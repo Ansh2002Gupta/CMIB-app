@@ -1,0 +1,72 @@
+{
+  "name": "boilerplate",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint .",
+    "web": "react-scripts start",
+    "web-build": "react-scripts build",
+    "web-test": "react-scripts test",
+    "web-eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.18.1",
+    "@unthinkable/react-avatar": "file:src/npms/react-avatar",
+    "@unthinkable/react-button": "file:src/npms/react-button",
+    "@unthinkable/react-core-components": "file:src/npms/react-core",
+    "@unthinkable/react-event-handler": "file:src/npms/react-event-handler",
+    "@unthinkable/react-router": "file:src/npms/react-router",
+    "@unthinkable/react-theme": "file:src/npms/react-theme",
+    "@unthinkable/react-util": "file:src/npms/react-utils",
+    "axios": "^0.27.2",
+    "react": "17.0.2",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dom": "17.0.2",
+    "react-intl": "^6.4.2",
+    "react-native": "0.68.2",
+    "react-native-modal": "^13.0.1",
+    "react-native-svg": "12.1.1",
+    "react-native-svg-transformer": "^1.0.0",
+    "react-refresh": "^0.14.0",
+    "react-router": "^6.4.5",
+    "react-router-dom": "^6.4.5",
+    "react-router-native": "^6.4.5",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@babel/core": "7.21.4",
+    "@babel/runtime": "7.21.0",
+    "@react-native-community/eslint-config": "2.0.0",
+    "babel-jest": "26.6.3",
+    "eslint": "7.32.0",
+    "jest": "26.6.0",
+    "metro-react-native-babel-preset": "0.67.0",
+    "react-test-renderer": "17.0.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
