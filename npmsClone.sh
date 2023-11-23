@@ -1,0 +1,47 @@
+mkdir -p src/npms
+
+cd src/npms
+
+git clone https://x-token-auth:ATCTT3xFfGN0Q7JAFDWFD2M1RhPAsuPbXp5i05-L9rg9E9tFspPJTpWqlfI-_kFtkuTpWkuDZKE1_AkolNkpqBT4SaZ5_vEU84ch4t4MgHNuKeDqM76zRPuvSCoFTNq1MbUyvQe9TUammi41sfcPbDsOzN2tPfoBK4qplh38FgO3Spyg7Cbj43s=6B67B175@bitbucket.org/daffodilsoftware/react-core.git
+cd react-core
+git config credential.helper store
+git checkout a100e460245bf461e4cfe7bac2cd7104b768d912 # master
+cd ..
+
+git clone https://x-token-auth:ATCTT3xFfGN0v1JIfP53ZtlyOwCFeX665APaYSMbANGeZXym9jRU3VIogLlgBab3VDLAp3HfUX3ZNyeb09M8RkO1Avv_49ofA8YoGJyFVihFmU5zpJAw0u2DZEd5FHDCZBgmelA7AL7lKe__nq7swxgAHxvRTo2EGXQW57bTwrlU5HYw6dIxOCM=B2F27283@bitbucket.org/daffodilsoftware/unthinkable-react-button.git react-button
+cd react-button
+git config credential.helper store
+git checkout 27d52b42792d2db63cb4fd93eda69716a80e02e1 # master
+cd ..
+
+git clone https://x-token-auth:ATCTT3xFfGN01McsPa0vBRKN2TntRHEIoDpTpj1EGsPekH0R-aU8IFp3jrVUYfQKp0VKoA173Dw4xZBXXOlVPRp_ihyHgT_I8fkhPN6Qs6eluUdwypXRgxoWP3GWoccg1lCgDBPZEs-ylsCPbZr75PyWyI_GYdYqzxj6n3f0fQJHHGIEjTqFXVE=91A7CCDD@bitbucket.org/daffodilsoftware/react-avatar.git
+cd react-avatar
+git config credential.helper store
+git checkout fbb55ad1214e186e82accdc010f836b8c1d35ec3 # master
+cd ..
+
+git clone https://x-token-auth:ATCTT3xFfGN0rh-8QcTgFgMZO2-DwbEbxpRY2sNLRCDRfRUFM7BvxTqmhAfvcYQspBqI3xNrV9YqogtWlx8Nbr3WqtW31pPSkyOY7Hj5DIUTYokyhost7jKvJYG9j7X_zXL2hCVRHWHJmpmYh1Ctq42v65OiYxKN4MKmsnAH0ahG1axGm2J_W1M=6F9EBA06@bitbucket.org/daffodilsoftware/react-router.git
+cd react-router
+git config credential.helper store
+git checkout 033088d89df3cce9d6a9a44720271755aff9eee8 # master
+cd ..
+
+git clone https://x-token-auth:ATCTT3xFfGN0HDAotMRl6fgSeywJ5TJ_5DT-oDQgdZBIqLuaYZ2bcW8xsKC4e9cxomQVG6-iCp__60VMn1vYSVC7q9Vp4RdkPhAbcOQO4V_-mprad0m0_jnTirrYDygs8SaMDRTeHMxLP7J8y1sYo7eZ9rbFGGyq7rPUax7qlwY5XbaTRdAojgw=B95C7533@bitbucket.org/daffodilsoftware/react-utils.git
+cd react-utils
+git config credential.helper store
+git checkout 7a26568a4b55ee5d524a502861a85fbc9a6cc555 # master
+cd ..
+
+git clone https://x-token-auth:ATCTT3xFfGN0398h2Q_0zPcUHkkmMEFC8reuKu3bhIWO4sVsxbqITtMQ1w2cnOuDLHGkZTAvA-GOAZ6hEXyNHzJ5-U_KhbcaIkPeSX1D4AdS-zUcZVl0vmScehuh5OrAHTSxV4nwmZ2R3pCvXtceqRnWrGeknprCIfNpPcT0c6cyzl7gePXzH34=6C56CF7D@bitbucket.org/daffodilsoftware/react-theme.git
+cd react-theme
+git config credential.helper store
+git checkout 7279dfa62c7f5315b2f29f18cadc4c955e4e09c6 # master
+cd ..
+
+git clone https://x-token-auth:ATCTT3xFfGN0qIU16ADSHAFA3OTg2nOSP6YKoUgoEaoA3u_r6Lv-i_v8xJp8y-jx6I4dyq7y4bHltsUH7FSTY5NHGqAZrDyzSfKMQzEwIXqRorYwcIukNTFnFzZ8yhoONAafOu-TLQMC9d2L44snDjiUQgrPDpmezDUiAgzxBXdoUZZJ7IhdVjQ=84528408@bitbucket.org/daffodilsoftware/react-event-handler.git
+cd react-event-handler
+git config credential.helper store
+git checkout 788eb43fdec4dbe69e0c55a06a213157aeade219 # master
+cd ..
+
+cd ../../
