@@ -17,7 +17,7 @@ function App() {
   } = theme;
 
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
       <MediaQueryProvider breakpoints={breakpoints}>
         <ThemeProvider {...theme}>
           <IntlProvider
@@ -31,7 +31,7 @@ function App() {
           </IntlProvider>
         </ThemeProvider>
       </MediaQueryProvider>
-    </Provider>
+    // </Provider>
   );
 }
 

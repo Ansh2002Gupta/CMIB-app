@@ -12,6 +12,7 @@ import styles from "./CreateNewPassword.style";
 import HeaderName from "../../components/HeaderName";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ButtonComponent from "../../components/ButtonComponent";
+import colors from "../../assets/colors";
 
 
 function CreateNewPasswordUI(props) {

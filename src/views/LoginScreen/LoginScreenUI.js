@@ -121,7 +121,7 @@ const LoginScreenUI = (props) => {
                 {intl.formatMessage({ id: "label.account" })}
               </Text>
               <TouchableOpacity
-                onPress={() => setToggleSection(!toggleSection)}
+              // onPress={() => setToggleSection(!toggleSection)}
               >
                 <Text style={styles.newAccountText}>
                   {intl.formatMessage({ id: "label.newAccount" })}
