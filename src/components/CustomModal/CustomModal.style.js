@@ -2,16 +2,9 @@ import colors from "../../assets/colors";
 
 const style = {
   containerStyle: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0, 0.7)",
-    zIndex: 1,
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    alignContent: "center",
-    bottom: 0,
-    justifyContent: "center",
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
   },
   innerContainer: {
     paddingLeft: 16,
