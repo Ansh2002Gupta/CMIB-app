@@ -1,16 +1,18 @@
-import React, {useState, useContext} from 'react';
-import {useIntl} from 'react-intl';
-import {Button} from '@unthinkable/react-button';
-import {View, Text, TextInput} from '@unthinkable/react-core-components';
+import React, { useState, useContext } from "react";
+import { useIntl } from "react-intl";
+import { Button } from "@unthinkable/react-button";
+import { View, Text, TextInput } from "@unthinkable/react-core-components";
 
-import {AuthContext} from '../../globalContext/auth/authProvider';
-import {setAuth} from './../../globalContext/auth/authActions';
-import {useNavigate} from '../../routes';
-import {AuthService, StorageService} from './../../services';
+import { AuthContext } from "../../globalContext/auth/authProvider";
+import { setAuth } from "./../../globalContext/auth/authActions";
+import { useNavigate } from "../../routes";
+import { AuthService, StorageService } from "./../../services";
 
-import styles from './loginForm.style';
+import styles from "./loginForm.style";
 
-function useLoginForm(initialState = {username: 'user', password: 'password'}) {
+function useLoginForm(
+  initialState = { username: "user", password: "password" }
+) {
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     username: initialState.username,
@@ -18,42 +20,47 @@ function useLoginForm(initialState = {username: 'user', password: 'password'}) {
   });
   const [isProcessing, setIsProcessing] = useState(false);
   const [, authDispatch] = useContext(AuthContext);
+  const onClickSignUp = () => {
+    navigate("/signup");
+  };
   const onLogin = async () => {
     setIsProcessing(true);
     // api call and passResponse to setAuthAction
     const response = await AuthService.login(formValues);
-    await StorageService.set('auth', response);
+    await StorageService.set("auth", response);
     authDispatch(setAuth(response));
     setIsProcessing(false);
-    navigate('/');
+    navigate("/");
   };
   return {
     formValues,
     setFormValues,
     onLogin,
     isProcessing,
+    onClickSignUp,
   };
 }
 
 function LoginForm(props) {
   const intl = useIntl();
-  const {formValues, setFormValues, onLogin, isProcessing} = useLoginForm();
-  const {username, password} = formValues || {};
+  const { formValues, setFormValues, onLogin, isProcessing, onClickSignUp } =
+    useLoginForm();
+  const { username, password } = formValues || {};
   const isLoginActionDisabled =
     !username.trim() || !password.trim() || isProcessing;
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.header}>
-          {intl.formatMessage({id: 'label.welcome'})}
+          {intl.formatMessage({ id: "label.welcome" })}
         </Text>
         <TextInput
           style={styles.input}
-          placeholder={intl.formatMessage({id: 'label.username'})}
-          onChangeText={value => {
-            setFormValues(v => {
+          placeholder={intl.formatMessage({ id: "label.username" })}
+          onChangeText={(value) => {
+            setFormValues((v) => {
               v.username = value;
-              return {...v};
+              return { ...v };
             });
           }}
           value={username}
@@ -61,23 +68,32 @@ function LoginForm(props) {
         <TextInput
           type="password"
           style={styles.input}
-          placeholder={intl.formatMessage({id: 'label.password'})}
-          onChangeText={value => {
-            setFormValues(v => {
+          placeholder={intl.formatMessage({ id: "label.password" })}
+          onChangeText={(value) => {
+            setFormValues((v) => {
               v.password = value;
-              return {...v};
+              return { ...v };
             });
           }}
           secureTextEntry={true}
           value={password}
         />
         <Button
-          text={intl.formatMessage({id: 'label.login'})}
+          text={intl.formatMessage({ id: "label.login" })}
           onPress={() => {
             onLogin();
           }}
           disabled={isLoginActionDisabled}
-          disabledContainerStyle={{opacity: 0.5}}
+          disabledContainerStyle={{ opacity: 0.5 }}
+          containerStyle={styles.button}
+          textStyle={styles.buttonText}
+        />
+        <Button
+          text={intl.formatMessage({ id: "label.sign_up" })}
+          onPress={() => {
+            onClickSignUp();
+          }}
+          disabledContainerStyle={{ opacity: 0.5 }}
           containerStyle={styles.button}
           textStyle={styles.buttonText}
         />
