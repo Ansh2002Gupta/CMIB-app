@@ -1,10 +1,9 @@
+import colors from "../../assets/colors";
 const style = {
   heading: {
-    color: '#000833',
-    textAlign: 'center',
-    // fontFamily: 'GeneralSans-Regular',
-    fontSize: 18,
-    fontWeight: '600',
+    color: colors.black,
+    fontSize: 28,
+    fontFamily: "GeneralSans-Bold",
   },
 };
 

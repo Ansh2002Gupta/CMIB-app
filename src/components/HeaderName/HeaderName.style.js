@@ -1,8 +1,9 @@
 const style = {
   heading: {
-    padding: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    fontSize: 14,
+    fontWeight: "500",
   },
 };
 

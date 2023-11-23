@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.18.1",
+    "@reduxjs/toolkit": "^1.9.7",
     "@unthinkable/react-avatar": "file:src/npms/react-avatar",
     "@unthinkable/react-button": "file:src/npms/react-button",
     "@unthinkable/react-core-components": "file:src/npms/react-core",
@@ -31,6 +32,7 @@
     "react-native-modal": "^13.0.1",
     "react-native-svg": "12.1.1",
     "react-native-svg-transformer": "^1.0.0",
+    "react-redux": "^8.1.3",
     "react-refresh": "^0.14.0",
     "react-router": "^6.4.5",
     "react-router-dom": "^6.4.5",

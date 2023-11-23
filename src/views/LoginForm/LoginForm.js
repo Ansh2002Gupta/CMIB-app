@@ -25,7 +25,7 @@ function useLoginForm(initialState = {username: 'user', password: 'password'}) {
     await StorageService.set('auth', response);
     authDispatch(setAuth(response));
     setIsProcessing(false);
-    navigate('/');
+    navigate('/loginscreen');
   };
   return {
     formValues,

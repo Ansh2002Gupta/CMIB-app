@@ -1,39 +1,35 @@
+import colors from "../../assets/colors";
 const style = {
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 16,
-    alignItems: 'center',
-    backgroundColor:'#FFFFFF',
-  },
+  container: {},
   header: {
-    fontSize: 24,
-    marginBottom: 24,
-    textAlign: 'center',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 16,
-    alignItems: 'center',
-  },
-  header: {
-    fontSize: 24,
-    marginBottom: 24,
-    textAlign: 'center',
+    fontSize: 12,
+    fontWeight: "500",
+    fontFamily: "GeneralSans-Regular",
+    color: colors.black,
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    flex: 1,
+    height: 48,
+    alignItems: "center",
+    borderColor: colors.lightGrey,
     borderWidth: 1,
-    marginBottom: 12,
     paddingLeft: 8,
+    fontSize: 14,
+    fontWeight: "500",
+    fontFamily: "GeneralSans-Regular",
   },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 12,
-    borderRadius: 4,
-    alignItems: 'center',
+  textInputView: {
+    backgroundColor: colors.white,
+    marginTop: 5,
+    flexDirection: "row",
+  },
+  eyeIconContainer: {
+    position: "absolute",
+    right: 10,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 8,
   },
 };
 
