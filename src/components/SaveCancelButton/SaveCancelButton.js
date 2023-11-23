@@ -19,7 +19,7 @@ const SaveCancelButton = (props) => {
   } = props;
 
   return (
-    <View style={{ flexDirection: "row" }}>
+    <View style={styles.containerStyle}>
       <TouchableOpacity
         onPress={onPressDibale}
         style={styles.disableButtonStyle}

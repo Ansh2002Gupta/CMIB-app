@@ -8,6 +8,7 @@ const style = {
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 8,
+    bottom: 16,
   },
   titleStyle: {
     fontSize: 16,

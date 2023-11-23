@@ -27,7 +27,6 @@ const Input = (props) => {
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
 
   const data = [
     { label: "Item 1", value: "1" },
@@ -42,12 +41,10 @@ const Input = (props) => {
 
   const handleFocus = () => {
     setIsFocused(true);
-    setShowDropdown(true);
   };
 
   const handleBlur = () => {
     setIsFocused(false);
-    setShowDropdown(false);
   };
 
   return (
@@ -98,7 +95,7 @@ const Input = (props) => {
 
           <TextInput
             value={value}
-            style={style.textInputStyle}
+            style={[style.textInputStyle, isMultiline && style.textAlignStyle]}
             multiline={isMultiline}
             onFocus={handleFocus}
             onBlur={handleBlur}

@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import colors from "../../assets/colors";
 
 const style = {
@@ -72,13 +73,15 @@ const style = {
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
     borderWidth: 1,
-    padding: 14,
+    paddingLeft: 14,
+    paddingRight: 14,
     marginTop: 4,
     borderRadius: 8,
     flexDirection: "row",
+    paddingVertical: Platform.OS === "android" ? 0 : 14,
   },
   textInputStyle: {
-    // flex: 1,
+    flex: 1,
     fontFamily: "GeneralSans-Medium",
     fontSize: 14,
   },
@@ -87,6 +90,9 @@ const style = {
     fontFamily: "GeneralSans-Medium",
     fontSize: 12,
     lineHeight: 18,
+  },
+  textAlignStyle: {
+    textAlignVertical: "top",
   },
   secondInputStyle: {
     backgroundColor: colors.white,

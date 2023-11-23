@@ -3,7 +3,8 @@ const style = {
     flexDirection: "row",
   },
   contentContainerStyle: {
-    paddingTop: 24,
+    marginTop: 24,
+    marginBottom: 24,
   },
   registrationInput: { flex: 1 },
   partnerInput: { marginLeft: 24 },
