@@ -21,6 +21,15 @@ import iconDivider from "../../public/images/iconDivider/iconDivider.png";
 import iconUpload from "../../public/images/iconUpload/iconUpload.png";
 import iconTrash from "../../public/images/iconTrash/iconTrash.png";
 import iconSuccess from "../../public/images/iconSuccess/iconSuccess.png";
+import iconMenu from "../../public/images/iconMenu/iconMenu.png";
+import iconNotification from "../../public/images/iconNotification/iconNotification.png";
+import iconProfile from "../../public/images/iconProfile/iconProfile.png";
+import iconLogout from "../../public/images/iconLogout/iconLogout.png";
+import iconBuilding from "../../public/images/iconBuilding/iconBuilding.png";
+import iconLock from "../../public/images/iconLock/iconLock.png";
+import iconArrowRight from "../../public/images/iconArrowRight/iconArrowRight.png";
+import iconBack from "../../public/images/iconBack/iconBack.png";
+import iconEdit from "../../public/images/iconEdit/iconEdit.png";
 
 export default {
   avatar,
@@ -46,4 +55,13 @@ export default {
   iconUpload,
   iconTrash,
   iconSuccess,
+  iconMenu,
+  iconNotification,
+  iconProfile,
+  iconLogout,
+  iconBuilding,
+  iconLock,
+  iconArrowRight,
+  iconBack,
+  iconEdit,
 };

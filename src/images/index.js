@@ -32,6 +32,15 @@ const iconDivider = "/images/iconDivider/iconDivider.png";
 const iconUpload = "/images/iconUpload/iconUpload.png";
 const iconTrash = "/images/iconTrash/iconTrash.png";
 const iconSuccess = "/images/iconSuccess/iconSuccess.png";
+const iconMenu = "/images/iconMenu/iconMenu.png";
+const iconNotification = "/images/iconNotification/iconNotification.png";
+const iconProfile = "/images/iconProfile/iconProfile.png";
+const iconLogout = "/images/iconLogout/iconLogout.png";
+const iconBuilding = "/images/iconBuilding/iconBuilding.png";
+const iconLock = "/images/iconLock/iconLock.png";
+const iconArrowRight = "/images/iconArrowRight/iconArrowRight.png";
+const iconBack = "/images/iconBack/iconBack.png";
+const iconEdit = "/images/iconEdit/iconEdit.png";
 
 export default {
   avatar,
@@ -61,4 +70,13 @@ export default {
   iconUpload,
   iconTrash,
   iconSuccess,
+  iconMenu,
+  iconNotification,
+  iconProfile,
+  iconLogout,
+  iconBuilding,
+  iconLock,
+  iconArrowRight,
+  iconBack,
+  iconEdit,
 };

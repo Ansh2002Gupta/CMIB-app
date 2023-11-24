@@ -11,10 +11,16 @@ const CustomModal = (props) => {
     <View>
       <Modal isVisible style={style.containerStyle}>
         <View style={style.innerContainer}>
-          <Image source={images.iconSuccess} />
-          <Text style={style.headerText}>{headerText}</Text>
-          <Text style={style.infoText}>{secondaryText}</Text>
-          <ButtonComponent title={buttonTitle} onPress={onPress} />
+          {isSuccess ? (
+            <>
+              <Image source={images.iconSuccess} />
+              <Text style={style.headerText}>{headerText}</Text>
+              <Text style={style.infoText}>{secondaryText}</Text>
+              <ButtonComponent title={buttonTitle} onPress={onPress} />
+            </>
+          ) : (
+            { children }
+          )}
         </View>
       </Modal>
     </View>

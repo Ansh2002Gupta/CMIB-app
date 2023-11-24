@@ -9,6 +9,8 @@ import Auth from "../pages/Auth";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import SignUpScreen from "../views/SignUp/SignUpWelcomeScreen/index";
+import MyAccountScreen from "../views/MyAccount/index";
+import ViewProfile from "../views/ViewProfile/index";
 import SignUpSecondScreen from "../views/SignUp/SignUpSecondScreen/index";
 import SignUpThirdScreen from "../views/SignUp/SignUpThirdScreen/index";
 import SignUpLastScreen from "../views/SignUp/SignUpLastScreen/index";
@@ -39,7 +41,18 @@ const config = [
       // array of views under Page route
       {
         viewPath: "",
-        element: <DashboardView />, // view
+        element: <MyAccountScreen />, // view
+      },
+    ],
+  },
+  {
+    pagePath: "/viewprofile",
+    element: <HomeWithPrivateAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <ViewProfile />, // view
       },
     ],
   },

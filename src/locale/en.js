@@ -90,6 +90,8 @@ const locale = {
   "label.telephonic_call_from_icai": "Telephonic Call from ICAI Officials",
   "label.advertisement_in_ca_journal":
     "Advertisement in the Chartered Accountant Journal",
+  "label.my_account": "My Account",
+  "label.view_profile": "View Profile",
 };
 
 export default locale;
