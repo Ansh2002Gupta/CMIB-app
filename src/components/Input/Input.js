@@ -6,7 +6,7 @@ import {
   Image,
   TextInput,
 } from "@unthinkable/react-core-components";
-import { Dropdown } from "react-native-element-dropdown";
+import Dropdown from "../Dropdown";
 import style from "./Input.style";
 import colors from "../../assets/colors";
 import images from "../../images";
@@ -72,7 +72,7 @@ const Input = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            setValue(item.value);
+            // setValue(item.value); TODO: Seems like we have forgot to pass 'setValue' in the props. Not taking any action on this right now.
             setIsFocused(false);
           }}
           {...remainingProps}

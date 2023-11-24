@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "@unthinkable/react-core-components";
 
-const UploadImage = () => {
+const Dropdown = () => {
   return <View></View>;
 };
 
-export default UploadImage;
+export default Dropdown;

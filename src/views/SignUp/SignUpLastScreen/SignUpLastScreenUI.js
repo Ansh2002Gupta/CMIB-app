@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import images from "../../../images";
 import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
 import Input from "../../../components/Input/Input";
-import { Modal, Image } from "react-native";
 import {
   ScrollView,
   View,

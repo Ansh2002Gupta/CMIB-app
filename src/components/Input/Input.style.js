@@ -1,4 +1,4 @@
-import { Platform } from "react-native";
+import { Platform } from "@unthinkable/react-core-components"; //TODO: I have changed this import from react-natice package to @unthinkable/react-core-components. Please remove this comment if that's okay.
 import colors from "../../assets/colors";
 
 const style = {
