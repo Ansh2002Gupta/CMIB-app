@@ -78,7 +78,8 @@ const ForgotPasswordUI = (props) => {
             onClickGoToLogin();
           }}
           buttonTitle={intl.formatMessage({ id: "label.backToLogin" })}
-        />
+          isSuccess
+        ></CustomModal>
       ) : null}
     </View>
   );

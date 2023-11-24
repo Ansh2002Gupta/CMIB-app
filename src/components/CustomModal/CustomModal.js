@@ -7,15 +7,28 @@ import style from "./CustomModal.style";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
 const CustomModal = (props) => {
-  const { headerText, secondaryText, buttonTitle, onPress } = props;
+  const {
+    headerText,
+    secondaryText,
+    buttonTitle,
+    onPress,
+    isSuccess,
+    children,
+  } = props;
   return (
     <Modal animationType="slide" transparent>
       <View style={style.containerStyle}>
         <View style={style.innerContainer}>
-          <Image source={images.iconSuccess} />
-          <Text style={style.headerText}>{headerText}</Text>
-          <Text style={style.infoText}>{secondaryText}</Text>
-          <ButtonComponent title={buttonTitle} onPress={onPress} />
+          {isSuccess ? (
+            <>
+              <Image source={images.iconSuccess} />
+              <Text style={style.headerText}>{headerText}</Text>
+              <Text style={style.infoText}>{secondaryText}</Text>
+              <ButtonComponent title={buttonTitle} onPress={onPress} />
+            </>
+          ) : (
+            children
+          )}
         </View>
       </View>
     </Modal>
