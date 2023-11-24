@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "../../routes";
+import { useIntl } from "react-intl";
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
 
 function CreateNewPasswordComponent(props) {
   const navigate = useNavigate();
+  const intl = useIntl();
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [error, setError] = useState("");
@@ -58,6 +60,7 @@ function CreateNewPasswordComponent(props) {
       confirmNewPassword={confirmNewPassword}
       onChangeConfirmPasswordInput={onChangeConfirmPasswordInput}
       error={error}
+      intl={intl}
     />
   );
 }

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useIntl } from "react-intl";
+import React from "react";
 import {
   View,
   Text,
@@ -13,7 +12,6 @@ import HeaderName from "../../components/HeaderName";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ButtonComponent from "../../components/ButtonComponent";
 
-
 function CreateNewPasswordUI(props) {
   const {
     handleSubmit,
@@ -24,9 +22,9 @@ function CreateNewPasswordUI(props) {
     newPassword,
     onChangeConfirmPasswordInput,
     error,
+    intl,
   } = props;
   const icons = useTheme("icons");
-  const intl = useIntl();
   const bulletStyle = (isValid) => ({
     width: 6,
     height: 6,
