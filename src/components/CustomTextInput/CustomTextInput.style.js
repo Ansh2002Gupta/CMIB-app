@@ -107,12 +107,8 @@ const style = {
     borderRadius: 8,
   },
   eyeIconContainer: {
-    position: "absolute",
-    right: 0,
-    height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
   },
 };
 
