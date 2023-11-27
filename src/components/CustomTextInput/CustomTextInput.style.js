@@ -108,11 +108,11 @@ const style = {
   },
   eyeIconContainer: {
     position: "absolute",
-    right: 10,
+    right: 0,
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    padding: 8,
+    padding: 16,
   },
 };
 
