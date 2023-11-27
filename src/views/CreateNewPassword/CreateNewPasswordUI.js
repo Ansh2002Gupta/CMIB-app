@@ -61,8 +61,6 @@ function CreateNewPasswordUI(props) {
           eyeImage={true}
           isPassword={true}
         />
-        {error ? <Text>{error}</Text> : null}
-
         <View>
           <Text style={styles.validationText}>
             {intl.formatMessage({ id: "label.passwordRequirment" })}

@@ -39,6 +39,7 @@ const ForgotPasswordUI = (props) => {
               onChangeInput(val);
             }}
             errorMessage={errorMessage}
+            isError={!!errorMessage}
             isMandatory
           />
         </View>
