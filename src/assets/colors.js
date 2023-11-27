@@ -8,6 +8,11 @@ const red = "#D93400";
 const gray = "#5A5A5A";
 const darkGreen = "#00873E";
 const subHeadingGray = "#616C82";
+const darkGrey = "#616C82";
+const errorRed = "#D93400";
+const lightBlue = "#269AD4";
+const secondaryGrey = "#F2F4FC";
+const darkBlack = "#0F0F0F";
 
 export default {
   white,
@@ -19,5 +24,10 @@ export default {
   red,
   gray,
   darkGreen,
-  subHeadingGray
+  subHeadingGray,
+  darkGrey,
+  errorRed,
+  lightBlue,
+  secondaryGrey,
+  darkBlack,
 };

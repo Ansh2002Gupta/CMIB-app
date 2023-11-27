@@ -14,6 +14,26 @@ const g20Icon = "/images/svg/g20Icon.svg";
 const gloPac = "/images/svg/gloPac.svg";
 const cmibText = "/images/cmibText.png";
 const cmibImage = "/images/cmibImage.png";
+const iconWalkthroughSignUpOne =
+  "/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
+const iconCheckedCheckbox =
+  "/images/iconCheckedCheckbox/iconCheckedCheckbox.png";
+const iconUncheckedCheckbox =
+  "images/iconUncheckedCheckbox/iconUncheckedCheckbox.png";
+const iconArrowRightWhite =
+  "images/iconArrowRightWhite/iconArrowRightWhite.png";
+const iconWalkthroughSignUpTwo =
+  "/images/iconWalkthroughSignUpTwo/iconWalkthroughSignUpTwo.png";
+const iconDownArrow = "/images/iconDownArrow/iconDownArrow.png";
+const iconArrowLeft = "/images/iconArrowLeft/iconArrowLeft.png";
+const iconWalkthroughSignUpThree =
+  "/images/iconWalkthroughSignUpThree/iconWalkthroughSignUpThree.png";
+const iconWalkthroughSignUpLast =
+  "/images/iconWalkthroughSignUpLast/iconWalkthroughSignUpLast.png";
+const iconDivider = "/images/iconDivider/iconDivider.png";
+const iconUpload = "/images/iconUpload/iconUpload.png";
+const iconTrash = "/images/iconTrash/iconTrash.png";
+const iconSuccess = "/images/iconSuccess/iconSuccess.png";
 
 export default {
   avatar,
@@ -32,4 +52,17 @@ export default {
   gloPac,
   cmibImage,
   cmibText,
+  iconWalkthroughSignUpOne,
+  iconCheckedCheckbox,
+  iconUncheckedCheckbox,
+  iconArrowRightWhite,
+  iconWalkthroughSignUpTwo,
+  iconDownArrow,
+  iconArrowLeft,
+  iconWalkthroughSignUpThree,
+  iconWalkthroughSignUpLast,
+  iconDivider,
+  iconUpload,
+  iconTrash,
+  iconSuccess,
 };
