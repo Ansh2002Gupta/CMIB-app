@@ -1,12 +1,10 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.white },
+  mainView: { flex: 1, backgroundColor: colors.backgroundColor },
   container: {
-    marginRight: 16,
-    marginLeft: 16,
-    marinTop: 16,
-    marinBottom: 16,
-    backgroundColor: colors.white,
+    paddingLeft: 16,
+    paddingRight: 16,
+    backgroundColor: colors.errorRed,
   },
   buttonView: {
     flexDirection: "row",
@@ -19,7 +17,6 @@ const style = {
     backgroundColor: colors.backgroundColor,
     padding: 16,
   },
-  firstTextInput: { marginTop: 8 },
   borderStyle: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
@@ -34,14 +31,7 @@ const style = {
     marginBottom: 24,
     fontSize: 14,
     fontFamily: "GeneralSans-Bold",
-    fontWeight: "600",
     color: colors.darkBlue,
-  },
-  secoundTextInput: { marginTop: 16 },
-  bulletPointContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 5,
   },
   bullet: {
     width: 6,

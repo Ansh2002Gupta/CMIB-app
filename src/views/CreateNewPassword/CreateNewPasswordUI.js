@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
-import { useTheme } from "@unthinkable/react-theme";
 import CustomTextInput from "../../components/CustomTextInput";
 import styles from "./CreateNewPassword.style";
 import HeaderText from "../../components/HeaderText/HeaderText";
@@ -23,13 +22,12 @@ function CreateNewPasswordUI(props) {
     error,
     intl,
   } = props;
-  const icons = useTheme("icons");
   const bulletStyle = (isValid) => ({
     width: 6,
     height: 6,
     borderRadius: 5,
     margin: 5,
-    backgroundColor: isValid ? colors.darkGreen : colors.lightGrey,
+    backgroundColor: isValid ? colors.green : colors.lightGrey,
   });
   return (
     <View style={styles.mainView}>
@@ -61,40 +59,39 @@ function CreateNewPasswordUI(props) {
           eyeImage={true}
           isPassword={true}
         />
-        <View>
-          <Text style={styles.validationText}>
-            {intl.formatMessage({ id: "label.passwordRequirment" })}
+
+        <Text style={styles.validationText}>
+          {intl.formatMessage({ id: "label.passwordRequirment" })}
+        </Text>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.length)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.characterLength" })}
           </Text>
-          <View style={styles.validationView}>
-            <View style={bulletStyle(validations.length)}></View>
-            <Text style={styles.bulletText}>
-              {intl.formatMessage({ id: "label.characterLength" })}
-            </Text>
-          </View>
-          <View style={styles.validationView}>
-            <View style={bulletStyle(validations.numeric)}></View>
-            <Text style={styles.bulletText}>
-              {intl.formatMessage({ id: "label.numericCharacter" })}
-            </Text>
-          </View>
-          <View style={styles.validationView}>
-            <View style={bulletStyle(validations.uppercase)}></View>
-            <Text style={styles.bulletText}>
-              {intl.formatMessage({ id: "label.upercaseCharacter" })}
-            </Text>
-          </View>
-          <View style={styles.validationView}>
-            <View style={bulletStyle(validations.lowercase)}></View>
-            <Text style={styles.bulletText}>
-              {intl.formatMessage({ id: "label.lowercaseCharacter" })}
-            </Text>
-          </View>
-          <View style={styles.validationView}>
-            <View style={bulletStyle(validations.specialChar)}></View>
-            <Text style={styles.bulletText}>
-              {intl.formatMessage({ id: "label.specialCharacter" })}
-            </Text>
-          </View>
+        </View>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.numeric)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.numericCharacter" })}
+          </Text>
+        </View>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.uppercase)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.upercaseCharacter" })}
+          </Text>
+        </View>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.lowercase)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.lowercaseCharacter" })}
+          </Text>
+        </View>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.specialChar)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.specialCharacter" })}
+          </Text>
         </View>
       </View>
       <View style={styles.submitView}>
