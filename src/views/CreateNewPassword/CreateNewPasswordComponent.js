@@ -19,7 +19,7 @@ function CreateNewPasswordComponent(props) {
   });
 
   const onClickGoToLogin = () => {
-    navigate("/loginScreen");
+    navigate("/");
   };
 
   const onChangePasswordInput = (val) => {

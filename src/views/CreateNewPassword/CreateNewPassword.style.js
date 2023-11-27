@@ -29,7 +29,7 @@ const style = {
     marginRight: -16,
     marginTop: 24,
   },
-  submitView: { padding: 16 },
+  submitView: { paddingLeft: 16, paddingRight: 16 },
   backToLoginText: {
     textAlign: "center",
     marginTop: 24,
