@@ -21,7 +21,7 @@ const style = {
   },
   firstTextInput: { marginTop: 8 },
   borderStyle: {
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: colors.lightGrey,
     marginLeft: -16,
     marginRight: -16,
