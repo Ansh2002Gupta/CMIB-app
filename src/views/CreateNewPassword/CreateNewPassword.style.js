@@ -4,7 +4,7 @@ const style = {
   container: {
     paddingLeft: 16,
     paddingRight: 16,
-    backgroundColor: colors.errorRed,
+    backgroundColor: colors.white,
   },
   buttonView: {
     flexDirection: "row",
