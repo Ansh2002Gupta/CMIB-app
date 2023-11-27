@@ -22,7 +22,6 @@ const LoginScreenUI = (props) => {
     password,
     onChangeUsername,
     onChangePassword,
-    icons,
     intl,
     onCreateNewPasswordClick,
   } = props;
@@ -73,9 +72,6 @@ const LoginScreenUI = (props) => {
               errorMessage={errorMessage}
               isMandatory
             />
-            {!!errorMessage && (
-              <Text style={styles.errorMessage}>{errorMessage}</Text>
-            )}
             <CustomTextInput
               label={intl.formatMessage({ id: "label.password" })}
               placeholder={intl.formatMessage({ id: "label.enterPassword" })}
@@ -89,11 +85,7 @@ const LoginScreenUI = (props) => {
               <Text style={styles.rememberMeText}>
                 {intl.formatMessage({ id: "label.rememberMe" })}
               </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  onForgotPasswordClick();
-                }}
-              >
+              <TouchableOpacity onPress={onForgotPasswordClick}>
                 <Text style={styles.forgotPasswordText}>
                   {intl.formatMessage({ id: "label.forgotPassword" })}
                 </Text>
@@ -102,9 +94,7 @@ const LoginScreenUI = (props) => {
             <View style={styles.loginButtonView}>
               <ButtonComponent
                 title={intl.formatMessage({ id: "label.login" })}
-                onPress={() => {
-                  onLogin();
-                }}
+                onPress={onLogin}
                 disabled={loginDisabled}
               />
             </View>
@@ -112,11 +102,7 @@ const LoginScreenUI = (props) => {
               <Text style={styles.accountText}>
                 {intl.formatMessage({ id: "label.account" })}
               </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  onCreateNewPasswordClick();
-                }}
-              >
+              <TouchableOpacity onPress={onCreateNewPasswordClick}>
                 <Text style={styles.newAccountText}>
                   {intl.formatMessage({ id: "label.newAccount" })}
                 </Text>

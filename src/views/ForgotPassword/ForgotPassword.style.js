@@ -4,8 +4,6 @@ const style = {
   container: {
     marginRight: 16,
     marginLeft: 16,
-    marinTop: 16,
-    marinBottom: 16,
     backgroundColor: colors.white,
   },
   buttonView: {
@@ -21,7 +19,7 @@ const style = {
   },
   firstTextInput: { marginTop: 8 },
   borderStyle: {
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: colors.lightGrey,
     marginLeft: -16,
     marginRight: -16,
@@ -35,12 +33,6 @@ const style = {
     fontSize: 14,
     fontFamily: "GeneralSans-Semibold",
     color: colors.darkBlue,
-  },
-  errorMessage: {
-    color: colors.red,
-    fontSize: 12,
-    fontFamily: "GeneralSans-Medium",
-    marginTop: 2,
   },
 };
 export default style;

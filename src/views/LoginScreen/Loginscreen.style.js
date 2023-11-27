@@ -73,13 +73,6 @@ const style = {
     marginLeft: -16,
     marginRight: -16,
   },
-  errorMessage: {
-    color: colors.red,
-    fontSize: 12,
-    fontFamily: "GeneralSans-Medium",
-    marginTop: 2,
-  },
-
   accountText: {
     color: colors.darkGrey,
     fontSize: 14,

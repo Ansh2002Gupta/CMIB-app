@@ -41,9 +41,6 @@ const ForgotPasswordUI = (props) => {
             errorMessage={errorMessage}
             isMandatory
           />
-          {!!errorMessage && (
-            <Text style={styles.errorMessage}>{errorMessage}</Text>
-          )}
         </View>
       </View>
       <View style={styles.submitView}>
