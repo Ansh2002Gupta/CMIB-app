@@ -26,6 +26,7 @@ const LoginScreenUI = (props) => {
     onChangePassword,
     icons,
     intl,
+    onCreateNewPasswordClick,
   } = props;
 
   return (
@@ -50,7 +51,7 @@ const LoginScreenUI = (props) => {
             <Text style={styles.topTabsText}>
               {intl.formatMessage({ id: "label.member_candidate_button" })}
             </Text>
-            <View style={!active ? styles.inActiveStyle : styles.activeStyle} />
+            <View style={!active ? styles.activeStyle : styles.inActiveStyle} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.topTabs}
@@ -61,7 +62,7 @@ const LoginScreenUI = (props) => {
                 {intl.formatMessage({ id: "label.company_button" })}
               </Text>
             </View>
-            <View style={active ? styles.inActiveStyle : styles.activeStyle} />
+            <View style={active ? styles.activeStyle : styles.inActiveStyle} />
           </TouchableOpacity>
         </View>
         <View style={styles.borderStyle} />
@@ -118,7 +119,11 @@ const LoginScreenUI = (props) => {
               <Text style={styles.accountText}>
                 {intl.formatMessage({ id: "label.account" })}
               </Text>
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity
+                onPress={() => {
+                  onCreateNewPasswordClick();
+                }}
+              >
                 <Text style={styles.newAccountText}>
                   {intl.formatMessage({ id: "label.newAccount" })}
                 </Text>

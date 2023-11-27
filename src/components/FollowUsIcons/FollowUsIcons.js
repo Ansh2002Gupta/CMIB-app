@@ -15,22 +15,22 @@ const FollowUsIcons = ({ text }) => {
       </Text>
       <View style={styles.imageView}>
         <View style={styles.imageStyle}>
-          <Image source={icons.brand} />
+          <Image source={icons.iconTwitter} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.facebook} />
+          <Image source={icons.iconFacebook} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.youtube} />
+          <Image source={icons.iconYoutube} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.linkedin} />
+          <Image source={icons.iconLinkedin} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.instagram} />
+          <Image source={icons.iconInstagram} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.telegram} />
+          <Image source={icons.iconTelegram} />
         </View>
       </View>
     </View>

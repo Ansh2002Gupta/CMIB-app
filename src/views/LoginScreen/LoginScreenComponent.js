@@ -20,6 +20,9 @@ function LoginScreenComponent(props) {
     navigate("/forgotPassword");
   };
 
+  const onCreateNewPasswordClick = async () => {
+    navigate("/createNewPassword");
+  };
   const toggleUser = (val) => {
     setActive(val);
   };
@@ -68,6 +71,7 @@ function LoginScreenComponent(props) {
       userName={userName}
       intl={intl}
       icons={icons}
+      onCreateNewPasswordClick={onCreateNewPasswordClick}
     />
   );
 }

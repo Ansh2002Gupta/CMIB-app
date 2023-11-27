@@ -13,13 +13,15 @@ const style = {
     marginBottom: 24,
     textAlign: "center",
   },
-  activeStyle: { paddingTop: 16 },
+  activeStyle: {
+    paddingTop: 16,
+    borderBottomWidth: 2,
+    borderColor: colors.green,
+  },
   topTabs: {
     width: "50%",
   },
   inActiveStyle: {
-    borderBottomWidth: 2,
-    borderColor: colors.green,
     paddingTop: 16,
   },
   topTabsText: {
@@ -50,11 +52,10 @@ const style = {
   rememberMeText: {
     fontSize: 14,
     fontWeight: "500",
-    fontFamily: "GeneralSans-Regular",
+    fontFamily: "GeneralSans-Medium",
     color: colors.black,
   },
   forgotPasswordText: {
-    textDecorationLine: "underline",
     fontSize: 14,
     fontWeight: "bold",
     fontFamily: "GeneralSans-Regular",
@@ -67,7 +68,6 @@ const style = {
     flexDirection: "row",
   },
   newAccountText: {
-    textDecorationLine: "underline",
     color: "#00137E",
     fontSize: 14,
     fontWeight: "600",

@@ -12,8 +12,17 @@ const cmibIcon = "/images/svg/cmibIcon.svg";
 const azadiMohatsav = "/images/svg/azadiMohatsav.svg";
 const g20Icon = "/images/svg/g20Icon.svg";
 const gloPac = "/images/svg/gloPac.svg";
-const cmibText = "/images/cmibText.png";
-const cmibImage = "/images/cmibImage.png";
+const cmibImage = "/images/iconCmib/cmibImage.png";
+const cmibText = "/images/iconCmibText/cmibText.png";
+const iconEye = "/images/iconEye/iconEye.png";
+const iconFacebook = "/images/iconFacebook/iconFacebook.png";
+const iconInstagram = "/images/iconInstagram/iconInstagram.png";
+const iconLinkedin = "/images/iconLinkedin/iconLinkedin.png";
+const iconSuccess = "/images/iconSuccess/iconSuccess.png";
+const iconTelegram = "/images/iconTelegram/iconTelegram.png";
+const iconTwitter = "/images/iconTwitter/iconTwitter.png";
+const iconYoutube = "/images/iconYoutube/iconYoutube.png";
+const iconEyeSlash = "/images/iconEyeSlash.png";
 
 export default {
   avatar,
@@ -32,4 +41,13 @@ export default {
   gloPac,
   cmibImage,
   cmibText,
+  iconEye,
+  iconFacebook,
+  iconInstagram,
+  iconEyeSlash,
+  iconSuccess,
+  iconLinkedin,
+  iconTelegram,
+  iconTwitter,
+  iconYoutube,
 };

@@ -8,17 +8,17 @@ import homeSolid from "../../public/images/home-solid.png";
 import homeOutline from "../../public/images/home-outline.png";
 import profileSolid from "../../public/images/profile-solid.png";
 import profileOutline from "../../public/images/profile-outline.png";
-import cmibText from "../../public/images/cmibText.png";
-import cmibImage from "../../public/images/cmibImage.png";
-import eye from "../../public/images/eye.png";
-import telegram from "../../public/images/telegram.png";
-import brand from "../../public/images/brand.png";
-import linkedin from "../../public/images/linkedin.png";
-import instagram from "../../public/images/instagram.png";
-import facebook from "../../public/images/facebook.png";
-import youtube from "../../public/images/youtube.png";
-import eyeSlash from "../../public/images/eye-slash.png";
+import cmibImage from "../../public/images/iconCmib/cmibImage.png";
+import cmibText from "../../public/images/iconCmibText/cmibText.png";
+import iconEye from "../../public/images/iconEye/iconEye.png";
+import iconFacebook from "../../public/images/iconFacebook/iconFacebook.png";
+import iconInstagram from "../../public/images/iconInstagram/iconInstagram.png";
+import iconLinkedin from "../../public/images/iconLinkedin/iconLinkedin.png";
 import iconSuccess from "../../public/images/iconSuccess/iconSuccess.png";
+import iconTelegram from "../../public/images/iconTelegram/iconTelegram.png";
+import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
+import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
+import iconEyeSlash from "../../public/images/iconEyeSlash.png";
 
 export default {
   avatar,
@@ -33,13 +33,13 @@ export default {
   profileOutline,
   cmibImage,
   cmibText,
-  eye,
-  telegram,
-  brand,
-  linkedin,
-  instagram,
-  facebook,
-  youtube,
-  eyeSlash,
+  iconEye,
+  iconFacebook,
+  iconInstagram,
+  iconEyeSlash,
   iconSuccess,
+  iconLinkedin,
+  iconTelegram,
+  iconTwitter,
+  iconYoutube,
 };

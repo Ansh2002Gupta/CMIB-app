@@ -46,7 +46,9 @@ const CustomTextInput = ({
             style={styles.eyeIconContainer}
             onPress={toggleTextVisibility}
           >
-            <Image source={isTextVisible ? icons.eyeSlash : icons.eye} />
+            <Image
+              source={isTextVisible ? icons.iconEyeSlash : icons.iconEye}
+            />
           </TouchableOpacity>
         ) : null}
       </View>

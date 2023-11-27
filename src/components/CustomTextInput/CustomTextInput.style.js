@@ -17,6 +17,7 @@ const style = {
     fontSize: 14,
     fontWeight: "500",
     fontFamily: "GeneralSans-Regular",
+    borderRadius: 8,
   },
   textInputView: {
     backgroundColor: colors.white,
