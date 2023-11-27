@@ -37,12 +37,10 @@ const style = {
   },
   companyView: {
     flex: 1,
-    backgroundColor: colors.backgroundColor,
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 24,
   },
-
   forgotPasswordView: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -7,8 +7,7 @@ import {
 import styles from "./Loginscreen.style";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import CustomTextInput from "../../components/CustomTextInput";
-import CustomLoginButton from "../../components/CustomLoginButton";
-
+import ButtonComponent from "../../components/ButtonComponent";
 import FollowUsIcons from "../../components/FollowUsIcons";
 
 const LoginScreenUI = (props) => {
@@ -63,7 +62,7 @@ const LoginScreenUI = (props) => {
         </View>
         <View style={styles.borderStyle} />
       </View>
-      {active ? (
+      {active && (
         <>
           <View style={styles.companyView}>
             <CustomTextInput
@@ -101,8 +100,8 @@ const LoginScreenUI = (props) => {
               </TouchableOpacity>
             </View>
             <View style={styles.loginButtonView}>
-              <CustomLoginButton
-                label={intl.formatMessage({ id: "label.login" })}
+              <ButtonComponent
+                title={intl.formatMessage({ id: "label.login" })}
                 onPress={() => {
                   onLogin();
                 }}
@@ -126,7 +125,7 @@ const LoginScreenUI = (props) => {
             <FollowUsIcons />
           </View>
         </>
-      ) : null}
+      )}
     </View>
   );
 };

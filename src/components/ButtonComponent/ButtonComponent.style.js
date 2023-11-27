@@ -8,6 +8,9 @@ const style = {
     flexDirection: "row",
     borderRadius: 8,
   },
+  disableButtonStyle: {
+    opacity: 0.5,
+  },
   titleStyle: {
     fontSize: 16,
     fontFamily: "GeneralSans-Semibold",
