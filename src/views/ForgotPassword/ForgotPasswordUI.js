@@ -23,12 +23,10 @@ const ForgotPasswordUI = (props) => {
   return (
     <View style={styles.mainView}>
       <View style={styles.container}>
-        <View style={styles.headerTextView}>
-          <HeaderText
-            label={intl.formatMessage({ id: "label.forgotPasswordText" })}
-            text={intl.formatMessage({ id: "label.forgotPassword" })}
-          />
-        </View>
+        <HeaderText
+          label={intl.formatMessage({ id: "label.forgotPasswordText" })}
+          text={intl.formatMessage({ id: "label.forgotPassword" })}
+        />
         <View style={styles.borderStyle} />
       </View>
       <View style={styles.companyView}>

@@ -4,19 +4,11 @@ const style = {
   container: {
     paddingRight: 16,
     paddingLeft: 16,
-    marinTop: 16,
-    marinBottom: 16,
     backgroundColor: colors.white,
-  },
-  header: {
-    fontSize: 24,
-    marginBottom: 24,
-    textAlign: "center",
   },
   activeStyle: {
     paddingTop: 16,
     borderBottomWidth: 3,
-    zIndex: 100,
     borderColor: colors.green,
   },
   topTabs: {
@@ -37,8 +29,6 @@ const style = {
     fontSize: 14,
     fontFamily: "GeneralSans-Semibold",
   },
-  headerTextView: { marginTop: 24 },
-  headerNameView: { marginTop: 8 },
   buttonView: {
     flexDirection: "row",
     justifyContent: "space-between",

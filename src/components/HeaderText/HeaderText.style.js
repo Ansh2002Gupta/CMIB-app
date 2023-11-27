@@ -1,5 +1,8 @@
 import colors from "../../assets/colors";
 const style = {
+  headerContainer: {
+    marginTop: 24,
+  },
   heading: {
     color: colors.black,
     fontSize: 28,

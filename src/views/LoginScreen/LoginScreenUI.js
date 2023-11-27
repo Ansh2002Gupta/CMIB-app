@@ -31,12 +31,10 @@ const LoginScreenUI = (props) => {
   return (
     <View style={styles.mainView}>
       <View style={styles.container}>
-        <View style={styles.headerTextView}>
-          <HeaderText
-            text={intl.formatMessage({ id: "label.cmib" })}
-            label={intl.formatMessage({ id: "label.cmibText" })}
-          />
-        </View>
+        <HeaderText
+          text={intl.formatMessage({ id: "label.cmib" })}
+          label={intl.formatMessage({ id: "label.cmibText" })}
+        />
         <View style={styles.buttonView}>
           <TouchableOpacity
             style={styles.topTabs}

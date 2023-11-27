@@ -8,8 +8,6 @@ const style = {
     marinBottom: 16,
     backgroundColor: colors.white,
   },
-  headerTextView: { marginTop: 24 },
-  headerNameView: { marginTop: 10 },
   buttonView: {
     flexDirection: "row",
     justifyContent: "space-between",

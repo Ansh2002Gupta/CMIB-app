@@ -34,12 +34,10 @@ function CreateNewPasswordUI(props) {
   return (
     <View style={styles.mainView}>
       <View style={styles.container}>
-        <View style={styles.headerTextView}>
-          <HeaderText
-            text={intl.formatMessage({ id: "label.createNewPassword" })}
-            label={intl.formatMessage({ id: "label.createNewPasswordText" })}
-          />
-        </View>
+        <HeaderText
+          text={intl.formatMessage({ id: "label.createNewPassword" })}
+          label={intl.formatMessage({ id: "label.createNewPasswordText" })}
+        />
         <View style={styles.borderStyle} />
       </View>
       <View style={styles.companyView}>
