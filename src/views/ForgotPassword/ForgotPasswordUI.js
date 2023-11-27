@@ -22,27 +22,23 @@ const ForgotPasswordUI = (props) => {
   } = props;
   return (
     <View style={styles.mainView}>
-      <View style={styles.container}>
-        <HeaderText
-          label={intl.formatMessage({ id: "label.forgotPasswordText" })}
-          text={intl.formatMessage({ id: "label.forgotPassword" })}
-        />
-        <View style={styles.borderStyle} />
-      </View>
+      <HeaderText
+        label={intl.formatMessage({ id: "label.forgotPasswordText" })}
+        text={intl.formatMessage({ id: "label.forgotPassword" })}
+      />
+      <View style={styles.borderStyle} />
       <View style={styles.companyView}>
-        <View style={styles.firstTextInput}>
-          <CustomTextInput
-            label={intl.formatMessage({ id: "label.enterId" })}
-            placeholder={intl.formatMessage({ id: "label.enterEmail" })}
-            value={userName}
-            onChangeText={(val) => {
-              onChangeInput(val);
-            }}
-            errorMessage={errorMessage}
-            isError={!!errorMessage}
-            isMandatory
-          />
-        </View>
+        <CustomTextInput
+          label={intl.formatMessage({ id: "label.enterId" })}
+          placeholder={intl.formatMessage({ id: "label.enterEmail" })}
+          value={userName}
+          onChangeText={(val) => {
+            onChangeInput(val);
+          }}
+          errorMessage={errorMessage}
+          isError={!!errorMessage}
+          isMandatory
+        />
       </View>
       <View style={styles.submitView}>
         <ButtonComponent
@@ -55,7 +51,7 @@ const ForgotPasswordUI = (props) => {
           </Text>
         </TouchableOpacity>
       </View>
-      {successLogin ? (
+      {successLogin && (
         <CustomModal
           headerText={intl.formatMessage({ id: "label.thanks" })}
           secondaryText={intl.formatMessage({ id: "label.passwordResetText" })}
@@ -65,7 +61,7 @@ const ForgotPasswordUI = (props) => {
           buttonTitle={intl.formatMessage({ id: "label.goBackToLogin" })}
           isSuccess
         ></CustomModal>
-      ) : null}
+      )}
     </View>
   );
 };

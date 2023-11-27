@@ -1,10 +1,12 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.backgroundColor },
+  mainView: {
+    flex: 1,
+  },
   container: {
+    backgroundColor: colors.white,
     paddingRight: 16,
     paddingLeft: 16,
-    backgroundColor: colors.white,
   },
   activeStyle: {
     paddingTop: 16,
@@ -37,6 +39,7 @@ const style = {
   },
   companyView: {
     flex: 1,
+    backgroundColor: colors.backgroundColor,
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 24,

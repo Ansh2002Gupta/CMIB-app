@@ -1,10 +1,10 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.white },
-  container: {
+  mainView: {
+    flex: 1,
+    backgroundColor: colors.white,
     marginRight: 16,
     marginLeft: 16,
-    backgroundColor: colors.white,
   },
   buttonView: {
     flexDirection: "row",
@@ -15,9 +15,8 @@ const style = {
   companyView: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
-    padding: 16,
+    paddingTop: 24,
   },
-  firstTextInput: { marginTop: 8 },
   borderStyle: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
@@ -25,7 +24,6 @@ const style = {
     marginRight: -16,
     marginTop: 24,
   },
-  submitView: { paddingLeft: 16, paddingRight: 16 },
   backToLoginText: {
     textAlign: "center",
     marginTop: 24,
