@@ -70,6 +70,7 @@ const LoginScreenUI = (props) => {
               value={userName}
               onChangeText={(val) => onChangeUsername(val)}
               errorMessage={errorMessage}
+              isError={!!errorMessage}
               isMandatory
             />
             <CustomTextInput
