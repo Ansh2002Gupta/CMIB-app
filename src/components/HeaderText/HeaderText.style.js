@@ -4,6 +4,7 @@ const style = {
     color: colors.black,
     fontSize: 28,
     fontFamily: "GeneralSans-Bold",
+    fontWeight: '600'
   },
 };
 

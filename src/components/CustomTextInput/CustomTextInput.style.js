@@ -5,7 +5,7 @@ const style = {
     fontSize: 12,
     fontWeight: "500",
     fontFamily: "GeneralSans-Regular",
-    color: colors.black,
+    color: colors.subHeadingGray,
   },
   input: {
     flex: 1,

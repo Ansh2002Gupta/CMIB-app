@@ -18,6 +18,8 @@ const CustomTextInput = ({
   eyeImage,
   errorMessage,
   isPassword,
+  customLabelStyle,
+  customTextInputContainer,
 }) => {
   const icons = useTheme("icons");
   const [isTextVisible, setIsTextVisible] = useState(false);
@@ -26,7 +28,7 @@ const CustomTextInput = ({
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{label}</Text>
+      <Text style={[styles.header, customLabelStyle]}>{label}</Text>
       <View style={styles.textInputView}>
         <TextInput
           style={[
@@ -35,6 +37,7 @@ const CustomTextInput = ({
             {
               borderColor: errorMessage ? colors.red : colors.lightGrey,
             },
+            customTextInputContainer
           ]}
           placeholder={placeholder}
           value={value}
