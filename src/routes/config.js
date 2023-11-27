@@ -5,6 +5,7 @@ import ProfileView from "../views/Profile";
 import LoginForm from "../views/LoginForm";
 import Home from "../pages/Home";
 import Auth from "../pages/Auth";
+import Login from "../pages/Login";
 import LoginScreen from "../views/LoginScreen";
 import ForgotPassword from "../views/ForgotPassword";
 
@@ -17,28 +18,13 @@ const HomeWithPrivateAccess = withPrivateAccess(Home);
 
 const config = [
   {
-    pagePath: "/example",
-    element: <HomeWithPrivateAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "route",
-        element: <div>Example Route</div>,
-      },
-      {
-        viewPath: "route1",
-        element: <div>Example Route1</div>,
-      },
-    ],
-  },
-  {
     pagePath: "/",
-    element: <HomeWithPrivateAccess />, // Page
+    element: <Login />, // Page
     views: [
       // array of views under Page route
       {
         viewPath: "",
-        element: <DashboardView />, // view
+        element: <LoginScreen />, // view
       },
     ],
   },
@@ -54,30 +40,8 @@ const config = [
     ],
   },
   {
-    pagePath: "/login",
-    element: <AuthWithPublicAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <LoginForm />, // view
-      },
-    ],
-  },
-  {
-    pagePath: "/loginScreen",
-    // element: <AuthWithPublicAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <LoginScreen />, // view
-      },
-    ],
-  },
-  {
     pagePath: "/forgotPassword",
-    // element: <AuthWithPublicAccess />, // Page
+    element: <Login />, // Page
     views: [
       // array of views under Page route
       {
@@ -88,7 +52,7 @@ const config = [
   },
   {
     pagePath: "/createNewPassword",
-    // element: <AuthWithPublicAccess />, // Page
+    element: <Login />, // Page
     views: [
       // array of views under Page route
       {

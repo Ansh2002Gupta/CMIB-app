@@ -1,7 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Image, Text, View } from "@unthinkable/react-core-components";
-import { Modal } from "react-native";
+import {
+  Image,
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+} from "@unthinkable/react-core-components";
 import images from "../../images";
 import style from "./CustomModal.style";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
@@ -14,10 +19,13 @@ const CustomModal = (props) => {
     onPress,
     isSuccess,
     children,
+    isIconCross,
+    onPressIconCross,
   } = props;
+
   return (
-    <Modal animationType="slide" transparent>
-      <View style={style.containerStyle}>
+    <View>
+      <Modal isVisible style={style.containerStyle}>
         <View style={style.innerContainer}>
           {isSuccess ? (
             <>
@@ -27,11 +35,19 @@ const CustomModal = (props) => {
               <ButtonComponent title={buttonTitle} onPress={onPress} />
             </>
           ) : (
-            children
+            <>
+              <View style={style.headerStyle}>
+                <Text style={style.headerText}>{headerText}</Text>
+                <TouchableOpacity onPress={onPressIconCross}>
+                  {isIconCross && <Image source={images.iconCross} />}
+                </TouchableOpacity>
+              </View>
+              {children}
+            </>
           )}
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </View>
   );
 };
 
@@ -40,6 +56,9 @@ CustomModal.propTypes = {
   secondaryText: PropTypes.string.isRequired,
   buttonTitle: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
+  isSuccess: PropTypes.bool.isRequired,
+  isIconCross: PropTypes.bool.isRequired,
+  onPressIconCross: PropTypes.func.isRequired,
 };
 
 export default CustomModal;

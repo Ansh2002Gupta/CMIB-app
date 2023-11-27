@@ -10,10 +10,8 @@ const style = {
   },
   titleStyle: {
     fontSize: 16,
-    fontFamily: "GeneralSans-Bold",
-    fontWeight: "600",
+    fontFamily: "GeneralSans-Semibold",
     color: colors.white,
-    margin: 8,
   },
 };
 

@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
-import { useTheme } from "@unthinkable/react-theme";
 import { useNavigate } from "../../routes";
 import { validateEmail } from "../../constants/CommonFunctions";
 import ForgotPasswordUI from "./ForgotPasswordUI";
 
 function ForgotPasswordComponent(props) {
   const navigate = useNavigate();
-  const icons = useTheme("icons");
   const intl = useIntl();
   const [userName, setuserName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -15,7 +13,7 @@ function ForgotPasswordComponent(props) {
 
   const onClickGoToLogin = () => {
     setSuccessLogin(false);
-    navigate("/loginScreen");
+    navigate("/");
   };
 
   const onClickForgotPassword = () => {
@@ -41,7 +39,6 @@ function ForgotPasswordComponent(props) {
       onChangeInput={onChangeInput}
       errorMessage={errorMessage}
       intl={intl}
-      icons={icons}
     />
   );
 }

@@ -7,6 +7,8 @@ const green = "#04AF55";
 const red = "#D93400";
 const gray = "#5A5A5A";
 const darkGreen = "#00873E";
+const darkGrey = "#616C82";
+const errorRed = "#D93400";
 
 export default {
   white,
@@ -18,4 +20,6 @@ export default {
   red,
   gray,
   darkGreen,
+  darkGrey,
+  errorRed,
 };

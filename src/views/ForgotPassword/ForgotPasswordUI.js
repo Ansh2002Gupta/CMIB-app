@@ -5,9 +5,7 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../components/CustomTextInput";
-import HeaderImage from "../../components/HeaderImage";
 import styles from "./ForgotPassword.style";
-import HeaderName from "../../components/HeaderName";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ButtonComponent from "../../components/ButtonComponent";
 import CustomModal from "../../components/CustomModal";
@@ -21,24 +19,14 @@ const ForgotPasswordUI = (props) => {
     successLogin,
     errorMessage,
     intl,
-    icons,
   } = props;
   return (
     <View style={styles.mainView}>
       <View style={styles.container}>
-        <HeaderImage
-          image1={icons.cmibImage}
-          image2={icons.cmibText}
-          text={intl.formatMessage({ id: "label.fullName" })}
-        />
         <View style={styles.headerTextView}>
           <HeaderText
+            label={intl.formatMessage({ id: "label.forgotPasswordText" })}
             text={intl.formatMessage({ id: "label.forgotPassword" })}
-          />
-        </View>
-        <View style={styles.headerNameView}>
-          <HeaderName
-            text={intl.formatMessage({ id: "label.forgotPasswordText" })}
           />
         </View>
         <View style={styles.borderStyle} />
@@ -53,6 +41,7 @@ const ForgotPasswordUI = (props) => {
               onChangeInput(val);
             }}
             errorMessage={errorMessage}
+            isMandatory
           />
           {!!errorMessage && (
             <Text style={styles.errorMessage}>{errorMessage}</Text>
@@ -77,7 +66,7 @@ const ForgotPasswordUI = (props) => {
           onPress={() => {
             onClickGoToLogin();
           }}
-          buttonTitle={intl.formatMessage({ id: "label.backToLogin" })}
+          buttonTitle={intl.formatMessage({ id: "label.goBackToLogin" })}
           isSuccess
         ></CustomModal>
       ) : null}

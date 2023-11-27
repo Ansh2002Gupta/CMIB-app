@@ -5,11 +5,11 @@ import { useTheme } from "@unthinkable/react-theme";
 
 import styles from "./FollowUsIcons.style";
 
-const FollowUsIcons = ({ text }) => {
+const FollowUsIcons = () => {
   const intl = useIntl();
   const icons = useTheme("icons");
   return (
-    <View>
+    <View style={styles.containerStyle}>
       <Text style={styles.followUsText}>
         {intl.formatMessage({ id: "label.follow" })}
       </Text>

@@ -1,6 +1,6 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.white, marginTop: 20 },
+  mainView: { flex: 1, backgroundColor: colors.white },
   container: {
     marginRight: 16,
     marginLeft: 16,
@@ -35,8 +35,7 @@ const style = {
     marginTop: 24,
     marginBottom: 24,
     fontSize: 14,
-    fontFamily: "GeneralSans-Bold",
-    fontWeight: "600",
+    fontFamily: "GeneralSans-Semibold",
     color: colors.darkBlue,
   },
   errorMessage: {

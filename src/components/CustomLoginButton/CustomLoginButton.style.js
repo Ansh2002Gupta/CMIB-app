@@ -6,10 +6,10 @@ const style = {
     borderRadius: 8,
   },
   labelView: {
-    color: "white",
+    color: colors.backgroundColor,
     textAlign: "center",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "GeneralSans-Semibold",
   },
 };
 

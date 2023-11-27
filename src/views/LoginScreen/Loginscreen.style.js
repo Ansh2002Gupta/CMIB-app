@@ -1,9 +1,9 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.white, marginTop: 20 },
+  mainView: { flex: 1, backgroundColor: colors.backgroundColor },
   container: {
-    marginRight: 16,
-    marginLeft: 16,
+    paddingRight: 16,
+    paddingLeft: 16,
     marinTop: 16,
     marinBottom: 16,
     backgroundColor: colors.white,
@@ -15,7 +15,8 @@ const style = {
   },
   activeStyle: {
     paddingTop: 16,
-    borderBottomWidth: 2,
+    borderBottomWidth: 3,
+    zIndex: 100,
     borderColor: colors.green,
   },
   topTabs: {
@@ -26,11 +27,18 @@ const style = {
   },
   topTabsText: {
     textAlign: "center",
-    fontSIze: 14,
-    fontWeight: "500",
+    color: colors.darkGrey,
+    fontSize: 14,
+    fontFamily: "GeneralSans-Medium",
+  },
+  activeTopTabsText: {
+    textAlign: "center",
+    color: colors.black,
+    fontSize: 14,
+    fontFamily: "GeneralSans-Semibold",
   },
   headerTextView: { marginTop: 24 },
-  headerNameView: { marginTop: 10 },
+  headerNameView: { marginTop: 8 },
   buttonView: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -40,25 +48,24 @@ const style = {
   companyView: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
-    padding: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 24,
   },
-  firstTextInput: { marginTop: 8 },
-  secoundTextInput: { marginTop: 16 },
+
   forgotPasswordView: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 32,
   },
   rememberMeText: {
     fontSize: 14,
-    fontWeight: "500",
     fontFamily: "GeneralSans-Medium",
     color: colors.black,
+    lineHeight: 20,
   },
   forgotPasswordText: {
     fontSize: 14,
-    fontWeight: "bold",
-    fontFamily: "GeneralSans-Regular",
+    fontFamily: "GeneralSans-Semibold",
     color: colors.darkBlue,
   },
   loginButtonView: { marginTop: 32 },
@@ -68,17 +75,15 @@ const style = {
     flexDirection: "row",
   },
   newAccountText: {
-    color: "#00137E",
+    color: colors.darkBlue,
     fontSize: 14,
-    fontWeight: "600",
+    fontFamily: "GeneralSans-Semibold",
   },
-  accountText: {},
   borderStyle: {
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: colors.lightGrey,
     marginLeft: -16,
     marginRight: -16,
-    marginTop: -1,
   },
   errorMessage: {
     color: colors.red,
@@ -86,8 +91,11 @@ const style = {
     fontFamily: "GeneralSans-Medium",
     marginTop: 2,
   },
-  followUsImageView: {
-    marginHorizontal: 30,
+
+  accountText: {
+    color: colors.darkGrey,
+    fontSize: 14,
+    fontFamily: "GeneralSans-Medium",
   },
 };
 

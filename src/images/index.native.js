@@ -8,8 +8,6 @@ import homeSolid from "../../public/images/home-solid.png";
 import homeOutline from "../../public/images/home-outline.png";
 import profileSolid from "../../public/images/profile-solid.png";
 import profileOutline from "../../public/images/profile-outline.png";
-import cmibImage from "../../public/images/iconCmib/cmibImage.png";
-import cmibText from "../../public/images/iconCmibText/cmibText.png";
 import iconEye from "../../public/images/iconEye/iconEye.png";
 import iconFacebook from "../../public/images/iconFacebook/iconFacebook.png";
 import iconInstagram from "../../public/images/iconInstagram/iconInstagram.png";
@@ -19,6 +17,7 @@ import iconTelegram from "../../public/images/iconTelegram/iconTelegram.png";
 import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
 import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
 import iconEyeSlash from "../../public/images/iconEyeSlash.png";
+import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
 
 export default {
   avatar,
@@ -31,8 +30,6 @@ export default {
   homeOutline,
   profileSolid,
   profileOutline,
-  cmibImage,
-  cmibText,
   iconEye,
   iconFacebook,
   iconInstagram,
@@ -42,4 +39,5 @@ export default {
   iconTelegram,
   iconTwitter,
   iconYoutube,
+  iconCmibLogo,
 };
