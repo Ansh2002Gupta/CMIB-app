@@ -9,12 +9,12 @@ import styles from "./CreateNewPassword.style";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ButtonComponent from "../../components/ButtonComponent";
 import colors from "../../assets/colors";
+import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation";
 
 function CreateNewPasswordUI(props) {
   const {
     handleSubmit,
     onClickGoToLogin,
-    validations,
     onChangePasswordInput,
     confirmNewPassword,
     newPassword,
@@ -22,13 +22,7 @@ function CreateNewPasswordUI(props) {
     error,
     intl,
   } = props;
-  const bulletStyle = (isValid) => ({
-    width: 6,
-    height: 6,
-    borderRadius: 5,
-    margin: 5,
-    backgroundColor: isValid ? colors.green : colors.lightGrey,
-  });
+
   return (
     <View style={styles.mainView}>
       <View style={styles.container}>
@@ -59,40 +53,10 @@ function CreateNewPasswordUI(props) {
           eyeImage={true}
           isPassword={true}
         />
-
-        <Text style={styles.validationText}>
-          {intl.formatMessage({ id: "label.passwordRequirment" })}
-        </Text>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.length)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.characterLength" })}
-          </Text>
-        </View>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.numeric)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.numericCharacter" })}
-          </Text>
-        </View>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.uppercase)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.upercaseCharacter" })}
-          </Text>
-        </View>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.lowercase)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.lowercaseCharacter" })}
-          </Text>
-        </View>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.specialChar)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.specialCharacter" })}
-          </Text>
-        </View>
+        <CreateNewPasswordValidation
+          newPassword={newPassword}
+          confirmNewPassword={confirmNewPassword}
+        />
       </View>
       <View style={styles.submitView}>
         <ButtonComponent
