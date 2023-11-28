@@ -41,6 +41,9 @@ const iconLock = "/images/iconLock/iconLock.png";
 const iconArrowRight = "/images/iconArrowRight/iconArrowRight.png";
 const iconBack = "/images/iconBack/iconBack.png";
 const iconEdit = "/images/iconEdit/iconEdit.png";
+const iconDelete = "/images/iconDelete/iconDelete.png";
+const iconChange = "/images/iconChange/iconChange.png";
+const iconCross = "/images/iconCross/iconCross.png";
 
 export default {
   avatar,
@@ -79,4 +82,7 @@ export default {
   iconArrowRight,
   iconBack,
   iconEdit,
+  iconChange,
+  iconDelete,
+  iconCross,
 };

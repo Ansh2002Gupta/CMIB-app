@@ -92,6 +92,9 @@ const locale = {
     "Advertisement in the Chartered Accountant Journal",
   "label.my_account": "My Account",
   "label.view_profile": "View Profile",
+  "label.edit_profile_picture": "Edit Profile Picture",
+  "label.change": "Change",
+  "label.remove": "Remove",
 };
 
 export default locale;

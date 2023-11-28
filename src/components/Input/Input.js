@@ -92,7 +92,6 @@ const Input = (props) => {
               <Image source={images.iconDivider} style={style.iconStyle} />
             </View>
           )}
-
           <TextInput
             value={value}
             style={[style.textInputStyle, isMultiline && style.textAlignStyle]}

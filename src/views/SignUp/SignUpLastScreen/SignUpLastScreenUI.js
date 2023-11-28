@@ -58,6 +58,7 @@ const SignUpLastScreenUI = (props) => {
             id: "label.go_back_to_login",
           })}
           onPress={onClickGoToLogin}
+          isSuccess
         />
       )}
       <ScrollView

@@ -11,9 +11,11 @@ import {
 import style from "./ViewProfile.style";
 import CardCaomponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import CustomModal from "../../components/CustomModal/CustomModal";
 
 const ViewProfileUI = (props) => {
   const { intl, onGoBack, showEditModal, handleEditPopup } = props;
+
   const profileImage = "";
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -25,13 +27,16 @@ const ViewProfileUI = (props) => {
 
   const renderProfileIcon = () => {
     if (profileImage) {
-      return (
-        <Image source={{ uri: profileImage }} style={style.profileImage} />
-      );
+      return <Image source={{ uri: profileImage }} />;
     } else {
       const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
       return (
-        <View style={style.initialsContainer}>
+        <View
+          style={[
+            style.initialsContainer,
+            showEditModal && style.editProfileContainer,
+          ]}
+        >
           <Text style={style.initialsText}>{initials}</Text>
         </View>
       );
@@ -48,13 +53,49 @@ const ViewProfileUI = (props) => {
     >
       <View style={style.picContainer}>
         {renderProfileIcon()}
-        <TouchableOpacity style={style.iconEditStyle} onPress={() => {}}>
+        <TouchableOpacity
+          style={style.iconEditStyle}
+          onPress={() => {
+            handleEditPopup(true);
+          }}
+        >
           <Image source={images.iconEdit} />
         </TouchableOpacity>
       </View>
       <CardCaomponent>
         <DetailComponent details={details} />
       </CardCaomponent>
+      {showEditModal && (
+        <CustomModal
+          headerText={intl.formatMessage({ id: "label.edit_profile_picture" })}
+          isIconCross
+          onPressIconCross={() => {
+            handleEditPopup(false);
+          }}
+        >
+          {renderProfileIcon()}
+          <View style={style.editButtonContainer}>
+            <View style={style.buttonStyle}>
+              <Image source={images.iconChange} />
+              <TouchableOpacity
+                onPress={() => {
+                  handleEditPopup(false);
+                }}
+              >
+                <Text style={style.textStyle}>
+                  {intl.formatMessage({ id: "label.change" })}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[style.buttonStyle, style.secondButtonStyle]}>
+              <Image source={images.iconDelete} />
+              <Text style={style.textStyle}>
+                {intl.formatMessage({ id: "label.remove" })}
+              </Text>
+            </View>
+          </View>
+        </CustomModal>
+      )}
     </Header>
   );
 };

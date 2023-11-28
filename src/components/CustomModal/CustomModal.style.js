@@ -25,6 +25,11 @@ const style = {
     color: colors.black,
     paddingTop: 20,
   },
+  headerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   infoText: {
     fontFamily: "GeneralSans-Medium",
     fontSize: 14,
