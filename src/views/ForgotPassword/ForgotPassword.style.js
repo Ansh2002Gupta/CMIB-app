@@ -1,12 +1,10 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.white },
-  container: {
+  mainView: {
+    flex: 1,
+    backgroundColor: colors.white,
     marginRight: 16,
     marginLeft: 16,
-    marinTop: 16,
-    marinBottom: 16,
-    backgroundColor: colors.white,
   },
   webContainer: {
     backgroundColor: colors.white,
@@ -32,7 +30,7 @@ const style = {
   },
   companyView: {
     backgroundColor: colors.backgroundColor,
-    padding: 16,
+    paddingTop: 24,
   },
   firstTextInput: { marginTop: 8 },
   width900pxOrWebEmailInput: {

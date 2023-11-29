@@ -100,18 +100,6 @@ const style = {
   textAlignStyle: {
     textAlignVertical: "top",
   },
-  secondInputStyle: {
-    backgroundColor: colors.white,
-    borderColor: colors.lightGrey,
-    borderWidth: 1,
-    paddingTop: 14,
-    paddingBottom: 14,
-    paddingRight: 16,
-    paddingLeft: 16,
-    marginLeft: 24,
-    marginTop: 4,
-    borderRadius: 8,
-  },
   eyeIconContainer: {
     justifyContent: "center",
     alignItems: "center",

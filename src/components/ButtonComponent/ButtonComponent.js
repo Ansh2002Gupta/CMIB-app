@@ -9,11 +9,15 @@ import styles from "./ButtonComponent.style";
 import images from "../../images";
 
 const ButtonComponent = (props) => {
-  const { title, onPress, customTitleStyle, custonButtonContainer, showNextIcon } = props;
+  const { title, onPress, disabled, customTitleStyle, customButtonContainer, hasIconRight } = props;
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.buttonStyle, custonButtonContainer]}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.buttonStyle, disabled && styles.disableButtonStyle, customButtonContainer]}
+      disabled={disabled}
+    >
       <Text style={[styles.titleStyle, customTitleStyle]}>{title}</Text>
-      {showNextIcon && <Image source={images.iconArrowRightWhite} />}
+      {hasIconRight && <Image source={images.iconArrowRightWhite} />}
     </TouchableOpacity>
   );
 };
@@ -21,7 +25,10 @@ const ButtonComponent = (props) => {
 ButtonComponent.propTypes = {
   title: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
-  showNextIcon: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  customButtonContainer: PropTypes.object,
+  customTitleStyle: PropTypes.object,
+  hasIconRight: PropTypes.bool
 };
 
 export default ButtonComponent;

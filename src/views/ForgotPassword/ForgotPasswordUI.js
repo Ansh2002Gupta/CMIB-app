@@ -149,7 +149,7 @@ const ForgotPasswordUI = (props) => {
             title={intl.formatMessage({ id: "label.submit" })}
             onPress={onClickForgotPassword}
             customTitleStyle={isWebView && styles.customBtnText}
-            custonButtonContainer={
+            customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
           />

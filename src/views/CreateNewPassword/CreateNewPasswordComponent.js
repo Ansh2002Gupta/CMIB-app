@@ -9,14 +9,6 @@ function CreateNewPasswordComponent(props) {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [error, setError] = useState("");
-  const [validations, setValidations] = useState({
-    length: false,
-    numeric: false,
-    uppercase: false,
-    lowercase: false,
-    specialChar: false,
-    match: false,
-  });
 
   const onClickGoToLogin = () => {
     navigate("/");
@@ -30,21 +22,6 @@ function CreateNewPasswordComponent(props) {
     setConfirmNewPassword(val);
   };
 
-  const validatePassword = (newPassword, confirmNewPassword) => {
-    setValidations({
-      length: newPassword.length >= 6,
-      numeric: /[0-9]/.test(newPassword),
-      uppercase: /[A-Z]/.test(newPassword),
-      lowercase: /[a-z]/.test(newPassword),
-      specialChar: /[!?.@#$%^&+=]/.test(newPassword),
-      match: newPassword === confirmNewPassword,
-    });
-  };
-
-  useEffect(() => {
-    validatePassword(newPassword, confirmNewPassword);
-  }, [newPassword, confirmNewPassword]);
-
   const handleSubmit = () => {
     if (validatePassword()) {
       console.log("Password is valid and submitted!");
@@ -54,7 +31,6 @@ function CreateNewPasswordComponent(props) {
     <CreateNewPasswordUI
       handleSubmit={handleSubmit}
       onClickGoToLogin={onClickGoToLogin}
-      validations={validations}
       onChangePasswordInput={onChangePasswordInput}
       newPassword={newPassword}
       confirmNewPassword={confirmNewPassword}

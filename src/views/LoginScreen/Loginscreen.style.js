@@ -1,10 +1,12 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.backgroundColor },
+  mainView: {
+    flex: 1,
+  },
   container: {
+    backgroundColor: colors.white,
     paddingRight: 16,
     paddingLeft: 16,
-    backgroundColor: colors.white,
   },
   activeStyle: {
     paddingTop: 16,
@@ -42,7 +44,6 @@ const style = {
     paddingRight: 16,
     paddingTop: 24,
   },
-
   forgotPasswordView: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -75,13 +76,6 @@ const style = {
     marginLeft: -16,
     marginRight: -16,
   },
-  errorMessage: {
-    color: colors.red,
-    fontSize: 12,
-    fontFamily: "GeneralSans-Medium",
-    marginTop: 2,
-  },
-
   accountText: {
     color: colors.darkGrey,
     fontSize: 14,

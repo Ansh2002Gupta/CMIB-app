@@ -7,8 +7,7 @@ import {
 import styles from "./Loginscreen.style";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import CustomTextInput from "../../components/CustomTextInput";
-import CustomLoginButton from "../../components/CustomLoginButton";
-
+import ButtonComponent from "../../components/ButtonComponent";
 import FollowUsIcons from "../../components/FollowUsIcons";
 
 const LoginScreenUI = (props) => {
@@ -23,7 +22,6 @@ const LoginScreenUI = (props) => {
     password,
     onChangeUsername,
     onChangePassword,
-    icons,
     intl,
     onCreateNewPasswordClick,
   } = props;
@@ -63,7 +61,7 @@ const LoginScreenUI = (props) => {
         </View>
         <View style={styles.borderStyle} />
       </View>
-      {active ? (
+      {active && (
         <>
           <View style={styles.companyView}>
             <CustomTextInput
@@ -72,11 +70,9 @@ const LoginScreenUI = (props) => {
               value={userName}
               onChangeText={(val) => onChangeUsername(val)}
               errorMessage={errorMessage}
+              isError={!!errorMessage}
               isMandatory
             />
-            {!!errorMessage && (
-              <Text style={styles.errorMessage}>{errorMessage}</Text>
-            )}
             <CustomTextInput
               label={intl.formatMessage({ id: "label.password" })}
               placeholder={intl.formatMessage({ id: "label.enterPassword" })}
@@ -90,22 +86,16 @@ const LoginScreenUI = (props) => {
               <Text style={styles.rememberMeText}>
                 {intl.formatMessage({ id: "label.rememberMe" })}
               </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  onForgotPasswordClick();
-                }}
-              >
+              <TouchableOpacity onPress={onForgotPasswordClick}>
                 <Text style={styles.forgotPasswordText}>
                   {intl.formatMessage({ id: "label.forgotPassword" })}
                 </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.loginButtonView}>
-              <CustomLoginButton
-                label={intl.formatMessage({ id: "label.login" })}
-                onPress={() => {
-                  onLogin();
-                }}
+              <ButtonComponent
+                title={intl.formatMessage({ id: "label.login" })}
+                onPress={onLogin}
                 disabled={loginDisabled}
               />
             </View>
@@ -113,11 +103,7 @@ const LoginScreenUI = (props) => {
               <Text style={styles.accountText}>
                 {intl.formatMessage({ id: "label.account" })}
               </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  onCreateNewPasswordClick();
-                }}
-              >
+              <TouchableOpacity onPress={onCreateNewPasswordClick}>
                 <Text style={styles.newAccountText}>
                   {intl.formatMessage({ id: "label.newAccount" })}
                 </Text>
@@ -126,7 +112,7 @@ const LoginScreenUI = (props) => {
             <FollowUsIcons />
           </View>
         </>
-      ) : null}
+      )}
     </View>
   );
 };
