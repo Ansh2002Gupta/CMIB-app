@@ -10,7 +10,7 @@ const SignUpSecondScreenComponent = () => {
   const navigate = useNavigate();
 
   const onClickGoToLogin = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   const onGoBack = () => {
