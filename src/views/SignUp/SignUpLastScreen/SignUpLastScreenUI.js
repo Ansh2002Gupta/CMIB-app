@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import images from "../../../images";
 import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
-import Input from "../../../components/Input/Input";
 import {
   ScrollView,
   View,
@@ -14,6 +13,7 @@ import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelBut
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import UploadImage from "../../../components/UploadImage/UploadImage";
 import CustomModal from "../../../components/CustomModal/CustomModal";
+import CustomTextInput from "../../../components/CustomTextInput";
 
 const SignUpLastScreenUI = (props) => {
   const {
@@ -57,6 +57,7 @@ const SignUpLastScreenUI = (props) => {
             id: "label.go_back_to_login",
           })}
           onPress={onClickGoToLogin}
+          isSuccess
         />
       )}
       <ScrollView
@@ -66,7 +67,7 @@ const SignUpLastScreenUI = (props) => {
         <Text style={style.headerText}>
           {intl.formatMessage({ id: "label.social_media_presence" })}
         </Text>
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.facebook",
           })}
@@ -74,7 +75,7 @@ const SignUpLastScreenUI = (props) => {
             id: "label.enter_facebook_url",
           })}
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.linkedin",
           })}
@@ -82,7 +83,7 @@ const SignUpLastScreenUI = (props) => {
             id: "label.enter_linkedin_url",
           })}
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.twitter",
           })}
@@ -90,7 +91,7 @@ const SignUpLastScreenUI = (props) => {
             id: "label.enter_twitter_url",
           })}
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.youtube",
           })}
@@ -102,7 +103,7 @@ const SignUpLastScreenUI = (props) => {
         <Text style={style.headerText}>
           {intl.formatMessage({ id: "label.company_details" })}
         </Text>
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.short_profile_of_the_company",
           })}
@@ -113,7 +114,7 @@ const SignUpLastScreenUI = (props) => {
           isMultiline
           height={84}
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.website",
           })}
@@ -122,7 +123,7 @@ const SignUpLastScreenUI = (props) => {
           })}
           isMandatory
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.nature_of_supplier",
           })}
@@ -132,7 +133,7 @@ const SignUpLastScreenUI = (props) => {
           isMandatory
           isDropdown
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.company_type",
           })}

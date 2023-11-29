@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import images from "../../../images";
 import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
-import Input from "../../../components/Input/Input";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 import style from "./SignUpSecondScreen.style";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import CustomTextInput from "../../../components/CustomTextInput";
 
 const SignUpSecondScreenUI = (props) => {
   const { intl, onClickGoToLogin, onGoBack, onClickNext } = props;
@@ -21,14 +21,14 @@ const SignUpSecondScreenUI = (props) => {
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
       >
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({ id: "label.company_name" })}
           isMandatory
           placeholder={intl.formatMessage({
             id: "label.company_name_placeholder",
           })}
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({ id: "label.entity" })}
           isMandatory
           isDropdown
@@ -38,7 +38,7 @@ const SignUpSecondScreenUI = (props) => {
         />
         <View style={style.inputContainer}>
           <View style={style.registrationInput}>
-            <Input
+            <CustomTextInput
               label={intl.formatMessage({
                 id: "label.firm_registration_no",
               })}
@@ -49,7 +49,7 @@ const SignUpSecondScreenUI = (props) => {
             />
           </View>
           <View style={style.partnerInput}>
-            <Input
+            <CustomTextInput
               label={intl.formatMessage({
                 id: "label.no_of_partners",
               })}
@@ -60,7 +60,7 @@ const SignUpSecondScreenUI = (props) => {
             />
           </View>
         </View>
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({ id: "label.current_industry" })}
           isMandatory
           isDropdown
@@ -68,7 +68,7 @@ const SignUpSecondScreenUI = (props) => {
             id: "label.select_current_indusrty_placeholder",
           })}
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.address_for_correspondence",
           })}
@@ -79,7 +79,7 @@ const SignUpSecondScreenUI = (props) => {
             id: "label.address_for_correspondance_placeholder",
           })}
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({ id: "label.state" })}
           isMandatory
           isDropdown
@@ -87,7 +87,7 @@ const SignUpSecondScreenUI = (props) => {
             id: "label.select_state",
           })}
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({ id: "label.email_id" })}
           isMandatory
           placeholder={intl.formatMessage({
@@ -96,7 +96,7 @@ const SignUpSecondScreenUI = (props) => {
         />
         <View style={style.inputContainer}>
           <View>
-            <Input
+            <CustomTextInput
               label={intl.formatMessage({
                 id: "label.isd_std_code",
               })}
@@ -107,7 +107,7 @@ const SignUpSecondScreenUI = (props) => {
             />
           </View>
           <View style={style.noInput}>
-            <Input
+            <CustomTextInput
               label={intl.formatMessage({
                 id: "label.telephone_no",
               })}

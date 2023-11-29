@@ -36,7 +36,7 @@ const style = {
     fontSize: 14,
     lineHeight: 22,
     color: colors.darkGrey,
-    paddingBottom: 24,
+    paddingBottom: 36,
   },
 };
 

@@ -3,14 +3,14 @@ const style = {
   mainView: {
     flex: 1,
     backgroundColor: colors.white,
-    marginRight: 16,
-    marginLeft: 16,
   },
-  webContainer: {
+  container: {
     backgroundColor: colors.white,
+    paddingRight: 16,
+    paddingLeft: 16,
   },
   webFontFamily: {
-    fontFamily: "General Sans"
+    fontFamily: "General Sans",
   },
   forgotHeaderText: {
     fontSize: 40,
@@ -20,7 +20,7 @@ const style = {
     color: colors.subHeadingGray,
   },
   width900pxOrCustomSubHeading: {
-    fontSize: 14
+    fontSize: 14,
   },
   buttonView: {
     flexDirection: "row",
@@ -31,10 +31,12 @@ const style = {
   companyView: {
     backgroundColor: colors.backgroundColor,
     paddingTop: 24,
+    paddingRight: 16,
+    paddingLeft: 16,
   },
   firstTextInput: { marginTop: 8 },
   width900pxOrWebEmailInput: {
-    marginTop: 16
+    marginTop: 16,
   },
   webEmailInput: {
     marginTop: 56,
@@ -54,7 +56,7 @@ const style = {
     fontSize: 14,
     fontFamily: "GeneralSans-Semibold",
     color: colors.darkBlue,
-    fontWeight: '600'
+    fontWeight: "600",
   },
   errorMessage: {
     color: colors.red,
@@ -91,31 +93,31 @@ const style = {
     borderRadius: 12,
   },
   customAsteriskStyle: {
-    color: colors.red
+    color: colors.red,
   },
   customBtnText: {
     fontSize: 16,
     fontFamily: "General Sans",
-    fontWeight: '600'
+    fontWeight: "600",
   },
   footerImage: {
     position: "absolute",
     bottom: 0,
   },
   width900pxOrLessSubmitBtn: {
-    height: 44
+    height: 44,
   },
   width900pxOrLessForgotHeading: {
-    fontSize: 30
+    fontSize: 30,
   },
   width1200pxOrLessForgotHeading: {
-    fontSize: 34
+    fontSize: 34,
   },
   smScreenContainers: {
-    width: '60%'
+    width: "60%",
   },
   mdScreenContainers: {
-    width: '40%'
+    width: "40%",
   },
 };
 export default style;

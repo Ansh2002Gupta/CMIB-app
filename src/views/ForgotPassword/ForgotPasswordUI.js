@@ -111,7 +111,7 @@ const ForgotPasswordUI = (props) => {
             : styles.grayBackground
         }
       >
-        <View style={isWebView ? styles.webContainer : styles.container}>
+        <View style={styles.container}>
           <HeaderText
             label={intl.formatMessage({
               id: "label.enter_email_to_reset_password",
@@ -178,7 +178,7 @@ const ForgotPasswordUI = (props) => {
           onPress={() => {
             onClickGoToLogin();
           }}
-          buttonTitle={intl.formatMessage({ id: "go_back_to_login" })}
+          buttonTitle={intl.formatMessage({ id: "label.go_back_to_login" })}
           isSuccess
         />
       ) : null}

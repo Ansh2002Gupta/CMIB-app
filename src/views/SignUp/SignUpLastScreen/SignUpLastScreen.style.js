@@ -4,7 +4,7 @@ const style = {
   headerText: {
     color: colors.black,
     fontSize: 16,
-    fontFamily: "GeneralSans-semiBold",
+    fontFamily: "GeneralSans-Semibold",
     lineHeight: 24,
     marginBottom: 24,
   },
@@ -21,6 +21,7 @@ const style = {
   },
   infoStyle: {
     marginTop: -24,
+    marginBottom: 24,
     color: colors.darkGrey,
     fontFamily: "GeneralSans-Medium",
     fontSize: 14,
