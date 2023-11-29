@@ -6,6 +6,8 @@ const style = {
   },
   container: {
     backgroundColor: colors.white,
+  },
+  mobContainer: {
     paddingRight: 16,
     paddingLeft: 16,
   },

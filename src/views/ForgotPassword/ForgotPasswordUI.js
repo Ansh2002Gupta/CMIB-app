@@ -111,7 +111,13 @@ const ForgotPasswordUI = (props) => {
             : styles.grayBackground
         }
       >
-        <View style={styles.container}>
+        <View
+          style={
+            isWebView
+              ? styles.container
+              : [styles.container, styles.mobContainer]
+          }
+        >
           <HeaderText
             label={intl.formatMessage({
               id: "label.enter_email_to_reset_password",
