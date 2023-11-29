@@ -6,15 +6,33 @@ import { useNavigate } from "../../routes";
 import { validateEmail } from "../../constants/CommonFunctions";
 
 function LoginScreenComponent(props) {
+  const navigate = useNavigate();
+  const icons = useTheme("icons");
+  const intl = useIntl();
+
   const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
 
-  const navigate = useNavigate();
-  const icons = useTheme("icons");
-  const intl = useIntl();
+  const [options, setOptions] = useState([
+    {
+      title: intl.formatMessage({ id: "label.remember_me" }),
+      isSelected: false,
+      id: 1,
+    },
+  ]);
+
+  const handleToggle = (id) => {
+    const updatedItems = options.map((item) => {
+      if (item.id === id) {
+        return { ...item, isSelected: !item.isSelected };
+      }
+      return item;
+    });
+    setOptions(updatedItems);
+  };
 
   const onForgotPasswordClick = async () => {
     navigate("/forgotPassword");
@@ -72,6 +90,8 @@ function LoginScreenComponent(props) {
       intl={intl}
       icons={icons}
       onCreateNewPasswordClick={onCreateNewPasswordClick}
+      handleToggle={handleToggle}
+      options={options}
     />
   );
 }

@@ -5,10 +5,12 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 import styles from "./Loginscreen.style";
+import PropTypes from "prop-types";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import CustomTextInput from "../../components/CustomTextInput";
 import ButtonComponent from "../../components/ButtonComponent";
 import FollowUsIcons from "../../components/FollowUsIcons";
+import CheckBox from "../../components/CheckBox/CheckBox";
 
 const LoginScreenUI = (props) => {
   const {
@@ -24,6 +26,8 @@ const LoginScreenUI = (props) => {
     onChangePassword,
     intl,
     onCreateNewPasswordClick,
+    options,
+    handleToggle,
   } = props;
 
   return (
@@ -87,9 +91,16 @@ const LoginScreenUI = (props) => {
               isPassword={true}
             />
             <View style={styles.forgotPasswordView}>
-              <Text style={styles.rememberMeText}>
-                {intl.formatMessage({ id: "label.remember_me" })}
-              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <CheckBox
+                  isSelected={options[0].isSelected}
+                  handleCheckbox={handleToggle}
+                  id={options[0].id}
+                />
+                <Text style={styles.rememberMeText}>
+                  {intl.formatMessage({ id: "label.remember_me" })}
+                </Text>
+              </View>
               <TouchableOpacity onPress={onForgotPasswordClick}>
                 <Text style={styles.forgotPasswordText}>
                   {intl.formatMessage({ id: "label.forgot_password" })}
@@ -119,6 +130,23 @@ const LoginScreenUI = (props) => {
       )}
     </View>
   );
+};
+
+LoginScreenUI.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+  active: PropTypes.bool.isRequired,
+  onForgotPasswordClick: PropTypes.func.isRequired,
+  toggleUser: PropTypes.func.isRequired,
+  loginDisabled: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  onChangeUsername: PropTypes.func.isRequired,
+  onChangePassword: PropTypes.func.isRequired,
+  intl: PropTypes.object.isRequired,
+  onCreateNewPasswordClick: PropTypes.func.isRequired,
+  handleToggle: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired,
 };
 
 export default LoginScreenUI;
