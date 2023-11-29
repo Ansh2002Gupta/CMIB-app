@@ -29,7 +29,6 @@ const ForgotPasswordUI = (props) => {
     switch (str) {
       case "forgotPasswordWebContainer": {
         if (currentBreakpoint === "sm") {
-          console.log('inside sm check');
           return {
             ...styles.forgotPasswordWebContainer,
             ...styles.smScreenContainers,
@@ -46,7 +45,7 @@ const ForgotPasswordUI = (props) => {
         };
       }
 
-      case "label.forgotPassword": {
+      case "label.forgot_password": {
         if (currentBreakpoint === "sm") {
           return {
             ...styles.webFontFamily,
@@ -65,7 +64,7 @@ const ForgotPasswordUI = (props) => {
         };
       }
 
-      case "label.forgotPasswordText": {
+      case "label.enter_email_to_reset_password": {
         if (currentBreakpoint === "sm") {
           return {
             ...styles.webFontFamily,
@@ -114,10 +113,12 @@ const ForgotPasswordUI = (props) => {
       >
         <View style={isWebView ? styles.webContainer : styles.container}>
           <HeaderText
-            label={intl.formatMessage({ id: "label.forgotPasswordText" })}
-            text={intl.formatMessage({ id: "label.forgotPassword" })}
+            label={intl.formatMessage({
+              id: "label.enter_email_to_reset_password",
+            })}
+            text={intl.formatMessage({ id: "label.forgot_password" })}
             customTextStyle={
-              isWebView ? getResponsiveStyles("label.forgotPassword") : {}
+              isWebView ? getResponsiveStyles("label.forgot_password") : {}
             }
           />
           {!isWebView && <View style={styles.borderStyle} />}
@@ -131,8 +132,10 @@ const ForgotPasswordUI = (props) => {
             }
           >
             <CustomTextInput
-              label={intl.formatMessage({ id: "label.enterId" })}
-              placeholder={intl.formatMessage({ id: "label.enterEmail" })}
+              label={intl.formatMessage({ id: "label.enter_id" })}
+              placeholder={intl.formatMessage({
+                id: "label.email_id_placeholder",
+              })}
               value={userName}
               onChangeText={(val) => {
                 onChangeInput(val);
@@ -161,7 +164,7 @@ const ForgotPasswordUI = (props) => {
                   : styles.backToLoginText
               }
             >
-              {intl.formatMessage({ id: "label.backToLogin" })}
+              {intl.formatMessage({ id: "label.back_to_login" })}
             </Text>
           </TouchableOpacity>
         </View>
@@ -169,11 +172,13 @@ const ForgotPasswordUI = (props) => {
       {successLogin ? (
         <CustomModal
           headerText={intl.formatMessage({ id: "label.thanks" })}
-          secondaryText={intl.formatMessage({ id: "label.passwordResetText" })}
+          secondaryText={intl.formatMessage({
+            id: "label.reset_password_info_text",
+          })}
           onPress={() => {
             onClickGoToLogin();
           }}
-          buttonTitle={intl.formatMessage({ id: "label.goBackToLogin" })}
+          buttonTitle={intl.formatMessage({ id: "go_back_to_login" })}
           isSuccess
         />
       ) : null}

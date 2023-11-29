@@ -3,8 +3,8 @@ import { Outlet } from "../routes";
 import MainLayout from "../layouts/MainLayout";
 import LoginHeaderContainer from "../containers/LoginHeader";
 
-function Login() {
+function HeaderWithContentLayout() {
   return <MainLayout header={<LoginHeaderContainer />} content={<Outlet />} />;
 }
 
-export default Login;
+export default HeaderWithContentLayout;

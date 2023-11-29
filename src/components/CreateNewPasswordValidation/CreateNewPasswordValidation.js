@@ -39,36 +39,36 @@ const CreateNewPasswordValidation = ({ confirmNewPassword, newPassword }) => {
   return (
     <View>
       <Text style={styles.validationText}>
-        {intl.formatMessage({ id: "label.passwordRequirment" })}
+        {intl.formatMessage({ id: "label.password_requirment_text" })}
       </Text>
       <View style={styles.validationView}>
         <View style={bulletStyle(validations.length)}></View>
         <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.characterLength" })}
+          {intl.formatMessage({ id: "label.char_length_validation" })}
         </Text>
       </View>
       <View style={styles.validationView}>
         <View style={bulletStyle(validations.numeric)}></View>
         <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.numericCharacter" })}
+          {intl.formatMessage({ id: "label.numeric_char_validation" })}
         </Text>
       </View>
       <View style={styles.validationView}>
         <View style={bulletStyle(validations.uppercase)}></View>
         <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.upercaseCharacter" })}
+          {intl.formatMessage({ id: "label.upper_case_validation" })}
         </Text>
       </View>
       <View style={styles.validationView}>
         <View style={bulletStyle(validations.lowercase)}></View>
         <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.lowercaseCharacter" })}
+          {intl.formatMessage({ id: "label.lower_case_validation" })}
         </Text>
       </View>
       <View style={styles.validationView}>
         <View style={bulletStyle(validations.specialChar)}></View>
         <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.specialCharacter" })}
+          {intl.formatMessage({ id: "label.special_char_validation" })}
         </Text>
       </View>
     </View>

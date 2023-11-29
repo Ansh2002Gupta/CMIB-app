@@ -30,8 +30,8 @@ const LoginScreenUI = (props) => {
     <View style={styles.mainView}>
       <View style={styles.container}>
         <HeaderText
-          text={intl.formatMessage({ id: "label.cmib" })}
-          label={intl.formatMessage({ id: "label.cmibText" })}
+          text={intl.formatMessage({ id: "label.login_to_cmib" })}
+          label={intl.formatMessage({ id: "label.secure_login_access" })}
         />
         <View style={styles.buttonView}>
           <TouchableOpacity
@@ -41,7 +41,7 @@ const LoginScreenUI = (props) => {
             <Text
               style={!active ? styles.activeTopTabsText : styles.topTabsText}
             >
-              {intl.formatMessage({ id: "label.member_candidate_button" })}
+              {intl.formatMessage({ id: "label.member_candidate" })}
             </Text>
             <View style={!active ? styles.activeStyle : styles.inActiveStyle} />
           </TouchableOpacity>
@@ -53,7 +53,7 @@ const LoginScreenUI = (props) => {
               <Text
                 style={active ? styles.activeTopTabsText : styles.topTabsText}
               >
-                {intl.formatMessage({ id: "label.company_button" })}
+                {intl.formatMessage({ id: "label.company" })}
               </Text>
             </View>
             <View style={active ? styles.activeStyle : styles.inActiveStyle} />
@@ -66,7 +66,9 @@ const LoginScreenUI = (props) => {
           <View style={styles.companyView}>
             <CustomTextInput
               label={intl.formatMessage({ id: "label.username" })}
-              placeholder={intl.formatMessage({ id: "label.enterEmail" })}
+              placeholder={intl.formatMessage({
+                id: "label.email_id_placeholder",
+              })}
               value={userName}
               onChangeText={(val) => onChangeUsername(val)}
               errorMessage={errorMessage}
@@ -75,7 +77,9 @@ const LoginScreenUI = (props) => {
             />
             <CustomTextInput
               label={intl.formatMessage({ id: "label.password" })}
-              placeholder={intl.formatMessage({ id: "label.enterPassword" })}
+              placeholder={intl.formatMessage({
+                id: "label.password_placeholder",
+              })}
               value={password}
               onChangeText={(val) => onChangePassword(val)}
               isMandatory
@@ -84,11 +88,11 @@ const LoginScreenUI = (props) => {
             />
             <View style={styles.forgotPasswordView}>
               <Text style={styles.rememberMeText}>
-                {intl.formatMessage({ id: "label.rememberMe" })}
+                {intl.formatMessage({ id: "label.remember_me" })}
               </Text>
               <TouchableOpacity onPress={onForgotPasswordClick}>
                 <Text style={styles.forgotPasswordText}>
-                  {intl.formatMessage({ id: "label.forgotPassword" })}
+                  {intl.formatMessage({ id: "label.forgot_password" })}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -101,11 +105,11 @@ const LoginScreenUI = (props) => {
             </View>
             <View style={styles.accountView}>
               <Text style={styles.accountText}>
-                {intl.formatMessage({ id: "label.account" })}
+                {intl.formatMessage({ id: "label.dont_have_account" })}
               </Text>
               <TouchableOpacity onPress={onCreateNewPasswordClick}>
                 <Text style={styles.newAccountText}>
-                  {intl.formatMessage({ id: "label.newAccount" })}
+                  {intl.formatMessage({ id: "label.create_new_account" })}
                 </Text>
               </TouchableOpacity>
             </View>

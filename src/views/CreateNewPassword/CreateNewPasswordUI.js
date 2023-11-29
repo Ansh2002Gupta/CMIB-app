@@ -27,15 +27,17 @@ function CreateNewPasswordUI(props) {
     <View style={styles.mainView}>
       <View style={styles.container}>
         <HeaderText
-          text={intl.formatMessage({ id: "label.createNewPassword" })}
-          label={intl.formatMessage({ id: "label.createNewPasswordText" })}
+          text={intl.formatMessage({ id: "label.create_new_password" })}
+          label={intl.formatMessage({ id: "label.enter_new_password" })}
         />
         <View style={styles.borderStyle} />
       </View>
       <View style={styles.companyView}>
         <CustomTextInput
-          label={intl.formatMessage({ id: "label.newPassword" })}
-          placeholder={intl.formatMessage({ id: "label.enterNewPassword" })}
+          label={intl.formatMessage({ id: "label.new_password" })}
+          placeholder={intl.formatMessage({
+            id: "label.enter_your_new_password",
+          })}
           value={newPassword}
           onChangeText={(val) => onChangePasswordInput(val)}
           isMandatory
@@ -43,8 +45,10 @@ function CreateNewPasswordUI(props) {
           isPassword={true}
         />
         <CustomTextInput
-          label={intl.formatMessage({ id: "label.confirmPassword" })}
-          placeholder={intl.formatMessage({ id: "label.confirmNewPassword" })}
+          label={intl.formatMessage({ id: "label.confirm_new_password" })}
+          placeholder={intl.formatMessage({
+            id: "label.confirm_your_new_password",
+          })}
           value={confirmNewPassword}
           onChangeText={(val) => {
             onChangeConfirmPasswordInput(val);
@@ -65,7 +69,7 @@ function CreateNewPasswordUI(props) {
         />
         <TouchableOpacity onPress={onClickGoToLogin}>
           <Text style={styles.backToLoginText}>
-            {intl.formatMessage({ id: "label.backToLogin" })}
+            {intl.formatMessage({ id: "label.back_to_login" })}
           </Text>
         </TouchableOpacity>
       </View>

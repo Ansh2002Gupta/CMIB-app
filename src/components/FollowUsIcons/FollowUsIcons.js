@@ -11,7 +11,7 @@ const FollowUsIcons = () => {
   return (
     <View style={styles.containerStyle}>
       <Text style={styles.followUsText}>
-        {intl.formatMessage({ id: "label.follow" })}
+        {intl.formatMessage({ id: "label.follow_us" })}
       </Text>
       <View style={styles.imageView}>
         <View style={styles.imageStyle}>
