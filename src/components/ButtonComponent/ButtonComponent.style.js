@@ -7,6 +7,7 @@ const style = {
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 8,
+    bottom: 16,
   },
   disableButtonStyle: {
     opacity: 0.5,
@@ -15,6 +16,7 @@ const style = {
     fontSize: 16,
     fontFamily: "GeneralSans-Semibold",
     color: colors.white,
+    margin: 8,
   },
 };
 
