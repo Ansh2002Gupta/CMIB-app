@@ -56,6 +56,7 @@ const style = {
     fontSize: 14,
     fontFamily: "GeneralSans-Semibold",
     color: colors.darkBlue,
+    fontWeight: '600'
   },
   errorMessage: {
     color: colors.red,
@@ -112,10 +113,10 @@ const style = {
   width1200pxOrLessForgotHeading: {
     fontSize: 34
   },
-  mdScreenContainers: {
+  smScreenContainers: {
     width: '60%'
   },
-  largeScreenContainers: {
+  mdScreenContainers: {
     width: '40%'
   },
 };

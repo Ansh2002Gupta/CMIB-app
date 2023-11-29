@@ -104,8 +104,8 @@ function CreateNewPasswordUI(props) {
           title={intl.formatMessage({ id: "label.submit" })}
           onPress={handleSubmit}
         />
-        <TouchableOpacity>
-          <Text style={styles.backToLoginText} onPress={onClickGoToLogin}>
+        <TouchableOpacity onPress={onClickGoToLogin}>
+          <Text style={styles.backToLoginText}>
             {intl.formatMessage({ id: "label.backToLogin" })}
           </Text>
         </TouchableOpacity>

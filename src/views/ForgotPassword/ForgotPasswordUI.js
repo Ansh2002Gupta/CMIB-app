@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { useMediaQuery } from "@unthinkable/react-util";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CustomModal from "../../components/CustomModal";
@@ -25,22 +24,21 @@ const ForgotPasswordUI = (props) => {
   } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
-  const width1200pxOrLess = useMediaQuery("(max-width: 1200px)");
-  const width900pxOrLess = useMediaQuery("(max-width: 900px)");
 
   const getResponsiveStyles = (str) => {
     switch (str) {
       case "forgotPasswordWebContainer": {
-        if (width900pxOrLess) {
+        if (currentBreakpoint === "sm") {
+          console.log('inside sm check');
+          return {
+            ...styles.forgotPasswordWebContainer,
+            ...styles.smScreenContainers,
+          };
+        }
+        if (currentBreakpoint === "md") {
           return {
             ...styles.forgotPasswordWebContainer,
             ...styles.mdScreenContainers,
-          };
-        }
-        if (width1200pxOrLess) {
-          return {
-            ...styles.forgotPasswordWebContainer,
-            ...styles.largeScreenContainers,
           };
         }
         return {
@@ -49,13 +47,13 @@ const ForgotPasswordUI = (props) => {
       }
 
       case "label.forgotPassword": {
-        if (width900pxOrLess) {
+        if (currentBreakpoint === "sm") {
           return {
             ...styles.webFontFamily,
             ...styles.width900pxOrLessForgotHeading,
           };
         }
-        if (width1200pxOrLess) {
+        if (currentBreakpoint === "md") {
           return {
             ...styles.webFontFamily,
             ...styles.width1200pxOrLessForgotHeading,
@@ -68,7 +66,7 @@ const ForgotPasswordUI = (props) => {
       }
 
       case "label.forgotPasswordText": {
-        if (width900pxOrLess) {
+        if (currentBreakpoint === "sm") {
           return {
             ...styles.webFontFamily,
             ...styles.customSubHeading,
@@ -82,7 +80,7 @@ const ForgotPasswordUI = (props) => {
       }
 
       case "textInputView": {
-        if (width900pxOrLess) {
+        if (currentBreakpoint === "sm") {
           return {
             ...styles.width900pxOrWebEmailInput,
           };
@@ -93,7 +91,7 @@ const ForgotPasswordUI = (props) => {
       }
 
       case "submitButtonContainer": {
-        if (width900pxOrLess) {
+        if (currentBreakpoint === "sm") {
           return {
             ...styles.width900pxOrLessSubmitBtn,
           };
@@ -115,13 +113,13 @@ const ForgotPasswordUI = (props) => {
         }
       >
         <View style={isWebView ? styles.webContainer : styles.container}>
-            <HeaderText
-              label={intl.formatMessage({ id: "label.forgotPasswordText" })}
-              text={intl.formatMessage({ id: "label.forgotPassword" })}
-              customTextStyle={
-                isWebView ? getResponsiveStyles("label.forgotPassword") : {}
-              }
-            />
+          <HeaderText
+            label={intl.formatMessage({ id: "label.forgotPasswordText" })}
+            text={intl.formatMessage({ id: "label.forgotPassword" })}
+            customTextStyle={
+              isWebView ? getResponsiveStyles("label.forgotPassword") : {}
+            }
+          />
           {!isWebView && <View style={styles.borderStyle} />}
         </View>
         <View style={isWebView ? styles.whiteBackground : styles.companyView}>
@@ -155,14 +153,13 @@ const ForgotPasswordUI = (props) => {
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
           />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onClickGoToLogin}>
             <Text
               style={
                 isWebView
                   ? [styles.backToLoginText, styles.webFontFamily]
                   : styles.backToLoginText
               }
-              onPress={onClickGoToLogin}
             >
               {intl.formatMessage({ id: "label.backToLogin" })}
             </Text>
@@ -178,7 +175,7 @@ const ForgotPasswordUI = (props) => {
           }}
           buttonTitle={intl.formatMessage({ id: "label.goBackToLogin" })}
           isSuccess
-        ></CustomModal>
+        />
       ) : null}
     </View>
   );
