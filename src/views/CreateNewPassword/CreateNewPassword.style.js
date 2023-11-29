@@ -1,6 +1,6 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.white, marginTop: 20 },
+  mainView: { flex: 1, backgroundColor: colors.white },
   container: {
     marginRight: 16,
     marginLeft: 16,
@@ -8,8 +8,6 @@ const style = {
     marinBottom: 16,
     backgroundColor: colors.white,
   },
-  headerTextView: { marginTop: 24 },
-  headerNameView: { marginTop: 10 },
   buttonView: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -29,7 +27,7 @@ const style = {
     marginRight: -16,
     marginTop: 24,
   },
-  submitView: { padding: 16 },
+  submitView: { paddingLeft: 16, paddingRight: 16 },
   backToLoginText: {
     textAlign: "center",
     marginTop: 24,
@@ -43,29 +41,26 @@ const style = {
   bulletPointContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 5, // Spacing between items
+    marginBottom: 5,
   },
   bullet: {
-    width: 6, // Bullet width
-    height: 6, // Bullet height
-    borderRadius: 3, // Half of the width/height to make it circular
-    backgroundColor: colors.lightGrey, // Bullet color
-    marginRight: 10, // Spacing
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.lightGrey,
+    marginRight: 10,
   },
   bulletText: {
     fontSize: 14,
-    fontFamily: "GeneralSans-Regular",
-    fontWeight: "600",
+    fontFamily: "GeneralSans-Medium",
     color: colors.gray,
   },
   validationText: {
     marginBottom: 8,
     fontSize: 14,
-    fontFamily: "GeneralSans-Regular",
-    fontWeight: "600",
+    fontFamily: "GeneralSans-Medium",
     color: colors.black,
   },
-  requirmentView: { marginTop: 32 },
   validationView: { flexDirection: "row", marginTop: 5 },
 };
 export default style;

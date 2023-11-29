@@ -1,1 +1,3 @@
-export { default } from "./CreateNewPasswordComponent";
+import CreateNewPasswordComponent from "./CreateNewPasswordComponent";
+
+export default CreateNewPasswordComponent;

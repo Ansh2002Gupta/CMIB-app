@@ -5,32 +5,32 @@ import { useTheme } from "@unthinkable/react-theme";
 
 import styles from "./FollowUsIcons.style";
 
-const FollowUsIcons = ({ text }) => {
+const FollowUsIcons = () => {
   const intl = useIntl();
   const icons = useTheme("icons");
   return (
-    <View>
+    <View style={styles.containerStyle}>
       <Text style={styles.followUsText}>
         {intl.formatMessage({ id: "label.follow" })}
       </Text>
       <View style={styles.imageView}>
         <View style={styles.imageStyle}>
-          <Image source={icons.brand} />
+          <Image source={icons.iconTwitter} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.facebook} />
+          <Image source={icons.iconFacebook} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.youtube} />
+          <Image source={icons.iconYoutube} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.linkedin} />
+          <Image source={icons.iconLinkedin} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.instagram} />
+          <Image source={icons.iconInstagram} />
         </View>
         <View style={styles.imageStyle}>
-          <Image source={icons.telegram} />
+          <Image source={icons.iconTelegram} />
         </View>
       </View>
     </View>

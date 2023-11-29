@@ -24,6 +24,12 @@ const style = {
     fontSize: 20,
     color: colors.black,
     paddingTop: 20,
+    paddingBottom: 8,
+  },
+  headerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   infoText: {
     fontFamily: "GeneralSans-Medium",

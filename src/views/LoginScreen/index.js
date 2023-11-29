@@ -1,1 +1,3 @@
-export { default } from "./LoginScreenComponent";
+import LoginScreenComponent from "./LoginScreenComponent";
+
+export default LoginScreenComponent;

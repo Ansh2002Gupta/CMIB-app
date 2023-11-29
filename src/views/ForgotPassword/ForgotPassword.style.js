@@ -1,6 +1,6 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.white, marginTop: 20 },
+  mainView: { flex: 1, backgroundColor: colors.white },
   container: {
     marginRight: 16,
     marginLeft: 16,
@@ -14,8 +14,6 @@ const style = {
   webFontFamily: {
     fontFamily: "General Sans"
   },
-  headerTextView: { marginTop: 24 },
-  headerNameView: { marginTop: 10 },
   forgotHeaderText: {
     fontSize: 40,
   },
@@ -44,7 +42,7 @@ const style = {
     marginTop: 56,
   },
   borderStyle: {
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: colors.lightGrey,
     marginLeft: -16,
     marginRight: -16,
@@ -56,8 +54,7 @@ const style = {
     marginTop: 24,
     marginBottom: 24,
     fontSize: 14,
-    fontFamily: "GeneralSans-Bold",
-    fontWeight: "600",
+    fontFamily: "GeneralSans-Semibold",
     color: colors.darkBlue,
   },
   errorMessage: {
@@ -90,10 +87,6 @@ const style = {
     backgroundColor: colors.white,
     flex: 1,
     justifyContent: "flex-end",
-  },
-  customTextInputLabel: {
-    fontSize: 14,
-    color: colors.black
   },
   customTextInput: {
     borderRadius: 12,

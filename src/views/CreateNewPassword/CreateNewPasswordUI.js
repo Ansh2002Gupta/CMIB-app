@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useIntl } from "react-intl";
+import React from "react";
 import {
   View,
   Text,
@@ -7,13 +6,10 @@ import {
 } from "@unthinkable/react-core-components";
 import { useTheme } from "@unthinkable/react-theme";
 import CustomTextInput from "../../components/CustomTextInput";
-import HeaderImage from "../../components/HeaderImage";
 import styles from "./CreateNewPassword.style";
-import HeaderName from "../../components/HeaderName";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ButtonComponent from "../../components/ButtonComponent";
 import colors from "../../assets/colors";
-
 
 function CreateNewPasswordUI(props) {
   const {
@@ -25,9 +21,9 @@ function CreateNewPasswordUI(props) {
     newPassword,
     onChangeConfirmPasswordInput,
     error,
+    intl,
   } = props;
   const icons = useTheme("icons");
-  const intl = useIntl();
   const bulletStyle = (isValid) => ({
     width: 6,
     height: 6,
@@ -38,48 +34,36 @@ function CreateNewPasswordUI(props) {
   return (
     <View style={styles.mainView}>
       <View style={styles.container}>
-        <HeaderImage
-          image1={icons.cmibImage}
-          image2={icons.cmibText}
-          text={intl.formatMessage({ id: "label.fullName" })}
+        <HeaderText
+          text={intl.formatMessage({ id: "label.createNewPassword" })}
+          label={intl.formatMessage({ id: "label.createNewPasswordText" })}
         />
-        <View style={styles.headerTextView}>
-          <HeaderText
-            text={intl.formatMessage({ id: "label.createNewPassword" })}
-          />
-        </View>
-        <View style={styles.headerNameView}>
-          <HeaderName
-            text={intl.formatMessage({ id: "label.createNewPasswordText" })}
-          />
-        </View>
         <View style={styles.borderStyle} />
       </View>
       <View style={styles.companyView}>
-        <View style={styles.firstTextInput}>
-          <CustomTextInput
-            label={intl.formatMessage({ id: "label.newPassword" })}
-            placeholder={intl.formatMessage({ id: "label.enterNewPassword" })}
-            value={newPassword}
-            onChangeText={(val) => onChangePasswordInput(val)}
-            eyeImage={true}
-            isPassword={true}
-          />
-        </View>
-        <View style={styles.secoundTextInput}>
-          <CustomTextInput
-            label={intl.formatMessage({ id: "label.confirmPassword" })}
-            placeholder={intl.formatMessage({ id: "label.confirmNewPassword" })}
-            value={confirmNewPassword}
-            onChangeText={(val) => {
-              onChangeConfirmPasswordInput(val);
-            }}
-            eyeImage={true}
-            isPassword={true}
-          />
-          {error ? <Text>{error}</Text> : null}
-        </View>
-        <View style={styles.requirmentView}>
+        <CustomTextInput
+          label={intl.formatMessage({ id: "label.newPassword" })}
+          placeholder={intl.formatMessage({ id: "label.enterNewPassword" })}
+          value={newPassword}
+          onChangeText={(val) => onChangePasswordInput(val)}
+          isMandatory
+          eyeImage={true}
+          isPassword={true}
+        />
+        <CustomTextInput
+          label={intl.formatMessage({ id: "label.confirmPassword" })}
+          placeholder={intl.formatMessage({ id: "label.confirmNewPassword" })}
+          value={confirmNewPassword}
+          onChangeText={(val) => {
+            onChangeConfirmPasswordInput(val);
+          }}
+          isMandatory
+          eyeImage={true}
+          isPassword={true}
+        />
+        {error ? <Text>{error}</Text> : null}
+
+        <View>
           <Text style={styles.validationText}>
             {intl.formatMessage({ id: "label.passwordRequirment" })}
           </Text>

@@ -8,16 +8,6 @@ import homeSolid from "../../public/images/home-solid.png";
 import homeOutline from "../../public/images/home-outline.png";
 import profileSolid from "../../public/images/profile-solid.png";
 import profileOutline from "../../public/images/profile-outline.png";
-import cmibText from "../../public/images/cmibText.png";
-import cmibImage from "../../public/images/cmibImage.png";
-import eye from "../../public/images/eye.png";
-import telegram from "../../public/images/telegram.png";
-import brand from "../../public/images/brand.png";
-import linkedin from "../../public/images/linkedin.png";
-import instagram from "../../public/images/instagram.png";
-import facebook from "../../public/images/facebook.png";
-import youtube from "../../public/images/youtube.png";
-import eyeSlash from "../../public/images/eye-slash.png";
 import iconWalkthroughSignUpOne from "../../public/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
 import iconCheckedCheckbox from "../../public/images/iconCheckedCheckbox/iconCheckedCheckbox.png";
 import iconUncheckedCheckbox from "../../public/images/iconUncheckedCheckbox/iconUncheckedCheckbox.png";
@@ -30,7 +20,16 @@ import iconWalkthroughSignUpLast from "../../public/images/iconWalkthroughSignUp
 import iconDivider from "../../public/images/iconDivider/iconDivider.png";
 import iconUpload from "../../public/images/iconUpload/iconUpload.png";
 import iconTrash from "../../public/images/iconTrash/iconTrash.png";
+import iconEye from "../../public/images/iconEye/iconEye.png";
+import iconFacebook from "../../public/images/iconFacebook/iconFacebook.png";
+import iconInstagram from "../../public/images/iconInstagram/iconInstagram.png";
+import iconLinkedin from "../../public/images/iconLinkedin/iconLinkedin.png";
 import iconSuccess from "../../public/images/iconSuccess/iconSuccess.png";
+import iconTelegram from "../../public/images/iconTelegram/iconTelegram.png";
+import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
+import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
+import iconEyeSlash from "../../public/images/iconEyeSlash.png";
+import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
 
 export default {
   avatar,
@@ -43,16 +42,6 @@ export default {
   homeOutline,
   profileSolid,
   profileOutline,
-  cmibImage,
-  cmibText,
-  eye,
-  telegram,
-  brand,
-  linkedin,
-  instagram,
-  facebook,
-  youtube,
-  eyeSlash,
   iconWalkthroughSignUpOne,
   iconCheckedCheckbox,
   iconUncheckedCheckbox,
@@ -65,5 +54,14 @@ export default {
   iconDivider,
   iconUpload,
   iconTrash,
+  iconEye,
+  iconFacebook,
+  iconInstagram,
+  iconEyeSlash,
   iconSuccess,
+  iconLinkedin,
+  iconTelegram,
+  iconTwitter,
+  iconYoutube,
+  iconCmibLogo,
 };

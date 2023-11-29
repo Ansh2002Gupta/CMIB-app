@@ -12,8 +12,6 @@ const cmibIcon = "/images/svg/cmibIcon.svg";
 const azadiMohatsav = "/images/svg/azadiMohatsav.svg";
 const g20Icon = "/images/svg/g20Icon.svg";
 const gloPac = "/images/svg/gloPac.svg";
-const cmibText = "/images/cmibText.png";
-const cmibImage = "/images/cmibImage.png";
 const iconWalkthroughSignUpOne =
   "/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
 const iconCheckedCheckbox =
@@ -33,7 +31,16 @@ const iconWalkthroughSignUpLast =
 const iconDivider = "/images/iconDivider/iconDivider.png";
 const iconUpload = "/images/iconUpload/iconUpload.png";
 const iconTrash = "/images/iconTrash/iconTrash.png";
+const iconEye = "/images/iconEye/iconEye.png";
+const iconFacebook = "/images/iconFacebook/iconFacebook.png";
+const iconInstagram = "/images/iconInstagram/iconInstagram.png";
+const iconLinkedin = "/images/iconLinkedin/iconLinkedin.png";
 const iconSuccess = "/images/iconSuccess/iconSuccess.png";
+const iconTelegram = "/images/iconTelegram/iconTelegram.png";
+const iconTwitter = "/images/iconTwitter/iconTwitter.png";
+const iconYoutube = "/images/iconYoutube/iconYoutube.png";
+const iconEyeSlash = "/images/iconEyeSlash.png";
+const iconCmibLogo = "images/iconCmibLogo/iconCmibLogo.png";
 
 export default {
   avatar,
@@ -50,8 +57,6 @@ export default {
   azadiMohatsav,
   g20Icon,
   gloPac,
-  cmibImage,
-  cmibText,
   iconWalkthroughSignUpOne,
   iconCheckedCheckbox,
   iconUncheckedCheckbox,
@@ -65,4 +70,13 @@ export default {
   iconUpload,
   iconTrash,
   iconSuccess,
+  iconEye,
+  iconFacebook,
+  iconInstagram,
+  iconEyeSlash,
+  iconLinkedin,
+  iconTelegram,
+  iconTwitter,
+  iconYoutube,
+  iconCmibLogo,
 };
