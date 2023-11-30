@@ -117,7 +117,7 @@ const style = {
     flex: 1,
     justifyContent: "end",
   },
-  minHeight: { minHeight: "50vh" },
+  minHeight: { minHeight: "50%" },
   gapForWebView: { gap: 24 },
   // Web view related Styles
   webView: {
