@@ -37,7 +37,6 @@ function CreateNewPasswordUI(props) {
   const width1800pxOrLess = currentBreakpoint !== "xxl";
   const width900pxOrLess =
     currentBreakpoint === "md" || currentBreakpoint === "sm";
-  console.log({ width1800pxOrLess, width900pxOrLess });
 
   const areAllFieldFilledInPassword = () => {
     if (

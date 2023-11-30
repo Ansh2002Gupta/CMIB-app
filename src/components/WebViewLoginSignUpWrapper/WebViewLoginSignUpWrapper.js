@@ -50,10 +50,6 @@ const WebViewLoginSignUpWrapper = ({ shouldApplyStyles, children }) => {
   return (
     <>
       <View style={style.container}>
-        {/* Please remove this dummy header image later */}
-        {shouldApplyStyles && (
-          <Image source={images.headerDummyImage} style={{ width: "100%" }} />
-        )}
         <View
           style={
             shouldApplyStyles

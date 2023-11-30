@@ -7,6 +7,7 @@ export const style = {
     gap: 48,
     width: "100%",
     height: "100%",
+    paddingTop: 48,
   },
   outerContainer: {
     width: "100%",
@@ -29,6 +30,7 @@ export const style = {
     padding: 40,
     width: "30%",
     margin: "0 auto",
+    maxWidth: 600,
   },
   innerContainer1800: {
     width: "40%",
@@ -37,10 +39,10 @@ export const style = {
     width: "45%",
   },
   innerContainer1000: {
-    width: "70%",
+    width: "75%",
   },
   innerContainer600: {
-    width: "70%",
+    width: "75%",
     padding: 32,
   },
 };

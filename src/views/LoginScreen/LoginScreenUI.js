@@ -33,7 +33,7 @@ const LoginScreenUI = (props) => {
   } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
-  const width1800pxOrLess = currentBreakpoint === "xxl";
+  const width1800pxOrLess = currentBreakpoint !== "xxl";
   const width900pxOrLess =
     currentBreakpoint === "xs" || currentBreakpoint === "sm";
 
@@ -82,6 +82,9 @@ const LoginScreenUI = (props) => {
             text={intl.formatMessage({ id: "label.login_to_cmib" })}
             label={intl.formatMessage({ id: "label.secure_login_access" })}
             customTextStyle={isWebView ? getResponsiveStyles("label.cmib") : {}}
+            customSecondHeadingStyles={
+              isWebView ? styles.webView.subHeadingText : {}
+            }
             customContainerStyles={
               isWebView ? styles.webView.headerContainer : {}
             }

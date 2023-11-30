@@ -38,7 +38,7 @@ const style = {
     fontSize: 14,
     fontFamily:
       Platform.OS.toLowerCase() === "web" ? "General sans" : "GeneralSans-Bold",
-    fontWeight: 600,
+    fontWeight: "600",
     color: colors.darkBlue,
     cursor: "pointer",
   },
@@ -75,7 +75,7 @@ const style = {
     fontFamily: "General sans",
     color: colors.errorRed,
     fontSize: 14,
-    fontWeight: 600,
+    fontWeight: "600",
   },
   // web view related styles
   webView: {
@@ -91,8 +91,7 @@ const style = {
       fontFamily: "General Sans",
       fontSize: 40,
       fontStyle: "normal",
-      fontWeight: 600,
-      lineHeight: "normal",
+      fontWeight: "600",
     },
     headerText1800px: {
       fontSize: 36,
@@ -104,7 +103,7 @@ const style = {
       color: colors.darkGrey,
       fontSize: 16,
       fontStyle: "normal",
-      fontWeight: 500,
+      fontWeight: "500",
       lineHeight: 24,
     },
     headerNameText900: { fontSize: 14 },
@@ -113,7 +112,7 @@ const style = {
       fontFamily: "General Sans",
       fontSize: 14,
       fontStyle: "normal",
-      fontWeight: 600,
+      fontWeight: "600",
       lineHeight: 24,
       textTransform: "capitalize",
     },
@@ -127,7 +126,7 @@ const style = {
       fontFamily: "General Sans",
       fontSize: 14,
       fontStyle: "normal",
-      fontWeight: 500,
+      fontWeight: "500",
       lineHeight: 22,
     },
     passwordRequirementsContainer: {
@@ -139,7 +138,7 @@ const style = {
     },
     submitText: {
       fontFamily: "General sans",
-      fontWeight: 500,
+      fontWeight: "500",
       cursor: "pointer",
     },
     submitTextContainer: {
@@ -147,7 +146,7 @@ const style = {
     },
     backBtnText: {
       fontFamily: "General sans",
-      fontWeight: 600,
+      fontWeight: "600",
       cursor: "pointer",
     },
     companyView: {
