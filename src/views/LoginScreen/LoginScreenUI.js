@@ -28,7 +28,8 @@ const LoginScreenUI = (props) => {
     onCreateNewPasswordClick,
     options,
     handleToggle,
-    isLoggingIn
+    isLoggingIn,
+    errorWhileLoggingIn
   } = props;
 
   return (
@@ -116,6 +117,13 @@ const LoginScreenUI = (props) => {
                 displayLoader={isLoggingIn}
               />
             </View>
+            {errorWhileLoggingIn ?
+            <View style={styles.errorView}>
+              <Text style={styles.errorText}>{errorWhileLoggingIn}</Text>
+            </View>
+            :
+            null
+            }
             <View style={styles.accountView}>
               <Text style={styles.accountText}>
                 {intl.formatMessage({ id: "label.dont_have_account" })}

@@ -1,4 +1,8 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const isWeb = Platform.OS === 'web';
+
 const style = {
   mainView: {
     flex: 1,
@@ -81,6 +85,18 @@ const style = {
     fontSize: 14,
     fontFamily: "GeneralSans-Medium",
   },
+  errorView: {
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: colors.errorBackground
+  },
+  errorText: {
+    fontSize: 14,
+    color: colors.errorRed,
+    fontWeight: '500',
+    fontFamily: isWeb ? "General Sans" : "GeneralSans-SemiBold"
+  }
 };
 
 export default style;
