@@ -47,7 +47,7 @@ const SignUpLastScreenComponent = () => {
 
   const onClickGoToLogin = () => {
     handleSuccessModal(false);
-    navigate("/login");
+    navigate("/");
   };
 
   const onGoBack = () => {

@@ -25,7 +25,7 @@ const HomeWithPrivateAccess = withPrivateAccess(Home);
 
 const config = [
   {
-    pagePath: "/login",
+    pagePath: "/",
     element: <LoginWithPublicAccess />, // Page
     views: [
       // array of views under Page route

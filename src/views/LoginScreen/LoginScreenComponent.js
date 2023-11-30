@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useTheme } from "@unthinkable/react-theme";
+
 import LoginScreenUI from "./LoginScreenUI";
 import { useNavigate } from "../../routes";
+import useLoginUser from "../../services/hooks/useLoginUser";
 import { validateEmail } from "../../constants/CommonFunctions";
+import { ActivityIndicator } from "@unthinkable/react-core-components";
 
 function LoginScreenComponent(props) {
   const navigate = useNavigate();
@@ -15,6 +18,7 @@ function LoginScreenComponent(props) {
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
+  const { loginUserResult, handleUserLogin, isLoading, errorWhileLoggingIn } = useLoginUser();
 
   const [options, setOptions] = useState([
     {
@@ -52,6 +56,7 @@ function LoginScreenComponent(props) {
       return;
     } else {
       setErrorMessage("");
+      handleUserLogin({email: userName, password: password})
     }
   };
 
@@ -92,6 +97,8 @@ function LoginScreenComponent(props) {
       onCreateNewPasswordClick={onCreateNewPasswordClick}
       handleToggle={handleToggle}
       options={options}
+      isLoggingIn={isLoading}
+      errorWhileLoggingIn={errorWhileLoggingIn}
     />
   );
 }

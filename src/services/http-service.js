@@ -1,6 +1,10 @@
 import axios from 'axios'
+import { Platform } from '@unthinkable/react-core-components'
 
-const baseUrl = process.env.REACT_APP_API_URL
+import axiosInstance from '../axios/axiosInstance'
+import { API_URL } from '../constants/constants'
+
+const baseUrl = Platform.OS !== 'web' ? API_URL : process.env.REACT_APP_API_URL
 
 export default class Http {
   static async get(_url, handleDiscard = () => {}) {
@@ -22,10 +26,10 @@ export default class Http {
     try {
       const cancelPostRequest = axios.CancelToken.source()
       handleDiscard(cancelPostRequest)
-      const response = await axios.post(url, data, {
+      const response = await axiosInstance.post(url, data, {
         cancelToken: cancelPostRequest.token
       })
-      return response.data
+      return response
     } catch (error) {
       throw error
     }

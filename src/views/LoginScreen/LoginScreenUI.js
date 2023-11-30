@@ -28,6 +28,7 @@ const LoginScreenUI = (props) => {
     onCreateNewPasswordClick,
     options,
     handleToggle,
+    isLoggingIn
   } = props;
 
   return (
@@ -112,6 +113,7 @@ const LoginScreenUI = (props) => {
                 title={intl.formatMessage({ id: "label.login" })}
                 onPress={onLogin}
                 disabled={loginDisabled}
+                displayLoader={isLoggingIn}
               />
             </View>
             <View style={styles.accountView}>

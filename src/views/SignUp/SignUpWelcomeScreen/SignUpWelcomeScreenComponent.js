@@ -10,7 +10,7 @@ const SignUpScreenWelcomeComponent = () => {
   const navigate = useNavigate();
 
   const onClickGoToLogin = () => {
-    navigate("/login");
+    navigate("/");
   };
 
   const onClickNext = () => {
