@@ -1,4 +1,6 @@
 import colors from "../../assets/colors";
+import { Platform } from "@unthinkable/react-core-components";
+
 const style = {
   headerContainer: {
     marginTop: 24,
@@ -6,13 +8,19 @@ const style = {
   heading: {
     color: colors.black,
     fontSize: 28,
-    fontFamily: "GeneralSans-Semibold",
-    fontWeight: '600'
+    fontFamily:
+      Platform.OS.toLowerCase() === "web"
+        ? "General Sans"
+        : "GeneralSans-Semibold",
+    fontWeight: "600",
   },
   secoundHeading: {
     color: colors.darkGrey,
     fontSize: 14,
-    fontFamily: "GeneralSans-Medium",
+    fontFamily:
+      Platform.OS.toLowerCase() === "web"
+        ? "General Sans"
+        : "GeneralSans-Medium",
     lineHeight: 20,
     marginTop: 8,
   },

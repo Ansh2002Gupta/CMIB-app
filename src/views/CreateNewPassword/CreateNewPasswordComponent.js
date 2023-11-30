@@ -23,9 +23,9 @@ function CreateNewPasswordComponent(props) {
   };
 
   const handleSubmit = () => {
-    if (validatePassword()) {
-      console.log("Password is valid and submitted!");
-    }
+    // if (validatePassword()) {
+    //   console.log("Password is valid and submitted!");
+    // }
   };
   return (
     <CreateNewPasswordUI

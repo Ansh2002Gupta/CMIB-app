@@ -10,6 +10,8 @@ const style = {
     marginLeft: 16,
     marinTop: 16,
     marinBottom: 16,
+    width: "30%",
+    minWidth: "120px",
   },
 };
 

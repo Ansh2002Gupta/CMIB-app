@@ -7,6 +7,8 @@ const style = {
   },
   labelContainer: {
     flexDirection: "row",
+    fontFamily: "General Sans",
+    gap: "4px",
   },
   dropdown: {
     paddingTop: 6,
@@ -35,7 +37,10 @@ const style = {
   placeholderStyle: {
     fontSize: 14,
     color: colors.darkGrey,
-    fontFamily: "GeneralSans-Medium",
+    fontFamily:
+      Platform.OS.toLowerCase() === "web"
+        ? "General sans"
+        : "GeneralSans-Medium",
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -48,7 +53,10 @@ const style = {
   label: {
     color: colors.darkGrey,
     fontSize: 12,
-    fontFamily: "GeneralSans-Medium",
+    fontFamily:
+      Platform.OS.toLowerCase() === "web"
+        ? "General sans"
+        : "GeneralSans-Medium",
   },
   webLabel: {
     fontFamily: "General Sans",
@@ -81,21 +89,28 @@ const style = {
     paddingLeft: 14,
     paddingRight: 14,
     marginTop: 4,
-    borderRadius: Platform.OS === 'web' ? 12 : 8,
+    borderRadius: Platform.OS === "web" ? 12 : 8,
     flexDirection: "row",
     paddingTop: Platform.OS === "android" ? 0 : 14,
     paddingBottom: Platform.OS === "android" ? 0 : 14,
   },
   textInputStyle: {
     flex: 1,
-    fontFamily: "GeneralSans-Medium",
+    fontFamily:
+      Platform.OS.toLowerCase() === "web"
+        ? "General sans"
+        : "GeneralSans-Medium",
     fontSize: 14,
   },
   errorMsg: {
     color: colors.errorRed,
-    fontFamily: "GeneralSans-Medium",
+    fontFamily:
+      Platform.OS.toLowerCase() === "web"
+        ? "General sans"
+        : "GeneralSans-Medium",
     fontSize: 12,
     lineHeight: 18,
+    fontWeight: "600",
   },
   textAlignStyle: {
     textAlignVertical: "top",
@@ -103,6 +118,7 @@ const style = {
   eyeIconContainer: {
     justifyContent: "center",
     alignItems: "center",
+    cursor: "pointer",
   },
 };
 

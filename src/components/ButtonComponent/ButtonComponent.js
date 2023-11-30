@@ -9,11 +9,22 @@ import styles from "./ButtonComponent.style";
 import images from "../../images";
 
 const ButtonComponent = (props) => {
-  const { title, onPress, disabled, customTitleStyle, customButtonContainer, hasIconRight } = props;
+  const {
+    title,
+    onPress,
+    disabled,
+    customTitleStyle,
+    customButtonContainer,
+    hasIconRight,
+  } = props;
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.buttonStyle, disabled && styles.disableButtonStyle, customButtonContainer]}
+      style={[
+        styles.buttonStyle,
+        disabled && styles.disableButtonStyle,
+        customButtonContainer,
+      ]}
       disabled={disabled}
     >
       <Text style={[styles.titleStyle, customTitleStyle]}>{title}</Text>
@@ -28,7 +39,7 @@ ButtonComponent.propTypes = {
   disabled: PropTypes.bool.isRequired,
   customButtonContainer: PropTypes.object,
   customTitleStyle: PropTypes.object,
-  hasIconRight: PropTypes.bool
+  hasIconRight: PropTypes.bool,
 };
 
 export default ButtonComponent;
