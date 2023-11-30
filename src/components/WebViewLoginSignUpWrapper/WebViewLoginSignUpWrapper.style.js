@@ -7,8 +7,8 @@ export const style = {
     gap: 48,
     width: "100%",
     height: "100%",
-    paddingTop: 48,
   },
+  responsiveContainer: { paddingTop: 48 },
   outerContainer: {
     width: "100%",
     minHeight: "100%",

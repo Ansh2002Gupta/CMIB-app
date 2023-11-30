@@ -115,7 +115,7 @@ const style = {
   followUsImageView: {
     marginHorizontal: 30,
     flex: 1,
-    justifyContent: "end",
+    justifyContent: "flex-end",
   },
   minHeight: { minHeight: 500 },
   gapForWebView: { gap: 24 },

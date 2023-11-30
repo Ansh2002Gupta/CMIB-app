@@ -41,7 +41,7 @@ const WebViewLoginSignUpWrapper = ({ shouldApplyStyles, children }) => {
         }
         return style.innerContainer;
       }
-      default : {
+      default: {
         return {};
       }
     }
@@ -49,7 +49,12 @@ const WebViewLoginSignUpWrapper = ({ shouldApplyStyles, children }) => {
 
   return (
     <>
-      <View style={style.container}>
+      <View
+        style={{
+          ...style.container,
+          ...(shouldApplyStyles ? style.responsiveContainer : {}),
+        }}
+      >
         <View
           style={
             shouldApplyStyles
