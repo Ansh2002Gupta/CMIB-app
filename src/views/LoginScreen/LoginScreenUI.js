@@ -32,14 +32,10 @@ const LoginScreenUI = (props) => {
     handleToggle,
   } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView =
-    currentBreakpoint === "sm" ||
-    currentBreakpoint === "md" ||
-    currentBreakpoint === "lg" ||
-    currentBreakpoint === "xl" ||
-    currentBreakpoint === "xxl";
+  const isWebView = currentBreakpoint !== "xs";
   const width1800pxOrLess = currentBreakpoint === "xxl";
-  const width900pxOrLess = currentBreakpoint === "md" || currentBreakpoint === "sm";
+  const width900pxOrLess =
+    currentBreakpoint === "xs" || currentBreakpoint === "sm";
 
   const getResponsiveStyles = (str) => {
     switch (str) {

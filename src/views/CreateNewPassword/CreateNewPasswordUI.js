@@ -33,14 +33,11 @@ function CreateNewPasswordUI(props) {
     match: false,
   });
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView =
-    currentBreakpoint === "sm" ||
-    currentBreakpoint === "md" ||
-    currentBreakpoint === "lg" ||
-    currentBreakpoint === "xl" ||
-    currentBreakpoint === "xxl";
-  const width1800pxOrLess = currentBreakpoint === "xxl";
-  const width900pxOrLess = currentBreakpoint === "md" || currentBreakpoint === "sm";
+  const isWebView = currentBreakpoint !== "xs";
+  const width1800pxOrLess = currentBreakpoint !== "xxl";
+  const width900pxOrLess =
+    currentBreakpoint === "md" || currentBreakpoint === "sm";
+  console.log({ width1800pxOrLess, width900pxOrLess });
 
   const areAllFieldFilledInPassword = () => {
     if (

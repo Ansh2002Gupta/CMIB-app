@@ -11,7 +11,7 @@ const style = {
     marinTop: 16,
     marinBottom: 16,
     width: "30%",
-    minWidth: "120px",
+    minWidth: 120,
   },
 };
 

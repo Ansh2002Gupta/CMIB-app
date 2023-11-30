@@ -4,14 +4,14 @@ export const style = {
   container: {
     display: "flex",
     flexDirection: "column",
-    gap: "48px",
+    gap: 48,
     width: "100%",
     height: "100%",
   },
   outerContainer: {
     width: "100%",
     minHeight: "100%",
-    paddingBottom: "48px",
+    paddingBottom: 48,
     display: "flex",
     alignItems: "center",
   },
@@ -22,25 +22,25 @@ export const style = {
     height: "100%",
   },
   innerContainer: {
-    borderRadius: "24px",
+    borderRadius: 24,
     border: `1px solid ${colors.lightGrey}`,
     background: "#FFF",
     boxShadow: "0px 4px 32px 0px rgba(97, 108, 130, 0.04)",
-    padding: "40px",
-    width: "30vw",
+    padding: 40,
+    width: "30%",
     margin: "0 auto",
   },
   innerContainer1800: {
-    width: "40vw",
+    width: "40%",
   },
   innerContainer1400: {
-    width: "50vw",
+    width: "45%",
   },
   innerContainer1000: {
-    width: "70vw",
+    width: "70%",
   },
   innerContainer600: {
-    width: "calc(100% - 48px)",
-    padding: "32px",
+    width: "70%",
+    padding: 32,
   },
 };

@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 
-import useMediaQuery from "../../npms/react-utils/src/hooks/useMediaQuery.js";
 import images from "../../images";
 import { View, Image } from "@unthinkable/react-core-components";
 import { style } from "./WebViewLoginSignUpWrapper.style.js";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 
 const WebViewLoginSignUpWrapper = ({ shouldApplyStyles, children }) => {
-  const isWidthLessThan1800 = useMediaQuery("(max-width: 1800px)");
-  const isWidthLessThan1400 = useMediaQuery("(max-width: 1400px)");
-  const isWidthLessThan1000 = useMediaQuery("(max-width: 1000px)");
-  const isWidthLessThan600 = useMediaQuery("(max-width: 600px)");
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const isWidthLessThan1800 = currentBreakpoint === "xl";
+  const isWidthLessThan1400 = currentBreakpoint === "lg";
+  const isWidthLessThan1000 = currentBreakpoint === "md";
+  const isWidthLessThan600 = currentBreakpoint === "sm";
 
   const getResponsiveStyles = (str) => {
     switch (str) {

@@ -6,12 +6,7 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 
 function HeaderWithContentLayout() {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView =
-    currentBreakpoint === "sm" ||
-    currentBreakpoint === "md" ||
-    currentBreakpoint === "lg" ||
-    currentBreakpoint === "xl" ||
-    currentBreakpoint === "xxl";
+  const isWebView = currentBreakpoint !== "xs";
 
   return (
     <MainLayout
