@@ -4,7 +4,7 @@ import { Platform } from "@unthinkable/react-core-components";
 const style = {
   bulletText: {
     fontSize: 14,
-    fontWeight: 500,
+    fontWeight: "500",
     fontFamily:
       Platform.OS.toLowerCase() === "web"
         ? "General sans"

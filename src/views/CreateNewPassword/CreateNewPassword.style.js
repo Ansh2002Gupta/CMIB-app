@@ -119,7 +119,7 @@ const style = {
       background: "#FFF",
       fontFamily: "General Sans",
       marginTop: 0,
-      fontWeight: 500,
+      fontWeight: "500",
     },
     passwordRequirements: {
       color: colors.gray,
