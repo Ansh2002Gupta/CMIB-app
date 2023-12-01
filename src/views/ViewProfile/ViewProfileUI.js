@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Header from "../../components/Header/Header";
 import images from "../../images";
+import ImagePicker from "react-native-image-crop-picker";
 import {
   TouchableOpacity,
   Text,
@@ -43,6 +44,21 @@ const ViewProfileUI = (props) => {
     }
   };
 
+  const openImagePicker = async () => {
+    try {
+      const image = await ImagePicker.openPicker({
+        // width: 100,
+        // height: 100,
+        cropping: true,
+        cropperCircleOverlay: true,
+      });
+
+      console.log("Selected image:", image);
+    } catch (error) {
+      console.log("Image picker error:", error);
+    }
+  };
+
   return (
     <Header
       intl={intl}
@@ -80,6 +96,7 @@ const ViewProfileUI = (props) => {
               <TouchableOpacity
                 onPress={() => {
                   handleEditPopup(false);
+                  openImagePicker();
                 }}
               >
                 <Text style={style.textStyle}>

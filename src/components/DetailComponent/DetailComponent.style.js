@@ -10,8 +10,17 @@ const style = {
     fontFamily: "GeneralSans-Medium",
     marginBottom: 8,
   },
+  headerText: {
+    fontFamily: "GeneralSans-Semibold",
+    fontSize: 16,
+    paddingBottom: 24,
+  },
   starStyle: {
     color: colors.errorRed,
+  },
+  linkStyle: {
+    color: colors.darkBlue,
+    textDecorationLine: "underline",
   },
   valueStyle: {
     fontSize: 14,

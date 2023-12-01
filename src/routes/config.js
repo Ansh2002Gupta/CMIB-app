@@ -14,6 +14,7 @@ import ViewProfile from "../views/ViewProfile/index";
 import SignUpSecondScreen from "../views/SignUp/SignUpSecondScreen/index";
 import SignUpThirdScreen from "../views/SignUp/SignUpThirdScreen/index";
 import SignUpLastScreen from "../views/SignUp/SignUpLastScreen/index";
+import CompanyProfile from "../views/CompanyProfile/index";
 
 const AuthWithPublicAccess = withPublicAccess(Auth);
 const HomeWithPrivateAccess = withPrivateAccess(Home);
@@ -53,6 +54,17 @@ const config = [
       {
         viewPath: "",
         element: <ViewProfile />, // view
+      },
+    ],
+  },
+  {
+    pagePath: "/companyProfile",
+    element: <HomeWithPrivateAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <CompanyProfile />, // view
       },
     ],
   },

@@ -95,6 +95,9 @@ const locale = {
   "label.edit_profile_picture": "Edit Profile Picture",
   "label.change": "Change",
   "label.remove": "Remove",
+  "label.company_profile": "Company Profile",
+  "label.cancel": "Cancel",
+  "label.save": "Save",
 };
 
 export default locale;

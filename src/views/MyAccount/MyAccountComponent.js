@@ -19,12 +19,17 @@ const MyAccountComponent = () => {
     navigate("/viewprofile");
   };
 
+  const onClickCompanyPorfile = () => {
+    navigate("/companyProfile");
+  };
+
   const handleOptionClick = (option) => {
     switch (option.id) {
       case 1:
         onClickViewPorfile();
         break;
       case 2:
+        onClickCompanyPorfile();
         break;
       case 3:
         break;
