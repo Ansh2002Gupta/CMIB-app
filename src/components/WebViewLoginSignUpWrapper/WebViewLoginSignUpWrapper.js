@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 
-import images from "../../images";
-import { View, Image } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 import { style } from "./WebViewLoginSignUpWrapper.style.js";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 

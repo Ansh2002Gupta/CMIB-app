@@ -69,7 +69,6 @@ const style = {
   validationView: { flexDirection: "row", marginTop: 5 },
   passwordFieldsErrorContainer: {
     marginTop: 16,
-    paddingLeft: 16,
   },
   passwordFieldsErrorText: {
     fontFamily: "General sans",
@@ -120,6 +119,7 @@ const style = {
       background: "#FFF",
       fontFamily: "General Sans",
       marginTop: 0,
+      fontWeight: 500,
     },
     passwordRequirements: {
       color: colors.gray,

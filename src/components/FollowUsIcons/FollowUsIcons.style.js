@@ -3,8 +3,8 @@ import { Platform } from "@unthinkable/react-core-components";
 
 const style = {
   containerStyle: {
-    position: "absolute",
-    bottom: 24,
+    marginTop:24,
+    marginBottom:24,
     left: 0,
     right: 0,
     alignItems: "center",

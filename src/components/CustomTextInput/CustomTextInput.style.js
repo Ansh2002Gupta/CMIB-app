@@ -8,7 +8,7 @@ const style = {
   labelContainer: {
     flexDirection: "row",
     fontFamily: "General Sans",
-    gap: "4px",
+    gap: 4,
   },
   dropdown: {
     paddingTop: 6,
