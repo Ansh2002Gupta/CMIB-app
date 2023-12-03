@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { validateEmail } from "../../constants/CommonFunctions";
 import ForgotPasswordUI from "./ForgotPasswordUI";
+import useForgotPassword from "../../services/hooks/useForgotPassword";
 
 function ForgotPasswordComponent(props) {
   const navigate = useNavigate();
@@ -10,6 +11,12 @@ function ForgotPasswordComponent(props) {
   const [userName, setuserName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successLogin, setSuccessLogin] = useState(false);
+  const {
+    forgotPasswordResult,
+    handleForgotPassword,
+    isLoading,
+    errorWhileResetPassword,
+  } = useForgotPassword();
 
   const onClickGoToLogin = () => {
     setSuccessLogin(false);
@@ -24,6 +31,7 @@ function ForgotPasswordComponent(props) {
     } else {
       setErrorMessage("");
     }
+    handleForgotPassword({ email: userName });
     setSuccessLogin(true);
   };
 
