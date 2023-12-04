@@ -44,7 +44,7 @@ function LoginScreenComponent(props) {
   };
 
   const onCreateNewPasswordClick = async () => {
-    navigate("/signup");
+    navigate("/createNewPassword");
   };
   const toggleUser = (val) => {
     setActive(val);

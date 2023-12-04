@@ -1,4 +1,6 @@
 import colors from "../../assets/colors";
+import { Platform } from "@unthinkable/react-core-components";
+
 const style = {
   containerStyle: {
     alignItems: "center",
@@ -9,8 +11,12 @@ const style = {
     color: colors.black,
     fontSize: 14,
     alignSelf: "center",
-    fontFamily: "GeneralSans-Medium",
+    fontFamily:
+      Platform.OS.toLowerCase() === "web"
+        ? "General Sans"
+        : "GeneralSans-Medium",
     justifyContent: "center",
+    fontWeight: "600",
   },
   imageView: {
     flexDirection: "row",

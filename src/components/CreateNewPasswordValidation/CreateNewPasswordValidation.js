@@ -4,16 +4,14 @@ import styles from "./ConfirmPasswordValidation.style";
 import colors from "../../assets/colors";
 import { useIntl } from "react-intl";
 
-const CreateNewPasswordValidation = ({ confirmNewPassword, newPassword }) => {
+const CreateNewPasswordValidation = ({
+  confirmNewPassword,
+  newPassword,
+  customContainerStyles,
+  validations,
+  setValidations,
+}) => {
   const intl = useIntl();
-  const [validations, setValidations] = useState({
-    length: false,
-    numeric: false,
-    uppercase: false,
-    lowercase: false,
-    specialChar: false,
-    match: false,
-  });
 
   const bulletStyle = (isValid) => [
     styles.bulletIconStyle,
@@ -41,35 +39,37 @@ const CreateNewPasswordValidation = ({ confirmNewPassword, newPassword }) => {
       <Text style={styles.validationText}>
         {intl.formatMessage({ id: "label.password_requirment_text" })}
       </Text>
-      <View style={styles.validationView}>
-        <View style={bulletStyle(validations.length)}></View>
-        <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.char_length_validation" })}
-        </Text>
-      </View>
-      <View style={styles.validationView}>
-        <View style={bulletStyle(validations.numeric)}></View>
-        <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.numeric_char_validation" })}
-        </Text>
-      </View>
-      <View style={styles.validationView}>
-        <View style={bulletStyle(validations.uppercase)}></View>
-        <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.upper_case_validation" })}
-        </Text>
-      </View>
-      <View style={styles.validationView}>
-        <View style={bulletStyle(validations.lowercase)}></View>
-        <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.lower_case_validation" })}
-        </Text>
-      </View>
-      <View style={styles.validationView}>
-        <View style={bulletStyle(validations.specialChar)}></View>
-        <Text style={styles.bulletText}>
-          {intl.formatMessage({ id: "label.special_char_validation" })}
-        </Text>
+      <View style={customContainerStyles}>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.length)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.char_length_validation" })}
+          </Text>
+        </View>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.numeric)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.numeric_char_validation" })}
+          </Text>
+        </View>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.uppercase)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.upper_case_validation" })}
+          </Text>
+        </View>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.lowercase)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.lower_case_validation" })}
+          </Text>
+        </View>
+        <View style={styles.validationView}>
+          <View style={bulletStyle(validations.specialChar)}></View>
+          <Text style={styles.bulletText}>
+            {intl.formatMessage({ id: "label.special_char_validation" })}
+          </Text>
+        </View>
       </View>
     </View>
   );
