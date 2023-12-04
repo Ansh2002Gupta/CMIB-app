@@ -13,10 +13,7 @@ const useForgotPassword = () => {
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      console.log("@@@@");
       const res = await Http.post(`company/reset-password`, payload);
-      console.log("####");
-      console.log("result result", res.status);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setForgotPasswordResult(res.data);
@@ -33,11 +30,9 @@ const useForgotPassword = () => {
     }
   };
 
-  console.log(postStatus, "postStatus");
   const isLoading = postStatus === API_STATUS.LOADING;
   const isSuccess = postStatus === API_STATUS.SUCCESS;
   const isError = postStatus === API_STATUS.ERROR;
-  console.log("error forgot", errorWhileResetPassword);
   return {
     forgotPasswordResult,
     errorWhileResetPassword,
