@@ -1,7 +1,8 @@
 import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+import FollowUsIcons from "../../components/FollowUsIcons";
 
-const isWeb = Platform.OS === 'web';
+const isWeb = Platform.OS === "web";
 
 const style = {
   mainView: {
@@ -42,11 +43,12 @@ const style = {
     marginTop: 40,
   },
   companyView: {
-    flex: 1,
     backgroundColor: colors.backgroundColor,
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 24,
+    justifyContent: "space-between",
+    flexGrow: 1,
   },
   forgotPasswordView: {
     flexDirection: "row",
@@ -86,17 +88,18 @@ const style = {
     fontFamily: "GeneralSans-Medium",
   },
   errorView: {
-    alignItems: 'center',
+    alignItems: "center",
     padding: 10,
     borderRadius: 8,
-    backgroundColor: colors.errorBackground
+    backgroundColor: colors.errorBackground,
   },
   errorText: {
     fontSize: 14,
     color: colors.errorRed,
-    fontWeight: '500',
-    fontFamily: isWeb ? "General Sans" : "GeneralSans-SemiBold"
-  }
+    fontWeight: "500",
+    fontFamily: isWeb ? "General Sans" : "GeneralSans-SemiBold",
+  },
+  FollowUsIconsStyle: { marginTop: 32, marginBottom: 20 },
 };
 
 export default style;

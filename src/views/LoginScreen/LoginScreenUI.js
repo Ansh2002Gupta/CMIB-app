@@ -3,6 +3,8 @@ import {
   View,
   Text,
   TouchableOpacity,
+  ScrollView,
+  Dimensions,
 } from "@unthinkable/react-core-components";
 import styles from "./Loginscreen.style";
 import PropTypes from "prop-types";
@@ -11,6 +13,7 @@ import CustomTextInput from "../../components/CustomTextInput";
 import ButtonComponent from "../../components/ButtonComponent";
 import FollowUsIcons from "../../components/FollowUsIcons";
 import CheckBox from "../../components/CheckBox/CheckBox";
+import CommonText from "../../components/CommonText";
 
 const LoginScreenUI = (props) => {
   const {
@@ -29,7 +32,7 @@ const LoginScreenUI = (props) => {
     options,
     handleToggle,
     isLoggingIn,
-    errorWhileLoggingIn
+    errorWhileLoggingIn,
   } = props;
 
   return (
@@ -69,73 +72,75 @@ const LoginScreenUI = (props) => {
       </View>
       {active && (
         <>
-          <View style={styles.companyView}>
-            <CustomTextInput
-              label={intl.formatMessage({ id: "label.username" })}
-              placeholder={intl.formatMessage({
-                id: "label.email_id_placeholder",
-              })}
-              value={userName}
-              onChangeText={(val) => onChangeUsername(val)}
-              errorMessage={errorMessage}
-              isError={!!errorMessage}
-              isMandatory
-            />
-            <CustomTextInput
-              label={intl.formatMessage({ id: "label.password" })}
-              placeholder={intl.formatMessage({
-                id: "label.password_placeholder",
-              })}
-              value={password}
-              onChangeText={(val) => onChangePassword(val)}
-              isMandatory
-              eyeImage={true}
-              isPassword={true}
-            />
-            <View style={styles.forgotPasswordView}>
-              <View style={{ flexDirection: "row" }}>
-                <CheckBox
-                  isSelected={options[0].isSelected}
-                  handleCheckbox={handleToggle}
-                  id={options[0].id}
-                />
-                <Text style={styles.rememberMeText}>
-                  {intl.formatMessage({ id: "label.remember_me" })}
-                </Text>
-              </View>
-              <TouchableOpacity onPress={onForgotPasswordClick}>
-                <Text style={styles.forgotPasswordText}>
-                  {intl.formatMessage({ id: "label.forgot_password" })}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.loginButtonView}>
-              <ButtonComponent
-                title={intl.formatMessage({ id: "label.login" })}
-                onPress={onLogin}
-                disabled={loginDisabled}
-                displayLoader={isLoggingIn}
+          <ScrollView contentContainerStyle={styles.companyView}>
+            <View>
+              <CustomTextInput
+                label={intl.formatMessage({ id: "label.username" })}
+                placeholder={intl.formatMessage({
+                  id: "label.email_id_placeholder",
+                })}
+                value={userName}
+                onChangeText={(val) => onChangeUsername(val)}
+                errorMessage={errorMessage}
+                isError={!!errorMessage}
+                isMandatory
               />
-            </View>
-            {errorWhileLoggingIn ?
-            <View style={styles.errorView}>
-              <Text style={styles.errorText}>{errorWhileLoggingIn}</Text>
-            </View>
-            :
-            null
-            }
-            <View style={styles.accountView}>
-              <Text style={styles.accountText}>
-                {intl.formatMessage({ id: "label.dont_have_account" })}
-              </Text>
-              <TouchableOpacity onPress={onCreateNewPasswordClick}>
-                <Text style={styles.newAccountText}>
-                  {intl.formatMessage({ id: "label.create_new_account" })}
+              <CustomTextInput
+                label={intl.formatMessage({ id: "label.password" })}
+                placeholder={intl.formatMessage({
+                  id: "label.password_placeholder",
+                })}
+                value={password}
+                onChangeText={(val) => onChangePassword(val)}
+                isMandatory
+                eyeImage={true}
+                isPassword={true}
+              />
+              <View style={styles.forgotPasswordView}>
+                <View style={{ flexDirection: "row" }}>
+                  <CheckBox
+                    isSelected={options[0].isSelected}
+                    handleCheckbox={handleToggle}
+                    id={options[0].id}
+                  />
+                  <Text style={styles.rememberMeText}>
+                    {intl.formatMessage({ id: "label.remember_me" })}
+                  </Text>
+                </View>
+                <TouchableOpacity onPress={onForgotPasswordClick}>
+                  <CommonText
+                    customTextStyle={styles.forgotPasswordText}
+                    title={intl.formatMessage({ id: "label.forgot_password" })}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.loginButtonView}>
+                <ButtonComponent
+                  title={intl.formatMessage({ id: "label.login" })}
+                  onPress={onLogin}
+                  disabled={loginDisabled}
+                />
+              </View>
+              {errorWhileLoggingIn ? (
+                <View style={styles.errorView}>
+                  <Text style={styles.errorText}>{errorWhileLoggingIn}</Text>
+                </View>
+              ) : null}
+              <View style={styles.accountView}>
+                <Text style={styles.accountText}>
+                  {intl.formatMessage({ id: "label.dont_have_account" })}
                 </Text>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={onCreateNewPasswordClick}>
+                  <Text style={styles.newAccountText}>
+                    {intl.formatMessage({ id: "label.create_new_account" })}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <FollowUsIcons />
-          </View>
+            <View style={styles.FollowUsIconsStyle}>
+              <FollowUsIcons />
+            </View>
+          </ScrollView>
         </>
       )}
     </View>

@@ -18,7 +18,8 @@ function LoginScreenComponent(props) {
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
-  const { loginUserResult, handleUserLogin, isLoading, errorWhileLoggingIn } = useLoginUser();
+  const { loginUserResult, handleUserLogin, isLoading, errorWhileLoggingIn } =
+    useLoginUser();
 
   const [options, setOptions] = useState([
     {
@@ -56,7 +57,7 @@ function LoginScreenComponent(props) {
       return;
     } else {
       setErrorMessage("");
-      handleUserLogin({email: userName, password: password})
+      handleUserLogin({ email: userName, password: password });
     }
   };
 

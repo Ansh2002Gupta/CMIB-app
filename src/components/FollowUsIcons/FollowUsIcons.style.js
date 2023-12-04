@@ -1,12 +1,10 @@
 import colors from "../../assets/colors";
 const style = {
   containerStyle: {
-    position: "absolute",
-    bottom: 24,
-    left: 0,
-    right: 0,
     alignItems: "center",
+    paddingTop: 24,
   },
+  mainContainerStyle: {},
   followUsText: {
     color: colors.black,
     fontSize: 14,

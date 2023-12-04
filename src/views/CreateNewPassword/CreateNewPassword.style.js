@@ -1,6 +1,9 @@
 import colors from "../../assets/colors";
 const style = {
-  mainView: { flex: 1, backgroundColor: colors.backgroundColor },
+  mainView: {
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
+  },
   container: {
     paddingLeft: 16,
     paddingRight: 16,
@@ -24,7 +27,11 @@ const style = {
     marginRight: -16,
     marginTop: 24,
   },
-  submitView: { paddingLeft: 16, paddingRight: 16 },
+  submitView: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 24,
+  },
   backToLoginText: {
     textAlign: "center",
     marginTop: 24,
@@ -52,5 +59,6 @@ const style = {
     color: colors.black,
   },
   validationView: { flexDirection: "row", marginTop: 5 },
+  scrollViewContainerStyle: { justifyContent: "space-between", flexGrow: 1 },
 };
 export default style;
