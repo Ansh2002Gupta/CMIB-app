@@ -17,10 +17,10 @@ export const style = {
     alignItems: "center",
   },
   defaultInnerContainerStyles: {
-    height: "100%",
+    flex: 1,
   },
   defaultOuterContainerStyles: {
-    height: "100%",
+    flex: 1,
   },
   innerContainer: {
     borderRadius: 24,
