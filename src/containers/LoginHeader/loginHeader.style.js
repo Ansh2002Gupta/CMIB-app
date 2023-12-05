@@ -19,8 +19,14 @@ const style = {
     paddingBottom: 24,
     paddingLeft: 72,
     paddingRight: 72,
+  },
+  headerBorder: {
     borderBottomWidth: 1,
-    borderColor: colors.lightGrey
+    borderColor: colors.lightGrey,
+  },
+  smContainerStyle: {
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   webContainerStyle: {
     flexDirection: 'row',
@@ -34,7 +40,6 @@ const style = {
   cmibLogo: {
     width: 166,
     height: 54,
-    alignSelf: 'center'
   },
   gloPac: {
     width: 82,
