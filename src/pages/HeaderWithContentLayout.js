@@ -10,7 +10,7 @@ function HeaderWithContentLayout() {
 
   return (
     <MainLayout
-      header={!isWebView ? <LoginHeaderContainer /> : null}
+      header={<LoginHeaderContainer />}
       content={<Outlet />}
     />
   );
