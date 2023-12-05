@@ -7,17 +7,17 @@ import styles from "./loginHeader.style";
 
 const LoginHeader = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
+  const hideRightIcons = currentBreakpoint === "xs" || currentBreakpoint === "sm";
 
   return (
-    <View style={styles.webMainView}>
-      <View style={styles.webContainerStyle}>
+    <View style={hideRightIcons ? styles.mainView : styles.webMainView}>
+      <View style={hideRightIcons ? styles.containerStyle : styles.webContainerStyle}>
         <Image
           source={images.iconCmibLogo}
           style={styles.cmibLogo}
           resizeMode="contain"
         />
-        {isWebView && <View style={styles.rightIconContainer}>
+        {!hideRightIcons && <View style={styles.rightIconContainer}>
           <Image
             source={images.iconGloPac}
             style={styles.gloPac}
