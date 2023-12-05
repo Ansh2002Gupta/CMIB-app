@@ -17,6 +17,9 @@ const style = {
   forgotHeaderText: {
     fontSize: 40,
   },
+  forgotHeaderContainer: {
+    marginTop: 0
+  },
   customSubHeading: {
     fontSize: 16,
     color: colors.subHeadingGray,
@@ -116,7 +119,7 @@ const style = {
     fontSize: 34,
   },
   smScreenContainers: {
-    width: "60%",
+    width: "75%",
   },
   mdScreenContainers: {
     width: "40%",
