@@ -170,7 +170,6 @@ const LoginScreenUI = (props) => {
             >
               <View
                 style={{
-                  ...styles.companyView,
                   ...(isWebView ? styles.webView.backGroundColor : {}),
                 }}
               >
