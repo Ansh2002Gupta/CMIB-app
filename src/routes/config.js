@@ -3,8 +3,9 @@ import React from "react";
 import DashboardView from "../views/Dashboard";
 import ProfileView from "../views/Profile";
 import LoginForm from "../views/LoginForm";
+import Round1 from "../views/Round1View";
+import Round2 from "../views/Round2View";
 import Home from "../pages/Home";
-import Auth from "../pages/Auth";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import LoginScreen from "../views/LoginScreen/index";
 import ForgotPassword from "../views/ForgotPassword/index";
@@ -43,6 +44,39 @@ const config = [
       {
         viewPath: "",
         element: <ProfileView />, // view
+      },
+    ],
+  },
+  {
+    pagePath: "/Dashboard",
+    element: <HomeWithPrivateAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <DashboardView />, // view
+      },
+    ],
+  },
+  {
+    pagePath: "/Round1",
+    element: <HomeWithPrivateAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <Round1 />, // view
+      },
+    ],
+  },
+  {
+    pagePath: "/Round2",
+    element: <HomeWithPrivateAccess />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <Round2 />, // view
       },
     ],
   },
@@ -87,6 +121,17 @@ const config = [
       {
         viewPath: "",
         element: <SignUpSecondScreen />, // view
+      },
+    ],
+  },
+  {
+    pagePath: "/loginForm",
+    element: <LoginForm />, // Page
+    views: [
+      // array of views under Page route
+      {
+        viewPath: "",
+        element: <LoginForm />, // view
       },
     ],
   },

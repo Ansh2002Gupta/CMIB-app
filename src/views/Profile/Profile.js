@@ -1,8 +1,8 @@
-import React from 'react';
-import {useIntl} from 'react-intl';
-import {View, Text} from '@unthinkable/react-core-components';
+import React from "react";
+import { useIntl } from "react-intl";
+import { View, Text } from "@unthinkable/react-core-components";
 
-import styles from './profile.style';
+import styles from "./profile.style";
 
 function ProfileView(props) {
   const intl = useIntl();
@@ -10,7 +10,7 @@ function ProfileView(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
-        {intl.formatMessage({id: 'label.profile'})}
+        {intl.formatMessage({ id: "label.my_account" })}
       </Text>
     </View>
   );

@@ -3,13 +3,13 @@ import { Outlet } from "../routes";
 
 import MainLayout from "../layouts/MainLayout";
 import HeaderContainer from "../containers/Header";
-import MenuContainer from "../containers/Menu";
+import BottomBar from "../containers/BottomBar";
 
 function Home() {
   return (
     <MainLayout
       header={<HeaderContainer />}
-      menu={<MenuContainer />}
+      menu={<BottomBar />}
       content={<Outlet />}
     />
   );
