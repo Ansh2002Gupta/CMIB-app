@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Http from "../http-service";
 import { API_STATUS, STATUS_CODES } from "../../constants/constants";
@@ -14,9 +15,10 @@ const useLoginUser = () => {
       setPostStatus(API_STATUS.LOADING);
       errorWhileLoggingIn && setErrorWhileLoggingIn("");
       const res = await Http.post(`company/login`, payload);
-      console.log('result result', res.status);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
+        const authToken = res.data.data.access_token;
+        await AsyncStorage.setItem('authToken', authToken);
         setLoginUserResult(res.data);
         return;
       }

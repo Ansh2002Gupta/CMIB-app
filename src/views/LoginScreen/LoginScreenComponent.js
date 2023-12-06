@@ -6,7 +6,6 @@ import LoginScreenUI from "./LoginScreenUI";
 import { useNavigate } from "../../routes";
 import useLoginUser from "../../services/hooks/useLoginUser";
 import { validateEmail } from "../../constants/CommonFunctions";
-import { ActivityIndicator } from "@unthinkable/react-core-components";
 
 function LoginScreenComponent(props) {
   const navigate = useNavigate();
@@ -18,8 +17,7 @@ function LoginScreenComponent(props) {
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
-  const { loginUserResult, handleUserLogin, isLoading, errorWhileLoggingIn } =
-    useLoginUser();
+  const { handleUserLogin, isLoading, errorWhileLoggingIn } = useLoginUser();
 
   const [options, setOptions] = useState([
     {
