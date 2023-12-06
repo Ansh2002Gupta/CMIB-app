@@ -3,7 +3,7 @@ import {MediaQueryContext, useComponentTheme} from '@unthinkable/react-theme';
 
 import {TwoColumn, TwoRow} from '../../core/layouts';
 
-function MainLayout({header, menu, content}) {
+function MainLayout({header, menu, content, topSectionStyle}) {
   const theme = useComponentTheme('Auth');
 
   const {current: currentBreakpoint} = useContext(MediaQueryContext);
@@ -34,6 +34,7 @@ function MainLayout({header, menu, content}) {
             topSection={header}
             bottomSection={content}
             isBottomFillSpace={true}
+            topSectionStyle={topSectionStyle}
           />
         }
         isLeftFillSpace={false}

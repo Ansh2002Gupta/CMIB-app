@@ -12,6 +12,7 @@ function HeaderWithContentLayout() {
     <MainLayout
       header={<LoginHeaderContainer />}
       content={<Outlet />}
+      topSectionStyle={{position: 'sticky', top: 0, zIndex: 1, backgroundColor: "white"}}
     />
   );
 }

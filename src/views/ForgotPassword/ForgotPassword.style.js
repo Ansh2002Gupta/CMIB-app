@@ -119,7 +119,7 @@ const style = {
     fontSize: 34,
   },
   smScreenContainers: {
-    width: "75%",
+    width: "60%",
   },
   mdScreenContainers: {
     width: "40%",

@@ -14,7 +14,6 @@ const useLoginUser = () => {
       setPostStatus(API_STATUS.LOADING);
       errorWhileLoggingIn && setErrorWhileLoggingIn("");
       const res = await Http.post(`company/login`, payload);
-      console.log('result result', res.status);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setLoginUserResult(res.data);
