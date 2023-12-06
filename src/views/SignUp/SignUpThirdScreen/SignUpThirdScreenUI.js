@@ -6,6 +6,7 @@ import { ScrollView, View, Text } from "@unthinkable/react-core-components";
 import style from "./SignUpThirdScreen.style";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import CustomTextInput from "../../../components/CustomTextInput";
+import { SALUTATION_OPTIONS } from "../../../constants/constants";
 
 const SignUpThirdScreenUI = (props) => {
   const { intl, onClickGoToLogin, onGoBack, onClickNext } = props;
@@ -35,6 +36,7 @@ const SignUpThirdScreenUI = (props) => {
             placeholder={intl.formatMessage({
               id: "label.select",
             })}
+            options={SALUTATION_OPTIONS}
             isMandatory
             isDropdown
           />
@@ -77,7 +79,6 @@ const SignUpThirdScreenUI = (props) => {
             id: "label.enter_contact_person_email_id",
           })}
           isMandatory
-          isDropdown
         />
       </ScrollView>
       <SaveCancelButton

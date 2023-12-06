@@ -14,6 +14,10 @@ import CheckBox from "../../../components/CheckBox/CheckBox";
 import UploadImage from "../../../components/UploadImage/UploadImage";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
+import {
+  NATURE_OF_SUPPLIER,
+  COMPANY_TYPE_OPTIONS,
+} from "../../../constants/constants";
 
 const SignUpLastScreenUI = (props) => {
   const {
@@ -24,6 +28,13 @@ const SignUpLastScreenUI = (props) => {
     handleToggle,
     handleSuccessModal,
     showSuccessSignUp,
+    handleInputChange,
+    facebookUrl,
+    linkedInUrl,
+    twitterUrl,
+    youtubeUrl,
+    companyDetails,
+    website,
   } = props;
 
   const renderItem = ({ item, index }) => {
@@ -74,6 +85,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_facebook_url",
           })}
+          value={facebookUrl}
+          onChangeText={(value) => handleInputChange(value, "facebookUrl")}
         />
         <CustomTextInput
           label={intl.formatMessage({
@@ -82,6 +95,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_linkedin_url",
           })}
+          value={linkedInUrl}
+          onChangeText={(value) => handleInputChange(value, "linkedInUrl")}
         />
         <CustomTextInput
           label={intl.formatMessage({
@@ -90,6 +105,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_twitter_url",
           })}
+          value={twitterUrl}
+          onChangeText={(value) => handleInputChange(value, "twitterUrl")}
         />
         <CustomTextInput
           label={intl.formatMessage({
@@ -98,6 +115,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_youtube_url",
           })}
+          value={youtubeUrl}
+          onChangeText={(value) => handleInputChange(value, "youtubeUrl")}
         />
         <View style={style.seperator} />
         <Text style={style.headerText}>
@@ -110,6 +129,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_profile_of_company",
           })}
+          value={companyDetails}
+          onChangeText={(value) => handleInputChange(value, "companyDetails")}
           isMandatory
           isMultiline
           height={84}
@@ -121,6 +142,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_your_website",
           })}
+          value={website}
+          onChangeText={(value) => handleInputChange(value, "website")}
           isMandatory
         />
         <CustomTextInput
@@ -132,6 +155,7 @@ const SignUpLastScreenUI = (props) => {
           })}
           isMandatory
           isDropdown
+          options={NATURE_OF_SUPPLIER}
         />
         <CustomTextInput
           label={intl.formatMessage({
@@ -140,6 +164,7 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_company_type",
           })}
+          options={COMPANY_TYPE_OPTIONS}
           isMandatory
           isDropdown
         />

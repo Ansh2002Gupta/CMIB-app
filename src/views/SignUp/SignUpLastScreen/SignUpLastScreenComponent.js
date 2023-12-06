@@ -6,6 +6,13 @@ import SignUpLastScreenUI from "./SignUpLastScreenUI";
 const SignUpLastScreenComponent = () => {
   const intl = useIntl();
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
+  const [facebookUrl, setFacebookUrl] = useState("");
+  const [linkedInUrl, setLinkedInUrl] = useState("");
+  const [twitterUrl, setTwitterUrl] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [companyDetails, setCompanyDetails] = useState("");
+  const [website, setWebsite] = useState("");
+
   const [options, setOptions] = useState([
     {
       title: intl.formatMessage({ id: "label.email_from_cpaib" }),
@@ -41,6 +48,31 @@ const SignUpLastScreenComponent = () => {
 
   const navigate = useNavigate();
 
+  const handleInputChange = (value, name) => {
+    switch (name) {
+      case "facebookUrl":
+        setFacebookUrl(value);
+        break;
+      case "linkedInUrl":
+        setLinkedInUrl(value);
+        break;
+      case "twitterUrl":
+        setTwitterUrl(value);
+        break;
+      case "youtubeUrl":
+        setYoutubeUrl(value);
+        break;
+      case "companyDetails":
+        setCompanyDetails(value);
+        break;
+      case "website":
+        setWebsite(value);
+        break;
+      default:
+        break;
+    }
+  };
+
   const handleSuccessModal = (value) => {
     setShowSuccessSignUp(value);
   };
@@ -64,9 +96,7 @@ const SignUpLastScreenComponent = () => {
     setOptions(updatedItems);
   };
 
-  const onClickNext = () => {
-    // navigate("/signupThirdScreen");
-  };
+  const onClickNext = () => {};
 
   return (
     <SignUpLastScreenUI
@@ -78,6 +108,13 @@ const SignUpLastScreenComponent = () => {
       handleToggle={handleToggle}
       handleSuccessModal={handleSuccessModal}
       showSuccessSignUp={showSuccessSignUp}
+      handleInputChange={handleInputChange}
+      facebookUrl={facebookUrl}
+      linkedInUrl={linkedInUrl}
+      twitterUrl={twitterUrl}
+      youtubeUrl={youtubeUrl}
+      companyDetails={companyDetails}
+      website={website}
     />
   );
 };

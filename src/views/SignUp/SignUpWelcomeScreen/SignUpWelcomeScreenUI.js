@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import images from "../../../images";
 import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
@@ -8,34 +8,15 @@ import CheckBox from "../../../components/CheckBox/CheckBox";
 import ButtonComponent from "../../../components/ButtonComponent/ButtonComponent";
 
 const SignUpWelcomeScreenUI = (props) => {
-  const { intl, onClickGoToLogin, onClickNext } = props;
-  const [options, setOptions] = useState([
-    {
-      title: intl.formatMessage({ id: "label.ca_jobs" }),
-      isSelected: false,
-      id: 1,
-    },
-    {
-      title: intl.formatMessage({ id: "label.newly_qualified_ca" }),
-      isSelected: false,
-      id: 2,
-    },
-    {
-      title: intl.formatMessage({ id: "label.overseas_placements" }),
-      isSelected: false,
-      id: 3,
-    },
-    {
-      title: intl.formatMessage({ id: "label.career_ascents" }),
-      isSelected: false,
-      id: 4,
-    },
-    {
-      title: intl.formatMessage({ id: "label.women_placements" }),
-      isSelected: false,
-      id: 5,
-    },
-  ]);
+  const {
+    intl,
+    onClickGoToLogin,
+    onClickNext,
+    contactDetails,
+    setContactDetails,
+    options,
+    setOptions,
+  } = props;
 
   const handleToggle = (id) => {
     const updatedItems = options.map((item) => {
@@ -44,7 +25,15 @@ const SignUpWelcomeScreenUI = (props) => {
       }
       return item;
     });
+
     setOptions(updatedItems);
+
+    const toggledItem = updatedItems.find((item) => item.id === id);
+    if (toggledItem.isSelected) {
+      setContactDetails([...contactDetails, { module: toggledItem.id }]);
+    } else {
+      setContactDetails(contactDetails.filter((item) => item.module !== id));
+    }
   };
 
   const renderItem = ({ item, index }) => {
@@ -79,6 +68,7 @@ const SignUpWelcomeScreenUI = (props) => {
         title={intl.formatMessage({ id: "label.next" })}
         onPress={onClickNext}
         hasIconRight
+        disabled={contactDetails.length <= 0}
       />
     </SignUpHeader>
   );
@@ -88,6 +78,10 @@ SignUpWelcomeScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
+  setContactDetails: PropTypes.func.isRequired,
+  contactDetails: PropTypes.array.isRequired,
+  options: PropTypes.array.isRequired,
+  setOptions: PropTypes.func.isRequired,
 };
 
 export default SignUpWelcomeScreenUI;

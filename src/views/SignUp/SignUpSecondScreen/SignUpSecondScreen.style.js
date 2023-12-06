@@ -7,8 +7,9 @@ const style = {
     marginBottom: 24,
   },
   registrationInput: { flex: 1 },
-  partnerInput: { marginLeft: 24 },
+  partnerInput: { marginLeft: 24, width: 100 },
   noInput: { marginLeft: 24, flex: 1 },
+  codeInput: { width: 100 },
 };
 
 export default style;
