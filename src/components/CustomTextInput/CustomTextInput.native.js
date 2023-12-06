@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Text,
@@ -8,11 +8,10 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 import { Dropdown } from "react-native-element-dropdown";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import style from "./CustomTextInput.style";
 import colors from "../../assets/colors";
 import images from "../../images";
+import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
@@ -30,28 +29,17 @@ const CustomTextInput = (props) => {
     isPassword,
     customLabelStyle,
     customTextInputContainer,
+    options,
+    onChangeValue,
     ...remainingProps
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
 
   const toggleTextVisibility = () => {
     setIsTextVisible(!isTextVisible);
   };
-
-  const data = [
-    { label: "Item 1", value: "1" },
-    { label: "Item 2", value: "2" },
-    { label: "Item 3", value: "3" },
-    { label: "Item 4", value: "4" },
-    { label: "Item 5", value: "5" },
-    { label: "Item 6", value: "6" },
-    { label: "Item 7", value: "7" },
-    { label: "Item 8", value: "8" },
-  ];
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -64,7 +52,7 @@ const CustomTextInput = (props) => {
   return (
     <View style={style.container}>
       <View style={style.labelContainer}>
-        <Text style={[style.label, isWebView && style.webLabel, customLabelStyle]}>{label}</Text>
+        <Text style={[style.label, customLabelStyle]}>{label}</Text>
         {isMandatory && <Text style={[style.label, style.starStyle]}> *</Text>}
       </View>
       {isDropdown ? (
@@ -77,7 +65,7 @@ const CustomTextInput = (props) => {
           ]}
           renderRightIcon={() => <Image source={images.iconDownArrow} />}
           placeholderStyle={style.placeholderStyle}
-          data={data}
+          data={options}
           maxHeight={200}
           labelField="label"
           valueField="value"
@@ -86,7 +74,7 @@ const CustomTextInput = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            // setValue(item.value);
+            onChangeValue(item.value);
             setIsFocused(false);
           }}
           {...remainingProps}
@@ -109,7 +97,11 @@ const CustomTextInput = (props) => {
 
           <TextInput
             value={value}
-            style={[style.textInputStyle, isMultiline && style.textAlignStyle, isWebView && style.webLabel, customTextInputContainer]}
+            style={[
+              style.textInputStyle,
+              isMultiline && style.textAlignStyle,
+              customTextInputContainer,
+            ]}
             multiline={isMultiline}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -146,6 +138,12 @@ CustomTextInput.propTypes = {
   errorMessage: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   dropdownStyle: PropTypes.object.isRequired,
+  options: PropTypes.object.isRequired,
+  onChangeValue: PropTypes.func.isRequired,
+  eyeImage: PropTypes.bool,
+  isPassword: PropTypes.bool,
+  customLabelStyle: PropTypes.object,
+  customTextInputContainer: PropTypes.object,
 };
 
 export default CustomTextInput;
