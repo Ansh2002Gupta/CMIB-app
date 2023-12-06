@@ -22,6 +22,9 @@ const style = {
     borderRadius: 8,
     flex: 1,
   },
+  disableStyle: {
+    opacity: 0.5,
+  },
   secondButotnStyle: {
     marginLeft: 8,
   },
