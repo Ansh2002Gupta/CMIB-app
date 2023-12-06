@@ -82,14 +82,14 @@ const SignUpSecondScreenComponent = () => {
       isValid = false;
     }
 
-    if (numRegex.test(String(code)) || code.length < 2 || code.length > 8) {
+    if (!numRegex.test(String(code)) || code.length < 2 || code.length > 8) {
       newErrors.code =
         "Country code must be a combination of numbers and between 2 and 8 digits.";
       isValid = false;
     }
 
     if (
-      numRegex.test(String(telephoneNo)) ||
+      !numRegex.test(String(telephoneNo)) ||
       telephoneNo.length > 15 ||
       telephoneNo.length < 7
     ) {
@@ -103,7 +103,10 @@ const SignUpSecondScreenComponent = () => {
       isValid = false;
     }
 
-    if (numRegex.test(String(registrationNo)) || registrationNo.length !== 10) {
+    if (
+      !numRegex.test(String(registrationNo)) ||
+      registrationNo.length !== 10
+    ) {
       newErrors.registrationNo =
         "Registration number must be exactly 10 digits.";
       isValid = false;
@@ -114,7 +117,7 @@ const SignUpSecondScreenComponent = () => {
       isValid = false;
     }
 
-    if (numRegex.test(String(noOfPartners))) {
+    if (!numRegex.test(String(noOfPartners))) {
       newErrors.noOfPartners =
         "Number of partners must be a combination of numbers.";
       isValid = false;
