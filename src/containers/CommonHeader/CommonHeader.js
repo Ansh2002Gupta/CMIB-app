@@ -3,9 +3,9 @@ import { View, Image } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import images from "../../images";
-import styles from "./loginHeader.style";
+import styles from "./commonHeader.style";
 
-const LoginHeader = () => {
+const CommonHeader = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const hideRightIcons =
     currentBreakpoint === "xs" || currentBreakpoint === "sm";
@@ -52,4 +52,4 @@ const LoginHeader = () => {
   );
 };
 
-export default LoginHeader;
+export default CommonHeader;

@@ -16,6 +16,7 @@ function MainLayout({header, menu, content, topSectionStyle}) {
           topSection={header}
           bottomSection={content}
           isBottomFillSpace={true}
+          topSectionStyle={topSectionStyle}
         />
       }
       bottomSection={menu}

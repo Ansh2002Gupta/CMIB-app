@@ -1,18 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
+
 import { Outlet } from "../../routes";
 import MainLayout from "../../layouts/MainLayout";
-import LoginHeaderContainer from "../../containers/LoginHeader";
-import { MediaQueryContext } from "@unthinkable/react-theme";
-
+import CommonHeader from "../../containers/CommonHeader";
 import style from "./HeaderWithContent.style"
 
 function HeaderWithContentLayout() {
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
-
   return (
     <MainLayout
-      header={<LoginHeaderContainer />}
+      header={<CommonHeader />}
       content={<Outlet />}
       topSectionStyle={style.headerContainer}
     />
