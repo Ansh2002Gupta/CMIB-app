@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Http from "../http-service";
 import { API_STATUS, STATUS_CODES } from "../../constants/constants";
@@ -16,6 +17,8 @@ const useLoginUser = () => {
       const res = await Http.post(`company/login`, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
+        const authToken = res.data.data.access_token;
+        await AsyncStorage.setItem("authToken", authToken);
         setLoginUserResult(res.data);
         return;
       }
@@ -29,7 +32,6 @@ const useLoginUser = () => {
       setErrorWhileLoggingIn(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     }
   };
-  
   const isLoading = postStatus === API_STATUS.LOADING;
   const isSuccess = postStatus === API_STATUS.SUCCESS;
   const isError = postStatus === API_STATUS.ERROR;

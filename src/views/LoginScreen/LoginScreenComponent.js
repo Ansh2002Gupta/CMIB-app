@@ -6,21 +6,16 @@ import LoginScreenUI from "./LoginScreenUI";
 import { useNavigate } from "../../routes";
 import useLoginUser from "../../services/hooks/useLoginUser";
 import { validateEmail } from "../../constants/CommonFunctions";
-import { ActivityIndicator } from "@unthinkable/react-core-components";
 
 function LoginScreenComponent(props) {
   const navigate = useNavigate();
   const icons = useTheme("icons");
   const intl = useIntl();
-
   const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
-  const { loginUserResult, handleUserLogin, isLoading, errorWhileLoggingIn } =
-    useLoginUser();
-
   const [options, setOptions] = useState([
     {
       title: intl.formatMessage({ id: "label.remember_me" }),
@@ -28,6 +23,7 @@ function LoginScreenComponent(props) {
       id: 1,
     },
   ]);
+  const { handleUserLogin, isLoading, errorWhileLoggingIn } = useLoginUser();
 
   const handleToggle = (id) => {
     const updatedItems = options.map((item) => {
@@ -46,6 +42,7 @@ function LoginScreenComponent(props) {
   const onCreateNewPasswordClick = async () => {
     navigate("/createNewPassword");
   };
+
   const toggleUser = (val) => {
     setActive(val);
   };
