@@ -194,7 +194,7 @@ const SignUpSecondScreenComponent = () => {
       noOfPartners={noOfPartners}
       address={address}
       emailId={emailId}
-      entit={entity}
+      entity={entity}
       currentIndustry={currentIndustry}
       telephoneNo={telephoneNo}
       code={code}
