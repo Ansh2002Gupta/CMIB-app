@@ -3,10 +3,10 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
-
-import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
 import { validateEmail } from "../../../constants/CommonFunctions";
 import { numRegex } from "../../../constants/constants";
+
+import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
 
 const SignUpSecondScreenComponent = () => {
   const intl = useIntl();
@@ -61,7 +61,7 @@ const SignUpSecondScreenComponent = () => {
       entity,
       currentIndustry,
     ];
-    return requiredFields.every((field) => field.trim() !== "");
+    return requiredFields.every((field) => String(field).trim() !== "");
   };
 
   const validateFields = () => {
