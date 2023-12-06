@@ -8,6 +8,7 @@ import {
   Text,
 } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
 import { TwoRow, FourColumn } from "../../core/layouts";
 import { useNavigate, useLocation } from "../../routes";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
@@ -116,15 +117,14 @@ function BottomBar() {
                   ) : (
                     <Image source={images.iconDashboard} />
                   )}
-                  <Text
-                    style={
+                  <CommonText
+                    title={intl.formatMessage({ id: "label.dashboard" })}
+                    customTextStyle={
                       bottomBarActive === 1
                         ? Styles.activeTextStyle
                         : Styles.inActiveTextStyle
                     }
-                  >
-                    {intl.formatMessage({ id: "label.dashboard" })}
-                  </Text>
+                  />
                 </TouchableOpacity>
               </>
             }
@@ -148,15 +148,14 @@ function BottomBar() {
                   ) : (
                     <Image source={images.iconRound1} />
                   )}
-                  <Text
-                    style={
+                  <CommonText
+                    title={intl.formatMessage({ id: "label.round1" })}
+                    customTextStyle={
                       bottomBarActive === 2
                         ? Styles.activeTextStyle
                         : Styles.inActiveTextStyle
                     }
-                  >
-                    {intl.formatMessage({ id: "label.round1" })}
-                  </Text>
+                  />
                 </TouchableOpacity>
               </>
             }
@@ -180,15 +179,14 @@ function BottomBar() {
                   ) : (
                     <Image source={images.iconRound2} />
                   )}
-                  <Text
-                    style={
+                  <CommonText
+                    title={intl.formatMessage({ id: "label.round2" })}
+                    customTextStyle={
                       bottomBarActive === 3
                         ? Styles.activeTextStyle
                         : Styles.inActiveTextStyle
                     }
-                  >
-                    {intl.formatMessage({ id: "label.round2" })}
-                  </Text>
+                  />
                 </TouchableOpacity>
               </>
             }
@@ -212,15 +210,14 @@ function BottomBar() {
                   ) : (
                     <Image source={images.iconMyaccount} />
                   )}
-                  <Text
-                    style={
+                  <CommonText
+                    title={intl.formatMessage({ id: "label.my_account" })}
+                    customTextStyle={
                       bottomBarActive === 4
                         ? Styles.activeTextStyle
                         : Styles.inActiveTextStyle
                     }
-                  >
-                    {intl.formatMessage({ id: "label.my_account" })}
-                  </Text>
+                  />
                 </TouchableOpacity>
               </>
             }

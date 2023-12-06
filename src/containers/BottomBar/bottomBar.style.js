@@ -30,18 +30,12 @@ const style = {
   },
   inActiveTextStyle: {
     fontSize: 12,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
+    fontWeight: "500",
     color: colors.darkGrey,
   },
   activeTextStyle: {
     fontSize: 12,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
+    fontWeight: "500",
     color: colors.darkBlue,
   },
   buttonStyle: {
