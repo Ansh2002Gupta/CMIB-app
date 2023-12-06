@@ -18,7 +18,7 @@ const useLoginUser = () => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         const authToken = res.data.data.access_token;
-        await AsyncStorage.setItem("authToken", authToken);
+        await AsyncStorage.setItem('authToken', authToken);
         setLoginUserResult(res.data);
         return;
       }
@@ -32,6 +32,7 @@ const useLoginUser = () => {
       setErrorWhileLoggingIn(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     }
   };
+  
   const isLoading = postStatus === API_STATUS.LOADING;
   const isSuccess = postStatus === API_STATUS.SUCCESS;
   const isError = postStatus === API_STATUS.ERROR;
