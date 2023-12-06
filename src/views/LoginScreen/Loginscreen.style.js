@@ -256,7 +256,7 @@ const style = {
     padding: 10,
     borderRadius: 8,
     backgroundColor: colors.errorBackground,
-    marginTop: 10
+    marginTop: 10,
   },
   errorText: {
     fontSize: 14,
