@@ -4,7 +4,7 @@ import { View, Image } from "@unthinkable/react-core-components";
 import images from "../../images";
 import styles from "./commonHeader.style";
 
-const CommonHeader = () => {
+const Header = () => {
   return (
     <View style={styles.mainView}>
       <View style={styles.containerStyle}>
@@ -14,4 +14,4 @@ const CommonHeader = () => {
   );
 };
 
-export default CommonHeader;
+export default Header;

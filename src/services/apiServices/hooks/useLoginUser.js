@@ -1,9 +1,9 @@
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import Http from "../http-service";
-import { API_STATUS, STATUS_CODES } from "../../constants/constants";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import Http from "../../http-service";
+import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useLoginUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);

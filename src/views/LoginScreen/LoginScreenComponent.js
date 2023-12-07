@@ -4,7 +4,7 @@ import { useTheme } from "@unthinkable/react-theme";
 
 import LoginScreenUI from "./LoginScreenUI";
 import { useNavigate } from "../../routes";
-import useLoginUser from "../../services/hooks/useLoginUser";
+import useLoginUser from "../../services/apiServices/hooks/useLoginUser";
 import { validateEmail } from "../../constants/CommonFunctions";
 
 function LoginScreenComponent(props) {
