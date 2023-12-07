@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
-import { clearAuthAndLogout } from "../globalContext/auth/authActions";
 import { AuthContext } from "../globalContext/auth/authProvider";
+import { clearAuthAndLogout } from "../globalContext/auth/authActions";
 
 export const useHeader = () => {
   const [, authDispatch] = useContext(AuthContext);
