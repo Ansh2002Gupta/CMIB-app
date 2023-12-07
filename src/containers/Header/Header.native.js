@@ -2,7 +2,7 @@ import React from "react";
 import { View, Image } from "@unthinkable/react-core-components";
 
 import images from "../../images";
-import styles from "./commonHeader.style";
+import styles from "./Header.style";
 
 const Header = () => {
   return (
