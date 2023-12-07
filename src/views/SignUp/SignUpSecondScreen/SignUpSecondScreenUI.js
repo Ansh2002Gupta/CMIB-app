@@ -28,6 +28,7 @@ const SignUpSecondScreenUI = (props) => {
     errors,
     allFieldsFilled,
     entity,
+    currentIndustry,
   } = props;
 
   return (
@@ -105,6 +106,7 @@ const SignUpSecondScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_current_indusrty_placeholder",
           })}
+          value={currentIndustry}
           options={CURRENT_INDUSTRY_OPTIONS}
           onChangeValue={(val) => handleInputChange(val, "currentIndustry")}
         />
@@ -130,6 +132,7 @@ const SignUpSecondScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_state",
           })}
+          options={[]}
         />
         <CustomTextInput
           label={intl.formatMessage({ id: "label.email_id" })}
@@ -180,7 +183,7 @@ const SignUpSecondScreenUI = (props) => {
         onPressDibale={onGoBack}
         onPressActive={onClickNext}
         hasIconRight
-        isNextDisabled={!allFieldsFilled()}
+        // isNextDisabled={!allFieldsFilled()}
         activeButtonText={intl.formatMessage({ id: "label.next" })}
       />
     </SignUpHeader>
@@ -202,6 +205,7 @@ SignUpSecondScreenUI.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   entity: PropTypes.string.isRequired,
+  currentIndustry: PropTypes.string.isRequired,
   allFieldsFilled: PropTypes.func.isRequired,
 };
 

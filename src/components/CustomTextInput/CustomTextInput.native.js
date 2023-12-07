@@ -107,7 +107,7 @@ const CustomTextInput = (props) => {
             onBlur={handleBlur}
             placeholderTextColor={colors.darkGrey}
             placeholder={placeholder}
-            secureTextEntry={isPassword ? !isTextVisible : null}
+            secureTextEntry={isPassword && !isTextVisible}
             {...remainingProps}
           />
           {eyeImage ? (
@@ -138,7 +138,7 @@ CustomTextInput.propTypes = {
   errorMessage: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   dropdownStyle: PropTypes.object.isRequired,
-  options: PropTypes.object.isRequired,
+  options: PropTypes.array.isRequired,
   onChangeValue: PropTypes.func.isRequired,
   eyeImage: PropTypes.bool,
   isPassword: PropTypes.bool,
