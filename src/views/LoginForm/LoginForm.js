@@ -30,7 +30,7 @@ function useLoginForm(
     await StorageService.set("auth", response);
     authDispatch(setAuth(response));
     setIsProcessing(false);
-    navigate("/");
+    navigate("/Dashboard");
   };
   return {
     formValues,

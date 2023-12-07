@@ -1,5 +1,5 @@
 const style = {
-  container: {
+  main: {
     flex: 1,
     justifyContent: "center",
     padding: 16,
@@ -8,6 +8,9 @@ const style = {
     fontSize: 24,
     marginBottom: 24,
     textAlign: "center",
+  },
+  componentView: {
+    // flexDirection: "row",
   },
 };
 

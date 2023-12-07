@@ -49,14 +49,15 @@ function LoginScreenComponent(props) {
   };
 
   const onLogin = () => {
-    let error = validateEmail(userName);
-    if (error) {
-      setErrorMessage(error);
-      return;
-    } else {
-      setErrorMessage("");
-      handleUserLogin({ email: userName, password: password });
-    }
+    // let error = validateEmail(userName);
+    // if (error) {
+    //   setErrorMessage(error);
+    //   return;
+    // } else {
+    //   setErrorMessage("");
+    //   handleUserLogin({ email: userName, password: password });
+    // }
+    navigate("/loginForm");
   };
 
   const onChangePassword = (val) => {
