@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
-import { validateEmail } from "../../constants/CommonFunctions";
+import { useIntl } from "react-intl";
+
 import ForgotPasswordUI from "./ForgotPasswordUI";
 import useForgotPassword from "../../services/apiServices/hooks/useForgotPassword";
+import { validateEmail } from "../../constants/CommonFunctions";
 
 function ForgotPasswordComponent(props) {
   const navigate = useNavigate();
@@ -12,10 +13,10 @@ function ForgotPasswordComponent(props) {
   const [errorMessage, setErrorMessage] = useState("");
   const [successLogin, setSuccessLogin] = useState(false);
   const {
+    errorWhileResetPassword,
     forgotPasswordResult,
     handleForgotPassword,
     isLoading,
-    errorWhileResetPassword,
   } = useForgotPassword();
 
   const onClickGoToLogin = () => {

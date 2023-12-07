@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
 import { useTheme } from "@unthinkable/react-theme";
 
 import LoginScreenUI from "./LoginScreenUI";
-import { useNavigate } from "../../routes";
 import useLoginUser from "../../services/apiServices/hooks/useLoginUser";
 import { validateEmail } from "../../constants/CommonFunctions";
 
@@ -17,7 +17,7 @@ function LoginScreenComponent(props) {
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
-  const { handleUserLogin, isLoading, errorWhileLoggingIn } = useLoginUser();
+  const { errorWhileLoggingIn, handleUserLogin, isLoading } = useLoginUser();
 
   const [options, setOptions] = useState([
     {
@@ -78,6 +78,7 @@ function LoginScreenComponent(props) {
       setLoginDisabled(true);
     }
   }, [userName, password]);
+
 
   return (
     <LoginScreenUI

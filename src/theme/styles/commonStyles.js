@@ -1,6 +1,6 @@
 import colors from "../../assets/colors";
 
-const style = {
+const commonStyles = {
   headerContainer: {
     position: "sticky",
     top: 0,
@@ -9,4 +9,4 @@ const style = {
   },
 };
 
-export default style;
+export default commonStyles;

@@ -5,7 +5,7 @@ import ProfileView from "../views/Profile";
 import LoginForm from "../views/LoginForm";
 import Home from "../pages/Home";
 import Auth from "../pages/Auth";
-import HeaderWithContentLayout from "../pages/HeaderWithContentLayout/HeaderWithContentLayout";
+import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import LoginScreen from "../views/LoginScreen/index";
 import ForgotPassword from "../views/ForgotPassword/index";
 
