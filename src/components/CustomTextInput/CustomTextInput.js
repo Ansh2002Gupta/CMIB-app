@@ -9,6 +9,7 @@ import {
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
+import Dropdown from "../Dropdown/index";
 import style from "./CustomTextInput.style";
 import colors from "../../assets/colors";
 import images from "../../images";
@@ -63,56 +64,72 @@ const CustomTextInput = (props) => {
   return (
     <View style={style.container}>
       <View style={style.labelContainer}>
-        <Text
-          style={[style.label, isWebView && style.webLabel, customLabelStyle]}
-        >
-          {label}
-        </Text>
+        <Text style={[style.label, isWebView && style.webLabel, customLabelStyle]}>{label}</Text>
         {isMandatory && <Text style={[style.label, style.starStyle]}> *</Text>}
       </View>
-      <View
-        style={[
-          style.inputContainer,
-          isFocused && style.focusedStyle,
-          isError && style.invalidInput,
-        ]}
-      >
-        {isMobileNumber && (
-          <View style={style.prefixContainer}>
-            <Text style={style.prefixStyle}>+91</Text>
-            <Image source={images.iconDownArrow} style={style.iconStyle} />
-            <Image source={images.iconDivider} style={style.iconStyle} />
-          </View>
-        )}
-
-        <TextInput
-          value={value}
+      {isDropdown ? (
+        <Dropdown
           style={[
-            style.textInputStyle,
-            isMultiline && style.textAlignStyle,
-            isWebView && style.webLabel,
-            customTextInputContainer,
+            style.dropdown,
+            isFocused && style.focusedStyle,
+            isError && style.invalidInput,
+            dropdownStyle,
           ]}
-          multiline={isMultiline}
+          renderRightIcon={() => <Image source={images.iconDownArrow} />}
+          placeholderStyle={style.placeholderStyle}
+          data={data}
+          maxHeight={200}
+          labelField="label"
+          valueField="value"
+          placeholder={placeholder || ""}
+          value={value}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          placeholderTextColor={colors.darkGrey}
-          placeholder={placeholder}
-          type={!isTextVisible && isPassword ? "password" : "text"}
-          secureTextEntry={isPassword ? !isTextVisible : null}
+          onChange={(item) => {
+            // setValue(item.value);
+            setIsFocused(false);
+          }}
           {...remainingProps}
         />
-        {eyeImage ? (
-          <TouchableOpacity
-            style={style.eyeIconContainer}
-            onPress={toggleTextVisibility}
-          >
-            <Image
-              source={isTextVisible ? images.iconEyeSlash : images.iconEye}
-            />
-          </TouchableOpacity>
-        ) : null}
-      </View>
+      ) : (
+        <View
+          style={[
+            style.inputContainer,
+            isFocused && style.focusedStyle,
+            isError && style.invalidInput,
+          ]}
+        >
+          {isMobileNumber && (
+            <View style={style.prefixContainer}>
+              <Text style={style.prefixStyle}>+91</Text>
+              <Image source={images.iconDownArrow} style={style.iconStyle} />
+              <Image source={images.iconDivider} style={style.iconStyle} />
+            </View>
+          )}
+
+          <TextInput
+            value={value}
+            style={[style.textInputStyle, isMultiline && style.textAlignStyle, isWebView && style.webLabel, customTextInputContainer]}
+            multiline={isMultiline}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            placeholderTextColor={colors.darkGrey}
+            placeholder={placeholder}
+            secureTextEntry={isPassword ? !isTextVisible : null}
+            {...remainingProps}
+          />
+          {eyeImage ? (
+            <TouchableOpacity
+              style={style.eyeIconContainer}
+              onPress={toggleTextVisibility}
+            >
+              <Image
+                source={isTextVisible ? images.iconEyeSlash : images.iconEye}
+              />
+            </TouchableOpacity>
+          ) : null}
+        </View>
+      )}
       {isError && <Text style={style.errorMsg}>{errorMessage}</Text>}
     </View>
   );
