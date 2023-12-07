@@ -10,7 +10,7 @@ import LoginScreen from "../views/LoginScreen/index";
 import ForgotPassword from "../views/ForgotPassword/index";
 
 import CreateNewPassword from "../views/CreateNewPassword/index";
-import SignUpScreen from "../views/SignUp/index";
+import SignUpScreen from "../views/SignUpView/index";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import ContentLayout from "../pages/ContentLayout";
