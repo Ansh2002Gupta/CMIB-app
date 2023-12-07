@@ -1,17 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import images from "../../../images";
-import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
 import { ScrollView, View, Text } from "@unthinkable/react-core-components";
 import style from "./SignUpThirdScreen.style";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
-import CustomTextInput from "../../../components/CustomTextInput";
-import { SALUTATION_OPTIONS } from "../../../constants/constants";
+import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
+import CustomTextInput from "../../components/CustomTextInput";
+import { SALUTATION_OPTIONS } from "../../constants/constants";
 
 const SignUpThirdScreenUI = (props) => {
   const {
     intl,
-    onClickGoToLogin,
     onGoBack,
     onClickNext,
     handleInputChange,
@@ -123,7 +120,6 @@ const SignUpThirdScreenUI = (props) => {
 
 SignUpThirdScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
-  onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,

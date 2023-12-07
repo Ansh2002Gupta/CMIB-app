@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import images from "../../../images";
-import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
 import {
   ScrollView,
   View,
@@ -9,15 +7,15 @@ import {
   FlatList,
 } from "@unthinkable/react-core-components";
 import style from "./SignUpLastScreen.style";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
-import CheckBox from "../../../components/CheckBox/CheckBox";
-import UploadImage from "../../../components/UploadImage/UploadImage";
-import CustomModal from "../../../components/CustomModal/CustomModal";
-import CustomTextInput from "../../../components/CustomTextInput";
+import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
+import CheckBox from "../../components/CheckBox/CheckBox";
+import UploadImage from "../../components/UploadImage/UploadImage";
+import CustomModal from "../../components/CustomModal/CustomModal";
+import CustomTextInput from "../../components/CustomTextInput";
 import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
-} from "../../../constants/constants";
+} from "../../constants/constants";
 
 const SignUpLastScreenUI = (props) => {
   const {

@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import images from "../../images";
 import SignUpHeader from "../../components/SignUpHeader/SignUpHeader";
-import SignUpWelcomeScreen from "./SignUpWelcomeScreen/index";
-import SignUpSecondScreen from "./SignUpSecondScreen/index";
-import SignUpThirdScreen from "./SignUpThirdScreen";
-import SignUpLastScreen from "./SignUpLastScreen";
+import SignUpWelcomeScreen from "../../components/SignUpWelcomeScreen/index";
+import SignUpSecondScreen from "../../components/SignUpSecondScreen/index";
+import SignUpThirdScreen from "../../components/SignUpThirdScreen/index";
+import SignUpLastScreen from "../../components/SignUpLastScreen/index";
 
 const tabConfig = [
   {
