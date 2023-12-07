@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Text,
   View,
@@ -7,12 +8,11 @@ import {
   TextInput,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import Dropdown from "../Dropdown/index";
-import style from "./CustomTextInput.style";
 import colors from "../../assets/colors";
 import images from "../../images";
+import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
@@ -86,7 +86,7 @@ const CustomTextInput = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            // setValue(item.value);
+            // setValue(item.value); Ask Kashish about this state
             setIsFocused(false);
           }}
           {...remainingProps}
@@ -106,7 +106,6 @@ const CustomTextInput = (props) => {
               <Image source={images.iconDivider} style={style.iconStyle} />
             </View>
           )}
-
           <TextInput
             value={value}
             style={[style.textInputStyle, isMultiline && style.textAlignStyle, isWebView && style.webLabel, customTextInputContainer]}
