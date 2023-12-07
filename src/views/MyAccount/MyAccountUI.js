@@ -1,13 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
-import Header from "../../components/Header/Header";
-import images from "../../images";
 import {
   TouchableOpacity,
   Text,
   Image,
   View,
 } from "@unthinkable/react-core-components";
+import PropTypes from "prop-types";
+
+import Header from "../../components/Header/Header";
+import images from "../../images";
 import style from "./MyAccount.style";
 
 const MyAccountUI = (props) => {
