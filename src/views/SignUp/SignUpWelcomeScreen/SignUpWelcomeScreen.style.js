@@ -10,6 +10,12 @@ const style = {
     paddingTop: 24,
   },
   contentContainerStyle: { flex: 1 },
+  innerContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
+  },
 };
 
 export default style;

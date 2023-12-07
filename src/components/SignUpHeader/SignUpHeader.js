@@ -9,10 +9,10 @@ import {
 import styles from "./SignUpHeader.style";
 
 const SignUpHeader = (props) => {
-  const { intl, onClickGoToLogin, headerText, image, children } = props;
+  const { intl, onClickGoToLogin, headerText, image } = props;
 
   return (
-    <View style={styles.container}>
+    <View>
       <TouchableOpacity
         onPress={() => {
           onClickGoToLogin();
@@ -26,7 +26,6 @@ const SignUpHeader = (props) => {
       <Image source={image} style={styles.iconBar} />
       <Text style={styles.formHeaderStyle}>{headerText}</Text>
       <View style={styles.borderStyle} />
-      <View style={styles.innerContainer}>{children}</View>
     </View>
   );
 };
@@ -36,7 +35,6 @@ SignUpHeader.propTypes = {
   onClickGoToLogin: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  children: PropTypes.node,
 };
 
 export default SignUpHeader;

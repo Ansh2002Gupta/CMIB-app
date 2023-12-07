@@ -25,14 +25,7 @@ const SignUpThirdScreenUI = (props) => {
   } = props;
 
   return (
-    <SignUpHeader
-      intl={intl}
-      headerText={intl.formatMessage({
-        id: "label.contact_personal_details",
-      })}
-      onClickGoToLogin={onClickGoToLogin}
-      image={images.iconWalkthroughSignUpThree}
-    >
+    <>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
@@ -114,15 +107,17 @@ const SignUpThirdScreenUI = (props) => {
           isMandatory
         />
       </ScrollView>
-      <SaveCancelButton
-        disableButtonText={intl.formatMessage({ id: "label.back" })}
-        onPressDibale={onGoBack}
-        onPressActive={onClickNext}
-        hasIconRight
-        isNextDisabled={!allFieldsFilled()}
-        activeButtonText={intl.formatMessage({ id: "label.next" })}
-      />
-    </SignUpHeader>
+      <View style={style.buttonContainer}>
+        <SaveCancelButton
+          disableButtonText={intl.formatMessage({ id: "label.back" })}
+          onPressDibale={onGoBack}
+          onPressActive={onClickNext}
+          hasIconRight
+          isNextDisabled={!allFieldsFilled()}
+          activeButtonText={intl.formatMessage({ id: "label.next" })}
+        />
+      </View>
+    </>
   );
 };
 

@@ -6,3 +6,9 @@ export const setSignUpDetails = (value) => {
     payload: value,
   };
 };
+
+export const resetSignUpDetails = () => {
+  return {
+    type: types.RESET_SIGN_UP_DETAIL,
+  };
+};

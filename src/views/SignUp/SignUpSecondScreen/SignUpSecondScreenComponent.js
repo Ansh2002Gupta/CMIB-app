@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../../routes";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../constants/CommonFunctions";
@@ -8,9 +7,8 @@ import { numRegex } from "../../../constants/constants";
 
 import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
 
-const SignUpSecondScreenComponent = () => {
+const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
-  const navigate = useNavigate();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const [companyName, setCompanyName] = useState(
     signUpState.signUpDetail.name || ""
@@ -127,12 +125,8 @@ const SignUpSecondScreenComponent = () => {
     return isValid;
   };
 
-  const onClickGoToLogin = () => {
-    navigate("/");
-  };
-
   const onGoBack = () => {
-    navigate("/signup");
+    tabHandler("prev");
   };
 
   const onClickNext = () => {
@@ -148,7 +142,7 @@ const SignUpSecondScreenComponent = () => {
         std_country_code: code,
       };
       signUpDispatch(setSignUpDetails(details));
-      navigate("/signupThirdScreen");
+      tabHandler("next");
     }
   };
 
@@ -189,7 +183,6 @@ const SignUpSecondScreenComponent = () => {
   return (
     <SignUpSecondScreenUI
       intl={intl}
-      onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}
       onClickNext={onClickNext}
       companyName={companyName}

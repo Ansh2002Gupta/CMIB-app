@@ -52,12 +52,7 @@ const SignUpLastScreenUI = (props) => {
   };
 
   return (
-    <SignUpHeader
-      intl={intl}
-      headerText={intl.formatMessage({ id: "label.other_details" })}
-      onClickGoToLogin={onClickGoToLogin}
-      image={images.iconWalkthroughSignUpLast}
-    >
+    <View style={style.mainContainerStyle}>
       {showSuccessSignUp && (
         <CustomModal
           headerText={intl.formatMessage({
@@ -213,7 +208,7 @@ const SignUpLastScreenUI = (props) => {
         isNextDisabled={!allFieldsFilled()}
         activeButtonText={intl.formatMessage({ id: "label.sign_up" })}
       />
-    </SignUpHeader>
+    </View>
   );
 };
 

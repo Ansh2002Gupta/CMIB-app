@@ -1,15 +1,13 @@
 import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../../routes";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 
 import SignUpWelcomeScreenUI from "./SignUpWelcomeScreenUI";
 
-const SignUpScreenWelcomeComponent = () => {
+const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
   const intl = useIntl();
-  const navigate = useNavigate();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
 
   const initialContactDetails = signUpState.signUpDetail.contact_details || [];
@@ -42,10 +40,6 @@ const SignUpScreenWelcomeComponent = () => {
   const [contactDetails, setContactDetails] = useState(initialContactDetails);
   const [options, setOptions] = useState(initialOptions);
 
-  const onClickGoToLogin = () => {
-    navigate("/");
-  };
-
   const onClickNext = () => {
     const existingContactDetails =
       signUpState.signUpDetail.contact_details || [];
@@ -62,13 +56,12 @@ const SignUpScreenWelcomeComponent = () => {
     };
 
     signUpDispatch(setSignUpDetails(details));
-    navigate("/signupSecondScreen");
+    tabHandler("next");
   };
 
   return (
     <SignUpWelcomeScreenUI
       intl={intl}
-      onClickGoToLogin={onClickGoToLogin}
       onClickNext={onClickNext}
       contactDetails={contactDetails}
       setContactDetails={setContactDetails}

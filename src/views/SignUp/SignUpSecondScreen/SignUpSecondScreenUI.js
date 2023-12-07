@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import images from "../../../images";
-import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 import style from "./SignUpSecondScreen.style";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
@@ -14,7 +12,6 @@ import {
 const SignUpSecondScreenUI = (props) => {
   const {
     intl,
-    onClickGoToLogin,
     onGoBack,
     onClickNext,
     companyName,
@@ -32,12 +29,7 @@ const SignUpSecondScreenUI = (props) => {
   } = props;
 
   return (
-    <SignUpHeader
-      intl={intl}
-      headerText={intl.formatMessage({ id: "label.basic_details" })}
-      onClickGoToLogin={onClickGoToLogin}
-      image={images.iconWalkthroughSignUpTwo}
-    >
+    <View style={style.innerContainer}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
@@ -186,13 +178,12 @@ const SignUpSecondScreenUI = (props) => {
         isNextDisabled={!allFieldsFilled()}
         activeButtonText={intl.formatMessage({ id: "label.next" })}
       />
-    </SignUpHeader>
+    </View>
   );
 };
 
 SignUpSecondScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
-  onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
   companyName: PropTypes.string.isRequired,

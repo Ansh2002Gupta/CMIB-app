@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import images from "../../../images";
-import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
-import { FlatList, Text } from "@unthinkable/react-core-components";
+import { FlatList, Text, View } from "@unthinkable/react-core-components";
 import style from "./SignUpWelcomeScreen.style";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import ButtonComponent from "../../../components/ButtonComponent/ButtonComponent";
@@ -10,7 +8,6 @@ import ButtonComponent from "../../../components/ButtonComponent/ButtonComponent
 const SignUpWelcomeScreenUI = (props) => {
   const {
     intl,
-    onClickGoToLogin,
     onClickNext,
     contactDetails,
     setContactDetails,
@@ -49,12 +46,7 @@ const SignUpWelcomeScreenUI = (props) => {
   };
 
   return (
-    <SignUpHeader
-      intl={intl}
-      headerText={intl.formatMessage({ id: "label.welcome_to_sign_up" })}
-      onClickGoToLogin={onClickGoToLogin}
-      image={images.iconWalkthroughSignUpOne}
-    >
+    <View style={style.innerContainer}>
       <Text style={style.formHeaderStyle}>
         {intl.formatMessage({ id: "label.choose_interest" })}
       </Text>
@@ -70,13 +62,12 @@ const SignUpWelcomeScreenUI = (props) => {
         hasIconRight
         disabled={contactDetails.length <= 0}
       />
-    </SignUpHeader>
+    </View>
   );
 };
 
 SignUpWelcomeScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
-  onClickGoToLogin: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
   setContactDetails: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,

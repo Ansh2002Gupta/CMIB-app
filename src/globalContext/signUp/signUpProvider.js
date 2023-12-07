@@ -10,6 +10,8 @@ const localeReducer = (state, action) => {
         ...state,
         signUpDetail: { ...state.signUpDetail, ...action.payload },
       };
+    case types.RESET_SIGN_UP_DETAIL:
+      return initialState;
     default:
       return state;
   }

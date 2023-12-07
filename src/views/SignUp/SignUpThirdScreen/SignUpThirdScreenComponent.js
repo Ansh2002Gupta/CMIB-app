@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../../routes";
-
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../constants/CommonFunctions";
@@ -9,23 +7,22 @@ import { numRegex } from "../../../constants/constants";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
 
-const SignUpThirdScreenComponent = () => {
+const SignUpThirdScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
-  const navigate = useNavigate();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const initialContactDetails = signUpState.signUpDetail.contact_details || [];
 
   const [salutation, setSalutation] = useState(
-    initialContactDetails[0].salutation || ""
+    initialContactDetails[0]?.salutation || ""
   );
-  const [name, setName] = useState(initialContactDetails[0].name || "");
+  const [name, setName] = useState(initialContactDetails[0]?.name || "");
   const [designation, setDesignation] = useState(
-    initialContactDetails[0].designation || ""
+    initialContactDetails[0]?.designation || ""
   );
   const [mobileNo, setMobileNo] = useState(
-    initialContactDetails[0].mobile_number || ""
+    initialContactDetails[0]?.mobile_number || ""
   );
-  const [emailId, setEmailId] = useState(initialContactDetails[0].email || "");
+  const [emailId, setEmailId] = useState(initialContactDetails[0]?.email || "");
 
   const [errors, setErrors] = useState({
     name: "",
@@ -81,12 +78,8 @@ const SignUpThirdScreenComponent = () => {
     return isValid;
   };
 
-  const onClickGoToLogin = () => {
-    navigate("/");
-  };
-
   const onGoBack = () => {
-    navigate("/signupSecondScreen");
+    tabHandler("prev");
   };
 
   const onClickNext = () => {
@@ -119,8 +112,9 @@ const SignUpThirdScreenComponent = () => {
         };
 
         signUpDispatch(setSignUpDetails(newContactDetails));
-        navigate("/signupLastScreen");
+        tabHandler("next");
       }
+      tabHandler("next");
     }
   };
 
@@ -149,7 +143,6 @@ const SignUpThirdScreenComponent = () => {
   return (
     <SignUpThirdScreenUI
       intl={intl}
-      onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}
       onClickNext={onClickNext}
       handleInputChange={handleInputChange}
