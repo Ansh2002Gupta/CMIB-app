@@ -9,7 +9,20 @@ import CustomTextInput from "../../../components/CustomTextInput";
 import { SALUTATION_OPTIONS } from "../../../constants/constants";
 
 const SignUpThirdScreenUI = (props) => {
-  const { intl, onClickGoToLogin, onGoBack, onClickNext } = props;
+  const {
+    intl,
+    onClickGoToLogin,
+    onGoBack,
+    onClickNext,
+    handleInputChange,
+    salutation,
+    mobileNo,
+    emailId,
+    designation,
+    name,
+    allFieldsFilled,
+    errors,
+  } = props;
 
   return (
     <SignUpHeader
@@ -36,8 +49,12 @@ const SignUpThirdScreenUI = (props) => {
             placeholder={intl.formatMessage({
               id: "label.select",
             })}
+            errorMessage={errors.salutation}
+            isError={!!errors.salutation}
+            value={salutation}
             options={SALUTATION_OPTIONS}
             isMandatory
+            onChangeValue={(val) => handleInputChange(val, "salutation")}
             isDropdown
           />
           <View style={style.secondInput}>
@@ -48,6 +65,10 @@ const SignUpThirdScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_contact_person_name",
               })}
+              value={name}
+              errorMessage={errors.name}
+              isError={!!errors.name}
+              onChangeText={(val) => handleInputChange(val, "name")}
               isMandatory
             />
           </View>
@@ -59,6 +80,10 @@ const SignUpThirdScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_contact_person_designation",
           })}
+          errorMessage={errors.designation}
+          isError={!!errors.designation}
+          value={designation}
+          onChangeText={(val) => handleInputChange(val, "designation")}
           isMandatory
         />
         <CustomTextInput
@@ -68,7 +93,11 @@ const SignUpThirdScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_contact_person_mobile_no",
           })}
+          value={mobileNo}
+          onChangeText={(val) => handleInputChange(val, "mobileNo")}
           isMobileNumber
+          errorMessage={errors.mobileNo}
+          isError={!!errors.mobileNo}
           isMandatory
         />
         <CustomTextInput
@@ -78,6 +107,10 @@ const SignUpThirdScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_contact_person_email_id",
           })}
+          errorMessage={errors.emailId}
+          isError={!!errors.emailId}
+          value={emailId}
+          onChangeText={(val) => handleInputChange(val, "email")}
           isMandatory
         />
       </ScrollView>
@@ -86,6 +119,7 @@ const SignUpThirdScreenUI = (props) => {
         onPressDibale={onGoBack}
         onPressActive={onClickNext}
         hasIconRight
+        isNextDisabled={!allFieldsFilled()}
         activeButtonText={intl.formatMessage({ id: "label.next" })}
       />
     </SignUpHeader>
@@ -97,6 +131,14 @@ SignUpThirdScreenUI.propTypes = {
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  salutation: PropTypes.string.isRequired,
+  mobileNo: PropTypes.string.isRequired,
+  emailId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  designation: PropTypes.string.isRequired,
+  allFieldsFilled: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
 export default SignUpThirdScreenUI;
