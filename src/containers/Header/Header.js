@@ -3,7 +3,7 @@ import { View, Image } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import images from "../../images";
-import styles from "./Header.style";
+import styles from "./header.style";
 
 const Header = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
