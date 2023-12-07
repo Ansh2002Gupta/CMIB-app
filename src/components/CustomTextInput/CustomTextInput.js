@@ -137,14 +137,14 @@ const CustomTextInput = (props) => {
 CustomTextInput.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  isMandatory: PropTypes.bool.isRequired,
-  isDropdown: PropTypes.bool.isRequired,
-  isMultiline: PropTypes.bool.isRequired,
-  isMobileNumber: PropTypes.bool.isRequired,
-  isError: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  isMandatory: PropTypes.bool,
+  isDropdown: PropTypes.bool,
+  isMultiline: PropTypes.bool,
+  isMobileNumber: PropTypes.bool,
+  isError: PropTypes.bool,
+  errorMessage: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
-  dropdownStyle: PropTypes.object.isRequired,
+  dropdownStyle: PropTypes.object,
 };
 
 export default CustomTextInput;
