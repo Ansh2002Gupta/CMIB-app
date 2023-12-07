@@ -1,17 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
+import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
+import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
+import { urlRegex } from "../../../constants/constants";
 
 const SignUpLastScreenComponent = () => {
   const intl = useIntl();
+  const [signUpState, signUpDispatch] = useContext(SignUpContext);
+  const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
-  const [facebookUrl, setFacebookUrl] = useState("");
-  const [linkedInUrl, setLinkedInUrl] = useState("");
-  const [twitterUrl, setTwitterUrl] = useState("");
-  const [youtubeUrl, setYoutubeUrl] = useState("");
-  const [companyDetails, setCompanyDetails] = useState("");
-  const [website, setWebsite] = useState("");
+  const [facebookUrl, setFacebookUrl] = useState(
+    initialDetails.social_media_link?.facebook || ""
+  );
+  const [linkedInUrl, setLinkedInUrl] = useState(
+    initialDetails.social_media_link?.linkedIn || ""
+  );
+  const [twitterUrl, setTwitterUrl] = useState(
+    initialDetails.social_media_link?.twitter || ""
+  );
+  const [youtubeUrl, setYoutubeUrl] = useState(
+    initialDetails.social_media_link?.youtube || ""
+  );
+  const [companyDetails, setCompanyDetails] = useState(
+    initialDetails.company_details || ""
+  );
+  const [website, setWebsite] = useState(initialDetails.website || "");
+  const [natureOfSupplier, setNatureOfSupplier] = useState(
+    initialDetails.nature_of_supplier || ""
+  );
+  const [companyType, setCompanyType] = useState(
+    initialDetails.company_type || ""
+  );
 
   const [options, setOptions] = useState([
     {
@@ -48,6 +69,69 @@ const SignUpLastScreenComponent = () => {
 
   const navigate = useNavigate();
 
+  const [errors, setErrors] = useState({
+    facebookUrl: "",
+    linkedInUrl: "",
+    twitterUrl: "",
+    youtubeUrl: "",
+    companyDetails: "",
+    website: "",
+  });
+
+  const allFieldsFilled = () => {
+    const requiredFields = [
+      companyDetails,
+      website,
+      natureOfSupplier,
+      companyType,
+    ];
+    return requiredFields.every((field) => String(field).trim() !== "");
+  };
+
+  const validateFields = () => {
+    let isValid = true;
+    let newErrors = {
+      facebookUrl: "",
+      twitterUrl: "",
+      linkedInUrl: "",
+      youtubeUrl: "",
+      companyDetails: "",
+      website: "",
+    };
+
+    if (facebookUrl && !urlRegex.test(String(facebookUrl))) {
+      newErrors.facebookUrl = "Please enter a valid URL.";
+      isValid = false;
+    }
+
+    if (twitterUrl && !urlRegex.test(String(twitterUrl))) {
+      newErrors.twitterUrl = "Please enter a valid URL.";
+      isValid = false;
+    }
+
+    if (linkedInUrl && !urlRegex.test(String(linkedInUrl))) {
+      newErrors.linkedInUrl = "Please enter a valid URL.";
+      isValid = false;
+    }
+
+    if (youtubeUrl && !urlRegex.test(String(youtubeUrl))) {
+      newErrors.youtubeUrl = "Please enter a valid URL.";
+      isValid = false;
+    }
+    if (companyDetails.length < 6 || companyDetails.length > 1000) {
+      newErrors.designation =
+        "Designation must be between 6 and 500 characters.";
+      isValid = false;
+    }
+    if (!urlRegex.test(String(website))) {
+      newErrors.website = "Please enter a valid URL.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const handleInputChange = (value, name) => {
     switch (name) {
       case "facebookUrl":
@@ -68,15 +152,41 @@ const SignUpLastScreenComponent = () => {
       case "website":
         setWebsite(value);
         break;
+      case "companyType":
+        setCompanyType(value);
+        break;
+      case "natureOfSupplier":
+        setNatureOfSupplier(value);
+        break;
       default:
         break;
     }
   };
 
   const handleSuccessModal = (value) => {
-    setShowSuccessSignUp(value);
+    if (value) {
+      if (validateFields()) {
+        const details = {
+          social_media_link: {
+            linkedIn: linkedInUrl,
+            facebook: facebookUrl,
+            twitter: twitterUrl,
+            youtube: youtubeUrl,
+          },
+          website: website,
+          nature_of_supplier: natureOfSupplier,
+          type: companyType,
+          company_details: companyDetails,
+        };
+        signUpDispatch(setSignUpDetails(details));
+        setShowSuccessSignUp(true);
+      }
+    } else {
+      setShowSuccessSignUp(false);
+    }
   };
 
+  console.log(signUpState);
   const onClickGoToLogin = () => {
     handleSuccessModal(false);
     navigate("/");
@@ -96,14 +206,11 @@ const SignUpLastScreenComponent = () => {
     setOptions(updatedItems);
   };
 
-  const onClickNext = () => {};
-
   return (
     <SignUpLastScreenUI
       intl={intl}
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}
-      onClickNext={onClickNext}
       options={options}
       handleToggle={handleToggle}
       handleSuccessModal={handleSuccessModal}
@@ -115,6 +222,8 @@ const SignUpLastScreenComponent = () => {
       youtubeUrl={youtubeUrl}
       companyDetails={companyDetails}
       website={website}
+      errors={errors}
+      allFieldsFilled={allFieldsFilled}
     />
   );
 };

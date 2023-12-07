@@ -34,7 +34,9 @@ const SignUpLastScreenUI = (props) => {
     twitterUrl,
     youtubeUrl,
     companyDetails,
+    allFieldsFilled,
     website,
+    errors,
   } = props;
 
   const renderItem = ({ item, index }) => {
@@ -85,6 +87,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_facebook_url",
           })}
+          errorMessage={errors.facebookUrl}
+          isError={!!errors.facebookUrl}
           value={facebookUrl}
           onChangeText={(value) => handleInputChange(value, "facebookUrl")}
         />
@@ -95,6 +99,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_linkedin_url",
           })}
+          errorMessage={errors.linkedInUrl}
+          isError={!!errors.linkedInUrl}
           value={linkedInUrl}
           onChangeText={(value) => handleInputChange(value, "linkedInUrl")}
         />
@@ -105,6 +111,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_twitter_url",
           })}
+          errorMessage={errors.twitterUrl}
+          isError={!!errors.twitterUrl}
           value={twitterUrl}
           onChangeText={(value) => handleInputChange(value, "twitterUrl")}
         />
@@ -115,6 +123,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_youtube_url",
           })}
+          errorMessage={errors.youtubeUrl}
+          isError={!!errors.youtubeUrl}
           value={youtubeUrl}
           onChangeText={(value) => handleInputChange(value, "youtubeUrl")}
         />
@@ -129,6 +139,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_profile_of_company",
           })}
+          errorMessage={errors.companyDetails}
+          isError={!!errors.companyDetails}
           value={companyDetails}
           onChangeText={(value) => handleInputChange(value, "companyDetails")}
           isMandatory
@@ -143,6 +155,8 @@ const SignUpLastScreenUI = (props) => {
             id: "label.enter_your_website",
           })}
           value={website}
+          errorMessage={errors.website}
+          isError={!!errors.website}
           onChangeText={(value) => handleInputChange(value, "website")}
           isMandatory
         />
@@ -155,6 +169,9 @@ const SignUpLastScreenUI = (props) => {
           })}
           isMandatory
           isDropdown
+          onChangeValue={(value) =>
+            handleInputChange(value, "natureOfSupplier")
+          }
           options={NATURE_OF_SUPPLIER}
         />
         <CustomTextInput
@@ -164,6 +181,7 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_company_type",
           })}
+          onChangeValue={(value) => handleInputChange(value, "companyType")}
           options={COMPANY_TYPE_OPTIONS}
           isMandatory
           isDropdown
@@ -192,6 +210,7 @@ const SignUpLastScreenUI = (props) => {
         disableButtonText={intl.formatMessage({ id: "label.back" })}
         onPressDibale={onGoBack}
         onPressActive={() => handleSuccessModal(true)}
+        isNextDisabled={!allFieldsFilled()}
         activeButtonText={intl.formatMessage({ id: "label.sign_up" })}
       />
     </SignUpHeader>
@@ -202,11 +221,19 @@ SignUpLastScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
-  onClickNext: PropTypes.func.isRequired,
   handleToggle: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   handleSuccessModal: PropTypes.func.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
+  errors: PropTypes.object.isRequired,
+  facebookUrl: PropTypes.string.isRequired,
+  linkedInUrl: PropTypes.string.isRequired,
+  twitterUrl: PropTypes.string.isRequired,
+  youtubeUrl: PropTypes.string.isRequired,
+  website: PropTypes.string.isRequired,
+  companyDetails: PropTypes.string.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  allFieldsFilled: PropTypes.func.isRequired,
 };
 
 export default SignUpLastScreenUI;

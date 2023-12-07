@@ -1,6 +1,8 @@
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 
 export const numRegex = /^\d+$/;
+export const urlRegex = /(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -38,19 +40,19 @@ export const CURRENT_INDUSTRY_OPTIONS = [
 ];
 
 export const SALUTATION_OPTIONS = [
-  { label: "Mr.", value: "1" },
-  { label: "Ms", value: "2" },
-  { label: "Dr.", value: "3" },
+  { label: "Mr.", value: "Mr." },
+  { label: "Ms.", value: "Ms." },
+  { label: "Dr.", value: "Dr." },
 ];
 
 export const COMPANY_TYPE_OPTIONS = [
-  { label: "Exempt", value: "1" },
-  { label: "Nil Rated", value: "2" },
-  { label: "Bill of Supply", value: "3" },
-  { label: "Export", value: "4" },
-  { label: "SEZ", value: "5" },
-  { label: "Deemed Export", value: "6" },
-  { label: "Taxable", value: "7" },
+  { label: "Exempt", value: "exempt" },
+  { label: "Nil Rated", value: "nil rated" },
+  { label: "Bill of Supply", value: "bill of supply" },
+  { label: "Export", value: "export" },
+  { label: "SEZ", value: "sez" },
+  { label: "Deemed Export", value: "deemed export" },
+  { label: "Taxable", value: "taxan;e" },
 ];
 
 export const NATURE_OF_SUPPLIER = [
