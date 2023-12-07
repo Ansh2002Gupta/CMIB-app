@@ -183,7 +183,7 @@ const SignUpSecondScreenUI = (props) => {
         onPressDibale={onGoBack}
         onPressActive={onClickNext}
         hasIconRight
-        // isNextDisabled={!allFieldsFilled()}
+        isNextDisabled={!allFieldsFilled()}
         activeButtonText={intl.formatMessage({ id: "label.next" })}
       />
     </SignUpHeader>
