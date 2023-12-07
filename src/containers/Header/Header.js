@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { View, Image } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
+import { View, Image } from "@unthinkable/react-core-components";
 
 import images from "../../images";
 import styles from "./header.style";
