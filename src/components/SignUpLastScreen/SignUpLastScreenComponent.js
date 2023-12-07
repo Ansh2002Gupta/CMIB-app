@@ -9,7 +9,7 @@ import {
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
 import { urlRegex } from "../../constants/constants";
 
-const SignUpLastScreenComponent = () => {
+const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const initialDetails = signUpState.signUpDetail || [];
@@ -198,7 +198,7 @@ const SignUpLastScreenComponent = () => {
   };
 
   const onGoBack = () => {
-    navigate("/signupThirdScreen");
+    tabHandler("prev");
   };
 
   const handleToggle = (id) => {
