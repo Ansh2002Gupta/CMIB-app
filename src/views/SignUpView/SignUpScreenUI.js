@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import images from "../../images";
+
 import SignUpHeader from "../../containers/SignUpHeader/SignUpHeader";
 import SignUpWelcomeScreen from "../../containers/SignupScreens/SignUpWelcomeScreen/index";
 import SignUpSecondScreen from "../../containers/SignupScreens/SignUpSecondScreen/index";
 import SignUpThirdScreen from "../../containers/SignupScreens/SignUpThirdScreen/index";
 import SignUpLastScreen from "../../containers/SignupScreens/SignUpLastScreen/index";
+import images from "../../images";
 
 const SignUpScreenUI = ({
   intl,
@@ -19,6 +20,11 @@ const SignUpScreenUI = ({
       id: "label.welcome_to_sign_up",
       imageKey: "iconWalkthroughSignUpOne",
       component: SignUpWelcomeScreen,
+    },
+    {
+      id: "label.basic_detail",
+      imageKey: "iconWalkthroughSignUpTwo",
+      component: SignUpSecondScreen,
     },
   ];
 

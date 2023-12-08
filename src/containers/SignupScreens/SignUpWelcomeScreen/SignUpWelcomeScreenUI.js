@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FlatList, Text, View } from "@unthinkable/react-core-components";
-import style from "./SignUpWelcomeScreen.style";
-import CheckBox from "../../../components/CheckBox/CheckBox";
+
 import ButtonComponent from "../../../components/ButtonComponent/ButtonComponent";
+import CheckBox from "../../../components/CheckBox/CheckBox";
+import style from "./SignUpWelcomeScreen.style";
 
 const SignUpWelcomeScreenUI = (props) => {
   const {

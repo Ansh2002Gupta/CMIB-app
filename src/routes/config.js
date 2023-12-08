@@ -1,21 +1,16 @@
 import React from "react";
 
-import DashboardView from "../views/Dashboard";
 import ProfileView from "../views/Profile";
-import LoginForm from "../views/LoginForm";
 import Home from "../pages/Home";
-import Auth from "../pages/Auth";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import LoginScreen from "../views/LoginScreen/index";
 import ForgotPassword from "../views/ForgotPassword/index";
-
 import CreateNewPassword from "../views/CreateNewPassword/index";
 import SignUpScreen from "../views/SignUpView/index";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import ContentLayout from "../pages/ContentLayout";
 
-// const AuthWithPublicAccess = withPublicAccess(Auth);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
 const HomeWithPrivateAccess = withPrivateAccess(Home);

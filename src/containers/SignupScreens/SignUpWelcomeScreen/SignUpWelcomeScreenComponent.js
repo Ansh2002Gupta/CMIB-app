@@ -1,16 +1,14 @@
 import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
+import SignUpWelcomeScreenUI from "./SignUpWelcomeScreenUI";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
-import SignUpWelcomeScreenUI from "./SignUpWelcomeScreenUI";
 
 const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-
   const initialContactDetails = signUpState.signUpDetail.contact_details || [];
-
   const initialOptions = [
     { title: intl.formatMessage({ id: "label.ca_jobs" }), id: "ca-jobs" },
     {
@@ -38,11 +36,9 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
 
   const [contactDetails, setContactDetails] = useState(initialContactDetails);
   const [options, setOptions] = useState(initialOptions);
-
   const onClickNext = () => {
     const existingContactDetails =
       signUpState.signUpDetail.contact_details || [];
-
     const newContactDetails = contactDetails.filter(
       (detail) =>
         !existingContactDetails.some(
@@ -53,7 +49,6 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
     const details = {
       contact_details: [...existingContactDetails, ...newContactDetails],
     };
-
     signUpDispatch(setSignUpDetails(details));
     tabHandler("next");
   };

@@ -13,10 +13,8 @@ const useSaveLogo = () => {
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileUpload && setErrorWhileUpload("");
-
       const formData = new FormData();
       formData.append("logo", file);
-
       const res = await Http.post(`company/save-logo`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

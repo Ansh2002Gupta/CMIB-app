@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { useTheme } from "@unthinkable/react-theme";
+import { ActivityIndicator } from "@unthinkable/react-core-components";
 
 import LoginScreenUI from "./LoginScreenUI";
 import useLoginUser from "../../services/hooks/useLoginUser";
 import { validateEmail } from "../../constants/CommonFunctions";
-import { ActivityIndicator } from "@unthinkable/react-core-components";
 
 function LoginScreenComponent(props) {
   const navigate = useNavigate();

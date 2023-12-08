@@ -16,7 +16,6 @@ import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
 } from "../../../constants/constants";
-
 import style from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = (props) => {
