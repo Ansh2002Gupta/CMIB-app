@@ -1,19 +1,19 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
   Text,
   TouchableOpacity,
   ScrollView,
 } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
-import PropTypes from "prop-types";
 
+import ButtonComponent from "../../components/ButtonComponent";
+import CheckBox from "../../components/CheckBox/CheckBox";
+import CustomTextInput from "../../components/CustomTextInput";
+import FollowUsIcons from "../../components/FollowUsIcons";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
-import CustomTextInput from "../../components/CustomTextInput";
-import ButtonComponent from "../../components/ButtonComponent";
-import FollowUsIcons from "../../components/FollowUsIcons";
-import CheckBox from "../../components/CheckBox/CheckBox";
 import styles from "./Loginscreen.style";
 
 const LoginScreenUI = (props) => {
