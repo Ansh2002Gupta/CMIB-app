@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ScrollView, View, Text } from "@unthinkable/react-core-components";
 import style from "./SignUpThirdScreen.style";
-import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
-import CustomTextInput from "../../components/CustomTextInput";
-import { SALUTATION_OPTIONS } from "../../constants/constants";
+import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import CustomTextInput from "../../../components/CustomTextInput";
+import { SALUTATION_OPTIONS } from "../../../constants/constants";
 
 const SignUpThirdScreenUI = (props) => {
   const {
@@ -107,7 +107,7 @@ const SignUpThirdScreenUI = (props) => {
       <View style={style.buttonContainer}>
         <SaveCancelButton
           disableButtonText={intl.formatMessage({ id: "label.back" })}
-          onPressDibale={onGoBack}
+          onPressDisable={onGoBack}
           onPressActive={onClickNext}
           hasIconRight
           isNextDisabled={!allFieldsFilled()}

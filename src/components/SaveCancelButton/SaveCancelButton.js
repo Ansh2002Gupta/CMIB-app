@@ -13,7 +13,7 @@ const SaveCancelButton = (props) => {
   const {
     disableButtonText,
     activeButtonText,
-    onPressDibale,
+    onPressDisable,
     onPressActive,
     hasIconRight,
     isNextDisabled,
@@ -22,7 +22,7 @@ const SaveCancelButton = (props) => {
   return (
     <View style={styles.containerStyle}>
       <TouchableOpacity
-        onPress={onPressDibale}
+        onPress={onPressDisable}
         style={styles.disableButtonStyle}
       >
         <Image source={images.iconArrowLeft} />
@@ -48,9 +48,9 @@ const SaveCancelButton = (props) => {
 SaveCancelButton.propTypes = {
   disableButtonText: PropTypes.string.isRequired,
   activeButtonText: PropTypes.string.isRequired,
-  onPressDibale: PropTypes.func.isRequired,
-  onPressActive: PropTypes.func.isRequired,
-  hasIconRight: PropTypes.bool.isRequired,
+  onPressDisable: PropTypes.func,
+  onPressActive: PropTypes.func,
+  hasIconRight: PropTypes.bool,
   isNextDisabled: PropTypes.bool,
 };
 

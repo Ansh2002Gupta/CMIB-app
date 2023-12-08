@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 import style from "./SignUpSecondScreen.style";
-import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
-import CustomTextInput from "../../components/CustomTextInput";
+import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import CustomTextInput from "../../../components/CustomTextInput";
 import {
   ENTITY_OPTIONS,
   CURRENT_INDUSTRY_OPTIONS,
-} from "../../constants/constants";
+} from "../../../constants/constants";
 
 const SignUpSecondScreenUI = (props) => {
   const {
@@ -172,7 +172,7 @@ const SignUpSecondScreenUI = (props) => {
       </ScrollView>
       <SaveCancelButton
         disableButtonText={intl.formatMessage({ id: "label.back" })}
-        onPressDibale={onGoBack}
+        onPressDisable={onGoBack}
         onPressActive={onClickNext}
         hasIconRight
         isNextDisabled={!allFieldsFilled()}

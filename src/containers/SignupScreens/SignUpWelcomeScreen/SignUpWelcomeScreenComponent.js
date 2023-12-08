@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
-import { SignUpContext } from "../../globalContext/signUp/signUpProvider";
+import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 
-import { setSignUpDetails } from "../../globalContext/signUp/signUpActions";
+import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 
 import SignUpWelcomeScreenUI from "./SignUpWelcomeScreenUI";
 

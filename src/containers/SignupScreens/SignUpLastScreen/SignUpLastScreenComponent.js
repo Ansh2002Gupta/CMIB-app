@@ -1,13 +1,14 @@
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../routes";
-import { SignUpContext } from "../../globalContext/signUp/signUpProvider";
+import { useNavigate } from "../../../routes";
+
+import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
   resetSignUpDetails,
-} from "../../globalContext/signUp/signUpActions";
+} from "../../../globalContext/signUp/signUpActions";
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
-import { urlRegex } from "../../constants/constants";
+import { urlRegex } from "../../../constants/constants";
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
