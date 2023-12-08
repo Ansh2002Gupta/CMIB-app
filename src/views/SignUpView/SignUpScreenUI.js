@@ -22,7 +22,7 @@ const SignUpScreenUI = ({
       component: SignUpWelcomeScreen,
     },
     {
-      id: "label.basic_detail",
+      id: "label.basic_details",
       imageKey: "iconWalkthroughSignUpTwo",
       component: SignUpSecondScreen,
     },
