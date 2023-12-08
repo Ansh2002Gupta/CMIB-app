@@ -4,29 +4,38 @@ import Http from "../http-service";
 import { API_STATUS, STATUS_CODES } from "../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
-const useLoginUser = () => {
+const useSaveLogo = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
-  const [loginUserResult, setLoginUserResult] = useState([]);
-  const [errorWhileLoggingIn, setErrorWhileLoggingIn] = useState("");
+  const [fileUploadResult, setFileUploadResult] = useState([]);
+  const [errorWhileUpload, setErrorWhileUpload] = useState("");
 
-  const handleUserLogin = async (payload) => {
+  const handleFileUpload = async (file) => {
     try {
       setPostStatus(API_STATUS.LOADING);
-      errorWhileLoggingIn && setErrorWhileLoggingIn("");
-      const res = await Http.post(`company/login`, payload);
+      errorWhileUpload && setErrorWhileUpload("");
+
+      const formData = new FormData();
+      formData.append("logo", file);
+
+      const res = await Http.post(`company/save-logo`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
-        setLoginUserResult(res.data);
+        setFileUploadResult(res.data);
         return;
       }
       setPostStatus(API_STATUS.ERROR);
     } catch (err) {
       setPostStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
-        setErrorWhileLoggingIn(err.response?.data?.message);
+        setErrorWhileUpload(err.response?.data?.message);
         return;
       }
-      setErrorWhileLoggingIn(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setErrorWhileUpload(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     }
   };
 
@@ -35,14 +44,14 @@ const useLoginUser = () => {
   const isError = postStatus === API_STATUS.ERROR;
 
   return {
-    loginUserResult,
-    errorWhileLoggingIn,
+    fileUploadResult,
+    errorWhileUpload,
     postStatus,
-    handleUserLogin,
+    handleFileUpload,
     isError,
     isLoading,
     isSuccess,
   };
 };
 
-export default useLoginUser;
+export default useSaveLogo;
