@@ -4,10 +4,10 @@ import { Button } from "@unthinkable/react-button";
 import { View, Text, TextInput } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../../globalContext/auth/authProvider";
+import { AuthService, StorageService } from "./../../services";
 import { setAuth } from "./../../globalContext/auth/authActions";
 import { useNavigate } from "../../routes";
-import { AuthService, StorageService } from "./../../services";
-
+import { navigations } from "../../constants/routeNames";
 import styles from "./loginForm.style";
 
 function useLoginForm(
@@ -21,7 +21,7 @@ function useLoginForm(
   const [isProcessing, setIsProcessing] = useState(false);
   const [, authDispatch] = useContext(AuthContext);
   const onClickSignUp = () => {
-    navigate("/signup");
+    navigate(navigations.Dashboard);
   };
   const onLogin = async () => {
     setIsProcessing(true);
@@ -30,7 +30,7 @@ function useLoginForm(
     await StorageService.set("auth", response);
     authDispatch(setAuth(response));
     setIsProcessing(false);
-    navigate("/");
+    navigate(navigations.Dashboard);
   };
   return {
     formValues,

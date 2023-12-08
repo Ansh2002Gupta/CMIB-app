@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { Outlet } from "../routes";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import MainLayout from "../layouts/MainLayout";
-import HeaderContainer from "../containers/Header";
 import BottomBar from "../containers/BottomBar";
+import HeaderContainer from "../containers/Header";
+import MainLayout from "../layouts/MainLayout";
 
 function Home() {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -13,7 +13,7 @@ function Home() {
   return (
     <MainLayout
       header={<HeaderContainer />}
-      menu={!isWebView ? <BottomBar /> : null}
+      menu={<BottomBar />}
       content={<Outlet />}
     />
   );

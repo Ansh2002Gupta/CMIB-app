@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
+
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
+import { navigations } from "../../../constants/routeNames";
 
 const SignUpLastScreenComponent = () => {
   const intl = useIntl();
@@ -47,11 +49,11 @@ const SignUpLastScreenComponent = () => {
 
   const onClickGoToLogin = () => {
     handleSuccessModal(false);
-    navigate("/");
+    navigate(navigations.Login);
   };
 
   const onGoBack = () => {
-    navigate("/signupThirdScreen");
+    navigate(navigations.SignupThirdScreen);
   };
 
   const handleToggle = (id) => {
@@ -65,7 +67,7 @@ const SignUpLastScreenComponent = () => {
   };
 
   const onClickNext = () => {
-    // navigate("/signupThirdScreen");
+    navigate(navigations.SignupThirdScreen);
   };
 
   return (

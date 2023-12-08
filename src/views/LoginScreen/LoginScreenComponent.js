@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
 import { useTheme } from "@unthinkable/react-theme";
 
 import LoginScreenUI from "./LoginScreenUI";
-import { useNavigate } from "../../routes";
 import useLoginUser from "../../services/hooks/useLoginUser";
+import { navigations } from "../../constants/routeNames";
 import { validateEmail } from "../../constants/CommonFunctions";
-import { ActivityIndicator } from "@unthinkable/react-core-components";
 
 function LoginScreenComponent(props) {
   const navigate = useNavigate();
@@ -18,8 +18,7 @@ function LoginScreenComponent(props) {
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
-  const { loginUserResult, handleUserLogin, isLoading, errorWhileLoggingIn } =
-    useLoginUser();
+  const { handleUserLogin, isLoading, errorWhileLoggingIn } = useLoginUser();
 
   const [options, setOptions] = useState([
     {
@@ -40,25 +39,26 @@ function LoginScreenComponent(props) {
   };
 
   const onForgotPasswordClick = async () => {
-    navigate("/forgotPassword");
+    navigate(navigations.ForgotPassword);
   };
 
   const onCreateNewPasswordClick = async () => {
-    navigate("/signUp");
+    navigate(navigations.Signup);
   };
   const toggleUser = (val) => {
     setActive(val);
   };
 
   const onLogin = () => {
-    let error = validateEmail(userName);
-    if (error) {
-      setErrorMessage(error);
-      return;
-    } else {
-      setErrorMessage("");
-      handleUserLogin({ email: userName, password: password });
-    }
+    // let error = validateEmail(userName);
+    // if (error) {
+    //   setErrorMessage(error);
+    //   return;
+    // } else {
+    //   setErrorMessage("");
+    //   handleUserLogin({ email: userName, password: password });
+    // }
+    navigate(navigations.LoginForm);
   };
 
   const onChangePassword = (val) => {

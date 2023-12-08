@@ -38,7 +38,7 @@ import iconActiveRound1 from "../../public/images/iconActiveRound1/iconActiveRou
 import iconActiveRound2 from "../../public/images/iconActiveRound2/iconActiveRound2.png";
 import iconActiveMyaccount from "../../public/images/iconActiveMyaccount/iconActiveMyaccount.png";
 
-export default {
+const images = {
   avatar,
   logo,
   sun,
@@ -79,3 +79,5 @@ export default {
   iconActiveRound2,
   iconActiveMyaccount,
 };
+
+export default images;

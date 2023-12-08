@@ -12,3 +12,11 @@ export const STATUS_CODES = {
   NOT_FOUND: 404,
   UNAUTHORIZED_USER: 401
 };
+
+export const ACCOUNT_TABS ={
+  DASHBOARD:"dashboard",
+  PROFILE:"profile",
+  ROUND_ONE:"round-one",
+  ROUND_TWO:"round-two",
+
+}

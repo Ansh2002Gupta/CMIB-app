@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
+
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
+import { navigations } from "../../constants/routeNames";
 
 function CreateNewPasswordComponent(props) {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ function CreateNewPasswordComponent(props) {
   const [error, setError] = useState("");
 
   const onClickGoToLogin = () => {
-    navigate("/");
+    navigate(navigations.Login);
   };
 
   const onChangePasswordInput = (val) => {
@@ -22,11 +24,7 @@ function CreateNewPasswordComponent(props) {
     setConfirmNewPassword(val);
   };
 
-  const handleSubmit = () => {
-    // if (validatePassword()) {
-    //   console.log("Password is valid and submitted!");
-    // }
-  };
+  const handleSubmit = () => {};
   return (
     <CreateNewPasswordUI
       handleSubmit={handleSubmit}

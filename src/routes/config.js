@@ -1,32 +1,32 @@
 import React from "react";
 
+import ContentLayout from "../pages/ContentLayout";
+import CreateNewPassword from "../views/CreateNewPassword/index";
 import DashboardView from "../views/Dashboard";
-import ProfileView from "../views/Profile";
-import LoginForm from "../views/LoginForm";
-import Round1 from "../views/Round1View";
-import Round2 from "../views/Round2View";
+import ForgotPassword from "../views/ForgotPassword/index";
 import Home from "../pages/Home";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
+import LoginForm from "../views/LoginForm";
 import LoginScreen from "../views/LoginScreen/index";
-import ForgotPassword from "../views/ForgotPassword/index";
-
-import CreateNewPassword from "../views/CreateNewPassword/index";
+import ProfileView from "../views/Profile";
+import RoundOne from "../views/RoundOneView";
+import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUp/SignUpWelcomeScreen/index";
 import SignUpSecondScreen from "../views/SignUp/SignUpSecondScreen/index";
 import SignUpThirdScreen from "../views/SignUp/SignUpThirdScreen/index";
 import SignUpLastScreen from "../views/SignUp/SignUpLastScreen/index";
+import { navigations } from "../constants/routeNames";
+
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
-import ContentLayout from "../pages/ContentLayout";
 
-// const AuthWithPublicAccess = withPublicAccess(Auth);
+const HomeWithPrivateAccess = withPrivateAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
-const HomeWithPrivateAccess = withPrivateAccess(Home);
 
 const config = [
   {
-    pagePath: "/",
+    pagePath: navigations.Login,
     element: <LoginWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -37,7 +37,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/profile",
+    pagePath: navigations.Profile,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
@@ -48,7 +48,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/Dashboard",
+    pagePath: navigations.Dashboard,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
@@ -59,29 +59,29 @@ const config = [
     ],
   },
   {
-    pagePath: "/Round1",
+    pagePath: navigations.RoundOne,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {
         viewPath: "",
-        element: <Round1 />, // view
+        element: <RoundOne />, // view
       },
     ],
   },
   {
-    pagePath: "/Round2",
+    pagePath: navigations.RoundTwo,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {
         viewPath: "",
-        element: <Round2 />, // view
+        element: <RoundTwo />, // view
       },
     ],
   },
   {
-    pagePath: "/forgotPassword",
+    pagePath: navigations.ForgotPassword,
     element: <LoginWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -92,7 +92,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/createNewPassword",
+    pagePath: navigations.CreateNewPassword,
     element: <LoginWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -103,7 +103,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/signup",
+    pagePath: navigations.Signup,
     element: <SignUpWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -114,7 +114,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/signupSecondScreen",
+    pagePath: navigations.SignupSecondScreen,
     element: <SignUpWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -125,7 +125,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/loginForm",
+    pagePath: navigations.LoginForm,
     element: <LoginForm />, // Page
     views: [
       // array of views under Page route
@@ -136,7 +136,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/signupThirdScreen",
+    pagePath: navigations.SignupThirdScreen,
     element: <SignUpWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -147,7 +147,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/signupLastScreen",
+    pagePath: navigations.SignupLastScreen,
     element: <SignUpWithPublicAccess />, // Page
     views: [
       // array of views under Page route

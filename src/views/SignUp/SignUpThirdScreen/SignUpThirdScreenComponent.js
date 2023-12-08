@@ -1,6 +1,8 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
+
+import { navigations } from "../../../constants/routeNames";
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
 
 const SignUpThirdScreenComponent = () => {
@@ -9,15 +11,15 @@ const SignUpThirdScreenComponent = () => {
   const navigate = useNavigate();
 
   const onClickGoToLogin = () => {
-    navigate("/");
+    navigate(navigations.Login);
   };
 
   const onGoBack = () => {
-    navigate("/signupSecondScreen");
+    navigate(navigations.SignupSecondScreen);
   };
 
   const onClickNext = () => {
-    navigate("/signupLastScreen");
+    navigate(navigations.SignupLastScreen);
   };
 
   return (

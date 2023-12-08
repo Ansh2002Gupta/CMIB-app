@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
 
 import SignUpWelcomeScreenUI from "./SignUpWelcomeScreenUI";
+import { navigations } from "../../../constants/routeNames";
 
 const SignUpScreenWelcomeComponent = () => {
   const intl = useIntl();
@@ -10,11 +11,11 @@ const SignUpScreenWelcomeComponent = () => {
   const navigate = useNavigate();
 
   const onClickGoToLogin = () => {
-    navigate("/");
+    navigate(navigations.Login);
   };
 
   const onClickNext = () => {
-    navigate("/signupSecondScreen");
+    navigate(navigations.SignupSecondScreen);
   };
 
   return (

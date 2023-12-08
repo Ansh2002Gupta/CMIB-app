@@ -50,7 +50,7 @@ const iconMyaccount = "images/iconMyaccount/iconMyaccount.png";
 const iconActiveMyaccount =
   "images/iconActiveMyaccount/iconActiveMyaccount.png";
 
-export default {
+const images = {
   avatar,
   logo,
   sun,
@@ -95,3 +95,5 @@ export default {
   iconMyaccount,
   iconActiveMyaccount,
 };
+
+export default images;
