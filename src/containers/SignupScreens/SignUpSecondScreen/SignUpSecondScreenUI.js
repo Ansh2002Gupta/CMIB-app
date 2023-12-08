@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ScrollView, View } from "@unthinkable/react-core-components";
-import style from "./SignUpSecondScreen.style";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import CustomTextInput from "../../../components/CustomTextInput";
 import {
   ENTITY_OPTIONS,
   CURRENT_INDUSTRY_OPTIONS,
 } from "../../../constants/constants";
+import style from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = (props) => {
   const {

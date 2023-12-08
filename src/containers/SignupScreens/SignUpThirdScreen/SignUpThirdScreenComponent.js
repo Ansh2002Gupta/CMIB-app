@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
+
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../constants/CommonFunctions";
 import { numRegex } from "../../../constants/constants";
