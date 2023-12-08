@@ -34,13 +34,13 @@ const useForgotPassword = () => {
   const isSuccess = postStatus === API_STATUS.SUCCESS;
   const isError = postStatus === API_STATUS.ERROR;
   return {
-    forgotPasswordResult,
     errorWhileResetPassword,
-    postStatus,
+    forgotPasswordResult,
     handleForgotPassword,
     isError,
     isLoading,
     isSuccess,
+    postStatus,
   };
 };
 

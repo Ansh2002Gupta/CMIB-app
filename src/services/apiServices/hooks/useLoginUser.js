@@ -38,13 +38,13 @@ const useLoginUser = () => {
   const isError = postStatus === API_STATUS.ERROR;
 
   return {
-    loginUserResult,
     errorWhileLoggingIn,
-    postStatus,
     handleUserLogin,
     isError,
     isLoading,
     isSuccess,
+    loginUserResult,
+    postStatus,
   };
 };
 
