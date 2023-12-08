@@ -7,35 +7,45 @@ import SignUpSecondScreen from "../../containers/SignupScreens/SignUpSecondScree
 import SignUpThirdScreen from "../../containers/SignupScreens/SignUpThirdScreen/index";
 import SignUpLastScreen from "../../containers/SignupScreens/SignUpLastScreen/index";
 
-const tabConfig = [
-  {
-    id: "label.welcome_to_sign_up",
-    imageKey: "iconWalkthroughSignUpOne",
-    component: SignUpWelcomeScreen,
-  },
-  {
-    id: "label.basic_details",
-    imageKey: "iconWalkthroughSignUpTwo",
-    component: SignUpSecondScreen,
-  },
-  {
-    id: "label.for_new_ca_placement",
-    imageKey: "iconWalkthroughSignUpThree",
-    component: SignUpThirdScreen,
-  },
-  {
+const SignUpScreenUI = ({
+  intl,
+  onClickGoToLogin,
+  activeTab,
+  onHandleTab,
+  selectedContactDetails,
+}) => {
+  let tabConfig = [
+    {
+      id: "label.welcome_to_sign_up",
+      imageKey: "iconWalkthroughSignUpOne",
+      component: SignUpWelcomeScreen,
+    },
+  ];
+
+  selectedContactDetails.forEach((contactDetail, index) => {
+    tabConfig.push({
+      id: "label.contact_personal_details",
+      imageKey: "iconWalkthroughSignUpThree",
+      component: SignUpThirdScreen,
+      module: contactDetail.module,
+      index: index,
+    });
+  });
+
+  tabConfig.push({
     id: "label.other_details",
     imageKey: "iconWalkthroughSignUpLast",
     component: SignUpLastScreen,
-  },
-];
+  });
 
-const SignUpScreenUI = ({ intl, onClickGoToLogin, activeTab, onHandleTab }) => {
+  const activeTabIndex = Math.min(activeTab, tabConfig.length - 1);
   const {
     id,
     imageKey,
     component: ActiveTabComponent,
-  } = tabConfig[activeTab] || tabConfig[0];
+    module,
+    index,
+  } = tabConfig[activeTabIndex];
   const headerText = intl.formatMessage({ id });
   const image = images[imageKey];
 
@@ -47,7 +57,11 @@ const SignUpScreenUI = ({ intl, onClickGoToLogin, activeTab, onHandleTab }) => {
         onClickGoToLogin={onClickGoToLogin}
         image={image}
       />
-      <ActiveTabComponent tabHandler={onHandleTab} />
+      <ActiveTabComponent
+        tabHandler={onHandleTab}
+        module={module}
+        index={index}
+      />
     </>
   );
 };
@@ -57,6 +71,7 @@ SignUpScreenUI.propTypes = {
   onClickGoToLogin: PropTypes.func.isRequired,
   onHandleTab: PropTypes.func.isRequired,
   activeTab: PropTypes.number.isRequired,
+  selectedContactDetails: PropTypes.array.isRequired,
 };
 
 export default SignUpScreenUI;

@@ -61,6 +61,10 @@ const locale = {
   "label.source_of_info":
     "Source of information about the ICAI Career Ascent programme",
   "label.for_new_ca_placement": "For Newly Qualified CA's Placement",
+  "label.ca_jobs": "For CA Jobs",
+  "label.for_overseas_placements": "For Overseas placements",
+  "label.for_career_ascents": "For Career Ascents",
+  "label.for_women_placements": "For Women Placements",
   "label.contact_personal_designation": "Contact Person Designation",
   "label.salutation": "Salutation",
   "label.contact_person_name": "Contact Person Name",

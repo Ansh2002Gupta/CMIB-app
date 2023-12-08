@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 
@@ -8,22 +8,24 @@ import { numRegex } from "../../../constants/constants";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
 
-const SignUpThirdScreenComponent = ({ tabHandler }) => {
+const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const initialContactDetails = signUpState.signUpDetail.contact_details || [];
 
   const [salutation, setSalutation] = useState(
-    initialContactDetails[0]?.salutation || ""
+    initialContactDetails[index]?.salutation || ""
   );
-  const [name, setName] = useState(initialContactDetails[0]?.name || "");
+  const [name, setName] = useState(initialContactDetails[index]?.name || "");
   const [designation, setDesignation] = useState(
-    initialContactDetails[0]?.designation || ""
+    initialContactDetails[index]?.designation || ""
   );
   const [mobileNo, setMobileNo] = useState(
-    initialContactDetails[0]?.mobile_number || ""
+    initialContactDetails[index]?.mobile_number || ""
   );
-  const [emailId, setEmailId] = useState(initialContactDetails[0]?.email || "");
+  const [emailId, setEmailId] = useState(
+    initialContactDetails[index]?.email || ""
+  );
 
   const [errors, setErrors] = useState({
     name: "",
@@ -32,6 +34,44 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
     mobileNo: "",
     emailId: "",
   });
+
+  useEffect(() => {
+    setSalutation(initialContactDetails[index].salutation || "");
+    setName(initialContactDetails[index].name || "");
+    setDesignation(initialContactDetails[index].designation || "");
+    setMobileNo(initialContactDetails[index].mobile_number || "");
+    setEmailId(initialContactDetails[index].email || "");
+
+    setErrors({
+      name: "",
+      salutation: "",
+      designation: "",
+      mobileNo: "",
+      emailId: "",
+    });
+  }, [index, module, initialContactDetails]);
+
+  let headerText = "";
+  switch (module) {
+    case "ca-jobs":
+      headerText = intl.formatMessage({ id: "label.ca_jobs" });
+      break;
+    case "newly-qualified-ca-placememt":
+      headerText = intl.formatMessage({ id: "label.for_new_ca_placement" });
+      break;
+    case "overseas-placements":
+      headerText = intl.formatMessage({ id: "label.for_overseas_placements" });
+      break;
+    case "career-ascents":
+      headerText = intl.formatMessage({ id: "label.for_career_ascents" });
+      break;
+    case "women-placement":
+      headerText = intl.formatMessage({ id: "label.for_women_placements" });
+      break;
+    default:
+      headerText = intl.formatMessage({ id: "label.for_ca_jobs" });
+      break;
+  }
 
   const allFieldsFilled = () => {
     const requiredFields = [name, salutation, designation, mobileNo, emailId];
@@ -88,9 +128,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
       const existingContactDetails =
         signUpState.signUpDetail.contact_details || [];
 
-      if (
-        existingContactDetails.some((detail) => detail.module === "ca-jobs")
-      ) {
+      if (existingContactDetails.some((detail) => detail.module === module)) {
         const details = {
           name: name,
           email: emailId,
@@ -99,7 +137,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
           designation: designation,
         };
         const caJobsIndex = existingContactDetails.findIndex(
-          (detail) => detail.module === "ca-jobs"
+          (detail) => detail.module === module
         );
         if (caJobsIndex !== -1) {
           existingContactDetails[caJobsIndex] = {
@@ -153,6 +191,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
       designation={designation}
       allFieldsFilled={allFieldsFilled}
       errors={errors}
+      headerText={headerText}
     />
   );
 };

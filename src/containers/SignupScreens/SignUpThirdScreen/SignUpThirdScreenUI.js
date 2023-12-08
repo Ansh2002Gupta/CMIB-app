@@ -19,6 +19,7 @@ const SignUpThirdScreenUI = (props) => {
     name,
     allFieldsFilled,
     errors,
+    headerText,
   } = props;
 
   return (
@@ -27,9 +28,7 @@ const SignUpThirdScreenUI = (props) => {
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
       >
-        <Text style={style.headerText}>
-          {intl.formatMessage({ id: "label.for_new_ca_placement" })}
-        </Text>
+        <Text style={style.headerText}>{headerText}</Text>
         <View style={style.inputContainer}>
           <CustomTextInput
             label={intl.formatMessage({
@@ -130,6 +129,7 @@ SignUpThirdScreenUI.propTypes = {
   designation: PropTypes.string.isRequired,
   allFieldsFilled: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  headerText: PropTypes.string.isRequired,
 };
 
 export default SignUpThirdScreenUI;
