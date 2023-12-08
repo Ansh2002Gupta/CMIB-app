@@ -6,16 +6,18 @@ import {
   Text,
   FlatList,
 } from "@unthinkable/react-core-components";
-import style from "./SignUpLastScreen.style";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+
 import CheckBox from "../../../components/CheckBox/CheckBox";
-import UploadImage from "../../../components/UploadImage/UploadImage";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
+import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import UploadImage from "../../../components/UploadImage/UploadImage";
 import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
 } from "../../../constants/constants";
+
+import style from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = (props) => {
   const {
