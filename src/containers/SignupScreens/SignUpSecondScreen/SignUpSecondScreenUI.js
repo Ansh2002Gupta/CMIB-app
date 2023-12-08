@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ScrollView, View } from "@unthinkable/react-core-components";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+
 import CustomTextInput from "../../../components/CustomTextInput";
+import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import {
   ENTITY_OPTIONS,
   CURRENT_INDUSTRY_OPTIONS,
