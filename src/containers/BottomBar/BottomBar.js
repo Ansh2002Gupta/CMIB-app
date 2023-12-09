@@ -10,7 +10,8 @@ import {
 import LocaleSwitcher from "../../components/LocaleSwitcher";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
 import { TwoRow, FourColumn } from "../../core/layouts";
-import { useNavigate, useLocation } from "../../routes";
+import { useLocation } from "../../routes";
+import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { ACCOUNT_TABS } from "../../constants/constants";
 import { navigations } from "../../constants/routeNames";
 import images from "../../images";
@@ -20,9 +21,9 @@ import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 function BottomBar() {
   const icons = useTheme("icons");
   const intl = useIntl();
+  const { navigateScreen } = useNavigateScreen();
   const { logo, homeOutline, homeSolid, profileOutline, profileSolid } = icons;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const navigate = useNavigate();
   const { pathname: currrentRoute } = useLocation();
   const [bottomBarActive, setBottomBarActive] = useState(
     ACCOUNT_TABS.DASHBOARD
@@ -30,7 +31,7 @@ function BottomBar() {
 
   const navigateTo = (active, route) => {
     setBottomBarActive(active);
-    navigate(route);
+    navigateScreen(route);
   };
 
   const homeIcon =
