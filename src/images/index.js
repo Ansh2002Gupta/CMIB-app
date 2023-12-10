@@ -49,6 +49,11 @@ const iconActiveRound2 = "images/iconActiveRound2/iconActiveRound2.png";
 const iconMyaccount = "images/iconMyaccount/iconMyaccount.png";
 const iconActiveMyaccount =
   "images/iconActiveMyaccount/iconActiveMyaccount.png";
+const iconAddApplicationForm =
+  "images/iconAddApplicationForm/iconAddApplicationForm.png";
+const iconHiringProcess = "images/iconHiringProcess/iconHiringProcess.png";
+const iconDownloadDetails =
+  "images/iconDownloadDetails/iconDownloadDetails.png";
 
 export default {
   avatar,
@@ -94,4 +99,7 @@ export default {
   iconRound1,
   iconMyaccount,
   iconActiveMyaccount,
+  iconAddApplicationForm,
+  iconHiringProcess,
+  iconDownloadDetails,
 };

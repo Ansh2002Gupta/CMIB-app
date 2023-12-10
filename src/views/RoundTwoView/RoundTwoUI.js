@@ -2,9 +2,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { View, Text } from "@unthinkable/react-core-components";
 
-import styles from "./round2.style";
+import styles from "./RoundTwo.style";
 
-function Round2(props) {
+function RoundTwoUI(props) {
   const intl = useIntl();
 
   return (
@@ -16,4 +16,4 @@ function Round2(props) {
   );
 }
 
-export default Round2;
+export default RoundTwoUI;

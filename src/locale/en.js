@@ -133,6 +133,15 @@ const locale = {
   "label.save": "Save",
   "label.round1": "Round 1",
   "label.round2": "Round 2",
+  "label.add_application_form_text": "Add Application Form",
+  "label.add_application_form_description_text":
+    "Streamlined application form designed for quick and easy submission.",
+  "label.hiring_process_text": "Shortlisting, Consent Marking & Interviews",
+  "label.hiring_process_description":
+    "Streamlining the hiring process with shortlisting, consent marking, and interviews.",
+  "label.download_details_text": "Roster Details and Download",
+  "label.download_details_description":
+    "Access and download comprehensive roster details effortlessly.",
 };
 
 export default locale;
