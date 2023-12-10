@@ -190,8 +190,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     }
   };
 
-  console.log(signUpState);
-
   const onClickGoToLogin = () => {
     handleSuccessModal(false);
     signUpDispatch(resetSignUpDetails());
