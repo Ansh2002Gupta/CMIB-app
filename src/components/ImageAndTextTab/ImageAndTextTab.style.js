@@ -1,30 +1,35 @@
 import colors from "../../assets/colors";
 
 const style = {
-  borderStyle: {
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
-    marginLeft: -16,
-    marginRight: -16,
-  },
   activeStyleDashboard: {
     borderColor: colors.darkBlue,
     borderBottomWidth: 2,
     marginBottom: -1,
     marginLeft: 10,
   },
-  activeStyleMyaccount: {
+  activeStyle: {
     borderColor: colors.darkBlue,
     borderBottomWidth: 2,
     marginBottom: -1,
-    marginRight: 10,
+  },
+  inActiveStyle: {
+    borderColor: colors.white,
+    borderBottomWidth: 1,
   },
   buttonStyle: {
     alignItems: "center",
     padding: 16,
   },
-  sectionViewStyle: { width: 48, height: 48, padding: 15 },
-  imageStyle: { width: "100%", height: "100%" },
+  inActiveTextStyle: {
+    fontSize: 12,
+    fontWeight: "500",
+    color: colors.darkGrey,
+  },
+  activeTextStyle: {
+    fontSize: 12,
+    fontWeight: "500",
+    color: colors.darkBlue,
+  },
 };
 
 export default style;
