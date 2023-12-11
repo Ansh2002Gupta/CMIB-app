@@ -3,7 +3,6 @@ import { Outlet } from "../routes";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import BottomBar from "../containers/BottomBar";
-import HeaderContainer from "../containers/Header";
 import MainLayout from "../layouts/MainLayout";
 
 function Home() {
@@ -11,11 +10,7 @@ function Home() {
   const isWebView = currentBreakpoint !== "xs";
 
   return (
-    <MainLayout
-      header={<HeaderContainer />}
-      menu={<BottomBar />}
-      content={<Outlet />}
-    />
+    <MainLayout menu={!isWebView ? <BottomBar /> : null} content={<Outlet />} />
   );
 }
 

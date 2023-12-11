@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
 import { useTheme } from "@unthinkable/react-theme";
 
 import LoginScreenUI from "./LoginScreenUI";
@@ -50,15 +50,14 @@ function LoginScreenComponent(props) {
   };
 
   const onLogin = () => {
-    // let error = validateEmail(userName);
-    // if (error) {
-    //   setErrorMessage(error);
-    //   return;
-    // } else {
-    //   setErrorMessage("");
-    //   handleUserLogin({ email: userName, password: password });
-    // }
-    navigate(navigations.LOGIN_FORM);
+    let error = validateEmail(userName);
+    if (error) {
+      setErrorMessage(error);
+      return;
+    } else {
+      setErrorMessage("");
+      handleUserLogin({ email: userName, password: password });
+    }
   };
 
   const onChangePassword = (val) => {

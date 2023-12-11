@@ -1,8 +1,8 @@
 import React from "react";
 import BaseLayout from "../Base";
 import PropTypes from "prop-types";
-import layoutStyle from "./fourColumn.style";
 
+import layoutStyle from "./fourColumn.style";
 function FourColumn({
   style,
   sectionStyle,
@@ -45,8 +45,7 @@ FourColumn.defaultProps = {
 
 FourColumn.propTypes = {
   style: PropTypes.object,
-  leftSectionStyle: PropTypes.object,
-  rightSectionStyle: PropTypes.object,
+  sectionStyle: PropTypes.object,
   isLeftFillSpace: PropTypes.bool,
   isRightFillSpace: PropTypes.bool,
   firstSection: PropTypes.node,
