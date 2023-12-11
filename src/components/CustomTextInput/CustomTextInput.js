@@ -143,7 +143,7 @@ CustomTextInput.propTypes = {
   isMobileNumber: PropTypes.bool,
   isError: PropTypes.bool,
   errorMessage: PropTypes.string,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   dropdownStyle: PropTypes.object,
   eyeImage: PropTypes.bool,
   isPassword: PropTypes.bool,

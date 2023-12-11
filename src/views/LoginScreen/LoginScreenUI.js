@@ -78,7 +78,7 @@ const LoginScreenUI = (props) => {
       <View
         style={{
           ...styles.mainView,
-          ...(isWebView ? styles.gapForWebView : {}),
+          ...(isWebView && styles.gapForWebView),
         }}
       >
         <View style={styles.container}>
@@ -87,16 +87,14 @@ const LoginScreenUI = (props) => {
             label={intl.formatMessage({ id: "label.secure_login_access" })}
             customTextStyle={isWebView ? getResponsiveStyles("label.cmib") : {}}
             customSecondHeadingStyles={
-              isWebView ? styles.webView.subHeadingText : {}
+              isWebView && styles.webView.subHeadingText
             }
-            customContainerStyles={
-              isWebView ? styles.webView.headerContainer : {}
-            }
+            customContainerStyles={isWebView && styles.webView.headerContainer}
           />
           <View
             style={{
               ...styles.buttonView,
-              ...(isWebView ? styles.webView.extraMargin : {}),
+              ...(isWebView && styles.webView.extraMargin),
             }}
           >
             <TouchableOpacity
@@ -119,7 +117,7 @@ const LoginScreenUI = (props) => {
                     ? styles.inActiveStyle
                     : {
                         ...styles.activeStyle,
-                        ...(isWebView ? styles.webView.activeTab : {}),
+                        ...(isWebView && styles.webView.activeTab),
                       }
                 }
               />
@@ -146,7 +144,7 @@ const LoginScreenUI = (props) => {
                     ? styles.inActiveStyle
                     : {
                         ...styles.activeStyle,
-                        ...(isWebView ? styles.webView.activeTab : {}),
+                        ...(isWebView && styles.webView.activeTab),
                       }
                 }
               />
@@ -155,7 +153,7 @@ const LoginScreenUI = (props) => {
           <View
             style={{
               ...styles.borderStyle,
-              ...(isWebView ? styles.webView.tabsBottomGreyLine : {}),
+              ...(isWebView && styles.webView.tabsBottomGreyLine),
             }}
           />
         </View>
@@ -163,17 +161,17 @@ const LoginScreenUI = (props) => {
           <ScrollView
             contentContainerStyle={{
               ...styles.companyView,
-              ...(isWebView ? styles.webView.backGroundColor : {}),
+              ...(isWebView && styles.webView.backGroundColor),
             }}
           >
             <View
               style={{
-                ...(isWebView ? styles.webView.backGroundColor : {}),
+                ...(isWebView && styles.webView.backGroundColor),
               }}
             >
               <View
                 style={{
-                  ...(isWebView ? styles.webView.backGroundColor : {}),
+                  ...(isWebView && styles.webView.backGroundColor),
                 }}
               >
                 <CustomTextInput
@@ -186,11 +184,9 @@ const LoginScreenUI = (props) => {
                   errorMessage={errorMessage}
                   isError={!!errorMessage}
                   isMandatory
-                  customLabelStyle={
-                    isWebView ? styles.webView.inputLabelText : {}
-                  }
+                  customLabelStyle={isWebView && styles.webView.inputLabelText}
                   customTextInputContainer={
-                    isWebView ? styles.webView.inputTextBox : {}
+                    isWebView && styles.webView.inputTextBox
                   }
                 />
                 <CustomTextInput
@@ -203,11 +199,9 @@ const LoginScreenUI = (props) => {
                   isMandatory
                   eyeImage={true}
                   isPassword={true}
-                  customLabelStyle={
-                    isWebView ? styles.webView.inputLabelText : {}
-                  }
+                  customLabelStyle={isWebView && styles.webView.inputLabelText}
                   customTextInputContainer={
-                    isWebView ? styles.webView.inputTextBox : {}
+                    isWebView && styles.webView.inputTextBox
                   }
                 />
                 <View style={styles.forgotPasswordView}>
@@ -223,7 +217,7 @@ const LoginScreenUI = (props) => {
                     <Text
                       style={{
                         ...styles.forgotPasswordText,
-                        ...(isWebView ? styles.webView.forgotPasswordText : {}),
+                        ...(isWebView && styles.webView.forgotPasswordText),
                       }}
                     >
                       {intl.formatMessage({ id: "label.forgot_password" })}
@@ -236,20 +230,20 @@ const LoginScreenUI = (props) => {
                     onPress={onLogin}
                     disabled={loginDisabled}
                     displayLoader={isLoading}
-                    customTitleStyle={isWebView ? styles.webView.loginText : {}}
+                    customTitleStyle={isWebView && styles.webView.loginText}
                   />
                 </View>
               </View>
-              {errorWhileLoggingIn ? (
+              {errorWhileLoggingIn && (
                 <View style={styles.errorView}>
                   <Text style={styles.errorText}>{errorWhileLoggingIn}</Text>
                 </View>
-              ) : null}
+              )}
               <View style={styles.accountView}>
                 <Text
                   style={{
                     ...styles.accountText,
-                    ...(isWebView ? styles.webView.dontHaveAccountText : {}),
+                    ...(isWebView && styles.webView.dontHaveAccountText),
                   }}
                 >
                   {intl.formatMessage({ id: "label.dont_have_account" })}
@@ -258,7 +252,7 @@ const LoginScreenUI = (props) => {
                   <Text
                     style={{
                       ...styles.newAccountText,
-                      ...(isWebView ? styles.webView.createNewAccountText : {}),
+                      ...(isWebView && styles.webView.createNewAccountText),
                     }}
                   >
                     {intl.formatMessage({ id: "label.create_new_account" })}
