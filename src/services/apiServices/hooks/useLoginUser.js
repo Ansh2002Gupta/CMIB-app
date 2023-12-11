@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-import Http from "../http-service";
-import { API_STATUS, STATUS_CODES } from "../../constants/constants";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import Http from "../../http-service";
+import Storage from "../../storage-service";
+import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useLoginUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
@@ -16,6 +17,8 @@ const useLoginUser = () => {
       const res = await Http.post(`company/login`, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
+        const authToken = res.data.data.access_token;
+        await Storage.set('authToken', authToken);
         setLoginUserResult(res.data);
         return;
       }
@@ -35,13 +38,13 @@ const useLoginUser = () => {
   const isError = postStatus === API_STATUS.ERROR;
 
   return {
-    loginUserResult,
     errorWhileLoggingIn,
-    postStatus,
     handleUserLogin,
     isError,
     isLoading,
     isSuccess,
+    loginUserResult,
+    postStatus,
   };
 };
 

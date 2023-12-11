@@ -2,13 +2,13 @@ import React from "react";
 import { Outlet } from "../routes";
 
 import MainLayout from "../layouts/MainLayout";
-import HeaderContainer from "../containers/Header";
+import Header from "../containers/Header";
 import MenuContainer from "../containers/Menu";
 
 function Home() {
   return (
     <MainLayout
-      header={<HeaderContainer />}
+      header={<Header />}
       menu={<MenuContainer />}
       content={<Outlet />}
     />

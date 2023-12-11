@@ -41,6 +41,9 @@ const iconTwitter = "/images/iconTwitter/iconTwitter.png";
 const iconYoutube = "/images/iconYoutube/iconYoutube.png";
 const iconEyeSlash = "/images/iconEyeSlash.png";
 const iconCmibLogo = "images/iconCmibLogo/iconCmibLogo.png";
+const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
+const iconGloPac = "images/iconGloPac/iconGloPac.png";
+const iconG20 = "images/iconG20/iconG20.png";
 
 export default {
   avatar,
@@ -79,4 +82,7 @@ export default {
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
+  iconAzadiMahotsav,
+  iconGloPac,
+  iconG20
 };

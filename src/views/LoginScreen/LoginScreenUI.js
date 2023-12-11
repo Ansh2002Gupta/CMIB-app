@@ -1,18 +1,19 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
   Text,
   TouchableOpacity,
   ScrollView,
 } from "@unthinkable/react-core-components";
-import PropTypes from "prop-types";
+
+import ButtonComponent from "../../components/ButtonComponent";
+import CheckBox from "../../components/CheckBox/CheckBox";
+import CustomTextInput from "../../components/CustomTextInput";
+import FollowUsIcons from "../../components/FollowUsIcons";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
-import CustomTextInput from "../../components/CustomTextInput";
-import ButtonComponent from "../../components/ButtonComponent";
-import FollowUsIcons from "../../components/FollowUsIcons";
-import CheckBox from "../../components/CheckBox/CheckBox";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import styles from "./Loginscreen.style";
 
 const LoginScreenUI = (props) => {
@@ -170,65 +171,74 @@ const LoginScreenUI = (props) => {
                 ...(isWebView ? styles.webView.backGroundColor : {}),
               }}
             >
-              <CustomTextInput
-                label={intl.formatMessage({ id: "label.username" })}
-                placeholder={intl.formatMessage({
-                  id: "label.email_id_placeholder",
-                })}
-                value={userName}
-                onChangeText={(val) => onChangeUsername(val)}
-                errorMessage={errorMessage}
-                isError={!!errorMessage}
-                isMandatory
-                customLabelStyle={isWebView && styles.webView.inputLabelText}
-                customTextInputContainer={
-                  isWebView && styles.webView.inputTextBox
-                }
-              />
-              <CustomTextInput
-                label={intl.formatMessage({ id: "label.password" })}
-                placeholder={intl.formatMessage({
-                  id: "label.password_placeholder",
-                })}
-                value={password}
-                onChangeText={(val) => onChangePassword(val)}
-                isMandatory
-                eyeImage={true}
-                isPassword={true}
-                customLabelStyle={
-                  isWebView ? styles.webView.inputLabelText : {}
-                }
-                customTextInputContainer={
-                  isWebView ? styles.webView.inputTextBox : {}
-                }
-              />
-              <View style={styles.forgotPasswordView}>
-                <View style={{ flexDirection: "row" }}>
-                  <CheckBox
-                    title="Remember Me"
-                    isSelected={options[0].isSelected}
-                    handleCheckbox={handleToggle}
-                    id={options[0].id}
+              <View
+                style={{
+                  ...(isWebView ? styles.webView.backGroundColor : {}),
+                }}
+              >
+                <CustomTextInput
+                  label={intl.formatMessage({ id: "label.username" })}
+                  placeholder={intl.formatMessage({
+                    id: "label.email_id_placeholder",
+                  })}
+                  value={userName}
+                  onChangeText={(val) => onChangeUsername(val)}
+                  errorMessage={errorMessage}
+                  isError={!!errorMessage}
+                  isMandatory
+                  customLabelStyle={
+                    isWebView ? styles.webView.inputLabelText : {}
+                  }
+                  customTextInputContainer={
+                    isWebView ? styles.webView.inputTextBox : {}
+                  }
+                />
+                <CustomTextInput
+                  label={intl.formatMessage({ id: "label.password" })}
+                  placeholder={intl.formatMessage({
+                    id: "label.password_placeholder",
+                  })}
+                  value={password}
+                  onChangeText={(val) => onChangePassword(val)}
+                  isMandatory
+                  eyeImage={true}
+                  isPassword={true}
+                  customLabelStyle={
+                    isWebView ? styles.webView.inputLabelText : {}
+                  }
+                  customTextInputContainer={
+                    isWebView ? styles.webView.inputTextBox : {}
+                  }
+                />
+                <View style={styles.forgotPasswordView}>
+                  <View style={{ flexDirection: "row" }}>
+                    <CheckBox
+                      title="Remember Me"
+                      isSelected={options[0].isSelected}
+                      handleCheckbox={handleToggle}
+                      id={options[0].id}
+                    />
+                  </View>
+                  <TouchableOpacity onPress={onForgotPasswordClick}>
+                    <Text
+                      style={{
+                        ...styles.forgotPasswordText,
+                        ...(isWebView ? styles.webView.forgotPasswordText : {}),
+                      }}
+                    >
+                      {intl.formatMessage({ id: "label.forgot_password" })}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.loginButtonView}>
+                  <ButtonComponent
+                    title={intl.formatMessage({ id: "label.login" })}
+                    onPress={onLogin}
+                    disabled={loginDisabled}
+                    displayLoader={isLoading}
+                    customTitleStyle={isWebView ? styles.webView.loginText : {}}
                   />
                 </View>
-                <TouchableOpacity onPress={onForgotPasswordClick}>
-                  <Text
-                    style={{
-                      ...styles.forgotPasswordText,
-                      ...(isWebView ? styles.webView.forgotPasswordText : {}),
-                    }}
-                  >
-                    {intl.formatMessage({ id: "label.forgot_password" })}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.loginButtonView}>
-                <ButtonComponent
-                  title={intl.formatMessage({ id: "label.login" })}
-                  onPress={onLogin}
-                  disabled={loginDisabled}
-                  customTitleStyle={isWebView ? styles.webView.loginText : {}}
-                />
               </View>
               {errorWhileLoggingIn ? (
                 <View style={styles.errorView}>
@@ -286,6 +296,7 @@ LoginScreenUI.propTypes = {
   handleToggle: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  errorWhileLoggingIn: PropTypes.bool.isRequired,
 };
 
 export default LoginScreenUI;

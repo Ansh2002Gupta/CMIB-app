@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Image } from "@unthinkable/react-core-components";
-import styles from "./loginHeader.style";
-import images from "../../images";
 
-const LoginHeaderContainer = () => {
+import images from "../../images";
+import styles from "./header.style";
+
+const Header = () => {
   return (
     <View style={styles.mainView}>
       <View style={styles.containerStyle}>
@@ -13,4 +14,4 @@ const LoginHeaderContainer = () => {
   );
 };
 
-export default LoginHeaderContainer;
+export default Header;
