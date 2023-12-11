@@ -1,1 +1,3 @@
-export { default } from "./MyAccountComponent";
+import MyAccountComponent from './MyAccountComponent';
+
+export default MyAccountComponent;

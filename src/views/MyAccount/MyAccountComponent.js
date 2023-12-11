@@ -1,21 +1,22 @@
 import React from "react";
-import { useIntl } from "react-intl";
-import images from "../../images";
 import { useNavigate } from "../../routes";
+import { useIntl } from "react-intl";
+
 import MyAccountUI from "./MyAccountUI";
+import { options } from "./MyAccountConstant";
 
 const MyAccountComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
 
-  const options = [
-    { title: "View Profile", id: 1, iconLeft: images.iconProfile },
-    { title: "Comapny Profile", id: 2, iconLeft: images.iconBuilding },
-    { title: "Change Password", id: 3, iconLeft: images.iconLock },
-    { title: "Logout", id: 4, iconLeft: images.iconLogout },
-  ];
+  // const options = [
+  //   { title: "View Profile", id: 1, iconLeft: images.iconProfile },
+  //   { title: "Comapny Profile", id: 2, iconLeft: images.iconBuilding },
+  //   { title: "Change Password", id: 3, iconLeft: images.iconLock },
+  //   { title: "Logout", id: 4, iconLeft: images.iconLogout },
+  // ];
 
-  const onClickViewPorfile = () => {
+  const onClickViewProfile = () => {
     navigate("/viewprofile");
   };
 
@@ -26,7 +27,7 @@ const MyAccountComponent = () => {
   const handleOptionClick = (option) => {
     switch (option.id) {
       case 1:
-        onClickViewPorfile();
+        onClickViewProfile();
         break;
       case 2:
         onClickCompanyPorfile();

@@ -131,6 +131,7 @@ const locale = {
   "label.company_profile": "Company Profile",
   "label.cancel": "Cancel",
   "label.save": "Save",
+  "label.change_password": "Change Password",
 };
 
 export default locale;

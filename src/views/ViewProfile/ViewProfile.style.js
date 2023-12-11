@@ -51,6 +51,12 @@ const style = {
     fontFamily: "GeneralSans-Semibold",
     marginLeft: 2,
   },
+  picParentContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
+  }
 };
 
 export default style;

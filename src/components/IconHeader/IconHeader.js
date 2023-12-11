@@ -7,10 +7,10 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import styles from "./Header.style";
+import styles from "./IconHeader.style";
 
-const Header = (props) => {
-  const { headerText, children, iconLeft, iconRight, onPressLeftIcon } = props;
+const IconHeader = (props) => {
+  const { headerText, iconLeft, iconRight, onPressLeftIcon, onPressRightIcon } = props;
 
   return (
     <View style={styles.container}>
@@ -21,22 +21,25 @@ const Header = (props) => {
               <Image source={iconLeft} />
             </TouchableOpacity>
           )}
-          {iconRight && <Image source={iconRight} />}
+          {iconRight && 
+          <TouchableOpacity onPress={onPressRightIcon}>
+          <Image source={iconRight} />
+          </TouchableOpacity>
+          }
         </View>
         <Text style={styles.formHeaderStyle}>{headerText}</Text>
       </View>
       <View style={styles.borderStyle} />
-      <View style={styles.innerContainer}>{children}</View>
     </View>
   );
 };
 
-Header.propTypes = {
-  iconLeft: PropTypes.string.isRequired,
-  iconRight: PropTypes.string.isRequired,
-  headerText: PropTypes.string.isRequired,
-  onPressLeftIcon: PropTypes.func.isRequired,
-  children: PropTypes.object.isRequired,
+IconHeader.propTypes = {
+  iconLeft: PropTypes.string,
+  iconRight: PropTypes.string,
+  headerText: PropTypes.string,
+  onPressLeftIcon: PropTypes.func,
+  onPressRightIcon: PropTypes.func,
 };
 
-export default Header;
+export default IconHeader;

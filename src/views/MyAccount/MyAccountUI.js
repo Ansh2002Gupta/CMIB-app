@@ -1,13 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   TouchableOpacity,
   Text,
   Image,
   View,
 } from "@unthinkable/react-core-components";
-import PropTypes from "prop-types";
 
-import Header from "../../components/Header/Header";
+import IconHeader from "../../components/IconHeader/IconHeader";
 import images from "../../images";
 import style from "./MyAccount.style";
 
@@ -34,35 +34,38 @@ const MyAccountUI = (props) => {
   };
 
   return (
-    <Header
-      intl={intl}
-      headerText={intl.formatMessage({ id: "label.my_account" })}
-      iconLeft={images.iconMenu}
-      iconRight={images.iconNotification}
-    >
-      <View style={style.profileContainer}>
-        {renderProfileIcon()}
-        <View style={style.detailContainer}>
-          <Text style={style.fullNameStyle}>
-            {firstName} {lastName}
-          </Text>
-          <Text style={style.emailStyle}>{email}</Text>
-        </View>
-      </View>
-      {options.map((option) => (
-        <TouchableOpacity
-          style={style.optionCotainer}
-          key={option.id}
-          onPress={() => handleOptionClick(option)}
-        >
-          <Image source={option.iconLeft} />
-          <Text style={style.titleStyle}>{option.title}</Text>
-          <View style={style.iconContainer}>
-            <Image source={images.iconArrowRight} />
+    <>
+      <IconHeader
+        intl={intl}
+        headerText={intl.formatMessage({ id: "label.my_account" })}
+        iconLeft={images.iconMenu}
+        iconRight={images.iconNotification}
+      />
+      <View style={style.profileParentContainer}>
+        <View style={style.profileContainer}>
+          {renderProfileIcon()}
+          <View style={style.detailContainer}>
+            <Text style={style.fullNameStyle}>
+              {firstName} {lastName}
+            </Text>
+            <Text style={style.emailStyle}>{email}</Text>
           </View>
-        </TouchableOpacity>
-      ))}
-    </Header>
+        </View>
+        {options.map((option) => (
+          <TouchableOpacity
+            style={style.optionCotainer}
+            key={option.id}
+            onPress={() => handleOptionClick(option)}
+          >
+            <Image source={option.iconLeft} />
+            <Text style={style.titleStyle}>{ intl.formatMessage({ id: option.title })}</Text>
+            <View style={style.iconContainer}>
+              <Image source={images.iconArrowRight} />
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </>
   );
 };
 

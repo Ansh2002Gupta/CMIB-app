@@ -25,6 +25,7 @@ import ContentLayout from "../pages/ContentLayout";
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
 const HomeWithPrivateAccess = withPrivateAccess(Home);
+const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
   {
@@ -40,7 +41,7 @@ const config = [
   },
   {
     pagePath: "/profile",
-    element: <HomeWithPrivateAccess />, // Page
+    element: <ContentRouteWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {
@@ -51,7 +52,7 @@ const config = [
   },
   {
     pagePath: "/viewprofile",
-    element: <HomeWithPrivateAccess />, // Page
+    element: <ContentRouteWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
       {

@@ -2,7 +2,6 @@ import colors from "../../assets/colors";
 
 const style = {
   container: {
-    flex: 1,
     backgroundColor: colors.white,
   },
   headerContainerStyle: {
@@ -34,12 +33,6 @@ const style = {
   borderStyle: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
-  },
-  innerContainer: {
-    paddingLeft: 16,
-    paddingRight: 16,
-    flex: 1,
-    backgroundColor: colors.backgroundColor,
   },
 };
 

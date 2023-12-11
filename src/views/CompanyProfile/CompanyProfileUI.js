@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Header from "../../components/Header/Header";
+import Header from "../../components/IconHeader/IconHeader";
 import images from "../../images";
 import style from "./CompanyProfile.style";
 import CardCaomponent from "../../components/CardComponent/CardComponent";

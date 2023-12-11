@@ -7,6 +7,12 @@ const style = {
     paddingBottom: 16,
     alignItems: "center",
   },
+  profileParentContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
+  },
   profileContainer: {
     marginTop: 16,
     marginBottom: 16,
