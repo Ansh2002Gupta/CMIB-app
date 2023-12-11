@@ -41,11 +41,19 @@ const iconTwitter = "/images/iconTwitter/iconTwitter.png";
 const iconYoutube = "/images/iconYoutube/iconYoutube.png";
 const iconEyeSlash = "/images/iconEyeSlash.png";
 const iconCmibLogo = "images/iconCmibLogo/iconCmibLogo.png";
+const iconDashboard = "images/iconDashboard/iconDashboard.png";
+const iconRound1 = "images/iconRound1/iconRound1.png";
+const iconActiveRound1 = "images/iconActiveRound1/iconActiveRound1.png";
+const iconRound2 = "images/iconRound2/iconRound2.png";
+const iconActiveRound2 = "images/iconActiveRound2/iconActiveRound2.png";
+const iconMyaccount = "images/iconMyaccount/iconMyaccount.png";
+const iconActiveMyaccount =
+  "images/iconActiveMyaccount/iconActiveMyaccount.png";
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
 
-export default {
+const images = {
   avatar,
   logo,
   sun,
@@ -82,7 +90,16 @@ export default {
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
+  iconDashboard,
+  iconActiveRound1,
+  iconActiveRound2,
+  iconRound2,
+  iconRound1,
+  iconMyaccount,
+  iconActiveMyaccount,
   iconAzadiMahotsav,
   iconGloPac,
   iconG20
 };
+
+export default images;

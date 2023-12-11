@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
 import { useTheme } from "@unthinkable/react-theme";
 
 import LoginScreenUI from "./LoginScreenUI";
 import useLoginUser from "../../services/apiServices/hooks/useLoginUser";
+import { navigations } from "../../constants/routeNames";
 import { validateEmail } from "../../constants/CommonFunctions";
 
 function LoginScreenComponent(props) {
@@ -17,7 +18,7 @@ function LoginScreenComponent(props) {
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
-  const { errorWhileLoggingIn, handleUserLogin, isLoading } = useLoginUser();
+  const { handleUserLogin, isLoading, errorWhileLoggingIn } = useLoginUser();
 
   const [options, setOptions] = useState([
     {
@@ -38,11 +39,11 @@ function LoginScreenComponent(props) {
   };
 
   const onForgotPasswordClick = async () => {
-    navigate("/forgotPassword");
+    navigate(navigations.FORGOT_PASSWORD);
   };
 
   const onCreateNewPasswordClick = async () => {
-    navigate("/createNewPassword");
+    navigate(navigations.SIGN_UP);
   };
   const toggleUser = (val) => {
     setActive(val);
@@ -78,7 +79,6 @@ function LoginScreenComponent(props) {
       setLoginDisabled(true);
     }
   }, [userName, password]);
-
 
   return (
     <LoginScreenUI
