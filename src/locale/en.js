@@ -104,7 +104,7 @@ const locale = {
   "label.enter_contact_person_email_id": "Enter contact person email ID",
   "label.enter_contact_person_mobile_no": "Enter contact person mobile number",
   "label.enter_contact_person_name": "Enter contact person name",
-  "label.enter_facebook_url": "Enter contact facebook profile URL",
+  "label.enter_facebook_url": "Enter your facebook profile URL",
   "label.enter_twitter_url": "Enter your twitter profile URL",
   "label.enter_youtube_url": "Enter your youtube Channel URL",
   "label.enter_linkedin_url": "Enter your linkedIn profile URL",
