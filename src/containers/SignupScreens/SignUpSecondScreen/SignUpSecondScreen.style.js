@@ -9,9 +9,9 @@ const style = {
     marginBottom: 24,
   },
   registrationInput: { flex: 1 },
-  partnerInput: { marginLeft: 24, width: 100 },
+  partnerInput: { marginLeft: 24, maxWidth: 100 },
   noInput: { marginLeft: 24, flex: 1 },
-  codeInput: { width: 100 },
+  codeInput: { maxWidth: 100 },
   innerContainer: {
     paddingLeft: 16,
     paddingRight: 16,

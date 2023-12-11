@@ -140,7 +140,7 @@ const SignUpSecondScreenUI = (props) => {
           value={emailId}
           errorMessage={errors.emailId}
           isError={!!errors.emailId}
-          onChangeText={(val) => handleInputChange(val, "email")}
+          onChangeText={(val) => handleInputChange(val, "emailId")}
         />
         <View style={style.inputContainer}>
           <View style={style.codeInput}>
@@ -191,17 +191,9 @@ SignUpSecondScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
-  companyName: PropTypes.string.isRequired,
-  registrationNo: PropTypes.string.isRequired,
-  noOfPartners: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  emailId: PropTypes.string.isRequired,
-  telephoneNo: PropTypes.string.isRequired,
-  code: PropTypes.string.isRequired,
+  formData: PropTypes.object.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  entity: PropTypes.string.isRequired,
-  currentIndustry: PropTypes.string.isRequired,
   allFieldsFilled: PropTypes.func.isRequired,
 };
 
