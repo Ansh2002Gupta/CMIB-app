@@ -49,6 +49,9 @@ const iconActiveRound2 = "images/iconActiveRound2/iconActiveRound2.png";
 const iconMyaccount = "images/iconMyaccount/iconMyaccount.png";
 const iconActiveMyaccount =
   "images/iconActiveMyaccount/iconActiveMyaccount.png";
+const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
+const iconGloPac = "images/iconGloPac/iconGloPac.png";
+const iconG20 = "images/iconG20/iconG20.png";
 
 const images = {
   avatar,
@@ -94,6 +97,9 @@ const images = {
   iconRound1,
   iconMyaccount,
   iconActiveMyaccount,
+  iconAzadiMahotsav,
+  iconGloPac,
+  iconG20
 };
 
 export default images;

@@ -17,6 +17,9 @@ const style = {
   forgotHeaderText: {
     fontSize: 40,
   },
+  forgotHeaderContainer: {
+    marginTop: 0
+  },
   customSubHeading: {
     fontSize: 16,
     color: colors.subHeadingGray,

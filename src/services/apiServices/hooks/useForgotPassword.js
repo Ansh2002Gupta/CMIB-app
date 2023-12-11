@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import Http from "../http-service";
-import { API_STATUS, STATUS_CODES } from "../../constants/constants";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import Http from "../../http-service";
+import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useForgotPassword = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
@@ -34,13 +34,13 @@ const useForgotPassword = () => {
   const isSuccess = postStatus === API_STATUS.SUCCESS;
   const isError = postStatus === API_STATUS.ERROR;
   return {
-    forgotPasswordResult,
     errorWhileResetPassword,
-    postStatus,
+    forgotPasswordResult,
     handleForgotPassword,
     isError,
     isLoading,
     isSuccess,
+    postStatus,
   };
 };
 

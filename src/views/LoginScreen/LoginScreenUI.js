@@ -1,20 +1,19 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
   Text,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
 } from "@unthinkable/react-core-components";
-import PropTypes from "prop-types";
+
+import ButtonComponent from "../../components/ButtonComponent";
+import CheckBox from "../../components/CheckBox/CheckBox";
+import CustomTextInput from "../../components/CustomTextInput";
+import FollowUsIcons from "../../components/FollowUsIcons";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
-import CustomTextInput from "../../components/CustomTextInput";
-import ButtonComponent from "../../components/ButtonComponent";
-import FollowUsIcons from "../../components/FollowUsIcons";
-import CheckBox from "../../components/CheckBox/CheckBox";
-import CommonText from "../../components/CommonText";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import styles from "./Loginscreen.style";
 
 const LoginScreenUI = (props) => {
@@ -232,6 +231,7 @@ const LoginScreenUI = (props) => {
                     title={intl.formatMessage({ id: "label.login" })}
                     onPress={onLogin}
                     disabled={loginDisabled}
+                    displayLoader={isLoggingIn}
                     customTitleStyle={isWebView ? styles.webView.loginText : {}}
                   />
                 </View>

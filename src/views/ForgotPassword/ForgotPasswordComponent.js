@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import ForgotPasswordUI from "./ForgotPasswordUI";
-import useForgotPassword from "../../services/hooks/useForgotPassword";
+import useForgotPassword from "../../services/apiServices/hooks/useForgotPassword";
 import { useNavigate } from "../../routes";
 import { validateEmail } from "../../constants/CommonFunctions";
 import { navigations } from "../../constants/routeNames";

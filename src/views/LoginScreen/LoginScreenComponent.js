@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { useTheme } from "@unthinkable/react-theme";
 
 import LoginScreenUI from "./LoginScreenUI";
-import useLoginUser from "../../services/hooks/useLoginUser";
+import useLoginUser from "../../services/apiServices/hooks/useLoginUser";
 import { navigations } from "../../constants/routeNames";
 import { validateEmail } from "../../constants/CommonFunctions";
 
