@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpWelcomeScreenUI from "./SignUpWelcomeScreenUI";
@@ -18,31 +19,6 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
       (detail) => detail.module === option.id
     ),
   }));
-
-  // const initialOptions = [
-  //   { title: intl.formatMessage({ id: "label.ca_jobs" }), id: "ca-jobs" },
-  //   {
-  //     title: intl.formatMessage({ id: "label.newly_qualified_ca" }),
-  //     id: "newly-qualified-ca-placememt",
-  //   },
-  //   {
-  //     title: intl.formatMessage({ id: "label.overseas_placements" }),
-  //     id: "overseas-placements",
-  //   },
-  //   {
-  //     title: intl.formatMessage({ id: "label.career_ascents" }),
-  //     id: "career-ascents",
-  //   },
-  //   {
-  //     title: intl.formatMessage({ id: "label.women_placements" }),
-  //     id: "women-placement",
-  //   },
-  // ].map((option) => ({
-  //   ...option,
-  //   isSelected: initialContactDetails.some(
-  //     (detail) => detail.module === option.id
-  //   ),
-  // }));
 
   const [contactDetails, setContactDetails] = useState(initialContactDetails);
   const [options, setOptions] = useState(initialOptions);
@@ -73,6 +49,10 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
       setOptions={setOptions}
     />
   );
+};
+
+SignUpScreenWelcomeComponent.propTypes = {
+  tabHandler: PropTypes.func.isRequired,
 };
 
 export default SignUpScreenWelcomeComponent;
