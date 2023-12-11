@@ -34,7 +34,6 @@ const SignUpLastScreenUI = (props) => {
     website,
     errors,
   } = props;
-  console.log("key", socialMediaLinks);
 
   const renderItem = ({ item, index }) => {
     return (
