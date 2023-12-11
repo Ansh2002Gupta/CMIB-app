@@ -1,8 +1,10 @@
 import React from "react";
-import BaseLayout from "../Base";
 import PropTypes from "prop-types";
 
+import BaseLayout from "../Base";
+
 import layoutStyle from "./fourColumn.style";
+
 function FourColumn({
   style,
   sectionStyle,

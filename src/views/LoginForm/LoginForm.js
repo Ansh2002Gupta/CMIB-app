@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
 import { Button } from "@unthinkable/react-button";
 import { View, Text, TextInput } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../../globalContext/auth/authProvider";
 import { AuthService, StorageService } from "./../../services";
 import { setAuth } from "./../../globalContext/auth/authActions";
-import { useNavigate } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 import styles from "./loginForm.style";
 

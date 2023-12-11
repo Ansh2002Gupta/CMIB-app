@@ -1,10 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   View,
   TouchableOpacity,
   Image,
 } from "@unthinkable/react-core-components";
-import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import style from "./ImageAndTextTab.style";

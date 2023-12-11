@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
-import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import {
   Image,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
+
+import { TwoRow, FourColumn } from "../../core/layouts";
 
 import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
-import { TwoRow, FourColumn } from "../../core/layouts";
 import { useLocation } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 import images from "../../images";
