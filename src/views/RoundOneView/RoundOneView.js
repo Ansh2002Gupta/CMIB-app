@@ -2,18 +2,18 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { View, Text } from "@unthinkable/react-core-components";
 
-import styles from "./dashboard.style";
+import styles from "./roundOne.style";
 
-function DashboardView(props) {
+function RoundOne(props) {
   const intl = useIntl();
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
-        {intl.formatMessage({ id: "label.dashboard" })}
+        {intl.formatMessage({ id: "label.round1" })}
       </Text>
     </View>
   );
 }
 
-export default DashboardView;
+export default RoundOne;

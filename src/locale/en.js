@@ -126,7 +126,7 @@ const locale = {
   "label.telephonic_call_from_icai": "Telephonic Call from ICAI Officials",
   "label.advertisement_in_ca_journal":
     "Advertisement in the Chartered Accountant Journal",
-  "label.my_account": "My Account",
+  "label.my_account": "Account",
   "label.view_profile": "View Profile",
   "label.edit_profile_picture": "Edit Profile Picture",
   "label.crop_profile_picture": "Crop Profile Picture",
@@ -156,6 +156,8 @@ const locale = {
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
+  "label.round1": "Round 1",
+  "label.round2": "Round 2",
 };
 
 export default locale;
