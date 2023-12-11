@@ -41,10 +41,10 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  iconLeft: PropTypes.string.isRequired,
-  iconRight: PropTypes.string.isRequired,
-  headerText: PropTypes.string.isRequired,
-  onPressLeftIcon: PropTypes.func.isRequired,
+  iconLeft: PropTypes.string,
+  iconRight: PropTypes.string,
+  headerText: PropTypes.string,
+  onPressLeftIcon: PropTypes.func,
   children: PropTypes.object.isRequired,
 };
 

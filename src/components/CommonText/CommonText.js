@@ -4,7 +4,7 @@ import { Text, View } from "@unthinkable/react-core-components";
 
 import styles from "./CommonText.style";
 
-const CommonText = (props) => {
+const ButtonComponent = (props) => {
   const { title, customTextStyle } = props;
   return (
     <View>
@@ -13,8 +13,8 @@ const CommonText = (props) => {
   );
 };
 
-CommonText.propTypes = {
+ButtonComponent.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default CommonText;
+export default ButtonComponent;

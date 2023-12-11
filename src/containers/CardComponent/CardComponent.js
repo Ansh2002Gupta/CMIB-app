@@ -15,7 +15,7 @@ const CardCaomponent = (props) => {
 
 CardCaomponent.propTypes = {
   children: PropTypes.object.isRequired,
-  customCardComponentStyle:PropTypes.object
+  customCardComponentStyle: PropTypes.object,
 };
 
 export default CardCaomponent;
