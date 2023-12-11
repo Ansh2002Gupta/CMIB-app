@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
 
-import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
+import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { INTEREST_OPTIONS, urlRegex } from "../../../constants/constants";
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
@@ -83,14 +83,17 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         socialMediaLinks[key] &&
         !urlRegex.test(String(socialMediaLinks[key]))
       ) {
-        newErrors.socialMediaLinks[key] = "Please enter a valid URL.";
+        newErrors.socialMediaLinks[key] = intl.formatMessage({
+          id: "label.url_validation",
+        });
         isValid = false;
       }
     });
 
     if (companyDetails.length < 6 || companyDetails.length > 1000) {
-      newErrors.companyDetails =
-        "Company details must be between 6 and 1000 characters.";
+      newErrors.companyDetails = intl.formatMessage({
+        id: "label.url_validation",
+      });
       isValid = false;
     }
     if (!urlRegex.test(String(website))) {

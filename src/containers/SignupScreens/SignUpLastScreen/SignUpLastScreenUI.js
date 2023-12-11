@@ -183,7 +183,7 @@ SignUpLastScreenUI.propTypes = {
   options: PropTypes.array.isRequired,
   handleSuccessModal: PropTypes.func.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.object,
   socialMediaLinks: PropTypes.object.isRequired,
   website: PropTypes.string.isRequired,
   companyDetails: PropTypes.string.isRequired,

@@ -153,6 +153,9 @@ const locale = {
     "Designation must be between 6 and 500 characters.",
   "label.mobile_number_validation":
     "Mobile number must be a combination of numbers and between 7 and 15 digits.",
+  "label.url_validation": "Please enter a valid URL.",
+  "label.company_details_validation":
+    "Company details must be between 6 and 1000 characters.",
 };
 
 export default locale;
