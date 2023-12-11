@@ -39,11 +39,11 @@ function LoginScreenComponent(props) {
   };
 
   const onForgotPasswordClick = async () => {
-    navigate(navigations.ForgotPassword);
+    navigate(navigations.FORGOT_PASSWORD);
   };
 
   const onCreateNewPasswordClick = async () => {
-    navigate(navigations.Signup);
+    navigate(navigations.SIGN_UP);
   };
   const toggleUser = (val) => {
     setActive(val);
@@ -58,7 +58,7 @@ function LoginScreenComponent(props) {
     //   setErrorMessage("");
     //   handleUserLogin({ email: userName, password: password });
     // }
-    navigate(navigations.LoginForm);
+    navigate(navigations.LOGIN_FORM);
   };
 
   const onChangePassword = (val) => {

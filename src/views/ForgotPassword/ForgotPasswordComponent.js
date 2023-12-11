@@ -17,7 +17,7 @@ function ForgotPasswordComponent() {
 
   const onClickGoToLogin = () => {
     setSuccessLogin(false);
-    navigate(navigations.Login);
+    navigate(navigations.LOGIN);
   };
 
   const onClickForgotPassword = () => {

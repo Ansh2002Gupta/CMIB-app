@@ -49,11 +49,11 @@ const SignUpLastScreenComponent = () => {
 
   const onClickGoToLogin = () => {
     handleSuccessModal(false);
-    navigate(navigations.Login);
+    navigate(navigations.LOGIN);
   };
 
   const onGoBack = () => {
-    navigate(navigations.SignupThirdScreen);
+    navigate(navigations.SIGNUP_THIRD_SCREEN);
   };
 
   const handleToggle = (id) => {
@@ -67,7 +67,7 @@ const SignUpLastScreenComponent = () => {
   };
 
   const onClickNext = () => {
-    navigate(navigations.SignupThirdScreen);
+    navigate(navigations.SIGNUP_THIRD_SCREEN);
   };
 
   return (

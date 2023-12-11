@@ -122,7 +122,7 @@ const locale = {
   "label.telephonic_call_from_icai": "Telephonic Call from ICAI Officials",
   "label.advertisement_in_ca_journal":
     "Advertisement in the Chartered Accountant Journal",
-  "label.my_account": "My Account",
+  "label.my_account": "Account",
   "label.view_profile": "View Profile",
   "label.edit_profile_picture": "Edit Profile Picture",
   "label.crop_profile_picture": "Crop Profile Picture",

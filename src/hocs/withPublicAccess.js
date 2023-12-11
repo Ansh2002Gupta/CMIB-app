@@ -11,7 +11,7 @@ function withPublicAccess(Component) {
     const navigate = useNavigate();
     useEffect(() => {
       if (!_.isEmpty(authState)) {
-        navigate(navigations.Login);
+        navigate(navigations.LOGIN);
       }
     }, []);
 

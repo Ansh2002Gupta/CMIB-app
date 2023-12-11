@@ -11,13 +11,13 @@ const style = {
     borderColor: colors.darkBlue,
     borderBottomWidth: 2,
     marginBottom: -1,
-    marginLeft: 10,
+    marginLeft: 5,
   },
   activeStyleMyaccount: {
     borderColor: colors.darkBlue,
     borderBottomWidth: 2,
     marginBottom: -1,
-    marginRight: 10,
+    marginRight: 5,
   },
   buttonStyle: {
     alignItems: "center",
@@ -25,6 +25,7 @@ const style = {
   },
   sectionViewStyle: { width: 48, height: 48, padding: 15 },
   imageStyle: { width: "100%", height: "100%" },
+  sectionStyle: { flex: 1 },
 };
 
 export default style;

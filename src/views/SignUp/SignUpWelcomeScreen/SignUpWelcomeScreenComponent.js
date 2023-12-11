@@ -11,11 +11,11 @@ const SignUpScreenWelcomeComponent = () => {
   const navigate = useNavigate();
 
   const onClickGoToLogin = () => {
-    navigate(navigations.Login);
+    navigate(navigations.LOGIN);
   };
 
   const onClickNext = () => {
-    navigate(navigations.SignupSecondScreen);
+    navigate(navigations.SIGNUP_SECOUND_SCREEN);
   };
 
   return (

@@ -7,16 +7,16 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
+import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
+import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { TwoRow, FourColumn } from "../../core/layouts";
 import { useLocation } from "../../routes";
-import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { ACCOUNT_TABS } from "../../constants/constants";
 import { navigations } from "../../constants/routeNames";
 import images from "../../images";
 import styles from "./bottomBar.style";
-import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 
 function BottomBar() {
   const icons = useTheme("icons");
@@ -25,19 +25,20 @@ function BottomBar() {
   const { logo, homeOutline, homeSolid, profileOutline, profileSolid } = icons;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { pathname: currrentRoute } = useLocation();
-  const [bottomBarActive, setBottomBarActive] = useState(
-    ACCOUNT_TABS.DASHBOARD
-  );
+  const [bottomBarActive, setBottomBarActive] = useState(currrentRoute);
 
   const navigateTo = (active, route) => {
-    setBottomBarActive(active);
+    console.log(route, "activeroute");
+    setBottomBarActive(route);
     navigateScreen(route);
   };
 
+  console.log(currrentRoute, "currrentRoute");
+  console.log(bottomBarActive, "bottomBarActive");
   const homeIcon =
-    currrentRoute === navigations.Login ? homeSolid : homeOutline;
+    currrentRoute === navigations.LOGIN ? homeSolid : homeOutline;
   const profileIcon =
-    currrentRoute === navigations.Profile ? profileSolid : profileOutline;
+    currrentRoute === navigations.PROFILE ? profileSolid : profileOutline;
 
   if (currentBreakpoint === "md") {
     return (
@@ -55,7 +56,7 @@ function BottomBar() {
                 <TouchableOpacity
                   style={styles.sectionViewStyle}
                   onPress={() => {
-                    navigateTo(ACCOUNT_TABS.DASHBOARD, navigations.Dashboard);
+                    navigateTo(ACCOUNT_TABS.DASHBOARD, navigations.DASHBOARD);
                   }}
                 >
                   <Image source={homeIcon} style={styles.imageStyle} />
@@ -63,7 +64,7 @@ function BottomBar() {
                 <TouchableOpacity
                   style={styles.sectionViewStyle}
                   onPress={() => {
-                    navigateTo(ACCOUNT_TABS.PROFILE, navigations.Profile);
+                    navigateTo(ACCOUNT_TABS.PROFILE, navigations.PROFILE);
                   }}
                 >
                   <Image source={profileIcon} style={styles.imageStyle} />
@@ -90,11 +91,12 @@ function BottomBar() {
         <View style={styles.borderStyle}></View>
         <View>
           <FourColumn
+            sectionStyle={styles.sectionStyle}
             firstSection={
               <ImageAndTextTab
-                isActive={bottomBarActive === ACCOUNT_TABS.DASHBOARD}
+                isActive={bottomBarActive === navigations.DASHBOARD}
                 onPress={() => {
-                  navigateTo(ACCOUNT_TABS.DASHBOARD, navigations.Dashboard);
+                  navigateTo(ACCOUNT_TABS.DASHBOARD, navigations.DASHBOARD);
                 }}
                 containerStyle={styles.activeStyleDashboard}
                 imageActive={images.iconDashboard}
@@ -104,9 +106,9 @@ function BottomBar() {
             }
             secoundSection={
               <ImageAndTextTab
-                isActive={bottomBarActive === ACCOUNT_TABS.ROUND_ONE}
+                isActive={bottomBarActive === navigations.ROUND_ONE}
                 onPress={() => {
-                  navigateTo(ACCOUNT_TABS.ROUND_ONE, navigations.RoundOne);
+                  navigateTo(ACCOUNT_TABS.ROUND_ONE, navigations.ROUND_ONE);
                 }}
                 imageActive={images.iconActiveRound1}
                 imageInactive={images.iconRound1}
@@ -115,9 +117,9 @@ function BottomBar() {
             }
             thirdSection={
               <ImageAndTextTab
-                isActive={bottomBarActive === ACCOUNT_TABS.ROUND_TWO}
+                isActive={bottomBarActive === navigations.ROUND_TWO}
                 onPress={() => {
-                  navigateTo(ACCOUNT_TABS.ROUND_TWO, navigations.RoundTwo);
+                  navigateTo(ACCOUNT_TABS.ROUND_TWO, navigations.ROUND_TWO);
                 }}
                 imageActive={images.iconActiveRound2}
                 imageInactive={images.iconRound2}
@@ -126,9 +128,9 @@ function BottomBar() {
             }
             fourthSection={
               <ImageAndTextTab
-                isActive={bottomBarActive === ACCOUNT_TABS.PROFILE}
+                isActive={bottomBarActive === navigations.PROFILE}
                 onPress={() => {
-                  navigateTo(ACCOUNT_TABS.PROFILE, navigations.Profile);
+                  navigateTo(ACCOUNT_TABS.PROFILE, navigations.PROFILE);
                 }}
                 imageActive={images.iconActiveMyaccount}
                 imageInactive={images.iconMyaccount}

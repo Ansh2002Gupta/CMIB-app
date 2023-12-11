@@ -26,7 +26,7 @@ const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
 
 const config = [
   {
-    pagePath: navigations.Login,
+    pagePath: navigations.LOGIN,
     element: <LoginWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -37,7 +37,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.Profile,
+    pagePath: navigations.PROFILE,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
@@ -48,7 +48,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.Dashboard,
+    pagePath: navigations.DASHBOARD,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
@@ -59,7 +59,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.RoundOne,
+    pagePath: navigations.ROUND_ONE,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
@@ -70,7 +70,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.RoundTwo,
+    pagePath: navigations.ROUND_TWO,
     element: <HomeWithPrivateAccess />, // Page
     views: [
       // array of views under Page route
@@ -81,7 +81,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.ForgotPassword,
+    pagePath: navigations.FORGOT_PASSWORD,
     element: <LoginWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -92,7 +92,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.CreateNewPassword,
+    pagePath: navigations.CREATE_NEW_PASSWORD,
     element: <LoginWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -103,7 +103,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.Signup,
+    pagePath: navigations.SIGN_UP,
     element: <SignUpWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -114,7 +114,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.SignupSecondScreen,
+    pagePath: navigations.SIGNUP_SECOUND_SCREEN,
     element: <SignUpWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -125,7 +125,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.LoginForm,
+    pagePath: navigations.LOGIN_FORM,
     element: <LoginForm />, // Page
     views: [
       // array of views under Page route
@@ -136,7 +136,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.SignupThirdScreen,
+    pagePath: navigations.SIGNUP_THIRD_SCREEN,
     element: <SignUpWithPublicAccess />, // Page
     views: [
       // array of views under Page route
@@ -147,7 +147,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.SignupLastScreen,
+    pagePath: navigations.SIGNUP_LAST_SCREEN,
     element: <SignUpWithPublicAccess />, // Page
     views: [
       // array of views under Page route

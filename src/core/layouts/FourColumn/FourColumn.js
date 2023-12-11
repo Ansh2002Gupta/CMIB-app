@@ -5,8 +5,7 @@ import layoutStyle from "./fourColumn.style";
 
 function FourColumn({
   style,
-  leftSectionStyle,
-  rightSectionStyle,
+  sectionStyle,
   isLeftFillSpace,
   isRightFillSpace,
   firstSection,
@@ -18,16 +17,16 @@ function FourColumn({
     <BaseLayout style={{ ...layoutStyle, ...style }}>
       {({ Column }) => (
         <>
-          <Column isFillSpace={isLeftFillSpace} style={leftSectionStyle}>
+          <Column isFillSpace={isLeftFillSpace} style={sectionStyle}>
             {firstSection}
           </Column>
-          <Column isFillSpace={isRightFillSpace} style={rightSectionStyle}>
+          <Column isFillSpace={isRightFillSpace} style={sectionStyle}>
             {secoundSection}
           </Column>
-          <Column isFillSpace={isRightFillSpace} style={rightSectionStyle}>
+          <Column isFillSpace={isRightFillSpace} style={sectionStyle}>
             {thirdSection}
           </Column>
-          <Column isFillSpace={isRightFillSpace} style={rightSectionStyle}>
+          <Column isFillSpace={isRightFillSpace} style={sectionStyle}>
             {fourthSection}
           </Column>
         </>

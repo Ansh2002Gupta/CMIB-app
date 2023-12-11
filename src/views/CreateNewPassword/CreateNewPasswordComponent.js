@@ -13,7 +13,7 @@ function CreateNewPasswordComponent(props) {
   const [error, setError] = useState("");
 
   const onClickGoToLogin = () => {
-    navigate(navigations.Login);
+    navigate(navigations.LOGIN);
   };
 
   const onChangePasswordInput = (val) => {

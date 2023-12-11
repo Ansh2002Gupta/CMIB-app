@@ -11,15 +11,15 @@ const SignUpThirdScreenComponent = () => {
   const navigate = useNavigate();
 
   const onClickGoToLogin = () => {
-    navigate(navigations.Login);
+    navigate(navigations.LOGIN);
   };
 
   const onGoBack = () => {
-    navigate(navigations.SignupSecondScreen);
+    navigate(navigations.SIGNUP_SECOUND_SCREEN);
   };
 
   const onClickNext = () => {
-    navigate(navigations.SignupLastScreen);
+    navigate(navigations.SIGNUP_LAST_SCREEN);
   };
 
   return (

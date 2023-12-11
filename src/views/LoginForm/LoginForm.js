@@ -21,7 +21,7 @@ function useLoginForm(
   const [isProcessing, setIsProcessing] = useState(false);
   const [, authDispatch] = useContext(AuthContext);
   const onClickSignUp = () => {
-    navigate(navigations.Dashboard);
+    navigate(navigations.DASHBOARD);
   };
   const onLogin = async () => {
     setIsProcessing(true);
@@ -30,7 +30,7 @@ function useLoginForm(
     await StorageService.set("auth", response);
     authDispatch(setAuth(response));
     setIsProcessing(false);
-    navigate(navigations.Dashboard);
+    navigate(navigations.DASHBOARD);
   };
   return {
     formValues,
