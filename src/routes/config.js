@@ -1,6 +1,5 @@
 import React from "react";
 
-import ProfileView from "../views/Profile";
 import Home from "../pages/Home";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import LoginScreen from "../views/LoginScreen/index";
@@ -12,7 +11,7 @@ import LoginForm from "../views/LoginForm";
 import ProfileView from "../views/Profile";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
-import SignUpScreen from "../views/SignUp/SignUpWelcomeScreen/index";
+import SignUpScreen from "../views/SignUpView/index";
 import { navigations } from "../constants/routeNames";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -111,17 +110,7 @@ const config = [
       },
     ],
   },
-  {
-    pagePath: navigations.SIGNUP_SECOUND_SCREEN,
-    element: <SignUpWithPublicAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <SignUpSecondScreen />, // view
-      },
-    ],
-  },
+
   {
     pagePath: navigations.LOGIN_FORM,
     element: <LoginForm />, // Page
@@ -130,28 +119,6 @@ const config = [
       {
         viewPath: "",
         element: <LoginForm />, // view
-      },
-    ],
-  },
-  {
-    pagePath: navigations.SIGNUP_THIRD_SCREEN,
-    element: <SignUpWithPublicAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <SignUpThirdScreen />, // view
-      },
-    ],
-  },
-  {
-    pagePath: navigations.SIGNUP_LAST_SCREEN,
-    element: <SignUpWithPublicAccess />, // Page
-    views: [
-      // array of views under Page route
-      {
-        viewPath: "",
-        element: <SignUpLastScreen />, // view
       },
     ],
   },
