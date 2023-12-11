@@ -7,12 +7,13 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Text,
 } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
 import CardComponent from "../../containers/CardComponent/CardComponent";
 import Header from "../../components/Header/Header";
-import CommonText from "../../components/CommonText/CommonText";
-import styles from "./RoundOne.style";
+import styles from "./roundOne.style";
 
 const RoundOneUI = (props) => {
   const intl = useIntl();
@@ -80,8 +81,8 @@ const RoundOneUI = (props) => {
 
 RoundOneUI.propTypes = {
   containers: PropTypes.array.isRequired,
-  onPressCard:PropTypes.func.isRequired,
-  selectedContainer:PropTypes.number,
+  onPressCard: PropTypes.func.isRequired,
+  selectedContainer: PropTypes.number,
 };
 
 export default RoundOneUI;

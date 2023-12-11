@@ -54,8 +54,11 @@ const iconAddApplicationForm =
 const iconHiringProcess = "images/iconHiringProcess/iconHiringProcess.png";
 const iconDownloadDetails =
   "images/iconDownloadDetails/iconDownloadDetails.png";
+const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
+const iconGloPac = "images/iconGloPac/iconGloPac.png";
+const iconG20 = "images/iconG20/iconG20.png";
 
-export default {
+const images = {
   avatar,
   logo,
   sun,
@@ -102,4 +105,9 @@ export default {
   iconAddApplicationForm,
   iconHiringProcess,
   iconDownloadDetails,
+  iconAzadiMahotsav,
+  iconGloPac,
+  iconG20,
 };
+
+export default images;

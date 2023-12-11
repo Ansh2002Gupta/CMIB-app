@@ -2,7 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { View, Text } from "@unthinkable/react-core-components";
 
-import styles from "./RoundTwo.style";
+import styles from "./roundTwo.style";
 
 function RoundTwoUI(props) {
   const intl = useIntl();

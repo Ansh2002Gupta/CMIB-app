@@ -41,7 +41,7 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 
-export default {
+const images = {
   avatar,
   logo,
   sun,
@@ -85,3 +85,5 @@ export default {
   iconHiringProcess,
   iconDownloadDetails,
 };
+
+export default images;

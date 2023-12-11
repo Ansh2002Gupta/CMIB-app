@@ -1,11 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import BaseLayout from "../Base";
+
 import layoutStyle from "./fourColumn.style";
 
 function FourColumn({
   style,
-  leftSectionStyle,
-  rightSectionStyle,
+  sectionStyle,
   isLeftFillSpace,
   isRightFillSpace,
   firstSection,
@@ -15,18 +17,18 @@ function FourColumn({
 }) {
   return (
     <BaseLayout style={{ ...layoutStyle, ...style }}>
-      {({ Row, Column }) => (
+      {({ Column }) => (
         <>
-          <Column isFillSpace={isLeftFillSpace} style={leftSectionStyle}>
+          <Column isFillSpace={isLeftFillSpace} style={sectionStyle}>
             {firstSection}
           </Column>
-          <Column isFillSpace={isRightFillSpace} style={rightSectionStyle}>
+          <Column isFillSpace={isRightFillSpace} style={sectionStyle}>
             {secoundSection}
           </Column>
-          <Column isFillSpace={isRightFillSpace} style={rightSectionStyle}>
+          <Column isFillSpace={isRightFillSpace} style={sectionStyle}>
             {thirdSection}
           </Column>
-          <Column isFillSpace={isRightFillSpace} style={rightSectionStyle}>
+          <Column isFillSpace={isRightFillSpace} style={sectionStyle}>
             {fourthSection}
           </Column>
         </>
@@ -41,6 +43,17 @@ FourColumn.defaultProps = {
   rightSectionStyle: {},
   isLeftFillSpace: false,
   isRightFillSpace: false,
+};
+
+FourColumn.propTypes = {
+  style: PropTypes.object,
+  sectionStyle: PropTypes.object,
+  isLeftFillSpace: PropTypes.bool,
+  isRightFillSpace: PropTypes.bool,
+  firstSection: PropTypes.node,
+  secoundSection: PropTypes.node,
+  thirdSection: PropTypes.node,
+  fourthSection: PropTypes.node,
 };
 
 export default FourColumn;

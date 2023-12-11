@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
 import { useTheme } from "@unthinkable/react-theme";
+import { ActivityIndicator } from "@unthinkable/react-core-components";
 
 import LoginScreenUI from "./LoginScreenUI";
-import { useNavigate } from "../../routes";
-import useLoginUser from "../../services/hooks/useLoginUser";
+import useLoginUser from "../../services/apiServices/hooks/useLoginUser";
+import { navigations } from "../../constants/routeNames";
 import { validateEmail } from "../../constants/CommonFunctions";
 
 function LoginScreenComponent(props) {
@@ -38,12 +40,13 @@ function LoginScreenComponent(props) {
   };
 
   const onForgotPasswordClick = async () => {
-    navigate("/forgotPassword");
+    navigate(navigations.FORGOT_PASSWORD);
   };
 
   const onCreateNewPasswordClick = async () => {
-    navigate("/signUp");
+    navigate(navigations.SIGN_UP);
   };
+
   const toggleUser = (val) => {
     setActive(val);
   };
@@ -52,12 +55,11 @@ function LoginScreenComponent(props) {
     // let error = validateEmail(userName);
     // if (error) {
     //   setErrorMessage(error);
-    //   return;
     // } else {
     //   setErrorMessage("");
     //   handleUserLogin({ email: userName, password: password });
     // }
-    navigate("/loginForm");
+    navigate(navigations.LOGIN_FORM);
   };
 
   const onChangePassword = (val) => {
@@ -66,14 +68,12 @@ function LoginScreenComponent(props) {
   };
 
   const onChangeUsername = (val) => {
-    {
-      setuserName(val);
-      setErrorMessage("");
-    }
+    setuserName(val);
+    setErrorMessage("");
   };
 
   useEffect(() => {
-    if (userName != "" && password != "") {
+    if (userName !== "" && password !== "") {
       setLoginDisabled(false);
     } else {
       setLoginDisabled(true);
@@ -97,7 +97,7 @@ function LoginScreenComponent(props) {
       onCreateNewPasswordClick={onCreateNewPasswordClick}
       handleToggle={handleToggle}
       options={options}
-      isLoggingIn={isLoading}
+      isLoading={isLoading}
       errorWhileLoggingIn={errorWhileLoggingIn}
     />
   );

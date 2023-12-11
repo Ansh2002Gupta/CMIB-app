@@ -1,56 +1,47 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import {
   Image,
   TouchableOpacity,
   View,
-  Text,
 } from "@unthinkable/react-core-components";
 
-import CommonText from "../../components/CommonText";
 import { TwoRow, FourColumn } from "../../core/layouts";
-import { useNavigate, useLocation } from "../../routes";
-import ThemeSwitcher from "../../components/ThemeSwitcher";
+
+import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
+import ThemeSwitcher from "../../components/ThemeSwitcher";
+import useNavigateScreen from "../../services/hooks/useNavigateScreen";
+import { useLocation } from "../../routes";
+import { navigations } from "../../constants/routeNames";
 import images from "../../images";
-
-import Styles from "./bottomBar.style";
-
-function useMenu() {
-  const navigate = useNavigate();
-  const { pathname: currrentRoute } = useLocation();
-  const [bottomBarActive, setBottomBarActive] = useState(1);
-
-  const navigateTo = (active, route) => {
-    setBottomBarActive(active);
-    navigate(route);
-  };
-  return {
-    currrentRoute,
-    bottomBarActive,
-    navigateTo,
-  };
-}
+import styles from "./bottomBar.style";
 
 function BottomBar() {
-  const { currrentRoute, bottomBarActive, navigateTo } = useMenu();
   const icons = useTheme("icons");
   const intl = useIntl();
+  const { navigateScreen } = useNavigateScreen();
   const { logo, homeOutline, homeSolid, profileOutline, profileSolid } = icons;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const { pathname: currrentRoute } = useLocation();
 
-  const homeIcon = currrentRoute === "/" ? homeSolid : homeOutline;
+  const navigateTo = (route) => {
+    navigateScreen(route);
+  };
+
+  const homeIcon =
+    currrentRoute === navigations.LOGIN ? homeSolid : homeOutline;
   const profileIcon =
-    currrentRoute === "/profile" ? profileSolid : profileOutline;
+    currrentRoute === navigations.PROFILE ? profileSolid : profileOutline;
 
   if (currentBreakpoint === "md") {
     return (
       <TwoRow
-        style={Styles.menuContainer}
+        style={styles.menuContainer}
         topSection={
-          <View style={Styles.sectionViewStyle}>
-            <Image source={logo} style={Styles.imageStyle} />
+          <View style={styles.sectionViewStyle}>
+            <Image source={logo} style={styles.imageStyle} />
           </View>
         }
         bottomSection={
@@ -58,20 +49,20 @@ function BottomBar() {
             topSection={
               <>
                 <TouchableOpacity
-                  style={Styles.sectionViewStyle}
+                  style={styles.sectionViewStyle}
                   onPress={() => {
-                    navigateTo(1, "/Dashboard");
+                    navigateTo(navigations.DASHBOARD);
                   }}
                 >
-                  <Image source={homeIcon} style={Styles.imageStyle} />
+                  <Image source={homeIcon} style={styles.imageStyle} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={Styles.sectionViewStyle}
+                  style={styles.sectionViewStyle}
                   onPress={() => {
-                    navigateTo(4, "/profile");
+                    navigateTo(navigations.PROFILE);
                   }}
                 >
-                  <Image source={profileIcon} style={Styles.imageStyle} />
+                  <Image source={profileIcon} style={styles.imageStyle} />
                 </TouchableOpacity>
               </>
             }
@@ -81,148 +72,68 @@ function BottomBar() {
                 <LocaleSwitcher />
               </>
             }
-            isTopFillSpace={true}
-            isBottomFillSpace={false}
+            isTopFillSpace
           />
         }
-        isTopFillSpace={false}
-        isBottomFillSpace={true}
+        isBottomFillSpace
       />
     );
   }
 
   return (
     <View>
-      <View style={Styles.bottomBarView}>
-        <View style={Styles.borderStyle}></View>
+      <View style={styles.bottomBarView}>
+        <View style={styles.borderStyle}></View>
         <View>
           <FourColumn
+            sectionStyle={styles.sectionStyle}
             firstSection={
-              <>
-                <View
-                  style={
-                    bottomBarActive === 1
-                      ? Styles.activeStyleDashboard
-                      : Styles.inActiveStyle
-                  }
-                />
-                <TouchableOpacity
-                  style={Styles.buttonStyle}
-                  onPress={() => {
-                    navigateTo(1, "/Dashboard");
-                  }}
-                >
-                  {bottomBarActive === 1 ? (
-                    <Image source={images.iconDashboard} />
-                  ) : (
-                    <Image source={images.iconDashboard} />
-                  )}
-                  <CommonText
-                    title={intl.formatMessage({ id: "label.dashboard" })}
-                    customTextStyle={
-                      bottomBarActive === 1
-                        ? Styles.activeTextStyle
-                        : Styles.inActiveTextStyle
-                    }
-                  />
-                </TouchableOpacity>
-              </>
+              <ImageAndTextTab
+                isActive={currrentRoute === navigations.DASHBOARD}
+                onPress={() => {
+                  navigateTo(navigations.DASHBOARD);
+                }}
+                containerStyle={styles.activeStyleDashboard}
+                imageActive={images.iconDashboard}
+                imageInactive={images.iconDashboard}
+                text={intl.formatMessage({ id: "label.dashboard" })}
+              />
             }
             secoundSection={
-              <>
-                <View
-                  style={
-                    bottomBarActive === 2
-                      ? Styles.activeStyle
-                      : Styles.inActiveStyle
-                  }
-                />
-                <TouchableOpacity
-                  style={Styles.buttonStyle}
-                  onPress={() => {
-                    navigateTo(2, "/Round1");
-                  }}
-                >
-                  {bottomBarActive === 2 ? (
-                    <Image source={images.iconActiveRound1} />
-                  ) : (
-                    <Image source={images.iconRound1} />
-                  )}
-                  <CommonText
-                    title={intl.formatMessage({ id: "label.round1" })}
-                    customTextStyle={
-                      bottomBarActive === 2
-                        ? Styles.activeTextStyle
-                        : Styles.inActiveTextStyle
-                    }
-                  />
-                </TouchableOpacity>
-              </>
+              <ImageAndTextTab
+                isActive={currrentRoute === navigations.ROUND_ONE}
+                onPress={() => {
+                  navigateTo(navigations.ROUND_ONE);
+                }}
+                imageActive={images.iconActiveRound1}
+                imageInactive={images.iconRound1}
+                text={intl.formatMessage({ id: "label.round1" })}
+              />
             }
             thirdSection={
-              <>
-                <View
-                  style={
-                    bottomBarActive === 3
-                      ? Styles.activeStyle
-                      : Styles.inActiveStyle
-                  }
-                />
-                <TouchableOpacity
-                  style={Styles.buttonStyle}
-                  onPress={() => {
-                    navigateTo(3, "/Round2");
-                  }}
-                >
-                  {bottomBarActive === 3 ? (
-                    <Image source={images.iconActiveRound2} />
-                  ) : (
-                    <Image source={images.iconRound2} />
-                  )}
-                  <CommonText
-                    title={intl.formatMessage({ id: "label.round2" })}
-                    customTextStyle={
-                      bottomBarActive === 3
-                        ? Styles.activeTextStyle
-                        : Styles.inActiveTextStyle
-                    }
-                  />
-                </TouchableOpacity>
-              </>
+              <ImageAndTextTab
+                isActive={currrentRoute === navigations.ROUND_TWO}
+                onPress={() => {
+                  navigateTo(navigations.ROUND_TWO);
+                }}
+                imageActive={images.iconActiveRound2}
+                imageInactive={images.iconRound2}
+                text={intl.formatMessage({ id: "label.round2" })}
+              />
             }
             fourthSection={
-              <>
-                <View
-                  style={
-                    bottomBarActive === 4
-                      ? Styles.activeStyleMyaccount
-                      : Styles.inActiveStyle
-                  }
-                />
-                <TouchableOpacity
-                  style={Styles.buttonStyle}
-                  onPress={() => {
-                    navigateTo(4, "/profile");
-                  }}
-                >
-                  {bottomBarActive === 4 ? (
-                    <Image source={images.iconActiveMyaccount} />
-                  ) : (
-                    <Image source={images.iconMyaccount} />
-                  )}
-                  <CommonText
-                    title={intl.formatMessage({ id: "label.my_account" })}
-                    customTextStyle={
-                      bottomBarActive === 4
-                        ? Styles.activeTextStyle
-                        : Styles.inActiveTextStyle
-                    }
-                  />
-                </TouchableOpacity>
-              </>
+              <ImageAndTextTab
+                isActive={currrentRoute === navigations.PROFILE}
+                onPress={() => {
+                  navigateTo(navigations.PROFILE);
+                }}
+                imageActive={images.iconActiveMyaccount}
+                imageInactive={images.iconMyaccount}
+                text={intl.formatMessage({ id: "label.my_account" })}
+                containerStyle={styles.activeStyleMyaccount}
+              />
             }
-            isLeftFillSpace={true}
-            isRightFillSpace={true}
+            isLeftFillSpace
           />
         </View>
       </View>
