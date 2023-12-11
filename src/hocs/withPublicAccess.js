@@ -11,13 +11,10 @@ function withPublicAccess(Component) {
     const navigate = useNavigate();
     useEffect(() => {
       if (!_.isEmpty(authState)) {
-        navigate(navigations.LOGIN);
+        navigate(navigations.DASHBOARD);
       }
     }, []);
 
-    if (!_.isEmpty(authState)) {
-      return null;
-    }
     return <Component {...props} />;
   };
 }

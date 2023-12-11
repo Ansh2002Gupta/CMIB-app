@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import Http from "../../http-service";
 import Storage from "../../storage-service";
+import useNavigateScreen from "../../hooks/useNavigateScreen";
+import { AuthContext } from "../../../globalContext/auth/authProvider";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { navigations } from "../../../constants/routeNames";
+import { setAuth } from "../../../globalContext/auth/authActions";
 
 const useLoginUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
   const [loginUserResult, setLoginUserResult] = useState([]);
   const [errorWhileLoggingIn, setErrorWhileLoggingIn] = useState("");
+
+  const [, authDispatch] = useContext(AuthContext);
+
+  const { navigateScreen } = useNavigateScreen();
 
   const handleUserLogin = async (payload) => {
     try {
@@ -18,8 +26,10 @@ const useLoginUser = () => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         const authToken = res.data.data.access_token;
-        await Storage.set('authToken', authToken);
+        await Storage.set("auth", authToken);
         setLoginUserResult(res.data);
+        authDispatch(setAuth({ token: authToken }));
+        navigateScreen(navigations.DASHBOARD);
         return;
       }
       setPostStatus(API_STATUS.ERROR);

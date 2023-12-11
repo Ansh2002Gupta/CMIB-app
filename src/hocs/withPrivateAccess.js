@@ -9,15 +9,13 @@ function withPrivateAccess(Component) {
   return (props) => {
     const [authState] = useContext(AuthContext);
     const navigate = useNavigate();
+
     useEffect(() => {
       if (_.isEmpty(authState)) {
         navigate(navigations.LOGIN);
       }
     }, [authState]);
 
-    if (_.isEmpty(authState)) {
-      return null;
-    }
     return <Component {...props} />;
   };
 }
