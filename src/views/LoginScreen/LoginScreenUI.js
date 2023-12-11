@@ -234,11 +234,11 @@ const LoginScreenUI = (props) => {
                   />
                 </View>
               </View>
-              {errorWhileLoggingIn && (
+              {errorWhileLoggingIn ? (
                 <View style={styles.errorView}>
                   <Text style={styles.errorText}>{errorWhileLoggingIn}</Text>
                 </View>
-              )}
+              ) : null}
               <View style={styles.accountView}>
                 <Text
                   style={{
