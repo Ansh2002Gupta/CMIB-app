@@ -127,7 +127,7 @@ const style = {
     activeTab: {
       borderBottom: `3px solid ${colors.green}`,
       marginBottom: -2,
-      zIndex: 10,
+      zIndex: 1,
     },
     backGroundColor: {
       backgroundColor: colors.white,

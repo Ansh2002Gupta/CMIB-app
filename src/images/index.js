@@ -41,7 +41,9 @@ const iconTwitter = "/images/iconTwitter/iconTwitter.png";
 const iconYoutube = "/images/iconYoutube/iconYoutube.png";
 const iconEyeSlash = "/images/iconEyeSlash.png";
 const iconCmibLogo = "images/iconCmibLogo/iconCmibLogo.png";
-
+const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
+const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
+const iconCMIBPortal = "images/iconCMIBPortal/iconCMIBPortal.png"
 export default {
   avatar,
   logo,
@@ -79,4 +81,7 @@ export default {
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
+  iconArrowUp,
+  iconArrowDown,
+  iconCMIBPortal
 };

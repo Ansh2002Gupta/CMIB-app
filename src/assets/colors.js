@@ -14,6 +14,7 @@ const lightBlue = "#269AD4";
 const secondaryGrey = "#F2F4FC";
 const darkBlack = "#0F0F0F";
 const errorBackground = "#ffeded"
+const darkBlueShade = "#000833"
 
 export default {
   white,
@@ -31,5 +32,6 @@ export default {
   lightBlue,
   secondaryGrey,
   darkBlack,
-  errorBackground
+  errorBackground,
+  darkBlueShade
 };

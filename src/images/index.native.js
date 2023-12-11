@@ -30,7 +30,9 @@ import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
 import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
 import iconEyeSlash from "../../public/images/iconEyeSlash.png";
 import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
-
+import iconCMIBPortal from "../../public/images/iconCMIBPortal/iconCMIBPortal.png";
+import iconArrowUp from '../../public/images/iconArrowUp/iconArrowUp.png';
+import iconArrowDown from '../../public/images/iconArrowDown/iconArrowDown.png';
 export default {
   avatar,
   logo,
@@ -64,4 +66,7 @@ export default {
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
+  iconCMIBPortal,
+  iconArrowUp,
+  iconArrowDown
 };

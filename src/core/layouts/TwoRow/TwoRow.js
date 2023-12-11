@@ -1,6 +1,6 @@
-import React from 'react';
-import BaseLayout from '../Base';
-import layoutStyle from './twoRow.style';
+import React from "react";
+import BaseLayout from "../Base";
+import layoutStyle from "./twoRow.style";
 
 function TwoRow({
   style,
@@ -10,19 +10,18 @@ function TwoRow({
   bottomSectionStyle,
   isTopFillSpace,
   isBottomFillSpace,
+  sideBar,
 }) {
   return (
-    <BaseLayout style={{...layoutStyle, ...style}}>
-      {({Row}) => (
+    <BaseLayout style={{ ...layoutStyle, ...style }}>
+      {({ Row }) => (
         <>
-          <Row
-            isFillSpace={isTopFillSpace}
-            style={topSectionStyle}>
+          {sideBar}
+          <Row isFillSpace={isTopFillSpace} style={topSectionStyle}>
             {topSection}
           </Row>
-          <Row
-            isFillSpace={isBottomFillSpace}
-            style={bottomSectionStyle}>
+
+          <Row isFillSpace={isBottomFillSpace} style={bottomSectionStyle}>
             {bottomSection}
           </Row>
         </>
@@ -37,6 +36,7 @@ TwoRow.defaultProps = {
   isBottomFillSpace: false,
   isTopFillSpace: false,
   bottomSectionStyle: {},
+  sideBar: {},
 };
 
 export default TwoRow;
