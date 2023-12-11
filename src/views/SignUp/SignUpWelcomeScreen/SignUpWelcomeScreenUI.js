@@ -78,7 +78,7 @@ const SignUpWelcomeScreenUI = (props) => {
       <ButtonComponent
         title={intl.formatMessage({ id: "label.next" })}
         onPress={onClickNext}
-        showNextIcon
+        hasIconRight
       />
     </SignUpHeader>
   );

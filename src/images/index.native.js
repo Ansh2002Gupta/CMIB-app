@@ -20,6 +20,10 @@ import iconWalkthroughSignUpLast from "../../public/images/iconWalkthroughSignUp
 import iconDivider from "../../public/images/iconDivider/iconDivider.png";
 import iconUpload from "../../public/images/iconUpload/iconUpload.png";
 import iconTrash from "../../public/images/iconTrash/iconTrash.png";
+import iconEye from "../../public/images/iconEye/iconEye.png";
+import iconFacebook from "../../public/images/iconFacebook/iconFacebook.png";
+import iconInstagram from "../../public/images/iconInstagram/iconInstagram.png";
+import iconLinkedin from "../../public/images/iconLinkedin/iconLinkedin.png";
 import iconSuccess from "../../public/images/iconSuccess/iconSuccess.png";
 import iconMenu from "../../public/images/iconMenu/iconMenu.png";
 import iconNotification from "../../public/images/iconNotification/iconNotification.png";
@@ -33,6 +37,11 @@ import iconEdit from "../../public/images/iconEdit/iconEdit.png";
 import iconDelete from "../../public/images/iconDelete/iconDelete.png";
 import iconChange from "../../public/images/iconChange/iconChange.png";
 import iconCross from "../../public/images/iconCross/iconCross.png";
+import iconTelegram from "../../public/images/iconTelegram/iconTelegram.png";
+import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
+import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
+import iconEyeSlash from "../../public/images/iconEyeSlash.png";
+import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
 
 export default {
   avatar,
@@ -57,6 +66,10 @@ export default {
   iconDivider,
   iconUpload,
   iconTrash,
+  iconEye,
+  iconFacebook,
+  iconInstagram,
+  iconEyeSlash,
   iconSuccess,
   iconMenu,
   iconNotification,
@@ -70,4 +83,9 @@ export default {
   iconChange,
   iconDelete,
   iconCross,
+  iconLinkedin,
+  iconTelegram,
+  iconTwitter,
+  iconYoutube,
+  iconCmibLogo,
 };

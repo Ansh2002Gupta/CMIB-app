@@ -31,6 +31,10 @@ const iconWalkthroughSignUpLast =
 const iconDivider = "/images/iconDivider/iconDivider.png";
 const iconUpload = "/images/iconUpload/iconUpload.png";
 const iconTrash = "/images/iconTrash/iconTrash.png";
+const iconEye = "/images/iconEye/iconEye.png";
+const iconFacebook = "/images/iconFacebook/iconFacebook.png";
+const iconInstagram = "/images/iconInstagram/iconInstagram.png";
+const iconLinkedin = "/images/iconLinkedin/iconLinkedin.png";
 const iconSuccess = "/images/iconSuccess/iconSuccess.png";
 const iconMenu = "/images/iconMenu/iconMenu.png";
 const iconNotification = "/images/iconNotification/iconNotification.png";
@@ -44,6 +48,14 @@ const iconEdit = "/images/iconEdit/iconEdit.png";
 const iconDelete = "/images/iconDelete/iconDelete.png";
 const iconChange = "/images/iconChange/iconChange.png";
 const iconCross = "/images/iconCross/iconCross.png";
+const iconTelegram = "/images/iconTelegram/iconTelegram.png";
+const iconTwitter = "/images/iconTwitter/iconTwitter.png";
+const iconYoutube = "/images/iconYoutube/iconYoutube.png";
+const iconEyeSlash = "/images/iconEyeSlash.png";
+const iconCmibLogo = "images/iconCmibLogo/iconCmibLogo.png";
+const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
+const iconGloPac = "images/iconGloPac/iconGloPac.png";
+const iconG20 = "images/iconG20/iconG20.png";
 
 export default {
   avatar,
@@ -85,4 +97,16 @@ export default {
   iconChange,
   iconDelete,
   iconCross,
+  iconEye,
+  iconFacebook,
+  iconInstagram,
+  iconEyeSlash,
+  iconLinkedin,
+  iconTelegram,
+  iconTwitter,
+  iconYoutube,
+  iconCmibLogo,
+  iconAzadiMahotsav,
+  iconGloPac,
+  iconG20
 };

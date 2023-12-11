@@ -1,11 +1,20 @@
 import React from "react";
 import { Text, View } from "@unthinkable/react-core-components";
-import Styles from "./HeaderText.style";
+import style from "./HeaderText.style";
 
-const HeaderText = ({text}) => {
+const HeaderText = ({
+  text,
+  label,
+  customTextStyle,
+  customSecondHeadingStyles,
+  customContainerStyles,
+}) => {
   return (
-    <View>
-      <Text style={Styles.heading}>{text}</Text>
+    <View style={[style.headerContainer, customContainerStyles]}>
+      <Text style={[style.heading, customTextStyle]}>{text}</Text>
+      <Text style={[style.secoundHeading, customSecondHeadingStyles]}>
+        {label}
+      </Text>
     </View>
   );
 };

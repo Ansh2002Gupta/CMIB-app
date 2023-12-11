@@ -4,11 +4,10 @@ import { Text, View } from "@unthinkable/react-core-components";
 
 import Styles from "./HeaderName.style";
 
-const HeaderName = () => {
-  const intl = useIntl();
+const HeaderName = ({text, customTextStyle}) => {
   return (
     <View>
-      <Text style={Styles.heading}>{intl.formatMessage({ id: 'label.greetings' })} Samay!</Text>
+      <Text style={[Styles.heading, customTextStyle]}>{text}</Text>
     </View>
   );
 };

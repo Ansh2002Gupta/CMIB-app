@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import images from "../../../images";
 import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
-import Input from "../../../components/Input/Input";
 import { ScrollView, View, Text } from "@unthinkable/react-core-components";
 import style from "./SignUpThirdScreen.style";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import CustomTextInput from "../../../components/CustomTextInput";
 
 const SignUpThirdScreenUI = (props) => {
   const { intl, onClickGoToLogin, onGoBack, onClickNext } = props;
@@ -27,7 +27,7 @@ const SignUpThirdScreenUI = (props) => {
           {intl.formatMessage({ id: "label.for_new_ca_placement" })}
         </Text>
         <View style={style.inputContainer}>
-          <Input
+          <CustomTextInput
             label={intl.formatMessage({
               id: "label.salutation",
             })}
@@ -39,7 +39,7 @@ const SignUpThirdScreenUI = (props) => {
             isDropdown
           />
           <View style={style.secondInput}>
-            <Input
+            <CustomTextInput
               label={intl.formatMessage({
                 id: "label.contact_person_name",
               })}
@@ -50,7 +50,7 @@ const SignUpThirdScreenUI = (props) => {
             />
           </View>
         </View>
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.contact_personal_designation",
           })}
@@ -59,7 +59,7 @@ const SignUpThirdScreenUI = (props) => {
           })}
           isMandatory
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.mobile_number",
           })}
@@ -69,7 +69,7 @@ const SignUpThirdScreenUI = (props) => {
           isMobileNumber
           isMandatory
         />
-        <Input
+        <CustomTextInput
           label={intl.formatMessage({
             id: "label.email_id",
           })}
