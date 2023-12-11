@@ -165,11 +165,11 @@ const SignUpLastScreenUI = (props) => {
         <UploadImage intl={intl} />
       </ScrollView>
       <SaveCancelButton
-        disableButtonText={intl.formatMessage({ id: "label.back" })}
-        onPressDisable={onGoBack}
-        onPressActive={() => handleSuccessModal(true)}
+        buttonOneText={intl.formatMessage({ id: "label.back" })}
+        onPressButtonTwo={onGoBack}
+        onPressButtonOne={() => handleSuccessModal(true)}
         isNextDisabled={!allFieldsFilled()}
-        activeButtonText={intl.formatMessage({ id: "label.sign_up" })}
+        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
       />
     </View>
   );

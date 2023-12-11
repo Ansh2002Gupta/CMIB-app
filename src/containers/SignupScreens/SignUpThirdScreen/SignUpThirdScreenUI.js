@@ -106,12 +106,12 @@ const SignUpThirdScreenUI = (props) => {
       </ScrollView>
       <View style={style.buttonContainer}>
         <SaveCancelButton
-          disableButtonText={intl.formatMessage({ id: "label.back" })}
-          onPressDisable={onGoBack}
-          onPressActive={onClickNext}
+          buttonOneText={intl.formatMessage({ id: "label.back" })}
+          onPressButtonOne={onGoBack}
+          onPressButtonTwo={onClickNext}
           hasIconRight
           isNextDisabled={!allFieldsFilled()}
-          activeButtonText={intl.formatMessage({ id: "label.next" })}
+          buttonTwoText={intl.formatMessage({ id: "label.next" })}
         />
       </View>
     </>

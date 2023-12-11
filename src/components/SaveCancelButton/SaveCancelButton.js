@@ -11,10 +11,10 @@ import images from "../../images";
 
 const SaveCancelButton = (props) => {
   const {
-    disableButtonText,
-    activeButtonText,
-    onPressDisable,
-    onPressActive,
+    buttonOneText,
+    buttonTwoText,
+    onPressButtonOne,
+    onPressButtonTwo,
     hasIconRight,
     isNextDisabled,
   } = props;
@@ -22,15 +22,15 @@ const SaveCancelButton = (props) => {
   return (
     <View style={styles.containerStyle}>
       <TouchableOpacity
-        onPress={onPressDisable}
+        onPress={onPressButtonOne}
         style={styles.disableButtonStyle}
       >
         <Image source={images.iconArrowLeft} />
 
-        <Text style={styles.disableTextStyle}>{disableButtonText}</Text>
+        <Text style={styles.disableTextStyle}>{buttonOneText}</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onPressActive}
+        onPress={onPressButtonTwo}
         style={[
           styles.buttonStyle,
           styles.secondButotnStyle,
@@ -38,7 +38,7 @@ const SaveCancelButton = (props) => {
         ]}
         disabled={isNextDisabled}
       >
-        <Text style={styles.titleStyle}>{activeButtonText}</Text>
+        <Text style={styles.titleStyle}>{buttonTwoText}</Text>
         {hasIconRight && <Image source={images.iconArrowRightWhite} />}
       </TouchableOpacity>
     </View>
@@ -46,12 +46,12 @@ const SaveCancelButton = (props) => {
 };
 
 SaveCancelButton.propTypes = {
-  disableButtonText: PropTypes.string.isRequired,
-  activeButtonText: PropTypes.string.isRequired,
-  onPressDisable: PropTypes.func,
-  onPressActive: PropTypes.func,
+  buttonOneText: PropTypes.string.isRequired,
+  buttonTwoText: PropTypes.string.isRequired,
   hasIconRight: PropTypes.bool,
   isNextDisabled: PropTypes.bool,
+  onPressButtonOne: PropTypes.func,
+  onPressButtonTwo: PropTypes.func,
 };
 
 export default SaveCancelButton;
