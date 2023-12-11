@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { useNavigate } from "../../routes";
@@ -8,6 +8,7 @@ import images from "../../images";
 const RoundOneComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const [selectedContainer, setSelectedContainer] = useState(null);
   const containers = [
     {
       title: intl.formatMessage({
@@ -41,7 +42,17 @@ const RoundOneComponent = () => {
     },
   ];
 
-  return <RoundOneUI containers={containers} />;
+  const onPressCard = (id) => {
+    setSelectedContainer(id);
+  };
+
+  return (
+    <RoundOneUI
+      containers={containers}
+      onPressCard={onPressCard}
+      selectedContainer={selectedContainer}
+    />
+  );
 };
 
 export default RoundOneComponent;

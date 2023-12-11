@@ -1,4 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useIntl } from "react-intl";
+import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
@@ -6,20 +8,18 @@ import {
   Image,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
-import { useIntl } from "react-intl";
 
-import Header from "../../components/Header/Header";
-import PropTypes from "prop-types";
 import CardComponent from "../../containers/CardComponent/CardComponent";
+import Header from "../../components/Header/Header";
 import CommonText from "../../components/CommonText/CommonText";
 import styles from "./RoundOne.style";
 
 const RoundOneUI = (props) => {
   const intl = useIntl();
-  const { containers } = props;
+  const { containers, onPressCard, selectedContainer } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
-  const [selectedContainer, setSelectedContainer] = useState(null);
+
   return (
     <Header
       headerText={intl.formatMessage({ id: "label.round1" })}
@@ -38,7 +38,7 @@ const RoundOneUI = (props) => {
         {containers.map((container) => (
           <TouchableOpacity
             onPress={() => {
-              setSelectedContainer(container.id);
+              onPressCard(container.id);
             }}
             style={styles.buttonStyle}
           >
@@ -80,6 +80,8 @@ const RoundOneUI = (props) => {
 
 RoundOneUI.propTypes = {
   containers: PropTypes.array.isRequired,
+  onPressCard:PropTypes.func.isRequired,
+  selectedContainer:PropTypes.number,
 };
 
 export default RoundOneUI;

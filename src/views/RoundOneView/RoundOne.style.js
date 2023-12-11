@@ -36,8 +36,8 @@ const style = {
     flex: 1,
     width: "100%",
     height: 236,
-    borderWidth: 10,
-    borderColor: "red",
+    borderWidth: 1,
+    borderColor: colors.green,
   },
   webContainerStyle: {
     flexDirection: "row",
