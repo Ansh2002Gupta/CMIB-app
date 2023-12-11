@@ -9,7 +9,13 @@ const style = {
     marginBottom: 24,
   },
   contentContainerStyle: {
+    flex: 1,
     paddingTop: 24,
+  },
+  mainContainerStyle: {
+    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: colors.backgroundColor,
   },
   seperator: {
     height: 1,

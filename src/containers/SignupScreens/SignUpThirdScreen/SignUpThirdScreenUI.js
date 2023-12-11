@@ -1,31 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
-import images from "../../../images";
-import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
 import { ScrollView, View, Text } from "@unthinkable/react-core-components";
-import style from "./SignUpThirdScreen.style";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+
 import CustomTextInput from "../../../components/CustomTextInput";
+import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import { SALUTATION_OPTIONS } from "../../../constants/constants";
+import style from "./SignUpThirdScreen.style";
 
 const SignUpThirdScreenUI = (props) => {
-  const { intl, onClickGoToLogin, onGoBack, onClickNext } = props;
+  const {
+    intl,
+    onGoBack,
+    onClickNext,
+    handleInputChange,
+    salutation,
+    mobileNo,
+    emailId,
+    designation,
+    name,
+    allFieldsFilled,
+    errors,
+    headerText,
+  } = props;
 
   return (
-    <SignUpHeader
-      intl={intl}
-      headerText={intl.formatMessage({
-        id: "label.contact_personal_details",
-      })}
-      onClickGoToLogin={onClickGoToLogin}
-      image={images.iconWalkthroughSignUpThree}
-    >
+    <>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
       >
-        <Text style={style.headerText}>
-          {intl.formatMessage({ id: "label.for_new_ca_placement" })}
-        </Text>
+        <Text style={style.headerText}>{headerText}</Text>
         <View style={style.inputContainer}>
           <CustomTextInput
             label={intl.formatMessage({
@@ -35,7 +39,12 @@ const SignUpThirdScreenUI = (props) => {
             placeholder={intl.formatMessage({
               id: "label.select",
             })}
+            errorMessage={errors.salutation}
+            isError={!!errors.salutation}
+            value={salutation}
+            options={SALUTATION_OPTIONS}
             isMandatory
+            onChangeValue={(val) => handleInputChange(val, "salutation")}
             isDropdown
           />
           <View style={style.secondInput}>
@@ -46,6 +55,10 @@ const SignUpThirdScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_contact_person_name",
               })}
+              value={name}
+              errorMessage={errors.name}
+              isError={!!errors.name}
+              onChangeText={(val) => handleInputChange(val, "name")}
               isMandatory
             />
           </View>
@@ -57,6 +70,10 @@ const SignUpThirdScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_contact_person_designation",
           })}
+          errorMessage={errors.designation}
+          isError={!!errors.designation}
+          value={designation}
+          onChangeText={(val) => handleInputChange(val, "designation")}
           isMandatory
         />
         <CustomTextInput
@@ -66,7 +83,11 @@ const SignUpThirdScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_contact_person_mobile_no",
           })}
+          value={mobileNo}
+          onChangeText={(val) => handleInputChange(val, "mobileNo")}
           isMobileNumber
+          errorMessage={errors.mobileNo}
+          isError={!!errors.mobileNo}
           isMandatory
         />
         <CustomTextInput
@@ -76,26 +97,40 @@ const SignUpThirdScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_contact_person_email_id",
           })}
+          errorMessage={errors.emailId}
+          isError={!!errors.emailId}
+          value={emailId}
+          onChangeText={(val) => handleInputChange(val, "email")}
           isMandatory
-          isDropdown
         />
       </ScrollView>
-      <SaveCancelButton
-        disableButtonText={intl.formatMessage({ id: "label.back" })}
-        onPressDibale={onGoBack}
-        onPressActive={onClickNext}
-        hasIconRight
-        activeButtonText={intl.formatMessage({ id: "label.next" })}
-      />
-    </SignUpHeader>
+      <View style={style.buttonContainer}>
+        <SaveCancelButton
+          buttonOneText={intl.formatMessage({ id: "label.back" })}
+          onPressButtonOne={onGoBack}
+          onPressButtonTwo={onClickNext}
+          hasIconRight
+          isNextDisabled={!allFieldsFilled()}
+          buttonTwoText={intl.formatMessage({ id: "label.next" })}
+        />
+      </View>
+    </>
   );
 };
 
 SignUpThirdScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
-  onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  salutation: PropTypes.string.isRequired,
+  mobileNo: PropTypes.string.isRequired,
+  emailId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  designation: PropTypes.string.isRequired,
+  allFieldsFilled: PropTypes.func.isRequired,
+  errors: PropTypes.object,
+  headerText: PropTypes.string.isRequired,
 };
 
 export default SignUpThirdScreenUI;

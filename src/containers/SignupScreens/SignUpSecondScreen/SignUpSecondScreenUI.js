@@ -1,22 +1,40 @@
 import React from "react";
 import PropTypes from "prop-types";
-import images from "../../../images";
-import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
 import { ScrollView, View } from "@unthinkable/react-core-components";
-import style from "./SignUpSecondScreen.style";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+
 import CustomTextInput from "../../../components/CustomTextInput";
+import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import {
+  ENTITY_OPTIONS,
+  CURRENT_INDUSTRY_OPTIONS,
+} from "../../../constants/constants";
+import style from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = (props) => {
-  const { intl, onClickGoToLogin, onGoBack, onClickNext } = props;
+  const {
+    intl,
+    onGoBack,
+    onClickNext,
+    formData,
+    handleInputChange,
+    errors,
+    allFieldsFilled,
+  } = props;
+
+  const {
+    companyName,
+    registrationNo,
+    noOfPartners,
+    address,
+    emailId,
+    telephoneNo,
+    code,
+    entity,
+    currentIndustry,
+  } = formData;
 
   return (
-    <SignUpHeader
-      intl={intl}
-      headerText={intl.formatMessage({ id: "label.basic_details" })}
-      onClickGoToLogin={onClickGoToLogin}
-      image={images.iconWalkthroughSignUpTwo}
-    >
+    <View style={style.innerContainer}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
@@ -27,6 +45,10 @@ const SignUpSecondScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.company_name_placeholder",
           })}
+          value={companyName}
+          errorMessage={errors.companyName}
+          isError={!!errors.companyName}
+          onChangeText={(val) => handleInputChange(val, "companyName")}
         />
         <CustomTextInput
           label={intl.formatMessage({ id: "label.entity" })}
@@ -35,6 +57,11 @@ const SignUpSecondScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_entity_placeholder",
           })}
+          value={entity}
+          errorMessage={errors.entity}
+          isError={!!errors.entity}
+          onChangeValue={(val) => handleInputChange(val, "entity")}
+          options={ENTITY_OPTIONS}
         />
         <View style={style.inputContainer}>
           <View style={style.registrationInput}>
@@ -46,6 +73,10 @@ const SignUpSecondScreenUI = (props) => {
                 id: "label.enter_firm_no",
               })}
               isMandatory
+              errorMessage={errors.registrationNo}
+              isError={!!errors.registrationNo}
+              value={registrationNo}
+              onChangeText={(val) => handleInputChange(val, "registrationNo")}
             />
           </View>
           <View style={style.partnerInput}>
@@ -57,6 +88,11 @@ const SignUpSecondScreenUI = (props) => {
                 id: "label.enter_no",
               })}
               isMandatory
+              keyboardType="numeric"
+              value={noOfPartners}
+              errorMessage={errors.noOfPartners}
+              isError={!!errors.noOfPartners}
+              onChangeText={(val) => handleInputChange(val, "noOfPartners")}
             />
           </View>
         </View>
@@ -67,6 +103,9 @@ const SignUpSecondScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_current_indusrty_placeholder",
           })}
+          value={currentIndustry}
+          options={CURRENT_INDUSTRY_OPTIONS}
+          onChangeValue={(val) => handleInputChange(val, "currentIndustry")}
         />
         <CustomTextInput
           label={intl.formatMessage({
@@ -75,6 +114,10 @@ const SignUpSecondScreenUI = (props) => {
           isMandatory
           isMultiline
           height={84}
+          value={address}
+          errorMessage={errors.address}
+          isError={!!errors.address}
+          onChangeText={(val) => handleInputChange(val, "address")}
           placeholder={intl.formatMessage({
             id: "label.address_for_correspondance_placeholder",
           })}
@@ -86,6 +129,7 @@ const SignUpSecondScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_state",
           })}
+          options={[]}
         />
         <CustomTextInput
           label={intl.formatMessage({ id: "label.email_id" })}
@@ -93,9 +137,13 @@ const SignUpSecondScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.email_id_placeholder",
           })}
+          value={emailId}
+          errorMessage={errors.emailId}
+          isError={!!errors.emailId}
+          onChangeText={(val) => handleInputChange(val, "emailId")}
         />
         <View style={style.inputContainer}>
-          <View>
+          <View style={style.codeInput}>
             <CustomTextInput
               label={intl.formatMessage({
                 id: "label.isd_std_code",
@@ -103,6 +151,10 @@ const SignUpSecondScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_code",
               })}
+              value={code}
+              errorMessage={errors.code}
+              isError={!!errors.code}
+              onChangeText={(val) => handleInputChange(val, "code")}
               isMandatory
             />
           </View>
@@ -114,27 +166,35 @@ const SignUpSecondScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_telephone_no",
               })}
+              errorMessage={errors.telephoneNo}
+              isError={!!errors.telephoneNo}
               isMandatory
+              value={telephoneNo}
+              onChangeText={(val) => handleInputChange(val, "telephoneNo")}
             />
           </View>
         </View>
       </ScrollView>
       <SaveCancelButton
-        disableButtonText={intl.formatMessage({ id: "label.back" })}
-        onPressDibale={onGoBack}
-        onPressActive={onClickNext}
+        buttonOneText={intl.formatMessage({ id: "label.back" })}
+        onPressButtonOne={onGoBack}
+        onPressButtonTwo={onClickNext}
         hasIconRight
-        activeButtonText={intl.formatMessage({ id: "label.next" })}
+        isNextDisabled={!allFieldsFilled()}
+        buttonTwoText={intl.formatMessage({ id: "label.next" })}
       />
-    </SignUpHeader>
+    </View>
   );
 };
 
 SignUpSecondScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
-  onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
+  formData: PropTypes.object.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  allFieldsFilled: PropTypes.func.isRequired,
 };
 
 export default SignUpSecondScreenUI;

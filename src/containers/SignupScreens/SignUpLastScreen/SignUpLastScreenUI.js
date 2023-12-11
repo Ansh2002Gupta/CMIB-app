@@ -1,19 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import images from "../../../images";
-import SignUpHeader from "../../../components/SignUpHeader/SignUpHeader";
 import {
   ScrollView,
   View,
   Text,
   FlatList,
 } from "@unthinkable/react-core-components";
-import style from "./SignUpLastScreen.style";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+
 import CheckBox from "../../../components/CheckBox/CheckBox";
-import UploadImage from "../../../components/UploadImage/UploadImage";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
+import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import UploadImage from "../../../components/UploadImage/UploadImage";
+import {
+  NATURE_OF_SUPPLIER,
+  COMPANY_TYPE_OPTIONS,
+} from "../../../constants/constants";
+import style from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = (props) => {
   const {
@@ -24,6 +27,12 @@ const SignUpLastScreenUI = (props) => {
     handleToggle,
     handleSuccessModal,
     showSuccessSignUp,
+    handleInputChange,
+    socialMediaLinks,
+    companyDetails,
+    allFieldsFilled,
+    website,
+    errors,
   } = props;
 
   const renderItem = ({ item, index }) => {
@@ -39,12 +48,7 @@ const SignUpLastScreenUI = (props) => {
   };
 
   return (
-    <SignUpHeader
-      intl={intl}
-      headerText={intl.formatMessage({ id: "label.other_details" })}
-      onClickGoToLogin={onClickGoToLogin}
-      image={images.iconWalkthroughSignUpLast}
-    >
+    <View style={style.mainContainerStyle}>
       {showSuccessSignUp && (
         <CustomModal
           headerText={intl.formatMessage({
@@ -67,38 +71,21 @@ const SignUpLastScreenUI = (props) => {
         <Text style={style.headerText}>
           {intl.formatMessage({ id: "label.social_media_presence" })}
         </Text>
-        <CustomTextInput
-          label={intl.formatMessage({
-            id: "label.facebook",
-          })}
-          placeholder={intl.formatMessage({
-            id: "label.enter_facebook_url",
-          })}
-        />
-        <CustomTextInput
-          label={intl.formatMessage({
-            id: "label.linkedin",
-          })}
-          placeholder={intl.formatMessage({
-            id: "label.enter_linkedin_url",
-          })}
-        />
-        <CustomTextInput
-          label={intl.formatMessage({
-            id: "label.twitter",
-          })}
-          placeholder={intl.formatMessage({
-            id: "label.enter_twitter_url",
-          })}
-        />
-        <CustomTextInput
-          label={intl.formatMessage({
-            id: "label.youtube",
-          })}
-          placeholder={intl.formatMessage({
-            id: "label.enter_youtube_url",
-          })}
-        />
+        {Object.keys(socialMediaLinks).map((key) => (
+          <CustomTextInput
+            key={key}
+            label={intl.formatMessage({
+              id: `label.${key}`,
+            })}
+            placeholder={intl.formatMessage({
+              id: `label.enter_${key}_url`,
+            })}
+            errorMessage={errors.socialMediaLinks[key]}
+            isError={!!errors.socialMediaLinks[key]}
+            value={socialMediaLinks[key]}
+            onChangeText={(value) => handleInputChange(value, key)}
+          />
+        ))}
         <View style={style.seperator} />
         <Text style={style.headerText}>
           {intl.formatMessage({ id: "label.company_details" })}
@@ -110,6 +97,10 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_profile_of_company",
           })}
+          errorMessage={errors.companyDetails}
+          isError={!!errors.companyDetails}
+          value={companyDetails}
+          onChangeText={(value) => handleInputChange(value, "companyDetails")}
           isMandatory
           isMultiline
           height={84}
@@ -121,6 +112,10 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_your_website",
           })}
+          value={website}
+          errorMessage={errors.website}
+          isError={!!errors.website}
+          onChangeText={(value) => handleInputChange(value, "website")}
           isMandatory
         />
         <CustomTextInput
@@ -132,6 +127,10 @@ const SignUpLastScreenUI = (props) => {
           })}
           isMandatory
           isDropdown
+          onChangeValue={(value) =>
+            handleInputChange(value, "natureOfSupplier")
+          }
+          options={NATURE_OF_SUPPLIER}
         />
         <CustomTextInput
           label={intl.formatMessage({
@@ -140,6 +139,8 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_company_type",
           })}
+          onChangeValue={(value) => handleInputChange(value, "companyType")}
+          options={COMPANY_TYPE_OPTIONS}
           isMandatory
           isDropdown
         />
@@ -164,12 +165,13 @@ const SignUpLastScreenUI = (props) => {
         <UploadImage intl={intl} />
       </ScrollView>
       <SaveCancelButton
-        disableButtonText={intl.formatMessage({ id: "label.back" })}
-        onPressDibale={onGoBack}
-        onPressActive={() => handleSuccessModal(true)}
-        activeButtonText={intl.formatMessage({ id: "label.sign_up" })}
+        buttonOneText={intl.formatMessage({ id: "label.back" })}
+        onPressButtonTwo={onGoBack}
+        onPressButtonOne={() => handleSuccessModal(true)}
+        isNextDisabled={!allFieldsFilled()}
+        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
       />
-    </SignUpHeader>
+    </View>
   );
 };
 
@@ -177,11 +179,16 @@ SignUpLastScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
-  onClickNext: PropTypes.func.isRequired,
   handleToggle: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   handleSuccessModal: PropTypes.func.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
+  errors: PropTypes.object,
+  socialMediaLinks: PropTypes.object.isRequired,
+  website: PropTypes.string.isRequired,
+  companyDetails: PropTypes.string.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  allFieldsFilled: PropTypes.func.isRequired,
 };
 
 export default SignUpLastScreenUI;

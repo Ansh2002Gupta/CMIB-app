@@ -1,35 +1,32 @@
 import { useState } from "react";
 
 import Http from "../../http-service";
-import Storage from "../../storage-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useLoginUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
-  const [loginUserResult, setLoginUserResult] = useState([]);
-  const [errorWhileLoggingIn, setErrorWhileLoggingIn] = useState("");
+  const [validateResult, setValidateResult] = useState([]);
+  const [error, setError] = useState("");
 
-  const handleUserLogin = async (payload) => {
+  const handleSignUpValidation = async (payload) => {
     try {
       setPostStatus(API_STATUS.LOADING);
-      errorWhileLoggingIn && setErrorWhileLoggingIn("");
-      const res = await Http.post(`company/login`, payload);
+      error && setError("");
+      const res = await Http.post(`company/sign-up/validate`, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
-        const authToken = res.data.data.access_token;
-        await Storage.set('authToken', authToken);
-        setLoginUserResult(res.data);
+        setValidateResult(res.data);
         return;
       }
       setPostStatus(API_STATUS.ERROR);
     } catch (err) {
       setPostStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
-        setErrorWhileLoggingIn(err.response?.data?.message);
+        setError(err.response?.data?.message);
         return;
       }
-      setErrorWhileLoggingIn(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     }
   };
 
@@ -38,13 +35,13 @@ const useLoginUser = () => {
   const isError = postStatus === API_STATUS.ERROR;
 
   return {
-    errorWhileLoggingIn,
-    handleUserLogin,
+    validateResult,
+    setError,
+    postStatus,
+    handleSignUpValidation,
     isError,
     isLoading,
     isSuccess,
-    loginUserResult,
-    postStatus,
   };
 };
 

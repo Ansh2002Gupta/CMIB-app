@@ -30,6 +30,8 @@ const CustomTextInput = (props) => {
     isPassword,
     customLabelStyle,
     customTextInputContainer,
+    options,
+    onChangeValue,
     ...remainingProps
   } = props;
 
@@ -42,17 +44,6 @@ const CustomTextInput = (props) => {
     setIsTextVisible(!isTextVisible);
   };
 
-  const data = [
-    { label: "Item 1", value: "1" },
-    { label: "Item 2", value: "2" },
-    { label: "Item 3", value: "3" },
-    { label: "Item 4", value: "4" },
-    { label: "Item 5", value: "5" },
-    { label: "Item 6", value: "6" },
-    { label: "Item 7", value: "7" },
-    { label: "Item 8", value: "8" },
-  ];
-
   const handleFocus = () => {
     setIsFocused(true);
   };
@@ -64,7 +55,11 @@ const CustomTextInput = (props) => {
   return (
     <View style={style.container}>
       <View style={style.labelContainer}>
-        <Text style={[style.label, isWebView && style.webLabel, customLabelStyle]}>{label}</Text>
+        <Text
+          style={[style.label, isWebView && style.webLabel, customLabelStyle]}
+        >
+          {label}
+        </Text>
         {isMandatory && <Text style={[style.label, style.starStyle]}> *</Text>}
       </View>
       {isDropdown ? (
@@ -77,7 +72,7 @@ const CustomTextInput = (props) => {
           ]}
           renderRightIcon={() => <Image source={images.iconDownArrow} />}
           placeholderStyle={style.placeholderStyle}
-          data={data}
+          data={options}
           maxHeight={200}
           labelField="label"
           valueField="value"
@@ -86,7 +81,7 @@ const CustomTextInput = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            // setValue(item.value); Ask Kashish about this state
+            onChangeValue(item.value);
             setIsFocused(false);
           }}
           {...remainingProps}
@@ -108,13 +103,18 @@ const CustomTextInput = (props) => {
           )}
           <TextInput
             value={value}
-            style={[style.textInputStyle, isMultiline && style.textAlignStyle, isWebView && style.webLabel, customTextInputContainer]}
+            style={[
+              style.textInputStyle,
+              isMultiline && style.textAlignStyle,
+              isWebView && style.webLabel,
+              customTextInputContainer,
+            ]}
             multiline={isMultiline}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholderTextColor={colors.darkGrey}
             placeholder={placeholder}
-            secureTextEntry={isPassword ? !isTextVisible : null}
+            secureTextEntry={isPassword && !isTextVisible}
             {...remainingProps}
           />
           {eyeImage ? (
@@ -143,8 +143,12 @@ CustomTextInput.propTypes = {
   isMobileNumber: PropTypes.bool,
   isError: PropTypes.bool,
   errorMessage: PropTypes.string,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   dropdownStyle: PropTypes.object,
+  eyeImage: PropTypes.bool,
+  isPassword: PropTypes.bool,
+  customLabelStyle: PropTypes.object,
+  customTextInputContainer: PropTypes.object,
 };
 
 export default CustomTextInput;
