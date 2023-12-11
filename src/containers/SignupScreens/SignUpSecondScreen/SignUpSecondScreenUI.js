@@ -15,6 +15,13 @@ const SignUpSecondScreenUI = (props) => {
     intl,
     onGoBack,
     onClickNext,
+    formData,
+    handleInputChange,
+    errors,
+    allFieldsFilled,
+  } = props;
+
+  const {
     companyName,
     registrationNo,
     noOfPartners,
@@ -22,12 +29,9 @@ const SignUpSecondScreenUI = (props) => {
     emailId,
     telephoneNo,
     code,
-    handleInputChange,
-    errors,
-    allFieldsFilled,
     entity,
     currentIndustry,
-  } = props;
+  } = formData;
 
   return (
     <View style={style.innerContainer}>

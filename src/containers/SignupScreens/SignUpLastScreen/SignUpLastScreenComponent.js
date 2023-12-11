@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
 
@@ -8,25 +9,21 @@ import {
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
-import { urlRegex } from "../../../constants/constants";
+import { INTEREST_OPTIONS, urlRegex } from "../../../constants/constants";
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
-  const [facebookUrl, setFacebookUrl] = useState(
-    initialDetails.social_media_link?.facebook || ""
-  );
-  const [linkedInUrl, setLinkedInUrl] = useState(
-    initialDetails.social_media_link?.linkedIn || ""
-  );
-  const [twitterUrl, setTwitterUrl] = useState(
-    initialDetails.social_media_link?.twitter || ""
-  );
-  const [youtubeUrl, setYoutubeUrl] = useState(
-    initialDetails.social_media_link?.youtube || ""
-  );
+
+  const [socialMediaLinks, setSocialMediaLinks] = useState({
+    facebook: initialDetails.social_media_link?.facebook || "",
+    linkedin: initialDetails.social_media_link?.linkedIn || "",
+    twitter: initialDetails.social_media_link?.twitter || "",
+    youtube: initialDetails.social_media_link?.youtube || "",
+  });
+
   const [companyDetails, setCompanyDetails] = useState(
     initialDetails.company_details || ""
   );
@@ -38,46 +35,22 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     initialDetails.company_type || ""
   );
 
-  const [options, setOptions] = useState([
-    {
-      title: intl.formatMessage({ id: "label.email_from_cpaib" }),
-      isSelected: false,
-      id: 1,
-    },
-    {
-      title: intl.formatMessage({ id: "label.campus" }),
-      isSelected: false,
-      id: 2,
-    },
-    {
-      title: intl.formatMessage({ id: "label.programme_brouchers" }),
-      isSelected: false,
-      id: 3,
-    },
-    {
-      title: intl.formatMessage({ id: "label.based_on_prev_participation" }),
-      isSelected: false,
-      id: 4,
-    },
-    {
-      title: intl.formatMessage({ id: "label.telephonic_call_from_icai" }),
-      isSelected: false,
-      id: 5,
-    },
-    {
-      title: intl.formatMessage({ id: "label.advertisement_in_ca_journal" }),
-      isSelected: false,
-      id: 6,
-    },
-  ]);
+  const [options, setOptions] = useState(
+    INTEREST_OPTIONS.map((option) => ({
+      ...option,
+      title: intl.formatMessage({ id: option.messageId }),
+    }))
+  );
 
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({
-    facebookUrl: "",
-    linkedInUrl: "",
-    twitterUrl: "",
-    youtubeUrl: "",
+    socialMediaLinks: {
+      facebook: "",
+      linkedIn: "",
+      twitter: "",
+      youtube: "",
+    },
     companyDetails: "",
     website: "",
   });
@@ -95,36 +68,29 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const validateFields = () => {
     let isValid = true;
     let newErrors = {
-      facebookUrl: "",
-      twitterUrl: "",
-      linkedInUrl: "",
-      youtubeUrl: "",
+      socialMediaLinks: {
+        facebook: "",
+        linkedIn: "",
+        twitter: "",
+        youtube: "",
+      },
       companyDetails: "",
       website: "",
     };
 
-    if (facebookUrl && !urlRegex.test(String(facebookUrl))) {
-      newErrors.facebookUrl = "Please enter a valid URL.";
-      isValid = false;
-    }
+    Object.keys(socialMediaLinks).forEach((key) => {
+      if (
+        socialMediaLinks[key] &&
+        !urlRegex.test(String(socialMediaLinks[key]))
+      ) {
+        newErrors.socialMediaLinks[key] = "Please enter a valid URL.";
+        isValid = false;
+      }
+    });
 
-    if (twitterUrl && !urlRegex.test(String(twitterUrl))) {
-      newErrors.twitterUrl = "Please enter a valid URL.";
-      isValid = false;
-    }
-
-    if (linkedInUrl && !urlRegex.test(String(linkedInUrl))) {
-      newErrors.linkedInUrl = "Please enter a valid URL.";
-      isValid = false;
-    }
-
-    if (youtubeUrl && !urlRegex.test(String(youtubeUrl))) {
-      newErrors.youtubeUrl = "Please enter a valid URL.";
-      isValid = false;
-    }
     if (companyDetails.length < 6 || companyDetails.length > 1000) {
-      newErrors.designation =
-        "Designation must be between 6 and 500 characters.";
+      newErrors.companyDetails =
+        "Company details must be between 6 and 1000 characters.";
       isValid = false;
     }
     if (!urlRegex.test(String(website))) {
@@ -137,33 +103,28 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   };
 
   const handleInputChange = (value, name) => {
-    switch (name) {
-      case "facebookUrl":
-        setFacebookUrl(value);
-        break;
-      case "linkedInUrl":
-        setLinkedInUrl(value);
-        break;
-      case "twitterUrl":
-        setTwitterUrl(value);
-        break;
-      case "youtubeUrl":
-        setYoutubeUrl(value);
-        break;
-      case "companyDetails":
-        setCompanyDetails(value);
-        break;
-      case "website":
-        setWebsite(value);
-        break;
-      case "companyType":
-        setCompanyType(value);
-        break;
-      case "natureOfSupplier":
-        setNatureOfSupplier(value);
-        break;
-      default:
-        break;
+    if (name in socialMediaLinks) {
+      setSocialMediaLinks({
+        ...socialMediaLinks,
+        [name]: value,
+      });
+    } else {
+      switch (name) {
+        case "companyDetails":
+          setCompanyDetails(value);
+          break;
+        case "website":
+          setWebsite(value);
+          break;
+        case "companyType":
+          setCompanyType(value);
+          break;
+        case "natureOfSupplier":
+          setNatureOfSupplier(value);
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -171,12 +132,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     if (value) {
       if (validateFields()) {
         const details = {
-          social_media_link: {
-            linkedIn: linkedInUrl,
-            facebook: facebookUrl,
-            twitter: twitterUrl,
-            youtube: youtubeUrl,
-          },
+          social_media_link: socialMediaLinks,
           website: website,
           nature_of_supplier: natureOfSupplier,
           type: companyType,
@@ -220,16 +176,17 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       handleSuccessModal={handleSuccessModal}
       showSuccessSignUp={showSuccessSignUp}
       handleInputChange={handleInputChange}
-      facebookUrl={facebookUrl}
-      linkedInUrl={linkedInUrl}
-      twitterUrl={twitterUrl}
-      youtubeUrl={youtubeUrl}
+      socialMediaLinks={socialMediaLinks}
       companyDetails={companyDetails}
       website={website}
       errors={errors}
       allFieldsFilled={allFieldsFilled}
     />
   );
+};
+
+SignUpLastScreenComponent.propTypes = {
+  tabHandler: PropTypes.func.isRequired,
 };
 
 export default SignUpLastScreenComponent;

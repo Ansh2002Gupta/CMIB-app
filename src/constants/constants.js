@@ -1,8 +1,8 @@
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 
 export const numRegex = /^\d+$/;
-export const urlRegex = /(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-
+export const urlRegex =
+  /(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -60,4 +60,36 @@ export const NATURE_OF_SUPPLIER = [
   { label: "Unregistered", value: "unregistered" },
   { label: "Composition Supplier", value: "composition supplier" },
   { label: "UIN Holder", value: "UIN holder" },
+];
+
+export const INTEREST_OPTIONS = [
+  { messageId: "label.email_from_cpaib", isSelected: false, id: 1 },
+  { messageId: "label.campus", isSelected: false, id: 2 },
+  { messageId: "label.programme_brouchers", isSelected: false, id: 3 },
+  { messageId: "label.based_on_prev_participation", isSelected: false, id: 4 },
+  { messageId: "label.telephonic_call_from_icai", isSelected: false, id: 5 },
+  { messageId: "label.advertisement_in_ca_journal", isSelected: false, id: 6 },
+];
+
+export const MODULE_OPTIONS = [
+  {
+    id: "ca-jobs",
+    messageId: "label.ca_jobs",
+  },
+  {
+    id: "newly-qualified-ca-placement",
+    messageId: "label.newly_qualified_ca",
+  },
+  {
+    id: "overseas-placements",
+    messageId: "label.overseas_placements",
+  },
+  {
+    id: "career-ascents",
+    messageId: "label.career_ascents",
+  },
+  {
+    id: "women-placement",
+    messageId: "label.women_placements",
+  },
 ];

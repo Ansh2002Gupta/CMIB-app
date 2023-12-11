@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
@@ -10,32 +11,19 @@ import { validateEmail } from "../../../constants/CommonFunctions";
 const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const [companyName, setCompanyName] = useState(
-    signUpState.signUpDetail.name || ""
-  );
-  const [registrationNo, setRegistrationNo] = useState(
-    signUpState.signUpDetail.frn_number || ""
-  );
-  const [noOfPartners, setNoOfPartners] = useState(
-    signUpState.signUpDetail.number_of_partner || ""
-  );
-  const [address, setAddress] = useState(
-    signUpState.signUpDetail.address || ""
-  );
-  const [emailId, setEmailId] = useState(signUpState.signUpDetail.email || "");
+  const initialSignUpDetail = signUpState.signUpDetail;
 
-  const [telephoneNo, setTelephoneNo] = useState(
-    signUpState.signUpDetail.telephone_number || ""
-  );
-  const [code, setCode] = useState(
-    signUpState.signUpDetail.std_country_code || ""
-  );
-
-  const [entity, setEntity] = useState(signUpState.signUpDetail.entity || "");
-
-  const [currentIndustry, setCurrentIndustry] = useState(
-    signUpState.signUpDetail.industry_type || ""
-  );
+  const [formData, setFormData] = useState({
+    companyName: initialSignUpDetail.name || "",
+    registrationNo: initialSignUpDetail.frn_number || "",
+    noOfPartners: initialSignUpDetail.number_of_partner || "",
+    address: initialSignUpDetail.address || "",
+    emailId: initialSignUpDetail.email || "",
+    telephoneNo: initialSignUpDetail.telephone_number || "",
+    code: initialSignUpDetail.std_country_code || "",
+    entity: initialSignUpDetail.entity || "",
+    currentIndustry: initialSignUpDetail.industry_type || "",
+  });
 
   const [errors, setErrors] = useState({
     companyName: "",
@@ -48,17 +36,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
   });
 
   const allFieldsFilled = () => {
-    const requiredFields = [
-      companyName,
-      registrationNo,
-      noOfPartners,
-      address,
-      emailId,
-      telephoneNo,
-      code,
-      entity,
-      currentIndustry,
-    ];
+    const requiredFields = Object.values(formData);
     return requiredFields.every((field) => String(field).trim() !== "");
   };
 
@@ -74,15 +52,27 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
       code: "",
     };
 
+    const {
+      companyName,
+      registrationNo,
+      noOfPartners,
+      address,
+      emailId,
+      telephoneNo,
+      code,
+    } = formData;
+
     if (companyName.length < 6 || companyName.length > 255) {
-      newErrors.companyName =
-        "Company name must be between 6 and 255 characters.";
+      newErrors.companyName = intl.formatMessage({
+        id: "label.company_name_validation",
+      });
       isValid = false;
     }
 
     if (!numRegex.test(String(code)) || code.length < 2 || code.length > 8) {
-      newErrors.code =
-        "Country code must be a combination of numbers and between 2 and 8 digits.";
+      newErrors.code = intl.formatMessage({
+        id: "label.country_code_validation",
+      });
       isValid = false;
     }
 
@@ -91,13 +81,16 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
       telephoneNo.length > 15 ||
       telephoneNo.length < 7
     ) {
-      newErrors.telephoneNo =
-        "Telephone number must be a combination of numbers and between 7 and 15 digits.";
+      newErrors.telephoneNo = intl.formatMessage({
+        id: "label.telephone_no_validation",
+      });
       isValid = false;
     }
 
     if (validateEmail(emailId)) {
-      newErrors.emailId = "Email ID must be valid.";
+      newErrors.emailId = intl.formatMessage({
+        id: "label.email_id_validation",
+      });
       isValid = false;
     }
 
@@ -105,19 +98,23 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
       !numRegex.test(String(registrationNo)) ||
       registrationNo.length !== 10
     ) {
-      newErrors.registrationNo =
-        "Registration number must be exactly 10 digits.";
+      newErrors.registrationNo = intl.formatMessage({
+        id: "label.registration_no_validation",
+      });
       isValid = false;
     }
 
     if (address.length < 6 || address.length > 500) {
-      newErrors.address = "Address must be between 6 and 500 characters.";
+      newErrors.address = intl.formatMessage({
+        id: "label.address_validation",
+      });
       isValid = false;
     }
 
     if (!numRegex.test(String(noOfPartners))) {
-      newErrors.noOfPartners =
-        "Number of partners must be a combination of numbers.";
+      newErrors.noOfPartners = intl.formatMessage({
+        id: "label.no_of_partners_validation",
+      });
       isValid = false;
     }
 
@@ -131,6 +128,17 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
 
   const onClickNext = () => {
     if (validateFields()) {
+      const {
+        companyName,
+        emailId,
+        entity,
+        registrationNo,
+        noOfPartners,
+        telephoneNo,
+        address,
+        code,
+      } = formData;
+
       const details = {
         name: companyName,
         email: emailId,
@@ -141,43 +149,17 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
         address: address,
         std_country_code: code,
       };
+
       signUpDispatch(setSignUpDetails(details));
       tabHandler("next");
     }
   };
 
   const handleInputChange = (value, name) => {
-    switch (name) {
-      case "registrationNo":
-        setRegistrationNo(value);
-        break;
-      case "noOfPartners":
-        setNoOfPartners(value);
-        break;
-      case "address":
-        setAddress(value);
-        break;
-      case "email":
-        setEmailId(value);
-        break;
-      case "telephoneNo":
-        setTelephoneNo(value);
-        break;
-      case "code":
-        setCode(value);
-        break;
-      case "companyName":
-        setCompanyName(value);
-        break;
-      case "entity":
-        setEntity(value);
-        break;
-      case "currentIndustry":
-        setCurrentIndustry(value);
-        break;
-      default:
-        break;
-    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   return (
@@ -185,20 +167,16 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
       intl={intl}
       onGoBack={onGoBack}
       onClickNext={onClickNext}
-      companyName={companyName}
-      registrationNo={registrationNo}
-      noOfPartners={noOfPartners}
-      address={address}
-      emailId={emailId}
-      entity={entity}
-      currentIndustry={currentIndustry}
-      telephoneNo={telephoneNo}
-      code={code}
+      formData={formData}
       handleInputChange={handleInputChange}
       errors={errors}
       allFieldsFilled={allFieldsFilled}
     />
   );
+};
+
+SignUpSecondScreenComponent.propTypes = {
+  tabHandler: PropTypes.func.isRequired,
 };
 
 export default SignUpSecondScreenComponent;

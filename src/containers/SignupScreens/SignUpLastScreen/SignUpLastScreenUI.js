@@ -28,15 +28,13 @@ const SignUpLastScreenUI = (props) => {
     handleSuccessModal,
     showSuccessSignUp,
     handleInputChange,
-    facebookUrl,
-    linkedInUrl,
-    twitterUrl,
-    youtubeUrl,
+    socialMediaLinks,
     companyDetails,
     allFieldsFilled,
     website,
     errors,
   } = props;
+  console.log("key", socialMediaLinks);
 
   const renderItem = ({ item, index }) => {
     return (
@@ -74,54 +72,21 @@ const SignUpLastScreenUI = (props) => {
         <Text style={style.headerText}>
           {intl.formatMessage({ id: "label.social_media_presence" })}
         </Text>
-        <CustomTextInput
-          label={intl.formatMessage({
-            id: "label.facebook",
-          })}
-          placeholder={intl.formatMessage({
-            id: "label.enter_facebook_url",
-          })}
-          errorMessage={errors.facebookUrl}
-          isError={!!errors.facebookUrl}
-          value={facebookUrl}
-          onChangeText={(value) => handleInputChange(value, "facebookUrl")}
-        />
-        <CustomTextInput
-          label={intl.formatMessage({
-            id: "label.linkedin",
-          })}
-          placeholder={intl.formatMessage({
-            id: "label.enter_linkedin_url",
-          })}
-          errorMessage={errors.linkedInUrl}
-          isError={!!errors.linkedInUrl}
-          value={linkedInUrl}
-          onChangeText={(value) => handleInputChange(value, "linkedInUrl")}
-        />
-        <CustomTextInput
-          label={intl.formatMessage({
-            id: "label.twitter",
-          })}
-          placeholder={intl.formatMessage({
-            id: "label.enter_twitter_url",
-          })}
-          errorMessage={errors.twitterUrl}
-          isError={!!errors.twitterUrl}
-          value={twitterUrl}
-          onChangeText={(value) => handleInputChange(value, "twitterUrl")}
-        />
-        <CustomTextInput
-          label={intl.formatMessage({
-            id: "label.youtube",
-          })}
-          placeholder={intl.formatMessage({
-            id: "label.enter_youtube_url",
-          })}
-          errorMessage={errors.youtubeUrl}
-          isError={!!errors.youtubeUrl}
-          value={youtubeUrl}
-          onChangeText={(value) => handleInputChange(value, "youtubeUrl")}
-        />
+        {Object.keys(socialMediaLinks).map((key) => (
+          <CustomTextInput
+            key={key}
+            label={intl.formatMessage({
+              id: `label.${key}`,
+            })}
+            placeholder={intl.formatMessage({
+              id: `label.enter_${key}_url`,
+            })}
+            errorMessage={errors.socialMediaLinks[key]}
+            isError={!!errors.socialMediaLinks[key]}
+            value={socialMediaLinks[key]}
+            onChangeText={(value) => handleInputChange(value, key)}
+          />
+        ))}
         <View style={style.seperator} />
         <Text style={style.headerText}>
           {intl.formatMessage({ id: "label.company_details" })}
@@ -220,10 +185,7 @@ SignUpLastScreenUI.propTypes = {
   handleSuccessModal: PropTypes.func.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
   errors: PropTypes.object.isRequired,
-  facebookUrl: PropTypes.string.isRequired,
-  linkedInUrl: PropTypes.string.isRequired,
-  twitterUrl: PropTypes.string.isRequired,
-  youtubeUrl: PropTypes.string.isRequired,
+  socialMediaLinks: PropTypes.object.isRequired,
   website: PropTypes.string.isRequired,
   companyDetails: PropTypes.string.isRequired,
   handleInputChange: PropTypes.func.isRequired,

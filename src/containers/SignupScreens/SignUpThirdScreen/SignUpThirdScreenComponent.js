@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
@@ -53,7 +54,7 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
   let headerText = "";
   switch (module) {
     case "ca-jobs":
-      headerText = intl.formatMessage({ id: "label.ca_jobs" });
+      headerText = intl.formatMessage({ id: "label.for_ca_jobs" });
       break;
     case "newly-qualified-ca-placememt":
       headerText = intl.formatMessage({ id: "label.for_new_ca_placement" });
@@ -88,14 +89,16 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
     };
 
     if (name.length < 6 || name.length > 255) {
-      newErrors.name =
-        "Contact Person Name must be between 6 and 255 characters.";
+      newErrors.name = intl.formatMessage({
+        id: "label.contact_person_validation",
+      });
       isValid = false;
     }
 
     if (designation.length < 6 || designation.length > 500) {
-      newErrors.designation =
-        "Designation must be between 6 and 500 characters.";
+      newErrors.designation = intl.formatMessage({
+        id: "label.designation_validation",
+      });
       isValid = false;
     }
 
@@ -104,13 +107,16 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
       mobileNo.length > 15 ||
       mobileNo.length < 7
     ) {
-      newErrors.mobileNo =
-        "Mobile number must be a combination of numbers and between 7 and 15 digits.";
+      newErrors.mobileNo = intl.formatMessage({
+        id: "label.mobile_number_validation",
+      });
       isValid = false;
     }
 
     if (validateEmail(emailId)) {
-      newErrors.emailId = "Email ID must be valid.";
+      newErrors.emailId = intl.formatMessage({
+        id: "label.email_id_validation",
+      });
       isValid = false;
     }
 
@@ -193,6 +199,12 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
       headerText={headerText}
     />
   );
+};
+
+SignUpThirdScreenComponent.propTypes = {
+  tabHandler: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+  module: PropTypes.string.isRequired,
 };
 
 export default SignUpThirdScreenComponent;
