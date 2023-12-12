@@ -30,10 +30,21 @@ import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
 import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
 import iconEyeSlash from "../../public/images/iconEyeSlash.png";
 import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
+import iconDashboard from "../../public/images/iconDashboard/iconDashboard.png";
+import iconRound1 from "../../public/images/iconRound1/iconRound1.png";
+import iconRound2 from "../../public/images/iconRound2/iconRound2.png";
+import iconMyaccount from "../../public/images/iconMyaccount/iconMyaccount.png";
+import iconActiveRound1 from "../../public/images/iconActiveRound1/iconActiveRound1.png";
+import iconActiveRound2 from "../../public/images/iconActiveRound2/iconActiveRound2.png";
+import iconActiveMyaccount from "../../public/images/iconActiveMyaccount/iconActiveMyaccount.png";
 import iconCMIBPortal from "../../public/images/iconCMIBPortal/iconCMIBPortal.png";
 import iconArrowUp from '../../public/images/iconArrowUp/iconArrowUp.png';
 import iconArrowDown from '../../public/images/iconArrowDown/iconArrowDown.png';
-export default {
+
+const images = {
+  iconCMIBPortal,
+  iconArrowUp, 
+  iconArrowDown,
   avatar,
   logo,
   sun,
@@ -66,7 +77,13 @@ export default {
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
-  iconCMIBPortal,
-  iconArrowUp,
-  iconArrowDown
+  iconDashboard,
+  iconRound1,
+  iconRound2,
+  iconMyaccount,
+  iconActiveRound1,
+  iconActiveRound2,
+  iconActiveMyaccount,
 };
+
+export default images;

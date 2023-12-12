@@ -1,8 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Storage from '../services/storage-service';
 
 export const getAuthToken = async () => {
   try {
-    const authToken = await AsyncStorage.getItem('authToken');
+    const authToken = await Storage.get('authToken');
     return authToken;
   } catch (error) {
     throw error;

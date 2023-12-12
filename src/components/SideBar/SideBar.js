@@ -12,17 +12,18 @@ import styles from "./SideBar.style";
 
 const SideBar = ({ items }) => {
   const [showList, setShowList] = useState(false);
-  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [selectedList, setSelecteList] = useState(null);
+  const [selectedSubList, setSelecteSubList] = useState(null);
 
   const renderSubItem = ({ item }) => (
     <TouchableOpacity
       style={[
         styles.subList,
-        selectedItemId === item.id && {
+        selectedList === item.id && {
           backgroundColor: "rgba(255, 255, 255, 0.08)",
         },
       ]}
-      onPress={() => setSelectedItemId(item.id)}
+      onPress={() => setSelecteList(item.id)}
     >
       <ButtonComponent
         customTextStyle={styles.subListText}
@@ -36,11 +37,11 @@ const SideBar = ({ items }) => {
       <TouchableOpacity
         style={[
           styles.list,
-          selectedItemId === item.id && {
+          selectedSubList === item.id && {
             backgroundColor: "rgba(255, 255, 255, 0.08)",
           },
         ]}
-        onPress={() => setSelectedItemId(item.id)}
+        onPress={() => setSelecteSubList(item.id)}
       >
         <ButtonComponent customTextStyle={styles.listText} title={item.title} />
       </TouchableOpacity>
