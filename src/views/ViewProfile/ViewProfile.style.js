@@ -14,6 +14,8 @@ const style = {
     alignItems: "center",
     height: 104,
     width: 104,
+    borderWidth: 0.5,
+    borderColor: colors.lightGrey
   },
   editProfileContainer: {
     alignSelf: "center",
@@ -56,6 +58,9 @@ const style = {
     paddingRight: 16,
     flex: 1,
     backgroundColor: colors.backgroundColor,
+  },
+  initialsText: {
+    color: colors.black
   }
 };
 

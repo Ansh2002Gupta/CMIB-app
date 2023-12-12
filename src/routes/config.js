@@ -25,7 +25,7 @@ import ContentLayout from "../pages/ContentLayout";
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
 const HomeWithPrivateAccess = withPrivateAccess(Home);
-const ContentRouteWithPrivateAccess = withPublicAccess(ContentLayout);
+const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
   {
@@ -60,7 +60,7 @@ const config = [
   },
   {
     pagePath: "/companyProfile",
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",

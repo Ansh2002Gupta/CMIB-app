@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
-  Text,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
 
+import CommonText from "../CommonText";
 import styles from "./IconHeader.style";
 
 const IconHeader = (props) => {
@@ -27,7 +27,10 @@ const IconHeader = (props) => {
           </TouchableOpacity>
           }
         </View>
-        <Text style={styles.formHeaderStyle}>{headerText}</Text>
+        <CommonText
+        title={headerText}
+        customTextStyle={styles.formHeaderStyle}
+        />
       </View>
       <View style={styles.borderStyle} />
     </View>

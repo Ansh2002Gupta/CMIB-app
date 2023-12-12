@@ -8,6 +8,7 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../components/CardComponent/CardComponent";
+import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
@@ -27,7 +28,7 @@ const ViewProfileUI = (props) => {
     { title: "Email ID", value: "pooja.dhar@j&k.co" },
   ];
 
-  const renderProfileIcon = () => {
+  const renderProfileIcon = (iconType) => {
     if (profileImage) {
       return <Image source={{ uri: profileImage }} />;
     } else {
@@ -36,10 +37,12 @@ const ViewProfileUI = (props) => {
         <View
           style={[
             style.initialsContainer,
-            showEditModal && style.editProfileContainer,
+            showEditModal &&
+              iconType === "modalIcon" &&
+              style.editProfileContainer,
           ]}
         >
-          <Text style={style.initialsText}>{initials}</Text>
+          <CommonText title={initials} customTextStyle={style.initialsText} />
         </View>
       );
     }
@@ -51,6 +54,9 @@ const ViewProfileUI = (props) => {
         cropping: true,
         cropperCircleOverlay: true,
       });
+      if(image) {
+        handleEditPopup(false);
+      }
     } catch (error) {
       console.log("Image picker error:", error);
     }
@@ -67,7 +73,7 @@ const ViewProfileUI = (props) => {
       />
       <View style={style.picParentContainer}>
         <View style={style.picContainer}>
-          {renderProfileIcon()}
+          {renderProfileIcon("profileIcon")}
           <TouchableOpacity
             style={style.iconEditStyle}
             onPress={() => {
@@ -90,13 +96,12 @@ const ViewProfileUI = (props) => {
               handleEditPopup(false);
             }}
           >
-            {renderProfileIcon()}
+            {renderProfileIcon("modalIcon")}
             <View style={style.editButtonContainer}>
               <View style={style.buttonStyle}>
                 <Image source={images.iconChange} />
                 <TouchableOpacity
                   onPress={() => {
-                    handleEditPopup(false);
                     openImagePicker();
                   }}
                 >

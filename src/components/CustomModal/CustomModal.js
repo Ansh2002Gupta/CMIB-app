@@ -7,9 +7,10 @@ import {
   Modal,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
+
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import images from "../../images";
 import style from "./CustomModal.style";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
 const CustomModal = (props) => {
   const {
