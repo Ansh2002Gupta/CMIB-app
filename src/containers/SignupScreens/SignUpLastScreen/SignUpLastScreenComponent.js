@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "../../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../../routes";
 
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
 import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";

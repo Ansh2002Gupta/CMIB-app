@@ -25,7 +25,7 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
   const [contactDetails, setContactDetails] = useState(initialContactDetails);
   const [options, setOptions] = useState(initialOptions);
 
-  const onClickNext = async () => {
+  const onClickNext = () => {
     const existingContactDetails =
       signUpState.signUpDetail.contact_details || [];
     const newContactDetails = contactDetails.filter(
