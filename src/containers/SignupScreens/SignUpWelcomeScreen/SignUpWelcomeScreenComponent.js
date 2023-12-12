@@ -12,7 +12,8 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const { handleSignUpValidation } = useValidateSignUp();
-  const initialContactDetails = signUpState.signUpDetail.contact_details || [];
+  const initialContactDetails =
+    signUpState?.signUpDetail?.contact_details || [];
 
   const initialOptions = MODULE_OPTIONS.map((option) => ({
     ...option,
