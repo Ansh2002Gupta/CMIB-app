@@ -103,14 +103,12 @@ export const ROUND_ONE_CARD = [
   },
   {
     title: "label.hiring_process_text",
-
     id: 2,
     image: "iconHiringProcess",
     subTitle: "label.hiring_process_description",
   },
   {
     title: "label.download_details_text",
-
     id: 3,
     image: "iconDownloadDetails",
     subTitle: "label.download_details_description",

@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import { useIntl } from "react-intl";
 import {
   Image,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
+import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
 import { TwoRow, FourColumn } from "../../core/layouts";
 

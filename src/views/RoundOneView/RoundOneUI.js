@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
   ScrollView,
@@ -11,13 +10,13 @@ import {
 import CardComponent from "../../containers/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
 import Header from "../../components/Header/Header";
-import useIsWebView from "../../utils/isWebView";
+import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./RoundOne.style";
 
 const RoundOneUI = (props) => {
   const { containers, onPressCard, selectedContainer, intl } = props;
-  const isWebView = useIsWebView();
+  const { isWebView } = useIsWebView();
 
   return (
     <View style={styles.innerContainer}>

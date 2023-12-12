@@ -24,18 +24,17 @@ const style = {
   componentStyle: {
     flexDirection: "row",
     paddingBottom: 24,
+    cursor: "pointer",
   },
   webComponentStyle: {
     flexDirection: "column",
     flex: 1,
     width: "100%",
-    height: 236,
   },
   webActiveComponentStyle: {
     flexDirection: "column",
     flex: 1,
     width: "100%",
-    height: 236,
     borderWidth: 1,
     borderColor: colors.green,
   },

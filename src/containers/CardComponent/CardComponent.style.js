@@ -3,7 +3,7 @@ import colors from "../../assets/colors";
 const style = {
   containerStyle: {
     marginTop: 24,
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: colors.lightGrey,
     paddingTop: 24,

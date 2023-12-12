@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import RoundOneUI from "./RoundOneUI";
-import { ROUND_ONE_CARD } from "../../constants/constants";
 import images from "../../images";
+import { ROUND_ONE_CARD } from "../../constants/constants";
 
 const RoundOneComponent = () => {
   const intl = useIntl();
@@ -15,14 +15,10 @@ const RoundOneComponent = () => {
     subTitle: intl.formatMessage({ id: card.subTitle }),
   }));
 
-  const onPressCard = (id) => {
-    setSelectedContainer(id);
-  };
-
   return (
     <RoundOneUI
       containers={containers}
-      onPressCard={onPressCard}
+      onPressCard={(id) => setSelectedContainer(id)}
       selectedContainer={selectedContainer}
       intl={intl}
     />
