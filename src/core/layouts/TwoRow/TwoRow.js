@@ -10,13 +10,11 @@ function TwoRow({
   bottomSectionStyle,
   isTopFillSpace,
   isBottomFillSpace,
-  sideBar,
 }) {
   return (
     <BaseLayout style={{ ...layoutStyle, ...style }}>
       {({ Row }) => (
         <>
-          {sideBar}
           <Row isFillSpace={isTopFillSpace} style={topSectionStyle}>
             {topSection}
           </Row>

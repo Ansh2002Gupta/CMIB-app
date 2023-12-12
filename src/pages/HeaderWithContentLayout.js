@@ -6,6 +6,7 @@ import SideNavBar from "../containers/SideNavBar/SideNavBar";
 
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { items } from "../constants/ConstantListItems";
+import SideBar from "../components/SideBar/SideBar";
 
 function HeaderWithContentLayout() {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -25,8 +26,10 @@ function HeaderWithContentLayout() {
         !isWebView ? <LoginHeaderContainer onPress={toggleSideBar} /> : null
       }
       content={<Outlet />}
-      sideBar={
-        isWebView || isSideBarVisible ? (
+      menu={
+        isWebView &&
+        currentBreakpoint !== "sm" &&
+        currentBreakpoint !== "xs" ? (
           <SideNavBar onClose={() => setSideBarVisible(false)} items={items} />
         ) : null
       }
