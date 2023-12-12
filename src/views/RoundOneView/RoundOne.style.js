@@ -66,6 +66,7 @@ const style = {
     paddingRight: 16,
 
     backgroundColor: colors.backgroundColor,
+    marginBottom: 16,
   },
   webAddApplicationView: {
     paddingLeft: 0,
