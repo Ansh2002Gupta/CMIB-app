@@ -81,7 +81,7 @@ const CustomTextInput = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            onChangeValue(item.value);
+            onChangeValue(item.value || item.id || item.state_code);
             setIsFocused(false);
           }}
           {...remainingProps}

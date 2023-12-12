@@ -41,6 +41,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     INTEREST_OPTIONS.map((option) => ({
       ...option,
       title: intl.formatMessage({ id: option.messageId }),
+      isSelected:
+        initialDetails.source_of_information?.includes(
+          intl.formatMessage({ id: option.messageId })
+        ) || false,
     }))
   );
 
@@ -142,6 +146,9 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           nature_of_supplier: natureOfSupplier,
           type: companyType,
           company_details: companyDetails,
+          source_of_information: options
+            .filter((item) => item.isSelected)
+            .map((item) => item.title),
         };
 
         handleSignUpValidation(
