@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import Dropdown from "../Dropdown/index";
 import colors from "../../assets/colors";
 import CommonText from "../CommonText";
+import Dropdown from "../Dropdown/index";
 import images from "../../images";
 import style from "./CustomTextInput.style";
 

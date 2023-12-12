@@ -7,8 +7,8 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CommonText from '../CommonText';
-import styles from "./CheckBox.style";
 import images from "../../images";
+import styles from "./CheckBox.style";
 
 const CheckBox = (props) => {
   const { title, isSelected, handleCheckbox, index, id } = props;

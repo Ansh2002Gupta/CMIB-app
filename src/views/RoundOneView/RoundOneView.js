@@ -1,6 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { View,} from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import styles from "./roundOne.style";
