@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
@@ -16,8 +15,7 @@ import images from "../../images";
 import styles from "./roundOne.style";
 
 const RoundOneUI = (props) => {
-  const intl = useIntl();
-  const { containers, onPressCard, selectedContainer } = props;
+  const { containers, onPressCard, selectedContainer, intl } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
 

@@ -24,6 +24,7 @@ const RoundOneComponent = () => {
       containers={containers}
       onPressCard={onPressCard}
       selectedContainer={selectedContainer}
+      intl={intl}
     />
   );
 };
