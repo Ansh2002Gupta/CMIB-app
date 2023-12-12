@@ -57,6 +57,8 @@ const iconDownloadDetails =
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
+const iconDrawer = "images/iconDrawer/iconDrawer.png";
+const iconNotification = "images/iconNotification/iconNotification.png";
 
 const images = {
   avatar,
@@ -108,6 +110,8 @@ const images = {
   iconAzadiMahotsav,
   iconGloPac,
   iconG20,
+  iconDrawer,
+  iconNotification,
 };
 
 export default images;

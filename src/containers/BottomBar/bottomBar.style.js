@@ -1,5 +1,4 @@
 import colors from "../../assets/colors";
-import { Platform } from "@unthinkable/react-core-components";
 
 const style = {
   borderStyle: {

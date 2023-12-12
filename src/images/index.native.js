@@ -40,6 +40,8 @@ import iconActiveMyaccount from "../../public/images/iconActiveMyaccount/iconAct
 import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/iconAddApplicationForm.png";
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
+import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
+import iconNotification from "../../public/images/iconNotification/iconNotification.png";
 
 const images = {
   avatar,
@@ -84,6 +86,8 @@ const images = {
   iconAddApplicationForm,
   iconHiringProcess,
   iconDownloadDetails,
+  iconDrawer,
+  iconNotification,
 };
 
 export default images;

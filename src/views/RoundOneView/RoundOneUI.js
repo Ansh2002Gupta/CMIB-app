@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
@@ -7,12 +7,12 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  Text,
 } from "@unthinkable/react-core-components";
 
-import CommonText from "../../components/CommonText";
 import CardComponent from "../../containers/CardComponent/CardComponent";
+import CommonText from "../../components/CommonText";
 import Header from "../../components/Header/Header";
+import images from "../../images";
 import styles from "./roundOne.style";
 
 const RoundOneUI = (props) => {
@@ -28,6 +28,8 @@ const RoundOneUI = (props) => {
         ...styles.headerTextStyle,
         ...(isWebView ? styles.webHeaderTextStyle : null),
       }}
+      iconLeft={images.iconDrawer}
+      iconRight={images.iconNotification}
     >
       <ScrollView
         style={{
