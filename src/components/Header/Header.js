@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
   Text,
@@ -17,17 +18,18 @@ const Header = (props) => {
     iconRight,
     onPressLeftIcon,
   } = props;
-
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const isWebView = currentBreakpoint !== "xs";
   return (
     <View style={styles.container}>
       <View style={styles.headerContainerStyle}>
         <View style={styles.iconContainer}>
-          {iconLeft && (
+          {iconLeft && !isWebView && (
             <TouchableOpacity onPress={onPressLeftIcon}>
               <Image source={iconLeft} />
             </TouchableOpacity>
           )}
-          {iconRight && <Image source={iconRight} />}
+          {iconRight && !isWebView && <Image source={iconRight} />}
         </View>
         <Text style={[styles.formHeaderStyle, customHeaderTextStyle]}>
           {headerText}
