@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
-import useIndustryTypes from "../../../services/apiServices/hooks/useIndustryTypes";
 import useGetStates from "../../../services/apiServices/hooks/useGetStates";
+import useIndustryTypes from "../../../services/apiServices/hooks/useIndustryTypes";
+import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
 import { numRegex } from "../../../constants/constants";
-import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
+import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { validateEmail } from "../../../constants/CommonFunctions";
 
 const SignUpSecondScreenComponent = ({ tabHandler }) => {
