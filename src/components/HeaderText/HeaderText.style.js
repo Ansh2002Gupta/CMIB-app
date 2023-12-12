@@ -14,7 +14,7 @@ const style = {
         : "GeneralSans-Semibold",
     fontWeight: "600",
   },
-  secoundHeading: {
+  secondHeading: {
     color: colors.darkGrey,
     fontSize: 14,
     fontFamily:

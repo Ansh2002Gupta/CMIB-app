@@ -1,7 +1,8 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { View, Text } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
 import styles from "./dashboard.style";
 
 function DashboardView(props) {
@@ -9,9 +10,10 @@ function DashboardView(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>
-        {intl.formatMessage({ id: "label.dashboard" })}
-      </Text>
+      <CommonText
+        customTextStyle={styles.header}
+        title={intl.formatMessage({ id: "label.dashboard" })}
+      />
     </View>
   );
 }

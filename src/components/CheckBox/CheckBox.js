@@ -2,10 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
-  Text,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
+
+import CommonText from '../CommonText';
 import styles from "./CheckBox.style";
 import images from "../../images";
 
@@ -23,7 +24,7 @@ const CheckBox = (props) => {
           style={styles.iconStyle}
         />
       </TouchableOpacity>
-      <Text style={styles.titleStyle}>{title}</Text>
+      <CommonText customTextStyle ={styles.titleStyle} title={title}/>
     </View>
   );
 };

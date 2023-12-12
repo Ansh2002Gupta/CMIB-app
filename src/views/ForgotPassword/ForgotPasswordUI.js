@@ -7,6 +7,7 @@ import {
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import ButtonComponent from "../../components/ButtonComponent";
+import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
@@ -164,15 +165,14 @@ const ForgotPasswordUI = (props) => {
             }
           />
           <TouchableOpacity onPress={onClickGoToLogin}>
-            <Text
-              style={
+            <CommonText
+              customTextStyle={
                 isWebView
                   ? [styles.backToLoginText, styles.webFontFamily]
                   : styles.backToLoginText
               }
-            >
-              {intl.formatMessage({ id: "label.back_to_login" })}
-            </Text>
+              title={intl.formatMessage({ id: "label.back_to_login" })}
+            />
           </TouchableOpacity>
         </View>
       </View>
