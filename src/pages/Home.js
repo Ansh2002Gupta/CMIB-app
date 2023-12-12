@@ -10,10 +10,7 @@ function Home() {
   const isWebView = currentBreakpoint !== "xs";
 
   return (
-    <MainLayout
-      menu={!isWebView ? <BottomBar /> : <BottomBar />}
-      content={<Outlet />}
-    />
+    <MainLayout menu={!isWebView ? <BottomBar /> : null} content={<Outlet />} />
   );
 }
 

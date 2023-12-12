@@ -33,4 +33,5 @@ const colors = {
   darkBlack,
   errorBackground,
 };
+
 export default colors;
