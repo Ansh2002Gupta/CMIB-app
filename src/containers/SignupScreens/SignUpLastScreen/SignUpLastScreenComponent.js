@@ -8,12 +8,14 @@ import {
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
+import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { INTEREST_OPTIONS, urlRegex } from "../../../constants/constants";
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
+  const { handleSignUpValidation } = useValidateSignUp();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
 
@@ -141,6 +143,18 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           type: companyType,
           company_details: companyDetails,
         };
+
+        handleSignUpValidation(
+          details,
+          () => {
+            signUpDispatch(setSignUpDetails(details));
+            setShowSuccessSignUp(true);
+          },
+          (error) => {
+            console.error("ERROR:", error);
+          }
+        );
+
         signUpDispatch(setSignUpDetails(details));
         setShowSuccessSignUp(true);
       }

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpWelcomeScreenUI from "./SignUpWelcomeScreenUI";
+import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { MODULE_OPTIONS } from "../../../constants/constants";
@@ -10,6 +11,7 @@ import { MODULE_OPTIONS } from "../../../constants/constants";
 const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
+  const { handleSignUpValidation } = useValidateSignUp();
   const initialContactDetails = signUpState.signUpDetail.contact_details || [];
 
   const initialOptions = MODULE_OPTIONS.map((option) => ({
@@ -22,7 +24,8 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
 
   const [contactDetails, setContactDetails] = useState(initialContactDetails);
   const [options, setOptions] = useState(initialOptions);
-  const onClickNext = () => {
+
+  const onClickNext = async () => {
     const existingContactDetails =
       signUpState.signUpDetail.contact_details || [];
     const newContactDetails = contactDetails.filter(
@@ -35,8 +38,17 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
     const details = {
       contact_details: [...existingContactDetails, ...newContactDetails],
     };
-    signUpDispatch(setSignUpDetails(details));
-    tabHandler("next");
+
+    handleSignUpValidation(
+      { details },
+      () => {
+        signUpDispatch(setSignUpDetails(details));
+        tabHandler("next");
+      },
+      (error) => {
+        console.error("ERROR:", error);
+      }
+    );
   };
 
   return (

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
+import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
 import { numRegex } from "../../../constants/constants";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
@@ -11,6 +12,7 @@ import { validateEmail } from "../../../constants/CommonFunctions";
 const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
+  const { handleSignUpValidation } = useValidateSignUp();
   const initialSignUpDetail = signUpState.signUpDetail;
 
   const [formData, setFormData] = useState({
@@ -148,10 +150,20 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
         telephone_number: telephoneNo,
         address: address,
         std_country_code: code,
+        industry_type: currentIndustry,
+        state_code: state,
       };
 
-      signUpDispatch(setSignUpDetails(details));
-      tabHandler("next");
+      handleSignUpValidation(
+        details,
+        () => {
+          signUpDispatch(setSignUpDetails(details));
+          tabHandler("next");
+        },
+        (error) => {
+          console.error("ERROR:", error);
+        }
+      );
     }
   };
 
