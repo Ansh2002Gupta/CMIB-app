@@ -26,19 +26,6 @@ export const ENTITY_OPTIONS = [
   },
 ];
 
-export const CURRENT_INDUSTRY_OPTIONS = [
-  { label: "Diversified", value: "1" },
-  { label: "Information Technology", value: "2" },
-  { label: "BPO", value: "3" },
-  { label: "Financial Services", value: "4" },
-  { label: "Service Industry", value: "5" },
-  { label: "Trading", value: "6" },
-  { label: "Manufacturing", value: "7" },
-  { label: "Infrastructure", value: "8" },
-  { label: "Construction", value: "9" },
-  { label: "Firm of Chartered Accountants", value: "10" },
-];
-
 export const SALUTATION_OPTIONS = [
   { label: "Mr.", value: "Mr." },
   { label: "Ms.", value: "Ms." },
