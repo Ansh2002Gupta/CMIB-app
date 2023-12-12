@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
@@ -11,13 +11,13 @@ import {
 import CardComponent from "../../containers/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
 import Header from "../../components/Header/Header";
+import useIsWebView from "../../utils/isWebView";
 import images from "../../images";
 import styles from "./RoundOne.style";
 
 const RoundOneUI = (props) => {
   const { containers, onPressCard, selectedContainer, intl } = props;
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
+  const isWebView = useIsWebView();
 
   return (
     <View style={styles.innerContainer}>
