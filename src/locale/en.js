@@ -132,6 +132,9 @@ const locale = {
   "label.cancel": "Cancel",
   "label.save": "Save",
   "label.change_password": "Change Password",
+  "label.tickets": "Tickets",
+  "label.notification_settings": "Notification Settings",
+  "label.feedback": "Feedback"
 };
 
 export default locale;

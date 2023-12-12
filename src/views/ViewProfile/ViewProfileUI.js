@@ -7,14 +7,13 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import IconHeader from "../../components/IconHeader/IconHeader";
-import images from "../../images";
-import ImagePicker from "react-native-image-crop-picker";
-
-import style from "./ViewProfile.style";
-import CardCaomponent from "../../components/CardComponent/CardComponent";
-import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import CardComponent from "../../components/CardComponent/CardComponent";
 import CustomModal from "../../components/CustomModal/CustomModal";
+import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import ImagePicker from "../../components/ImagePickerComponent/ImagePickerComponent";
+import images from "../../images";
+import style from "./ViewProfile.style";
 
 const ViewProfileUI = (props) => {
   const { intl, onGoBack, showEditModal, handleEditPopup } = props;
@@ -49,13 +48,9 @@ const ViewProfileUI = (props) => {
   const openImagePicker = async () => {
     try {
       const image = await ImagePicker.openPicker({
-        // width: 100,
-        // height: 100,
         cropping: true,
         cropperCircleOverlay: true,
       });
-
-      console.log("Selected image:", image);
     } catch (error) {
       console.log("Image picker error:", error);
     }
@@ -82,9 +77,9 @@ const ViewProfileUI = (props) => {
             <Image source={images.iconEdit} />
           </TouchableOpacity>
         </View>
-        <CardCaomponent>
+        <CardComponent>
           <DetailComponent details={details} />
-        </CardCaomponent>
+        </CardComponent>
         {showEditModal && (
           <CustomModal
             headerText={intl.formatMessage({

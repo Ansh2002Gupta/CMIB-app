@@ -42,14 +42,22 @@ const style = {
   },
   titleStyle: {
     fontSize: 14,
-    fontFamily: "GeneralSans-Medium",
     lineHeight: 20,
     paddingLeft: 12,
+    color: colors.black
   },
   iconContainer: {
     flex: 1,
     alignItems: "flex-end",
   },
+  leftIcon: {
+    width: 24,
+    height: 24
+  },
+  arrowIcon: {
+    width: 16,
+    height: 16
+  }
 };
 
 export default style;

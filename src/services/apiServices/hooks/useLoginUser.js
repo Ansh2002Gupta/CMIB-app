@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-
 import { useNavigate } from "../../../routes";
+
 import Http from "../../http-service";
 import Storage from "../../storage-service";
 import { AuthContext } from "../../../globalContext/auth/authProvider";
@@ -26,16 +26,18 @@ const useLoginUser = () => {
         await Storage.set('authToken', authToken);
         setLoginUserResult(res.data);
         authDispatch(setAuth(res));
-        navigate('/profile');
+        navigate('/account');
         return;
       }
       setPostStatus(API_STATUS.ERROR);
     } catch (err) {
       setPostStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
+        navigate('/account');
         setErrorWhileLoggingIn(err.response?.data?.message);
         return;
       }
+      navigate('/account');
       setErrorWhileLoggingIn(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     }
   };

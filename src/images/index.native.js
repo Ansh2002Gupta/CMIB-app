@@ -42,6 +42,9 @@ import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
 import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
 import iconEyeSlash from "../../public/images/iconEyeSlash.png";
 import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
+import ticketIcon from "../../public/images/ticketIcon/ticketIcon.png";
+import iconSend from "../../public/images/iconSend/iconSend.png";
+import iconSetting from "../../public/images/iconSetting/iconSetting.png";
 
 export default {
   avatar,
@@ -88,4 +91,7 @@ export default {
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
+  ticketIcon,
+  iconSend,
+  iconSetting
 };

@@ -9,18 +9,11 @@ const MyAccountComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
 
-  // const options = [
-  //   { title: "View Profile", id: 1, iconLeft: images.iconProfile },
-  //   { title: "Comapny Profile", id: 2, iconLeft: images.iconBuilding },
-  //   { title: "Change Password", id: 3, iconLeft: images.iconLock },
-  //   { title: "Logout", id: 4, iconLeft: images.iconLogout },
-  // ];
-
   const onClickViewProfile = () => {
     navigate("/viewprofile");
   };
 
-  const onClickCompanyPorfile = () => {
+  const onClickCompanyProfile = () => {
     navigate("/companyProfile");
   };
 
@@ -30,11 +23,17 @@ const MyAccountComponent = () => {
         onClickViewProfile();
         break;
       case 2:
-        onClickCompanyPorfile();
         break;
       case 3:
         break;
       case 4:
+        break;
+      case 5:
+        onClickCompanyProfile();
+        break;
+      case 6:
+        break;
+      case 7:
         break;
       default:
         break;

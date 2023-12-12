@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Header from "../../components/IconHeader/IconHeader";
-import images from "../../images";
-import style from "./CompanyProfile.style";
-import CardCaomponent from "../../components/CardComponent/CardComponent";
+
+import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import images from "../../images";
 
 const CompanyProfileUI = (props) => {
   const { intl, onGoBack } = props;
@@ -15,26 +15,27 @@ const CompanyProfileUI = (props) => {
   ];
 
   return (
-    <Header
-      intl={intl}
-      headerText={intl.formatMessage({ id: "label.company_profile" })}
-      onPressLeftIcon={onGoBack}
-      iconLeft={images.iconBack}
-      iconRight={images.iconNotification}
-    >
-      <CardCaomponent>
+    <>
+      <IconHeader
+        intl={intl}
+        headerText={intl.formatMessage({ id: "label.company_profile" })}
+        onPressLeftIcon={onGoBack}
+        iconLeft={images.iconBack}
+        iconRight={images.iconNotification}
+      />
+      <CardComponent>
         <DetailComponent
           details={details}
           headerText={intl.formatMessage({ id: "label.company_details" })}
         />
-      </CardCaomponent>
-      <CardCaomponent>
+      </CardComponent>
+      <CardComponent>
         <DetailComponent
           details={details}
           headerText={intl.formatMessage({ id: "label.source_of_info" })}
         />
-      </CardCaomponent>
-    </Header>
+      </CardComponent>
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import images from "../../images";
 import style from "./MyAccount.style";
@@ -57,10 +58,13 @@ const MyAccountUI = (props) => {
             key={option.id}
             onPress={() => handleOptionClick(option)}
           >
-            <Image source={option.iconLeft} />
-            <Text style={style.titleStyle}>{ intl.formatMessage({ id: option.title })}</Text>
+            <Image source={option.iconLeft} style={style.leftIcon} />
+            <CommonText
+            customTextStyle={style.titleStyle}
+            title={intl.formatMessage({ id: option.title })}
+            />
             <View style={style.iconContainer}>
-              <Image source={images.iconArrowRight} />
+              <Image source={images.iconArrowRight} style={style.arrowIcon} />
             </View>
           </TouchableOpacity>
         ))}

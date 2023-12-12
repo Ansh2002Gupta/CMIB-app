@@ -25,116 +25,106 @@ import ContentLayout from "../pages/ContentLayout";
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
 const HomeWithPrivateAccess = withPrivateAccess(Home);
-const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
+const ContentRouteWithPrivateAccess = withPublicAccess(ContentLayout);
 
 const config = [
   {
     pagePath: "/",
-    element: <LoginWithPublicAccess />, // Page
+    element: <LoginWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <LoginScreen />, // view
+        element: <LoginScreen />,
       },
     ],
   },
   {
-    pagePath: "/profile",
-    element: <ContentRouteWithPrivateAccess />, // Page
+    pagePath: "/account",
+    element: <ContentRouteWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <MyAccountScreen />, // view
+        element: <MyAccountScreen />,
       },
     ],
   },
   {
     pagePath: "/viewprofile",
-    element: <ContentRouteWithPrivateAccess />, // Page
+    element: <ContentRouteWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <ViewProfile />, // view
+        element: <ViewProfile />,
       },
     ],
   },
   {
     pagePath: "/companyProfile",
-    element: <HomeWithPrivateAccess />, // Page
+    element: <ContentRouteWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <CompanyProfile />, // view
+        element: <CompanyProfile />,
       },
     ],
   },
   {
     pagePath: "/forgotPassword",
-    element: <LoginWithPublicAccess />, // Page
+    element: <LoginWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <ForgotPassword />, // view
+        element: <ForgotPassword />,
       },
     ],
   },
   {
     pagePath: "/createNewPassword",
-    element: <LoginWithPublicAccess />, // Page
+    element: <LoginWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <CreateNewPassword />, // view
+        element: <CreateNewPassword />,
       },
     ],
   },
   {
     pagePath: "/signup",
-    element: <SignUpWithPublicAccess />, // Page
+    element: <SignUpWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <SignUpScreen />, // view
+        element: <SignUpScreen />,
       },
     ],
   },
   {
     pagePath: "/signupSecondScreen",
-    element: <SignUpWithPublicAccess />, // Page
+    element: <SignUpWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <SignUpSecondScreen />, // view
+        element: <SignUpSecondScreen />,
       },
     ],
   },
   {
     pagePath: "/signupThirdScreen",
-    element: <SignUpWithPublicAccess />, // Page
+    element: <SignUpWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <SignUpThirdScreen />, // view
+        element: <SignUpThirdScreen />,
       },
     ],
   },
   {
     pagePath: "/signupLastScreen",
-    element: <SignUpWithPublicAccess />, // Page
+    element: <SignUpWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <SignUpLastScreen />, // view
+        element: <SignUpLastScreen />,
       },
     ],
   },

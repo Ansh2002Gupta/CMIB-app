@@ -1,6 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
+
 import CompanyProfileUI from "./CompanyProfileUI";
 
 const CompanyProfileComponent = () => {
@@ -8,7 +9,7 @@ const CompanyProfileComponent = () => {
   const navigate = useNavigate();
 
   const onGoBack = () => {
-    navigate("/");
+    navigate("/account");
   };
 
   return <CompanyProfileUI intl={intl} onGoBack={onGoBack} />;

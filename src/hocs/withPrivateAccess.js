@@ -9,7 +9,7 @@ function withPrivateAccess(Component) {
     const navigate = useNavigate();
     useEffect(() => {
       if (_.isEmpty(authState)) {
-        navigate('/login');
+        navigate('/');
       }
     }, [authState]);
 

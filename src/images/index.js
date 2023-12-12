@@ -56,6 +56,9 @@ const iconCmibLogo = "images/iconCmibLogo/iconCmibLogo.png";
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
+const ticketIcon  = "images/ticketIcon/ticketIcon.png";
+const iconSend = "images/iconSend/iconSend.png";
+const iconSetting = "images/iconSetting/iconSetting.png";
 
 export default {
   avatar,
@@ -108,5 +111,8 @@ export default {
   iconCmibLogo,
   iconAzadiMahotsav,
   iconGloPac,
-  iconG20
+  iconG20,
+  ticketIcon,
+  iconSend,
+  iconSetting
 };
