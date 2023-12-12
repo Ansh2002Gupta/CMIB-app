@@ -7,6 +7,7 @@ import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import Home from "../pages/Home";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
+import JobsView from "../views/JobsView/JobsView";
 import LoginScreen from "../views/LoginScreen/index";
 import ProfileView from "../views/Profile";
 import RoundOne from "../views/RoundOneView";
@@ -18,6 +19,7 @@ import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
+const HomeWithPublicAccess = withPublicAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
 
@@ -110,6 +112,16 @@ const config = [
       {
         viewPath: "",
         element: <LoginScreen />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.JOBS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobsView />,
       },
     ],
   },

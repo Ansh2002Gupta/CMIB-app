@@ -158,6 +158,7 @@ const locale = {
     "Company details must be between 6 and 1000 characters.",
   "label.round1": "Round 1",
   "label.round2": "Round 2",
+  "label.jobs": "Jobs",
 };
 
 export default locale;

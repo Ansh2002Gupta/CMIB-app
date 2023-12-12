@@ -8,6 +8,7 @@ import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { navigations } from "../../../constants/routeNames";
 import { setAuth } from "../../../globalContext/auth/authActions";
+import { RouteContext } from "../../../globalContext/route/routeProvider";
 
 const useLoginUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
@@ -15,6 +16,7 @@ const useLoginUser = () => {
   const [errorWhileLoggingIn, setErrorWhileLoggingIn] = useState("");
 
   const [, authDispatch] = useContext(AuthContext);
+  const [routeState] = useContext(RouteContext);
 
   const { navigateScreen } = useNavigateScreen();
 
@@ -29,7 +31,7 @@ const useLoginUser = () => {
         await Storage.set("auth", authToken);
         setLoginUserResult(res.data);
         authDispatch(setAuth({ token: authToken }));
-        navigateScreen(navigations.DASHBOARD);
+        navigateScreen(routeState?.loginRedirectRoute || navigations.DASHBOARD);
         return;
       }
       setPostStatus(API_STATUS.ERROR);

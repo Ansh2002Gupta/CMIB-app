@@ -93,3 +93,6 @@ export const MODULE_OPTIONS = [
     messageId: "label.women_placements",
   },
 ];
+
+export const COLOR_MODES = ["light", "dark"];
+export const EXIT_WEBVIEW = "EXIT_WEBVIEW";
