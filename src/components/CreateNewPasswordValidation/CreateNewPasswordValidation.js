@@ -1,6 +1,6 @@
-import React, { useEffect,} from "react";
-import { View } from "@unthinkable/react-core-components";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
+import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import colors from "../../assets/colors";

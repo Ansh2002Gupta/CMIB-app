@@ -1,23 +1,14 @@
 import colors from "../../assets/colors";
-import { Platform } from "@unthinkable/react-core-components";
 
 const style = {
   bulletText: {
     fontSize: 14,
     fontWeight: "500",
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
     color: colors.gray,
   },
   validationText: {
     marginBottom: 8,
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
     color: colors.black,
     fontWeight: "500",
   },

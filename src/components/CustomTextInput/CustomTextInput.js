@@ -2,16 +2,16 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
-  View,
   Image,
   TextInput,
   TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 
-import colors from "../../assets/colors";
 import CommonText from "../CommonText";
 import Dropdown from "../Dropdown/index";
 import images from "../../images";
+import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
@@ -55,9 +55,19 @@ const CustomTextInput = (props) => {
   return (
     <View style={style.container}>
       <View style={style.labelContainer}>
-        <CommonText customTextStyle={[style.label, isWebView && style.webLabel, customLabelStyle]} title={label} />
+        <CommonText
+          customTextStyle={[
+            style.label,
+            isWebView && style.webLabel,
+            customLabelStyle,
+          ]}
+          title={label}
+        />
         {isMandatory && (
-          <CommonText customTextStyle={[style.label, style.starStyle]} title={"*"} />
+          <CommonText
+            customTextStyle={[style.label, style.starStyle]}
+            title={"*"}
+          />
         )}
       </View>
       {isDropdown ? (

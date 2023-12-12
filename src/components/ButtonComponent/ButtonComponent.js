@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import colors from "../../assets/colors";
 import CommonText from "../CommonText";
 import images from "../../images";
+import colors from "../../assets/colors";
 import styles from "./ButtonComponent.style";
 
 const ButtonComponent = (props) => {
@@ -34,8 +34,10 @@ const ButtonComponent = (props) => {
       {displayLoader ? (
         <ActivityIndicator color={colors.white} />
       ) : (
-      
-        <CommonText customTextStyle={[styles.titleStyle, customTitleStyle]} title={title} />
+        <CommonText
+          customTextStyle={[styles.titleStyle, customTitleStyle]}
+          title={title}
+        />
       )}
       {hasIconRight && <Image source={images.iconArrowRightWhite} />}
     </TouchableOpacity>

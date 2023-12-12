@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
-  Text,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
@@ -168,7 +167,7 @@ const ForgotPasswordUI = (props) => {
             <CommonText
               customTextStyle={
                 isWebView
-                  ? [styles.backToLoginText, styles.webFontFamily]
+                  ? [styles.backToLoginText]
                   : styles.backToLoginText
               }
               title={intl.formatMessage({ id: "label.back_to_login" })}

@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
   TouchableOpacity,
   ScrollView,
 } from "@unthinkable/react-core-components";
 
+import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
+import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
-import ButtonComponent from "../../components/ButtonComponent";
-import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import styles from "./CreateNewPassword.style";
 
 function CreateNewPasswordUI(props) {
@@ -180,9 +180,7 @@ function CreateNewPasswordUI(props) {
               <View style={styles.passwordFieldsErrorContainer}>
                 <CommonText
                   customTextStyle={styles.passwordFieldsErrorText}
-                  title={
-                    "Please provide all the necessary fields for the password."
-                  }
+                  title={intl.formatMessage({ id: "password.error" })}
                 />
               </View>
             )}

@@ -1,7 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import {View, Image } from "@unthinkable/react-core-components";
 import { useTheme } from "@unthinkable/react-theme";
+import { View, Image } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import styles from "./FollowUsIcons.style";
