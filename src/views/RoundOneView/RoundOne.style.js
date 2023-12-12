@@ -62,7 +62,10 @@ const style = {
     marginTop: 8,
   },
   containerStyle: {
-    marginBottom: 24,
+    paddingLeft: 16,
+    paddingRight: 16,
+
+    backgroundColor: colors.backgroundColor,
   },
   webAddApplicationView: {
     paddingLeft: 0,
@@ -72,6 +75,10 @@ const style = {
     fontSize: 32,
     color: colors.black,
     fontWeight: "600",
+  },
+  innerContainer: {
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
   },
   headerTextStyle: {
     fontSize: 20,

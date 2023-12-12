@@ -2,7 +2,6 @@ import colors from "../../assets/colors";
 
 const style = {
   container: {
-    flex: 1,
     backgroundColor: colors.white,
   },
   headerContainerStyle: {

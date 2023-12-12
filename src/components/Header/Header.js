@@ -11,12 +11,11 @@ import styles from "./Header.style";
 
 const Header = (props) => {
   const {
+    customHeaderTextStyle,
     headerText,
-    children,
     iconLeft,
     iconRight,
     onPressLeftIcon,
-    customHeaderTextStyle,
   } = props;
 
   return (
@@ -35,17 +34,15 @@ const Header = (props) => {
         </Text>
       </View>
       <View style={styles.borderStyle} />
-      <View style={styles.innerContainer}>{children}</View>
     </View>
   );
 };
 
 Header.propTypes = {
+  headerText: PropTypes.string.isRequired,
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,
-  headerText: PropTypes.string,
   onPressLeftIcon: PropTypes.func,
-  children: PropTypes.object.isRequired,
 };
 
 export default Header;

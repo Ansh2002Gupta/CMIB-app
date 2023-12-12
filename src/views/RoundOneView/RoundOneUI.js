@@ -22,15 +22,16 @@ const RoundOneUI = (props) => {
   const isWebView = currentBreakpoint !== "xs";
 
   return (
-    <Header
-      headerText={intl.formatMessage({ id: "label.round1" })}
-      customHeaderTextStyle={{
-        ...styles.headerTextStyle,
-        ...(isWebView ? styles.webHeaderTextStyle : null),
-      }}
-      iconLeft={images.iconDrawer}
-      iconRight={images.iconNotification}
-    >
+    <View style={styles.innerContainer}>
+      <Header
+        headerText={intl.formatMessage({ id: "label.round1" })}
+        customHeaderTextStyle={{
+          ...styles.headerTextStyle,
+          ...(isWebView ? styles.webHeaderTextStyle : null),
+        }}
+        iconLeft={images.iconDrawer}
+        iconRight={images.iconNotification}
+      />
       <ScrollView
         style={{
           ...styles.containerStyle,
@@ -77,7 +78,7 @@ const RoundOneUI = (props) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-    </Header>
+    </View>
   );
 };
 
