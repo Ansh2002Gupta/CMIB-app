@@ -34,7 +34,7 @@ SignUpHeader.propTypes = {
   intl: PropTypes.object.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
-  image: PropTypes.any,
+  image: PropTypes.node,
 };
 
 export default SignUpHeader;
