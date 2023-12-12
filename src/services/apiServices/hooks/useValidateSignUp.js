@@ -1,32 +1,36 @@
 import { useState } from "react";
-
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
-const useLoginUser = () => {
+const useValidateSignUp = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
   const [validateResult, setValidateResult] = useState([]);
   const [error, setError] = useState("");
 
-  const handleSignUpValidation = async (payload) => {
+  const handleSignUpValidation = async (
+    payload,
+    successCallback,
+    errorCallback
+  ) => {
+    setPostStatus(API_STATUS.LOADING);
+    setError("");
     try {
-      setPostStatus(API_STATUS.LOADING);
-      error && setError("");
       const res = await Http.post(`company/sign-up/validate`, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setValidateResult(res.data);
-        return;
+        successCallback();
+      } else {
+        setPostStatus(API_STATUS.ERROR);
+        errorCallback(res);
       }
-      setPostStatus(API_STATUS.ERROR);
     } catch (err) {
       setPostStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setError(err.response?.data?.message);
-        return;
-      }
-      setError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      const errorMessage =
+        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      setError(errorMessage);
+      errorCallback(errorMessage);
     }
   };
 
@@ -36,7 +40,7 @@ const useLoginUser = () => {
 
   return {
     validateResult,
-    setError,
+    error,
     postStatus,
     handleSignUpValidation,
     isError,
@@ -45,4 +49,4 @@ const useLoginUser = () => {
   };
 };
 
-export default useLoginUser;
+export default useValidateSignUp;
