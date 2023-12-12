@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../routes";
 
+import SignUpLastScreenUI from "./SignUpLastScreenUI";
+import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
-import SignUpLastScreenUI from "./SignUpLastScreenUI";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
-import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { INTEREST_OPTIONS, urlRegex } from "../../../constants/constants";
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
