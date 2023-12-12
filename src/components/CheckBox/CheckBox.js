@@ -10,7 +10,7 @@ import styles from "./CheckBox.style";
 import images from "../../images";
 
 const CheckBox = (props) => {
-  const { title, isSelected, handleCheckbox, index, id } = props;
+  const { title, isSelected, handleCheckbox, id } = props;
   return (
     <View style={styles.contentContainerStyle}>
       <TouchableOpacity onPress={() => handleCheckbox(id)}>
@@ -32,8 +32,7 @@ CheckBox.propTypes = {
   title: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
   handleCheckbox: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default CheckBox;

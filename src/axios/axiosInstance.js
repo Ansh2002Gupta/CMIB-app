@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((request) => {
   request.headers["Content-Type"] = "application/json";
-  request.headers["api-version"] = "v1"
+  request.headers["api-version"] = "v1";
   return request;
 });
 

@@ -275,22 +275,22 @@ const LoginScreenUI = (props) => {
 };
 
 LoginScreenUI.propTypes = {
-  onLogin: PropTypes.func.isRequired,
   active: PropTypes.bool.isRequired,
-  onForgotPasswordClick: PropTypes.func.isRequired,
-  toggleUser: PropTypes.func.isRequired,
-  loginDisabled: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  onChangeUsername: PropTypes.func.isRequired,
-  onChangePassword: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired,
-  onCreateNewPasswordClick: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string,
+  errorWhileLoggingIn: PropTypes.string,
   handleToggle: PropTypes.func.isRequired,
-  options: PropTypes.array.isRequired,
+  intl: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  errorWhileLoggingIn: PropTypes.bool.isRequired,
+  loginDisabled: PropTypes.bool.isRequired,
+  options: PropTypes.array.isRequired,
+  onCreateNewPasswordClick: PropTypes.func.isRequired,
+  onChangePassword: PropTypes.func.isRequired,
+  onChangeUsername: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
+  onForgotPasswordClick: PropTypes.func.isRequired,
+  password: PropTypes.string.isRequired,
+  toggleUser: PropTypes.func.isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 export default LoginScreenUI;
