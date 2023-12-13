@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
-  Text,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
 
+import CommonText from "../CommonText";
 import styles from "./Header.style";
 
 const Header = (props) => {
@@ -31,9 +31,13 @@ const Header = (props) => {
           )}
           {iconRight && !isWebView && <Image source={iconRight} />}
         </View>
-        <Text style={[styles.formHeaderStyle, customHeaderTextStyle]}>
-          {headerText}
-        </Text>
+        <CommonText
+          title={headerText}
+          customTextStyle={{
+            ...styles.formHeaderStyle,
+            ...customHeaderTextStyle,
+          }}
+        />
       </View>
       <View style={styles.borderStyle} />
     </View>
