@@ -161,9 +161,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
             console.error("ERROR:", error);
           }
         );
-
-        signUpDispatch(setSignUpDetails(details));
-        setShowSuccessSignUp(true);
       }
     } else {
       setShowSuccessSignUp(false);
