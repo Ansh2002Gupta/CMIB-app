@@ -107,6 +107,7 @@ const SignUpSecondScreenUI = (props) => {
           })}
           labelField="name"
           valueField="id"
+          inputKey="id"
           value={currentIndustry}
           options={industryOptions || []}
           onChangeValue={(val) => handleInputChange(val, "currentIndustry")}
@@ -135,6 +136,7 @@ const SignUpSecondScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_state",
           })}
+          inputKey="state_code"
           value={state}
           options={stateOptions || []}
           onChangeValue={(val) => handleInputChange(val, "state")}
