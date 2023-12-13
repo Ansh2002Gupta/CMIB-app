@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { launchImageLibrary } from "react-native-image-picker";
 import {
   Image,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
+import { launchImageLibrary } from "react-native-image-picker";
 
 import CommonText from "../CommonText";
 import images from "../../images";

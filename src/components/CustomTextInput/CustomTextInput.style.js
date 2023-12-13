@@ -52,7 +52,6 @@ const style = {
   },
   label: {
     color: colors.darkGrey,
-    fontSize: 12,
   },
   webLabel: {
     fontFamily: "General Sans",
@@ -99,7 +98,6 @@ const style = {
   },
   errorMsg: {
     color: colors.errorRed,
-    fontSize: 12,
     lineHeight: 18,
     fontWeight: "600",
   },

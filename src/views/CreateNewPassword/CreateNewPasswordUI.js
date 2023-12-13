@@ -180,7 +180,7 @@ function CreateNewPasswordUI(props) {
               <View style={styles.passwordFieldsErrorContainer}>
                 <CommonText
                   customTextStyle={styles.passwordFieldsErrorText}
-                  title={intl.formatMessage({ id: "password.error" })}
+                  title={intl.formatMessage({ id: "label.password_field_error" })}
                 />
               </View>
             )}

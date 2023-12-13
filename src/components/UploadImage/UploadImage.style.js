@@ -64,7 +64,6 @@ const style = {
   infoStyle: {
     color: colors.darkGrey,
     lineHeight: 18,
-    fontSize: 12,
   },
 };
 

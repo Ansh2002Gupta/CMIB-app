@@ -15,7 +15,7 @@ const locale = {
   "label.password_placeholder": "Enter your password",
   "label.remember_me": "Remember Me",
   "label.forgot_password": "Forgot Password?",
-  "password.error": "Please provide all the necessary fields for the password.",
+  "label.password_field_error": "Please provide all the necessary fields for the password.",
   "label.dont_have_account": "Don't have an account?  ",
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
