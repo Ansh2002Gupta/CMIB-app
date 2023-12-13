@@ -137,7 +137,7 @@ const locale = {
   "label.save": "Save",
   "label.round1": "Round 1",
   "label.round2": "Round 2",
-  "label.add_application_form_text": "Add Application Form",
+  "label.add_application_form_text": "Add / View Application form",
   "label.add_application_form_description_text":
     "Streamlined application form designed for quick and easy submission.",
   "label.hiring_process_text": "Shortlisting, Consent Marking & Interviews",
