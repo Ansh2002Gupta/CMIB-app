@@ -17,6 +17,7 @@ const DefaultRoute = () => {
     });
     return <Navigate to={navigations.DASHBOARD} replace />;
   } else {
+    //TODO: Add proper screen for this on mobile.
     return <Navigate to={navigations.LOGIN} replace />;
   }
 };
