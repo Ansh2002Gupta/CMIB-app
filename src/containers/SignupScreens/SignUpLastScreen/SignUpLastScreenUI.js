@@ -7,6 +7,7 @@ import CheckBox from "../../../components/CheckBox/CheckBox";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../../components/UploadImage/UploadImage";
 import {
   NATURE_OF_SUPPLIER,
@@ -16,19 +17,21 @@ import style from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = (props) => {
   const {
+    allFieldsFilled,
+    companyDetails,
+    errors,
+    handleDismissToast,
+    handleInputChange,
+    handleSuccessModal,
+    handleToggle,
     intl,
     onClickGoToLogin,
     onGoBack,
     options,
-    handleToggle,
-    handleSuccessModal,
     showSuccessSignUp,
-    handleInputChange,
     socialMediaLinks,
-    companyDetails,
-    allFieldsFilled,
+    validationError,
     website,
-    errors,
   } = props;
 
   const renderItem = ({ item, index }) => {
@@ -175,24 +178,32 @@ const SignUpLastScreenUI = (props) => {
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
       />
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
 
 SignUpLastScreenUI.propTypes = {
+  allFieldsFilled: PropTypes.func.isRequired,
+  companyDetails: PropTypes.string.isRequired,
+  errors: PropTypes.object,
+  handleDismissToast: PropTypes.func,
+  handleInputChange: PropTypes.func.isRequired,
+  handleSuccessModal: PropTypes.func.isRequired,
+  handleToggle: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
-  handleToggle: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
-  handleSuccessModal: PropTypes.func.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
-  errors: PropTypes.object,
   socialMediaLinks: PropTypes.object.isRequired,
+  validationError: PropTypes.string,
   website: PropTypes.string.isRequired,
-  companyDetails: PropTypes.string.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  allFieldsFilled: PropTypes.func.isRequired,
 };
 
 export default SignUpLastScreenUI;

@@ -19,6 +19,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const { getStates, stateResult } = useGetStates();
   const initialSignUpDetail = signUpState.signUpDetail;
 
+  const [validationError, setValidationError] = useState("");
   const [formData, setFormData] = useState({
     companyName: initialSignUpDetail.name || "",
     registrationNo: initialSignUpDetail.frn_number || "",
@@ -134,6 +135,10 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
     return isValid;
   };
 
+  const handleDismissToast = () => {
+    setValidationError("");
+  };
+
   const onGoBack = () => {
     tabHandler("prev");
   };
@@ -173,7 +178,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
           tabHandler("next");
         },
         (error) => {
-          console.error("ERROR:", error);
+          setValidationError(error);
         }
       );
     }
@@ -197,6 +202,8 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
       allFieldsFilled={allFieldsFilled}
       industryOptions={industryTypeResult}
       stateOptions={stateResult}
+      handleDismissToast={handleDismissToast}
+      validationError={validationError}
     />
   );
 };

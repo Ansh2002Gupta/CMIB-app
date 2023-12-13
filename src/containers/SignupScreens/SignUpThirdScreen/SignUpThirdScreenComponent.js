@@ -15,6 +15,7 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
   const initialContactDetails = signUpState.signUpDetail.contact_details || [];
   const { handleSignUpValidation } = useValidateSignUp();
 
+  const [validationError, setValidationError] = useState("");
   const [salutation, setSalutation] = useState(
     initialContactDetails[index]?.salutation || ""
   );
@@ -165,11 +166,15 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
             tabHandler("next");
           },
           (error) => {
-            console.error("ERROR:", error);
+            setValidationError(error);
           }
         );
       }
     }
+  };
+
+  const handleDismissToast = () => {
+    setValidationError("");
   };
 
   const handleInputChange = (value, name) => {
@@ -208,6 +213,8 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
       allFieldsFilled={allFieldsFilled}
       errors={errors}
       headerText={headerText}
+      validationError={validationError}
+      handleDismissToast={handleDismissToast}
     />
   );
 };

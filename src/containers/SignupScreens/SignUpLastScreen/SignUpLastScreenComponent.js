@@ -18,6 +18,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const { handleSignUpValidation } = useValidateSignUp();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
+  const [validationError, setValidationError] = useState("");
 
   const [socialMediaLinks, setSocialMediaLinks] = useState({
     facebook: initialDetails.social_media_link?.facebook || "",
@@ -161,13 +162,17 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
             setShowSuccessSignUp(true);
           },
           (error) => {
-            console.error("ERROR:", error);
+            setValidationError(error);
           }
         );
       }
     } else {
       setShowSuccessSignUp(false);
     }
+  };
+
+  const handleDismissToast = () => {
+    setValidationError("");
   };
 
   const onClickGoToLogin = () => {
@@ -205,6 +210,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       website={website}
       errors={errors}
       allFieldsFilled={allFieldsFilled}
+      validationError={validationError}
+      handleDismissToast={handleDismissToast}
     />
   );
 };

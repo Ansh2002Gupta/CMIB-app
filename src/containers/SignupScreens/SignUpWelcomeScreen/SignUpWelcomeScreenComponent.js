@@ -25,6 +25,7 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
 
   const [contactDetails, setContactDetails] = useState(initialContactDetails);
   const [options, setOptions] = useState(initialOptions);
+  const [validationError, setValidationError] = useState("");
 
   const onClickNext = () => {
     const existingContactDetails =
@@ -47,9 +48,13 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
         tabHandler("next");
       },
       (error) => {
-        console.error("ERROR:", error);
+        setValidationError(error);
       }
     );
+  };
+
+  const handleDismissToast = () => {
+    setValidationError("");
   };
 
   return (
@@ -60,6 +65,8 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
       setContactDetails={setContactDetails}
       options={options}
       setOptions={setOptions}
+      handleDismissToast={handleDismissToast}
+      validationError={validationError}
     />
   );
 };
