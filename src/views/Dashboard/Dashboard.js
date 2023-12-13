@@ -5,7 +5,7 @@ import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../components/CommonText";
 import styles from "./dashboard.style";
 
-function DashboardView(props) {
+function DashboardView() {
   const intl = useIntl();
 
   return (
