@@ -120,6 +120,28 @@ const style = {
     alignItems: "center",
     cursor: "pointer",
   },
+  mainView: {
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    borderRadius: 5,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
+    justifyContent: "space-between",
+    marginTop: 4,
+  },
+  counterView: {
+    justifyContent: "center",
+  },
+  counterText: {
+    color: colors.black,
+  },
+  buttonsView: {
+    marginLeft: 8,
+    alignItems: "center",
+  },
 };
 
 export default style;

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
+import CommonText from "../CommonText";
 import Dropdown from "../Dropdown/index";
 import colors from "../../assets/colors";
 import images from "../../images";
@@ -32,10 +33,12 @@ const CustomTextInput = (props) => {
     customTextInputContainer,
     options,
     onChangeValue,
+    counterInput,
     ...remainingProps
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
+  const [count, setCount] = useState(0);
   const [isTextVisible, setIsTextVisible] = useState(false);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
@@ -50,6 +53,16 @@ const CustomTextInput = (props) => {
 
   const handleBlur = () => {
     setIsFocused(false);
+  };
+
+  const incrementCount = () => {
+    setCount(count + 1);
+  };
+
+  const decrementCount = () => {
+    if (count > 0) {
+      setCount(count - 1);
+    }
   };
 
   return (
@@ -86,6 +99,20 @@ const CustomTextInput = (props) => {
           }}
           {...remainingProps}
         />
+      ) : counterInput ? (
+        <View style={style.mainView}>
+          <View style={style.counterView}>
+            <CommonText customTextStyle={style.counterText} title={count} />
+          </View>
+          <View style={style.buttonsView}>
+            <TouchableOpacity onPress={incrementCount} style={style.button}>
+              <Image source={images.iconUpArrow} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={decrementCount} style={style.button}>
+              <Image source={images.iconDownArrow} />
+            </TouchableOpacity>
+          </View>
+        </View>
       ) : (
         <View
           style={[
@@ -135,8 +162,8 @@ const CustomTextInput = (props) => {
 };
 
 CustomTextInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  value: PropTypes.string,
   isMandatory: PropTypes.bool,
   isDropdown: PropTypes.bool,
   isMultiline: PropTypes.bool,

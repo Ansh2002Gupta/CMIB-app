@@ -37,6 +37,7 @@ import iconMyaccount from "../../public/images/iconMyaccount/iconMyaccount.png";
 import iconActiveRound1 from "../../public/images/iconActiveRound1/iconActiveRound1.png";
 import iconActiveRound2 from "../../public/images/iconActiveRound2/iconActiveRound2.png";
 import iconActiveMyaccount from "../../public/images/iconActiveMyaccount/iconActiveMyaccount.png";
+import iconUpArrow from "../../public/images/iconUpArrow/iconUpArrow.png";
 
 const images = {
   avatar,
@@ -78,6 +79,7 @@ const images = {
   iconActiveRound1,
   iconActiveRound2,
   iconActiveMyaccount,
+  iconUpArrow,
 };
 
 export default images;
