@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import { toastTimeout } from "../../constants/constants";
+import { TOAST_TIMEOUT } from "../../constants/constants";
 import style from "./ToastComponent.style";
 
 const ToastComponent = (props) => {
-  const { duration = toastTimeout, onDismiss, toastMessage } = props;
+  const { duration = TOAST_TIMEOUT, onDismiss, toastMessage } = props;
 
   useEffect(() => {
     const timer = setTimeout(() => {

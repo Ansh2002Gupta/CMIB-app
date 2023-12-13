@@ -217,7 +217,6 @@ SignUpSecondScreenUI.propTypes = {
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,
-
   intl: PropTypes.object.isRequired,
   onClickNext: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
