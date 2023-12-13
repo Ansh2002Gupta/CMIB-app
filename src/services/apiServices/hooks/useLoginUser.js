@@ -4,11 +4,11 @@ import Http from "../../http-service";
 import Storage from "../../storage-service";
 import useNavigateScreen from "../../hooks/useNavigateScreen";
 import { AuthContext } from "../../../globalContext/auth/authProvider";
+import { RouteContext } from "../../../globalContext/route/routeProvider";
+import { setAuth } from "../../../globalContext/auth/authActions";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { navigations } from "../../../constants/routeNames";
-import { setAuth } from "../../../globalContext/auth/authActions";
-import { RouteContext } from "../../../globalContext/route/routeProvider";
 
 const useLoginUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
