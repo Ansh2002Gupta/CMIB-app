@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   TouchableOpacity,
-  Text,
   Image,
   View,
 } from "@unthinkable/react-core-components";
@@ -54,7 +53,7 @@ const ViewProfileUI = (props) => {
         cropping: true,
         cropperCircleOverlay: true,
       });
-      if(image) {
+      if (image) {
         handleEditPopup(false);
       }
     } catch (error) {
@@ -105,16 +104,18 @@ const ViewProfileUI = (props) => {
                     openImagePicker();
                   }}
                 >
-                  <Text style={style.textStyle}>
-                    {intl.formatMessage({ id: "label.change" })}
-                  </Text>
+                  <CommonText
+                    customTextStyle={style.textStyle}
+                    title={intl.formatMessage({ id: "label.change" })}
+                  />
                 </TouchableOpacity>
               </View>
               <View style={[style.buttonStyle, style.secondButtonStyle]}>
                 <Image source={images.iconDelete} />
-                <Text style={style.textStyle}>
-                  {intl.formatMessage({ id: "label.remove" })}
-                </Text>
+                <CommonText
+                  customTextStyle={style.textStyle}
+                  title={intl.formatMessage({ id: "label.remove" })}
+                />
               </View>
             </View>
           </CustomModal>

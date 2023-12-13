@@ -50,8 +50,8 @@ const style = {
   textStyle: {
     fontSize: 14,
     color: colors.black,
-    fontFamily: "GeneralSans-Semibold",
     marginLeft: 2,
+    fontWeight: '600',
   },
   picParentContainer: {
     paddingLeft: 16,
@@ -60,7 +60,7 @@ const style = {
     backgroundColor: colors.backgroundColor,
   },
   initialsText: {
-    color: colors.black
+    fontSize: 14
   }
 };
 

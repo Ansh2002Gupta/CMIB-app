@@ -32,13 +32,13 @@ const style = {
   },
   fullNameStyle: {
     fontSize: 16,
-    fontFamily: "GeneralSans-semiBold",
+    fontFamily: "600",
     color: colors.black,
   },
   emailStyle: {
     fontSize: 14,
-    fontFamily: "GeneralSans-Medium",
     color: colors.darkGrey,
+    fontWeight: "500"
   },
   titleStyle: {
     fontSize: 14,
@@ -57,6 +57,9 @@ const style = {
   arrowIcon: {
     width: 16,
     height: 16
+  },
+  initialsText: {
+    fontSize: 14
   }
 };
 

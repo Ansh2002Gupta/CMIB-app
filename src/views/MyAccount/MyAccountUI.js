@@ -14,6 +14,7 @@ import style from "./MyAccount.style";
 
 const MyAccountUI = (props) => {
   const { intl, options, handleOptionClick } = props;
+  //TODO: Replace this dummy data with api data.
   const profileImage = "";
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -28,7 +29,10 @@ const MyAccountUI = (props) => {
       const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
       return (
         <View style={style.initialsContainer}>
-          <Text style={style.initialsText}>{initials}</Text>
+          <CommonText
+          customTextStyle={style.initialsText}
+          title={initials}
+          />
         </View>
       );
     }
@@ -46,10 +50,16 @@ const MyAccountUI = (props) => {
         <View style={style.profileContainer}>
           {renderProfileIcon()}
           <View style={style.detailContainer}>
-            <Text style={style.fullNameStyle}>
-              {firstName} {lastName}
-            </Text>
-            <Text style={style.emailStyle}>{email}</Text>
+            {/* <Text style={style.fullNameStyle}> */}
+            <CommonText
+            customTextStyle={style.fullNameStyle}
+            title={`${firstName} ${lastName}`}
+            />
+            {/* <Text style={style.emailStyle}>{email}</Text> */}
+            <CommonText
+            title={email}
+            customTextStyle={style.emailStyle}
+            />
           </View>
         </View>
         {options.map((option) => (
