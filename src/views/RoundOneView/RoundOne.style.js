@@ -50,13 +50,11 @@ const style = {
     fontSize: 14,
     color: colors.subHeadingGray,
     fontWeight: "500",
-
     marginTop: 8,
   },
   containerStyle: {
     paddingLeft: 16,
     paddingRight: 16,
-
     backgroundColor: colors.backgroundColor,
     marginBottom: 16,
   },
