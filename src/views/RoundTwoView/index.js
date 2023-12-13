@@ -1,3 +1,3 @@
-import RoundTwo from "./RoundTwoView";
+import RoundTwoUI from "./RoundTwoUI";
 
-export default RoundTwo;
+export default RoundTwoUI;
