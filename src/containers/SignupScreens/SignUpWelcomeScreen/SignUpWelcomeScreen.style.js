@@ -6,7 +6,6 @@ const style = {
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 24,
-    fontFamily: "GeneralSans-Bold",
     paddingTop: 24,
   },
   contentContainerStyle: { flex: 1 },

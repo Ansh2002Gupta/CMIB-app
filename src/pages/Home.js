@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Outlet } from "../routes";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import BottomBar from "../containers/BottomBar";
 import MainLayout from "../layouts/MainLayout";
+import useIsWebView from "../hooks/useIsWebView";
 
 function Home() {
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
-
+  const { isWebView } = useIsWebView();
   return (
     <MainLayout menu={!isWebView ? <BottomBar /> : null} content={<Outlet />} />
   );

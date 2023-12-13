@@ -6,9 +6,10 @@ import styles from "./CommonText.style";
 
 const ButtonComponent = (props) => {
   const { title, customTextStyle } = props;
+  const styleArray = Array.isArray(customTextStyle) ? customTextStyle : [customTextStyle];
   return (
     <View>
-      <Text style={[styles.textStyle, customTextStyle]}>{title}</Text>
+      <Text style={[styles.textStyle, ...styleArray]}>{title}</Text>
     </View>
   );
 };
