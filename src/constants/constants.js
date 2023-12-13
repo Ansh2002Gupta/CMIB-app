@@ -4,6 +4,8 @@ export const numRegex = /^\d+$/;
 export const urlRegex =
   /(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
+export const API_VERSION_NUMBER = "v1";
+
 export const API_STATUS = {
   IDLE: "idle",
   LOADING: "loading",
@@ -24,19 +26,6 @@ export const ENTITY_OPTIONS = [
     label: "Firm of Chartered Accountants",
     value: "firm of chartered accountants",
   },
-];
-
-export const CURRENT_INDUSTRY_OPTIONS = [
-  { label: "Diversified", value: "1" },
-  { label: "Information Technology", value: "2" },
-  { label: "BPO", value: "3" },
-  { label: "Financial Services", value: "4" },
-  { label: "Service Industry", value: "5" },
-  { label: "Trading", value: "6" },
-  { label: "Manufacturing", value: "7" },
-  { label: "Infrastructure", value: "8" },
-  { label: "Construction", value: "9" },
-  { label: "Firm of Chartered Accountants", value: "10" },
 ];
 
 export const SALUTATION_OPTIONS = [

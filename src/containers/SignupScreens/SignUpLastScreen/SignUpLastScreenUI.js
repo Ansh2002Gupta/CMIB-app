@@ -170,8 +170,8 @@ const SignUpLastScreenUI = (props) => {
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
-        onPressButtonTwo={onGoBack}
-        onPressButtonOne={() => handleSuccessModal(true)}
+        onPressButtonOne={onGoBack}
+        onPressButtonTwo={() => handleSuccessModal(true)}
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
       />

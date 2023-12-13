@@ -85,6 +85,8 @@ const SignUpThirdScreenUI = (props) => {
             id: "label.enter_contact_person_mobile_no",
           })}
           value={mobileNo}
+          maxLength={15}
+          keyboardType="numeric"
           onChangeText={(val) => handleInputChange(val, "mobileNo")}
           isMobileNumber
           errorMessage={errors.mobileNo}
