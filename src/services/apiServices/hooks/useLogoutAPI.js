@@ -2,10 +2,10 @@ import { useState, useContext } from "react";
 
 import Http from "../../http-service";
 import Storage from "../../storage-service";
-import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { AuthContext } from "../../../globalContext/auth/authProvider";
 import { clearAuthAndLogout } from "../../../globalContext/auth/authActions";
+import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useLogoutAPI = () => {
   const [logoutApiStatus, setLogoutApiStatus] = useState(API_STATUS.IDLE);
