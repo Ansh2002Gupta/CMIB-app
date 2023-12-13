@@ -1,16 +1,22 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
+import useGetStates from "../../../services/apiServices/hooks/useGetStates";
+import useIndustryTypes from "../../../services/apiServices/hooks/useIndustryTypes";
+import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
 import { numRegex } from "../../../constants/constants";
-import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
+import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { validateEmail } from "../../../constants/CommonFunctions";
 
 const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
+  const { handleSignUpValidation } = useValidateSignUp();
+  const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
+  const { getStates, stateResult } = useGetStates();
   const initialSignUpDetail = signUpState.signUpDetail;
 
   const [formData, setFormData] = useState({
@@ -23,6 +29,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
     code: initialSignUpDetail.std_country_code || "",
     entity: initialSignUpDetail.entity || "",
     currentIndustry: initialSignUpDetail.industry_type || "",
+    state: initialSignUpDetail.state_code || "",
   });
 
   const [errors, setErrors] = useState({
@@ -34,6 +41,11 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
     telephoneNo: "",
     code: "",
   });
+
+  useEffect(() => {
+    getIndustryTypes();
+    getStates();
+  }, []);
 
   const allFieldsFilled = () => {
     const requiredFields = Object.values(formData);
@@ -71,7 +83,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
 
     if (!numRegex.test(String(code)) || code.length < 2 || code.length > 8) {
       newErrors.code = intl.formatMessage({
-        id: "label.company_details_validation",
+        id: "label.country_code_validation",
       });
       isValid = false;
     }
@@ -137,6 +149,8 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
         telephoneNo,
         address,
         code,
+        currentIndustry,
+        state,
       } = formData;
 
       const details = {
@@ -148,10 +162,20 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
         telephone_number: telephoneNo,
         address: address,
         std_country_code: code,
+        industry_type: currentIndustry,
+        state_code: state,
       };
 
-      signUpDispatch(setSignUpDetails(details));
-      tabHandler("next");
+      handleSignUpValidation(
+        details,
+        () => {
+          signUpDispatch(setSignUpDetails(details));
+          tabHandler("next");
+        },
+        (error) => {
+          console.error("ERROR:", error);
+        }
+      );
     }
   };
 
@@ -171,6 +195,8 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
       handleInputChange={handleInputChange}
       errors={errors}
       allFieldsFilled={allFieldsFilled}
+      industryOptions={industryTypeResult}
+      stateOptions={stateResult}
     />
   );
 };

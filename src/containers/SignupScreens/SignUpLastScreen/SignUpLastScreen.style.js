@@ -4,7 +4,6 @@ const style = {
   headerText: {
     color: colors.black,
     fontSize: 16,
-    fontFamily: "GeneralSans-Semibold",
     lineHeight: 24,
     marginBottom: 24,
   },

@@ -1,19 +1,21 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "../../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../../routes";
 
+import SignUpLastScreenUI from "./SignUpLastScreenUI";
+import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
-import SignUpLastScreenUI from "./SignUpLastScreenUI";
-import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { INTEREST_OPTIONS, urlRegex } from "../../../constants/constants";
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
+  const { handleSignUpValidation } = useValidateSignUp();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
 
@@ -39,6 +41,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     INTEREST_OPTIONS.map((option) => ({
       ...option,
       title: intl.formatMessage({ id: option.messageId }),
+      isSelected:
+        initialDetails.source_of_information?.includes(
+          intl.formatMessage({ id: option.messageId })
+        ) || false,
     }))
   );
 
@@ -92,12 +98,15 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     if (companyDetails.length < 6 || companyDetails.length > 1000) {
       newErrors.companyDetails = intl.formatMessage({
-        id: "label.url_validation",
+        id: "label.company_details_validation",
       });
       isValid = false;
     }
+
     if (!urlRegex.test(String(website))) {
-      newErrors.website = "Please enter a valid URL.";
+      newErrors.website = intl.formatMessage({
+        id: "label.url_validation",
+      });
       isValid = false;
     }
 
@@ -140,9 +149,21 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           nature_of_supplier: natureOfSupplier,
           type: companyType,
           company_details: companyDetails,
+          source_of_information: options
+            .filter((item) => item.isSelected)
+            .map((item) => item.title),
         };
-        signUpDispatch(setSignUpDetails(details));
-        setShowSuccessSignUp(true);
+
+        handleSignUpValidation(
+          details,
+          () => {
+            signUpDispatch(setSignUpDetails(details));
+            setShowSuccessSignUp(true);
+          },
+          (error) => {
+            console.error("ERROR:", error);
+          }
+        );
       }
     } else {
       setShowSuccessSignUp(false);

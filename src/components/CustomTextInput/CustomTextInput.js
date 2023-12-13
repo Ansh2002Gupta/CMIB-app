@@ -2,17 +2,16 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
-  Text,
-  View,
   Image,
   TextInput,
   TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import Dropdown from "../Dropdown/index";
-import colors from "../../assets/colors";
 import images from "../../images";
+import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
@@ -34,6 +33,7 @@ const CustomTextInput = (props) => {
     options,
     onChangeValue,
     counterInput,
+    inputKey = "value",
     ...remainingProps
   } = props;
 
@@ -68,12 +68,20 @@ const CustomTextInput = (props) => {
   return (
     <View style={style.container}>
       <View style={style.labelContainer}>
-        <Text
-          style={[style.label, isWebView && style.webLabel, customLabelStyle]}
-        >
-          {label}
-        </Text>
-        {isMandatory && <Text style={[style.label, style.starStyle]}> *</Text>}
+        <CommonText
+          customTextStyle={[
+            style.label,
+            isWebView && style.webLabel,
+            customLabelStyle,
+          ]}
+          title={label}
+        />
+        {isMandatory && (
+          <CommonText
+            customTextStyle={[style.label, style.starStyle]}
+            title={"*"}
+          />
+        )}
       </View>
       {isDropdown ? (
         <Dropdown
@@ -94,7 +102,7 @@ const CustomTextInput = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            onChangeValue(item.value);
+            onChangeValue(item[inputKey]);
             setIsFocused(false);
           }}
           {...remainingProps}
@@ -123,7 +131,7 @@ const CustomTextInput = (props) => {
         >
           {isMobileNumber && (
             <View style={style.prefixContainer}>
-              <Text style={style.prefixStyle}>+91</Text>
+              <CommonText customTextStyle={style.prefixStyle} title={+91} />
               <Image source={images.iconDownArrow} style={style.iconStyle} />
               <Image source={images.iconDivider} style={style.iconStyle} />
             </View>
@@ -156,7 +164,9 @@ const CustomTextInput = (props) => {
           ) : null}
         </View>
       )}
-      {isError && <Text style={style.errorMsg}>{errorMessage}</Text>}
+      {isError && (
+        <CommonText customTextStyle={style.errorMsg} title={errorMessage} />
+      )}
     </View>
   );
 };

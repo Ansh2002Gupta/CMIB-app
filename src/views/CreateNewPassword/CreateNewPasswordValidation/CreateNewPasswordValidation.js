@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Text, View } from "@unthinkable/react-core-components";
-import styles from "./ConfirmPasswordValidation.style";
-import colors from "../../assets/colors";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { View } from "@unthinkable/react-core-components";
+
+import CommonText from '../../../components/CommonText'
+import colors from "../../../assets/colors";
+import styles from "./CreateNewPasswordValidation.style";
 
 const CreateNewPasswordValidation = ({
   confirmNewPassword,
@@ -36,43 +39,62 @@ const CreateNewPasswordValidation = ({
 
   return (
     <View>
-      <Text style={styles.validationText}>
-        {intl.formatMessage({ id: "label.password_requirment_text" })}
-      </Text>
+      <CommonText
+        customTextStyle={styles.validationText}
+        title={intl.formatMessage({ id: "label.password_requirment_text" })}
+      />
       <View style={customContainerStyles}>
         <View style={styles.validationView}>
           <View style={bulletStyle(validations.length)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.char_length_validation" })}
-          </Text>
+
+          <CommonText
+            customTextStyle={styles.bulletText}
+            title={intl.formatMessage({ id: "label.char_length_validation" })}
+          />
         </View>
         <View style={styles.validationView}>
           <View style={bulletStyle(validations.numeric)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.numeric_char_validation" })}
-          </Text>
+
+          <CommonText
+            customTextStyle={styles.bulletText}
+            title={intl.formatMessage({ id: "label.numeric_char_validation" })}
+          />
         </View>
         <View style={styles.validationView}>
           <View style={bulletStyle(validations.uppercase)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.upper_case_validation" })}
-          </Text>
+
+          <CommonText
+            customTextStyle={styles.bulletText}
+            title={intl.formatMessage({ id: "label.upper_case_validation" })}
+          />
         </View>
         <View style={styles.validationView}>
           <View style={bulletStyle(validations.lowercase)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.lower_case_validation" })}
-          </Text>
+
+          <CommonText
+            customTextStyle={styles.bulletText}
+            title={intl.formatMessage({ id: "label.lower_case_validation" })}
+          />
         </View>
         <View style={styles.validationView}>
           <View style={bulletStyle(validations.specialChar)}></View>
-          <Text style={styles.bulletText}>
-            {intl.formatMessage({ id: "label.special_char_validation" })}
-          </Text>
+
+          <CommonText
+            customTextStyle={styles.bulletText}
+            title={intl.formatMessage({ id: "label.special_char_validation" })}
+          />
         </View>
       </View>
     </View>
   );
+};
+
+CreateNewPasswordValidation.propTypes = {
+  confirmNewPassword: PropTypes.string.isRequired,
+  newPassword: PropTypes.string.isRequired,
+  customContainerStyles: PropTypes.object,
+  validations: PropTypes.object.isRequired,
+  setValidations: PropTypes.object.isRequired,
 };
 
 export default CreateNewPasswordValidation;

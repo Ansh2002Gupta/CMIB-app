@@ -2,15 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
-  Text,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import styles from "./CheckBox.style";
+
+import CommonText from '../CommonText';
 import images from "../../images";
+import styles from "./CheckBox.style";
 
 const CheckBox = (props) => {
-  const { title, isSelected, handleCheckbox, index, id } = props;
+  const { title, isSelected, handleCheckbox, id } = props;
   return (
     <View style={styles.contentContainerStyle}>
       <TouchableOpacity onPress={() => handleCheckbox(id)}>
@@ -23,7 +24,7 @@ const CheckBox = (props) => {
           style={styles.iconStyle}
         />
       </TouchableOpacity>
-      <Text style={styles.titleStyle}>{title}</Text>
+      <CommonText customTextStyle ={styles.titleStyle} title={title}/>
     </View>
   );
 };
@@ -32,8 +33,7 @@ CheckBox.propTypes = {
   title: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
   handleCheckbox: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default CheckBox;

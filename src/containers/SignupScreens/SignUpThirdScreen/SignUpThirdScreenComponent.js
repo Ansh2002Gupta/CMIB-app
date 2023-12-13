@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
+import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../constants/CommonFunctions";
@@ -12,6 +13,7 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const initialContactDetails = signUpState.signUpDetail.contact_details || [];
+  const { handleSignUpValidation } = useValidateSignUp();
 
   const [salutation, setSalutation] = useState(
     initialContactDetails[index]?.salutation || ""
@@ -140,6 +142,7 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
           salutation: salutation,
           mobile_number: mobileNo,
           designation: designation,
+          mobile_country_code: "+91",
         };
         const caJobsIndex = existingContactDetails.findIndex(
           (detail) => detail.module === module
@@ -155,8 +158,16 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
           contact_details: [...existingContactDetails],
         };
 
-        signUpDispatch(setSignUpDetails(newContactDetails));
-        tabHandler("next");
+        handleSignUpValidation(
+          { newContactDetails },
+          () => {
+            signUpDispatch(setSignUpDetails(newContactDetails));
+            tabHandler("next");
+          },
+          (error) => {
+            console.error("ERROR:", error);
+          }
+        );
       }
     }
   };
