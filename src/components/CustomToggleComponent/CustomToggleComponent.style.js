@@ -42,6 +42,7 @@ const style = {
     color: colors.black,
     paddingLeft: 8,
     paddingRight: 16,
+    fontWeight: "500",
   },
   container: {
     paddingBottom: 32,
