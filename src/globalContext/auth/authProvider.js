@@ -1,6 +1,5 @@
-import React, {createContext, useEffect, useReducer} from 'react';
-import {StorageService} from '../../services';
-import * as types from './types';
+import React, { createContext, useReducer } from "react";
+import * as types from "./types";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -16,11 +15,11 @@ const authReducer = (state, action) => {
   }
 };
 
-const initialState = {}; // StorageService.get('auth');
+const initialState = {};
 
 export const AuthContext = createContext([initialState, () => {}]);
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
   const [authState, authDispatch] = useReducer(authReducer, initialState);
 
   return (

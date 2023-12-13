@@ -15,7 +15,8 @@ const locale = {
   "label.password_placeholder": "Enter your password",
   "label.remember_me": "Remember Me",
   "label.forgot_password": "Forgot Password?",
-  "label.password_field_error": "Please provide all the necessary fields for the password.",
+  "label.password_field_error":
+    "Please provide all the necessary fields for the password.",
   "label.dont_have_account": "Don't have an account?  ",
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
@@ -168,6 +169,7 @@ const locale = {
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
+  "label.jobs": "Jobs",
 };
 
 export default locale;

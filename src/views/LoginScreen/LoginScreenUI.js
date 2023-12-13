@@ -293,7 +293,7 @@ LoginScreenUI.propTypes = {
   handleToggle: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  errorWhileLoggingIn: PropTypes.bool.isRequired,
+  errorWhileLoggingIn: PropTypes.string,
 };
 
 export default LoginScreenUI;
