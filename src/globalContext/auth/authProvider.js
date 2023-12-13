@@ -1,5 +1,4 @@
 import React, { createContext, useReducer } from "react";
-import { StorageService } from "../../services";
 import * as types from "./types";
 
 const authReducer = (state, action) => {
@@ -15,8 +14,6 @@ const authReducer = (state, action) => {
       return state;
   }
 };
-
-const authToken = await StorageService.get("auth");
 
 const initialState = {};
 
