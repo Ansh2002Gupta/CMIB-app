@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "../routes";
-import _ from "lodash";
 
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { RouteContext } from "../globalContext/route/routeProvider";

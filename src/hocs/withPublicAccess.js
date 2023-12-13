@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "../routes";
-import _ from "lodash";
 
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { StorageService } from "../services";
@@ -13,7 +12,6 @@ function withPublicAccess(Component) {
 
     // TODO: Need to refactor and test the below code.
     // const location = useLocation();
-
     // if (
     //   Platform.OS.toLowerCase() === "web" &&
     //   location.pathname === navigations.LOGIN

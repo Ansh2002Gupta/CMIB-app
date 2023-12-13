@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import { Navigate } from "../../routes";
-import _ from "lodash";
 import { Platform } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../../globalContext/auth/authProvider";
-import { navigations } from "../../constants/routeNames";
 import { StorageService } from "../../services";
+import { navigations } from "../../constants/routeNames";
 
 const DefaultRoute = () => {
   const [authState] = useContext(AuthContext);
@@ -16,7 +15,6 @@ const DefaultRoute = () => {
         return <Navigate to={navigations.LOGIN} replace />;
       }
     });
-
     return <Navigate to={navigations.DASHBOARD} replace />;
   } else {
     return <Navigate to={navigations.LOGIN} replace />;
