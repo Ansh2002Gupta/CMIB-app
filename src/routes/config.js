@@ -1,55 +1,54 @@
 import React from "react";
 
-import DashboardView from "../views/Dashboard";
-import ProfileView from "../views/Profile";
-import LoginForm from "../views/LoginForm";
-import Home from "../pages/Home";
-import Auth from "../pages/Auth";
-import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
-import LoginScreen from "../views/LoginScreen/index";
-import ForgotPassword from "../views/ForgotPassword/index";
-
+import ContentLayout from "../pages/ContentLayout";
 import CreateNewPassword from "../views/CreateNewPassword/index";
-import SignUpScreen from "../views/SignUp/SignUpWelcomeScreen/index";
-import MyAccountScreen from "../views/MyAccount/index";
-import ViewProfile from "../views/ViewProfile/index";
-import SignUpSecondScreen from "../views/SignUp/SignUpSecondScreen/index";
-import SignUpThirdScreen from "../views/SignUp/SignUpThirdScreen/index";
-import SignUpLastScreen from "../views/SignUp/SignUpLastScreen/index";
-import CompanyProfile from "../views/CompanyProfile/index";
+import DashboardView from "../views/Dashboard";
+import MyAccount from "../views/MyAccount";
+import ViewProfile from "../views/ViewProfile";
+import CompanyProfile from "../views/CompanyProfile";
+import DefaultRoute from "./Components/DefaultRoute";
+import ForgotPassword from "../views/ForgotPassword/index";
+import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
+import Home from "../pages/Home";
+import JobsView from "../views/JobsView/JobsView";
+import LoginScreen from "../views/LoginScreen/index";
+import ProfileView from "../views/Profile";
+import RoundOne from "../views/RoundOneView";
+import RoundTwo from "../views/RoundTwoView";
+import SignUpScreen from "../views/SignUpView/index";
+
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
-import ContentLayout from "../pages/ContentLayout";
+import { navigations } from "../constants/routeNames";
 
-// const AuthWithPublicAccess = withPublicAccess(Auth);
+const HomeWithPrivateAccess = withPrivateAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
-const HomeWithPrivateAccess = withPrivateAccess(Home);
 const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
   {
-    pagePath: "/",
-    element: <LoginWithPublicAccess />,
+    pagePath: navigations.ROOT,
+    element: <DefaultRoute />,
     views: [
       {
         viewPath: "",
-        element: <LoginScreen />,
+        element: <DefaultRoute />,
       },
     ],
   },
   {
-    pagePath: "/account",
-    element: <ContentRouteWithPrivateAccess />,
+    pagePath: navigations.PROFILE,
+    element: <HomeWithPrivateAccess />, // Page
     views: [
       {
         viewPath: "",
-        element: <MyAccountScreen />,
+        element: <MyAccount />,
       },
     ],
   },
   {
-    pagePath: "/viewprofile",
+    pagePath: navigations.VIEW_PROFILE,
     element: <ContentRouteWithPrivateAccess />,
     views: [
       {
@@ -59,7 +58,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/companyProfile",
+    pagePath: navigations.COMPANY_PROFILE,
     element: <HomeWithPrivateAccess />,
     views: [
       {
@@ -69,7 +68,37 @@ const config = [
     ],
   },
   {
-    pagePath: "/forgotPassword",
+    pagePath: navigations.DASHBOARD,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <DashboardView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.ROUND_ONE,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <RoundOne />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.ROUND_TWO,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <RoundTwo />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.FORGOT_PASSWORD,
     element: <LoginWithPublicAccess />,
     views: [
       {
@@ -79,7 +108,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/createNewPassword",
+    pagePath: navigations.CREATE_NEW_PASSWORD,
     element: <LoginWithPublicAccess />,
     views: [
       {
@@ -89,7 +118,7 @@ const config = [
     ],
   },
   {
-    pagePath: "/signup",
+    pagePath: navigations.SIGN_UP,
     element: <SignUpWithPublicAccess />,
     views: [
       {
@@ -99,32 +128,32 @@ const config = [
     ],
   },
   {
-    pagePath: "/signupSecondScreen",
-    element: <SignUpWithPublicAccess />,
+    pagePath: navigations.LOGIN,
+    element: <LoginWithPublicAccess />,
     views: [
       {
         viewPath: "",
-        element: <SignUpSecondScreen />,
+        element: <LoginScreen />,
       },
     ],
   },
   {
-    pagePath: "/signupThirdScreen",
-    element: <SignUpWithPublicAccess />,
+    pagePath: navigations.JOBS,
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
-        element: <SignUpThirdScreen />,
+        element: <JobsView />,
       },
     ],
   },
   {
-    pagePath: "/signupLastScreen",
-    element: <SignUpWithPublicAccess />,
+    pagePath: navigations.OUT_SOURCED,
+    element: <DefaultRoute />,
     views: [
       {
         viewPath: "",
-        element: <SignUpLastScreen />,
+        element: <DefaultRoute />,
       },
     ],
   },

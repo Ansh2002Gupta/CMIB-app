@@ -10,6 +10,8 @@ const style = {
     paddingRight: 24,
     paddingLeft: 24,
     borderRadius: 16,
+    marginLeft: 16,
+    marginRight: 16
   },
 };
 

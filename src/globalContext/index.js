@@ -1,19 +1,23 @@
-import React from 'react';
-import authProvider from './auth/authProvider';
-import DashboardProvider from './dashboard/dashboardProvider';
-import LocaleProvider from './locale/localeProviders';
+import React from "react";
+import authProvider from "./auth/authProvider";
+import DashboardProvider from "./dashboard/dashboardProvider";
+import LocaleProvider from "./locale/localeProviders";
+import RouteProvider from "./route/routeProvider";
+import SignUpProvider from "./signUp/signUpProvider";
 
 // Import other created Providers and add them here -
 const providers = [
   authProvider,
   DashboardProvider,
-  LocaleProvider
+  LocaleProvider,
+  RouteProvider,
+  SignUpProvider,
 ];
 
-const combineProviders = components => {
+const combineProviders = (components) => {
   return components.reduce(
     (AccumulatedComponents, CurrentComponent) => {
-      return ({children}) => {
+      return ({ children }) => {
         return (
           <AccumulatedComponents>
             <CurrentComponent>{children}</CurrentComponent>
@@ -21,7 +25,7 @@ const combineProviders = components => {
         );
       };
     },
-    ({children}) => <>{children}</>,
+    ({ children }) => <>{children}</>
   );
 };
 

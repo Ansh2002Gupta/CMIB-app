@@ -1,20 +1,21 @@
 import React from "react";
-import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
+import { useNavigate } from "react-router";
 
 import MyAccountUI from "./MyAccountUI";
 import { options } from "./MyAccountConstant";
+import { navigations } from "../../constants/routeNames";
 
 const MyAccountComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
 
   const onClickViewProfile = () => {
-    navigate("/viewprofile");
+    navigate(navigations.VIEW_PROFILE);
   };
 
   const onClickCompanyProfile = () => {
-    navigate("/companyProfile");
+    navigate(navigations.COMPANY_PROFILE);
   };
 
   const handleOptionClick = (option) => {

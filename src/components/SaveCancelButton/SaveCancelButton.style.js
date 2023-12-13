@@ -22,18 +22,19 @@ const style = {
     borderRadius: 8,
     flex: 1,
   },
+  disableStyle: {
+    opacity: 0.5,
+  },
   secondButotnStyle: {
     marginLeft: 8,
   },
   titleStyle: {
     fontSize: 16,
-    fontFamily: "GeneralSans-Semibold",
     color: colors.white,
     margin: 8,
   },
   disableTextStyle: {
     fontSize: 16,
-    fontFamily: "GeneralSans-Semibold",
     color: colors.black,
     margin: 8,
   },

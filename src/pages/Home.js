@@ -1,17 +1,14 @@
 import React from "react";
 import { Outlet } from "../routes";
 
+import BottomBar from "../containers/BottomBar";
 import MainLayout from "../layouts/MainLayout";
-import Header from "../containers/Header";
-import MenuContainer from "../containers/Menu";
+import useIsWebView from "../hooks/useIsWebView";
 
 function Home() {
+  const { isWebView } = useIsWebView();
   return (
-    <MainLayout
-      header={<Header />}
-      menu={<MenuContainer />}
-      content={<Outlet />}
-    />
+    <MainLayout menu={!isWebView ? <BottomBar /> : null} content={<Outlet />} />
   );
 }
 

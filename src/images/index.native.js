@@ -45,8 +45,19 @@ import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
 import ticketIcon from "../../public/images/ticketIcon/ticketIcon.png";
 import iconSend from "../../public/images/iconSend/iconSend.png";
 import iconSetting from "../../public/images/iconSetting/iconSetting.png";
+import iconDashboard from "../../public/images/iconDashboard/iconDashboard.png";
+import iconRound1 from "../../public/images/iconRound1/iconRound1.png";
+import iconRound2 from "../../public/images/iconRound2/iconRound2.png";
+import iconMyaccount from "../../public/images/iconMyaccount/iconMyaccount.png";
+import iconActiveRound1 from "../../public/images/iconActiveRound1/iconActiveRound1.png";
+import iconActiveRound2 from "../../public/images/iconActiveRound2/iconActiveRound2.png";
+import iconActiveMyaccount from "../../public/images/iconActiveMyaccount/iconActiveMyaccount.png";
+import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/iconAddApplicationForm.png";
+import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
+import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
+import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
 
-export default {
+const images = {
   avatar,
   logo,
   sun,
@@ -93,5 +104,18 @@ export default {
   iconCmibLogo,
   ticketIcon,
   iconSend,
-  iconSetting
+  iconSetting,
+  iconDashboard,
+  iconRound1,
+  iconRound2,
+  iconMyaccount,
+  iconActiveRound1,
+  iconActiveRound2,
+  iconActiveMyaccount,
+  iconAddApplicationForm,
+  iconHiringProcess,
+  iconDownloadDetails,
+  iconDrawer,
 };
+
+export default images;

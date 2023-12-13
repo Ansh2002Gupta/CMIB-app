@@ -19,6 +19,7 @@ const ViewProfileUI = (props) => {
   const { intl, onGoBack, showEditModal, handleEditPopup } = props;
 
   const profileImage = "";
+  //TODO: Dummy data to be replaced by api data.
   const firstName = "Kashish";
   const lastName = "Bhatheja";
   const details = [
@@ -79,7 +80,7 @@ const ViewProfileUI = (props) => {
               handleEditPopup(true);
             }}
           >
-            <Image source={images.iconEdit} />
+            <Image source={images.iconEdit} style={style.editIcon} />
           </TouchableOpacity>
         </View>
         <CardComponent>

@@ -7,7 +7,7 @@ const style = {
   titleStyle: {
     color: colors.darkGrey,
     fontSize: 12,
-    fontFamily: "GeneralSans-Medium",
+    fontWeight: "500",
     marginBottom: 8,
   },
   headerText: {
@@ -24,9 +24,10 @@ const style = {
   },
   valueStyle: {
     fontSize: 14,
-    fontFamily: "GeneralSans-Medium",
     color: colors.black,
     marginBottom: 24,
+    fontWeight: "500"
+
   },
 };
 

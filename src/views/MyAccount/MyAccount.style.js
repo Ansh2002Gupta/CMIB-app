@@ -32,7 +32,7 @@ const style = {
   },
   fullNameStyle: {
     fontSize: 16,
-    fontFamily: "600",
+    fontWeight: "600",
     color: colors.black,
   },
   emailStyle: {

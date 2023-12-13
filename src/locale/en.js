@@ -15,6 +15,8 @@ const locale = {
   "label.password_placeholder": "Enter your password",
   "label.remember_me": "Remember Me",
   "label.forgot_password": "Forgot Password?",
+  "label.password_field_error":
+    "Please provide all the necessary fields for the password.",
   "label.dont_have_account": "Don't have an account?  ",
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
@@ -61,6 +63,10 @@ const locale = {
   "label.source_of_info":
     "Source of information about the ICAI Career Ascent programme",
   "label.for_new_ca_placement": "For Newly Qualified CA's Placement",
+  "label.for_ca_jobs": "For CA Jobs",
+  "label.for_overseas_placements": "For Overseas placements",
+  "label.for_career_ascents": "For Career Ascents",
+  "label.for_women_placements": "For Women Placements",
   "label.contact_personal_designation": "Contact Person Designation",
   "label.salutation": "Salutation",
   "label.contact_person_name": "Contact Person Name",
@@ -100,7 +106,7 @@ const locale = {
   "label.enter_contact_person_email_id": "Enter contact person email ID",
   "label.enter_contact_person_mobile_no": "Enter contact person mobile number",
   "label.enter_contact_person_name": "Enter contact person name",
-  "label.enter_facebook_url": "Enter contact facebook profile URL",
+  "label.enter_facebook_url": "Enter your facebook profile URL",
   "label.enter_twitter_url": "Enter your twitter profile URL",
   "label.enter_youtube_url": "Enter your youtube Channel URL",
   "label.enter_linkedin_url": "Enter your linkedIn profile URL",
@@ -122,7 +128,7 @@ const locale = {
   "label.telephonic_call_from_icai": "Telephonic Call from ICAI Officials",
   "label.advertisement_in_ca_journal":
     "Advertisement in the Chartered Accountant Journal",
-  "label.my_account": "My Account",
+  "label.my_account": "Account",
   "label.view_profile": "View Profile",
   "label.edit_profile_picture": "Edit Profile Picture",
   "label.crop_profile_picture": "Crop Profile Picture",
@@ -134,7 +140,40 @@ const locale = {
   "label.change_password": "Change Password",
   "label.tickets": "Tickets",
   "label.notification_settings": "Notification Settings",
-  "label.feedback": "Feedback"
+  "label.feedback": "Feedback",
+  "label.round1": "Round 1",
+  "label.round2": "Round 2",
+  "label.add_application_form_text": "Add / View Application form",
+  "label.add_application_form_description_text":
+    "Streamlined application form designed for quick and easy submission.",
+  "label.hiring_process_text": "Shortlisting, Consent Marking & Interviews",
+  "label.hiring_process_description":
+    "Streamlining the hiring process with shortlisting, consent marking, and interviews.",
+  "label.download_details_text": "Roster Details and Download",
+  "label.download_details_description":
+    "Access and download comprehensive roster details effortlessly.",
+  "label.company_name_validation":
+    "Company name must be between 6 and 255 characters.",
+  "label.country_code_validation":
+    "Country code must be a combination of numbers and between 2 and 8 digits.",
+  "label.telephone_no_validation":
+    "Telephone number must be a combination of numbers and between 7 and 15 digits.",
+  "label.email_id_validation": "Email ID must be valid",
+  "label.registration_no_validation":
+    "Registration number must be exactly 10 digits.",
+  "label.address_validation": "Address must be between 6 and 500 characters.",
+  "label.no_of_partners_validation":
+    "Number of partners must be a combination of numbers.",
+  "label.contact_person_validation":
+    "Contact Person Name must be between 6 and 255 characters.",
+  "label.designation_validation":
+    "Designation must be between 6 and 500 characters.",
+  "label.mobile_number_validation":
+    "Mobile number must be a combination of numbers and between 7 and 15 digits.",
+  "label.url_validation": "Please enter a valid URL.",
+  "label.company_details_validation":
+    "Company details must be between 6 and 1000 characters.",
+  "label.jobs": "Jobs",
 };
 
 export default locale;

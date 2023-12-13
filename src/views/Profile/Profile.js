@@ -1,17 +1,19 @@
-import React from 'react';
-import {useIntl} from 'react-intl';
-import {View, Text} from '@unthinkable/react-core-components';
+import React from "react";
+import { useIntl } from "react-intl";
+import { View } from "@unthinkable/react-core-components";
 
-import styles from './profile.style';
+import CommonText from "../../components/CommonText/CommonText";
+import styles from "./profile.style";
 
 function ProfileView(props) {
   const intl = useIntl();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>
-        {intl.formatMessage({id: 'label.profile'})}
-      </Text>
+      <CommonText
+        customTextStyle={styles.header}
+        title={intl.formatMessage({ id: "label.my_account" })}
+      />
     </View>
   );
 }

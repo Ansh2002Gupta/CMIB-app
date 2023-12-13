@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
-  Text,
   TouchableOpacity,
   ScrollView,
 } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
+import CommonText from "../../components/CommonText";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomTextInput from "../../components/CustomTextInput";
 import FollowUsIcons from "../../components/FollowUsIcons";
@@ -32,7 +32,7 @@ const LoginScreenUI = (props) => {
     onCreateNewPasswordClick,
     options,
     handleToggle,
-    isLoggingIn,
+    isLoading,
     errorWhileLoggingIn,
   } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -78,7 +78,7 @@ const LoginScreenUI = (props) => {
       <View
         style={{
           ...styles.mainView,
-          ...(isWebView ? styles.gapForWebView : {}),
+          ...(isWebView && styles.gapForWebView),
         }}
       >
         <View style={styles.container}>
@@ -87,39 +87,37 @@ const LoginScreenUI = (props) => {
             label={intl.formatMessage({ id: "label.secure_login_access" })}
             customTextStyle={isWebView ? getResponsiveStyles("label.cmib") : {}}
             customSecondHeadingStyles={
-              isWebView ? styles.webView.subHeadingText : {}
+              isWebView && styles.webView.subHeadingText
             }
-            customContainerStyles={
-              isWebView ? styles.webView.headerContainer : {}
-            }
+            customContainerStyles={isWebView && styles.webView.headerContainer}
           />
           <View
             style={{
               ...styles.buttonView,
-              ...(isWebView ? styles.webView.extraMargin : {}),
+              ...(isWebView && styles.webView.extraMargin),
             }}
           >
             <TouchableOpacity
               style={styles.topTabs}
               onPress={() => toggleUser(false)}
             >
-              <Text
-                style={{
+              <CommonText
+                customTextStyle={{
                   ...styles.topTabsText,
                   ...(!active
                     ? styles.webView.selectedSectionHeading
                     : styles.webView.unSelectedSectionHeading),
                 }}
-              >
-                {intl.formatMessage({ id: "label.member_candidate" })}
-              </Text>
+                title={intl.formatMessage({ id: "label.member_candidate" })}
+              />
+
               <View
                 style={
                   active
                     ? styles.inActiveStyle
                     : {
                         ...styles.activeStyle,
-                        ...(isWebView ? styles.webView.activeTab : {}),
+                        ...(isWebView && styles.webView.activeTab),
                       }
                 }
               />
@@ -129,16 +127,15 @@ const LoginScreenUI = (props) => {
               onPress={() => toggleUser(true)}
             >
               <View>
-                <Text
-                  style={{
+                <CommonText
+                  customTextStyle={{
                     ...styles.topTabsText,
                     ...(active
                       ? styles.webView.selectedSectionHeading
                       : styles.webView.unSelectedSectionHeading),
                   }}
-                >
-                  {intl.formatMessage({ id: "label.company" })}
-                </Text>
+                  title={intl.formatMessage({ id: "label.company" })}
+                />
               </View>
               <View
                 style={
@@ -146,7 +143,7 @@ const LoginScreenUI = (props) => {
                     ? styles.inActiveStyle
                     : {
                         ...styles.activeStyle,
-                        ...(isWebView ? styles.webView.activeTab : {}),
+                        ...(isWebView && styles.webView.activeTab),
                       }
                 }
               />
@@ -155,21 +152,25 @@ const LoginScreenUI = (props) => {
           <View
             style={{
               ...styles.borderStyle,
-              ...(isWebView ? styles.webView.tabsBottomGreyLine : {}),
+              ...(isWebView && styles.webView.tabsBottomGreyLine),
             }}
           />
         </View>
         {active ? (
-          <>
-            <ScrollView
-              contentContainerStyle={{
-                ...styles.companyView,
-                ...(isWebView ? styles.webView.backGroundColor : {}),
+          <ScrollView
+            contentContainerStyle={{
+              ...styles.companyView,
+              ...(isWebView && styles.webView.backGroundColor),
+            }}
+          >
+            <View
+              style={{
+                ...(isWebView && styles.webView.backGroundColor),
               }}
             >
               <View
                 style={{
-                  ...(isWebView ? styles.webView.backGroundColor : {}),
+                  ...(isWebView && styles.webView.backGroundColor),
                 }}
               >
                 <CustomTextInput
@@ -182,11 +183,9 @@ const LoginScreenUI = (props) => {
                   errorMessage={errorMessage}
                   isError={!!errorMessage}
                   isMandatory
-                  customLabelStyle={
-                    isWebView ? styles.webView.inputLabelText : {}
-                  }
+                  customLabelStyle={isWebView && styles.webView.inputLabelText}
                   customTextInputContainer={
-                    isWebView ? styles.webView.inputTextBox : {}
+                    isWebView && styles.webView.inputTextBox
                   }
                 />
                 <CustomTextInput
@@ -199,11 +198,9 @@ const LoginScreenUI = (props) => {
                   isMandatory
                   eyeImage={true}
                   isPassword={true}
-                  customLabelStyle={
-                    isWebView ? styles.webView.inputLabelText : {}
-                  }
+                  customLabelStyle={isWebView && styles.webView.inputLabelText}
                   customTextInputContainer={
-                    isWebView ? styles.webView.inputTextBox : {}
+                    isWebView && styles.webView.inputTextBox
                   }
                 />
                 <View style={styles.forgotPasswordView}>
@@ -216,14 +213,15 @@ const LoginScreenUI = (props) => {
                     />
                   </View>
                   <TouchableOpacity onPress={onForgotPasswordClick}>
-                    <Text
-                      style={{
+                    <CommonText
+                      customTextStyle={{
                         ...styles.forgotPasswordText,
-                        ...(isWebView ? styles.webView.forgotPasswordText : {}),
+                        ...(isWebView && styles.webView.forgotPasswordText),
                       }}
-                    >
-                      {intl.formatMessage({ id: "label.forgot_password" })}
-                    </Text>
+                      title={intl.formatMessage({
+                        id: "label.forgot_password",
+                      })}
+                    />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.loginButtonView}>
@@ -231,45 +229,46 @@ const LoginScreenUI = (props) => {
                     title={intl.formatMessage({ id: "label.login" })}
                     onPress={onLogin}
                     disabled={loginDisabled}
-                    displayLoader={isLoggingIn}
-                    customTitleStyle={isWebView ? styles.webView.loginText : {}}
+                    displayLoader={isLoading}
+                    customTitleStyle={isWebView && styles.webView.loginText}
                   />
                 </View>
-                {errorWhileLoggingIn ? (
-                  <View style={styles.errorView}>
-                    <Text style={styles.errorText}>{errorWhileLoggingIn}</Text>
-                  </View>
-                ) : null}
-                <View style={styles.accountView}>
-                  <Text
-                    style={{
-                      ...styles.accountText,
-                      ...(isWebView ? styles.webView.dontHaveAccountText : {}),
-                    }}
-                  >
-                    {intl.formatMessage({ id: "label.dont_have_account" })}
-                  </Text>
-                  <TouchableOpacity onPress={onCreateNewPasswordClick}>
-                    <Text
-                      style={{
-                        ...styles.newAccountText,
-                        ...(isWebView
-                          ? styles.webView.createNewAccountText
-                          : {}),
-                      }}
-                    >
-                      {intl.formatMessage({ id: "label.create_new_account" })}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                {!isWebView && (
-                  <View style={styles.followUsImageView}>
-                    <FollowUsIcons />
-                  </View>
-                )}
               </View>
-            </ScrollView>
-          </>
+              {errorWhileLoggingIn ? (
+                <View style={styles.errorView}>
+                  <CommonText
+                    customTextStyle={styles.errorText}
+                    title={errorWhileLoggingIn}
+                  />
+                </View>
+              ) : null}
+              <View style={styles.accountView}>
+                <CommonText
+                  customTextStyle={{
+                    ...styles.accountText,
+                    ...(isWebView && styles.webView.dontHaveAccountText),
+                  }}
+                  title={intl.formatMessage({ id: "label.dont_have_account" })}
+                />
+                <TouchableOpacity onPress={onCreateNewPasswordClick}>
+                  <CommonText
+                    customTextStyle={{
+                      ...styles.newAccountText,
+                      ...(isWebView && styles.webView.createNewAccountText),
+                    }}
+                    title={intl.formatMessage({
+                      id: "label.create_new_account",
+                    })}
+                  />
+                </TouchableOpacity>
+              </View>
+              {!isWebView && (
+                <View style={styles.followUsImageView}>
+                  <FollowUsIcons />
+                </View>
+              )}
+            </View>
+          </ScrollView>
         ) : (
           <View style={styles.minHeight}></View>
         )}
@@ -293,6 +292,8 @@ LoginScreenUI.propTypes = {
   onCreateNewPasswordClick: PropTypes.func.isRequired,
   handleToggle: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  errorWhileLoggingIn: PropTypes.string,
 };
 
 export default LoginScreenUI;

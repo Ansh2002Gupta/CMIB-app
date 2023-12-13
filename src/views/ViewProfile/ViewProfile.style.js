@@ -29,9 +29,12 @@ const style = {
     marginTop: 16,
   },
   iconEditStyle: {
+    alignSelf: "center",
+  },
+  editIcon: {
     position: "absolute",
     bottom: 0,
-    right: 128,
+    left: 10
   },
   editButtonContainer: {
     flexDirection: "row",

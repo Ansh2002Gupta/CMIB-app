@@ -3,36 +3,49 @@ import PropTypes from "prop-types";
 import {
   Image,
   View,
-  Text,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
-import styles from "./SaveCancelButton.style";
+
+import CommonText from "../CommonText";
 import images from "../../images";
+import styles from "./SaveCancelButton.style";
 
 const SaveCancelButton = (props) => {
   const {
-    disableButtonText,
-    activeButtonText,
-    onPressDibale,
-    onPressActive,
+    buttonOneText,
+    buttonTwoText,
+    onPressButtonOne,
+    onPressButtonTwo,
     hasIconRight,
+    isNextDisabled,
   } = props;
 
   return (
     <View style={styles.containerStyle}>
       <TouchableOpacity
-        onPress={onPressDibale}
+        onPress={onPressButtonOne}
         style={styles.disableButtonStyle}
       >
         <Image source={images.iconArrowLeft} />
 
-        <Text style={styles.disableTextStyle}>{disableButtonText}</Text>
+        <CommonText
+          customTextStyle={styles.disableTextStyle}
+          title={buttonOneText}
+        />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onPressActive}
-        style={[styles.buttonStyle, styles.secondButotnStyle]}
+        onPress={onPressButtonTwo}
+        style={[
+          styles.buttonStyle,
+          styles.secondButotnStyle,
+          isNextDisabled && styles.disableStyle,
+        ]}
+        disabled={isNextDisabled}
       >
-        <Text style={styles.titleStyle}>{activeButtonText}</Text>
+        <CommonText
+          customTextStyle={styles.titleStyle}
+          title={buttonTwoText}
+        />
         {hasIconRight && <Image source={images.iconArrowRightWhite} />}
       </TouchableOpacity>
     </View>
@@ -40,11 +53,12 @@ const SaveCancelButton = (props) => {
 };
 
 SaveCancelButton.propTypes = {
-  disableButtonText: PropTypes.string.isRequired,
-  activeButtonText: PropTypes.string.isRequired,
-  onPressDibale: PropTypes.func.isRequired,
-  onPressActive: PropTypes.func.isRequired,
-  hasIconRight: PropTypes.bool.isRequired,
+  buttonOneText: PropTypes.string.isRequired,
+  buttonTwoText: PropTypes.string.isRequired,
+  hasIconRight: PropTypes.bool,
+  isNextDisabled: PropTypes.bool,
+  onPressButtonOne: PropTypes.func,
+  onPressButtonTwo: PropTypes.func,
 };
 
 export default SaveCancelButton;

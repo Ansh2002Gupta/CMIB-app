@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
+import { useNavigate } from "react-router";
 
 import ViewProfileUI from "./ViewProfileUI";
+import { navigations } from "../../constants/routeNames";
 
 const ViewProfieComponent = () => {
   const intl = useIntl();
@@ -14,7 +15,7 @@ const ViewProfieComponent = () => {
   };
 
   const onGoBack = () => {
-    navigate("/account");
+    navigate(navigations.PROFILE);
   };
 
   return (

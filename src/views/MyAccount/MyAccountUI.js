@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   TouchableOpacity,
-  Text,
   Image,
   View,
 } from "@unthinkable/react-core-components";
@@ -50,12 +49,10 @@ const MyAccountUI = (props) => {
         <View style={style.profileContainer}>
           {renderProfileIcon()}
           <View style={style.detailContainer}>
-            {/* <Text style={style.fullNameStyle}> */}
             <CommonText
             customTextStyle={style.fullNameStyle}
             title={`${firstName} ${lastName}`}
             />
-            {/* <Text style={style.emailStyle}>{email}</Text> */}
             <CommonText
             title={email}
             customTextStyle={style.emailStyle}

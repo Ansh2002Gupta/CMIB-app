@@ -1,13 +1,14 @@
 import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
-import { Button } from "@unthinkable/react-button";
-import { View, Text, TextInput } from "@unthinkable/react-core-components";
-
-import { AuthContext } from "../../globalContext/auth/authProvider";
-import { setAuth } from "./../../globalContext/auth/authActions";
 import { useNavigate } from "../../routes";
-import { AuthService, StorageService } from "./../../services";
+import { Button } from "@unthinkable/react-button";
+import { View, TextInput } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
+import { AuthContext } from "../../globalContext/auth/authProvider";
+import { AuthService, StorageService } from "./../../services";
+import { setAuth } from "./../../globalContext/auth/authActions";
+import { navigations } from "../../constants/routeNames";
 import styles from "./loginForm.style";
 
 function useLoginForm(
@@ -21,7 +22,7 @@ function useLoginForm(
   const [isProcessing, setIsProcessing] = useState(false);
   const [, authDispatch] = useContext(AuthContext);
   const onClickSignUp = () => {
-    navigate("/signup");
+    navigate(navigations.DASHBOARD);
   };
   const onLogin = async () => {
     setIsProcessing(true);
@@ -30,7 +31,7 @@ function useLoginForm(
     await StorageService.set("auth", response);
     authDispatch(setAuth(response));
     setIsProcessing(false);
-    navigate("/");
+    navigate(navigations.DASHBOARD);
   };
   return {
     formValues,
@@ -51,9 +52,10 @@ function LoginForm(props) {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.header}>
-          {intl.formatMessage({ id: "label.welcome" })}
-        </Text>
+        <CommonText
+          customTextStyle={styles.header}
+          title={intl.formatMessage({ id: "label.welcome" })}
+        />
         <TextInput
           style={styles.input}
           placeholder={intl.formatMessage({ id: "label.username" })}

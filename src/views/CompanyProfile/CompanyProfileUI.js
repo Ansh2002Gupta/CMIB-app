@@ -8,6 +8,7 @@ import images from "../../images";
 
 const CompanyProfileUI = (props) => {
   const { intl, onGoBack } = props;
+  //TODO: Dummy data to be replace by api response.
   const details = [
     { title: "Designation", value: "Senior Chartered Accountant" },
     { title: "Mobile Number", value: "+91-1234 5678 21" },

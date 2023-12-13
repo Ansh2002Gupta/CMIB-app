@@ -37,7 +37,6 @@ const iconInstagram = "/images/iconInstagram/iconInstagram.png";
 const iconLinkedin = "/images/iconLinkedin/iconLinkedin.png";
 const iconSuccess = "/images/iconSuccess/iconSuccess.png";
 const iconMenu = "/images/iconMenu/iconMenu.png";
-const iconNotification = "/images/iconNotification/iconNotification.png";
 const iconProfile = "/images/iconProfile/iconProfile.png";
 const iconLogout = "/images/iconLogout/iconLogout.png";
 const iconBuilding = "/images/iconBuilding/iconBuilding.png";
@@ -53,14 +52,29 @@ const iconTwitter = "/images/iconTwitter/iconTwitter.png";
 const iconYoutube = "/images/iconYoutube/iconYoutube.png";
 const iconEyeSlash = "/images/iconEyeSlash.png";
 const iconCmibLogo = "images/iconCmibLogo/iconCmibLogo.png";
+const iconDashboard = "images/iconDashboard/iconDashboard.png";
+const iconRound1 = "images/iconRound1/iconRound1.png";
+const iconActiveRound1 = "images/iconActiveRound1/iconActiveRound1.png";
+const iconRound2 = "images/iconRound2/iconRound2.png";
+const iconActiveRound2 = "images/iconActiveRound2/iconActiveRound2.png";
+const iconMyaccount = "images/iconMyaccount/iconMyaccount.png";
+const iconActiveMyaccount =
+  "images/iconActiveMyaccount/iconActiveMyaccount.png";
+const iconAddApplicationForm =
+  "images/iconAddApplicationForm/iconAddApplicationForm.png";
+const iconHiringProcess = "images/iconHiringProcess/iconHiringProcess.png";
+const iconDownloadDetails =
+  "images/iconDownloadDetails/iconDownloadDetails.png";
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
 const ticketIcon  = "images/ticketIcon/ticketIcon.png";
 const iconSend = "images/iconSend/iconSend.png";
 const iconSetting = "images/iconSetting/iconSetting.png";
+const iconDrawer = "images/iconDrawer/iconDrawer.png";
+const iconNotification = "images/iconNotification/iconNotification.png";
 
-export default {
+const images = {
   avatar,
   logo,
   sun,
@@ -109,10 +123,23 @@ export default {
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
+  iconDashboard,
+  iconActiveRound1,
+  iconActiveRound2,
+  iconRound2,
+  iconRound1,
+  iconMyaccount,
+  iconActiveMyaccount,
+  iconAddApplicationForm,
+  iconHiringProcess,
+  iconDownloadDetails,
   iconAzadiMahotsav,
   iconGloPac,
   iconG20,
   ticketIcon,
   iconSend,
-  iconSetting
+  iconSetting,
+  iconDrawer,
 };
+
+export default images;

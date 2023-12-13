@@ -1,22 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View, Text } from "@unthinkable/react-core-components";
+
+import CommonText from "../CommonText";
 import style from "./DetailComponent.style";
 
 const DetailComponent = ({ details, headerText }) => {
   return (
     <View>
-      {headerText && <Text style={style.headerText}>{headerText}</Text>}
+      {headerText && (
+        <CommonText customTextStyle={style.headerText} title={headerText} />
+      )}
       {details.map((detail, index) => (
-        <View style={style.detailItem}>
+        <View>
           <View style={style.titleContainer}>
-            <Text style={style.titleStyle}>{detail.title}</Text>
-            <Text style={style.starStyle}> *</Text>
+            <CommonText
+              title={detail.title}
+              customTextStyle={style.titleStyle}
+            />
+            <CommonText title=" *" customTextStyle={style.starStyle} />
           </View>
-
-          <Text style={[style.valueStyle, detail.isLink && style.linkStyle]}>
-            {detail.value}
-          </Text>
+          <CommonText
+            title={detail.value}
+            customTextStyle={[
+              style.valueStyle,
+              detail.isLink && style.linkStyle,
+            ]}
+          />
         </View>
       ))}
     </View>
