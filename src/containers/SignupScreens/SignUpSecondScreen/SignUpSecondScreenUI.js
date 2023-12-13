@@ -73,6 +73,8 @@ const SignUpSecondScreenUI = (props) => {
                 id: "label.enter_firm_no",
               })}
               isMandatory
+              keyboardType="numeric"
+              maxLength={10}
               errorMessage={errors.registrationNo}
               isError={!!errors.registrationNo}
               value={registrationNo}
@@ -157,7 +159,9 @@ const SignUpSecondScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_code",
               })}
+              keyboardType="numeric"
               value={code}
+              maxLength={15}
               errorMessage={errors.code}
               isError={!!errors.code}
               onChangeText={(val) => handleInputChange(val, "code")}
@@ -175,6 +179,8 @@ const SignUpSecondScreenUI = (props) => {
               errorMessage={errors.telephoneNo}
               isError={!!errors.telephoneNo}
               isMandatory
+              keyboardType="numeric"
+              maxLength={15}
               value={telephoneNo}
               onChangeText={(val) => handleInputChange(val, "telephoneNo")}
             />

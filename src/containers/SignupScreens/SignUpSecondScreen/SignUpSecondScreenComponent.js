@@ -83,7 +83,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
 
     if (!numRegex.test(String(code)) || code.length < 2 || code.length > 8) {
       newErrors.code = intl.formatMessage({
-        id: "label.company_details_validation",
+        id: "label.country_code_validation",
       });
       isValid = false;
     }
