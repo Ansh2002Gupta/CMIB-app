@@ -9,13 +9,6 @@ const style = {
     marginBottom: 24,
     textAlign: "center",
   },
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundCOlor: colors.secondaryGrey,
-    borderWidth: 1,
-    backgroundColor: "pink",
-  },
   componentView: {
     padding: 24,
     backgroundColor: colors.white,

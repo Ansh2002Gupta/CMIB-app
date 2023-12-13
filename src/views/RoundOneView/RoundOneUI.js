@@ -81,6 +81,7 @@ const RoundOneUI = (props) => {
 
 RoundOneUI.propTypes = {
   containers: PropTypes.array.isRequired,
+  intl: PropTypes.object.isRequired,
   onPressCard: PropTypes.func.isRequired,
   selectedContainer: PropTypes.number,
 };
