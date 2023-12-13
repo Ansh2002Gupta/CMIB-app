@@ -13,11 +13,10 @@ import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
 import { navigations } from "../constants/routeNames";
+ import OtpViewComponent from "../views/OtpScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
-
-import OtpView from "../components/OptView/OtpView"
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
@@ -31,7 +30,7 @@ const config = [
       // array of views under Page route
       {
         viewPath: "",
-        element: <ForgotPassword />, // view //ForgotPassword //LoginScreen
+        element: <CreateNewPassword />, // view //ForgotPassword //LoginScreen //OtpComponent
       },
     ],
   },

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import ForgotPasswordUI from "./ForgotPasswordUI";
@@ -10,10 +10,21 @@ import { navigations } from "../../constants/routeNames";
 function ForgotPasswordComponent() {
   const navigate = useNavigate();
   const intl = useIntl();
-  const [userName, setuserName] = useState("");
+  const [userEmail, setuserEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successLogin, setSuccessLogin] = useState(false);
   const { handleForgotPassword } = useForgotPassword();
+
+  //for disable button
+  const [loginDisabled, setLoginDisabled] = useState(true);
+
+  useEffect(() => {
+    if (userEmail !== "") {
+      setLoginDisabled(false);
+    } else {
+      setLoginDisabled(true);
+    }
+  }, [userEmail]);
 
   const onClickGoToLogin = () => {
     setSuccessLogin(false);
@@ -21,29 +32,34 @@ function ForgotPasswordComponent() {
   };
 
   const onClickForgotPassword = () => {
-    let error = validateEmail(userName);
+
+    console.log("onClickForgotPassword ====> ");
+
+    let error = validateEmail(userEmail);
     if (error) {
       setErrorMessage(error);
       return;
     } else {
       setErrorMessage("");
     }
-    handleForgotPassword({ email: userName });
-    setSuccessLogin(true);
+    handleForgotPassword({ email: userEmail });
+    // setSuccessLogin(true);
   };
 
   const onChangeInput = (val) => {
-    setuserName(val);
+    setuserEmail(val);
   };
+
   return (
     <ForgotPasswordUI
       successLogin={successLogin}
-      userName={userName}
+      userEmail={userEmail}
       onClickForgotPassword={onClickForgotPassword}
       onClickGoToLogin={onClickGoToLogin}
       onChangeInput={onChangeInput}
       errorMessage={errorMessage}
       intl={intl}
+      loginDisabled={loginDisabled}
     />
   );
 }

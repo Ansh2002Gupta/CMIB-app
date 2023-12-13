@@ -1,4 +1,4 @@
-import React, { useContext,useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,22 +8,58 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CustomModal from "../../components/CustomModal";
-import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
-import styles from "./ForgotPassword.style";
+import OtpComponent from "../../components/OptComponent/OtpComponent"
+import styles from "./OtpView.style";
 
-const ForgotPasswordUI = (props) => {
+const OtpViewUI = (props) => {
   const {
+    successLogin,
+    otpValue,
+    handleOtpChange,
+    errorMessage,
     onClickForgotPassword,
     onClickGoToLogin,
-    onChangeInput,
-    userEmail,
-    successLogin,
-    errorMessage,
     intl,
     loginDisabled,
+    onResendOtpClick,
+    otpLeft,
+    isCounter,
+    setIsCounter,
+    minutes,
+    setMinutes,
+    seconds,
+    setSeconds,
+
   } = props;
-  
+
+
+
+
+
+  useEffect(() => {
+    let myInterval = setInterval(() => {
+      setIsCounter(true);
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(myInterval);
+          setIsCounter(false);
+
+        } else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(myInterval);
+    };
+  }, [minutes, seconds]);
+
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
 
@@ -66,7 +102,7 @@ const ForgotPasswordUI = (props) => {
         };
       }
 
-      case "label.enter_email_to_reset_password": {
+      case "label.otp_text": {
         if (currentBreakpoint === "sm") {
           return {
             ...styles.webFontFamily,
@@ -80,16 +116,16 @@ const ForgotPasswordUI = (props) => {
         };
       }
 
-      case "textInputView": {
-        if (currentBreakpoint === "sm") {
-          return {
-            ...styles.width900pxOrWebEmailInput,
-          };
-        }
-        return {
-          ...styles.webEmailInput,
-        };
-      }
+      // case "textInputView": {
+      //   if (currentBreakpoint === "sm") {
+      //     return {
+      //       ...styles.width900pxOrWebEmailInput,
+      //     };
+      //   }
+      //   return {
+      //     ...styles.webEmailInput,
+      //   };
+      // }
 
       case "submitButtonContainer": {
         if (currentBreakpoint === "sm") {
@@ -122,7 +158,7 @@ const ForgotPasswordUI = (props) => {
         >
           <HeaderText
             label={intl.formatMessage({
-              id: "label.enter_email_to_reset_password",
+              id: "label.otp_text",
             })}
             text={intl.formatMessage({ id: "label.forgot_password" })}
             customTextStyle={
@@ -132,6 +168,7 @@ const ForgotPasswordUI = (props) => {
           />
           {!isWebView && <View style={styles.borderStyle} />}
         </View>
+
         <View style={isWebView ? styles.whiteBackground : styles.companyView}>
           <View
             style={
@@ -140,20 +177,32 @@ const ForgotPasswordUI = (props) => {
                 : styles.firstTextInput
             }
           >
-            <CustomTextInput
-              label={intl.formatMessage({ id: "label.enter_id" })}
-              placeholder={intl.formatMessage({
-                id: "label.email_id_placeholder",
-              })}
-              value={userEmail}
-              onChangeText={(val) => {
-                onChangeInput(val);
-              }}
-              errorMessage={errorMessage}
+            <OtpComponent
+              label={intl.formatMessage({ id: "label.text_otp" })}
+              onOtpChange={handleOtpChange}
               customAsteriskStyle={styles.customAsteriskStyle}
               isMandatory
+              errorMessage={errorMessage}
               isError={!!errorMessage}
             />
+            {otpLeft > 0 ?
+              <View style={styles.textLabelParent}>
+                <Text style={styles.textlabel}>{"Haven’t received the OTP?"} </Text>
+                {isCounter ?
+                  <Text style={styles.textlabelTimer}> Send Again ( {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds} )</Text>
+                  :
+                  <TouchableOpacity onPress={onResendOtpClick}>
+                    <Text style={styles.textlabelReset}> Send Again ({otpLeft} left)</Text>
+                  </TouchableOpacity>
+                }
+              </View>
+              :
+              <View style={styles.textLabelAfterParent}>
+                <Text style={styles.textlabel}>{"You have requested OTP for 4 times! "} </Text>
+                <Text style={styles.textlabel}>You can resend the next OTP after {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}  </Text>
+              </View>
+            }
+
           </View>
         </View>
         <View style={isWebView ? styles.webSubmitView : styles.submitView}>
@@ -178,6 +227,8 @@ const ForgotPasswordUI = (props) => {
             </Text>
           </TouchableOpacity>
         </View>
+
+
       </View>
       {successLogin ? (
         <CustomModal
@@ -196,4 +247,4 @@ const ForgotPasswordUI = (props) => {
   );
 };
 
-export default ForgotPasswordUI;
+export default OtpViewUI;

@@ -57,8 +57,8 @@ CustomModal.propTypes = {
   buttonTitle: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
   isSuccess: PropTypes.bool.isRequired,
-  isIconCross: PropTypes.bool.isRequired,
-  onPressIconCross: PropTypes.func.isRequired,
+  isIconCross: PropTypes.bool,
+  onPressIconCross: PropTypes.func,
 };
 
 export default CustomModal;

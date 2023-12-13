@@ -158,6 +158,9 @@ const locale = {
     "Company details must be between 6 and 1000 characters.",
   "label.round1": "Round 1",
   "label.round2": "Round 2",
+  "label.otp_text":
+  "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
+  "label.text_otp": "OTP",
 };
 
 export default locale;
