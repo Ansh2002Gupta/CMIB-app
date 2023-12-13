@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
@@ -86,6 +87,14 @@ const CreateNewPasswordValidation = ({
       </View>
     </View>
   );
+};
+
+CreateNewPasswordValidation.propTypes = {
+  confirmNewPassword: PropTypes.string.isRequired,
+  newPassword: PropTypes.string.isRequired,
+  customContainerStyles: PropTypes.object,
+  validations: PropTypes.object.isRequired,
+  setValidations: PropTypes.object.isRequired,
 };
 
 export default CreateNewPasswordValidation;

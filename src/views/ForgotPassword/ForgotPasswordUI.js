@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import {
-  View,
-  TouchableOpacity,
-} from "@unthinkable/react-core-components";
+import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
@@ -166,9 +164,7 @@ const ForgotPasswordUI = (props) => {
           <TouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={
-                isWebView
-                  ? [styles.backToLoginText]
-                  : styles.backToLoginText
+                isWebView ? [styles.backToLoginText] : styles.backToLoginText
               }
               title={intl.formatMessage({ id: "label.back_to_login" })}
             />
@@ -190,6 +186,15 @@ const ForgotPasswordUI = (props) => {
       ) : null}
     </View>
   );
+};
+ForgotPasswordUI.propTypes = {
+  intl: PropTypes.object.isRequired,
+  onClickForgotPassword: PropTypes.func,
+  userName: PropTypes.string.isRequired,
+  onClickGoToLogin: PropTypes.func.isRequired,
+  onChangeInput: PropTypes.func.isRequired,
+  successLogin: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
 
 export default ForgotPasswordUI;
