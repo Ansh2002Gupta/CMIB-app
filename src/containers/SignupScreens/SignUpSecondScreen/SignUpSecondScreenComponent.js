@@ -32,11 +32,6 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
     state: initialSignUpDetail.state_code || "",
   });
 
-  useEffect(() => {
-    getIndustryTypes();
-    getStates();
-  }, []);
-
   const [errors, setErrors] = useState({
     companyName: "",
     registrationNo: "",
@@ -46,6 +41,11 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
     telephoneNo: "",
     code: "",
   });
+
+  useEffect(() => {
+    getIndustryTypes();
+    getStates();
+  }, []);
 
   const allFieldsFilled = () => {
     const requiredFields = Object.values(formData);
