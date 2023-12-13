@@ -93,3 +93,26 @@ export const MODULE_OPTIONS = [
     messageId: "label.women_placements",
   },
 ];
+
+export const COLOR_MODES = ["light", "dark"];
+export const EXIT_WEBVIEW = "EXIT_WEBVIEW";
+export const ROUND_ONE_CARD = [
+  {
+    title: "label.add_application_form_text",
+    id: 1,
+    image: "iconAddApplicationForm",
+    subTitle: "label.add_application_form_description_text",
+  },
+  {
+    title: "label.hiring_process_text",
+    id: 2,
+    image: "iconHiringProcess",
+    subTitle: "label.hiring_process_description",
+  },
+  {
+    title: "label.download_details_text",
+    id: 3,
+    image: "iconDownloadDetails",
+    subTitle: "label.download_details_description",
+  },
+];

@@ -1,9 +1,10 @@
 import {
   NativeRouter as Router,
+  Navigate,
   Outlet,
   useNavigate,
   useRoutes,
   useLocation,
-} from 'react-router-native';
+} from "react-router-native";
 
-export {Router, Outlet, useNavigate, useRoutes, useLocation};
+export { Router, Navigate, Outlet, useNavigate, useRoutes, useLocation };
