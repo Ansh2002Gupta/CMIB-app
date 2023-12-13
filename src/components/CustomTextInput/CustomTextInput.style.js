@@ -52,11 +52,6 @@ const style = {
   },
   label: {
     color: colors.darkGrey,
-    fontSize: 12,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
   },
   webLabel: {
     fontFamily: "General Sans",
@@ -66,7 +61,6 @@ const style = {
     marginRight: 8,
     color: colors.black,
     fontSize: 14,
-    fontFamily: "GeneralSans-Medium",
   },
   iconStyle: {
     marginRight: 8,
@@ -104,11 +98,6 @@ const style = {
   },
   errorMsg: {
     color: colors.errorRed,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
-    fontSize: 12,
     lineHeight: 18,
     fontWeight: "600",
   },

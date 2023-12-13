@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from "@unthinkable/react-core-components";
+import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
+import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
+import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
@@ -164,15 +162,12 @@ const ForgotPasswordUI = (props) => {
             }
           />
           <TouchableOpacity onPress={onClickGoToLogin}>
-            <Text
-              style={
-                isWebView
-                  ? [styles.backToLoginText, styles.webFontFamily]
-                  : styles.backToLoginText
+            <CommonText
+              customTextStyle={
+                isWebView ? [styles.backToLoginText] : styles.backToLoginText
               }
-            >
-              {intl.formatMessage({ id: "label.back_to_login" })}
-            </Text>
+              title={intl.formatMessage({ id: "label.back_to_login" })}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -191,6 +186,15 @@ const ForgotPasswordUI = (props) => {
       ) : null}
     </View>
   );
+};
+ForgotPasswordUI.propTypes = {
+  intl: PropTypes.object.isRequired,
+  onClickForgotPassword: PropTypes.func,
+  userName: PropTypes.string.isRequired,
+  onClickGoToLogin: PropTypes.func.isRequired,
+  onChangeInput: PropTypes.func.isRequired,
+  successLogin: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
 
 export default ForgotPasswordUI;

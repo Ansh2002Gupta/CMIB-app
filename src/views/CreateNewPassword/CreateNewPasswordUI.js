@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
-  Text,
   TouchableOpacity,
   ScrollView,
 } from "@unthinkable/react-core-components";
-import CustomTextInput from "../../components/CustomTextInput";
-import styles from "./CreateNewPassword.style";
-import HeaderText from "../../components/HeaderText/HeaderText";
+
+import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import ButtonComponent from "../../components/ButtonComponent";
-import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import CommonText from "../../components/CommonText";
+import CustomTextInput from "../../components/CustomTextInput";
+import HeaderText from "../../components/HeaderText/HeaderText";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
+import styles from "./CreateNewPassword.style";
 
 function CreateNewPasswordUI(props) {
   const {
@@ -177,9 +178,10 @@ function CreateNewPasswordUI(props) {
             />
             {isAnyPasswordFieldLeft && (
               <View style={styles.passwordFieldsErrorContainer}>
-                <Text style={styles.passwordFieldsErrorText}>
-                  Please provide all the necessary fields for the password.
-                </Text>
+                <CommonText
+                  customTextStyle={styles.passwordFieldsErrorText}
+                  title={intl.formatMessage({ id: "label.password_field_error" })}
+                />
               </View>
             )}
           </View>
@@ -194,14 +196,13 @@ function CreateNewPasswordUI(props) {
               customButtonContainer={styles.webView.submitTextContainer}
             />
             <TouchableOpacity onPress={onClickGoToLogin}>
-              <Text
-                style={{
+              <CommonText
+                customTextStyle={{
                   ...styles.backToLoginText,
                   ...(isWebView ? styles.webView.backBtnText : {}),
                 }}
-              >
-                {intl.formatMessage({ id: "label.back_to_login" })}
-              </Text>
+                title={intl.formatMessage({ id: "label.back_to_login" })}
+              />
             </TouchableOpacity>
           </View>
         </View>

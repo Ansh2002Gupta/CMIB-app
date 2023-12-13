@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FlatList, Text, View } from "@unthinkable/react-core-components";
+import { FlatList, View } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../../components/ButtonComponent/ButtonComponent";
+import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import style from "./SignUpWelcomeScreen.style";
 
@@ -48,9 +49,10 @@ const SignUpWelcomeScreenUI = (props) => {
 
   return (
     <View style={style.innerContainer}>
-      <Text style={style.formHeaderStyle}>
-        {intl.formatMessage({ id: "label.choose_interest" })}
-      </Text>
+      <CommonText
+        customTextStyle={style.formHeaderStyle}
+        title={intl.formatMessage({ id: "label.choose_interest" })}
+      />
       <FlatList
         contentContainerStyle={style.contentContainerStyle}
         data={options}

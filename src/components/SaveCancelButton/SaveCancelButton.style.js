@@ -30,13 +30,11 @@ const style = {
   },
   titleStyle: {
     fontSize: 16,
-    fontFamily: "GeneralSans-Semibold",
     color: colors.white,
     margin: 8,
   },
   disableTextStyle: {
     fontSize: 16,
-    fontFamily: "GeneralSans-Semibold",
     color: colors.black,
     margin: 8,
   },
