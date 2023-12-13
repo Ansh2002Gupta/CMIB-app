@@ -16,7 +16,7 @@ const authReducer = (state, action) => {
   }
 };
 
-const authToken = await StorageService.get("auth");
+// const authToken = await StorageService.get("auth");
 
 const initialState = {};
 

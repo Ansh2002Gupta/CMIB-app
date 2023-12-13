@@ -15,12 +15,12 @@ function withPublicAccess(Component) {
 
     const location = useLocation();
 
-    if (
-      Platform.OS.toLowerCase() !== "web" &&
-      location.pathname === navigations.LOGIN
-    ) {
-      window.postMessage(EXIT_WEBVIEW);
-    }
+    // if (
+    //   Platform.OS.toLowerCase() !== "web" &&
+    //   location.pathname === navigations.LOGIN
+    // ) {
+    //   window.postMessage(EXIT_WEBVIEW);
+    // }
 
     useEffect(() => {
       StorageService.get("auth").then((token) => {

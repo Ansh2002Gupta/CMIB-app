@@ -34,15 +34,15 @@ function withPrivateAccess(Component) {
       });
     }, []);
 
-    if (
-      Platform.OS.toLowerCase() !== "web" &&
-      location.pathname === navigations.JOBS
-    ) {
-      window.postMessage({
-        message: EXIT_WEBVIEW,
-        data: getQueryParamsAsAnObject(location.search),
-      });
-    }
+    // if (
+    //   Platform.OS.toLowerCase() !== "web" &&
+    //   location.pathname === navigations.JOBS
+    // ) {
+    //   window.postMessage({
+    //     message: EXIT_WEBVIEW,
+    //     data: getQueryParamsAsAnObject(location.search),
+    //   });
+    // }
 
     return <Component {...props} />;
   };
