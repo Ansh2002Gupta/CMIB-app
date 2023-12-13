@@ -4,7 +4,7 @@ const style = {
     flexDirection: "row",
     alignItems: "center",
   },
-  buttonStyle: {
+  yesButtonStyle: {
     width: 16,
     height: 16,
     borderRadius: 8,
@@ -27,13 +27,13 @@ const style = {
   activeButtonStyle: {
     borderColor: colors.green,
   },
-  viewStyle: {
+  buttonViewStyle: {
     width: 6,
     height: 6,
     borderRadius: 3,
     backgroundColor: "transparent",
   },
-  activeViewStyle: {
+  activeButtonViewStyle: {
     backgroundColor: colors.green,
   },
   textStyle: {

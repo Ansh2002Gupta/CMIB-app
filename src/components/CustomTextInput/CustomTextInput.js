@@ -108,7 +108,7 @@ const CustomTextInput = (props) => {
           {...remainingProps}
         />
       ) : counterInput ? (
-        <View style={style.mainView}>
+        <View style={style.counterMainView}>
           <View style={style.counterView}>
             <CommonText customTextStyle={style.counterText} title={count} />
           </View>

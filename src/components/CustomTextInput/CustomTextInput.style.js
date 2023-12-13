@@ -109,7 +109,7 @@ const style = {
     alignItems: "center",
     cursor: "pointer",
   },
-  mainView: {
+  counterMainView: {
     flexDirection: "row",
     borderWidth: 1,
     borderColor: colors.lightGrey,

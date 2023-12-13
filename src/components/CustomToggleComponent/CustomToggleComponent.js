@@ -6,49 +6,50 @@ import CommonText from "../CommonText";
 import styles from "./CustomToggleComponent.style";
 
 const CustomToggleComponent = () => {
-  const [selectedOption, setSelectedOption] = useState(2);
+  const [selectedToggleOption, setSelectedToggleOption] = useState(2);
   const intl = useIntl();
   const handleOptionSelect = (option) => {
-    setSelectedOption(option);
+    setSelectedToggleOption(option);
   };
 
   return (
     <View style={styles.mainView}>
       <TouchableOpacity
         style={{
-          ...styles.buttonStyle,
-          ...(selectedOption === 0 ? styles.activeButtonStyle : null),
+          ...styles.yesButtonStyle,
+          ...(selectedToggleOption === 0 ? styles.activeButtonStyle : null),
         }}
         onPress={() => handleOptionSelect(0)}
       >
         <View
           style={{
-            ...styles.viewStyle,
-            ...(selectedOption === 0 ? styles.activeViewStyle : null),
+            ...styles.buttonViewStyle,
+            ...(selectedToggleOption === 0
+              ? styles.activeButtonViewStyle
+              : null),
           }}
         />
       </TouchableOpacity>
-
       <CommonText
         title={intl.formatMessage({ id: "label.yes" })}
         customTextStyle={styles.textStyle}
       />
-
       <TouchableOpacity
         style={{
           ...styles.noButtonStyle,
-          ...(selectedOption === 1 ? styles.activeButtonStyle : null),
+          ...(selectedToggleOption === 1 ? styles.activeButtonStyle : null),
         }}
         onPress={() => handleOptionSelect(1)}
       >
         <View
           style={{
-            ...styles.viewStyle,
-            ...(selectedOption === 1 ? styles.activeViewStyle : null),
+            ...styles.buttonViewStyle,
+            ...(selectedToggleOption === 1
+              ? styles.activeButtonViewStyle
+              : null),
           }}
         />
       </TouchableOpacity>
-
       <CommonText
         title={intl.formatMessage({ id: "label.no" })}
         customTextStyle={styles.textStyle}
