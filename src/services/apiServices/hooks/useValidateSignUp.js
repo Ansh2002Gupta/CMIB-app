@@ -26,11 +26,11 @@ const useValidateSignUp = () => {
         errorCallback(res);
       }
     } catch (err) {
-      setPostStatus(API_STATUS.ERROR);
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       setError(errorMessage);
       errorCallback(errorMessage);
+      setPostStatus(API_STATUS.ERROR);
     }
   };
 

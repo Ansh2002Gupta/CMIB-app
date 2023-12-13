@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
+import useSignUpUser from "../../../services/apiServices/hooks/useSignUpUser";
 import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
@@ -16,6 +17,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const { handleSignUpValidation } = useValidateSignUp();
+  const { handleSignUp } = useSignUpUser();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
   const [validationError, setValidationError] = useState("");
@@ -34,9 +36,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const [natureOfSupplier, setNatureOfSupplier] = useState(
     initialDetails.nature_of_supplier || ""
   );
-  const [companyType, setCompanyType] = useState(
-    initialDetails.company_type || ""
-  );
+  const [companyType, setCompanyType] = useState(initialDetails.type || "");
 
   const [options, setOptions] = useState(
     INTEREST_OPTIONS.map((option) => ({
@@ -141,6 +141,19 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     }
   };
 
+  const onSuccess = async (details) => {
+    signUpDispatch(setSignUpDetails(details));
+    handleSignUp(
+      signUpState.signUpDetail,
+      () => setShowSuccessSignUp(true),
+      (error) => onError(error)
+    );
+  };
+
+  const onError = (err) => {
+    setValidationError(err);
+  };
+
   const handleSuccessModal = (value) => {
     if (value) {
       if (validateFields()) {
@@ -157,13 +170,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
         handleSignUpValidation(
           details,
-          () => {
-            signUpDispatch(setSignUpDetails(details));
-            setShowSuccessSignUp(true);
-          },
-          (error) => {
-            setValidationError(error);
-          }
+          () => onSuccess(details),
+          (error) => onError(error)
         );
       }
     } else {
@@ -207,6 +215,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       handleInputChange={handleInputChange}
       socialMediaLinks={socialMediaLinks}
       companyDetails={companyDetails}
+      natureOfSupplier={natureOfSupplier}
+      companyType={companyType}
       website={website}
       errors={errors}
       allFieldsFilled={allFieldsFilled}

@@ -19,12 +19,14 @@ const SignUpLastScreenUI = (props) => {
   const {
     allFieldsFilled,
     companyDetails,
+    companyType,
     errors,
     handleDismissToast,
     handleInputChange,
     handleSuccessModal,
     handleToggle,
     intl,
+    natureOfSupplier,
     onClickGoToLogin,
     onGoBack,
     options,
@@ -127,6 +129,7 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_nature_of_supplier",
           })}
+          value={natureOfSupplier}
           isMandatory
           isDropdown
           onChangeValue={(value) =>
@@ -141,6 +144,7 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_company_type",
           })}
+          value={companyType}
           onChangeValue={(value) => handleInputChange(value, "companyType")}
           options={COMPANY_TYPE_OPTIONS}
           isMandatory
@@ -191,12 +195,14 @@ const SignUpLastScreenUI = (props) => {
 SignUpLastScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   companyDetails: PropTypes.string.isRequired,
+  companyType: PropTypes.string.isRequired,
   errors: PropTypes.object,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   handleSuccessModal: PropTypes.func.isRequired,
   handleToggle: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  natureOfSupplier: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
