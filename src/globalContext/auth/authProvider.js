@@ -18,11 +18,7 @@ const authReducer = (state, action) => {
 
 const authToken = await StorageService.get("auth");
 
-const initialState = authToken
-  ? {
-      token: authToken,
-    }
-  : {};
+const initialState = {};
 
 export const AuthContext = createContext([initialState, () => {}]);
 

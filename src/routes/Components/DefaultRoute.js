@@ -4,13 +4,17 @@ import _ from "lodash";
 
 import { AuthContext } from "../../globalContext/auth/authProvider";
 import { navigations } from "../../constants/routeNames";
+import { StorageService } from "../../services";
 
 const DefaultRoute = () => {
   const [authState] = useContext(AuthContext);
 
-  if (!_.isEmpty(authState)) {
-    <Navigate to={navigations.LOGIN} replace />;
-  }
+  StorageService.get("auth").then((token) => {
+    if (!token && authState?.token) {
+      return <Navigate to={navigations.LOGIN} replace />;
+    }
+  });
+
   return <Navigate to={navigations.DASHBOARD} replace />;
 };
 

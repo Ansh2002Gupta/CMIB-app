@@ -5,6 +5,7 @@ import { Platform } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { RouteContext } from "../globalContext/route/routeProvider";
+import { StorageService } from "../services";
 import { getQueryParamsAsAnObject } from "../utils/util";
 import { navigations } from "../constants/routeNames";
 import { setLoginRedirectRoute } from "../globalContext/route/routeActions";
@@ -17,6 +18,22 @@ function withPrivateAccess(Component) {
     const location = useLocation();
     const [, routeDispatch] = useContext(RouteContext);
 
+    useEffect(() => {
+      StorageService.get("auth").then((token) => {
+        console.log(token);
+        if (!authState?.token && !token) {
+          routeDispatch(
+            setLoginRedirectRoute({
+              loginRedirectRoute: `${location.pathname}${
+                location.search.length ? location.search : ""
+              }`,
+            })
+          );
+          navigate(navigations.LOGIN);
+        }
+      });
+    }, []);
+
     if (
       Platform.OS.toLowerCase() !== "web" &&
       location.pathname === navigations.JOBS
@@ -26,19 +43,6 @@ function withPrivateAccess(Component) {
         data: getQueryParamsAsAnObject(location.search),
       });
     }
-
-    useEffect(() => {
-      if (_.isEmpty(authState)) {
-        routeDispatch(
-          setLoginRedirectRoute({
-            loginRedirectRoute: `${location.pathname}${
-              location.search.length ? location.search : ""
-            }`,
-          })
-        );
-        navigate(navigations.LOGIN);
-      }
-    }, [authState]);
 
     return <Component {...props} />;
   };

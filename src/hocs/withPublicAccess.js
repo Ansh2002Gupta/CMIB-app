@@ -4,6 +4,7 @@ import _ from "lodash";
 import { Platform } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../globalContext/auth/authProvider";
+import { StorageService } from "../services";
 import { navigations } from "../constants/routeNames";
 import { EXIT_WEBVIEW } from "../constants/constants";
 
@@ -22,9 +23,12 @@ function withPublicAccess(Component) {
     }
 
     useEffect(() => {
-      if (!_.isEmpty(authState)) {
-        navigate(navigations.DASHBOARD);
-      }
+      StorageService.get("auth").then((token) => {
+        console.log(token);
+        if (authState?.token || token) {
+          navigate(navigations.DASHBOARD);
+        }
+      });
     }, []);
 
     return <Component {...props} />;
