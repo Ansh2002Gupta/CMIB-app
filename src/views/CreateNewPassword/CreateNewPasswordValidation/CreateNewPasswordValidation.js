@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import CommonText from "../CommonText";
-import colors from "../../assets/colors";
+import CommonText from '../../../components/CommonText'
+import colors from "../../../assets/colors";
 import styles from "./ConfirmPasswordValidation.style";
 
 const CreateNewPasswordValidation = ({
