@@ -4,6 +4,7 @@ export const numRegex = /^\d+$/;
 export const urlRegex =
   /(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
+export const toastTimeout = 5000;
 export const API_VERSION_NUMBER = "v1";
 
 export const API_STATUS = {
