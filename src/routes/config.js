@@ -17,6 +17,8 @@ import { navigations } from "../constants/routeNames";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 
+import OtpView from "../components/OptView/OtpView"
+
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
@@ -29,7 +31,7 @@ const config = [
       // array of views under Page route
       {
         viewPath: "",
-        element: <LoginScreen />, // view
+        element: <ForgotPassword />, // view //ForgotPassword //LoginScreen
       },
     ],
   },
