@@ -7,7 +7,12 @@ import { TOAST_TIMEOUT } from "../../constants/constants";
 import style from "./ToastComponent.style";
 
 const ToastComponent = (props) => {
-  const { duration = TOAST_TIMEOUT, onDismiss, toastMessage } = props;
+  const {
+    customToastStyle,
+    duration = TOAST_TIMEOUT,
+    onDismiss,
+    toastMessage,
+  } = props;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,13 +23,14 @@ const ToastComponent = (props) => {
   }, [onDismiss, duration]);
 
   return (
-    <View style={style.containerStyle}>
+    <View style={[style.containerStyle, customToastStyle]}>
       <CommonText customTextStyle={style.textStyle} title={toastMessage} />
     </View>
   );
 };
 
 ToastComponent.propTypes = {
+  customToastStyle: PropTypes.object,
   duration: PropTypes.number,
   onDismiss: PropTypes.func,
   toastMessage: PropTypes.string.isRequired,
