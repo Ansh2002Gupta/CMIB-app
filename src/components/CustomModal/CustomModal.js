@@ -2,14 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
-  Text,
   View,
   Modal,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
+
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import CommonText from "../CommonText";
 import images from "../../images";
 import style from "./CustomModal.style";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
 const CustomModal = (props) => {
   const {
@@ -30,14 +31,23 @@ const CustomModal = (props) => {
           {isSuccess ? (
             <>
               <Image source={images.iconSuccess} />
-              <Text style={style.headerText}>{headerText}</Text>
-              <Text style={style.infoText}>{secondaryText}</Text>
+              <CommonText
+                customTextStyle={style.headerText}
+                title={headerText}
+              />
+              <CommonText
+                customTextStyle={style.infoText}
+                title={secondaryText}
+              />
               <ButtonComponent title={buttonTitle} onPress={onPress} />
             </>
           ) : (
             <>
               <View style={style.headerStyle}>
-                <Text style={style.headerText}>{headerText}</Text>
+                <CommonText
+                  customTextStyle={style.headerText}
+                  title={headerText}
+                />
                 <TouchableOpacity onPress={onPressIconCross}>
                   {isIconCross && <Image source={images.iconCross} />}
                 </TouchableOpacity>

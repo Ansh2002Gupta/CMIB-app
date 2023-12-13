@@ -5,7 +5,6 @@ const style = {
     color: colors.black,
     fontSize: 18,
     marginBottom: 24,
-    fontFamily: "GeneralSans-Semibold",
     paddingTop: 24,
   },
   contentContainerStyle: { flex: 1 },

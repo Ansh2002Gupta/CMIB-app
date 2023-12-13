@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Image,
-  Text,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import styles from "./UploadImage.style";
 import { launchImageLibrary } from "react-native-image-picker";
+
+import CommonText from "../CommonText";
 import images from "../../images";
+import styles from "./UploadImage.style";
 
 const UploadImage = ({ intl }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -56,7 +57,7 @@ const UploadImage = ({ intl }) => {
             />
           </View>
           <View style={styles.innerContainer}>
-            <Text style={styles.nameStyle}>{fileName}</Text>
+            <CommonText customTextStyle={styles.nameStyle} title={fileName} />
             <TouchableOpacity onPress={onClickDeleteImage}>
               <Image source={images.iconTrash} />
             </TouchableOpacity>
@@ -66,18 +67,22 @@ const UploadImage = ({ intl }) => {
         <>
           <Image source={images.iconUpload} />
           <View style={styles.textContainer}>
-            <Text style={styles.textStyle}>
-              {intl.formatMessage({ id: "label.drag_drop_files" })}
-            </Text>
+            <CommonText
+              customTextStyle={styles.textStyle}
+              title={intl.formatMessage({ id: "label.drag_drop_files" })}
+            />
             <TouchableOpacity onPress={openImagePicker}>
-              <Text style={styles.browseStyle}>
-                {` ${intl.formatMessage({ id: "label.browse" })}`}
-              </Text>
+              <CommonText
+                customTextStyle={styles.browseStyle}
+                title={` ${intl.formatMessage({ id: "label.browse" })}`}
+              />
             </TouchableOpacity>
           </View>
-          <Text style={styles.infoStyle}>
-            {intl.formatMessage({ id: "label.supported_type" })}
-          </Text>
+
+          <CommonText
+            customTextStyle={styles.infoStyle}
+            title={intl.formatMessage({ id: "label.supported_type" })}
+          />
         </>
       )}
     </View>

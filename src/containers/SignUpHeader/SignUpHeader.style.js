@@ -25,7 +25,6 @@ const style = {
     fontWeight: "600",
     alignSelf: "center",
     marginBottom: 24,
-    fontFamily: "GeneralSans-Bold",
   },
   borderStyle: {
     borderWidth: 1,

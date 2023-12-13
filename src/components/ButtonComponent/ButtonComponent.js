@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import {
   ActivityIndicator,
   Image,
-  Text,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import colors from "../../assets/colors";
+import CommonText from "../CommonText";
 import images from "../../images";
+import colors from "../../assets/colors";
 import styles from "./ButtonComponent.style";
 
 const ButtonComponent = (props) => {
@@ -34,7 +34,10 @@ const ButtonComponent = (props) => {
       {displayLoader ? (
         <ActivityIndicator color={colors.white} />
       ) : (
-        <Text style={[styles.titleStyle, customTitleStyle]}>{title}</Text>
+        <CommonText
+          customTextStyle={[styles.titleStyle, customTitleStyle]}
+          title={title}
+        />
       )}
       {hasIconRight && <Image source={images.iconArrowRightWhite} />}
     </TouchableOpacity>

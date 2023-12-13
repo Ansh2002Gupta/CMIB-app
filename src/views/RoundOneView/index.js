@@ -1,3 +1,3 @@
-import RoundOne from "./RoundOneView";
+import RoundOneComponent from "./RoundOneComponent";
 
-export default RoundOne;
+export default RoundOneComponent;

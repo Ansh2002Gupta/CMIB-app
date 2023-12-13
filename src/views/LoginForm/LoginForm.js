@@ -2,8 +2,9 @@ import React, { useState, useContext } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { Button } from "@unthinkable/react-button";
-import { View, Text, TextInput } from "@unthinkable/react-core-components";
+import { View, TextInput } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
 import { AuthContext } from "../../globalContext/auth/authProvider";
 import { AuthService, StorageService } from "./../../services";
 import { setAuth } from "./../../globalContext/auth/authActions";
@@ -51,9 +52,10 @@ function LoginForm(props) {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.header}>
-          {intl.formatMessage({ id: "label.welcome" })}
-        </Text>
+        <CommonText
+          customTextStyle={styles.header}
+          title={intl.formatMessage({ id: "label.welcome" })}
+        />
         <TextInput
           style={styles.input}
           placeholder={intl.formatMessage({ id: "label.username" })}

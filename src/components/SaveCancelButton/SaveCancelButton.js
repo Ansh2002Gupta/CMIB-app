@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import {
   Image,
   View,
-  Text,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
-import styles from "./SaveCancelButton.style";
+
+import CommonText from "../CommonText";
 import images from "../../images";
+import styles from "./SaveCancelButton.style";
 
 const SaveCancelButton = (props) => {
   const {
@@ -27,7 +28,10 @@ const SaveCancelButton = (props) => {
       >
         <Image source={images.iconArrowLeft} />
 
-        <Text style={styles.disableTextStyle}>{buttonOneText}</Text>
+        <CommonText
+          customTextStyle={styles.disableTextStyle}
+          title={buttonOneText}
+        />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={onPressButtonTwo}
@@ -38,7 +42,10 @@ const SaveCancelButton = (props) => {
         ]}
         disabled={isNextDisabled}
       >
-        <Text style={styles.titleStyle}>{buttonTwoText}</Text>
+        <CommonText
+          customTextStyle={styles.titleStyle}
+          title={buttonTwoText}
+        />
         {hasIconRight && <Image source={images.iconArrowRightWhite} />}
       </TouchableOpacity>
     </View>

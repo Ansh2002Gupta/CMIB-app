@@ -1,13 +1,20 @@
 import React from "react";
-import { Text, View } from "@unthinkable/react-core-components";
-import Styles from "./SubHeading.style";
+import PropTypes from "prop-types";
+import { View } from "@unthinkable/react-core-components";
 
-const SubHeadingText= ({text}) => {
+import CommonText from "../CommonText";
+import styles from "./SubHeading.style";
+
+const SubHeadingText = ({ text }) => {
   return (
     <View>
-      <Text style={Styles.heading}>{text}</Text>
+      <CommonText customTextStyle={styles.heading} title={text} />
     </View>
   );
+};
+
+SubHeadingText.propTypes = {
+  text: PropTypes.string.isRequired,
 };
 
 export default SubHeadingText;
