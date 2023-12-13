@@ -6,8 +6,7 @@ import MainLayout from "../layouts/MainLayout";
 import useIsWebView from "../hooks/useIsWebView";
 
 function Home() {
-  const isWebView = useIsWebView();
-
+  const { isWebView } = useIsWebView();
   return (
     <MainLayout menu={!isWebView ? <BottomBar /> : null} content={<Outlet />} />
   );
