@@ -3,6 +3,7 @@ const style = {
   mainView: {
     flexDirection: "row",
     alignItems: "center",
+    paddingTop: 4,
   },
   yesButtonStyle: {
     width: 16,
@@ -42,6 +43,22 @@ const style = {
     paddingLeft: 8,
     paddingRight: 16,
   },
+  container: {
+    paddingBottom: 32,
+  },
+  labelContainer: {
+    flexDirection: "row",
+    fontFamily: "General Sans",
+    gap: 4,
+  },
+  label: {
+    color: colors.darkGrey,
+  },
+  webLabel: {
+    fontFamily: "General Sans",
+    color: colors.black,
+  },
+  starStyle: { color: colors.errorRed },
 };
 
 export default style;
