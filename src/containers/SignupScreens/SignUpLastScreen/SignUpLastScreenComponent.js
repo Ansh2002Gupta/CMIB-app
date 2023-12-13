@@ -98,12 +98,15 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     if (companyDetails.length < 6 || companyDetails.length > 1000) {
       newErrors.companyDetails = intl.formatMessage({
-        id: "label.url_validation",
+        id: "label.company_details_validation",
       });
       isValid = false;
     }
+
     if (!urlRegex.test(String(website))) {
-      newErrors.website = "Please enter a valid URL.";
+      newErrors.website = intl.formatMessage({
+        id: "label.url_validation",
+      });
       isValid = false;
     }
 
