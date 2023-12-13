@@ -1,8 +1,9 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { Text, View, Image } from "@unthinkable/react-core-components";
 import { useTheme } from "@unthinkable/react-theme";
+import { View, Image } from "@unthinkable/react-core-components";
 
+import CommonText from "../CommonText";
 import styles from "./FollowUsIcons.style";
 
 const FollowUsIcons = () => {
@@ -10,9 +11,10 @@ const FollowUsIcons = () => {
   const icons = useTheme("icons");
   return (
     <View style={styles.containerStyle}>
-      <Text style={styles.followUsText}>
-        {intl.formatMessage({ id: "label.follow_us" })}
-      </Text>
+      <CommonText
+        customTextStyle={styles.followUsText}
+        title={intl.formatMessage({ id: "label.follow_us" })}
+      />
       <View style={styles.imageView}>
         <View style={styles.imageStyle}>
           <Image source={icons.iconTwitter} />

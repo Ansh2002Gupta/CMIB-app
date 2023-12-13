@@ -1,4 +1,3 @@
-import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 const style = {
   buttonStyle: {
@@ -16,10 +15,6 @@ const style = {
   },
   titleStyle: {
     fontSize: 16,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General Sans"
-        : "GeneralSans-Semibold",
     color: colors.white,
     margin: 8,
     fontWeight: "600",
