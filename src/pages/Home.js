@@ -9,10 +9,7 @@ function Home() {
   const isWebView = useIsWebView();
 
   return (
-    <MainLayout
-      menu={!isWebView ? <BottomBar /> : <BottomBar />}
-      content={<Outlet />}
-    />
+    <MainLayout menu={!isWebView ? <BottomBar /> : null} content={<Outlet />} />
   );
 }
 
