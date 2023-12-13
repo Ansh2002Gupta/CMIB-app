@@ -6,9 +6,9 @@ import {
   ScrollView,
 } from "@unthinkable/react-core-components";
 
+import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
-import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";

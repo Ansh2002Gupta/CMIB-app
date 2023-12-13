@@ -144,7 +144,6 @@ const SignUpLastScreenUI = (props) => {
           isDropdown
         />
         <View style={style.seperator} />
-
         <CommonText
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.source_of_info" })}
