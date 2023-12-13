@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import Http from "../../http-service";
 import Storage from "../../storage-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { AuthContext } from "../../../globalContext/auth/authProvider";
+import { clearAuthAndLogout } from "../../../globalContext/auth/authActions";
 
-const useLogoutUser = () => {
+const useLogoutAPI = () => {
   const [logoutApiStatus, setLogoutApiStatus] = useState(API_STATUS.IDLE);
   const [loginUserResult, setLoginUserResult] = useState([]);
+  const [, authDispatch] = useContext(AuthContext);
   const [errorWhileLoggingOut, setErrorWhileLoggingOut] = useState("");
 
   const handleUserLogout = async (payload) => {
@@ -18,10 +21,12 @@ const useLogoutUser = () => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setLogoutApiStatus(API_STATUS.SUCCESS);
         await Storage.removeAll();
+        authDispatch(clearAuthAndLogout());
         setLoginUserResult(res.data);
         return;
       }
       setLogoutApiStatus(API_STATUS.ERROR);
+      setErrorWhileLoggingOut(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setLogoutApiStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
@@ -47,4 +52,4 @@ const useLogoutUser = () => {
   };
 };
 
-export default useLogoutUser;
+export default useLogoutAPI;
