@@ -64,6 +64,16 @@ const style = {
   },
   initialsText: {
     fontSize: 14
+  },
+  profileImageStyle: {
+    width: 104,
+    height: 104,
+    borderRadius: 52
+  },
+  modalProfileImage: {
+    width: 152,
+    height: 152,
+    borderRadius: 76
   }
 };
 

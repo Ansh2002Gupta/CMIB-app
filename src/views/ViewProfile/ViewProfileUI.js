@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   TouchableOpacity,
@@ -17,8 +17,7 @@ import style from "./ViewProfile.style";
 
 const ViewProfileUI = (props) => {
   const { intl, onGoBack, showEditModal, handleEditPopup } = props;
-
-  const profileImage = "";
+  const [profileImage, setProfileImage] = useState("");
   //TODO: Dummy data to be replaced by api data.
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -30,7 +29,23 @@ const ViewProfileUI = (props) => {
 
   const renderProfileIcon = (iconType) => {
     if (profileImage) {
-      return <Image source={{ uri: profileImage }} />;
+      return (
+        <View
+          style={[
+            style.initialsContainer,
+            showEditModal &&
+              iconType === "modalIcon" &&
+              style.editProfileContainer,
+          ]}
+        >
+          <Image
+            source={{ uri: profileImage }}
+            style={
+              showEditModal && iconType === "modalIcon" ? style.modalProfileImage : style.profileImageStyle
+            }
+          />
+        </View>
+      );
     } else {
       const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
       return (
@@ -56,6 +71,7 @@ const ViewProfileUI = (props) => {
       });
       if (image) {
         handleEditPopup(false);
+        setProfileImage(image?.sourceURL);
       }
     } catch (error) {
       //TODO: Replace this error log with a toast which has been created by Kashish.
