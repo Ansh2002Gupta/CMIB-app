@@ -21,12 +21,13 @@ export default class Http {
     }
   }
 
-  static async post(_url, data, handleDiscard = () => {}) {
+  static async post(_url, data, headers = {}, handleDiscard = () => {}) {
     const url = `${baseUrl}${_url}`;
     try {
       const cancelPostRequest = axios.CancelToken.source();
       handleDiscard(cancelPostRequest);
       const response = await axiosInstance.post(url, data, {
+        headers: headers,
         cancelToken: cancelPostRequest.token,
       });
       return response;
