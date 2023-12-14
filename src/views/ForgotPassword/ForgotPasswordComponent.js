@@ -14,7 +14,7 @@ function ForgotPasswordComponent() {
   const [userEmail, setuserEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successLogin, setSuccessLogin] = useState(false); 
-  const { handleForgotPassword } = useForgotPasswordAPI();
+  const { handleForgotPasswordAPI, isLoading} = useForgotPasswordAPI();
 
   //for disable button
   const [loginDisabled, setLoginDisabled] = useState(true);
@@ -42,12 +42,13 @@ function ForgotPasswordComponent() {
       setErrorMessage("");
     }
     
-    handleForgotPassword({ email: userEmail }); 
+    handleForgotPasswordAPI({ email: userEmail }, true); 
 
-    setSuccessLogin(false);
-    navigate(navigations.FORGOT_PASSWORD_OTP,{ state: { email: userEmail } });
-    
+    setSuccessLogin(false);   
   };
+
+  
+
 
   const onChangeInput = (val) => {
     setuserEmail(val);
@@ -63,6 +64,7 @@ function ForgotPasswordComponent() {
       errorMessage={errorMessage}
       intl={intl}
       loginDisabled={loginDisabled}
+      isLoading={isLoading}
     />
   );
 }

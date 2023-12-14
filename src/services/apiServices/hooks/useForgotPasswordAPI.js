@@ -3,7 +3,8 @@ import { useState } from "react";
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
-
+import { useNavigate } from "../../../routes";
+import { navigations } from "../../../constants/routeNames";
 
 const useForgotPasswordAPI = () => {
 
@@ -11,14 +12,22 @@ const useForgotPasswordAPI = () => {
   const [forgotPasswordResult, setForgotPasswordResult] = useState([]);
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
 
-  const handleForgotPassword = async (payload) => {
+  const navigate = useNavigate();
+
+  const handleForgotPasswordAPI = async (payload, isNavigate) => {
+    
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
       const res = await Http.post(`company/reset-password`, payload);
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+
+      if ( res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setForgotPasswordResult(res.data);
+      
+        if(isNavigate)
+        navigate(navigations.FORGOT_PASSWORD_OTP,{ state: { email: payload.email } });
+
         return;
       }
       setPostStatus(API_STATUS.ERROR);
@@ -38,7 +47,7 @@ const useForgotPasswordAPI = () => {
   return {
     errorWhileResetPassword,
     forgotPasswordResult,
-    handleForgotPassword,
+    handleForgotPasswordAPI,
     isError,
     isLoading,
     isSuccess,

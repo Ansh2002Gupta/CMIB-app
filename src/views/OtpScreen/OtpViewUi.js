@@ -1,13 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from "@unthinkable/react-core-components";
+import { View, Text,  TouchableOpacity,} from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import ButtonComponent from "../../components/ButtonComponent";
-import CustomModal from "../../components/CustomModal";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import OtpComponent from "../../components/OptComponent/OtpComponent"
 import styles from "./OtpView.style";
@@ -16,7 +11,6 @@ import { OTP_TRY_COUNT,OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 
 const OtpViewUI = (props) => {
   const {
-    successLogin,
     otpValue,
     handleOtpChange,
     errorMessage,
@@ -33,7 +27,6 @@ const OtpViewUI = (props) => {
     setMinutes,
     seconds,
     setSeconds,
-
   } = props;
 
 
@@ -249,22 +242,7 @@ const OtpViewUI = (props) => {
             </Text>
           </TouchableOpacity>
         </View>
-
-
       </View>
-      {successLogin ? (
-        <CustomModal
-          headerText={intl.formatMessage({ id: "label.thanks" })}
-          secondaryText={intl.formatMessage({
-            id: "label.reset_password_info_text",
-          })}
-          onPress={() => {
-            onClickGoToLogin();
-          }}
-          buttonTitle={intl.formatMessage({ id: "label.go_back_to_login" })}
-          isSuccess
-        />
-      ) : null}
     </View>
   );
 };

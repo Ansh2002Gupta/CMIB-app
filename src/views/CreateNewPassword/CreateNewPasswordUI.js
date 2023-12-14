@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import {
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from "@unthinkable/react-core-components";
+import {View,TouchableOpacity,ScrollView,} from "@unthinkable/react-core-components";
 
 import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import ButtonComponent from "../../components/ButtonComponent";
@@ -24,7 +20,9 @@ function CreateNewPasswordUI(props) {
     onChangeConfirmPasswordInput,
     error,
     intl,
+    isLoading,
   } = props;
+
   const [isAnyPasswordFieldLeft, setIsAnyPasswordFieldLeft] = useState(false);
   const [validations, setValidations] = useState({
     length: false,
@@ -46,7 +44,8 @@ function CreateNewPasswordUI(props) {
       !validations.numeric ||
       !validations.uppercase ||
       !validations.lowercase ||
-      !validations.specialChar
+      !validations.specialChar||
+      !validations.match
     ) {
       setIsAnyPasswordFieldLeft(true);
       return;
@@ -97,7 +96,7 @@ function CreateNewPasswordUI(props) {
       style={styles.mainView}
       contentContainerStyle={styles.scrollViewContainerStyle}
     >
-      {/* <View> */}
+    
       <WebViewLoginSignUpWrapper shouldApplyStyles={isWebView}>
         <View
           style={{
@@ -194,6 +193,7 @@ function CreateNewPasswordUI(props) {
               }}
               customTitleStyle={styles.webView.submitText}
               customButtonContainer={styles.webView.submitTextContainer}
+              displayLoader ={isLoading}
             />
             <TouchableOpacity onPress={onClickGoToLogin}>
               <CommonText

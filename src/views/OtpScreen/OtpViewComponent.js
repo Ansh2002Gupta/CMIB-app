@@ -2,11 +2,11 @@ import React, { useState,useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import OtpViewUI from "./OtpViewUi";
-import useForgotPassword from "../../services/apiServices/hooks/useForgotPasswordAPI";
+import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
 import { useNavigate,useLocation } from "../../routes"; 
 import { validateOtp } from "../../constants/CommonFunctions";
 import { navigations } from "../../constants/routeNames";
-import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES,OTP_TIMER_MAX_MINUTES} from "../../constants/constants";
+import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES} from "../../constants/constants";
 
 function OtpViewComponent() {
 
@@ -24,8 +24,8 @@ function OtpViewComponent() {
   const [otpValue, setOtpValue] = useState('');
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [successLogin, setSuccessLogin] = useState(false);
-  const { handleForgotPassword } = useForgotPassword(); 
+  const { handleForgotPasswordAPI } = useForgotPasswordAPI(); 
+
   const [loginDisabled, setLoginDisabled] = useState(true);
 
   useEffect(() => {
@@ -37,11 +37,10 @@ function OtpViewComponent() {
   }, [otpValue]);
 
   const onClickGoToLogin = () => {
-    setSuccessLogin(false);
     navigate(navigations.LOGIN);
   };
 
-  const onClickForgotPassword = () => {
+  const onClickSubmit = () => {
     let error = validateOtp(otpValue);
     if (error) {
       setErrorMessage(error);
@@ -49,13 +48,10 @@ function OtpViewComponent() {
     } else {
       setErrorMessage("");
     }
-    handleForgotPassword({ email: userEmail });
-    setSuccessLogin(false);
     navigate(navigations.CREATE_NEW_PASSWORD,{ state: { email: email,otpCode: otpValue } });
   };
 
   const handleOtpChange = (otp) => {
-    console.log("Otp recieved ===>",otp);
     setOtpValue(otp);
   };
 
@@ -64,15 +60,17 @@ function OtpViewComponent() {
       setMinutes(OTP_TIMER_MIN_MINUTES);
       setSeconds(OTP_TIMER_SECOND);
       setIsCounter(true);
+
+      //Calling Api 
+      handleForgotPasswordAPI({ email: userEmail }, false);
     }
   };
 
   return (
     <OtpViewUI
-      successLogin={successLogin}
       otpValue={otpValue}
       handleOtpChange={handleOtpChange}
-      onClickForgotPassword={onClickForgotPassword}
+      onClickForgotPassword={onClickSubmit}
       onClickGoToLogin={onClickGoToLogin}
       errorMessage={errorMessage}  
       intl={intl}
@@ -86,7 +84,6 @@ function OtpViewComponent() {
       setMinutes={setMinutes}
       seconds={seconds}
       setSeconds={setSeconds}
-      
     />
   );
 }

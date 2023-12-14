@@ -20,6 +20,7 @@ const ForgotPasswordUI = (props) => {
     errorMessage,
     intl,
     loginDisabled,
+    isLoading,
   } = props;
   
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -163,6 +164,7 @@ const ForgotPasswordUI = (props) => {
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
+            displayLoader={isLoading}
           />
           <TouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
