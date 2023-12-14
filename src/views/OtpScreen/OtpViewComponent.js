@@ -28,14 +28,6 @@ function OtpViewComponent() {
   // const { handleForgotPassword } = useForgotPassword(); // for api call hadnling
   const [loginDisabled, setLoginDisabled] = useState(true);
 
-
-  useEffect(()=>{
-    setOtpLeft(prev => prev - 1); 
-    // const receivedOtp = '3567'; 
-    // setOtpValue(receivedOtp);
-
-  },[])
-
   useEffect(() => {
     if (otpValue !== "") {
       setLoginDisabled(false);
@@ -59,31 +51,20 @@ function OtpViewComponent() {
     }
     // handleForgotPassword({ email: userEmail });
     setSuccessLogin(false);
-    navigate(navigations.FORGOT_PASSWORD_OTP);
+    navigate(navigations.CREATE_NEW_PASSWORD,{ state: { email: email,otpCode: otpValue } });
   };
 
   const handleOtpChange = (otp) => {
     console.log("Otp recieved ===>",otp);
-    // setOtpValue(otp);
+    setOtpValue(otp);
   };
 
   const onResendOtpClick= () => {
-
     if(otpLeft > 0) {
-      console.log("otpLeft current value ===>>> ",otpLeft)
-      setOtpLeft(prev => prev - 1);
       setMinutes(OTP_TIMER_MIN_MINUTES);
       setSeconds(OTP_TIMER_SECOND);
       setIsCounter(true);
     }
-    else
-    {
-      console.log("otpLeft current value Zero ===>>  ",otpLeft)
-      setOtpLeft(prev => prev - 1);
-      setMinutes(OTP_TIMER_MAX_MINUTES);
-      setSeconds(0);
-    }
-    
   };
 
   return (

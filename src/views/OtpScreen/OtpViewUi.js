@@ -37,6 +37,8 @@ const OtpViewUI = (props) => {
   } = props;
 
 
+  const [afterAttempt, setAfterAttempt] = useState(false);
+
   useEffect(() => {
     let myInterval = setInterval(() => {
       setIsCounter(true);
@@ -45,9 +47,9 @@ const OtpViewUI = (props) => {
       }
       if (seconds === 0) {
         if (minutes === 0) {
+          setOtpLeft(prev => prev - 1); 
           clearInterval(myInterval);
           setIsCounter(false);
-
         } else {
           setMinutes(minutes - 1);
           setSeconds(59);
@@ -59,6 +61,15 @@ const OtpViewUI = (props) => {
       clearInterval(myInterval);
     };
   }, [minutes, seconds]);
+
+
+  useEffect(() => {
+    if (otpLeft ===0) {
+      console.log('You have used all your OTP attempts.');
+      setAfterAttempt(true)
+      setMinutes(15);
+    }
+  }, [otpLeft]);
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
@@ -186,7 +197,7 @@ const OtpViewUI = (props) => {
               errorMessage={errorMessage}
               isError={!!errorMessage}
             />
-            {otpLeft >= 0 ?
+            {otpLeft > 0 &&
               <View style={styles.textLabelParent}>
                 <Text style={styles.textlabel}>{"Haven’t received the OTP?"} </Text>
                 {isCounter ?
@@ -197,12 +208,22 @@ const OtpViewUI = (props) => {
                   </TouchableOpacity>
                 }
               </View>
-              :
+            }
+
+            {otpLeft === 0 && isCounter && !afterAttempt &&
+              <View style={styles.textLabelParent}>
+                <Text style={styles.textlabel}>{"Haven’t received the OTP?"} </Text>
+                <Text style={styles.textlabelTimer}> Send Again ( {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds} )</Text>
+              </View>
+            }
+
+            {otpLeft === 0 && afterAttempt &&
               <View style={styles.textLabelAfterParent}>
                 <Text style={styles.textlabel}>You have requested OTP for {OTP_TRY_COUNT} times! </Text>
                 <Text style={styles.textlabel}>You can resend the next OTP after {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}  </Text>
               </View>
             }
+
 
           </View>
         </View>

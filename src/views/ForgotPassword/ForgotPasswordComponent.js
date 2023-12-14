@@ -42,10 +42,9 @@ function ForgotPasswordComponent() {
       setErrorMessage("");
     }
     
-    // handleForgotPassword({ email: userEmail }); 
+    handleForgotPassword({ email: userEmail }); 
 
     setSuccessLogin(false);
-    // navigate(navigations.FORGOT_PASSWORD_OTP);
     navigate(navigations.FORGOT_PASSWORD_OTP,{ state: { email: userEmail } });
     
   };

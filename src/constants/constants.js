@@ -9,7 +9,7 @@ export const API_VERSION_NUMBER = "v1";
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 5;
 export const OTP_TIMER_MIN_MINUTES = 0;
-export const OTP_TIMER_MAX_MINUTES = 15;
+export const OTP_TIMER_MAX_MINUTES =1;
 
 export const API_STATUS = {
   IDLE: "idle",
