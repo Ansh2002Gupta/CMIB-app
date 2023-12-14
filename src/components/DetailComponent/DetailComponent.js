@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, Text } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import style from "./DetailComponent.style";
