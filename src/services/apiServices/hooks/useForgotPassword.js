@@ -13,13 +13,10 @@ const useForgotPassword = () => {
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
 
   const handleForgotPassword = async (payload) => {
-    console.log("handleForgotPassword ===> ",payload );
     try {
-      console.log("handleForgotPassword ===> Calling Api " );
       setPostStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
       const res = await Http.post(`company/reset-password`, payload);
-      console.log("company/reset-password Api Response ===> ",JSON.stringify(res))
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setForgotPasswordResult(res.data);
@@ -27,7 +24,6 @@ const useForgotPassword = () => {
       }
       setPostStatus(API_STATUS.ERROR);
     } catch (err) {
-      console.log("handleForgotPassword ===> Api error " );
       setPostStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);

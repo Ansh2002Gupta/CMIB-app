@@ -12,7 +12,7 @@ function ForgotPasswordComponent() {
   const intl = useIntl();
   const [userEmail, setuserEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [successLogin, setSuccessLogin] = useState(false);
+  const [successLogin, setSuccessLogin] = useState(false); // for the custom view 
   const { handleForgotPassword } = useForgotPassword();
 
   //for disable button
@@ -42,8 +42,12 @@ function ForgotPasswordComponent() {
     } else {
       setErrorMessage("");
     }
-    handleForgotPassword({ email: userEmail });
-    // setSuccessLogin(true);
+    
+    handleForgotPassword({ email: userEmail }); // API Calling for OTP 
+
+    setSuccessLogin(false);
+    navigate(navigations.FORGOT_PASSWORD_OTP);
+    
   };
 
   const onChangeInput = (val) => {

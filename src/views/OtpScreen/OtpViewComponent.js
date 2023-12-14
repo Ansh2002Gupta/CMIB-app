@@ -6,6 +6,7 @@ import useForgotPassword from "../../services/apiServices/hooks/useForgotPasswor
 import { useNavigate } from "../../routes";
 import { validateOtp } from "../../constants/CommonFunctions";
 import { navigations } from "../../constants/routeNames";
+import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES,OTP_TIMER_MAX_MINUTES} from "../../constants/constants";
 
 function OtpViewComponent() {
 
@@ -13,14 +14,13 @@ function OtpViewComponent() {
   const intl = useIntl();
 
   // the timer 
-  const [otpLeft,setOtpLeft] = useState(3);
+  const [otpLeft,setOtpLeft] = useState(OTP_TRY_COUNT);
   const [isCounter, setIsCounter] = useState(true);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(10);
+  const [minutes, setMinutes] = useState(OTP_TIMER_MIN_MINUTES);
+  const [seconds, setSeconds] = useState(OTP_TIMER_SECOND);
 
   //handling the otp
   const [otpValue, setOtpValue] = useState('');
-  // const [userEmail, setuserEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const [successLogin, setSuccessLogin] = useState(false);
@@ -43,9 +43,6 @@ function OtpViewComponent() {
   };
 
   const onClickForgotPassword = () => {
-
-    console.log("value of otpValue ===> ",otpValue)
-
     let error = validateOtp(otpValue);
     if (error) {
       setErrorMessage(error);
@@ -54,12 +51,9 @@ function OtpViewComponent() {
       setErrorMessage("");
     }
     // handleForgotPassword({ email: userEmail });
-    // setSuccessLogin(true);
+    setSuccessLogin(false);
+    navigate(navigations.FORGOT_PASSWORD_OTP);
   };
-
-  // const onChangeInput = (val) => {
-  //   setuserEmail(val);
-  // };
 
   const handleOtpChange = (otp) => {
     setOtpValue(otp);
@@ -71,19 +65,15 @@ function OtpViewComponent() {
     setIsCounter(true);
     if(otpLeft > 0) {
       setOtpLeft(prev => prev - 1);
-      setSeconds(5);
+      setMinutes(OTP_TIMER_MIN_MINUTES);
       }else{
-        setMinutes(15);
-        setSeconds(0);
+        setMinutes(OTP_TIMER_MAX_MINUTES);
       }
-
   };
 
   return (
     <OtpViewUI
       successLogin={successLogin}
-      // userEmail={userEmail}
-       // onChangeInput={onChangeInput}
       otpValue={otpValue}
       handleOtpChange={handleOtpChange}
       onClickForgotPassword={onClickForgotPassword}

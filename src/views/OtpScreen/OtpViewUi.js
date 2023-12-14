@@ -34,9 +34,6 @@ const OtpViewUI = (props) => {
   } = props;
 
 
-
-
-
   useEffect(() => {
     let myInterval = setInterval(() => {
       setIsCounter(true);
