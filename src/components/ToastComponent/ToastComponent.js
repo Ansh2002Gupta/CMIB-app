@@ -20,7 +20,7 @@ const ToastComponent = (props) => {
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [onDismiss, duration]);
+  }, [duration]);
 
   return (
     <View style={[style.containerStyle, customToastStyle]}>

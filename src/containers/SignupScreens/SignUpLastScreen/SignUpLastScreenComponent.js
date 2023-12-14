@@ -141,6 +141,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     }
   };
 
+  const onError = (err) => {
+    setValidationError(err);
+  };
+
   const onSuccess = async (details) => {
     signUpDispatch(setSignUpDetails(details));
     handleSignUp(
@@ -148,10 +152,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       () => setShowSuccessSignUp(true),
       (error) => onError(error)
     );
-  };
-
-  const onError = (err) => {
-    setValidationError(err);
   };
 
   const handleSuccessModal = (value) => {
@@ -205,23 +205,23 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   return (
     <SignUpLastScreenUI
+      allFieldsFilled={allFieldsFilled}
+      companyDetails={companyDetails}
+      companyType={companyType}
+      errors={errors}
+      handleDismissToast={handleDismissToast}
+      handleInputChange={handleInputChange}
+      handleToggle={handleToggle}
+      handleSuccessModal={handleSuccessModal}
       intl={intl}
+      natureOfSupplier={natureOfSupplier}
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}
       options={options}
-      handleToggle={handleToggle}
-      handleSuccessModal={handleSuccessModal}
       showSuccessSignUp={showSuccessSignUp}
-      handleInputChange={handleInputChange}
       socialMediaLinks={socialMediaLinks}
-      companyDetails={companyDetails}
-      natureOfSupplier={natureOfSupplier}
-      companyType={companyType}
-      website={website}
-      errors={errors}
-      allFieldsFilled={allFieldsFilled}
       validationError={validationError}
-      handleDismissToast={handleDismissToast}
+      website={website}
     />
   );
 };

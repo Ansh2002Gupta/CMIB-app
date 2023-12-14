@@ -12,7 +12,8 @@ import { numRegex } from "../../../constants/constants";
 const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const initialContactDetails = signUpState.signUpDetail.contact_details || [];
+  const initialContactDetails =
+    signUpState?.signUpDetail?.contact_details || [];
   const { handleSignUpValidation } = useValidateSignUp();
 
   const [validationError, setValidationError] = useState("");

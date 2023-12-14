@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View, FlatList } from "@unthinkable/react-core-components";
+import { FlatList, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
