@@ -47,7 +47,7 @@ function ForgotPasswordComponent() {
     (error) => {
       setValidationError(error);
     }); 
-    setSuccessLogin(true);   
+    setSuccessLogin(false);   
   };
 
   const onChangeInput = (val) => {

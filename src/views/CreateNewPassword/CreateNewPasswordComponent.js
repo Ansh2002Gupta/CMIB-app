@@ -18,6 +18,7 @@ function CreateNewPasswordComponent(props) {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [successLogin, setSuccessLogin] = useState(false); 
   const [error, setError] = useState("");
+  const [validationError, setValidationError] = useState("");
 
   const { handleCreateNewPasswordAPI,isLoading } = useCreateNewPasswordAPI();
 
