@@ -9,6 +9,7 @@ import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import styles from "./ForgotPassword.style";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const ForgotPasswordUI = (props) => {
   const {
@@ -21,8 +22,10 @@ const ForgotPasswordUI = (props) => {
     intl,
     loginDisabled,
     isLoading,
+    handleDismissToast,
+    validationError,
   } = props;
-  
+
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
 
@@ -189,6 +192,13 @@ const ForgotPasswordUI = (props) => {
           isSuccess
         />
       ) : null}
+
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
@@ -200,6 +210,8 @@ ForgotPasswordUI.propTypes = {
   onChangeInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
   errorMessage: PropTypes.string,
+  handleDismissToast: PropTypes.func,
+  validationError: PropTypes.bool,
 };
 
 export default ForgotPasswordUI;

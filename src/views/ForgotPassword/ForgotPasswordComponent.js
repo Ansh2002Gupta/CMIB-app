@@ -11,10 +11,13 @@ import { navigations } from "../../constants/routeNames";
 function ForgotPasswordComponent() {
   const navigate = useNavigate();
   const intl = useIntl();
+
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
   const [successLogin, setSuccessLogin] = useState(false); 
   const [userEmail, setuserEmail] = useState("");
+  const [validationError, setValidationError] = useState("");
+
   const { handleForgotPasswordAPI, isLoading,isShowOtpView} = useForgotPasswordAPI();
  
   useEffect(() => {
@@ -38,12 +41,21 @@ function ForgotPasswordComponent() {
     } else {
       setErrorMessage("");
     }
-    handleForgotPasswordAPI({ email: userEmail }, true); 
-    setSuccessLogin(false);   
+    handleForgotPasswordAPI(
+      { email: userEmail },
+       true,  
+    (error) => {
+      setValidationError(error);
+    }); 
+    setSuccessLogin(true);   
   };
 
   const onChangeInput = (val) => {
     setuserEmail(val);
+  };
+
+  const handleDismissToast = () => {
+    setValidationError("");
   };
 
   return (
@@ -62,6 +74,8 @@ function ForgotPasswordComponent() {
       intl={intl}
       loginDisabled={loginDisabled}
       isLoading={isLoading}
+      handleDismissToast={handleDismissToast}
+      validationError={validationError}
     />}
     </>
   );

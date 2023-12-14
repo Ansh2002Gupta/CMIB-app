@@ -120,16 +120,16 @@ const OtpViewUI = (props) => {
         };
       }
 
-      // case "textInputView": {
-      //   if (currentBreakpoint === "sm") {
-      //     return {
-      //       ...styles.width900pxOrWebEmailInput,
-      //     };
-      //   }
-      //   return {
-      //     ...styles.webEmailInput,
-      //   };
-      // }
+      case "textInputView": {
+        if (currentBreakpoint === "sm") {
+          return {
+            ...styles.width900pxOrWebEmailInput,
+          };
+        }
+        return {
+          ...styles.webEmailInput,
+        };
+      }
 
       case "submitButtonContainer": {
         if (currentBreakpoint === "sm") {

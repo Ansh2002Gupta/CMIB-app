@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import {COMPANY_FORGOT_PASSWORD_OTP} from "../apiEndPoint"
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 
 const useCreateNewPasswordAPI = () => {
@@ -12,7 +12,7 @@ const useCreateNewPasswordAPI = () => {
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
 
-  const handleCreateNewPasswordAPI = async (payload) => {
+  const handleCreateNewPasswordAPI = async (payload,successCallback,errorCallback) => {
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
@@ -20,10 +20,18 @@ const useCreateNewPasswordAPI = () => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setForgotPasswordResult(res.data);
+        successCallback();
         return;
       }
-      setPostStatus(API_STATUS.ERROR);
+      else{
+        setPostStatus(API_STATUS.ERROR);
+        errorCallback(res);
+      }
     } catch (err) {
+
+      const errorMessage =
+      err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      errorCallback(errorMessage);
       setPostStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);
