@@ -19,10 +19,10 @@ const useSignUpUser = () => {
         setSignUpUserResult(res.data);
         successCallback();
         return;
-      } else {
-        errorCallback(res);
-        setPostStatus(API_STATUS.ERROR);
       }
+      errorCallback(res);
+      setPostStatus(API_STATUS.ERROR);
+      setError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setPostStatus(API_STATUS.ERROR);
       const errorMessage =
