@@ -33,8 +33,6 @@ function CreateNewPasswordComponent(props) {
   };
 
   const handleSubmit = () => {
-
-console.log("Calling API ........")
     handleCreateNewPasswordAPI({
       email: email,
       password: newPassword,
