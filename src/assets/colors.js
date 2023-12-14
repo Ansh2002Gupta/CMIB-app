@@ -14,8 +14,10 @@ const lightBlue = "#269AD4";
 const secondaryGrey = "#F2F4FC";
 const darkBlack = "#0F0F0F";
 const errorBackground = "#ffeded";
+const voilet="#B1B3B5";
 
 const colors = {
+  voilet,
   white,
   darkBlue,
   black,

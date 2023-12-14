@@ -12,7 +12,7 @@ import HeaderText from "../../components/HeaderText/HeaderText";
 import OtpComponent from "../../components/OptComponent/OtpComponent"
 import styles from "./OtpView.style";
 
-import { OTP_TRY_COUNT } from "../../constants/constants";
+import { OTP_TRY_COUNT,OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 
 const OtpViewUI = (props) => {
   const {
@@ -67,7 +67,7 @@ const OtpViewUI = (props) => {
     if (otpLeft ===0) {
       console.log('You have used all your OTP attempts.');
       setAfterAttempt(true)
-      setMinutes(15);
+      setMinutes(OTP_TIMER_MAX_MINUTES);
     }
   }, [otpLeft]);
 
@@ -199,12 +199,12 @@ const OtpViewUI = (props) => {
             />
             {otpLeft > 0 &&
               <View style={styles.textLabelParent}>
-                <Text style={styles.textlabel}>{"Haven’t received the OTP?"} </Text>
+                <Text style={styles.textlabel}>{intl.formatMessage({ id: "label.otp_recieved" })} </Text>
                 {isCounter ?
-                  <Text style={styles.textlabelTimer}> Send Again ( {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds} )</Text>
+                  <Text style={styles.textlabelTimer}>  {intl.formatMessage({ id: "label.request_otp_again" })} {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds} {intl.formatMessage({ id: "label.braces" })} </Text>
                   :
                   <TouchableOpacity onPress={onResendOtpClick}>
-                    <Text style={styles.textlabelReset}> Send Again ({otpLeft} left)</Text>
+                    <Text style={styles.textlabelReset}> {intl.formatMessage({ id: "label.request_otp_again" })} {otpLeft} {intl.formatMessage({ id: "label.left_brace" })} </Text>
                   </TouchableOpacity>
                 }
               </View>
@@ -212,15 +212,15 @@ const OtpViewUI = (props) => {
 
             {otpLeft === 0 && isCounter && !afterAttempt &&
               <View style={styles.textLabelParent}>
-                <Text style={styles.textlabel}>{"Haven’t received the OTP?"} </Text>
-                <Text style={styles.textlabelTimer}> Send Again ( {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds} )</Text>
+                <Text style={styles.textlabel}>{intl.formatMessage({ id: "label.otp_recieved" })} </Text>
+                <Text style={styles.textlabelTimer}>  {intl.formatMessage({ id: "label.request_otp_again" })} {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds} {intl.formatMessage({ id: "label.braces" })}</Text>
               </View>
             }
 
             {otpLeft === 0 && afterAttempt &&
               <View style={styles.textLabelAfterParent}>
-                <Text style={styles.textlabel}>You have requested OTP for {OTP_TRY_COUNT} times! </Text>
-                <Text style={styles.textlabel}>You can resend the next OTP after {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}  </Text>
+                <Text style={styles.textlabel}>{intl.formatMessage({ id: "label.request_otp" })} {OTP_TRY_COUNT} {intl.formatMessage({ id: "label.times" })}</Text>
+                <Text style={styles.textlabel}>{intl.formatMessage({ id: "label.request_otp_next" })} {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}  </Text>
               </View>
             }
 

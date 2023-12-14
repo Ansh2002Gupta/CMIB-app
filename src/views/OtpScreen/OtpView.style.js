@@ -125,14 +125,14 @@ const style = {
     width: "40%",
   },
   textlabel:{
-    color: "#616C82",
+    color: colors.subHeadingGray,
     fontSize: 14,
     fontFamily: "General Sans",
     lineHeight: 20,
     fontWeight: "500",
   },
   textlabelTimer: {
-    color: "#B1B3B5",
+    color: colors.voilet,
     fontSize: 14,
     fontFamily: "General Sans",
     lineHeight: 20,
@@ -140,7 +140,7 @@ const style = {
     marginLeft: 4,
   },
   textlabelReset:{
-    color: "#00137E",
+    color: colors.darkBlue,
     fontSize: 14,
     fontFamily: "General Sans",
     lineHeight: 20,
