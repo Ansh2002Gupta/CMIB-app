@@ -5,7 +5,8 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
-import { SALUTATION_OPTIONS } from "../../../constants/constants";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
+import { CAREER_ASCENTS, CA_JOBS, NEWLY_QUALIFIED, OVERSEAS_PLACEMENTS, SALUTATION_OPTIONS, WOMENT_PLACEMENT } from "../../../constants/constants";
 import style from "./SignUpThirdScreen.style";
 
 const SignUpThirdScreenUI = (props) => {
@@ -13,23 +14,25 @@ const SignUpThirdScreenUI = (props) => {
     allFieldsFilled,
     contactDetails,
     errors,
+    handleDismissToast,
     handleInputChange,
     intl,
     onClickNext,
     onGoBack,
+    validationError,
   } = props;
 
   const getHeaderText = (module, intl) => {
     switch (module) {
-      case "ca-jobs":
+      case CA_JOBS:
         return intl.formatMessage({ id: "label.for_ca_jobs" });
-      case "newly-qualified-ca-placement":
+      case NEWLY_QUALIFIED:
         return intl.formatMessage({ id: "label.for_new_ca_placement" });
-      case "overseas-placements":
+      case OVERSEAS_PLACEMENTS:
         return intl.formatMessage({ id: "label.for_overseas_placements" });
-      case "career-ascents":
+      case CAREER_ASCENTS
         return intl.formatMessage({ id: "label.for_career_ascents" });
-      case "women-placement":
+      case WOMENT_PLACEMENT:
         return intl.formatMessage({ id: "label.for_women_placements" });
       default:
         return intl.formatMessage({ id: "label.for_ca_jobs" });
@@ -143,6 +146,12 @@ const SignUpThirdScreenUI = (props) => {
           buttonTwoText={intl.formatMessage({ id: "label.next" })}
         />
       </View>
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </>
   );
 };
@@ -151,10 +160,12 @@ SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
   errors: PropTypes.object,
+  handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   onClickNext: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
+  validationError: PropTypes.string,
 };
 
 export default SignUpThirdScreenUI;

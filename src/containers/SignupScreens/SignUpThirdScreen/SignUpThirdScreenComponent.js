@@ -3,18 +3,27 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../constants/CommonFunctions";
-import { numRegex } from "../../../constants/constants";
+import {
+  numRegex,
+  ADDRESS_MAX_LENGTH,
+  FIELD_MAX_LENGTH,
+  FIELD_MIN_LENGTH,
+  NUMBER_MAX_LENGTH,
+  NUMBER_MIN_LENGTH,
+} from "../../../constants/constants";
 
 const SignUpThirdScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const initialContactDetails = signUpState.signUpDetail.contact_details || [];
+  const initialContactDetails =
+    signUpState?.signUpDetail?.contact_details || [];
   const { handleSignUpValidation } = useValidateSignUp();
 
+  const [validationError, setValidationError] = useState("");
   const [contactDetails, setContactDetails] = useState(
     initialContactDetails.map((contact) => ({
       designation: contact.designation || "",
@@ -46,6 +55,12 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
         salutation: contact.salutation || "",
       }))
     );
+    initialContactDetails.map(() => ({
+      designation: "",
+      emailId: "",
+      mobileNo: "",
+      name: "",
+    }));
   }, [initialContactDetails]);
 
   const allFieldsFilled = () => {
@@ -69,13 +84,19 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
         name: "",
       };
 
-      if (detail.name.length < 6 || detail.name.length > 255) {
+      if (
+        detail.name.length < FIELD_MIN_LENGTH ||
+        detail.name.length > FIELD_MAX_LENGTH
+      ) {
         error.name = intl.formatMessage({
           id: "label.contact_person_validation",
         });
       }
 
-      if (detail.designation.length < 6 || detail.designation.length > 500) {
+      if (
+        detail.designation.length < FIELD_MIN_LENGTH ||
+        detail.designation.length > ADDRESS_MAX_LENGTH
+      ) {
         error.designation = intl.formatMessage({
           id: "label.designation_validation",
         });
@@ -83,8 +104,8 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
 
       if (
         !numRegex.test(String(detail.mobileNo)) ||
-        detail.mobileNo.length > 15 ||
-        detail.mobileNo.length < 7
+        detail.mobileNo.length > NUMBER_MAX_LENGTH ||
+        detail.mobileNo.length < NUMBER_MIN_LENGTH
       ) {
         error.mobileNo = intl.formatMessage({
           id: "label.mobile_number_validation",
@@ -106,6 +127,10 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
 
   const onGoBack = () => {
     tabHandler("prev");
+  };
+
+  const handleDismissToast = () => {
+    setValidationError("");
   };
 
   const onClickNext = () => {
@@ -131,7 +156,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
           tabHandler("next");
         },
         (error) => {
-          console.error("ERROR:", error);
+          setValidationError(error);
         }
       );
     }
@@ -151,10 +176,12 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
       allFieldsFilled={allFieldsFilled}
       contactDetails={contactDetails}
       errors={errors}
+      handleDismissToast={handleDismissToast}
+      handleInputChange={handleInputChange}
       intl={intl}
       onClickNext={onClickNext}
       onGoBack={onGoBack}
-      handleInputChange={handleInputChange}
+      validationError={validationError}
     />
   );
 };
