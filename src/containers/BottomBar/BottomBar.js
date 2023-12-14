@@ -31,7 +31,7 @@ function BottomBar() {
   };
 
   const homeIcon =
-    currrentRoute === navigations.LOGIN ? homeSolid : homeOutline;
+    currrentRoute === navigations.ROOT ? homeSolid : homeOutline;
   const profileIcon =
     currrentRoute === navigations.PROFILE ? profileSolid : profileOutline;
 

@@ -31,13 +31,11 @@ const style = {
   },
   textStyle: {
     fontSize: 16,
-    fontFamily: "GeneralSans-Semibold",
     lineHeight: 24,
     color: colors.darkBlack,
   },
   nameStyle: {
     color: colors.darkBlue,
-    fontFamily: "GeneralSans-Semibold",
     fontSize: 14,
     lineHeight: 24,
   },
@@ -59,7 +57,6 @@ const style = {
   },
   browseStyle: {
     fontSize: 16,
-    fontFamily: "GeneralSans-Semibold",
     lineHeight: 24,
     color: colors.green,
     textDecorationLine: "underline",
@@ -67,8 +64,6 @@ const style = {
   infoStyle: {
     color: colors.darkGrey,
     lineHeight: 18,
-    fontFamily: "GeneralSans-Medium",
-    fontSize: 12,
   },
 };
 

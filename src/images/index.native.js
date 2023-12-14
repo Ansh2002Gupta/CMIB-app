@@ -40,6 +40,12 @@ import iconActiveMyaccount from "../../public/images/iconActiveMyaccount/iconAct
 import iconCMIBPortal from "../../public/images/iconCMIBPortal/iconCMIBPortal.png";
 import iconArrowUp from '../../public/images/iconArrowUp/iconArrowUp.png';
 import iconArrowDown from '../../public/images/iconArrowDown/iconArrowDown.png';
+import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/iconAddApplicationForm.png";
+import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
+import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
+import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
+import iconNotification from "../../public/images/iconNotification/iconNotification.png";
+
 
 const images = {
   iconCMIBPortal,
@@ -84,6 +90,11 @@ const images = {
   iconActiveRound1,
   iconActiveRound2,
   iconActiveMyaccount,
+  iconAddApplicationForm,
+  iconHiringProcess,
+  iconDownloadDetails,
+  iconDrawer,
+  iconNotification,
 };
 
 export default images;

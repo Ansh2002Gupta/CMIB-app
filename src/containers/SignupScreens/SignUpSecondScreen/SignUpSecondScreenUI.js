@@ -4,10 +4,7 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CustomTextInput from "../../../components/CustomTextInput";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
-import {
-  ENTITY_OPTIONS,
-  CURRENT_INDUSTRY_OPTIONS,
-} from "../../../constants/constants";
+import { ENTITY_OPTIONS } from "../../../constants/constants";
 import style from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = (props) => {
@@ -19,6 +16,8 @@ const SignUpSecondScreenUI = (props) => {
     handleInputChange,
     errors,
     allFieldsFilled,
+    industryOptions,
+    stateOptions,
   } = props;
 
   const {
@@ -31,6 +30,7 @@ const SignUpSecondScreenUI = (props) => {
     code,
     entity,
     currentIndustry,
+    state,
   } = formData;
 
   return (
@@ -73,6 +73,8 @@ const SignUpSecondScreenUI = (props) => {
                 id: "label.enter_firm_no",
               })}
               isMandatory
+              keyboardType="numeric"
+              maxLength={10}
               errorMessage={errors.registrationNo}
               isError={!!errors.registrationNo}
               value={registrationNo}
@@ -103,8 +105,11 @@ const SignUpSecondScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_current_indusrty_placeholder",
           })}
+          labelField="name"
+          valueField="id"
+          inputKey="id"
           value={currentIndustry}
-          options={CURRENT_INDUSTRY_OPTIONS}
+          options={industryOptions || []}
           onChangeValue={(val) => handleInputChange(val, "currentIndustry")}
         />
         <CustomTextInput
@@ -126,10 +131,15 @@ const SignUpSecondScreenUI = (props) => {
           label={intl.formatMessage({ id: "label.state" })}
           isMandatory
           isDropdown
+          labelField="name"
+          valueField="state_code"
           placeholder={intl.formatMessage({
             id: "label.select_state",
           })}
-          options={[]}
+          inputKey="state_code"
+          value={state}
+          options={stateOptions || []}
+          onChangeValue={(val) => handleInputChange(val, "state")}
         />
         <CustomTextInput
           label={intl.formatMessage({ id: "label.email_id" })}
@@ -151,7 +161,9 @@ const SignUpSecondScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_code",
               })}
+              keyboardType="numeric"
               value={code}
+              maxLength={15}
               errorMessage={errors.code}
               isError={!!errors.code}
               onChangeText={(val) => handleInputChange(val, "code")}
@@ -169,6 +181,8 @@ const SignUpSecondScreenUI = (props) => {
               errorMessage={errors.telephoneNo}
               isError={!!errors.telephoneNo}
               isMandatory
+              keyboardType="numeric"
+              maxLength={15}
               value={telephoneNo}
               onChangeText={(val) => handleInputChange(val, "telephoneNo")}
             />
@@ -195,6 +209,8 @@ SignUpSecondScreenUI.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   allFieldsFilled: PropTypes.func.isRequired,
+  industryOptions: PropTypes.array,
+  stateOptions: PropTypes.array,
 };
 
 export default SignUpSecondScreenUI;

@@ -76,7 +76,6 @@ const style = {
     marginTop: 16,
   },
   passwordFieldsErrorText: {
-    fontFamily: "General sans",
     color: colors.errorRed,
     fontSize: 14,
     fontWeight: "600",

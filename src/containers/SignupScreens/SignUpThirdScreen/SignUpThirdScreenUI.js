@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View, Text } from "@unthinkable/react-core-components";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
+import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import { SALUTATION_OPTIONS } from "../../../constants/constants";
@@ -29,7 +30,7 @@ const SignUpThirdScreenUI = (props) => {
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
       >
-        <Text style={style.headerText}>{headerText}</Text>
+        <CommonText customTextStyle={style.headerText} title={headerText} />
         <View style={style.inputContainer}>
           <CustomTextInput
             label={intl.formatMessage({
@@ -84,6 +85,8 @@ const SignUpThirdScreenUI = (props) => {
             id: "label.enter_contact_person_mobile_no",
           })}
           value={mobileNo}
+          maxLength={15}
+          keyboardType="numeric"
           onChangeText={(val) => handleInputChange(val, "mobileNo")}
           isMobileNumber
           errorMessage={errors.mobileNo}

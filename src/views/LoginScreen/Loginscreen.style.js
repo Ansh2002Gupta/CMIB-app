@@ -32,10 +32,6 @@ const style = {
     textAlign: "center",
     color: colors.darkGrey,
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
   },
   activeTopTabsText: {
     textAlign: "center",
@@ -75,10 +71,6 @@ const style = {
   },
   forgotPasswordText: {
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Semibold",
     color: colors.darkBlue,
     cursor: "pointer",
     fontWeight: "600",
@@ -96,10 +88,6 @@ const style = {
     fontSize: 14,
     fontWeight: "600",
     cursor: "pointer",
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Semibold",
   },
   borderStyle: {
     borderWidth: 1,
@@ -110,10 +98,6 @@ const style = {
   accountText: {
     color: colors.darkGrey,
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
   },
   followUsImageView: {
     marginHorizontal: 30,

@@ -1,23 +1,45 @@
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "../routes";
-import _ from "lodash";
+import { useLocation, useNavigate } from "../routes";
 
 import { AuthContext } from "../globalContext/auth/authProvider";
+import { RouteContext } from "../globalContext/route/routeProvider";
+import { StorageService } from "../services";
+import { setLoginRedirectRoute } from "../globalContext/route/routeActions";
 import { navigations } from "../constants/routeNames";
 
 function withPrivateAccess(Component) {
   return (props) => {
     const [authState] = useContext(AuthContext);
     const navigate = useNavigate();
-    useEffect(() => {
-      if (_.isEmpty(authState)) {
-        navigate(navigations.LOGIN);
-      }
-    }, [authState]);
+    const location = useLocation();
+    const [, routeDispatch] = useContext(RouteContext);
 
-    if (_.isEmpty(authState)) {
-      return null;
-    }
+    useEffect(() => {
+      StorageService.get("auth").then((token) => {
+        if (!authState?.token && !token) {
+          routeDispatch(
+            setLoginRedirectRoute({
+              loginRedirectRoute: `${location.pathname}${
+                location.search.length ? location.search : ""
+              }`,
+            })
+          );
+          navigate(navigations.LOGIN);
+        }
+      });
+    }, []);
+
+    // TODO: Need to refactor and test the below code.
+    // if (
+    //   Platform.OS.toLowerCase() === "web" &&
+    //   location.pathname === navigations.JOBS
+    // ) {
+    //   window.postMessage({
+    //     message: EXIT_WEBVIEW,
+    //     data: getQueryParamsAsAnObject(location.search),
+    //   });
+    // }
+
     return <Component {...props} />;
   };
 }
