@@ -7,7 +7,14 @@ import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSi
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../constants/CommonFunctions";
-import { numRegex } from "../../../constants/constants";
+import {
+  ADDRESS_MAX_LENGTH,
+  FIELD_MAX_LENGTH,
+  FIELD_MIN_LENGTH,
+  NUMBER_MAX_LENGTH,
+  NUMBER_MIN_LENGTH,
+  numRegex,
+} from "../../../constants/constants";
 
 const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
   const intl = useIntl();
@@ -92,14 +99,17 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
       emailId: "",
     };
 
-    if (name.length < 6 || name.length > 255) {
+    if (name.length < FIELD_MIN_LENGTH || name.length > FIELD_MAX_LENGTH) {
       newErrors.name = intl.formatMessage({
         id: "label.contact_person_validation",
       });
       isValid = false;
     }
 
-    if (designation.length < 6 || designation.length > 500) {
+    if (
+      designation.length < FIELD_MIN_LENGTH ||
+      designation.length > ADDRESS_MAX_LENGTH
+    ) {
       newErrors.designation = intl.formatMessage({
         id: "label.designation_validation",
       });
@@ -108,8 +118,8 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
 
     if (
       !numRegex.test(String(mobileNo)) ||
-      mobileNo.length > 15 ||
-      mobileNo.length < 7
+      mobileNo.length > NUMBER_MAX_LENGTH ||
+      mobileNo.length < NUMBER_MIN_LENGTH
     ) {
       newErrors.mobileNo = intl.formatMessage({
         id: "label.mobile_number_validation",

@@ -6,6 +6,15 @@ export const urlRegex =
 
 export const TOAST_TIMEOUT = 5000;
 export const API_VERSION_NUMBER = "v1";
+export const FIELD_MIN_LENGTH = 6;
+export const FIELD_MAX_LENGTH = 255;
+export const CODE_MIN_LENGTH = 2;
+export const CODE_MAX_LENGTH = 8;
+export const NUMBER_MIN_LENGTH = 7;
+export const NUMBER_MAX_LENGTH = 15;
+export const REGISTRATION_NO_LENGTH = 10;
+export const ADDRESS_MAX_LENGTH = 500;
+export const COMPANY_DETAIL_MAX_LENGTH = 100;
 
 export const API_STATUS = {
   IDLE: "idle",

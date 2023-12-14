@@ -11,7 +11,12 @@ import {
   setSignUpDetails,
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
-import { INTEREST_OPTIONS, urlRegex } from "../../../constants/constants";
+import {
+  COMPANY_DETAIL_MAX_LENGTH,
+  FIELD_MIN_LENGTH,
+  INTEREST_OPTIONS,
+  urlRegex,
+} from "../../../constants/constants";
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
@@ -97,7 +102,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       }
     });
 
-    if (companyDetails.length < 6 || companyDetails.length > 1000) {
+    if (
+      companyDetails.length < FIELD_MIN_LENGTH ||
+      companyDetails.length > COMPANY_DETAIL_MAX_LENGTH
+    ) {
       newErrors.companyDetails = intl.formatMessage({
         id: "label.company_details_validation",
       });
