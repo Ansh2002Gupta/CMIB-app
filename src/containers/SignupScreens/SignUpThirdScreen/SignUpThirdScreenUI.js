@@ -6,7 +6,14 @@ import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
-import { CAREER_ASCENTS, CA_JOBS, NEWLY_QUALIFIED, OVERSEAS_PLACEMENTS, SALUTATION_OPTIONS, WOMENT_PLACEMENT } from "../../../constants/constants";
+import {
+  CAREER_ASCENTS,
+  CA_JOBS,
+  NEWLY_QUALIFIED,
+  OVERSEAS_PLACEMENTS,
+  SALUTATION_OPTIONS,
+  WOMENT_PLACEMENT,
+} from "../../../constants/constants";
 import style from "./SignUpThirdScreen.style";
 
 const SignUpThirdScreenUI = (props) => {
@@ -30,7 +37,7 @@ const SignUpThirdScreenUI = (props) => {
         return intl.formatMessage({ id: "label.for_new_ca_placement" });
       case OVERSEAS_PLACEMENTS:
         return intl.formatMessage({ id: "label.for_overseas_placements" });
-      case CAREER_ASCENTS
+      case CAREER_ASCENTS:
         return intl.formatMessage({ id: "label.for_career_ascents" });
       case WOMENT_PLACEMENT:
         return intl.formatMessage({ id: "label.for_women_placements" });
