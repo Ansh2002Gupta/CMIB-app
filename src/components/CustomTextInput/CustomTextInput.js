@@ -32,7 +32,7 @@ const CustomTextInput = (props) => {
     customTextInputContainer,
     options,
     onChangeValue,
-    counterInput,
+    isCounterInput,
     inputKey = "value",
     ...remainingProps
   } = props;
@@ -56,12 +56,12 @@ const CustomTextInput = (props) => {
   };
 
   const incrementCount = () => {
-    setCount(count + 1);
+    setCount((prev) => prev + 1);
   };
 
   const decrementCount = () => {
     if (count > 0) {
-      setCount(count - 1);
+      setCount((prev) => prev - 1);
     }
   };
 
@@ -107,7 +107,7 @@ const CustomTextInput = (props) => {
           }}
           {...remainingProps}
         />
-      ) : counterInput ? (
+      ) : isCounterInput ? (
         <View style={style.counterMainView}>
           <View style={style.counterView}>
             <CommonText customTextStyle={style.counterText} title={count} />
@@ -186,6 +186,7 @@ CustomTextInput.propTypes = {
   isPassword: PropTypes.bool,
   customLabelStyle: PropTypes.object,
   customTextInputContainer: PropTypes.object,
+  isCounterInput: PropTypes.bool,
 };
 
 export default CustomTextInput;
