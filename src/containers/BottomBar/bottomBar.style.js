@@ -4,8 +4,6 @@ const style = {
   borderStyle: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
-    marginLeft: -16,
-    marginRight: -16,
   },
   activeStyleDashboard: {
     borderColor: colors.darkBlue,

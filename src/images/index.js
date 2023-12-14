@@ -49,9 +49,16 @@ const iconActiveRound2 = "images/iconActiveRound2/iconActiveRound2.png";
 const iconMyaccount = "images/iconMyaccount/iconMyaccount.png";
 const iconActiveMyaccount =
   "images/iconActiveMyaccount/iconActiveMyaccount.png";
+const iconAddApplicationForm =
+  "images/iconAddApplicationForm/iconAddApplicationForm.png";
+const iconHiringProcess = "images/iconHiringProcess/iconHiringProcess.png";
+const iconDownloadDetails =
+  "images/iconDownloadDetails/iconDownloadDetails.png";
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
+const iconDrawer = "images/iconDrawer/iconDrawer.png";
+const iconNotification = "images/iconNotification/iconNotification.png";
 
 const images = {
   avatar,
@@ -97,9 +104,14 @@ const images = {
   iconRound1,
   iconMyaccount,
   iconActiveMyaccount,
+  iconAddApplicationForm,
+  iconHiringProcess,
+  iconDownloadDetails,
   iconAzadiMahotsav,
   iconGloPac,
-  iconG20
+  iconG20,
+  iconDrawer,
+  iconNotification,
 };
 
 export default images;

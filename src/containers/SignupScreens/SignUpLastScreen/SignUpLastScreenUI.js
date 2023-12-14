@@ -1,12 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  ScrollView,
-  View,
-  Text,
-  FlatList,
-} from "@unthinkable/react-core-components";
+import { ScrollView, View, FlatList } from "@unthinkable/react-core-components";
 
+import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
@@ -68,9 +64,10 @@ const SignUpLastScreenUI = (props) => {
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
       >
-        <Text style={style.headerText}>
-          {intl.formatMessage({ id: "label.social_media_presence" })}
-        </Text>
+        <CommonText
+          customTextStyle={style.headerText}
+          title={intl.formatMessage({ id: "label.social_media_presence" })}
+        />
         {Object.keys(socialMediaLinks).map((key) => (
           <CustomTextInput
             key={key}
@@ -87,9 +84,11 @@ const SignUpLastScreenUI = (props) => {
           />
         ))}
         <View style={style.seperator} />
-        <Text style={style.headerText}>
-          {intl.formatMessage({ id: "label.company_details" })}
-        </Text>
+
+        <CommonText
+          customTextStyle={style.headerText}
+          title={intl.formatMessage({ id: "label.company_details" })}
+        />
         <CustomTextInput
           label={intl.formatMessage({
             id: "label.short_profile_of_the_company",
@@ -145,29 +144,34 @@ const SignUpLastScreenUI = (props) => {
           isDropdown
         />
         <View style={style.seperator} />
-        <Text style={style.headerText}>
-          {intl.formatMessage({ id: "label.source_of_info" })}
-        </Text>
+        <CommonText
+          customTextStyle={style.headerText}
+          title={intl.formatMessage({ id: "label.source_of_info" })}
+        />
         <FlatList
           data={options}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
         <View style={style.seperator} />
-        <Text style={style.headerText}>
-          {intl.formatMessage({ id: "label.uplaod_company_logo" })}
-        </Text>
-        <Text style={style.infoStyle}>
-          {intl.formatMessage({
+
+        <CommonText
+          customTextStyle={style.headerText}
+          title={intl.formatMessage({ id: "label.uplaod_company_logo" })}
+        />
+
+        <CommonText
+          customTextStyle={style.infoStyle}
+          title={intl.formatMessage({
             id: "label.logo_info",
           })}
-        </Text>
+        />
         <UploadImage intl={intl} />
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
-        onPressButtonTwo={onGoBack}
-        onPressButtonOne={() => handleSuccessModal(true)}
+        onPressButtonOne={onGoBack}
+        onPressButtonTwo={() => handleSuccessModal(true)}
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
       />

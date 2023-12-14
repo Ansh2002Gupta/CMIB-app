@@ -1,22 +1,22 @@
 import React from "react";
 
-import Home from "../pages/Home";
-import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
-import LoginScreen from "../views/LoginScreen/index";
-import ForgotPassword from "../views/ForgotPassword/index";
-import CreateNewPassword from "../views/CreateNewPassword/index";
 import ContentLayout from "../pages/ContentLayout";
+import CreateNewPassword from "../views/CreateNewPassword/index";
 import DashboardView from "../views/Dashboard";
-import LoginForm from "../views/LoginForm";
+import DefaultRoute from "./Components/DefaultRoute";
+import ForgotPassword from "../views/ForgotPassword/index";
+import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
+import Home from "../pages/Home";
+import JobsView from "../views/JobsView/JobsView";
+import LoginScreen from "../views/LoginScreen/index";
 import ProfileView from "../views/Profile";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
-import { navigations } from "../constants/routeNames";
- import OtpViewComponent from "../views/OtpScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
+import { navigations } from "../constants/routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
@@ -24,13 +24,12 @@ const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
 
 const config = [
   {
-    pagePath: navigations.LOGIN,
-    element: <LoginWithPublicAccess />, // Page
+    pagePath: navigations.ROOT,
+    element: <DefaultRoute />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <CreateNewPassword />, // view //ForgotPassword //LoginScreen //OtpComponent
+        element: <DefaultRoute />,
       },
     ],
   },
@@ -47,79 +46,91 @@ const config = [
   },
   {
     pagePath: navigations.DASHBOARD,
-    element: <HomeWithPrivateAccess />, // Page
+    element: <HomeWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <DashboardView />, // view
+        element: <DashboardView />,
       },
     ],
   },
   {
     pagePath: navigations.ROUND_ONE,
-    element: <HomeWithPrivateAccess />, // Page
+    element: <HomeWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <RoundOne />, // view
+        element: <RoundOne />,
       },
     ],
   },
   {
     pagePath: navigations.ROUND_TWO,
-    element: <HomeWithPrivateAccess />, // Page
+    element: <HomeWithPrivateAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <RoundTwo />, // view
+        element: <RoundTwo />,
       },
     ],
   },
   {
     pagePath: navigations.FORGOT_PASSWORD,
-    element: <LoginWithPublicAccess />, // Page
+    element: <LoginWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <ForgotPassword />, // view
+        element: <ForgotPassword />,
       },
     ],
   },
   {
     pagePath: navigations.CREATE_NEW_PASSWORD,
-    element: <LoginWithPublicAccess />, // Page
+    element: <LoginWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <CreateNewPassword />, // view
+        element: <CreateNewPassword />,
       },
     ],
   },
   {
     pagePath: navigations.SIGN_UP,
-    element: <SignUpWithPublicAccess />, // Page
+    element: <SignUpWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <SignUpScreen />, // view
+        element: <SignUpScreen />,
       },
     ],
   },
-
   {
-    pagePath: navigations.LOGIN_FORM,
-    element: <LoginForm />, // Page
+    pagePath: navigations.LOGIN,
+    element: <LoginWithPublicAccess />,
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <LoginForm />, // view
+        element: <LoginScreen />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.JOBS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobsView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.OUT_SOURCED,
+    element: <DefaultRoute />,
+    views: [
+      {
+        viewPath: "",
+        element: <DefaultRoute />,
       },
     ],
   },

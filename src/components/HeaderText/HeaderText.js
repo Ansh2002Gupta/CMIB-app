@@ -1,5 +1,7 @@
 import React from "react";
-import { Text, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
+
+import CommonText from "../CommonText";
 import style from "./HeaderText.style";
 
 const HeaderText = ({
@@ -11,10 +13,8 @@ const HeaderText = ({
 }) => {
   return (
     <View style={[style.headerContainer, customContainerStyles]}>
-      <Text style={[style.heading, customTextStyle]}>{text}</Text>
-      <Text style={[style.secoundHeading, customSecondHeadingStyles]}>
-        {label}
-      </Text>
+      <CommonText customTextStyle={[style.heading, customTextStyle]} title={text} />
+      <CommonText customTextStyle={[style.secondHeading, customSecondHeadingStyles]} title={label} />
     </View>
   );
 };
