@@ -4,7 +4,6 @@ import Storage from "../services/storage-service";
 import { API_VERSION_NUMBER } from "../constants/constants";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
-
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
