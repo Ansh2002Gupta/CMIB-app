@@ -10,8 +10,8 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMe
 const useLogoutAPI = () => {
   const [logoutApiStatus, setLogoutApiStatus] = useState(API_STATUS.IDLE);
   const [loginUserResult, setLoginUserResult] = useState([]);
-  const [, authDispatch] = useContext(AuthContext);
   const [errorWhileLoggingOut, setErrorWhileLoggingOut] = useState("");
+  const [, authDispatch] = useContext(AuthContext);
 
   const handleUserLogout = async (payload) => {
     try {
