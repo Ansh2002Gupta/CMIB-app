@@ -3,30 +3,22 @@ import { useIntl } from "react-intl";
 
 import OtpViewUI from "./OtpViewUi";
 import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
-import { useNavigate,useLocation } from "../../routes"; 
+import { useNavigate } from "../../routes"; 
 import { validateOtp } from "../../constants/CommonFunctions";
 import { navigations } from "../../constants/routeNames";
 import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES} from "../../constants/constants";
 
-function OtpViewComponent() {
-
+function OtpViewComponent( {email}) {
   const navigate = useNavigate();
-  const location = useLocation();
   const intl = useIntl();
-
-  const { email } = location.state || {};
-
-  const [otpLeft,setOtpLeft] = useState(OTP_TRY_COUNT);
-  const [isCounter, setIsCounter] = useState(true);
-  const [minutes, setMinutes] = useState(OTP_TIMER_MIN_MINUTES);
-  const [seconds, setSeconds] = useState(OTP_TIMER_SECOND);
-
-  const [otpValue, setOtpValue] = useState('');
   const [errorMessage, setErrorMessage] = useState("");
-
-  const { handleForgotPasswordAPI } = useForgotPasswordAPI(); 
-
+  const [isCounter, setIsCounter] = useState(true);
   const [loginDisabled, setLoginDisabled] = useState(true);
+  const [minutes, setMinutes] = useState(OTP_TIMER_MIN_MINUTES);
+  const [otpLeft,setOtpLeft] = useState(OTP_TRY_COUNT);
+  const [otpValue, setOtpValue] = useState('');
+  const [seconds, setSeconds] = useState(OTP_TIMER_SECOND);
+  const { handleForgotPasswordAPI } = useForgotPasswordAPI(); 
 
   useEffect(() => {
     if (otpValue !== "") {
@@ -48,7 +40,7 @@ function OtpViewComponent() {
     } else {
       setErrorMessage("");
     }
-    navigate(navigations.CREATE_NEW_PASSWORD,{ state: { email: email,otpCode: otpValue } });
+    navigate(navigations.CREATE_NEW_PASSWORD,{ state: { email,otpCode: otpValue } });
   };
 
   const handleOtpChange = (otp) => {
@@ -60,9 +52,7 @@ function OtpViewComponent() {
       setMinutes(OTP_TIMER_MIN_MINUTES);
       setSeconds(OTP_TIMER_SECOND);
       setIsCounter(true);
-
-      //Calling Api 
-      handleForgotPasswordAPI({ email: userEmail }, false);
+      handleForgotPasswordAPI({ email }, false);
     }
   };
 

@@ -2,7 +2,6 @@ import React from "react";
 
 import ContentLayout from "../pages/ContentLayout";
 import CreateNewPassword from "../views/CreateNewPassword/index";
-import OtpViewComponent from "../views/OtpScreen/index";
 import DashboardView from "../views/Dashboard";
 import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
@@ -82,16 +81,6 @@ const config = [
       {
         viewPath: "",
         element: <ForgotPassword />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.FORGOT_PASSWORD_OTP,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <OtpViewComponent />,
       },
     ],
   },

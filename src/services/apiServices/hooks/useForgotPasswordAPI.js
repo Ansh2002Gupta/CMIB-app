@@ -3,39 +3,30 @@ import { useState } from "react";
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
-import { useNavigate } from "../../../routes";
-import { navigations } from "../../../constants/routeNames";
 
 const useForgotPasswordAPI = () => {
 
-  const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
-  const [forgotPasswordResult, setForgotPasswordResult] = useState([]);
+  const [isShowOtpView, setIsShowOtpView] = useState(false);
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
-
-  const navigate = useNavigate();
+  const [forgotPasswordResult, setForgotPasswordResult] = useState([]);
+  const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
 
   const handleForgotPasswordAPI = async (payload, isNavigate) => {
-    
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
       const res = await Http.post(`company/reset-password-otp`, payload);
-
-      console.log(" company/reset-password-otp ===> ", res);
-
-      if ( res.status === STATUS_CODES.SUCCESS_STATUS) {
+      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setForgotPasswordResult(res.data);
-      
-        if(isNavigate)
-        navigate(navigations.FORGOT_PASSWORD_OTP,{ state: { email: payload.email } });
+        if (isNavigate)
+          setIsShowOtpView(true);
 
         return;
       }
       setPostStatus(API_STATUS.ERROR);
     } catch (err) {
       setPostStatus(API_STATUS.ERROR);
-      console.log(" company/reset-password-otp ===> ", err);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);
         return;
@@ -53,6 +44,7 @@ const useForgotPasswordAPI = () => {
     handleForgotPasswordAPI,
     isError,
     isLoading,
+    isShowOtpView,
     isSuccess,
     postStatus,
   };

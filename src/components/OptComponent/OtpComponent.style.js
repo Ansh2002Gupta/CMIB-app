@@ -11,7 +11,8 @@ const style = {
     flexDirection: "row",
     fontFamily: "General Sans",
     marginHorizontal:10,
-    marginVertical:5,
+    marginTop:5,
+    marginBottom:5,
     gap: 4,
   },
   label: {
@@ -30,6 +31,7 @@ const style = {
   otpContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap:8,
   },
   activeOtpBox: {
     borderColor: colors.green, 
@@ -43,6 +45,7 @@ const style = {
     textAlign: "center",
     fontSize: 16,
     marginHorizontal: 10,
+   
   },
   errorMsg: {
     color: colors.errorRed,

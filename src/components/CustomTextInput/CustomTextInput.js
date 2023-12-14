@@ -126,6 +126,7 @@ const CustomTextInput = (props) => {
             secureTextEntry={isPassword && !isTextVisible}
             {...remainingProps}
           />
+          
           {eyeImage ? (
             <TouchableOpacity
               style={style.eyeIconContainer}

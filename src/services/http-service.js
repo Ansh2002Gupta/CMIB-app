@@ -1,10 +1,12 @@
-import Config from "react-native-config";
+// import Config from "react-native-config";
+import Config from "../components/ReactConfig/index";
 import axios from "axios";
 import { Platform } from "@unthinkable/react-core-components";
 
 import axiosInstance from "../axios/axiosInstance";
 
-const baseUrl = Platform.OS !== "web" ? Config.REACT_APP_API_URL : process.env.REACT_APP_API_URL;
+// const baseUrl = Platform.OS !== "web" ? Config.REACT_APP_API_URL : process.env.REACT_APP_API_URL;
+const baseUrl=Config.REACT_APP_API_URL;
 
 export default class Http {
   static async get(_url, handleDiscard = () => {}) {
