@@ -193,7 +193,7 @@ const ForgotPasswordUI = (props) => {
 ForgotPasswordUI.propTypes = {
   intl: PropTypes.object.isRequired,
   onClickForgotPassword: PropTypes.func,
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
   onClickGoToLogin: PropTypes.func.isRequired,
   onChangeInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,

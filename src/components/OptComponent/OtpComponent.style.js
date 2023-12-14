@@ -31,7 +31,9 @@ const style = {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-
+  activeOtpBox: {
+    borderColor: colors.green, 
+  },
   otpBox: {
     width: 74,
     height: 56,

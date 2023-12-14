@@ -12,6 +12,8 @@ import HeaderText from "../../components/HeaderText/HeaderText";
 import OtpComponent from "../../components/OptComponent/OtpComponent"
 import styles from "./OtpView.style";
 
+import { OTP_TRY_COUNT } from "../../constants/constants";
+
 const OtpViewUI = (props) => {
   const {
     successLogin,
@@ -24,6 +26,7 @@ const OtpViewUI = (props) => {
     loginDisabled,
     onResendOtpClick,
     otpLeft,
+    setOtpLeft,
     isCounter,
     setIsCounter,
     minutes,
@@ -176,13 +179,14 @@ const OtpViewUI = (props) => {
           >
             <OtpComponent
               label={intl.formatMessage({ id: "label.text_otp" })}
+              onOtpReceived={otpValue}
               onOtpChange={handleOtpChange}
               customAsteriskStyle={styles.customAsteriskStyle}
               isMandatory
               errorMessage={errorMessage}
               isError={!!errorMessage}
             />
-            {otpLeft > 0 ?
+            {otpLeft >= 0 ?
               <View style={styles.textLabelParent}>
                 <Text style={styles.textlabel}>{"Haven’t received the OTP?"} </Text>
                 {isCounter ?
@@ -195,7 +199,7 @@ const OtpViewUI = (props) => {
               </View>
               :
               <View style={styles.textLabelAfterParent}>
-                <Text style={styles.textlabel}>{"You have requested OTP for 4 times! "} </Text>
+                <Text style={styles.textlabel}>You have requested OTP for {OTP_TRY_COUNT} times! </Text>
                 <Text style={styles.textlabel}>You can resend the next OTP after {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}  </Text>
               </View>
             }

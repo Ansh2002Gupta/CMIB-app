@@ -8,11 +8,12 @@ import { validateEmail } from "../../constants/CommonFunctions";
 import { navigations } from "../../constants/routeNames";
 
 function ForgotPasswordComponent() {
+
   const navigate = useNavigate();
   const intl = useIntl();
   const [userEmail, setuserEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [successLogin, setSuccessLogin] = useState(false); // for the custom view 
+  const [successLogin, setSuccessLogin] = useState(false); 
   const { handleForgotPassword } = useForgotPassword();
 
   //for disable button
@@ -33,8 +34,6 @@ function ForgotPasswordComponent() {
 
   const onClickForgotPassword = () => {
 
-    console.log("onClickForgotPassword ====> ");
-
     let error = validateEmail(userEmail);
     if (error) {
       setErrorMessage(error);
@@ -43,10 +42,11 @@ function ForgotPasswordComponent() {
       setErrorMessage("");
     }
     
-    handleForgotPassword({ email: userEmail }); // API Calling for OTP 
+    // handleForgotPassword({ email: userEmail }); 
 
     setSuccessLogin(false);
-    navigate(navigations.FORGOT_PASSWORD_OTP);
+    // navigate(navigations.FORGOT_PASSWORD_OTP);
+    navigate(navigations.FORGOT_PASSWORD_OTP,{ state: { email: userEmail } });
     
   };
 
