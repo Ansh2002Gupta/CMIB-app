@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import OtpViewUI from "./OtpViewUi";
+import OtpViewUI from "./OtpViewUI";
 import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
 import { useNavigate } from "../../routes"; 
 import { validateOtp } from "../../constants/CommonFunctions";
