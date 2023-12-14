@@ -55,12 +55,14 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
         salutation: contact.salutation || "",
       }))
     );
-    initialContactDetails.map(() => ({
-      designation: "",
-      emailId: "",
-      mobileNo: "",
-      name: "",
-    }));
+    setErrors(
+      initialContactDetails.map(() => ({
+        designation: "",
+        emailId: "",
+        mobileNo: "",
+        name: "",
+      }))
+    );
   }, [initialContactDetails]);
 
   const allFieldsFilled = () => {
