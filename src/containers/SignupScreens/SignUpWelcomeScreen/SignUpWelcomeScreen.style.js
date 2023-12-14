@@ -2,9 +2,8 @@ import colors from "../../../assets/colors";
 
 const style = {
   formHeaderStyle: {
-    color: colors.black, 
+    color: colors.black,
     fontSize: 18,
-    fontWeight: "600",
     marginBottom: 24,
     paddingTop: 24,
   },
