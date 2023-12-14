@@ -19,7 +19,7 @@ const useForgotPasswordAPI = () => {
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const res = await Http.post(`company/reset-password`, payload);
+      const res = await Http.post(`company/reset-password-otp`, payload);
 
       if ( res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
@@ -56,28 +56,3 @@ const useForgotPasswordAPI = () => {
 };
 
 export default useForgotPasswordAPI;
-
-/**
- url: /api/company/reset-password-otp
-Request
- {
-  "email": "user@example.com"
-  }
-
-Response
-  Success
-  {
-  "error": false,
-  "code": 200,
-  "message": "OK",
-  "data": true
-  }
-
-  Failure
-  {
-  "error": true,
-  "code": 422,
-  "message": "This email is invalid, please correct your email",
-  "data": false
-  }
- */

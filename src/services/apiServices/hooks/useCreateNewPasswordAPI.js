@@ -16,7 +16,7 @@ const useCreateNewPasswordAPI = () => {
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const res = await Http.post(`company/change-password-otp`, payload);
+      const res = await Http.post(`company/forget-password-otp`, payload);
 
       console.log("company/change-password-otp ===> ",res)
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
@@ -54,15 +54,3 @@ const useCreateNewPasswordAPI = () => {
 };
 
 export default useCreateNewPasswordAPI;
-
-/**
- * url  =>   /api/company/forget-password-otp
- * Request 
- {
-  "email": "user@example.com",
-  "password": "NewPassword123!",
-  "password_confirmation": "NewPassword123!",
-  "otp": "649682"
-}
- * 
- */
