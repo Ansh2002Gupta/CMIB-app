@@ -52,7 +52,7 @@ function HeaderWithContentLayout() {
       content={<Outlet />}
       topSectionStyle={commonStyles.headerContainer}
       menu={
-        isWebView || (isSideBarVisible && isAuthenticated) ? (
+        (isWebView && isAuthenticated) || isSideBarVisible ? (
           <SideNavBar
             onClose={() => setSideBarVisible(false)}
             items={listItems}
