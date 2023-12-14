@@ -21,6 +21,8 @@ const useForgotPasswordAPI = () => {
       errorWhileResetPassword && setErrorWhileResetPassword("");
       const res = await Http.post(`company/reset-password-otp`, payload);
 
+      console.log(" company/reset-password-otp ===> ", res);
+
       if ( res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setForgotPasswordResult(res.data);
@@ -33,6 +35,7 @@ const useForgotPasswordAPI = () => {
       setPostStatus(API_STATUS.ERROR);
     } catch (err) {
       setPostStatus(API_STATUS.ERROR);
+      console.log(" company/reset-password-otp ===> ", err);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);
         return;
