@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpWelcomeScreenUI from "./SignUpWelcomeScreenUI";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { MODULE_OPTIONS } from "../../../constants/constants";

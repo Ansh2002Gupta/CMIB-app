@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
-import useSignUpUser from "../../../services/apiServices/hooks/useSignUpUser";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpUser";
+import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,

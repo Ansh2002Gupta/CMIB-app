@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
 import useGetStates from "../../../services/apiServices/hooks/useGetStates";
 import useIndustryTypes from "../../../services/apiServices/hooks/useIndustryTypes";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import {
   ADDRESS_MAX_LENGTH,
   CODE_MAX_LENGTH,
