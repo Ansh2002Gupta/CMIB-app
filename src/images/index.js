@@ -59,14 +59,15 @@ const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
 const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
 const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
-const iconCMIBPortal = "images/iconCMIBPortal/iconCMIBPortal.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
+const iconCmibLogoWhite = "images/iconCmibLogoWhite/iconCmibLogoWhite.png";
+const iconRightArrow = "images/iconRightArrow/iconRightArrow.png";
+const iconFooterGlobal = "images/iconFooterGlobal/iconFooterGlobal.png";
 
 const images = {
   iconArrowUp,
   iconArrowDown,
-  iconCMIBPortal,
   avatar,
   logo,
   sun,
@@ -118,6 +119,9 @@ const images = {
   iconG20,
   iconDrawer,
   iconNotification,
+  iconCmibLogoWhite,
+  iconRightArrow,
+  iconFooterGlobal,
 };
 
 export default images;

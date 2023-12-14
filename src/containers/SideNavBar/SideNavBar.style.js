@@ -1,6 +1,7 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
+const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
   sideBar: {
     position: "absolute",
@@ -11,9 +12,11 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   overLay: {
-    ...StyleSheet.absoluteFillObject,
     backgroundColor: "transparent",
     zIndex: 1,
+    borderWidth: 1,
+    width: width,
+    height: height,
   },
 });
 

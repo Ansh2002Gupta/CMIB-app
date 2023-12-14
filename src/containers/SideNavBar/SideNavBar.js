@@ -1,16 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Animated,
   TouchableWithoutFeedback,
   View,
 } from "@unthinkable/react-core-components";
 
-import PropTypes from "prop-types";
-
 import SideBar from "../../components/SideBar/SideBar";
 import styles from "./SideNavBar.style";
 
-const SideNavBar = ({ onClose, items }) => {
+const SideNavBar = ({ onClose, items, onPress }) => {
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const isWebView = currentBreakpoint !== "xs";
   const sideBarPosition = useRef(new Animated.Value(-300)).current;
 
   useEffect(() => {
@@ -32,22 +34,27 @@ const SideNavBar = ({ onClose, items }) => {
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={handleCloseSidebar}>
-        <View style={styles.overLay} />
-      </TouchableWithoutFeedback>
+      {isWebView ? (
+        <></>
+      ) : (
+        <TouchableWithoutFeedback onPress={handleCloseSidebar}>
+          <View style={styles.overLay} />
+        </TouchableWithoutFeedback>
+      )}
+
       <Animated.View
         style={{
           ...styles.sideBar,
           transform: [{ translateX: sideBarPosition }],
         }}
       >
-        <SideBar items={items} />
+        <SideBar items={items} onPress={onPress} />
       </Animated.View>
     </>
   );
 };
 SideNavBar.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 };
 
 export default SideNavBar;

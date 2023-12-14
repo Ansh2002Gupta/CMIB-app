@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useIntl } from "react-intl";
 import {
   View,
   Image,
@@ -6,27 +7,35 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import ButtonComponent from "../CommonText/CommonText";
+import CommonText from "../CommonText";
 import images from "../../images";
+import colors from "../../assets/colors";
 import styles from "./SideBar.style";
 
-const SideBar = ({ items }) => {
-  const [showList, setShowList] = useState(false);
+
+const SideBar = ({ items, onPress }) => {
+  const intl = useIntl();
+  const [currentList, setCurrentList] = useState(items);
   const [selectedList, setSelecteList] = useState(null);
   const [selectedSubList, setSelecteSubList] = useState(null);
+  const [showStaticContent, setShowStaticContent] = useState(true);
 
   const renderSubItem = ({ item }) => (
     <TouchableOpacity
       style={[
         styles.subList,
-        selectedList === item.id && {
-          backgroundColor: "rgba(255, 255, 255, 0.08)",
-        },
+        selectedSubList === item.id && styles.selectedItemBackground,
       ]}
-      onPress={() => setSelecteList(item.id)}
+      onPress={() => {
+        setSelecteSubList(item.id);
+        setSelecteList(null);
+      }}
     >
-      <ButtonComponent
-        customTextStyle={styles.subListText}
+      <CommonText
+        customTextStyle={[
+          styles.subListText,
+          selectedSubList === item.id && styles.selectedItem,
+        ]}
         title={item.title}
       />
     </TouchableOpacity>
@@ -37,13 +46,19 @@ const SideBar = ({ items }) => {
       <TouchableOpacity
         style={[
           styles.list,
-          selectedSubList === item.id && {
-            backgroundColor: "rgba(255, 255, 255, 0.08)",
-          },
+          selectedList === item.id && styles.selectedItemBackground,
         ]}
-        onPress={() => setSelecteSubList(item.id)}
+        onPress={() => setSelecteList(item.id)}
       >
-        <ButtonComponent customTextStyle={styles.listText} title={item.title} />
+        <CommonText
+          customTextStyle={{
+            ...styles.listText,
+            ...(selectedList === item.id && styles.selectedItem),
+            ...(item.subitems &&
+              item.subitems.length > 0 && { color: colors.subHeadingGray }),
+          }}
+          title={item.title}
+        />
       </TouchableOpacity>
       {/* Render subitems if any */}
       {item.subitems && (
@@ -56,33 +71,69 @@ const SideBar = ({ items }) => {
     </View>
   );
 
-  return (
-    <View>
-      <Image source={images.iconCMIBPortal} />
-      <View style={styles.textImageView}>
-        <TouchableOpacity>
-          <ButtonComponent
-            customTextStyle={styles.moduleText}
-            title={"Choose a module"}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setShowList(!showList)}>
-          {showList ? (
-            <Image source={images.iconArrowUp} />
-          ) : (
-            <Image source={images.iconArrowDown} />
-          )}
-        </TouchableOpacity>
-      </View>
+  useEffect(() => {
+    setCurrentList(items);
+  }, [items]);
 
-      {showList ? (
+  const handleOnPress = () => {
+    onPress();
+    setShowStaticContent(false);
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.imageView}>
+        <Image source={images.iconCmibLogoWhite} />
+      </View>
+      {showStaticContent && (
+        <>
+          <View style={styles.textImageView}>
+            <CommonText
+              customTextStyle={styles.moduleText}
+              title={intl.formatMessage({
+                id: "label.module",
+              })}
+            />
+            <View style={styles.textView}>
+              <CommonText
+                customTextStyle={styles.newQualifiedText}
+                title={intl.formatMessage({
+                  id: "label.newely_qualified_placements",
+                })}
+              />
+              <TouchableOpacity onPress={handleOnPress}>
+                <CommonText
+                  customTextStyle={styles.changeText}
+                  title={intl.formatMessage({ id: "label.change" })}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <CommonText
+              customTextStyle={styles.sessionText}
+              title={intl.formatMessage({ id: "label.session" })}
+            />
+          </View>
+        </>
+      )}
+      <View style={styles.container}>
         <FlatList
-          data={items}
+          data={currentList}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
-          // contentContainerStyle={styles.contentContainerStyle}
         />
-      ) : null}
+      </View>
+      <View style={styles.bottomView}>
+        <View style={styles.imageTextView}>
+          <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
+          <CommonText
+            customTextStyle={styles.visitWebsiteText}
+            title={intl.formatMessage({ id: "label.visit_website" })}
+          />
+        </View>
+        <Image source={images.iconRightArrow} style={styles.globalIcon} />
+      </View>
     </View>
   );
 };

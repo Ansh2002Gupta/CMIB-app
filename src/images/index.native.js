@@ -37,19 +37,19 @@ import iconMyaccount from "../../public/images/iconMyaccount/iconMyaccount.png";
 import iconActiveRound1 from "../../public/images/iconActiveRound1/iconActiveRound1.png";
 import iconActiveRound2 from "../../public/images/iconActiveRound2/iconActiveRound2.png";
 import iconActiveMyaccount from "../../public/images/iconActiveMyaccount/iconActiveMyaccount.png";
-import iconCMIBPortal from "../../public/images/iconCMIBPortal/iconCMIBPortal.png";
-import iconArrowUp from '../../public/images/iconArrowUp/iconArrowUp.png';
-import iconArrowDown from '../../public/images/iconArrowDown/iconArrowDown.png';
 import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/iconAddApplicationForm.png";
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
 import iconNotification from "../../public/images/iconNotification/iconNotification.png";
 
-
+import iconArrowUp from "../../public/images/iconArrowUp/iconArrowUp.png";
+import iconArrowDown from "../../public/images/iconArrowDown/iconArrowDown.png";
+import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLogowhite.png";
+import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
+import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
 const images = {
-  iconCMIBPortal,
-  iconArrowUp, 
+  iconArrowUp,
   iconArrowDown,
   avatar,
   logo,
@@ -95,6 +95,9 @@ const images = {
   iconDownloadDetails,
   iconDrawer,
   iconNotification,
+  iconCmibLogoWhite,
+  iconRightArrow,
+  iconFooterGlobal,
 };
 
 export default images;

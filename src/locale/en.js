@@ -139,6 +139,11 @@ const locale = {
   "label.save": "Save",
   "label.round1": "Round 1",
   "label.round2": "Round 2",
+  "label.visit_website":"Visit Website",
+  "label.session":"Session",
+  "label.change":"Change",
+  "label.module":"Module",
+  "label.newely_qualified_placements":"Newly Qualified Placements",
   "label.add_application_form_text": "Add / View Application form",
   "label.add_application_form_description_text":
     "Streamlined application form designed for quick and easy submission.",
