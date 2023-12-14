@@ -5,16 +5,19 @@ import { FlatList, View } from "@unthinkable/react-core-components";
 import ButtonComponent from "../../../components/ButtonComponent/ButtonComponent";
 import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import style from "./SignUpWelcomeScreen.style";
 
 const SignUpWelcomeScreenUI = (props) => {
   const {
-    intl,
-    onClickNext,
     contactDetails,
-    setContactDetails,
+    handleDismissToast,
+    intl,
     options,
+    onClickNext,
+    setContactDetails,
     setOptions,
+    validationError,
   } = props;
 
   const handleToggle = (id) => {
@@ -65,17 +68,25 @@ const SignUpWelcomeScreenUI = (props) => {
         hasIconRight
         disabled={contactDetails.length <= 0}
       />
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
 
 SignUpWelcomeScreenUI.propTypes = {
+  contactDetails: PropTypes.array.isRequired,
+  handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
+  options: PropTypes.array.isRequired,
   onClickNext: PropTypes.func.isRequired,
   setContactDetails: PropTypes.func.isRequired,
-  contactDetails: PropTypes.array.isRequired,
-  options: PropTypes.array.isRequired,
   setOptions: PropTypes.func.isRequired,
+  validationError: PropTypes.bool,
 };
 
 export default SignUpWelcomeScreenUI;
