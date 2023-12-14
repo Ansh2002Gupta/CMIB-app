@@ -29,12 +29,12 @@ function OtpViewComponent() {
   const [loginDisabled, setLoginDisabled] = useState(true);
 
 
-  // useEffect(()=>{
-  //   setOtpLeft(prev => prev - 1); 
-  //   // const receivedOtp = '3567'; 
-  //   // setOtpValue(receivedOtp);
+  useEffect(()=>{
+    setOtpLeft(prev => prev - 1); 
+    // const receivedOtp = '3567'; 
+    // setOtpValue(receivedOtp);
 
-  // },[])
+  },[])
 
   useEffect(() => {
     if (otpValue !== "") {
@@ -68,6 +68,7 @@ function OtpViewComponent() {
   };
 
   const onResendOtpClick= () => {
+
     if(otpLeft > 0) {
       console.log("otpLeft current value ===>>> ",otpLeft)
       setOtpLeft(prev => prev - 1);
@@ -82,6 +83,7 @@ function OtpViewComponent() {
       setMinutes(OTP_TIMER_MAX_MINUTES);
       setSeconds(0);
     }
+    
   };
 
   return (
