@@ -11,14 +11,6 @@ const style = {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  headerTextStyle: {
-    textAlign: "right",
-    color: colors.darkBlue,
-    fontSize: 14,
-    fontWeight: "600",
-    lineHeight: 20,
-    fontFamily: "GeneralSans-Semibold",
-  },
   iconBar: {
     alignSelf: "center",
     margin: 16,

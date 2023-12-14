@@ -11,7 +11,7 @@ const style = {
     marginBottom: 8,
   },
   headerText: {
-    fontFamily: "GeneralSans-Semibold",
+    fontWeight: "600",
     fontSize: 16,
     paddingBottom: 24,
   },

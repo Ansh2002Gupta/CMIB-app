@@ -5,7 +5,7 @@ export const navigations = {
   FORGOT_PASSWORD: "/forgot-password",
   LOGIN: "/login",
   JOBS: "/jobs",
-  PROFILE: "/account",
+  PROFILE: "/profile",
   ROUND_ONE: "/round-one",
   ROUND_TWO: "/round-two",
   SIGN_UP: "/sign-up",

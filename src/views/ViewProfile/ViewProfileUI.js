@@ -58,6 +58,7 @@ const ViewProfileUI = (props) => {
         handleEditPopup(false);
       }
     } catch (error) {
+      //TODO: Replace this error loag with a toast which has been created by Kashish.
       console.log("Image picker error:", error);
     }
   };
