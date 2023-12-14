@@ -12,10 +12,10 @@ import {
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
 import {
+  urlRegex,
   COMPANY_DETAIL_MAX_LENGTH,
   FIELD_MIN_LENGTH,
   INTEREST_OPTIONS,
-  urlRegex,
 } from "../../../constants/constants";
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {

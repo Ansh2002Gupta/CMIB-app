@@ -8,12 +8,17 @@ import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../constants/CommonFunctions";
 import {
+  numRegex,
   ADDRESS_MAX_LENGTH,
+  CAREER_ASCENTS,
+  CA_JOBS,
   FIELD_MAX_LENGTH,
   FIELD_MIN_LENGTH,
+  NEWLY_QUALIFIED,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
-  numRegex,
+  OVERSEAS_PLACEMENTS,
+  WOMENT_PLACEMENT,
 } from "../../../constants/constants";
 
 const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
@@ -64,19 +69,19 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
 
   let headerText = "";
   switch (module) {
-    case "ca-jobs":
+    case CA_JOBS:
       headerText = intl.formatMessage({ id: "label.for_ca_jobs" });
       break;
-    case "newly-qualified-ca-placememt":
+    case NEWLY_QUALIFIED:
       headerText = intl.formatMessage({ id: "label.for_new_ca_placement" });
       break;
-    case "overseas-placements":
+    case OVERSEAS_PLACEMENTS:
       headerText = intl.formatMessage({ id: "label.for_overseas_placements" });
       break;
-    case "career-ascents":
+    case CAREER_ASCENTS:
       headerText = intl.formatMessage({ id: "label.for_career_ascents" });
       break;
-    case "women-placement":
+    case WOMENT_PLACEMENT:
       headerText = intl.formatMessage({ id: "label.for_women_placements" });
       break;
     default:

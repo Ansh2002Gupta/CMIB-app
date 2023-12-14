@@ -7,6 +7,7 @@ import useGetStates from "../../../services/apiServices/hooks/useGetStates";
 import useIndustryTypes from "../../../services/apiServices/hooks/useIndustryTypes";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import {
+  numRegex,
   ADDRESS_MAX_LENGTH,
   CODE_MAX_LENGTH,
   CODE_MIN_LENGTH,
@@ -14,7 +15,6 @@ import {
   FIELD_MIN_LENGTH,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
-  numRegex,
   REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
