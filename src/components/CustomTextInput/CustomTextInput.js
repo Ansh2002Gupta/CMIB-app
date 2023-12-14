@@ -37,8 +37,8 @@ const CustomTextInput = (props) => {
     ...remainingProps
   } = props;
 
-  const [isFocused, setIsFocused] = useState(false);
   const [count, setCount] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
@@ -174,6 +174,7 @@ const CustomTextInput = (props) => {
 CustomTextInput.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
+  isCounterInput: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isDropdown: PropTypes.bool,
   isMultiline: PropTypes.bool,
@@ -186,7 +187,6 @@ CustomTextInput.propTypes = {
   isPassword: PropTypes.bool,
   customLabelStyle: PropTypes.object,
   customTextInputContainer: PropTypes.object,
-  isCounterInput: PropTypes.bool,
 };
 
 export default CustomTextInput;
