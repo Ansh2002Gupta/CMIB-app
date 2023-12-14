@@ -23,6 +23,7 @@ const MyAccountComponent = () => {
       case 1:
         onClickViewProfile();
         break;
+      //TODO: Add the screen handling once designs are available.
       case 2:
         break;
       case 3:

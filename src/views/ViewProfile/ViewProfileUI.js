@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  TouchableOpacity,
   Image,
+  TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
 
@@ -16,7 +16,7 @@ import images from "../../images";
 import style from "./ViewProfile.style";
 
 const ViewProfileUI = (props) => {
-  const { intl, onGoBack, showEditModal, handleEditPopup } = props;
+  const { handleEditPopup, intl, onGoBack, showEditModal } = props;
   const [profileImage, setProfileImage] = useState("");
   //TODO: Dummy data to be replaced by api data.
   const firstName = "Kashish";
@@ -144,10 +144,10 @@ const ViewProfileUI = (props) => {
 };
 
 ViewProfileUI.propTypes = {
+  handleEditPopup: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   onGoBack: PropTypes.func.isRequired,
   showEditModal: PropTypes.bool.isRequired,
-  handleEditPopup: PropTypes.func.isRequired,
 };
 
 export default ViewProfileUI;

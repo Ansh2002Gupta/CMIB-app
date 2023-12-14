@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
-  View,
   Modal,
   TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
@@ -63,12 +63,12 @@ const CustomModal = (props) => {
 
 CustomModal.propTypes = {
   headerText: PropTypes.string,
+  isIconCross: PropTypes.bool,
+  isSuccess: PropTypes.bool,
+  onPress: PropTypes.func,
+  onPressIconCross: PropTypes.func,
   secondaryText: PropTypes.string,
   buttonTitle: PropTypes.string,
-  onPress: PropTypes.func,
-  isSuccess: PropTypes.bool,
-  isIconCross: PropTypes.bool,
-  onPressIconCross: PropTypes.func,
 };
 
 export default CustomModal;

@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  TouchableOpacity,
   Image,
+  TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
 
@@ -12,7 +12,7 @@ import images from "../../images";
 import style from "./MyAccount.style";
 
 const MyAccountUI = (props) => {
-  const { intl, options, handleOptionClick } = props;
+  const { handleOptionClick, intl, options } = props;
   //TODO: Replace this dummy data with api data.
   const profileImage = "";
   const firstName = "Kashish";
@@ -81,9 +81,9 @@ const MyAccountUI = (props) => {
 };
 
 MyAccountUI.propTypes = {
+  handleOptionClick: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
-  handleOptionClick: PropTypes.func.isRequired,
 };
 
 export default MyAccountUI;

@@ -20,10 +20,10 @@ const ViewProfieComponent = () => {
 
   return (
     <ViewProfileUI
+      handleEditPopup={handleEditPopup}
       intl={intl}
       onGoBack={onGoBack}
       showEditModal={showEditModal}
-      handleEditPopup={handleEditPopup}
     />
   );
 };

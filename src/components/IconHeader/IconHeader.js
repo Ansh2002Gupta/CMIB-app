@@ -38,9 +38,9 @@ const IconHeader = (props) => {
 };
 
 IconHeader.propTypes = {
+  headerText: PropTypes.string,
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,
-  headerText: PropTypes.string,
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,
 };
