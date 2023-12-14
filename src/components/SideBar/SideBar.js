@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import {
   View,
@@ -11,7 +12,6 @@ import CommonText from "../CommonText";
 import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./SideBar.style";
-
 
 const SideBar = ({ items, onPress }) => {
   const intl = useIntl();
@@ -136,6 +136,11 @@ const SideBar = ({ items, onPress }) => {
       </View>
     </View>
   );
+};
+
+SideBar.propTypes = {
+  items: PropTypes.array.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default SideBar;

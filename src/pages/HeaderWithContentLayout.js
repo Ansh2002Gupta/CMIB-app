@@ -8,10 +8,10 @@ import { getAuthToken } from "../utils/getAuthToken";
 import {
   items,
   newQualifiedPlacementsList,
-} from "../constants/ConstantListItems";
-import commonStyles from "../theme/styles/commonStyles";
+} from "../constants/sideBarListItems";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import Header from "../containers/Header";
+import commonStyles from "../theme/styles/commonStyles";
 
 function HeaderWithContentLayout() {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);

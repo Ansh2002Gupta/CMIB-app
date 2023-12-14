@@ -53,8 +53,11 @@ const SideNavBar = ({ onClose, items, onPress }) => {
     </>
   );
 };
+
 SideNavBar.propTypes = {
   onClose: PropTypes.func,
+  items: PropTypes.array.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default SideNavBar;
