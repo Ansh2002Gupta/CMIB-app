@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import OtpViewUI from "./OtpViewUi";
-import useForgotPassword from "../../services/apiServices/hooks/useForgotPassword";
+import useForgotPassword from "../../services/apiServices/hooks/useForgotPasswordAPI";
 import { useNavigate,useLocation } from "../../routes"; 
 import { validateOtp } from "../../constants/CommonFunctions";
 import { navigations } from "../../constants/routeNames";
@@ -25,7 +25,7 @@ function OtpViewComponent() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [successLogin, setSuccessLogin] = useState(false);
-  // const { handleForgotPassword } = useForgotPassword(); // for api call hadnling
+  const { handleForgotPassword } = useForgotPassword(); 
   const [loginDisabled, setLoginDisabled] = useState(true);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ function OtpViewComponent() {
     } else {
       setErrorMessage("");
     }
-    // handleForgotPassword({ email: userEmail });
+    handleForgotPassword({ email: userEmail });
     setSuccessLogin(false);
     navigate(navigations.CREATE_NEW_PASSWORD,{ state: { email: email,otpCode: otpValue } });
   };

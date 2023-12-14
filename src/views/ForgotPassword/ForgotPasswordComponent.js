@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import ForgotPasswordUI from "./ForgotPasswordUI";
-import useForgotPassword from "../../services/apiServices/hooks/useForgotPassword";
+import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
 import { useNavigate } from "../../routes";
 import { validateEmail } from "../../constants/CommonFunctions";
 import { navigations } from "../../constants/routeNames";
@@ -14,7 +14,7 @@ function ForgotPasswordComponent() {
   const [userEmail, setuserEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successLogin, setSuccessLogin] = useState(false); 
-  const { handleForgotPassword } = useForgotPassword();
+  const { handleForgotPassword } = useForgotPasswordAPI();
 
   //for disable button
   const [loginDisabled, setLoginDisabled] = useState(true);

@@ -5,8 +5,7 @@ import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 
-const useForgotPassword = () => {
-
+const useForgotPasswordAPI = () => {
 
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
   const [forgotPasswordResult, setForgotPasswordResult] = useState([]);
@@ -47,4 +46,29 @@ const useForgotPassword = () => {
   };
 };
 
-export default useForgotPassword;
+export default useForgotPasswordAPI;
+
+/**
+ url: /api/company/reset-password-otp
+Request
+ {
+  "email": "user@example.com"
+  }
+
+Response
+  Success
+  {
+  "error": false,
+  "code": 200,
+  "message": "OK",
+  "data": true
+  }
+
+  Failure
+  {
+  "error": true,
+  "code": 422,
+  "message": "This email is invalid, please correct your email",
+  "data": false
+  }
+ */
