@@ -36,9 +36,9 @@ const useDeleteLogo = () => {
   const isError = deletionStatus === API_STATUS.ERROR;
 
   return {
-    fileDeletionResult,
-    errorWhileDeletion,
     deletionStatus,
+    errorWhileDeletion,
+    fileDeletionResult,
     handleDeleteLogo,
     isError,
     isLoading,
