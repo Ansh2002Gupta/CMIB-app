@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import React, { useEffect, useState } from "react";
 import { ScrollView,TouchableOpacity,View } from "@unthinkable/react-core-components";
 
 import CreateNewPasswordValidation from "./CreateNewPasswordValidation";

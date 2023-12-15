@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
