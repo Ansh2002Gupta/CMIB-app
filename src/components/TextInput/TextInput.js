@@ -1,4 +1,5 @@
 import React, { useCallback, memo, forwardRef } from "react";
+import PropTypes from "prop-types";
 import { StyleSheet } from "@unthinkable/react-core-components";
 
 const defaultStyle = {
@@ -91,6 +92,19 @@ const TextInput = (
       onChange={onChangeCallback}
     />
   );
+};
+
+PropTypes.TextInput = {
+  caretHidden: PropTypes.bool,
+  editable: PropTypes.bool,
+  onSubmitEditing: PropTypes.func,
+  onChange: PropTypes.func,
+  onChangeText: PropTypes.func,
+  onChangeValue: PropTypes.func,
+  onKeyUp: PropTypes.func,
+  style: PropTypes.object,
+  showSoftInputOnFocus: PropTypes.bool,
+  value: PropTypes.number,
 };
 
 export default memo(forwardRef(TextInput));
