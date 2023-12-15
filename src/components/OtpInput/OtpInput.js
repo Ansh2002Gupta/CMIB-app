@@ -4,9 +4,9 @@ import { TextInput, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./OtpComponent.style";
+import styles from "./OtpInput.style";
 
-const OtpComponent = ({
+const OtpInput = ({
   customLabelStyle,
   errorMessage,
   isError,
@@ -96,7 +96,7 @@ const OtpComponent = ({
   );
 };
 
-OtpComponent.propTypes = {
+OtpInput.propTypes = {
   customLabelStyle: PropTypes.object,
   errorMessage: PropTypes.string,
   isError: PropTypes.bool,
@@ -104,4 +104,4 @@ OtpComponent.propTypes = {
   label: PropTypes.string.isRequired,
   onOtpChange: PropTypes.func.isRequired,
 }
-export default OtpComponent;
+export default OtpInput;

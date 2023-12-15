@@ -5,7 +5,7 @@ import { TouchableOpacity,View } from "@unthinkable/react-core-components";
 import ButtonComponent from "../../components/ButtonComponent";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import CommonText from "../../components/CommonText";
-import OtpComponent from "../../components/OtpComponent/OtpComponent"
+import OtpInput from "../../components/OtpInput/index"
 import { OTP_TRY_COUNT, OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./OtpView.style";
@@ -180,7 +180,7 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
                 : styles.firstTextInput
             }
           >
-            <OtpComponent
+            <OtpInput
               label={intl.formatMessage({ id: "label.text_otp" })}
               onOtpChange={handleOtpChange}
               customAsteriskStyle={styles.customAsteriskStyle}
