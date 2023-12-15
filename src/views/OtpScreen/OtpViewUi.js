@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types"
-import { View, Text, TouchableOpacity, } from "@unthinkable/react-core-components";
+import { View,TouchableOpacity, } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import HeaderText from "../../components/HeaderText/HeaderText";
+import CommonText from "../../components/CommonText";
 import OtpComponent from "../../components/OptComponent/OtpComponent"
 import styles from "./OtpView.style";
 
@@ -32,6 +33,14 @@ const OtpViewUI = (props) => {
 
 
   const [afterAttempt, setAfterAttempt] = useState(false);
+
+  const formattedTimerValue = `${intl.formatMessage({ id: "label.request_otp_again" })} ${minutes < 10 ? `0${minutes}` : minutes
+}:${seconds < 10 ? `0${seconds}` : seconds} ${intl.formatMessage({ id: "label.braces" })}`;
+
+const formatedOtpLeftValue = `${intl.formatMessage({ id: "label.request_otp_again" })} ${otpLeft} ${intl.formatMessage({ id: "label.left_brace" })}`;
+const textFirstHeading = `${intl.formatMessage({ id: "label.request_otp" })} ${OTP_TRY_COUNT} ${intl.formatMessage({ id: "label.times" })}`;
+const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" })} ${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+
 
   useEffect(() => {
     let myInterval = setInterval(() => {
@@ -144,6 +153,9 @@ const OtpViewUI = (props) => {
     }
   };
 
+
+
+
   return (
     <View style={styles.mainView}>
       <View
@@ -191,12 +203,21 @@ const OtpViewUI = (props) => {
             />
             {otpLeft > 0 &&
               <View style={styles.textLabelParent}>
-                <Text style={styles.textlabel}>{intl.formatMessage({ id: "label.otp_recieved" })} </Text>
+                <CommonText
+                  customTextStyle={styles.textlabel}
+                  title={intl.formatMessage({ id: "label.otp_recieved" })}
+                />
                 {isCounter ?
-                  <Text style={styles.textlabelTimer}>  {intl.formatMessage({ id: "label.request_otp_again" })} {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds} {intl.formatMessage({ id: "label.braces" })} </Text>
+                  <CommonText
+                    customTextStyle={styles.textlabelTimer}
+                    title={formattedTimerValue}
+                  />
                   :
                   <TouchableOpacity onPress={onResendOtpClick}>
-                    <Text style={styles.textlabelReset}> {intl.formatMessage({ id: "label.request_otp_again" })} {otpLeft} {intl.formatMessage({ id: "label.left_brace" })} </Text>
+                    <CommonText
+                      customTextStyle={styles.textlabelReset}
+                      title={formatedOtpLeftValue}
+                    />
                   </TouchableOpacity>
                 }
               </View>
@@ -204,15 +225,27 @@ const OtpViewUI = (props) => {
 
             {otpLeft === 0 && isCounter && !afterAttempt &&
               <View style={styles.textLabelParent}>
-                <Text style={styles.textlabel}>{intl.formatMessage({ id: "label.otp_recieved" })} </Text>
-                <Text style={styles.textlabelTimer}>  {intl.formatMessage({ id: "label.request_otp_again" })} {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds} {intl.formatMessage({ id: "label.braces" })}</Text>
+                <CommonText
+                  customTextStyle={styles.textlabel}
+                  title={intl.formatMessage({ id: "label.otp_recieved" })}
+                />
+                <CommonText
+                  customTextStyle={styles.textlabelTimer}
+                  title={formattedTimerValue}
+                />
               </View>
             }
 
             {otpLeft === 0 && afterAttempt &&
               <View style={styles.textLabelAfterParent}>
-                <Text style={styles.textlabel}>{intl.formatMessage({ id: "label.request_otp" })} {OTP_TRY_COUNT} {intl.formatMessage({ id: "label.times" })}</Text>
-                <Text style={styles.textlabel}>{intl.formatMessage({ id: "label.request_otp_next" })} {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}  </Text>
+                <CommonText
+                  customTextStyle={styles.textlabel}
+                  title={textFirstHeading}
+                />
+                <CommonText
+                  customTextStyle={styles.textlabel}
+                  title={textSecondHeading}
+                />
               </View>
             }
 
@@ -230,15 +263,13 @@ const OtpViewUI = (props) => {
             }
           />
           <TouchableOpacity onPress={onClickGoToLogin}>
-            <Text
-              style={
-                isWebView
-                  ? [styles.backToLoginText, styles.webFontFamily]
-                  : styles.backToLoginText
-              }
-            >
-              {intl.formatMessage({ id: "label.back_to_login" })}
-            </Text>
+            <CommonText
+                  customTextStyle={isWebView
+                    ? [styles.backToLoginText, styles.webFontFamily]
+                    : styles.backToLoginText}
+                  title={intl.formatMessage({ id: "label.back_to_login" })}
+                />
+
           </TouchableOpacity>
         </View>
       </View>
