@@ -103,6 +103,7 @@ const style = {
     marginHorizontal: 30,
     flex: 1,
     justifyContent: "flex-end",
+    paddingBottom: 16,
   },
   minHeight: { minHeight: 500 },
   gapForWebView: { gap: 24 },

@@ -17,8 +17,12 @@ const errorBackground = "#ffeded";
 const darkBlueShade = "#000833";
 const offWhite = "#FFFFFF14";
 const slateGray = "#616C8299";
+const lightGray = "#D0D5DD";
+const voilet = "#B1B3B5";
 
 const colors = {
+  lightGray,
+  voilet,
   white,
   darkBlue,
   black,
@@ -39,5 +43,4 @@ const colors = {
   offWhite,
   slateGray,
 };
-
 export default colors;

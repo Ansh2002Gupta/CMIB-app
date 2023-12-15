@@ -6,7 +6,7 @@ import { useTheme } from "@unthinkable/react-theme";
 import LoginScreenUI from "./LoginScreenUI";
 import useLoginUser from "../../services/apiServices/hooks/useLoginUser";
 import { navigations } from "../../constants/routeNames";
-import { validateEmail } from "../../constants/CommonFunctions";
+import { validateEmail } from "../../constants/commonFunctions";
 
 function LoginScreenComponent() {
   const navigate = useNavigate();

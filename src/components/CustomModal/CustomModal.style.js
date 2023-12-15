@@ -20,10 +20,9 @@ const style = {
     paddingBottom: 24,
   },
   headerText: {
-    fontFamily: "GeneralSans-Semibold",
+    fontWeight: "600",
     fontSize: 20,
     color: colors.black,
-    paddingTop: 20,
     paddingBottom: 8,
   },
   headerStyle: {
