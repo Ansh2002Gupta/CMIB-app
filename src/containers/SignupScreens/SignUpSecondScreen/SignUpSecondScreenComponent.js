@@ -5,11 +5,21 @@ import { useIntl } from "react-intl";
 import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
 import useGetStates from "../../../services/apiServices/hooks/useGetStates";
 import useIndustryTypes from "../../../services/apiServices/hooks/useIndustryTypes";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
-import { numRegex } from "../../../constants/constants";
+import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
+import {
+  numRegex,
+  ADDRESS_MAX_LENGTH,
+  CODE_MAX_LENGTH,
+  CODE_MIN_LENGTH,
+  FIELD_MAX_LENGTH,
+  FIELD_MIN_LENGTH,
+  NUMBER_MAX_LENGTH,
+  NUMBER_MIN_LENGTH,
+  REGISTRATION_NO_LENGTH,
+} from "../../../constants/constants";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
-import { validateEmail } from "../../../constants/CommonFunctions";
+import { validateEmail } from "../../../constants/commonFunctions";
 
 const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
@@ -19,6 +29,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const { getStates, stateResult } = useGetStates();
   const initialSignUpDetail = signUpState.signUpDetail;
 
+  const [validationError, setValidationError] = useState("");
   const [formData, setFormData] = useState({
     companyName: initialSignUpDetail.name || "",
     registrationNo: initialSignUpDetail.frn_number || "",
@@ -74,14 +85,21 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
       code,
     } = formData;
 
-    if (companyName.length < 6 || companyName.length > 255) {
+    if (
+      companyName.length < FIELD_MIN_LENGTH ||
+      companyName.length > FIELD_MAX_LENGTH
+    ) {
       newErrors.companyName = intl.formatMessage({
         id: "label.company_name_validation",
       });
       isValid = false;
     }
 
-    if (!numRegex.test(String(code)) || code.length < 2 || code.length > 8) {
+    if (
+      !numRegex.test(String(code)) ||
+      code.length < CODE_MIN_LENGTH ||
+      code.length > CODE_MAX_LENGTH
+    ) {
       newErrors.code = intl.formatMessage({
         id: "label.country_code_validation",
       });
@@ -90,8 +108,8 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
 
     if (
       !numRegex.test(String(telephoneNo)) ||
-      telephoneNo.length > 15 ||
-      telephoneNo.length < 7
+      telephoneNo.length > NUMBER_MAX_LENGTH ||
+      telephoneNo.length < NUMBER_MIN_LENGTH
     ) {
       newErrors.telephoneNo = intl.formatMessage({
         id: "label.telephone_no_validation",
@@ -108,7 +126,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
 
     if (
       !numRegex.test(String(registrationNo)) ||
-      registrationNo.length !== 10
+      registrationNo.length !== REGISTRATION_NO_LENGTH
     ) {
       newErrors.registrationNo = intl.formatMessage({
         id: "label.registration_no_validation",
@@ -116,7 +134,10 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
       isValid = false;
     }
 
-    if (address.length < 6 || address.length > 500) {
+    if (
+      address.length < FIELD_MIN_LENGTH ||
+      address.length > ADDRESS_MAX_LENGTH
+    ) {
       newErrors.address = intl.formatMessage({
         id: "label.address_validation",
       });
@@ -132,6 +153,10 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
 
     setErrors(newErrors);
     return isValid;
+  };
+
+  const handleDismissToast = () => {
+    setValidationError("");
   };
 
   const onGoBack = () => {
@@ -173,7 +198,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
           tabHandler("next");
         },
         (error) => {
-          console.error("ERROR:", error);
+          setValidationError(error);
         }
       );
     }
@@ -197,6 +222,8 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
       allFieldsFilled={allFieldsFilled}
       industryOptions={industryTypeResult}
       stateOptions={stateResult}
+      handleDismissToast={handleDismissToast}
+      validationError={validationError}
     />
   );
 };

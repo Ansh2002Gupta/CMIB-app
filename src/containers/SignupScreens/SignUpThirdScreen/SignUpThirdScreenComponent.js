@@ -3,18 +3,32 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
-import { validateEmail } from "../../../constants/CommonFunctions";
-import { numRegex } from "../../../constants/constants";
+import { validateEmail } from "../../../constants/commonFunctions";
+import {
+  numRegex,
+  ADDRESS_MAX_LENGTH,
+  CAREER_ASCENTS,
+  CA_JOBS,
+  FIELD_MAX_LENGTH,
+  FIELD_MIN_LENGTH,
+  NEWLY_QUALIFIED,
+  NUMBER_MAX_LENGTH,
+  NUMBER_MIN_LENGTH,
+  OVERSEAS_PLACEMENTS,
+  WOMENT_PLACEMENT,
+} from "../../../constants/constants";
 
 const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const initialContactDetails = signUpState.signUpDetail.contact_details || [];
+  const initialContactDetails =
+    signUpState?.signUpDetail?.contact_details || [];
   const { handleSignUpValidation } = useValidateSignUp();
 
+  const [validationError, setValidationError] = useState("");
   const [salutation, setSalutation] = useState(
     initialContactDetails[index]?.salutation || ""
   );
@@ -55,19 +69,19 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
 
   let headerText = "";
   switch (module) {
-    case "ca-jobs":
+    case CA_JOBS:
       headerText = intl.formatMessage({ id: "label.for_ca_jobs" });
       break;
-    case "newly-qualified-ca-placememt":
+    case NEWLY_QUALIFIED:
       headerText = intl.formatMessage({ id: "label.for_new_ca_placement" });
       break;
-    case "overseas-placements":
+    case OVERSEAS_PLACEMENTS:
       headerText = intl.formatMessage({ id: "label.for_overseas_placements" });
       break;
-    case "career-ascents":
+    case CAREER_ASCENTS:
       headerText = intl.formatMessage({ id: "label.for_career_ascents" });
       break;
-    case "women-placement":
+    case WOMENT_PLACEMENT:
       headerText = intl.formatMessage({ id: "label.for_women_placements" });
       break;
     default:
@@ -90,14 +104,17 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
       emailId: "",
     };
 
-    if (name.length < 6 || name.length > 255) {
+    if (name.length < FIELD_MIN_LENGTH || name.length > FIELD_MAX_LENGTH) {
       newErrors.name = intl.formatMessage({
         id: "label.contact_person_validation",
       });
       isValid = false;
     }
 
-    if (designation.length < 6 || designation.length > 500) {
+    if (
+      designation.length < FIELD_MIN_LENGTH ||
+      designation.length > ADDRESS_MAX_LENGTH
+    ) {
       newErrors.designation = intl.formatMessage({
         id: "label.designation_validation",
       });
@@ -106,8 +123,8 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
 
     if (
       !numRegex.test(String(mobileNo)) ||
-      mobileNo.length > 15 ||
-      mobileNo.length < 7
+      mobileNo.length > NUMBER_MAX_LENGTH ||
+      mobileNo.length < NUMBER_MIN_LENGTH
     ) {
       newErrors.mobileNo = intl.formatMessage({
         id: "label.mobile_number_validation",
@@ -165,11 +182,15 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
             tabHandler("next");
           },
           (error) => {
-            console.error("ERROR:", error);
+            setValidationError(error);
           }
         );
       }
     }
+  };
+
+  const handleDismissToast = () => {
+    setValidationError("");
   };
 
   const handleInputChange = (value, name) => {
@@ -208,6 +229,8 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
       allFieldsFilled={allFieldsFilled}
       errors={errors}
       headerText={headerText}
+      validationError={validationError}
+      handleDismissToast={handleDismissToast}
     />
   );
 };
