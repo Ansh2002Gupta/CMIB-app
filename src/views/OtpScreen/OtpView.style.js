@@ -147,17 +147,17 @@ const style = {
     fontWeight: "600",
     marginLeft: 4,
   },
+
   textLabelParent: {
     flexDirection: "row",
     fontFamily: "General Sans",
-    marginHorizontal: 10,
     marginTop: 16,
-    gap: 4,
+    justifyContent: 'center',
   },
+
   textLabelAfterParent: {
     flexDirection: "column",
     fontFamily: "General Sans",
-    marginHorizontal: 10,
     marginTop: 16,
     alignItems:"center"
   }

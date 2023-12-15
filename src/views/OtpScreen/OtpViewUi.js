@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types"
-import { View, Text,  TouchableOpacity,} from "@unthinkable/react-core-components";
+import { View, Text, TouchableOpacity, } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import ButtonComponent from "../../components/ButtonComponent";
@@ -8,10 +8,9 @@ import HeaderText from "../../components/HeaderText/HeaderText";
 import OtpComponent from "../../components/OptComponent/OtpComponent"
 import styles from "./OtpView.style";
 
-import { OTP_TRY_COUNT,OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
+import { OTP_TRY_COUNT, OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 
 const OtpViewUI = (props) => {
-  
 
   const {
     handleOtpChange,
@@ -42,7 +41,7 @@ const OtpViewUI = (props) => {
       }
       if (seconds === 0) {
         if (minutes === 0) {
-          setOtpLeft(prev => prev - 1); 
+          setOtpLeft(prev => prev - 1);
           clearInterval(myInterval);
           setIsCounter(false);
         } else {
@@ -59,7 +58,7 @@ const OtpViewUI = (props) => {
 
 
   useEffect(() => {
-    if (otpLeft ===0) {
+    if (otpLeft === 0) {
       setAfterAttempt(true)
       setMinutes(OTP_TIMER_MAX_MINUTES);
     }
@@ -247,8 +246,8 @@ const OtpViewUI = (props) => {
   );
 };
 
-OtpViewUI.propTypes ={
-  handleOtpChange:  PropTypes.func.isRequired,
+OtpViewUI.propTypes = {
+  handleOtpChange: PropTypes.func.isRequired,
   errorMessage: PropTypes.string.isRequired,
   onClickForgotPassword: PropTypes.func,
   onClickGoToLogin: PropTypes.func,

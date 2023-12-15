@@ -102,7 +102,7 @@ const OtpComponent = (props) => {
   };
 
   return (
-    <View style={styles.containerParent}>
+    <View >
 
       <View style={styles.container}>
 

@@ -1,37 +1,32 @@
 import colors from "../../assets/colors";
 import { Platform } from "@unthinkable/react-core-components";
 const style = {
-  containerParent: {
-    alignItems: 'center',
-  },
+
   container: {
     flexDirection: "column",
   },
+
   labelContainer: {
     flexDirection: "row",
     fontFamily:
-      Platform.OS.toLowerCase() === "web"
+    Platform.OS.toLowerCase() === "web"
         ? "General sans"
         : "GeneralSans-Medium",
-    marginLeft:10,
-    marginRight:10,
-    marginTop:5,
-    marginBottom:5,
-    gap: 4,
+    marginBottom:4,
   },
+
   label: {
-    color: colors.darkGrey,
-    fontSize: 12,
+    color: colors.gray,
+    fontSize: 14,
     fontFamily:
       Platform.OS.toLowerCase() === "web"
         ? "General sans"
         : "GeneralSans-Medium",
+        fontWeight:"500",
+        lineHeight:24,
   },
   webLabel: {
-    fontFamily:
-    Platform.OS.toLowerCase() === "web"
-      ? "General sans"
-      : "GeneralSans-Medium",
+    fontFamily: "General Sans",
     color: colors.black,
   },
   starStyle: { 
@@ -39,8 +34,8 @@ const style = {
   },
   otpContainer: {
     flexDirection: 'row',
+    alignItems: 'center', 
     justifyContent: 'space-between',
-    gap:8,
   },
   activeOtpBox: {
     borderColor: colors.green, 
@@ -49,13 +44,12 @@ const style = {
     width: 74,
     height: 56,
     borderWidth: 1,
-    borderColor: colors.lightGrey,
-    borderRadius: 5,
+    borderColor: colors.gray,
+    borderRadius: 12,
     textAlign: "center",
-    fontSize: 16,
-    marginLeft: 10,
-    marginRight:10,
-   
+    fontSize: 20,
+    fontWeight:"500",
+    lineHeight: 28,
   },
   errorMsg: {
     color: colors.errorRed,
