@@ -217,7 +217,7 @@ function CreateNewPasswordUI(props) {
               onDismiss={handleDismissToast}
             />
           )}
-          {successLogin ? (
+          {successLogin && (
             <CustomModal
               headerText={intl.formatMessage({ id: "label.thanks" })}
               secondaryText={intl.formatMessage({
@@ -229,7 +229,7 @@ function CreateNewPasswordUI(props) {
               buttonTitle={intl.formatMessage({ id: "label.go_back_to_login" })}
               isSuccess
             />
-          ) : null}
+          )}
         </View>
       </WebViewLoginSignUpWrapper>
     </ScrollView>

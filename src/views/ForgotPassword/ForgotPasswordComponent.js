@@ -9,13 +9,16 @@ import { validateEmail } from "../../constants/CommonFunctions";
 import { navigations } from "../../constants/routeNames";
 
 function ForgotPasswordComponent() {
+
   const navigate = useNavigate();
   const intl = useIntl();
+
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
   const [successLogin, setSuccessLogin] = useState(false); 
   const [userEmail, setuserEmail] = useState("");
   const [validationError, setValidationError] = useState("");
+  
   const { handleForgotPasswordAPI, isLoading,isShowOtpView} = useForgotPasswordAPI();
 
   useEffect(() => {

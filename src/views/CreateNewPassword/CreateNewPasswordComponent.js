@@ -9,13 +9,15 @@ import { navigations } from "../../constants/routeNames";
 function CreateNewPasswordComponent(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { email ,otpCode} = location.state || {};
   const intl = useIntl();
+  const { email ,otpCode} = location.state || {};
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [successLogin, setSuccessLogin] = useState(false); 
   const [error, setError] = useState("");
   const [validationError, setValidationError] = useState("");
+  
   const { handleCreateNewPasswordAPI,isLoading } = useCreateNewPasswordAPI();
 
   const onClickGoToLogin = () => {

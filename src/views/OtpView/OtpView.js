@@ -11,6 +11,7 @@ import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES} from "../../cons
 function OtpView( {email}) {
   const navigate = useNavigate();
   const intl = useIntl();
+
   const [errorMessage, setErrorMessage] = useState("");
   const [isCounter, setIsCounter] = useState(true);
   const [submitDisabled, setSubmitDisabled] = useState(true);
@@ -18,6 +19,7 @@ function OtpView( {email}) {
   const [otpLeft,setOtpLeft] = useState(OTP_TRY_COUNT);
   const [otpValue, setOtpValue] = useState('');
   const [seconds, setSeconds] = useState(OTP_TIMER_SECOND);
+  
   const { handleForgotPasswordAPI } = useForgotPasswordAPI(); 
 
   useEffect(() => {
