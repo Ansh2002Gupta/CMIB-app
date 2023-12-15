@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes"; 
 
 import { navigations } from "../../constants/routeNames";
-import OtpViewUI from "./OtpViewUI";
+import OtpViewUI from "./OtpViewUX";
 import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
 import { validateOtp } from "../../constants/CommonFunctions";
 import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES} from "../../constants/constants";
