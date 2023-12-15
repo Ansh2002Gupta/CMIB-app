@@ -71,6 +71,7 @@ const iconG20 = "images/iconG20/iconG20.png";
 const ticketIcon  = "images/ticketIcon/ticketIcon.png";
 const iconSend = "images/iconSend/iconSend.png";
 const iconSetting = "images/iconSetting/iconSetting.png";
+const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
 
@@ -139,6 +140,7 @@ const images = {
   ticketIcon,
   iconSend,
   iconSetting,
+  iconUpArrow,
   iconDrawer,
 };
 

@@ -32,10 +32,12 @@ const CustomTextInput = (props) => {
     customTextInputContainer,
     options,
     onChangeValue,
+    isCounterInput,
     inputKey = "value",
     ...remainingProps
   } = props;
 
+  const [count, setCount] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -51,6 +53,16 @@ const CustomTextInput = (props) => {
 
   const handleBlur = () => {
     setIsFocused(false);
+  };
+
+  const incrementCount = () => {
+    setCount((prev) => prev + 1);
+  };
+
+  const decrementCount = () => {
+    if (count > 0) {
+      setCount((prev) => prev - 1);
+    }
   };
 
   return (
@@ -95,6 +107,20 @@ const CustomTextInput = (props) => {
           }}
           {...remainingProps}
         />
+      ) : isCounterInput ? (
+        <View style={style.counterMainView}>
+          <View style={style.counterView}>
+            <CommonText customTextStyle={style.counterText} title={count} />
+          </View>
+          <View style={style.buttonsView}>
+            <TouchableOpacity onPress={incrementCount} style={style.button}>
+              <Image source={images.iconUpArrow} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={decrementCount} style={style.button}>
+              <Image source={images.iconDownArrow} />
+            </TouchableOpacity>
+          </View>
+        </View>
       ) : (
         <View
           style={[
@@ -146,8 +172,9 @@ const CustomTextInput = (props) => {
 };
 
 CustomTextInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  value: PropTypes.string,
+  isCounterInput: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isDropdown: PropTypes.bool,
   isMultiline: PropTypes.bool,

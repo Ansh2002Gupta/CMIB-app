@@ -173,6 +173,8 @@ const locale = {
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
+  "label.yes": "Yes",
+  "label.no": "No",
   "label.otp_text":
     "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
   "label.text_otp": "OTP",
