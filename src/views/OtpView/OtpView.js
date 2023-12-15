@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
-import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes"; 
+import { useIntl } from "react-intl";
+
 
 import { navigations } from "../../constants/routeNames";
 import OtpViewUI from "./OtpViewUI";

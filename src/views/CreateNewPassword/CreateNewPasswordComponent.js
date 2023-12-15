@@ -24,12 +24,15 @@ function CreateNewPasswordComponent(props) {
     setSuccessLogin(false);
     navigate(navigations.LOGIN);
   };
+
   const onChangePasswordInput = (val) => {
     setNewPassword(val);
   };
+
   const onChangeConfirmPasswordInput = (val) => {
     setConfirmNewPassword(val);
   };
+
   const handleSubmit = () => {
     handleCreateNewPasswordAPI({
       email: email,
@@ -44,9 +47,11 @@ function CreateNewPasswordComponent(props) {
       setValidationError(error);
     });
   };
+
   const handleDismissToast = () => {
     setValidationError("");
   };
+  
   return (
     <CreateNewPasswordUI
       handleSubmit={handleSubmit}
