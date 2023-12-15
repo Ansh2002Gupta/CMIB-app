@@ -9,6 +9,7 @@ import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import {useIsWebView} from "../../hooks/useIsWebView"
 import styles from "./ForgotPassword.style";
 
 
@@ -28,7 +29,7 @@ const ForgotPasswordUI = (props) => {
   } = props;
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
+  const { isWebView } = useIsWebView();
 
   const getResponsiveStyles = (str) => {
     switch (str) {
