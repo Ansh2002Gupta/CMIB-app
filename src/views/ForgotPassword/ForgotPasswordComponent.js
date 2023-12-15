@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
-import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
+import { useIntl } from "react-intl";
+
 
 import ForgotPasswordUI from "./ForgotPasswordUI";
 import OtpViewComponent from "../OtpView";
@@ -28,10 +29,12 @@ function ForgotPasswordComponent() {
       setLoginDisabled(true);
     }
   }, [userEmail]);
+
   const onClickGoToLogin = () => {
     setSuccessLogin(false);
     navigate(navigations.LOGIN);
   };
+
   const onClickForgotPassword = () => {
     let error = validateEmail(userEmail);
     if (error) {
@@ -48,12 +51,15 @@ function ForgotPasswordComponent() {
     }); 
     setSuccessLogin(false);   
   };
+
   const onChangeInput = (val) => {
     setuserEmail(val);
   };
+
   const handleDismissToast = () => {
     setValidationError("");
   };
+
   return (
     <>
     {isShowOtpView ? 
