@@ -182,8 +182,6 @@ const locale = {
   "label.braces":")",
   "label.left_brace":"left)",
   "label.times":"times!",
-  "label.NOT_VALID_EMAIL":"Not a valid email, please enter again",
-  "label.NOT_VALID_OTP":"Not a valid otp, please enter again",
 };
 
 export default locale;

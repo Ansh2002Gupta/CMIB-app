@@ -1,7 +1,5 @@
-import { useIntl } from "react-intl";
 import { mailformat, otpRegex } from "./Regex";
 
-const intl = useIntl();
 
 export const validateEmail = (userEmail) => {
   if (!userEmail.match(mailformat)) {
