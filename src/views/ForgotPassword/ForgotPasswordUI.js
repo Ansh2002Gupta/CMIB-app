@@ -8,8 +8,10 @@ import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
-import styles from "./ForgotPassword.style";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import useIsWebView from "../../hooks/useIsWebView";
+import styles from "./ForgotPassword.style";
+
 
 const ForgotPasswordUI = (props) => {
   const {
@@ -26,8 +28,7 @@ const ForgotPasswordUI = (props) => {
     validationError,
   } = props;
 
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
+  const { isWebView } = useIsWebView();
 
   const getResponsiveStyles = (str) => {
     switch (str) {
@@ -203,14 +204,14 @@ const ForgotPasswordUI = (props) => {
   );
 };
 ForgotPasswordUI.propTypes = {
+  errorMessage: PropTypes.string,
+  handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
   onClickForgotPassword: PropTypes.func,
-  userName: PropTypes.string,
   onClickGoToLogin: PropTypes.func.isRequired,
   onChangeInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  handleDismissToast: PropTypes.func,
+  userName: PropTypes.string.isRequired,
   validationError: PropTypes.bool,
 };
 

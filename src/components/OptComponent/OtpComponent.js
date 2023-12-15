@@ -10,12 +10,12 @@ import styles from "./OtpComponent.style";
 const OtpComponent = (props) => {
 
   const {
+    customLabelStyle,
+    errorMessage,
+    isError,
+    isMandatory,
     label,
     onOtpChange,
-    isMandatory,
-    customLabelStyle,
-    isError,
-    errorMessage,
   } = props;
 
   const { isWebView } = useIsWebView();

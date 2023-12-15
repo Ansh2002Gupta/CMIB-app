@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View, TouchableOpacity, ScrollView, } from "@unthinkable/react-core-components";
+import { ScrollView,TouchableOpacity,View } from "@unthinkable/react-core-components";
 
 import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import ButtonComponent from "../../components/ButtonComponent";
@@ -8,23 +8,25 @@ import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
-import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
-import styles from "./CreateNewPassword.style";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
+import useIsWebView from "../../hooks/useIsWebView";
+import styles from "./CreateNewPassword.style";
+
 
 function CreateNewPasswordUI(props) {
   const {
-    handleSubmit,
-    onClickGoToLogin,
-    onChangePasswordInput,
     confirmNewPassword,
-    newPassword,
-    onChangeConfirmPasswordInput,
     error,
+    handleSubmit,
+    handleDismissToast,
     intl,
     isLoading,
+    newPassword,
+    onClickGoToLogin,
+    onChangePasswordInput,
+    onChangeConfirmPasswordInput,
     successLogin,
-    handleDismissToast,
     validationError,
   } = props;
 
@@ -37,8 +39,7 @@ function CreateNewPasswordUI(props) {
     specialChar: false,
     match: false,
   });
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
+  const { isWebView } = useIsWebView();
   const width1800pxOrLess = currentBreakpoint !== "xxl";
   const width900pxOrLess =
     currentBreakpoint === "md" || currentBreakpoint === "sm";
@@ -101,7 +102,6 @@ function CreateNewPasswordUI(props) {
       style={styles.mainView}
       contentContainerStyle={styles.scrollViewContainerStyle}
     >
-
       <WebViewLoginSignUpWrapper shouldApplyStyles={isWebView}>
         <View
           style={{
@@ -210,14 +210,12 @@ function CreateNewPasswordUI(props) {
               />
             </TouchableOpacity>
           </View>
-
           {!!validationError && (
             <ToastComponent
               toastMessage={validationError}
               onDismiss={handleDismissToast}
             />
           )}
-
           {successLogin ? (
             <CustomModal
               headerText={intl.formatMessage({ id: "label.thanks" })}
@@ -231,7 +229,6 @@ function CreateNewPasswordUI(props) {
               isSuccess
             />
           ) : null}
-
         </View>
       </WebViewLoginSignUpWrapper>
     </ScrollView>

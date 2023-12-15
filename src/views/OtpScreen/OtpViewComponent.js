@@ -1,13 +1,12 @@
 import React, { useState,useEffect } from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes"; 
 
 import { navigations } from "../../constants/routeNames";
-import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES} from "../../constants/constants";
 import OtpViewUI from "./OtpViewUI";
 import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
-import { useNavigate } from "../../routes"; 
 import { validateOtp } from "../../constants/CommonFunctions";
-
+import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES} from "../../constants/constants";
 function OtpViewComponent( {email}) {
   const navigate = useNavigate();
   const intl = useIntl();

@@ -3,38 +3,31 @@ import { useNavigate,useLocation } from "../../routes";
 import { useIntl } from "react-intl";
 
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
-import { navigations } from "../../constants/routeNames";
 import useCreateNewPasswordAPI from "../../services/apiServices/hooks/useCreateNewPasswordAPI";
+import { navigations } from "../../constants/routeNames";
 
 function CreateNewPasswordComponent(props) {
-
   const navigate = useNavigate();
   const location = useLocation();
-
   const { email ,otpCode} = location.state || {};
-
   const intl = useIntl();
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [successLogin, setSuccessLogin] = useState(false); 
   const [error, setError] = useState("");
   const [validationError, setValidationError] = useState("");
-
   const { handleCreateNewPasswordAPI,isLoading } = useCreateNewPasswordAPI();
 
   const onClickGoToLogin = () => {
     setSuccessLogin(false);
     navigate(navigations.LOGIN);
   };
-
   const onChangePasswordInput = (val) => {
     setNewPassword(val);
   };
-
   const onChangeConfirmPasswordInput = (val) => {
     setConfirmNewPassword(val);
   };
-
   const handleSubmit = () => {
     handleCreateNewPasswordAPI({
       email: email,
@@ -49,11 +42,9 @@ function CreateNewPasswordComponent(props) {
       setValidationError(error);
     });
   };
-
   const handleDismissToast = () => {
     setValidationError("");
   };
-
   return (
     <CreateNewPasswordUI
       handleSubmit={handleSubmit}
@@ -70,5 +61,4 @@ function CreateNewPasswordComponent(props) {
     />
   );
 }
-
 export default CreateNewPasswordComponent;
