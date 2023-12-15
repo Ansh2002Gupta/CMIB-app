@@ -143,6 +143,7 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
         return;
     }
   };
+  
   return (
     <View style={styles.mainView}>
       <View
