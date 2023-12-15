@@ -171,7 +171,17 @@ const locale = {
     "Company details must be between 6 and 1000 characters.",
   "label.yes": "Yes",
   "label.no": "No",
+  "label.otp_text":
+    "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
+  "label.text_otp": "OTP",
   "label.jobs": "Jobs",
+  "label.otp_recieved": "Haven’t received the OTP?",
+  "label.request_otp": "You have requested OTP for ",
+  "label.request_otp_next": "You can resend the next OTP after",
+  "label.request_otp_again": "Send Again (",
+  "label.braces": ")",
+  "label.left_brace": "left)",
+  "label.times": "times!",
 };
 
 export default locale;

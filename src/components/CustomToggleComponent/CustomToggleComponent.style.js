@@ -49,14 +49,12 @@ const style = {
   },
   labelContainer: {
     flexDirection: "row",
-    fontFamily: "General Sans",
     gap: 4,
   },
   label: {
     color: colors.darkGrey,
   },
   webLabel: {
-    fontFamily: "General Sans",
     color: colors.black,
   },
   starStyle: { color: colors.errorRed },

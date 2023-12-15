@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
 
+
 import ForgotPasswordUI from "./ForgotPasswordUI";
-import useForgotPassword from "../../services/apiServices/hooks/useForgotPassword";
-import { useNavigate } from "../../routes";
-import { validateEmail } from "../../constants/CommonFunctions";
+import OtpViewComponent from "../OtpView";
+import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
+import { validateEmail } from "../../constants/commonFunctions";
 import { navigations } from "../../constants/routeNames";
 
 function ForgotPasswordComponent() {
+
   const navigate = useNavigate();
   const intl = useIntl();
-  const [userName, setuserName] = useState("");
+
   const [errorMessage, setErrorMessage] = useState("");
-  const [successLogin, setSuccessLogin] = useState(false);
-  const { handleForgotPassword } = useForgotPassword();
+  const [loginDisabled, setLoginDisabled] = useState(true);
+  const [successLogin, setSuccessLogin] = useState(false); 
+  const [userEmail, setuserEmail] = useState("");
+  const [validationError, setValidationError] = useState("");
+  
+  const { handleForgotPasswordAPI, isLoading,isShowOtpView} = useForgotPasswordAPI();
+
+  useEffect(() => {
+    if (userEmail !== "") {
+      setLoginDisabled(false);
+    } else {
+      setLoginDisabled(true);
+    }
+  }, [userEmail]);
 
   const onClickGoToLogin = () => {
     setSuccessLogin(false);
@@ -21,31 +36,50 @@ function ForgotPasswordComponent() {
   };
 
   const onClickForgotPassword = () => {
-    let error = validateEmail(userName);
+    let error = validateEmail(userEmail);
     if (error) {
       setErrorMessage(error);
       return;
     } else {
       setErrorMessage("");
     }
-    handleForgotPassword({ email: userName });
-    setSuccessLogin(true);
+    handleForgotPasswordAPI(
+      { email: userEmail },
+       true,  
+    (error) => {
+      setValidationError(error);
+    }); 
+    setSuccessLogin(false);   
   };
 
   const onChangeInput = (val) => {
-    setuserName(val);
+    setuserEmail(val);
   };
+
+  const handleDismissToast = () => {
+    setValidationError("");
+  };
+
   return (
+    <>
+    {isShowOtpView ? 
+    <OtpViewComponent
+    email={userEmail}
+    /> :
     <ForgotPasswordUI
       successLogin={successLogin}
-      userName={userName}
+      userEmail={userEmail}
       onClickForgotPassword={onClickForgotPassword}
       onClickGoToLogin={onClickGoToLogin}
       onChangeInput={onChangeInput}
       errorMessage={errorMessage}
       intl={intl}
-    />
+      loginDisabled={loginDisabled}
+      isLoading={isLoading}
+      handleDismissToast={handleDismissToast}
+      validationError={validationError}
+    />}
+    </>
   );
 }
-
 export default ForgotPasswordComponent;
