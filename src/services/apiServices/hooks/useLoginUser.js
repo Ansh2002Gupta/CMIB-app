@@ -14,7 +14,6 @@ const useLoginUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
   const [loginUserResult, setLoginUserResult] = useState([]);
   const [errorWhileLoggingIn, setErrorWhileLoggingIn] = useState("");
-
   const [, authDispatch] = useContext(AuthContext);
   const [routeState] = useContext(RouteContext);
 

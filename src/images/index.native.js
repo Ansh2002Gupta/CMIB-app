@@ -25,11 +25,26 @@ import iconFacebook from "../../public/images/iconFacebook/iconFacebook.png";
 import iconInstagram from "../../public/images/iconInstagram/iconInstagram.png";
 import iconLinkedin from "../../public/images/iconLinkedin/iconLinkedin.png";
 import iconSuccess from "../../public/images/iconSuccess/iconSuccess.png";
+import iconMenu from "../../public/images/iconMenu/iconMenu.png";
+import iconNotification from "../../public/images/iconNotification/iconNotification.png";
+import iconProfile from "../../public/images/iconProfile/iconProfile.png";
+import iconLogout from "../../public/images/iconLogout/iconLogout.png";
+import iconBuilding from "../../public/images/iconBuilding/iconBuilding.png";
+import iconLock from "../../public/images/iconLock/iconLock.png";
+import iconArrowRight from "../../public/images/iconArrowRight/iconArrowRight.png";
+import iconBack from "../../public/images/iconBack/iconBack.png";
+import iconEdit from "../../public/images/iconEdit/iconEdit.png";
+import iconDelete from "../../public/images/iconDelete/iconDelete.png";
+import iconChange from "../../public/images/iconChange/iconChange.png";
+import iconCross from "../../public/images/iconCross/iconCross.png";
 import iconTelegram from "../../public/images/iconTelegram/iconTelegram.png";
 import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
 import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
 import iconEyeSlash from "../../public/images/iconEyeSlash.png";
 import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
+import ticketIcon from "../../public/images/ticketIcon/ticketIcon.png";
+import iconSend from "../../public/images/iconSend/iconSend.png";
+import iconSetting from "../../public/images/iconSetting/iconSetting.png";
 import iconDashboard from "../../public/images/iconDashboard/iconDashboard.png";
 import iconRound1 from "../../public/images/iconRound1/iconRound1.png";
 import iconRound2 from "../../public/images/iconRound2/iconRound2.png";
@@ -42,7 +57,6 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
-import iconNotification from "../../public/images/iconNotification/iconNotification.png";
 
 const images = {
   avatar,
@@ -72,11 +86,26 @@ const images = {
   iconInstagram,
   iconEyeSlash,
   iconSuccess,
+  iconMenu,
+  iconNotification,
+  iconProfile,
+  iconLogout,
+  iconBuilding,
+  iconLock,
+  iconArrowRight,
+  iconBack,
+  iconEdit,
+  iconChange,
+  iconDelete,
+  iconCross,
   iconLinkedin,
   iconTelegram,
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
+  ticketIcon,
+  iconSend,
+  iconSetting,
   iconDashboard,
   iconRound1,
   iconRound2,
@@ -89,7 +118,6 @@ const images = {
   iconHiringProcess,
   iconDownloadDetails,
   iconDrawer,
-  iconNotification,
 };
 
 export default images;
