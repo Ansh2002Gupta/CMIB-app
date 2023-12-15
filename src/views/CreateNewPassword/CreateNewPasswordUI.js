@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { ScrollView,TouchableOpacity,View } from "@unthinkable/react-core-components";
 
@@ -10,7 +10,6 @@ import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
-import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./CreateNewPassword.style";
 
 
