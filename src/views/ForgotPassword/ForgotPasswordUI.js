@@ -1,7 +1,7 @@
-import React from "react";
+import React , {useContext} from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View, TouchableOpacity } from "@unthinkable/react-core-components";
+import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
@@ -9,7 +9,6 @@ import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
-import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./ForgotPassword.style";
 
 
