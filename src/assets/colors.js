@@ -16,6 +16,7 @@ const darkBlack = "#0F0F0F";
 const errorBackground = "#ffeded";
 const voilet="#B1B3B5";
 
+
 const colors = {
   voilet,
   white,

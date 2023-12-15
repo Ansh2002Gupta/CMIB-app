@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import PropTypes from "prop-types"
 import { View, Text,  TouchableOpacity,} from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
@@ -11,7 +12,6 @@ import { OTP_TRY_COUNT,OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 
 const OtpViewUI = (props) => {
   const {
-    otpValue,
     handleOtpChange,
     errorMessage,
     onClickForgotPassword,
@@ -183,7 +183,6 @@ const OtpViewUI = (props) => {
           >
             <OtpComponent
               label={intl.formatMessage({ id: "label.text_otp" })}
-              onOtpReceived={otpValue}
               onOtpChange={handleOtpChange}
               customAsteriskStyle={styles.customAsteriskStyle}
               isMandatory
@@ -246,5 +245,24 @@ const OtpViewUI = (props) => {
     </View>
   );
 };
+
+OtpViewUI.propTypes ={
+  handleOtpChange:  PropTypes.func.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  onClickForgotPassword: PropTypes.func,
+  onClickGoToLogin: PropTypes.func,
+  intl: PropTypes.object.isRequired,
+  loginDisabled: PropTypes.bool,
+  onResendOtpClick: PropTypes.func.isRequired,
+  otpLeft: PropTypes.number,
+  setOtpLeft: PropTypes.number,
+  isCounter: PropTypes.bool,
+  setIsCounter: PropTypes.bool,
+  minutes: PropTypes.number,
+  setMinutes: PropTypes.number,
+  seconds: PropTypes.number,
+  setSeconds: PropTypes.number,
+
+}
 
 export default OtpViewUI;

@@ -9,8 +9,12 @@ const style = {
   },
   labelContainer: {
     flexDirection: "row",
-    fontFamily: "General Sans",
-    marginHorizontal:10,
+    fontFamily:
+      Platform.OS.toLowerCase() === "web"
+        ? "General sans"
+        : "GeneralSans-Medium",
+    marginLeft:10,
+    marginRight:10,
     marginTop:5,
     marginBottom:5,
     gap: 4,
@@ -24,10 +28,15 @@ const style = {
         : "GeneralSans-Medium",
   },
   webLabel: {
-    fontFamily: "General Sans",
+    fontFamily:
+    Platform.OS.toLowerCase() === "web"
+      ? "General sans"
+      : "GeneralSans-Medium",
     color: colors.black,
   },
-  starStyle: { color: colors.errorRed },
+  starStyle: { 
+    color: colors.errorRed 
+  },
   otpContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -40,11 +49,12 @@ const style = {
     width: 74,
     height: 56,
     borderWidth: 1,
-    borderColor: '#999',
+    borderColor: colors.lightGrey,
     borderRadius: 5,
     textAlign: "center",
     fontSize: 16,
-    marginHorizontal: 10,
+    marginLeft: 10,
+    marginRight:10,
    
   },
   errorMsg: {

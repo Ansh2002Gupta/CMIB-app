@@ -1,6 +1,8 @@
-import React, { useState, useRef, useContext, useEffect } from 'react';
+import React, { useState, useRef, useContext } from 'react';
+import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View, TextInput, Text, } from "@unthinkable/react-core-components";
+
 import styles from "./OtpComponent.style";
 
 const OtpComponent = (props) => {
@@ -8,7 +10,6 @@ const OtpComponent = (props) => {
   const {
     label,
     onOtpChange,
-    onOtpReceived, 
     isMandatory,
     customLabelStyle,
     isError,
@@ -31,7 +32,6 @@ const OtpComponent = (props) => {
     newOtp[index] = text;
     setOtp(newOtp);
 
-    // Call the callback function provided by the parent
     if (onOtpChange) {
       onOtpChange(newOtp.join(''));
     }
@@ -42,23 +42,23 @@ const OtpComponent = (props) => {
   };
 
 
-  useEffect(() => {
-    if (onOtpReceived) {
-      simulateOtpReceive(onOtpReceived);
-    }
-  }, [onOtpReceived]);
+  // useEffect(() => {
+  //   if (onOtpReceived) {
+  //     simulateOtpReceive(onOtpReceived);
+  //   }
+  // }, [onOtpReceived]);
 
   
-  const simulateOtpReceive = (receivedOtp) => {
-    if (receivedOtp.length === otp.length) {
-      const newOtp = receivedOtp.split('');
-      setOtp(newOtp);
-      if (onOtpChange) {
-        onOtpChange(receivedOtp);
-      }
-      inputsRef.current[otp.length - 1].focus();
-    }
-  };
+  // const simulateOtpReceive = (receivedOtp) => {
+  //   if (receivedOtp.length === otp.length) {
+  //     const newOtp = receivedOtp.split('');
+  //     setOtp(newOtp);
+  //     if (onOtpChange) {
+  //       onOtpChange(receivedOtp);
+  //     }
+  //     inputsRef.current[otp.length - 1].focus();
+  //   }
+  // };
 
   const handleInputFocus = (index) => {
     setActiveInputIndex(index);
@@ -103,7 +103,9 @@ const OtpComponent = (props) => {
 
   return (
     <View style={styles.containerParent}>
+
       <View style={styles.container}>
+
         <View style={styles.labelContainer}>
           <Text
             style={[styles.label, isWebView && styles.webLabel, customLabelStyle]}
@@ -112,14 +114,27 @@ const OtpComponent = (props) => {
           </Text>
           {isMandatory && <Text style={[styles.label, styles.starStyle]}> *</Text>}
         </View>
+
         <View style={styles.otpContainer}>
           {renderInputs()}
         </View>
+
         {isError && <Text style={styles.errorMsg}>{errorMessage}</Text>}
+
       </View>
+
     </View>
   );
 };
+
+OtpComponent.propTypes ={
+  label: PropTypes.string.isRequired,
+  onOtpChange: PropTypes.func.isRequired,
+  isMandatory: PropTypes.bool,
+  customLabelStyle: PropTypes.object,
+  isError: PropTypes.bool,
+  errorMessage: PropTypes.string,
+}
 
 
 
