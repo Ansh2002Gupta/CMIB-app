@@ -9,8 +9,8 @@ import {
 
 import CommonText from "../CommonText";
 import Dropdown from "../Dropdown/index";
-import images from "../../images";
 import TextInput from "../TextInput";
+import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
 
