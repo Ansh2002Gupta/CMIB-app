@@ -11,6 +11,8 @@ import styles from "./OtpView.style";
 import { OTP_TRY_COUNT,OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 
 const OtpViewUI = (props) => {
+  
+
   const {
     handleOtpChange,
     errorMessage,
@@ -58,7 +60,6 @@ const OtpViewUI = (props) => {
 
   useEffect(() => {
     if (otpLeft ===0) {
-      console.log('You have used all your OTP attempts.');
       setAfterAttempt(true)
       setMinutes(OTP_TIMER_MAX_MINUTES);
     }
