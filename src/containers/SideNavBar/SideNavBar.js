@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, {  useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Animated,
   TouchableWithoutFeedback,
@@ -8,12 +7,12 @@ import {
 } from "@unthinkable/react-core-components";
 
 import SideBar from "../../components/SideBar/SideBar";
+import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./SideNavBar.style";
 
 const SideNavBar = ({ onClose, items, onPress }) => {
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
   const sideBarPosition = useRef(new Animated.Value(-300)).current;
+  const isWebView = useIsWebView();
 
   useEffect(() => {
     Animated.timing(sideBarPosition, {

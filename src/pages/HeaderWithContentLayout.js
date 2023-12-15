@@ -1,24 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "../routes";
 
 import MainLayout from "../layouts/MainLayout";
 
 import { getAuthToken } from "../utils/getAuthToken";
+import useIsWebView from "../hooks/useIsWebView";
+import SideNavBar from "../containers/SideNavBar/SideNavBar";
+import Header from "../containers/Header";
 import {
   items,
   newQualifiedPlacementsList,
 } from "../constants/sideBarListItems";
-import SideNavBar from "../containers/SideNavBar/SideNavBar";
-import Header from "../containers/Header";
 import commonStyles from "../theme/styles/commonStyles";
 
 function HeaderWithContentLayout() {
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [listItems, setListItems] = useState(items);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isWebView = useIsWebView();
 
   const handleNewlyQualifiedPlacementsClick = () => {
     setListItems(newQualifiedPlacementsList);
