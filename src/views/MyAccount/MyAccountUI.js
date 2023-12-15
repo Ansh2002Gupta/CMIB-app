@@ -7,12 +7,20 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePasswordModal";
+import CustomModal from "../../components/CustomModal/CustomModal";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import images from "../../images";
 import style from "./MyAccount.style";
 
 const MyAccountUI = (props) => {
-  const { handleOptionClick, intl, options } = props;
+  const {
+    changePasswordModal,
+    handleOptionClick,
+    handleChangePassword,
+    intl,
+    options,
+  } = props;
   //TODO: Replace this dummy data with api data.
   const profileImage = "";
   const firstName = "Kashish";
@@ -28,10 +36,7 @@ const MyAccountUI = (props) => {
       const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
       return (
         <View style={style.initialsContainer}>
-          <CommonText
-          customTextStyle={style.initialsText}
-          title={initials}
-          />
+          <CommonText customTextStyle={style.initialsText} title={initials} />
         </View>
       );
     }
@@ -50,13 +55,10 @@ const MyAccountUI = (props) => {
           {renderProfileIcon()}
           <View style={style.detailContainer}>
             <CommonText
-            customTextStyle={style.fullNameStyle}
-            title={`${firstName} ${lastName}`}
+              customTextStyle={style.fullNameStyle}
+              title={`${firstName} ${lastName}`}
             />
-            <CommonText
-            title={email}
-            customTextStyle={style.emailStyle}
-            />
+            <CommonText title={email} customTextStyle={style.emailStyle} />
           </View>
         </View>
         {options.map((option) => (
@@ -67,8 +69,8 @@ const MyAccountUI = (props) => {
           >
             <Image source={option.iconLeft} style={style.leftIcon} />
             <CommonText
-            customTextStyle={style.titleStyle}
-            title={intl.formatMessage({ id: option.title })}
+              customTextStyle={style.titleStyle}
+              title={intl.formatMessage({ id: option.title })}
             />
             <View style={style.iconContainer}>
               <Image source={images.iconArrowRight} style={style.arrowIcon} />
@@ -76,12 +78,25 @@ const MyAccountUI = (props) => {
           </TouchableOpacity>
         ))}
       </View>
+      {changePasswordModal ? (
+        <CustomModal
+          headerText={intl.formatMessage({
+            id: "label.change_password",
+          })}
+          customInnerContainerStyle={style.innerContainerStyle}
+          headerTextStyle={style.headerTextStyle}
+        >
+          <ChangePasswordModal onPressCancel={handleChangePassword} />
+        </CustomModal>
+      ) : null}
     </>
   );
 };
 
 MyAccountUI.propTypes = {
+  changePasswordModal: PropTypes.bool,
   handleOptionClick: PropTypes.func.isRequired,
+  handleChangePassword: PropTypes.func,
   intl: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
 };
