@@ -1,29 +1,37 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
-  View,
-  TouchableOpacity,
   ScrollView,
+  TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
 import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation/CreateNewPasswordValidation";
+import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./CreateNewPassword.style";
 
-function CreateNewPasswordUI({
-  confirmNewPassword,
-  error,
-  handleSubmit,
-  intl,
-  onClickGoToLogin,
-  onChangePasswordInput,
-  onChangeConfirmPasswordInput,
-  newPassword,
-}) {
+function CreateNewPasswordUI(props) {
+  const {
+    confirmNewPassword,
+    error,
+    handleSubmit,
+    handleDismissToast,
+    intl,
+    isLoading,
+    newPassword,
+    onClickGoToLogin,
+    onChangePasswordInput,
+    onChangeConfirmPasswordInput,
+    successLogin,
+    validationError,
+  } = props;
+
   const [isAnyPasswordFieldLeft, setIsAnyPasswordFieldLeft] = useState(false);
   const [validations, setValidations] = useState({
     length: false,
@@ -33,6 +41,7 @@ function CreateNewPasswordUI({
     specialChar: false,
     match: false,
   });
+
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
   const width1800pxOrLess = currentBreakpoint !== "xxl";
@@ -45,7 +54,8 @@ function CreateNewPasswordUI({
       !validations.numeric ||
       !validations.uppercase ||
       !validations.lowercase ||
-      !validations.specialChar
+      !validations.specialChar ||
+      !validations.match
     ) {
       setIsAnyPasswordFieldLeft(true);
       return;
@@ -96,7 +106,6 @@ function CreateNewPasswordUI({
       style={styles.mainView}
       contentContainerStyle={styles.scrollViewContainerStyle}
     >
-      {/* <View> */}
       <WebViewLoginSignUpWrapper shouldApplyStyles={isWebView}>
         <View
           style={{
@@ -191,10 +200,11 @@ function CreateNewPasswordUI({
               title={intl.formatMessage({ id: "label.submit" })}
               onPress={() => {
                 areAllFieldFilledInPassword();
-                // handleSubmit();
+                handleSubmit();
               }}
               customTitleStyle={styles.webView.submitText}
               customButtonContainer={styles.webView.submitTextContainer}
+              displayLoader={isLoading}
             />
             <TouchableOpacity onPress={onClickGoToLogin}>
               <CommonText
@@ -206,6 +216,25 @@ function CreateNewPasswordUI({
               />
             </TouchableOpacity>
           </View>
+          {!!validationError && (
+            <ToastComponent
+              toastMessage={validationError}
+              onDismiss={handleDismissToast}
+            />
+          )}
+          {successLogin && (
+            <CustomModal
+              headerText={intl.formatMessage({ id: "label.thanks" })}
+              secondaryText={intl.formatMessage({
+                id: "label.reset_password_info_text",
+              })}
+              onPress={() => {
+                onClickGoToLogin();
+              }}
+              buttonTitle={intl.formatMessage({ id: "label.go_back_to_login" })}
+              isSuccess
+            />
+          )}
         </View>
       </WebViewLoginSignUpWrapper>
     </ScrollView>

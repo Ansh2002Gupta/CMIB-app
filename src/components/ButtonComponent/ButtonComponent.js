@@ -47,7 +47,7 @@ const ButtonComponent = (props) => {
 ButtonComponent.propTypes = {
   title: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   customButtonContainer: PropTypes.object,
   customTitleStyle: PropTypes.object,
   hasIconRight: PropTypes.bool,

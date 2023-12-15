@@ -5,23 +5,26 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import { SALUTATION_OPTIONS } from "../../../constants/constants";
 import style from "./SignUpThirdScreen.style";
 
 const SignUpThirdScreenUI = (props) => {
   const {
+    allFieldsFilled,
+    designation,
+    emailId,
+    errors,
+    handleDismissToast,
+    handleInputChange,
+    headerText,
     intl,
     onGoBack,
     onClickNext,
-    handleInputChange,
     salutation,
-    mobileNo,
-    emailId,
-    designation,
     name,
-    allFieldsFilled,
-    errors,
-    headerText,
+    mobileNo,
+    validationError,
   } = props;
 
   return (
@@ -118,23 +121,31 @@ const SignUpThirdScreenUI = (props) => {
           hasIconLeft
         />
       </View>
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </>
   );
 };
 
 SignUpThirdScreenUI.propTypes = {
+  allFieldsFilled: PropTypes.func.isRequired,
+  designation: PropTypes.string.isRequired,
+  emailId: PropTypes.string.isRequired,
+  errors: PropTypes.object,
+  handleDismissToast: PropTypes.func,
+  handleInputChange: PropTypes.func.isRequired,
+  headerText: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
   salutation: PropTypes.string.isRequired,
-  mobileNo: PropTypes.string.isRequired,
-  emailId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  designation: PropTypes.string.isRequired,
-  allFieldsFilled: PropTypes.func.isRequired,
-  errors: PropTypes.object,
-  headerText: PropTypes.string.isRequired,
+  mobileNo: PropTypes.string.isRequired,
+  toastMessage: PropTypes.string,
 };
 
 export default SignUpThirdScreenUI;

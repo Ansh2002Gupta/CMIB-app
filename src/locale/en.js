@@ -173,8 +173,19 @@ const locale = {
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
+  "label.otp_text":
+    "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
+  "label.text_otp": "OTP",
   "label.jobs": "Jobs",
-  "label.old_password": "Old Password"
+  "label.old_password": "Old Password",
+  "label.otp_recieved": "Haven’t received the OTP?",
+  "label.request_otp": "You have requested OTP for ",
+  "label.request_otp_next": "You can resend the next OTP after",
+  "label.request_otp_again": "Send Again (",
+  "label.braces": ")",
+  "label.left_brace": "left)",
+  "label.times": "times!",
+  "label.password-not-match": "Passwords do not match",
 };
 
 export default locale;

@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { View, ScrollView } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
+import { ScrollView, View } from "@unthinkable/react-core-components";
+
+import FiveColumn from "../../core/layouts/FiveColumn";
+
+import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation/CreateNewPasswordValidation";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
-
-import FiveColumn from "../../core/layouts/FiveColumn";
 import styles from "./ChangePasswordModal.style";
-import CommonText from "../../components/CommonText";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
   const intl = useIntl();
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [error, setError] = useState("");
   const [isAnyPasswordFieldLeft, setIsAnyPasswordFieldLeft] = useState(false);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [validations, setValidations] = useState({
     length: false,
     numeric: false,
@@ -64,7 +65,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
       return;
     }
     if (newPassword !== confirmNewPassword) {
-      setError("Passwords do not match");
+      setError(intl.formatMessage({ id: "label.password-not-match" }));
       return;
     }
     setError(null);
@@ -83,14 +84,12 @@ const ChangePasswordModal = ({ onPressCancel }) => {
       !validations.numeric ||
       !validations.uppercase ||
       !validations.lowercase ||
-      !validations.specialChar ||
-      error !== null ||
-      newPassword !== confirmNewPassword
+      !validations.specialChar
     );
   };
 
   return (
-    <ScrollView style={{ paddingBottom: 16 }}>
+    <ScrollView style={styles.mainView}>
       <FiveColumn
         firstSection={
           <CustomTextInput
@@ -151,7 +150,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           </View>
         }
         fiveSection={
-          <View style={{ paddingBottom: 21, paddingTop: 24 }}>
+          <View style={styles.saveAndCancelButtonView}>
             {errorWhileChangePassword ? (
               <CommonText
                 title={errorWhileChangePassword}
@@ -160,7 +159,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
             ) : null}
 
             <SaveCancelButton
-              customContainerStyle={{ bottom: 0 }}
+              customContainerStyle={styles.customContainerStyle}
               buttonOneText={intl.formatMessage({ id: "label.cancel" })}
               onPressButtonOne={() => {
                 onPressCancel(false);
@@ -177,8 +176,6 @@ const ChangePasswordModal = ({ onPressCancel }) => {
 };
 
 ChangePasswordModal.propTypes = {
-  children: PropTypes.object.isRequired,
-  customCardComponentStyle: PropTypes.object,
   onPressCancel: PropTypes.func,
 };
 

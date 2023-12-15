@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Http from "../../http-service";
-import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import Http from "../../../http-service";
+import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useValidateSignUp = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
@@ -26,11 +26,11 @@ const useValidateSignUp = () => {
         errorCallback(res);
       }
     } catch (err) {
-      setPostStatus(API_STATUS.ERROR);
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       setError(errorMessage);
       errorCallback(errorMessage);
+      setPostStatus(API_STATUS.ERROR);
     }
   };
 

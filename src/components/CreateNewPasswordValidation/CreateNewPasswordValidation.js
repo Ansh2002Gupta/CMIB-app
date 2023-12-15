@@ -93,7 +93,7 @@ CreateNewPasswordValidation.propTypes = {
   newPassword: PropTypes.string.isRequired,
   customContainerStyles: PropTypes.object,
   validations: PropTypes.object.isRequired,
-  setValidations: PropTypes.object.isRequired,
+  setValidations: PropTypes.func.isRequired,
 };
 
 export default CreateNewPasswordValidation;

@@ -4,20 +4,23 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CustomTextInput from "../../../components/CustomTextInput";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
 import style from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = (props) => {
   const {
-    intl,
-    onGoBack,
-    onClickNext,
-    formData,
-    handleInputChange,
-    errors,
     allFieldsFilled,
+    errors,
+    formData,
+    handleDismissToast,
+    handleInputChange,
     industryOptions,
+    intl,
+    onClickNext,
+    onGoBack,
     stateOptions,
+    validationError,
   } = props;
 
   const {
@@ -198,20 +201,28 @@ const SignUpSecondScreenUI = (props) => {
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
         hasIconLeft
       />
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
 
 SignUpSecondScreenUI.propTypes = {
-  intl: PropTypes.object.isRequired,
-  onGoBack: PropTypes.func.isRequired,
-  onClickNext: PropTypes.func.isRequired,
-  formData: PropTypes.object.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
   allFieldsFilled: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  formData: PropTypes.object.isRequired,
+  handleDismissToast: PropTypes.func,
+  handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,
+  intl: PropTypes.object.isRequired,
+  onClickNext: PropTypes.func.isRequired,
+  onGoBack: PropTypes.func.isRequired,
   stateOptions: PropTypes.array,
+  validationError: PropTypes.string,
 };
 
 export default SignUpSecondScreenUI;

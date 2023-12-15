@@ -1,27 +1,35 @@
-import React, { useContext } from "react";
+import React , {useContext} from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View, TouchableOpacity } from "@unthinkable/react-core-components";
+import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import useIsWebView from "../../hooks/useIsWebView"
 import styles from "./ForgotPassword.style";
+
 
 const ForgotPasswordUI = (props) => {
   const {
     onClickForgotPassword,
     onClickGoToLogin,
     onChangeInput,
-    userName,
+    userEmail,
     successLogin,
     errorMessage,
     intl,
+    loginDisabled,
+    isLoading,
+    handleDismissToast,
+    validationError,
   } = props;
+
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
+  const { isWebView } = useIsWebView();
 
   const getResponsiveStyles = (str) => {
     switch (str) {
@@ -141,7 +149,7 @@ const ForgotPasswordUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.email_id_placeholder",
               })}
-              value={userName}
+              value={userEmail}
               onChangeText={(val) => {
                 onChangeInput(val);
               }}
@@ -156,10 +164,12 @@ const ForgotPasswordUI = (props) => {
           <ButtonComponent
             title={intl.formatMessage({ id: "label.submit" })}
             onPress={onClickForgotPassword}
+            disabled={loginDisabled}
             customTitleStyle={isWebView && styles.customBtnText}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
+            displayLoader={isLoading}
           />
           <TouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
@@ -184,17 +194,26 @@ const ForgotPasswordUI = (props) => {
           isSuccess
         />
       ) : null}
+
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
 ForgotPasswordUI.propTypes = {
+  errorMessage: PropTypes.string,
+  handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
   onClickForgotPassword: PropTypes.func,
-  userName: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onChangeInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
-  errorMessage: PropTypes.string,
+  userName: PropTypes.string.isRequired,
+  validationError: PropTypes.bool,
 };
 
 export default ForgotPasswordUI;
