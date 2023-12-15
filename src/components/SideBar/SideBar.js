@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import {
-  View,
-  Image,
   FlatList,
+  Image,
   TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
