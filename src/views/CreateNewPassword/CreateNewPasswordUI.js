@@ -8,7 +8,7 @@ import {
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
-import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation/CreateNewPasswordValidation";
+import NewPasswordValidation from "../../components/NewPasswordValidation";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
@@ -172,7 +172,7 @@ function CreateNewPasswordUI(props) {
                 isWebView ? styles.webView.inputTextBox : {}
               }
             />
-            <CreateNewPasswordValidation
+            <NewPasswordValidation
               {...{
                 newPassword,
                 confirmNewPassword,

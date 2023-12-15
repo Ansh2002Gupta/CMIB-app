@@ -5,16 +5,15 @@ import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import colors from "../../assets/colors";
-import styles from "./CreateNewPasswordValidation.style";
+import styles from "./NewPasswordValidation.style";
 
-const CreateNewPasswordValidation = ({
+const NewPasswordValidation = ({
   confirmNewPassword,
   newPassword,
   customContainerStyles,
   validations,
   setValidations,
 }) => {
-
   const intl = useIntl();
   const bulletStyle = (isValid) => [
     styles.bulletIconStyle,
@@ -88,7 +87,7 @@ const CreateNewPasswordValidation = ({
   );
 };
 
-CreateNewPasswordValidation.propTypes = {
+NewPasswordValidation.propTypes = {
   confirmNewPassword: PropTypes.string.isRequired,
   newPassword: PropTypes.string.isRequired,
   customContainerStyles: PropTypes.object,
@@ -96,4 +95,4 @@ CreateNewPasswordValidation.propTypes = {
   setValidations: PropTypes.func.isRequired,
 };
 
-export default CreateNewPasswordValidation;
+export default NewPasswordValidation;

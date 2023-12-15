@@ -7,7 +7,7 @@ import FiveColumn from "../../core/layouts/FiveColumn";
 
 import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
-import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation/CreateNewPasswordValidation";
+import NewPasswordValidation from "../../components/NewPasswordValidation";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
 import styles from "./ChangePasswordModal.style";
@@ -138,7 +138,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
                 customTextStyle={styles.passwordMatchStyle}
               />
             ) : null}
-            <CreateNewPasswordValidation
+            <NewPasswordValidation
               {...{
                 newPassword,
                 confirmNewPassword,
