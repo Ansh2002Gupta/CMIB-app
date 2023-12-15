@@ -60,7 +60,7 @@ function ForgotPasswordComponent() {
 
   return (
     <>
-    {(!isShowOtpView) ? 
+    {isShowOtpView ? 
     <OtpViewComponent
     email={userEmail}
     /> :
