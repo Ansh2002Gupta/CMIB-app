@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import ForgotPasswordUI from "./ForgotPasswordUI";
 import OtpViewComponent from "../OtpView";
 import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
-import { validateEmail } from "../../constants/CommonFunctions";
+import { validateEmail } from "../../constants/commonFunctions";
 import { navigations } from "../../constants/routeNames";
 
 function ForgotPasswordComponent() {

@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 import { navigations } from "../../constants/routeNames";
 import OtpViewUI from "./OtpViewUI";
 import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
-import { validateOtp } from "../../constants/CommonFunctions";
+import { validateOtp } from "../../constants/commonFunctions";
 import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES} from "../../constants/constants";
 
 function OtpView( {email}) {

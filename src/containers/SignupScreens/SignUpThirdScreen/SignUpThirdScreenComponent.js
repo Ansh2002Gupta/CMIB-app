@@ -6,7 +6,7 @@ import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
-import { validateEmail } from "../../../constants/CommonFunctions";
+import { validateEmail } from "../../../constants/commonFunctions";
 import {
   numRegex,
   ADDRESS_MAX_LENGTH,
