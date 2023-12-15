@@ -6,8 +6,8 @@ import ButtonComponent from "../../components/ButtonComponent";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import CommonText from "../../components/CommonText";
 import OtpInput from "../../components/OtpInput/index"
-import { OTP_TRY_COUNT, OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 import useIsWebView from "../../hooks/useIsWebView";
+import { OTP_TRY_COUNT, OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 import styles from "./OtpView.style";
 
 const OtpViewUI = ({
