@@ -1,23 +1,19 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import { TextInput, View } from "@unthinkable/react-core-components";
 
-import CommonText from "../../components/CommonText";
+import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./OtpComponent.style";
 
-const OtpComponent = (props) => {
-
-  const {
-    customLabelStyle,
-    errorMessage,
-    isError,
-    isMandatory,
-    label,
-    onOtpChange,
-  } = props;
-
+const OtpComponent = ({
+  customLabelStyle,
+  errorMessage,
+  isError,
+  isMandatory,
+  label,
+  onOtpChange,
+}) => {
   const { isWebView } = useIsWebView();
   const [activeInputIndex, setActiveInputIndex] = useState(null);
   const [otp, setOtp] = useState(new Array(4).fill(''));
@@ -26,11 +22,9 @@ const OtpComponent = (props) => {
     const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
-
-    if (onOtpChange) {
+   if (onOtpChange) {
       onOtpChange(newOtp.join(''));
     }
-
     if (text && index < otp.length - 1) {
       inputsRef.current[index + 1].focus();
     }

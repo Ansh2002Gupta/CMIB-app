@@ -5,30 +5,28 @@ import { TouchableOpacity,View } from "@unthinkable/react-core-components";
 import ButtonComponent from "../../components/ButtonComponent";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import CommonText from "../../components/CommonText";
-import OtpComponent from "../../components/OptComponent/OtpComponent"
+import OtpComponent from "../../components/OtpComponent/OtpComponent"
 import { OTP_TRY_COUNT, OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./OtpView.style";
 
-const OtpViewUI = (props) => {
-  const {
-    errorMessage,
-    handleOtpChange,
-    intl,
-    isCounter,
-    submitDisabled,
-    minutes,
-    otpLeft,
-    onClickForgotPassword,
-    onClickGoToLogin,
-    onResendOtpClick,
-    setIsCounter,
-    setMinutes,
-    seconds,
-    setOtpLeft,
-    setSeconds,
-  } = props;
-
+const OtpViewUI = ({
+  errorMessage,
+  handleOtpChange,
+  intl,
+  isCounter,
+  submitDisabled,
+  minutes,
+  otpLeft,
+  onClickForgotPassword,
+  onClickGoToLogin,
+  onResendOtpClick,
+  setIsCounter,
+  setMinutes,
+  seconds,
+  setOtpLeft,
+  setSeconds,
+} ) => {
   const [afterAttempt, setAfterAttempt] = useState(false);
   const formattedTimerValue = `${intl.formatMessage({ id: "label.request_otp_again" })} ${minutes < 10 ? `0${minutes}` : minutes
 }:${seconds < 10 ? `0${seconds}` : seconds} ${intl.formatMessage({ id: "label.braces" })}`;
