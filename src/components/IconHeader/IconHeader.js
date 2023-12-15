@@ -9,9 +9,7 @@ import {
 import CommonText from "../CommonText";
 import styles from "./IconHeader.style";
 
-const IconHeader = (props) => {
-  const { headerText, iconLeft, iconRight, onPressLeftIcon, onPressRightIcon } = props;
-
+const IconHeader = ({headerText, iconLeft, iconRight, onPressLeftIcon, onPressRightIcon }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainerStyle}>
