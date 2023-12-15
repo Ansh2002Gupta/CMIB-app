@@ -1,8 +1,8 @@
 import React from "react";
 import {
-  View,
   Image,
   TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 
 import images from "../../images";
