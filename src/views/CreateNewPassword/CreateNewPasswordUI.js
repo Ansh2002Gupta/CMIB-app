@@ -6,24 +6,25 @@ import {
   ScrollView,
 } from "@unthinkable/react-core-components";
 
+import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
-import CreateNewPasswordValidation from "../../components/CreateNewPasswordValidation/CreateNewPasswordValidation";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./CreateNewPassword.style";
 
-function CreateNewPasswordUI({
-  confirmNewPassword,
-  error,
-  handleSubmit,
-  intl,
-  onClickGoToLogin,
-  onChangePasswordInput,
-  onChangeConfirmPasswordInput,
-  newPassword,
-}) {
+function CreateNewPasswordUI(props) {
+  const {
+    handleSubmit,
+    onClickGoToLogin,
+    onChangePasswordInput,
+    confirmNewPassword,
+    newPassword,
+    onChangeConfirmPasswordInput,
+    error,
+    intl,
+  } = props;
   const [isAnyPasswordFieldLeft, setIsAnyPasswordFieldLeft] = useState(false);
   const [validations, setValidations] = useState({
     length: false,
@@ -179,9 +180,7 @@ function CreateNewPasswordUI({
               <View style={styles.passwordFieldsErrorContainer}>
                 <CommonText
                   customTextStyle={styles.passwordFieldsErrorText}
-                  title={intl.formatMessage({
-                    id: "label.password_field_error",
-                  })}
+                  title={intl.formatMessage({ id: "label.password_field_error" })}
                 />
               </View>
             )}

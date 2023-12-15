@@ -38,13 +38,13 @@ const style = {
   emailStyle: {
     fontSize: 14,
     color: colors.darkGrey,
-    fontWeight: "500",
+    fontWeight: "500"
   },
   titleStyle: {
     fontSize: 14,
     lineHeight: 20,
     paddingLeft: 12,
-    color: colors.black,
+    color: colors.black
   },
   iconContainer: {
     flex: 1,
@@ -52,23 +52,15 @@ const style = {
   },
   leftIcon: {
     width: 24,
-    height: 24,
+    height: 24
   },
   arrowIcon: {
     width: 16,
-    height: 16,
+    height: 16
   },
   initialsText: {
-    fontSize: 14,
-  },
-  headerTextStyle: {
-    paddingTop: 0,
-    fontWeight: "600",
-    paddingBottom: 16,
-  },
-  innerContainerStyle: {
-    maxHeight: "80%",
-  },
+    fontSize: 14
+  }
 };
 
 export default style;

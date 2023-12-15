@@ -115,7 +115,6 @@ const SignUpThirdScreenUI = (props) => {
           hasIconRight
           isNextDisabled={!allFieldsFilled()}
           buttonTwoText={intl.formatMessage({ id: "label.next" })}
-          hasIconLeft
         />
       </View>
     </>

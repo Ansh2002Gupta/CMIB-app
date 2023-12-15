@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import CommonText from "../CommonText";
-import colors from "../../assets/colors";
+import CommonText from '../../../components/CommonText'
+import colors from "../../../assets/colors";
 import styles from "./CreateNewPasswordValidation.style";
 
 const CreateNewPasswordValidation = ({
@@ -14,27 +14,28 @@ const CreateNewPasswordValidation = ({
   validations,
   setValidations,
 }) => {
-
   const intl = useIntl();
+
   const bulletStyle = (isValid) => [
     styles.bulletIconStyle,
     {
       backgroundColor: isValid ? colors.green : colors.lightGrey,
     },
   ];
+  const validatePassword = (newPassword, confirmNewPassword) => {
+    setValidations({
+      length: newPassword.length >= 6,
+      numeric: /[0-9]/.test(newPassword),
+      uppercase: /[A-Z]/.test(newPassword),
+      lowercase: /[a-z]/.test(newPassword),
+      specialChar: /[!?.@#$%^&+=]/.test(newPassword),
+      match: newPassword === confirmNewPassword,
+    });
+  };
+
   useEffect(() => {
-    const validatePassword = () => {
-      setValidations({
-        length: newPassword.length >= 6,
-        numeric: /[0-9]/.test(newPassword),
-        uppercase: /[A-Z]/.test(newPassword),
-        lowercase: /[a-z]/.test(newPassword),
-        specialChar: /[!?.@#$%^&+=]/.test(newPassword),
-        match: newPassword === confirmNewPassword,
-      });
-    };
-    validatePassword();
-  }, [newPassword, confirmNewPassword, setValidations]);
+    validatePassword(newPassword, confirmNewPassword);
+  }, [newPassword, confirmNewPassword]);
 
   return (
     <View>
