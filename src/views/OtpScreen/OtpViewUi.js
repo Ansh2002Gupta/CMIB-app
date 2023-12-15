@@ -16,7 +16,7 @@ const OtpViewUI = (props) => {
     handleOtpChange,
     intl,
     isCounter,
-    loginDisabled,
+    submitDisabled,
     minutes,
     otpLeft,
     onClickForgotPassword,
@@ -37,9 +37,6 @@ const textFirstHeading = `${intl.formatMessage({ id: "label.request_otp" })} ${O
 const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" })} ${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 
   useEffect(() => {
-    if (minutes === 0 && seconds === 0) {
-        return;
-    }
     let timer = setInterval(() => {
       setIsCounter(true);
       if (seconds > 0) {
@@ -48,7 +45,7 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
       if (seconds === 0) {
         if (minutes === 0) {
           setOtpLeft(prev => prev - 1);
-          clearInterval(myInterval);
+          clearInterval(timer);
           setIsCounter(false);
         } else {
           setMinutes(prev => prev - 1);
@@ -244,7 +241,7 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
           <ButtonComponent
             title={intl.formatMessage({ id: "label.submit" })}
             onPress={onClickForgotPassword}
-            disabled={loginDisabled}
+            disabled={submitDisabled}
             customTitleStyle={isWebView && styles.customBtnText}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
@@ -265,21 +262,21 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
 };
 
 OtpViewUI.propTypes = {
-  errorMessage: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string,
   handleOtpChange: PropTypes.func.isRequired,
   isCounter: PropTypes.bool,
   intl: PropTypes.object.isRequired,
-  loginDisabled: PropTypes.bool,
+  submitDisabled: PropTypes.bool,
   minutes: PropTypes.number,
   onClickForgotPassword: PropTypes.func,
   onClickGoToLogin: PropTypes.func,
   onResendOtpClick: PropTypes.func.isRequired,
   otpLeft: PropTypes.number,
-  setOtpLeft: PropTypes.number,
-  setIsCounter: PropTypes.bool,
-  setMinutes: PropTypes.number,
+  setOtpLeft: PropTypes.func,
+  setIsCounter: PropTypes.func,
+  setMinutes: PropTypes.func,
   seconds: PropTypes.number,
-  setSeconds: PropTypes.number,
+  setSeconds: PropTypes.func,
 }
 
 export default OtpViewUI;

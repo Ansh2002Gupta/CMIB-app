@@ -13,7 +13,7 @@ function OtpViewComponent( {email}) {
   const intl = useIntl();
   const [errorMessage, setErrorMessage] = useState("");
   const [isCounter, setIsCounter] = useState(true);
-  const [loginDisabled, setLoginDisabled] = useState(true);
+  const [submitDisabled, setSubmitDisabled] = useState(true);
   const [minutes, setMinutes] = useState(OTP_TIMER_MIN_MINUTES);
   const [otpLeft,setOtpLeft] = useState(OTP_TRY_COUNT);
   const [otpValue, setOtpValue] = useState('');
@@ -22,9 +22,9 @@ function OtpViewComponent( {email}) {
 
   useEffect(() => {
     if (otpValue !== "") {
-      setLoginDisabled(false);
+      setSubmitDisabled(false);
     } else {
-      setLoginDisabled(true);
+      setSubmitDisabled(true);
     }
   }, [otpValue]);
 
@@ -64,7 +64,7 @@ function OtpViewComponent( {email}) {
       onClickGoToLogin={onClickGoToLogin}
       errorMessage={errorMessage}  
       intl={intl}
-      loginDisabled={loginDisabled}
+      submitDisabled={submitDisabled}
       onResendOtpClick={onResendOtpClick}
       otpLeft={otpLeft}
       setOtpLeft={setOtpLeft}
