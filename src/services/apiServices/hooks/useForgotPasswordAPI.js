@@ -6,7 +6,6 @@ import {COMPANY_RESET_PASSWORD_OTP} from "../apiEndPoint"
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useForgotPasswordAPI = () => {
-
   const [isShowOtpView, setIsShowOtpView] = useState(false);
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
   const [forgotPasswordResult, setForgotPasswordResult] = useState([]);
@@ -26,27 +25,24 @@ const useForgotPasswordAPI = () => {
       }else {
         setPostStatus(API_STATUS.ERROR);
         errorCallback(res);
-      }
-      
+      } 
     } catch (err) {
-
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
         errorCallback(errorMessage);
-
       setPostStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);
         return;
       }
-      setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
-      
+      setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE); 
     }
   };
 
   const isLoading = postStatus === API_STATUS.LOADING;
   const isSuccess = postStatus === API_STATUS.SUCCESS;
   const isError = postStatus === API_STATUS.ERROR;
+  
   return {
     errorWhileResetPassword,
     forgotPasswordResult,
@@ -58,5 +54,4 @@ const useForgotPasswordAPI = () => {
     postStatus,
   };
 };
-
 export default useForgotPasswordAPI;

@@ -3,7 +3,6 @@ export const navigations = {
   CREATE_NEW_PASSWORD: "/create-new-password",
   DASHBOARD: "/dashboard",
   FORGOT_PASSWORD: "/forgot-password",
-  FORGOT_PASSWORD_OTP: "/forgot-password-otp",
   LOGIN: "/login",
   JOBS: "/jobs",
   PROFILE: "/profile",

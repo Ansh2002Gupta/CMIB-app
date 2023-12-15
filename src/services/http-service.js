@@ -3,7 +3,7 @@ import axios from "axios";
 
 import axiosInstance from "../axios/axiosInstance";
 
-const baseUrl=Config.REACT_APP_API_URL;
+const baseUrl = Config.REACT_APP_API_URL;
 
 export default class Http {
   static async get(_url, handleDiscard = () => {}) {

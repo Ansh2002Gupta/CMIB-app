@@ -7,7 +7,6 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMe
 
 
 const useCreateNewPasswordAPI = () => {
-
   const [forgotPasswordResult, setForgotPasswordResult] = useState([]);
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
@@ -23,12 +22,9 @@ const useCreateNewPasswordAPI = () => {
         successCallback();
         return;
       }
-      else{
         setPostStatus(API_STATUS.ERROR);
         errorCallback(res);
-      }
     } catch (err) {
-
       const errorMessage =
       err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       errorCallback(errorMessage);
