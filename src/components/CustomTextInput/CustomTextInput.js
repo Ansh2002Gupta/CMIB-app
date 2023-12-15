@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
-  TextInput,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import Dropdown from "../Dropdown/index";
+import TextInput from "../TextInput";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
