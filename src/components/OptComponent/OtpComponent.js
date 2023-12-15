@@ -20,9 +20,8 @@ const OtpComponent = (props) => {
 
   const { isWebView } = useIsWebView();
   const [activeInputIndex, setActiveInputIndex] = useState(null);
-  const inputsRef = useRef(otp.map(() => React.createRef()));
   const [otp, setOtp] = useState(new Array(4).fill(''));
-
+  const inputsRef = useRef(otp.map(() => React.createRef()));
   const handleOtpChange = (text, index) => {
     const newOtp = [...otp];
     newOtp[index] = text;

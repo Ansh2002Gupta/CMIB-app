@@ -37,10 +37,13 @@ const textFirstHeading = `${intl.formatMessage({ id: "label.request_otp" })} ${O
 const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" })} ${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 
   useEffect(() => {
+    if (minutes === 0 && seconds === 0) {
+        return;
+    }
     let timer = setInterval(() => {
       setIsCounter(true);
       if (seconds > 0) {
-        setSeconds(seconds - 1);
+        setSeconds(prev => prev - 1);
       }
       if (seconds === 0) {
         if (minutes === 0) {
@@ -48,7 +51,7 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
           clearInterval(myInterval);
           setIsCounter(false);
         } else {
-          setMinutes(minutes - 1);
+          setMinutes(prev => prev - 1);
           setSeconds(59);
         }
       }
