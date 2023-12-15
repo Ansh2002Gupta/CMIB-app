@@ -12,6 +12,7 @@ import CustomModal from "../../components/CustomModal/CustomModal";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import ImagePicker from "../../components/ImagePickerComponent/ImagePickerComponent";
+import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
 import style from "./ViewProfile.style";
 
@@ -28,41 +29,16 @@ const ViewProfileUI = (props) => {
   ];
 
   const renderProfileIcon = (iconType) => {
-    if (profileImage) {
-      return (
-        <View
-          style={[
-            style.initialsContainer,
-            showEditModal &&
-              iconType === "modalIcon" &&
-              style.editProfileContainer,
-          ]}
-        >
-          <Image
-            source={{ uri: profileImage }}
-            style={
-              showEditModal && iconType === "modalIcon" ? style.modalProfileImage : style.profileImageStyle
-            }
-          />
-        </View>
-      );
-    } else {
-      const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
-      return (
-        <View
-          style={[
-            style.initialsContainer,
-            showEditModal &&
-              iconType === "modalIcon" &&
-              style.editProfileContainer,
-          ]}
-        >
-          <CommonText title={initials} customTextStyle={style.initialsText} />
-        </View>
-      );
-    }
+    return (
+      <ProfileIcon
+        showEditModal={showEditModal}
+        iconType={iconType}
+        firstName={firstName}
+        lastName={lastName}
+        profileImage={profileImage}
+      />
+    );
   };
-
   const openImagePicker = async () => {
     try {
       const image = await ImagePicker.openPicker({
