@@ -17,16 +17,14 @@ function HeaderWithContentLayout() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [listItems, setListItems] = useState(items);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const isWebView = useIsWebView();
+  const { isWebView } = useIsWebView();
 
   const handleNewlyQualifiedPlacementsClick = () => {
     setListItems(newQualifiedPlacementsList);
   };
 
   const toggleSideBar = () => {
-    if (!isWebView) {
-      setSideBarVisible(!isSideBarVisible);
-    }
+    setSideBarVisible(true);
   };
 
   useEffect(() => {
@@ -47,7 +45,7 @@ function HeaderWithContentLayout() {
 
   return (
     <MainLayout
-      header={!isWebView ? <Header onPress={toggleSideBar} /> : null}
+      header={<Header onPress={toggleSideBar} />}
       content={<Outlet />}
       topSectionStyle={commonStyles.headerContainer}
       menu={

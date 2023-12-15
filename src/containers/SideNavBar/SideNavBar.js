@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import {
   Animated,
@@ -12,7 +12,7 @@ import styles from "./SideNavBar.style";
 
 const SideNavBar = ({ onClose, items, onPress }) => {
   const sideBarPosition = useRef(new Animated.Value(-300)).current;
-  const isWebView = useIsWebView();
+  const { isWebView } = useIsWebView();
 
   useEffect(() => {
     Animated.timing(sideBarPosition, {
