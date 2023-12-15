@@ -30,7 +30,6 @@ const style = {
     marginTop: -16,
     marginBottom: 24,
     color: colors.darkGrey,
-    fontFamily: "GeneralSans-Medium",
     fontSize: 14,
     lineHeight: 24,
   },
