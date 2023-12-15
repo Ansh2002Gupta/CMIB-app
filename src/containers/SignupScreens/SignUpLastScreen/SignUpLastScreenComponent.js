@@ -4,20 +4,28 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpUser";
+import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
-import { INTEREST_OPTIONS, urlRegex } from "../../../constants/constants";
+import {
+  urlRegex,
+  COMPANY_DETAIL_MAX_LENGTH,
+  FIELD_MIN_LENGTH,
+  INTEREST_OPTIONS,
+} from "../../../constants/constants";
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const { handleSignUpValidation } = useValidateSignUp();
+  const { handleSignUp } = useSignUpUser();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
+  const [validationError, setValidationError] = useState("");
 
   const [socialMediaLinks, setSocialMediaLinks] = useState({
     facebook: initialDetails.social_media_link?.facebook || "",
@@ -33,9 +41,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const [natureOfSupplier, setNatureOfSupplier] = useState(
     initialDetails.nature_of_supplier || ""
   );
-  const [companyType, setCompanyType] = useState(
-    initialDetails.company_type || ""
-  );
+  const [companyType, setCompanyType] = useState(initialDetails.type || "");
 
   const [options, setOptions] = useState(
     INTEREST_OPTIONS.map((option) => ({
@@ -96,7 +102,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       }
     });
 
-    if (companyDetails.length < 6 || companyDetails.length > 1000) {
+    if (
+      companyDetails.length < FIELD_MIN_LENGTH ||
+      companyDetails.length > COMPANY_DETAIL_MAX_LENGTH
+    ) {
       newErrors.companyDetails = intl.formatMessage({
         id: "label.company_details_validation",
       });
@@ -140,6 +149,19 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     }
   };
 
+  const onError = (err) => {
+    setValidationError(err);
+  };
+
+  const onSuccess = async (details) => {
+    signUpDispatch(setSignUpDetails(details));
+    handleSignUp(
+      signUpState.signUpDetail,
+      () => setShowSuccessSignUp(true),
+      (error) => onError(error)
+    );
+  };
+
   const handleSuccessModal = (value) => {
     if (value) {
       if (validateFields()) {
@@ -156,18 +178,17 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
         handleSignUpValidation(
           details,
-          () => {
-            signUpDispatch(setSignUpDetails(details));
-            setShowSuccessSignUp(true);
-          },
-          (error) => {
-            console.error("ERROR:", error);
-          }
+          () => onSuccess(details),
+          (error) => onError(error)
         );
       }
     } else {
       setShowSuccessSignUp(false);
     }
+  };
+
+  const handleDismissToast = () => {
+    setValidationError("");
   };
 
   const onClickGoToLogin = () => {
@@ -192,19 +213,23 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   return (
     <SignUpLastScreenUI
+      allFieldsFilled={allFieldsFilled}
+      companyDetails={companyDetails}
+      companyType={companyType}
+      errors={errors}
+      handleDismissToast={handleDismissToast}
+      handleInputChange={handleInputChange}
+      handleToggle={handleToggle}
+      handleSuccessModal={handleSuccessModal}
       intl={intl}
+      natureOfSupplier={natureOfSupplier}
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}
       options={options}
-      handleToggle={handleToggle}
-      handleSuccessModal={handleSuccessModal}
       showSuccessSignUp={showSuccessSignUp}
-      handleInputChange={handleInputChange}
       socialMediaLinks={socialMediaLinks}
-      companyDetails={companyDetails}
+      validationError={validationError}
       website={website}
-      errors={errors}
-      allFieldsFilled={allFieldsFilled}
     />
   );
 };

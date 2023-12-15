@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View, FlatList } from "@unthinkable/react-core-components";
+import { FlatList, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../../components/UploadImage/UploadImage";
 import {
   NATURE_OF_SUPPLIER,
@@ -16,19 +17,23 @@ import style from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = (props) => {
   const {
+    allFieldsFilled,
+    companyDetails,
+    companyType,
+    errors,
+    handleDismissToast,
+    handleInputChange,
+    handleSuccessModal,
+    handleToggle,
     intl,
+    natureOfSupplier,
     onClickGoToLogin,
     onGoBack,
     options,
-    handleToggle,
-    handleSuccessModal,
     showSuccessSignUp,
-    handleInputChange,
     socialMediaLinks,
-    companyDetails,
-    allFieldsFilled,
+    validationError,
     website,
-    errors,
   } = props;
 
   const renderItem = ({ item, index }) => {
@@ -124,6 +129,7 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_nature_of_supplier",
           })}
+          value={natureOfSupplier}
           isMandatory
           isDropdown
           onChangeValue={(value) =>
@@ -138,6 +144,7 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.select_company_type",
           })}
+          value={companyType}
           onChangeValue={(value) => handleInputChange(value, "companyType")}
           options={COMPANY_TYPE_OPTIONS}
           isMandatory
@@ -175,24 +182,34 @@ const SignUpLastScreenUI = (props) => {
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
       />
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
 
 SignUpLastScreenUI.propTypes = {
+  allFieldsFilled: PropTypes.func.isRequired,
+  companyDetails: PropTypes.string.isRequired,
+  companyType: PropTypes.string.isRequired,
+  errors: PropTypes.object,
+  handleDismissToast: PropTypes.func,
+  handleInputChange: PropTypes.func.isRequired,
+  handleSuccessModal: PropTypes.func.isRequired,
+  handleToggle: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  natureOfSupplier: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
-  handleToggle: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
-  handleSuccessModal: PropTypes.func.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
-  errors: PropTypes.object,
   socialMediaLinks: PropTypes.object.isRequired,
+  validationError: PropTypes.string,
   website: PropTypes.string.isRequired,
-  companyDetails: PropTypes.string.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  allFieldsFilled: PropTypes.func.isRequired,
 };
 
 export default SignUpLastScreenUI;
