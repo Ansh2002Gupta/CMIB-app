@@ -30,11 +30,6 @@ const style = {
     justifyContent: "space-between",
     alignItems: "center",
   },
-  headerStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
   infoText: {
     fontFamily: "GeneralSans-Medium",
     fontSize: 14,
