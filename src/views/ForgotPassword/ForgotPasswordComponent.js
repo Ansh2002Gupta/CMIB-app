@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 
 import ForgotPasswordUI from "./ForgotPasswordUI";
-import OtpViewComponent from "../OtpScreen";
+import OtpViewComponent from "../OtpView";
 import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
 import { validateEmail } from "../../constants/CommonFunctions";
 import { navigations } from "../../constants/routeNames";

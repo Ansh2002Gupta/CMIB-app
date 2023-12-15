@@ -3,11 +3,12 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes"; 
 
 import { navigations } from "../../constants/routeNames";
-import OtpViewUI from "./OtpViewUX";
+import OtpViewUI from "./OtpViewUI";
 import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
 import { validateOtp } from "../../constants/CommonFunctions";
 import { OTP_TRY_COUNT ,OTP_TIMER_SECOND,OTP_TIMER_MIN_MINUTES} from "../../constants/constants";
-function OtpViewComponent( {email}) {
+
+function OtpView( {email}) {
   const navigate = useNavigate();
   const intl = useIntl();
   const [errorMessage, setErrorMessage] = useState("");
@@ -77,4 +78,4 @@ function OtpViewComponent( {email}) {
   );
 }
 
-export default OtpViewComponent;
+export default OtpView;

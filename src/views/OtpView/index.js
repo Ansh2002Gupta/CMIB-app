@@ -1,2 +1,2 @@
-import OtpViewComponent from "./OtpViewComponent";
-export default OtpViewComponent;
+import OtpView from "./OtpView";
+export default OtpView;

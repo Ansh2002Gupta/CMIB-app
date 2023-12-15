@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import { ScrollView,TouchableOpacity,View } from "@unthinkable/react-core-components";
 
 import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
@@ -38,7 +39,9 @@ function CreateNewPasswordUI(props) {
     specialChar: false,
     match: false,
   });
-  const { isWebView } = useIsWebView();
+
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const isWebView = currentBreakpoint !== "xs";
   const width1800pxOrLess = currentBreakpoint !== "xxl";
   const width900pxOrLess =
     currentBreakpoint === "md" || currentBreakpoint === "sm";
