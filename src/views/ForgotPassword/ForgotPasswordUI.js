@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
@@ -27,7 +28,8 @@ const ForgotPasswordUI = (props) => {
     validationError,
   } = props;
 
-  const { isWebView } = useIsWebView();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const isWebView = currentBreakpoint !== "xs";
 
   const getResponsiveStyles = (str) => {
     switch (str) {
