@@ -1,9 +1,10 @@
 import React, { useState, useRef, useContext } from 'react';
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View, TextInput} from "@unthinkable/react-core-components";
+import { TextInput, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./OtpComponent.style";
 
 const OtpComponent = (props) => {
@@ -17,16 +18,10 @@ const OtpComponent = (props) => {
     errorMessage,
   } = props;
 
-
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
-
-
+  const { isWebView } = useIsWebView();
   const [activeInputIndex, setActiveInputIndex] = useState(null);
-
-
-  const [otp, setOtp] = useState(new Array(4).fill(''));
   const inputsRef = useRef(otp.map(() => React.createRef()));
+  const [otp, setOtp] = useState(new Array(4).fill(''));
 
   const handleOtpChange = (text, index) => {
     const newOtp = [...otp];
@@ -41,25 +36,6 @@ const OtpComponent = (props) => {
       inputsRef.current[index + 1].focus();
     }
   };
-
-
-  // useEffect(() => {
-  //   if (onOtpReceived) {
-  //     simulateOtpReceive(onOtpReceived);
-  //   }
-  // }, [onOtpReceived]);
-
-
-  // const simulateOtpReceive = (receivedOtp) => {
-  //   if (receivedOtp.length === otp.length) {
-  //     const newOtp = receivedOtp.split('');
-  //     setOtp(newOtp);
-  //     if (onOtpChange) {
-  //       onOtpChange(receivedOtp);
-  //     }
-  //     inputsRef.current[otp.length - 1].focus();
-  //   }
-  // };
 
   const handleInputFocus = (index) => {
     setActiveInputIndex(index);
@@ -104,9 +80,7 @@ const OtpComponent = (props) => {
 
   return (
     <View >
-
       <View style={styles.container}>
-
         <View style={styles.labelContainer}>
           <CommonText
             customTextStyle={[styles.label, isWebView && styles.webLabel, customLabelStyle]}
@@ -117,30 +91,24 @@ const OtpComponent = (props) => {
             title={` *`}
           />}
         </View>
-
         <View style={styles.otpContainer}>
           {renderInputs()}
         </View>
-
         {isError && <CommonText
           customTextStyle={styles.errorMsg}
           title={errorMessage}
         />}
       </View>
-
     </View>
   );
 };
 
 OtpComponent.propTypes = {
+  customLabelStyle: PropTypes.object,
+  errorMessage: PropTypes.string,
+  isError: PropTypes.bool,
+  isMandatory: PropTypes.bool,
   label: PropTypes.string.isRequired,
   onOtpChange: PropTypes.func.isRequired,
-  isMandatory: PropTypes.bool,
-  customLabelStyle: PropTypes.object,
-  isError: PropTypes.bool,
-  errorMessage: PropTypes.string,
 }
-
-
-
 export default OtpComponent;
