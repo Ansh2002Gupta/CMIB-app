@@ -9,7 +9,7 @@ import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
-import {useIsWebView} from "../../hooks/useIsWebView"
+import useIsWebView from "../../hooks/useIsWebView"
 import styles from "./ForgotPassword.style";
 
 
