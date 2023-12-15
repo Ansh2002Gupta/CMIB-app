@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
+  ActivityIndicator,
   Image,
   View,
   TouchableOpacity,
@@ -14,6 +15,7 @@ const SaveCancelButton = (props) => {
   const {
     buttonOneText,
     buttonTwoText,
+    displayLoader,
     onPressButtonOne,
     onPressButtonTwo,
     hasIconRight,
@@ -44,7 +46,15 @@ const SaveCancelButton = (props) => {
         ]}
         disabled={isNextDisabled}
       >
-        <CommonText customTextStyle={styles.titleStyle} title={buttonTwoText} />
+        {displayLoader ? (
+          <ActivityIndicator color={colors.white} />
+        ) : (
+          <CommonText
+            customTextStyle={styles.titleStyle}
+            title={buttonTwoText}
+          />
+        )}
+
         {hasIconRight && <Image source={images.iconArrowRightWhite} />}
       </TouchableOpacity>
     </View>
@@ -55,6 +65,7 @@ SaveCancelButton.propTypes = {
   buttonOneText: PropTypes.string.isRequired,
   buttonTwoText: PropTypes.string.isRequired,
   customContainerStyle: PropTypes.object.isRequired,
+  displayLoader: PropTypes.bool,
   hasIconRight: PropTypes.bool,
   hasIconLeft: PropTypes.bool,
   isNextDisabled: PropTypes.bool,

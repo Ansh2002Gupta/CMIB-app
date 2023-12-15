@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
@@ -16,16 +16,15 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   const intl = useIntl();
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [error, setError] = useState("");
-  const [isAnyPasswordFieldLeft, setIsAnyPasswordFieldLeft] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [validations, setValidations] = useState({
     length: false,
-    numeric: false,
-    uppercase: false,
     lowercase: false,
-    specialChar: false,
     match: false,
+    numeric: false,
+    specialChar: false,
+    uppercase: false,
   });
   const { errorWhileChangePassword, handleUseChangePassword, isLoading } =
     useChangePasswordApi();
@@ -34,20 +33,9 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     setOldPassword(val);
   };
 
-  const onChangeNewPassword = (val) => {
-    setNewPassword(val);
-    setIsAnyPasswordFieldLeft(false);
-  };
-
   const onChangeConfoirmNewPassword = (val) => {
     setConfirmNewPassword(val);
   };
-
-  useEffect(() => {
-    return () => {
-      setIsAnyPasswordFieldLeft(false);
-    };
-  }, []);
 
   const areAllFieldsValid = () => {
     return (
@@ -60,18 +48,20 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   };
 
   const areAllFieldFilledInPassword = () => {
-    if (!areAllFieldsValid()) {
-      setIsAnyPasswordFieldLeft(true);
-      return;
-    }
     if (newPassword !== confirmNewPassword) {
       setError(intl.formatMessage({ id: "label.password-not-match" }));
       return;
     }
     setError(null);
-    setIsAnyPasswordFieldLeft(false);
     if (areAllFieldsValid()) {
-      handleUseChangePassword(oldPassword, newPassword);
+      handleUseChangePassword({
+        //TODO
+        // email: ,
+        // old_password:,
+        // password: ,
+        // password_confirmation: ,
+        // otp: ,
+      });
     }
   };
 
@@ -111,7 +101,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               id: "label.password_placeholder",
             })}
             value={newPassword}
-            onChangeText={(val) => onChangeNewPassword(val)}
+            onChangeText={(val) => setNewPassword(val)}
             isMandatory
             eyeImage={true}
             isPassword={true}
@@ -142,7 +132,6 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               {...{
                 newPassword,
                 confirmNewPassword,
-                setIsAnyPasswordFieldLeft,
                 validations,
                 setValidations,
               }}
@@ -164,6 +153,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               onPressButtonOne={() => {
                 onPressCancel(false);
               }}
+              disabled={isLoading}
               onPressButtonTwo={() => areAllFieldFilledInPassword()}
               isNextDisabled={isNextDisabled()}
               buttonTwoText={intl.formatMessage({ id: "label.save" })}
