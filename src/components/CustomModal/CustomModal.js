@@ -15,6 +15,7 @@ import style from "./CustomModal.style";
 const CustomModal = (props) => {
   const {
     headerText,
+    headerTextStyle,
     secondaryText,
     buttonTitle,
     onPress,
@@ -22,12 +23,13 @@ const CustomModal = (props) => {
     children,
     isIconCross,
     onPressIconCross,
+    customInnerContainerStyle,
   } = props;
 
   return (
     <View>
       <Modal isVisible style={style.containerStyle}>
-        <View style={style.innerContainer}>
+        <View style={[style.innerContainer, customInnerContainerStyle]}>
           {isSuccess ? (
             <>
               <Image source={images.iconSuccess} />
@@ -45,7 +47,7 @@ const CustomModal = (props) => {
             <>
               <View style={style.headerStyle}>
                 <CommonText
-                  customTextStyle={style.headerText}
+                  customTextStyle={[style.headerText, headerTextStyle]}
                   title={headerText}
                 />
                 <TouchableOpacity onPress={onPressIconCross}>
@@ -63,12 +65,14 @@ const CustomModal = (props) => {
 
 CustomModal.propTypes = {
   headerText: PropTypes.string,
+  headerTextStyle: PropTypes.bool,
   isIconCross: PropTypes.bool,
   isSuccess: PropTypes.bool,
   onPress: PropTypes.func,
   onPressIconCross: PropTypes.func,
   secondaryText: PropTypes.string,
   buttonTitle: PropTypes.string,
+  customInnerContainerStyle: PropTypes.object,
 };
 
 export default CustomModal;

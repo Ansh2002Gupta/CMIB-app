@@ -174,6 +174,7 @@ const locale = {
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
   "label.jobs": "Jobs",
+  "label.old_password": "Old Password"
 };
 
 export default locale;

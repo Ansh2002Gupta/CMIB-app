@@ -8,7 +8,10 @@ import useIsWebView from "../hooks/useIsWebView";
 function Home() {
   const { isWebView } = useIsWebView();
   return (
-    <MainLayout menu={!isWebView ? <BottomBar /> : null} content={<Outlet />} />
+    <MainLayout
+      menu={!isWebView ? <BottomBar /> : <BottomBar />}
+      content={<Outlet />}
+    />
   );
 }
 

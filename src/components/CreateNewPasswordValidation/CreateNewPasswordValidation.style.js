@@ -1,4 +1,4 @@
-import colors from "../../../assets/colors";
+import colors from "../../assets/colors";
 
 const style = {
   bulletText: {
@@ -12,7 +12,7 @@ const style = {
     color: colors.black,
     fontWeight: "500",
   },
-  validationView: { flexDirection: "row", marginTop: 5 },
+  validationView: { flexDirection: "row", marginTop: 8 },
   bulletIconStyle: { width: 6, height: 6, borderRadius: 5, margin: 5 },
 };
 export default style;
