@@ -8,11 +8,11 @@ import style from "./DetailComponent.style";
 const DetailComponent = ({ details, headerText }) => {
   return (
     <View>
-      {headerText && (
+      {!!headerText && (
         <CommonText customTextStyle={style.headerText} title={headerText} />
       )}
-      {details.map((detail, index) => (
-        <View>
+      {details?.map((detail, index) => (
+        <View key={index}>
           <View style={style.titleContainer}>
             <CommonText
               title={detail.title}
@@ -35,7 +35,7 @@ const DetailComponent = ({ details, headerText }) => {
 
 DetailComponent.propTypes = {
   details: PropTypes.array.isRequired,
-  headerText: PropTypes.string.isRequired,
+  headerText: PropTypes.string,
 };
 
 export default DetailComponent;
