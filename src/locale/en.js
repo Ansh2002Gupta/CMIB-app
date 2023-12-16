@@ -174,6 +174,9 @@ const locale = {
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
   "label.jobs": "Jobs",
+  "label.company_logo": "Company Logo",
+  "label.contact_person_info": "Contact Person Information",
+  "label.balance_credit": "Balance Credit",
 };
 
 export default locale;

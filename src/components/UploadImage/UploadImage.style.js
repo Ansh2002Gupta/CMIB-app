@@ -12,6 +12,10 @@ const style = {
     backgroundColor: colors.secondaryGrey,
     alignItems: "center",
   },
+  showImageStyle: {
+    borderStyle: "solid",
+    borderColor: colors.lightGrey,
+  },
   imageContainer: {
     flex: 1,
     justifyContent: "center",
@@ -38,6 +42,7 @@ const style = {
     color: colors.darkBlue,
     fontSize: 14,
     lineHeight: 24,
+    fontWeight: "600",
   },
   innerContainer: {
     flexDirection: "row",
@@ -45,9 +50,6 @@ const style = {
     alignItems: "center",
     width: "100%",
     backgroundColor: "white",
-    // position: "absolute",
-    // justifyContent: "flex-end",
-    // bottom: 0,
     paddingLeft: 16,
     paddingRight: 16,
     borderBottomLeftRadius: 8,
