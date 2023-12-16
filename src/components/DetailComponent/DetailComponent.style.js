@@ -17,7 +17,6 @@ const style = {
   },
   innerContainer: { width: "100%" },
   rowStyle: { width: "50%" },
-
   starStyle: {
     color: colors.errorRed,
   },
