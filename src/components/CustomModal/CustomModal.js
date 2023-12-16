@@ -14,16 +14,16 @@ import style from "./CustomModal.style";
 
 const CustomModal = (props) => {
   const {
+    buttonTitle,
+    children,
+    customInnerContainerStyle,
     headerText,
     headerTextStyle,
-    secondaryText,
-    buttonTitle,
-    onPress,
     isSuccess,
-    children,
     isIconCross,
+    onPress,
     onPressIconCross,
-    customInnerContainerStyle,
+    secondaryText,
   } = props;
 
   return (
@@ -64,6 +64,8 @@ const CustomModal = (props) => {
 };
 
 CustomModal.propTypes = {
+  buttonTitle: PropTypes.string,
+  customInnerContainerStyle: PropTypes.object,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.bool,
   isIconCross: PropTypes.bool,
@@ -71,8 +73,6 @@ CustomModal.propTypes = {
   onPress: PropTypes.func,
   onPressIconCross: PropTypes.func,
   secondaryText: PropTypes.string,
-  buttonTitle: PropTypes.string,
-  customInnerContainerStyle: PropTypes.object,
 };
 
 export default CustomModal;

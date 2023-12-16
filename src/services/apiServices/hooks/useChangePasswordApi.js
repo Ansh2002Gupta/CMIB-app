@@ -40,12 +40,12 @@ const useChangePasswordApi = () => {
   const isError = postStatus === API_STATUS.ERROR;
 
   return {
+    changePasswordResult,
     errorWhileChangePassword,
     handleUseChangePassword,
     isError,
     isLoading,
     isSuccess,
-    changePasswordResult,
     postStatus,
   };
 };

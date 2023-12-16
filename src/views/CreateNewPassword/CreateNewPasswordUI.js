@@ -8,10 +8,10 @@ import {
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
-import NewPasswordValidation from "../../components/NewPasswordValidation";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
+import NewPasswordValidation from "../../components/NewPasswordValidation";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./CreateNewPassword.style";
@@ -35,11 +35,11 @@ function CreateNewPasswordUI(props) {
   const [isAnyPasswordFieldLeft, setIsAnyPasswordFieldLeft] = useState(false);
   const [validations, setValidations] = useState({
     length: false,
-    numeric: false,
-    uppercase: false,
     lowercase: false,
-    specialChar: false,
+    numeric: false,
     match: false,
+    specialChar: false,
+    uppercase: false,
   });
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);

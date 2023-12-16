@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import BaseLayout from "../Base";
-
 import layoutStyle from "./FiveColumn.style";
 
 function FiveColumn({
@@ -19,7 +18,6 @@ function FiveColumn({
   secoundSectionStyle,
   thirdSection,
   thirdSectionStyle,
- 
 }) {
   return (
     <BaseLayout style={{ ...layoutStyle, ...style }}>
@@ -47,30 +45,30 @@ function FiveColumn({
 }
 
 FiveColumn.defaultProps = {
-  style: {},
-  isLeftFillSpace: false,
-  isRightFillSpace: false,
   firstSectionStyle: {},
-  secoundSectionStyle: {},
-  thirdSectionStyle: {},
   fourthSectionStyle: {},
   fiveSectionStyle: {},
+  isLeftFillSpace: false,
+  isRightFillSpace: false,
+  style: {},
+  secoundSectionStyle: {},
+  thirdSectionStyle: {},
 };
 
 FiveColumn.propTypes = {
-  style: PropTypes.object,
   firstSectionStyle: PropTypes.object,
+  fiveSectionStyle: PropTypes.object,
+  firstSection: PropTypes.node,
+  fiveSection: PropTypes.node,
+  fourthSection: PropTypes.node,
+  fourthSectionStyle: PropTypes.object,
   isLeftFillSpace: PropTypes.bool,
   isRightFillSpace: PropTypes.bool,
-  firstSection: PropTypes.node,
-  secoundSection: PropTypes.node,
-  thirdSection: PropTypes.node,
-  fourthSection: PropTypes.node,
-  fiveSection: PropTypes.node,
+  style: PropTypes.object,
   secoundSectionStyle: PropTypes.object,
+  secoundSection: PropTypes.node,
   thirdSectionStyle: PropTypes.object,
-  fourthSectionStyle: PropTypes.object,
-  fiveSectionStyle: PropTypes.object,
+  thirdSection: PropTypes.node,
 };
 
 export default FiveColumn;

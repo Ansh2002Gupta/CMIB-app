@@ -67,7 +67,7 @@ const style = {
     paddingBottom: 16,
   },
   innerContainerStyle: {
-    maxHeight: "80%",
+    maxHeight: "90%",
   },
 };
 
