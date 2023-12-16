@@ -17,7 +17,6 @@ const styles = {
     fontSize: 14,
     paddingTop: 3,
   },
-  textImageView: {},
   moduleText: {
     color: colors.darkGrey,
     fontSize: 14,
@@ -64,7 +63,6 @@ const styles = {
   selectedItemBackground:{
     backgroundColor: colors.offWhite,
   },
-
   list: {
     paddingTop: 18,
     paddingBottom: 18,
