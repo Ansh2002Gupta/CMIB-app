@@ -26,7 +26,7 @@ const DetailComponent = ({ details, headerText }) => {
 
   return (
     <View>
-      {headerText && (
+      {!!headerText && (
         <CommonText customTextStyle={style.headerText} title={headerText} />
       )}
       <View style={containerStyle}>
