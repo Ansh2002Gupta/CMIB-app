@@ -63,4 +63,4 @@
 
 For web, use ```npm run web``` incase of error run ```FAST_REFRESH=false npm run web```
 
-For native, use react native command ```npx react-naive run-<android|ios>```
+For native, use react native command ```npx react-native run-<android|ios>```

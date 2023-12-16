@@ -5,9 +5,7 @@ import { Image, View } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import styles from "./ProfileIcon.style";
 
-const ProfileIcon = (props) => {
-  const { showEditModal, iconType, profileImage, firstName, lastName } = props;
-
+const ProfileIcon = ({ showEditModal, iconType, profileImage, firstName, lastName }) => {
   if (profileImage) {
     return (
       <View
@@ -46,11 +44,11 @@ const ProfileIcon = (props) => {
 };
 
 ProfileIcon.propTypes = {
-  showEditModal: PropTypes.bool,
-  iconType: PropTypes.string,
-  profileImage: PropTypes.string,
   firstName: PropTypes.string,
+  iconType: PropTypes.string,
   lastName: PropTypes.string,
+  profileImage: PropTypes.string,
+  showEditModal: PropTypes.bool,
 };
 
 export default ProfileIcon;

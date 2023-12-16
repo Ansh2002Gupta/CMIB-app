@@ -62,13 +62,13 @@ const CustomModal = (props) => {
 };
 
 CustomModal.propTypes = {
-  headerText: PropTypes.string,
+  buttonTitle: PropTypes.string.isRequired,
+  headerText: PropTypes.string.isRequired,
+  isSuccess: PropTypes.bool.isRequired,
   isIconCross: PropTypes.bool,
-  isSuccess: PropTypes.bool,
-  onPress: PropTypes.func,
+  onPress: PropTypes.func.isRequired,
   onPressIconCross: PropTypes.func,
-  secondaryText: PropTypes.string,
-  buttonTitle: PropTypes.string,
+  secondaryText: PropTypes.string.isRequired,
 };
 
 export default CustomModal;
