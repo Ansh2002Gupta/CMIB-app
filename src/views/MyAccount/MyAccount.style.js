@@ -2,8 +2,8 @@ import colors from "../../assets/colors";
 import { Dimensions } from "@unthinkable/react-core-components";
 
 const deviceHeight = Dimensions.get("window").height;
-const maxHeightPercentage = 0.8; // 80% of the device height
-const minHeightThreshold = 500; // Minimum threshold height for smaller screens
+const maxHeightPercentage = 0.8;
+const minHeightThreshold = 500;
 const maxHeight = deviceHeight * maxHeightPercentage;
 
 let modalHeight = maxHeight;
