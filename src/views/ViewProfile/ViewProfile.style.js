@@ -36,7 +36,7 @@ const style = {
   textStyle: {
     fontSize: 14,
     color: colors.black,
-    marginLeft: 2,
+    marginLeft: 8,
     fontWeight: "600",
   },
   picParentContainer: {

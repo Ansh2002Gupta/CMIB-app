@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Image,
@@ -18,6 +18,7 @@ import style from "./ViewProfile.style";
 
 const ViewProfileUI = (props) => {
   const { handleEditPopup, intl, onGoBack, showEditModal } = props;
+  const [hasChangedPhoto, setHasChangedPhoto] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   //TODO: Dummy data to be replaced by api data.
   const firstName = "Kashish";
@@ -27,6 +28,12 @@ const ViewProfileUI = (props) => {
     { title: "Mobile Number", value: "+91-1234 5678 21" },
     { title: "Email ID", value: "pooja.dhar@j&k.co" },
   ];
+
+  useEffect(() => {
+    if (!showEditModal) {
+      setHasChangedPhoto(false);
+    }
+  }, [showEditModal]);
 
   const renderProfileIcon = (iconType) => {
     return (
@@ -46,8 +53,8 @@ const ViewProfileUI = (props) => {
         cropperCircleOverlay: true,
       });
       if (image) {
-        handleEditPopup(false);
         setProfileImage(image?.sourceURL);
+        setHasChangedPhoto(true);
       }
     } catch (error) {
       //TODO: Replace this error log with a toast which has been created by Kashish.
@@ -104,13 +111,23 @@ const ViewProfileUI = (props) => {
                   />
                 </TouchableOpacity>
               </View>
-              <View style={[style.buttonStyle, style.secondButtonStyle]}>
-                <Image source={images.iconDelete} />
-                <CommonText
-                  customTextStyle={style.textStyle}
-                  title={intl.formatMessage({ id: "label.remove" })}
-                />
-              </View>
+              {hasChangedPhoto ? (
+                <View style={[style.buttonStyle, style.secondButtonStyle]}>
+                  <Image source={images.iconUpdate} />
+                  <CommonText
+                    customTextStyle={style.textStyle}
+                    title={intl.formatMessage({ id: "label.update" })}
+                  />
+                </View>
+              ) : (
+                <View style={[style.buttonStyle, style.secondButtonStyle]}>
+                  <Image source={images.iconDelete} />
+                  <CommonText
+                    customTextStyle={style.textStyle}
+                    title={intl.formatMessage({ id: "label.remove" })}
+                  />
+                </View>
+              )}
             </View>
           </CustomModal>
         )}
