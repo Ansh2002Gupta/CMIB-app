@@ -1,35 +1,68 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View, FlatList } from "@unthinkable/react-core-components";
+import { MediaQueryContext } from "@unthinkable/react-theme";
+import {
+  FlatList,
+  Platform,
+  ScrollView,
+  View,
+} from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
+import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
+import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import UploadImage from "../../../components/UploadImage/UploadImage";
+import useIsWebView from "../../../hooks/useIsWebView";
 import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
 } from "../../../constants/constants";
 import style from "./SignUpLastScreen.style";
 
-const SignUpLastScreenUI = (props) => {
-  const {
-    intl,
-    onClickGoToLogin,
-    onGoBack,
-    options,
-    handleToggle,
-    handleSuccessModal,
-    showSuccessSignUp,
-    handleInputChange,
-    socialMediaLinks,
-    companyDetails,
-    allFieldsFilled,
-    website,
-    errors,
-  } = props;
+const SignUpLastScreenUI = ({
+  intl,
+  onClickGoToLogin,
+  onGoBack,
+  options,
+  handleToggle,
+  handleSuccessModal,
+  showSuccessSignUp,
+  handleInputChange,
+  socialMediaLinks,
+  companyDetails,
+  allFieldsFilled,
+  website,
+  errors,
+}) => {
+  const isWeb = Platform.OS === "web";
+  const { isWebView } = useIsWebView();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+
+  const getResponsiveStyles = (str) => {
+    switch (str) {
+      case "signupContainer": {
+        if (
+          currentBreakpoint === "sm" ||
+          currentBreakpoint === "xs" ||
+          currentBreakpoint === "md"
+        ) {
+          return {
+            ...style.signupContainer,
+            ...style.smSignupContainer,
+          };
+        }
+        return {
+          ...style.signupContainer,
+        };
+      }
+      default:
+        return;
+    }
+  };
 
   const renderItem = ({ item, index }) => {
     return (
@@ -43,27 +76,9 @@ const SignUpLastScreenUI = (props) => {
     );
   };
 
-  return (
-    <View style={style.mainContainerStyle}>
-      {showSuccessSignUp && (
-        <CustomModal
-          headerText={intl.formatMessage({
-            id: "label.signup_success",
-          })}
-          secondaryText={intl.formatMessage({
-            id: "label.signup_info",
-          })}
-          buttonTitle={intl.formatMessage({
-            id: "label.go_back_to_login",
-          })}
-          onPress={onClickGoToLogin}
-          isSuccess
-        />
-      )}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={style.contentContainerStyle}
-      >
+  const renderFormContent = () => {
+    return (
+      <View style={style.formContainer}>
         <CommonText
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.social_media_presence" })}
@@ -154,12 +169,10 @@ const SignUpLastScreenUI = (props) => {
           keyExtractor={(item) => item.id}
         />
         <View style={style.seperator} />
-
         <CommonText
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.uplaod_company_logo" })}
         />
-
         <CommonText
           customTextStyle={style.infoStyle}
           title={intl.formatMessage({
@@ -167,14 +180,84 @@ const SignUpLastScreenUI = (props) => {
           })}
         />
         <UploadImage intl={intl} />
-      </ScrollView>
-      <SaveCancelButton
-        buttonOneText={intl.formatMessage({ id: "label.back" })}
-        onPressButtonOne={onGoBack}
-        onPressButtonTwo={() => handleSuccessModal(true)}
-        isNextDisabled={!allFieldsFilled()}
-        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
-      />
+      </View>
+    );
+  };
+
+  const renderFooterContent = () => {
+    return (
+      <View style={style.signupFooterContainer}>
+        <SaveCancelButton
+          buttonOneText={intl.formatMessage({ id: "label.back" })}
+          onPressButtonOne={onGoBack}
+          onPressButtonTwo={() => handleSuccessModal(true)}
+          isNextDisabled={!allFieldsFilled()}
+          buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
+        />
+        {isWebView && (
+          <LabelWithLinkText
+            label={intl.formatMessage({ id: "label.already_account" })}
+            linkText={intl.formatMessage({ id: "label.login_here" })}
+            onLinkClick={onClickGoToLogin}
+          />
+        )}
+      </View>
+    );
+  };
+
+  return (
+    <View
+      style={
+        isWebView
+          ? getResponsiveStyles("signupContainer")
+          : style.mainContainerStyle
+      }
+    >
+      {showSuccessSignUp && (
+        <CustomModal
+          headerText={intl.formatMessage({
+            id: "label.signup_success",
+          })}
+          secondaryText={intl.formatMessage({
+            id: "label.signup_info",
+          })}
+          buttonTitle={intl.formatMessage({
+            id: "label.go_back_to_login",
+          })}
+          onPress={onClickGoToLogin}
+          isSuccess
+        />
+      )}
+      {isWebView && (
+        <View>
+          <HeaderTextWithLabelAndDescription
+            label={intl.formatMessage({ id: "label.step_four" })}
+            headerText={intl.formatMessage({
+              id: "label.other_details",
+            })}
+          />
+        </View>
+      )}
+      {isWeb ? (
+        <View
+          style={
+            !isWebView
+              ? [style.contentContainerStyle, style.extraSmallContainer]
+              : style.webContentContainer
+          }
+        >
+          {renderFormContent()}
+          {renderFooterContent()}
+        </View>
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={style.contentContainerStyle}
+        >
+          {renderFormContent()}
+        </ScrollView>
+      )}
+      {!isWeb && renderFooterContent()}
     </View>
   );
 };

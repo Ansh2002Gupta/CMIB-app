@@ -1,35 +1,61 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { MediaQueryContext } from "@unthinkable/react-theme";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
+import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
+import useIsWebView from "../../../hooks/useIsWebView";
 import { SALUTATION_OPTIONS } from "../../../constants/constants";
 import style from "./SignUpThirdScreen.style";
 
-const SignUpThirdScreenUI = (props) => {
-  const {
-    intl,
-    onGoBack,
-    onClickNext,
-    handleInputChange,
-    salutation,
-    mobileNo,
-    emailId,
-    designation,
-    name,
-    allFieldsFilled,
-    errors,
-    headerText,
-  } = props;
+const SignUpThirdScreenUI = ({
+  intl,
+  onGoBack,
+  onClickNext,
+  handleInputChange,
+  salutation,
+  mobileNo,
+  emailId,
+  designation,
+  name,
+  allFieldsFilled,
+  errors,
+  headerText,
+  onClickGoToLogin,
+}) => {
+  const isWeb = Platform.OS === "web";
+  const { isWebView } = useIsWebView();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
-  return (
-    <>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={style.contentContainerStyle}
-      >
+  const getResponsiveStyles = (str) => {
+    switch (str) {
+      case "signupContainer": {
+        if (
+          currentBreakpoint === "sm" ||
+          currentBreakpoint === "xs" ||
+          currentBreakpoint === "md"
+        ) {
+          return {
+            ...style.signupContainer,
+            ...style.smSignupContainer,
+          };
+        }
+        return {
+          ...style.signupContainer,
+        };
+      }
+      default:
+        return;
+    }
+  };
+
+  const renderFormContent = () => {
+    return (
+      <View style={style.formContainer}>
         <CommonText customTextStyle={style.headerText} title={headerText} />
         <View style={style.inputContainer}>
           <CustomTextInput
@@ -106,34 +132,83 @@ const SignUpThirdScreenUI = (props) => {
           onChangeText={(val) => handleInputChange(val, "email")}
           isMandatory
         />
-      </ScrollView>
-      <View style={style.buttonContainer}>
+      </View>
+    );
+  };
+
+  const renderFooterContent = () => {
+    return (
+      <View style={!isWeb ? style.buttonContainer : style.webSignupFooter}>
         <SaveCancelButton
           buttonOneText={intl.formatMessage({ id: "label.back" })}
           onPressButtonOne={onGoBack}
           onPressButtonTwo={onClickNext}
           hasIconRight
-          isNextDisabled={!allFieldsFilled()}
+          // isNextDisabled={!allFieldsFilled()}
           buttonTwoText={intl.formatMessage({ id: "label.next" })}
         />
+        {isWebView && (
+          <LabelWithLinkText
+            labelText={intl.formatMessage({ id: "label.already_account" })}
+            linkText={intl.formatMessage({ id: "label.login_here" })}
+            onLinkClick={onClickGoToLogin}
+          />
+        )}
       </View>
-    </>
+    );
+  };
+
+  return (
+    <View
+      style={
+        isWebView
+          ? getResponsiveStyles("signupContainer")
+          : style.innerContainer
+      }
+    >
+      {isWebView && (
+        <View>
+          <HeaderTextWithLabelAndDescription
+            label={intl.formatMessage({ id: "label.step_three" })}
+            headerText={intl.formatMessage({
+              id: "label.contact_person_details",
+            })}
+          />
+        </View>
+      )}
+      {isWebView ? (
+        <View style={style.webContainerStyle}>
+          {renderFormContent()}
+          {renderFooterContent()}
+        </View>
+      ) : (
+        <>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={style.contentContainerStyle}
+          >
+            {renderFormContent()}
+          </ScrollView>
+          {renderFooterContent()}
+        </>
+      )}
+    </View>
   );
 };
 
 SignUpThirdScreenUI.propTypes = {
+  allFieldsFilled: PropTypes.func.isRequired,
+  designation: PropTypes.string.isRequired,
+  emailId: PropTypes.string.isRequired,
+  errors: PropTypes.object,
+  handleInputChange: PropTypes.func.isRequired,
+  headerText: PropTypes.string.isRequired,
   intl: PropTypes.object.isRequired,
+  mobileNo: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onClickNext: PropTypes.func.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
   salutation: PropTypes.string.isRequired,
-  mobileNo: PropTypes.string.isRequired,
-  emailId: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  designation: PropTypes.string.isRequired,
-  allFieldsFilled: PropTypes.func.isRequired,
-  errors: PropTypes.object,
-  headerText: PropTypes.string.isRequired,
 };
 
 export default SignUpThirdScreenUI;

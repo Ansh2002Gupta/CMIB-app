@@ -6,6 +6,7 @@ const style = {
     fontSize: 18,
     marginBottom: 24,
     paddingTop: 24,
+    fontWeight: "600",
   },
   contentContainerStyle: { flex: 1 },
   innerContainer: {
@@ -13,6 +14,22 @@ const style = {
     paddingRight: 16,
     flex: 1,
     backgroundColor: colors.backgroundColor,
+  },
+  signUpSubContainer: {
+    flex: 1,
+  },
+  webFormHeaderStyle: {
+    paddingTop: 0,
+  },
+  signupFooterContainer: {
+    gap: 32,
+  },
+  smSignupContainer: {
+    gap: 32,
+  },
+  signupContainer: {
+    flex: 1,
+    gap: 56,
   },
 };
 

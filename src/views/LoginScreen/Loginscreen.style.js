@@ -249,6 +249,9 @@ const style = {
     fontFamily: isWeb ? "General Sans" : "GeneralSans-SemiBold",
   },
   FollowUsIconsStyle: { marginTop: 32, marginBottom: 20 },
+  headerText: {
+    fontSize: 28
+  }
 };
 
 export default style;

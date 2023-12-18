@@ -17,7 +17,7 @@ const locale = {
   "label.forgot_password": "Forgot Password?",
   "label.password_field_error":
     "Please provide all the necessary fields for the password.",
-  "label.dont_have_account": "Don't have an account?  ",
+  "label.dont_have_account": "Don't have an account?",
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
   "label.enter_email_to_reset_password":
@@ -170,6 +170,16 @@ const locale = {
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
   "label.jobs": "Jobs",
+  "label.welcome_to_cmib": "Welcome to CMI&B Company Sign-up",
+  "label.step_one": "Step 1",
+  "label.step_two": "Step 2",
+  "label.step_three": "Step 3",
+  "label.step_four": "Step 4",
+  "label.already_account": "Already have an account?  ",
+  "label.login_here": "Login here",
+  "label.basic_details": "Basic Details",
+  "label.contact_person_details": "Contact Person Details",
+  "label.other_details": "Other Details"
 };
 
 export default locale;

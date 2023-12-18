@@ -11,6 +11,10 @@ const style = {
     flex: 1,
     paddingTop: 24,
   },
+  extraSmallContainer: {
+    paddingLeft: 16,
+    paddingRight: 16
+  },
   mainContainerStyle: {
     flex: 1,
     paddingHorizontal: 16,
@@ -33,6 +37,42 @@ const style = {
     lineHeight: 24,
   },
   secondInput: { marginLeft: 24, flex: 1 },
+  webContentContainer: {
+    backgroundColor: colors.white,
+    gap: 32,
+    flex: 1,
+  },
+  smSignupContainer: {
+    gap: 32,
+  },
+  signupContainer: {
+    flex: 1,
+    gap: 56,
+  },
+  signupFooterContainer: {
+    gap: 32,
+  },
+  alreadyAccountContainer: {
+    flexDirection: "row",
+    alignSelf: "center",
+  },
+  alreadyAccountText: {
+    fontSize: 14,
+    color: colors.mediumGray,
+  },
+  loginHere: {
+    color: colors.darkBlue,
+    fontSize: 14,
+    alignSelf: "center",
+    fontWeight: "600",
+    cursor: "pointer",
+  },
+  customSaveButtonContainer: {
+    bottom: 0,
+  },
+  formContainer: {
+    flex: 1
+  }
 };
 
 export default style;

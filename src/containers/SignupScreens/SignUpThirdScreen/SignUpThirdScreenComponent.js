@@ -9,7 +9,7 @@ import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../constants/CommonFunctions";
 import { numRegex } from "../../../constants/constants";
 
-const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
+const SignUpThirdScreenComponent = ({ tabHandler, index, module, onClickGoToLogin }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const initialContactDetails = signUpState.signUpDetail.contact_details || [];
@@ -74,7 +74,6 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
       headerText = intl.formatMessage({ id: "label.for_ca_jobs" });
       break;
   }
-
   const allFieldsFilled = () => {
     const requiredFields = [name, salutation, designation, mobileNo, emailId];
     return requiredFields.every((field) => String(field).trim() !== "");
@@ -208,6 +207,7 @@ const SignUpThirdScreenComponent = ({ tabHandler, index, module }) => {
       allFieldsFilled={allFieldsFilled}
       errors={errors}
       headerText={headerText}
+      onClickGoToLogin={onClickGoToLogin}
     />
   );
 };

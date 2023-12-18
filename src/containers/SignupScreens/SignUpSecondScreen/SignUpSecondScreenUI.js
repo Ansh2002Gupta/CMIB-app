@@ -1,25 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { MediaQueryContext } from "@unthinkable/react-theme";
+import {
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 
+import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
+import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
+import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import useIsWebView from "../../../hooks/useIsWebView";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
 import style from "./SignUpSecondScreen.style";
 
-const SignUpSecondScreenUI = (props) => {
-  const {
-    intl,
-    onGoBack,
-    onClickNext,
-    formData,
-    handleInputChange,
-    errors,
-    allFieldsFilled,
-    industryOptions,
-    stateOptions,
-  } = props;
-
+const SignUpSecondScreenUI = ({
+  intl,
+  onGoBack,
+  onClickNext,
+  formData,
+  handleInputChange,
+  errors,
+  allFieldsFilled,
+  industryOptions,
+  stateOptions,
+  onClickGoToLogin,
+}) => {
   const {
     companyName,
     registrationNo,
@@ -33,12 +42,35 @@ const SignUpSecondScreenUI = (props) => {
     state,
   } = formData;
 
-  return (
-    <View style={style.innerContainer}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={style.contentContainerStyle}
-      >
+  const isWeb = Platform.OS === "web";
+  const { isWebView } = useIsWebView();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+
+  const getResponsiveStyles = (str) => {
+    switch (str) {
+      case "signupContainer": {
+        if (
+          currentBreakpoint === "sm" ||
+          currentBreakpoint === "xs" ||
+          currentBreakpoint === "md"
+        ) {
+          return {
+            ...style.signupContainer,
+            ...style.smSignupContainer,
+          };
+        }
+        return {
+          ...style.signupContainer,
+        };
+      }
+      default:
+        return;
+    }
+  };
+
+  const renderFormContent = () => {
+    return (
+      <View style={style.formContainer}>
         <CustomTextInput
           label={intl.formatMessage({ id: "label.company_name" })}
           isMandatory
@@ -188,7 +220,12 @@ const SignUpSecondScreenUI = (props) => {
             />
           </View>
         </View>
-      </ScrollView>
+      </View>
+    );
+  };
+
+  const renderFooter = () => (
+    <View style={style.signupFooterContainer}>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
         onPressButtonOne={onGoBack}
@@ -196,7 +233,46 @@ const SignUpSecondScreenUI = (props) => {
         hasIconRight
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
+        customSaveButtonContainer={isWebView && style.customSaveButtonContainer}
       />
+      {isWebView && (
+        <LabelWithLinkText
+        labelText={intl.formatMessage({ id: "label.already_account" })}
+        linkText={intl.formatMessage({ id: "label.login_here" })}
+        onLinkClick={onClickGoToLogin}
+        />
+      )}
+    </View>
+  );
+
+  return (
+    <View
+      style={
+        isWebView
+          ? getResponsiveStyles("signupContainer")
+          : style.innerContainer
+      }
+    >
+      {isWebView && (
+        <HeaderTextWithLabelAndDescription
+          label={intl.formatMessage({ id: "label.step_two" })}
+          headerText={intl.formatMessage({ id: "label.basic_details" })}
+        />
+      )}
+      {!isWeb ? (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={style.contentContainerStyle}
+        >
+          {renderFormContent()}
+        </ScrollView>
+      ) : (
+        <View style={!isWebView ? [style.contentContainerStyle, style.webContentContainer] : style.webContentContainer}>
+          {renderFormContent()}
+          {renderFooter()}
+        </View>
+      )}
+      {!isWeb && renderFooter()}
     </View>
   );
 };

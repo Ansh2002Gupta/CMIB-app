@@ -9,6 +9,7 @@ const style = {
     flexDirection: "row",
     borderRadius: 8,
     flex: 1,
+    cursor: "pointer"
   },
   containerStyle: { flexDirection: "row", bottom: 16 },
   disableButtonStyle: {
@@ -21,11 +22,12 @@ const style = {
     flexDirection: "row",
     borderRadius: 8,
     flex: 1,
+    cursor: "pointer"
   },
   disableStyle: {
     opacity: 0.5,
   },
-  secondButotnStyle: {
+  secondButtonStyle: {
     marginLeft: 8,
   },
   titleStyle: {

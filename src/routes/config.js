@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "@unthinkable/react-core-components";
 
 import ContentLayout from "../pages/ContentLayout";
 import CreateNewPassword from "../views/CreateNewPassword/index";
@@ -20,7 +21,7 @@ import { navigations } from "../constants/routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
-const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
+const SignUpWithPublicAccess = withPublicAccess(Platform.OS === 'web' ? HeaderWithContentLayout : ContentLayout);
 
 const config = [
   {

@@ -7,7 +7,8 @@ import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
-import HeaderText from "../../components/HeaderText/HeaderText";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ForgotPassword.style";
 
 const ForgotPasswordUI = (props) => {
@@ -28,17 +29,20 @@ const ForgotPasswordUI = (props) => {
       case "forgotPasswordWebContainer": {
         if (currentBreakpoint === "sm") {
           return {
+            ...commonStyles.commonWebContainer,
             ...styles.forgotPasswordWebContainer,
             ...styles.smScreenContainers,
           };
         }
         if (currentBreakpoint === "md") {
           return {
+            ...commonStyles.commonWebContainer,
             ...styles.forgotPasswordWebContainer,
             ...styles.mdScreenContainers,
           };
         }
         return {
+          ...commonStyles.commonWebContainer,
           ...styles.forgotPasswordWebContainer,
         };
       }
@@ -116,14 +120,12 @@ const ForgotPasswordUI = (props) => {
               : [styles.container, styles.mobContainer]
           }
         >
-          <HeaderText
-            label={intl.formatMessage({
+          <HeaderTextWithLabelAndDescription
+            description={intl.formatMessage({
               id: "label.enter_email_to_reset_password",
             })}
-            text={intl.formatMessage({ id: "label.forgot_password" })}
-            customTextStyle={
-              isWebView ? getResponsiveStyles("label.forgot_password") : {}
-            }
+            headerText={intl.formatMessage({ id: "label.forgot_password" })}
+            customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.forgot_password")} : styles.headerText}
             customContainerStyles={isWebView && styles.forgotHeaderContainer}
           />
           {!isWebView && <View style={styles.borderStyle} />}

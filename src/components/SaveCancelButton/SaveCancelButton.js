@@ -18,16 +18,16 @@ const SaveCancelButton = (props) => {
     onPressButtonTwo,
     hasIconRight,
     isNextDisabled,
+    customSaveButtonContainer
   } = props;
 
   return (
-    <View style={styles.containerStyle}>
+    <View style={[styles.containerStyle, customSaveButtonContainer]}>
       <TouchableOpacity
         onPress={onPressButtonOne}
         style={styles.disableButtonStyle}
       >
         <Image source={images.iconArrowLeft} />
-
         <CommonText
           customTextStyle={styles.disableTextStyle}
           title={buttonOneText}
@@ -37,7 +37,7 @@ const SaveCancelButton = (props) => {
         onPress={onPressButtonTwo}
         style={[
           styles.buttonStyle,
-          styles.secondButotnStyle,
+          styles.secondButtonStyle,
           isNextDisabled && styles.disableStyle,
         ]}
         disabled={isNextDisabled}
@@ -59,6 +59,7 @@ SaveCancelButton.propTypes = {
   isNextDisabled: PropTypes.bool,
   onPressButtonOne: PropTypes.func,
   onPressButtonTwo: PropTypes.func,
+  customSaveButtonContainer: PropTypes.object,
 };
 
 export default SaveCancelButton;

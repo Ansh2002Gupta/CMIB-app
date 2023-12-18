@@ -5,7 +5,6 @@ const style = {
   mainView: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
-    // height: "100%",
   },
   container: {
     paddingLeft: 16,
@@ -163,6 +162,9 @@ const style = {
       gridRowGap: 16,
       marginBottom: 32,
     },
+    headerText: {
+      fontSize: 28,
+    }
   },
 };
 export default style;

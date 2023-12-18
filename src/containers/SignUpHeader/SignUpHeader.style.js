@@ -36,6 +36,21 @@ const style = {
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
+  webIconBar: {
+    transform: "rotate(90deg)",
+  },
+  webStepperContainer: {
+    flexDirection: "row-reverse"
+  },
+  lgStepperContainer: {
+    flex: 2.5
+  },
+  smStepperContainer: {
+    flex: 1.5
+  },
+  stepperContainer: {
+    flex: 3.5
+  }
 };
 
 export default style;

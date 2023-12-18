@@ -10,7 +10,7 @@ import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
-import HeaderText from "../../components/HeaderText/HeaderText";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./CreateNewPassword.style";
 
@@ -106,12 +106,10 @@ function CreateNewPasswordUI(props) {
           }}
         >
           <View style={styles.container}>
-            <HeaderText
-              text={intl.formatMessage({ id: "label.create_new_password" })}
-              label={intl.formatMessage({ id: "label.enter_new_password" })}
-              customTextStyle={
-                isWebView ? getResponsiveStyles("label.createNewPassword") : {}
-              }
+            <HeaderTextWithLabelAndDescription
+              headerText={intl.formatMessage({ id: "label.create_new_password" })}
+              description={intl.formatMessage({ id: "label.enter_new_password" })}
+              customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.createNewPassword")} : styles.headerText}
               customSecondHeadingStyles={
                 isWebView
                   ? getResponsiveStyles("label.createNewPasswordText")

@@ -5,9 +5,22 @@ import colors from "../../assets/colors";
 const commonStyles = {
   headerContainer: {
     top: 0,
-    zIndex: 1,
+    zIndex: 2,
     backgroundColor: colors.white,
     ...(Platform.OS === 'web' ? { position: "sticky" } : {}),
+  },
+  commonWebContainer: {
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    backgroundColor: colors.white,
+    padding: 40,
+    width: "32%",
+    alignSelf: "center",
+    marginTop: 48,
+    zIndex: 1,
+    boxShadow: "0px 4px 32px 0px rgba(97, 108, 130, 0.04)",
+    justifyContent: "center"
   },
 };
 
