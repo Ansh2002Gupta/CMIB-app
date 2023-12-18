@@ -29,14 +29,6 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   const { errorWhileChangePassword, handleUseChangePassword, isLoading } =
     useChangePasswordApi();
 
-  const onChangeOldPassword = (val) => {
-    setOldPassword(val);
-  };
-
-  const onChangeConfoirmNewPassword = (val) => {
-    setConfirmNewPassword(val);
-  };
-
   const areAllFieldsValid = () => {
     return (
       validations.length &&
@@ -88,7 +80,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               id: "label.password_placeholder",
             })}
             value={oldPassword}
-            onChangeText={(val) => onChangeOldPassword(val)}
+            onChangeText={(val) => setOldPassword(val)}
             isMandatory
             eyeImage={true}
             isPassword={true}
@@ -114,7 +106,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               id: "label.password_placeholder",
             })}
             value={confirmNewPassword}
-            onChangeText={(val) => onChangeConfoirmNewPassword(val)}
+            onChangeText={(val) => setConfirmNewPassword(val)}
             isMandatory
             eyeImage={true}
             isPassword={true}
