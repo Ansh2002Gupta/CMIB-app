@@ -71,7 +71,11 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   };
 
   return (
-    <ScrollView style={styles.mainView}>
+    <ScrollView
+      style={styles.mainView}
+      contentContainerStyle={styles.contentContainerStyle}
+      keyboardShouldPersistTaps="handled"
+    >
       <FiveColumn
         firstSection={
           <CustomTextInput

@@ -5,7 +5,9 @@ import {
   Modal,
   TouchableOpacity,
   View,
+  Platform,
 } from "@unthinkable/react-core-components";
+import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
 
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import CommonText from "../CommonText";
@@ -29,7 +31,10 @@ const CustomModal = (props) => {
   return (
     <View>
       <Modal isVisible style={style.containerStyle}>
-        <View style={[style.innerContainer, customInnerContainerStyle]}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={[style.innerContainer, customInnerContainerStyle]}
+        >
           {isSuccess ? (
             <>
               <Image source={images.iconSuccess} />
@@ -57,7 +62,7 @@ const CustomModal = (props) => {
               {children}
             </>
           )}
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );

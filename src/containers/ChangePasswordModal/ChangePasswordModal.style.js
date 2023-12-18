@@ -16,6 +16,9 @@ const style = {
   customContainerStyle: {
     bottom: 0,
   },
+  contentContainerStyle: {
+    flexGrow: 1,
+  },
 };
 
 export default style;
