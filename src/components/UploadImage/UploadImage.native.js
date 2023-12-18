@@ -41,6 +41,7 @@ const UploadImage = ({ intl }) => {
       }
     });
   };
+
   return (
     <View
       style={[

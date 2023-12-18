@@ -15,6 +15,7 @@ const style = {
   imageContainer: {
     flex: 1,
     justifyContent: "center",
+    borderBottom: `1px solid ${colors.lightGrey}`,
   },
   selectedImageStyle: {
     height: 120,
@@ -23,6 +24,8 @@ const style = {
   selectedImageContainer: {
     borderStyle: "solid",
     borderColor: colors.lightGrey,
+    borderWidth: 1,
+    borderRadius: 8,
   },
   textContainer: {
     flexDirection: "row",
@@ -64,6 +67,9 @@ const style = {
   infoStyle: {
     color: colors.darkGrey,
     lineHeight: 18,
+  },
+  hideRawInputField: {
+    display: "none",
   },
 };
 
