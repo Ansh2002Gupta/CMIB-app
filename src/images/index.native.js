@@ -63,9 +63,12 @@ import iconArrowDown from "../../public/images/iconArrowDown/iconArrowDown.png";
 import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLogowhite.png";
 import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
 import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
+import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
+
 const images = {
   iconArrowUp,
   iconArrowDown,
+  iconArrowDown2,
   avatar,
   logo,
   sun,

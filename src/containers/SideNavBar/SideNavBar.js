@@ -32,7 +32,7 @@ const SideNavBar = ({ onClose, items, onPress }) => {
   };
 
   return (
-    <>
+    <View style={[styles.container, isWebView ? styles.mainContainer : null]}>
       {isWebView ? (
         <></>
       ) : (
@@ -44,12 +44,13 @@ const SideNavBar = ({ onClose, items, onPress }) => {
       <Animated.View
         style={{
           ...styles.sideBar,
+          ...(isWebView ? styles.mainContainer : {}),
           transform: [{ translateX: sideBarPosition }],
         }}
       >
         <SideBar items={items} onPress={onPress} />
       </Animated.View>
-    </>
+    </View>
   );
 };
 

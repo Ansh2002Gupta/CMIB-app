@@ -3,6 +3,13 @@ import colors from "../../assets/colors";
 
 const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  mainContainer: {
+    width: "100%",
+    height: "100%",
+  },
   sideBar: {
     position: "absolute",
     top: 0,
@@ -10,12 +17,13 @@ const styles = StyleSheet.create({
     left: 0,
     backgroundColor: colors.darkBlueShade,
     zIndex: 2,
+    height: "100%",
   },
   overLay: {
     backgroundColor: "transparent",
     zIndex: 1,
-    borderWidth: 1,
-    width: width,
+    // borderWidth: 1,
+    // width: width,
     height: height,
   },
 });

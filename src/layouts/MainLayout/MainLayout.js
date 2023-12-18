@@ -1,12 +1,18 @@
-import React, { useContext } from "react";
-import { MediaQueryContext, useComponentTheme } from "@unthinkable/react-theme";
+import React from "react";
+import {  useComponentTheme } from "@unthinkable/react-theme";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-function MainLayout({ header, menu, content, topSectionStyle }) {
+function MainLayout({
+  header,
+  menu,
+  content,
+  topSectionStyle,
+  leftSectionStyle,
+  rightSectionStyle,
+  isRightFillSpace = true,
+}) {
   const theme = useComponentTheme("Auth");
-
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   let layout = (
     <TwoRow
@@ -37,8 +43,10 @@ function MainLayout({ header, menu, content, topSectionStyle }) {
           topSectionStyle={topSectionStyle}
         />
       }
+      leftSectionStyle={leftSectionStyle}
+      rightSectionStyle={rightSectionStyle}
       isLeftFillSpace={false}
-      isRightFillSpace={true}
+      isRightFillSpace={isRightFillSpace}
     />
   );
 

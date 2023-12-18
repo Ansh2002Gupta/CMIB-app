@@ -1,8 +1,12 @@
 import colors from "../../assets/colors";
 
 const styles = {
-  container: {
+  mainContainer: {
     flex: 1,
+    width: "100%",
+  },
+  container:{
+    flex: 1 
   },
   imageView: {
     alignItems: "center",

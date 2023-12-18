@@ -81,56 +81,60 @@ const SideBar = ({ items, onPress }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.imageView}>
-        <Image source={images.iconCmibLogoWhite} />
-      </View>
-      {showStaticContent && (
-        <>
-          <View>
-            <CommonText
-              customTextStyle={styles.moduleText}
-              title={intl.formatMessage({
-                id: "label.module",
-              })}
-            />
-            <View style={styles.textView}>
+    <View style={styles.mainContainer}>
+      <View style={styles.container}>
+        <View style={styles.imageView}>
+          <Image source={images.iconCmibLogoWhite} />
+        </View>
+        {showStaticContent && (
+          <>
+            <View>
               <CommonText
-                customTextStyle={styles.newQualifiedText}
+                customTextStyle={styles.moduleText}
                 title={intl.formatMessage({
-                  id: "label.newely_qualified_placements",
+                  id: "label.module",
                 })}
               />
-              <TouchableOpacity onPress={handleOnPress}>
+              <View style={styles.textView}>
                 <CommonText
-                  customTextStyle={styles.changeText}
-                  title={intl.formatMessage({ id: "label.change" })}
+                  customTextStyle={styles.newQualifiedText}
+                  title={intl.formatMessage({
+                    id: "label.newely_qualified_placements",
+                  })}
                 />
-              </TouchableOpacity>
+                <TouchableOpacity onPress={handleOnPress}>
+                  <CommonText
+                    customTextStyle={styles.changeText}
+                    title={intl.formatMessage({ id: "label.change" })}
+                  />
+                </TouchableOpacity>
+              </View>
+              <CommonText
+                customTextStyle={styles.sessionText}
+                title={intl.formatMessage({ id: "label.session" })}
+              />
             </View>
-          </View>
-          <CommonText
-            customTextStyle={styles.sessionText}
-            title={intl.formatMessage({ id: "label.session" })}
-          />
-        </>
-      )}
-      <View style={styles.container}>
-        <FlatList
-          data={currentList}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-      <View style={styles.bottomView}>
-        <View style={styles.imageTextView}>
-          <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
-          <CommonText
-            customTextStyle={styles.visitWebsiteText}
-            title={intl.formatMessage({ id: "label.visit_website" })}
+          </>
+        )}
+
+        <View style={styles.container}>
+          <FlatList
+            data={currentList}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
           />
         </View>
-        <Image source={images.iconRightArrow} style={styles.globalIcon} />
+
+        <View style={styles.bottomView}>
+          <View style={styles.imageTextView}>
+            <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
+            <CommonText
+              customTextStyle={styles.visitWebsiteText}
+              title={intl.formatMessage({ id: "label.visit_website" })}
+            />
+          </View>
+          <Image source={images.iconRightArrow} style={styles.globalIcon} />
+        </View>
       </View>
     </View>
   );

@@ -79,10 +79,12 @@ const iconRightArrow = "images/iconRightArrow/iconRightArrow.png";
 const iconFooterGlobal = "images/iconFooterGlobal/iconFooterGlobal.png";
 const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
 const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
+const iconArrowDown2 = "images/iconArrowDown2/iconArrowDown2.png";
 
 const images = {
   iconArrowUp,
   iconArrowDown,
+  iconArrowDown2,
   avatar,
   logo,
   sun,
