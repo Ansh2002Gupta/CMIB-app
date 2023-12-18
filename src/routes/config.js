@@ -11,6 +11,7 @@ import ForgotPassword from "../views/ForgotPassword/index";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import Home from "../pages/Home";
 import JobsView from "../views/JobsView/JobsView";
+import LoginFormView from "../views/LoginFormView/LoginFormView";
 import LoginScreen from "../views/LoginScreen/index";
 import ProfileView from "../views/Profile";
 import RoundOne from "../views/RoundOneView";
@@ -133,7 +134,7 @@ const config = [
     views: [
       {
         viewPath: "",
-        element: <LoginScreen />,
+        element: <LoginFormView />,
       },
     ],
   },

@@ -1,78 +1,45 @@
-import React, { useContext, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
+import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
-  View,
-  TouchableOpacity,
   ScrollView,
+  TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
-import CommonText from "../../components/CommonText";
 import CheckBox from "../../components/CheckBox/CheckBox";
+import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
-import FollowUsIcons from "../../components/FollowUsIcons";
 import HeaderText from "../../components/HeaderText/HeaderText";
+import FollowUsIcons from "../../components/FollowUsIcons";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
-import styles from "./Loginscreen.style";
-import UploadImage from "../../components/UploadImage/UploadImage";
+import useLoginForm from "./controllers/useLoginForm";
+import { getResponsiveStyles, styles } from "./LoginFormContainer.style";
 
-const LoginScreenUI = (props) => {
+const LoginFormContainer = () => {
   const {
-    onLogin,
     active,
-    onForgotPasswordClick,
-    toggleUser,
-    loginDisabled,
     errorMessage,
-    userName,
-    password,
-    onChangeUsername,
-    onChangePassword,
-    intl,
-    onCreateNewPasswordClick,
-    options,
-    handleToggle,
+    loginDisabled,
     isLoading,
     errorWhileLoggingIn,
-  } = props;
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
-  const width1800pxOrLess = currentBreakpoint !== "xxl";
-  const width900pxOrLess =
-    currentBreakpoint === "xs" || currentBreakpoint === "sm";
+    handleToggle,
+    onForgotPasswordClick,
+    onCreateNewPasswordClick,
+    toggleUser,
+    onLogin,
+    onChangePassword,
+    onChangeUsername,
+    options,
+    password,
+    userName,
+  } = useLoginForm();
 
-  const getResponsiveStyles = (str) => {
-    switch (str) {
-      case "label.cmib": {
-        if (width900pxOrLess) {
-          return {
-            ...styles.webView.headerText,
-            ...styles.webView.headerText900px,
-          };
-        }
-        if (width1800pxOrLess) {
-          return {
-            ...styles.webView.headerText,
-            ...styles.webView.headerText1800px,
-          };
-        }
-        return styles.webView.headerText;
-      }
-      case "label.cmibText": {
-        if (width900pxOrLess) {
-          return {
-            ...styles.webView.subHeadingText,
-            ...styles.webView.subHeadingText900px,
-          };
-        }
-        return styles.webView.subHeadingText;
-      }
-      default: {
-        return {};
-      }
-    }
-  };
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const intl = useIntl();
+
+  const isWebView = currentBreakpoint !== "xs";
 
   return (
     <WebViewLoginSignUpWrapper shouldApplyStyles={isWebView}>
@@ -86,7 +53,11 @@ const LoginScreenUI = (props) => {
           <HeaderText
             text={intl.formatMessage({ id: "label.login_to_cmib" })}
             label={intl.formatMessage({ id: "label.secure_login_access" })}
-            customTextStyle={isWebView ? getResponsiveStyles("label.cmib") : {}}
+            customTextStyle={
+              isWebView
+                ? getResponsiveStyles({ str: "label.cmib", currentBreakpoint })
+                : {}
+            }
             customSecondHeadingStyles={
               isWebView && styles.webView.subHeadingText
             }
@@ -280,23 +251,4 @@ const LoginScreenUI = (props) => {
   );
 };
 
-LoginScreenUI.propTypes = {
-  active: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string,
-  errorWhileLoggingIn: PropTypes.string,
-  handleToggle: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  loginDisabled: PropTypes.bool.isRequired,
-  options: PropTypes.array.isRequired,
-  onCreateNewPasswordClick: PropTypes.func.isRequired,
-  onChangePassword: PropTypes.func.isRequired,
-  onChangeUsername: PropTypes.func.isRequired,
-  onLogin: PropTypes.func.isRequired,
-  onForgotPasswordClick: PropTypes.func.isRequired,
-  password: PropTypes.string.isRequired,
-  toggleUser: PropTypes.func.isRequired,
-  userName: PropTypes.string.isRequired,
-};
-
-export default LoginScreenUI;
+export default LoginFormContainer;
