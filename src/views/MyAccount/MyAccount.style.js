@@ -1,4 +1,16 @@
 import colors from "../../assets/colors";
+import { Dimensions } from "@unthinkable/react-core-components";
+
+const deviceHeight = Dimensions.get("window").height;
+const maxHeightPercentage = 0.8; // 80% of the device height
+const minHeightThreshold = 500; // Minimum threshold height for smaller screens
+const maxHeight = deviceHeight * maxHeightPercentage;
+
+let modalHeight = maxHeight;
+
+if (deviceHeight < minHeightThreshold) {
+  modalHeight = minHeightThreshold;
+}
 
 const style = {
   optionCotainer: {
@@ -67,7 +79,8 @@ const style = {
     paddingBottom: 16,
   },
   innerContainerStyle: {
-    maxHeight: "90%",
+    height: modalHeight,
+    maxHeight: maxHeight,
   },
 };
 

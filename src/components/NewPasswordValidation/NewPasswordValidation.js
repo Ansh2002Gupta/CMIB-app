@@ -9,8 +9,8 @@ import styles from "./NewPasswordValidation.style";
 
 const NewPasswordValidation = ({
   confirmNewPassword,
-  newPassword,
   customContainerStyles,
+  newPassword,
   validations,
   setValidations,
 }) => {
