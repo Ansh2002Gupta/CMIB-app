@@ -17,7 +17,7 @@ const useChangePasswordApi = () => {
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileChangePassword && setErrorWhileChangePassword("");
-      const res = await Http.post(`company/change-password`, payload);
+      const res = await Http.post(`company/change-password-otp`, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setChangePasswordResult(res.data);
