@@ -10,43 +10,21 @@ import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWit
 import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
-import style from "./SignUpWelcomeScreen.style";
+import { getResponsiveStyles, style } from "./SignUpWelcomeScreen.style";
 
 const SignUpWelcomeScreenUI = ({
-  intl,
-  onClickNext,
   contactDetails,
   handleDismissToast,
-  setContactDetails,
-  options,
-  setOptions,
+  intl,
+  onClickNext,
   onClickGoToLogin,
+  options,
+  setContactDetails,
+  setOptions,
   validationError,
 }) => {
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-
-  const getResponsiveStyles = (str) => {
-    switch (str) {
-      case "signupContainer": {
-        if (
-          currentBreakpoint === "sm" ||
-          currentBreakpoint === "xs" ||
-          currentBreakpoint === "md"
-        ) {
-          return {
-            ...style.signupContainer,
-            ...style.smSignupContainer,
-          };
-        }
-        return {
-          ...style.signupContainer,
-        };
-      }
-      default:
-        return;
-    }
-  };
 
   const handleToggle = (id) => {
     const updatedItems = options.map((item) => {
@@ -80,7 +58,7 @@ const SignUpWelcomeScreenUI = ({
     <View
       style={
         isWebView
-          ? getResponsiveStyles("signupContainer")
+          ? getResponsiveStyles({str: "signupContainer", currentBreakpoint})
           : style.innerContainer
       }
     >
@@ -131,16 +109,21 @@ const SignUpWelcomeScreenUI = ({
   );
 };
 
+SignUpWelcomeScreenUI.defaultProps = {
+  handleDismissToast: () => {},
+  validationError: false,
+};
+
 SignUpWelcomeScreenUI.propTypes = {
   contactDetails: PropTypes.array.isRequired,
   handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
   onClickNext: PropTypes.func.isRequired,
+  onClickGoToLogin: PropTypes.func.isRequired,
   setContactDetails: PropTypes.func.isRequired,
   setOptions: PropTypes.func.isRequired,
   validationError: PropTypes.bool,
-  onClickGoToLogin: PropTypes.func,
 };
 
 export default SignUpWelcomeScreenUI;

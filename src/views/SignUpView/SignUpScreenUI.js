@@ -10,8 +10,7 @@ import SignUpThirdScreen from "../../containers/SignupScreens/SignUpThirdScreen/
 import SignUpLastScreen from "../../containers/SignupScreens/SignUpLastScreen/index";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
-import commonStyles from "../../theme/styles/commonStyles";
-import style from "./SignUpScreen.style";
+import { getResponsiveStyles, style } from "./SignUpScreen.style";
 
 const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -48,47 +47,6 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
   const headerText = intl.formatMessage({ id });
   const image = images[imageKey];
 
-  const getResponsiveStyles = (str) => {
-    switch (str) {
-      case "signUpWebContainer": {
-        if (currentBreakpoint === "lg") {
-          return {
-            ...commonStyles.commonWebContainer,
-            ...style.signUpWebContainer,
-            ...style.largeScreenContainer,
-          };
-        }
-        if (currentBreakpoint === "md") {
-          return {
-            ...commonStyles.commonWebContainer,
-            ...style.signUpWebContainer,
-            ...style.width900pxOrLessContainer,
-          };
-        }
-        if (currentBreakpoint === "sm") {
-          return {
-            ...commonStyles.commonWebContainer,
-            ...style.signUpWebContainer,
-            ...style.smScreenContainer,
-          };
-        }
-        if (currentBreakpoint === "xs") {
-          return {
-            ...commonStyles.commonWebContainer,
-            ...style.signUpWebContainer,
-            ...style.extraSmallScreenContainer,
-          };
-        }
-        return {
-          ...commonStyles.commonWebContainer,
-          ...style.signUpWebContainer,
-        };
-      }
-      default:
-        return;
-    }
-  };
-
   return (
     <View style={!isWebView ? style.container : style.webContainer}>
       <SignUpHeader
@@ -99,7 +57,7 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
       />
       {isWebView ? (
         <View style={style.webSubContainer}>
-          <View style={getResponsiveStyles("signUpWebContainer")}>
+          <View style={getResponsiveStyles({str: "signUpWebContainer", currentBreakpoint})}>
             <ActiveTabComponent
               tabHandler={onHandleTab}
               onClickGoToLogin={onClickGoToLogin}

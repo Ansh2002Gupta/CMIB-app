@@ -18,16 +18,16 @@ import {
   SALUTATION_OPTIONS,
   WOMENT_PLACEMENT,
 } from "../../../constants/constants";
-import style from "./SignUpThirdScreen.style";
+import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 
 const SignUpThirdScreenUI = ({
-  intl,
   allFieldsFilled,
-  errors,
-  onClickGoToLogin,
   contactDetails,
+  errors,
   handleDismissToast,
   handleInputChange,
+  intl,
+  onClickGoToLogin,
   onClickNext,
   onGoBack,
   validationError,
@@ -50,28 +50,6 @@ const SignUpThirdScreenUI = ({
         return intl.formatMessage({ id: "label.for_women_placements" });
       default:
         return intl.formatMessage({ id: "label.for_ca_jobs" });
-    }
-  };
-
-  const getResponsiveStyles = (str) => {
-    switch (str) {
-      case "signupContainer": {
-        if (
-          currentBreakpoint === "sm" ||
-          currentBreakpoint === "xs" ||
-          currentBreakpoint === "md"
-        ) {
-          return {
-            ...style.signupContainer,
-            ...style.smSignupContainer,
-          };
-        }
-        return {
-          ...style.signupContainer,
-        };
-      }
-      default:
-        return;
     }
   };
 
@@ -180,7 +158,7 @@ const SignUpThirdScreenUI = ({
           onPressButtonOne={onGoBack}
           onPressButtonTwo={onClickNext}
           hasIconRight
-          // isNextDisabled={!allFieldsFilled()}
+          isNextDisabled={!allFieldsFilled()}
           buttonTwoText={intl.formatMessage({ id: "label.next" })}
         />
         {isWebView && (
@@ -198,7 +176,7 @@ const SignUpThirdScreenUI = ({
     <View
       style={
         isWebView
-          ? getResponsiveStyles("signupContainer")
+          ? getResponsiveStyles({str: "signupContainer", currentBreakpoint})
           : style.innerContainer
       }
     >
@@ -238,6 +216,13 @@ const SignUpThirdScreenUI = ({
   );
 };
 
+SignUpThirdScreenUI.defaultProps = {
+  errors: {},
+  handleDismissToast: ()=>{},
+  onClickGoToLogin: ()=>{},
+  validationError: "",
+};
+
 SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
@@ -245,10 +230,10 @@ SignUpThirdScreenUI.propTypes = {
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  onClickGoToLogin: PropTypes.func,
   onClickNext: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   validationError: PropTypes.string,
-  onClickGoToLogin: PropTypes.func,
 };
 
 export default SignUpThirdScreenUI;

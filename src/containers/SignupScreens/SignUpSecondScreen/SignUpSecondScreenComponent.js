@@ -231,6 +231,7 @@ const SignUpSecondScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
 
 SignUpSecondScreenComponent.propTypes = {
   tabHandler: PropTypes.func.isRequired,
+  onClickGoToLogin: PropTypes.func.isRequired,
 };
 
 export default SignUpSecondScreenComponent;

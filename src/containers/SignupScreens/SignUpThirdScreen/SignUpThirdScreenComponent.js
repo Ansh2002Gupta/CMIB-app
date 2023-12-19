@@ -191,6 +191,7 @@ const SignUpThirdScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
 
 SignUpThirdScreenComponent.propTypes = {
   tabHandler: PropTypes.func.isRequired,
+  onClickGoToLogin: PropTypes.func.isRequired,
 };
 
 export default SignUpThirdScreenComponent;

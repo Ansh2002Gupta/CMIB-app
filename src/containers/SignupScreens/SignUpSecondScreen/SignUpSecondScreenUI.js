@@ -10,60 +10,38 @@ import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelBut
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
-import style from "./SignUpSecondScreen.style";
+import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = ({
-  intl,
-  onGoBack,
-  onClickNext,
-  formData,
-  handleInputChange,
-  errors,
   allFieldsFilled,
+  errors,
+  formData,
+  handleDismissToast,
+  handleInputChange,
   industryOptions,
-  stateOptions,
+  intl,
+  onClickNext,
   onClickGoToLogin,
+  onGoBack,
+  stateOptions,
   validationError,
-  handleDismissToast
 }) => {
   const {
-    companyName,
-    registrationNo,
-    noOfPartners,
     address,
-    emailId,
-    telephoneNo,
     code,
-    entity,
+    companyName,
     currentIndustry,
+    emailId,
+    entity,
+    noOfPartners,
+    registrationNo,
     state,
+    telephoneNo,
   } = formData;
 
   const isWeb = Platform.OS === "web";
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-
-  const getResponsiveStyles = (str) => {
-    switch (str) {
-      case "signupContainer": {
-        if (
-          currentBreakpoint === "sm" ||
-          currentBreakpoint === "xs" ||
-          currentBreakpoint === "md"
-        ) {
-          return {
-            ...style.signupContainer,
-            ...style.smSignupContainer,
-          };
-        }
-        return {
-          ...style.signupContainer,
-        };
-      }
-      default:
-        return;
-    }
-  };
 
   const renderFormContent = () => {
     return (
@@ -228,7 +206,7 @@ const SignUpSecondScreenUI = ({
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
         hasIconRight
-        // isNextDisabled={!allFieldsFilled()}
+        isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
         customSaveButtonContainer={isWebView && style.customSaveButtonContainer}
       />
@@ -246,7 +224,7 @@ const SignUpSecondScreenUI = ({
     <View
       style={
         isWebView
-          ? getResponsiveStyles("signupContainer")
+          ? getResponsiveStyles({str: "signupContainer", currentBreakpoint})
           : style.innerContainer
       }
     >
@@ -284,6 +262,13 @@ const SignUpSecondScreenUI = ({
       )}
     </View>
   );
+};
+
+SignUpSecondScreenUI.defaultProps = {
+  handleDismissToast: () => {},
+  industryOptions: [],
+  stateOptions: [],
+  validationError: "",
 };
 
 SignUpSecondScreenUI.propTypes = {

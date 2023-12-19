@@ -1,6 +1,6 @@
 import colors from "../../../assets/colors";
 
-const style = {
+export const style = {
   headerText: {
     color: colors.black,
     fontSize: 16,
@@ -14,7 +14,7 @@ const style = {
   },
   extraSmallContainer: {
     paddingLeft: 16,
-    paddingRight: 16
+    paddingRight: 16,
   },
   mainContainerStyle: {
     flex: 1,
@@ -36,7 +36,10 @@ const style = {
     fontSize: 14,
     lineHeight: 24,
   },
-  secondInput: { marginLeft: 24, flex: 1 },
+  secondInput: {
+    marginLeft: 24,
+    flex: 1
+  },
   webContentContainer: {
     backgroundColor: colors.white,
     gap: 32,
@@ -71,8 +74,28 @@ const style = {
     bottom: 0,
   },
   formContainer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 };
 
-export default style;
+export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
+  switch (str) {
+    case "signupContainer": {
+      if (
+        currentBreakpoint === "sm" ||
+        currentBreakpoint === "xs" ||
+        currentBreakpoint === "md"
+      ) {
+        return {
+          ...style.signupContainer,
+          ...style.smSignupContainer,
+        };
+      }
+      return {
+        ...style.signupContainer,
+      };
+    }
+    default:
+      return;
+  }
+};

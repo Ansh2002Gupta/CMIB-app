@@ -1,6 +1,6 @@
 import colors from "../../../assets/colors";
 
-const style = {
+export const style = {
   inputContainer: {
     flexDirection: "row",
   },
@@ -11,12 +11,22 @@ const style = {
   },
   webContentContainer: {
     gap: 32,
+    flex: 1,
+  },
+  registrationInput: {
     flex: 1
   },
-  registrationInput: { flex: 1 },
-  partnerInput: { marginLeft: 24, maxWidth: 100 },
-  noInput: { marginLeft: 24, flex: 1 },
-  codeInput: { maxWidth: 100 },
+  partnerInput: {
+    marginLeft: 24,
+    maxWidth: 100
+  },
+  noInput: {
+    marginLeft: 24,
+    flex: 1
+  },
+  codeInput: {
+    maxWidth: 100
+  },
   innerContainer: {
     paddingLeft: 16,
     paddingRight: 16,
@@ -52,8 +62,28 @@ const style = {
     bottom: 0,
   },
   formContainer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 };
 
-export default style;
+export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
+  switch (str) {
+    case "signupContainer": {
+      if (
+        currentBreakpoint === "sm" ||
+        currentBreakpoint === "xs" ||
+        currentBreakpoint === "md"
+      ) {
+        return {
+          ...style.signupContainer,
+          ...style.smSignupContainer,
+        };
+      }
+      return {
+        ...style.signupContainer,
+      };
+    }
+    default:
+      return;
+  }
+};

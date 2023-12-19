@@ -22,7 +22,7 @@ import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
 } from "../../../constants/constants";
-import style from "./SignUpLastScreen.style";
+import { getResponsiveStyles, style } from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = ({
   allFieldsFilled,
@@ -46,28 +46,6 @@ const SignUpLastScreenUI = ({
   const isWeb = Platform.OS === "web";
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-
-  const getResponsiveStyles = (str) => {
-    switch (str) {
-      case "signupContainer": {
-        if (
-          currentBreakpoint === "sm" ||
-          currentBreakpoint === "xs" ||
-          currentBreakpoint === "md"
-        ) {
-          return {
-            ...style.signupContainer,
-            ...style.smSignupContainer,
-          };
-        }
-        return {
-          ...style.signupContainer,
-        };
-      }
-      default:
-        return;
-    }
-  };
 
   const renderItem = ({ item, index }) => {
     return (
@@ -216,7 +194,7 @@ const SignUpLastScreenUI = ({
     <View
       style={
         isWebView
-          ? getResponsiveStyles("signupContainer")
+          ? getResponsiveStyles({str: "signupContainer", currentBreakpoint})
           : style.mainContainerStyle
       }
     >
@@ -273,6 +251,12 @@ const SignUpLastScreenUI = ({
       )}
     </View>
   );
+};
+
+SignUpLastScreenUI.defaultProps = {
+  errors: {},
+  handleDismissToast: () => {},
+  validationError: "",
 };
 
 SignUpLastScreenUI.propTypes = {
