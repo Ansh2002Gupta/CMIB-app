@@ -8,7 +8,7 @@ import {
 
 import CommonText from "../../components/CommonText";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import LogoutModel from "../../components/LogoutModal/LogoutModal";
+import LogoutModel from "../../containers/LogoutModal/LogoutModal";
 import images from "../../images";
 import style from "./MyAccount.style";
 
