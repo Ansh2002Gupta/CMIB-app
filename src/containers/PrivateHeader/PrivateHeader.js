@@ -1,17 +1,17 @@
 import React, { useContext, useState } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
-  View,
   Image,
   TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
-import CommonText from "../CommonText";
 import images from "../../images";
-import styles from "./HeaderForLoggedInUser.style";
+import styles from "./PrivateHeader.style";
 
-const HeaderForLoggedInUser = ({ onPress, showCloseIcon }) => {
+const PrivateHeader = ({ onPress, showCloseIcon }) => {
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [menuIconVisible, setMenuIconVisible] = useState(true);
@@ -114,4 +114,4 @@ const HeaderForLoggedInUser = ({ onPress, showCloseIcon }) => {
   );
 };
 
-export default HeaderForLoggedInUser;
+export default PrivateHeader;

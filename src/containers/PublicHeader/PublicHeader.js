@@ -4,9 +4,9 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View, Image } from "@unthinkable/react-core-components";
 
 import images from "../../images";
-import styles from "./HeaderForNonLoggedInUser.style";
+import styles from "./PublicHeader.style";
 
-const HeaderForNonLoggedInUser = () => {
+const PublicHeader = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const hideRightIcons =
     currentBreakpoint === "xs" || currentBreakpoint === "sm";
@@ -66,4 +66,4 @@ const HeaderForNonLoggedInUser = () => {
   );
 };
 
-export default HeaderForNonLoggedInUser;
+export default PublicHeader;

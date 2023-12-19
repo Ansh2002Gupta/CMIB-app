@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import HeaderForLoggedInUser from "../../components/HeaderForLoggedInUser/HeaderForLoggedInUser";
-import HeaderForNonLoggedInUser from "../../components/HeaderForNonLoggedInUser.js/HeaderForNonLoggedInUser";
+import PublicHeader from "../PublicHeader/PublicHeader";
+import PrivateHeader from "../PrivateHeader/PrivateHeader";
 import { getAuthToken } from "../../utils/getAuthToken";
 
 const Header = ({ onPress, showCloseIcon }) => {
@@ -27,12 +27,9 @@ const Header = ({ onPress, showCloseIcon }) => {
   return (
     <>
       {isuserLoggedIn ? (
-        <HeaderForLoggedInUser
-          onPress={onPress}
-          showCloseIcon={showCloseIcon}
-        />
+        <PrivateHeader onPress={onPress} showCloseIcon={showCloseIcon} />
       ) : (
-        <HeaderForNonLoggedInUser />
+        <PublicHeader />
       )}
     </>
   );
