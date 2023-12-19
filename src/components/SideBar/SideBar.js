@@ -13,7 +13,7 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./SideBar.style";
 
-const SideBar = ({ items, onPress }) => {
+const SideBar = ({ items, handleItemListRendering }) => {
   const intl = useIntl();
   const [currentList, setCurrentList] = useState(items);
   const [selectedList, setSelectedList] = useState(null);
@@ -75,7 +75,7 @@ const SideBar = ({ items, onPress }) => {
   }, [items]);
 
   const handleRenderList = () => {
-    onPress();
+    handleItemListRendering();
     setShowStaticContent(false);
   };
 

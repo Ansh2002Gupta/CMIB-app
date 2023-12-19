@@ -10,7 +10,7 @@ import SideBar from "../../components/SideBar/SideBar";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./SideNavBar.style";
 
-const SideNavBar = ({ onClose, onPress, items }) => {
+const SideNavBar = ({ onClose, handleItemListRendering, items }) => {
   const sideBarPosition = useRef(new Animated.Value(-300)).current;
   const { isWebView } = useIsWebView();
 
@@ -47,7 +47,7 @@ const SideNavBar = ({ onClose, onPress, items }) => {
           transform: [{ translateX: sideBarPosition }],
         }}
       >
-        <SideBar items={items} onPress={onPress} />
+        <SideBar items={items} handleItemListRendering={handleItemListRendering} />
       </Animated.View>
     </>
   );
@@ -55,7 +55,7 @@ const SideNavBar = ({ onClose, onPress, items }) => {
 
 SideNavBar.propTypes = {
   onClose: PropTypes.func,
-  onPress: PropTypes.func.isRequired,
+  handleItemListRendering: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
 };
 

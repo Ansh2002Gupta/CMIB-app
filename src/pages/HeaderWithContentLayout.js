@@ -53,7 +53,7 @@ function HeaderWithContentLayout() {
           <SideNavBar
             onClose={toggleSideBar}
             items={listItems}
-            onPress={handleNewlyQualifiedPlacementsClick}
+            handleItemListRendering={handleNewlyQualifiedPlacementsClick}
           />
         ) : null
       }
