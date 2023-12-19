@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import images from "../../images";
 
@@ -52,6 +53,9 @@ const LogoutModel = ({ onCancel ,onSave}) => {
   );
 };
 
-LogoutModel.propTypes = {};
+LogoutModel.propTypes = {
+  onCancel: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+};
 
 export default LogoutModel;
