@@ -14,7 +14,7 @@ import images from "../../images";
 import style from "./MyAccount.style";
 
 const MyAccountUI = (props) => {
-  const { handleOptionClick, intl, options,isLogout,handleLogoutClick } = props;
+  const { handleOptionClick, intl, options,isLogout,handleLogoutClick,saveLogout } = props;
   //TODO: Replace this dummy data with api data.
   const profileImage = "";
   const firstName = "Kashish";
@@ -84,10 +84,9 @@ const MyAccountUI = (props) => {
 
       {isLogout && (
         <LogoutModel
-        onPressCancel={handleLogoutClick}
-        >
-        
-        </LogoutModel>
+        onCancel={handleLogoutClick}
+        onSave={saveLogout}
+       />
       ) }
     </>
   );

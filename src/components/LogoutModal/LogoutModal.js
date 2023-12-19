@@ -1,27 +1,22 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-
 import images from "../../images";
 
 import CustomModal from "../../components/CustomModal/CustomModal";
 import CommonText from "../CommonText";
-import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton"
-
-
 import style from "./logoutModal.style";
 import MultiRow from "../../core/layouts/MultiRow";
 import TwoRowButton from "../TwoRowButton/TwoRowButton";
+import  useLogoutAPI from "../../services/apiServices/hooks/useLogoutAPI"
 
-const LogoutModel = ({ onPressCancel }) => {
+const LogoutModel = ({ onCancel ,onSave}) => {
   const intl = useIntl();
-
+  const { handleUserLogout,isLoading } = useLogoutAPI();
   const Warning = images.Warning;
 
   const columnConfigs = [
     {
       content: <Warning style={style.logo}/>,
-      style: { backgroundColor: 'lightblue' },
     },
     {
       content:  <CommonText customTextStyle={style.headerText} title={"Logout"} />,
@@ -33,10 +28,18 @@ const LogoutModel = ({ onPressCancel }) => {
       content:    <TwoRowButton
       leftButtonText={intl.formatMessage({ id: "label.cancel" })}
       onLeftButtonClick={() => {
-        onPressCancel(false);
+        onCancel(false);
       }}
-      rightButtonText={intl.formatMessage({ id: "label.save" })} //rightButtonText
-      onRightButtonClick={() => {console.log("Save clicked !!")}}
+      rightButtonText={intl.formatMessage({ id: "label.save" })} 
+      onRightButtonClick={() => { 
+        handleUserLogout(
+          {},
+          ()=>{
+            onCancel(false);
+            onSave();
+          },
+          (error)=>{console.log("Error ==>",error )}); 
+         }}
     />,
     },
     

@@ -17,7 +17,6 @@ const useResetPasswordAPI = () => {
       errorWhileResetPassword && setErrorWhileResetPassword("");
       const res = await Http.post(COMPANY_FORGOT_PASSWORD_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
-        console.log("API Success ==> ",JSON.stringify(res.data) );
         setPostStatus(API_STATUS.SUCCESS);
         setResetPasswordResult(res.data);
         successCallback(res.data.message);
@@ -26,7 +25,6 @@ const useResetPasswordAPI = () => {
         setPostStatus(API_STATUS.ERROR);
         errorCallback(res);
     } catch (err) {
-      console.log("API Failure ==> ",JSON.stringify(err) );
       const errorMessage =
       err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       errorCallback(errorMessage);

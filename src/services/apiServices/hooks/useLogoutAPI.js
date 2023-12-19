@@ -6,6 +6,7 @@ import { AuthContext } from "../../../globalContext/auth/authProvider";
 import { clearAuthAndLogout } from "../../../globalContext/auth/authActions";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import {COMPANY_LOGOUT} from"../apiEndPoint"
 
 const useLogoutAPI = () => {
   const [logoutApiStatus, setLogoutApiStatus] = useState(API_STATUS.IDLE);
@@ -13,22 +14,25 @@ const useLogoutAPI = () => {
   const [errorWhileLoggingOut, setErrorWhileLoggingOut] = useState("");
   const [, authDispatch] = useContext(AuthContext);
 
-  const handleUserLogout = async (payload) => {
+  const handleUserLogout = async (payload , successCallback ,errorCallback) => {
     try {
       setLogoutApiStatus(API_STATUS.LOADING);
       errorWhileLoggingOut && setErrorWhileLoggingOut("");
-      const res = await Http.post(`company/logout`, payload);
+      const res = await Http.post(COMPANY_LOGOUT, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setLogoutApiStatus(API_STATUS.SUCCESS);
         await Storage.removeAll();
         authDispatch(clearAuthAndLogout());
         setLoginUserResult(res.data);
+        successCallback();
         return;
       }
       setLogoutApiStatus(API_STATUS.ERROR);
       setErrorWhileLoggingOut(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      errorCallback(res);
     } catch (err) {
       setLogoutApiStatus(API_STATUS.ERROR);
+      errorCallback(err);
       if (err.response?.data?.message) {
         setErrorWhileLoggingOut(err.response?.data?.message);
         return;
