@@ -3,14 +3,12 @@ import colors from "../../assets/colors";
 const style = {
   bulletText: {
     fontSize: 14,
-    fontWeight: "500",
     color: colors.gray,
   },
   validationText: {
     marginBottom: 8,
     fontSize: 14,
     color: colors.black,
-    fontWeight: "500",
   },
   validationView: {
     flexDirection: "row",
