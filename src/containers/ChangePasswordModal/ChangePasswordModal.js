@@ -73,6 +73,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   return (
     <ScrollView
       style={styles.mainView}
+      showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.contentContainerStyle}
       keyboardShouldPersistTaps="handled"
     >
@@ -142,21 +143,20 @@ const ChangePasswordModal = ({ onPressCancel }) => {
                 customTextStyle={styles.errorText}
               />
             )}
-
-            <SaveCancelButton
-              customContainerStyle={styles.customContainerStyle}
-              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-              onPressButtonOne={() => {
-                onPressCancel(false);
-              }}
-              disabled={isLoading}
-              onPressButtonTwo={() => areAllFieldFilledInPassword()}
-              isNextDisabled={isNextDisabled()}
-              buttonTwoText={intl.formatMessage({ id: "label.save" })}
-            />
           </View>
         }
       ></FiveColumn>
+      <SaveCancelButton
+        customContainerStyle={styles.customContainerStyle}
+        buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+        onPressButtonOne={() => {
+          onPressCancel(false);
+        }}
+        disabled={isLoading}
+        onPressButtonTwo={() => areAllFieldFilledInPassword()}
+        isNextDisabled={isNextDisabled()}
+        buttonTwoText={intl.formatMessage({ id: "label.save" })}
+      />
     </ScrollView>
   );
 };
