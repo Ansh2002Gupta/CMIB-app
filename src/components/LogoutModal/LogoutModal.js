@@ -38,7 +38,7 @@ const LogoutModel = ({ onCancel ,onSave}) => {
             onCancel(false);
             onSave();
           },
-          (error)=>{console.log("Error ==>",error )}); 
+          (error)=>{}); 
          }}
     />,
     },
