@@ -37,6 +37,7 @@ const SignUpLastScreenUI = ({
   natureOfSupplier,
   onClickGoToLogin,
   onGoBack,
+  onImageUpload,
   options,
   showSuccessSignUp,
   socialMediaLinks,
@@ -149,6 +150,7 @@ const SignUpLastScreenUI = ({
           title={intl.formatMessage({ id: "label.source_of_info" })}
         />
         <FlatList
+          contentContainerStyle={style.containerStyle}
           data={options}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
@@ -164,7 +166,7 @@ const SignUpLastScreenUI = ({
             id: "label.logo_info",
           })}
         />
-        <UploadImage intl={intl} />
+        <UploadImage intl={intl} onImageUpload={onImageUpload} />
       </View>
     );
   };
@@ -272,6 +274,7 @@ SignUpLastScreenUI.propTypes = {
   natureOfSupplier: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
+  onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
   socialMediaLinks: PropTypes.object.isRequired,

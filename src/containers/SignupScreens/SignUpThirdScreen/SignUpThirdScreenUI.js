@@ -120,7 +120,7 @@ const SignUpThirdScreenUI = ({
                 id: "label.enter_contact_person_mobile_no",
               })}
               value={contactDetails[index].mobileNo}
-              maxLength={15}
+              maxLength={10}
               keyboardType="numeric"
               onChangeText={(val) => handleInputChange(val, "mobileNo", index)}
               isMobileNumber
