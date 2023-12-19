@@ -21,6 +21,7 @@ const SignUpLastScreenUI = (props) => {
     companyDetails,
     companyType,
     errors,
+    errorWhileDeletion,
     handleDismissToast,
     handleInputChange,
     handleSuccessModal,
@@ -189,9 +190,9 @@ const SignUpLastScreenUI = (props) => {
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
       />
-      {!!validationError && (
+      {!!(validationError || errorWhileDeletion) && (
         <ToastComponent
-          toastMessage={validationError}
+          toastMessage={validationError || errorWhileDeletion}
           onDismiss={handleDismissToast}
         />
       )}
@@ -201,6 +202,7 @@ const SignUpLastScreenUI = (props) => {
 
 SignUpLastScreenUI.defaultProps = {
   errors: {},
+  errorWhileDeletion: "",
   handleDismissToast: () => {},
   onDeleteImage: () => {},
   onImageUpload: () => {},
@@ -212,6 +214,7 @@ SignUpLastScreenUI.propTypes = {
   companyDetails: PropTypes.string.isRequired,
   companyType: PropTypes.string.isRequired,
   errors: PropTypes.object,
+  errorWhileDeletion: PropTypes.string,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   handleSuccessModal: PropTypes.func.isRequired,

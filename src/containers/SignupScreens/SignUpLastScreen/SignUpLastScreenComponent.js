@@ -25,7 +25,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const { handleSignUpValidation } = useValidateSignUp();
   const { handleSignUp } = useSignUpUser();
-  const { handleDeleteLogo } = useDeleteLogo();
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
   const { handleFileUpload, fileUploadResult } = useSaveLogo();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
@@ -77,8 +78,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         {
           file_path: fileUploadResult?.data?.file_name,
         },
-        handleDeletionSuccess,
-        (error) => onError(error)
+        handleDeletionSuccess
       );
     }
   };
@@ -211,6 +211,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const handleDismissToast = () => {
     setValidationError("");
+    setErrorWhileDeletion("");
   };
 
   const onClickGoToLogin = () => {
@@ -239,6 +240,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       companyDetails={companyDetails}
       companyType={companyType}
       errors={errors}
+      errorWhileDeletion={errorWhileDeletion}
       handleDismissToast={handleDismissToast}
       handleInputChange={handleInputChange}
       handleToggle={handleToggle}

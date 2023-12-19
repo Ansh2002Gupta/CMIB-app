@@ -9,7 +9,7 @@ const useDeleteLogo = () => {
   const [fileDeletionResult, setFileDeletionResult] = useState([]);
   const [errorWhileDeletion, setErrorWhileDeletion] = useState("");
 
-  const handleDeleteLogo = async (payload, successCallback, errorCallback) => {
+  const handleDeleteLogo = async (payload, successCallback) => {
     try {
       setDeletionStatus(API_STATUS.LOADING);
       errorWhileDeletion && setErrorWhileDeletion("");
@@ -22,11 +22,9 @@ const useDeleteLogo = () => {
       }
       setDeletionStatus(API_STATUS.ERROR);
       setErrorWhileDeletion(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
-      errorCallback(res);
     } catch (err) {
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      errorCallback(errorMessage);
       setDeletionStatus(API_STATUS.ERROR);
       if (errorMessage) {
         setErrorWhileDeletion(errorMessage);
@@ -48,6 +46,7 @@ const useDeleteLogo = () => {
     isError,
     isLoading,
     isSuccess,
+    setErrorWhileDeletion,
   };
 };
 
