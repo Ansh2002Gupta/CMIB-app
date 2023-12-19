@@ -139,6 +139,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
     const isValid = validateFields();
     if (isValid) {
       const updatedContactDetails = contactDetails.map((detail) => ({
+        module: detail.module,
         name: detail.name,
         email: detail.emailId,
         salutation: detail.salutation,
