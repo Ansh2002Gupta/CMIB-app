@@ -1,5 +1,6 @@
-import React, {useState, useEffect } from "react";
+import React, {useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types"
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import { TouchableOpacity,View } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
@@ -27,6 +28,7 @@ const OtpViewUI = ({
   setOtpLeft,
   setSeconds,
 } ) => {
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [afterAttempt, setAfterAttempt] = useState(false);
   const formattedTimerValue = `${intl.formatMessage({ id: "label.request_otp_again" })} ${minutes < 10 ? `0${minutes}` : minutes
 }:${seconds < 10 ? `0${seconds}` : seconds} ${intl.formatMessage({ id: "label.braces" })}`;
