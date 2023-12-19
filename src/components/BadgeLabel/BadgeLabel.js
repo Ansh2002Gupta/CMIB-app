@@ -32,6 +32,11 @@ const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
   );
 };
 
+BadgeLabel.defaultProps = {
+  customContainerStyle: {},
+  customTextStyle: {},
+};
+
 BadgeLabel.propTypes = {
   badgeLabels: PropTypes.array.isRequired,
   customContainerStyle: PropTypes.object,

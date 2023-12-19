@@ -4,9 +4,12 @@ import { View } from "@unthinkable/react-core-components";
 
 import style from "./CardComponent.style";
 
-const CardComponent = (props) => {
-  const { children, customStyle } = props;
+const CardComponent = ({ children, customStyle }) => {
   return <View style={[style.containerStyle, customStyle]}>{children}</View>;
+};
+
+CardComponent.defaultProps = {
+  customStyle: {},
 };
 
 CardComponent.propTypes = {
