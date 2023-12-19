@@ -1,7 +1,10 @@
 import colors from "../../assets/colors";
 
 const style = {
-  webContainerStyle: { flexDirection: "row", flexWrap: "wrap" },
+  webContainerStyle: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   containerStyle: { paddingBottom: 16 },
   innerContainerStyle: {
     backgroundColor: colors.secondaryGrey,
