@@ -53,9 +53,10 @@ const UploadImage = ({
           type: type,
         };
         formData.append("company_logo", file);
-        onImageUpload(formData);
-        setSelectedImage(imageUri);
-        setFileName(fileName);
+        onImageUpload(formData, () => {
+          setSelectedImage(imageUri);
+          setFileName(fileName);
+        });
       }
     });
   };

@@ -165,6 +165,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     }
   };
 
+  const handleImageUpload = (file, handleUploadSuccess) => {
+    handleFileUpload(file, handleUploadSuccess, (error) => onError(error));
+  };
+
   const onError = (err) => {
     setValidationError(err);
   };
@@ -245,7 +249,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       onGoBack={onGoBack}
       options={options}
       onDeleteImage={handleImageDeletion}
-      onImageUpload={handleFileUpload}
+      onImageUpload={handleImageUpload}
       showSuccessSignUp={showSuccessSignUp}
       socialMediaLinks={socialMediaLinks}
       validationError={validationError}

@@ -22,9 +22,9 @@ const useSaveLogo = () => {
         setUploadStatus(API_STATUS.SUCCESS);
         setFileUploadResult(res.data);
         successCallback();
-        errorCallback(res);
         return;
       }
+      errorCallback(res);
       setUploadStatus(API_STATUS.ERROR);
       setErrorWhileUpload(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
