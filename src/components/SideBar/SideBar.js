@@ -60,7 +60,6 @@ const SideBar = ({ items, onPress }) => {
           title={item.title}
         />
       </TouchableOpacity>
-      {/* Render subitems if any */}
       {item.subitems && (
         <FlatList
           data={item.subitems}

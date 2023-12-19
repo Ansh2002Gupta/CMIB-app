@@ -16,9 +16,9 @@ const SideNavBar = ({ onClose, items, onPress }) => {
 
   useEffect(() => {
     Animated.timing(sideBarPosition, {
-      toValue: 0, // Animate to 0 to bring it into view
-      duration: 200, // Duration of the animation
-      useNativeDriver: true, // Use native driver for better performance
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
     }).start();
   }, [sideBarPosition]);
 
@@ -54,8 +54,8 @@ const SideNavBar = ({ onClose, items, onPress }) => {
 };
 
 SideNavBar.propTypes = {
-  onClose: PropTypes.func,
   items: PropTypes.array.isRequired,
+  onClose: PropTypes.func,
   onPress: PropTypes.func.isRequired,
 };
 
