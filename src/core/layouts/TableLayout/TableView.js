@@ -23,6 +23,13 @@ TableView.defaultProps = {
   tableStyle: {},
 };
 
+TableView.propTypes = {
+  gridData: PropTypes.arrayOf(PropTypes.array).isRequired, 
+  cellStyle: PropTypes.object,
+  rowStyle: PropTypes.object,
+  tableStyle: PropTypes.object,
+};
+
 export default TableView;
 
 

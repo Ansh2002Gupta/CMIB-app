@@ -1,6 +1,6 @@
 import colors from "../../assets/colors";
 
-const style = {
+const styles = {
   containerStyle: {
     marginTop: 24,
   },
@@ -40,4 +40,4 @@ const style = {
   
 };
 
-export default style;
+export default styles;

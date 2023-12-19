@@ -17,21 +17,25 @@ const CustomColumn = ({
   iconLeft, 
   iconRight 
 }) => {
-  
-
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[styles.buttonStyle, style, disabled && styles.disabledStyle]}
       disabled={disabled}
     >
-      {iconLeft && <Image source={iconLeft} style={styles.iconStyle} />}
+      {!!iconLeft && <Image source={iconLeft} />}
       <CommonText customTextStyle ={[styles.textStyle, textStyle]} title={title}/>
-      {iconRight && <Image source={iconRight} style={styles.iconStyle} />}
+      {!!iconRight && <Image source={iconRight}/>}
     </TouchableOpacity>
   );
 };
-
+CustomColumn.defaultProps = {
+  style: {},
+  textStyle: {},
+  disabled: false,
+  iconLeft: null,
+  iconRight: null,
+};
 CustomColumn.propTypes = {
   onPress: PropTypes.func.isRequired, 
   title: PropTypes.string.isRequired, 
@@ -46,22 +50,7 @@ CustomColumn.propTypes = {
     PropTypes.number,
   ]),
   disabled: PropTypes.bool, 
-  iconLeft: PropTypes.oneOfType([ 
-    PropTypes.element,
-    PropTypes.number, 
-  ]),
-  iconRight: PropTypes.oneOfType([ 
-    PropTypes.element, 
-    PropTypes.number, 
-  ]),
+  iconLeft: PropTypes.node,
+  iconRight: PropTypes.node,
 };
-
-CustomColumn.defaultProps = {
-  style: {},
-  textStyle: {},
-  disabled: false,
-  iconLeft: null,
-  iconRight: null,
-};
-
 export default CustomColumn;

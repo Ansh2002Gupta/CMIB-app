@@ -38,7 +38,6 @@ function CreateNewPasswordUI(props) {
     uppercase: false,
     lowercase: false,
     specialChar: false,
-    // match: false,
   });
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);

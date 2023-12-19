@@ -27,9 +27,6 @@ const MyAccountComponent = () => {
     navigate(navigations.LOGIN);
   };
 
-
-
-
   const handleOptionClick = (option) => {
     switch (option.id) {
       case 1:

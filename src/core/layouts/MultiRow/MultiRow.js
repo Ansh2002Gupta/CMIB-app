@@ -1,5 +1,6 @@
 import React from 'react';
 import BaseLayout from '../Base';
+
 import layoutStyle from './multiRow.style';
 
 function MultiRow({
@@ -26,7 +27,16 @@ function MultiRow({
 
 MultiRow.defaultProps = {
   style: {},
-  rows: [], // Expecting an array of row configurations
+  rows: [], 
+};
+
+MultiRow.propTypes = {
+  style: PropTypes.object,
+  rows: PropTypes.arrayOf(PropTypes.shape({
+    isFillSpace: PropTypes.bool,
+    style: PropTypes.object,
+    content: PropTypes.node, 
+  })),
 };
 
 export default MultiRow;

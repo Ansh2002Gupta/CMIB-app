@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate,useLocation } from "../../routes";
 import { useIntl } from "react-intl";
+import { useNavigate,useLocation } from "../../routes";
+
 
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
 import useResetPasswordAPI from "../../services/apiServices/hooks/useRestPasswordAPI";
@@ -36,7 +37,7 @@ function CreateNewPasswordComponent(props) {
   };
 
   const handleSubmit = () => {
-    const isPasswordMatch = newPassword.trim().toLowerCase() === confirmNewPassword.trim().toLowerCase();
+    const isPasswordMatch = newPassword?.trim()?.toLowerCase() === confirmNewPassword?.trim()?.toLowerCase();
     if (isPasswordMatch) {
       setErrorMessage("");
     } else {

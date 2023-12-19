@@ -1,17 +1,19 @@
-import React from 'react';
-import BaseLayout from '../Base';
-import layoutStyle from './multiColumn.style';
+import React from "react";
+import BaseLayout from "../Base";
+
+import layoutStyle from "./multiColumn.style";
 
 function MultiColumn({ style, columns }) {
   return (
     <BaseLayout style={{ ...layoutStyle, ...style }}>
-      {({ Row,Column }) => (
+      {({ Row, Column }) => (
         <>
           {columns.map((columnConfig, index) => (
             <Column
               key={`column-${index}`}
               isFillSpace={columnConfig.isFillSpace}
-              style={columnConfig.style}>
+              style={columnConfig.style}
+            >
               {columnConfig.content}
             </Column>
           ))}
@@ -23,7 +25,18 @@ function MultiColumn({ style, columns }) {
 
 MultiColumn.defaultProps = {
   style: {},
-  columns: [], // Expecting an array of column configurations
+  columns: [],
+};
+
+MultiColumn.propTypes = {
+  style: PropTypes.object,
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      isFillSpace: PropTypes.bool,
+      style: PropTypes.object,
+      content: PropTypes.node,
+    })
+  ),
 };
 
 export default MultiColumn;

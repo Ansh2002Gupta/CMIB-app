@@ -1,6 +1,5 @@
 import colors from "../../assets/colors";
-
-const style = {
+const styles = {
   containerStyle: {
     marginBottom: 0,
     marginLeft: 0,
@@ -17,8 +16,6 @@ const style = {
     fontSize: 14,
     color: colors.gray,
     lineHeight: 22,
-  },
-  customContainerStyle: {
   },
   logo: {
     height : 24,

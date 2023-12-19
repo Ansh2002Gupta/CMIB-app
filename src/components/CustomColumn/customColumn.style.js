@@ -1,4 +1,4 @@
-const style = {
+const styles = {
   buttonStyle: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -9,11 +9,9 @@ const style = {
   textStyle: {
     fontSize: 16,
   },
-  iconStyle: {
-  },
   disabledStyle: {
     opacity: 0.5,
   },
 };
 
-export default style;
+export default styles;

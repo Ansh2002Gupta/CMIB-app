@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import images from "../../images";
-import styles from "./twoRowButton.style";
-import CustomColumn from "../TwoColumnButton/CustomColumn";
+import CustomColumn from "../CustomColumn/CustomColumn"
 import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
+import styles from "./twoRowButton.style";
 
 const TwoRowButton = (props) => {
   const {

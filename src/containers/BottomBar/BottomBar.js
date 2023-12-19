@@ -7,17 +7,16 @@ import {
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
-import { TwoRow } from "../../core/layouts";
-
+import images from "../../images";
 import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
+import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
+import { navigations } from "../../constants/routeNames";
+import { TwoRow } from "../../core/layouts";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { useLocation } from "../../routes";
-import { navigations } from "../../constants/routeNames";
-import images from "../../images";
 import styles from "./bottomBar.style";
-import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
 
 function BottomBar() {
   const icons = useTheme("icons");
@@ -25,16 +24,15 @@ function BottomBar() {
   const { navigateScreen } = useNavigateScreen();
   const { logo, homeOutline, homeSolid, profileOutline, profileSolid } = icons;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const { pathname: currrentRoute } = useLocation();
+  const { pathname: currentRoute } = useLocation();
 
   const navigateTo = (route) => {
     navigateScreen(route);
   };
 
-  const homeIcon =
-    currrentRoute === navigations.ROOT ? homeSolid : homeOutline;
+  const homeIcon = currentRoute === navigations.ROOT ? homeSolid : homeOutline;
   const profileIcon =
-    currrentRoute === navigations.PROFILE ? profileSolid : profileOutline;
+  currentRoute === navigations.PROFILE ? profileSolid : profileOutline;
 
   if (currentBreakpoint === "md") {
     return (
@@ -81,38 +79,66 @@ function BottomBar() {
     );
   }
 
+  function createRowConfig(
+    route,
+    imageActive,
+    imageInactive,
+    messageId,
+    containerStyle = {}
+  ) {
+    return {
+      content: (
+        <ImageAndTextTab
+          isActive={currrentRoute === route}
+          onPress={() => {
+            navigateTo(route);
+          }}
+          containerStyle={containerStyle}
+          imageActive={imageActive}
+          imageInactive={imageInactive}
+          text={intl.formatMessage({ id: messageId })}
+        />
+      ),
+      style: {},
+      isFillSpace: true,
+    };
+  }
 
-function createRowConfig(route, imageActive, imageInactive, messageId, containerStyle = {}) {
-  return {
-    content: (
-      <ImageAndTextTab
-        isActive={currrentRoute === route}
-        onPress={() => {
-          navigateTo(route);
-        }}
-        containerStyle={containerStyle}
-        imageActive={imageActive}
-        imageInactive={imageInactive}
-        text={intl.formatMessage({ id: messageId })}
-      />
+  const rowConfigs = [
+    createRowConfig(
+      navigations.DASHBOARD,
+      images.iconDashboard,
+      images.iconDashboard,
+      "label.dashboard",
+      styles.activeStyleMyaccount
     ),
-    style: {},
-    isFillSpace: true,
-  };
-}
-
-
-const rowConfigs = [
-  createRowConfig(navigations.DASHBOARD, images.iconDashboard, images.iconDashboard, "label.dashboard", styles.activeStyleMyaccount),
-  createRowConfig(navigations.ROUND_ONE, images.iconActiveRound1, images.iconRound1, "label.round1",styles.activeStyleMyaccount),
-  createRowConfig(navigations.ROUND_TWO, images.iconActiveRound2, images.iconRound2, "label.round2",styles.activeStyleMyaccount),
-  createRowConfig(navigations.PROFILE, images.iconActiveMyaccount, images.iconMyaccount, "label.my_account", styles.activeStyleMyaccount),
-];
+    createRowConfig(
+      navigations.ROUND_ONE,
+      images.iconActiveRound1,
+      images.iconRound1,
+      "label.round1",
+      styles.activeStyleMyaccount
+    ),
+    createRowConfig(
+      navigations.ROUND_TWO,
+      images.iconActiveRound2,
+      images.iconRound2,
+      "label.round2",
+      styles.activeStyleMyaccount
+    ),
+    createRowConfig(
+      navigations.PROFILE,
+      images.iconActiveMyaccount,
+      images.iconMyaccount,
+      "label.my_account",
+      styles.activeStyleMyaccount
+    ),
+  ];
 
   return (
     <View>
-        <View style={styles.borderStyle}></View>
-        <MultiColumn columns={rowConfigs} />
+      <View style={styles.borderStyle}></View>
+      <MultiColumn columns={rowConfigs} />
     </View>
   );
 }

@@ -1,5 +1,5 @@
-const style = {
+const styles = {
   flexDirection: 'column',
 };
 
-export default style;
+export default styles;

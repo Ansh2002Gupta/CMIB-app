@@ -9,28 +9,28 @@ const useSendOtpAPI = () => {
   const [isShowOtpView, setIsShowOtpView] = useState(false);
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
   const [sendOtpResult, setSendOtpResult] = useState([]);
-  const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
+  const [apiStatus, setAPIStatus] = useState(API_STATUS.IDLE);
 
   const handleSendOtpAPI = async (payload, isNavigate, errorCallback) => {
     try {
-      setPostStatus(API_STATUS.LOADING);
+      setAPIStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
       const res = await Http.post(COMPANY_SEND_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
-        setPostStatus(API_STATUS.SUCCESS);
+        setAPIStatus(API_STATUS.SUCCESS);
         setSendOtpResult(res.data);
         if (isNavigate)
           setIsShowOtpView(true);
         return;
       }else {
-        setPostStatus(API_STATUS.ERROR);
+        setAPIStatus(API_STATUS.ERROR);
         errorCallback(res);
       } 
     } catch (err) {
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
         errorCallback(errorMessage);
-      setPostStatus(API_STATUS.ERROR);
+        setAPIStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);
         return;
@@ -39,11 +39,12 @@ const useSendOtpAPI = () => {
     }
   };
 
-  const isLoading = postStatus === API_STATUS.LOADING;
-  const isSuccess = postStatus === API_STATUS.SUCCESS;
-  const isError = postStatus === API_STATUS.ERROR;
+  const isLoading = apiStatus === API_STATUS.LOADING;
+  const isSuccess = apiStatus === API_STATUS.SUCCESS;
+  const isError = apiStatus === API_STATUS.ERROR;
   
   return {
+    apiStatus,
     errorWhileResetPassword,
     sendOtpResult,
     handleSendOtpAPI,
@@ -51,7 +52,7 @@ const useSendOtpAPI = () => {
     isLoading,
     isShowOtpView,
     isSuccess,
-    postStatus,
   };
 };
+
 export default useSendOtpAPI;

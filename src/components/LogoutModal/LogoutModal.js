@@ -1,29 +1,29 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { useIntl } from "react-intl";
-import images from "../../images";
+import PropTypes from "prop-types";
 
-import CustomModal from "../../components/CustomModal/CustomModal";
+import images from "../../images";
 import CommonText from "../CommonText";
-import style from "./logoutModal.style";
+import CustomModal from "../../components/CustomModal/CustomModal";
 import MultiRow from "../../core/layouts/MultiRow";
 import TwoRowButton from "../TwoRowButton/TwoRowButton";
 import  useLogoutAPI from "../../services/apiServices/hooks/useLogoutAPI"
+import styles from "./logoutModal.style";
 
-const LogoutModel = ({ onCancel ,onSave}) => {
+const LogoutModal = ({ onCancel ,onSave}) => {
   const intl = useIntl();
-  const { handleUserLogout,isLoading } = useLogoutAPI();
+  const { handleUserLogout } = useLogoutAPI();
   const Warning = images.Warning;
 
-  const columnConfigs = [
+  const rowConfigs = [
     {
-      content: <Warning style={style.logo}/>,
+      content: <Warning style={styles.logo}/>,
     },
     {
-      content:  <CommonText customTextStyle={style.headerText} title={intl.formatMessage({ id: "label.logout" })} />,
+      content:  <CommonText customTextStyle={styles.headerText} title={intl.formatMessage({ id: "label.logout" })} />,
     },
     {
-      content: <CommonText customTextStyle={style.subHeaderText} title={intl.formatMessage({ id: "label.logout_message" })} />,
+      content: <CommonText customTextStyle={styles.subHeaderText} title={intl.formatMessage({ id: "label.logout_message" })} />,
     },
      {
       content:    <TwoRowButton
@@ -43,19 +43,18 @@ const LogoutModel = ({ onCancel ,onSave}) => {
          }}
     />,
     },
-    
   ];
 
   return (
     <CustomModal>
-     <MultiRow rows={columnConfigs} />     
+     <MultiRow rows={rowConfigs} />     
     </CustomModal>
   );
 };
 
-LogoutModel.propTypes = {
+LogoutModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
 };
 
-export default LogoutModel;
+export default LogoutModal;
