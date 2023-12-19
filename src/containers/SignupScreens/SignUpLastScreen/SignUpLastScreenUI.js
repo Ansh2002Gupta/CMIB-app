@@ -29,6 +29,7 @@ const SignUpLastScreenUI = (props) => {
     natureOfSupplier,
     onClickGoToLogin,
     onGoBack,
+    onImageUpload,
     options,
     showSuccessSignUp,
     socialMediaLinks,
@@ -156,6 +157,7 @@ const SignUpLastScreenUI = (props) => {
           title={intl.formatMessage({ id: "label.source_of_info" })}
         />
         <FlatList
+          contentContainerStyle={style.containerStyle}
           data={options}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
@@ -173,7 +175,7 @@ const SignUpLastScreenUI = (props) => {
             id: "label.logo_info",
           })}
         />
-        <UploadImage intl={intl} />
+        <UploadImage intl={intl} onImageUpload={onImageUpload} />
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
@@ -205,6 +207,7 @@ SignUpLastScreenUI.propTypes = {
   natureOfSupplier: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
+  onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
   socialMediaLinks: PropTypes.object.isRequired,

@@ -79,6 +79,8 @@ const ticketIcon  = "images/ticketIcon/ticketIcon.png";
 const iconSend = "images/iconSend/iconSend.png";
 const iconSetting = "images/iconSetting/iconSetting.png";
 const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
+const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
+
 
 const images = {
   iconArrowUp,
@@ -88,6 +90,7 @@ const images = {
   sun,
   moon,
   flagFr,
+  iconSquareEdit,
   flagUk,
   homeSolid,
   homeOutline,
