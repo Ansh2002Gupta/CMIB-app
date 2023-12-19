@@ -87,7 +87,6 @@ const UploadImage = ({ intl, onImageUpload }) => {
               />
             </TouchableOpacity>
           </View>
-
           <CommonText
             customTextStyle={styles.infoStyle}
             title={intl.formatMessage({ id: "label.supported_type" })}

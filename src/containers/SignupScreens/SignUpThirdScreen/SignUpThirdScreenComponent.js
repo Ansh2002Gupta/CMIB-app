@@ -105,7 +105,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
 
       if (
         !numRegex.test(String(detail.mobileNo)) ||
-        detail.mobileNo.length === REGISTRATION_NO_LENGTH
+        detail.mobileNo.length !== REGISTRATION_NO_LENGTH
       ) {
         error.mobileNo = intl.formatMessage({
           id: "label.mobile_number_validation",
