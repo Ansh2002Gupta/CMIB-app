@@ -12,8 +12,7 @@ import {
   ADDRESS_MAX_LENGTH,
   FIELD_MAX_LENGTH,
   FIELD_MIN_LENGTH,
-  NUMBER_MAX_LENGTH,
-  NUMBER_MIN_LENGTH,
+  REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
 
 const SignUpThirdScreenComponent = ({ tabHandler }) => {
@@ -106,8 +105,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
 
       if (
         !numRegex.test(String(detail.mobileNo)) ||
-        detail.mobileNo.length > NUMBER_MAX_LENGTH ||
-        detail.mobileNo.length < NUMBER_MIN_LENGTH
+        detail.mobileNo.length === REGISTRATION_NO_LENGTH
       ) {
         error.mobileNo = intl.formatMessage({
           id: "label.mobile_number_validation",
