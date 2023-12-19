@@ -6,7 +6,7 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import SideBar from "../../components/SideBar/SideBar";
+import SideBar from "../SideBar/SideBar";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./SideNavBar.style";
 

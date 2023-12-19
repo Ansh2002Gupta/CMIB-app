@@ -9,10 +9,8 @@ import CompanyProfile from "../views/CompanyProfile";
 import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
-import Home from "../pages/Home";
 import JobsView from "../views/JobsView/JobsView";
 import LoginScreen from "../views/LoginScreen/index";
-import ProfileView from "../views/Profile";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
@@ -49,7 +47,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.Web_View,
+    pagePath: navigations.WEB_VIEW,
     element: <HomeWithPrivateAccess />,
     views: [
       {

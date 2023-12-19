@@ -18,7 +18,6 @@ function TwoRow({
           <Row isFillSpace={isTopFillSpace} style={topSectionStyle}>
             {topSection}
           </Row>
-
           <Row isFillSpace={isBottomFillSpace} style={bottomSectionStyle}>
             {bottomSection}
           </Row>

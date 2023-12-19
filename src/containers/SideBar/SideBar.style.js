@@ -11,10 +11,15 @@ const styles = {
   imageView: {
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 40,
     paddingLeft: 70,
     paddingRight: 70,
     paddingBottom: 24,
+  },
+  imageViewStyles: {
+    paddingTop: 24,
+  },
+  imgViewStyle: {
+    paddingTop: 40,
   },
   newQualifiedText: {
     color: colors.backgroundColor,
@@ -30,13 +35,12 @@ const styles = {
     paddingRight: 16,
     paddingBottom: 8,
     paddingTop: 32,
-    cursor: "pointer",
   },
   leftArrow: {
     height: 25,
     width: 25,
   },
-  leftArrowButton:{
+  leftArrowButton: {
     paddingTop: 16,
     paddingLeft: 16,
   },
@@ -71,36 +75,6 @@ const styles = {
     paddingRight: 16,
     paddingBottom: 8,
     paddingTop: 16,
-    cursor: "pointer",
-  },
-  selectedItem: {
-    color: colors.white,
-    fontWeight: "600",
-  },
-  selectedItemBackground: {
-    backgroundColor: colors.offWhite,
-  },
-  list: {
-    paddingTop: 18,
-    paddingBottom: 18,
-    paddingLeft: 16,
-    cursor: "pointer",
-  },
-  listText: {
-    fontSize: 14,
-    color: colors.lightGrey,
-    fontWeight: "500",
-  },
-  subList: {
-    paddingTop: 18,
-    paddingBottom: 18,
-    paddingLeft: 16,
-    cursor: "pointer",
-  },
-  subListText: {
-    color: colors.lightGrey,
-    fontSize: 14,
-    fontWeight: "500",
   },
   bottomView: {
     paddingTop: 20,

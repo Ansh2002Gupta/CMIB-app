@@ -19,6 +19,10 @@ const styles = {
     paddingLeft: 24,
     paddingRight: 24,
   },
+  borderStyling: {
+    borderColor: colors.lightGrey,
+    borderWidth: 1,
+  },
   icons: {
     width: 24,
     height: 24,

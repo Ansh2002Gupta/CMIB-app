@@ -43,12 +43,8 @@ const PrivateHeader = ({ onPress, showCloseIcon }) => {
   };
 
   const borderBottomStyles =
-    currentBreakpoint === "xs"
-      ? {}
-      : {
-          borderColor: "#CCD0E5",
-          borderWidth: 1,
-        };
+    currentBreakpoint === "xs" ? {} : styles.borderStyling;
+
   return (
     <>
       {isWebView ? (
@@ -99,6 +95,7 @@ const PrivateHeader = ({ onPress, showCloseIcon }) => {
         <View style={styles.container}>
           <TouchableOpacity
             onPress={() => {
+              console.log("hello");
               showCloseIcon();
               onPress();
             }}

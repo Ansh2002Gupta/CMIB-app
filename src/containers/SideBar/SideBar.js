@@ -10,19 +10,19 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CommonText from "../CommonText";
+import CommonText from "../../components/CommonText";
+import CustomList from "../../components/CustomList/CustomList";
 import { CMS_URI } from "../../constants/constants";
 import images from "../../images";
-import colors from "../../assets/colors";
 import styles from "./SideBar.style";
 
 const SideBar = ({
   handleDisplayHeader,
-  items,
+  onClose,
   onPress,
   resetList,
   showCloseIcon,
-  onClose,
+  items,
 }) => {
   const navigate = useNavigate();
   const intl = useIntl();
@@ -34,48 +34,23 @@ const SideBar = ({
   const [showClose, setShowClose] = useState(true);
 
   const renderSubItem = ({ item }) => (
-    <TouchableOpacity
-      style={[
-        styles.subList,
-        selectedSubList === item.id && styles.selectedItemBackground,
-      ]}
-      onPress={() => {
+    <CustomList
+      item={{ ...item, isSelected: selectedSubList === item.id }}
+      onSelect={(id) => {
         setSelecteSubList(item.id);
         setSelecteList(null);
       }}
-    >
-      <CommonText
-        customTextStyle={[
-          styles.subListText,
-          selectedSubList === item.id && styles.selectedItem,
-        ]}
-        title={item.title}
-      />
-    </TouchableOpacity>
+    />
   );
-
   const renderItem = ({ item }) => (
-    <View>
-      <TouchableOpacity
-        style={[
-          styles.list,
-          selectedList === item.id && styles.selectedItemBackground,
-        ]}
-        onPress={() => {
-          setSelecteList(item.id);
+    <>
+      <CustomList
+        item={{ ...item, isSelected: selectedList === item.id }}
+        onSelect={(id) => {
+          setSelecteList(id);
           setSelecteSubList(null);
         }}
-      >
-        <CommonText
-          customTextStyle={{
-            ...styles.listText,
-            ...(selectedList === item.id && styles.selectedItem),
-            ...(item.subitems &&
-              item.subitems.length > 0 && { color: colors.subHeadingGray }),
-          }}
-          title={item.title}
-        />
-      </TouchableOpacity>
+      />
       {item.subitems && (
         <FlatList
           data={item.subitems}
@@ -83,7 +58,7 @@ const SideBar = ({
           keyExtractor={(subitem) => subitem.id}
         />
       )}
-    </View>
+    </>
   );
 
   useEffect(() => {
@@ -104,12 +79,15 @@ const SideBar = ({
     resetList();
   };
   const handleBottomViewNavigation = () => {
-    navigate(navigations.Web_View, {
+    navigate(navigations.WEB_VIEW, {
       state: { uri: CMS_URI },
     });
     onClose();
     handleDisplayHeader();
   };
+  const dynamicPadding =
+    showBackIcon || showClose ? styles.imageViewStyles : styles.imgViewStyle;
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
@@ -131,12 +109,7 @@ const SideBar = ({
             <Image source={images.iconClose} style={styles.leftArrow} />
           </TouchableOpacity>
         ) : null}
-        <View
-          style={[
-            styles.imageView,
-            { paddingTop: showBackIcon || showClose ? 24 : 40 },
-          ]}
-        >
+        <View style={[styles.imageView, dynamicPadding]}>
           <Image source={images.iconCmibLogoWhite} />
         </View>
         {showStaticContent && (
@@ -169,7 +142,6 @@ const SideBar = ({
             </View>
           </>
         )}
-
         <View style={styles.container}>
           <FlatList
             data={currentList}
@@ -177,7 +149,6 @@ const SideBar = ({
             keyExtractor={(item) => item.id}
           />
         </View>
-
         <TouchableOpacity
           style={styles.bottomView}
           onPress={handleBottomViewNavigation}
@@ -197,12 +168,12 @@ const SideBar = ({
 };
 
 SideBar.propTypes = {
-  handleDisplayHeader: PropTypes.array.isRequired,
-  items: PropTypes.array.isRequired,
+  handleDisplayHeader: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
 };
 
 export default SideBar;

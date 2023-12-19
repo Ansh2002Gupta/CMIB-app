@@ -1,7 +1,7 @@
 import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const { width, height } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,8 +22,6 @@ const styles = StyleSheet.create({
   overLay: {
     backgroundColor: "transparent",
     zIndex: 1,
-    // borderWidth: 1,
-    // width: width,
     height: height,
   },
 });
