@@ -12,7 +12,16 @@ const style = {
     color: colors.black,
     fontWeight: "500",
   },
-  validationView: { flexDirection: "row", marginTop: 8 },
-  bulletIconStyle: { width: 6, height: 6, borderRadius: 5, margin: 5 },
+  validationView: {
+    flexDirection: "row",
+    marginTop: 8,
+    alignItems: "center",
+  },
+  bulletIconStyle: {
+    width: 8,
+    height: 8,
+    borderRadius: 6,
+    margin: 8,
+  },
 };
 export default style;
