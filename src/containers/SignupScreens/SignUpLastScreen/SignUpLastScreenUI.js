@@ -199,6 +199,14 @@ const SignUpLastScreenUI = (props) => {
   );
 };
 
+SignUpLastScreenUI.defaultProps = {
+  errors: {},
+  handleDismissToast: () => {},
+  onDeleteImage: () => {},
+  onImageUpload: () => {},
+  validationError: "",
+};
+
 SignUpLastScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   companyDetails: PropTypes.string.isRequired,
