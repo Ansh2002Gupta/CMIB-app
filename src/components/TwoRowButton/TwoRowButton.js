@@ -49,6 +49,14 @@ const TwoRowButton = (props) => {
        />
   );
 };
-
+TwoRowButton.propTypes = {
+  leftButtonText: PropTypes.string.isRequired,
+  rightButtonText: PropTypes.string.isRequired,
+  onLeftButtonClick: PropTypes.func,
+  onRightButtonClick: PropTypes.func,
+  hasIconLeft: PropTypes.bool,
+  hasIconRight: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+};
 
 export default TwoRowButton;
