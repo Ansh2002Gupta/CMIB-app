@@ -19,10 +19,10 @@ const LogoutModel = ({ onCancel ,onSave}) => {
       content: <Warning style={style.logo}/>,
     },
     {
-      content:  <CommonText customTextStyle={style.headerText} title={"Logout"} />,
+      content:  <CommonText customTextStyle={style.headerText} title={intl.formatMessage({ id: "label.logout" })} />,
     },
     {
-      content: <CommonText customTextStyle={style.subHeaderText} title={"Are you sure you want to logout of the portal?"} />,
+      content: <CommonText customTextStyle={style.subHeaderText} title={intl.formatMessage({ id: "label.logout_message" })} />,
     },
      {
       content:    <TwoRowButton
