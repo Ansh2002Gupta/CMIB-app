@@ -5,7 +5,6 @@ import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import { PASSWORD_VALIDATIONS } from "../../constants/Regex";
-import colors from "../../assets/colors";
 import styles from "./NewPasswordValidation.style";
 
 const NewPasswordValidation = ({
