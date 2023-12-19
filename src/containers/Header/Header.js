@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 import PublicHeader from "../PublicHeader/PublicHeader";
 import PrivateHeader from "../PrivateHeader/PrivateHeader";
 import { getAuthToken } from "../../utils/getAuthToken";
 
-const Header = ({ onPress, showCloseIcon }) => {
+const Header = ({ onPress, showCloseIcon, showHeader }) => {
   const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
 
   const checkAuthToken = async () => {
@@ -26,13 +27,23 @@ const Header = ({ onPress, showCloseIcon }) => {
 
   return (
     <>
-      {isuserLoggedIn ? (
-        <PrivateHeader onPress={onPress} showCloseIcon={showCloseIcon} />
-      ) : (
-        <PublicHeader />
-      )}
+      {showHeader ? (
+        <>
+          {isuserLoggedIn ? (
+            <PrivateHeader onPress={onPress} showCloseIcon={showCloseIcon} />
+          ) : (
+            <PublicHeader />
+          )}
+        </>
+      ) : null}
     </>
   );
+};
+
+Header.propTypes = {
+  onPress: PropTypes.func.isRequired,
+  showCloseIcon: PropTypes.func.isRequired,
+  showHeader: PropTypes.func.isRequired,
 };
 
 export default Header;

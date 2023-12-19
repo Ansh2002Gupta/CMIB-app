@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
+import { navigations } from "../../constants/routeNames";
 import {
   FlatList,
   Image,
@@ -9,11 +11,20 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import { CMS_URI } from "../../constants/constants";
 import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./SideBar.style";
 
-const SideBar = ({ items, onPress, resetList, showCloseIcon, onClose }) => {
+const SideBar = ({
+  handleDisplayHeader,
+  items,
+  onPress,
+  resetList,
+  showCloseIcon,
+  onClose,
+}) => {
+  const navigate = useNavigate();
   const intl = useIntl();
   const [currentList, setCurrentList] = useState(items);
   const [selectedList, setSelecteList] = useState(null);
@@ -92,7 +103,13 @@ const SideBar = ({ items, onPress, resetList, showCloseIcon, onClose }) => {
     setShowClose(true);
     resetList();
   };
-
+  const handleBottomViewNavigation = () => {
+    navigate(navigations.Web_View, {
+      state: { uri: CMS_URI },
+    });
+    onClose();
+    handleDisplayHeader();
+  };
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
@@ -161,7 +178,10 @@ const SideBar = ({ items, onPress, resetList, showCloseIcon, onClose }) => {
           />
         </View>
 
-        <View style={styles.bottomView}>
+        <TouchableOpacity
+          style={styles.bottomView}
+          onPress={handleBottomViewNavigation}
+        >
           <View style={styles.imageTextView}>
             <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
             <CommonText
@@ -170,18 +190,19 @@ const SideBar = ({ items, onPress, resetList, showCloseIcon, onClose }) => {
             />
           </View>
           <Image source={images.iconRightArrow} style={styles.globalIcon} />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
 SideBar.propTypes = {
+  handleDisplayHeader: PropTypes.array.isRequired,
   items: PropTypes.array.isRequired,
+  onClose: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default SideBar;

@@ -11,6 +11,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./SideNavBar.style";
 
 const SideNavBar = ({
+  handleDisplayHeader,
   items,
   onClose,
   onPress,
@@ -55,11 +56,12 @@ const SideNavBar = ({
         }}
       >
         <SideBar
+          handleDisplayHeader={handleDisplayHeader}
           items={items}
+          onClose={onClose}
           onPress={onPress}
           resetList={resetList}
           showCloseIcon={showCloseIcon}
-          onClose={onClose}
         />
       </Animated.View>
     </View>
@@ -67,6 +69,7 @@ const SideNavBar = ({
 };
 
 SideNavBar.propTypes = {
+  handleDisplayHeader: PropTypes.array.isRequired,
   items: PropTypes.array.isRequired,
   onClose: PropTypes.func,
   onPress: PropTypes.func.isRequired,

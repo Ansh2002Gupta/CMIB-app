@@ -20,6 +20,8 @@ function HeaderWithContentLayout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [listItems, setListItems] = useState(items);
   const [showClose, setShowClose] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
+
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const windowDimensions = useWindowDimensions();
@@ -51,6 +53,9 @@ function HeaderWithContentLayout() {
   const showCloseIcon = () => {
     setShowClose(true);
   };
+  const handleDisplayHeader = () => {
+    setShowHeader(false);
+  };
 
   const layoutProps = {};
 
@@ -74,7 +79,13 @@ function HeaderWithContentLayout() {
   }
   return (
     <MainLayout
-      header={<Header onPress={toggleSideBar} showCloseIcon={showCloseIcon} />}
+      header={
+        <Header
+          onPress={toggleSideBar}
+          showCloseIcon={showCloseIcon}
+          showHeader={showHeader}
+        />
+      }
       content={<Outlet />}
       topSectionStyle={commonStyles.headerContainer}
       {...layoutProps}
@@ -85,11 +96,12 @@ function HeaderWithContentLayout() {
           currentBreakpoint !== "xs") ||
         isSideBarVisible ? (
           <SideNavBar
+            handleDisplayHeader={handleDisplayHeader}
             onClose={() => setSideBarVisible(false)}
-            items={listItems}
             onPress={handleNewlyQualifiedPlacementsClick}
             resetList={() => setListItems(items)}
             showCloseIcon={showClose}
+            items={listItems}
           />
         ) : null
       }

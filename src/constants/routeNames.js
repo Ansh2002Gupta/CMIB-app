@@ -12,4 +12,5 @@ export const navigations = {
   ROUND_TWO: "/round-two",
   SIGN_UP: "/sign-up",
   VIEW_PROFILE: "/view-profile",
+  Web_View:'/web-view'
 };
