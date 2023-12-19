@@ -33,26 +33,26 @@ const CustomColumn = ({
 };
 
 CustomColumn.propTypes = {
-  onPress: PropTypes.func.isRequired, // Function called when the button is pressed
-  title: PropTypes.string.isRequired, // Text displayed on the button
-  style: PropTypes.oneOfType([ // Style applied to the button container
+  onPress: PropTypes.func.isRequired, 
+  title: PropTypes.string.isRequired, 
+  style: PropTypes.oneOfType([ 
     PropTypes.object,
     PropTypes.array,
     PropTypes.number,
   ]),
-  textStyle: PropTypes.oneOfType([ // Style applied to the button text
+  textStyle: PropTypes.oneOfType([ 
     PropTypes.object,
     PropTypes.array,
     PropTypes.number,
   ]),
-  disabled: PropTypes.bool, // Indicates if the button is disabled
-  iconLeft: PropTypes.oneOfType([ // Icon displayed on the left of the text
-    PropTypes.element, // Use PropTypes.element for React elements
-    PropTypes.number, // Use PropTypes.number for image require() calls
+  disabled: PropTypes.bool, 
+  iconLeft: PropTypes.oneOfType([ 
+    PropTypes.element,
+    PropTypes.number, 
   ]),
-  iconRight: PropTypes.oneOfType([ // Icon displayed on the right of the text
-    PropTypes.element, // Use PropTypes.element for React elements
-    PropTypes.number, // Use PropTypes.number for image require() calls
+  iconRight: PropTypes.oneOfType([ 
+    PropTypes.element, 
+    PropTypes.number, 
   ]),
 };
 
