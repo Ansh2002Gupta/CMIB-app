@@ -17,6 +17,7 @@ function CreateNewPasswordComponent(props) {
   const [successLogin, setSuccessLogin] = useState(false); 
   const [successMsg, setSuccessMsg] = useState("");
   const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [validationError, setValidationError] = useState("");
   
   const { handleResetPasswordAPI,isLoading } = useResetPasswordAPI();
@@ -35,6 +36,13 @@ function CreateNewPasswordComponent(props) {
   };
 
   const handleSubmit = () => {
+    const isPasswordMatch = newPassword.trim().toLowerCase() === confirmNewPassword.trim().toLowerCase();
+    if (isPasswordMatch) {
+      setErrorMessage("");
+    } else {
+      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
+      return;
+    }
     handleResetPasswordAPI({
       token: token,
       password: newPassword,
@@ -51,9 +59,12 @@ function CreateNewPasswordComponent(props) {
   const handleDismissToast = () => {
     setValidationError("");
   };
+
+  
   
   return (
     <CreateNewPasswordUI
+      errorMessage={errorMessage} 
       handleSubmit={handleSubmit}
       onClickGoToLogin={onClickGoToLogin}
       onChangePasswordInput={onChangePasswordInput}

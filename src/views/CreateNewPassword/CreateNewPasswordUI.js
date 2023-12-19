@@ -16,6 +16,7 @@ import styles from "./CreateNewPassword.style";
 function CreateNewPasswordUI(props) {
   const {
     confirmNewPassword,
+    errorMessage,
     error,
     handleSubmit,
     handleDismissToast,
@@ -37,7 +38,7 @@ function CreateNewPasswordUI(props) {
     uppercase: false,
     lowercase: false,
     specialChar: false,
-    match: false,
+    // match: false,
   });
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -52,8 +53,8 @@ function CreateNewPasswordUI(props) {
       !validations.numeric ||
       !validations.uppercase ||
       !validations.lowercase ||
-      !validations.specialChar ||
-      !validations.match
+      !validations.specialChar 
+      // !validations.match
     ) {
       setIsAnyPasswordFieldLeft(true);
       return;
@@ -98,6 +99,9 @@ function CreateNewPasswordUI(props) {
       setIsAnyPasswordFieldLeft(false);
     };
   }, []);
+
+  
+
 
   return (
     <ScrollView
@@ -169,6 +173,8 @@ function CreateNewPasswordUI(props) {
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
+              errorMessage={errorMessage}
+              isError={!!errorMessage}
             />
             <CreateNewPasswordValidation
               {...{

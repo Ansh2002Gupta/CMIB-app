@@ -186,6 +186,7 @@ const locale = {
   "label.braces": ")",
   "label.left_brace": "left)",
   "label.times": "times!",
+  "label.error_password": "Password not match",
 };
 
 export default locale;
