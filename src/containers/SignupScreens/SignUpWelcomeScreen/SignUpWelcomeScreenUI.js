@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import {
-  FlatList,
-  View,
-} from "@unthinkable/react-core-components";
+import { FlatList, View } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../../components/ButtonComponent/ButtonComponent";
-import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
-import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
+import CommonText from "../../../components/CommonText";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
+import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import style from "./SignUpWelcomeScreen.style";
 
@@ -18,10 +16,12 @@ const SignUpWelcomeScreenUI = ({
   intl,
   onClickNext,
   contactDetails,
+  handleDismissToast,
   setContactDetails,
   options,
   setOptions,
   onClickGoToLogin,
+  validationError,
 }) => {
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -29,21 +29,25 @@ const SignUpWelcomeScreenUI = ({
   const getResponsiveStyles = (str) => {
     switch (str) {
       case "signupContainer": {
-        if (currentBreakpoint === "sm" || currentBreakpoint === "xs" || currentBreakpoint === "md") {
+        if (
+          currentBreakpoint === "sm" ||
+          currentBreakpoint === "xs" ||
+          currentBreakpoint === "md"
+        ) {
           return {
             ...style.signupContainer,
             ...style.smSignupContainer,
           };
         }
         return {
-          ...style.signupContainer
-        }
+          ...style.signupContainer,
+        };
       }
       default:
         return;
     }
   };
-  
+
   const handleToggle = (id) => {
     const updatedItems = options.map((item) => {
       if (item.id === id) {
@@ -73,11 +77,17 @@ const SignUpWelcomeScreenUI = ({
   };
 
   return (
-    <View style={isWebView ? getResponsiveStyles("signupContainer") : style.innerContainer}>
+    <View
+      style={
+        isWebView
+          ? getResponsiveStyles("signupContainer")
+          : style.innerContainer
+      }
+    >
       {isWebView && (
         <HeaderTextWithLabelAndDescription
-        label={intl.formatMessage({ id: "label.step_one" })}
-        headerText={intl.formatMessage({ id: "label.welcome_to_cmib" })}
+          label={intl.formatMessage({ id: "label.step_one" })}
+          headerText={intl.formatMessage({ id: "label.welcome_to_cmib" })}
         />
       )}
       <View style={style.signUpSubContainer}>
@@ -104,24 +114,33 @@ const SignUpWelcomeScreenUI = ({
           />
           {isWebView && (
             <LabelWithLinkText
-            labelText={intl.formatMessage({ id: "label.already_account" })}
-            linkText={intl.formatMessage({ id: "label.login_here" })}
-            onLinkClick={onClickGoToLogin}
+              labelText={intl.formatMessage({ id: "label.already_account" })}
+              linkText={intl.formatMessage({ id: "label.login_here" })}
+              onLinkClick={onClickGoToLogin}
             />
           )}
         </View>
       </View>
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
 
 SignUpWelcomeScreenUI.propTypes = {
   contactDetails: PropTypes.array.isRequired,
+  handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
-  onClickNext: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
+  onClickNext: PropTypes.func.isRequired,
   setContactDetails: PropTypes.func.isRequired,
   setOptions: PropTypes.func.isRequired,
+  validationError: PropTypes.bool,
+  onClickGoToLogin: PropTypes.func,
 };
 
 export default SignUpWelcomeScreenUI;

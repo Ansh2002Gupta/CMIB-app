@@ -1,10 +1,32 @@
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
+export const  VALID_EMAIL = "Not a valid email, please enter again";
+export const  VALID_OTP = "Not a valid otp, please enter again";
 
 export const numRegex = /^\d+$/;
 export const urlRegex =
   /(?:https?:\/\/)?(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
+export const TOAST_TIMEOUT = 5000;
 export const API_VERSION_NUMBER = "v1";
+export const FIELD_MIN_LENGTH = 6;
+export const FIELD_MAX_LENGTH = 255;
+export const CODE_MIN_LENGTH = 2;
+export const CODE_MAX_LENGTH = 8;
+export const NUMBER_MIN_LENGTH = 7;
+export const NUMBER_MAX_LENGTH = 15;
+export const REGISTRATION_NO_LENGTH = 10;
+export const ADDRESS_MAX_LENGTH = 500;
+export const COMPANY_DETAIL_MAX_LENGTH = 100;
+export const CA_JOBS = "ca-jobs";
+export const NEWLY_QUALIFIED = "newly-qualified-ca-placement";
+export const OVERSEAS_PLACEMENTS = "overseas-placements";
+export const CAREER_ASCENTS = "career-ascents";
+export const WOMENT_PLACEMENT = "women-placement";
+
+export const OTP_TRY_COUNT = 5;
+export const OTP_TIMER_SECOND = 0;
+export const OTP_TIMER_MIN_MINUTES = 1;
+export const OTP_TIMER_MAX_MINUTES =15;
 
 export const API_STATUS = {
   IDLE: "idle",

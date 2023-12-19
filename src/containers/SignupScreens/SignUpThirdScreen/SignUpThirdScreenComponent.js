@@ -3,219 +3,194 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
-import { validateEmail } from "../../../constants/CommonFunctions";
-import { numRegex } from "../../../constants/constants";
+import { validateEmail } from "../../../constants/commonFunctions";
+import {
+  numRegex,
+  ADDRESS_MAX_LENGTH,
+  FIELD_MAX_LENGTH,
+  FIELD_MIN_LENGTH,
+  NUMBER_MAX_LENGTH,
+  NUMBER_MIN_LENGTH,
+} from "../../../constants/constants";
 
-const SignUpThirdScreenComponent = ({ tabHandler, index, module, onClickGoToLogin }) => {
+const SignUpThirdScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const initialContactDetails = signUpState.signUpDetail.contact_details || [];
+  const initialContactDetails =
+    signUpState?.signUpDetail?.contact_details || [];
   const { handleSignUpValidation } = useValidateSignUp();
 
-  const [salutation, setSalutation] = useState(
-    initialContactDetails[index]?.salutation || ""
-  );
-  const [name, setName] = useState(initialContactDetails[index]?.name || "");
-  const [designation, setDesignation] = useState(
-    initialContactDetails[index]?.designation || ""
-  );
-  const [mobileNo, setMobileNo] = useState(
-    initialContactDetails[index]?.mobile_number || ""
-  );
-  const [emailId, setEmailId] = useState(
-    initialContactDetails[index]?.email || ""
+  const [validationError, setValidationError] = useState("");
+  const [contactDetails, setContactDetails] = useState(
+    initialContactDetails.map((contact) => ({
+      designation: contact.designation || "",
+      emailId: contact.email || "",
+      mobileNo: contact.mobile_number || "",
+      module: contact.module,
+      name: contact.name || "",
+      salutation: contact.salutation || "",
+    }))
   );
 
-  const [errors, setErrors] = useState({
-    name: "",
-    salutation: "",
-    designation: "",
-    mobileNo: "",
-    emailId: "",
-  });
+  const [errors, setErrors] = useState(
+    contactDetails.map(() => ({
+      designation: "",
+      emailId: "",
+      mobileNo: "",
+      name: "",
+    }))
+  );
 
   useEffect(() => {
-    setSalutation(initialContactDetails[index].salutation || "");
-    setName(initialContactDetails[index].name || "");
-    setDesignation(initialContactDetails[index].designation || "");
-    setMobileNo(initialContactDetails[index].mobile_number || "");
-    setEmailId(initialContactDetails[index].email || "");
+    setContactDetails(
+      initialContactDetails.map((contact) => ({
+        designation: contact.designation || "",
+        emailId: contact.email || "",
+        mobileNo: contact.mobile_number || "",
+        module: contact.module || "",
+        name: contact.name || "",
+        salutation: contact.salutation || "",
+      }))
+    );
+    setErrors(
+      initialContactDetails.map(() => ({
+        designation: "",
+        emailId: "",
+        mobileNo: "",
+        name: "",
+      }))
+    );
+  }, [initialContactDetails]);
 
-    setErrors({
-      name: "",
-      salutation: "",
-      designation: "",
-      mobileNo: "",
-      emailId: "",
-    });
-  }, [index, module, initialContactDetails]);
-
-  let headerText = "";
-  switch (module) {
-    case "ca-jobs":
-      headerText = intl.formatMessage({ id: "label.for_ca_jobs" });
-      break;
-    case "newly-qualified-ca-placememt":
-      headerText = intl.formatMessage({ id: "label.for_new_ca_placement" });
-      break;
-    case "overseas-placements":
-      headerText = intl.formatMessage({ id: "label.for_overseas_placements" });
-      break;
-    case "career-ascents":
-      headerText = intl.formatMessage({ id: "label.for_career_ascents" });
-      break;
-    case "women-placement":
-      headerText = intl.formatMessage({ id: "label.for_women_placements" });
-      break;
-    default:
-      headerText = intl.formatMessage({ id: "label.for_ca_jobs" });
-      break;
-  }
   const allFieldsFilled = () => {
-    const requiredFields = [name, salutation, designation, mobileNo, emailId];
-    return requiredFields.every((field) => String(field).trim() !== "");
+    return contactDetails.every((detail) => {
+      const requiredFields = [
+        detail.designation,
+        detail.emailId,
+        detail.mobileNo,
+        detail.name,
+      ];
+      return requiredFields.every((field) => String(field).trim() !== "");
+    });
   };
 
   const validateFields = () => {
-    let isValid = true;
-    let newErrors = {
-      name: "",
-      salutation: "",
-      designation: "",
-      mobileNo: "",
-      emailId: "",
-    };
+    const newErrors = contactDetails.map((detail) => {
+      let error = {
+        designation: "",
+        emailId: "",
+        mobileNo: "",
+        name: "",
+      };
 
-    if (name.length < 6 || name.length > 255) {
-      newErrors.name = intl.formatMessage({
-        id: "label.contact_person_validation",
-      });
-      isValid = false;
-    }
+      if (
+        detail.name.length < FIELD_MIN_LENGTH ||
+        detail.name.length > FIELD_MAX_LENGTH
+      ) {
+        error.name = intl.formatMessage({
+          id: "label.contact_person_validation",
+        });
+      }
 
-    if (designation.length < 6 || designation.length > 500) {
-      newErrors.designation = intl.formatMessage({
-        id: "label.designation_validation",
-      });
-      isValid = false;
-    }
+      if (
+        detail.designation.length < FIELD_MIN_LENGTH ||
+        detail.designation.length > ADDRESS_MAX_LENGTH
+      ) {
+        error.designation = intl.formatMessage({
+          id: "label.designation_validation",
+        });
+      }
 
-    if (
-      !numRegex.test(String(mobileNo)) ||
-      mobileNo.length > 15 ||
-      mobileNo.length < 7
-    ) {
-      newErrors.mobileNo = intl.formatMessage({
-        id: "label.mobile_number_validation",
-      });
-      isValid = false;
-    }
+      if (
+        !numRegex.test(String(detail.mobileNo)) ||
+        detail.mobileNo.length > NUMBER_MAX_LENGTH ||
+        detail.mobileNo.length < NUMBER_MIN_LENGTH
+      ) {
+        error.mobileNo = intl.formatMessage({
+          id: "label.mobile_number_validation",
+        });
+      }
 
-    if (validateEmail(emailId)) {
-      newErrors.emailId = intl.formatMessage({
-        id: "label.email_id_validation",
-      });
-      isValid = false;
-    }
+      if (validateEmail(detail.emailId)) {
+        error.emailId = intl.formatMessage({ id: "label.email_id_validation" });
+      }
+
+      return error;
+    });
 
     setErrors(newErrors);
-    return isValid;
+    return newErrors.every((error) =>
+      Object.values(error).every((fieldError) => fieldError === "")
+    );
   };
 
   const onGoBack = () => {
     tabHandler("prev");
   };
 
+  const handleDismissToast = () => {
+    setValidationError("");
+  };
+
   const onClickNext = () => {
-    if (validateFields()) {
-      const existingContactDetails =
-        signUpState.signUpDetail.contact_details || [];
+    const isValid = validateFields();
+    if (isValid) {
+      const updatedContactDetails = contactDetails.map((detail) => ({
+        name: detail.name,
+        email: detail.emailId,
+        salutation: detail.salutation,
+        mobile_number: detail.mobileNo,
+        designation: detail.designation,
+        mobile_country_code: "+91",
+      }));
 
-      if (existingContactDetails.some((detail) => detail.module === module)) {
-        const details = {
-          name: name,
-          email: emailId,
-          salutation: salutation,
-          mobile_number: mobileNo,
-          designation: designation,
-          mobile_country_code: "+91",
-        };
-        const caJobsIndex = existingContactDetails.findIndex(
-          (detail) => detail.module === module
-        );
-        if (caJobsIndex !== -1) {
-          existingContactDetails[caJobsIndex] = {
-            ...existingContactDetails[caJobsIndex],
-            ...details,
-          };
+      const newContactDetails = {
+        contact_details: updatedContactDetails,
+      };
+
+      handleSignUpValidation(
+        newContactDetails,
+        () => {
+          signUpDispatch(setSignUpDetails(newContactDetails));
+          tabHandler("next");
+        },
+        (error) => {
+          setValidationError(error);
         }
-
-        const newContactDetails = {
-          contact_details: [...existingContactDetails],
-        };
-
-        handleSignUpValidation(
-          { newContactDetails },
-          () => {
-            signUpDispatch(setSignUpDetails(newContactDetails));
-            tabHandler("next");
-          },
-          (error) => {
-            console.error("ERROR:", error);
-          }
-        );
-      }
+      );
     }
   };
 
-  const handleInputChange = (value, name) => {
-    switch (name) {
-      case "salutation":
-        setSalutation(value);
-        break;
-      case "name":
-        setName(value);
-        break;
-      case "designation":
-        setDesignation(value);
-        break;
-      case "email":
-        setEmailId(value);
-        break;
-      case "mobileNo":
-        setMobileNo(value);
-        break;
-      default:
-        break;
-    }
+  const handleInputChange = (value, name, index) => {
+    const updatedDetails = [...contactDetails];
+    updatedDetails[index] = {
+      ...updatedDetails[index],
+      [name]: value,
+    };
+    setContactDetails(updatedDetails);
   };
 
   return (
     <SignUpThirdScreenUI
-      intl={intl}
-      onGoBack={onGoBack}
-      onClickNext={onClickNext}
-      handleInputChange={handleInputChange}
-      salutation={salutation}
-      mobileNo={mobileNo}
-      emailId={emailId}
-      name={name}
-      designation={designation}
       allFieldsFilled={allFieldsFilled}
+      contactDetails={contactDetails}
       errors={errors}
-      headerText={headerText}
       onClickGoToLogin={onClickGoToLogin}
+      handleDismissToast={handleDismissToast}
+      handleInputChange={handleInputChange}
+      intl={intl}
+      onClickNext={onClickNext}
+      onGoBack={onGoBack}
+      validationError={validationError}
     />
   );
 };
 
 SignUpThirdScreenComponent.propTypes = {
   tabHandler: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  module: PropTypes.string.isRequired,
 };
 
 export default SignUpThirdScreenComponent;

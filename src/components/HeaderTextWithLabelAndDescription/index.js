@@ -1,3 +1,3 @@
-import HeaderText from "./HeaderText";
+import HeaderTextWithLabelAndDescription from "./HeaderTextWithLabelAndDescription";
 
-export default HeaderText;
+export default HeaderTextWithLabelAndDescription;

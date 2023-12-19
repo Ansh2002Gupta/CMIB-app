@@ -1,18 +1,13 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import {
-  Platform,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
-import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
 import style from "./SignUpSecondScreen.style";
@@ -28,6 +23,8 @@ const SignUpSecondScreenUI = ({
   industryOptions,
   stateOptions,
   onClickGoToLogin,
+  validationError,
+  handleDismissToast
 }) => {
   const {
     companyName,
@@ -231,15 +228,15 @@ const SignUpSecondScreenUI = ({
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
         hasIconRight
-        isNextDisabled={!allFieldsFilled()}
+        // isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
         customSaveButtonContainer={isWebView && style.customSaveButtonContainer}
       />
       {isWebView && (
         <LabelWithLinkText
-        labelText={intl.formatMessage({ id: "label.already_account" })}
-        linkText={intl.formatMessage({ id: "label.login_here" })}
-        onLinkClick={onClickGoToLogin}
+          labelText={intl.formatMessage({ id: "label.already_account" })}
+          linkText={intl.formatMessage({ id: "label.login_here" })}
+          onLinkClick={onClickGoToLogin}
         />
       )}
     </View>
@@ -267,26 +264,40 @@ const SignUpSecondScreenUI = ({
           {renderFormContent()}
         </ScrollView>
       ) : (
-        <View style={!isWebView ? [style.contentContainerStyle, style.webContentContainer] : style.webContentContainer}>
+        <View
+          style={
+            !isWebView
+              ? [style.contentContainerStyle, style.webContentContainer]
+              : style.webContentContainer
+          }
+        >
           {renderFormContent()}
           {renderFooter()}
         </View>
       )}
       {!isWeb && renderFooter()}
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
 
 SignUpSecondScreenUI.propTypes = {
-  intl: PropTypes.object.isRequired,
-  onGoBack: PropTypes.func.isRequired,
-  onClickNext: PropTypes.func.isRequired,
-  formData: PropTypes.object.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
   allFieldsFilled: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  formData: PropTypes.object.isRequired,
+  handleDismissToast: PropTypes.func,
+  handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,
+  intl: PropTypes.object.isRequired,
+  onClickNext: PropTypes.func.isRequired,
+  onGoBack: PropTypes.func.isRequired,
   stateOptions: PropTypes.array,
+  validationError: PropTypes.string,
 };
 
 export default SignUpSecondScreenUI;

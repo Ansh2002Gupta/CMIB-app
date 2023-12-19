@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpWelcomeScreenUI from "./SignUpWelcomeScreenUI";
-import useValidateSignUp from "../../../services/apiServices/hooks/useValidateSignUp";
+import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { MODULE_OPTIONS } from "../../../constants/constants";
@@ -25,6 +25,7 @@ const SignUpScreenWelcomeComponent = ({ tabHandler, onClickGoToLogin }) => {
 
   const [contactDetails, setContactDetails] = useState(initialContactDetails);
   const [options, setOptions] = useState(initialOptions);
+  const [validationError, setValidationError] = useState("");
 
   const onClickNext = () => {
     const existingContactDetails =
@@ -47,9 +48,13 @@ const SignUpScreenWelcomeComponent = ({ tabHandler, onClickGoToLogin }) => {
         tabHandler("next");
       },
       (error) => {
-        console.error("ERROR:", error);
+        setValidationError(error);
       }
     );
+  };
+
+  const handleDismissToast = () => {
+    setValidationError("");
   };
 
   return (
@@ -61,6 +66,8 @@ const SignUpScreenWelcomeComponent = ({ tabHandler, onClickGoToLogin }) => {
       options={options}
       setOptions={setOptions}
       onClickGoToLogin={onClickGoToLogin}
+      handleDismissToast={handleDismissToast}
+      validationError={validationError}
     />
   );
 };

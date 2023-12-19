@@ -6,6 +6,7 @@ const style = {
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 24,
+    fontWeight: "600",
   },
   contentContainerStyle: {
     flex: 1,
@@ -29,10 +30,9 @@ const style = {
     flexDirection: "row",
   },
   infoStyle: {
-    marginTop: -24,
+    marginTop: -16,
     marginBottom: 24,
     color: colors.darkGrey,
-    fontFamily: "GeneralSans-Medium",
     fontSize: 14,
     lineHeight: 24,
   },

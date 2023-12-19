@@ -6,7 +6,7 @@ const style = {
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 24,
-    fontweight: "600"
+    fontWeight: "600",
   },
   contentContainerStyle: {
     marginTop: 24,
@@ -17,10 +17,15 @@ const style = {
   webContainerStyle: {
     backgroundColor: colors.white,
     gap: 32,
-    flex:1
+    flex: 1,
   },
   inputContainer: {
     flexDirection: "row",
+  },
+  dividerStyle: {
+    height: 1,
+    backgroundColor: colors.lightGrey,
+    marginBottom: 24,
   },
   dropdownStyle: { minWidth: 96 },
   secondInput: { marginLeft: 24, flex: 1 },

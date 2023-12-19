@@ -4,6 +4,9 @@ import { Platform } from "@unthinkable/react-core-components";
 import ContentLayout from "../pages/ContentLayout";
 import CreateNewPassword from "../views/CreateNewPassword/index";
 import DashboardView from "../views/Dashboard";
+import MyAccount from "../views/MyAccount";
+import ViewProfile from "../views/ViewProfile";
+import CompanyProfile from "../views/CompanyProfile";
 import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
@@ -22,6 +25,7 @@ import { navigations } from "../constants/routeNames";
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(Platform.OS === 'web' ? HeaderWithContentLayout : ContentLayout);
+const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
   {
@@ -38,10 +42,29 @@ const config = [
     pagePath: navigations.PROFILE,
     element: <HomeWithPrivateAccess />, // Page
     views: [
-      // array of views under Page route
       {
         viewPath: "",
-        element: <ProfileView />, // view
+        element: <MyAccount />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.VIEW_PROFILE,
+    element: <ContentRouteWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <ViewProfile />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.COMPANY_PROFILE,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <CompanyProfile />,
       },
     ],
   },

@@ -13,13 +13,9 @@ import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import style from "./SignUpScreen.style";
 
-const SignUpScreenUI = ({
-  intl,
-  onClickGoToLogin,
-  activeTab,
-  onHandleTab,
-  selectedContactDetails,
-}) => {
+const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const { isWebView } = useIsWebView();
   let tabConfig = [
     {
       id: "label.welcome_to_sign_up",
@@ -31,33 +27,23 @@ const SignUpScreenUI = ({
       imageKey: "iconWalkthroughSignUpTwo",
       component: SignUpSecondScreen,
     },
-  ];
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const { isWebView } = useIsWebView();
-
-  selectedContactDetails.forEach((contactDetail, index) => {
-    tabConfig.push({
+    {
       id: "label.contact_personal_details",
       imageKey: "iconWalkthroughSignUpThree",
       component: SignUpThirdScreen,
-      module: contactDetail.module,
-      index: index,
-    });
-  });
-
-  tabConfig.push({
-    id: "label.other_details",
-    imageKey: "iconWalkthroughSignUpLast",
-    component: SignUpLastScreen,
-  });
+    },
+    {
+      id: "label.other_details",
+      imageKey: "iconWalkthroughSignUpLast",
+      component: SignUpLastScreen,
+    },
+  ];
 
   const activeTabIndex = Math.min(activeTab, tabConfig.length - 1);
   const {
     id,
     imageKey,
     component: ActiveTabComponent,
-    module,
-    index,
   } = tabConfig[activeTabIndex];
   const headerText = intl.formatMessage({ id });
   const image = images[imageKey];
@@ -116,8 +102,6 @@ const SignUpScreenUI = ({
           <View style={getResponsiveStyles("signUpWebContainer")}>
             <ActiveTabComponent
               tabHandler={onHandleTab}
-              module={module}
-              index={index}
               onClickGoToLogin={onClickGoToLogin}
             />
           </View>
@@ -125,8 +109,7 @@ const SignUpScreenUI = ({
       ) : (
         <ActiveTabComponent
           tabHandler={onHandleTab}
-          module={module}
-          index={index}
+          onClickGoToLogin={onClickGoToLogin}
         />
       )}
     </View>
@@ -134,11 +117,10 @@ const SignUpScreenUI = ({
 };
 
 SignUpScreenUI.propTypes = {
+  activeTab: PropTypes.number.isRequired,
   intl: PropTypes.object.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onHandleTab: PropTypes.func.isRequired,
-  activeTab: PropTypes.number.isRequired,
-  selectedContactDetails: PropTypes.array.isRequired,
 };
 
 export default SignUpScreenUI;

@@ -8,13 +8,14 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
+import CommonText from "../../../components/CommonText";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../../components/UploadImage/UploadImage";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
@@ -24,19 +25,23 @@ import {
 import style from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = ({
+  allFieldsFilled,
+  companyDetails,
+  companyType,
+  errors,
+  handleDismissToast,
+  handleInputChange,
+  handleSuccessModal,
+  handleToggle,
   intl,
+  natureOfSupplier,
   onClickGoToLogin,
   onGoBack,
   options,
-  handleToggle,
-  handleSuccessModal,
   showSuccessSignUp,
-  handleInputChange,
   socialMediaLinks,
-  companyDetails,
-  allFieldsFilled,
+  validationError,
   website,
-  errors,
 }) => {
   const isWeb = Platform.OS === "web";
   const { isWebView } = useIsWebView();
@@ -139,6 +144,7 @@ const SignUpLastScreenUI = ({
           placeholder={intl.formatMessage({
             id: "label.select_nature_of_supplier",
           })}
+          value={natureOfSupplier}
           isMandatory
           isDropdown
           onChangeValue={(value) =>
@@ -153,6 +159,7 @@ const SignUpLastScreenUI = ({
           placeholder={intl.formatMessage({
             id: "label.select_company_type",
           })}
+          value={companyType}
           onChangeValue={(value) => handleInputChange(value, "companyType")}
           options={COMPANY_TYPE_OPTIONS}
           isMandatory
@@ -196,7 +203,7 @@ const SignUpLastScreenUI = ({
         />
         {isWebView && (
           <LabelWithLinkText
-            label={intl.formatMessage({ id: "label.already_account" })}
+            labelText={intl.formatMessage({ id: "label.already_account" })}
             linkText={intl.formatMessage({ id: "label.login_here" })}
             onLinkClick={onClickGoToLogin}
           />
@@ -258,24 +265,34 @@ const SignUpLastScreenUI = ({
         </ScrollView>
       )}
       {!isWeb && renderFooterContent()}
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
 
 SignUpLastScreenUI.propTypes = {
+  allFieldsFilled: PropTypes.func.isRequired,
+  companyDetails: PropTypes.string.isRequired,
+  companyType: PropTypes.string.isRequired,
+  errors: PropTypes.object,
+  handleDismissToast: PropTypes.func,
+  handleInputChange: PropTypes.func.isRequired,
+  handleSuccessModal: PropTypes.func.isRequired,
+  handleToggle: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  natureOfSupplier: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
-  handleToggle: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
-  handleSuccessModal: PropTypes.func.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
-  errors: PropTypes.object,
   socialMediaLinks: PropTypes.object.isRequired,
+  validationError: PropTypes.string,
   website: PropTypes.string.isRequired,
-  companyDetails: PropTypes.string.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  allFieldsFilled: PropTypes.func.isRequired,
 };
 
 export default SignUpLastScreenUI;

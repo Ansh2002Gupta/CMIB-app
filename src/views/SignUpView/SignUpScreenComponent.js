@@ -10,9 +10,7 @@ const SignUpScreenComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
-  const [signUpState, signUpDispatch] = useContext(SignUpContext);
-
-  const selectedContactDetails = signUpState.signUpDetail.contact_details || [];
+  const [, signUpDispatch] = useContext(SignUpContext);
 
   const onHandleTab = (direction) => {
     setActiveTab((prevTab) => {
@@ -35,7 +33,6 @@ const SignUpScreenComponent = () => {
       onClickGoToLogin={onClickGoToLogin}
       onHandleTab={onHandleTab}
       activeTab={activeTab}
-      selectedContactDetails={selectedContactDetails}
     />
   );
 };

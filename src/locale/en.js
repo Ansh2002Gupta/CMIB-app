@@ -137,6 +137,10 @@ const locale = {
   "label.company_profile": "Company Profile",
   "label.cancel": "Cancel",
   "label.save": "Save",
+  "label.change_password": "Change Password",
+  "label.tickets": "Tickets",
+  "label.notification_settings": "Notification Settings",
+  "label.feedback": "Feedback",
   "label.round1": "Round 1",
   "label.round2": "Round 2",
   "label.add_application_form_text": "Add / View Application form",
@@ -169,6 +173,11 @@ const locale = {
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
+  "label.yes": "Yes",
+  "label.no": "No",
+  "label.otp_text":
+    "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
+  "label.text_otp": "OTP",
   "label.jobs": "Jobs",
   "label.welcome_to_cmib": "Welcome to CMI&B Company Sign-up",
   "label.step_one": "Step 1",
@@ -179,7 +188,14 @@ const locale = {
   "label.login_here": "Login here",
   "label.basic_details": "Basic Details",
   "label.contact_person_details": "Contact Person Details",
-  "label.other_details": "Other Details"
+  "label.other_details": "Other Details",
+  "label.otp_recieved": "Haven’t received the OTP?",
+  "label.request_otp": "You have requested OTP for ",
+  "label.request_otp_next": "You can resend the next OTP after",
+  "label.request_otp_again": "Send Again (",
+  "label.braces": ")",
+  "label.left_brace": "left)",
+  "label.times": "times!",
 };
 
 export default locale;
