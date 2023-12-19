@@ -13,14 +13,13 @@ import IconHeader from "../../components/IconHeader/IconHeader";
 import images from "../../images";
 import style from "./MyAccount.style";
 
-const MyAccountUI = (props) => {
-  const {
-    changePasswordModal,
-    handleOptionClick,
-    handleChangePassword,
-    intl,
-    options,
-  } = props;
+const MyAccountUI = ({
+  changePasswordModal,
+  handleOptionClick,
+  handleChangePassword,
+  intl,
+  options,
+}) => {
   //TODO: Replace this dummy data with api data.
   const profileImage = "";
   const firstName = "Kashish";

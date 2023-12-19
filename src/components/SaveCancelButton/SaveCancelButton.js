@@ -9,21 +9,20 @@ import {
 
 import CommonText from "../CommonText";
 import images from "../../images";
+import colors from "../../assets/colors";
 import styles from "./SaveCancelButton.style";
 
-const SaveCancelButton = (props) => {
-  const {
-    buttonOneText,
-    buttonTwoText,
-    displayLoader,
-    onPressButtonOne,
-    onPressButtonTwo,
-    hasIconRight,
-    hasIconLeft,
-    isNextDisabled,
-    customContainerStyle,
-  } = props;
-
+const SaveCancelButton = ({
+  buttonOneText,
+  buttonTwoText,
+  customContainerStyle,
+  displayLoader,
+  onPressButtonOne,
+  onPressButtonTwo,
+  hasIconRight,
+  hasIconLeft,
+  isNextDisabled,
+}) => {
   return (
     <View style={[styles.containerStyle, customContainerStyle]}>
       <TouchableOpacity
@@ -61,10 +60,20 @@ const SaveCancelButton = (props) => {
   );
 };
 
+SaveCancelButton.defaultProps = {
+  customContainerStyle: {},
+  displayLoader: false,
+  hasIconRight: false,
+  hasIconLeft: false,
+  isNextDisabled: false,
+  onPressButtonOne: () => {},
+  onPressButtonTwo: () => {},
+};
+
 SaveCancelButton.propTypes = {
   buttonOneText: PropTypes.string.isRequired,
   buttonTwoText: PropTypes.string.isRequired,
-  customContainerStyle: PropTypes.object.isRequired,
+  customContainerStyle: PropTypes.object,
   displayLoader: PropTypes.bool,
   hasIconRight: PropTypes.bool,
   hasIconLeft: PropTypes.bool,

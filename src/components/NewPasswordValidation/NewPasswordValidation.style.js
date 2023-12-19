@@ -13,13 +13,15 @@ const style = {
   validationView: {
     flexDirection: "row",
     marginTop: 8,
-    alignItems: "center",
   },
   bulletIconStyle: {
-    width: 8,
-    height: 8,
-    borderRadius: 6,
-    margin: 8,
+    width: 6,
+    height: 6,
+    borderRadius: 5,
+    margin: 5,
   },
+  activityBulletStyle: (isValid) => ({
+    backgroundColor: isValid ? colors.green : colors.lightGrey,
+  }),
 };
 export default style;

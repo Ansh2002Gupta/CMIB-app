@@ -18,11 +18,9 @@ const NewPasswordValidation = ({
   const intl = useIntl();
   const bulletStyle = (isValid) => [
     styles.bulletIconStyle,
-    {
-      backgroundColor: isValid ? colors.green : colors.lightGrey,
-    },
+    styles.activityBulletStyle(isValid),
   ];
-  
+
   const validatePassword = (password, confirmNewPassword) => {
     return {
       length: PASSWORD_VALIDATIONS.length(password),

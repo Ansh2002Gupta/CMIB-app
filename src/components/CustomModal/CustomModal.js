@@ -14,20 +14,18 @@ import CommonText from "../CommonText";
 import images from "../../images";
 import style from "./CustomModal.style";
 
-const CustomModal = (props) => {
-  const {
-    buttonTitle,
-    children,
-    customInnerContainerStyle,
-    headerText,
-    headerTextStyle,
-    isSuccess,
-    isIconCross,
-    onPress,
-    onPressIconCross,
-    secondaryText,
-  } = props;
-
+const CustomModal = ({
+  buttonTitle,
+  children,
+  customInnerContainerStyle,
+  headerText,
+  headerTextStyle,
+  isSuccess,
+  isIconCross,
+  onPress,
+  onPressIconCross,
+  secondaryText,
+}) => {
   return (
     <View>
       <Modal isVisible style={style.containerStyle}>
@@ -66,6 +64,18 @@ const CustomModal = (props) => {
       </Modal>
     </View>
   );
+};
+
+CustomModal.defaultProps = {
+  buttonTitle: "Default Button Title",
+  customInnerContainerStyle: {},
+  headerText: "Default Header Text",
+  headerTextStyle: false,
+  isIconCross: false,
+  isSuccess: false,
+  onPress: () => {},
+  onPressIconCross: () => {},
+  secondaryText: "Default Secondary Text",
 };
 
 CustomModal.propTypes = {

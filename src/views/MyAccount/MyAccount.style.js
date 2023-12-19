@@ -1,5 +1,5 @@
-import colors from "../../assets/colors";
 import { Dimensions } from "@unthinkable/react-core-components";
+import colors from "../../assets/colors";
 
 const deviceHeight = Dimensions.get("window").height;
 const maxHeightPercentage = 0.8;
