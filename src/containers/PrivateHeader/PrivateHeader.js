@@ -95,7 +95,6 @@ const PrivateHeader = ({ onPress, showCloseIcon }) => {
         <View style={styles.container}>
           <TouchableOpacity
             onPress={() => {
-              console.log("hello");
               showCloseIcon();
               onPress();
             }}
