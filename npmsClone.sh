@@ -35,7 +35,7 @@ cd ..
 git clone https://x-token-auth:ATCTT3xFfGN0398h2Q_0zPcUHkkmMEFC8reuKu3bhIWO4sVsxbqITtMQ1w2cnOuDLHGkZTAvA-GOAZ6hEXyNHzJ5-U_KhbcaIkPeSX1D4AdS-zUcZVl0vmScehuh5OrAHTSxV4nwmZ2R3pCvXtceqRnWrGeknprCIfNpPcT0c6cyzl7gePXzH34=6C56CF7D@bitbucket.org/daffodilsoftware/react-theme.git
 cd react-theme
 git config credential.helper store
-git checkout 7279dfa62c7f5315b2f29f18cadc4c955e4e09c6 # master
+git checkout 05b7106dee7a82c2dc070405c9e554c470c0fb0e # master
 cd ..
 
 git clone https://x-token-auth:ATCTT3xFfGN0qIU16ADSHAFA3OTg2nOSP6YKoUgoEaoA3u_r6Lv-i_v8xJp8y-jx6I4dyq7y4bHltsUH7FSTY5NHGqAZrDyzSfKMQzEwIXqRorYwcIukNTFnFzZ8yhoONAafOu-TLQMC9d2L44snDjiUQgrPDpmezDUiAgzxBXdoUZZJ7IhdVjQ=84528408@bitbucket.org/daffodilsoftware/react-event-handler.git
