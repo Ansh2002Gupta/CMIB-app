@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import { PASSWORD_VALIDATIONS } from "../../constants/Regex";
 import colors from "../../assets/colors";
 import styles from "./NewPasswordValidation.style";
 
@@ -21,18 +22,24 @@ const NewPasswordValidation = ({
       backgroundColor: isValid ? colors.green : colors.lightGrey,
     },
   ];
-  useEffect(() => {
-    const validatePassword = () => {
-      setValidations({
-        length: newPassword.length >= 6,
-        numeric: /[0-9]/.test(newPassword),
-        uppercase: /[A-Z]/.test(newPassword),
-        lowercase: /[a-z]/.test(newPassword),
-        specialChar: /[!?.@#$%^&+=]/.test(newPassword),
-        match: newPassword === confirmNewPassword,
-      });
+  
+  const validatePassword = (password, confirmNewPassword) => {
+    return {
+      length: PASSWORD_VALIDATIONS.length(password),
+      numeric: PASSWORD_VALIDATIONS.numeric.test(password),
+      uppercase: PASSWORD_VALIDATIONS.uppercase.test(password),
+      lowercase: PASSWORD_VALIDATIONS.lowercase.test(password),
+      specialChar: PASSWORD_VALIDATIONS.specialChar.test(password),
+      match: password === confirmNewPassword,
     };
-    validatePassword();
+  };
+
+  useEffect(() => {
+    const updatedValidations = validatePassword(
+      newPassword,
+      confirmNewPassword
+    );
+    setValidations(updatedValidations);
   }, [newPassword, confirmNewPassword, setValidations]);
 
   return (

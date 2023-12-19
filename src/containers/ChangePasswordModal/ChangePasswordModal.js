@@ -118,12 +118,12 @@ const ChangePasswordModal = ({ onPressCancel }) => {
         }
         fourthSection={
           <View>
-            {error ? (
+            {!!error && (
               <CommonText
                 title={error}
                 customTextStyle={styles.passwordMatchStyle}
               />
-            ) : null}
+            )}
             <NewPasswordValidation
               {...{
                 newPassword,
@@ -136,12 +136,12 @@ const ChangePasswordModal = ({ onPressCancel }) => {
         }
         fiveSection={
           <View style={styles.saveAndCancelButtonView}>
-            {errorWhileChangePassword ? (
+            {!!errorWhileChangePassword && (
               <CommonText
                 title={errorWhileChangePassword}
                 customTextStyle={styles.errorText}
               />
-            ) : null}
+            )}
 
             <SaveCancelButton
               customContainerStyle={styles.customContainerStyle}
