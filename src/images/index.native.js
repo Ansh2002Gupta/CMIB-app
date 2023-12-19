@@ -64,6 +64,8 @@ import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLog
 import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
 import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
 import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
+import iconClose from "../../public/images/iconClose/iconClose.png";
+import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 
 const images = {
   iconArrowUp,
@@ -75,6 +77,7 @@ const images = {
   moon,
   flagFr,
   flagUk,
+  iconLeftArrow,
   homeSolid,
   homeOutline,
   profileSolid,
@@ -97,6 +100,7 @@ const images = {
   iconEyeSlash,
   iconSuccess,
   iconMenu,
+  iconClose,
   iconNotification,
   iconProfile,
   iconLogout,

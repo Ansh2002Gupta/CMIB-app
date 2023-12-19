@@ -80,6 +80,8 @@ const iconFooterGlobal = "images/iconFooterGlobal/iconFooterGlobal.png";
 const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
 const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
 const iconArrowDown2 = "images/iconArrowDown2/iconArrowDown2.png";
+const iconClose = "images/iconClose/iconClose.png"
+const iconLeftArrow = "images/iconLeftArrow/iconLeftArrow.png"
 
 const images = {
   iconArrowUp,
@@ -88,6 +90,7 @@ const images = {
   avatar,
   logo,
   sun,
+  iconLeftArrow,
   moon,
   flagFr,
   flagUk,
@@ -119,6 +122,7 @@ const images = {
   iconBuilding,
   iconLock,
   iconArrowRight,
+  iconClose,
   iconBack,
   iconEdit,
   iconChange,

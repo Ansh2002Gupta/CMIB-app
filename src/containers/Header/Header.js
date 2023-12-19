@@ -4,7 +4,7 @@ import HeaderForLoggedInUser from "../../components/HeaderForLoggedInUser/Header
 import HeaderForNonLoggedInUser from "../../components/HeaderForNonLoggedInUser.js/HeaderForNonLoggedInUser";
 import { getAuthToken } from "../../utils/getAuthToken";
 
-const Header = ({ onPress }) => {
+const Header = ({ onPress, showCloseIcon }) => {
   const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
 
   const checkAuthToken = async () => {
@@ -27,7 +27,10 @@ const Header = ({ onPress }) => {
   return (
     <>
       {isuserLoggedIn ? (
-        <HeaderForLoggedInUser onPress={onPress} />
+        <HeaderForLoggedInUser
+          onPress={onPress}
+          showCloseIcon={showCloseIcon}
+        />
       ) : (
         <HeaderForNonLoggedInUser />
       )}

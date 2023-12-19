@@ -11,7 +11,7 @@ import CommonText from "../CommonText";
 import images from "../../images";
 import styles from "./HeaderForLoggedInUser.style";
 
-const HeaderForLoggedInUser = ({ onPress }) => {
+const HeaderForLoggedInUser = ({ onPress, showCloseIcon }) => {
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [menuIconVisible, setMenuIconVisible] = useState(true);
@@ -97,7 +97,12 @@ const HeaderForLoggedInUser = ({ onPress }) => {
         </View>
       ) : (
         <View style={styles.container}>
-          <TouchableOpacity onPress={onPress}>
+          <TouchableOpacity
+            onPress={() => {
+              showCloseIcon();
+              onPress();
+            }}
+          >
             <Image source={images.iconMenu} />
           </TouchableOpacity>
           <TouchableOpacity>

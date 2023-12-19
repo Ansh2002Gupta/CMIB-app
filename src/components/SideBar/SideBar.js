@@ -13,12 +13,14 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./SideBar.style";
 
-const SideBar = ({ items, onPress }) => {
+const SideBar = ({ items, onPress, resetList, showCloseIcon, onClose }) => {
   const intl = useIntl();
   const [currentList, setCurrentList] = useState(items);
   const [selectedList, setSelecteList] = useState(null);
   const [selectedSubList, setSelecteSubList] = useState(null);
   const [showStaticContent, setShowStaticContent] = useState(true);
+  const [showBackIcon, setShowBackIcon] = useState(false);
+  const [showClose, setShowClose] = useState(true);
 
   const renderSubItem = ({ item }) => (
     <TouchableOpacity
@@ -48,7 +50,10 @@ const SideBar = ({ items, onPress }) => {
           styles.list,
           selectedList === item.id && styles.selectedItemBackground,
         ]}
-        onPress={() => setSelecteList(item.id)}
+        onPress={() => {
+          setSelecteList(item.id);
+          setSelecteSubList(null);
+        }}
       >
         <CommonText
           customTextStyle={{
@@ -60,7 +65,6 @@ const SideBar = ({ items, onPress }) => {
           title={item.title}
         />
       </TouchableOpacity>
-      {/* Render subitems if any */}
       {item.subitems && (
         <FlatList
           data={item.subitems}
@@ -77,13 +81,41 @@ const SideBar = ({ items, onPress }) => {
 
   const handleOnPress = () => {
     onPress();
+    setShowBackIcon(true);
+    setShowClose(false);
     setShowStaticContent(false);
+  };
+
+  const resetSidebar = () => {
+    setShowBackIcon(false);
+    setShowStaticContent(true);
+    setShowClose(true);
+    resetList();
   };
 
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
-        <View style={styles.imageView}>
+        {showBackIcon ? (
+          <TouchableOpacity onPress={resetSidebar}>
+            <Image source={images.iconLeftArrow} style={styles.leftArrow} />
+          </TouchableOpacity>
+        ) : null}
+        {showCloseIcon && showClose ? (
+          <TouchableOpacity
+            onPress={() => {
+              onClose();
+            }}
+          >
+            <Image source={images.iconClose} style={styles.leftArrow} />
+          </TouchableOpacity>
+        ) : null}
+        <View
+          style={[
+            styles.imageView,
+            { paddingTop: showBackIcon || showClose ? 24 : 40 },
+          ]}
+        >
           <Image source={images.iconCmibLogoWhite} />
         </View>
         {showStaticContent && (
@@ -143,6 +175,9 @@ const SideBar = ({ items, onPress }) => {
 SideBar.propTypes = {
   items: PropTypes.array.isRequired,
   onPress: PropTypes.func.isRequired,
+  resetList: PropTypes.func.isRequired,
+  showCloseIcon: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default SideBar;

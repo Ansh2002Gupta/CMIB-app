@@ -17,8 +17,9 @@ import commonStyles from "../theme/styles/commonStyles";
 
 function HeaderWithContentLayout() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
-  const [listItems, setListItems] = useState(items);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [listItems, setListItems] = useState(items);
+  const [showClose, setShowClose] = useState(false);
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const windowDimensions = useWindowDimensions();
@@ -47,6 +48,10 @@ function HeaderWithContentLayout() {
     checkAuthToken();
   }, []);
 
+  const showCloseIcon = () => {
+    setShowClose(true);
+  };
+
   const layoutProps = {};
 
   if (
@@ -69,7 +74,7 @@ function HeaderWithContentLayout() {
   }
   return (
     <MainLayout
-      header={<Header onPress={toggleSideBar} />}
+      header={<Header onPress={toggleSideBar} showCloseIcon={showCloseIcon} />}
       content={<Outlet />}
       topSectionStyle={commonStyles.headerContainer}
       {...layoutProps}
@@ -83,6 +88,8 @@ function HeaderWithContentLayout() {
             onClose={() => setSideBarVisible(false)}
             items={listItems}
             onPress={handleNewlyQualifiedPlacementsClick}
+            resetList={() => setListItems(items)}
+            showCloseIcon={showClose}
           />
         ) : null
       }
