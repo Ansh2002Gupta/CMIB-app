@@ -57,7 +57,11 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
+<<<<<<< HEAD
 import Warning from "../../public/images/svg/warning.svg"
+=======
+import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
+>>>>>>> development
 
 const images = {
   avatar,
@@ -119,7 +123,8 @@ const images = {
   iconHiringProcess,
   iconDownloadDetails,
   iconDrawer,
-  Warning
+  Warning,
+  iconSquareEdit,
 };
 
 export default images;
