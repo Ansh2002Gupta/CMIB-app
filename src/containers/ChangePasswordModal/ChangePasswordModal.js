@@ -71,81 +71,82 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   };
 
   return (
-    <ScrollView
-      style={styles.mainView}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.contentContainerStyle}
-      keyboardShouldPersistTaps="handled"
-    >
-      <FiveColumn
-        firstSection={
-          <CustomTextInput
-            label={intl.formatMessage({ id: "label.old_password" })}
-            placeholder={intl.formatMessage({
-              id: "label.password_placeholder",
-            })}
-            value={oldPassword}
-            onChangeText={(val) => setOldPassword(val)}
-            isMandatory
-            eyeImage={true}
-            isPassword={true}
-          />
-        }
-        secoundSection={
-          <CustomTextInput
-            label={intl.formatMessage({ id: "label.new_password" })}
-            placeholder={intl.formatMessage({
-              id: "label.password_placeholder",
-            })}
-            value={newPassword}
-            onChangeText={(val) => setNewPassword(val)}
-            isMandatory
-            eyeImage={true}
-            isPassword={true}
-          />
-        }
-        thirdSection={
-          <CustomTextInput
-            label={intl.formatMessage({ id: "label.confirm_new_password" })}
-            placeholder={intl.formatMessage({
-              id: "label.password_placeholder",
-            })}
-            value={confirmNewPassword}
-            onChangeText={(val) => setConfirmNewPassword(val)}
-            isMandatory
-            eyeImage={true}
-            isPassword={true}
-          />
-        }
-        fourthSection={
-          <View>
-            {!!error && (
-              <CommonText
-                title={error}
-                customTextStyle={styles.passwordMatchStyle}
-              />
-            )}
-            <NewPasswordValidation
-              {...{
-                newPassword,
-                confirmNewPassword,
-                validations,
-                setValidations,
-              }}
+    <>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.contentContainerStyle}
+        keyboardShouldPersistTaps="handled"
+      >
+        <FiveColumn
+          firstSection={
+            <CustomTextInput
+              label={intl.formatMessage({ id: "label.old_password" })}
+              placeholder={intl.formatMessage({
+                id: "label.password_placeholder",
+              })}
+              value={oldPassword}
+              onChangeText={(val) => setOldPassword(val)}
+              isMandatory
+              eyeImage={true}
+              isPassword={true}
             />
-          </View>
-        }
-        fiveSection={
-          <View style={styles.saveAndCancelButtonView}>
-            {!!errorWhileChangePassword && (
-              <CommonText
-                title={errorWhileChangePassword}
-                customTextStyle={styles.errorText}
+          }
+          secoundSection={
+            <CustomTextInput
+              label={intl.formatMessage({ id: "label.new_password" })}
+              placeholder={intl.formatMessage({
+                id: "label.password_placeholder",
+              })}
+              value={newPassword}
+              onChangeText={(val) => setNewPassword(val)}
+              isMandatory
+              eyeImage={true}
+              isPassword={true}
+            />
+          }
+          thirdSection={
+            <CustomTextInput
+              label={intl.formatMessage({ id: "label.confirm_new_password" })}
+              placeholder={intl.formatMessage({
+                id: "label.password_placeholder",
+              })}
+              value={confirmNewPassword}
+              onChangeText={(val) => setConfirmNewPassword(val)}
+              isMandatory
+              eyeImage={true}
+              isPassword={true}
+            />
+          }
+          fourthSection={
+            <View>
+              {!!error && (
+                <CommonText
+                  title={error}
+                  customTextStyle={styles.passwordMatchStyle}
+                />
+              )}
+              <NewPasswordValidation
+                {...{
+                  newPassword,
+                  confirmNewPassword,
+                  validations,
+                  setValidations,
+                }}
               />
-            )}
-          </View>
-        }
-      ></FiveColumn>
+            </View>
+          }
+          fiveSection={
+            !!errorWhileChangePassword && (
+              <View style={styles.saveAndCancelButtonView}>
+                <CommonText
+                  title={errorWhileChangePassword}
+                  customTextStyle={styles.errorText}
+                />
+              </View>
+            )
+          }
+        ></FiveColumn>
+      </ScrollView>
       <SaveCancelButton
         customContainerStyle={styles.customContainerStyle}
         buttonOneText={intl.formatMessage({ id: "label.cancel" })}
@@ -157,7 +158,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
         isNextDisabled={isNextDisabled()}
         buttonTwoText={intl.formatMessage({ id: "label.save" })}
       />
-    </ScrollView>
+    </>
   );
 };
 

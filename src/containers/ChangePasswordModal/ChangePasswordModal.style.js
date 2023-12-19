@@ -1,8 +1,6 @@
+import { Platform } from "react-native";
 import colors from "../../assets/colors";
 const style = {
-  mainView: {
-    paddingBottom: 16,
-  },
   errorText: {
     fontSize: 14,
     color: colors.errorRed,
@@ -17,11 +15,12 @@ const style = {
     paddingTop: 24,
   },
   customContainerStyle: {
-    position: "absolute",
-    bottom: 16,
+    bottom: Platform.OS === "android" ? 0 : 16,
   },
   contentContainerStyle: {
     flexGrow: 1,
+    paddingBottom: 16,
+    justifyContent: "space-between",
   },
 };
 
