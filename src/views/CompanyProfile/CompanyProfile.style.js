@@ -16,6 +16,9 @@ const style = {
     color: colors.black,
     fontWeight: "600",
   },
+  badgeContainer: {
+    marginBottom: 8,
+  },
 };
 
 export default style;

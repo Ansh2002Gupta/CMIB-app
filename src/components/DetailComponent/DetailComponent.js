@@ -18,7 +18,7 @@ const DetailComponent = ({ details, headerText }) => {
     sm: "1fr 1fr",
   };
 
-  const columnCount = isWebView ? gridStyles[currentBreakpoint] : undefined;
+  const columnCount = isWebView && gridStyles[currentBreakpoint];
 
   const containerStyle = isWebView
     ? style.containerGridStyle(columnCount)

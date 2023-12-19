@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View, Text } from "@unthinkable/react-core-components";
+import { ScrollView, Text, View } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
 import CardComponent from "../../components/CardComponent/CardComponent";
@@ -132,12 +132,16 @@ const CompanyProfileUI = (props) => {
             <DetailComponent
               headerText={intl.formatMessage({ id: "label.source_of_info" })}
             />
-            <BadgeLabel badgeLabels={sourceOfInfo} />
+            <BadgeLabel
+              badgeLabels={sourceOfInfo}
+              customTextStyle={style.badgeContainer}
+            />
           </CardComponent>
           <CardComponent>
             <DetailComponent
               headerText={intl.formatMessage({ id: "label.company_logo" })}
             />
+            {/* TODO: Dummy Image to be replaced by api response */}
             <UploadImage
               imageUrl={
                 "https://codeskulptor-demos.commondatastorage.googleapis.com/pang/FDqGDmc.png"
@@ -151,6 +155,7 @@ const CompanyProfileUI = (props) => {
               <Text style={style.headingText}>
                 {intl.formatMessage({ id: "label.balance_credit" })}:{" "}
               </Text>
+              {/* TODO: Dummy text to be replaced by api response */}
               <Text style={style.valueStyle}>2345 INR</Text>
             </View>
           </CardComponent>

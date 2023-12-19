@@ -5,7 +5,6 @@ const style = {
   containerStyle: { paddingBottom: 16 },
   innerContainerStyle: {
     backgroundColor: colors.secondaryGrey,
-    marginBottom: 8,
     justifyContent: "center",
     borderRadius: 16,
     alignSelf: "flex-start",

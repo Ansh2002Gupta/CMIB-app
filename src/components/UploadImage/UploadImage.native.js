@@ -11,7 +11,7 @@ import CommonText from "../CommonText";
 import images from "../../images";
 import styles from "./UploadImage.style";
 
-const UploadImage = ({ intl, imageUrl, imageName }) => {
+const UploadImage = ({ customContainerStyle, intl, imageUrl, imageName }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
 
@@ -47,6 +47,7 @@ const UploadImage = ({ intl, imageUrl, imageName }) => {
         styles.contentContainerStyle,
         selectedImage && styles.selectedImageContainer,
         imageUrl ? styles.showImageStyle : null,
+        customContainerStyle,
       ]}
     >
       {!!selectedImage || imageUrl ? (
@@ -95,6 +96,7 @@ const UploadImage = ({ intl, imageUrl, imageName }) => {
 };
 
 UploadImage.propTypes = {
+  customContainerStyle: PropTypes.object,
   intl: PropTypes.object.isRequired,
   imageUrl: PropTypes.string,
   imageName: PropTypes.string,
