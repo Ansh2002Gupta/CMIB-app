@@ -11,7 +11,13 @@ import CommonText from "../CommonText";
 import images from "../../images";
 import styles from "./UploadImage.style";
 
-const UploadImage = ({ customContainerStyle, intl, imageUrl, imageName }) => {
+const UploadImage = ({
+  customContainerStyle,
+  intl,
+  imageUrl,
+  imageName,
+  onImageUpload,
+}) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
 
@@ -36,6 +42,15 @@ const UploadImage = ({ customContainerStyle, intl, imageUrl, imageName }) => {
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
         let fileName = response.fileName || response.assets?.[0]?.fileName;
+        let type = response.fileName || response.assets?.[0]?.type;
+        const formData = new FormData();
+        const file = {
+          uri: imageUri,
+          name: fileName,
+          type: type,
+        };
+        formData.append("company_logo", file);
+        onImageUpload(formData);
         setSelectedImage(imageUri);
         setFileName(fileName);
       }
@@ -98,6 +113,7 @@ const UploadImage = ({ customContainerStyle, intl, imageUrl, imageName }) => {
 UploadImage.propTypes = {
   customContainerStyle: PropTypes.object,
   intl: PropTypes.object.isRequired,
+  onImageUpload: PropTypes.func,
   imageUrl: PropTypes.string,
   imageName: PropTypes.string,
 };
