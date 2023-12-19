@@ -17,6 +17,8 @@ import { useLocation } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 import images from "../../images";
 import styles from "./bottomBar.style";
+import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
+import MultiRow from "../../core/layouts/MultiRow";
 
 function BottomBar() {
   const icons = useTheme("icons");
@@ -80,63 +82,38 @@ function BottomBar() {
     );
   }
 
+// Define a function to create a row configuration
+function createRowConfig(route, imageActive, imageInactive, messageId, containerStyle = {}) {
+  return {
+    content: (
+      <ImageAndTextTab
+        isActive={currrentRoute === route}
+        onPress={() => {
+          navigateTo(route);
+        }}
+        containerStyle={containerStyle}
+        imageActive={imageActive}
+        imageInactive={imageInactive}
+        text={intl.formatMessage({ id: messageId })}
+      />
+    ),
+    style: {},
+    isFillSpace: true,
+  };
+}
+
+// Use the function to build the rowConfigs array
+const rowConfigs = [
+  createRowConfig(navigations.DASHBOARD, images.iconDashboard, images.iconDashboard, "label.dashboard", styles.activeStyleMyaccount),
+  createRowConfig(navigations.ROUND_ONE, images.iconActiveRound1, images.iconRound1, "label.round1",styles.activeStyleMyaccount),
+  createRowConfig(navigations.ROUND_TWO, images.iconActiveRound2, images.iconRound2, "label.round2",styles.activeStyleMyaccount),
+  createRowConfig(navigations.PROFILE, images.iconActiveMyaccount, images.iconMyaccount, "label.my_account", styles.activeStyleMyaccount),
+];
+
   return (
     <View>
-      <View style={styles.bottomBarView}>
         <View style={styles.borderStyle}></View>
-        <View>
-          <FourColumn
-            sectionStyle={styles.sectionStyle}
-            firstSection={
-              <ImageAndTextTab
-                isActive={currrentRoute === navigations.DASHBOARD}
-                onPress={() => {
-                  navigateTo(navigations.DASHBOARD);
-                }}
-                containerStyle={styles.activeStyleDashboard}
-                imageActive={images.iconDashboard}
-                imageInactive={images.iconDashboard}
-                text={intl.formatMessage({ id: "label.dashboard" })}
-              />
-            }
-            secoundSection={
-              <ImageAndTextTab
-                isActive={currrentRoute === navigations.ROUND_ONE}
-                onPress={() => {
-                  navigateTo(navigations.ROUND_ONE);
-                }}
-                imageActive={images.iconActiveRound1}
-                imageInactive={images.iconRound1}
-                text={intl.formatMessage({ id: "label.round1" })}
-              />
-            }
-            thirdSection={
-              <ImageAndTextTab
-                isActive={currrentRoute === navigations.ROUND_TWO}
-                onPress={() => {
-                  navigateTo(navigations.ROUND_TWO);
-                }}
-                imageActive={images.iconActiveRound2}
-                imageInactive={images.iconRound2}
-                text={intl.formatMessage({ id: "label.round2" })}
-              />
-            }
-            fourthSection={
-              <ImageAndTextTab
-                isActive={currrentRoute === navigations.PROFILE}
-                onPress={() => {
-                  navigateTo(navigations.PROFILE);
-                }}
-                imageActive={images.iconActiveMyaccount}
-                imageInactive={images.iconMyaccount}
-                text={intl.formatMessage({ id: "label.my_account" })}
-                containerStyle={styles.activeStyleMyaccount}
-              />
-            }
-            isLeftFillSpace
-          />
-        </View>
-      </View>
+        <MultiColumn columns={rowConfigs} />
     </View>
   );
 }

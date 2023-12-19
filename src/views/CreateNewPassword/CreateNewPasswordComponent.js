@@ -3,22 +3,23 @@ import { useNavigate,useLocation } from "../../routes";
 import { useIntl } from "react-intl";
 
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
-import useCreateNewPasswordAPI from "../../services/apiServices/hooks/useCreateNewPasswordAPI";
+import useResetPasswordAPI from "../../services/apiServices/hooks/useRestPasswordAPI";
 import { navigations } from "../../constants/routeNames";
 
 function CreateNewPasswordComponent(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const intl = useIntl();
-  const { email ,otpCode} = location.state || {};
+  const {token} = location.state || {};
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [successLogin, setSuccessLogin] = useState(false); 
+  const [successMsg, setSuccessMsg] = useState("");
   const [error, setError] = useState("");
   const [validationError, setValidationError] = useState("");
   
-  const { handleCreateNewPasswordAPI,isLoading } = useCreateNewPasswordAPI();
+  const { handleResetPasswordAPI,isLoading } = useResetPasswordAPI();
 
   const onClickGoToLogin = () => {
     setSuccessLogin(false);
@@ -34,13 +35,12 @@ function CreateNewPasswordComponent(props) {
   };
 
   const handleSubmit = () => {
-    handleCreateNewPasswordAPI({
-      email: email,
+    handleResetPasswordAPI({
+      token: token,
       password: newPassword,
-      password_confirmation: confirmNewPassword,
-      otp: otpCode ,
     }, 
-    (success) => {
+    (msg) => {
+      setSuccessMsg(msg);
       setSuccessLogin(true);
     },
       (error) => {
@@ -64,6 +64,8 @@ function CreateNewPasswordComponent(props) {
       intl={intl}
       isLoading={isLoading}
       handleDismissToast={handleDismissToast}
+      successLogin={successLogin}
+      successMsg={successMsg}
       validationError={validationError}
     />
   );

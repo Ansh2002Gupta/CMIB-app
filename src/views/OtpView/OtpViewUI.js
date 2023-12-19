@@ -9,16 +9,18 @@ import OtpInput from "../../components/OtpInput/index"
 import useIsWebView from "../../hooks/useIsWebView";
 import { OTP_TRY_COUNT, OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
 import styles from "./OtpView.style";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const OtpViewUI = ({
   errorMessage,
   handleOtpChange,
   intl,
   isCounter,
+  isLoading,
   submitDisabled,
   minutes,
   otpLeft,
-  onClickForgotPassword,
+  onVerifyOtpClick,
   onClickGoToLogin,
   onResendOtpClick,
   setIsCounter,
@@ -26,6 +28,8 @@ const OtpViewUI = ({
   seconds,
   setOtpLeft,
   setSeconds,
+  handleDismissToast,
+  validationError,
 } ) => {
   const [afterAttempt, setAfterAttempt] = useState(false);
   const formattedTimerValue = `${intl.formatMessage({ id: "label.request_otp_again" })} ${minutes < 10 ? `0${minutes}` : minutes
@@ -239,12 +243,13 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
         <View style={isWebView ? styles.webSubmitView : styles.submitView}>
           <ButtonComponent
             title={intl.formatMessage({ id: "label.submit" })}
-            onPress={onClickForgotPassword}
+            onPress={onVerifyOtpClick}
             disabled={submitDisabled}
             customTitleStyle={isWebView && styles.customBtnText}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
+            displayLoader={isLoading}
           />
           <TouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
@@ -256,6 +261,13 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
           </TouchableOpacity>
         </View>
       </View>
+
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
@@ -267,7 +279,7 @@ OtpViewUI.propTypes = {
   intl: PropTypes.object.isRequired,
   submitDisabled: PropTypes.bool,
   minutes: PropTypes.number,
-  onClickForgotPassword: PropTypes.func,
+  onVerifyOtpClick: PropTypes.func,
   onClickGoToLogin: PropTypes.func,
   onResendOtpClick: PropTypes.func.isRequired,
   otpLeft: PropTypes.number,

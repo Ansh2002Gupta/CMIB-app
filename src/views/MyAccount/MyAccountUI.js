@@ -8,11 +8,13 @@ import {
 
 import CommonText from "../../components/CommonText";
 import IconHeader from "../../components/IconHeader/IconHeader";
+
+import LogoutModel from "../../components/LogoutModal/LogoutModal";
 import images from "../../images";
 import style from "./MyAccount.style";
 
 const MyAccountUI = (props) => {
-  const { handleOptionClick, intl, options } = props;
+  const { handleOptionClick, intl, options,isLogout,handleLogoutClick } = props;
   //TODO: Replace this dummy data with api data.
   const profileImage = "";
   const firstName = "Kashish";
@@ -59,23 +61,34 @@ const MyAccountUI = (props) => {
             />
           </View>
         </View>
-        {options.map((option) => (
+        {options.map((option,index) => (
           <TouchableOpacity
-            style={style.optionCotainer}
+            style={[style.optionCotainer, index !== options.length - 1 && style.optionCotainerBorder]}
             key={option.id}
             onPress={() => handleOptionClick(option)}
           >
             <Image source={option.iconLeft} style={style.leftIcon} />
+            <View style={style.titleParentStyle}>
             <CommonText
             customTextStyle={style.titleStyle}
             title={intl.formatMessage({ id: option.title })}
             />
+            </View>
+
             <View style={style.iconContainer}>
               <Image source={images.iconArrowRight} style={style.arrowIcon} />
             </View>
           </TouchableOpacity>
         ))}
       </View>
+
+      {isLogout && (
+        <LogoutModel
+        onPressCancel={handleLogoutClick}
+        >
+        
+        </LogoutModel>
+      ) }
     </>
   );
 };

@@ -7,6 +7,10 @@ const style = {
     paddingBottom: 16,
     alignItems: "center",
   },
+  optionCotainerBorder: {
+    borderBottomWidth: 1,
+    borderColor: colors.lightGrey,
+  },
   profileParentContainer: {
     paddingLeft: 16,
     paddingRight: 16,
@@ -15,7 +19,7 @@ const style = {
   },
   profileContainer: {
     marginTop: 16,
-    marginBottom: 16,
+    marginBottom: 24,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -40,14 +44,19 @@ const style = {
     color: colors.darkGrey,
     fontWeight: "500"
   },
+  titleParentStyle: {
+    paddingLeft: 12,
+    paddingRight:12,
+    flex:1,
+  },
   titleStyle: {
     fontSize: 14,
     lineHeight: 20,
-    paddingLeft: 12,
-    color: colors.black
+    color: colors.black,
+    numberOfLines:1,
+    ellipsizeMode:"tail",
   },
   iconContainer: {
-    flex: 1,
     alignItems: "flex-end",
   },
   leftIcon: {

@@ -2,38 +2,40 @@ import { useState } from "react";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
-import {COMPANY_FORGOT_PASSWORD_OTP} from "../apiEndPoint"
+import {COMPANY_SEND_OTP} from "../apiEndPoint"
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
-
-const useCreateNewPasswordAPI = () => {
-  const [forgotPasswordResult, setForgotPasswordResult] = useState([]);
+const useSendOtpAPI = () => {
+  const [isShowOtpView, setIsShowOtpView] = useState(false);
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
+  const [sendOtpResult, setSendOtpResult] = useState([]);
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
 
-  const handleCreateNewPasswordAPI = async (payload,successCallback,errorCallback) => {
+  const handleSendOtpAPI = async (payload, isNavigate, errorCallback) => {
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const res = await Http.post(COMPANY_FORGOT_PASSWORD_OTP, payload);
+      const res = await Http.post(COMPANY_SEND_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
-        setForgotPasswordResult(res.data);
-        successCallback();
+        setSendOtpResult(res.data);
+        if (isNavigate)
+          setIsShowOtpView(true);
         return;
-      }
+      }else {
         setPostStatus(API_STATUS.ERROR);
         errorCallback(res);
+      } 
     } catch (err) {
       const errorMessage =
-      err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      errorCallback(errorMessage);
+        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+        errorCallback(errorMessage);
       setPostStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);
         return;
       }
-      setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE); 
     }
   };
 
@@ -43,13 +45,13 @@ const useCreateNewPasswordAPI = () => {
   
   return {
     errorWhileResetPassword,
-    forgotPasswordResult,
-    handleCreateNewPasswordAPI,
+    sendOtpResult,
+    handleSendOtpAPI,
     isError,
     isLoading,
+    isShowOtpView,
     isSuccess,
     postStatus,
   };
 };
-
-export default useCreateNewPasswordAPI;
+export default useSendOtpAPI;

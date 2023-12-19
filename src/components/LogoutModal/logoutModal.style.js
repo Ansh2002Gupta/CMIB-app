@@ -1,0 +1,26 @@
+import colors from "../../assets/colors";
+
+const style = {
+  containerStyle: {
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+  },
+  headerText: {
+    fontWeight: "600",
+    fontSize: 20,
+    color: colors.black,
+    marginBottom: 8,
+  },
+  subHeaderText: {
+    fontWeight: "500",
+    fontSize: 14,
+    color: colors.gray,
+    lineHeight: 22,
+  },
+  customContainerStyle: {
+    // bottom: 0,
+  }
+};
+
+export default style;

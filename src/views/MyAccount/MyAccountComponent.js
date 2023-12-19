@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 
@@ -9,6 +9,7 @@ import { navigations } from "../../constants/routeNames";
 const MyAccountComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const [Logout, setLogout] = useState(false);
 
   const onClickViewProfile = () => {
     navigate(navigations.VIEW_PROFILE);
@@ -16,6 +17,10 @@ const MyAccountComponent = () => {
 
   const onClickCompanyProfile = () => {
     navigate(navigations.COMPANY_PROFILE);
+  };
+
+  const handleLogout = (val) => {
+    setLogout(val);
   };
 
   const handleOptionClick = (option) => {
@@ -36,6 +41,7 @@ const MyAccountComponent = () => {
       case 6:
         break;
       case 7:
+        handleLogout(true);
         break;
       default:
         break;
@@ -45,8 +51,11 @@ const MyAccountComponent = () => {
   return (
     <MyAccountUI
       intl={intl}
+      isLogout={Logout}
       options={options}
       handleOptionClick={handleOptionClick}
+      handleLogoutClick={handleLogout}
+      
     />
   );
 };

@@ -26,6 +26,7 @@ function CreateNewPasswordUI(props) {
     onChangePasswordInput,
     onChangeConfirmPasswordInput,
     successLogin,
+    successMsg,
     validationError,
   } = props;
 
@@ -219,10 +220,7 @@ function CreateNewPasswordUI(props) {
           )}
           {successLogin && (
             <CustomModal
-              headerText={intl.formatMessage({ id: "label.thanks" })}
-              secondaryText={intl.formatMessage({
-                id: "label.reset_password_info_text",
-              })}
+              headerText={successMsg}
               onPress={() => {
                 onClickGoToLogin();
               }}
