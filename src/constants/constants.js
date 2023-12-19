@@ -1,6 +1,6 @@
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
-export const  VALID_EMAIL = "Not a valid email, please enter again";
-export const  VALID_OTP = "Not a valid otp, please enter again";
+export const VALID_EMAIL = "Not a valid email, please enter again";
+export const VALID_OTP = "Not a valid otp, please enter again";
 
 export const numRegex = /^\d+$/;
 export const urlRegex =
@@ -19,14 +19,14 @@ export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 100;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "newly-qualified-ca-placement";
-export const OVERSEAS_PLACEMENTS = "overseas-placements";
-export const CAREER_ASCENTS = "career-ascents";
+export const OVERSEAS_PLACEMENTS = "overseas-placement";
+export const CAREER_ASCENTS = "career-ascent";
 export const WOMENT_PLACEMENT = "women-placement";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
 export const OTP_TIMER_MIN_MINUTES = 1;
-export const OTP_TIMER_MAX_MINUTES =15;
+export const OTP_TIMER_MAX_MINUTES = 15;
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -92,11 +92,11 @@ export const MODULE_OPTIONS = [
     messageId: "label.newly_qualified_ca",
   },
   {
-    id: "overseas-placements",
+    id: "overseas-placement",
     messageId: "label.overseas_placements",
   },
   {
-    id: "career-ascents",
+    id: "career-ascent",
     messageId: "label.career_ascents",
   },
   {

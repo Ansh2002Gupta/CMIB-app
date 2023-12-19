@@ -71,9 +71,9 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     website: "",
   });
 
-  const handleImageDeletion = async (handleDeletionSuccess) => {
+  const handleImageDeletion = (handleDeletionSuccess) => {
     if (fileUploadResult?.data?.file_name) {
-      await handleDeleteLogo(
+      handleDeleteLogo(
         {
           file_path: fileUploadResult?.data?.file_name,
         },
@@ -245,6 +245,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       onGoBack={onGoBack}
       options={options}
       onDeleteImage={handleImageDeletion}
+      onImageUpload={handleFileUpload}
       showSuccessSignUp={showSuccessSignUp}
       socialMediaLinks={socialMediaLinks}
       validationError={validationError}
