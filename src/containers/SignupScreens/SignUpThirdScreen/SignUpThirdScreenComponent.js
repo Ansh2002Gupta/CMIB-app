@@ -77,7 +77,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
   };
 
   const validateFields = () => {
-    const newErrors = contactDetails.map((detail) => {
+    let newErrors = contactDetails.map((detail) => {
       let error = {
         designation: "",
         emailId: "",
@@ -118,6 +118,27 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
 
       return error;
     });
+
+    const emailDuplicates = contactDetails
+      .map((detail) => detail.emailId)
+      .filter(
+        (email, index, array) =>
+          array.indexOf(email) !== index && email.trim() !== ""
+      );
+
+    if (emailDuplicates.length > 0) {
+      newErrors = newErrors.map((error, index) => {
+        if (emailDuplicates.includes(contactDetails[index].emailId)) {
+          return {
+            ...error,
+            emailId: intl.formatMessage({
+              id: "label.duplicate_email_validation",
+            }),
+          };
+        }
+        return error;
+      });
+    }
 
     setErrors(newErrors);
     return newErrors.every((error) =>

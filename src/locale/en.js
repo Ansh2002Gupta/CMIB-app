@@ -189,6 +189,7 @@ const locale = {
   "label.left_brace": "left)",
   "label.times": "times!",
   "label.edit": "Edit",
+  "label.duplicate_email_validation": "Email addresses must be unique.",
 };
 
 export default locale;
