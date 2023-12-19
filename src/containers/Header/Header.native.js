@@ -11,11 +11,9 @@ import styles from "./header.style";
 const Header = ({ onPress }) => {
   return (
     <View style={styles.mainView}>
-      <View style={styles.containerStyle}>
-        <TouchableOpacity onPress={onPress}>
-          <Image source={images.iconCmibLogo} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={onPress} style={styles.containerStyle}>
+        <Image source={images.iconCmibLogo} />
+      </TouchableOpacity>
     </View>
   );
 };

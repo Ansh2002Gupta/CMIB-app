@@ -5,8 +5,8 @@ import MainLayout from "../layouts/MainLayout";
 
 import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
-import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import Header from "../containers/Header";
+import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import {
   items,
   newQualifiedPlacementsList,
@@ -24,7 +24,7 @@ function HeaderWithContentLayout() {
   };
 
   const toggleSideBar = () => {
-    setSideBarVisible(true);
+    setSideBarVisible(!isSideBarVisible);
   };
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function HeaderWithContentLayout() {
       menu={
         (isWebView && isAuthenticated) || isSideBarVisible ? (
           <SideNavBar
-            onClose={() => setSideBarVisible(false)}
+            onClose={toggleSideBar}
             items={listItems}
             onPress={handleNewlyQualifiedPlacementsClick}
           />
