@@ -13,17 +13,20 @@ import styles from "./UploadImage.style";
 
 const UploadImage = ({
   customContainerStyle,
-  intl,
-  imageUrl,
   imageName,
+  imageUrl,
+  intl,
+  onDeleteImage,
   onImageUpload,
 }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
 
   const onClickDeleteImage = () => {
-    setFileName("");
-    setSelectedImage(null);
+    onDeleteImage(() => {
+      setFileName("");
+      setSelectedImage(null);
+    });
   };
 
   const openImagePicker = () => {
@@ -110,12 +113,21 @@ const UploadImage = ({
   );
 };
 
+UploadImage.defaultProps = {
+  customContainerStyle: {},
+  onDeleteImage: () => {},
+  onImageUpload: () => {},
+  imageUrl: "",
+  imageName: "",
+};
+
 UploadImage.propTypes = {
   customContainerStyle: PropTypes.object,
-  intl: PropTypes.object.isRequired,
-  onImageUpload: PropTypes.func,
-  imageUrl: PropTypes.string,
   imageName: PropTypes.string,
+  imageUrl: PropTypes.string,
+  intl: PropTypes.object.isRequired,
+  onDeleteImage: PropTypes.func,
+  onImageUpload: PropTypes.func,
 };
 
 export default UploadImage;

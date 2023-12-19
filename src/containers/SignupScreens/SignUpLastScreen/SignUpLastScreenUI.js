@@ -28,6 +28,7 @@ const SignUpLastScreenUI = (props) => {
     intl,
     natureOfSupplier,
     onClickGoToLogin,
+    onDeleteImage,
     onGoBack,
     onImageUpload,
     options,
@@ -175,7 +176,11 @@ const SignUpLastScreenUI = (props) => {
             id: "label.logo_info",
           })}
         />
-        <UploadImage intl={intl} onImageUpload={onImageUpload} />
+        <UploadImage
+          intl={intl}
+          onImageUpload={onImageUpload}
+          onDeleteImage={onDeleteImage}
+        />
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
@@ -206,6 +211,7 @@ SignUpLastScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
   natureOfSupplier: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
+  onDeleteImage: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
+import useDeleteLogo from "../../../services/apiServices/hooks/useDeleteLogoAPI";
 import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpUser";
 import useSaveLogo from "../../../services/apiServices/hooks/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
@@ -24,6 +25,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const { handleSignUpValidation } = useValidateSignUp();
   const { handleSignUp } = useSignUpUser();
+  const { handleDeleteLogo } = useDeleteLogo();
   const { handleFileUpload, fileUploadResult } = useSaveLogo();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
@@ -68,6 +70,18 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     companyDetails: "",
     website: "",
   });
+
+  const handleImageDeletion = async (handleDeletionSuccess) => {
+    if (fileUploadResult?.data?.file_name) {
+      await handleDeleteLogo(
+        {
+          file_path: fileUploadResult?.data?.file_name,
+        },
+        handleDeletionSuccess,
+        (error) => onError(error)
+      );
+    }
+  };
 
   const allFieldsFilled = () => {
     const requiredFields = [
@@ -230,7 +244,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}
       options={options}
-      onImageUpload={handleFileUpload}
+      onDeleteImage={handleImageDeletion}
       showSuccessSignUp={showSuccessSignUp}
       socialMediaLinks={socialMediaLinks}
       validationError={validationError}
