@@ -7,7 +7,7 @@ import {
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
-import { TwoRow, FourColumn } from "../../core/layouts";
+import { TwoRow } from "../../core/layouts";
 
 import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
@@ -18,7 +18,6 @@ import { navigations } from "../../constants/routeNames";
 import images from "../../images";
 import styles from "./bottomBar.style";
 import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
-import MultiRow from "../../core/layouts/MultiRow";
 
 function BottomBar() {
   const icons = useTheme("icons");
@@ -82,7 +81,7 @@ function BottomBar() {
     );
   }
 
-// Define a function to create a row configuration
+
 function createRowConfig(route, imageActive, imageInactive, messageId, containerStyle = {}) {
   return {
     content: (
@@ -102,7 +101,7 @@ function createRowConfig(route, imageActive, imageInactive, messageId, container
   };
 }
 
-// Use the function to build the rowConfigs array
+
 const rowConfigs = [
   createRowConfig(navigations.DASHBOARD, images.iconDashboard, images.iconDashboard, "label.dashboard", styles.activeStyleMyaccount),
   createRowConfig(navigations.ROUND_ONE, images.iconActiveRound1, images.iconRound1, "label.round1",styles.activeStyleMyaccount),
