@@ -174,6 +174,26 @@ const CustomTextInput = (props) => {
   );
 };
 
+CustomTextInput.defaultProps = {
+  customLabelStyle: {},
+  customStyle: {},
+  customTextInputContainer: {},
+  dropdownStyle: {},
+  errorMessage: "",
+  eyeImage: false,
+  isCounterInput: false,
+  isDropdown: false,
+  isError: false,
+  isMandatory: false,
+  isMobileNumber: false,
+  isMultiline: false,
+  inputKey: "value",
+  isPassword: false,
+  label: "",
+  placeholder: "",
+  value: "",
+};
+
 CustomTextInput.propTypes = {
   customLabelStyle: PropTypes.object,
   customStyle: PropTypes.object,
