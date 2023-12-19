@@ -34,7 +34,6 @@ TwoRow.defaultProps = {
   isBottomFillSpace: false,
   isTopFillSpace: false,
   bottomSectionStyle: {},
-
 };
 
 export default TwoRow;

@@ -87,7 +87,7 @@ const SideBar = ({ items, onPress }) => {
       </View>
       {showStaticContent && (
         <>
-          <View style={styles.textImageView}>
+          <View>
             <CommonText
               customTextStyle={styles.moduleText}
               title={intl.formatMessage({
@@ -109,12 +109,10 @@ const SideBar = ({ items, onPress }) => {
               </TouchableOpacity>
             </View>
           </View>
-          <View>
-            <CommonText
-              customTextStyle={styles.sessionText}
-              title={intl.formatMessage({ id: "label.session" })}
-            />
-          </View>
+          <CommonText
+            customTextStyle={styles.sessionText}
+            title={intl.formatMessage({ id: "label.session" })}
+          />
         </>
       )}
       <View style={styles.container}>
