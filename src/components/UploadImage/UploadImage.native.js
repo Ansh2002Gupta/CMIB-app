@@ -11,7 +11,7 @@ import CommonText from "../CommonText";
 import images from "../../images";
 import styles from "./UploadImage.style";
 
-const UploadImage = ({ intl }) => {
+const UploadImage = ({ customContainerStyle, intl, imageUrl, imageName }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
 
@@ -46,21 +46,28 @@ const UploadImage = ({ intl }) => {
       style={[
         styles.contentContainerStyle,
         selectedImage && styles.selectedImageContainer,
+        imageUrl ? styles.showImageStyle : null,
+        customContainerStyle,
       ]}
     >
-      {selectedImage ? (
+      {!!selectedImage || imageUrl ? (
         <>
           <View style={styles.imageContainer}>
             <Image
-              source={{ uri: selectedImage }}
+              source={{ uri: selectedImage || imageUrl }}
               style={styles.selectedImageStyle}
             />
           </View>
           <View style={styles.innerContainer}>
-            <CommonText customTextStyle={styles.nameStyle} title={fileName} />
-            <TouchableOpacity onPress={onClickDeleteImage}>
-              <Image source={images.iconTrash} />
-            </TouchableOpacity>
+            <CommonText
+              customTextStyle={styles.nameStyle}
+              title={fileName || imageName}
+            />
+            {!imageUrl && (
+              <TouchableOpacity onPress={onClickDeleteImage}>
+                <Image source={images.iconTrash} />
+              </TouchableOpacity>
+            )}
           </View>
         </>
       ) : (
@@ -78,7 +85,6 @@ const UploadImage = ({ intl }) => {
               />
             </TouchableOpacity>
           </View>
-
           <CommonText
             customTextStyle={styles.infoStyle}
             title={intl.formatMessage({ id: "label.supported_type" })}
@@ -90,7 +96,10 @@ const UploadImage = ({ intl }) => {
 };
 
 UploadImage.propTypes = {
+  customContainerStyle: PropTypes.object,
   intl: PropTypes.object.isRequired,
+  imageUrl: PropTypes.string,
+  imageName: PropTypes.string,
 };
 
 export default UploadImage;
