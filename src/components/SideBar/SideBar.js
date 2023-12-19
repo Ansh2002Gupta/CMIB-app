@@ -97,7 +97,10 @@ const SideBar = ({ items, onPress, resetList, showCloseIcon, onClose }) => {
     <View style={styles.mainContainer}>
       <View style={styles.container}>
         {showBackIcon ? (
-          <TouchableOpacity onPress={resetSidebar}>
+          <TouchableOpacity
+            onPress={resetSidebar}
+            style={styles.leftArrowButton}
+          >
             <Image source={images.iconLeftArrow} style={styles.leftArrow} />
           </TouchableOpacity>
         ) : null}
@@ -106,6 +109,7 @@ const SideBar = ({ items, onPress, resetList, showCloseIcon, onClose }) => {
             onPress={() => {
               onClose();
             }}
+            style={styles.leftArrowButton}
           >
             <Image source={images.iconClose} style={styles.leftArrow} />
           </TouchableOpacity>

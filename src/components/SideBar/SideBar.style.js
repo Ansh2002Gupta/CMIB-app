@@ -35,6 +35,8 @@ const styles = {
   leftArrow: {
     height: 25,
     width: 25,
+  },
+  leftArrowButton:{
     paddingTop: 16,
     paddingLeft: 16,
   },
@@ -48,6 +50,7 @@ const styles = {
     paddingRight: 16,
     borderBottomWidth: 1,
     borderBottomColor: colors.slateGray,
+    opacity: 0.6,
   },
   changeText: {
     color: colors.backgroundColor,

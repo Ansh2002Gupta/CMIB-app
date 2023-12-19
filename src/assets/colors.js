@@ -16,7 +16,7 @@ const darkBlack = "#0F0F0F";
 const errorBackground = "#ffeded";
 const darkBlueShade = "#000833";
 const offWhite = "#FFFFFF14";
-const slateGray = "#616C8299";
+const slateGray = "#616c82";
 const lightGray = "#D0D5DD";
 const voilet = "#B1B3B5";
 
