@@ -19,7 +19,10 @@ const style = {
     lineHeight: 22,
   },
   customContainerStyle: {
-    // bottom: 0,
+  },
+  logo: {
+    height : 24,
+    width :24,
   }
 };
 

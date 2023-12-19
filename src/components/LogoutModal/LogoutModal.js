@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
+import images from "../../images";
+
 import CustomModal from "../../components/CustomModal/CustomModal";
 import CommonText from "../CommonText";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton"
@@ -14,7 +16,13 @@ import TwoRowButton from "../TwoRowButton/TwoRowButton";
 const LogoutModel = ({ onPressCancel }) => {
   const intl = useIntl();
 
+  const Warning = images.Warning;
+
   const columnConfigs = [
+    {
+      content: <Warning style={style.logo}/>,
+      style: { backgroundColor: 'lightblue' },
+    },
     {
       content:  <CommonText customTextStyle={style.headerText} title={"Logout"} />,
     },
