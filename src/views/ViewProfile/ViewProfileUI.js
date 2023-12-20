@@ -29,6 +29,10 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
     { title: "Mobile Number", value: "+91-1234 5678 21" },
     { title: "Email ID", value: "pooja.dhar@j&k.co" },
   ];
+  const buttonTitle =
+    profileImage !== ""
+      ? intl.formatMessage({ id: "label.change" })
+      : intl.formatMessage({ id: "label.add" });
 
   useEffect(() => {
     if (!showEditModal) {
@@ -39,7 +43,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   const handleDismissToast = () => {
     setErrorMessage("");
   };
-  
+
   const renderProfileIcon = (iconType) => {
     return (
       <ProfileIcon
@@ -110,17 +114,10 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
                     openImagePicker();
                   }}
                 >
-                  {profileImage !== "" ? (
-                    <CommonText
-                      customTextStyle={style.textStyle}
-                      title={intl.formatMessage({ id: "label.change" })}
-                    />
-                  ) : (
-                    <CommonText
-                      customTextStyle={style.textStyle}
-                      title={intl.formatMessage({ id: "label.add" })}
-                    />
-                  )}
+                  <CommonText
+                    customTextStyle={style.textStyle}
+                    title={buttonTitle}
+                  />
                 </TouchableOpacity>
               </View>
 
