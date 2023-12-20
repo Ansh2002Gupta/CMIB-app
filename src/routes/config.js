@@ -16,6 +16,7 @@ import ProfileView from "../views/Profile";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
+import Test from "../views/Test";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -28,135 +29,145 @@ const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
   {
-    pagePath: navigations.ROOT,
-    element: <DefaultRoute />,
-    views: [
-      {
-        viewPath: "",
-        element: <DefaultRoute />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.PROFILE,
-    element: <HomeWithPrivateAccess />, // Page
-    views: [
-      {
-        viewPath: "",
-        element: <MyAccount />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.VIEW_PROFILE,
-    element: <ContentRouteWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <ViewProfile />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.COMPANY_PROFILE,
-    element: <ContentRouteWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <CompanyProfile />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.DASHBOARD,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <DashboardView />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.ROUND_ONE,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <RoundOne />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.ROUND_TWO,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <RoundTwo />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.FORGOT_PASSWORD,
+    pagePath: "/",
     element: <LoginWithPublicAccess />,
     views: [
       {
         viewPath: "",
-        element: <ForgotPassword />,
+        element: <Test />,
       },
     ],
   },
-  {
-    pagePath: navigations.CREATE_NEW_PASSWORD,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <CreateNewPassword />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.SIGN_UP,
-    element: <SignUpWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <SignUpScreen />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.LOGIN,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <LoginScreen />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.JOBS,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <JobsView />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.OUT_SOURCED,
-    element: <DefaultRoute />,
-    views: [
-      {
-        viewPath: "",
-        element: <DefaultRoute />,
-      },
-    ],
-  },
+  // {
+  //   pagePath: navigations.ROOT,
+  //   element: <DefaultRoute />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <DefaultRoute />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.PROFILE,
+  //   element: <HomeWithPrivateAccess />, // Page
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <MyAccount />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.VIEW_PROFILE,
+  //   element: <ContentRouteWithPrivateAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <ViewProfile />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.COMPANY_PROFILE,
+  //   element: <ContentRouteWithPrivateAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <CompanyProfile />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.DASHBOARD,
+  //   element: <HomeWithPrivateAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <DashboardView />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.ROUND_ONE,
+  //   element: <HomeWithPrivateAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <RoundOne />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.ROUND_TWO,
+  //   element: <HomeWithPrivateAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <RoundTwo />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.FORGOT_PASSWORD,
+  //   element: <LoginWithPublicAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <ForgotPassword />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.CREATE_NEW_PASSWORD,
+  //   element: <LoginWithPublicAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <CreateNewPassword />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.SIGN_UP,
+  //   element: <SignUpWithPublicAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <SignUpScreen />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.LOGIN,
+  //   element: <LoginWithPublicAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <LoginScreen />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.JOBS,
+  //   element: <HomeWithPrivateAccess />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <JobsView />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   pagePath: navigations.OUT_SOURCED,
+  //   element: <DefaultRoute />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <DefaultRoute />,
+  //     },
+  //   ],
+  // },
 ];
 
 export default config;
