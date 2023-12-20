@@ -47,12 +47,8 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     setError(null);
     if (areAllFieldsValid()) {
       handleUseChangePassword({
-        //TODO
-        // email: ,
-        // old_password:,
-        // password: ,
-        // password_confirmation: ,
-        // otp: ,
+        old_password: oldPassword,
+        password: newPassword,
       });
     }
   };
