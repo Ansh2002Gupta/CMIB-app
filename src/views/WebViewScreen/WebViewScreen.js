@@ -1,10 +1,11 @@
 import React from "react";
-import { Text, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
+import DefaultRoute from "../../routes/Components/DefaultRoute";
 
 const WebViewScreen = () => {
   return (
     <View>
-      <Text></Text>
+      <DefaultRoute />
     </View>
   );
 };

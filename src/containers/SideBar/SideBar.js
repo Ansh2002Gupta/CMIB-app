@@ -11,9 +11,9 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
+import Config from "../../components/ReactConfig/ReactConfig";
 import CommonText from "../../components/CommonText";
 import CustomList from "../../components/CustomList/CustomList";
-import { CMS_URI } from "../../constants/constants";
 import images from "../../images";
 import styles from "./SideBar.style";
 
@@ -33,12 +33,18 @@ const SideBar = ({
   const [showStaticContent, setShowStaticContent] = useState(true);
   const [showBackIcon, setShowBackIcon] = useState(false);
   const [showClose, setShowClose] = useState(true);
+  const [selectedItem, setSelectedItem] = useState("");
 
   const renderSubItem = ({ item }) => (
     <CustomList
       item={{ ...item, isSelected: selectedSubList === item.id }}
       onSelect={(id) => {
         setSelecteSubList(item.id);
+        setSelectedItem(item.title);
+        setShowBackIcon(false);
+        setShowStaticContent(true);
+        setShowClose(true);
+        resetList();
         setSelecteList(null);
       }}
     />
@@ -49,6 +55,11 @@ const SideBar = ({
         item={{ ...item, isSelected: selectedList === item.id }}
         onSelect={(id) => {
           setSelecteList(id);
+          setSelectedItem(item.title);
+          setShowBackIcon(false);
+          setShowStaticContent(true);
+          setShowClose(true);
+          resetList();
           setSelecteSubList(null);
         }}
       />
@@ -81,11 +92,11 @@ const SideBar = ({
   };
   const handleBottomViewNavigation = () => {
     if (Platform.OS === "web") {
-      window.location.replace(CMS_URI);
+      window.location.href = Config.REACT_APP_CMS_URI;
     } else {
       onClose();
       navigate(navigations.WEB_VIEW, {
-        state: { uri: CMS_URI },
+        state: { uri: Config.REACT_APP_CMS_URI },
       });
       handleDisplayHeader();
     }
@@ -129,9 +140,12 @@ const SideBar = ({
               <View style={styles.textView}>
                 <CommonText
                   customTextStyle={styles.newQualifiedText}
-                  title={intl.formatMessage({
-                    id: "label.newely_qualified_placements",
-                  })}
+                  title={
+                    selectedItem ||
+                    intl.formatMessage({
+                      id: "label.newely_qualified_placements",
+                    })
+                  }
                 />
                 <TouchableOpacity onPress={handleOnPress}>
                   <CommonText
