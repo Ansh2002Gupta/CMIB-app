@@ -37,7 +37,6 @@ const iconInstagram = "/images/iconInstagram/iconInstagram.png";
 const iconLinkedin = "/images/iconLinkedin/iconLinkedin.png";
 const iconSuccess = "/images/iconSuccess/iconSuccess.png";
 const iconMenu = "/images/iconMenu/iconMenu.png";
-const iconProfile = "/images/iconProfile/iconProfile.png";
 const iconLogout = "/images/iconLogout/iconLogout.png";
 const iconBuilding = "/images/iconBuilding/iconBuilding.png";
 const iconLock = "/images/iconLock/iconLock.png";
@@ -81,6 +80,9 @@ const iconClose = "images/iconClose/iconClose.png";
 const iconLeftArrow = "images/iconLeftArrow/iconLeftArrow.png";
 const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
 const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
+const iconProfile = "/images/iconProfile/iconProfile.png";
+const iconSend = "/images/iconSend/iconSend.png";
+const iconSetting = "/images/iconSetting/iconSetting.png"
 
 const images = {
   iconArrowUp,
@@ -109,7 +111,6 @@ const images = {
   iconWalkthroughSignUpTwo,
   iconDownArrow,
   iconArrowLeft,
-  iconSquareEdit,
   iconWalkthroughSignUpThree,
   iconWalkthroughSignUpLast,
   iconDivider,
@@ -117,7 +118,6 @@ const images = {
   iconTrash,
   iconSuccess,
   iconMenu,
-  iconNotification,
   iconProfile,
   iconLogout,
   iconBuilding,
