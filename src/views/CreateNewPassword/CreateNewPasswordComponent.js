@@ -6,7 +6,7 @@ import CreateNewPasswordUI from "./CreateNewPasswordUI";
 import useResetPasswordAPI from "../../services/apiServices/hooks/useRestPasswordAPI";
 import { navigations } from "../../constants/routeNames";
 
-function CreateNewPasswordComponent(props) {
+function CreateNewPasswordComponent() {
   const navigate = useNavigate();
   const location = useLocation();
   const intl = useIntl();
@@ -14,7 +14,6 @@ function CreateNewPasswordComponent(props) {
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [successLogin, setSuccessLogin] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const {

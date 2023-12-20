@@ -1,19 +1,18 @@
 import React from "react";
-import { Image, Platform } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
-import styles from "./customImage.style";
+import { Image, Platform } from "@unthinkable/react-core-components";
 
+import styles from "./customImage.style";
 const CustomImage = ({ Icon, isSvg, resizeMode, source, style }) => {
   if (Platform.OS.toLowerCase() === "web") {
     return <Image source={source} style={style} resizeMode={resizeMode} />;
   } else {
     if (isSvg) {
-      return <Icon  style={style}/>;
+      return <Icon style={style} />;
     }
     return <Image source={source} style={style} resizeMode={resizeMode} />;
   }
 };
-
 CustomImage.defaultProps = {
   style: styles.logo,
   resizeMode: "contain",
