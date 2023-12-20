@@ -265,8 +265,9 @@ const OtpViewUI = ({
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
             displayLoader={isLoading}
+            
           />
-          <TouchableOpacity onPress={onClickGoToLogin}>
+          <TouchableOpacity style={styles.topTabs}  onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={
                 isWebView
