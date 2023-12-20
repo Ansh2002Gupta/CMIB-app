@@ -52,7 +52,6 @@ function CreateNewPasswordUI(props) {
       !validations.uppercase ||
       !validations.lowercase ||
       !validations.specialChar 
-      // !validations.match
     ) {
       setIsAnyPasswordFieldLeft(true);
       return;
@@ -200,6 +199,7 @@ function CreateNewPasswordUI(props) {
               title={intl.formatMessage({ id: "label.submit" })}
               onPress={() => {
                 areAllFieldFilledInPassword();
+                if(isAnyPasswordFieldLeft)
                 handleSubmit();
               }}
               customTitleStyle={styles.webView.submitText}
