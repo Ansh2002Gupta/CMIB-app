@@ -25,7 +25,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const { handleSignUpValidation, validationError, setValidationError } =
     useValidateSignUp();
-  const { handleSignUp } = useSignUpUser();
+  const { handleSignUp, setSignUpError, signUpError } = useSignUpUser();
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
   const {
@@ -174,18 +174,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     handleFileUpload(file, handleUploadSuccess);
   };
 
-  const onError = (err) => {
-    setValidationError(err);
-  };
-
   const onSuccess = async (details) => {
     signUpDispatch(setSignUpDetails(details));
     const updatedDetails = { ...initialDetails, ...details };
-    handleSignUp(
-      updatedDetails,
-      () => setShowSuccessSignUp(true),
-      (error) => onError(error)
-    );
+    handleSignUp(updatedDetails, () => setShowSuccessSignUp(true));
   };
 
   const handleSuccessModal = (value) => {
@@ -212,6 +204,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const handleDismissToast = () => {
     setValidationError("");
+    setSignUpError("");
     setErrorWhileDeletion("");
     setErrorWhileUpload("");
   };
@@ -256,6 +249,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       onDeleteImage={handleImageDeletion}
       onImageUpload={handleImageUpload}
       showSuccessSignUp={showSuccessSignUp}
+      signUpError={signUpError}
       socialMediaLinks={socialMediaLinks}
       validationError={validationError}
       website={website}

@@ -35,10 +35,14 @@ const SignUpLastScreenUI = (props) => {
     onImageUpload,
     options,
     showSuccessSignUp,
+    signUpError,
     socialMediaLinks,
     validationError,
     website,
   } = props;
+
+  const errorMessage =
+    validationError || errorWhileDeletion || errorWhileUpload || signUpError;
 
   const renderItem = ({ item, index }) => {
     return (
@@ -191,7 +195,7 @@ const SignUpLastScreenUI = (props) => {
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
       />
-      {!!(validationError || errorWhileDeletion || errorWhileUpload) && (
+      {!!errorMessage && (
         <ToastComponent
           toastMessage={validationError || errorWhileDeletion}
           onDismiss={handleDismissToast}

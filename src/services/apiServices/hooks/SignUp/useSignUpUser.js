@@ -7,12 +7,12 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/erro
 const useSignUpUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
   const [signUpUserResult, setSignUpUserResult] = useState([]);
-  const [error, setError] = useState("");
+  const [signUpError, setSignUpError] = useState("");
 
-  const handleSignUp = async (payload, successCallback, errorCallback) => {
+  const handleSignUp = async (payload, successCallback) => {
     try {
       setPostStatus(API_STATUS.LOADING);
-      error && setError("");
+      signUpError && setSignUpError("");
       const res = await Http.post(`company/sign-up`, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
@@ -20,15 +20,13 @@ const useSignUpUser = () => {
         successCallback();
         return;
       }
-      errorCallback(res);
       setPostStatus(API_STATUS.ERROR);
-      setError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setSignUpError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setPostStatus(API_STATUS.ERROR);
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      setError(errorMessage);
-      errorCallback(errorMessage);
+      setSignUpError(errorMessage);
     }
   };
 
@@ -37,13 +35,14 @@ const useSignUpUser = () => {
   const isError = postStatus === API_STATUS.ERROR;
 
   return {
-    signUpUserResult,
-    setError,
-    postStatus,
     handleSignUp,
     isError,
     isLoading,
     isSuccess,
+    setSignUpError,
+    signUpError,
+    signUpUserResult,
+    postStatus,
   };
 };
 
