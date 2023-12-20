@@ -19,6 +19,9 @@ const offWhite = "#FFFFFF14";
 const slateGray = "#616c82";
 const lightGray = "#D0D5DD";
 const voilet = "#B1B3B5";
+const mustardYellow = "#FABB00";
+const silver = "#EBEBEB";
+const yellow = "#FABB00";
 
 const colors = {
   lightGray,
@@ -27,6 +30,9 @@ const colors = {
   darkBlue,
   black,
   lightGrey,
+  mustardYellow,
+  silver,
+  yellow,
   backgroundColor,
   green,
   red,

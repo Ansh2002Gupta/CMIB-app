@@ -82,7 +82,10 @@ const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
 const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconProfile = "/images/iconProfile/iconProfile.png";
 const iconSend = "/images/iconSend/iconSend.png";
-const iconSetting = "/images/iconSetting/iconSetting.png"
+const iconSetting = "/images/iconSetting/iconSetting.png";
+const iconAlertTriangle = "images/iconAlertTriangle/iconAlertTriangle.png";
+const iconWarning = "images/svg/iconWarning.svg";
+const iconTick = "images/iconTick/iconTick.png";
 
 const images = {
   iconArrowUp,
@@ -138,6 +141,9 @@ const images = {
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
+  iconAlertTriangle,
+  iconWarning,
+  iconTick,
   iconDashboard,
   iconActiveRound1,
   iconActiveRound2,

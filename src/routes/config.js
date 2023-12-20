@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import ContentLayout from "../pages/ContentLayout";
 import CreateNewPassword from "../views/CreateNewPassword/index";
@@ -16,9 +16,9 @@ import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
 import WebViewScreen from "../views/WebViewScreen/WebViewScreen";
 
-import withPrivateAccess from "../hocs/withPrivateAccess";
-import withPublicAccess from "../hocs/withPublicAccess";
-import { navigations } from "../constants/routeNames";
+import withPrivateAccess from '../hocs/withPrivateAccess';
+import withPublicAccess from '../hocs/withPublicAccess';
+import { navigations } from '../constants/routeNames';
 
 const HomeWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
@@ -31,7 +31,7 @@ const config = [
     element: <DefaultRoute />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <DefaultRoute />,
       },
     ],
@@ -41,7 +41,7 @@ const config = [
     element: <HomeWithPrivateAccess />, // Page
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <MyAccount />,
       },
     ],
@@ -61,7 +61,7 @@ const config = [
     element: <ContentRouteWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <ViewProfile />,
       },
     ],
@@ -71,7 +71,7 @@ const config = [
     element: <ContentRouteWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <CompanyProfile />,
       },
     ],
@@ -81,7 +81,7 @@ const config = [
     element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <DashboardView />,
       },
     ],
@@ -91,7 +91,7 @@ const config = [
     element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <RoundOne />,
       },
     ],
@@ -101,7 +101,7 @@ const config = [
     element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <RoundTwo />,
       },
     ],
@@ -111,7 +111,7 @@ const config = [
     element: <LoginWithPublicAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <ForgotPassword />,
       },
     ],
@@ -121,7 +121,7 @@ const config = [
     element: <LoginWithPublicAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <CreateNewPassword />,
       },
     ],
@@ -131,7 +131,7 @@ const config = [
     element: <SignUpWithPublicAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <SignUpScreen />,
       },
     ],
@@ -141,7 +141,7 @@ const config = [
     element: <LoginWithPublicAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <LoginScreen />,
       },
     ],
@@ -151,7 +151,7 @@ const config = [
     element: <HomeWithPrivateAccess />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <JobsView />,
       },
     ],
@@ -161,7 +161,7 @@ const config = [
     element: <DefaultRoute />,
     views: [
       {
-        viewPath: "",
+        viewPath: '',
         element: <DefaultRoute />,
       },
     ],
