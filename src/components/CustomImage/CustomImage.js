@@ -6,12 +6,11 @@ import styles from "./customImage.style";
 const CustomImage = ({ Icon, isSvg, resizeMode, source, style }) => {
   if (Platform.OS.toLowerCase() === "web") {
     return <Image source={source} style={style} resizeMode={resizeMode} />;
-  } else {
-    if (isSvg) {
-      return <Icon style={style} />;
-    }
-    return <Image source={source} style={style} resizeMode={resizeMode} />;
   }
+  if (isSvg) {
+    return <Icon style={style} />;
+  }
+  return <Image source={source} style={style} resizeMode={resizeMode} />;
 };
 CustomImage.defaultProps = {
   style: styles.logo,

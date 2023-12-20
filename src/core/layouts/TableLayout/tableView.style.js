@@ -1,5 +1,6 @@
 const styles = {
-  flexDirection: 'column',
+  display: 'flex',
+  flexDirection: 'row'
 };
 
 export default styles;

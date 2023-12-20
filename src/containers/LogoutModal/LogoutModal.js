@@ -67,13 +67,11 @@ const LogoutModal = ({ onCancel, onSave }) => {
   ];
 
   return (
-    <View>
       <Modal isVisible style={styles.containerStyle}>
         <View style={styles.innerContainer}>
           <MultiRow rows={rowConfigs} />
         </View>
       </Modal>
-    </View>
   );
 };
 
