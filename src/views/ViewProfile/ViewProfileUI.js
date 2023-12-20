@@ -62,7 +62,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
         cropperCircleOverlay: true,
       });
       if (image) {
-        setProfileImage(image?.sourceURL);
+        setProfileImage(image?.sourceURL || image?.path);
         setPhotoEditFlag(true);
       }
     } catch (error) {
