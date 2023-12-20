@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Image } from '@unthinkable/react-core-components';
-import PropTypes from 'prop-types';
 
 import { FourRow, ThreeRow, TwoRow } from '../../core/layouts';
 
@@ -89,7 +89,7 @@ const ViewProfileModal = ({ closeModal, setModalSelect }) => {
 
 ViewProfileModal.propTypes = {
   closeModal: PropTypes.func,
-  setModalSelect:PropTypes.func
+  setModalSelect: PropTypes.func,
 };
 
 export default ViewProfileModal;

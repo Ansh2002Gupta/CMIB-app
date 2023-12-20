@@ -1,16 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Image } from '@unthinkable/react-core-components';
-import PropTypes from 'prop-types';
 
 import { ThreeRow, TwoColumn } from '../../core/layouts';
 
-import styles from './popoverContainer.style';
-import ProfileIcon from '../../components/ProfileIcon/ProfileIcon';
 import CommonText from '../../components/CommonText';
+import ProfileIcon from '../../components/ProfileIcon/ProfileIcon';
 import images from '../../images';
+import styles from './popoverContainer.style';
 
-const PopoverContainer = ({closePopover, openModal,  setModalSelect }) => {
+const PopoverContainer = ({ closePopover, openModal, setModalSelect }) => {
   const intl = useIntl();
 
   const firstName = 'Kashish';
@@ -53,13 +53,25 @@ const PopoverContainer = ({closePopover, openModal,  setModalSelect }) => {
               imageContainerStyle={styles.imageContainerStyle}
             />
           }
-          middleSection={<CommonText title={`${firstName} ${lastName}`} />}
-          bottomSection={<CommonText title={email} />}
+          middleSection={
+            <CommonText
+              customTextStyle={styles.boldText}
+              title={`${firstName} ${lastName}`}
+            />
+          }
+          bottomSection={
+            <CommonText customTextStyle={styles.normalText} title={email} />
+          }
         />
       }
       middleSection={accountList.map((item) => {
         return (
           <TwoColumn
+            onPress={() => {
+              setModalSelect(item.id);
+              closePopover();
+              openModal();
+            }}
             key={item.id}
             style={styles.itemContainerStyle}
             leftSection={
@@ -67,15 +79,13 @@ const PopoverContainer = ({closePopover, openModal,  setModalSelect }) => {
                 source={item.imageUrl}
                 alt={item.name}
                 style={styles.imageStyle}
-                onClick={() => {
-                  setModalSelect(item.id);
-                  closePopover();
-                  openModal();
-                }}
               />
             }
             rightSection={
-              <CommonText title={intl.formatMessage({ id: item?.label })} />
+              <CommonText
+                customTextStyle={styles.normalBlackText}
+                title={intl.formatMessage({ id: item?.label })}
+              />
             }
           />
         );
@@ -83,20 +93,20 @@ const PopoverContainer = ({closePopover, openModal,  setModalSelect }) => {
       middleSectionStyle={styles.middleSectionStyle}
       bottomSection={
         <TwoColumn
+          onPress={() => {
+            setModalSelect(3);
+            closePopover();
+            openModal();
+          }}
           style={styles.itemContainerStyle}
           leftSection={
-            <Image
-              source={images.iconLogout}
-              style={styles.imageStyle}
-              onClick={() => {
-                setModalSelect(3);
-                closePopover();
-                openModal();
-              }}
-            />
+            <Image source={images.iconLogout} style={styles.imageStyle} />
           }
           rightSection={
-            <CommonText title={intl.formatMessage({ id: 'account.logout' })} />
+            <CommonText
+              customTextStyle={styles.normalBlackText}
+              title={intl.formatMessage({ id: 'account.logout' })}
+            />
           }
         />
       }
@@ -107,8 +117,8 @@ const PopoverContainer = ({closePopover, openModal,  setModalSelect }) => {
 
 PopoverContainer.propTypes = {
   closeModal: PropTypes.func,
-  openModal:PropTypes.func,
-  setModalSelect:PropTypes.func
+  openModal: PropTypes.func,
+  setModalSelect: PropTypes.func,
 };
 
 export default PopoverContainer;

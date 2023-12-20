@@ -6,8 +6,6 @@ const style = {
     backgroundColor: 'white',
     borderRadius: 200,
     alignItems: 'center',
-    // height: 104,
-    // width: 104,
     borderWidth: 0.5,
     borderColor: colors.lightGrey,
     position: 'relative',

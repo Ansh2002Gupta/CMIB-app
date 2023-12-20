@@ -1,4 +1,5 @@
 import colors from '../../assets/colors';
+
 const styles = {
   mainContainer: {
     margin: 24,
@@ -6,7 +7,7 @@ const styles = {
     borderRadius: 20,
     borderColor: colors.lightGrey,
     borderWidth: 1,
-    minWidth: 200,
+    minWidth: 240,
   },
   profileImageStyle: {
     height: 50,
@@ -31,11 +32,29 @@ const styles = {
     gap: 16,
   },
   bottomSectionStyle: { padding: 16 },
-  itemContainerStyle: { alignItems: 'center', gap: 8 },
+  itemContainerStyle: { alignItems: 'center', gap: 8, cursor: 'pointer' },
   imageStyle: {
     height: 15,
     width: 15,
     cursor: 'pointer',
+  },
+  boldText: {
+    color: colors.black,
+    fontSize: 16,
+    fontWeight: '600',
+    fontFamily: 'General Sans',
+  },
+  normalText: {
+    color: colors.subHeadingGray,
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: 'General Sans',
+  },
+  normalBlackText: {
+    color: colors.black,
+    fontSize: 14,
+    fontWeight: '500',
+    fontFamily: 'General Sans',
   },
 };
 export default styles;

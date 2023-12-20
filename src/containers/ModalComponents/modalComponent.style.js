@@ -1,4 +1,5 @@
 import colors from '../../assets/colors';
+
 const styles = {
   mainContainer: {
     backgroundColor: colors.white,
@@ -55,7 +56,6 @@ const styles = {
     height: 104,
     width: 104,
   },
-
   profileMainContainer: {
     background: `linear-gradient(to bottom, ${colors.silver} 40%, ${colors.white} 30%)`,
     padding: 24,

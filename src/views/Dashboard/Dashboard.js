@@ -44,9 +44,7 @@ function DashboardView() {
         }
       />
       <Modal isVisible={modalVisible} backdrop={true}>
-        <div
-          style={styles.modal}
-        >
+        <div style={styles.modal}>
           {modalselect === 3 && (
             <ModalComponents.LogoutModal
               closeModal={closeModal}
@@ -63,7 +61,7 @@ function DashboardView() {
             />
           )}
           {modalselect === -1 && (
-            <ModalComponents.ChnageProfileModal closeModal={closeModal} />
+            <ModalComponents.ChangeProfileModal closeModal={closeModal} />
           )}
         </div>
       </Modal>

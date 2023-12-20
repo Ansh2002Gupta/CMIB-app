@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { Image } from '@unthinkable/react-core-components';
 import { Button } from '@unthinkable/react-button';
-import PropTypes from 'prop-types';
 
 import { ThreeRow, TwoColumn, TwoRow } from '../../core/layouts';
 
@@ -73,7 +73,7 @@ const LogoutModal = ({ closeModal, handleLogout }) => {
 
 LogoutModal.propTypes = {
   closeModal: PropTypes.func,
-  handleLogout:PropTypes.func
+  handleLogout: PropTypes.func,
 };
 
 export default LogoutModal;

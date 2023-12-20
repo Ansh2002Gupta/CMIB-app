@@ -1,10 +1,10 @@
 import LogoutModal from './LogoutModal';
 import ViewProfileModal from './ViewProfileModal';
-import ChnageProfileModal from './ChnageProfileModal';
+import ChangeProfileModal from './ChangeProfileModal';
 
 const ModalComponents = {
   LogoutModal,
   ViewProfileModal,
-  ChnageProfileModal,
+  ChangeProfileModal,
 };
 export default ModalComponents;

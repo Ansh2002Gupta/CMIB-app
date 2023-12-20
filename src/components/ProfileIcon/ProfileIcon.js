@@ -6,16 +6,16 @@ import CommonText from '../CommonText';
 import styles from './ProfileIcon.style';
 
 const ProfileIcon = ({
-  showEditModal,
+  firstName,
   icon,
   iconType,
+  imageContainerStyle,
+  initialContainerStyle,
+  lastName,
   onClick,
   profileImage,
   profileImageStyle,
-  imageContainerStyle,
-  initialContainerStyle,
-  firstName,
-  lastName,
+  showEditModal,
 }) => {
   if (profileImage) {
     return (
@@ -62,13 +62,15 @@ const ProfileIcon = ({
 
 ProfileIcon.propTypes = {
   firstName: PropTypes.string,
-  icon:PropTypes.element,
+  icon: PropTypes.element,
   iconType: PropTypes.string,
+  imageContainerStyle: PropTypes.object,
+  initialContainerStyle: PropTypes.object,
   lastName: PropTypes.string,
-  onClick:PropTypes.func,
+  onClick: PropTypes.func,
   profileImage: PropTypes.string,
+  profileImageStyle: PropTypes.object,
   showEditModal: PropTypes.bool,
-
 };
 
 export default ProfileIcon;

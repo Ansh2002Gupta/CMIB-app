@@ -1,24 +1,24 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
-import { Image } from '@unthinkable/react-core-components';
-import { Button } from '@unthinkable/react-button';
 import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
+import { Image, View } from '@unthinkable/react-core-components';
+import { Button } from '@unthinkable/react-button';
 
 import { ThreeRow, TwoColumn } from '../../core/layouts';
 
 import CommonText from '../../components/CommonText';
-import images from '../../images';
 import ProfileIcon from '../../components/ProfileIcon/ProfileIcon';
+import images from '../../images';
 import styles from './modalComponent.style';
 
-const ChnageProfileModal = ({ closeModal }) => {
+const ChangeProfileModal = ({ closeModal }) => {
   const intl = useIntl();
   const firstName = 'Kashish';
   const lastName = 'Bhatheja';
   const profileImage = 'https://picsum.photos/id/10/200/300';
 
   return (
-    <div>
+    <View>
       <ThreeRow
         style={styles.changeProfileContainer}
         topSection={
@@ -78,10 +78,11 @@ const ChnageProfileModal = ({ closeModal }) => {
           />
         }
       />
-    </div>
+    </View>
   );
 };
-ChnageProfileModal.propTypes = {
+ChangeProfileModal.propTypes = {
   closeModal: PropTypes.func,
 };
-export default ChnageProfileModal;
+
+export default ChangeProfileModal;

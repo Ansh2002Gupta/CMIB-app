@@ -1,9 +1,10 @@
-import React, {  useRef, useEffect } from 'react';
-import PropTypes from "prop-types";
+import React, { useRef, useEffect } from 'react';
+import { View } from '@unthinkable/react-core-components';
+import PropTypes from 'prop-types';
 
 import styles from './popover.style';
 
-const Popover = ({closePopover, content, isVisible }) => {
+const Popover = ({ closePopover, content, isVisible }) => {
   const popoverRef = useRef(null);
 
   const handleClickOutside = (event) => {
@@ -18,16 +19,15 @@ const Popover = ({closePopover, content, isVisible }) => {
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
-
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isVisible]);
 
   return (
-    <div style={styles.popoverContainer}>
-      {isVisible && <div ref={popoverRef}>{content}</div>}
-    </div>
+    <View style={styles.popoverContainer}>
+      {isVisible && <View ref={popoverRef}>{content}</View>}
+    </View>
   );
 };
 
@@ -35,8 +35,6 @@ Popover.propTypes = {
   closePopover: PropTypes.func,
   content: PropTypes.element,
   isVisible: PropTypes.bool,
-
-  
-}
+};
 
 export default Popover;
