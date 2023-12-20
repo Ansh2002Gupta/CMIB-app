@@ -58,7 +58,7 @@ const style = {
   },
   forgotPasswordView: {
     flexDirection: "row",
-    justifyContent: "end",
+    justifyContent: "flex-end",
   },
   rememberMeText: {
     fontSize: 14,

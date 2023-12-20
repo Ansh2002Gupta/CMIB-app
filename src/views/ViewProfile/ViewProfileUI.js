@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Image,
@@ -13,12 +13,14 @@ import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import ImagePicker from "../../components/ImagePickerComponent/ImagePickerComponent";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import images from "../../images";
 import style from "./ViewProfile.style";
 
-const ViewProfileUI = (props) => {
-  const { handleEditPopup, intl, onGoBack, showEditModal } = props;
+const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
+  const [photoEditFlag, setPhotoEditFlag] = useState(false);
   const [profileImage, setProfileImage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   //TODO: Dummy data to be replaced by api data.
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -27,6 +29,19 @@ const ViewProfileUI = (props) => {
     { title: "Mobile Number", value: "+91-1234 5678 21" },
     { title: "Email ID", value: "pooja.dhar@j&k.co" },
   ];
+  const buttonTitle = profileImage
+    ? intl.formatMessage({ id: "label.change" })
+    : intl.formatMessage({ id: "label.add" });
+
+  useEffect(() => {
+    if (!showEditModal) {
+      setPhotoEditFlag(false);
+    }
+  }, [showEditModal]);
+
+  const handleDismissToast = () => {
+    setErrorMessage("");
+  };
 
   const renderProfileIcon = (iconType) => {
     return (
@@ -46,12 +61,12 @@ const ViewProfileUI = (props) => {
         cropperCircleOverlay: true,
       });
       if (image) {
-        handleEditPopup(false);
-        setProfileImage(image?.sourceURL);
+        setProfileImage(image?.sourceURL || image?.path);
+        setPhotoEditFlag(true);
       }
     } catch (error) {
       //TODO: Replace this error log with a toast which has been created by Kashish.
-      console.log("Image picker error:", error);
+      setErrorMessage(error);
     }
   };
 
@@ -100,21 +115,40 @@ const ViewProfileUI = (props) => {
                 >
                   <CommonText
                     customTextStyle={style.textStyle}
-                    title={intl.formatMessage({ id: "label.change" })}
+                    title={buttonTitle}
                   />
                 </TouchableOpacity>
               </View>
-              <View style={[style.buttonStyle, style.secondButtonStyle]}>
-                <Image source={images.iconDelete} />
-                <CommonText
-                  customTextStyle={style.textStyle}
-                  title={intl.formatMessage({ id: "label.remove" })}
-                />
-              </View>
+              {!!profileImage &&
+                (photoEditFlag ? (
+                  <View
+                    style={[style.saveButtonStyle, style.secondButtonStyle]}
+                  >
+                    <Image source={images.iconTick} />
+                    <CommonText
+                      customTextStyle={style.saveTextStyle}
+                      title={intl.formatMessage({ id: "label.save" })}
+                    />
+                  </View>
+                ) : (
+                  <View style={[style.buttonStyle, style.secondButtonStyle]}>
+                    <Image source={images.iconDelete} />
+                    <CommonText
+                      customTextStyle={style.textStyle}
+                      title={intl.formatMessage({ id: "label.remove" })}
+                    />
+                  </View>
+                ))}
             </View>
           </CustomModal>
         )}
       </View>
+      {!!errorMessage && (
+        <ToastComponent
+          toastMessage={errorMessage}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </>
   );
 };

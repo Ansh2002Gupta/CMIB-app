@@ -188,6 +188,8 @@ const locale = {
   "label.braces": ")",
   "label.left_brace": "left)",
   "label.times": "times!",
+  "label.update": "Update",
+  "label.add": "Add",
   "label.error_password": "Password doesn't match",
   "label.edit": "Edit",
   "label.duplicate_email_validation": "Email addresses must be unique.",
