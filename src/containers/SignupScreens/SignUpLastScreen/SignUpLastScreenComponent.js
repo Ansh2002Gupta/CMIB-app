@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
+import useDeleteLogo from "../../../services/apiServices/hooks/useDeleteLogoAPI";
 import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpUser";
 import useSaveLogo from "../../../services/apiServices/hooks/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
@@ -22,12 +23,19 @@ import {
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation } = useValidateSignUp();
-  const { handleSignUp } = useSignUpUser();
-  const { handleFileUpload, fileUploadResult } = useSaveLogo();
+  const { handleSignUpValidation, validationError, setValidationError } =
+    useValidateSignUp();
+  const { handleSignUp, setSignUpError, signUpError } = useSignUpUser();
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    setErrorWhileUpload,
+  } = useSaveLogo();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
-  const [validationError, setValidationError] = useState("");
 
   const [socialMediaLinks, setSocialMediaLinks] = useState({
     facebook: initialDetails.social_media_link?.facebook || "",
@@ -68,6 +76,17 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     companyDetails: "",
     website: "",
   });
+
+  const handleImageDeletion = (handleDeletionSuccess) => {
+    if (fileUploadResult?.data?.file_name) {
+      handleDeleteLogo(
+        {
+          file_path: fileUploadResult?.data?.file_name,
+        },
+        handleDeletionSuccess
+      );
+    }
+  };
 
   const allFieldsFilled = () => {
     const requiredFields = [
@@ -151,18 +170,14 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     }
   };
 
-  const onError = (err) => {
-    setValidationError(err);
+  const handleImageUpload = (file, handleUploadSuccess) => {
+    handleFileUpload(file, handleUploadSuccess);
   };
 
   const onSuccess = async (details) => {
     signUpDispatch(setSignUpDetails(details));
     const updatedDetails = { ...initialDetails, ...details };
-    handleSignUp(
-      updatedDetails,
-      () => setShowSuccessSignUp(true),
-      (error) => onError(error)
-    );
+    handleSignUp(updatedDetails, () => setShowSuccessSignUp(true));
   };
 
   const handleSuccessModal = (value) => {
@@ -180,11 +195,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
             .map((item) => item.title),
         };
 
-        handleSignUpValidation(
-          details,
-          () => onSuccess(details),
-          (error) => onError(error)
-        );
+        handleSignUpValidation(details, () => onSuccess(details));
       }
     } else {
       setShowSuccessSignUp(false);
@@ -193,6 +204,9 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const handleDismissToast = () => {
     setValidationError("");
+    setSignUpError("");
+    setErrorWhileDeletion("");
+    setErrorWhileUpload("");
   };
 
   const onClickGoToLogin = () => {
@@ -221,6 +235,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       companyDetails={companyDetails}
       companyType={companyType}
       errors={errors}
+      errorWhileDeletion={errorWhileDeletion}
+      errorWhileUpload={errorWhileUpload}
       handleDismissToast={handleDismissToast}
       handleInputChange={handleInputChange}
       handleToggle={handleToggle}
@@ -230,8 +246,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}
       options={options}
-      onImageUpload={handleFileUpload}
+      onDeleteImage={handleImageDeletion}
+      onImageUpload={handleImageUpload}
       showSuccessSignUp={showSuccessSignUp}
+      signUpError={signUpError}
       socialMediaLinks={socialMediaLinks}
       validationError={validationError}
       website={website}

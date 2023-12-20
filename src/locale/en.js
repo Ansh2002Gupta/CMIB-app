@@ -190,8 +190,11 @@ const locale = {
   "label.left_brace": "left)",
   "label.times": "times!",
   "label.password-not-match": "Passwords do not match",
+  "label.update": "Update",
+  "label.add": "Add",
   "label.error_password": "Password doesn't match",
   "label.edit": "Edit",
+  "label.duplicate_email_validation": "Email addresses must be unique.",
   "label.logout_message": "Are you sure you want to logout of the portal?",
 };
 

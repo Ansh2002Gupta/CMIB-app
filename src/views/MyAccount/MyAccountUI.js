@@ -17,16 +17,24 @@ import images from "../../images";
 import style from "./MyAccount.style";
 
 const MyAccountUI = ({
+<<<<<<< HEAD
   changePasswordModal,
   handleOptionClick,
   handleChangePassword,
   handleLogoutClick,
   isLogout,
   intl,
+=======
+  intl,
+  isLogout,
+  handleLogoutClick,
+  handleOptionClick,
+>>>>>>> development
   options,
   saveLogout,
 }) => {
   //TODO: Replace this dummy data with api data.
+  //TODO: update image on save button (once api will come)
   const profileImage = "";
   const firstName = "Kashish";
   const lastName = "Bhatheja";

@@ -11,7 +11,8 @@ import { MODULE_OPTIONS } from "../../../constants/constants";
 const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation } = useValidateSignUp();
+  const { handleSignUpValidation, validationError, setValidationError } =
+    useValidateSignUp();
   const initialContactDetails =
     signUpState?.signUpDetail?.contact_details || [];
 
@@ -25,7 +26,6 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
 
   const [contactDetails, setContactDetails] = useState(initialContactDetails);
   const [options, setOptions] = useState(initialOptions);
-  const [validationError, setValidationError] = useState("");
 
   const onClickNext = () => {
     const existingContactDetails =
@@ -41,16 +41,10 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
       contact_details: [...existingContactDetails, ...newContactDetails],
     };
 
-    handleSignUpValidation(
-      { details },
-      () => {
-        signUpDispatch(setSignUpDetails(details));
-        tabHandler("next");
-      },
-      (error) => {
-        setValidationError(error);
-      }
-    );
+    handleSignUpValidation({ details }, () => {
+      signUpDispatch(setSignUpDetails(details));
+      tabHandler("next");
+    });
   };
 
   const handleDismissToast = () => {
