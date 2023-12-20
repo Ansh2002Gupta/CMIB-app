@@ -21,6 +21,8 @@ const SignUpLastScreenUI = (props) => {
     companyDetails,
     companyType,
     errors,
+    errorWhileDeletion,
+    errorWhileUpload,
     handleDismissToast,
     handleInputChange,
     handleSuccessModal,
@@ -28,14 +30,19 @@ const SignUpLastScreenUI = (props) => {
     intl,
     natureOfSupplier,
     onClickGoToLogin,
+    onDeleteImage,
     onGoBack,
     onImageUpload,
     options,
     showSuccessSignUp,
+    signUpError,
     socialMediaLinks,
     validationError,
     website,
   } = props;
+
+  const errorMessage =
+    validationError || errorWhileDeletion || errorWhileUpload || signUpError;
 
   const renderItem = ({ item, index }) => {
     return (
@@ -175,7 +182,11 @@ const SignUpLastScreenUI = (props) => {
             id: "label.logo_info",
           })}
         />
-        <UploadImage intl={intl} onImageUpload={onImageUpload} />
+        <UploadImage
+          intl={intl}
+          onImageUpload={onImageUpload}
+          onDeleteImage={onDeleteImage}
+        />
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
@@ -184,9 +195,9 @@ const SignUpLastScreenUI = (props) => {
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
       />
-      {!!validationError && (
+      {!!errorMessage && (
         <ToastComponent
-          toastMessage={validationError}
+          toastMessage={validationError || errorWhileDeletion}
           onDismiss={handleDismissToast}
         />
       )}
@@ -194,11 +205,22 @@ const SignUpLastScreenUI = (props) => {
   );
 };
 
+SignUpLastScreenUI.defaultProps = {
+  errors: {},
+  errorWhileDeletion: "",
+  handleDismissToast: () => {},
+  onDeleteImage: () => {},
+  onImageUpload: () => {},
+  validationError: "",
+};
+
 SignUpLastScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   companyDetails: PropTypes.string.isRequired,
   companyType: PropTypes.string.isRequired,
   errors: PropTypes.object,
+  errorWhileDeletion: PropTypes.string,
+  errorWhileUpload: PropTypes.string,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   handleSuccessModal: PropTypes.func.isRequired,
@@ -206,6 +228,7 @@ SignUpLastScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
   natureOfSupplier: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
+  onDeleteImage: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,
