@@ -23,14 +23,14 @@ import {
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation } = useValidateSignUp();
+  const { handleSignUpValidation, validationError, setValidationError } =
+    useValidateSignUp();
   const { handleSignUp } = useSignUpUser();
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
   const { handleFileUpload, fileUploadResult } = useSaveLogo();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
-  const [validationError, setValidationError] = useState("");
 
   const [socialMediaLinks, setSocialMediaLinks] = useState({
     facebook: initialDetails.social_media_link?.facebook || "",
