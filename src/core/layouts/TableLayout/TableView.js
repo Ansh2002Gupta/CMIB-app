@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import { View } from '@unthinkable/react-core-components'; 
 
 function TableView({ gridData, cellStyle, rowStyle, tableStyle }) {

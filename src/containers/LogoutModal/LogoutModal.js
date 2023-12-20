@@ -1,6 +1,7 @@
 import React from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
+
 
 import images from "../../images";
 import CommonText from "../../components/CommonText";

@@ -39,18 +39,6 @@ CustomColumn.defaultProps = {
 CustomColumn.propTypes = {
   onPress: PropTypes.func.isRequired, 
   title: PropTypes.string.isRequired, 
-  style: PropTypes.oneOfType([ 
-    PropTypes.object,
-    PropTypes.array,
-    PropTypes.number,
-  ]),
-  textStyle: PropTypes.oneOfType([ 
-    PropTypes.object,
-    PropTypes.array,
-    PropTypes.number,
-  ]),
   disabled: PropTypes.bool, 
-  iconLeft: PropTypes.node,
-  iconRight: PropTypes.node,
 };
 export default CustomColumn;
