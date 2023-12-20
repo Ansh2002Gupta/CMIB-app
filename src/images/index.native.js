@@ -130,7 +130,10 @@ const images = {
   iconHiringProcess,
   iconDownloadDetails,
   iconDrawer,
-  iconTick,
+  iconNotification,
+  iconCmibLogoWhite,
+  iconRightArrow,
+  iconFooterGlobal,
   iconWarning,
   iconSquareEdit,
 };

@@ -26,6 +26,9 @@ const SideNavBar = ({
       toValue: 0,
       duration: 200,
       useNativeDriver: true,
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
     }).start();
   }, [sideBarPosition]);
 

@@ -75,20 +75,24 @@ const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
 const iconTick = "images/iconTick/iconTick.png";
+const iconCmibLogoWhite = "images/iconCmibLogoWhite/iconCmibLogoWhite.png";
+const iconRightArrow = "images/iconRightArrow/iconRightArrow.png";
+const iconFooterGlobal = "images/iconFooterGlobal/iconFooterGlobal.png";
+const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
+const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
 const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
 const iconWarning = "images/svg/iconWarning.svg";
 
 const images = {
   iconArrowUp,
   iconArrowDown,
-  iconArrowDown2,
   avatar,
   logo,
+  iconSquareEdit,
+  iconWarning,
   sun,
-  iconLeftArrow,
   moon,
   flagFr,
-  iconSquareEdit,
   flagUk,
   homeSolid,
   homeOutline,
@@ -117,7 +121,6 @@ const images = {
   iconBuilding,
   iconLock,
   iconArrowRight,
-  iconClose,
   iconBack,
   iconEdit,
   iconChange,
@@ -132,8 +135,6 @@ const images = {
   iconTwitter,
   iconYoutube,
   iconCmibLogo,
-  iconAlertTriangle,
-  iconWarning,
   iconTick,
   iconDashboard,
   iconActiveRound1,
@@ -153,9 +154,10 @@ const images = {
   iconSetting,
   iconUpArrow,
   iconDrawer,
-  iconTick,
-  iconSquareEdit,
-  iconWarning,
+  iconNotification,
+  iconCmibLogoWhite,
+  iconRightArrow,
+  iconFooterGlobal,
 };
 
 export default images;
