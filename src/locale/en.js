@@ -190,7 +190,9 @@ const locale = {
   "label.left_brace": "left)",
   "label.times": "times!",
   "label.password-not-match": "Passwords do not match",
+  "label.error_password": "Password doesn't match",
   "label.edit": "Edit",
+  "label.logout_message": "Are you sure you want to logout of the portal?",
 };
 
 export default locale;

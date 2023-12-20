@@ -19,7 +19,7 @@ import styles from "./CreateNewPassword.style";
 function CreateNewPasswordUI(props) {
   const {
     confirmNewPassword,
-    error,
+    errorMessage,
     handleSubmit,
     handleDismissToast,
     intl,
@@ -29,6 +29,7 @@ function CreateNewPasswordUI(props) {
     onChangePasswordInput,
     onChangeConfirmPasswordInput,
     successLogin,
+    successMsg,
     validationError,
   } = props;
 
@@ -54,8 +55,7 @@ function CreateNewPasswordUI(props) {
       !validations.numeric ||
       !validations.uppercase ||
       !validations.lowercase ||
-      !validations.specialChar ||
-      !validations.match
+      !validations.specialChar
     ) {
       setIsAnyPasswordFieldLeft(true);
       return;
@@ -171,6 +171,8 @@ function CreateNewPasswordUI(props) {
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
+              errorMessage={errorMessage}
+              isError={!!errorMessage}
             />
             <NewPasswordValidation
               {...{
@@ -200,7 +202,7 @@ function CreateNewPasswordUI(props) {
               title={intl.formatMessage({ id: "label.submit" })}
               onPress={() => {
                 areAllFieldFilledInPassword();
-                handleSubmit();
+                if (isAnyPasswordFieldLeft) handleSubmit();
               }}
               customTitleStyle={styles.webView.submitText}
               customButtonContainer={styles.webView.submitTextContainer}
@@ -224,10 +226,7 @@ function CreateNewPasswordUI(props) {
           )}
           {successLogin && (
             <CustomModal
-              headerText={intl.formatMessage({ id: "label.thanks" })}
-              secondaryText={intl.formatMessage({
-                id: "label.reset_password_info_text",
-              })}
+              headerText={successMsg}
               onPress={() => {
                 onClickGoToLogin();
               }}

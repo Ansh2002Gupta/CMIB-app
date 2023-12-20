@@ -11,6 +11,7 @@ import CommonText from "../../components/CommonText";
 import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePasswordModal";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import IconHeader from "../../components/IconHeader/IconHeader";
+import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import images from "../../images";
 import style from "./MyAccount.style";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
@@ -19,8 +20,11 @@ const MyAccountUI = ({
   changePasswordModal,
   handleOptionClick,
   handleChangePassword,
+  handleLogoutClick,
+  isLogout,
   intl,
   options,
+  saveLogout,
 }) => {
   //TODO: Replace this dummy data with api data.
   const profileImage = "";
@@ -40,53 +44,65 @@ const MyAccountUI = ({
   };
 
   return (
-    <ScrollView>
-      <IconHeader
-        intl={intl}
-        headerText={intl.formatMessage({ id: "label.my_account" })}
-        iconLeft={images.iconMenu}
-        iconRight={images.iconNotification}
-      />
-      <View style={style.profileParentContainer}>
-        <View style={style.profileContainer}>
-          {renderProfileIcon()}
-          <View style={style.detailContainer}>
-            <CommonText
-              customTextStyle={style.fullNameStyle}
-              title={`${firstName} ${lastName}`}
-            />
-            <CommonText title={email} customTextStyle={style.emailStyle} />
-          </View>
-        </View>
-        {options.map((option) => (
-          <TouchableOpacity
-            style={style.optionCotainer}
-            key={option.id}
-            onPress={() => handleOptionClick(option)}
-          >
-            <Image source={option.iconLeft} style={style.leftIcon} />
-            <CommonText
-              customTextStyle={style.titleStyle}
-              title={intl.formatMessage({ id: option.title })}
-            />
-            <View style={style.iconContainer}>
-              <Image source={images.iconArrowRight} style={style.arrowIcon} />
+    <>
+      <ScrollView>
+        <IconHeader
+          intl={intl}
+          headerText={intl.formatMessage({ id: "label.my_account" })}
+          iconLeft={images.iconMenu}
+          iconRight={images.iconNotification}
+        />
+        <View style={style.profileParentContainer}>
+          <View style={style.profileContainer}>
+            {renderProfileIcon()}
+            <View style={style.detailContainer}>
+              <CommonText
+                customTextStyle={style.fullNameStyle}
+                title={`${firstName} ${lastName}`}
+              />
+              <CommonText title={email} customTextStyle={style.emailStyle} />
             </View>
-          </TouchableOpacity>
-        ))}
-      </View>
-      {changePasswordModal ? (
-        <CustomModal
-          headerText={intl.formatMessage({
-            id: "label.change_password",
-          })}
-          customInnerContainerStyle={style.innerContainerStyle}
-          headerTextStyle={style.headerTextStyle}
-        >
-          <ChangePasswordModal onPressCancel={handleChangePassword} />
-        </CustomModal>
-      ) : null}
-    </ScrollView>
+          </View>
+          {options.map((option, index) => (
+            <TouchableOpacity
+              style={[
+                style.optionCotainer,
+                index !== options.length - 1 && style.optionCotainerBorder,
+              ]}
+              key={option.id}
+              onPress={() => handleOptionClick(option)}
+            >
+              <Image source={option.iconLeft} style={style.leftIcon} />
+              <View style={style.titleParentStyle}>
+                <CommonText
+                  customTextStyle={style.titleStyle}
+                  title={intl.formatMessage({ id: option.title })}
+                />
+              </View>
+
+              <View style={style.iconContainer}>
+                <Image source={images.iconArrowRight} style={style.arrowIcon} />
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+        {changePasswordModal ? (
+          <CustomModal
+            headerText={intl.formatMessage({
+              id: "label.change_password",
+            })}
+            customInnerContainerStyle={style.innerContainerStyle}
+            headerTextStyle={style.headerTextStyle}
+          >
+            <ChangePasswordModal onPressCancel={handleChangePassword} />
+          </CustomModal>
+        ) : null}
+      </ScrollView>
+
+      {isLogout && (
+        <LogoutModal onCancel={handleLogoutClick} onSave={saveLogout} />
+      )}
+    </>
   );
 };
 
