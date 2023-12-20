@@ -11,7 +11,13 @@ import CommonText from "../CommonText";
 import images from "../../images";
 import styles from "./UploadImage.style";
 
-const UploadImage = ({ intl }) => {
+const UploadImage = ({
+  customContainerStyle,
+  intl,
+  imageUrl,
+  imageName,
+  onImageUpload,
+}) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
 
@@ -36,6 +42,15 @@ const UploadImage = ({ intl }) => {
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
         let fileName = response.fileName || response.assets?.[0]?.fileName;
+        let type = response.fileName || response.assets?.[0]?.type;
+        const formData = new FormData();
+        const file = {
+          uri: imageUri,
+          name: fileName,
+          type: type,
+        };
+        formData.append("company_logo", file);
+        onImageUpload(formData);
         setSelectedImage(imageUri);
         setFileName(fileName);
       }
@@ -46,21 +61,28 @@ const UploadImage = ({ intl }) => {
       style={[
         styles.contentContainerStyle,
         selectedImage && styles.selectedImageContainer,
+        imageUrl ? styles.showImageStyle : null,
+        customContainerStyle,
       ]}
     >
-      {selectedImage ? (
+      {!!selectedImage || imageUrl ? (
         <>
           <View style={styles.imageContainer}>
             <Image
-              source={{ uri: selectedImage }}
+              source={{ uri: selectedImage || imageUrl }}
               style={styles.selectedImageStyle}
             />
           </View>
           <View style={styles.innerContainer}>
-            <CommonText customTextStyle={styles.nameStyle} title={fileName} />
-            <TouchableOpacity onPress={onClickDeleteImage}>
-              <Image source={images.iconTrash} />
-            </TouchableOpacity>
+            <CommonText
+              customTextStyle={styles.nameStyle}
+              title={fileName || imageName}
+            />
+            {!imageUrl && (
+              <TouchableOpacity onPress={onClickDeleteImage}>
+                <Image source={images.iconTrash} />
+              </TouchableOpacity>
+            )}
           </View>
         </>
       ) : (
@@ -78,7 +100,6 @@ const UploadImage = ({ intl }) => {
               />
             </TouchableOpacity>
           </View>
-
           <CommonText
             customTextStyle={styles.infoStyle}
             title={intl.formatMessage({ id: "label.supported_type" })}
@@ -90,7 +111,11 @@ const UploadImage = ({ intl }) => {
 };
 
 UploadImage.propTypes = {
+  customContainerStyle: PropTypes.object,
   intl: PropTypes.object.isRequired,
+  onImageUpload: PropTypes.func,
+  imageUrl: PropTypes.string,
+  imageName: PropTypes.string,
 };
 
 export default UploadImage;

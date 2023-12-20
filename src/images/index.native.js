@@ -66,6 +66,7 @@ import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlo
 import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
 import iconClose from "../../public/images/iconClose/iconClose.png";
 import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
+import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 
 const images = {
   iconArrowUp,
@@ -79,6 +80,7 @@ const images = {
   flagUk,
   iconLeftArrow,
   homeSolid,
+  iconSquareEdit,
   homeOutline,
   profileSolid,
   profileOutline,

@@ -82,6 +82,7 @@ const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
 const iconArrowDown2 = "images/iconArrowDown2/iconArrowDown2.png";
 const iconClose = "images/iconClose/iconClose.png"
 const iconLeftArrow = "images/iconLeftArrow/iconLeftArrow.png"
+const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
 
 const images = {
   iconArrowUp,
@@ -109,6 +110,7 @@ const images = {
   iconWalkthroughSignUpTwo,
   iconDownArrow,
   iconArrowLeft,
+  iconSquareEdit,
   iconWalkthroughSignUpThree,
   iconWalkthroughSignUpLast,
   iconDivider,
