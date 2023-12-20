@@ -81,14 +81,14 @@ const SideBar = ({
   };
   const handleBottomViewNavigation = () => {
     if (Platform.OS === "web") {
-      window.open(CMS_URI);
-      return;
+      window.location.replace(CMS_URI);
+    } else {
+      onClose();
+      navigate(navigations.WEB_VIEW, {
+        state: { uri: CMS_URI },
+      });
+      handleDisplayHeader();
     }
-    onClose();
-    navigate(navigations.WEB_VIEW, {
-      state: { uri: CMS_URI },
-    });
-    handleDisplayHeader();
   };
   const dynamicPadding =
     showBackIcon || showClose ? styles.imageViewStyles : styles.imgViewStyle;
