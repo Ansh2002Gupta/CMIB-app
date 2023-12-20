@@ -13,9 +13,9 @@ import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import ImagePicker from "../../components/ImagePickerComponent/ImagePickerComponent";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import images from "../../images";
 import style from "./ViewProfile.style";
-import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   const [photoEditFlag, setPhotoEditFlag] = useState(false);
@@ -29,10 +29,9 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
     { title: "Mobile Number", value: "+91-1234 5678 21" },
     { title: "Email ID", value: "pooja.dhar@j&k.co" },
   ];
-  const buttonTitle =
-    profileImage !== ""
-      ? intl.formatMessage({ id: "label.change" })
-      : intl.formatMessage({ id: "label.add" });
+  const buttonTitle = profileImage
+    ? intl.formatMessage({ id: "label.change" })
+    : intl.formatMessage({ id: "label.add" });
 
   useEffect(() => {
     if (!showEditModal) {
@@ -120,7 +119,6 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
                   />
                 </TouchableOpacity>
               </View>
-
               {profileImage !== "" &&
                 (photoEditFlag ? (
                   <View
