@@ -126,7 +126,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
           array.indexOf(email) !== index && email.trim() !== ""
       );
 
-    if (emailDuplicates.length > 0) {
+    if (emailDuplicates?.length) {
       newErrors = newErrors.map((error, index) => {
         if (emailDuplicates.includes(contactDetails[index].emailId)) {
           return {
