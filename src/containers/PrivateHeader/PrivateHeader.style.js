@@ -31,9 +31,6 @@ const styles = {
     flexDirection: "row",
     paddingTop: 8,
   },
-  initialsText: {
-    fontSize: 14,
-  },
   profileContainer: {
     marginTop: 16,
     marginBottom: 16,
@@ -53,14 +50,6 @@ const styles = {
     fontSize: 12,
     color: colors.subHeadingGray,
     fontWeight: "500",
-  },
-  initialsContainer: {
-    justifyContent: "center",
-    backgroundColor: "#D3D3D3",
-    borderRadius: 200,
-    alignItems: "center",
-    height: 40,
-    width: 40,
   },
   iconArrow: {
     width: 16,
@@ -97,9 +86,6 @@ const styles = {
   },
   profileView: {
     flexDirection: "row",
-  },
-  profileTextView: {
-    paddingRight: 8,
   },
 };
 export default styles;
