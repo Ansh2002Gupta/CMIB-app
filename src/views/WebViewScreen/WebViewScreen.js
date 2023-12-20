@@ -1,12 +1,12 @@
-import { View,Text } from '@unthinkable/react-core-components'
-import React from 'react'
+import React from "react";
+import { Text, View } from "@unthinkable/react-core-components";
 
 const WebViewScreen = () => {
   return (
     <View>
-      <Text>WebViewScreen</Text>
+      <Text></Text>
     </View>
-  )
-}
+  );
+};
 
-export default WebViewScreen
+export default WebViewScreen;

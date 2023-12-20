@@ -7,8 +7,8 @@ import MainLayout from "../layouts/MainLayout";
 
 import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
-import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import Header from "../containers/Header";
+import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import {
   items,
   newQualifiedPlacementsList,
@@ -57,26 +57,6 @@ function HeaderWithContentLayout() {
     setShowHeader(false);
   };
 
-  const layoutProps = {};
-
-  if (
-    isWebView &&
-    isAuthenticated &&
-    currentBreakpoint !== "sm" &&
-    currentBreakpoint !== "xs"
-  ) {
-    layoutProps.isRightFillSpace = false;
-    layoutProps.leftSectionStyle = {
-      flex:
-        currentBreakpoint === "md"
-          ? 2
-          : windowDimensions.width >= 1200 && windowDimensions.width <= 1400
-          ? 1.5
-          : 1,
-    };
-
-    layoutProps.rightSectionStyle = { flex: 4 };
-  }
   return (
     <MainLayout
       header={
@@ -88,7 +68,27 @@ function HeaderWithContentLayout() {
       }
       content={<Outlet />}
       topSectionStyle={commonStyles.headerContainer}
-      {...layoutProps}
+      leftSectionStyle={
+        (isWebView &&
+          isAuthenticated &&
+          currentBreakpoint !== "sm" &&
+          currentBreakpoint !== "xs") ||
+        isSideBarVisible
+          ? {
+              flex:
+                currentBreakpoint === "md"
+                  ? 2
+                  : windowDimensions.width >= 1200 &&
+                    windowDimensions.width <= 1400
+                  ? 1.5
+                  : currentBreakpoint === "xs"
+                  ? 0
+                  : 1,
+            }
+          : {}
+      }
+      isRightFillSpace={false}
+      rightSectionStyle={{ flex: 4 }}
       menu={
         (isWebView &&
           isAuthenticated &&
@@ -97,7 +97,9 @@ function HeaderWithContentLayout() {
         isSideBarVisible ? (
           <SideNavBar
             handleDisplayHeader={handleDisplayHeader}
-            onClose={() => setSideBarVisible(false)}
+            onClose={() => {
+              setSideBarVisible(false);
+            }}
             onPress={handleNewlyQualifiedPlacementsClick}
             resetList={() => setListItems(items)}
             showCloseIcon={showClose}

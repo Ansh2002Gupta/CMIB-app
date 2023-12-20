@@ -6,6 +6,7 @@ import { navigations } from "../../constants/routeNames";
 import {
   FlatList,
   Image,
+  Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
@@ -79,10 +80,14 @@ const SideBar = ({
     resetList();
   };
   const handleBottomViewNavigation = () => {
+    if (Platform.OS === "web") {
+      window.open(CMS_URI);
+      return;
+    }
+    onClose();
     navigate(navigations.WEB_VIEW, {
       state: { uri: CMS_URI },
     });
-    onClose();
     handleDisplayHeader();
   };
   const dynamicPadding =
