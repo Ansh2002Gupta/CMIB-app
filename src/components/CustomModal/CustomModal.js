@@ -67,15 +67,15 @@ const CustomModal = ({
 };
 
 CustomModal.defaultProps = {
-  buttonTitle: "Default Button Title",
+  buttonTitle: "",
   customInnerContainerStyle: {},
-  headerText: "Default Header Text",
+  headerText: "",
   headerTextStyle: false,
   isIconCross: false,
   isSuccess: false,
   onPress: () => {},
   onPressIconCross: () => {},
-  secondaryText: "Default Secondary Text",
+  secondaryText: "",
 };
 
 CustomModal.propTypes = {

@@ -47,13 +47,13 @@ const useCreateNewPasswordAPI = () => {
   const isError = changePasswordStatus === API_STATUS.ERROR;
 
   return {
+    changePasswordStatus,
     errorWhileResetPassword,
     forgotPasswordResult,
     handleCreateNewPasswordAPI,
     isError,
     isLoading,
     isSuccess,
-    changePasswordStatus,
   };
 };
 
