@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import { useNavigate, useLocation } from "../../routes";
 
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
-import useResetPasswordAPI from "../../services/apiServices/hooks/useRestPasswordAPI";
+import useResetPasswordAPI from "../../services/apiServices/hooks/useResetPasswordAPI";
 import { navigations } from "../../constants/routeNames";
 
 function CreateNewPasswordComponent() {
