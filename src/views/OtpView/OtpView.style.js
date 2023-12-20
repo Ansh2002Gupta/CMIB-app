@@ -160,6 +160,10 @@ const style = {
     fontFamily: "General Sans",
     marginTop: 16,
     alignItems:"center"
-  }
+  },
+  topTabs: {
+    width: "50%",
+    cursor: "pointer",
+  },
 };
 export default style;

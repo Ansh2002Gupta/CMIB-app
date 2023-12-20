@@ -1,27 +1,32 @@
 import React, { useState } from "react";
-import { useNavigate,useLocation } from "../../routes";
 import { useIntl } from "react-intl";
+import { useNavigate, useLocation } from "../../routes";
 
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
-import useCreateNewPasswordAPI from "../../services/apiServices/hooks/useCreateNewPasswordAPI";
+import useResetPasswordAPI from "../../services/apiServices/hooks/useResetPasswordAPI";
 import { navigations } from "../../constants/routeNames";
 
-function CreateNewPasswordComponent(props) {
+function CreateNewPasswordComponent() {
   const navigate = useNavigate();
   const location = useLocation();
   const intl = useIntl();
-  const { email ,otpCode} = location.state || {};
+  const { token } = location.state || {};
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [successLogin, setSuccessLogin] = useState(false); 
-  const [error, setError] = useState("");
-  const [validationError, setValidationError] = useState("");
-  
-  const { handleCreateNewPasswordAPI,isLoading } = useCreateNewPasswordAPI();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const {
+    isLoading,
+    errorWhileResetPassword,
+    handleResetPasswordAPI,
+    resetPasswordResult,
+    setErrorWhileResetPassword,
+    setResetPasswordResult
+  } = useResetPasswordAPI();
 
   const onClickGoToLogin = () => {
-    setSuccessLogin(false);
+    setResetPasswordResult({});
     navigate(navigations.LOGIN);
   };
 
@@ -34,37 +39,42 @@ function CreateNewPasswordComponent(props) {
   };
 
   const handleSubmit = () => {
-    handleCreateNewPasswordAPI({
-      email: email,
-      password: newPassword,
-      password_confirmation: confirmNewPassword,
-      otp: otpCode ,
-    }, 
-    (success) => {
-      setSuccessLogin(true);
-    },
-      (error) => {
-      setValidationError(error);
-    });
+    const isPasswordMatch =
+      newPassword?.trim()?.toLowerCase() ===
+      confirmNewPassword?.trim()?.toLowerCase();
+    if (isPasswordMatch) {
+      setErrorMessage("");
+    } else {
+      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
+      return;
+    }
+    handleResetPasswordAPI(
+      {
+        token: token,
+        password: newPassword,
+      }
+    );
   };
 
   const handleDismissToast = () => {
-    setValidationError("");
+    setErrorWhileResetPassword("");
   };
-  
+
   return (
     <CreateNewPasswordUI
+      errorMessage={errorMessage}
       handleSubmit={handleSubmit}
       onClickGoToLogin={onClickGoToLogin}
       onChangePasswordInput={onChangePasswordInput}
       newPassword={newPassword}
       confirmNewPassword={confirmNewPassword}
       onChangeConfirmPasswordInput={onChangeConfirmPasswordInput}
-      error={error}
       intl={intl}
       isLoading={isLoading}
       handleDismissToast={handleDismissToast}
-      validationError={validationError}
+      successLogin={!!resetPasswordResult?.message}
+      successMsg={resetPasswordResult?.message}
+      validationError={errorWhileResetPassword}
     />
   );
 }
