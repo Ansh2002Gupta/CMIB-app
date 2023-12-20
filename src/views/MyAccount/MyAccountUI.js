@@ -12,8 +12,16 @@ import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import images from "../../images";
 import style from "./MyAccount.style";
 
-const MyAccountUI = ({intl, isLogout, handleLogoutClick, handleOptionClick, options, saveLogout}) => {
+const MyAccountUI = ({
+  intl,
+  isLogout,
+  handleLogoutClick,
+  handleOptionClick,
+  options,
+  saveLogout,
+}) => {
   //TODO: Replace this dummy data with api data.
+  //TODO: update image on save button (once api will come)
   const profileImage = "";
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -28,10 +36,7 @@ const MyAccountUI = ({intl, isLogout, handleLogoutClick, handleOptionClick, opti
       const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
       return (
         <View style={style.initialsContainer}>
-          <CommonText
-          customTextStyle={style.initialsText}
-          title={initials}
-          />
+          <CommonText customTextStyle={style.initialsText} title={initials} />
         </View>
       );
     }
@@ -50,27 +55,27 @@ const MyAccountUI = ({intl, isLogout, handleLogoutClick, handleOptionClick, opti
           {renderProfileIcon()}
           <View style={style.detailContainer}>
             <CommonText
-            customTextStyle={style.fullNameStyle}
-            title={`${firstName} ${lastName}`}
+              customTextStyle={style.fullNameStyle}
+              title={`${firstName} ${lastName}`}
             />
-            <CommonText
-            title={email}
-            customTextStyle={style.emailStyle}
-            />
+            <CommonText title={email} customTextStyle={style.emailStyle} />
           </View>
         </View>
-        {options.map((option,index) => (
+        {options.map((option, index) => (
           <TouchableOpacity
-            style={[style.optionCotainer, index !== options.length - 1 && style.optionCotainerBorder]}
+            style={[
+              style.optionCotainer,
+              index !== options.length - 1 && style.optionCotainerBorder,
+            ]}
             key={option.id}
             onPress={() => handleOptionClick(option)}
           >
             <Image source={option.iconLeft} style={style.leftIcon} />
             <View style={style.titleParentStyle}>
-            <CommonText
-            customTextStyle={style.titleStyle}
-            title={intl.formatMessage({ id: option.title })}
-            />
+              <CommonText
+                customTextStyle={style.titleStyle}
+                title={intl.formatMessage({ id: option.title })}
+              />
             </View>
 
             <View style={style.iconContainer}>
@@ -81,11 +86,8 @@ const MyAccountUI = ({intl, isLogout, handleLogoutClick, handleOptionClick, opti
       </View>
 
       {isLogout && (
-        <LogoutModal
-        onCancel={handleLogoutClick}
-        onSave={saveLogout}
-       />
-      ) }
+        <LogoutModal onCancel={handleLogoutClick} onSave={saveLogout} />
+      )}
     </>
   );
 };

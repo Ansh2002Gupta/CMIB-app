@@ -60,6 +60,7 @@ import iconDrawer from '../../public/images/iconDrawer/iconDrawer.png';
 import iconAlertTriangle from '../../public/images/iconAlertTriangle/iconAlertTriangle.png';
 import iconSquareEdit from '../../public/images/iconSquareEdit/iconSquareEdit.png';
 import iconWarning from '../../public/images/svg/iconWarning.svg';
+import iconTick from '../../public/images/iconTick/iconTick.png';
 
 const images = {
   avatar,
@@ -122,6 +123,7 @@ const images = {
   iconDownloadDetails,
   iconDrawer,
   iconAlertTriangle,
+  iconTick,
   iconWarning,
   iconSquareEdit,
 };

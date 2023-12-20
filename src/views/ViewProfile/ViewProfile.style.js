@@ -32,11 +32,27 @@ const style = {
     padding: 14,
     flex: 1,
   },
+  saveButtonStyle: {
+    flexDirection: "row",
+    justifyContent: "center",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    padding: 14,
+    flex: 1,
+    backgroundColor: colors.green,
+  },
   secondButtonStyle: { marginLeft: 16 },
   textStyle: {
     fontSize: 14,
     color: colors.black,
-    marginLeft: 2,
+    marginLeft: 8,
+    fontWeight: "600",
+  },
+  saveTextStyle: {
+    fontSize: 14,
+    color: colors.white,
+    marginLeft: 8,
     fontWeight: "600",
   },
   picParentContainer: {

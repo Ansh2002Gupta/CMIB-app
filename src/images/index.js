@@ -77,6 +77,7 @@ const iconNotification = 'images/iconNotification/iconNotification.png';
 const iconAlertTriangle = 'images/iconAlertTriangle/iconAlertTriangle.png';
 const iconSquareEdit = 'images/iconSquareEdit/iconSquareEdit.png';
 const iconWarning = 'images/svg/iconWarning.svg';
+const iconTick = 'images/iconTick/iconTick.png';
 
 const images = {
   avatar,
@@ -146,6 +147,7 @@ const images = {
   iconUpArrow,
   iconDrawer,
   iconAlertTriangle,
+  iconTick,
   iconSquareEdit,
   iconWarning,
 };

@@ -35,8 +35,6 @@ const style = {
     justifyContent: "space-between",
     overflow: "hidden",
     flexWrap: "wrap",
-    marginRight: 24,
-    flex: 1,
   },
   containerGridStyle: (columnCount) => ({
     display: "grid",
