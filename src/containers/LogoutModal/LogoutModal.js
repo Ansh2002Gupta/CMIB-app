@@ -1,28 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import {
-  Image,
-  Modal,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { Modal, View } from "@unthinkable/react-core-components";
 
-import images from "../../images";
 import CommonText from "../../components/CommonText";
+import CustomImage from "../../components/CustomImage/CustomImage";
 import MultiRow from "../../core/layouts/MultiRow";
 import TwoRowButton from "../../components/TwoRowButton/TwoRowButton";
 import useLogoutAPI from "../../services/apiServices/hooks/useLogoutAPI";
+import images from "../../images";
 import styles from "./logoutModal.style";
 
 const LogoutModal = ({ onCancel, onSave }) => {
   const intl = useIntl();
   const { handleUserLogout } = useLogoutAPI();
-  const IconWarning = images.iconWarning;
+  const WarningIcon = images.iconWarning;
 
   const rowConfigs = [
     {
-      content: <IconWarning style={styles.logo} />,
+      content: (
+        <CustomImage
+          Icon={WarningIcon}
+          style={styles.logo}
+          source={WarningIcon}
+          isSvg={true}
+        />
+      ),
     },
     {
       content: (

@@ -32,7 +32,7 @@ const TwoRowButton = (props) => {
       content: <CustomColumn
       onPress={onRightButtonClick}
       title={rightButtonText}
-      style={[styles.buttonStyle, styles.secondButtonStyle]}
+      style={{...styles.buttonStyle, ...styles.secondButtonStyle}}
       textStyle={styles.titleStyle}
       disabled={isDisabled}
       iconRight={hasIconRight ? images.iconArrowRightWhite : null}
