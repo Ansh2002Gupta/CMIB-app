@@ -18,7 +18,7 @@ const useLogoutAPI = () => {
     try {
       setLogoutApiStatus(API_STATUS.LOADING);
       errorWhileLoggingOut && setErrorWhileLoggingOut("");
-      const res = await Http.post(COMPANY_LOGOUT, payload);
+      const res = await Http.post(COMPANY_LOGOUT);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setLogoutApiStatus(API_STATUS.SUCCESS);
         await Storage.removeAll();
