@@ -18,7 +18,7 @@ export const REGISTRATION_NO_LENGTH = 10;
 export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 100;
 export const CA_JOBS = "ca-jobs";
-export const NEWLY_QUALIFIED = "newly-qualified-ca-placement";
+export const NEWLY_QUALIFIED = "nqca-placement";
 export const OVERSEAS_PLACEMENTS = "overseas-placement";
 export const CAREER_ASCENTS = "career-ascent";
 export const WOMENT_PLACEMENT = "women-placement";
@@ -88,7 +88,7 @@ export const MODULE_OPTIONS = [
     messageId: "label.ca_jobs",
   },
   {
-    id: "newly-qualified-ca-placement",
+    id: "nqca-placement",
     messageId: "label.newly_qualified_ca",
   },
   {
