@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
+  ScrollView,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
@@ -39,7 +40,7 @@ const MyAccountUI = ({
   };
 
   return (
-    <>
+    <ScrollView>
       <IconHeader
         intl={intl}
         headerText={intl.formatMessage({ id: "label.my_account" })}
@@ -85,7 +86,7 @@ const MyAccountUI = ({
           <ChangePasswordModal onPressCancel={handleChangePassword} />
         </CustomModal>
       ) : null}
-    </>
+    </ScrollView>
   );
 };
 
