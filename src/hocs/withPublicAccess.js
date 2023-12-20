@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "../routes";
+import { useLocation, useNavigate } from "../routes";
 
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { StorageService } from "../services";
 import { navigations } from "../constants/routeNames";
+import { EXIT_WEBVIEW } from "../constants/constants";
 
 function withPublicAccess(Component) {
   return (props) => {
@@ -11,13 +12,10 @@ function withPublicAccess(Component) {
     const navigate = useNavigate();
 
     // TODO: Need to refactor and test the below code.
-    // const location = useLocation();
-    // if (
-    //   Platform.OS.toLowerCase() === "web" &&
-    //   location.pathname === navigations.LOGIN
-    // ) {
-    //   window.postMessage(EXIT_WEBVIEW);
-    // }
+    const location = useLocation();
+    if (window && location.pathname === navigations.LOGIN) {
+      window.postMessage(EXIT_WEBVIEW);
+    }
 
     useEffect(() => {
       StorageService.get("auth").then((token) => {

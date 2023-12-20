@@ -5,7 +5,9 @@ import { AuthContext } from "../globalContext/auth/authProvider";
 import { RouteContext } from "../globalContext/route/routeProvider";
 import { StorageService } from "../services";
 import { setLoginRedirectRoute } from "../globalContext/route/routeActions";
+import { getQueryParamsAsAnObject } from "../utils/util";
 import { navigations } from "../constants/routeNames";
+import { EXIT_WEBVIEW } from "../constants/constants";
 
 function withPrivateAccess(Component) {
   return (props) => {
@@ -30,15 +32,12 @@ function withPrivateAccess(Component) {
     }, []);
 
     // TODO: Need to refactor and test the below code.
-    // if (
-    //   Platform.OS.toLowerCase() === "web" &&
-    //   location.pathname === navigations.JOBS
-    // ) {
-    //   window.postMessage({
-    //     message: EXIT_WEBVIEW,
-    //     data: getQueryParamsAsAnObject(location.search),
-    //   });
-    // }
+    if (window && location.pathname === navigations.JOBS) {
+      window.postMessage({
+        message: EXIT_WEBVIEW,
+        data: getQueryParamsAsAnObject(location.search),
+      });
+    }
 
     return <Component {...props} />;
   };
