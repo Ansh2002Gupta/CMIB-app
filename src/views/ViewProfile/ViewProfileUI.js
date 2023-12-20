@@ -119,7 +119,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
                   />
                 </TouchableOpacity>
               </View>
-              {profileImage !== "" &&
+              {!!profileImage &&
                 (photoEditFlag ? (
                   <View
                     style={[style.saveButtonStyle, style.secondButtonStyle]}
