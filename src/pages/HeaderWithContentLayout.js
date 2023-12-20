@@ -24,7 +24,7 @@ function HeaderWithContentLayout() {
   };
 
   const toggleSideBar = () => {
-    setSideBarVisible(true);
+    setSideBarVisible(!isSideBarVisible);
   };
 
   useEffect(() => {
@@ -51,9 +51,9 @@ function HeaderWithContentLayout() {
       menu={
         (isWebView && isAuthenticated) || isSideBarVisible ? (
           <SideNavBar
-            onClose={() => setSideBarVisible(false)}
+            onClose={toggleSideBar}
             items={listItems}
-            onPress={handleNewlyQualifiedPlacementsClick}
+            handleItemListRendering={handleNewlyQualifiedPlacementsClick}
           />
         ) : null
       }

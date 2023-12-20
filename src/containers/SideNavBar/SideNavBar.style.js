@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   overLay: {
     backgroundColor: "transparent",
     zIndex: 1,
-    borderWidth: 1,
     width: width,
     height: height,
   },

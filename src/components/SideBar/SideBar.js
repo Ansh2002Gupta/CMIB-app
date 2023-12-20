@@ -13,11 +13,11 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./SideBar.style";
 
-const SideBar = ({ items, onPress }) => {
+const SideBar = ({ items, handleItemListRendering }) => {
   const intl = useIntl();
   const [currentList, setCurrentList] = useState(items);
-  const [selectedList, setSelecteList] = useState(null);
-  const [selectedSubList, setSelecteSubList] = useState(null);
+  const [selectedList, setSelectedList] = useState(null);
+  const [selectedSubList, setSelectedSubList] = useState(null);
   const [showStaticContent, setShowStaticContent] = useState(true);
 
   const renderSubItem = ({ item }) => (
@@ -27,8 +27,8 @@ const SideBar = ({ items, onPress }) => {
         selectedSubList === item.id && styles.selectedItemBackground,
       ]}
       onPress={() => {
-        setSelecteSubList(item.id);
-        setSelecteList(null);
+        setSelectedSubList(item.id);
+        setSelectedList(null);
       }}
     >
       <CommonText
@@ -48,7 +48,7 @@ const SideBar = ({ items, onPress }) => {
           styles.list,
           selectedList === item.id && styles.selectedItemBackground,
         ]}
-        onPress={() => setSelecteList(item.id)}
+        onPress={() => setSelectedList(item.id)}
       >
         <CommonText
           customTextStyle={{
@@ -74,8 +74,8 @@ const SideBar = ({ items, onPress }) => {
     setCurrentList(items);
   }, [items]);
 
-  const handleOnPress = () => {
-    onPress();
+  const handleRenderList = () => {
+    handleItemListRendering();
     setShowStaticContent(false);
   };
 
@@ -100,7 +100,7 @@ const SideBar = ({ items, onPress }) => {
                   id: "label.newely_qualified_placements",
                 })}
               />
-              <TouchableOpacity onPress={handleOnPress}>
+              <TouchableOpacity onPress={handleRenderList}>
                 <CommonText
                   customTextStyle={styles.changeText}
                   title={intl.formatMessage({ id: "label.change" })}

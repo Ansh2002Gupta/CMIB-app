@@ -50,7 +50,6 @@ const styles = {
   sessionText: {
     color: colors.darkGrey,
     fontSize: 14,
-    fontWeight: "500",
     paddingLeft: 16,
     paddingRight: 16,
     paddingBottom: 8,
@@ -71,7 +70,6 @@ const styles = {
   listText: {
     fontSize: 14,
     color: colors.lightGrey,
-    fontWeight: "500",
   },
   subList: {
     paddingTop: 18,
@@ -81,7 +79,6 @@ const styles = {
   subListText: {
     color: colors.lightGrey,
     fontSize: 14,
-    fontWeight: "500",
   },
   bottomView: {
     paddingTop: 20,
@@ -99,7 +96,6 @@ const styles = {
     color: colors.lightGrey,
     paddingLeft: 12,
     fontSize: 14,
-    fontWeight: "500",
   },
   globalIcon: {
     width: 18,

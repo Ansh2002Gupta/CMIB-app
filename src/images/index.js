@@ -68,10 +68,6 @@ const iconDownloadDetails =
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
-const ticketIcon = "images/ticketIcon/ticketIcon.png";
-const iconSend = "images/iconSend/iconSend.png";
-const iconSetting = "images/iconSetting/iconSetting.png";
-const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
 const iconCmibLogoWhite = "images/iconCmibLogoWhite/iconCmibLogoWhite.png";
@@ -81,6 +77,10 @@ const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
 const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
 const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
 const iconWarning = "images/svg/iconWarning.svg";
+const ticketIcon = "images/ticketIcon/ticketIcon.png";
+const iconSetting = "images/iconSetting/iconSetting.png";
+const iconSend = "images/iconSend/iconSend.png";
+const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 
 const images = {
   iconArrowUp,
@@ -92,6 +92,7 @@ const images = {
   sun,
   moon,
   flagFr,
+  iconSquareEdit,
   flagUk,
   homeSolid,
   homeOutline,

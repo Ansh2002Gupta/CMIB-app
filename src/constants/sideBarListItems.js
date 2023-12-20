@@ -1,4 +1,5 @@
 export const items = [
+  // TODO data will replace with API data
   {
     id: 0,
     title: "2023 Aug - Sept Campus Placement",
@@ -33,6 +34,7 @@ export const items = [
   },
 ];
 export const newQualifiedPlacementsList = [
+  // TODO data will replace with API data
   {
     id: 0,
     title: "Newly Qualified Placements",
@@ -62,6 +64,7 @@ export const newQualifiedPlacementsList = [
 ];
 
 export const weblisting = [
+  // TODO data will replace with API data
   {
     id: 0,
     title: "Dashboard",
