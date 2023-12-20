@@ -26,6 +26,7 @@ const useChangePasswordApi = () => {
         return;
       }
       setPostStatus(API_STATUS.ERROR);
+      setErrorWhileChangePassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setPostStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
