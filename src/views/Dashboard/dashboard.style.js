@@ -6,6 +6,11 @@ const style = {
     alignItems: 'center',
     backgroundColor:'#FFFFFF',
   },
+  header: {
+    fontSize: 24,
+    marginBottom: 24,
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -30,13 +35,6 @@ const style = {
     borderRadius: 4,
     alignItems: 'center',
   },
-  modal:{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-    background: 'rgba(0, 0, 0, 0.5)',
-  }
 };
 
 export default style;
