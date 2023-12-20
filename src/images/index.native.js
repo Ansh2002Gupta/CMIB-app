@@ -57,7 +57,11 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
+<<<<<<< HEAD
 import iconTick from "../../public/images/iconTick/iconTick.png";
+=======
+import iconWarning from "../../public/images/svg/iconWarning.svg"
+>>>>>>> development
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 
 const images = {
@@ -121,6 +125,7 @@ const images = {
   iconDownloadDetails,
   iconDrawer,
   iconTick,
+  iconWarning,
   iconSquareEdit,
 };
 
