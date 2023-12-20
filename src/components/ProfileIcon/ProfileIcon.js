@@ -17,12 +17,15 @@ const ProfileIcon = ({
   if (profileImage) {
     return (
       <View
-        style={[
-          styles.initialsContainer,
-          showEditModal &&
-            iconType === "modalIcon" &&
-            styles.editProfileContainer,
-        ]}
+        style={
+          ([
+            styles.initialsContainer,
+            showEditModal &&
+              iconType === "modalIcon" &&
+              styles.editProfileContainer,
+          ],
+          customContainerStyle)
+        }
       >
         <Image
           source={{ uri: profileImage }}

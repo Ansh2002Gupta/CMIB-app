@@ -23,6 +23,7 @@ const style = {
     paddingBottom: 16,
     justifyContent: "space-between",
   },
+  fourthSectionStyle: { paddingBottom: 16 },
 };
 
 export default style;

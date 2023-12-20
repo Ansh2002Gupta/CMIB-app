@@ -29,6 +29,7 @@ const style = {
   editButtonContainer: {
     flexDirection: "row",
     flex: 1,
+    paddingBottom: 16,
   },
   buttonStyle: {
     flexDirection: "row",

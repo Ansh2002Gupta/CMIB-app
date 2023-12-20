@@ -45,7 +45,7 @@ function CreateNewPasswordComponent() {
     if (isPasswordMatch) {
       setErrorMessage("");
     } else {
-      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
+      setErrorMessage(intl.formatMessage({ id: "label.password-not-match" }));
       return;
     }
     handleResetPasswordAPI(

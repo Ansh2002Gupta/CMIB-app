@@ -202,7 +202,9 @@ function CreateNewPasswordUI(props) {
               title={intl.formatMessage({ id: "label.submit" })}
               onPress={() => {
                 areAllFieldFilledInPassword();
-                if (isAnyPasswordFieldLeft) handleSubmit();
+                if (isAnyPasswordFieldLeft) {
+                  handleSubmit();
+                }
               }}
               customTitleStyle={styles.webView.submitText}
               customButtonContainer={styles.webView.submitTextContainer}

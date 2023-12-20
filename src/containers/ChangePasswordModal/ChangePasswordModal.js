@@ -118,7 +118,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
             />
           }
           fourthSection={
-            <View>
+            <View style={styles.fourthSectionStyle}>
               {!!error && (
                 <CommonText
                   title={error}

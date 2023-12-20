@@ -8,7 +8,9 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMe
 import { navigations } from "../../../constants/routeNames";
 
 const useChangePasswordApi = () => {
-  const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
+  const [changePasswordStatus, setChangePasswordStatus] = useState(
+    API_STATUS.IDLE
+  );
   const [changePasswordResult, setChangePasswordResult] = useState([]);
   const [errorWhileChangePassword, setErrorWhileChangePassword] = useState("");
 
@@ -16,19 +18,19 @@ const useChangePasswordApi = () => {
 
   const handleUseChangePassword = async (payload) => {
     try {
-      setPostStatus(API_STATUS.LOADING);
+      setChangePasswordStatus(API_STATUS.LOADING);
       errorWhileChangePassword && setErrorWhileChangePassword("");
       const res = await Http.post(COMPANY_CHANGE_PASSWORD_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
-        setPostStatus(API_STATUS.SUCCESS);
+        setChangePasswordStatus(API_STATUS.SUCCESS);
         setChangePasswordResult(res.data);
         navigateScreen(navigations.DASHBOARD);
         return;
       }
-      setPostStatus(API_STATUS.ERROR);
+      setChangePasswordStatus(API_STATUS.ERROR);
       setErrorWhileChangePassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
-      setPostStatus(API_STATUS.ERROR);
+      setChangePasswordStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileChangePassword(err.response?.data?.message);
         return;
@@ -37,9 +39,9 @@ const useChangePasswordApi = () => {
     }
   };
 
-  const isLoading = postStatus === API_STATUS.LOADING;
-  const isSuccess = postStatus === API_STATUS.SUCCESS;
-  const isError = postStatus === API_STATUS.ERROR;
+  const isLoading = changePasswordStatus === API_STATUS.LOADING;
+  const isSuccess = changePasswordStatus === API_STATUS.SUCCESS;
+  const isError = changePasswordStatus === API_STATUS.ERROR;
 
   return {
     changePasswordResult,
@@ -48,7 +50,7 @@ const useChangePasswordApi = () => {
     isError,
     isLoading,
     isSuccess,
-    postStatus,
+    changePasswordStatus,
   };
 };
 
