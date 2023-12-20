@@ -20,6 +20,7 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   const [photoEditFlag, setPhotoEditFlag] = useState(false);
   const [profileImage, setProfileImage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   //TODO: Dummy data to be replaced by api data.
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -34,6 +35,10 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
       setPhotoEditFlag(false);
     }
   }, [showEditModal]);
+
+  const handleDismissToast = () => {
+    setErrorMessage("");
+  };
 
   console.log(profileImage, "profileImage");
   const renderProfileIcon = (iconType) => {
@@ -59,7 +64,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
       }
     } catch (error) {
       //TODO: Replace this error log with a toast which has been created by Kashish.
-      <ToastComponent title={error} />;
+      setErrorMessage(error);
     }
   };
 
@@ -144,6 +149,12 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
           </CustomModal>
         )}
       </View>
+      {!!errorMessage && (
+        <ToastComponent
+          toastMessage={errorMessage}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </>
   );
 };
