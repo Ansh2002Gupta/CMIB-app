@@ -13,7 +13,6 @@ const styles = {
   listText: {
     fontSize: 14,
     color: colors.lightGrey,
-    fontWeight: "500",
   },
   selectedItem: {
     color: colors.white,
