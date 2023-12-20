@@ -220,7 +220,7 @@ const OtpViewUI = ({
                     title={formattedTimerValue}
                   />
                 ) : (
-                  <TouchableOpacity onPress={onResendOtpClick}>
+                  <TouchableOpacity style={styles.topTabs} onPress={onResendOtpClick}>
                     <CommonText
                       customTextStyle={styles.textlabelReset}
                       title={formatedOtpLeftValue}
