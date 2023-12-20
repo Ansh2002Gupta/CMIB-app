@@ -28,7 +28,12 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const { handleSignUp } = useSignUpUser();
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
-  const { handleFileUpload, fileUploadResult } = useSaveLogo();
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    setErrorWhileUpload,
+  } = useSaveLogo();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
 
@@ -166,7 +171,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   };
 
   const handleImageUpload = (file, handleUploadSuccess) => {
-    handleFileUpload(file, handleUploadSuccess, (error) => onError(error));
+    handleFileUpload(file, handleUploadSuccess);
   };
 
   const onError = (err) => {
@@ -198,11 +203,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
             .map((item) => item.title),
         };
 
-        handleSignUpValidation(
-          details,
-          () => onSuccess(details),
-          (error) => onError(error)
-        );
+        handleSignUpValidation(details, () => onSuccess(details));
       }
     } else {
       setShowSuccessSignUp(false);
@@ -212,6 +213,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const handleDismissToast = () => {
     setValidationError("");
     setErrorWhileDeletion("");
+    setErrorWhileUpload("");
   };
 
   const onClickGoToLogin = () => {
@@ -241,6 +243,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       companyType={companyType}
       errors={errors}
       errorWhileDeletion={errorWhileDeletion}
+      errorWhileUpload={errorWhileUpload}
       handleDismissToast={handleDismissToast}
       handleInputChange={handleInputChange}
       handleToggle={handleToggle}

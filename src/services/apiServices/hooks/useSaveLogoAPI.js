@@ -9,7 +9,7 @@ const useSaveLogo = () => {
   const [fileUploadResult, setFileUploadResult] = useState([]);
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
 
-  const handleFileUpload = async (file, successCallback, errorCallback) => {
+  const handleFileUpload = async (file, successCallback) => {
     try {
       setUploadStatus(API_STATUS.LOADING);
       errorWhileUpload && setErrorWhileUpload("");
@@ -24,13 +24,11 @@ const useSaveLogo = () => {
         successCallback();
         return;
       }
-      errorCallback(res);
       setUploadStatus(API_STATUS.ERROR);
       setErrorWhileUpload(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      errorCallback(errorMessage);
       if (errorMessage) {
         setErrorWhileUpload(errorMessage);
         return;
@@ -45,13 +43,14 @@ const useSaveLogo = () => {
   const isError = uploadStatus === API_STATUS.ERROR;
 
   return {
-    fileUploadResult,
     errorWhileUpload,
-    uploadStatus,
+    fileUploadResult,
     handleFileUpload,
     isError,
     isLoading,
     isSuccess,
+    setErrorWhileUpload,
+    uploadStatus,
   };
 };
 
