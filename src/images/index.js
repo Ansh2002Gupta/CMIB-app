@@ -68,21 +68,19 @@ const iconDownloadDetails =
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
-const ticketIcon = "images/ticketIcon/ticketIcon.png";
-const iconSend = "images/iconSend/iconSend.png";
-const iconSetting = "images/iconSetting/iconSetting.png";
-const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
+const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
+const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
 const iconCmibLogoWhite = "images/iconCmibLogoWhite/iconCmibLogoWhite.png";
 const iconRightArrow = "images/iconRightArrow/iconRightArrow.png";
 const iconFooterGlobal = "images/iconFooterGlobal/iconFooterGlobal.png";
-const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
-const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
+const ticketIcon = "images/ticketIcon/ticketIcon.png";
 const iconArrowDown2 = "images/iconArrowDown2/iconArrowDown2.png";
-const iconClose = "images/iconClose/iconClose.png"
-const iconLeftArrow = "images/iconLeftArrow/iconLeftArrow.png"
+const iconClose = "images/iconClose/iconClose.png";
+const iconLeftArrow = "images/iconLeftArrow/iconLeftArrow.png";
 const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
+const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 
 const images = {
   iconArrowUp,
@@ -94,6 +92,7 @@ const images = {
   iconLeftArrow,
   moon,
   flagFr,
+  iconSquareEdit,
   flagUk,
   homeSolid,
   homeOutline,
