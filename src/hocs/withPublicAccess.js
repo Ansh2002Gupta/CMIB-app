@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "../routes";
+import { Platform } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { StorageService } from "../services";
@@ -10,11 +11,12 @@ function withPublicAccess(Component) {
   return (props) => {
     const [authState] = useContext(AuthContext);
     const navigate = useNavigate();
+    const isWebPlatform = Platform.OS.toLowerCase() === "web"
 
     // TODO: Need to refactor and test the below code.
     const location = useLocation();
-    if (window && location.pathname === navigations.LOGIN) {
-      window.postMessage(EXIT_WEBVIEW);
+    if (window && window.ReactNativeWebView && isWebPlatform && location.pathname === navigations.LOGIN) {
+      window.ReactNativeWebView.postMessage(EXIT_WEBVIEW);
     }
 
     useEffect(() => {

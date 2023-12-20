@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "../routes";
+import { Platform } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { RouteContext } from "../globalContext/route/routeProvider";
@@ -15,6 +16,7 @@ function withPrivateAccess(Component) {
     const navigate = useNavigate();
     const location = useLocation();
     const [, routeDispatch] = useContext(RouteContext);
+    const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
     useEffect(() => {
       StorageService.get("auth").then((token) => {
@@ -32,8 +34,8 @@ function withPrivateAccess(Component) {
     }, []);
 
     // TODO: Need to refactor and test the below code.
-    if (window && location.pathname === navigations.JOBS) {
-      window.postMessage({
+    if (window && window.ReactNativeWebView && isWebPlatform && location.pathname === navigations.JOBS) {
+      window.ReactNativeWebView.postMessage({
         message: EXIT_WEBVIEW,
         data: getQueryParamsAsAnObject(location.search),
       });
