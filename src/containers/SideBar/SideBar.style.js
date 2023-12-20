@@ -71,7 +71,6 @@ const styles = {
   sessionText: {
     color: colors.darkGrey,
     fontSize: 14,
-    fontWeight: "500",
     paddingLeft: 16,
     paddingRight: 16,
     paddingBottom: 8,
@@ -94,7 +93,6 @@ const styles = {
     color: colors.lightGrey,
     paddingLeft: 12,
     fontSize: 14,
-    fontWeight: "500",
   },
   globalIcon: {
     width: 18,

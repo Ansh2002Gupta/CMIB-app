@@ -70,11 +70,11 @@ const SideNavBar = ({
 
 SideNavBar.propTypes = {
   handleDisplayHeader: PropTypes.array.isRequired,
-  items: PropTypes.array.isRequired,
   onClose: PropTypes.func,
   onPress: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
 };
 
 export default SideNavBar;
