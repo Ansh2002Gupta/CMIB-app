@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
 import ButtonComponent from "../../components/ButtonComponent";
+import HeaderText from "../../components/HeaderText/HeaderText";
 import OtpInput from "../../components/OtpInput/index";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
-import HeaderText from "../../components/HeaderText/HeaderText";
-import CommonText from "../../components/CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import {
   OTP_TRY_COUNT,

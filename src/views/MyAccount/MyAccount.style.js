@@ -42,7 +42,6 @@ const style = {
   emailStyle: {
     fontSize: 14,
     color: colors.darkGrey,
-    fontWeight: "500"
   },
   titleParentStyle: {
     paddingLeft: 12,

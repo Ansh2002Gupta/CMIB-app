@@ -14,7 +14,7 @@ const useLogoutAPI = () => {
   const [errorWhileLoggingOut, setErrorWhileLoggingOut] = useState("");
   const [, authDispatch] = useContext(AuthContext);
 
-  const handleUserLogout = async (payload , successCallback ,errorCallback) => {
+  const handleUserLogout = async (successCallback ) => {
     try {
       setLogoutApiStatus(API_STATUS.LOADING);
       errorWhileLoggingOut && setErrorWhileLoggingOut("");
@@ -29,10 +29,8 @@ const useLogoutAPI = () => {
       }
       setLogoutApiStatus(API_STATUS.ERROR);
       setErrorWhileLoggingOut(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
-      errorCallback(res);
     } catch (err) {
       setLogoutApiStatus(API_STATUS.ERROR);
-      errorCallback(err);
       if (err.response?.data?.message) {
         setErrorWhileLoggingOut(err.response?.data?.message);
         return;

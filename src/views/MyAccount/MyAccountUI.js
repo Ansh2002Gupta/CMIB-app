@@ -8,7 +8,7 @@ import {
 
 import CommonText from "../../components/CommonText";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import LogoutModel from "../../containers/LogoutModal/LogoutModal";
+import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import images from "../../images";
 import style from "./MyAccount.style";
 
@@ -81,7 +81,7 @@ const MyAccountUI = ({intl, isLogout, handleLogoutClick, handleOptionClick, opti
       </View>
 
       {isLogout && (
-        <LogoutModel
+        <LogoutModal
         onCancel={handleLogoutClick}
         onSave={saveLogout}
        />

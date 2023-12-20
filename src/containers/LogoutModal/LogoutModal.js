@@ -53,12 +53,10 @@ const LogoutModal = ({ onCancel, onSave }) => {
           rightButtonText={intl.formatMessage({ id: "label.logout" })}
           onRightButtonClick={() => {
             handleUserLogout(
-              {},
               () => {
                 onCancel(false);
                 onSave();
-              },
-              (error) => {}
+              }
             );
           }}
         />

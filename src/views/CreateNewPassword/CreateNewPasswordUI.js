@@ -12,7 +12,6 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./CreateNewPassword.style";
 
-
 function CreateNewPasswordUI(props) {
   const {
     confirmNewPassword,
@@ -96,9 +95,6 @@ function CreateNewPasswordUI(props) {
       setIsAnyPasswordFieldLeft(false);
     };
   }, []);
-
-  
-
 
   return (
     <ScrollView
