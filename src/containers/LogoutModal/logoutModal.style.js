@@ -20,7 +20,20 @@ const styles = {
   logo: {
     height : 24,
     width :24,
-  }
+  },
+  innerContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    backgroundColor: "white",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    paddingTop: 24,
+    paddingBottom: 24,
+  },
 };
 
 export default styles;

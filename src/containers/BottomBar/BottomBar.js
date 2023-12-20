@@ -89,7 +89,7 @@ function BottomBar() {
     return {
       content: (
         <ImageAndTextTab
-          isActive={currrentRoute === route}
+          isActive={currentRoute === route}
           onPress={() => {
             navigateTo(route);
           }}

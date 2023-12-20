@@ -53,8 +53,6 @@ const style = {
     fontSize: 14,
     lineHeight: 20,
     color: colors.black,
-    numberOfLines:1,
-    ellipsizeMode:"tail",
   },
   iconContainer: {
     alignItems: "flex-end",
