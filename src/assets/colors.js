@@ -14,14 +14,9 @@ const lightBlue = "#269AD4";
 const secondaryGrey = "#F2F4FC";
 const darkBlack = "#0F0F0F";
 const errorBackground = "#ffeded";
-const darkBlueShade = "#000833";
-const offWhite = "#FFFFFF14";
-const slateGray = "#616c82";
 const lightGray = "#D0D5DD";
 const voilet = "#B1B3B5";
-const mustardYellow = "#FABB00";
-const silver = "#EBEBEB";
-const yellow = "#FABB00";
+const yellow ='#FABB00';
 
 const colors = {
   lightGray,
@@ -45,8 +40,7 @@ const colors = {
   secondaryGrey,
   darkBlack,
   errorBackground,
-  darkBlueShade,
-  offWhite,
-  slateGray,
+  lightGray,
+  yellow,
 };
 export default colors;

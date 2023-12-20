@@ -57,18 +57,9 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
-import iconArrowUp from "../../public/images/iconArrowUp/iconArrowUp.png";
-import iconArrowDown from "../../public/images/iconArrowDown/iconArrowDown.png";
-import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLogowhite.png";
-import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
-import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
-import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
-import iconClose from "../../public/images/iconClose/iconClose.png";
-import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
-import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
-import iconAlertTriangle from "../../public/images/iconAlertTriangle/iconAlertTriangle.png";
-import iconWarning from "../../public/images/svg/iconWarning.svg";
 import iconTick from "../../public/images/iconTick/iconTick.png";
+import iconWarning from "../../public/images/svg/iconWarning.svg"
+import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 
 const images = {
   iconArrowUp,
@@ -139,10 +130,9 @@ const images = {
   iconHiringProcess,
   iconDownloadDetails,
   iconDrawer,
-  iconNotification,
-  iconCmibLogoWhite,
-  iconRightArrow,
-  iconFooterGlobal,
+  iconTick,
+  iconWarning,
+  iconSquareEdit,
 };
 
 export default images;
