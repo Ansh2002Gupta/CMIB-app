@@ -17,19 +17,12 @@ import images from "../../images";
 import style from "./MyAccount.style";
 
 const MyAccountUI = ({
-<<<<<<< HEAD
   changePasswordModal,
   handleOptionClick,
   handleChangePassword,
   handleLogoutClick,
   isLogout,
   intl,
-=======
-  intl,
-  isLogout,
-  handleLogoutClick,
-  handleOptionClick,
->>>>>>> development
   options,
   saveLogout,
 }) => {
