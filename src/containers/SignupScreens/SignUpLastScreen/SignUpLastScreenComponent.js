@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
 import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpUser";
+import useSaveLogo from "../../../services/apiServices/hooks/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
@@ -23,6 +24,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const { handleSignUpValidation } = useValidateSignUp();
   const { handleSignUp } = useSignUpUser();
+  const { handleFileUpload, fileUploadResult } = useSaveLogo();
   const initialDetails = signUpState.signUpDetail || [];
   const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
   const [validationError, setValidationError] = useState("");
@@ -155,8 +157,9 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const onSuccess = async (details) => {
     signUpDispatch(setSignUpDetails(details));
+    const updatedDetails = { ...initialDetails, ...details };
     handleSignUp(
-      signUpState.signUpDetail,
+      updatedDetails,
       () => setShowSuccessSignUp(true),
       (error) => onError(error)
     );
@@ -164,13 +167,14 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const handleSuccessModal = (value) => {
     if (value) {
-      if (validateFields()) {
+      if (validateFields() && fileUploadResult) {
         const details = {
           social_media_link: socialMediaLinks,
           website: website,
           nature_of_supplier: natureOfSupplier,
           type: companyType,
           company_details: companyDetails,
+          company_logo: fileUploadResult?.data?.file_name,
           source_of_information: options
             .filter((item) => item.isSelected)
             .map((item) => item.title),
@@ -226,6 +230,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}
       options={options}
+      onImageUpload={handleFileUpload}
       showSuccessSignUp={showSuccessSignUp}
       socialMediaLinks={socialMediaLinks}
       validationError={validationError}

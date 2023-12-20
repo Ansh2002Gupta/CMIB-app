@@ -59,7 +59,7 @@ const config = [
   },
   {
     pagePath: navigations.COMPANY_PROFILE,
-    element: <HomeWithPrivateAccess />,
+    element: <ContentRouteWithPrivateAccess />,
     views: [
       {
         viewPath: '',

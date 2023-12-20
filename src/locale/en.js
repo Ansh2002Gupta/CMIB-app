@@ -186,6 +186,7 @@ const locale = {
   'label.braces': ')',
   'label.left_brace': 'left)',
   'label.times': 'times!',
+  'label.edit': 'Edit',
   'account.logout': 'Log Out',
   'account.logoutMessage': 'Are you sure you want to logout of the portal?',
   'account.access': 'Access',

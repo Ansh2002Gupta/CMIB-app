@@ -58,6 +58,7 @@ import iconHiringProcess from '../../public/images/iconHiringProcess/iconHiringP
 import iconDownloadDetails from '../../public/images/iconDownloadDetails/iconDownloadDetails.png';
 import iconDrawer from '../../public/images/iconDrawer/iconDrawer.png';
 import iconAlertTriangle from '../../public/images/iconAlertTriangle/iconAlertTriangle.png';
+import iconSquareEdit from '../../public/images/iconSquareEdit/iconSquareEdit.png';
 
 const images = {
   avatar,
@@ -120,6 +121,7 @@ const images = {
   iconDownloadDetails,
   iconDrawer,
   iconAlertTriangle,
+  iconSquareEdit,
 };
 
 export default images;
