@@ -11,8 +11,8 @@ const NewPasswordValidation = ({
   confirmNewPassword,
   customContainerStyles,
   newPassword,
-  validations,
   setValidations,
+  validations,
 }) => {
   const intl = useIntl();
   const bulletStyle = (isValid) => [
