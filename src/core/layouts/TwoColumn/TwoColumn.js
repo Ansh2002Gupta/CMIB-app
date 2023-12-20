@@ -1,26 +1,31 @@
-import React from 'react'
-import BaseLayout from '../Base'
-import layoutStyle from './twoColumn.style'
+import React from 'react';
+import BaseLayout from '../Base';
+import layoutStyle from './twoColumn.style';
 
-function TwoColumn({ style, leftSectionStyle, rightSectionStyle, leftSection, rightSection, isLeftFillSpace, isRightFillSpace }) {
+function TwoColumn({
+  style,
+  leftSectionStyle,
+  rightSectionStyle,
+  leftSection,
+  rightSection,
+  isLeftFillSpace,
+  isRightFillSpace,
+  onPress,
+}) {
   return (
-    <BaseLayout
-      style={{...layoutStyle, ...style}}
-    >
-      {
-        ({ Row, Column }) => (
-          <>
-            <Column isFillSpace={isLeftFillSpace} style={leftSectionStyle}>
-              {leftSection}
-            </Column>
-            <Column isFillSpace={isRightFillSpace} style={rightSectionStyle}>
-              {rightSection}
-            </Column>
-          </>
-        )
-      }
+    <BaseLayout style={{ ...layoutStyle, ...style }} onPress={onPress}>
+      {({ Row, Column }) => (
+        <>
+          <Column isFillSpace={isLeftFillSpace} style={leftSectionStyle}>
+            {leftSection}
+          </Column>
+          <Column isFillSpace={isRightFillSpace} style={rightSectionStyle}>
+            {rightSection}
+          </Column>
+        </>
+      )}
     </BaseLayout>
-  )
+  );
 }
 
 TwoColumn.defaultProps = {
@@ -28,7 +33,7 @@ TwoColumn.defaultProps = {
   leftSectionStyle: {},
   rightSectionStyle: {},
   isLeftFillSpace: false,
-  isRightFillSpace: false
-}
+  isRightFillSpace: false,
+};
 
-export default TwoColumn
+export default TwoColumn;
