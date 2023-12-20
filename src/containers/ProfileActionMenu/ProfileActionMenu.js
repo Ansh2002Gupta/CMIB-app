@@ -8,9 +8,9 @@ import { ThreeRow, TwoColumn } from '../../core/layouts';
 import CommonText from '../../components/CommonText';
 import ProfileIcon from '../../components/ProfileIcon/ProfileIcon';
 import images from '../../images';
-import styles from './popoverContainer.style';
+import styles from './ProfileActionMenu.style';
 
-const PopoverContainer = ({ closePopover, openModal, setModalSelect }) => {
+const ProfileActionMenu = ({ closePopover, openModal, setModalSelect }) => {
   const intl = useIntl();
 
   const firstName = 'Kashish';
@@ -115,10 +115,10 @@ const PopoverContainer = ({ closePopover, openModal, setModalSelect }) => {
   );
 };
 
-PopoverContainer.propTypes = {
+ProfileActionMenu.propTypes = {
   closeModal: PropTypes.func,
   openModal: PropTypes.func,
   setModalSelect: PropTypes.func,
 };
 
-export default PopoverContainer;
+export default ProfileActionMenu;

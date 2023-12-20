@@ -5,7 +5,7 @@ import { View, Modal } from '@unthinkable/react-core-components';
 import CommonText from '../../components/CommonText';
 import styles from './dashboard.style';
 import Popover from '../../components/Popover';
-import PopoverContainer from '../../containers/PopoverContainer';
+import ProfileActionMenu from '../../containers/ProfileActionMenu';
 import ModalComponents from '../../containers/ModalComponents';
 
 function DashboardView() {
@@ -34,7 +34,7 @@ function DashboardView() {
         isVisible={isVisible}
         closePopover={closePopover}
         content={
-          <PopoverContainer
+          <ProfileActionMenu
             openModal={openModal}
             closePopover={closePopover}
             setModalSelect={(val) => {
