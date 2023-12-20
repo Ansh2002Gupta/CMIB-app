@@ -12,6 +12,7 @@ import CustomModal from "../../components/CustomModal/CustomModal";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import images from "../../images";
 import style from "./MyAccount.style";
+import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 
 const MyAccountUI = ({
   changePasswordModal,
@@ -27,18 +28,14 @@ const MyAccountUI = ({
   const email = "kashishbhatheja@gmail.com";
 
   const renderProfileIcon = () => {
-    if (profileImage) {
-      return (
-        <Image source={{ uri: profileImage }} style={style.profileImage} />
-      );
-    } else {
-      const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
-      return (
-        <View style={style.initialsContainer}>
-          <CommonText customTextStyle={style.initialsText} title={initials} />
-        </View>
-      );
-    }
+    return (
+      <ProfileIcon
+        firstName={firstName}
+        lastName={lastName}
+        profileImage={profileImage}
+        customContainerStyle={style.initialsContainer}
+      />
+    );
   };
 
   return (

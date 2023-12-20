@@ -69,9 +69,6 @@ const style = {
     width: 16,
     height: 16,
   },
-  initialsText: {
-    fontSize: 14,
-  },
   headerTextStyle: {
     paddingTop: 0,
     fontWeight: "600",

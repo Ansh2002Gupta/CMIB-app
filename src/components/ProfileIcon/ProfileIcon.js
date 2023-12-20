@@ -5,7 +5,15 @@ import { Image, View } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import styles from "./ProfileIcon.style";
 
-const ProfileIcon = ({ showEditModal, iconType, profileImage, firstName, lastName }) => {
+const ProfileIcon = ({
+  customContainerStyle,
+  customImageStyle,
+  firstName,
+  iconType,
+  lastName,
+  profileImage,
+  showEditModal,
+}) => {
   if (profileImage) {
     return (
       <View
@@ -18,11 +26,12 @@ const ProfileIcon = ({ showEditModal, iconType, profileImage, firstName, lastNam
       >
         <Image
           source={{ uri: profileImage }}
-          style={
+          style={[
             showEditModal && iconType === "modalIcon"
               ? styles.modalProfileImage
-              : styles.profileImageStyle
-          }
+              : styles.profileImageStyle,
+            customImageStyle,
+          ]}
         />
       </View>
     );
@@ -35,6 +44,7 @@ const ProfileIcon = ({ showEditModal, iconType, profileImage, firstName, lastNam
           showEditModal &&
             iconType === "modalIcon" &&
             styles.editProfileContainer,
+          customContainerStyle,
         ]}
       >
         <CommonText title={initials} customTextStyle={styles.initialsText} />
@@ -44,6 +54,8 @@ const ProfileIcon = ({ showEditModal, iconType, profileImage, firstName, lastNam
 };
 
 ProfileIcon.propTypes = {
+  customContainerStyle: PropTypes.object,
+  customImageStyle: PropTypes.object,
   firstName: PropTypes.string,
   iconType: PropTypes.string,
   lastName: PropTypes.string,

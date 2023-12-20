@@ -14,6 +14,13 @@ const style = {
   iconEditStyle: {
     alignSelf: "center",
   },
+  editProfileContainer: {
+    alignSelf: "center",
+    height: 152,
+    width: 152,
+    marginTop: 32,
+    marginBottom: 32,
+  },
   editIcon: {
     position: "absolute",
     bottom: 0,
