@@ -57,6 +57,8 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
+import iconWarning from "../../public/images/svg/iconWarning.svg"
+import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 
 import iconArrowUp from "../../public/images/iconArrowUp/iconArrowUp.png";
 import iconArrowDown from "../../public/images/iconArrowDown/iconArrowDown.png";
@@ -129,6 +131,8 @@ const images = {
   iconCmibLogoWhite,
   iconRightArrow,
   iconFooterGlobal,
+  iconWarning,
+  iconSquareEdit,
 };
 
 export default images;

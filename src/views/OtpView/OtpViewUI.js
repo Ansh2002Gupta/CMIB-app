@@ -1,13 +1,18 @@
-import React, {useState, useEffect } from "react";
-import PropTypes from "prop-types"
-import { TouchableOpacity,View } from "@unthinkable/react-core-components";
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
+import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
 import ButtonComponent from "../../components/ButtonComponent";
 import HeaderText from "../../components/HeaderText/HeaderText";
-import CommonText from "../../components/CommonText";
-import OtpInput from "../../components/OtpInput/index"
+import OtpInput from "../../components/OtpInput/index";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
-import { OTP_TRY_COUNT, OTP_TIMER_MAX_MINUTES } from "../../constants/constants";
+import {
+  OTP_TRY_COUNT,
+  OTP_TIMER_MAX_MINUTES,
+} from "../../constants/constants";
 import styles from "./OtpView.style";
 
 const OtpViewUI = ({
@@ -15,10 +20,11 @@ const OtpViewUI = ({
   handleOtpChange,
   intl,
   isCounter,
+  isLoading,
   submitDisabled,
   minutes,
   otpLeft,
-  onClickForgotPassword,
+  onVerifyOtpClick,
   onClickGoToLogin,
   onResendOtpClick,
   setIsCounter,
@@ -26,27 +32,41 @@ const OtpViewUI = ({
   seconds,
   setOtpLeft,
   setSeconds,
-} ) => {
+  handleDismissToast,
+  validationError,
+}) => {
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [afterAttempt, setAfterAttempt] = useState(false);
-  const formattedTimerValue = `${intl.formatMessage({ id: "label.request_otp_again" })} ${minutes < 10 ? `0${minutes}` : minutes
-}:${seconds < 10 ? `0${seconds}` : seconds} ${intl.formatMessage({ id: "label.braces" })}`;
-const formatedOtpLeftValue = `${intl.formatMessage({ id: "label.request_otp_again" })} ${otpLeft} ${intl.formatMessage({ id: "label.left_brace" })}`;
-const textFirstHeading = `${intl.formatMessage({ id: "label.request_otp" })} ${OTP_TRY_COUNT} ${intl.formatMessage({ id: "label.times" })}`;
-const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" })} ${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+  const formattedTimerValue = `${intl.formatMessage({
+    id: "label.request_otp_again",
+  })} ${minutes < 10 ? `0${minutes}` : minutes}:${
+    seconds < 10 ? `0${seconds}` : seconds
+  } ${intl.formatMessage({ id: "label.braces" })}`;
+  const formatedOtpLeftValue = `${intl.formatMessage({
+    id: "label.request_otp_again",
+  })} ${otpLeft} ${intl.formatMessage({ id: "label.left_brace" })}`;
+  const textFirstHeading = `${intl.formatMessage({
+    id: "label.request_otp",
+  })} ${OTP_TRY_COUNT} ${intl.formatMessage({ id: "label.times" })}`;
+  const textSecondHeading = `${intl.formatMessage({
+    id: "label.request_otp_next",
+  })} ${minutes < 10 ? `0${minutes}` : minutes}:${
+    seconds < 10 ? `0${seconds}` : seconds
+  }`;
 
   useEffect(() => {
     let timer = setInterval(() => {
       setIsCounter(true);
       if (seconds > 0) {
-        setSeconds(prev => prev - 1);
+        setSeconds((prev) => prev - 1);
       }
       if (seconds === 0) {
         if (minutes === 0) {
-          setOtpLeft(prev => prev - 1);
+          setOtpLeft((prev) => prev - 1);
           clearInterval(timer);
           setIsCounter(false);
         } else {
-          setMinutes(prev => prev - 1);
+          setMinutes((prev) => prev - 1);
           setSeconds(59);
         }
       }
@@ -57,10 +77,9 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
     };
   }, [minutes, seconds]);
 
-
   useEffect(() => {
     if (otpLeft === 0) {
-      setAfterAttempt(true)
+      setAfterAttempt(true);
       setMinutes(OTP_TIMER_MAX_MINUTES);
     }
   }, [otpLeft]);
@@ -143,7 +162,7 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
         return;
     }
   };
-  
+
   return (
     <View style={styles.mainView}>
       <View
@@ -189,28 +208,28 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
               errorMessage={errorMessage}
               isError={!!errorMessage}
             />
-            {otpLeft > 0 &&
+            {otpLeft > 0 && (
               <View style={styles.textLabelParent}>
                 <CommonText
                   customTextStyle={styles.textlabel}
                   title={intl.formatMessage({ id: "label.otp_recieved" })}
                 />
-                {isCounter ?
+                {isCounter ? (
                   <CommonText
                     customTextStyle={styles.textlabelTimer}
                     title={formattedTimerValue}
                   />
-                  :
-                  <TouchableOpacity onPress={onResendOtpClick}>
+                ) : (
+                  <TouchableOpacity style={styles.topTabs} onPress={onResendOtpClick}>
                     <CommonText
                       customTextStyle={styles.textlabelReset}
                       title={formatedOtpLeftValue}
                     />
                   </TouchableOpacity>
-                }
+                )}
               </View>
-            }
-            {otpLeft === 0 && isCounter && !afterAttempt &&
+            )}
+            {otpLeft === 0 && isCounter && !afterAttempt && (
               <View style={styles.textLabelParent}>
                 <CommonText
                   customTextStyle={styles.textlabel}
@@ -221,8 +240,8 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
                   title={formattedTimerValue}
                 />
               </View>
-            }
-            {otpLeft === 0 && afterAttempt &&
+            )}
+            {otpLeft === 0 && afterAttempt && (
               <View style={styles.textLabelAfterParent}>
                 <CommonText
                   customTextStyle={styles.textlabel}
@@ -233,29 +252,39 @@ const textSecondHeading = `${intl.formatMessage({ id: "label.request_otp_next" }
                   title={textSecondHeading}
                 />
               </View>
-            }
+            )}
           </View>
         </View>
         <View style={isWebView ? styles.webSubmitView : styles.submitView}>
           <ButtonComponent
             title={intl.formatMessage({ id: "label.submit" })}
-            onPress={onClickForgotPassword}
+            onPress={onVerifyOtpClick}
             disabled={submitDisabled}
             customTitleStyle={isWebView && styles.customBtnText}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
+            displayLoader={isLoading}
+            
           />
-          <TouchableOpacity onPress={onClickGoToLogin}>
+          <TouchableOpacity style={styles.topTabs}  onPress={onClickGoToLogin}>
             <CommonText
-                  customTextStyle={isWebView
-                    ? [styles.backToLoginText, styles.webFontFamily]
-                    : styles.backToLoginText}
-                  title={intl.formatMessage({ id: "label.back_to_login" })}
-                />
+              customTextStyle={
+                isWebView
+                  ? [styles.backToLoginText, styles.webFontFamily]
+                  : styles.backToLoginText
+              }
+              title={intl.formatMessage({ id: "label.back_to_login" })}
+            />
           </TouchableOpacity>
         </View>
       </View>
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
@@ -267,7 +296,7 @@ OtpViewUI.propTypes = {
   intl: PropTypes.object.isRequired,
   submitDisabled: PropTypes.bool,
   minutes: PropTypes.number,
-  onClickForgotPassword: PropTypes.func,
+  onVerifyOtpClick: PropTypes.func,
   onClickGoToLogin: PropTypes.func,
   onResendOtpClick: PropTypes.func.isRequired,
   otpLeft: PropTypes.number,
@@ -276,6 +305,6 @@ OtpViewUI.propTypes = {
   setMinutes: PropTypes.func,
   seconds: PropTypes.number,
   setSeconds: PropTypes.func,
-}
+};
 
 export default OtpViewUI;

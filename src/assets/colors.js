@@ -19,6 +19,7 @@ const offWhite = "#FFFFFF14";
 const slateGray = "#616C8299";
 const lightGray = "#D0D5DD";
 const voilet = "#B1B3B5";
+const yellow ='#FABB00';
 
 const colors = {
   lightGray,
@@ -42,5 +43,6 @@ const colors = {
   darkBlueShade,
   offWhite,
   slateGray,
+  yellow,
 };
 export default colors;

@@ -1,6 +1,6 @@
 import colors from "../../assets/colors";
 
-const style = {
+const styles = {
   borderStyle: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
@@ -26,4 +26,4 @@ const style = {
   sectionStyle: { flex: 1 },
 };
 
-export default style;
+export default styles;

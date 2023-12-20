@@ -79,12 +79,16 @@ const iconRightArrow = "images/iconRightArrow/iconRightArrow.png";
 const iconFooterGlobal = "images/iconFooterGlobal/iconFooterGlobal.png";
 const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
 const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
+const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
+const iconWarning = "images/svg/iconWarning.svg";
 
 const images = {
   iconArrowUp,
   iconArrowDown,
   avatar,
   logo,
+  iconSquareEdit,
+  iconWarning,
   sun,
   moon,
   flagFr,

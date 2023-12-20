@@ -126,6 +126,7 @@ const style = {
   },
   counterText: {
     color: colors.black,
+    fontSize: 14,
   },
   buttonsView: {
     marginLeft: 8,
