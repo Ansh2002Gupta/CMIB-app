@@ -15,10 +15,10 @@ import ImagePicker from "../../components/ImagePickerComponent/ImagePickerCompon
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
 import style from "./ViewProfile.style";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
-const ViewProfileUI = (props) => {
-  const { handleEditPopup, intl, onGoBack, showEditModal } = props;
-  const [hasChangedPhoto, setHasChangedPhoto] = useState(false);
+const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
+  const [photoEditFlag, setPhotoEditFlag] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   //TODO: Dummy data to be replaced by api data.
   const firstName = "Kashish";
@@ -31,10 +31,11 @@ const ViewProfileUI = (props) => {
 
   useEffect(() => {
     if (!showEditModal) {
-      setHasChangedPhoto(false);
+      setPhotoEditFlag(false);
     }
   }, [showEditModal]);
 
+  console.log(profileImage, "profileImage");
   const renderProfileIcon = (iconType) => {
     return (
       <ProfileIcon
@@ -54,11 +55,11 @@ const ViewProfileUI = (props) => {
       });
       if (image) {
         setProfileImage(image?.sourceURL);
-        setHasChangedPhoto(true);
+        setPhotoEditFlag(true);
       }
     } catch (error) {
       //TODO: Replace this error log with a toast which has been created by Kashish.
-      console.log("Image picker error:", error);
+      <ToastComponent title={error} />;
     }
   };
 
@@ -105,29 +106,40 @@ const ViewProfileUI = (props) => {
                     openImagePicker();
                   }}
                 >
-                  <CommonText
-                    customTextStyle={style.textStyle}
-                    title={intl.formatMessage({ id: "label.change" })}
-                  />
+                  {profileImage !== "" ? (
+                    <CommonText
+                      customTextStyle={style.textStyle}
+                      title={intl.formatMessage({ id: "label.change" })}
+                    />
+                  ) : (
+                    <CommonText
+                      customTextStyle={style.textStyle}
+                      title={intl.formatMessage({ id: "label.add" })}
+                    />
+                  )}
                 </TouchableOpacity>
               </View>
-              {hasChangedPhoto ? (
-                <View style={[style.buttonStyle, style.secondButtonStyle]}>
-                  <Image source={images.iconUpdate} />
-                  <CommonText
-                    customTextStyle={style.textStyle}
-                    title={intl.formatMessage({ id: "label.update" })}
-                  />
-                </View>
-              ) : (
-                <View style={[style.buttonStyle, style.secondButtonStyle]}>
-                  <Image source={images.iconDelete} />
-                  <CommonText
-                    customTextStyle={style.textStyle}
-                    title={intl.formatMessage({ id: "label.remove" })}
-                  />
-                </View>
-              )}
+
+              {profileImage !== "" &&
+                (photoEditFlag ? (
+                  <View
+                    style={[style.saveButtonStyle, style.secondButtonStyle]}
+                  >
+                    <Image source={images.iconTick} />
+                    <CommonText
+                      customTextStyle={style.saveTextStyle}
+                      title={intl.formatMessage({ id: "label.save" })}
+                    />
+                  </View>
+                ) : (
+                  <View style={[style.buttonStyle, style.secondButtonStyle]}>
+                    <Image source={images.iconDelete} />
+                    <CommonText
+                      customTextStyle={style.textStyle}
+                      title={intl.formatMessage({ id: "label.remove" })}
+                    />
+                  </View>
+                ))}
             </View>
           </CustomModal>
         )}

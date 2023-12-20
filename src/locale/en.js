@@ -187,6 +187,7 @@ const locale = {
   "label.left_brace": "left)",
   "label.times": "times!",
   "label.update": "Update",
+  "label.add":"Add"
 };
 
 export default locale;
