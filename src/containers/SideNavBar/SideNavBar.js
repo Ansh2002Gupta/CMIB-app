@@ -76,7 +76,7 @@ SideNavBar.propTypes = {
   onClose: PropTypes.func,
   onPress: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
-  showCloseIcon: PropTypes.func.isRequired,
+  showCloseIcon: PropTypes.bool.isRequired,
   items: PropTypes.array.isRequired,
 };
 

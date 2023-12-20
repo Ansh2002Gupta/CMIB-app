@@ -12,10 +12,10 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./PrivateHeader.style";
 
-const PrivateHeader = ({ onPress, showCloseIcon }) => {
+const PrivateHeader = ({ onPress, showCloseIcon , menuIconVisible}) => {
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const [menuIconVisible, setMenuIconVisible] = useState(true);
+
 
   //TODO: Replace this dummy data with api data.
   const profileImage = "";
@@ -26,6 +26,10 @@ const PrivateHeader = ({ onPress, showCloseIcon }) => {
   const borderBottomStyles =
     currentBreakpoint === "xs" ? {} : styles.borderStyling;
 
+    console.log(currentBreakpoint==='sm', menuIconVisible)
+
+  const justifyContent = menuIconVisible ? "space-between" : "flex-end";
+
   return (
     <>
       {isWebView ? (
@@ -35,7 +39,6 @@ const PrivateHeader = ({ onPress, showCloseIcon }) => {
               <TouchableOpacity
                 onPress={() => {
                   onPress();
-                  setMenuIconVisible(false);
                 }}
                 style={styles.menuButton}
               >
@@ -76,15 +79,16 @@ const PrivateHeader = ({ onPress, showCloseIcon }) => {
           </View>
         </View>
       ) : (
-        <View style={styles.container}>
+        <View style={[styles.container,{justifyContent}]}>
+         {menuIconVisible && 
           <TouchableOpacity
-            onPress={() => {
-              showCloseIcon();
-              onPress();
-            }}
-          >
-            <Image source={images.iconMenu} />
-          </TouchableOpacity>
+          onPress={() => {
+            showCloseIcon();
+            onPress();
+          }}
+        >
+          <Image source={images.iconMenu} />
+        </TouchableOpacity>}
           <TouchableOpacity>
             <Image source={images.iconNotification} />
           </TouchableOpacity>

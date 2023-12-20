@@ -18,6 +18,7 @@ import commonStyles from "../theme/styles/commonStyles";
 function HeaderWithContentLayout() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [menuIconVisible, setMenuIconVisible] = useState(true);
   const [listItems, setListItems] = useState(items);
   const [showClose, setShowClose] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
@@ -30,10 +31,20 @@ function HeaderWithContentLayout() {
     setListItems(newQualifiedPlacementsList);
   };
 
+  useEffect(() => {
+    if (isSideBarVisible) {
+      setMenuIconVisible(false);
+    } else {
+      setMenuIconVisible(true);
+      setShowClose(false);
+    }
+  }, [isSideBarVisible]);
+
   const toggleSideBar = () => {
     setSideBarVisible(!isSideBarVisible);
+    showCloseIcon();
   };
-
+  
   useEffect(() => {
     const checkAuthToken = async () => {
       try {
@@ -53,6 +64,7 @@ function HeaderWithContentLayout() {
   const showCloseIcon = () => {
     setShowClose(true);
   };
+
   const handleDisplayHeader = () => {
     setShowHeader(false);
   };
@@ -64,6 +76,7 @@ function HeaderWithContentLayout() {
           onPress={toggleSideBar}
           showCloseIcon={showCloseIcon}
           showHeader={showHeader}
+          menuIconVisible={menuIconVisible}
         />
       }
       content={<Outlet />}
@@ -76,14 +89,13 @@ function HeaderWithContentLayout() {
         isSideBarVisible
           ? {
               flex:
-                currentBreakpoint === "md"
+               ( currentBreakpoint === "md" || currentBreakpoint === "sm")
                   ? 2
                   : windowDimensions.width >= 1200 &&
                     windowDimensions.width <= 1400
                   ? 1.5
-                  : currentBreakpoint === "xs"
-                  ? 0
                   : 1,
+              zIndex:2,
             }
           : {}
       }
@@ -105,7 +117,7 @@ function HeaderWithContentLayout() {
             showCloseIcon={showClose}
             items={listItems}
           />
-        ) : null
+        ) : null 
       }
     />
   );

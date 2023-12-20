@@ -37,7 +37,6 @@ const iconInstagram = "/images/iconInstagram/iconInstagram.png";
 const iconLinkedin = "/images/iconLinkedin/iconLinkedin.png";
 const iconSuccess = "/images/iconSuccess/iconSuccess.png";
 const iconMenu = "/images/iconMenu/iconMenu.png";
-const iconProfile = "/images/iconProfile/iconProfile.png";
 const iconLogout = "/images/iconLogout/iconLogout.png";
 const iconBuilding = "/images/iconBuilding/iconBuilding.png";
 const iconLock = "/images/iconLock/iconLock.png";
@@ -68,29 +67,35 @@ const iconDownloadDetails =
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
-const ticketIcon = "images/ticketIcon/ticketIcon.png";
-const iconSend = "images/iconSend/iconSend.png";
-const iconSetting = "images/iconSetting/iconSetting.png";
-const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
-const iconTick = "images/iconTick/iconTick.png";
 const iconCmibLogoWhite = "images/iconCmibLogoWhite/iconCmibLogoWhite.png";
 const iconRightArrow = "images/iconRightArrow/iconRightArrow.png";
 const iconFooterGlobal = "images/iconFooterGlobal/iconFooterGlobal.png";
+const ticketIcon = "images/ticketIcon/ticketIcon.png";
+const iconArrowDown2 = "images/iconArrowDown2/iconArrowDown2.png";
+const iconClose = "images/iconClose/iconClose.png";
+const iconLeftArrow = "images/iconLeftArrow/iconLeftArrow.png";
 const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
 const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
 const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
+const iconProfile = "/images/iconProfile/iconProfile.png";
 const iconWarning = "images/svg/iconWarning.svg";
+const iconTick = "images/iconTick/iconTick.png";
+const iconSetting = "images/iconSetting/iconSetting.png";
+const iconSend = "images/iconSend/iconSend.png";
+const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 
 const images = {
   iconArrowUp,
   iconArrowDown,
+  iconArrowDown2,
   avatar,
   logo,
   iconSquareEdit,
   iconWarning,
   sun,
+  iconLeftArrow,
   moon,
   flagFr,
   flagUk,
@@ -121,6 +126,7 @@ const images = {
   iconBuilding,
   iconLock,
   iconArrowRight,
+  iconClose,
   iconBack,
   iconEdit,
   iconChange,

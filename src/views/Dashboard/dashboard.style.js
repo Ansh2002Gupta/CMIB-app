@@ -1,21 +1,23 @@
 const style = {
+  // container: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'center',
+  //   padding: 16,
+  //   alignItems: 'center',
+  //   backgroundColor:'#FFFFFF',
+  // },
+  // header: {
+  //   fontSize: 24,
+  //   marginBottom: 24,
+  //   textAlign: 'center',
+  // },
   container: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     padding: 16,
     alignItems: 'center',
     backgroundColor:'#FFFFFF',
-  },
-  header: {
-    fontSize: 24,
-    marginBottom: 24,
-    textAlign: 'center',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 16,
-    alignItems: 'center',
   },
   header: {
     fontSize: 24,

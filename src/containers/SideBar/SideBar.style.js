@@ -7,7 +7,7 @@ const styles = {
   },
   container: {
     flex: 1,
-    backgroundColor: colors.darkBlueShade,
+    backgroundColor: colors.black,
   },
   imageView: {
     alignItems: "center",

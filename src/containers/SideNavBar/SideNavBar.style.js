@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: colors.darkBlueShade,
+    backgroundColor: colors.black,
     zIndex: 2,
     height: "100%",
   },

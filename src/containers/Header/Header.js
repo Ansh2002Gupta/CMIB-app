@@ -5,7 +5,7 @@ import PublicHeader from "../PublicHeader/PublicHeader";
 import PrivateHeader from "../PrivateHeader/PrivateHeader";
 import { getAuthToken } from "../../utils/getAuthToken";
 
-const Header = ({ onPress, showCloseIcon, showHeader }) => {
+const Header = ({ onPress, showCloseIcon, showHeader,menuIconVisible }) => {
   const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
 
   const checkAuthToken = async () => {
@@ -30,7 +30,7 @@ const Header = ({ onPress, showCloseIcon, showHeader }) => {
       {showHeader ? (
         <>
           {isuserLoggedIn ? (
-            <PrivateHeader onPress={onPress} showCloseIcon={showCloseIcon} />
+            <PrivateHeader onPress={onPress} showCloseIcon={showCloseIcon} menuIconVisible={menuIconVisible} />
           ) : (
             <PublicHeader />
           )}

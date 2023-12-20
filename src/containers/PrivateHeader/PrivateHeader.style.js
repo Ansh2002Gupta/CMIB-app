@@ -3,7 +3,6 @@ import colors from "../../assets/colors";
 const styles = {
   container: {
     flexDirection: "row",
-    justifyContent: "space-between",
     paddingRight: 16,
     paddingLeft: 16,
     paddingTop: 16,
@@ -13,7 +12,6 @@ const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#F2F4FC",
-    backgroundColor: "#fff",
     paddingTop: 24,
     paddingBottom: 24,
     paddingLeft: 24,

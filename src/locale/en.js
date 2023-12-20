@@ -194,6 +194,10 @@ const locale = {
   "label.edit": "Edit",
   "label.duplicate_email_validation": "Email addresses must be unique.",
   "label.logout_message": "Are you sure you want to logout of the portal?",
+  "label.visit_website":"Visit Website",
+  "label.session":"Session",
+  "label.module":"Module",
+  "label.newely_qualified_placements":"Newly Qualified Placements",
 };
 
 export default locale;

@@ -191,7 +191,7 @@ SideBar.propTypes = {
   onClose: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
-  showCloseIcon: PropTypes.func.isRequired,
+  showCloseIcon: PropTypes.bool.isRequired,
   items: PropTypes.array.isRequired,
 };
 
