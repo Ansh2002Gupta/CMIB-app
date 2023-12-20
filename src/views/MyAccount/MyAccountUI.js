@@ -12,9 +12,9 @@ import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePass
 import CustomModal from "../../components/CustomModal/CustomModal";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
+import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
 import style from "./MyAccount.style";
-import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 
 const MyAccountUI = ({
   changePasswordModal,
