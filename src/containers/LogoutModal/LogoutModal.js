@@ -50,7 +50,7 @@ const LogoutModal = ({ onCancel, onSave }) => {
           onLeftButtonClick={() => {
             onCancel(false);
           }}
-          rightButtonText={intl.formatMessage({ id: "label.save" })}
+          rightButtonText={intl.formatMessage({ id: "label.logout" })}
           onRightButtonClick={() => {
             handleUserLogout(
               {},
