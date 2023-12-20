@@ -3,6 +3,7 @@ import { useState } from "react";
 import Http from "../../http-service";
 import useNavigateScreen from "../../hooks/useNavigateScreen";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { COMPANY_CHANGE_PASSWORD_OTP } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { navigations } from "../../../constants/routeNames";
 
@@ -17,7 +18,7 @@ const useChangePasswordApi = () => {
     try {
       setPostStatus(API_STATUS.LOADING);
       errorWhileChangePassword && setErrorWhileChangePassword("");
-      const res = await Http.post(`company/change-password-otp`, payload);
+      const res = await Http.post(COMPANY_CHANGE_PASSWORD_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setChangePasswordResult(res.data);

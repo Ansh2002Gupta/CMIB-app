@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import BaseLayout from "../Base";
-import layoutStyle from "./FiveColumn.style";
 
 function FiveColumn({
   firstSection,
@@ -20,7 +19,7 @@ function FiveColumn({
   thirdSectionStyle,
 }) {
   return (
-    <BaseLayout style={{ ...layoutStyle, ...style }}>
+    <BaseLayout>
       {({ Column }) => (
         <>
           <Column isFillSpace={isLeftFillSpace} style={firstSectionStyle}>

@@ -17,11 +17,11 @@ const SaveCancelButton = ({
   buttonTwoText,
   customContainerStyle,
   displayLoader,
-  onPressButtonOne,
-  onPressButtonTwo,
   hasIconRight,
   hasIconLeft,
   isNextDisabled,
+  onPressButtonOne,
+  onPressButtonTwo,
 }) => {
   return (
     <View style={[styles.containerStyle, customContainerStyle]}>
@@ -29,8 +29,7 @@ const SaveCancelButton = ({
         onPress={onPressButtonOne}
         style={styles.disableButtonStyle}
       >
-        {hasIconLeft && <Image source={images.iconArrowLeft} />}
-
+        {!!hasIconLeft && <Image source={images.iconArrowLeft} />}
         <CommonText
           customTextStyle={styles.disableTextStyle}
           title={buttonOneText}
@@ -53,8 +52,7 @@ const SaveCancelButton = ({
             title={buttonTwoText}
           />
         )}
-
-        {hasIconRight && <Image source={images.iconArrowRightWhite} />}
+        {!!hasIconRight && <Image source={images.iconArrowRightWhite} />}
       </TouchableOpacity>
     </View>
   );

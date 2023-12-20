@@ -87,8 +87,8 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               value={oldPassword}
               onChangeText={(val) => setOldPassword(val)}
               isMandatory
-              eyeImage={true}
-              isPassword={true}
+              eyeImage
+              isPassword
             />
           }
           secoundSection={
@@ -100,8 +100,8 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               value={newPassword}
               onChangeText={(val) => setNewPassword(val)}
               isMandatory
-              eyeImage={true}
-              isPassword={true}
+              eyeImage
+              isPassword
             />
           }
           thirdSection={
@@ -113,8 +113,8 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               value={confirmNewPassword}
               onChangeText={(val) => setConfirmNewPassword(val)}
               isMandatory
-              eyeImage={true}
-              isPassword={true}
+              eyeImage
+              isPassword
             />
           }
           fourthSection={

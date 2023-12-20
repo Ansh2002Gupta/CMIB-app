@@ -1,4 +1,4 @@
-import { Platform } from "react-native";
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 const style = {
   errorText: {
