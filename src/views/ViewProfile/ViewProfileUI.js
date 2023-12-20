@@ -39,8 +39,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   const handleDismissToast = () => {
     setErrorMessage("");
   };
-
-  console.log(profileImage, "profileImage");
+  
   const renderProfileIcon = (iconType) => {
     return (
       <ProfileIcon
