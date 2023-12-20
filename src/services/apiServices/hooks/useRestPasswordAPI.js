@@ -7,28 +7,27 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMe
 
 
 const useResetPasswordAPI = () => {
-  const [resetPasswordResult, setResetPasswordResult] = useState([]);
+  const [resetPasswordResult, setResetPasswordResult] = useState({});
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
-  const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
+  const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
 
-  const handleResetPasswordAPI = async (payload,successCallback,errorCallback) => {
+  const handleResetPasswordAPI = async (payload) => {
     try {
-      setPostStatus(API_STATUS.LOADING);
+      setApiStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
       const res = await Http.post(COMPANY_FORGOT_PASSWORD_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
-        setPostStatus(API_STATUS.SUCCESS);
+        setApiStatus(API_STATUS.SUCCESS);
         setResetPasswordResult(res.data);
-        successCallback(res.data.message);
         return;
       }
-        setPostStatus(API_STATUS.ERROR);
-        errorCallback(res);
+      setApiStatus(API_STATUS.ERROR);
+      setErrorWhileResetPassword(res);
     } catch (err) {
       const errorMessage =
       err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       errorCallback(errorMessage);
-      setPostStatus(API_STATUS.ERROR);
+      setApiStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);
         return;
@@ -37,18 +36,20 @@ const useResetPasswordAPI = () => {
     }
   };
 
-  const isLoading = postStatus === API_STATUS.LOADING;
-  const isSuccess = postStatus === API_STATUS.SUCCESS;
-  const isError = postStatus === API_STATUS.ERROR;
+  const isLoading = apiStatus === API_STATUS.LOADING;
+  const isSuccess = apiStatus === API_STATUS.SUCCESS;
+  const isError = apiStatus === API_STATUS.ERROR;
   
   return {
+    apiStatus,
     errorWhileResetPassword,
-    resetPasswordResult,
     handleResetPasswordAPI,
     isError,
     isLoading,
     isSuccess,
-    postStatus,
+    resetPasswordResult,
+    setErrorWhileResetPassword,
+    setResetPasswordResult,
   };
 };
 

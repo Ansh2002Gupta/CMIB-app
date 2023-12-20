@@ -17,7 +17,6 @@ function CreateNewPasswordUI(props) {
   const {
     confirmNewPassword,
     errorMessage,
-    error,
     handleSubmit,
     handleDismissToast,
     intl,
