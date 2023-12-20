@@ -18,6 +18,7 @@ const lightGray = '#D0D5DD';
 const voilet = '#B1B3B5';
 const mustardYellow = '#FABB00';
 const silver = '#EBEBEB';
+const yellow = '#FABB00';
 
 const colors = {
   voilet,
@@ -40,5 +41,6 @@ const colors = {
   lightGray,
   mustardYellow,
   silver,
+  yellow,
 };
 export default colors;

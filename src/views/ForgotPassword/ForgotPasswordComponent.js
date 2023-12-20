@@ -1,26 +1,25 @@
-import React, { useState,useEffect } from "react";
-import { useNavigate } from "../../routes";
+import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
 
 
 import ForgotPasswordUI from "./ForgotPasswordUI";
 import OtpViewComponent from "../OtpView";
-import useForgotPasswordAPI from "../../services/apiServices/hooks/useForgotPasswordAPI";
+import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
 import { validateEmail } from "../../constants/commonFunctions";
 import { navigations } from "../../constants/routeNames";
 
 function ForgotPasswordComponent() {
-
   const navigate = useNavigate();
   const intl = useIntl();
 
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
-  const [successLogin, setSuccessLogin] = useState(false); 
+  const [successLogin, setSuccessLogin] = useState(false);
   const [userEmail, setuserEmail] = useState("");
   const [validationError, setValidationError] = useState("");
-  
-  const { handleForgotPasswordAPI, isLoading,isShowOtpView} = useForgotPasswordAPI();
+
+  const { handleSendOtpAPI, isLoading, isShowOtpView } = useSendOtpAPI();
 
   useEffect(() => {
     if (userEmail !== "") {
@@ -35,7 +34,7 @@ function ForgotPasswordComponent() {
     navigate(navigations.LOGIN);
   };
 
-  const onClickForgotPassword = () => {
+  const onSendOtpClick = () => {
     let error = validateEmail(userEmail);
     if (error) {
       setErrorMessage(error);
@@ -43,13 +42,10 @@ function ForgotPasswordComponent() {
     } else {
       setErrorMessage("");
     }
-    handleForgotPasswordAPI(
-      { email: userEmail },
-       true,  
-    (error) => {
+    handleSendOtpAPI({ email: userEmail }, true, (error) => {
       setValidationError(error);
-    }); 
-    setSuccessLogin(false);   
+    });
+    setSuccessLogin(false);
   };
 
   const onChangeInput = (val) => {
@@ -62,23 +58,23 @@ function ForgotPasswordComponent() {
 
   return (
     <>
-    {isShowOtpView ? 
-    <OtpViewComponent
-    email={userEmail}
-    /> :
-    <ForgotPasswordUI
-      successLogin={successLogin}
-      userEmail={userEmail}
-      onClickForgotPassword={onClickForgotPassword}
-      onClickGoToLogin={onClickGoToLogin}
-      onChangeInput={onChangeInput}
-      errorMessage={errorMessage}
-      intl={intl}
-      loginDisabled={loginDisabled}
-      isLoading={isLoading}
-      handleDismissToast={handleDismissToast}
-      validationError={validationError}
-    />}
+      {isShowOtpView ? (
+        <OtpViewComponent email={userEmail} />
+      ) : (
+        <ForgotPasswordUI
+          successLogin={successLogin}
+          userEmail={userEmail}
+          onSendOtpClick={onSendOtpClick}
+          onClickGoToLogin={onClickGoToLogin}
+          onChangeInput={onChangeInput}
+          errorMessage={errorMessage}
+          intl={intl}
+          loginDisabled={loginDisabled}
+          isLoading={isLoading}
+          handleDismissToast={handleDismissToast}
+          validationError={validationError}
+        />
+      )}
     </>
   );
 }
