@@ -8,7 +8,6 @@ import { StorageService } from "../services";
 import { setLoginRedirectRoute } from "../globalContext/route/routeActions";
 import { getQueryParamsAsAnObject } from "../utils/util";
 import { navigations } from "../constants/routeNames";
-import { EXIT_WEBVIEW } from "../constants/constants";
 
 function withPrivateAccess(Component) {
   return (props) => {
@@ -33,12 +32,18 @@ function withPrivateAccess(Component) {
       });
     }, []);
 
-    // TODO: Need to refactor and test the below code.
-    if (window && window.ReactNativeWebView && isWebPlatform && location.pathname === navigations.JOBS) {
-      window.ReactNativeWebView.postMessage({
-        message: EXIT_WEBVIEW,
-        data: getQueryParamsAsAnObject(location.search),
-      });
+    if (
+      window &&
+      window.ReactNativeWebView &&
+      isWebPlatform &&
+      location.pathname === navigations.JOBS
+    ) {
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          path: navigations.JOBS,
+          data: getQueryParamsAsAnObject(location.search),
+        })
+      );
     }
 
     return <Component {...props} />;
