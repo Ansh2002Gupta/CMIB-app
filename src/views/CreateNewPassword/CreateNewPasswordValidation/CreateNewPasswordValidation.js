@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import CommonText from '../../../components/CommonText'
+import CommonText from "../../../components/CommonText";
+import { VALIDATION_TYPE } from "../../../constants/constants";
 import colors from "../../../assets/colors";
 import styles from "./CreateNewPasswordValidation.style";
 
@@ -22,6 +23,7 @@ const CreateNewPasswordValidation = ({
       backgroundColor: isValid ? colors.green : colors.lightGrey,
     },
   ];
+
   const validatePassword = (newPassword, confirmNewPassword) => {
     setValidations({
       length: newPassword.length >= 6,
@@ -44,46 +46,15 @@ const CreateNewPasswordValidation = ({
         title={intl.formatMessage({ id: "label.password_requirment_text" })}
       />
       <View style={customContainerStyles}>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.length)}></View>
-
-          <CommonText
-            customTextStyle={styles.bulletText}
-            title={intl.formatMessage({ id: "label.char_length_validation" })}
-          />
-        </View>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.numeric)}></View>
-
-          <CommonText
-            customTextStyle={styles.bulletText}
-            title={intl.formatMessage({ id: "label.numeric_char_validation" })}
-          />
-        </View>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.uppercase)}></View>
-
-          <CommonText
-            customTextStyle={styles.bulletText}
-            title={intl.formatMessage({ id: "label.upper_case_validation" })}
-          />
-        </View>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.lowercase)}></View>
-
-          <CommonText
-            customTextStyle={styles.bulletText}
-            title={intl.formatMessage({ id: "label.lower_case_validation" })}
-          />
-        </View>
-        <View style={styles.validationView}>
-          <View style={bulletStyle(validations.specialChar)}></View>
-
-          <CommonText
-            customTextStyle={styles.bulletText}
-            title={intl.formatMessage({ id: "label.special_char_validation" })}
-          />
-        </View>
+        {VALIDATION_TYPE.map((validation) => (
+          <View key={validation.key} style={styles.validationView}>
+            <View style={bulletStyle(validations[validation.key])}></View>
+            <CommonText
+              customTextStyle={styles.bulletText}
+              title={intl.formatMessage({ id: validation.id })}
+            />
+          </View>
+        ))}
       </View>
     </View>
   );
