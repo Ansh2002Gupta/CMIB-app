@@ -1,36 +1,36 @@
 import React from "react";
 import colors from "../../assets/colors";
+import styles from "./Dropdown.style";
 
 const Dropdown = ({
-  onChange,
   data,
-  value,
   dropdownStyle,
-  valueField,
   labelField,
+  onChange,
   placeholder,
-  placeholderStyle
+  placeholderStyle,
+  value,
+  valueField,
 }) => {
   return (
     <select
       style={{
-        padding: 14,
-        backgroundColor: colors.white,
-        borderColor: colors.lightGrey,
-        borderWidth: 1,
-        borderRadius: 12,
-        marginTop: 4,
+        ...styles.dropdownContainer,
         ...dropdownStyle,
-        ...(value === '' ? placeholderStyle : {})
-      }
-    }
+        ...(value === "" ? placeholderStyle : {}),
+      }}
       value={value}
       onChange={(e) => {
-        onChange(e.target.value)
+        onChange(e.target.value);
       }}
       placeholder={placeholder}
     >
-      <option value="" disabled={value !== ''} hidden={value !== ''} selected={value === ''}>
+      <option
+        value=""
+        disabled={value !== ""}
+        hidden={value !== ""}
+        selected={value === ""}
+      >
         {placeholder || ""}
       </option>
       {data.map((option, index) => (
