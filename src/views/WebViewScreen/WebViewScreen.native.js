@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { WebView } from "react-native-webview";
 import { useLocation } from "../../routes";
 
+import styles from "../../theme/styles/commonStyles";
+
 const WebViewScreen = ({ route }) => {
   const [showWebView, setShowWebView] = useState(false);
   const location = useLocation();
@@ -15,7 +17,7 @@ const WebViewScreen = ({ route }) => {
   return (
     <WebView
       source={{ uri: uri }}
-      style={{ flex: 1 }}
+      style={styles.webViewContainer}
       onError={(syntheticEvent) => {
         const { nativeEvent } = syntheticEvent;
         console.error("WebView error: ", nativeEvent);

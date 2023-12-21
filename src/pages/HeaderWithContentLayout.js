@@ -24,28 +24,6 @@ function HeaderWithContentLayout() {
   const [showClose, setShowClose] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
 
-  const { isWebView } = useIsWebView();
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const windowDimensions = useWindowDimensions();
-
-  const handleNewlyQualifiedPlacementsClick = () => {
-    setListItems(newQualifiedPlacementsList);
-  };
-
-  useEffect(() => {
-    if (isSideBarVisible) {
-      setMenuIconVisible(false);
-    } else {
-      setMenuIconVisible(true);
-      setShowClose(false);
-    }
-  }, [isSideBarVisible]);
-
-  const toggleSideBar = () => {
-    setSideBarVisible(!isSideBarVisible);
-    showCloseIcon();
-  };
-
   useEffect(() => {
     const checkAuthToken = async () => {
       try {
@@ -61,6 +39,28 @@ function HeaderWithContentLayout() {
     };
     checkAuthToken();
   }, []);
+
+  useEffect(() => {
+    if (isSideBarVisible) {
+      setMenuIconVisible(false);
+    } else {
+      setMenuIconVisible(true);
+      setShowClose(false);
+    }
+  }, [isSideBarVisible]);
+
+  const { isWebView } = useIsWebView();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const windowDimensions = useWindowDimensions();
+
+  const handleNewlyQualifiedPlacementsClick = () => {
+    setListItems(newQualifiedPlacementsList);
+  };
+
+  const toggleSideBar = () => {
+    setSideBarVisible(!isSideBarVisible);
+    showCloseIcon();
+  };
 
   const showCloseIcon = () => {
     setShowClose(true);
@@ -104,7 +104,8 @@ function HeaderWithContentLayout() {
           : {}
       }
       isRightFillSpace={false}
-      rightSectionStyle={{ flex: 4 }}
+      rightSectionStyle={commonStyles.rightSectionStyle}
+      bottomSectionStyle={commonStyles.bottomBar}
       menu={
         (isWebView &&
           isAuthenticated &&

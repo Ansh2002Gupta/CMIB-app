@@ -35,6 +35,10 @@ const SideBar = ({
   const [showClose, setShowClose] = useState(true);
   const [selectedItem, setSelectedItem] = useState("");
 
+  useEffect(() => {
+    setCurrentList(items);
+  }, [items]);
+
   const renderSubItem = ({ item }) => (
     <CustomList
       item={{ ...item, isSelected: selectedSubList === item.id }}
@@ -73,9 +77,6 @@ const SideBar = ({
     </>
   );
 
-  useEffect(() => {
-    setCurrentList(items);
-  }, [items]);
 
   const handleOnPress = () => {
     onPress();
@@ -116,9 +117,7 @@ const SideBar = ({
         ) : null}
         {showCloseIcon && showClose ? (
           <TouchableOpacity
-            onPress={() => {
-              onClose();
-            }}
+            onPress={onClose}
             style={styles.leftArrowButton}
           >
             <Image source={images.iconClose} style={styles.leftArrow} />

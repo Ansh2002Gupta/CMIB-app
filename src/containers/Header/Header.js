@@ -7,6 +7,10 @@ import { getAuthToken } from "../../utils/getAuthToken";
 
 const Header = ({ onPress, showCloseIcon, showHeader,menuIconVisible }) => {
   const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
+  
+  useEffect(() => {
+    checkAuthToken();
+  }, []);
 
   const checkAuthToken = async () => {
     try {
@@ -20,10 +24,6 @@ const Header = ({ onPress, showCloseIcon, showHeader,menuIconVisible }) => {
       console.error("Error fetching authToken:", error);
     }
   };
-
-  useEffect(() => {
-    checkAuthToken();
-  }, []);
 
   return (
     <>

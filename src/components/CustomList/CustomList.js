@@ -3,6 +3,7 @@ import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import colors from "../../assets/colors";
+import PropTypes from "prop-types";
 import styles from "./CustomList.style";
 
 const CustomList = ({ item, onSelect }) => {
@@ -17,7 +18,7 @@ const CustomList = ({ item, onSelect }) => {
             ...styles.listText,
             ...(item.isSelected && styles.selectedItem),
             ...(item.subitems &&
-              item.subitems.length > 0 && { color: colors.subHeadingGray }),
+              item.subitems.length > 0 && styles.commonText),
           }}
           title={item.title}
         />
@@ -25,5 +26,10 @@ const CustomList = ({ item, onSelect }) => {
     </View>
   );
 };
+
+CustomList.prototypes={
+  onSelect: PropTypes.bool.isRequired,
+  item: PropTypes.object.isRequired,
+}
 
 export default CustomList;

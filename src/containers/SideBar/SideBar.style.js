@@ -81,9 +81,6 @@ const styles = {
     paddingTop: 16,
   },
   bottomView: {
-    // position:"absolute",
-    // bottom:0,
-    // width:"100%",
     paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: colors.offWhite,

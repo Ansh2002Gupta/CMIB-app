@@ -18,5 +18,8 @@ const styles = {
     color: colors.white,
     fontWeight: "600",
   },
+  commonText:{
+    color: colors.subHeadingGray
+  }
 };
 export default styles;

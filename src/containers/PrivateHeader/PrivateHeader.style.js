@@ -8,6 +8,12 @@ const styles = {
     paddingTop: 16,
     paddingBottom: 16,
   },
+  sideBarVisible:{
+    justifyContent:"flex-end"
+  },
+  sideBarNotVisible:{
+    justifyContent:"space-between"
+  },
   webContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -47,7 +53,6 @@ const styles = {
     paddingTop: 5,
     fontSize: 12,
     color: colors.subHeadingGray,
-    fontWeight: "500",
   },
   iconArrow: {
     width: 16,

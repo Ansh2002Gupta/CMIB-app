@@ -11,7 +11,8 @@ function MainLayout({
   leftSectionStyle,
   rightSectionStyle,
   isRightFillSpace = true,
-  bottomSection
+  bottomSection,
+  bottomSectionStyle,
 }) {
   const theme = useComponentTheme("Auth");
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -42,7 +43,7 @@ function MainLayout({
           bottomSection={bottomSection}
           isBottomFillSpace={true}
           topSectionStyle={topSectionStyle}
-          bottomSectionStyle={{position:"absolute", bottom: 0, left: 0, right: 0}}
+          bottomSectionStyle={bottomSectionStyle}
         />
       }
       leftSectionStyle={leftSectionStyle}

@@ -29,8 +29,6 @@ const PrivateHeader = ({ onPress, showCloseIcon, menuIconVisible }) => {
 
   const isMdOrGreater = windowDimensions.width >= 900;
 
-  const justifyContent = menuIconVisible ? "space-between" : "flex-end";
-
   return (
     <>
       {isWebView ? (
@@ -38,9 +36,7 @@ const PrivateHeader = ({ onPress, showCloseIcon, menuIconVisible }) => {
           <View style={styles.textContainer}>
             {currentBreakpoint === "sm" && menuIconVisible ? (
               <TouchableOpacity
-                onPress={() => {
-                  onPress();
-                }}
+                onPress={onPress}
                 style={styles.menuButton}
               >
                 <Image source={images.iconMenu} />
@@ -90,7 +86,12 @@ const PrivateHeader = ({ onPress, showCloseIcon, menuIconVisible }) => {
           </View>
         </View>
       ) : (
-        <View style={[styles.container, { justifyContent }]}>
+        <View
+          style={[
+            styles.container,
+            !menuIconVisible ? styles.sideBarVisible : styles.sideBarNotVisible,
+          ]}
+        >
           {menuIconVisible && (
             <TouchableOpacity
               onPress={() => {
