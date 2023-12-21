@@ -49,9 +49,14 @@ function CreateNewPasswordComponent() {
       setErrorMessage("");
     }
   };
-  
 
   const handleSubmit = () => {
+    if (
+      !newPassword.trim().toLowerCase() &&
+      !confirmNewPassword.trim().toLowerCase()
+    ) {
+      return;
+    }
     if (doPasswordsMatch()) {
       setErrorMessage("");
       handleResetPasswordAPI({
