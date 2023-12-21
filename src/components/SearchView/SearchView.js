@@ -1,42 +1,39 @@
-import React,{ useState } from 'react';
-import PropTypes from 'prop-types';
-import {View, TextInput, FlatList, Text } from '@unthinkable/react-core-components';
+import React, { useState } from "react";
+import { View, TextInput } from "@unthinkable/react-core-components";
 
-import styles from './searchView.style'
-const SearchView = ({ data }) => {
-  const [query, setQuery] = useState('');
-  const [filteredData, setFilteredData] = useState(data);
+import TouchableImage from "../../components/TouchableImage/TouchableImage";
+import images from "../../images";
+import styles from "./searchView.style";
 
-  const handleSearch = text => {
+const SearchView = ({ data, onSearch }) => {
+  const [query, setQuery] = useState("");
+  const SearchIcon = images.iconSearch;
+   
+  const handleSearch = (text) => {
     setQuery(text);
+    let filtered = data;
     if (text) {
       const formattedQuery = text.toLowerCase();
-      const filtered = data.filter(item => {
+      filtered = data.filter((item) => {
         return item.toLowerCase().includes(formattedQuery);
       });
-      setFilteredData(filtered);
-    } else {
-      setFilteredData(data);
+    }
+    if (onSearch) {
+      onSearch(filtered);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.searchParent}>
+      <TouchableImage source={SearchIcon} disabled={true} />
       <TextInput
-        style={styles.input}
+        style={styles.searchInput}
         value={query}
         onChangeText={handleSearch}
         placeholder="Search"
       />
-      {/* <FlatList
-        data={filteredData}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
-      /> */}
     </View>
   );
 };
-SearchView.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
+
 export default SearchView;

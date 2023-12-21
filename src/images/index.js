@@ -76,6 +76,9 @@ const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
 const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
 const iconWarning = "images/svg/iconWarning.svg";
+const iconFilter = "images/svg/iconFilter.svg";
+const iconSearch = "images/svg/iconSearch.svg";
+const iconMore = "images/svg/iconMore.svg";
 
 const images = {
   avatar,
@@ -146,6 +149,9 @@ const images = {
   iconDrawer,
   iconSquareEdit,
   iconWarning,
+  iconFilter,
+  iconSearch,
+  iconMore,
 };
 
 export default images;

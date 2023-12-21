@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Image, Platform } from "@unthinkable/react-core-components";
 
 import styles from "./customImage.style";
+
 const CustomImage = ({ Icon, isSvg, resizeMode, source, style }) => {
   if (Platform.OS.toLowerCase() === "web") {
     return <Image source={source} style={style} resizeMode={resizeMode} />;
@@ -18,7 +19,7 @@ CustomImage.defaultProps = {
   isSvg: false,
 };
 CustomImage.propTypes = {
-  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  // source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   resizeMode: PropTypes.oneOf([
     "cover",

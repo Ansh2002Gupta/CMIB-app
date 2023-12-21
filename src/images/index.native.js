@@ -59,7 +59,9 @@ import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDow
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
 import iconWarning from "../../public/images/svg/iconWarning.svg"
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
-
+import iconSearch from "../../public/images/svg/iconSearch.svg"
+import iconFilter from "../../public/images/svg/iconFilter.svg"
+import iconMore from "../../public/images/svg/iconMore.svg"
 const images = {
   avatar,
   logo,
@@ -122,6 +124,9 @@ const images = {
   iconDrawer,
   iconWarning,
   iconSquareEdit,
+  iconSearch,
+  iconFilter,
+  iconMore,
 };
 
 export default images;
