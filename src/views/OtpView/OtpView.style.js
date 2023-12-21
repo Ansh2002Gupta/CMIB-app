@@ -62,6 +62,7 @@ const style = {
     fontFamily: "GeneralSans-Semibold",
     color: colors.darkBlue,
     fontWeight: "600",
+    
   },
   errorMessage: {
     color: colors.red,
@@ -162,7 +163,6 @@ const style = {
     alignItems:"center"
   },
   topTabs: {
-    width: "50%",
     cursor: "pointer",
   },
 };

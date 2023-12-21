@@ -59,7 +59,7 @@ const style = {
     marginTop: 24,
     marginBottom: 24,
     fontSize: 14,
-    fontFamily: "GeneralSans-Semibold",
+    fontFamily: "General Sans",
     color: colors.darkBlue,
     fontWeight: "600",
   },

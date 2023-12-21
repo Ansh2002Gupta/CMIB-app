@@ -11,7 +11,7 @@ const DefaultRoute = () => {
 
   if (Platform.OS.toLowerCase() === "web") {
     StorageService.get("auth").then((token) => {
-      if (!token && !authState?.token) {
+      if (true) {
         return <Navigate to={navigations.LOGIN} replace />;
       }
     });
