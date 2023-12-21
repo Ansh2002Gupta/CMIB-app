@@ -106,7 +106,6 @@ export const MODULE_OPTIONS = [
 ];
 
 export const COLOR_MODES = ["light", "dark"];
-export const EXIT_WEBVIEW = "EXIT_WEBVIEW";
 export const ROUND_ONE_CARD = [
   {
     title: "label.add_application_form_text",
