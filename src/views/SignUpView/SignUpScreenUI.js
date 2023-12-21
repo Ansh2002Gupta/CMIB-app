@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
-import SignUpHeader from "../../containers/SignUpHeader/SignUpHeader";
+import SignUpHeader from "../../containers/SignUpHeader/index";
 import SignUpWelcomeScreen from "../../containers/SignupScreens/SignUpWelcomeScreen/index";
 import SignUpSecondScreen from "../../containers/SignupScreens/SignUpSecondScreen/index";
 import SignUpThirdScreen from "../../containers/SignupScreens/SignUpThirdScreen/index";

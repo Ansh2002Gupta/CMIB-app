@@ -106,7 +106,6 @@ const CustomTextInput = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            console.log('item', item);
             isWebPlatform ? onChangeValue(item) : onChangeValue(item[inputKey]);
             setIsFocused(false);
           }}

@@ -264,7 +264,6 @@ const SignUpLastScreenUI = ({
 
 SignUpLastScreenUI.defaultProps = {
   errors: {},
-  handleDismissToast: () => {},
   errorWhileDeletion: "",
   handleDismissToast: () => {},
   onDeleteImage: () => {},

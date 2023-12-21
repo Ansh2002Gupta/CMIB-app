@@ -58,8 +58,8 @@ const SignUpScreenWelcomeComponent = ({ tabHandler, onClickGoToLogin }) => {
 };
 
 SignUpScreenWelcomeComponent.propTypes = {
-  tabHandler: PropTypes.func.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
+  tabHandler: PropTypes.func.isRequired,
 };
 
 export default SignUpScreenWelcomeComponent;

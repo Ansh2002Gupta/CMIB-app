@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
   Platform,
@@ -8,45 +9,14 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-import styles from "./SignUpHeader.style";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import useIsWebView from "../../hooks/useIsWebView";
+import { getResponsiveStyles, styles } from "./SignUpHeader.style";
 
 const SignUpHeader = (props) => {
   const { intl, onClickGoToLogin, headerText, image } = props;
-  const isWeb = Platform.OS === "web";
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
-
-  const getResponsiveStyles = (str) => {
-    switch (str) {
-      case "steperContainer": {
-        if (currentBreakpoint === "lg") {
-          return {
-            ...styles.lgStepperContainer,
-          };
-        }
-        if (currentBreakpoint === "md") {
-          return {
-            ...styles.lgStepperContainer,
-          };
-        }
-        if (currentBreakpoint === "sm") {
-          return {
-            ...styles.smStepperContainer,
-          }
-        }
-        if (currentBreakpoint === "xs") {
-          return;
-        }
-        return {
-          ...styles.stepperContainer,
-        };
-      }
-      default:
-        return;
-    }
-  };
+  const isWeb = Platform.OS === "web";
 
   return (
     <>
@@ -63,13 +33,14 @@ const SignUpHeader = (props) => {
           />
         </TouchableOpacity>
       )}
-      <View style={isWeb && getResponsiveStyles("steperContainer")}>
+      <View style={isWeb && getResponsiveStyles({str: "steperContainer", currentBreakpoint})}>
         <Image
           source={image}
           style={
             isWebView ? [styles.iconBar, styles.webIconBar] : styles.iconBar
           }
         />
+        {/* TODO: Replace the stepper */}
         {!isWebView && (
           <CommonText
             customTextStyle={styles.formHeaderStyle}

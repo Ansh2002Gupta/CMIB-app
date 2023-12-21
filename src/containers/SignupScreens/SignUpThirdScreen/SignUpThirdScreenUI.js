@@ -6,9 +6,9 @@ import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
+import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
-import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
   CAREER_ASCENTS,
@@ -176,7 +176,7 @@ const SignUpThirdScreenUI = ({
     <View
       style={
         isWebView
-          ? getResponsiveStyles({str: "signupContainer", currentBreakpoint})
+          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
           : style.innerContainer
       }
     >
@@ -218,8 +218,8 @@ const SignUpThirdScreenUI = ({
 
 SignUpThirdScreenUI.defaultProps = {
   errors: {},
-  handleDismissToast: ()=>{},
-  onClickGoToLogin: ()=>{},
+  handleDismissToast: () => {},
+  onClickGoToLogin: () => {},
   validationError: "",
 };
 

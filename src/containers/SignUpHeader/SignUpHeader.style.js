@@ -1,6 +1,6 @@
 import colors from "../../assets/colors";
 
-const style = {
+export const styles = {
   headerContainerStyle: {
     marginTop: 24,
     marginBottom: 16,
@@ -40,17 +40,45 @@ const style = {
     transform: "rotate(90deg)",
   },
   webStepperContainer: {
-    flexDirection: "row-reverse"
+    flexDirection: "row-reverse",
   },
   lgStepperContainer: {
-    flex: 2.5
+    flex: 2.5,
   },
   smStepperContainer: {
-    flex: 1.5
+    flex: 1.5,
   },
   stepperContainer: {
-    flex: 3.5
-  }
+    flex: 3.5,
+  },
 };
 
-export default style;
+export const getResponsiveStyles = ({str, currentBreakpoint}) => {
+  switch (str) {
+    case "steperContainer": {
+      if (currentBreakpoint === "lg") {
+        return {
+          ...styles.lgStepperContainer,
+        };
+      }
+      if (currentBreakpoint === "md") {
+        return {
+          ...styles.lgStepperContainer,
+        };
+      }
+      if (currentBreakpoint === "sm") {
+        return {
+          ...styles.smStepperContainer,
+        };
+      }
+      if (currentBreakpoint === "xs") {
+        return;
+      }
+      return {
+        ...styles.stepperContainer,
+      };
+    }
+    default:
+      return;
+  }
+};

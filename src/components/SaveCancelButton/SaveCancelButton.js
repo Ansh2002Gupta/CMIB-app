@@ -52,14 +52,22 @@ const SaveCancelButton = (props) => {
   );
 };
 
+SaveCancelButton.defaultProps = {
+  customSaveButtonContainer: {},
+  hasIconRight: false,
+  isNextDisabled: false,
+  onPressButtonOne: ()=>{},
+  onPressButtonTwo: ()=>{},
+};
+
 SaveCancelButton.propTypes = {
   buttonOneText: PropTypes.string.isRequired,
   buttonTwoText: PropTypes.string.isRequired,
+  customSaveButtonContainer: PropTypes.object,
   hasIconRight: PropTypes.bool,
   isNextDisabled: PropTypes.bool,
   onPressButtonOne: PropTypes.func,
   onPressButtonTwo: PropTypes.func,
-  customSaveButtonContainer: PropTypes.object,
 };
 
 export default SaveCancelButton;

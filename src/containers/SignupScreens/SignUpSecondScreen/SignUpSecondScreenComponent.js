@@ -42,7 +42,6 @@ const SignUpSecondScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
     currentIndustry: initialSignUpDetail.industry_type || "",
     state: initialSignUpDetail.state_code || "",
   });
-  console.log('formData', formData);
 
   const [errors, setErrors] = useState({
     companyName: "",
@@ -225,8 +224,8 @@ const SignUpSecondScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
 };
 
 SignUpSecondScreenComponent.propTypes = {
-  tabHandler: PropTypes.func.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
+  tabHandler: PropTypes.func.isRequired,
 };
 
 export default SignUpSecondScreenComponent;
