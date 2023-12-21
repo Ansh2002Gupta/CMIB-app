@@ -7,7 +7,6 @@ import {
 } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
-import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
@@ -108,6 +107,7 @@ function CreateNewPasswordUI(props) {
     };
   }, []);
 
+  console.log(errorMessage, "errorMessage");
   return (
     <ScrollView
       style={styles.mainView}

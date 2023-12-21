@@ -39,7 +39,7 @@ function LoginScreenComponent() {
   };
 
   const onForgotPasswordClick = async () => {
-    navigate(navigations.FORGOT_PASSWORD);
+    navigate(navigations.CREATE_NEW_PASSWORD);
   };
 
   const onCreateNewPasswordClick = async () => {
