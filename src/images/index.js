@@ -74,6 +74,7 @@ const iconSetting = "images/iconSetting/iconSetting.png";
 const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
+const iconTick = "images/iconTick/iconTick.png";
 const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
 const iconWarning = "images/svg/iconWarning.svg";
 const iconFilter = "images/svg/iconFilter.svg";
@@ -147,6 +148,7 @@ const images = {
   iconSetting,
   iconUpArrow,
   iconDrawer,
+  iconTick,
   iconSquareEdit,
   iconWarning,
   iconFilter,

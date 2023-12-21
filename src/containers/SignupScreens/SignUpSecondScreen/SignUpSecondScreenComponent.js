@@ -24,12 +24,12 @@ import { validateEmail } from "../../../constants/commonFunctions";
 const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation } = useValidateSignUp();
+  const { handleSignUpValidation, validationError, setValidationError } =
+    useValidateSignUp();
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
   const { getStates, stateResult } = useGetStates();
   const initialSignUpDetail = signUpState.signUpDetail;
 
-  const [validationError, setValidationError] = useState("");
   const [formData, setFormData] = useState({
     companyName: initialSignUpDetail.name || "",
     registrationNo: initialSignUpDetail.frn_number || "",
@@ -191,16 +191,10 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
         state_code: state,
       };
 
-      handleSignUpValidation(
-        details,
-        () => {
-          signUpDispatch(setSignUpDetails(details));
-          tabHandler("next");
-        },
-        (error) => {
-          setValidationError(error);
-        }
-      );
+      handleSignUpValidation(details, () => {
+        signUpDispatch(setSignUpDetails(details));
+        tabHandler("next");
+      });
     }
   };
 
