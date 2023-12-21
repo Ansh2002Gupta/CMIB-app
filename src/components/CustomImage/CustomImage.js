@@ -19,7 +19,7 @@ CustomImage.defaultProps = {
   isSvg: false,
 };
 CustomImage.propTypes = {
-  // source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   resizeMode: PropTypes.oneOf([
     "cover",

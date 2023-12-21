@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity } from "react-native";
+import PropTypes from 'prop-types';
+import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage/CustomImage";
 import styles from "./touchableImage.style";
@@ -12,7 +13,11 @@ const TouchableImage = ({ source, parentStyle,imageStyle, disabled }) => {
     setIsSelected(!isSelected);
   };
 
-  const containerStyle = [styles.container,parentStyle, isSelected ? styles.selected : null];
+  const containerStyle = {
+    ...styles.container,
+    ...parentStyle,
+    ...(isSelected ? styles.selected : {}),
+  };
 
   return (
     <TouchableOpacity style={containerStyle} onPress={handlePress} disabled={disabled}>
@@ -22,5 +27,15 @@ const TouchableImage = ({ source, parentStyle,imageStyle, disabled }) => {
     </TouchableOpacity>
   );
 };
-
+TouchableImage.defaultProps = {
+  parentStyle: {},
+  imageStyle: {},
+  disabled: false
+};
+TouchableImage.propTypes = {
+  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  parentStyle: PropTypes.object,
+  imageStyle: PropTypes.object,
+  disabled: PropTypes.bool
+};
 export default TouchableImage;
