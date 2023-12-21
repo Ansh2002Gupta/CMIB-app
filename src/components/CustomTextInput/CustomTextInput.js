@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
   Platform,
@@ -11,6 +10,7 @@ import {
 import CommonText from "../CommonText";
 import Dropdown from "../Dropdown/index";
 import TextInput from "../TextInput";
+import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
@@ -42,8 +42,7 @@ const CustomTextInput = (props) => {
   const [count, setCount] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
+  const { isWebView } = useIsWebView();
   const isWebPlatform =  Platform.OS === "web";
 
   const toggleTextVisibility = () => {
