@@ -21,7 +21,6 @@ function CreateNewPasswordUI(props) {
     confirmNewPassword,
     errorMessage,
     handleSubmit,
-    handleDismissToast,
     handleConfirmPasswordBlur,
     intl,
     isLoading,
@@ -31,6 +30,7 @@ function CreateNewPasswordUI(props) {
     onChangeConfirmPasswordInput,
     successLogin,
     successMsg,
+    setErrorWhileResetPassword,
     validationError,
   } = props;
 
@@ -60,6 +60,11 @@ function CreateNewPasswordUI(props) {
       setIsAnyPasswordFieldLeft(true);
       return;
     }
+    setIsAnyPasswordFieldLeft(false);
+  };
+
+  const handleDismissToast = () => {
+    setErrorWhileResetPassword("");
     setIsAnyPasswordFieldLeft(false);
   };
 
@@ -148,6 +153,9 @@ function CreateNewPasswordUI(props) {
                 setIsAnyPasswordFieldLeft(false);
                 onChangePasswordInput(val);
               }}
+              customHandleBlur={() => {
+                handleConfirmPasswordBlur();
+              }}
               eyeImage={true}
               isPassword={true}
               customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
@@ -164,7 +172,7 @@ function CreateNewPasswordUI(props) {
               onChangeText={(val) => {
                 onChangeConfirmPasswordInput(val);
               }}
-              onBlur={() => {
+              customHandleBlur={() => {
                 handleConfirmPasswordBlur();
               }}
               isMandatory
@@ -176,6 +184,7 @@ function CreateNewPasswordUI(props) {
               }
               errorMessage={errorMessage}
               isError={!!errorMessage}
+              customErrorStyle={styles.ErrorStyle}
             />
             <CreateNewPasswordValidation
               {...{
@@ -189,16 +198,6 @@ function CreateNewPasswordUI(props) {
                 isWebView ? styles.webView.requirementsPoints : {}
               }
             />
-            {isAnyPasswordFieldLeft && (
-              <View style={styles.passwordFieldsErrorContainer}>
-                <CommonText
-                  customTextStyle={styles.passwordFieldsErrorText}
-                  title={intl.formatMessage({
-                    id: "label.password_field_error",
-                  })}
-                />
-              </View>
-            )}
           </View>
           <View style={styles.submitView}>
             <ButtonComponent
@@ -221,12 +220,6 @@ function CreateNewPasswordUI(props) {
               />
             </TouchableOpacity>
           </View>
-          {!!validationError && (
-            <ToastComponent
-              toastMessage={validationError}
-              onDismiss={handleDismissToast}
-            />
-          )}
           {successLogin && (
             <CustomModal
               headerText={successMsg}
@@ -238,6 +231,17 @@ function CreateNewPasswordUI(props) {
             />
           )}
         </View>
+        {(!!validationError || isAnyPasswordFieldLeft) && (
+          <ToastComponent
+            toastMessage={
+              validationError ||
+              intl.formatMessage({
+                id: "label.password_field_error",
+              })
+            }
+            onDismiss={handleDismissToast}
+          />
+        )}
       </WebViewLoginSignUpWrapper>
     </ScrollView>
   );

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
@@ -18,6 +18,8 @@ const CustomTextInput = (props) => {
   const {
     customLabelStyle,
     customStyle,
+    customErrorStyle,
+    customHandleBlur,
     customTextInputContainer,
     dropdownStyle,
     errorMessage,
@@ -53,6 +55,7 @@ const CustomTextInput = (props) => {
   };
 
   const handleBlur = () => {
+    customHandleBlur();
     setIsFocused(false);
   };
 
@@ -168,13 +171,18 @@ const CustomTextInput = (props) => {
         </View>
       )}
       {isError && (
-        <CommonText customTextStyle={style.errorMsg} title={errorMessage} />
+        <CommonText
+          customTextStyle={[style.errorMsg, customErrorStyle]}
+          title={errorMessage}
+        />
       )}
     </View>
   );
 };
 
 CustomTextInput.defaultProps = {
+  customHandleBlur: () => {},
+  customErrorStyle:{},
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
@@ -195,7 +203,9 @@ CustomTextInput.defaultProps = {
 };
 
 CustomTextInput.propTypes = {
+  customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
+  customErrorStyle:PropTypes.object,
   customStyle: PropTypes.object,
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,

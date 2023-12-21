@@ -38,35 +38,29 @@ function CreateNewPasswordComponent() {
     setConfirmNewPassword(val);
   };
 
-  const doPasswordsMatch = () => {
-    return (
-      newPassword.trim().toLowerCase() ===
-      confirmNewPassword.trim().toLowerCase()
-    );
-  };
+  const doPasswordsMatch = () =>
+    newPassword.trim().toLowerCase() ===
+    confirmNewPassword.trim().toLowerCase();
 
   const handleConfirmPasswordBlur = () => {
-    if (confirmNewPassword !== "" && !doPasswordsMatch()) {
+    if (confirmNewPassword && newPassword && !doPasswordsMatch()) {
       setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
     } else {
       setErrorMessage("");
     }
   };
+  
 
   const handleSubmit = () => {
     if (doPasswordsMatch()) {
       setErrorMessage("");
       handleResetPasswordAPI({
-        token: token,
+        token,
         password: newPassword,
       });
     } else {
       setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
     }
-  };
-
-  const handleDismissToast = () => {
-    setErrorWhileResetPassword("");
   };
 
   return (
@@ -80,11 +74,11 @@ function CreateNewPasswordComponent() {
       onChangeConfirmPasswordInput={onChangeConfirmPasswordInput}
       intl={intl}
       isLoading={isLoading}
-      handleDismissToast={handleDismissToast}
       handleConfirmPasswordBlur={handleConfirmPasswordBlur}
       successLogin={!!resetPasswordResult?.message}
       successMsg={resetPasswordResult?.message}
       validationError={errorWhileResetPassword}
+      setErrorWhileResetPassword={setErrorWhileResetPassword}
     />
   );
 }
