@@ -22,7 +22,7 @@ function CreateNewPasswordComponent() {
     handleResetPasswordAPI,
     resetPasswordResult,
     setErrorWhileResetPassword,
-    setResetPasswordResult
+    setResetPasswordResult,
   } = useResetPasswordAPI();
 
   const onClickGoToLogin = () => {
@@ -38,26 +38,34 @@ function CreateNewPasswordComponent() {
     setConfirmNewPassword(val);
   };
 
-  const handleSubmit = () => {
-    const isPasswordMatch =
-      newPassword?.trim()?.toLowerCase() ===
-      confirmNewPassword?.trim()?.toLowerCase();
-    if (isPasswordMatch) {
-      setErrorMessage("");
+  const doPasswordsMatch = () =>
+    newPassword.trim().toLowerCase() ===
+    confirmNewPassword.trim().toLowerCase();
+
+  const handleConfirmPasswordBlur = () => {
+    if (confirmNewPassword && newPassword && !doPasswordsMatch()) {
+      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
     } else {
-      setErrorMessage(intl.formatMessage({ id: "label.password-not-match" }));
-      return;
+      setErrorMessage("");
     }
-    handleResetPasswordAPI(
-      {
-        token: token,
-        password: newPassword,
-      }
-    );
   };
 
-  const handleDismissToast = () => {
-    setErrorWhileResetPassword("");
+  const handleSubmit = () => {
+    if (
+      !newPassword.trim().toLowerCase() &&
+      !confirmNewPassword.trim().toLowerCase()
+    ) {
+      return;
+    }
+    if (doPasswordsMatch()) {
+      setErrorMessage("");
+      handleResetPasswordAPI({
+        token,
+        password: newPassword,
+      });
+    } else {
+      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
+    }
   };
 
   return (
@@ -71,10 +79,11 @@ function CreateNewPasswordComponent() {
       onChangeConfirmPasswordInput={onChangeConfirmPasswordInput}
       intl={intl}
       isLoading={isLoading}
-      handleDismissToast={handleDismissToast}
+      handleConfirmPasswordBlur={handleConfirmPasswordBlur}
       successLogin={!!resetPasswordResult?.message}
       successMsg={resetPasswordResult?.message}
       validationError={errorWhileResetPassword}
+      setErrorWhileResetPassword={setErrorWhileResetPassword}
     />
   );
 }
