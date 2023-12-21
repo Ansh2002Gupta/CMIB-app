@@ -148,8 +148,8 @@ function CreateNewPasswordUI(props) {
                 setIsAnyPasswordFieldLeft(false);
                 onChangePasswordInput(val);
               }}
-              eyeImage={true}
-              isPassword={true}
+              eyeImage
+              isPassword
               customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
@@ -168,8 +168,8 @@ function CreateNewPasswordUI(props) {
                 handleConfirmPasswordBlur();
               }}
               isMandatory
-              eyeImage={true}
-              isPassword={true}
+              eyeImage
+              isPassword
               customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
