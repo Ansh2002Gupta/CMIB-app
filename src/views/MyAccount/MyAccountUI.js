@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
-  ScrollView,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
