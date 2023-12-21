@@ -94,7 +94,6 @@ const SideBar = ({
     if (Platform.OS === "web") {
       window.location.href = Config.REACT_APP_CMS_URI;
     } else {
-      onClose();
       navigate(navigations.WEB_VIEW, {
         state: { uri: Config.REACT_APP_CMS_URI },
       });
@@ -103,7 +102,7 @@ const SideBar = ({
   };
   const dynamicPadding =
     showBackIcon || showClose ? styles.imageViewStyles : styles.imgViewStyle;
-
+    
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>

@@ -84,5 +84,8 @@ const styles = {
     flexDirection: "row",
     marginLeft: 25,
   },
+  profileNameSection:{
+    flexDirection: "row",
+  }
 };
 export default styles;

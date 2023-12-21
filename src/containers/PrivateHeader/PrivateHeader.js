@@ -13,11 +13,10 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./PrivateHeader.style";
 
-const PrivateHeader = ({ onPress, showCloseIcon , menuIconVisible}) => {
+const PrivateHeader = ({ onPress, showCloseIcon, menuIconVisible }) => {
   const { isWebView } = useIsWebView();
   const windowDimensions = useWindowDimensions();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-
 
   //TODO: Replace this dummy data with api data.
   const profileImage = "";
@@ -28,7 +27,7 @@ const PrivateHeader = ({ onPress, showCloseIcon , menuIconVisible}) => {
   const borderBottomStyles =
     currentBreakpoint === "xs" ? {} : styles.borderStyling;
 
-  const isMdOrGreater = windowDimensions.width >= 900 ;
+  const isMdOrGreater = windowDimensions.width >= 900;
 
   const justifyContent = menuIconVisible ? "space-between" : "flex-end";
 
@@ -62,39 +61,46 @@ const PrivateHeader = ({ onPress, showCloseIcon , menuIconVisible}) => {
               source={images.iconNotification}
               style={styles.iconNotification}
             />
-           { isMdOrGreater && (
-            <>
             <View style={styles.profileView}>
-            <CustomAvatar
-              image={profileImage}
-              text={`${firstName} ${lastName}`}
-            />
-            <View>
-              <CommonText
-                customTextStyle={styles.fullNameStyle}
-                title={`${firstName} ${lastName}`}
+              <CustomAvatar
+                image={profileImage}
+                text={`${firstName} ${lastName}`}
               />
-              <CommonText title={role} customTextStyle={styles.roleStyle} />
+              {isMdOrGreater && (
+                <View style={styles.profileNameSection}>
+                  <View>
+                    <CommonText
+                      customTextStyle={styles.fullNameStyle}
+                      title={`${firstName} ${lastName}`}
+                    />
+                    <CommonText
+                      title={role}
+                      customTextStyle={styles.roleStyle}
+                    />
+                  </View>
+                  <TouchableOpacity>
+                    <Image
+                      source={images.iconArrowDown2}
+                      style={styles.iconArrow}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
-          </View>
-          <TouchableOpacity>
-            <Image source={images.iconArrowDown2} style={styles.iconArrow} />
-          </TouchableOpacity>
-            </>
-           )}
           </View>
         </View>
       ) : (
-        <View style={[styles.container,{justifyContent}]}>
-         {menuIconVisible && 
-          <TouchableOpacity
-          onPress={() => {
-            showCloseIcon();
-            onPress();
-          }}
-        >
-          <Image source={images.iconMenu} />
-        </TouchableOpacity>}
+        <View style={[styles.container, { justifyContent }]}>
+          {menuIconVisible && (
+            <TouchableOpacity
+              onPress={() => {
+                showCloseIcon();
+                onPress();
+              }}
+            >
+              <Image source={images.iconMenu} />
+            </TouchableOpacity>
+          )}
           <TouchableOpacity>
             <Image source={images.iconNotification} />
           </TouchableOpacity>
