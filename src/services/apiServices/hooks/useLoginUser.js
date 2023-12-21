@@ -56,6 +56,7 @@ const useLoginUser = () => {
     isSuccess,
     loginUserResult,
     postStatus,
+    setErrorWhileLoggingIn,
   };
 };
 
