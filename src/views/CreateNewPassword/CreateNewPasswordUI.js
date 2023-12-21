@@ -6,8 +6,8 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import ButtonComponent from "../../components/ButtonComponent";
+import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
