@@ -11,7 +11,10 @@ const style = {
     flex: 1,
     cursor: "pointer"
   },
-  containerStyle: { flexDirection: "row", bottom: 16 },
+  containerStyle: {
+    flexDirection: "row",
+    bottom: 16
+  },
   disableButtonStyle: {
     height: 56,
     backgroundColor: colors.white,
