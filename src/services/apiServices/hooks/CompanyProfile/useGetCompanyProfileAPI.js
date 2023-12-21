@@ -8,43 +8,41 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/erro
 const useGetCompanyProfileAPI = () => {
   const [profileResult, setProfileResult] = useState({});
   const [errorWhileGettingResult, setErrorWhileGettingResult] = useState("");
-  const [profileStatus, setProfileStatus] = useState(API_STATUS.IDLE);
+  const [companyProfileApiStatus, setCompanyProfileApiStatus] = useState(
+    API_STATUS.IDLE
+  );
 
   const onGetProfile = async () => {
     try {
-      setProfileStatus(API_STATUS.LOADING);
+      setCompanyProfileApiStatus(API_STATUS.LOADING);
       errorWhileGettingResult && setErrorWhileGettingResult("");
       const res = await Http.get(COMPANY_PROFILE);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
-        setProfileStatus(API_STATUS.SUCCESS);
+        setCompanyProfileApiStatus(API_STATUS.SUCCESS);
         setProfileResult(res.data);
         return;
       }
-      setProfileStatus(API_STATUS.ERROR);
+      setCompanyProfileApiStatus(API_STATUS.ERROR);
       setErrorWhileGettingResult(res);
     } catch (err) {
-      setProfileStatus(API_STATUS.ERROR);
-      const errorMessage =
-        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      if (errorMessage) {
-        setErrorWhileGettingResult(errorMessage);
-        return;
-      }
-      setErrorWhileGettingResult(errorMessage);
+      setCompanyProfileApiStatus(API_STATUS.ERROR);
+      setErrorWhileGettingResult(
+        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+      );
     }
   };
 
-  const isLoading = profileStatus === API_STATUS.LOADING;
-  const isSuccess = profileStatus === API_STATUS.SUCCESS;
-  const isError = profileStatus === API_STATUS.ERROR;
+  const isLoading = companyProfileApiStatus === API_STATUS.LOADING;
+  const isSuccess = companyProfileApiStatus === API_STATUS.SUCCESS;
+  const isError = companyProfileApiStatus === API_STATUS.ERROR;
 
   return {
-    profileStatus,
+    companyProfileApiStatus,
     errorWhileGettingResult,
-    onGetProfile,
     isError,
     isLoading,
     isSuccess,
+    onGetProfile,
     profileResult,
     setErrorWhileGettingResult,
     setProfileResult,
