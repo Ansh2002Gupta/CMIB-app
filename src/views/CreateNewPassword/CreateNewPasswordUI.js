@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { ScrollView,TouchableOpacity,View } from "@unthinkable/react-core-components";
+import {
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 
 import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import ButtonComponent from "../../components/ButtonComponent";
@@ -18,6 +22,7 @@ function CreateNewPasswordUI(props) {
     errorMessage,
     handleSubmit,
     handleDismissToast,
+    handleConfirmPasswordBlur,
     intl,
     isLoading,
     newPassword,
@@ -50,7 +55,7 @@ function CreateNewPasswordUI(props) {
       !validations.numeric ||
       !validations.uppercase ||
       !validations.lowercase ||
-      !validations.specialChar 
+      !validations.specialChar
     ) {
       setIsAnyPasswordFieldLeft(true);
       return;
@@ -159,6 +164,9 @@ function CreateNewPasswordUI(props) {
               onChangeText={(val) => {
                 onChangeConfirmPasswordInput(val);
               }}
+              onBlur={() => {
+                handleConfirmPasswordBlur();
+              }}
               isMandatory
               eyeImage={true}
               isPassword={true}
@@ -185,7 +193,9 @@ function CreateNewPasswordUI(props) {
               <View style={styles.passwordFieldsErrorContainer}>
                 <CommonText
                   customTextStyle={styles.passwordFieldsErrorText}
-                  title={intl.formatMessage({ id: "label.password_field_error" })}
+                  title={intl.formatMessage({
+                    id: "label.password_field_error",
+                  })}
                 />
               </View>
             )}
@@ -195,8 +205,7 @@ function CreateNewPasswordUI(props) {
               title={intl.formatMessage({ id: "label.submit" })}
               onPress={() => {
                 areAllFieldFilledInPassword();
-                if(isAnyPasswordFieldLeft)
-                handleSubmit();
+                if (isAnyPasswordFieldLeft) handleSubmit();
               }}
               customTitleStyle={styles.webView.submitText}
               customButtonContainer={styles.webView.submitTextContainer}
