@@ -17,6 +17,7 @@ const errorBackground = "#ffeded";
 const mediumGray = "#616C82";
 const lightGray = "#D0D5DD";
 const voilet = "#B1B3B5";
+const yellow ='#FABB00';
 
 const colors = {
   voilet,
@@ -38,5 +39,6 @@ const colors = {
   errorBackground,
   mediumGray,
   lightGray,
+  yellow,
 };
 export default colors;

@@ -9,7 +9,6 @@ import {
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
-import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomTextInput from "../../components/CustomTextInput";
 import FollowUsIcons from "../../components/FollowUsIcons";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
@@ -204,14 +203,6 @@ const LoginScreenUI = (props) => {
                   }
                 />
                 <View style={styles.forgotPasswordView}>
-                  <View style={{ flexDirection: "row" }}>
-                    <CheckBox
-                      title="Remember Me"
-                      isSelected={options[0].isSelected}
-                      handleCheckbox={handleToggle}
-                      id={options[0].id}
-                    />
-                  </View>
                   <TouchableOpacity onPress={onForgotPasswordClick}>
                     <CommonText
                       customTextStyle={{

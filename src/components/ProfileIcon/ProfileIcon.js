@@ -5,7 +5,14 @@ import { Image, View } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import styles from "./ProfileIcon.style";
 
-const ProfileIcon = ({ showEditModal, iconType, profileImage, firstName, lastName }) => {
+const ProfileIcon = ({
+  showEditModal,
+  iconType,
+  profileImage,
+  firstName,
+  lastName,
+}) => {
+
   if (profileImage) {
     return (
       <View

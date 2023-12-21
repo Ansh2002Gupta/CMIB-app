@@ -16,7 +16,7 @@ import styles from "./ForgotPassword.style";
 
 const ForgotPasswordUI = (props) => {
   const {
-    onClickForgotPassword,
+    onSendOtpClick,
     onClickGoToLogin,
     onChangeInput,
     userEmail,
@@ -165,7 +165,7 @@ const ForgotPasswordUI = (props) => {
         <View style={isWebView ? styles.webSubmitView : styles.submitView}>
           <ButtonComponent
             title={intl.formatMessage({ id: "label.submit" })}
-            onPress={onClickForgotPassword}
+            onPress={onSendOtpClick}
             disabled={loginDisabled}
             customTitleStyle={isWebView && styles.customBtnText}
             customButtonContainer={
@@ -210,7 +210,7 @@ ForgotPasswordUI.propTypes = {
   errorMessage: PropTypes.string,
   handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
-  onClickForgotPassword: PropTypes.func,
+  onSendOtpClick: PropTypes.func,
   onClickGoToLogin: PropTypes.func.isRequired,
   onChangeInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
