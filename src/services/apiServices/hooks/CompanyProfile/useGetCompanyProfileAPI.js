@@ -5,7 +5,7 @@ import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_PROFILE } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
-const useResetPasswordAPI = () => {
+const useGetCompanyProfileAPI = () => {
   const [profileResult, setProfileResult] = useState({});
   const [errorWhileGettingResult, setErrorWhileGettingResult] = useState("");
   const [profileStatus, setProfileStatus] = useState(API_STATUS.IDLE);
@@ -51,4 +51,4 @@ const useResetPasswordAPI = () => {
   };
 };
 
-export default useResetPasswordAPI;
+export default useGetCompanyProfileAPI;
