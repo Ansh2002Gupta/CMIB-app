@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import {
   Image,
   Modal,
+  Platform,
   TouchableOpacity,
   View,
-  Platform,
 } from "@unthinkable/react-core-components";
 import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
 
