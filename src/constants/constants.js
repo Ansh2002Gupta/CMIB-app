@@ -127,3 +127,5 @@ export const ROUND_ONE_CARD = [
     subTitle: "label.download_details_description",
   },
 ];
+
+export const REDIRECT_URL = "redirectUrl";
