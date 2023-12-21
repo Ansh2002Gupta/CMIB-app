@@ -34,11 +34,19 @@ function withPrivateAccess(Component) {
     }, []);
 
     // TODO: Need to refactor and test the below code.
-    if (window && window.ReactNativeWebView && isWebPlatform && location.pathname === navigations.JOBS) {
-      window.ReactNativeWebView.postMessage({
-        message: EXIT_WEBVIEW,
-        data: getQueryParamsAsAnObject(location.search),
-      });
+    if (
+      window &&
+      window.ReactNativeWebView &&
+      isWebPlatform &&
+      location.pathname === navigations.JOBS
+    ) {
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          path: navigations.JOBS,
+          message: EXIT_WEBVIEW,
+          data: getQueryParamsAsAnObject(location.search),
+        })
+      );
     }
 
     return <Component {...props} />;
