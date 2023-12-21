@@ -14,6 +14,7 @@ import {
   newQualifiedPlacementsList,
 } from "../constants/sideBarListItems";
 import commonStyles from "../theme/styles/commonStyles";
+import BottomBar from "../containers/BottomBar";
 
 function HeaderWithContentLayout() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
@@ -44,7 +45,7 @@ function HeaderWithContentLayout() {
     setSideBarVisible(!isSideBarVisible);
     showCloseIcon();
   };
-  
+
   useEffect(() => {
     const checkAuthToken = async () => {
       try {
@@ -79,6 +80,7 @@ function HeaderWithContentLayout() {
           menuIconVisible={menuIconVisible}
         />
       }
+      bottomSection={!isWebView ? <BottomBar /> : null}
       content={<Outlet />}
       topSectionStyle={commonStyles.headerContainer}
       leftSectionStyle={
@@ -89,13 +91,15 @@ function HeaderWithContentLayout() {
         isSideBarVisible
           ? {
               flex:
-               ( currentBreakpoint === "md" || currentBreakpoint === "sm")
+                currentBreakpoint === "md" || currentBreakpoint === "sm"
                   ? 2
                   : windowDimensions.width >= 1200 &&
                     windowDimensions.width <= 1400
                   ? 1.5
+                  : currentBreakpoint === "xs"
+                  ? 0
                   : 1,
-              zIndex:2,
+              zIndex: 2,
             }
           : {}
       }
@@ -117,7 +121,7 @@ function HeaderWithContentLayout() {
             showCloseIcon={showClose}
             items={listItems}
           />
-        ) : null 
+        ) : null
       }
     />
   );

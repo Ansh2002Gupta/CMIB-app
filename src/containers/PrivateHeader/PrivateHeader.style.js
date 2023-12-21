@@ -11,11 +11,12 @@ const styles = {
   webContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#F2F4FC",
-    paddingTop: 24,
-    paddingBottom: 24,
+    alignItems:"center",
+    paddingTop: 16,
+    paddingBottom: 20,
     paddingLeft: 24,
     paddingRight: 24,
+    flexWrap:"wrap"
   },
   borderStyling: {
     borderColor: colors.lightGrey,
@@ -27,7 +28,6 @@ const styles = {
   },
   textContainer: {
     flexDirection: "row",
-    paddingTop: 8,
   },
   profileContainer: {
     marginTop: 16,
@@ -58,8 +58,6 @@ const styles = {
   iconNotification: {
     width: 24,
     height: 24,
-    paddingRight: 25,
-    paddingTop: 8,
   },
   overView: {
     color: "#71717A",
@@ -80,10 +78,11 @@ const styles = {
   },
   notficationIconView: {
     flexDirection: "row",
-    paddingTop: 8,
+    alignItems:"center"
   },
   profileView: {
     flexDirection: "row",
+    marginLeft: 25,
   },
 };
 export default styles;

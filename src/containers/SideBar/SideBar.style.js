@@ -4,6 +4,7 @@ const styles = {
   mainContainer: {
     flex: 1,
     width: "100%",
+    position:"relative",
   },
   container: {
     flex: 1,
@@ -25,8 +26,9 @@ const styles = {
   newQualifiedText: {
     color: colors.backgroundColor,
     fontSize: 14,
-    paddingTop: 3,
+    marginBottom:5,
     cursor: "pointer",
+    flexWrap:"wrap"
   },
   moduleText: {
     color: colors.darkGrey,
@@ -48,6 +50,7 @@ const styles = {
   textView: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems:"center",
     backgroundColor: colors.offWhite,
     paddingTop: 16,
     paddingBottom: 16,
@@ -56,6 +59,7 @@ const styles = {
     borderBottomWidth: 1,
     borderBottomColor: colors.slateGray,
     opacity: 0.6,
+    flexWrap:"wrap"
   },
   changeText: {
     color: colors.backgroundColor,
@@ -77,6 +81,9 @@ const styles = {
     paddingTop: 16,
   },
   bottomView: {
+    // position:"absolute",
+    // bottom:0,
+    // width:"100%",
     paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: colors.offWhite,

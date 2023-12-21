@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
+import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
 import CommonText from "../../components/CommonText";
 import CustomAvatar from "../../components/CustomAvatar";
@@ -14,6 +15,7 @@ import styles from "./PrivateHeader.style";
 
 const PrivateHeader = ({ onPress, showCloseIcon , menuIconVisible}) => {
   const { isWebView } = useIsWebView();
+  const windowDimensions = useWindowDimensions();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
 
@@ -26,7 +28,7 @@ const PrivateHeader = ({ onPress, showCloseIcon , menuIconVisible}) => {
   const borderBottomStyles =
     currentBreakpoint === "xs" ? {} : styles.borderStyling;
 
-    console.log(currentBreakpoint==='sm', menuIconVisible)
+  const isMdOrGreater = windowDimensions.width >= 900 ;
 
   const justifyContent = menuIconVisible ? "space-between" : "flex-end";
 
@@ -60,22 +62,26 @@ const PrivateHeader = ({ onPress, showCloseIcon , menuIconVisible}) => {
               source={images.iconNotification}
               style={styles.iconNotification}
             />
+           { isMdOrGreater && (
+            <>
             <View style={styles.profileView}>
-              <CustomAvatar
-                image={profileImage}
-                text={`${firstName} ${lastName}`}
+            <CustomAvatar
+              image={profileImage}
+              text={`${firstName} ${lastName}`}
+            />
+            <View>
+              <CommonText
+                customTextStyle={styles.fullNameStyle}
+                title={`${firstName} ${lastName}`}
               />
-              <View>
-                <CommonText
-                  customTextStyle={styles.fullNameStyle}
-                  title={`${firstName} ${lastName}`}
-                />
-                <CommonText title={role} customTextStyle={styles.roleStyle} />
-              </View>
+              <CommonText title={role} customTextStyle={styles.roleStyle} />
             </View>
-            <TouchableOpacity>
-              <Image source={images.iconArrowDown2} style={styles.iconArrow} />
-            </TouchableOpacity>
+          </View>
+          <TouchableOpacity>
+            <Image source={images.iconArrowDown2} style={styles.iconArrow} />
+          </TouchableOpacity>
+            </>
+           )}
           </View>
         </View>
       ) : (
