@@ -42,6 +42,7 @@ const SignUpSecondScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
     currentIndustry: initialSignUpDetail.industry_type || "",
     state: initialSignUpDetail.state_code || "",
   });
+  console.log('formData', formData);
 
   const [errors, setErrors] = useState({
     companyName: "",

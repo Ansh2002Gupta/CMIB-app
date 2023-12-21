@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
+  Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
@@ -43,6 +44,7 @@ const CustomTextInput = (props) => {
   const [isTextVisible, setIsTextVisible] = useState(false);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
+  const isWebPlatform =  Platform.OS === "web";
 
   const toggleTextVisibility = () => {
     setIsTextVisible(!isTextVisible);
@@ -105,7 +107,8 @@ const CustomTextInput = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            onChangeValue(item[inputKey]);
+            console.log('item', item);
+            isWebPlatform ? onChangeValue(item) : onChangeValue(item[inputKey]);
             setIsFocused(false);
           }}
           {...remainingProps}
