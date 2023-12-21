@@ -2,9 +2,10 @@ import {
   Router,
   Navigate,
   Outlet,
+  useLocation,
   useNavigate,
   useRoutes,
-  useLocation,
+  useSearchParams,
 } from "./router";
 import Routes from "./Routes";
 
@@ -13,7 +14,8 @@ export {
   Navigate,
   Routes,
   Outlet,
+  useLocation,
   useNavigate,
   useRoutes,
-  useLocation,
+  useSearchParams,
 };
