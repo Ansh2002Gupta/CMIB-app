@@ -28,17 +28,8 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
   const [options, setOptions] = useState(initialOptions);
 
   const onClickNext = () => {
-    const existingContactDetails =
-      signUpState.signUpDetail.contact_details || [];
-    const newContactDetails = contactDetails.filter(
-      (detail) =>
-        !existingContactDetails.some(
-          (existingDetail) => existingDetail.module === detail.module
-        )
-    );
-
     const details = {
-      contact_details: [...existingContactDetails, ...newContactDetails],
+      contact_details: contactDetails,
     };
 
     handleSignUpValidation({ details }, () => {
