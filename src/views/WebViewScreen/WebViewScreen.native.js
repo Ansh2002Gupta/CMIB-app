@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router";
 import { WebView } from "react-native-webview";
 
 import styles from "./WebViewScreen.style";
+
 const WebViewScreen = () => {
   const location = useLocation();
   const navigate = useNavigate();
