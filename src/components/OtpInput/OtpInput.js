@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
-import { Platform } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
-import { TextInput, View } from "@unthinkable/react-core-components";
+import { Platform, TextInput, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
