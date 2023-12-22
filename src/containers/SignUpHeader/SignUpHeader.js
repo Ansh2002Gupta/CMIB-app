@@ -9,18 +9,17 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-import useIsWebView from "../../hooks/useIsWebView";
 import { getResponsiveStyles, styles } from "./SignUpHeader.style";
 
 const SignUpHeader = (props) => {
   const { intl, onClickGoToLogin, headerText, image } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const { isWebView } = useIsWebView();
+  const isWebView = currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
   const isWeb = Platform.OS === "web";
 
   return (
     <>
-      {!isWebView && (
+      {!isWebView && currentBreakpoint !== "sm" && (
         <TouchableOpacity
           onPress={() => {
             onClickGoToLogin();
@@ -33,7 +32,12 @@ const SignUpHeader = (props) => {
           />
         </TouchableOpacity>
       )}
-      <View style={isWeb && getResponsiveStyles({str: "steperContainer", currentBreakpoint})}>
+      <View
+        style={
+          isWeb &&
+          getResponsiveStyles({ str: "steperContainer", currentBreakpoint })
+        }
+      >
         <Image
           source={image}
           style={
@@ -41,7 +45,7 @@ const SignUpHeader = (props) => {
           }
         />
         {/* TODO: Replace the stepper */}
-        {!isWebView && (
+        {!isWebView && currentBreakpoint !== "sm" && (
           <CommonText
             customTextStyle={styles.formHeaderStyle}
             title={headerText}

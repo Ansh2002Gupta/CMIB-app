@@ -15,6 +15,8 @@ import { getResponsiveStyles, style } from "./SignUpScreen.style";
 const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
+  const displayRowHeader = currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
+
   let tabConfig = [
     {
       id: "label.welcome_to_sign_up",
@@ -48,7 +50,7 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
   const image = images[imageKey];
 
   return (
-    <View style={!isWebView ? style.container : style.webContainer}>
+    <View style={!displayRowHeader ? style.container : style.webContainer}>
       <SignUpHeader
         intl={intl}
         headerText={headerText}
@@ -56,7 +58,7 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
         image={image}
       />
       {isWebView ? (
-        <View style={style.webSubContainer}>
+        <View style={displayRowHeader && style.webSubContainer}>
           <View style={getResponsiveStyles({str: "signUpWebContainer", currentBreakpoint})}>
             <ActiveTabComponent
               tabHandler={onHandleTab}

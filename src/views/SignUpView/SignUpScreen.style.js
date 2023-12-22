@@ -23,7 +23,7 @@ export const style = {
     width: "75%",
   },
   smScreenContainer: {
-    alignSelf: "flex-start",
+    alignSelf: "center",
     width: "80%",
   },
   largeScreenContainer: {

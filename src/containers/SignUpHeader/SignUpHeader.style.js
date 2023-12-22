@@ -45,9 +45,6 @@ export const styles = {
   lgStepperContainer: {
     flex: 2.5,
   },
-  smStepperContainer: {
-    flex: 1.5,
-  },
   stepperContainer: {
     flex: 3.5,
   },
@@ -66,12 +63,7 @@ export const getResponsiveStyles = ({str, currentBreakpoint}) => {
           ...styles.lgStepperContainer,
         };
       }
-      if (currentBreakpoint === "sm") {
-        return {
-          ...styles.smStepperContainer,
-        };
-      }
-      if (currentBreakpoint === "xs") {
+      if (currentBreakpoint === "xs" || currentBreakpoint === "sm") {
         return;
       }
       return {
