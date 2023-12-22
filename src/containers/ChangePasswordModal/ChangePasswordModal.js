@@ -21,6 +21,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   const [newPassword, setNewPassword] = useState("");
   const isPasswordValid = strongPasswordValidator(newPassword);
   const doPasswordsMatch = newPassword === confirmNewPassword;
+  
   const { errorWhileChangePassword, handleUseChangePassword, isLoading } =
     useChangePasswordApi();
 
