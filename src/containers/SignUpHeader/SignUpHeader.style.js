@@ -13,7 +13,6 @@ const style = {
     fontSize: 14,
     fontWeight: "600",
     lineHeight: 20,
-    fontFamily: "General Sans",
   },
   iconBar: {
     alignSelf: "center",
