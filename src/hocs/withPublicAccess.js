@@ -1,22 +1,33 @@
 import React, { useContext, useEffect } from "react";
-import { useLocation, useNavigate } from "../routes";
+import { useLocation, useNavigate, useSearchParams } from "../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { StorageService } from "../services";
 import { navigations } from "../constants/routeNames";
-import { EXIT_WEBVIEW } from "../constants/constants";
+import { REDIRECT_URL } from "../constants/constants";
 
 function withPublicAccess(Component) {
   return (props) => {
     const [authState] = useContext(AuthContext);
     const navigate = useNavigate();
-    const isWebPlatform = Platform.OS.toLowerCase() === "web"
+    const [searchParams] = useSearchParams();
 
-    // TODO: Need to refactor and test the below code.
+    const isWebPlatform = Platform.OS.toLowerCase() === "web";
+
     const location = useLocation();
-    if (window && window.ReactNativeWebView && isWebPlatform && location.pathname === navigations.LOGIN) {
-      window.ReactNativeWebView.postMessage(EXIT_WEBVIEW);
+    if (
+      window &&
+      window.ReactNativeWebView &&
+      isWebPlatform &&
+      location.pathname === navigations.LOGIN
+    ) {
+      window.ReactNativeWebView.postMessage(
+        JSON.stringify({
+          path: navigations.LOGIN,
+          redirectPath: searchParams.get(REDIRECT_URL) || "",
+        })
+      );
     }
 
     useEffect(() => {
