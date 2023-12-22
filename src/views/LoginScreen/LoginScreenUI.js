@@ -12,27 +12,27 @@ import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import FollowUsIcons from "../../components/FollowUsIcons";
 import HeaderText from "../../components/HeaderText/HeaderText";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./Loginscreen.style";
 
 const LoginScreenUI = (props) => {
   const {
-    onLogin,
     active,
-    onForgotPasswordClick,
-    toggleUser,
-    loginDisabled,
     errorMessage,
-    userName,
-    password,
-    onChangeUsername,
-    onChangePassword,
-    intl,
-    onCreateNewPasswordClick,
-    options,
-    handleToggle,
-    isLoading,
     errorWhileLoggingIn,
+    handleDismissToast,
+    intl,
+    isLoading,
+    loginDisabled,
+    onChangePassword,
+    onChangeUsername,
+    onForgotPasswordClick,
+    onLogin,
+    onCreateNewPasswordClick,
+    password,
+    toggleUser,
+    userName,
   } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
@@ -202,19 +202,20 @@ const LoginScreenUI = (props) => {
                     isWebView && styles.webView.inputTextBox
                   }
                 />
-                <View style={styles.forgotPasswordView}>
-                  <TouchableOpacity onPress={onForgotPasswordClick}>
-                    <CommonText
-                      customTextStyle={{
-                        ...styles.forgotPasswordText,
-                        ...(isWebView && styles.webView.forgotPasswordText),
-                      }}
-                      title={intl.formatMessage({
-                        id: "label.forgot_password",
-                      })}
-                    />
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  onPress={onForgotPasswordClick}
+                  style={styles.forgotPasswordView}
+                >
+                  <CommonText
+                    customTextStyle={{
+                      ...styles.forgotPasswordText,
+                      ...(isWebView && styles.webView.forgotPasswordText),
+                    }}
+                    title={intl.formatMessage({
+                      id: "label.forgot_password",
+                    })}
+                  />
+                </TouchableOpacity>
                 <View style={styles.loginButtonView}>
                   <ButtonComponent
                     title={intl.formatMessage({ id: "label.login" })}
@@ -225,14 +226,6 @@ const LoginScreenUI = (props) => {
                   />
                 </View>
               </View>
-              {errorWhileLoggingIn ? (
-                <View style={styles.errorView}>
-                  <CommonText
-                    customTextStyle={styles.errorText}
-                    title={errorWhileLoggingIn}
-                  />
-                </View>
-              ) : null}
               <View style={styles.accountView}>
                 <CommonText
                   customTextStyle={{
@@ -253,35 +246,47 @@ const LoginScreenUI = (props) => {
                   />
                 </TouchableOpacity>
               </View>
-              {!isWebView && (
-                <View style={styles.followUsImageView}>
-                  <FollowUsIcons />
-                </View>
-              )}
             </View>
+            {!isWebView && (
+              <View style={styles.followUsImageView}>
+                <FollowUsIcons />
+              </View>
+            )}
           </ScrollView>
         ) : (
           <View style={styles.minHeight}></View>
         )}
       </View>
+      {!!errorWhileLoggingIn && (
+        <ToastComponent
+          toastMessage={errorWhileLoggingIn}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </WebViewLoginSignUpWrapper>
   );
+};
+
+LoginScreenUI.defaultProps = {
+  errorMessage: "",
+  errorWhileLoggingIn: "",
+  handleDismissToast: () => {},
 };
 
 LoginScreenUI.propTypes = {
   active: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
   errorWhileLoggingIn: PropTypes.string,
-  handleToggle: PropTypes.func.isRequired,
+  handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   loginDisabled: PropTypes.bool.isRequired,
-  options: PropTypes.array.isRequired,
-  onCreateNewPasswordClick: PropTypes.func.isRequired,
   onChangePassword: PropTypes.func.isRequired,
   onChangeUsername: PropTypes.func.isRequired,
-  onLogin: PropTypes.func.isRequired,
+  onCreateNewPasswordClick: PropTypes.func.isRequired,
   onForgotPasswordClick: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired,
   password: PropTypes.string.isRequired,
   toggleUser: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
