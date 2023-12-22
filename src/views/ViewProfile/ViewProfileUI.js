@@ -48,12 +48,16 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
       <ProfileIcon
         showEditModal={showEditModal}
         iconType={iconType}
+        customContainerStyle={
+          iconType === "modalIcon" && style.editProfileContainer
+        }
         firstName={firstName}
         lastName={lastName}
         profileImage={profileImage}
       />
     );
   };
+
   const openImagePicker = async () => {
     try {
       const image = await ImagePicker.openPicker({
