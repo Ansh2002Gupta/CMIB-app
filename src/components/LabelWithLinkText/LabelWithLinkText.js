@@ -7,10 +7,10 @@ import style from "./LabelWithLinkText.style";
 const LabelWithLinkText = ({ labelText, linkText, onLinkClick }) => {
   return (
     <View style={style.textContainer}>
-      <CommonText title={labelText} customTextStyle={style.labelTextStyle} />
-      <TouchableOpacity onPress={() => onLinkClick()}>
+      {!!labelText && <CommonText title={labelText} customTextStyle={style.labelTextStyle} />}
+      {!!linkText && <TouchableOpacity onPress={() => onLinkClick()}>
         <CommonText customTextStyle={style.linkTextStyle} title={linkText} />
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </View>
   );
 };
