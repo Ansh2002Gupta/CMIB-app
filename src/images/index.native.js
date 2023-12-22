@@ -66,6 +66,9 @@ import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.pn
 import iconClose from "../../public/images/iconClose/iconClose.png";
 import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
+import iconSearch from "../../public/images/svg/iconSearch.svg"
+import iconFilter from "../../public/images/svg/iconFilter.svg"
+import iconMore from "../../public/images/svg/iconMore.svg"
 import iconWarning from "../../public/images/svg/iconWarning.svg";
 import iconTick from "../../public/images/iconTick/iconTick.png";
 
@@ -140,6 +143,9 @@ const images = {
   iconFooterGlobal,
   iconWarning,
   iconSquareEdit,
+  iconSearch,
+  iconFilter,
+  iconMore,
 };
 
 export default images;

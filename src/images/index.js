@@ -85,6 +85,9 @@ const iconTick = "images/iconTick/iconTick.png";
 const iconSetting = "images/iconSetting/iconSetting.png";
 const iconSend = "images/iconSend/iconSend.png";
 const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
+const iconFilter = "images/svg/iconFilter.svg";
+const iconSearch = "images/svg/iconSearch.svg";
+const iconMore = "images/svg/iconMore.svg";
 
 const images = {
   iconArrowUp,
@@ -164,6 +167,12 @@ const images = {
   iconCmibLogoWhite,
   iconRightArrow,
   iconFooterGlobal,
+  iconTick,
+  iconSquareEdit,
+  iconWarning,
+  iconFilter,
+  iconSearch,
+  iconMore,
 };
 
 export default images;

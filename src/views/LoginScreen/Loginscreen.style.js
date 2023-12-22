@@ -1,7 +1,4 @@
-import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-
-const isWeb = Platform.OS === "web";
 
 const style = {
   mainView: {
@@ -37,10 +34,7 @@ const style = {
     textAlign: "center",
     color: colors.black,
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Semibold",
+    fontWeight: "600",
   },
   buttonView: {
     flexDirection: "row",
@@ -62,10 +56,6 @@ const style = {
   },
   rememberMeText: {
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
     color: colors.black,
     lineHeight: 20,
   },
@@ -75,7 +65,10 @@ const style = {
     cursor: "pointer",
     fontWeight: "600",
   },
-  loginButtonView: { marginTop: 32, cursor: "pointer" },
+  loginButtonView: {
+    marginTop: 32,
+    cursor: "pointer",
+  },
   accountView: {
     marginTop: 24,
     justifyContent: "center",
@@ -83,7 +76,6 @@ const style = {
     gap: 4,
   },
   newAccountText: {
-    textDecorationLine: "none",
     color: colors.darkBlue,
     fontSize: 14,
     fontWeight: "600",
@@ -100,13 +92,12 @@ const style = {
     fontSize: 14,
   },
   followUsImageView: {
-    marginHorizontal: 30,
-    flex: 1,
-    justifyContent: "flex-end",
     paddingBottom: 16,
+    paddingTop: 32,
   },
   minHeight: { minHeight: 500 },
   gapForWebView: { gap: 24 },
+
   // Web view related Styles
   webView: {
     activeTab: {
@@ -123,33 +114,23 @@ const style = {
     dontHaveAccountText: {
       color: colors.gray,
       fontSize: 14,
-      fontStyle: "normal",
-      fontWeight: "500",
       lineHeight: 20,
-      fontFamily: "General Sans",
     },
     createNewAccountText: {
       color: colors.darkBlue,
       fontSize: 14,
-      fontStyle: "normal",
       fontWeight: "600",
       lineHeight: 20,
       cursor: "pointer",
-      textDecoration: "none",
     },
     errorMessage: {
-      fontFamily: "General sans",
-      fontWeight: "500",
       marginTop: 2,
       color: colors.errorRed,
     },
     forgotPasswordText: {
-      fontFamily: "General Sans",
       fontSize: 14,
-      fontStyle: "normal",
       fontWeight: "600",
       lineHeight: 20,
-      textDecoration: "none",
       cursor: "pointer",
     },
     headerContainer: {
@@ -160,9 +141,7 @@ const style = {
     },
     headerText: {
       color: colors.black,
-      fontFamily: "General Sans",
       fontSize: 40,
-      fontStyle: "normal",
       fontWeight: "600",
       letterSpacing: -2,
     },
@@ -177,47 +156,34 @@ const style = {
     },
     inputLabelText: {
       color: colors.black,
-      fontFamily: "General Sans",
       fontSize: 14,
-      fontStyle: "normal",
-      fontWeight: "500",
       lineHeight: 24,
       textTransform: "capitalize",
     },
     inputTextBox: {
-      background: "#FFF",
-      fontFamily: "General Sans",
+      background: colors.white,
       marginTop: 0,
     },
     loginText: {
       cursor: "pointer",
-      fontFamily: "General Sans",
     },
     rememberMeText: {
-      fontFamily: "General Sans",
       fontSize: 14,
-      fontStyle: "normal",
-      fontWeight: "500",
       lineHeight: 20,
       cursor: "pointer",
       margin: 0,
     },
     selectedSectionHeading: {
       color: colors.black,
-      fontFamily: "General Sans",
       textAlign: "center",
       fontSize: 16,
-      fontStyle: "normal",
       fontWeight: "600",
       cursor: "pointer",
     },
     subHeadingText: {
       color: colors.darkGrey,
       fontSize: 16,
-      fontStyle: "normal",
-      fontWeight: "500",
       lineHeight: 24,
-      fontFamily: "General sans",
     },
     subHeadingText900px: {
       fontSize: 14,
@@ -229,27 +195,10 @@ const style = {
     unSelectedSectionHeading: {
       color: colors.darkGrey,
       textAlign: "center",
-      fontFamily: "General Sans",
       fontSize: 16,
-      fontStyle: "normal",
-      fontWeight: "500",
       cursor: "pointer",
     },
   },
-  errorView: {
-    alignItems: "center",
-    padding: 10,
-    borderRadius: 8,
-    backgroundColor: colors.errorBackground,
-    marginTop: 10,
-  },
-  errorText: {
-    fontSize: 14,
-    color: colors.errorRed,
-    fontWeight: "500",
-    fontFamily: isWeb ? "General Sans" : "GeneralSans-SemiBold",
-  },
-  FollowUsIconsStyle: { marginTop: 32, marginBottom: 20 },
 };
 
 export default style;
