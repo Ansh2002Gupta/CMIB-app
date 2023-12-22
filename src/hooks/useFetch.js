@@ -5,7 +5,7 @@ import { API_STATUS, STATUS_CODES } from "../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../constants/errorMessages";
 
 /** 
- * 1. useFetch will initiate the API call on component mount automatically so that you don't require to use the useEffect hook in you component explicitly just to call the API.
+ * 1. useFetch will initiate the API call on component mount automatically so that you don't require to use the useEffect hook in your component explicitly just to call the API.
  * 
  * 2. You can anytime omit this behaviour by passing skipApiCallOnMount: true inside the otherOptions object.
  * 
