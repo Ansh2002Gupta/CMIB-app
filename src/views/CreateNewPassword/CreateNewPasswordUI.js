@@ -107,7 +107,6 @@ function CreateNewPasswordUI(props) {
     };
   }, []);
 
-  console.log(errorMessage, "errorMessage");
   return (
     <ScrollView
       style={styles.mainView}

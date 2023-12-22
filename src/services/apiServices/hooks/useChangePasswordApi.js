@@ -31,11 +31,9 @@ const useChangePasswordApi = () => {
       setErrorWhileChangePassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setChangePasswordStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileChangePassword(err.response?.data?.message);
-        return;
-      }
-      setErrorWhileChangePassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setErrorWhileChangePassword(
+        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+      );
     }
   };
 
@@ -45,12 +43,12 @@ const useChangePasswordApi = () => {
 
   return {
     changePasswordResult,
+    changePasswordStatus,
     errorWhileChangePassword,
     handleUseChangePassword,
     isError,
     isLoading,
     isSuccess,
-    changePasswordStatus,
   };
 };
 

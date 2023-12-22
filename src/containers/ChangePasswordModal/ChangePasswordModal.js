@@ -78,7 +78,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
             <CustomTextInput
               label={intl.formatMessage({ id: "label.old_password" })}
               placeholder={intl.formatMessage({
-                id: "label.password_placeholder",
+                id: "label.old_password_placeholder",
               })}
               value={oldPassword}
               onChangeText={(val) => setOldPassword(val)}
@@ -91,7 +91,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
             <CustomTextInput
               label={intl.formatMessage({ id: "label.new_password" })}
               placeholder={intl.formatMessage({
-                id: "label.password_placeholder",
+                id: "label.enter_your_new_password",
               })}
               value={newPassword}
               onChangeText={(val) => setNewPassword(val)}
@@ -104,7 +104,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
             <CustomTextInput
               label={intl.formatMessage({ id: "label.confirm_new_password" })}
               placeholder={intl.formatMessage({
-                id: "label.password_placeholder",
+                id: "label.confirm_your_new_password",
               })}
               value={confirmNewPassword}
               onChangeText={(val) => setConfirmNewPassword(val)}

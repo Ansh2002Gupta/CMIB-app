@@ -30,15 +30,11 @@ const useCreateNewPasswordAPI = () => {
       setChangePasswordStatus(API_STATUS.ERROR);
       errorCallback(res);
     } catch (err) {
+      setChangePasswordStatus(API_STATUS.ERROR);
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       errorCallback(errorMessage);
-      setChangePasswordStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileResetPassword(err.response?.data?.message);
-        return;
-      }
-      setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setErrorWhileResetPassword(errorMessage);
     }
   };
 
