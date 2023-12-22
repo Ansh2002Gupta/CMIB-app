@@ -24,7 +24,7 @@ export const style = {
   },
   smScreenContainer: {
     alignSelf: "center",
-    width: "80%",
+    width: "65%",
   },
   largeScreenContainer: {
     width: "56%",
