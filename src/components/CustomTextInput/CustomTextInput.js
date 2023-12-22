@@ -69,7 +69,6 @@ const CustomTextInput = (props) => {
     }
   };
 
-  console.log((isError, "isError@"));
   return (
     <View style={[style.container, customStyle]}>
       {!!label && (
