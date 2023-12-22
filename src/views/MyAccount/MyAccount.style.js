@@ -1,4 +1,16 @@
+import { Dimensions } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const deviceHeight = Dimensions.get("window").height;
+const maxHeightPercentage = 0.8;
+const minHeightThreshold = 500;
+const maxHeight = deviceHeight * maxHeightPercentage;
+
+let modalHeight = maxHeight;
+
+if (deviceHeight < minHeightThreshold) {
+  modalHeight = minHeightThreshold;
+}
 
 const style = {
   optionCotainer: {
@@ -51,6 +63,7 @@ const style = {
   titleStyle: {
     fontSize: 14,
     lineHeight: 20,
+    paddingLeft: 12,
     color: colors.black,
   },
   iconContainer: {
@@ -58,15 +71,21 @@ const style = {
   },
   leftIcon: {
     width: 24,
-    height: 24
+    height: 24,
   },
   arrowIcon: {
     width: 16,
-    height: 16
+    height: 16,
   },
-  initialsText: {
-    fontSize: 14
-  }
+  headerTextStyle: {
+    paddingTop: 0,
+    fontWeight: "600",
+    paddingBottom: 16,
+  },
+  innerContainerStyle: {
+    height: modalHeight,
+    maxHeight: maxHeight,
+  },
 };
 
 export default style;
