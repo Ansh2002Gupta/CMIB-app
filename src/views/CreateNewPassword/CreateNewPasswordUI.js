@@ -87,7 +87,7 @@ function CreateNewPasswordUI(props) {
         id: "label.password_field_error",
       });
     } else if (newPassword !== confirmNewPassword) {
-      message = intl.formatMessage({ id: "label.passwords_do_not_match" });
+      message = intl.formatMessage({ id: "label.password-not-match" });
     }
 
     if (message) {
