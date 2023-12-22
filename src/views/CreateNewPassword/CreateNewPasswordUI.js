@@ -7,11 +7,11 @@ import {
 } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
-import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
+import NewPasswordValidation from "../../components/NewPasswordValidation";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./CreateNewPassword.style";
@@ -37,10 +37,11 @@ function CreateNewPasswordUI(props) {
   const [isAnyPasswordFieldLeft, setIsAnyPasswordFieldLeft] = useState(false);
   const [validations, setValidations] = useState({
     length: false,
-    numeric: false,
-    uppercase: false,
     lowercase: false,
+    numeric: false,
+    match: false,
     specialChar: false,
+    uppercase: false,
   });
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -186,7 +187,7 @@ function CreateNewPasswordUI(props) {
               isError={!!errorMessage}
               customErrorStyle={styles.ErrorStyle}
             />
-            <CreateNewPasswordValidation
+            <NewPasswordValidation
               {...{
                 newPassword,
                 confirmNewPassword,
@@ -204,7 +205,7 @@ function CreateNewPasswordUI(props) {
               title={intl.formatMessage({ id: "label.submit" })}
               onPress={() => {
                 areAllFieldFilledInPassword();
-                if (isAnyPasswordFieldLeft) handleSubmit();
+                if (!isAnyPasswordFieldLeft) handleSubmit();
               }}
               customTitleStyle={styles.webView.submitText}
               customButtonContainer={styles.webView.submitTextContainer}

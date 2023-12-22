@@ -18,24 +18,15 @@ function LoginScreenComponent() {
   const [active, setActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
-  const { handleUserLogin, isLoading, errorWhileLoggingIn } = useLoginUser();
+  const {
+    handleUserLogin,
+    isLoading,
+    errorWhileLoggingIn,
+    setErrorWhileLoggingIn,
+  } = useLoginUser();
 
-  const [options, setOptions] = useState([
-    {
-      title: intl.formatMessage({ id: "label.remember_me" }),
-      isSelected: false,
-      id: 1,
-    },
-  ]);
-
-  const handleToggle = (id) => {
-    const updatedItems = options.map((item) => {
-      if (item.id === id) {
-        return { ...item, isSelected: !item.isSelected };
-      }
-      return item;
-    });
-    setOptions(updatedItems);
+  const handleDismissToast = () => {
+    setErrorWhileLoggingIn("");
   };
 
   const onForgotPasswordClick = async () => {
@@ -80,23 +71,22 @@ function LoginScreenComponent() {
 
   return (
     <LoginScreenUI
-      onChangePassword={onChangePassword}
       active={active}
-      onLogin={onLogin}
-      onForgotPasswordClick={onForgotPasswordClick}
-      toggleUser={toggleUser}
-      loginDisabled={loginDisabled}
-      onChangeUsername={onChangeUsername}
       errorMessage={errorMessage}
-      password={password}
-      userName={userName}
-      intl={intl}
-      icons={icons}
-      onCreateNewPasswordClick={onCreateNewPasswordClick}
-      handleToggle={handleToggle}
-      options={options}
-      isLoading={isLoading}
       errorWhileLoggingIn={errorWhileLoggingIn}
+      handleDismissToast={handleDismissToast}
+      loginDisabled={loginDisabled}
+      icons={icons}
+      intl={intl}
+      isLoading={isLoading}
+      onChangePassword={onChangePassword}
+      onChangeUsername={onChangeUsername}
+      onCreateNewPasswordClick={onCreateNewPasswordClick}
+      onForgotPasswordClick={onForgotPasswordClick}
+      onLogin={onLogin}
+      password={password}
+      toggleUser={toggleUser}
+      userName={userName}
     />
   );
 }

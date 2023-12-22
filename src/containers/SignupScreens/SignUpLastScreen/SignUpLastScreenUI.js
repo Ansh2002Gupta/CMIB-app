@@ -194,6 +194,7 @@ const SignUpLastScreenUI = (props) => {
         onPressButtonTwo={() => handleSuccessModal(true)}
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
+        hasIconLeft
       />
       {!!errorMessage && (
         <ToastComponent

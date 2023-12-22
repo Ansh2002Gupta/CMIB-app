@@ -178,6 +178,7 @@ const locale = {
     "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
   "label.text_otp": "OTP",
   "label.jobs": "Jobs",
+  "label.old_password": "Old Password",
   "label.company_logo": "Company Logo",
   "label.contact_person_info": "Contact Person Information",
   "label.balance_credit": "Balance Credit",
@@ -188,12 +189,14 @@ const locale = {
   "label.braces": ")",
   "label.left_brace": "left)",
   "label.times": "times!",
+  "label.password-not-match": "The password and confirm password do not match.",
   "label.update": "Update",
   "label.add": "Add",
-  "label.error_password": "Password doesn't match",
   "label.edit": "Edit",
   "label.duplicate_email_validation": "Email addresses must be unique.",
   "label.logout_message": "Are you sure you want to logout of the portal?",
+  "label.error_password": "Password doesn't match",
+  "label.old_password_placeholder": "Enter your old password",
 };
 
 export default locale;

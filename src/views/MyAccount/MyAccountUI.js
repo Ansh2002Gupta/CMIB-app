@@ -7,16 +7,21 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePasswordModal";
+import CustomModal from "../../components/CustomModal/CustomModal";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
+import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
 import style from "./MyAccount.style";
 
 const MyAccountUI = ({
-  intl,
-  isLogout,
-  handleLogoutClick,
+  changePasswordModal,
   handleOptionClick,
+  handleChangePassword,
+  handleLogoutClick,
+  isLogout,
+  intl,
   options,
   saveLogout,
 }) => {
@@ -28,18 +33,14 @@ const MyAccountUI = ({
   const email = "kashishbhatheja@gmail.com";
 
   const renderProfileIcon = () => {
-    if (profileImage) {
-      return (
-        <Image source={{ uri: profileImage }} style={style.profileImage} />
-      );
-    } else {
-      const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
-      return (
-        <View style={style.initialsContainer}>
-          <CommonText customTextStyle={style.initialsText} title={initials} />
-        </View>
-      );
-    }
+    return (
+      <ProfileIcon
+        firstName={firstName}
+        lastName={lastName}
+        profileImage={profileImage}
+        customContainerStyle={style.initialsContainer}
+      />
+    );
   };
 
   return (
@@ -84,7 +85,17 @@ const MyAccountUI = ({
           </TouchableOpacity>
         ))}
       </View>
-
+      {changePasswordModal ? (
+        <CustomModal
+          headerText={intl.formatMessage({
+            id: "label.change_password",
+          })}
+          customInnerContainerStyle={style.innerContainerStyle}
+          headerTextStyle={style.headerTextStyle}
+        >
+          <ChangePasswordModal onPressCancel={handleChangePassword} />
+        </CustomModal>
+      ) : null}
       {isLogout && (
         <LogoutModal onCancel={handleLogoutClick} onSave={saveLogout} />
       )}
@@ -93,7 +104,9 @@ const MyAccountUI = ({
 };
 
 MyAccountUI.propTypes = {
+  changePasswordModal: PropTypes.bool,
   handleOptionClick: PropTypes.func.isRequired,
+  handleChangePassword: PropTypes.func,
   intl: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
 };

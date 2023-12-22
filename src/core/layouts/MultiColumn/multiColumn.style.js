@@ -1,6 +1,6 @@
-const styles = {
+const style = {
   flexDirection: 'row',
 };
 
-export default styles;
+export default style;
 

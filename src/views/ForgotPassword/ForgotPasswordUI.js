@@ -173,9 +173,7 @@ const ForgotPasswordUI = (props) => {
           />
           <TouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
-              customTextStyle={
-                isWebView ? [styles.backToLoginText] : styles.backToLoginText
-              }
+              customTextStyle={styles.backToLoginText}
               title={intl.formatMessage({ id: "label.back_to_login" })}
             />
           </TouchableOpacity>

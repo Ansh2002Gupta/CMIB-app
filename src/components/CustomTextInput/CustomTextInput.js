@@ -182,7 +182,7 @@ const CustomTextInput = (props) => {
 
 CustomTextInput.defaultProps = {
   customHandleBlur: () => {},
-  customErrorStyle:{},
+  customErrorStyle: {},
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
@@ -205,7 +205,7 @@ CustomTextInput.defaultProps = {
 CustomTextInput.propTypes = {
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
-  customErrorStyle:PropTypes.object,
+  customErrorStyle: PropTypes.object,
   customStyle: PropTypes.object,
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
