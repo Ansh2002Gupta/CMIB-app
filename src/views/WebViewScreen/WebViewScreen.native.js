@@ -1,29 +1,27 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import { WebView } from "react-native-webview";
-
-import { navigations } from "../../constants/routeNames";
-import { EXIT_WEBVIEW } from "../../constants/constants";
-
+import styles from "./WebViewScreen.style";
 const WebViewScreen = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const uri = location.uri;
-
+  const uri = location?.state?.uri;
   const handleWebViewEvent = (key) => {
     const eventData = key.nativeEvent.data;
-    console.log('eventData', eventData);
-    switch (eventData) {
-      case EXIT_WEBVIEW:
-        navigate(navigations.LOGIN);
-        break;
+    const parsedEventData = JSON.parse(eventData);
+    if (parsedEventData?.path) {
+      navigate(parsedEventData.path, {
+        state: {
+          redirectPath: parsedEventData?.redirectPath,
+          data: parsedEventData?.data,
+        },
+      });
     }
   };
-
   return (
     <WebView
-      source={{ uri: "http://13.233.17.74:81/jobs" }}
-      style={{ flex: 1 }}
+      source={{ uri: uri }}
+      style={styles.webViewContainer}
       onError={(syntheticEvent) => {
         const { nativeEvent } = syntheticEvent;
         console.error("WebView error: ", nativeEvent);
@@ -36,5 +34,4 @@ const WebViewScreen = () => {
     />
   );
 };
-
 export default WebViewScreen;

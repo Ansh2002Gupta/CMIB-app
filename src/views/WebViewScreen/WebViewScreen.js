@@ -1,10 +1,9 @@
-import React from 'react'
-import { View } from "@unthinkable/react-core-components";
+import React from "react";
+
+import DefaultRoute from "../../routes/Components/DefaultRoute";
 
 const WebViewScreen = () => {
-  return (
-    <View></View>
-  )
-}
+  return <DefaultRoute />;
+};
 
-export default WebViewScreen
+export default WebViewScreen;

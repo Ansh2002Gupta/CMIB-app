@@ -160,7 +160,7 @@ const config = [
   },
   {
     pagePath: navigations.WEB_VIEW,
-    element: <HomeWithPrivateAccess />,
+    element: <WebViewScreen />,
     views: [
       {
         viewPath: "",
