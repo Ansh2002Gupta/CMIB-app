@@ -10,6 +10,7 @@ import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
+import { strongPasswordValidator } from "../../constants/validation";
 import styles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
@@ -18,52 +19,33 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   const [error, setError] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [validations, setValidations] = useState({
-    length: false,
-    lowercase: false,
-    match: false,
-    numeric: false,
-    specialChar: false,
-    uppercase: false,
-  });
+  const isPasswordValid = strongPasswordValidator(newPassword);
+  const doPasswordsMatch = newPassword === confirmNewPassword;
   const { errorWhileChangePassword, handleUseChangePassword, isLoading } =
     useChangePasswordApi();
-
-  const areAllFieldsValid = () => {
-    return (
-      validations.length &&
-      validations.numeric &&
-      validations.uppercase &&
-      validations.lowercase &&
-      validations.specialChar
-    );
-  };
-
-  const areAllFieldFilledInPassword = () => {
-    if (newPassword !== confirmNewPassword) {
-      setError(intl.formatMessage({ id: "label.password-not-match" }));
-      return;
-    }
-    setError(null);
-    if (areAllFieldsValid()) {
-      handleUseChangePassword({
-        old_password: oldPassword,
-        password: newPassword,
-      });
-    }
-  };
 
   const isNextDisabled = () => {
     return (
       !oldPassword ||
       !newPassword ||
       !confirmNewPassword ||
-      !validations.length ||
-      !validations.numeric ||
-      !validations.uppercase ||
-      !validations.lowercase ||
-      !validations.specialChar
+      !isPasswordValid ||
+      !doPasswordsMatch
     );
+  };
+  
+  const handleSave = () => {
+    if (!doPasswordsMatch) {
+      setError(intl.formatMessage({ id: "label.password-not-match" }));
+      return;
+    }
+    setError(null);
+    if (isPasswordValid) {
+      handleUseChangePassword({
+        old_password: oldPassword,
+        password: newPassword,
+      });
+    }
   };
 
   return (
@@ -121,14 +103,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
                   customTextStyle={styles.passwordMatchStyle}
                 />
               )}
-              <NewPasswordValidation
-                {...{
-                  newPassword,
-                  confirmNewPassword,
-                  validations,
-                  setValidations,
-                }}
-              />
+              <NewPasswordValidation {...{ newPassword, confirmNewPassword }} />
             </View>
           }
           fiveSection={
@@ -150,7 +125,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           onPressCancel(false);
         }}
         disabled={isLoading}
-        onPressButtonTwo={() => areAllFieldFilledInPassword()}
+        onPressButtonTwo={handleSave}
         isNextDisabled={isNextDisabled()}
         buttonTwoText={intl.formatMessage({ id: "label.save" })}
       />
