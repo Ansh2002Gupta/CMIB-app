@@ -59,7 +59,6 @@ const style = {
     marginTop: 24,
     marginBottom: 24,
     fontSize: 14,
-    fontFamily: "GeneralSans-Semibold",
     color: colors.darkBlue,
     fontWeight: "600",
   },
@@ -162,7 +161,6 @@ const style = {
     alignItems:"center"
   },
   topTabs: {
-    width: "50%",
     cursor: "pointer",
   },
 };
