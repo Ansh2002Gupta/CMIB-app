@@ -1,13 +1,18 @@
+import colors from "../../assets/colors";
+
 const styles = {
-  buttonStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
-    borderRadius: 5,
-  },
-  textStyle: {
-    fontSize: 16,
+  buttonContainer: {
+    alignItems: "center",
+    borderRadius: 8,
+    borderColor: colors.lightGrey,
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    flex: 1,
+    flexDirection: "row",
+    minWidth: 100,
+    minHeight: 56,
+    justifyContent: "center",
+    padding: 14,
   },
   disabledStyle: {
     opacity: 0.5,

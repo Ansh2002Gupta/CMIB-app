@@ -20,11 +20,13 @@ const CustomColumn = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.buttonStyle, style, disabled && styles.disabledStyle]}
+      style={{...styles.buttonContainer, 
+        ...(style || {}),
+      }}
       disabled={disabled}
     >
       {!!iconLeft && <Image source={iconLeft} />}
-      <CommonText customTextStyle ={[styles.textStyle, textStyle]} title={title}/>
+      <CommonText customTextStyle ={textStyle} title={title}/>
       {!!iconRight && <Image source={iconRight}/>}
     </TouchableOpacity>
   );

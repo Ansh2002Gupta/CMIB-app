@@ -10,35 +10,36 @@ import TouchableImage from "../../components/TouchableImage/TouchableImage";
 import images from "../../images";
 
 import styles from "./dashboard.style";
+import AddDesignation from "../../components/AddDesignation/AddDesignation"
 
 function DashboardView() {
   const intl = useIntl();
 
-  const handleSearchResults = (filteredData) => {
-    console.log(filteredData);
-  };
+  // const handleSearchResults = (filteredData) => {
+  //   console.log(filteredData);
+  // };
 
-  const dataList = ['Apple', 'Banana', 'Orange', 'Mango', 'Pineapple', 'Grape'];
-  const FilterIcon = images.iconFilter;
-  const MoreIcon = images.iconMore;
+  // const dataList = ['Apple', 'Banana', 'Orange', 'Mango', 'Pineapple', 'Grape'];
+  // const FilterIcon = images.iconFilter;
+  // const MoreIcon = images.iconMore;
 
-  const columnConfigs = [
-    {
-      content: (<SearchView data={dataList}  onSearch={handleSearchResults}/>),
-      style: {},
-      isFillSpace: true,
-    },
-    {
-      content: <TouchableImage source={FilterIcon} disabled={true} parentStyle={styles.imageParentStyle} />,
-      style: {},
-      isFillSpace: false,
-    },
-    {
-      content: <TouchableImage source={MoreIcon} disabled={false} parentStyle={styles.imageParentStyle} />,
-      style: {},
-      isFillSpace: false,
-    },
-  ];
+  // const columnConfigs = [
+  //   {
+  //     content: (<SearchView data={dataList}  onSearch={handleSearchResults}/>),
+  //     style: {},
+  //     isFillSpace: true,
+  //   },
+  //   {
+  //     content: <TouchableImage source={FilterIcon} disabled={true} parentStyle={styles.imageParentStyle} />,
+  //     style: {},
+  //     isFillSpace: false,
+  //   },
+  //   {
+  //     content: <TouchableImage source={MoreIcon} disabled={false} parentStyle={styles.imageParentStyle} />,
+  //     style: {},
+  //     isFillSpace: false,
+  //   },
+  // ];
 
   return (
     <View style={styles.container}>
@@ -46,7 +47,9 @@ function DashboardView() {
         customTextStyle={styles.header}
         title={intl.formatMessage({ id: "label.dashboard" })}
       />
-        <MultiColumn columns={columnConfigs}  />
+        {/* <MultiColumn columns={columnConfigs}  /> */}
+
+        <AddDesignation />
     </View>
   );
 }
