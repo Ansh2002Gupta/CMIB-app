@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
+import { Platform } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
 import { TextInput, View } from "@unthinkable/react-core-components";
 
@@ -16,14 +17,14 @@ const OtpInput = ({
 }) => {
   const { isWebView } = useIsWebView();
   const [activeInputIndex, setActiveInputIndex] = useState(null);
-  const [otp, setOtp] = useState(new Array(4).fill(''));
+  const [otp, setOtp] = useState(new Array(4).fill(""));
   const inputsRef = useRef(otp.map(() => React.createRef()));
   const handleOtpChange = (text, index) => {
     const newOtp = [...otp];
     newOtp[index] = text;
     setOtp(newOtp);
-   if (onOtpChange) {
-      onOtpChange(newOtp.join(''));
+    if (onOtpChange) {
+      onOtpChange(newOtp.join(""));
     }
     if (text && index < otp.length - 1) {
       inputsRef.current[index + 1].focus();
@@ -39,13 +40,24 @@ const OtpInput = ({
   };
 
   const onKeyPress = ({ nativeEvent: { key: keyValue } }, index) => {
-    if (keyValue === 'Backspace' && !otp[index] && index > 0) {
+    if (keyValue === "Backspace" && !otp[index] && index > 0) {
       const newOtp = [...otp];
-      newOtp[index - 1] = '';
+      newOtp[index - 1] = "";
       setOtp(newOtp);
       inputsRef.current[index - 1].focus();
     }
   };
+
+  const platformSpecificProps = Platform.select({
+    web: {
+      type: "numeric",
+    },
+    default: {
+      keyboardType: "numeric",
+      returnKeyType: "done",
+      textContentType: "oneTimeCode",
+    },
+  });
 
   const renderInputs = () => {
     return otp.map((item, index) => (
@@ -61,10 +73,8 @@ const OtpInput = ({
         value={otp[index]}
         onChangeText={(text) => handleOtpChange(text, index)}
         onKeyPress={(e) => onKeyPress(e, index)}
-        keyboardType="numeric"
+        {...platformSpecificProps}
         maxLength={1}
-        returnKeyType="done"
-        textContentType="oneTimeCode"
         onFocus={() => handleInputFocus(index)}
         onBlur={handleInputBlur}
       />
@@ -72,25 +82,28 @@ const OtpInput = ({
   };
 
   return (
-    <View >
+    <View>
       <View style={styles.container}>
         <View style={styles.labelContainer}>
           <CommonText
-            customTextStyle={[styles.label, isWebView && styles.webLabel, customLabelStyle]}
+            customTextStyle={[
+              styles.label,
+              isWebView && styles.webLabel,
+              customLabelStyle,
+            ]}
             title={label}
           />
-          {isMandatory && <CommonText
-            customTextStyle={[styles.label, styles.starStyle]}
-            title={` *`}
-          />}
+          {isMandatory && (
+            <CommonText
+              customTextStyle={[styles.label, styles.starStyle]}
+              title={` *`}
+            />
+          )}
         </View>
-        <View style={styles.otpContainer}>
-          {renderInputs()}
-        </View>
-        {isError && <CommonText
-          customTextStyle={styles.errorMsg}
-          title={errorMessage}
-        />}
+        <View style={styles.otpContainer}>{renderInputs()}</View>
+        {isError && (
+          <CommonText customTextStyle={styles.errorMsg} title={errorMessage} />
+        )}
       </View>
     </View>
   );
@@ -103,5 +116,5 @@ OtpInput.propTypes = {
   isMandatory: PropTypes.bool,
   label: PropTypes.string.isRequired,
   onOtpChange: PropTypes.func.isRequired,
-}
+};
 export default OtpInput;

@@ -10,7 +10,8 @@ const buttonStyleBase = {
   borderRadius: 8,
 };
 
-const buttonStyleWeb = Platform.OS.toLowerCase() === "web" ? { cursor: 'pointer' } : {};
+const buttonStyleWeb =
+  Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {};
 
 const style = {
   buttonStyle: {
@@ -18,7 +19,7 @@ const style = {
     ...buttonStyleWeb,
   },
   disableButtonStyle: {
-    opacity: 0.5,
+    backgroundColor: colors.voilet,
   },
   titleStyle: {
     fontSize: 16,
@@ -29,6 +30,3 @@ const style = {
 };
 
 export default style;
-
-
-

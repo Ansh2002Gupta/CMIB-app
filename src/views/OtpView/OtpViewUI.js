@@ -203,7 +203,6 @@ const OtpViewUI = ({
             <OtpInput
               label={intl.formatMessage({ id: "label.text_otp" })}
               onOtpChange={handleOtpChange}
-              customAsteriskStyle={styles.customAsteriskStyle}
               isMandatory
               errorMessage={errorMessage}
               isError={!!errorMessage}
@@ -220,7 +219,10 @@ const OtpViewUI = ({
                     title={formattedTimerValue}
                   />
                 ) : (
-                  <TouchableOpacity style={styles.topTabs} onPress={onResendOtpClick}>
+                  <TouchableOpacity
+                    style={styles.topTabs}
+                    onPress={onResendOtpClick}
+                  >
                     <CommonText
                       customTextStyle={styles.textlabelReset}
                       title={formatedOtpLeftValue}
@@ -265,9 +267,8 @@ const OtpViewUI = ({
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
             displayLoader={isLoading}
-            
           />
-          <TouchableOpacity style={styles.topTabs}  onPress={onClickGoToLogin}>
+          <TouchableOpacity style={styles.topTabs} onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={
                 isWebView
