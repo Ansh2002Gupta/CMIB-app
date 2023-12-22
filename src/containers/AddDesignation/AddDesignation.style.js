@@ -8,7 +8,10 @@ const styles = {
   saveStyle:{
     backgroundColor: colors.green,
     marginLeft :16,
-  }
+  },
+  vacancyStyle:{
+    marginTop: 24,
+  },
 };
 
 export default styles;

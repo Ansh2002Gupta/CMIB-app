@@ -3,43 +3,45 @@ import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-// Just ignore this file as just to test custom component
+
+import AddDesignation from "../../containers/AddDesignation/AddDesignation"
 import SearchView from "../../components/SearchView/SearchView";
 import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
 import TouchableImage from "../../components/TouchableImage/TouchableImage";
 import images from "../../images";
 
 import styles from "./dashboard.style";
-import AddDesignation from "../../components/AddDesignation/AddDesignation"
+
+// Just ignore this file as just to test custom component
 
 function DashboardView() {
   const intl = useIntl();
 
-  // const handleSearchResults = (filteredData) => {
-  //   console.log(filteredData);
-  // };
+  const handleSearchResults = (filteredData) => {
+    console.log(filteredData);
+  };
 
-  // const dataList = ['Apple', 'Banana', 'Orange', 'Mango', 'Pineapple', 'Grape'];
-  // const FilterIcon = images.iconFilter;
-  // const MoreIcon = images.iconMore;
+  const dataList = ['Apple', 'Banana', 'Orange', 'Mango', 'Pineapple', 'Grape'];
+  const FilterIcon = images.iconFilter;
+  const MoreIcon = images.iconMore;
 
-  // const columnConfigs = [
-  //   {
-  //     content: (<SearchView data={dataList}  onSearch={handleSearchResults}/>),
-  //     style: {},
-  //     isFillSpace: true,
-  //   },
-  //   {
-  //     content: <TouchableImage source={FilterIcon} disabled={true} parentStyle={styles.imageParentStyle} />,
-  //     style: {},
-  //     isFillSpace: false,
-  //   },
-  //   {
-  //     content: <TouchableImage source={MoreIcon} disabled={false} parentStyle={styles.imageParentStyle} />,
-  //     style: {},
-  //     isFillSpace: false,
-  //   },
-  // ];
+  const columnConfigs = [
+    {
+      content: (<SearchView data={dataList}  onSearch={handleSearchResults}/>),
+      style: {},
+      isFillSpace: true,
+    },
+    {
+      content: <TouchableImage source={FilterIcon} disabled={true} parentStyle={styles.imageParentStyle} />,
+      style: {},
+      isFillSpace: false,
+    },
+    {
+      content: <TouchableImage source={MoreIcon} disabled={false} parentStyle={styles.imageParentStyle} />,
+      style: {},
+      isFillSpace: false,
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -47,7 +49,7 @@ function DashboardView() {
         customTextStyle={styles.header}
         title={intl.formatMessage({ id: "label.dashboard" })}
       />
-        {/* <MultiColumn columns={columnConfigs}  /> */}
+        <MultiColumn columns={columnConfigs}  />
 
         <AddDesignation />
     </View>

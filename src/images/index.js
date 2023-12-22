@@ -80,7 +80,8 @@ const iconWarning = "images/svg/iconWarning.svg";
 const iconFilter = "images/svg/iconFilter.svg";
 const iconSearch = "images/svg/iconSearch.svg";
 const iconMore = "images/svg/iconMore.svg";
-
+const iconArrowDown = "images/svg/iconArrowDown.svg";
+const iconArrowUp = "images/svg/iconArrowUp.svg";
 const images = {
   avatar,
   logo,
@@ -154,6 +155,8 @@ const images = {
   iconFilter,
   iconSearch,
   iconMore,
+  iconArrowDown,
+  iconArrowUp,
 };
 
 export default images;
