@@ -8,6 +8,7 @@ const WebViewScreen = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const uri = location?.state?.uri;
+
   const handleWebViewEvent = (key) => {
     const eventData = key.nativeEvent.data;
     const parsedEventData = JSON.parse(eventData);
@@ -20,9 +21,10 @@ const WebViewScreen = () => {
       });
     }
   };
+
   return (
     <WebView
-      source={{ uri: uri }}
+      source={{ uri }}
       style={styles.webViewContainer}
       onError={(syntheticEvent) => {
         const { nativeEvent } = syntheticEvent;
@@ -36,4 +38,5 @@ const WebViewScreen = () => {
     />
   );
 };
+
 export default WebViewScreen;
