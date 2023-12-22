@@ -1,16 +1,20 @@
 import colors from "../../assets/colors";
+
 const styles = {
   container: {
-    height: 44,
-    flexDirection: "row",
     alignItems: "center",
+    flexDirection: "row",
+    height: 44,
+  },
+  clickable: {
+    cursor: "pointer",
+  },
+  disabled: {
+    opacity: 0.5,
   },
   selected: {
     borderColor: colors.black,
     borderWidth: 1,
-  },
-  disabled: {
-    opacity: 0.5,
   },
 };
 

@@ -1,41 +1,53 @@
 import React, { useState } from "react";
-import PropTypes from 'prop-types';
-import { View, TouchableOpacity } from "@unthinkable/react-core-components";
+import PropTypes from "prop-types";
+import { Platform,TouchableOpacity, View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage/CustomImage";
 import styles from "./touchableImage.style";
 
-const TouchableImage = ({ source, parentStyle,imageStyle, disabled }) => {
+const TouchableImage = ({ disabled, imageStyle, parentStyle, source,   }) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
-    if (!disabled)
-    setIsSelected(!isSelected);
+    if (!disabled) setIsSelected((prev) => !prev);
   };
 
   const containerStyle = {
     ...styles.container,
     ...parentStyle,
+    ...(Platform.OS.toLowerCase() === "web" ? styles.clickable : {}),
     ...(isSelected ? styles.selected : {}),
   };
 
   return (
-    <TouchableOpacity style={containerStyle} onPress={handlePress} disabled={disabled}>
+    <TouchableOpacity
+      style={containerStyle}
+      onPress={handlePress}
+      disabled={disabled}
+    >
       <View>
-        <CustomImage Icon={source} style={imageStyle} source={source} isSvg={true} />
+        <CustomImage
+          Icon={source}
+          style={imageStyle}
+          source={source}
+          isSvg={true}
+        />
       </View>
     </TouchableOpacity>
   );
 };
+
 TouchableImage.defaultProps = {
-  parentStyle: {},
+  disabled: false,
   imageStyle: {},
-  disabled: false
+  parentStyle: {},
 };
+
 TouchableImage.propTypes = {
-  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  parentStyle: PropTypes.object,
+  disabled: PropTypes.bool,
   imageStyle: PropTypes.object,
-  disabled: PropTypes.bool
+  parentStyle: PropTypes.object,
+  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 };
+
 export default TouchableImage;

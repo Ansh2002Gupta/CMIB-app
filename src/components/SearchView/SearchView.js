@@ -1,7 +1,8 @@
-import React, { useEffect,useRef,useState } from "react";
-import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { View, TextInput } from "@unthinkable/react-core-components";
 
+import { DEBOUNCE_TIME } from "../../constants/constants";
 import TouchableImage from "../../components/TouchableImage/TouchableImage";
 import images from "../../images";
 import styles from "./searchView.style";
@@ -11,10 +12,6 @@ const SearchView = ({ data, onSearch }) => {
   const [query, setQuery] = useState("");
   const debounceTimeout = useRef(null);
 
-  const handleSearch = (text) => {
-    setQuery(text);
-  };
-  
   useEffect(() => {
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
@@ -30,13 +27,18 @@ const SearchView = ({ data, onSearch }) => {
       if (onSearch) {
         onSearch(filtered);
       }
-    }, 300); // Adjust the debounce time as needed
+    }, DEBOUNCE_TIME);
+
     return () => {
       if (debounceTimeout.current) {
         clearTimeout(debounceTimeout.current);
       }
     };
   }, [query, data, onSearch]);
+
+  const handleSearch = (text) => {
+    setQuery(text);
+  };
 
   return (
     <View style={styles.searchParent}>
@@ -50,8 +52,10 @@ const SearchView = ({ data, onSearch }) => {
     </View>
   );
 };
+
 SearchView.propTypes = {
   data: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onSearch: PropTypes.func
+  onSearch: PropTypes.func,
 };
+
 export default SearchView;
