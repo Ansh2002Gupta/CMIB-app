@@ -2,7 +2,6 @@ import colors from "../../assets/colors";
 
 const styles = {
   buttonContainer: {
-    alignItems: "center",
     borderRadius: 8,
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
@@ -10,9 +9,9 @@ const styles = {
     flex: 1,
     flexDirection: "row",
     minWidth: 100,
-    minHeight: 56,
+    minHeight: 48,
     justifyContent: "center",
-    padding: 14,
+    alignItems: "center",
   },
   disabledStyle: {
     opacity: 0.5,

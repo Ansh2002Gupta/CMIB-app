@@ -6,7 +6,8 @@ const styles = {
   },
   labelContainer: {
     flexDirection: "row",
-    marginBottom: 4
+    marginBottom: 4,
+    gap: 4,
   },
   label: {
     color: colors.darkGrey,

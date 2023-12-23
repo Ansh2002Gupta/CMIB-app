@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { View } from "@unthinkable/react-core-components";
 
 import CustomColumn from "../CustomColumn/CustomColumn";
 import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
@@ -25,7 +26,7 @@ const TwoRowButton = ({
         <CustomColumn
           onPress={onLeftButtonClick}
           title={leftButtonText}
-          style={leftButtonStyle }
+          style={leftButtonStyle}
           textStyle={leftTextStyle}
           disabled={isDisabled}
           iconLeft={hasIconLeft ? images.iconArrowLeft : null}
@@ -48,7 +49,7 @@ const TwoRowButton = ({
     },
   ];
 
-  return <MultiColumn columns={columnConfigs} style={styles.containerStyle} />;
+  return <MultiColumn columns={columnConfigs} />;
 };
 
 TwoRowButton.propTypes = {

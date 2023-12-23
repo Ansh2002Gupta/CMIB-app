@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
-import CustomLabelView from "../../components/CustomLabelView/CustomLabelView";
 import CustomModal from "../../components/CustomModal/CustomModal";
-import CounterInput from "../../components/CounterInput/CounterInput";
 import MultiRow from "../../core/layouts/MultiRow";
 import TwoRowButton from "../../components/TwoRowButton/TwoRowButton";
+import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./AddDesignation.style";
+import CustomTextInput from "../../components/CustomTextInput";
 
 const AddDesignation = () => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
   const [countValue, setCountValue] = useState(0);
+  const [designation, setDesignation] = useState("");
+
+  const onChangeDesignation = (val) => {
+    setDesignation(val);
+  };
 
   const handleCountChange = (newCount) => {
     setCountValue(newCount);
@@ -23,23 +29,36 @@ const AddDesignation = () => {
     console.log("Save Button clicked !!!");
   };
 
-  const rowConfigs = [
+  const addDesignation = [
     {
       content: (
-        <CustomLabelView
+        <CustomTextInput
+          label={intl.formatMessage({ id: "label.designation" })}
+          placeholder={intl.formatMessage({
+            id: "label.designation_placeholder",
+          })}
+          value={designation}
+          onChangeText={(val) => onChangeDesignation(val)}
+          isMandatory
+          customLabelStyle={isWebView && styles.webView.inputLabelText}
+          customTextInputContainer={isWebView && styles.webView.inputTextBox}
+          customStyle={{ paddingBottom: 0 }}
+        />
+      ),
+      style: styles.vacancyStyle,
+    },
+    {
+      content: (
+        <CustomTextInput
           label={intl.formatMessage({ id: "label.no_of_vacancy" })}
           isMandatory
-        >
-          <CounterInput
-            initialCount={countValue}
-            minCount={0}
-            maxCount={100}
-            onCountChange={handleCountChange}
-            step={1}
-          />
-        </CustomLabelView>
+          isCounterInput
+          initialCount={countValue}
+          onCountChange={handleCountChange}
+          customStyle={{ paddingBottom: 0 }}
+        />
       ),
-      style:styles.vacancyStyle,
+      style: styles.vacancyStyle,
     },
     {
       content: (
@@ -53,17 +72,17 @@ const AddDesignation = () => {
           onRightButtonClick={handleSaveButton}
         />
       ),
+      style: styles.vacancyStyle,
     },
   ];
 
   return (
     <CustomModal
-      style={styles.containerStyle}
       headerText={intl.formatMessage({
         id: "label.add_designation",
       })}
     >
-      <MultiRow rows={rowConfigs} />
+      <MultiRow rows={addDesignation} />
     </CustomModal>
   );
 };

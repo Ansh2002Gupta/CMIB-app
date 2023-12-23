@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
@@ -10,12 +10,14 @@ import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
 import TouchableImage from "../../components/TouchableImage/TouchableImage";
 import images from "../../images";
 
+
 import styles from "./dashboard.style";
 
 // Just ignore this file as just to test custom component
 
 function DashboardView() {
   const intl = useIntl();
+
 
   const handleSearchResults = (filteredData) => {
     console.log(filteredData);
@@ -45,13 +47,14 @@ function DashboardView() {
 
   return (
     <View style={styles.container}>
-      <CommonText
+      {/* <CommonText
         customTextStyle={styles.header}
         title={intl.formatMessage({ id: "label.dashboard" })}
-      />
+      /> */}
         {/* <MultiColumn columns={columnConfigs}  /> */}
 
         <AddDesignation />
+   
     </View>
   );
 }

@@ -2,9 +2,11 @@ import colors from "../../assets/colors";
 const style = {
   container: {
     flex: 1,
-    justifyContent: 'center',
-    padding: 16,
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // padding: 16,
+    justifyContent: 'flex-start',
+    
   },
   header: {
     fontSize: 24,
@@ -19,7 +21,19 @@ const style = {
     marginLeft: 16,
     paddingLeft: 12,
     paddingRight:12,
-  }
+  },
+  webView :{
+    inputLabelText: {
+      color: colors.black,
+      fontSize: 14,
+      lineHeight: 24,
+      textTransform: "capitalize",
+    },
+    inputTextBox: {
+      background: colors.white,
+      marginTop: 0,
+    },
+  },
 
 };
 
