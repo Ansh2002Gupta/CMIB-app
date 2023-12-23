@@ -42,7 +42,7 @@ const AddDesignation = () => {
           isMandatory
           customLabelStyle={isWebView && styles.webView.inputLabelText}
           customTextInputContainer={isWebView && styles.webView.inputTextBox}
-          customStyle={{ paddingBottom: 0 }}
+          customStyle={styles.negativePadding}
         />
       ),
       style: styles.vacancyStyle,
@@ -55,7 +55,7 @@ const AddDesignation = () => {
           isCounterInput
           initialCount={countValue}
           onCountChange={handleCountChange}
-          customStyle={{ paddingBottom: 0 }}
+          customStyle={styles.negativePadding}
         />
       ),
       style: styles.vacancyStyle,

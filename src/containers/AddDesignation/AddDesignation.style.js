@@ -9,6 +9,9 @@ const styles = {
     backgroundColor: colors.green,
     marginLeft: 16,
   },
+  negativePadding: { 
+    paddingBottom: 0 
+  },
   vacancyStyle: {
     marginTop: 24,
   },
