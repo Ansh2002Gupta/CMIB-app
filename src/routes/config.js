@@ -50,7 +50,7 @@ const config = [
   },
   {
     pagePath: navigations.WEB_VIEW,
-    element: <HomeWithPrivateAccess />,
+    element: <ContentRouteWithPrivateAccess />,
     views: [
       {
         viewPath: "",

@@ -5,9 +5,9 @@ import PublicHeader from "../PublicHeader/PublicHeader";
 import PrivateHeader from "../PrivateHeader/PrivateHeader";
 import { getAuthToken } from "../../utils/getAuthToken";
 
-const Header = ({ onPress, showCloseIcon, showHeader,menuIconVisible }) => {
+const Header = ({ toggleSideBar, showCloseIcon, showHeader, menuIconVisible }) => {
   const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
-  
+
   useEffect(() => {
     checkAuthToken();
   }, []);
@@ -30,7 +30,11 @@ const Header = ({ onPress, showCloseIcon, showHeader,menuIconVisible }) => {
       {showHeader ? (
         <>
           {isuserLoggedIn ? (
-            <PrivateHeader onPress={onPress} showCloseIcon={showCloseIcon} menuIconVisible={menuIconVisible} />
+            <PrivateHeader
+              toggleSideBar={toggleSideBar}
+              showCloseIcon={showCloseIcon}
+              menuIconVisible={menuIconVisible}
+            />
           ) : (
             <PublicHeader />
           )}
@@ -41,7 +45,7 @@ const Header = ({ onPress, showCloseIcon, showHeader,menuIconVisible }) => {
 };
 
 Header.propTypes = {
-  onPress: PropTypes.func.isRequired,
+  toggleSideBar: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.func.isRequired,
   showHeader: PropTypes.func.isRequired,
 };

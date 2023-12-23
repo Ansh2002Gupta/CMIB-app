@@ -197,7 +197,7 @@ const locale = {
   "label.visit_website":"Visit Website",
   "label.session":"Session",
   "label.module":"Module",
-  "label.newely_qualified_placements":"Newly Qualified Placements",
+  "label.newly_qualified_placements":"Newly Qualified Placements",
 };
 
 export default locale;

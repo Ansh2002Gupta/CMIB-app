@@ -1,5 +1,4 @@
 import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
 
 const { height } = Dimensions.get("window");
 const styles = StyleSheet.create({
@@ -7,8 +6,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mainContainer: {
+    flex: 1,
     width: "100%",
-    height: "100%",
+  },
+  SideBarmd: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 2,
+    width: "50%",
   },
   sideBar: {
     position: "absolute",
@@ -16,7 +23,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     zIndex: 2,
-    height: "100%",
+    width: "80%",
   },
   overLay: {
     backgroundColor: "transparent",

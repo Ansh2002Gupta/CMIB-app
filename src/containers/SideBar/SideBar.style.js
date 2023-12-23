@@ -3,8 +3,12 @@ import colors from "../../assets/colors";
 const styles = {
   mainContainer: {
     flex: 1,
-    width: "100%",
     position:"relative",
+  },
+  mainContainerWeb:{
+    flex: 1,
+    position:"relative",
+    backgroundColor: colors.black,
   },
   container: {
     flex: 1,
@@ -33,7 +37,6 @@ const styles = {
   moduleText: {
     color: colors.darkGrey,
     fontSize: 14,
-    fontWeight: "500",
     paddingLeft: 16,
     paddingRight: 16,
     paddingBottom: 8,
@@ -61,16 +64,18 @@ const styles = {
     opacity: 0.6,
     flexWrap:"wrap"
   },
-  changeText: {
-    color: colors.backgroundColor,
-    fontSize: 12,
+  changeTextContainer:{
     backgroundColor: colors.offWhite,
     paddingTop: 6,
     paddingBottom: 6,
     paddingLeft: 12,
     paddingRight: 12,
-    borderRadius: 24,
+    borderRadius: 12,
     cursor: "pointer",
+  },
+  changeText: {
+    color: colors.backgroundColor,
+    fontSize: 12,
   },
   sessionText: {
     color: colors.darkGrey,

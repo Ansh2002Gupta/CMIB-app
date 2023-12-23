@@ -22,6 +22,8 @@ const voilet = "#B1B3B5";
 const mustardYellow = "#FABB00";
 const silver = "#EBEBEB";
 const yellow = "#FABB00";
+const darkGreySecond ='#71717A';
+const darkBlackSecond = "#18181B";
 
 const colors = {
   lightGray,
@@ -48,5 +50,7 @@ const colors = {
   offWhite,
   slateGray,
   yellow,
+  darkGreySecond,
+  darkBlackSecond,
 };
 export default colors;

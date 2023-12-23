@@ -1,12 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {
-  Animated,
   TouchableWithoutFeedback,
   View,
 } from "@unthinkable/react-core-components";
+import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import SideBar from "../SideBar/SideBar";
+import SideBar from "../SideBar/index";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./SideNavBar.style";
 
@@ -18,41 +19,21 @@ const SideNavBar = ({
   resetList,
   showCloseIcon,
 }) => {
-  const sideBarPosition = useRef(new Animated.Value(-300)).current;
   const { isWebView } = useIsWebView();
-
-  useEffect(() => {
-    Animated.timing(sideBarPosition, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-    }).start();
-  }, [sideBarPosition]);
-
-  const handleCloseSidebar = () => {
-    Animated.timing(sideBarPosition, {
-      toValue: -300,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-    onClose();
-  };
+  const windowDimensions = useWindowDimensions();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   return (
     <View style={[styles.container, isWebView ? styles.mainContainer : null]}>
-      {isWebView ? (
-        <></>
-      ) : (
-        <TouchableWithoutFeedback onPress={handleCloseSidebar}>
-          <View style={styles.overLay} />
-        </TouchableWithoutFeedback>
-      )}
-
-      <Animated.View
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={styles.overLay} />
+      </TouchableWithoutFeedback>
+      <View
         style={{
-          ...styles.sideBar,
-          ...(isWebView ? styles.mainContainer : {}),
-          transform: [{ translateX: sideBarPosition }],
+          ...(currentBreakpoint === "sm" ? styles.SideBarmd : styles.sideBar),
+          ...(isWebView && windowDimensions.width >= 900
+            ? styles.mainContainer
+            : {}),
         }}
       >
         <SideBar
@@ -63,13 +44,13 @@ const SideNavBar = ({
           resetList={resetList}
           showCloseIcon={showCloseIcon}
         />
-      </Animated.View>
+      </View>
     </View>
   );
 };
 
 SideNavBar.propTypes = {
-  handleDisplayHeader: PropTypes.array.isRequired,
+  handleDisplayHeader: PropTypes.func.isRequired,
   onClose: PropTypes.func,
   onPress: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,

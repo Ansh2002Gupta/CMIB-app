@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { WebView } from "react-native-webview";
 import { useLocation } from "../../routes";
 
 import styles from "../../theme/styles/commonStyles";
 
-const WebViewScreen = ({ route }) => {
-  const [showWebView, setShowWebView] = useState(false);
+const WebViewScreen = () => {
   const location = useLocation();
   const { uri } = location.state || {};
 
   const handleWebViewEvent = (key) => {
     const eventData = JSON.parse(key.nativeEvent.data);
-    setShowWebView(false);
   };
 
   return (

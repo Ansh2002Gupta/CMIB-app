@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useMemo } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
@@ -13,7 +13,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./PrivateHeader.style";
 
-const PrivateHeader = ({ onPress, showCloseIcon, menuIconVisible }) => {
+const PrivateHeader = ({ toggleSideBar, showCloseIcon, menuIconVisible }) => {
   const { isWebView } = useIsWebView();
   const windowDimensions = useWindowDimensions();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -27,7 +27,10 @@ const PrivateHeader = ({ onPress, showCloseIcon, menuIconVisible }) => {
   const borderBottomStyles =
     currentBreakpoint === "xs" ? {} : styles.borderStyling;
 
-  const isMdOrGreater = windowDimensions.width >= 900;
+  const isMdOrGreater = useMemo(
+    () => windowDimensions.width >= 900,
+    [windowDimensions.width]
+  );
 
   return (
     <>
@@ -35,10 +38,7 @@ const PrivateHeader = ({ onPress, showCloseIcon, menuIconVisible }) => {
         <View style={[styles.webContainer, borderBottomStyles]}>
           <View style={styles.textContainer}>
             {currentBreakpoint === "sm" && menuIconVisible ? (
-              <TouchableOpacity
-                onPress={onPress}
-                style={styles.menuButton}
-              >
+              <TouchableOpacity onPress={toggleSideBar} style={styles.menuButton}>
                 <Image source={images.iconMenu} />
               </TouchableOpacity>
             ) : null}
@@ -96,7 +96,7 @@ const PrivateHeader = ({ onPress, showCloseIcon, menuIconVisible }) => {
             <TouchableOpacity
               onPress={() => {
                 showCloseIcon();
-                onPress();
+                toggleSideBar();
               }}
             >
               <Image source={images.iconMenu} />

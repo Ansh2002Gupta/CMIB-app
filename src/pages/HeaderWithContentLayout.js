@@ -1,10 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import React, { useEffect, useState, useMemo } from "react";
+
+import {
+  Modal,
+  Platform,
+  ScrollView,
+} from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
+
 import { Outlet } from "../routes";
-
 import MainLayout from "../layouts/MainLayout";
-
 import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
 import Header from "../containers/Header";
@@ -50,8 +54,13 @@ function HeaderWithContentLayout() {
   }, [isSideBarVisible]);
 
   const { isWebView } = useIsWebView();
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const windowDimensions = useWindowDimensions();
+
+  const modalSideBar = isSideBarVisible && !(windowDimensions.width >= 900);
+  const isMdOrGreater = useMemo(
+    () => windowDimensions.width >= 900,
+    [windowDimensions.width]
+  );
 
   const handleNewlyQualifiedPlacementsClick = () => {
     setListItems(newQualifiedPlacementsList);
@@ -70,61 +79,64 @@ function HeaderWithContentLayout() {
     setShowHeader(false);
   };
 
-  return (
-    <MainLayout
-      header={
-        <Header
-          onPress={toggleSideBar}
-          showCloseIcon={showCloseIcon}
-          showHeader={showHeader}
-          menuIconVisible={menuIconVisible}
-        />
-      }
-      bottomSection={!isWebView ? <BottomBar /> : null}
-      content={<Outlet />}
-      topSectionStyle={commonStyles.headerContainer}
-      leftSectionStyle={
-        (isWebView &&
-          isAuthenticated &&
-          currentBreakpoint !== "sm" &&
-          currentBreakpoint !== "xs") ||
-        isSideBarVisible
-          ? {
-              flex:
-                currentBreakpoint === "md" || currentBreakpoint === "sm"
-                  ? 2
-                  : windowDimensions.width >= 1200 &&
-                    windowDimensions.width <= 1400
-                  ? 1.5
-                  : currentBreakpoint === "xs"
-                  ? 0
-                  : 1,
-              zIndex: 2,
-            }
-          : {}
-      }
-      isRightFillSpace={false}
-      rightSectionStyle={commonStyles.rightSectionStyle}
-      bottomSectionStyle={commonStyles.bottomBar}
-      menu={
-        (isWebView &&
-          isAuthenticated &&
-          currentBreakpoint !== "sm" &&
-          currentBreakpoint !== "xs") ||
-        isSideBarVisible ? (
-          <SideNavBar
-            handleDisplayHeader={handleDisplayHeader}
-            onClose={() => {
-              setSideBarVisible(false);
-            }}
-            onPress={handleNewlyQualifiedPlacementsClick}
-            resetList={() => setListItems(items)}
-            showCloseIcon={showClose}
-            items={listItems}
-          />
-        ) : null
-      }
+  // Components for rendering the sidebar in a modal or inline
+  const sidebarComponent = (
+    <SideNavBar
+      handleDisplayHeader={handleDisplayHeader}
+      onClose={() => setSideBarVisible(false)}
+      onPress={handleNewlyQualifiedPlacementsClick}
+      resetList={() => setListItems(items)}
+      showCloseIcon={modalSideBar}
+      items={listItems}
     />
+  );
+
+  return (
+    <>
+      {modalSideBar && (
+        <Modal
+          isVisible={modalSideBar}
+          animationIn="slideInLeft"
+          animationOut="slideOutLeft"
+          style={commonStyles.modalStyle}
+        >
+          {Platform.OS.toLocaleLowerCase() === "web" ? (
+            <ScrollView style={{ flex: 1 }}>{sidebarComponent}</ScrollView>
+          ) : (
+            sidebarComponent
+          )}
+        </Modal>
+      )}
+
+      <MainLayout
+        header={
+          <Header
+            toggleSideBar={toggleSideBar}
+            showCloseIcon={showCloseIcon}
+            showHeader={showHeader}
+            menuIconVisible={menuIconVisible}
+          />
+        }
+        bottomSection={!isWebView ? <BottomBar /> : null}
+        menu={isAuthenticated ? sidebarComponent : null}
+        content={<Outlet />}
+        isSideBarVisible={isSideBarVisible}
+        topSectionStyle={
+          isMdOrGreater
+            ? commonStyles.topSectionStyle
+            : commonStyles.headerContainer
+        }
+        isRightFillSpace={false}
+        isLeftFillSpace={false}
+        rightSectionStyle={commonStyles.rightSectionStyle}
+        leftSectionStyle={commonStyles.leftSectionStyle}
+        bottomSectionStyle={
+          isMdOrGreater
+            ? commonStyles.bottomSectionStyle
+            : commonStyles.bottomBar
+        }
+      />
+    </>
   );
 }
 

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
+import { navigations } from "../../constants/routeNames";
 import {
   FlatList,
   Image,
@@ -9,21 +10,21 @@ import {
   View,
   Platform,
 } from "@unthinkable/react-core-components";
+import { SafeAreaView } from "react-native";
 
 import Config from "../../components/ReactConfig/ReactConfig";
 import CommonText from "../../components/CommonText";
 import CustomList from "../../components/CustomList/CustomList";
-import { navigations } from "../../constants/routeNames";
 import images from "../../images";
 import styles from "./SideBar.style";
 
 const SideBar = ({
   handleDisplayHeader,
-  items,
   onClose,
   onPress,
   resetList,
   showCloseIcon,
+  items,
 }) => {
   const navigate = useNavigate();
   const intl = useIntl();
@@ -37,7 +38,8 @@ const SideBar = ({
 
   const handleBottomViewNavigation = () => {
     const uri = Config.REACT_APP_CMS_URI;
-    window.location.href = uri;
+    navigate(navigations.WEB_VIEW, { state: { uri } });
+    handleDisplayHeader();
   };
 
   // Render functions for items and sub-items
@@ -55,7 +57,7 @@ const SideBar = ({
   );
 
   return (
-    <View style={styles.mainContainerWeb}>
+    <SafeAreaView style={styles.mainContainer}>
       <View style={styles.container}>
         {showCloseIcon && (
           <TouchableOpacity onPress={onClose} style={styles.leftArrowButton}>
@@ -75,7 +77,6 @@ const SideBar = ({
             customTextStyle={styles.moduleText}
             title={intl.formatMessage({ id: "label.module" })}
           />
-          {/* Right Now It's a static data, we will replace it by dynamic data as we get API */}
           <View style={styles.textView}>
             <CommonText
               customTextStyle={styles.newQualifiedText}
@@ -104,21 +105,21 @@ const SideBar = ({
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
+        <TouchableOpacity
+          style={styles.bottomView}
+          onPress={handleBottomViewNavigation}
+        >
+          <View style={styles.imageTextView}>
+            <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
+            <CommonText
+              customTextStyle={styles.visitWebsiteText}
+              title={intl.formatMessage({ id: "label.visit_website" })}
+            />
+          </View>
+          <Image source={images.iconRightArrow} style={styles.globalIcon} />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.bottomView}
-        onPress={handleBottomViewNavigation}
-      >
-        <View style={styles.imageTextView}>
-          <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
-          <CommonText
-            customTextStyle={styles.visitWebsiteText}
-            title={intl.formatMessage({ id: "label.visit_website" })}
-          />
-        </View>
-        <Image source={images.iconRightArrow} style={styles.globalIcon} />
-      </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

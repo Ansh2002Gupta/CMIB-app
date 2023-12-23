@@ -5,7 +5,7 @@ const styles = {
   initialsContainer: {
     justifyContent: "center",
     backgroundColor: "#D3D3D3",
-    borderRadius: 200,
+    borderRadius: 20,
     alignItems: "center",
     height: 40,
     width: 40,

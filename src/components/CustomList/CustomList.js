@@ -1,9 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-import colors from "../../assets/colors";
-import PropTypes from "prop-types";
 import styles from "./CustomList.style";
 
 const CustomList = ({ item, onSelect }) => {

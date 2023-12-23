@@ -65,14 +65,13 @@ const styles = {
     height: 24,
   },
   overView: {
-    color: "#71717A",
+    color: colors.darkGreySecond,
     fontSize: 14,
-    fontWeight: "500",
     paddingLeft: 8,
     paddingTop: 8,
   },
   nameText: {
-    color: "#18181B",
+    color: colors.darkBlackSecond,
     fontSize: 14,
     fontWeight: "600",
     paddingTop: 8,
