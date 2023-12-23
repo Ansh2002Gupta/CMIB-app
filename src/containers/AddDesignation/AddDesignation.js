@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
-import CustomView from "../../components/CustomView/CustomView";
+import CustomLabelView from "../../components/CustomLabelView/CustomLabelView";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import CounterInput from "../../components/CounterInput/CounterInput";
 import MultiRow from "../../core/layouts/MultiRow";
@@ -15,7 +15,6 @@ const AddDesignation = () => {
 
   const handleCountChange = (newCount) => {
     setCountValue(newCount);
-    console.log("Count has changed to:", newCount);
   };
   const handleCancelButton = () => {
     console.log("Cancel button clikced !!!");
@@ -27,7 +26,7 @@ const AddDesignation = () => {
   const rowConfigs = [
     {
       content: (
-        <CustomView
+        <CustomLabelView
           label={intl.formatMessage({ id: "label.no_of_vacancy" })}
           isMandatory
         >
@@ -38,7 +37,7 @@ const AddDesignation = () => {
             onCountChange={handleCountChange}
             step={1}
           />
-        </CustomView>
+        </CustomLabelView>
       ),
       style:styles.vacancyStyle,
     },

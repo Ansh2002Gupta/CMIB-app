@@ -4,9 +4,9 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import styles from "./CustomView.style";
+import styles from "./CustomLabelView.style";
 
-const CustomView = ({
+const CustomLabelView = ({
   children,
   style,
   customLabelStyle,
@@ -40,7 +40,7 @@ const CustomView = ({
   );
 };
 
-CustomView.defaultProps = {
+CustomLabelView.defaultProps = {
   children: null,
   style: {},
   customLabelStyle: {},
@@ -48,7 +48,7 @@ CustomView.defaultProps = {
   isMandatory: false,
 };
 
-CustomView.propTypes = {
+CustomLabelView.propTypes = {
   children: PropTypes.node,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customLabelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
@@ -56,4 +56,4 @@ CustomView.propTypes = {
   isMandatory: PropTypes.bool,
 };
 
-export default CustomView;
+export default CustomLabelView;
