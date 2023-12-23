@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { View, TextInput } from "@unthinkable/react-core-components";
+import { View, TextInput ,Platform} from "@unthinkable/react-core-components";
 
 import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity";
 import CommonText from "../CommonText";
@@ -81,6 +81,7 @@ const CounterInput = ({
     },
   ];
 
+  const mobileProps = Platform.OS.toLowerCase() !== 'web' ? {keyboardType:"numeric", returnKeyType:"done"}:{}
   const counterView = [
     {
       content: (
@@ -90,8 +91,8 @@ const CounterInput = ({
             value={count.toString()}
             onChangeText={handleTextInputChange}
             style={styles.counterInputText}
-            keyboardType="numeric"
-            returnKeyType="done"
+            {...mobileProps}
+            
           />
         </CustomTouchableOpacity>
       ),

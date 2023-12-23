@@ -49,7 +49,7 @@ function DashboardView() {
         customTextStyle={styles.header}
         title={intl.formatMessage({ id: "label.dashboard" })}
       />
-        <MultiColumn columns={columnConfigs}  />
+        {/* <MultiColumn columns={columnConfigs}  /> */}
 
         <AddDesignation />
     </View>
