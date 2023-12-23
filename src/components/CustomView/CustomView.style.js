@@ -6,7 +6,6 @@ const styles = {
   },
   labelContainer: {
     flexDirection: "row",
-    fontFamily: "General Sans",
     marginBottom: 4
   },
   label: {
@@ -16,7 +15,6 @@ const styles = {
    marginLeft: 4
   },
   webLabel: {
-    fontFamily: "General Sans",
     color: colors.black,
   },
   starStyle: { color: colors.errorRed },

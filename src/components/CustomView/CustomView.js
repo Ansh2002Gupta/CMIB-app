@@ -35,7 +35,6 @@ const CustomView = ({
           />
         )}
       </View>
-
       {children}
     </View>
   );
