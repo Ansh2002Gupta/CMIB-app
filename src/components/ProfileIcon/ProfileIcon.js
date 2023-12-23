@@ -6,30 +6,35 @@ import CommonText from "../CommonText";
 import styles from "./ProfileIcon.style";
 
 const ProfileIcon = ({
-  showEditModal,
-  iconType,
-  profileImage,
+  customContainerStyle,
+  customImageStyle,
   firstName,
+  iconType,
   lastName,
+  profileImage,
+  showEditModal,
 }) => {
-
   if (profileImage) {
     return (
       <View
-        style={[
-          styles.initialsContainer,
-          showEditModal &&
-            iconType === "modalIcon" &&
-            styles.editProfileContainer,
-        ]}
+        style={
+          ([
+            styles.initialsContainer,
+            showEditModal &&
+              iconType === "modalIcon" &&
+              styles.editProfileContainer,
+          ],
+          customContainerStyle)
+        }
       >
         <Image
           source={{ uri: profileImage }}
-          style={
+          style={[
             showEditModal && iconType === "modalIcon"
               ? styles.modalProfileImage
-              : styles.profileImageStyle
-          }
+              : styles.profileImageStyle,
+            customImageStyle,
+          ]}
         />
       </View>
     );
@@ -42,6 +47,7 @@ const ProfileIcon = ({
           showEditModal &&
             iconType === "modalIcon" &&
             styles.editProfileContainer,
+          customContainerStyle,
         ]}
       >
         <CommonText title={initials} customTextStyle={styles.initialsText} />
@@ -51,6 +57,8 @@ const ProfileIcon = ({
 };
 
 ProfileIcon.propTypes = {
+  customContainerStyle: PropTypes.object,
+  customImageStyle: PropTypes.object,
   firstName: PropTypes.string,
   iconType: PropTypes.string,
   lastName: PropTypes.string,

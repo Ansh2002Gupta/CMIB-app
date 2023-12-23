@@ -1,2 +1,1 @@
-import WebViewScreen from './WebViewScreen';
-export default WebViewScreen;
+export { default } from "./WebViewScreen";
