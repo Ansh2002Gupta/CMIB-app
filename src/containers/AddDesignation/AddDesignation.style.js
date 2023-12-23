@@ -12,6 +12,8 @@ const styles = {
   vacancyStyle:{
     marginTop: 24,
   },
+  leftTextStyle:{ fontSize:14 ,fontWeight:"600"},
+  rightTextStyle:{color:'white', fontSize:14 ,fontWeight:"600"}
 };
 
 export default styles;

@@ -46,10 +46,10 @@ const AddDesignation = () => {
         <TwoRowButton
           leftButtonText={intl.formatMessage({ id: "label.cancel" })}
           onLeftButtonClick={handleCancelButton}
-          leftTextStyle={{ fontSize:14 ,fontWeight:"600"}}
+          leftTextStyle={styles.leftTextStyle}
           rightButtonText={intl.formatMessage({ id: "label.save" })}
           rightButtonStyle={styles.saveStyle}
-          rightTextStyle={{color:'white', fontSize:14 ,fontWeight:"600"}}
+          rightTextStyle={styles.rightTextStyle}
           onRightButtonClick={handleSaveButton}
         />
       ),
