@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./CustomLabelView.style";
 
 const CustomLabelView = ({
@@ -14,9 +14,7 @@ const CustomLabelView = ({
   isMandatory,
   ...props
 }) => {
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
-
+  const { isWebView } = useIsWebView();
   return (
     <View style={[styles.parentContainer, style]}>
       <View style={styles.labelContainer}>
