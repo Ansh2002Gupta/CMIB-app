@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
   infoStyle: {
     color: colors.darkGrey,
     lineHeight: 18,
+    marginLeft: 24,
+    marginRight: 24,
   },
   hideRawInputField: {
     display: "none",

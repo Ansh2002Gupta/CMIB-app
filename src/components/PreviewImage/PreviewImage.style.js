@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderBottom: `1px solid ${colors.lightGrey}`,
     alignItems: "center",
+    minWidth: 250,
   },
   selectedImageStyle: {
     maxWidth: 450,
