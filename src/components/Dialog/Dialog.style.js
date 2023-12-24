@@ -1,15 +1,6 @@
 import colors from "../../assets/colors";
 
-const styles = {
-  backdrop: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100vh",
-    zIndex: 20,
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
-  },
+export const styles = {
   modal: {
     position: "fixed",
     top: "20vh",
@@ -43,6 +34,33 @@ const styles = {
   defaultMaxWidth: {
     maxWidth: "90%",
   },
+  headingRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: 600,
+  },
+  dialogCloseBtn: {
+    cursor: "pointer",
+  },
 };
 
-export default styles;
+export const setMaxWidth = ({ maxWidth }) => {
+  switch (maxWidth) {
+    case "xs":
+      return styles.xsWidth;
+    case "sm":
+      return styles.smWidth;
+    case "md":
+      return styles.mdWidth;
+    case "lg":
+      return styles.lgWidth;
+    case "xl":
+      return styles.xlWidth;
+    default:
+      return styles.defaultMaxWidth;
+  }
+};

@@ -7,7 +7,13 @@ const commonStyles = {
     top: 0,
     zIndex: 1,
     backgroundColor: colors.white,
-    ...(Platform.OS === 'web' ? { position: "sticky" } : {}),
+    ...(Platform.OS === "web" ? { position: "sticky" } : {}),
+  },
+  errorMessage: {
+    color: colors.errorRed,
+    fontSize: 14,
+    lineHeight: 18,
+    fontWeight: "600",
   },
 };
 

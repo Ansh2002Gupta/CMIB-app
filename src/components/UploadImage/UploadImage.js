@@ -1,17 +1,13 @@
 import React, { useRef, useState } from "react";
 import { useIntl } from "react-intl";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
 
-import CommonText from "../CommonText";
 import CropAndRotateImage from "../CropAndRotateImage";
-import TextInput from "../TextInput";
-import images from "../../images";
+import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
+import PreviewImage from "../PreviewImage";
+import useUploadedFileValidations from "../../hooks/useUploadedFileValidations";
 import { getImageSource } from "../../utils/util";
-import styles from "./UploadImage.style";
+import { IMAGE_MAX_SIZE } from "../../constants/constants";
+import { IMAGE_ACCEPTABLE_FORMAT_REGEX } from "../../constants/Regex";
 
 const UploadImage = ({ openCropViewAfterImageSelection }) => {
   const intl = useIntl();
@@ -19,31 +15,58 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
 
   const [file, setFile] = useState(null);
   const [openCropView, setOpenCropView] = useState(false);
-  const [photoURL, setPhotoURL] = useState("");
+
+  const {
+    nonUploadableImageError,
+    fileTooLargeError,
+    invalidFormatError,
+    setNonUploadableImageError,
+    setFileTooLargeError,
+    setInvalidFormatError,
+  } = useUploadedFileValidations();
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
   };
 
   const fileUploadHandler = (e) => {
-    // setFileIsTooLarge(false);
-    // setIsInvalidFormat(false);
-    const imageMimeType = /image\/(png|jpg|jpeg)/i;
+    setFileTooLargeError("");
+    setInvalidFormatError("");
+    setNonUploadableImageError("");
+    const imageMimeType = IMAGE_ACCEPTABLE_FORMAT_REGEX;
     const uploadedFile = e.target.files[0];
     if (uploadedFile) {
       if (!uploadedFile.type.match(imageMimeType)) {
-        // setIsInvalidFormat(true);
+        setInvalidFormatError(
+          intl.formatMessage({
+            id: "label.allowedFileFormatsError",
+          })
+        );
         e.target.value = null;
         return;
       }
-      if (uploadedFile.size > 5000000) {
-        // setFileIsTooLarge(true);
+      if (uploadedFile.size > IMAGE_MAX_SIZE) {
+        setFileTooLargeError(
+          intl.formatMessage({ id: "label.fileTooLargeError" })
+        );
         e.target.value = null;
         return;
       }
+      const img = document.createElement("img");
+      img.src = getImageSource(uploadedFile);
+      img.alt = uploadedFile.name;
+      img.onload = () => {
+        setFile(uploadedFile);
+        openCropViewAfterImageSelection && setOpenCropView(true);
+      };
+      img.onerror = () => {
+        setNonUploadableImageError(
+          intl.formatMessage({
+            id: "label.allowedFileFormatsError",
+          })
+        );
+      };
     }
-    setFile(uploadedFile);
-    openCropViewAfterImageSelection && setOpenCropView(true);
     e.target.value = null;
   };
 
@@ -66,59 +89,30 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
             photoURL: getImageSource(file),
             setFile,
             setOpenCropView,
-            setPhotoURL,
           }}
         />
       )}
       {!!file && !openCropView && (
-        <View style={styles.selectedImageContainer}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={getImageSource(file)}
-              style={styles.selectedImageStyle}
-            />
-          </View>
-          <View style={styles.innerContainer}>
-            <CommonText customTextStyle={styles.nameStyle} title={file?.name} />
-            <TouchableOpacity onPress={() => setFile(null)}>
-              <Image source={images.iconTrash} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <PreviewImage
+          fileName={file?.name}
+          onRemoveImage={() => setFile(null)}
+          source={getImageSource(file)}
+        />
       )}
       {(!file || openCropView) && (
-        <View
-          style={styles.contentContainerStyle}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          <Image source={images.iconUpload} />
-          <View style={styles.textContainer}>
-            <CommonText
-              customTextStyle={styles.textStyle}
-              title={intl.formatMessage({ id: "label.drag_drop_files" })}
-            />
-            &nbsp;
-            <TouchableOpacity onPress={handleUploadClick}>
-              <CommonText
-                customTextStyle={styles.browseStyle}
-                title={` ${intl.formatMessage({ id: "label.browse" })}`}
-              />
-            </TouchableOpacity>
-          </View>
-          <CommonText
-            customTextStyle={styles.infoStyle}
-            title={intl.formatMessage({ id: "label.supported_type" })}
-          />
-          <TextInput
-            type="file"
-            ref={fileInputRef}
-            name="fileUpload"
-            accept="image/png, image/jpeg, image/svg, image/eps"
-            onChange={(event) => fileUploadHandler(event)}
-            style={styles.hideRawInputField}
-          />
-        </View>
+        <DragAndDropCard
+          {...{
+            errorMessage:
+              nonUploadableImageError ||
+              fileTooLargeError ||
+              invalidFormatError,
+            fileInputRef,
+            fileUploadHandler,
+            handleDragOver,
+            handleDrop,
+            handleUploadClick,
+          }}
+        />
       )}
     </>
   );

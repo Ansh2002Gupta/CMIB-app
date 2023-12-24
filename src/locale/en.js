@@ -179,13 +179,18 @@ const locale = {
     "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
   "label.text_otp": "OTP",
   "label.jobs": "Jobs",
-  "label.otp_recieved": "Haven’t received the OTP?",
+  "label.otp_recieved": "Haven't received the OTP?",
   "label.request_otp": "You have requested OTP for ",
   "label.request_otp_next": "You can resend the next OTP after",
   "label.request_otp_again": "Send Again (",
   "label.braces": ")",
   "label.left_brace": "left)",
   "label.times": "times!",
+  "label.fileTooLargeError": "Uploaded file must be less than 5MB",
+  "label.allowedFileFormatsError":
+    "Only JPEG, PNG, SVG, EPS, PDF formats are allowed",
+  "label.nonUploadableImageError":
+    "Failed to upload this file, please try uploading a different image",
 };
 
 export default locale;

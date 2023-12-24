@@ -1,4 +1,5 @@
 import { Platform } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
 const styles = {
@@ -13,6 +14,9 @@ const styles = {
     backgroundColor: colors.white,
     color: colors.black,
     cursor: "pointer",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   greenBtn: {
     backgroundColor: colors.green,

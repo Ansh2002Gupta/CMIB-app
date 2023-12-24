@@ -1,8 +1,8 @@
 import React from "react";
+import { Modal } from "@unthinkable/react-core-components";
 
-// Currnet CustomModal.js code can be added here
-const Dialog = () => {
-  return <></>;
+const Dialog = ({ children }) => {
+  return <Modal>{children}</Modal>;
 };
 
 export default Dialog;

@@ -1,26 +1,45 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Text, TouchableOpacity } from "@unthinkable/react-core-components";
+import { Text } from "@unthinkable/react-core-components";
 
+import Button from "../Button/Button";
+import Spinner from "../Spinner";
 import styles from "./CustomButton.style";
 
-const CustomButton = ({ children, onPress, style, withGreenBackground }) => {
+const CustomButton = ({
+  children,
+  disabled,
+  isLoading,
+  onPress,
+  style,
+  withGreenBackground,
+}) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
+    <Button
       style={{
         ...styles.defaultBtnStyles,
         ...(withGreenBackground ? styles.greenBtn : {}),
         ...style,
       }}
+      disabled={isLoading || disabled}
+      {...{ onPress }}
     >
-      <Text style={styles.btnText}>{children} </Text>
-    </TouchableOpacity>
+      <Text style={styles.btnText}>{children}</Text>
+      {isLoading && (
+        <Spinner
+          size="xs"
+          thickness={3}
+          color={withGreenBackground ? "white" : ""}
+        />
+      )}
+    </Button>
   );
 };
 
 CustomButton.defaultProps = {
   children: <></>,
+  disabled: false,
+  isLoading: false,
   onPress: () => {},
   style: {},
   withGreenBackground: false,
@@ -28,6 +47,8 @@ CustomButton.defaultProps = {
 
 CustomButton.propTypes = {
   children: PropTypes.node,
+  disabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,
   withGreenBackground: PropTypes.bool,

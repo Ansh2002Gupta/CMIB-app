@@ -1,21 +1,34 @@
-const white = "#FFF";
-const darkBlue = "#00137E";
+/* Blacks */
 const black = "#000833";
-const lightGrey = "#CCD0E5";
-const backgroundColor = "#FBFCFF";
-const green = "#04AF55";
-const red = "#D93400";
-const gray = "#5A5A5A";
-const darkGreen = "#00873E";
-const subHeadingGray = "#616C82";
-const darkGrey = "#616C82";
-const errorRed = "#D93400";
-const lightBlue = "#269AD4";
-const secondaryGrey = "#F2F4FC";
 const darkBlack = "#0F0F0F";
-const errorBackground = "#ffeded";
-const lightGray = "#D0D5DD";
+const trueBlack = "#000";
+
+/* Blues */
+const backgroundColor = "#FBFCFF"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
+const darkBlue = "#00137E";
+const lightBlue = "#269AD4";
 const voilet = "#B1B3B5";
+
+/* Greens */
+const darkGreen = "#00873E";
+const green = "#04AF55";
+
+/* Greys */
+const darkGrey = "#616C82";
+const gray = "#5A5A5A";
+const lightGray = "#D0D5DD";
+const lightGrey = "#CCD0E5";
+const secondaryGrey = "#F2F4FC";
+const subHeadingGray = "#616C82";
+const disabledBtn = "#aaaaaa";
+
+/* Reds */
+const errorBackground = "#ffeded"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
+const errorRed = "#D93400";
+const red = "#D93400";
+
+/* Whites */
+const white = "#fff";
 
 const colors = {
   voilet,
@@ -36,5 +49,7 @@ const colors = {
   darkBlack,
   errorBackground,
   lightGray,
+  trueBlack,
+  disabledBtn,
 };
 export default colors;
