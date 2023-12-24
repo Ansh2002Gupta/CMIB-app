@@ -17,7 +17,10 @@ const styles = {
     justifyContent: "center",
   },
   counterInputText: {
+    flex:1,
     color: colors.black,
+    justifyContent: "center",
+    alignItems: "center",
     fontSize: 14,
     lineHeight: 20,
     padding: 0,

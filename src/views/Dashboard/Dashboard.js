@@ -20,9 +20,11 @@ function DashboardView() {
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => {
-    console.log("Add Designation is clicked !!!")
     setIsEnabled(previousState => !previousState);
   }
+  const handleCancelButton = () => {
+    setIsEnabled(previousState => !previousState);
+  };
 
   const handleSearchResults = (filteredData) => {
     console.log(filteredData);
@@ -80,7 +82,7 @@ function DashboardView() {
         style={{justifyContent :'flex-start',padding:14,backgroundColor:'#F2F4FC',borderColor :'#F2F4FC'}}
         textStyle={{ fontSize: 14,fontWeight: "600", color : '#00137E', lineHeight : 20 , marginLeft: 8 }}
       />
-      {(isEnabled)&&  <AddDesignation /> }
+      {(isEnabled)&&  <AddDesignation  handleCancelButton= {handleCancelButton} /> }
     </View>
   );
 }

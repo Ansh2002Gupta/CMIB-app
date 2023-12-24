@@ -9,7 +9,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./AddDesignation.style";
 import CustomTextInput from "../../components/CustomTextInput";
 
-const AddDesignation = () => {
+const AddDesignation = ({handleCancelButton}) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const [countValue, setCountValue] = useState(0);
@@ -22,9 +22,7 @@ const AddDesignation = () => {
   const handleCountChange = (newCount) => {
     setCountValue(newCount);
   };
-  const handleCancelButton = () => {
-    console.log("Cancel button clikced !!!");
-  };
+
   const handleSaveButton = () => {
     console.log("Save Button clicked !!!");
   };
@@ -40,6 +38,7 @@ const AddDesignation = () => {
           value={designation}
           onChangeText={(val) => onChangeDesignation(val)}
           isMandatory
+          isDropdown
           customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
           customTextInputContainer={isWebView ? styles.webView.inputTextBox : {}}
           customStyle={styles.negativePadding}
