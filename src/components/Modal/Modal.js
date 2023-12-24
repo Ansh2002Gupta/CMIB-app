@@ -10,9 +10,11 @@ const portalElement = document.getElementById("overlays");
 
 const Modal = ({
   children,
+  containerStyle,
   maxWidth,
   onClose,
   preventCloseOnBackdropClick,
+  style,
 }) => {
   return (
     <React.Fragment>
@@ -21,8 +23,14 @@ const Modal = ({
         portalElement
       )}
       {ReactDOM.createPortal(
-        <View style={styles.modal}>
-          <View style={{ ...styles.contentBox, ...setMaxWidth({ maxWidth }) }}>
+        <View style={{ ...styles.modal, ...style }}>
+          <View
+            style={{
+              ...styles.contentBox,
+              ...setMaxWidth({ maxWidth }),
+              ...containerStyle,
+            }}
+          >
             {children}
           </View>
         </View>,
@@ -34,16 +42,20 @@ const Modal = ({
 
 Modal.defaultProps = {
   children: <></>,
+  containerStyle: {},
   maxWidth: "",
   onClose: () => {},
   preventCloseOnBackdropClick: false,
+  style: {},
 };
 
 Modal.propTypes = {
   children: PropTypes.node,
+  containerStyle: PropTypes.object,
   maxWidth: PropTypes.string,
   onClose: PropTypes.func,
   preventCloseOnBackdropClick: PropTypes.bool,
+  style: PropTypes.object,
 };
 
 export default Modal;
