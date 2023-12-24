@@ -82,6 +82,8 @@ const iconSearch = "images/svg/iconSearch.svg";
 const iconMore = "images/svg/iconMore.svg";
 const iconArrowDown = "images/svg/iconArrowDown.svg";
 const iconArrowUp = "images/svg/iconArrowUp.svg";
+const iconAdd = "images/svg/iconAdd.svg";
+
 const images = {
   avatar,
   logo,
@@ -157,6 +159,7 @@ const images = {
   iconMore,
   iconArrowDown,
   iconArrowUp,
+  iconAdd,
 };
 
 export default images;

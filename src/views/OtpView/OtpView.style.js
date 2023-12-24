@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 const style = {
   mainView: {
@@ -161,7 +162,7 @@ const style = {
     alignItems:"center"
   },
   topTabs: {
-    cursor: "pointer",
+    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
   },
 };
 export default style;

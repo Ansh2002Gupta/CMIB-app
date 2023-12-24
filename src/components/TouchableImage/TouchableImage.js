@@ -20,6 +20,8 @@ const TouchableImage = ({ disabled,isSeletor , imageStyle, onPress, parentStyle,
     ...(isSelected ? styles.selected : {}),
   };
 
+  console.log("source value ==> ",typeof source)
+
   return (
     <CustomTouchableOpacity
       style={containerStyle}
@@ -50,7 +52,7 @@ TouchableImage.propTypes = {
   isSeletor: PropTypes.bool,
   imageStyle: PropTypes.object,
   parentStyle: PropTypes.object,
-  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]).isRequired,
 };
 
 export default TouchableImage;

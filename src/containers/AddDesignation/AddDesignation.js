@@ -56,6 +56,7 @@ const AddDesignation = () => {
           initialCount={countValue}
           onCountChange={handleCountChange}
           customStyle={styles.negativePadding}
+          customTextInputContainer={isWebView && styles.webView.inputLabelText}
         />
       ),
       style: styles.vacancyStyle,

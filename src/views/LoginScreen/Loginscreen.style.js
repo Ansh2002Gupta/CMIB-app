@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
@@ -18,7 +19,7 @@ const style = {
   },
   topTabs: {
     width: "50%",
-    cursor: "pointer",
+    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
   },
   inActiveStyle: {
     paddingTop: 16,
@@ -62,12 +63,12 @@ const style = {
   forgotPasswordText: {
     fontSize: 14,
     color: colors.darkBlue,
-    cursor: "pointer",
+    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
     fontWeight: "600",
   },
   loginButtonView: {
     marginTop: 32,
-    cursor: "pointer",
+    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
   },
   accountView: {
     marginTop: 24,
@@ -79,7 +80,7 @@ const style = {
     color: colors.darkBlue,
     fontSize: 14,
     fontWeight: "600",
-    cursor: "pointer",
+    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
   },
   borderStyle: {
     borderWidth: 1,
@@ -121,7 +122,7 @@ const style = {
       fontSize: 14,
       fontWeight: "600",
       lineHeight: 20,
-      cursor: "pointer",
+      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
     },
     errorMessage: {
       marginTop: 2,
@@ -131,7 +132,7 @@ const style = {
       fontSize: 14,
       fontWeight: "600",
       lineHeight: 20,
-      cursor: "pointer",
+      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
     },
     headerContainer: {
       marginTop: 0,
@@ -165,12 +166,12 @@ const style = {
       marginTop: 0,
     },
     loginText: {
-      cursor: "pointer",
+      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
     },
     rememberMeText: {
       fontSize: 14,
       lineHeight: 20,
-      cursor: "pointer",
+      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
       margin: 0,
     },
     selectedSectionHeading: {
@@ -178,7 +179,7 @@ const style = {
       textAlign: "center",
       fontSize: 16,
       fontWeight: "600",
-      cursor: "pointer",
+      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
     },
     subHeadingText: {
       color: colors.darkGrey,
@@ -196,7 +197,7 @@ const style = {
       color: colors.darkGrey,
       textAlign: "center",
       fontSize: 16,
-      cursor: "pointer",
+      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
     },
   },
 };

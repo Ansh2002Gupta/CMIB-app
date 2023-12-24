@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = {
@@ -7,7 +8,7 @@ const styles = {
     height: 44,
   },
   clickable: {
-    cursor: "pointer",
+    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
   },
   disabled: {
     opacity: 0.5,

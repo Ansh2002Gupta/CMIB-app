@@ -6,7 +6,6 @@ const styles = {
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
     borderWidth: 1,
-    flex: 1,
     flexDirection: "row",
     minWidth: 100,
     minHeight: 48,

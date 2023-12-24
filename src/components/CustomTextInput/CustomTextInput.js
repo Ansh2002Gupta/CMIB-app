@@ -61,6 +61,8 @@ const CustomTextInput = (props) => {
     setIsFocused(false);
   };
 
+console.log("Value of customStyle ",customStyle )
+
   return (
     <View style={[style.container, customStyle]}>
       {!!label && <CustomLabelView label={label} isMandatory />}

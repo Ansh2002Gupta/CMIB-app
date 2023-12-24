@@ -65,6 +65,8 @@ import iconFilter from "../../public/images/svg/iconFilter.svg"
 import iconMore from "../../public/images/svg/iconMore.svg"
 import iconArrowDown from "../../public/images/svg/iconArrowDown.svg"
 import iconArrowUp from "../../public/images/svg/iconArrowUp.svg"
+import iconAdd from "../../public/images/svg/iconAdd.svg"
+
 const images = {
   avatar,
   logo,
@@ -133,6 +135,7 @@ const images = {
   iconMore,
   iconArrowDown,
   iconArrowUp,
+  iconAdd,
 };
 
 export default images;
