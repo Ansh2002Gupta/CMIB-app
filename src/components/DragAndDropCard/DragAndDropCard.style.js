@@ -6,13 +6,29 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     height: 240,
     borderWidth: 1,
-    marginBottom: 48,
     borderRadius: 8,
     borderColor: colors.darkGrey,
     borderStyle: "dashed",
     justifyContent: "center",
     backgroundColor: colors.secondaryGrey,
     alignItems: "center",
+  },
+  loaderBox: {
+    position: "relative",
+  },
+  percentageBox: {
+    position: "absolute",
+    left: "50%",
+    top: "35%",
+  },
+  percentageBoxTwoDigitNumber: {
+    left: "45%",
+  },
+  percentageText: {
+    fontSize: 12,
+    fontWeight: 500,
+    lineHeight: 16,
+    color: colors.darkGrey,
   },
   textContainer: {
     flexDirection: "row",

@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import CropAndRotateImage from "../CropAndRotateImage";
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 import PreviewImage from "../PreviewImage";
+import useSaveLogo from "../../services/apiServices/hooks/useSaveLogoAPI";
 import useUploadedFileValidations from "../../hooks/useUploadedFileValidations";
 import { getImageSource } from "../../utils/util";
 import { IMAGE_MAX_SIZE } from "../../constants/constants";
@@ -25,16 +26,34 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
     setInvalidFormatError,
   } = useUploadedFileValidations();
 
+  const {
+    handleFileUpload,
+    isLoading: isUploadingImageToServer,
+    uploadPercentage,
+  } = useSaveLogo();
+
   const handleUploadClick = () => {
     fileInputRef.current.click();
   };
 
   const fileUploadHandler = (e) => {
+    initiateFileUpload(e.target.files[0], () => (e.target.value = null));
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    initiateFileUpload(e.dataTransfer.files?.[0], () => e.target.null);
+  };
+
+  const initiateFileUpload = (uploadedFile, resetUploadInput) => {
     setFileTooLargeError("");
     setInvalidFormatError("");
     setNonUploadableImageError("");
     const imageMimeType = IMAGE_ACCEPTABLE_FORMAT_REGEX;
-    const uploadedFile = e.target.files[0];
     if (uploadedFile) {
       if (!uploadedFile.type.match(imageMimeType)) {
         setInvalidFormatError(
@@ -42,14 +61,14 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
             id: "label.allowedFileFormatsError",
           })
         );
-        e.target.value = null;
+        resetUploadInput();
         return;
       }
       if (uploadedFile.size > IMAGE_MAX_SIZE) {
         setFileTooLargeError(
           intl.formatMessage({ id: "label.fileTooLargeError" })
         );
-        e.target.value = null;
+        resetUploadInput();
         return;
       }
       const img = document.createElement("img");
@@ -58,6 +77,11 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
       img.onload = () => {
         setFile(uploadedFile);
         openCropViewAfterImageSelection && setOpenCropView(true);
+        if (!openCropViewAfterImageSelection) {
+          const formData = new FormData();
+          formData.append("company_logo", uploadedFile);
+          handleFileUpload(formData);
+        }
       };
       img.onerror = () => {
         setNonUploadableImageError(
@@ -67,17 +91,7 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
         );
       };
     }
-    e.target.value = null;
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setFile(e.dataTransfer.files?.[0]);
-    openCropViewAfterImageSelection && setOpenCropView(true);
+    resetUploadInput();
   };
 
   return (
@@ -92,14 +106,16 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
           }}
         />
       )}
-      {!!file && !openCropView && (
+      {!isUploadingImageToServer && !!file && !openCropView && (
         <PreviewImage
-          fileName={file?.name}
-          onRemoveImage={() => setFile(null)}
-          source={getImageSource(file)}
+          {...{
+            fileName: file?.name,
+            onRemoveImage: () => setFile(null),
+            source: getImageSource(file),
+          }}
         />
       )}
-      {(!file || openCropView) && (
+      {(!file || openCropView || isUploadingImageToServer) && (
         <DragAndDropCard
           {...{
             errorMessage:
@@ -111,6 +127,8 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
             handleDragOver,
             handleDrop,
             handleUploadClick,
+            isLoading: isUploadingImageToServer,
+            uploadPercentage,
           }}
         />
       )}

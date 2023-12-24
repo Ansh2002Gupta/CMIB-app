@@ -6,8 +6,9 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMe
 
 const useSaveLogo = () => {
   const [uploadStatus, setUploadStatus] = useState(API_STATUS.IDLE);
-  const [fileUploadResult, setFileUploadResult] = useState([]);
+  const [fileUploadResult, setFileUploadResult] = useState(null);
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const handleFileUpload = async (file, successCallback) => {
     try {
@@ -17,8 +18,27 @@ const useSaveLogo = () => {
         "Content-Type": "multipart/form-data",
       };
 
-      const res = await Http.post(`company/save-logo`, file, headers);
+      const otherOptions = {
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          if (percent < 100) {
+            setUploadPercentage(percent);
+          }
+        },
+      };
+
+      const res = await Http.post(
+        `company/save-logo`,
+        file,
+        headers,
+        otherOptions
+      );
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+        setUploadPercentage(100);
+        setTimeout(() => {
+          setUploadPercentage(0);
+        }, 100);
         setUploadStatus(API_STATUS.SUCCESS);
         setFileUploadResult(res.data);
         successCallback();
@@ -50,6 +70,7 @@ const useSaveLogo = () => {
     isLoading,
     isSuccess,
     setErrorWhileUpload,
+    uploadPercentage,
     uploadStatus,
   };
 };
