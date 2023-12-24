@@ -61,7 +61,7 @@ const CustomTextInput = (props) => {
     setIsFocused(false);
   };
 
-console.log("Value of customStyle ",customStyle )
+console.log("Value of customLabelStyle ", typeof customLabelStyle )
 
   return (
     <View style={[style.container, customStyle]}>

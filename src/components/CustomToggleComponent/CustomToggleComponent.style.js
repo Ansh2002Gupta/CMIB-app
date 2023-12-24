@@ -13,7 +13,7 @@ const style = {
     borderColor: colors.lightGray,
     justifyContent: "center",
     alignItems: "center",
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   noButtonStyle: {
     width: 16,
@@ -23,7 +23,7 @@ const style = {
     borderColor: colors.lightGray,
     justifyContent: "center",
     alignItems: "center",
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   activeButtonStyle: {
     borderColor: colors.green,

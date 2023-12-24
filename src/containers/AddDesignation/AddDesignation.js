@@ -40,8 +40,8 @@ const AddDesignation = () => {
           value={designation}
           onChangeText={(val) => onChangeDesignation(val)}
           isMandatory
-          customLabelStyle={isWebView && styles.webView.inputLabelText}
-          customTextInputContainer={isWebView && styles.webView.inputTextBox}
+          customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
+          customTextInputContainer={isWebView ? styles.webView.inputTextBox : {}}
           customStyle={styles.negativePadding}
         />
       ),
@@ -56,7 +56,7 @@ const AddDesignation = () => {
           initialCount={countValue}
           onCountChange={handleCountChange}
           customStyle={styles.negativePadding}
-          customTextInputContainer={isWebView && styles.webView.inputLabelText}
+          customTextInputContainer={isWebView ? styles.webView.inputLabelText : {}}
         />
       ),
       style: styles.vacancyStyle,

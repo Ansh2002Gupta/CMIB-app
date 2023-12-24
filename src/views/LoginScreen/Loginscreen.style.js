@@ -19,7 +19,7 @@ const style = {
   },
   topTabs: {
     width: "50%",
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   inActiveStyle: {
     paddingTop: 16,
@@ -63,12 +63,12 @@ const style = {
   forgotPasswordText: {
     fontSize: 14,
     color: colors.darkBlue,
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
     fontWeight: "600",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   loginButtonView: {
     marginTop: 32,
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   accountView: {
     marginTop: 24,
@@ -80,7 +80,7 @@ const style = {
     color: colors.darkBlue,
     fontSize: 14,
     fontWeight: "600",
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   borderStyle: {
     borderWidth: 1,
@@ -122,7 +122,7 @@ const style = {
       fontSize: 14,
       fontWeight: "600",
       lineHeight: 20,
-      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
     },
     errorMessage: {
       marginTop: 2,
@@ -132,7 +132,7 @@ const style = {
       fontSize: 14,
       fontWeight: "600",
       lineHeight: 20,
-      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
     },
     headerContainer: {
       marginTop: 0,
@@ -166,20 +166,20 @@ const style = {
       marginTop: 0,
     },
     loginText: {
-      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
     },
     rememberMeText: {
       fontSize: 14,
       lineHeight: 20,
-      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
       margin: 0,
+      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
     },
     selectedSectionHeading: {
       color: colors.black,
       textAlign: "center",
       fontSize: 16,
       fontWeight: "600",
-      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
     },
     subHeadingText: {
       color: colors.darkGrey,
@@ -197,7 +197,7 @@ const style = {
       color: colors.darkGrey,
       textAlign: "center",
       fontSize: 16,
-      cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
     },
   },
 };

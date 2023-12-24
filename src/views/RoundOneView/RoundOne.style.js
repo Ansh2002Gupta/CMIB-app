@@ -18,7 +18,7 @@ const style = {
   componentStyle: {
     flexDirection: "row",
     paddingBottom: 24,
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   webComponentStyle: {
     flexDirection: "column",

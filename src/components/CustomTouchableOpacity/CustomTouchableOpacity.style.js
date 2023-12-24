@@ -4,7 +4,7 @@ const styles = {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   }
 };
 

@@ -162,7 +162,7 @@ const style = {
     alignItems:"center"
   },
   topTabs: {
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
 };
 export default style;

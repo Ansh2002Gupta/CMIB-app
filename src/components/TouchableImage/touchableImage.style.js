@@ -8,7 +8,7 @@ const styles = {
     height: 44,
   },
   clickable: {
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : {},
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   disabled: {
     opacity: 0.5,
