@@ -3,39 +3,41 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import CommonText from '../../../components/CommonText'
-import colors from "../../../assets/colors";
-import styles from "./CreateNewPasswordValidation.style";
+import CommonText from "../CommonText";
+import { PASSWORD_VALIDATIONS } from "../../constants/Regex";
+import styles from "./NewPasswordValidation.style";
 
-const CreateNewPasswordValidation = ({
+const NewPasswordValidation = ({
   confirmNewPassword,
-  newPassword,
   customContainerStyles,
-  validations,
+  newPassword,
   setValidations,
+  validations,
 }) => {
   const intl = useIntl();
-
   const bulletStyle = (isValid) => [
     styles.bulletIconStyle,
-    {
-      backgroundColor: isValid ? colors.green : colors.lightGrey,
-    },
+    styles.activityBulletStyle(isValid),
   ];
-  const validatePassword = (newPassword, confirmNewPassword) => {
-    setValidations({
-      length: newPassword.length >= 6,
-      numeric: /[0-9]/.test(newPassword),
-      uppercase: /[A-Z]/.test(newPassword),
-      lowercase: /[a-z]/.test(newPassword),
-      specialChar: /[!?.@#$%^&+=]/.test(newPassword),
-      match: newPassword === confirmNewPassword,
-    });
+
+  const validatePassword = (password, confirmNewPassword) => {
+    return {
+      length: PASSWORD_VALIDATIONS.length(password),
+      numeric: PASSWORD_VALIDATIONS.numeric.test(password),
+      uppercase: PASSWORD_VALIDATIONS.uppercase.test(password),
+      lowercase: PASSWORD_VALIDATIONS.lowercase.test(password),
+      specialChar: PASSWORD_VALIDATIONS.specialChar.test(password),
+      match: password === confirmNewPassword,
+    };
   };
 
   useEffect(() => {
-    validatePassword(newPassword, confirmNewPassword);
-  }, [newPassword, confirmNewPassword]);
+    const updatedValidations = validatePassword(
+      newPassword,
+      confirmNewPassword
+    );
+    setValidations(updatedValidations);
+  }, [newPassword, confirmNewPassword, setValidations]);
 
   return (
     <View>
@@ -89,7 +91,7 @@ const CreateNewPasswordValidation = ({
   );
 };
 
-CreateNewPasswordValidation.propTypes = {
+NewPasswordValidation.propTypes = {
   confirmNewPassword: PropTypes.string.isRequired,
   newPassword: PropTypes.string.isRequired,
   customContainerStyles: PropTypes.object,
@@ -97,4 +99,4 @@ CreateNewPasswordValidation.propTypes = {
   setValidations: PropTypes.func.isRequired,
 };
 
-export default CreateNewPasswordValidation;
+export default NewPasswordValidation;

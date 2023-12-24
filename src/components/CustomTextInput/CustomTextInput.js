@@ -16,23 +16,26 @@ import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
-    label,
-    value,
-    isMandatory,
-    isDropdown,
-    isMultiline,
-    isMobileNumber,
-    isError,
-    errorMessage,
-    placeholder,
-    dropdownStyle,
-    eyeImage,
-    isPassword,
     customLabelStyle,
+    customStyle,
+    customErrorStyle,
+    customHandleBlur,
     customTextInputContainer,
+    dropdownStyle,
+    errorMessage,
+    eyeImage,
+    isCounterInput,
+    isDropdown,
+    isError,
+    isMandatory,
+    isMobileNumber,
+    isMultiline,
+    isPassword,
+    label,
     options,
     onChangeValue,
-    isCounterInput,
+    placeholder,
+    value,
     inputKey = "value",
     ...remainingProps
   } = props;
@@ -52,6 +55,7 @@ const CustomTextInput = (props) => {
   };
 
   const handleBlur = () => {
+    customHandleBlur();
     setIsFocused(false);
   };
 
@@ -66,23 +70,25 @@ const CustomTextInput = (props) => {
   };
 
   return (
-    <View style={style.container}>
-      <View style={style.labelContainer}>
-        <CommonText
-          customTextStyle={[
-            style.label,
-            isWebView && style.webLabel,
-            customLabelStyle,
-          ]}
-          title={label}
-        />
-        {isMandatory && (
+    <View style={[style.container, customStyle]}>
+      {!!label && (
+        <View style={style.labelContainer}>
           <CommonText
-            customTextStyle={[style.label, style.starStyle]}
-            title={"*"}
+            customTextStyle={[
+              style.label,
+              isWebView && style.webLabel,
+              customLabelStyle,
+            ]}
+            title={label}
           />
-        )}
-      </View>
+          {isMandatory && (
+            <CommonText
+              customTextStyle={[style.label, style.starStyle]}
+              title={"*"}
+            />
+          )}
+        </View>
+      )}
       {isDropdown ? (
         <Dropdown
           style={[
@@ -165,28 +171,57 @@ const CustomTextInput = (props) => {
         </View>
       )}
       {isError && (
-        <CommonText customTextStyle={style.errorMsg} title={errorMessage} />
+        <CommonText
+          customTextStyle={[style.errorMsg, customErrorStyle]}
+          title={errorMessage}
+        />
       )}
     </View>
   );
 };
 
+CustomTextInput.defaultProps = {
+  customHandleBlur: () => {},
+  customErrorStyle: {},
+  customLabelStyle: {},
+  customStyle: {},
+  customTextInputContainer: {},
+  dropdownStyle: {},
+  errorMessage: "",
+  eyeImage: false,
+  isCounterInput: false,
+  isDropdown: false,
+  isError: false,
+  isMandatory: false,
+  isMobileNumber: false,
+  isMultiline: false,
+  inputKey: "value",
+  isPassword: false,
+  label: "",
+  placeholder: "",
+  value: "",
+};
+
 CustomTextInput.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string,
-  isCounterInput: PropTypes.bool,
-  isMandatory: PropTypes.bool,
-  isDropdown: PropTypes.bool,
-  isMultiline: PropTypes.bool,
-  isMobileNumber: PropTypes.bool,
-  isError: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  placeholder: PropTypes.string,
-  dropdownStyle: PropTypes.object,
-  eyeImage: PropTypes.bool,
-  isPassword: PropTypes.bool,
+  customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
+  customErrorStyle: PropTypes.object,
+  customStyle: PropTypes.object,
   customTextInputContainer: PropTypes.object,
+  dropdownStyle: PropTypes.object,
+  errorMessage: PropTypes.string,
+  eyeImage: PropTypes.bool,
+  isCounterInput: PropTypes.bool,
+  isDropdown: PropTypes.bool,
+  isError: PropTypes.bool,
+  isMandatory: PropTypes.bool,
+  isMobileNumber: PropTypes.bool,
+  isMultiline: PropTypes.bool,
+  inputKey: PropTypes.string,
+  isPassword: PropTypes.bool,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
 };
 
 export default CustomTextInput;

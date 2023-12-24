@@ -30,6 +30,9 @@ const red = "#D93400";
 /* Whites */
 const white = "#fff";
 
+/* Yellows */
+const yellow = "#FABB00";
+
 const colors = {
   voilet,
   white,
@@ -51,5 +54,6 @@ const colors = {
   lightGray,
   trueBlack,
   disabledBtn,
+  yellow,
 };
 export default colors;

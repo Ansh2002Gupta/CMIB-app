@@ -15,6 +15,7 @@ import LoginScreen from "../views/LoginScreen/index";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
+import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -58,7 +59,7 @@ const config = [
   },
   {
     pagePath: navigations.COMPANY_PROFILE,
-    element: <HomeWithPrivateAccess />,
+    element: <ContentRouteWithPrivateAccess />,
     views: [
       {
         viewPath: "",
@@ -153,6 +154,16 @@ const config = [
       {
         viewPath: "",
         element: <DefaultRoute />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.WEB_VIEW,
+    element: <WebViewScreen />,
+    views: [
+      {
+        viewPath: "",
+        element: <WebViewScreen />,
       },
     ],
   },

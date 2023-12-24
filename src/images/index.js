@@ -68,12 +68,18 @@ const iconDownloadDetails =
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
-const ticketIcon  = "images/ticketIcon/ticketIcon.png";
+const ticketIcon = "images/ticketIcon/ticketIcon.png";
 const iconSend = "images/iconSend/iconSend.png";
 const iconSetting = "images/iconSetting/iconSetting.png";
 const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
+const iconTick = "images/iconTick/iconTick.png";
+const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
+const iconWarning = "images/svg/iconWarning.svg";
+const iconFilter = "images/svg/iconFilter.svg";
+const iconSearch = "images/svg/iconSearch.svg";
+const iconMore = "images/svg/iconMore.svg";
 
 const images = {
   avatar,
@@ -142,6 +148,12 @@ const images = {
   iconSetting,
   iconUpArrow,
   iconDrawer,
+  iconTick,
+  iconSquareEdit,
+  iconWarning,
+  iconFilter,
+  iconSearch,
+  iconMore,
 };
 
 export default images;

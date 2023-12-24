@@ -14,6 +14,10 @@ const styles = {
     backgroundColor: colors.secondaryGrey,
     alignItems: "center",
   },
+  showImageStyle: {
+    borderStyle: "solid",
+    borderColor: colors.lightGrey,
+  },
   imageContainer: {
     flex: 1,
     justifyContent: "center",
@@ -45,6 +49,7 @@ const styles = {
     color: colors.darkBlue,
     fontSize: 14,
     lineHeight: 24,
+    fontWeight: "600",
   },
   innerContainer: {
     flexDirection: "row",

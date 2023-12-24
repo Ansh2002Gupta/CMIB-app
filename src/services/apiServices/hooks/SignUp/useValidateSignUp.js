@@ -6,15 +6,11 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/erro
 const useValidateSignUp = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
   const [validateResult, setValidateResult] = useState([]);
-  const [error, setError] = useState("");
+  const [validationError, setValidationError] = useState("");
 
-  const handleSignUpValidation = async (
-    payload,
-    successCallback,
-    errorCallback
-  ) => {
+  const handleSignUpValidation = async (payload, successCallback) => {
     setPostStatus(API_STATUS.LOADING);
-    setError("");
+    setValidationError("");
     try {
       const res = await Http.post(`company/sign-up/validate`, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
@@ -23,13 +19,11 @@ const useValidateSignUp = () => {
         successCallback();
       } else {
         setPostStatus(API_STATUS.ERROR);
-        errorCallback(res);
       }
     } catch (err) {
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      setError(errorMessage);
-      errorCallback(errorMessage);
+      setValidationError(errorMessage);
       setPostStatus(API_STATUS.ERROR);
     }
   };
@@ -40,12 +34,13 @@ const useValidateSignUp = () => {
 
   return {
     validateResult,
-    error,
+    validationError,
     postStatus,
     handleSignUpValidation,
     isError,
     isLoading,
     isSuccess,
+    setValidationError,
   };
 };
 

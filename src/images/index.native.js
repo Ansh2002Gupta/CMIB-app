@@ -57,6 +57,12 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
+import iconTick from "../../public/images/iconTick/iconTick.png";
+import iconWarning from "../../public/images/svg/iconWarning.svg"
+import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
+import iconSearch from "../../public/images/svg/iconSearch.svg"
+import iconFilter from "../../public/images/svg/iconFilter.svg"
+import iconMore from "../../public/images/svg/iconMore.svg"
 
 const images = {
   avatar,
@@ -118,6 +124,12 @@ const images = {
   iconHiringProcess,
   iconDownloadDetails,
   iconDrawer,
+  iconTick,
+  iconWarning,
+  iconSquareEdit,
+  iconSearch,
+  iconFilter,
+  iconMore,
 };
 
 export default images;

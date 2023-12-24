@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 
+import CommonText from "../../components/CommonText";
 import ButtonComponent from "../../components/ButtonComponent";
 import HeaderText from "../../components/HeaderText/HeaderText";
-import CommonText from "../../components/CommonText";
 import OtpInput from "../../components/OtpInput/index";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import {
   OTP_TRY_COUNT,
@@ -19,10 +20,11 @@ const OtpViewUI = ({
   handleOtpChange,
   intl,
   isCounter,
+  isLoading,
   submitDisabled,
   minutes,
   otpLeft,
-  onClickForgotPassword,
+  onVerifyOtpClick,
   onClickGoToLogin,
   onResendOtpClick,
   setIsCounter,
@@ -30,25 +32,22 @@ const OtpViewUI = ({
   seconds,
   setOtpLeft,
   setSeconds,
+  handleDismissToast,
+  validationError,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-
   const [afterAttempt, setAfterAttempt] = useState(false);
-
   const formattedTimerValue = `${intl.formatMessage({
     id: "label.request_otp_again",
   })} ${minutes < 10 ? `0${minutes}` : minutes}:${
     seconds < 10 ? `0${seconds}` : seconds
   } ${intl.formatMessage({ id: "label.braces" })}`;
-
   const formatedOtpLeftValue = `${intl.formatMessage({
     id: "label.request_otp_again",
   })} ${otpLeft} ${intl.formatMessage({ id: "label.left_brace" })}`;
-
   const textFirstHeading = `${intl.formatMessage({
     id: "label.request_otp",
   })} ${OTP_TRY_COUNT} ${intl.formatMessage({ id: "label.times" })}`;
-
   const textSecondHeading = `${intl.formatMessage({
     id: "label.request_otp_next",
   })} ${minutes < 10 ? `0${minutes}` : minutes}:${
@@ -221,7 +220,10 @@ const OtpViewUI = ({
                     title={formattedTimerValue}
                   />
                 ) : (
-                  <TouchableOpacity onPress={onResendOtpClick}>
+                  <TouchableOpacity
+                    style={styles.topTabs}
+                    onPress={onResendOtpClick}
+                  >
                     <CommonText
                       customTextStyle={styles.textlabelReset}
                       title={formatedOtpLeftValue}
@@ -259,14 +261,15 @@ const OtpViewUI = ({
         <View style={isWebView ? styles.webSubmitView : styles.submitView}>
           <ButtonComponent
             title={intl.formatMessage({ id: "label.submit" })}
-            onPress={onClickForgotPassword}
+            onPress={onVerifyOtpClick}
             disabled={submitDisabled}
             customTitleStyle={isWebView && styles.customBtnText}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
+            displayLoader={isLoading}
           />
-          <TouchableOpacity onPress={onClickGoToLogin}>
+          <TouchableOpacity style={styles.topTabs} onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={
                 isWebView
@@ -278,6 +281,12 @@ const OtpViewUI = ({
           </TouchableOpacity>
         </View>
       </View>
+      {!!validationError && (
+        <ToastComponent
+          toastMessage={validationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </View>
   );
 };
@@ -289,7 +298,7 @@ OtpViewUI.propTypes = {
   intl: PropTypes.object.isRequired,
   submitDisabled: PropTypes.bool,
   minutes: PropTypes.number,
-  onClickForgotPassword: PropTypes.func,
+  onVerifyOtpClick: PropTypes.func,
   onClickGoToLogin: PropTypes.func,
   onResendOtpClick: PropTypes.func.isRequired,
   otpLeft: PropTypes.number,

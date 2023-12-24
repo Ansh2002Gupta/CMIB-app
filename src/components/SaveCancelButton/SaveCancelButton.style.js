@@ -10,7 +10,7 @@ const style = {
     borderRadius: 8,
     flex: 1,
   },
-  containerStyle: { flexDirection: "row", bottom: 16 },
+  containerStyle: { flexDirection: "row" },
   disableButtonStyle: {
     height: 56,
     backgroundColor: colors.white,

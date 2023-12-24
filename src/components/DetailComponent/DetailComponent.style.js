@@ -15,6 +15,8 @@ const style = {
     fontSize: 16,
     paddingBottom: 24,
   },
+  innerContainer: { width: "100%" },
+  rowStyle: { width: "50%" },
   starStyle: {
     color: colors.errorRed,
   },
@@ -26,9 +28,18 @@ const style = {
     fontSize: 14,
     color: colors.black,
     marginBottom: 24,
-    fontWeight: "500"
-
+    fontWeight: "500",
   },
+  containerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    overflow: "hidden",
+    flexWrap: "wrap",
+  },
+  containerGridStyle: (columnCount) => ({
+    display: "grid",
+    gridTemplateColumns: columnCount || "1fr 1fr 1fr",
+  }),
 };
 
 export default style;

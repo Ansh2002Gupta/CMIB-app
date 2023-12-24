@@ -164,5 +164,8 @@ const style = {
       marginBottom: 32,
     },
   },
+  ErrorStyle: {
+    paddingTop: 4,
+  },
 };
 export default style;

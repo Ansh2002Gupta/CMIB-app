@@ -15,6 +15,7 @@ const style = {
     paddingBottom: 8,
     marginLeft: 8,
     marginRight: 8,
+    zIndex:1,
   },
   textStyle: {
     color: colors.white,

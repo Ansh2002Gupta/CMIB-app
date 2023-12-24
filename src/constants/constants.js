@@ -19,15 +19,16 @@ export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 100;
 export const IMAGE_MAX_SIZE = 5000000;
 export const CA_JOBS = "ca-jobs";
-export const NEWLY_QUALIFIED = "newly-qualified-ca-placement";
-export const OVERSEAS_PLACEMENTS = "overseas-placements";
-export const CAREER_ASCENTS = "career-ascents";
+export const NEWLY_QUALIFIED = "nqca-placement";
+export const OVERSEAS_PLACEMENTS = "overseas-placement";
+export const CAREER_ASCENTS = "career-ascent";
 export const WOMENT_PLACEMENT = "women-placement";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
 export const OTP_TIMER_MIN_MINUTES = 1;
 export const OTP_TIMER_MAX_MINUTES = 15;
+export const DEBOUNCE_TIME = 300;
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -89,15 +90,15 @@ export const MODULE_OPTIONS = [
     messageId: "label.ca_jobs",
   },
   {
-    id: "newly-qualified-ca-placement",
+    id: "nqca-placement",
     messageId: "label.newly_qualified_ca",
   },
   {
-    id: "overseas-placements",
+    id: "overseas-placement",
     messageId: "label.overseas_placements",
   },
   {
-    id: "career-ascents",
+    id: "career-ascent",
     messageId: "label.career_ascents",
   },
   {
@@ -107,7 +108,6 @@ export const MODULE_OPTIONS = [
 ];
 
 export const COLOR_MODES = ["light", "dark"];
-export const EXIT_WEBVIEW = "EXIT_WEBVIEW";
 export const ROUND_ONE_CARD = [
   {
     title: "label.add_application_form_text",
@@ -128,3 +128,5 @@ export const ROUND_ONE_CARD = [
     subTitle: "label.download_details_description",
   },
 ];
+
+export const REDIRECT_URL = "redirectUrl";
