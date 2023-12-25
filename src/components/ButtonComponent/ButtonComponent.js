@@ -7,7 +7,6 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity"
 import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./ButtonComponent.style";
@@ -23,7 +22,7 @@ const ButtonComponent = (props) => {
     displayLoader,
   } = props;
   return (
-    <CustomTouchableOpacity
+    <TouchableOpacity
       onPress={onPress}
       style={[
         styles.buttonStyle,
@@ -41,7 +40,7 @@ const ButtonComponent = (props) => {
         />
       )}
       {hasIconRight && <Image source={images.iconArrowRightWhite} />}
-    </CustomTouchableOpacity>
+    </TouchableOpacity>
   );
 };
 
