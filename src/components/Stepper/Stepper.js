@@ -43,7 +43,7 @@ const Stepper = ({
                     getStepStatus,
                   }),
                   ...(getStepStatus(index) !== "done"
-                    ? { width: 30, height: 30 }
+                    ? styles.activeOrPendingCircle
                     : {}),
                   ...stepperCircle,
                 }}
@@ -60,7 +60,7 @@ const Stepper = ({
                         getStepStatus,
                       }),
                     }}
-                    title={index + 1}
+                    title={`${index + 1}`}
                   />
                 )}
               </View>

@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
     boxShadow: isWeb ? "0px 2px 5px 0px rgba(20, 25, 26, 0.16)" : "",
     ...Platform.select({
       ios: {
-        shadowColor: 'rgba(20, 25, 26, 0.16)',
+        shadowColor: "rgba(20, 25, 26, 0.16)",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 1,
         shadowRadius: 5,
@@ -65,6 +65,10 @@ export const styles = StyleSheet.create({
   },
   inActiveCircle: {
     color: colors.black,
+  },
+  activeOrPendingCircle: {
+    width: 30,
+    height: 30,
   },
   circleText: {
     fontSize: 14,
