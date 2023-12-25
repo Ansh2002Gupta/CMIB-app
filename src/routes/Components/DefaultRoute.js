@@ -1,6 +1,5 @@
-import React, { useContext,useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Navigate } from "../../routes";
-import { Platform } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../../globalContext/auth/authProvider";
 import { StorageService } from "../../services";
@@ -14,12 +13,10 @@ const DefaultRoute = () => {
     async function checkAuthAndNavigate() {
       const token = await StorageService.get("auth");
       if (!token && !authState?.token) {
-        console.log("LOGIN SCREEN loading !!!");
         setNavigationPath(navigations.LOGIN);
-      } else {
-        console.log("Dashboard SCREEN loading !!!");
-        setNavigationPath(navigations.DASHBOARD);
+        return;
       }
+      setNavigationPath(navigations.DASHBOARD);
     }
 
     checkAuthAndNavigate();
