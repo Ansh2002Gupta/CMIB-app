@@ -18,14 +18,12 @@ import images from "../../images";
 import styles from "./SideBar.style";
 
 const SideBar = ({
-  handleDisplayHeader,
   items,
   onClose,
   onPress,
   resetList,
   showCloseIcon,
 }) => {
-  const navigate = useNavigate();
   const intl = useIntl();
   const [selectedItem, setSelectedItem] = useState("");
 
@@ -123,7 +121,6 @@ const SideBar = ({
 };
 
 SideBar.propTypes = {
-  handleDisplayHeader: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,

@@ -19,7 +19,6 @@ import images from "../../images";
 import styles from "./SideBar.style";
 
 const SideBar = ({
-  handleDisplayHeader,
   onClose,
   onPress,
   resetList,
@@ -39,7 +38,6 @@ const SideBar = ({
   const handleBottomViewNavigation = () => {
     const uri = Config.REACT_APP_CMS_URI;
     navigate(navigations.WEB_VIEW, { state: { uri } });
-    handleDisplayHeader();
   };
 
   // Render functions for items and sub-items
@@ -124,7 +122,6 @@ const SideBar = ({
 };
 
 SideBar.propTypes = {
-  handleDisplayHeader: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,

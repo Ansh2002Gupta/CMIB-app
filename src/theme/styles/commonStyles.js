@@ -15,28 +15,6 @@ const commonStyles = {
   middleContainer: {
     flex: 1,
   },
-  bottomBar: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  rightSectionStyle: {
-    flex: 8,
-  },
-  leftSectionStyle:{
-    flex:2
-  },
-  topSectionStyle: {
-    flex: 1,
-  },
-  bottomSectionStyle: {
-    flex: 9,
-  },
-  modalStyle:{
-    justifyContent: "flex-start",
-    margin: 0,
-  }
 };
 
 export default commonStyles;

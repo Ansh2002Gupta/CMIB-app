@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 
 import {
   Modal,
@@ -6,6 +6,7 @@ import {
   ScrollView,
 } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import { Outlet } from "../routes";
 import MainLayout from "../layouts/MainLayout";
@@ -18,6 +19,7 @@ import {
   newQualifiedPlacementsList,
 } from "../constants/sideBarListItems";
 import commonStyles from "../theme/styles/commonStyles";
+import Styles from './HeaderWithContentLayout.style'
 import BottomBar from "../containers/BottomBar";
 
 function HeaderWithContentLayout() {
@@ -26,7 +28,6 @@ function HeaderWithContentLayout() {
   const [menuIconVisible, setMenuIconVisible] = useState(true);
   const [listItems, setListItems] = useState(items);
   const [showClose, setShowClose] = useState(false);
-  const [showHeader, setShowHeader] = useState(true);
 
   useEffect(() => {
     const checkAuthToken = async () => {
@@ -55,6 +56,7 @@ function HeaderWithContentLayout() {
 
   const { isWebView } = useIsWebView();
   const windowDimensions = useWindowDimensions();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   const modalSideBar = isSideBarVisible && !(windowDimensions.width >= 900);
   const isMdOrGreater = useMemo(
@@ -75,14 +77,10 @@ function HeaderWithContentLayout() {
     setShowClose(true);
   };
 
-  const handleDisplayHeader = () => {
-    setShowHeader(false);
-  };
 
   // Components for rendering the sidebar in a modal or inline
   const sidebarComponent = (
     <SideNavBar
-      handleDisplayHeader={handleDisplayHeader}
       onClose={() => setSideBarVisible(false)}
       onPress={handleNewlyQualifiedPlacementsClick}
       resetList={() => setListItems(items)}
@@ -98,7 +96,7 @@ function HeaderWithContentLayout() {
           isVisible={modalSideBar}
           animationIn="slideInLeft"
           animationOut="slideOutLeft"
-          style={commonStyles.modalStyle}
+          style={Styles().modalStyle}
         >
           {Platform.OS.toLocaleLowerCase() === "web" ? (
             <ScrollView style={{ flex: 1 }}>{sidebarComponent}</ScrollView>
@@ -113,7 +111,6 @@ function HeaderWithContentLayout() {
           <Header
             toggleSideBar={toggleSideBar}
             showCloseIcon={showCloseIcon}
-            showHeader={showHeader}
             menuIconVisible={menuIconVisible}
           />
         }
@@ -128,12 +125,12 @@ function HeaderWithContentLayout() {
         }
         isRightFillSpace={false}
         isLeftFillSpace={false}
-        rightSectionStyle={commonStyles.rightSectionStyle}
-        leftSectionStyle={commonStyles.leftSectionStyle}
+        rightSectionStyle={Styles(currentBreakpoint).rightSectionStyle}
+        leftSectionStyle={Styles(currentBreakpoint).leftSectionStyle}
         bottomSectionStyle={
           isMdOrGreater
-            ? commonStyles.bottomSectionStyle
-            : commonStyles.bottomBar
+            ? Styles().bottomSectionStyle
+            : Styles().bottomBar
         }
       />
     </>

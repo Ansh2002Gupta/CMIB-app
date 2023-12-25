@@ -5,7 +5,7 @@ import PublicHeader from "../PublicHeader/PublicHeader";
 import PrivateHeader from "../PrivateHeader/PrivateHeader";
 import { getAuthToken } from "../../utils/getAuthToken";
 
-const Header = ({ toggleSideBar, showCloseIcon, showHeader, menuIconVisible }) => {
+const Header = ({ toggleSideBar, showCloseIcon, menuIconVisible }) => {
   const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -27,8 +27,6 @@ const Header = ({ toggleSideBar, showCloseIcon, showHeader, menuIconVisible }) =
 
   return (
     <>
-      {showHeader ? (
-        <>
           {isuserLoggedIn ? (
             <PrivateHeader
               toggleSideBar={toggleSideBar}
@@ -38,8 +36,6 @@ const Header = ({ toggleSideBar, showCloseIcon, showHeader, menuIconVisible }) =
           ) : (
             <PublicHeader />
           )}
-        </>
-      ) : null}
     </>
   );
 };
