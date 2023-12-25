@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import BaseLayout from '../Base';
 
-import layoutStyle from './multiRow.style';
+import layoutStyle from './MultiRow.style';
 
 function MultiRow({
   style,
