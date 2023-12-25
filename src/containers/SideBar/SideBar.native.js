@@ -36,8 +36,6 @@ const SideBar = ({
 
   const handleBottomViewNavigation = () => {
     const uri = Config.REACT_APP_CMS_URI;
-    console.log('Uri',uri);
-    
     navigate(navigations.WEB_VIEW, { state: { uri } });
   };
 
