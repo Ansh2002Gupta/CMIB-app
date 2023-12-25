@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.secondaryGrey,
     alignItems: "center",
+    minWidth: 300,
   },
   loaderBox: {
     position: "relative",
