@@ -13,7 +13,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./PrivateHeader.style";
 
-const PrivateHeader = ({ toggleSideBar, showCloseIcon, menuIconVisible }) => {
+const PrivateHeader = ({ toggleSideBar, menuIconVisible }) => {
   const { isWebView } = useIsWebView();
   const windowDimensions = useWindowDimensions();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -94,10 +94,7 @@ const PrivateHeader = ({ toggleSideBar, showCloseIcon, menuIconVisible }) => {
         >
           {menuIconVisible && (
             <TouchableOpacity
-              onPress={() => {
-                showCloseIcon();
-                toggleSideBar();
-              }}
+              onPress={toggleSideBar}
             >
               <Image source={images.iconMenu} />
             </TouchableOpacity>

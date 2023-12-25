@@ -19,7 +19,7 @@ import styles from "./SideBar.style";
 
 const SideBar = ({
   onClose,
-  onPress,
+  listItems,
   resetList,
   showCloseIcon,
   items,
@@ -83,7 +83,7 @@ const SideBar = ({
               }
             />
             <TouchableOpacity
-              onPress={onPress}
+              onPress={listItems}
               style={styles.changeTextContainer}
             >
               <CommonText
@@ -123,7 +123,7 @@ const SideBar = ({
 SideBar.propTypes = {
   items: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
-  onPress: PropTypes.func.isRequired,
+  listItems: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.bool.isRequired,
 };

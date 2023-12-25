@@ -27,7 +27,6 @@ function HeaderWithContentLayout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [menuIconVisible, setMenuIconVisible] = useState(true);
   const [listItems, setListItems] = useState(items);
-  const [showClose, setShowClose] = useState(false);
 
   useEffect(() => {
     const checkAuthToken = async () => {
@@ -50,7 +49,6 @@ function HeaderWithContentLayout() {
       setMenuIconVisible(false);
     } else {
       setMenuIconVisible(true);
-      setShowClose(false);
     }
   }, [isSideBarVisible]);
 
@@ -70,18 +68,14 @@ function HeaderWithContentLayout() {
 
   const toggleSideBar = () => {
     setSideBarVisible(!isSideBarVisible);
-    showCloseIcon();
   };
 
-  const showCloseIcon = () => {
-    setShowClose(true);
-  };
 
   // Components for rendering the sidebar in a modal or inline
   const sidebarComponent = (
     <SideNavBar
-      onClose={() => setSideBarVisible(false)}
-      onPress={handleNewlyQualifiedPlacementsClick}
+      onClose={toggleSideBar}
+      listItems={handleNewlyQualifiedPlacementsClick}
       resetList={() => setListItems(items)}
       showCloseIcon={modalSideBar}
       items={listItems}
@@ -109,7 +103,6 @@ function HeaderWithContentLayout() {
         header={
           <Header
             toggleSideBar={toggleSideBar}
-            showCloseIcon={showCloseIcon}
             menuIconVisible={menuIconVisible}
           />
         }

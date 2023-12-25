@@ -14,7 +14,7 @@ import styles from "./SideNavBar.style";
 const SideNavBar = ({
   items,
   onClose,
-  onPress,
+  listItems,
   resetList,
   showCloseIcon,
 }) => {
@@ -38,7 +38,7 @@ const SideNavBar = ({
         <SideBar
           items={items}
           onClose={onClose}
-          onPress={onPress}
+          listItems={listItems}
           resetList={resetList}
           showCloseIcon={showCloseIcon}
         />
@@ -49,7 +49,7 @@ const SideNavBar = ({
 
 SideNavBar.propTypes = {
   onClose: PropTypes.func,
-  onPress: PropTypes.func.isRequired,
+  listItems: PropTypes.func.isRequired,
   resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.bool.isRequired,
   items: PropTypes.array.isRequired,
