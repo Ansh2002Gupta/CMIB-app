@@ -57,20 +57,32 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
-import iconTick from "../../public/images/iconTick/iconTick.png";
-import iconWarning from "../../public/images/svg/iconWarning.svg"
+import iconArrowUp from "../../public/images/iconArrowUp/iconArrowUp.png";
+import iconArrowDown from "../../public/images/iconArrowDown/iconArrowDown.png";
+import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLogowhite.png";
+import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
+import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
+import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
+import iconClose from "../../public/images/iconClose/iconClose.png";
+import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg"
 import iconFilter from "../../public/images/svg/iconFilter.svg"
 import iconMore from "../../public/images/svg/iconMore.svg"
+import iconWarning from "../../public/images/svg/iconWarning.svg";
+import iconTick from "../../public/images/iconTick/iconTick.png";
 
 const images = {
+  iconArrowUp,
+  iconArrowDown,
+  iconArrowDown2,
   avatar,
   logo,
   sun,
   moon,
   flagFr,
   flagUk,
+  iconLeftArrow,
   homeSolid,
   homeOutline,
   profileSolid,
@@ -93,6 +105,7 @@ const images = {
   iconEyeSlash,
   iconSuccess,
   iconMenu,
+  iconClose,
   iconNotification,
   iconProfile,
   iconLogout,
@@ -107,6 +120,7 @@ const images = {
   iconLinkedin,
   iconTelegram,
   iconTwitter,
+  iconTick,
   iconYoutube,
   iconCmibLogo,
   ticketIcon,
@@ -124,7 +138,9 @@ const images = {
   iconHiringProcess,
   iconDownloadDetails,
   iconDrawer,
-  iconTick,
+  iconCmibLogoWhite,
+  iconRightArrow,
+  iconFooterGlobal,
   iconWarning,
   iconSquareEdit,
   iconSearch,

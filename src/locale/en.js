@@ -197,6 +197,10 @@ const locale = {
   "label.logout_message": "Are you sure you want to logout of the portal?",
   "label.error_password": "Password doesn't match",
   "label.old_password_placeholder": "Enter your old password",
+  "label.visit_website":"Visit Website",
+  "label.session":"Session",
+  "label.module":"Module",
+  "label.newly_qualified_placements":"Newly Qualified Placements",
 };
 
 export default locale;
