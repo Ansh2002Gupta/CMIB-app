@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage";
-import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity"
 import styles from "./TouchableImage.style";
 
 const TouchableImage = ({
