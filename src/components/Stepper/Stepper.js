@@ -1,11 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Image } from "@unthinkable/react-core-components";
+import { Image, View } from "@unthinkable/react-core-components";
 
+import CommonText from "../CommonText/CommonText";
 import images from "../../images";
 import { getAppropriateStyle, styles } from "./Stepper.style";
 
-const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
+const Stepper = ({
+  activeStep,
+  customStyle,
+  orientation,
+  showActiveLabelOnly,
+  steps,
+}) => {
+  const { containerStyle, stepperCircle, stepperHeroLabelText, stepperLabel } =
+    customStyle;
+
   const getStepStatus = (step) => {
     if (activeStep === step) return "active";
     if (activeStep > step) return "done";
@@ -14,16 +24,17 @@ const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
 
   return (
     <React.Fragment>
-      <div
+      <View
         style={{
-          ...(orientation === "vertical" ? styles.stepperVertical : {}),
           ...styles.stepsContainer,
+          ...(orientation === "vertical" ? styles.stepperVertical : {}),
+          ...containerStyle,
         }}
       >
         {steps?.map((label, index) => (
-          <div key={index} style={styles.step}>
-            <div style={styles.circleLabel}>
-              <div
+          <View key={index} style={styles.step}>
+            <View style={styles.circleLabel}>
+              <View
                 style={{
                   ...styles.circle,
                   ...getAppropriateStyle({
@@ -31,6 +42,7 @@ const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
                     stepValue: index,
                     getStepStatus,
                   }),
+                  ...stepperCircle,
                 }}
               >
                 {getStepStatus(index) === "done" ? (
@@ -38,28 +50,33 @@ const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
                 ) : (
                   index + 1
                 )}
-              </div>
+              </View>
               {!showActiveLabelOnly && (
-                <div
+                <View
                   style={{
-                    ...styles.label,
                     ...(orientation === "vertical" ? styles.verticalLabel : {}),
                     ...(orientation !== "vertical" && !showActiveLabelOnly
                       ? styles.horizontalLabel
                       : {}),
-                    ...getAppropriateStyle({
-                      fieldName: "label",
-                      stepValue: index,
-                      getStepStatus,
-                    }),
                   }}
                 >
-                  {label}
-                </div>
+                  <CommonText
+                    title={label}
+                    customTextStyle={{
+                      ...styles.label,
+                      ...getAppropriateStyle({
+                        fieldName: "label",
+                        stepValue: index,
+                        getStepStatus,
+                      }),
+                      ...stepperLabel,
+                    }}
+                  />
+                </View>
               )}
-            </div>
+            </View>
             {index < steps.length - 1 && (
-              <div
+              <View
                 style={{
                   ...styles.line,
                   ...(orientation !== "vertical" ? styles.horizontalLine : {}),
@@ -73,30 +90,21 @@ const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
                     getStepStatus,
                   }),
                 }}
-              ></div>
+              ></View>
             )}
-          </div>
+          </View>
         ))}
-      </div>
+      </View>
       {showActiveLabelOnly && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "16px",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "18px",
-              fontWeight: 600,
-              textAlign: "center",
-              color: "#000833",
+        <View style={styles.onlyActiveLabelBox}>
+          <CommonText
+            title={steps.find((label, idx) => idx === activeStep)}
+            customTextStyle={{
+              ...styles.onlyActiveLabel,
+              ...stepperHeroLabelText,
             }}
-          >
-            {steps.find((label, idx) => idx === activeStep)}
-          </p>
-        </div>
+          />
+        </View>
       )}
     </React.Fragment>
   );
@@ -104,6 +112,7 @@ const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
 
 Stepper.defaultProps = {
   activeStep: 0,
+  customStyle: {},
   orientation: "horizontal",
   showActiveLabelOnly: true,
   steps: [],
@@ -111,6 +120,7 @@ Stepper.defaultProps = {
 
 Stepper.propTypes = {
   activeStep: PropTypes.number.isRequired,
+  customStyle: PropTypes.object,
   orientation: PropTypes.string,
   showActiveLabelOnly: PropTypes.bool,
   steps: PropTypes.array.isRequired,

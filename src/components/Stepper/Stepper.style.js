@@ -7,6 +7,7 @@ const isWeb = Platform.OS.toLocaleLowerCase() === "web";
 export const styles = StyleSheet.create({
   stepsContainer: {
     display: "flex",
+    flexDirection: "row",
   },
   stepperVertical: {
     flexDirection: "column",
@@ -50,7 +51,7 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     borderStyle: "solid",
     boxShadow: isWeb ? "0px 2px 5px 0px rgba(20, 25, 26, 0.16)" : "",
-    padding: 2,
+    padding: 12,
   },
   doneCircle: {
     background: colors.greenOne,
@@ -59,7 +60,7 @@ export const styles = StyleSheet.create({
   },
   inActiveCircle: {
     color: colors.black,
-    padding: 2,
+    padding: 12,
   },
   label: {
     fontSize: 16,
@@ -103,6 +104,17 @@ export const styles = StyleSheet.create({
   },
   doneLine: {
     borderColor: colors.greenOne,
+  },
+  onlyActiveLabelBox: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "16px",
+  },
+  onlyActiveLabel: {
+    fontSize: 18,
+    fontWeight: 600,
+    textAlign: "center",
+    color: colors.black,
   },
 });
 
