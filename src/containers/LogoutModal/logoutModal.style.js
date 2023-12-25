@@ -9,13 +9,13 @@ const styles = {
     fontWeight: "600",
     fontSize: 20,
     color: colors.black,
-    marginBottom: 8,
+    marginTop:20,
   },
   subHeaderText: {
-    fontWeight: "500",
     fontSize: 14,
     color: colors.gray,
     lineHeight: 22,
+    marginTop:8,
   },
   logo: {
     height : 24,
@@ -33,6 +33,30 @@ const styles = {
     borderTopRightRadius: 8,
     paddingTop: 24,
     paddingBottom: 24,
+  },
+  saveStyle: {
+    backgroundColor: colors.yellow,
+    marginLeft: 16,
+  },
+  rightTextStyle: {
+    color: colors.black,
+    fontSize: 14,
+    fontWeight: "600",
+    lineHeight:20,
+  },
+  leftTextStyle: {
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  vacancyStyle: {
+    marginTop: 24,
+  },
+  parentStyle:{
+    ...Platform.select({
+      ios: {
+        marginBottom: 18, 
+      },
+    }),
   },
 };
 

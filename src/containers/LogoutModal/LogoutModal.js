@@ -16,7 +16,7 @@ const LogoutModal = ({ onCancel, onSave }) => {
   const { handleUserLogout } = useLogoutAPI();
   const WarningIcon = images.iconWarning;
 
-  const rowConfigs = [
+  const logoutConfig = [
     {
       content: (
         <CustomImage
@@ -50,7 +50,10 @@ const LogoutModal = ({ onCancel, onSave }) => {
           onLeftButtonClick={() => {
             onCancel(false);
           }}
+          leftTextStyle={styles.leftTextStyle}
           rightButtonText={intl.formatMessage({ id: "label.logout" })}
+          rightButtonStyle={styles.saveStyle}
+          rightTextStyle={styles.rightTextStyle}
           onRightButtonClick={() => {
             handleUserLogout(
               () => {
@@ -61,13 +64,14 @@ const LogoutModal = ({ onCancel, onSave }) => {
           }}
         />
       ),
+      style: styles.vacancyStyle,
     },
   ];
 
   return (
       <Modal isVisible style={styles.containerStyle}>
         <View style={styles.innerContainer}>
-          <MultiRow rows={rowConfigs} />
+          <MultiRow rows={logoutConfig}  style={styles.parentStyle} />
         </View>
       </Modal>
   );
