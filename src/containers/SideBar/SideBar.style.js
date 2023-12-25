@@ -9,6 +9,7 @@ const styles = {
     flex: 1,
     position:"relative",
     backgroundColor: colors.black,
+    overflow:"hidden"
   },
   container: {
     flex: 1,

@@ -40,27 +40,6 @@ function MainLayout({
     />
   );
 
-  // Changes made in MainLayout according to the SideBar
-
-  // if(currentBreakpoint === 'md')
-  // layout = (
-  //   <TwoColumn
-  //     style={theme.mainContainerStyle}
-  //     leftSection={menu}
-  //     rightSection={
-  //       <TwoRow
-  //         topSection={header}
-  //         bottomSection={bottomSection}
-  //         isBottomFillSpace={true}
-  //         topSectionStyle={topSectionStyle}
-  //         bottomSectionStyle={bottomSectionStyle}
-  //       />
-  //     }
-  //     leftSectionStyle={leftSectionStyle}
-  //     rightSectionStyle={rightSectionStyle}
-  //     isLeftFillSpace={false}
-  //     isRightFillSpace={isRightFillSpace}
-  //   />
 
     if( isMdOrGreater)
     layout = (
@@ -76,7 +55,7 @@ function MainLayout({
             bottomSectionStyle={bottomSectionStyle}
           />
         }
-        leftSectionStyle={leftSectionStyle}
+        leftSectionStyle={!!menu && leftSectionStyle}
         rightSectionStyle={rightSectionStyle}
         isLeftFillSpace={isLeftFillSpace}
         isRightFillSpace={isRightFillSpace}

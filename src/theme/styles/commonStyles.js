@@ -22,10 +22,10 @@ const commonStyles = {
     right: 0,
   },
   rightSectionStyle: {
-    flex: 7,
+    flex: 8,
   },
   leftSectionStyle:{
-    flex:3
+    flex:2
   },
   topSectionStyle: {
     flex: 1,
