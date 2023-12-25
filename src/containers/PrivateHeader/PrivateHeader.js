@@ -42,6 +42,7 @@ const PrivateHeader = ({ toggleSideBar, menuIconVisible }) => {
                 <Image source={images.iconMenu} />
               </TouchableOpacity>
             ) : null}
+            {/* Right Now It's a static data, we will replace it by dynamic data as we get API */}
             <CommonText
               customTextStyle={styles.nameText}
               title={"Hey John -"}
