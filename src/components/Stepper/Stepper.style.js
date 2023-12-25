@@ -40,43 +40,60 @@ export const styles = StyleSheet.create({
     margin: 0,
     display: "flex",
     alignItems: "center",
-    fontSize: 14,
-    fontWeight: 600,
-    lineHeight: isWeb ? 20 : "",
     justifyContent: "center",
   },
   activeCircle: {
     backgroundColor: colors.greenOne,
-    color: colors.white,
     borderWidth: 2,
     borderStyle: "solid",
     boxShadow: isWeb ? "0px 2px 5px 0px rgba(20, 25, 26, 0.16)" : "",
-    padding: 12,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(20, 25, 26, 0.16)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 1,
+        shadowRadius: 5,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
   },
   doneCircle: {
     background: colors.greenOne,
-    color: colors.greyTwo,
     borderColor: colors.greenOne,
   },
   inActiveCircle: {
     color: colors.black,
-    padding: 12,
+  },
+  circleText: {
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  activeCircleText: {
+    color: colors.white,
+  },
+  doneCircleText: {
+    color: colors.greyTwo,
+  },
+  inActiveCircleText: {
+    color: colors.black,
   },
   label: {
     fontSize: 16,
-    fontWeight: 500,
+    fontWeight: "500",
   },
   activeLabel: {
     color: colors.black,
     fontSize: 18,
-    fontWeight: 600,
+    fontWeight: "600",
   },
   inActiveLabel: {
     color: colors.subHeadingGray,
   },
   verticalLabel: {
     position: "absolute",
-    width: isWeb ? "max-content" : "auto",
+    width: isWeb ? "max-content" : "100%",
     right: "125%",
     top: "20%",
   },
@@ -108,11 +125,11 @@ export const styles = StyleSheet.create({
   onlyActiveLabelBox: {
     display: "flex",
     justifyContent: "center",
-    marginTop: "16px",
+    marginTop: 16,
   },
   onlyActiveLabel: {
     fontSize: 18,
-    fontWeight: 600,
+    fontWeight: "600",
     textAlign: "center",
     color: colors.black,
   },
@@ -129,6 +146,14 @@ export const getAppropriateStyle = ({
       if (getStepStatus(stepValue) === "active") styleName = "activeCircle";
       if (getStepStatus(stepValue) === "done") styleName = "doneCircle";
       if (getStepStatus(stepValue) === "inActive") styleName = "inActiveCircle";
+      return styles[styleName];
+    }
+    case "circleText": {
+      let styleName = "";
+      if (getStepStatus(stepValue) === "active") styleName = "activeCircleText";
+      if (getStepStatus(stepValue) === "done") styleName = "doneCircleText";
+      if (getStepStatus(stepValue) === "inActive")
+        styleName = "inActiveCircleText";
       return styles[styleName];
     }
     case "label": {

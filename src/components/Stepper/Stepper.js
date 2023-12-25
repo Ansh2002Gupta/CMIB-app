@@ -42,13 +42,26 @@ const Stepper = ({
                     stepValue: index,
                     getStepStatus,
                   }),
+                  ...(getStepStatus(index) !== "done"
+                    ? { width: 30, height: 30 }
+                    : {}),
                   ...stepperCircle,
                 }}
               >
                 {getStepStatus(index) === "done" ? (
                   <Image source={images.iconStepperDone} alt="Done" />
                 ) : (
-                  index + 1
+                  <CommonText
+                    customTextStyle={{
+                      ...styles.circleText,
+                      ...getAppropriateStyle({
+                        fieldName: "circleText",
+                        stepValue: index,
+                        getStepStatus,
+                      }),
+                    }}
+                    title={index + 1}
+                  />
                 )}
               </View>
               {!showActiveLabelOnly && (
