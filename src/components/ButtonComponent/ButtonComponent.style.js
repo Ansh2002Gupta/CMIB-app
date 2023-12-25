@@ -4,14 +4,15 @@ import colors from "../../assets/colors";
 const buttonStyleBase = {
   height: 56,
   backgroundColor: colors.green,
-  justifyContent: "center",
-  alignItems: "center",
-  flexDirection: "row",
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'row',
   borderRadius: 8,
 };
 
-const buttonStyleWeb =
-  Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {};
+const buttonStyleWeb = Platform.OS === 'web' ? { cursor: 'pointer' } : {};
+
+const disableButtonStyleWeb = Platform.OS === 'web' ? { cursor: 'not-allowed' } : {};
 
 const style = {
   buttonStyle: {
@@ -19,13 +20,15 @@ const style = {
     ...buttonStyleWeb,
   },
   disableButtonStyle: {
+    ...buttonStyleBase,
     backgroundColor: colors.voilet,
+    ...disableButtonStyleWeb,
   },
   titleStyle: {
     fontSize: 16,
     color: colors.white,
     margin: 8,
-    fontWeight: "600",
+    fontWeight: '600',
   },
 };
 
