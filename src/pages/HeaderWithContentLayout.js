@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useContext } from "react";
-
+import { Outlet } from "../routes";
 import {
   Modal,
   Platform,
@@ -8,19 +8,19 @@ import {
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import { Outlet } from "../routes";
 import MainLayout from "../layouts/MainLayout";
-import { getAuthToken } from "../utils/getAuthToken";
-import useIsWebView from "../hooks/useIsWebView";
+
+import BottomBar from "../containers/BottomBar";
 import Header from "../containers/Header";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
+import { getAuthToken } from "../utils/getAuthToken";
+import useIsWebView from "../hooks/useIsWebView";
 import {
   items,
   newQualifiedPlacementsList,
 } from "../constants/sideBarListItems";
 import commonStyles from "../theme/styles/commonStyles";
-import Styles from "./HeaderWithContentLayout.style";
-import BottomBar from "../containers/BottomBar";
+import Styles from './HeaderWithContentLayout.style'
 
 function HeaderWithContentLayout() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
@@ -91,7 +91,7 @@ function HeaderWithContentLayout() {
           animationOut="slideOutLeft"
           style={Styles().modalStyle}
         >
-          {Platform.OS.toLocaleLowerCase() === "web" ? (
+          {Platform.OS.toLowerCase() === "web" ? (
             <ScrollView style={{ flex: 1 }}>{sidebarComponent}</ScrollView>
           ) : (
             sidebarComponent

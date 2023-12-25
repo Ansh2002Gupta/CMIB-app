@@ -13,8 +13,8 @@ import styles from "./SideNavBar.style";
 
 const SideNavBar = ({
   items,
-  onClose,
   listItems,
+  onClose,
   resetList,
   showCloseIcon,
 }) => {
@@ -29,7 +29,7 @@ const SideNavBar = ({
       </TouchableWithoutFeedback>
       <View
         style={{
-          ...(currentBreakpoint === "sm" ? styles.SideBarmd : styles.sideBar),
+          ...(currentBreakpoint === "sm" ? styles.sideBarMd : styles.sideBar),
           ...(isWebView && windowDimensions.width >= 900
             ? styles.mainContainer
             : {}),
@@ -48,11 +48,11 @@ const SideNavBar = ({
 };
 
 SideNavBar.propTypes = {
-  onClose: PropTypes.func,
+  items: PropTypes.array.isRequired,
   listItems: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.bool.isRequired,
-  items: PropTypes.array.isRequired,
 };
 
 export default SideNavBar;

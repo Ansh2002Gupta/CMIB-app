@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
-  SideBarmd: {
+  sideBarMd: {
     position: "absolute",
     top: 0,
     bottom: 0,
