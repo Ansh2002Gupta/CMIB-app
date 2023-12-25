@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import CustomColumn from "../CustomColumn/CustomColumn"
 import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
 import images from "../../images";
-import styles from "./TwoRowButton.style";
+import styles from "./TwoRButton.style";
 
 const TwoRowButton = (props) => {
   const {
