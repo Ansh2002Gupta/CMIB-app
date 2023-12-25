@@ -27,7 +27,7 @@ function DashboardView() {
   };
 
   const handleSearchResults = (filteredData) => {
-    console.log(filteredData);
+    // console.log(filteredData);
   };
 
   const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
@@ -57,7 +57,7 @@ function DashboardView() {
         <TouchableImage
           source={MoreIcon}
           disabled={false}
-          isSeletor={true}
+          isSelector={true}
           parentStyle={styles.imageParentStyle}
         />
       ),
@@ -82,7 +82,7 @@ function DashboardView() {
         style={{justifyContent :'flex-start',padding:14,backgroundColor:'#F2F4FC',borderColor :'#F2F4FC'}}
         textStyle={{ fontSize: 14,fontWeight: "600", color : '#00137E', lineHeight : 20 , marginLeft: 8 }}
       />
-      {(isEnabled)&&  <AddDesignation  handleCancelButton= {handleCancelButton} /> }
+      {isEnabled &&<AddDesignation handleCancelButton={handleCancelButton} /> }
     </View>
   );
 }

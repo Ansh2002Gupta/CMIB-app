@@ -6,7 +6,7 @@ import CustomImage from "../CustomImage/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity"
 import styles from "./TouchableImage.style";
 
-const TouchableImage = ({ disabled,isSeletor , imageStyle, onPress, parentStyle, source, }) => {
+const TouchableImage = ({ disabled,isSelector , imageStyle, onPress, parentStyle, source, }) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
@@ -20,12 +20,10 @@ const TouchableImage = ({ disabled,isSeletor , imageStyle, onPress, parentStyle,
     ...(isSelected ? styles.selected : {}),
   };
 
-  console.log("source value ==> ",typeof source)
-
   return (
     <CustomTouchableOpacity
       style={containerStyle}
-      onPress={isSeletor ? handlePress :onPress }
+      onPress={isSelector ? handlePress :onPress }
       disabled={disabled}
     >
       <View>

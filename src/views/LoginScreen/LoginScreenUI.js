@@ -286,7 +286,7 @@ LoginScreenUI.propTypes = {
   onCreateNewPasswordClick: PropTypes.func.isRequired,
   onForgotPasswordClick: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
-  options: PropTypes.array.isRequired,
+  options: PropTypes.array,
   password: PropTypes.string.isRequired,
   toggleUser: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
