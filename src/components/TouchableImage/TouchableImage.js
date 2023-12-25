@@ -4,7 +4,7 @@ import { View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import styles from "./TouchableImage.style";
+import styles from "./TouchImage.style";
 
 const TouchableImage = ({
   disabled=true,
