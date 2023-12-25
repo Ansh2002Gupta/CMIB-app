@@ -101,7 +101,6 @@ const style = {
   // Web view related Styles
   webView: {
     activeTab: {
-      borderBottom: `3px solid ${colors.green}`,
       marginBottom: -2,
       zIndex: 10,
     },

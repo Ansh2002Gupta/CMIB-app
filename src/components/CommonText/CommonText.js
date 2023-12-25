@@ -4,19 +4,19 @@ import { Text, View } from "@unthinkable/react-core-components";
 
 import styles from "./CommonText.style";
 
-const CommonText = (props) => {
-  const { title, customTextStyle } = props;
+const CommonText = ({ customContainerStyle, customTextStyle, title }) => {
   const styleArray = Array.isArray(customTextStyle)
     ? customTextStyle
     : [customTextStyle];
   return (
-    <View>
+    <View style={customContainerStyle}>
       <Text style={[styles.textStyle, ...styleArray]}>{title}</Text>
     </View>
   );
 };
 
 CommonText.propTypes = {
+  customContainerStyle: PropTypes.object,
   title: PropTypes.string.isRequired,
 };
 

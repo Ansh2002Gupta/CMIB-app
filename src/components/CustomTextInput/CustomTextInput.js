@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
+  Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
@@ -68,6 +69,13 @@ const CustomTextInput = (props) => {
       setCount((prev) => prev - 1);
     }
   };
+
+  const platformSpecificProps = Platform.select({
+    web: {},
+    default: {
+      placeholderTextColor: colors.darkGrey,
+    },
+  });
 
   return (
     <View style={[style.container, customStyle]}>
@@ -150,10 +158,10 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
-            multiline={isMultiline}
+            multiline={isMultiline || undefined}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            placeholderTextColor={colors.darkGrey}
+            {...platformSpecificProps}
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
             {...remainingProps}

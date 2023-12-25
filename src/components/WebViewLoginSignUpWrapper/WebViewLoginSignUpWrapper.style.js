@@ -31,6 +31,7 @@ export const style = {
     marginLeft: "auto",
     marginRight: "auto",
     maxWidth: 600,
+    zIndex: 100,
   },
   innerContainer1800: {
     width: "40%",

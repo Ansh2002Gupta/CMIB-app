@@ -23,5 +23,8 @@ const style = {
   activityBulletStyle: (isValid) => ({
     backgroundColor: isValid ? colors.green : colors.lightGrey,
   }),
+  customCommonTextStyle:{
+    width:'100%'
+  }
 };
 export default style;

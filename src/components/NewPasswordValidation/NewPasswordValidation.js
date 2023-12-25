@@ -52,6 +52,7 @@ const NewPasswordValidation = ({
           <CommonText
             customTextStyle={styles.bulletText}
             title={intl.formatMessage({ id: "label.char_length_validation" })}
+            customContainerStyle={styles.customCommonTextStyle}
           />
         </View>
         <View style={styles.validationView}>
@@ -60,6 +61,7 @@ const NewPasswordValidation = ({
           <CommonText
             customTextStyle={styles.bulletText}
             title={intl.formatMessage({ id: "label.numeric_char_validation" })}
+            customContainerStyle={styles.customCommonTextStyle}
           />
         </View>
         <View style={styles.validationView}>
@@ -68,6 +70,7 @@ const NewPasswordValidation = ({
           <CommonText
             customTextStyle={styles.bulletText}
             title={intl.formatMessage({ id: "label.upper_case_validation" })}
+            customContainerStyle={styles.customCommonTextStyle}
           />
         </View>
         <View style={styles.validationView}>
@@ -76,6 +79,7 @@ const NewPasswordValidation = ({
           <CommonText
             customTextStyle={styles.bulletText}
             title={intl.formatMessage({ id: "label.lower_case_validation" })}
+            customContainerStyle={styles.customCommonTextStyle}
           />
         </View>
         <View style={styles.validationView}>
@@ -84,6 +88,7 @@ const NewPasswordValidation = ({
           <CommonText
             customTextStyle={styles.bulletText}
             title={intl.formatMessage({ id: "label.special_char_validation" })}
+            customContainerStyle={styles.customCommonTextStyle}
           />
         </View>
       </View>

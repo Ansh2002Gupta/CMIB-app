@@ -63,6 +63,7 @@ import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.pn
 import iconSearch from "../../public/images/svg/iconSearch.svg"
 import iconFilter from "../../public/images/svg/iconFilter.svg"
 import iconMore from "../../public/images/svg/iconMore.svg"
+import iconFooter from "../../public/images/svg/iconFooter.svg";
 
 const images = {
   avatar,
@@ -130,6 +131,7 @@ const images = {
   iconSearch,
   iconFilter,
   iconMore,
+  iconFooter,
 };
 
 export default images;
