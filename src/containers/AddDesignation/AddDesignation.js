@@ -31,7 +31,7 @@ const AddDesignation = ({handleCancelButton}) => {
           placeholder={intl.formatMessage({
             id: "label.designation_placeholder",
           })}
-          value={designation}
+          value={value}
           isMandatory
           isDropdown
           customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
