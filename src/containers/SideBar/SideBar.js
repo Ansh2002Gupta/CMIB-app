@@ -10,7 +10,7 @@ import {
   Platform,
 } from "@unthinkable/react-core-components";
 
-import Config from "../../components/ReactConfig/ReactConfig";
+import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
 import CustomList from "../../components/CustomList/CustomList";
 import { navigations } from "../../constants/routeNames";

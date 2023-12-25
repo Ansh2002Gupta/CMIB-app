@@ -12,7 +12,7 @@ import {
 } from "@unthinkable/react-core-components";
 import { SafeAreaView } from "react-native";
 
-import Config from "../../components/ReactConfig/ReactConfig";
+import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
 import CustomList from "../../components/CustomList/CustomList";
 import images from "../../images";
@@ -37,6 +37,8 @@ const SideBar = ({
 
   const handleBottomViewNavigation = () => {
     const uri = Config.REACT_APP_CMS_URI;
+    console.log('Uri',uri);
+    
     navigate(navigations.WEB_VIEW, { state: { uri } });
   };
 
