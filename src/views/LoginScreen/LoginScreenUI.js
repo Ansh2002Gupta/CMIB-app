@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   View,
+  TouchableOpacity,
   ScrollView,
 } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomTextInput from "../../components/CustomTextInput";
 import FollowUsIcons from "../../components/FollowUsIcons";
 import HeaderText from "../../components/HeaderText/HeaderText";
@@ -29,7 +29,7 @@ const LoginScreenUI = (props) => {
     onChangeUsername,
     onForgotPasswordClick,
     onLogin,
-    onSignUpClick,
+    onCreateNewPasswordClick,
     password,
     toggleUser,
     userName,
@@ -96,7 +96,7 @@ const LoginScreenUI = (props) => {
               ...(isWebView && styles.webView.extraMargin),
             }}
           >
-            <CustomTouchableOpacity
+            <TouchableOpacity
               style={styles.topTabs}
               onPress={() => toggleUser(false)}
             >
@@ -120,8 +120,8 @@ const LoginScreenUI = (props) => {
                       }
                 }
               />
-            </CustomTouchableOpacity>
-            <CustomTouchableOpacity
+            </TouchableOpacity>
+            <TouchableOpacity
               style={styles.topTabs}
               onPress={() => toggleUser(true)}
             >
@@ -146,7 +146,7 @@ const LoginScreenUI = (props) => {
                       }
                 }
               />
-            </CustomTouchableOpacity>
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -202,7 +202,7 @@ const LoginScreenUI = (props) => {
                     isWebView && styles.webView.inputTextBox
                   }
                 />
-                <CustomTouchableOpacity
+                <TouchableOpacity
                   onPress={onForgotPasswordClick}
                   style={styles.forgotPasswordView}
                 >
@@ -215,7 +215,7 @@ const LoginScreenUI = (props) => {
                       id: "label.forgot_password",
                     })}
                   />
-                </CustomTouchableOpacity>
+                </TouchableOpacity>
                 <View style={styles.loginButtonView}>
                   <ButtonComponent
                     title={intl.formatMessage({ id: "label.login" })}
@@ -234,7 +234,7 @@ const LoginScreenUI = (props) => {
                   }}
                   title={intl.formatMessage({ id: "label.dont_have_account" })}
                 />
-                <CustomTouchableOpacity onPress={onSignUpClick}>
+                <TouchableOpacity onPress={onCreateNewPasswordClick}>
                   <CommonText
                     customTextStyle={{
                       ...styles.newAccountText,
@@ -244,7 +244,7 @@ const LoginScreenUI = (props) => {
                       id: "label.create_new_account",
                     })}
                   />
-                </CustomTouchableOpacity>
+                </TouchableOpacity>
               </View>
             </View>
             {!isWebView && (
@@ -283,10 +283,10 @@ LoginScreenUI.propTypes = {
   loginDisabled: PropTypes.bool.isRequired,
   onChangePassword: PropTypes.func.isRequired,
   onChangeUsername: PropTypes.func.isRequired,
-  onSignUpClick: PropTypes.func.isRequired,
+  onCreateNewPasswordClick: PropTypes.func.isRequired,
   onForgotPasswordClick: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
-  options: PropTypes.array,
+  options: PropTypes.array.isRequired,
   password: PropTypes.string.isRequired,
   toggleUser: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,
