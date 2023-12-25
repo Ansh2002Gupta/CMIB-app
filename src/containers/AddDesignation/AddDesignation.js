@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import CustomModal from "../../components/CustomModal/CustomModal";
 import MultiRow from "../../core/layouts/MultiRow";
 import TwoRowButton from "../../components/TwoRowButton/TwoRowButton";
-import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./AddDesignation.style";
 import CustomTextInput from "../../components/CustomTextInput";
+import { ENTITY_OPTIONS } from "../../constants/constants";
 
 const AddDesignation = ({handleCancelButton}) => {
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
   const [countValue, setCountValue] = useState(0);
-
 
   const handleCountChange = (newCount) => {
     setCountValue(newCount);
@@ -31,11 +28,9 @@ const AddDesignation = ({handleCancelButton}) => {
           placeholder={intl.formatMessage({
             id: "label.designation_placeholder",
           })}
-          value={value}
+          options={ENTITY_OPTIONS}
           isMandatory
           isDropdown
-          customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
-          customTextInputContainer={isWebView ? styles.webView.inputTextBox : {}}
           customStyle={styles.negativePadding}
         />
       ),
@@ -50,7 +45,6 @@ const AddDesignation = ({handleCancelButton}) => {
           initialCount={countValue}
           onCountChange={handleCountChange}
           customStyle={styles.negativePadding}
-          customTextInputContainer={isWebView ? styles.webView.inputLabelText : {}}
         />
       ),
       style: styles.vacancyStyle,
