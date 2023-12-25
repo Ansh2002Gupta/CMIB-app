@@ -21,20 +21,20 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   const [newPassword, setNewPassword] = useState("");
   const isPasswordValid = strongPasswordValidator(newPassword);
   const doPasswordsMatch = newPassword === confirmNewPassword;
-  
+
   const { errorWhileChangePassword, handleUseChangePassword, isLoading } =
     useChangePasswordApi();
 
   const isNextDisabled = () => {
     return (
-      !oldPassword ||
-      !newPassword ||
       !confirmNewPassword ||
+      !doPasswordsMatch ||
       !isPasswordValid ||
-      !doPasswordsMatch
+      !oldPassword ||
+      !newPassword
     );
   };
-  
+
   const handleSave = () => {
     if (!doPasswordsMatch) {
       setError(intl.formatMessage({ id: "label.password-not-match" }));
