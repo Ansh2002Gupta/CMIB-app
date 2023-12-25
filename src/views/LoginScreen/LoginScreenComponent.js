@@ -33,7 +33,7 @@ function LoginScreenComponent() {
     navigate(navigations.FORGOT_PASSWORD);
   };
 
-  const onSignUpClick = async () => {
+  const onCreateNewPasswordClick = async () => {
     navigate(navigations.SIGN_UP);
   };
 
@@ -81,7 +81,7 @@ function LoginScreenComponent() {
       isLoading={isLoading}
       onChangePassword={onChangePassword}
       onChangeUsername={onChangeUsername}
-      onSignUpClick={onSignUpClick}
+      onCreateNewPasswordClick={onCreateNewPasswordClick}
       onForgotPasswordClick={onForgotPasswordClick}
       onLogin={onLogin}
       password={password}
