@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BaseLayout from "../Base";
 
-import layoutStyle from "./MColumn.style";
+import layoutStyle from "./MultiColumn.style";
 
 function MultiColumn({ style, columns }) {
   return (
