@@ -106,7 +106,7 @@ function HeaderWithContentLayout() {
             menuIconVisible={menuIconVisible}
           />
         }
-        bottomSection={!isWebView ? <BottomBar /> : null}
+        bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
         isSideBarVisible={isSideBarVisible}
