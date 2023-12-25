@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Platform,TouchableOpacity, View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage/CustomImage";
-import styles from "./touchableImage.style";
+import styles from "./TouchableImage.style";
 
 const TouchableImage = ({ disabled, imageStyle, parentStyle, source,   }) => {
   const [isSelected, setIsSelected] = useState(false);
