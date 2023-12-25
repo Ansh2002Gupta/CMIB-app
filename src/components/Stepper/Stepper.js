@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Image } from "@unthinkable/react-core-components";
 
+import images from "../../images";
 import { getAppropriateStyle, styles } from "./Stepper.style";
 
 const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
@@ -9,8 +11,6 @@ const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
     if (activeStep > step) return "done";
     return "inActive";
   };
-
-  // TODO: Add a tick icon when stepper item is in the done state.
 
   return (
     <React.Fragment>
@@ -33,13 +33,20 @@ const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
                   }),
                 }}
               >
-                {index + 1}
+                {getStepStatus(index) === "done" ? (
+                  <Image source={images.iconStepperDone} alt="Done" />
+                ) : (
+                  index + 1
+                )}
               </div>
               {!showActiveLabelOnly && (
                 <div
                   style={{
                     ...styles.label,
                     ...(orientation === "vertical" ? styles.verticalLabel : {}),
+                    ...(orientation !== "vertical" && !showActiveLabelOnly
+                      ? styles.horizontalLabel
+                      : {}),
                     ...getAppropriateStyle({
                       fieldName: "label",
                       stepValue: index,
@@ -56,6 +63,9 @@ const Stepper = ({ activeStep, orientation, showActiveLabelOnly, steps }) => {
                 style={{
                   ...styles.line,
                   ...(orientation !== "vertical" ? styles.horizontalLine : {}),
+                  ...(orientation !== "vertical" && !showActiveLabelOnly
+                    ? styles.horizontalLineTop
+                    : {}),
                   ...(orientation === "vertical" ? styles.verticalLine : {}),
                   ...getAppropriateStyle({
                     fieldName: "line",
@@ -100,10 +110,10 @@ Stepper.defaultProps = {
 };
 
 Stepper.propTypes = {
-  activeStep: PropTypes.number,
+  activeStep: PropTypes.number.isRequired,
   orientation: PropTypes.string,
   showActiveLabelOnly: PropTypes.bool,
-  steps: PropTypes.array,
+  steps: PropTypes.array.isRequired,
 };
 
 export default Stepper;

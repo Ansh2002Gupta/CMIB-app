@@ -26,6 +26,7 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     position: "relative",
+    zIndex: 1,
   },
   circle: {
     borderWidth: 2,
@@ -33,7 +34,6 @@ export const styles = StyleSheet.create({
     borderColor: colors.greyOne,
     borderRadius: 32,
     backgroundColor: colors.white,
-    padding: 8,
     width: 24,
     height: 24,
     margin: 0,
@@ -50,13 +50,16 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     borderStyle: "solid",
     boxShadow: isWeb ? "0px 2px 5px 0px rgba(20, 25, 26, 0.16)" : "",
+    padding: 2,
   },
   doneCircle: {
     background: colors.greenOne,
     color: colors.greyTwo,
+    borderColor: colors.greenOne,
   },
   inActiveCircle: {
     color: colors.black,
+    padding: 2,
   },
   label: {
     fontSize: 16,
@@ -73,21 +76,26 @@ export const styles = StyleSheet.create({
   verticalLabel: {
     position: "absolute",
     width: isWeb ? "max-content" : "auto",
-    right: "115%",
-    top: "35%",
+    right: "125%",
+    top: "20%",
+  },
+  horizontalLabel: {
+    marginTop: 16,
   },
   line: {
     height: 0,
     borderStyle: "solid",
     borderColor: colors.greyOne,
-    borderWidth: 6,
+    borderWidth: 4,
     borderRadius: 6,
   },
   horizontalLine: {
     position: "absolute",
-    top: isWeb ? "calc(50% - 10px)" : "50%",
-    left: isWeb ? "calc(50% + 40px)" : "50%",
-    width: isWeb ? "calc(100% - 85px)" : "100%",
+    left: "55%",
+    width: "90%",
+  },
+  horizontalLineTop: {
+    top: "17%",
   },
   verticalLine: {
     height: 89,
