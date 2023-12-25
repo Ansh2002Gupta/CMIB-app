@@ -19,7 +19,7 @@ import {
   newQualifiedPlacementsList,
 } from "../constants/sideBarListItems";
 import commonStyles from "../theme/styles/commonStyles";
-import Styles from './HeaderWithContentLayout.style'
+import Styles from "./HeaderWithContentLayout.style";
 import BottomBar from "../containers/BottomBar";
 
 function HeaderWithContentLayout() {
@@ -77,7 +77,6 @@ function HeaderWithContentLayout() {
     setShowClose(true);
   };
 
-
   // Components for rendering the sidebar in a modal or inline
   const sidebarComponent = (
     <SideNavBar
@@ -128,9 +127,7 @@ function HeaderWithContentLayout() {
         rightSectionStyle={Styles(currentBreakpoint).rightSectionStyle}
         leftSectionStyle={Styles(currentBreakpoint).leftSectionStyle}
         bottomSectionStyle={
-          isMdOrGreater
-            ? Styles().bottomSectionStyle
-            : Styles().bottomBar
+          isMdOrGreater ? Styles().bottomSectionStyle : Styles().bottomBar
         }
       />
     </>

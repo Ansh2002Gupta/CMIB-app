@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
@@ -8,7 +8,6 @@ import {
   Image,
   TouchableOpacity,
   View,
-  Platform,
 } from "@unthinkable/react-core-components";
 import { SafeAreaView } from "react-native";
 

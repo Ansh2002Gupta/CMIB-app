@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../routes";
 import {
   FlatList,
   Image,
   TouchableOpacity,
   View,
-  Platform,
 } from "@unthinkable/react-core-components";
 
 import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
 import CustomList from "../../components/CustomList/CustomList";
-import { navigations } from "../../constants/routeNames";
 import images from "../../images";
 import styles from "./SideBar.style";
 

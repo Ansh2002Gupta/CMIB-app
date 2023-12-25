@@ -49,16 +49,6 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.WEB_VIEW,
-    element: <ContentRouteWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <WebViewScreen />,
-      },
-    ],
-  },
-  {
     pagePath: navigations.VIEW_PROFILE,
     element: <ContentRouteWithPrivateAccess />,
     views: [
