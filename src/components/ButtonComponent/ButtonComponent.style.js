@@ -10,12 +10,9 @@ const buttonStyleBase = {
   borderRadius: 8,
 };
 
-const buttonStyleWeb = Platform.OS.toLowerCase() === "web" ? { cursor: 'pointer' } : {};
-
 const style = {
   buttonStyle: {
     ...buttonStyleBase,
-    ...buttonStyleWeb,
   },
   disableButtonStyle: {
     opacity: 0.5,

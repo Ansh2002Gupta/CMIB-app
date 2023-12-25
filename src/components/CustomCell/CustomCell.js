@@ -2,50 +2,51 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
+import CustomTouchableOpacity from "../CustomTouchableOpacity/";
+import CustomImage from "../CustomImage";
 import styles from "./CustomCell.style";
-import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity";
-import CustomImage from "../CustomImage/CustomImage";
 
-const CustomColumn = ({
+const CustomCell = ({
+  disabled = false,
+  isLeft = false,
+  isRight = false,
+  isSvg = false,
+  leftSource,
   onPress,
-  title,
+  rightSource,
   style,
   textStyle,
-  disabled = false,
-  isLeft=false,
-  leftSource,
-  isRight=false,
-  rightSource,
-  isSvg=false,
+  title,
 }) => {
-
   return (
     <CustomTouchableOpacity
       onPress={onPress}
-      style={{...styles.buttonContainer, ...style} }
+      style={{ ...styles.buttonContainer, ...style }}
       disabled={disabled}
     >
-      {isLeft && (
+      {!!isLeft && (
         <CustomImage Icon={leftSource} source={leftSource} isSvg={isSvg} />
       )}
-
       <CommonText customTextStyle={textStyle} title={title} />
-      {isRight && (
+      {!!isRight && (
         <CustomImage Icon={rightSource} source={rightSource} isSvg={isSvg} />
       )}
     </CustomTouchableOpacity>
   );
 };
-CustomColumn.defaultProps = {
-  style: {},
-  textStyle: {},
+
+CustomCell.defaultProps = {
   disabled: false,
   iconLeft: null,
   iconRight: null,
+  style: {},
+  textStyle: {},
 };
-CustomColumn.propTypes = {
+
+CustomCell.propTypes = {
+  disabled: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
 };
-export default CustomColumn;
+
+export default CustomCell;

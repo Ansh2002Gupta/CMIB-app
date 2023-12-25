@@ -5,7 +5,6 @@ const styles = {
   container: {
     alignItems: "center",
     flexDirection: "row",
-    height: 44,
   },
   clickable: {
     ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),

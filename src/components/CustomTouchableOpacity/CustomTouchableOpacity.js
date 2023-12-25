@@ -5,10 +5,10 @@ import { TouchableOpacity } from "@unthinkable/react-core-components";
 import styles from "./CustomTouchableOpacity.style";
 
 const CustomTouchableOpacity = ({
-  onPress,
   children,
-  style,
   disabled,
+  onPress,
+  style,
   ...props
 }) => {
   return (
@@ -25,18 +25,18 @@ const CustomTouchableOpacity = ({
 
 CustomTouchableOpacity.defaultProps = {
   children: null,
-  style: {},
   disabled: false,
+  style: {},
 };
 
 CustomTouchableOpacity.propTypes = {
-  onPress: PropTypes.func,
   children: PropTypes.node,
+  disabled: PropTypes.bool,
+  onPress: PropTypes.func,
   style: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.arrayOf(PropTypes.object),
   ]),
-  disabled: PropTypes.bool,
 };
 
 export default CustomTouchableOpacity;

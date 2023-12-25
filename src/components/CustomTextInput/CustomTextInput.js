@@ -36,9 +36,12 @@ const CustomTextInput = (props) => {
     isMultiline,
     isPassword,
     label,
+    maxCount=100,
+    minCount=0,
     options,
     onChangeValue,
     placeholder,
+    step=1,
     value,
     inputKey = "value",
     ...remainingProps
@@ -64,7 +67,6 @@ const CustomTextInput = (props) => {
   return (
     <View style={[style.container, customStyle]}>
       {!!label && <CustomLabelView label={label} isMandatory />}
-
       {isDropdown ? (
         <Dropdown
           style={[
@@ -92,10 +94,10 @@ const CustomTextInput = (props) => {
       ) : isCounterInput ? (
         <CounterInput
           initialCount={countValue}
-          minCount={0}
-          maxCount={100}
+          minCount={minCount}
+          maxCount={maxCount}
           onCountChange={handleCountChange}
-          step={1}
+          step={step}
         />
       ) : (
         <View

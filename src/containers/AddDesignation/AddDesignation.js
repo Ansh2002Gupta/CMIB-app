@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import CustomModal from "../../components/CustomModal/CustomModal";
-import MultiRow from "../../core/layouts/MultiRow";
-import TwoRowButton from "../../components/TwoRowButton/TwoRowButton";
-import styles from "./AddDesignation.style";
 import CustomTextInput from "../../components/CustomTextInput";
+import MultiRow from "../../core/layouts/MultiRow";
+import TwoRowButton from "../../components/TwoRowButton";
 import { ENTITY_OPTIONS } from "../../constants/constants";
+import styles from "./AddDesignation.style";
 
-const AddDesignation = ({handleCancelButton}) => {
+
+const AddDesignation = ({ handleCancelButton }) => {
   const intl = useIntl();
   const [countValue, setCountValue] = useState(0);
 
@@ -66,13 +67,13 @@ const AddDesignation = ({handleCancelButton}) => {
   ];
 
   return (
-    <CustomModal
-      headerText={intl.formatMessage({
-        id: "label.add_designation",
-      })}
-    >
-      <MultiRow rows={addDesignation} />
-    </CustomModal>
+      <CustomModal
+        headerText={intl.formatMessage({
+          id: "label.add_designation",
+        })}
+      >
+        <MultiRow rows={addDesignation} style={styles.parentStyle} />
+      </CustomModal>
   );
 };
 

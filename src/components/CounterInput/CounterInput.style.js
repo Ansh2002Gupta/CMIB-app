@@ -3,7 +3,6 @@ import colors from "../../assets/colors";
 const styles = {
   counterMainView: {
     borderWidth: 1,
-    height: 48,
     borderColor: colors.lightGrey,
     justifyContent: "center",
     alignItems: "center",

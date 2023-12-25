@@ -4,9 +4,9 @@ import { useIntl } from "react-intl";
 import { Modal, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-import CustomImage from "../../components/CustomImage/CustomImage";
+import CustomImage from "../../components/CustomImage";
 import MultiRow from "../../core/layouts/MultiRow";
-import TwoRowButton from "../../components/TwoRowButton/TwoRowButton";
+import TwoRowButton from "../../components/TwoRowButton";
 import useLogoutAPI from "../../services/apiServices/hooks/useLogoutAPI";
 import images from "../../images";
 import styles from "./logoutModal.style";

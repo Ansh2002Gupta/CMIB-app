@@ -8,10 +8,10 @@ import styles from "./CustomLabelView.style";
 
 const CustomLabelView = ({
   children,
-  style,
   customLabelStyle,
-  label,
   isMandatory,
+  label,
+  style,
   ...props
 }) => {
   const { isWebView } = useIsWebView();
@@ -40,18 +40,18 @@ const CustomLabelView = ({
 
 CustomLabelView.defaultProps = {
   children: null,
-  style: {},
   customLabelStyle: {},
-  label: "",
   isMandatory: false,
+  label: "",
+  style: {},
 };
 
 CustomLabelView.propTypes = {
   children: PropTypes.node,
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customLabelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  label: PropTypes.string,
   isMandatory: PropTypes.bool,
+  label: PropTypes.string,
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 export default CustomLabelView;

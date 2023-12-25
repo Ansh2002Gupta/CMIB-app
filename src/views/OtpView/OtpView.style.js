@@ -1,5 +1,6 @@
 import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
 const style = {
   mainView: {
     flex: 1,
@@ -161,8 +162,6 @@ const style = {
     marginTop: 16,
     alignItems:"center"
   },
-  topTabs: {
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
-  },
 };
+
 export default style;

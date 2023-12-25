@@ -197,7 +197,7 @@ const locale = {
   "label.logout_message": "Are you sure you want to logout of the portal?",
   "label.add_designation": "Add Designation",
   "label.designation": "Designation",
-  "label.designation_placeholder": "Assistant Finance Management",
+  "label.designation_placeholder": "Select Designation",
   "label.no_of_vacancy": "No. of. Vacancy",
   "label.error_password": "Password doesn't match",
   "label.old_password_placeholder": "Enter your old password",

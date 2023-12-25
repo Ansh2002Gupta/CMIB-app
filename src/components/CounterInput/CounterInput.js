@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { View, TextInput ,Platform} from "@unthinkable/react-core-components";
+import { View, TextInput, Platform } from "@unthinkable/react-core-components";
 
-import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CommonText from "../CommonText";
 import MultiRow from "../../core/layouts/MultiRow";
-import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
-import TouchableImage from "../TouchableImage/TouchableImage";
+import MultiColumn from "../../core/layouts/MultiColumn";
+import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import styles from "./CounterInput.style";
 
@@ -81,7 +81,10 @@ const CounterInput = ({
     },
   ];
 
-  const mobileProps = Platform.OS.toLowerCase() !== 'web' ? {keyboardType:"numeric", returnKeyType:"done"}:{}
+  const mobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { keyboardType: "numeric", returnKeyType: "done" }
+      : {};
   const counterView = [
     {
       content: (
@@ -92,7 +95,6 @@ const CounterInput = ({
             onChangeText={handleTextInputChange}
             style={styles.counterInputText}
             {...mobileProps}
-            
           />
         </CustomTouchableOpacity>
       ),
@@ -118,19 +120,19 @@ const CounterInput = ({
 };
 
 CounterInput.propTypes = {
-  minCount: PropTypes.number,
-  maxCount: PropTypes.number,
-  step: PropTypes.number,
   initialCount: PropTypes.number,
+  maxCount: PropTypes.number,
+  minCount: PropTypes.number,
   onCountChange: PropTypes.func,
+  step: PropTypes.number,
 };
 
 CounterInput.defaultProps = {
-  minCount: 0,
-  maxCount: Infinity,
-  step: 1,
   initialCount: 0,
+  maxCount: Infinity,
+  minCount: 0,
   onCountChange: null,
+  step: 1,
 };
 
 export default CounterInput;

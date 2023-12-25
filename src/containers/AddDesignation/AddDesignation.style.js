@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 const styles = {
   containerStyle: {
@@ -24,6 +25,13 @@ const styles = {
     fontSize: 14,
     fontWeight: "600",
   },
+  parentStyle:{
+    ...Platform.select({
+      ios: {
+        marginBottom: 30, 
+      },
+    }),
+  },
   webView: {
     inputLabelText: {
       color: colors.black,
@@ -35,6 +43,7 @@ const styles = {
       background: colors.white,
       marginTop: 0,
     },
+   
   },
 };
 

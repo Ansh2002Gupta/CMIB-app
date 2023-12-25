@@ -2,7 +2,6 @@ import colors from "../../assets/colors";
 
 const styles = {
   parentContainer: {
-    flexDirection: "column",
   },
   labelContainer: {
     flexDirection: "row",

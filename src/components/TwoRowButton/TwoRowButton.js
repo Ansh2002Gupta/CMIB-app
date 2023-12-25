@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import CustomCell from "../CustomCell/CustomCell";
-import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
+import CustomCell from "../CustomCell/";
+import MultiColumn from "../../core/layouts/MultiColumn";
 
 const TwoRowButton = ({
   isDisabled,
