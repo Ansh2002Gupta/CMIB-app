@@ -64,11 +64,12 @@ import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.pn
 import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
 import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
 import iconClose from "../../public/images/iconClose/iconClose.png";
-import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
+import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";;
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
-import iconSearch from "../../public/images/svg/iconSearch.svg"
-import iconFilter from "../../public/images/svg/iconFilter.svg"
-import iconMore from "../../public/images/svg/iconMore.svg"
+import iconSearch from "../../public/images/svg/iconSearch.svg";
+import iconFilter from "../../public/images/svg/iconFilter.svg";
+import iconMore from "../../public/images/svg/iconMore.svg";
+import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
 import iconWarning from "../../public/images/svg/iconWarning.svg";
 import iconTick from "../../public/images/iconTick/iconTick.png";
 
@@ -146,6 +147,7 @@ const images = {
   iconSearch,
   iconFilter,
   iconMore,
+  iconStepperDone,
 };
 
 export default images;

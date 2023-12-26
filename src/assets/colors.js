@@ -19,7 +19,10 @@ const offWhite = "#FFFFFF14";
 const slateGray = "#616c82";
 const lightGray = "#D0D5DD";
 const voilet = "#B1B3B5";
-const mustardYellow = "#FABB00";
+const greyOne = "#f1f1f1";
+const greyTwo = "#eee";
+const greyThree = "rgba(20, 25, 26, 0.16)";
+const greenOne = "#04af55";
 const silver = "#EBEBEB";
 const yellow = "#FABB00";
 const darkGreySecond ='#71717A';
@@ -32,7 +35,6 @@ const colors = {
   darkBlue,
   black,
   lightGrey,
-  mustardYellow,
   silver,
   backgroundColor,
   green,
@@ -52,5 +54,9 @@ const colors = {
   yellow,
   darkGreySecond,
   darkBlackSecond,
+  greyOne,
+  greyTwo,
+  greyThree,
+  greenOne,
 };
 export default colors;
