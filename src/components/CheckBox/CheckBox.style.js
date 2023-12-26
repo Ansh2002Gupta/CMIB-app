@@ -1,7 +1,9 @@
+import { Platform } from "@unthinkable/react-core-components";
+
 const style = {
   contentContainerStyle: {
     flexDirection: "row",
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   iconStyle: {
     height: 20,

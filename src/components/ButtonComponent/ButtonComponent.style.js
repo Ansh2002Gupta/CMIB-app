@@ -9,9 +9,7 @@ const buttonStyleBase = {
   flexDirection: "row",
   borderRadius: 8,
 };
-
 const buttonStyleWeb = Platform.OS.toLowerCase() === "web" ? { cursor: 'pointer' } : {};
-
 const style = {
   buttonStyle: {
     ...buttonStyleBase,

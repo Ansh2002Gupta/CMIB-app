@@ -88,6 +88,9 @@ const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconFilter = "images/svg/iconFilter.svg";
 const iconSearch = "images/svg/iconSearch.svg";
 const iconMore = "images/svg/iconMore.svg";
+const iconArrowDown = "images/svg/iconArrowDown.svg";
+const iconArrowUp = "images/svg/iconArrowUp.svg";
+const iconAdd = "images/svg/iconAdd.svg";
 const iconStepperDone = "images/svg/iconStepperDone.svg";
 
 const images = {
@@ -174,6 +177,9 @@ const images = {
   iconFilter,
   iconSearch,
   iconMore,
+  iconArrowDown,
+  iconArrowUp,
+  iconAdd,
   iconStepperDone,
 };
 

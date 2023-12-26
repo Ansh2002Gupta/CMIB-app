@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { View, TextInput } from "@unthinkable/react-core-components";
 
 import { DEBOUNCE_TIME } from "../../constants/constants";
-import TouchableImage from "../../components/TouchableImage/TouchableImage";
+import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
 import styles from "./searchView.style";
 
