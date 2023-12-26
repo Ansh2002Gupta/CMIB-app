@@ -42,7 +42,7 @@ const SaveCancelButton = ({
           styles.secondButotnStyle,
           isNextDisabled && styles.disableStyle,
         ]}
-        disabled={isNextDisabled}
+        disabled={isNextDisabled || displayLoader}
       >
         {displayLoader ? (
           <ActivityIndicator color={colors.white} />

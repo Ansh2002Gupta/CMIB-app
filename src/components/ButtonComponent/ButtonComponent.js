@@ -29,7 +29,7 @@ const ButtonComponent = (props) => {
         disabled && styles.disableButtonStyle,
         customButtonContainer,
       ]}
-      disabled={disabled}
+      disabled={disabled || displayLoader}
     >
       {displayLoader ? (
         <ActivityIndicator color={colors.white} />
