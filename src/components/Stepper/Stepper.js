@@ -125,11 +125,9 @@ const Stepper = ({
 };
 
 Stepper.defaultProps = {
-  activeStep: 0,
   customStyle: {},
   orientation: "horizontal",
   showActiveLabelOnly: true,
-  steps: [],
 };
 
 Stepper.propTypes = {
