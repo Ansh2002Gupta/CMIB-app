@@ -20,7 +20,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const initialContactDetails =
     signUpState?.signUpDetail?.contact_details || [];
-  const { handleSignUpValidation } = useValidateSignUp();
+  const { handleSignUpValidation, isLoading } = useValidateSignUp();
 
   const [validationError, setValidationError] = useState("");
   const [contactDetails, setContactDetails] = useState(
@@ -201,6 +201,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
       handleDismissToast={handleDismissToast}
       handleInputChange={handleInputChange}
       intl={intl}
+      isLoading={isLoading}
       onClickNext={onClickNext}
       onGoBack={onGoBack}
       validationError={validationError}

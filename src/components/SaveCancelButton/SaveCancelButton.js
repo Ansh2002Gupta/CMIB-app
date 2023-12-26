@@ -47,12 +47,14 @@ const SaveCancelButton = ({
         {displayLoader ? (
           <ActivityIndicator color={colors.white} />
         ) : (
-          <CommonText
-            customTextStyle={styles.titleStyle}
-            title={buttonTwoText}
-          />
+          <>
+            <CommonText
+              customTextStyle={styles.titleStyle}
+              title={buttonTwoText}
+            />
+            {!!hasIconRight && <Image source={images.iconArrowRightWhite} />}
+          </>
         )}
-        {!!hasIconRight && <Image source={images.iconArrowRightWhite} />}
       </TouchableOpacity>
     </View>
   );

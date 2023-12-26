@@ -28,6 +28,7 @@ const SignUpLastScreenUI = (props) => {
     handleSuccessModal,
     handleToggle,
     intl,
+    isLoading,
     natureOfSupplier,
     onClickGoToLogin,
     onDeleteImage,
@@ -190,11 +191,12 @@ const SignUpLastScreenUI = (props) => {
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
+        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
+        displayLoader={isLoading}
+        hasIconLeft
+        isNextDisabled={!allFieldsFilled()}
         onPressButtonOne={onGoBack}
         onPressButtonTwo={() => handleSuccessModal(true)}
-        isNextDisabled={!allFieldsFilled()}
-        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
-        hasIconLeft
       />
       {!!errorMessage && (
         <ToastComponent

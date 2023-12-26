@@ -23,9 +23,18 @@ import {
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation, validationError, setValidationError } =
-    useValidateSignUp();
-  const { handleSignUp, setSignUpError, signUpError } = useSignUpUser();
+  const {
+    handleSignUpValidation,
+    isLoading,
+    validationError,
+    setValidationError,
+  } = useValidateSignUp();
+  const {
+    handleSignUp,
+    isLoading: signUpLoader,
+    setSignUpError,
+    signUpError,
+  } = useSignUpUser();
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
   const {
@@ -242,6 +251,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       handleToggle={handleToggle}
       handleSuccessModal={handleSuccessModal}
       intl={intl}
+      isLoading={isLoading || signUpLoader}
       natureOfSupplier={natureOfSupplier}
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}

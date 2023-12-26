@@ -34,12 +34,14 @@ const ButtonComponent = (props) => {
       {displayLoader ? (
         <ActivityIndicator color={colors.white} />
       ) : (
-        <CommonText
-          customTextStyle={[styles.titleStyle, customTitleStyle]}
-          title={title}
-        />
+        <>
+          <CommonText
+            customTextStyle={[styles.titleStyle, customTitleStyle]}
+            title={title}
+          />
+          {hasIconRight && <Image source={images.iconArrowRightWhite} />}
+        </>
       )}
-      {hasIconRight && <Image source={images.iconArrowRightWhite} />}
     </TouchableOpacity>
   );
 };
