@@ -57,8 +57,6 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
-import iconArrowUp from "../../public/images/iconArrowUp/iconArrowUp.png";
-import iconArrowDown from "../../public/images/iconArrowDown/iconArrowDown.png";
 import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLogowhite.png";
 import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
 import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
@@ -150,8 +148,6 @@ const images = {
   iconSearch,
   iconFilter,
   iconMore,
-  iconArrowDown,
-  iconArrowUp,
   iconAdd,
   iconStepperDone,
 };
