@@ -214,13 +214,12 @@ function CreateNewPasswordUI(props) {
             />
           )}
         </View>
-        {!!validationError ||
-          (toastMessage !== "" && (
-            <ToastComponent
-              toastMessage={validationError || toastMessage}
-              onDismiss={handleDismissToast}
-            />
-          ))}
+        {(!!validationError || toastMessage !== "") && (
+          <ToastComponent
+            toastMessage={validationError || toastMessage}
+            onDismiss={handleDismissToast}
+          />
+        )}
       </WebViewLoginSignUpWrapper>
     </ScrollView>
   );
