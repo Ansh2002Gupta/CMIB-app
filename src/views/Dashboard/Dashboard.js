@@ -31,7 +31,7 @@ function DashboardView() {
       content: (
         <TouchableImage
           source={FilterIcon}
-          disabled={true}
+          disabled
           parentStyle={styles.imageParentStyle}
         />
       ),
@@ -42,7 +42,6 @@ function DashboardView() {
       content: (
         <TouchableImage
           source={MoreIcon}
-          disabled={false}
           parentStyle={styles.imageParentStyle}
         />
       ),

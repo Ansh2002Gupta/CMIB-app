@@ -19,6 +19,7 @@ const voilet = "#B1B3B5";
 const yellow = "#FABB00";
 const greyOne = "#f1f1f1";
 const greyTwo = "#eee";
+const greyThree = "rgba(20, 25, 26, 0.16)";
 const greenOne = "#04af55";
 
 const colors = {
@@ -43,6 +44,7 @@ const colors = {
   yellow,
   greyOne,
   greyTwo,
+  greyThree,
   greenOne,
 };
 export default colors;

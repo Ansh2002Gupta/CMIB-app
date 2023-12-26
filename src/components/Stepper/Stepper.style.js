@@ -1,6 +1,7 @@
 import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
+import { STEPPER_STATE } from "../../constants/constants";
 
 const isWeb = Platform.OS.toLocaleLowerCase() === "web";
 
@@ -46,10 +47,10 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.greenOne,
     borderWidth: 2,
     borderStyle: "solid",
-    boxShadow: isWeb ? "0px 2px 5px 0px rgba(20, 25, 26, 0.16)" : "",
+    boxShadow: isWeb ? `0px 2px 5px 0px ${colors.greyThree}` : "",
     ...Platform.select({
       ios: {
-        shadowColor: "rgba(20, 25, 26, 0.16)",
+        shadowColor: colors.greyThree,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 1,
         shadowRadius: 5,
@@ -144,31 +145,34 @@ export const getAppropriateStyle = ({
   stepValue,
   getStepStatus,
 }) => {
+  const isStepperActive = getStepStatus(stepValue) === STEPPER_STATE.ACTIVE;
+  const isStepperDone = getStepStatus(stepValue) === STEPPER_STATE.DONE;
+  const isStepperInActive = getStepStatus(stepValue) === STEPPER_STATE.INACTIVE;
+
   switch (fieldName) {
     case "circle": {
       let styleName = "";
-      if (getStepStatus(stepValue) === "active") styleName = "activeCircle";
-      if (getStepStatus(stepValue) === "done") styleName = "doneCircle";
-      if (getStepStatus(stepValue) === "inActive") styleName = "inActiveCircle";
+      if (isStepperActive) styleName = "activeCircle";
+      if (isStepperDone) styleName = "doneCircle";
+      if (isStepperInActive) styleName = "inActiveCircle";
       return styles[styleName];
     }
     case "circleText": {
       let styleName = "";
-      if (getStepStatus(stepValue) === "active") styleName = "activeCircleText";
-      if (getStepStatus(stepValue) === "done") styleName = "doneCircleText";
-      if (getStepStatus(stepValue) === "inActive")
-        styleName = "inActiveCircleText";
+      if (isStepperActive) styleName = "activeCircleText";
+      if (isStepperDone) styleName = "doneCircleText";
+      if (isStepperInActive) styleName = "inActiveCircleText";
       return styles[styleName];
     }
     case "label": {
       let styleName = "";
-      if (getStepStatus(stepValue) === "active") styleName = "activeLabel";
-      if (getStepStatus(stepValue) === "inActive") styleName = "inActiveLabel";
+      if (isStepperActive) styleName = "activeLabel";
+      if (isStepperInActive) styleName = "inActiveLabel";
       return styles[styleName];
     }
     case "line": {
       let styleName = "";
-      if (getStepStatus(stepValue) === "done") styleName = "doneLine";
+      if (isStepperDone) styleName = "doneLine";
       return styles[styleName];
     }
     default: {

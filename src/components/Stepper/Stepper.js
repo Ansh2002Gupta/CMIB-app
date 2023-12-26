@@ -4,6 +4,7 @@ import { Image, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText/CommonText";
 import images from "../../images";
+import { STEPPER_STATE } from "../../constants/constants";
 import { getAppropriateStyle, styles } from "./Stepper.style";
 
 const Stepper = ({
@@ -17,9 +18,9 @@ const Stepper = ({
     customStyle;
 
   const getStepStatus = (step) => {
-    if (activeStep === step) return "active";
-    if (activeStep > step) return "done";
-    return "inActive";
+    if (activeStep === step) return STEPPER_STATE.ACTIVE;
+    if (activeStep > step) return STEPPER_STATE.DONE;
+    return STEPPER_STATE.INACTIVE;
   };
 
   return (
@@ -42,13 +43,13 @@ const Stepper = ({
                     stepValue: index,
                     getStepStatus,
                   }),
-                  ...(getStepStatus(index) !== "done"
+                  ...(getStepStatus(index) !== STEPPER_STATE.DONE
                     ? styles.activeOrPendingCircle
                     : {}),
                   ...stepperCircle,
                 }}
               >
-                {getStepStatus(index) === "done" ? (
+                {getStepStatus(index) === STEPPER_STATE.DONE ? (
                   <Image source={images.iconStepperDone} alt="Done" />
                 ) : (
                   <CommonText
