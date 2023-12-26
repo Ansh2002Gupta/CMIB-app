@@ -72,10 +72,10 @@ const OtpInput = ({
         value={otp[index]}
         onChangeText={(text) => handleOtpChange(text, index)}
         onKeyPress={(e) => onKeyPress(e, index)}
-        {...platformSpecificProps}
         maxLength={1}
         onFocus={() => handleInputFocus(index)}
         onBlur={handleInputBlur}
+        {...platformSpecificProps}
       />
     ));
   };
@@ -116,4 +116,5 @@ OtpInput.propTypes = {
   label: PropTypes.string.isRequired,
   onOtpChange: PropTypes.func.isRequired,
 };
+
 export default OtpInput;
