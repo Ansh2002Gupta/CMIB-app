@@ -6,13 +6,14 @@ import axiosInstance from "../axios/axiosInstance";
 const baseUrl = Config.REACT_APP_API_URL;
 
 export default class Http {
-  static async get(_url, handleDiscard = () => {}) {
+  static async get(_url, apiOptions = {}, handleDiscard = () => {}) {
     const url = `${baseUrl}${_url}`;
     try {
       const cancelGetRequest = axios.CancelToken.source();
       handleDiscard(cancelGetRequest);
       const response = await axiosInstance.get(url, {
         cancelToken: cancelGetRequest.token,
+        ...apiOptions,
       });
       return response.data;
     } catch (error) {
