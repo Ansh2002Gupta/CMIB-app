@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { View } from '@unthinkable/react-core-components'; 
 
-import layoutStyle from './tableView.style';
+import layoutStyle from './TableView.style';
 function TableView({ gridData, cellStyle, rowStyle, tableStyle }) {
   return (
     <View style={tableStyle}>

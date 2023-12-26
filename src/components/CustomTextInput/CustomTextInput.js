@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
   Platform,
@@ -8,15 +7,19 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
+import CustomLabelView from "../CustomLabelView";
+import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import Dropdown from "../Dropdown/index";
 import TextInput from "../TextInput";
+import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
+    countValue,
     customLabelStyle,
     customStyle,
     customErrorStyle,
@@ -25,6 +28,7 @@ const CustomTextInput = (props) => {
     dropdownStyle,
     errorMessage,
     eyeImage,
+    handleCountChange,
     isCounterInput,
     isDropdown,
     isError,
@@ -33,19 +37,20 @@ const CustomTextInput = (props) => {
     isMultiline,
     isPassword,
     label,
+    maxCount = 100,
+    minCount = 0,
     options,
     onChangeValue,
     placeholder,
+    step = 1,
     value,
     inputKey = "value",
     ...remainingProps
   } = props;
 
-  const [count, setCount] = useState(0);
+  const { isWebView } = useIsWebView();
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
 
   const toggleTextVisibility = () => {
     setIsTextVisible(!isTextVisible);
@@ -60,16 +65,6 @@ const CustomTextInput = (props) => {
     setIsFocused(false);
   };
 
-  const incrementCount = () => {
-    setCount((prev) => prev + 1);
-  };
-
-  const decrementCount = () => {
-    if (count > 0) {
-      setCount((prev) => prev - 1);
-    }
-  };
-
   const platformSpecificProps = Platform.select({
     web: {},
     default: {
@@ -79,24 +74,7 @@ const CustomTextInput = (props) => {
 
   return (
     <View style={[style.container, customStyle]}>
-      {!!label && (
-        <View style={style.labelContainer}>
-          <CommonText
-            customTextStyle={[
-              style.label,
-              isWebView && style.webLabel,
-              customLabelStyle,
-            ]}
-            title={label}
-          />
-          {isMandatory && (
-            <CommonText
-              customTextStyle={[style.label, style.starStyle]}
-              title={"*"}
-            />
-          )}
-        </View>
-      )}
+      {!!label && <CustomLabelView label={label} isMandatory />}
       {isDropdown ? (
         <Dropdown
           style={[
@@ -122,19 +100,13 @@ const CustomTextInput = (props) => {
           {...remainingProps}
         />
       ) : isCounterInput ? (
-        <View style={style.counterMainView}>
-          <View style={style.counterView}>
-            <CommonText customTextStyle={style.counterText} title={count} />
-          </View>
-          <View style={style.buttonsView}>
-            <TouchableOpacity onPress={incrementCount} style={style.button}>
-              <Image source={images.iconUpArrow} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={decrementCount} style={style.button}>
-              <Image source={images.iconDownArrow} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <CounterInput
+          initialCount={countValue}
+          minCount={minCount}
+          maxCount={maxCount}
+          onCountChange={handleCountChange}
+          step={step}
+        />
       ) : (
         <View
           style={[

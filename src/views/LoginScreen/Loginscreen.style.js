@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
@@ -18,7 +19,7 @@ const style = {
   },
   topTabs: {
     width: "50%",
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   inActiveStyle: {
     paddingTop: 16,
@@ -62,8 +63,8 @@ const style = {
   forgotPasswordText: {
     fontSize: 14,
     color: colors.darkBlue,
-    cursor: "pointer",
     fontWeight: "600",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   loginButtonView: {
     marginTop: 32,
@@ -79,7 +80,7 @@ const style = {
     color: colors.darkBlue,
     fontSize: 14,
     fontWeight: "600",
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   borderStyle: {
     borderWidth: 1,
@@ -163,7 +164,7 @@ const style = {
       marginTop: 0,
     },
     loginText: {
-      cursor: "pointer",
+      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
     },
     rememberMeText: {
       fontSize: 14,

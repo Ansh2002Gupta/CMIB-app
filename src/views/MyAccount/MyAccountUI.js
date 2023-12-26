@@ -4,6 +4,7 @@ import {
   Image,
   TouchableOpacity,
   View,
+  ScrollView,
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
@@ -51,7 +52,7 @@ const MyAccountUI = ({
         iconLeft={images.iconMenu}
         iconRight={images.iconNotification}
       />
-      <View style={style.profileParentContainer}>
+      <ScrollView style={style.profileParentContainer}>
         <View style={style.profileContainer}>
           {renderProfileIcon()}
           <View style={style.detailContainer}>
@@ -84,7 +85,7 @@ const MyAccountUI = ({
             </View>
           </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
       {changePasswordModal ? (
         <CustomModal
           headerText={intl.formatMessage({
