@@ -15,6 +15,7 @@ import styles from "./dashboard.style";
 function DashboardView() {
   const intl = useIntl();
   const [isEnabled, setIsEnabled] = useState(false);
+
   const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
   const FilterIcon = images.iconFilter;
   const MoreIcon = images.iconMore;
