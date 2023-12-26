@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
     color: colors.gray,
   },
   validationText: {
-    marginBottom: 8,
     fontSize: 14,
     color: colors.black,
+    lineHeight: 22,
   },
   validationView: {
     flexDirection: "row",
