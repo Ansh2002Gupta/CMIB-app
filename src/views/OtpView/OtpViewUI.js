@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { TouchableOpacity, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity"
 import ButtonComponent from "../../components/ButtonComponent";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import OtpInput from "../../components/OtpInput/index";
@@ -219,15 +220,12 @@ const OtpViewUI = ({
                     title={formattedTimerValue}
                   />
                 ) : (
-                  <TouchableOpacity
-                    style={styles.topTabs}
-                    onPress={onResendOtpClick}
-                  >
+                  <CustomTouchableOpacity  onPress={onResendOtpClick}>
                     <CommonText
                       customTextStyle={styles.textlabelReset}
                       title={formatedOtpLeftValue}
                     />
-                  </TouchableOpacity>
+                  </CustomTouchableOpacity>
                 )}
               </View>
             )}
@@ -268,7 +266,7 @@ const OtpViewUI = ({
             }
             displayLoader={isLoading}
           />
-          <TouchableOpacity style={styles.topTabs} onPress={onClickGoToLogin}>
+          <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={
                 isWebView
@@ -277,7 +275,7 @@ const OtpViewUI = ({
               }
               title={intl.formatMessage({ id: "label.back_to_login" })}
             />
-          </TouchableOpacity>
+          </CustomTouchableOpacity>
         </View>
       </View>
       {!!validationError && (
