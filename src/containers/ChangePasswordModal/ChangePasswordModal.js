@@ -65,6 +65,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               placeholder={intl.formatMessage({
                 id: "label.old_password_placeholder",
               })}
+              customStyle={styles.containerStyle}
               value={oldPassword}
               onChangeText={(val) => setOldPassword(val)}
               isMandatory
@@ -78,6 +79,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_your_new_password",
               })}
+              customStyle={styles.containerStyle}
               value={newPassword}
               onChangeText={(val) => setNewPassword(val)}
               isMandatory
@@ -91,6 +93,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               placeholder={intl.formatMessage({
                 id: "label.confirm_your_new_password",
               })}
+              customStyle={styles.containerStyle}
               value={confirmNewPassword}
               onChangeText={(val) => setConfirmNewPassword(val)}
               isMandatory
