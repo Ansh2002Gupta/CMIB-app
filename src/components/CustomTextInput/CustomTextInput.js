@@ -133,9 +133,9 @@ const CustomTextInput = (props) => {
             multiline={isMultiline || undefined}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            {...platformSpecificProps}
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
+            {...platformSpecificProps}
             {...remainingProps}
           />
           {eyeImage ? (

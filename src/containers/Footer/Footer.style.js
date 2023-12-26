@@ -1,4 +1,6 @@
-const style = {
+import { StyleSheet } from "@unthinkable/react-core-components";
+
+const styles = StyleSheet.create({
   imageStyle: {
     flex: 1,
     justifyContent: "center",
@@ -7,6 +9,6 @@ const style = {
     overflow: "hidden",
     width: "100%",
   },
-};
+});
 
-export default style;
+export default styles;
