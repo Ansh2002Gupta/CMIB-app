@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-const style = {
+const styles = StyleSheet.create({
   bulletText: {
     fontSize: 14,
     color: colors.gray,
@@ -23,6 +25,6 @@ const style = {
   activityBulletStyle: (isValid) => ({
     backgroundColor: isValid ? colors.green : colors.lightGrey,
   }),
-};
+});
 
-export default style;
+export default styles;
