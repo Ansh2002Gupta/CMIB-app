@@ -163,7 +163,8 @@ const SignUpSecondScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
     tabHandler("prev");
   };
 
-  const onClickNext = () => {
+  const onClickNext = (event) => {
+    event?.preventDefault();
     if (validateFields()) {
       const {
         companyName,

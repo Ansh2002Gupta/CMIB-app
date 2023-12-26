@@ -14,7 +14,7 @@ const CheckBox = (props) => {
   const { title, isSelected, handleCheckbox, id } = props;
   return (
     <View style={styles.contentContainerStyle}>
-      <TouchableOpacity onPress={() => handleCheckbox(id)}>
+      <TouchableOpacity onPress={() => handleCheckbox(id)} style={styles.webCursor}>
         <Image
           source={
             isSelected

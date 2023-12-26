@@ -158,7 +158,7 @@ const locale = {
     "Country code must be a combination of numbers and between 2 and 8 digits.",
   "label.telephone_no_validation":
     "Telephone number must be a combination of numbers and between 7 and 15 digits.",
-  "label.email_id_validation": "Email ID must be valid",
+  "label.email_id_validation": "Please enter a valid email address",
   "label.registration_no_validation":
     "Registration number must be exactly 10 digits.",
   "label.address_validation": "Address must be between 6 and 500 characters.",

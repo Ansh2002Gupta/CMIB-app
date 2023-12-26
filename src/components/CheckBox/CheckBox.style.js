@@ -1,7 +1,6 @@
 const style = {
   contentContainerStyle: {
     flexDirection: "row",
-    cursor: "pointer",
   },
   iconStyle: {
     height: 20,
@@ -11,9 +10,11 @@ const style = {
     marginLeft: 8,
     marginBottom: 16,
     fontSize: 14,
-    fontWeight: "500",
     lineHeight: 20,
   },
+  webCursor: {
+    cursor: "pointer",
+  }
 };
 
 export default style;

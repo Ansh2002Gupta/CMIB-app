@@ -5,7 +5,7 @@ import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import ButtonComponent from "../../components/ButtonComponent";
-import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import OtpInput from "../../components/OtpInput/index"
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";

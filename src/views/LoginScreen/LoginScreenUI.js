@@ -11,7 +11,7 @@ import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import FollowUsIcons from "../../components/FollowUsIcons";
-import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./Loginscreen.style";
 

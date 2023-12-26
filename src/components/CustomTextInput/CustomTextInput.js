@@ -35,6 +35,7 @@ const CustomTextInput = (props) => {
     onChangeValue,
     placeholder,
     value,
+    onBlur,
     inputKey = "value",
     ...remainingProps
   } = props;
@@ -55,6 +56,9 @@ const CustomTextInput = (props) => {
 
   const handleBlur = () => {
     setIsFocused(false);
+    if (onBlur) {
+      onBlur()
+    }
   };
 
   const incrementCount = () => {

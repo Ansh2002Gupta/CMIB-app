@@ -7,7 +7,7 @@ import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
-import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView"
 import commonStyles from "../../theme/styles/commonStyles";

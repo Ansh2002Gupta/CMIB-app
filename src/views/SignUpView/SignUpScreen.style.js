@@ -38,6 +38,7 @@ export const style = {
     width: "45%",
     alignSelf: "flex-start",
     minHeight: "70vH",
+    marginBottom: 48
   },
 };
 

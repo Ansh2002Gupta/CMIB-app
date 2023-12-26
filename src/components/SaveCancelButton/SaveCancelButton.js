@@ -18,7 +18,7 @@ const SaveCancelButton = (props) => {
     onPressButtonTwo,
     hasIconRight,
     isNextDisabled,
-    customSaveButtonContainer
+    customSaveButtonContainer,
   } = props;
 
   return (

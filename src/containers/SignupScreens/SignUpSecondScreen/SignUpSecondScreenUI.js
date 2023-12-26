@@ -4,8 +4,9 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CustomTextInput from "../../../components/CustomTextInput";
-import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription/HeaderTextWithLabelAndDescription";
-import LabelWithLinkText from "../../../components/LabelWithLinkText/LabelWithLinkText";
+import FormWrapper from "../../../components/FormWrapper";
+import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
@@ -38,11 +39,9 @@ const SignUpSecondScreenUI = ({
     state,
     telephoneNo,
   } = formData;
-
   const isWeb = Platform.OS === "web";
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-
   const renderFormContent = () => {
     return (
       <View style={style.formContainer}>
@@ -55,7 +54,9 @@ const SignUpSecondScreenUI = ({
           value={companyName}
           errorMessage={errors.companyName}
           isError={!!errors.companyName}
-          onChangeText={(val) => handleInputChange(val, "companyName")}
+          onChangeText={(val) => {
+            console.log('val val val', val);
+            handleInputChange(val, "companyName")}}
         />
         <CustomTextInput
           label={intl.formatMessage({ id: "label.entity" })}
@@ -242,6 +243,7 @@ const SignUpSecondScreenUI = ({
           {renderFormContent()}
         </ScrollView>
       ) : (
+        <FormWrapper onSubmit={onClickNext}>
         <View
           style={
             !isWebView
@@ -252,6 +254,7 @@ const SignUpSecondScreenUI = ({
           {renderFormContent()}
           {renderFooter()}
         </View>
+        </FormWrapper>
       )}
       {!isWeb && renderFooter()}
       {!!validationError && (
