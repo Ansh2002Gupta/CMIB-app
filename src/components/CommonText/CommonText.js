@@ -15,8 +15,17 @@ const CommonText = ({ customContainerStyle, customTextStyle, title }) => {
   );
 };
 
+CommonText.defaultProps = {
+  customContainerStyle: {},
+  customTextStyle: {},
+};
+
 CommonText.propTypes = {
   customContainerStyle: PropTypes.object,
+  customTextStyle: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.arrayOf(PropTypes.object),
+  ]),
   title: PropTypes.string.isRequired,
 };
 
