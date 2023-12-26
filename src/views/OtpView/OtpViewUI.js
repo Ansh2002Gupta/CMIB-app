@@ -204,7 +204,6 @@ const OtpViewUI = ({
             <OtpInput
               label={intl.formatMessage({ id: "label.text_otp" })}
               onOtpChange={handleOtpChange}
-              customAsteriskStyle={styles.customAsteriskStyle}
               isMandatory
               errorMessage={errorMessage}
               isError={!!errorMessage}
@@ -266,7 +265,6 @@ const OtpViewUI = ({
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
             displayLoader={isLoading}
-            
           />
           <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
