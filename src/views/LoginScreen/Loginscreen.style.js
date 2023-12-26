@@ -13,7 +13,7 @@ const style = {
     paddingTop: 16,
     borderBottomWidth: 3,
     borderColor: colors.green,
-    zIndex: 11,
+    zIndex: 1,
     marginBottom: -1,
   },
   topTabs: {
@@ -102,7 +102,6 @@ const style = {
   webView: {
     activeTab: {
       marginBottom: -2,
-      zIndex: 10,
     },
     backGroundColor: {
       backgroundColor: colors.white,

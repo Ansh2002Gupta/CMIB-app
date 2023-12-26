@@ -1,22 +1,27 @@
-import React, {useContext} from 'react';
-import {MediaQueryContext, useComponentTheme} from '@unthinkable/react-theme';
+import React from "react";
+import { useComponentTheme } from "@unthinkable/react-theme";
 
-import {TwoColumn, TwoRow} from '../../core/layouts';
+import { TwoRow } from "../../core/layouts";
 
-function MainLayout({header, menu, content, topSectionStyle}) {
-  const theme = useComponentTheme('Auth');
-
-  const {current: currentBreakpoint} = useContext(MediaQueryContext);
+function MainLayout({
+  header,
+  menu,
+  content,
+  topSectionStyle,
+  bottomSectionStyle,
+}) {
+  const theme = useComponentTheme("Auth");
 
   let layout = (
     <TwoRow
-    style={theme.mainContainerStyle}
+      style={theme.mainContainerStyle}
       topSection={
         <TwoRow
           topSection={header}
           bottomSection={content}
           isBottomFillSpace={true}
           topSectionStyle={topSectionStyle}
+          bottomSectionStyle={bottomSectionStyle}
         />
       }
       bottomSection={menu}
@@ -24,26 +29,6 @@ function MainLayout({header, menu, content, topSectionStyle}) {
       isBottomFillSpace={false}
     />
   );
-
-  if (currentBreakpoint === 'md') {
-    layout = (
-      <TwoColumn
-      style={theme.mainContainerStyle}
-        leftSection={menu}
-        rightSection={
-          <TwoRow
-            topSection={header}
-            bottomSection={content}
-            isBottomFillSpace={true}
-            topSectionStyle={topSectionStyle}
-          />
-        }
-        isLeftFillSpace={false}
-        isRightFillSpace={true}
-      />
-    );
-  }
-  
   return layout;
 }
 

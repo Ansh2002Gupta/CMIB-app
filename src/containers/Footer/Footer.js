@@ -7,6 +7,7 @@ import styles from "./Footer.style";
 
 const Footer = () => {
   const FooterIcon = images.iconFooter;
+
   return (
     <View style={styles.mainView}>
       <CustomImage
