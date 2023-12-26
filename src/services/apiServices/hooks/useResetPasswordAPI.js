@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
-import { COMPANY_FORGOT_PASSWORD_OTP } from "../apiEndPoint";
+import { COMPANY_RESET_PASSWORD_OTP } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useResetPasswordAPI = () => {
@@ -14,7 +14,7 @@ const useResetPasswordAPI = () => {
     try {
       setApiStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const res = await Http.post(COMPANY_FORGOT_PASSWORD_OTP, payload);
+      const res = await Http.post(COMPANY_RESET_PASSWORD_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setApiStatus(API_STATUS.SUCCESS);
         setResetPasswordResult(res.data);
