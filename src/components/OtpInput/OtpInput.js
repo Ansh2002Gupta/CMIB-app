@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Platform, TextInput, View } from "@unthinkable/react-core-components";
 
