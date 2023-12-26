@@ -137,3 +137,9 @@ export const VALIDATION_TYPE = [
 ];
 
 export const REDIRECT_URL = "redirectUrl";
+
+export const STEPPER_STATE = {
+  ACTIVE: "active",
+  DONE: "done",
+  INACTIVE: "inActive",
+};
