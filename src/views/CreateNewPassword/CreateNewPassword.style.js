@@ -1,5 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
-
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: colors.darkBlue,
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   bullet: {
     width: 6,
@@ -120,14 +119,16 @@ const styles = StyleSheet.create({
       lineHeight: 22,
     },
     submitText: {
-      cursor: "pointer",
+      fontFamily: "General sans",
+      fontWeight: "500",
+      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
     },
     submitTextContainer: {
       marginBottom: 8,
     },
     backBtnText: {
       fontWeight: "600",
-      cursor: "pointer",
+      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
     },
     companyView: {
       backgroundColor: colors.white,

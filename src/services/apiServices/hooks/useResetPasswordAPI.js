@@ -5,7 +5,6 @@ import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { COMPANY_RESET_PASSWORD_OTP } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
-
 const useResetPasswordAPI = () => {
   const [resetPasswordResult, setResetPasswordResult] = useState({});
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
@@ -36,7 +35,7 @@ const useResetPasswordAPI = () => {
   const isLoading = apiStatus === API_STATUS.LOADING;
   const isSuccess = apiStatus === API_STATUS.SUCCESS;
   const isError = apiStatus === API_STATUS.ERROR;
-  
+
   return {
     apiStatus,
     errorWhileResetPassword,

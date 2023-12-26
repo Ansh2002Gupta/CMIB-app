@@ -29,7 +29,7 @@ CustomImage.propTypes = {
     "stretch",
     "repeat",
   ]),
-  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object,PropTypes.func]).isRequired,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   
 };
