@@ -39,7 +39,7 @@ const RoundOneUI = (props) => {
         {containers.map((container) => (
           <TouchableOpacity
             onPress={() => {
-              onPressCard(container.id);
+              onPressCard(container);
             }}
             style={styles.buttonStyle}
           >

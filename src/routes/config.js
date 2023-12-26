@@ -12,10 +12,10 @@ import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import Home from "../pages/Home";
 import JobsView from "../views/JobsView/JobsView";
 import LoginScreen from "../views/LoginScreen/index";
-import ProfileView from "../views/Profile";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
+import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -64,6 +64,16 @@ const config = [
       {
         viewPath: "",
         element: <CompanyProfile />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.ROUND_ONE_APPLICATION_FORM,
+    element: <ContentRouteWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <RoundOneApplicationForm />,
       },
     ],
   },
