@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-const style = {
+const styles = StyleSheet.create({
   mainView: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
@@ -141,5 +143,6 @@ const style = {
   ErrorStyle: {
     paddingTop: 4,
   },
-};
-export default style;
+});
+
+export default styles;

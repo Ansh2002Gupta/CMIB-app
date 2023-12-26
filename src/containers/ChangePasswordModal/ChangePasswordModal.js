@@ -19,7 +19,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   const [error, setError] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const isPasswordValid = strongPasswordValidator(newPassword);
+  const isPasswordStrong = strongPasswordValidator(newPassword);
   const doPasswordsMatch = newPassword === confirmNewPassword;
 
   const { errorWhileChangePassword, handleUseChangePassword, isLoading } =
@@ -29,19 +29,21 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     return (
       !confirmNewPassword ||
       !doPasswordsMatch ||
-      !isPasswordValid ||
+      !isPasswordStrong ||
       !oldPassword ||
       !newPassword
     );
   };
 
   const handleSave = () => {
+    if (isNextDisabled()) return;
+
     if (!doPasswordsMatch) {
       setError(intl.formatMessage({ id: "label.password-not-match" }));
       return;
     }
     setError(null);
-    if (isPasswordValid) {
+    if (isPasswordStrong) {
       handleUseChangePassword({
         old_password: oldPassword,
         password: newPassword,

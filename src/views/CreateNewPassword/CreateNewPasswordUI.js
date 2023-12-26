@@ -89,7 +89,6 @@ function CreateNewPasswordUI(props) {
     } else if (newPassword !== confirmNewPassword) {
       message = intl.formatMessage({ id: "label.password-not-match" });
     }
-
     if (message) {
       setToastMessage(message);
     } else {

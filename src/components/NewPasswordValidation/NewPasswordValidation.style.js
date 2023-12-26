@@ -24,4 +24,5 @@ const style = {
     backgroundColor: isValid ? colors.green : colors.lightGrey,
   }),
 };
+
 export default style;
