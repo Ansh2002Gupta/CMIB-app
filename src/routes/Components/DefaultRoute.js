@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navigate } from "../../routes";
-import { Platform } from "@unthinkable/react-core-components";
 
 import { AuthContext } from "../../globalContext/auth/authProvider";
 import { StorageService } from "../../services";
@@ -8,18 +7,28 @@ import { navigations } from "../../constants/routeNames";
 
 const DefaultRoute = () => {
   const [authState] = useContext(AuthContext);
+  const [navigationPath, setNavigationPath] = useState(null);
 
-  if (Platform.OS.toLowerCase() === "web") {
-    StorageService.get("auth").then((token) => {
+  useEffect(() => {
+    async function checkAuthAndNavigate() {
+      const token = await StorageService.get("auth");
       if (!token && !authState?.token) {
-        return <Navigate to={navigations.LOGIN} replace />;
+        setNavigationPath(navigations.LOGIN);
+        return;
       }
-    });
-    return <Navigate to={navigations.DASHBOARD} replace />;
-  } else {
-    //TODO: Add proper screen for this on mobile.
-    return <Navigate to={navigations.LOGIN} replace />;
+      setNavigationPath(navigations.DASHBOARD);
+    }
+
+    checkAuthAndNavigate();
+  }, [authState]);
+
+  // If navigationPath is not null, navigate to the corresponding route
+  if (navigationPath) {
+    return <Navigate to={navigationPath} replace />;
   }
+
+  // Render nothing or a loading spinner until navigationPath is determined
+  return null; // or return <LoadingIndicator />;
 };
 
 export default DefaultRoute;
