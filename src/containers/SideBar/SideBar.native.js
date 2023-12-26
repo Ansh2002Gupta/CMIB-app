@@ -5,25 +5,16 @@ import { SafeAreaView } from "react-native";
 import styles from "./SideBar.style";
 import SideBarContentSection from "./SideBarContentSection";
 
-const SideBar = ({ onClose, listItems, resetList, showCloseIcon, items }) => {
+const SideBar = ({ onClose, showCloseIcon }) => {
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <SideBarContentSection
-        items={items}
-        onClose={onClose}
-        listItems={listItems}
-        resetList={resetList}
-        showCloseIcon={showCloseIcon}
-      />
+      <SideBarContentSection onClose={onClose} showCloseIcon={showCloseIcon} />
     </SafeAreaView>
   );
 };
 
 SideBar.propTypes = {
-  items: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
-  listItems: PropTypes.func.isRequired,
-  resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.bool.isRequired,
 };
 

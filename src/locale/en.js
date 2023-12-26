@@ -205,6 +205,7 @@ const locale = {
   "label.session":"Session",
   "label.module":"Module",
   "label.newly_qualified_placements":"Newly Qualified Placements",
+  "label.choose_a_module":"Choose a module",
 };
 
 export default locale;

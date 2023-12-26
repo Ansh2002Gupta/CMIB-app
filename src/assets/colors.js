@@ -27,6 +27,7 @@ const silver = "#EBEBEB";
 const yellow = "#FABB00";
 const darkGreySecond ='#71717A';
 const darkBlackSecond = "#18181B";
+const lightGraySecond ='d3d3d3'
 
 const colors = {
   lightGray,
@@ -58,5 +59,6 @@ const colors = {
   greyTwo,
   greyThree,
   greenOne,
+  lightGraySecond
 };
 export default colors;

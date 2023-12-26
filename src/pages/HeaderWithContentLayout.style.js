@@ -23,6 +23,9 @@ const Styles = (currentBreakpoint) => StyleSheet.create({
     left: 0,
     right: 0,
   },
+  sideBarSection:{
+     flex: 1,
+  }
 });
 
 export default Styles;

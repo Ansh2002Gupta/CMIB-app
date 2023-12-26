@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { View, Image } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText/CommonText";
@@ -24,4 +25,10 @@ const CustomAvatar = ({ image, text }) => {
   }
 };
 
+CustomAvatar.propTypes={
+  image: PropTypes.string,
+  text: PropTypes.string,
+}
 export default CustomAvatar;
+
+

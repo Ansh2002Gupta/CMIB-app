@@ -5,25 +5,16 @@ import { View } from "@unthinkable/react-core-components";
 import styles from "./SideBar.style";
 import SideBarContentSection from "./SideBarContentSection";
 
-const SideBar = ({ items, onClose, listItems, resetList, showCloseIcon }) => {
+const SideBar = ({ onClose, showCloseIcon }) => {
   return (
     <View style={styles.mainContainerWeb}>
-      <SideBarContentSection
-        items={items}
-        onClose={onClose}
-        listItems={listItems}
-        resetList={resetList}
-        showCloseIcon={showCloseIcon}
-      />
+      <SideBarContentSection onClose={onClose} showCloseIcon={showCloseIcon} />
     </View>
   );
 };
 
 SideBar.propTypes = {
-  items: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
-  listItems: PropTypes.func.isRequired,
-  resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.bool.isRequired,
 };
 

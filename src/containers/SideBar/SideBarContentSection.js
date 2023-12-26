@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
-import { useNavigate } from "../../routes";
-import { navigations } from "../../constants/routeNames";
 import {
   FlatList,
   Image,
@@ -11,27 +8,40 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
+import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
+import { navigations } from "../../constants/routeNames";
+
+import { modules, items } from "../../constants/sideBarListItems";
+import { TwoColumn, TwoRow } from "../../core/layouts";
+
 import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
-import CustomList from "../../components/CustomList/CustomList";
+import ResponsiveTextTruncate from "../../components/ResponsiveTextTruncate/ResponsiveTextTruncate";
 import images from "../../images";
 import styles from "./SideBar.style";
+import useIsWebView from "../../hooks/useIsWebView";
+import ModuleList from "./ModuleList";
 
-const SideBarContentSection = ({
-  items,
-  onClose,
-  listItems,
-  resetList,
-  showCloseIcon,
-}) => {
+const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const navigate = useNavigate();
+  const isWeb = useIsWebView();
   const intl = useIntl();
-  const [selectedItem, setSelectedItem] = useState("");
+  const [openModuleSelector, setOpenModuleSelector] = useState(false);
+  const [selectedModule, setSelectedModule] = useState(modules[0]);
+  const [activeMenuItem, setActiveMenuItem] = useState(
+    selectedModule.children[0].key
+  );
 
-  // Define a function to handle the selection of an item
-  const handleSelectItem = (item) => {
-    setSelectedItem(item.title);
-    resetList();
+  // TODO: need to create context for it if needed
+  const handleOnSelectItem = (item) => {
+    setSelectedModule(item);
+    setOpenModuleSelector(false);
+  };
+  const handleOnClickMenuItem = ({ key }) => {
+    // Not all screen is made so i commented navigate for now
+    // navigate(key);
+    setActiveMenuItem(key);
   };
 
   const handleBottomViewNavigation = () => {
@@ -43,25 +53,40 @@ const SideBarContentSection = ({
     }
   };
 
-  // Render functions for items and sub-items
-  const renderItem = ({ item }) => (
-    <>
-      <CustomList item={item} onSelect={() => handleSelectItem(item)} />
-      {item.subitems && (
-        <FlatList
-          data={item.subitems}
-          renderItem={renderItem} // Recursive call to handle sub-items
-          keyExtractor={(subitem) => subitem.id}
+  const renderMenuItems = ({ item, index }) => {
+    const isActive = activeMenuItem === item.key;
+    return (
+      <TouchableOpacity
+        style={isActive ? styles.moduleActiveMenuItems : styles.moduleMenuItems}
+        onPress={() => handleOnClickMenuItem(item)}
+      >
+        <Image source={images[item.icon]} style={styles.menuIcons} />
+        <CommonText
+          customTextStyle={isActive ? styles.menuItemsText : styles.changeText}
+          title={item.label}
         />
-      )}
-    </>
-  );
+      </TouchableOpacity>
+    );
+  };
+
+  const renderSessions = ({ item, index }) => {
+    return (
+      <TouchableOpacity
+        style={styles.moduleListItem}
+        onPress={() => {
+          // TODO: Add function handling when after getting API
+        }}
+      >
+        <CommonText customTextStyle={styles.changeText} title={item.title} />
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
       {showCloseIcon && (
         <TouchableOpacity onPress={onClose} style={styles.leftArrowButton}>
-          <Image source={images.iconClose} style={styles.leftArrow} />
+          <Image source={images.iconClose} style={styles.closeButton} />
         </TouchableOpacity>
       )}
       <View
@@ -72,39 +97,71 @@ const SideBarContentSection = ({
       >
         <Image source={images.iconCmibLogoWhite} />
       </View>
-      <View>
-        <CommonText
-          customTextStyle={styles.moduleText}
-          title={intl.formatMessage({ id: "label.module" })}
-        />
-        {/* Right Now It's a static data, we will replace it by dynamic data as we get API */}
-        <View style={styles.textView}>
-          <CommonText
-            customTextStyle={styles.newQualifiedText}
-            title={
-              selectedItem ||
-              intl.formatMessage({ id: "label.newly_qualified_placements" })
-            }
-          />
-          <TouchableOpacity
-            onPress={listItems}
-            style={styles.changeTextContainer}
-          >
-            <CommonText
-              customTextStyle={styles.changeText}
-              title={intl.formatMessage({ id: "label.change" })}
-            />
-          </TouchableOpacity>
-        </View>
+      {!openModuleSelector && (
         <CommonText
           customTextStyle={styles.sessionText}
-          title={intl.formatMessage({ id: "label.session" })}
+          title={intl.formatMessage({ id: "label.module" })}
         />
-      </View>
-      <FlatList
-        data={items}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+      )}
+      <TwoRow
+        isBottomFillSpace={true}
+        topSection={
+          <TwoColumn
+            style={openModuleSelector ? styles.openModule : styles.moduleText}
+            leftSection={
+              <View
+                style={openModuleSelector ? "" : styles.moduleSelectorheading}
+              >
+                <ResponsiveTextTruncate
+                  text={selectedModule.label}
+                  maxLength={22}
+                  style={styles.changeText}
+                  widthPercentage={0.4}
+                />
+              </View>
+            }
+            rightSection={
+              <TouchableOpacity
+                onPress={() => setOpenModuleSelector((prev) => !prev)}
+                style={styles.changeTextContainer}
+              >
+                {openModuleSelector ? (
+                  <Image
+                    source={images.iconLeftArrow}
+                    style={styles.leftArrow}
+                  />
+                ) : (
+                  <CommonText
+                    customTextStyle={styles.changeText}
+                    title={intl.formatMessage({ id: "label.change" })}
+                  />
+                )}
+              </TouchableOpacity>
+            }
+          />
+        }
+        bottomSection={
+          openModuleSelector ? (
+            <ModuleList modules={modules} onSelectItem={handleOnSelectItem} />
+          ) : (
+            <>
+              {isWeb.isWebView ? (
+                <FlatList
+                  data={selectedModule.children}
+                  renderItem={renderMenuItems}
+                />
+              ) : (
+                <>
+                  <CommonText
+                    customTextStyle={styles.sessionText}
+                    title={intl.formatMessage({ id: "label.session" })}
+                  />
+                  <FlatList data={items} renderItem={renderSessions} />
+                </>
+              )}
+            </>
+          )
+        }
       />
       <TouchableOpacity
         style={styles.bottomView}
@@ -124,10 +181,7 @@ const SideBarContentSection = ({
 };
 
 SideBarContentSection.propTypes = {
-  items: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
-  listItems: PropTypes.func.isRequired,
-  resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.bool.isRequired,
 };
 

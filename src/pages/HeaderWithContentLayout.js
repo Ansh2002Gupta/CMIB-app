@@ -15,18 +15,13 @@ import Header from "../containers/Header";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
-import {
-  items,
-  newQualifiedPlacementsList,
-} from "../constants/sideBarListItems";
 import commonStyles from "../theme/styles/commonStyles";
-import Styles from './HeaderWithContentLayout.style'
+import Styles from "./HeaderWithContentLayout.style";
 
 function HeaderWithContentLayout() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [menuIconVisible, setMenuIconVisible] = useState(true);
-  const [listItems, setListItems] = useState(items);
 
   useEffect(() => {
     const checkAuthToken = async () => {
@@ -62,24 +57,13 @@ function HeaderWithContentLayout() {
     [windowDimensions.width]
   );
 
-  const handleNewlyQualifiedPlacementsClick = () => {
-    setListItems(newQualifiedPlacementsList);
-  };
-
   const toggleSideBar = () => {
     setSideBarVisible(!isSideBarVisible);
   };
 
-
   // Components for rendering the sidebar in a modal or inline
   const sidebarComponent = (
-    <SideNavBar
-      onClose={toggleSideBar}
-      listItems={handleNewlyQualifiedPlacementsClick}
-      resetList={() => setListItems(items)}
-      showCloseIcon={modalSideBar}
-      items={listItems}
-    />
+    <SideNavBar onClose={toggleSideBar} showCloseIcon={modalSideBar} />
   );
 
   return (
@@ -92,7 +76,7 @@ function HeaderWithContentLayout() {
           style={Styles().modalStyle}
         >
           {Platform.OS.toLowerCase() === "web" ? (
-            <ScrollView style={{ flex: 1 }}>{sidebarComponent}</ScrollView>
+            <ScrollView style={Styles().sideBarSection}>{sidebarComponent}</ScrollView>
           ) : (
             sidebarComponent
           )}
@@ -109,7 +93,6 @@ function HeaderWithContentLayout() {
         bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
-        isSideBarVisible={isSideBarVisible}
         topSectionStyle={
           isMdOrGreater
             ? commonStyles.topSectionStyle
