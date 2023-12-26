@@ -86,7 +86,6 @@ export const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: "500",
   },
   activeLabel: {
     color: colors.black,
