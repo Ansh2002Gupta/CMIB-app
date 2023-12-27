@@ -279,6 +279,7 @@ const SignUpLastScreenUI = ({
 SignUpLastScreenUI.defaultProps = {
   errors: {},
   errorWhileDeletion: "",
+  errorWhileUpload: "",
   handleDismissToast: () => {},
   onImageUpload: () => {},
   signUpError: "",

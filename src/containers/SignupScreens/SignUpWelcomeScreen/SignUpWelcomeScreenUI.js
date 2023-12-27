@@ -89,7 +89,8 @@ const SignUpWelcomeScreenUI = ({
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
-        <View style={style.signupFooterContainer}>
+      </View>
+      <View style={style.signupFooterContainer}>
           <ButtonComponent
             title={intl.formatMessage({ id: "label.next" })}
             onPress={onClickNext}
@@ -104,7 +105,6 @@ const SignUpWelcomeScreenUI = ({
             />
           )}
         </View>
-      </View>
       {!!validationError && (
         <ToastComponent
           toastMessage={validationError}
