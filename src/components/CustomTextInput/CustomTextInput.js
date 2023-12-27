@@ -72,7 +72,7 @@ const CustomTextInput = (props) => {
 
   return (
     <View style={[style.container, customStyle]}>
-      {!!label && <CustomLabelView label={label} isMandatory />}
+      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {isDropdown ? (
         <Dropdown
           style={[

@@ -7,7 +7,6 @@ export const style = {
   webContainer: {
     flexDirection: "row",
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
     display: "flex",
     gap: 48,

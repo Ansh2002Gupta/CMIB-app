@@ -16,7 +16,7 @@ import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWit
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
-import UploadImage from "../../../components/UploadImage/UploadImage";
+import UploadImage from "../../../components/UploadImage";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
   NATURE_OF_SUPPLIER,

@@ -35,19 +35,15 @@ export const styles = {
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
-  webIconBar: {
-    transform: "rotate(90deg)",
-  },
-  webStepperContainer: {
-    flexDirection: "row-reverse",
-  },
   lgStepperContainer: {
     flex: 3,
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    marginTop: 148
   },
   stepperContainer: {
     flex: 3.5,
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    marginTop: 148
   },
   stepperParentContainer: {
     marginTop: 24
