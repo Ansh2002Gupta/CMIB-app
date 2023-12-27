@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
@@ -9,6 +10,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import style from "./DetailComponent.style";
 
 const DetailComponent = ({ details, headerText, isEditable }) => {
+  const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
 
@@ -61,7 +63,7 @@ const DetailComponent = ({ details, headerText, isEditable }) => {
               <>
                 <View style={style.titleContainer}>
                   <CommonText
-                    title={detail.title}
+                    title={intl.formatMessage({ id: detail.title })}
                     customTextStyle={style.titleStyle}
                   />
                   <CommonText title=" *" customTextStyle={style.starStyle} />

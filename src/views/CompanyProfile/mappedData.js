@@ -4,6 +4,7 @@ export const mapApiDataToUI = (apiData) => {
     entity,
     frn_number,
     number_of_partner,
+    industry_type,
     std_country_code,
     telephone_number,
     address,
@@ -23,42 +24,50 @@ export const mapApiDataToUI = (apiData) => {
 
   return {
     companyDetail: [
-      { title: "Company Name", value: name },
-      { title: "Entity", value: entity },
-      { title: "Firm Registration No.[FRN]", value: frn_number, isMajor: true },
-      { title: "Partners(No.)", value: number_of_partner, isMinor: true },
-      { title: "Current Industry", value: number_of_partner },
-      { title: "Address of Correspondence", value: address },
-      { title: "Email ID", value: email },
-      { title: "ISD/STD Code", value: std_country_code, isMajor: true },
-      { title: "Telephone Number", value: telephone_number, isMinor: true },
+      { title: "label.company_name", value: name },
+      { title: "label.entity", value: entity },
+      { title: "label.firm_registration_no", value: frn_number, isMajor: true },
+      {
+        title: "label.no_of_partners",
+        value: number_of_partner,
+        isMinor: true,
+      },
+      { title: "label.current_industry", value: industry_type },
+      { title: "label.address_for_correspondence", value: address },
+      { title: "label.email_id", value: email },
+      { title: "label.isd_std_code", value: std_country_code, isMinor: true },
+      { title: "label.telephone_no", value: telephone_number, isMajor: true },
     ],
     contactPersonInfo: [
-      { title: "Salutation", value: contact_person_salutation, isMinor: true },
       {
-        title: "Contact Person Name",
+        title: "label.salutation",
+        value: contact_person_salutation,
+        isMinor: true,
+      },
+      {
+        title: "label.contact_person_name",
         value: contact_person_name,
         isMajor: true,
       },
       {
-        title: "Contact Person Designation",
+        title: "label.contact_personal_designation",
         value: contact_person_designation,
       },
       {
-        title: "Mobile Number",
+        title: "label.mobile_number",
         value:
           contact_person_mobile_country_code +
           "-" +
           contact_person_mobile_number,
       },
-      { title: "Email ID", value: contact_person_email },
+      { title: "label.email_id", value: contact_person_email },
     ],
     companyProfile: [
-      { title: "Short Profile of the Company", value: company_details },
+      { title: "label.short_profile_of_the_company", value: company_details },
     ],
     otherDetails: [
-      { title: "Website", value: website, isLink: true },
-      { title: "Nature of Supplier", value: nature_of_supplier },
+      { title: "label.website", value: website, isLink: true },
+      { title: "label.nature_of_supplier", value: nature_of_supplier },
     ],
     sourceOfInfo: source_of_information,
     companyLogo: company_logo,
