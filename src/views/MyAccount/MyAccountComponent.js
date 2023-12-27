@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "react-router";
+import { useNavigate } from "../../routes";
 
 import MyAccountUI from "./MyAccountUI";
 import { options } from "./MyAccountConstant";
@@ -9,6 +9,8 @@ import { navigations } from "../../constants/routeNames";
 const MyAccountComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const [changePasswordModal, setChangePasswordModal] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   const onClickViewProfile = () => {
     navigate(navigations.VIEW_PROFILE);
@@ -16,6 +18,18 @@ const MyAccountComponent = () => {
 
   const onClickCompanyProfile = () => {
     navigate(navigations.COMPANY_PROFILE);
+  };
+
+  const handleChangePassword = (val) => {
+    setChangePasswordModal(val);
+  };
+
+  const handleLogout = (val) => {
+    setLogout(val);
+  };
+
+  const saveLogout = () => {
+    navigate(navigations.LOGIN);
   };
 
   const handleOptionClick = (option) => {
@@ -34,8 +48,10 @@ const MyAccountComponent = () => {
         onClickCompanyProfile();
         break;
       case 6:
+        handleChangePassword(true);
         break;
       case 7:
+        handleLogout(true);
         break;
       default:
         break;
@@ -44,9 +60,14 @@ const MyAccountComponent = () => {
 
   return (
     <MyAccountUI
-      intl={intl}
-      options={options}
+      changePasswordModal={changePasswordModal}
       handleOptionClick={handleOptionClick}
+      handleChangePassword={handleChangePassword}
+      handleLogoutClick={handleLogout}
+      intl={intl}
+      isLogout={logout}
+      options={options}
+      saveLogout={saveLogout}
     />
   );
 };

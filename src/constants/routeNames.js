@@ -13,4 +13,5 @@ export const navigations = {
   SIGN_UP: "/sign-up",
   VIEW_PROFILE: "/view-profile",
   ROUND_ONE_APPLICATION_FORM: "/round-one-application-form",
+  WEB_VIEW: "/web-view",
 };

@@ -1,4 +1,4 @@
-import React , {useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { TouchableOpacity, View } from "@unthinkable/react-core-components";
@@ -9,13 +9,12 @@ import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
-import useIsWebView from "../../hooks/useIsWebView"
+import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./ForgotPassword.style";
-
 
 const ForgotPasswordUI = (props) => {
   const {
-    onClickForgotPassword,
+    onSendOtpClick,
     onClickGoToLogin,
     onChangeInput,
     userEmail,
@@ -154,7 +153,6 @@ const ForgotPasswordUI = (props) => {
                 onChangeInput(val);
               }}
               errorMessage={errorMessage}
-              customAsteriskStyle={styles.customAsteriskStyle}
               isMandatory
               isError={!!errorMessage}
             />
@@ -163,7 +161,7 @@ const ForgotPasswordUI = (props) => {
         <View style={isWebView ? styles.webSubmitView : styles.submitView}>
           <ButtonComponent
             title={intl.formatMessage({ id: "label.submit" })}
-            onPress={onClickForgotPassword}
+            onPress={onSendOtpClick}
             disabled={loginDisabled}
             customTitleStyle={isWebView && styles.customBtnText}
             customButtonContainer={
@@ -173,9 +171,7 @@ const ForgotPasswordUI = (props) => {
           />
           <TouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
-              customTextStyle={
-                isWebView ? [styles.backToLoginText] : styles.backToLoginText
-              }
+              customTextStyle={styles.backToLoginText}
               title={intl.formatMessage({ id: "label.back_to_login" })}
             />
           </TouchableOpacity>
@@ -208,12 +204,11 @@ ForgotPasswordUI.propTypes = {
   errorMessage: PropTypes.string,
   handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
-  onClickForgotPassword: PropTypes.func,
+  onSendOtpClick: PropTypes.func,
   onClickGoToLogin: PropTypes.func.isRequired,
   onChangeInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
-  userName: PropTypes.string.isRequired,
-  validationError: PropTypes.bool,
+  validationError: PropTypes.string,
 };
 
 export default ForgotPasswordUI;

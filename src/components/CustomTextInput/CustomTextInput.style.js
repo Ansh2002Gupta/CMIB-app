@@ -107,7 +107,7 @@ const style = {
   eyeIconContainer: {
     justifyContent: "center",
     alignItems: "center",
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   counterMainView: {
     flexDirection: "row",
@@ -126,6 +126,7 @@ const style = {
   },
   counterText: {
     color: colors.black,
+    fontSize: 14,
   },
   buttonsView: {
     marginLeft: 8,

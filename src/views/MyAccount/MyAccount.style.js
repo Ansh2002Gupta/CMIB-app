@@ -1,4 +1,16 @@
+import { Dimensions } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const deviceHeight = Dimensions.get("window").height;
+const maxHeightPercentage = 0.8;
+const minHeightThreshold = 500;
+const maxHeight = deviceHeight * maxHeightPercentage;
+
+let modalHeight = maxHeight;
+
+if (deviceHeight < minHeightThreshold) {
+  modalHeight = minHeightThreshold;
+}
 
 const style = {
   optionCotainer: {
@@ -6,6 +18,10 @@ const style = {
     paddingTop: 16,
     paddingBottom: 16,
     alignItems: "center",
+  },
+  optionCotainerBorder: {
+    borderBottomWidth: 1,
+    borderColor: colors.lightGrey,
   },
   profileParentContainer: {
     paddingLeft: 16,
@@ -15,7 +31,7 @@ const style = {
   },
   profileContainer: {
     marginTop: 16,
-    marginBottom: 16,
+    marginBottom: 24,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -38,29 +54,38 @@ const style = {
   emailStyle: {
     fontSize: 14,
     color: colors.darkGrey,
-    fontWeight: "500"
+  },
+  titleParentStyle: {
+    paddingLeft: 12,
+    paddingRight:12,
+    flex:1,
   },
   titleStyle: {
     fontSize: 14,
     lineHeight: 20,
     paddingLeft: 12,
-    color: colors.black
+    color: colors.black,
   },
   iconContainer: {
-    flex: 1,
     alignItems: "flex-end",
   },
   leftIcon: {
     width: 24,
-    height: 24
+    height: 24,
   },
   arrowIcon: {
     width: 16,
-    height: 16
+    height: 16,
   },
-  initialsText: {
-    fontSize: 14
-  }
+  headerTextStyle: {
+    paddingTop: 0,
+    fontWeight: "600",
+    paddingBottom: 16,
+  },
+  innerContainerStyle: {
+    height: modalHeight,
+    maxHeight: maxHeight,
+  },
 };
 
 export default style;

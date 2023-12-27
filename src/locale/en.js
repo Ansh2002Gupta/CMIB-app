@@ -168,8 +168,7 @@ const locale = {
     "Contact Person Name must be between 6 and 255 characters.",
   "label.designation_validation":
     "Designation must be between 6 and 500 characters.",
-  "label.mobile_number_validation":
-    "Mobile number must be a combination of numbers and between 7 and 15 digits.",
+  "label.mobile_number_validation": "Mobile number must be exactly 10 digits.",
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
@@ -179,6 +178,10 @@ const locale = {
     "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
   "label.text_otp": "OTP",
   "label.jobs": "Jobs",
+  "label.old_password": "Old Password",
+  "label.company_logo": "Company Logo",
+  "label.contact_person_info": "Contact Person Information",
+  "label.balance_credit": "Balance Credit",
   "label.otp_recieved": "Haven’t received the OTP?",
   "label.request_otp": "You have requested OTP for ",
   "label.request_otp_next": "You can resend the next OTP after",
@@ -188,6 +191,18 @@ const locale = {
   "label.times": "times!",
   "label.description": "Description",
   "label.heading": "H1",
+  "label.password-not-match": "The password and confirm password do not match.",
+  "label.update": "Update",
+  "label.add": "Add",
+  "label.edit": "Edit",
+  "label.duplicate_email_validation": "Email addresses must be unique.",
+  "label.logout_message": "Are you sure you want to logout of the portal?",
+  "label.add_designation": "Add Designation",
+  "label.designation": "Designation",
+  "label.designation_placeholder": "Select Designation",
+  "label.no_of_vacancy": "No. of. Vacancy",
+  "label.error_password": "Password doesn't match",
+  "label.old_password_placeholder": "Enter your old password",
 };
 
 export default locale;
