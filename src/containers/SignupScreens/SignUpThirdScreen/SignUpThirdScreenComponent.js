@@ -21,9 +21,9 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const initialContactDetails =
     signUpState?.signUpDetail?.contact_details || [];
-  const { handleSignUpValidation } = useValidateSignUp();
+  const { handleSignUpValidation, validationError, setValidationError } =
+    useValidateSignUp();
 
-  const [validationError, setValidationError] = useState("");
   const [contactDetails, setContactDetails] = useState(
     initialContactDetails.map((contact) => ({
       designation: contact.designation || "",
@@ -192,16 +192,10 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         contact_details: updatedContactDetails,
       };
 
-      handleSignUpValidation(
-        newContactDetails,
-        () => {
-          signUpDispatch(setSignUpDetails(newContactDetails));
-          tabHandler("next");
-        },
-        (error) => {
-          setValidationError(error);
-        }
-      );
+      handleSignUpValidation(newContactDetails, () => {
+        signUpDispatch(setSignUpDetails(newContactDetails));
+        tabHandler("next");
+      });
     }
   };
 
