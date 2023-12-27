@@ -44,8 +44,14 @@ const Dropdown = ({
 };
 
 Dropdown.defaultProps = {
+  data: [],
   dropdownStyle: {},
+  labelField: "",
+  onChange: ()=>{},
+  placeholder: "",
   placeholderStyle: {},
+  value: "",
+  valueField: ""
 };
 
 Dropdown.propTypes = {

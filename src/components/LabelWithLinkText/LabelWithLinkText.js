@@ -1,5 +1,6 @@
-import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 import React from "react";
+import { View, TouchableOpacity } from "@unthinkable/react-core-components";
+import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import style from "./LabelWithLinkText.style";
@@ -13,6 +14,18 @@ const LabelWithLinkText = ({ labelText, linkText, onLinkClick }) => {
       </TouchableOpacity>}
     </View>
   );
+};
+
+LabelWithLinkText.defaultProps = {
+  labelText: '',
+  linkText: '',
+  onLinkClick: () => {},
+};
+
+LabelWithLinkText.propTypes = {
+  labelText: PropTypes.string,
+  linkText: PropTypes.string,
+  onLinkClick: PropTypes.func,
 };
 
 export default LabelWithLinkText;

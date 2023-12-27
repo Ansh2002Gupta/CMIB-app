@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
@@ -6,12 +7,12 @@ import CommonText from "../CommonText";
 import { getResponsiveStyles, style } from "./HeaderTextWithLabelAndDescription.style";
 
 const HeaderTextWithLabelAndDescription = ({
+  customContainerStyles,
+  customSecondHeadingStyles,
+  customTextStyle,
+  description,
   headerText,
   label,
-  description,
-  customTextStyle,
-  customSecondHeadingStyles,
-  customContainerStyles,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
@@ -37,5 +38,24 @@ const HeaderTextWithLabelAndDescription = ({
     </View>
   );
 };
+
+HeaderTextWithLabelAndDescription.defaultProps = {
+  customContainerStyles: {},
+  customSecondHeadingStyles: {},
+  customTextStyle: {},
+  description: '',
+  headerText: '',
+  label: '',
+};
+
+HeaderTextWithLabelAndDescription.propTypes = {
+  customContainerStyles: PropTypes.object,
+  customSecondHeadingStyles: PropTypes.object,
+  customTextStyle: PropTypes.object,
+  description: PropTypes.string,
+  headerText: PropTypes.string,
+  label: PropTypes.string,
+};
+
 
 export default HeaderTextWithLabelAndDescription;
