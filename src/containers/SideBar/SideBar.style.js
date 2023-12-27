@@ -134,6 +134,7 @@ const styles = {
   moduleListItem: {
     padding: 16,
     width: '100%',
+    cursor: 'pointer',
   },
   moduleMenuItems:{
     marginLeft:16,

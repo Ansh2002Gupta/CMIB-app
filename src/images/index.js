@@ -69,7 +69,7 @@ const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
-const iconCmibLogoWhite = "images/iconCmibLogoWhite/iconCmibLogoWhite.png";
+const iconCmibLogoWhite = "images/iconCmibLogowhite/iconCmibLogowhite.png";
 const iconRightArrow = "images/iconRightArrow/iconRightArrow.png";
 const iconFooterGlobal = "images/iconFooterGlobal/iconFooterGlobal.png";
 const ticketIcon = "images/ticketIcon/ticketIcon.png";
@@ -169,14 +169,9 @@ const images = {
   iconCmibLogoWhite,
   iconRightArrow,
   iconFooterGlobal,
-  iconTick,
-  iconSquareEdit,
-  iconWarning,
   iconFilter,
   iconSearch,
   iconMore,
-  iconArrowDown,
-  iconArrowUp,
   iconAdd,
   iconStepperDone,
 };

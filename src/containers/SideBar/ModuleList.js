@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  TouchableOpacity,
   FlatList,
+  TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import styles from "./SideBar.style"; 
 import CommonText from "../../components/CommonText";
+import styles from "./SideBar.style"; 
 
 const ModuleList = ({ modules, onSelectItem }) => {
   return (

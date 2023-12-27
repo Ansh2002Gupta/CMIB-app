@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useMemo, useContext } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet } from "../routes";
 import {
   Modal,
   Platform,
   ScrollView,
+  Text,
+  View
 } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 import { MediaQueryContext } from "@unthinkable/react-theme";
@@ -76,7 +78,9 @@ function HeaderWithContentLayout() {
           style={Styles().modalStyle}
         >
           {Platform.OS.toLowerCase() === "web" ? (
-            <ScrollView style={Styles().sideBarSection}>{sidebarComponent}</ScrollView>
+            <ScrollView style={Styles().sideBarSection}>
+              {sidebarComponent}
+            </ScrollView>
           ) : (
             sidebarComponent
           )}
@@ -93,6 +97,8 @@ function HeaderWithContentLayout() {
         bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
+        // TODO: Footer should be added in this prop 
+        // footer={!isAuthenticated && <View><Text>Hello</Text></View>}
         topSectionStyle={
           isMdOrGreater
             ? commonStyles.topSectionStyle

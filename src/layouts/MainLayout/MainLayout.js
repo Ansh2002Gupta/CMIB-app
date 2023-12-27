@@ -4,7 +4,6 @@ import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimen
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-
 function MainLayout({
   header,
   menu,
@@ -17,7 +16,8 @@ function MainLayout({
   isLeftFillSpace = false,
   bottomSection,
   bottomSectionStyle,
-}) {
+  footer,
+}) {  
   const theme = useComponentTheme("Auth");
   const windowDimensions = useWindowDimensions();
   const isMdOrGreater = windowDimensions.width >= 900;
@@ -40,27 +40,32 @@ function MainLayout({
     />
   );
 
-
-    if( isMdOrGreater)
+  if (isMdOrGreater)
     layout = (
-      <TwoColumn
-        style={theme.mainContainerStyle}
-        leftSection={menu}
-        rightSection={
-          <TwoRow
-            topSection={header}
-            bottomSection={content}
-            isBottomFillSpace={false}
-            topSectionStyle={topSectionStyle}
-            bottomSectionStyle={bottomSectionStyle}
+      <TwoRow
+        topSection={
+          <TwoColumn
+            style={theme.mainContainerStyle}
+            leftSection={menu}
+            rightSection={
+              <TwoRow
+                topSection={header}
+                bottomSection={content}
+                isBottomFillSpace={false}
+                topSectionStyle={topSectionStyle}
+                bottomSectionStyle={bottomSectionStyle}
+              />
+            }
+            leftSectionStyle={!!menu && leftSectionStyle}
+            rightSectionStyle={rightSectionStyle}
+            isLeftFillSpace={isLeftFillSpace}
+            isRightFillSpace={isRightFillSpace}
           />
         }
-        leftSectionStyle={!!menu && leftSectionStyle}
-        rightSectionStyle={rightSectionStyle}
-        isLeftFillSpace={isLeftFillSpace}
-        isRightFillSpace={isRightFillSpace}
+        bottomSection={footer}
+        isTopFillSpace={!!footer ? false : true}
       />
-  );
+    );
 
   return layout;
 }
