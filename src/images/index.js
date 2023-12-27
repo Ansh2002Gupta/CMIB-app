@@ -14,10 +14,10 @@ const g20Icon = "/images/svg/g20Icon.svg";
 const gloPac = "/images/svg/gloPac.svg";
 const iconWalkthroughSignUpOne =
   "/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
-const iconCheckedCheckbox =
-  "/images/iconCheckedCheckbox/iconCheckedCheckbox.png";
-const iconUncheckedCheckbox =
-  "images/iconUncheckedCheckbox/iconUncheckedCheckbox.png";
+const iconCheckbox =
+  "/images/svg/icon_check.svg";
+const iconUnCheckbox =
+  "images/svg/icon_uncheck.svg";
 const iconArrowRightWhite =
   "images/iconArrowRightWhite/iconArrowRightWhite.png";
 const iconWalkthroughSignUpTwo =
@@ -101,8 +101,8 @@ const images = {
   g20Icon,
   gloPac,
   iconWalkthroughSignUpOne,
-  iconCheckedCheckbox,
-  iconUncheckedCheckbox,
+  iconCheckbox,
+  iconUnCheckbox,
   iconArrowRightWhite,
   iconWalkthroughSignUpTwo,
   iconDownArrow,
