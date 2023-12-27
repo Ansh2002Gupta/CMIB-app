@@ -26,23 +26,27 @@ const ModalWithTitleButton = ({
   return (
     <CustomModal
       headerText={heading}
-      style={{ ...styles.containerStyle, ...styles.parentStyle, ...containerStyle  }}
+      style={{
+        ...styles.containerStyle,
+        ...styles.parentStyle,
+        ...containerStyle,
+      }}
     >
       {children}
       {isTwoEnable && (
         <TwoRowButton
           leftButtonLeftImage={leftButtonLeftImage}
           leftButtonRightImage={leftButtonRightImage}
-          leftButtonStyle={{...styles.leftButtonStyle, ...leftButtonStyle}}
+          leftButtonStyle={{ ...styles.leftButtonStyle, ...leftButtonStyle }}
           leftButtonText={leftLabelTxt}
-          leftTextStyle={{...styles.leftTextStyle, ...leftTextStyle}}
+          leftTextStyle={{ ...styles.leftTextStyle, ...leftTextStyle }}
           onLeftButtonClick={onClickLeftButton}
           onRightButtonClick={onClickRightButton}
           rightButtonLeftImage={rightButtonLeftImage}
           rightButtonRightImage={rightButtonRightImage}
-          rightButtonStyle={{...styles.rightButtonStyle, ...rightButtonStyle}}
+          rightButtonStyle={{ ...styles.rightButtonStyle, ...rightButtonStyle }}
           rightButtonText={rightLabelTxt}
-          rightTextStyle={{...styles.rightTextStyle, ...rightTextStyle} }
+          rightTextStyle={{ ...styles.rightTextStyle, ...rightTextStyle }}
         />
       )}
     </CustomModal>

@@ -1,8 +1,8 @@
-import { Platform , StyleSheet} from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
-const styles =StyleSheet.create( {
+const styles = StyleSheet.create({
   containerStyle: {
     marginBottom: 0,
     marginLeft: 0,
@@ -24,10 +24,10 @@ const styles =StyleSheet.create( {
     fontSize: 14,
     fontWeight: "600",
   },
-  parentStyle:{
+  parentStyle: {
     ...Platform.select({
       ios: {
-        marginBottom: 30, 
+        marginBottom: 30,
       },
     }),
   },
