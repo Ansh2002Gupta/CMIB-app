@@ -4,10 +4,11 @@ import { View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import CommonText from "../CommonText";
+import CustomTextInput from "../CustomTextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./DetailComponent.style";
 
-const DetailComponent = ({ details, headerText }) => {
+const DetailComponent = ({ details, headerText, isEditable }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
 
@@ -16,6 +17,15 @@ const DetailComponent = ({ details, headerText }) => {
     lg: "1fr 1fr",
     md: "1fr 1fr",
     sm: "1fr 1fr",
+  };
+
+  const getRowStyle = (detail) => {
+    if (detail.isMajor) {
+      return style.rowStyle;
+    } else if (detail.isMinor) {
+      return style.minorRowStyle;
+    }
+    return style.innerContainer;
   };
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
@@ -33,22 +43,38 @@ const DetailComponent = ({ details, headerText }) => {
         {details?.map((detail, index) => (
           <View
             key={index}
-            style={detail.isRow ? style.rowStyle : style.innerContainer}
+            style={isWebView ? style.webContainer : getRowStyle(detail)}
           >
-            <View style={[style.titleContainer]}>
-              <CommonText
-                title={detail.title}
-                customTextStyle={style.titleStyle}
+            {isEditable ? (
+              <CustomTextInput
+                value={detail.value}
+                customStyle={style.inputStyle}
+                label={detail.title}
+                isDropdown={detail.isDropdown}
+                isCounterInput={detail.isCounterInput}
+                options={detail.options || []}
+                isMobileNumber={detail.isMobileNumber}
+                isMultiline={detail.isMultiline}
+                isMandatory
               />
-              <CommonText title=" *" customTextStyle={style.starStyle} />
-            </View>
-            <CommonText
-              title={detail.value}
-              customTextStyle={[
-                style.valueStyle,
-                detail.isLink && style.linkStyle,
-              ]}
-            />
+            ) : (
+              <>
+                <View style={style.titleContainer}>
+                  <CommonText
+                    title={detail.title}
+                    customTextStyle={style.titleStyle}
+                  />
+                  <CommonText title=" *" customTextStyle={style.starStyle} />
+                </View>
+                <CommonText
+                  title={detail.value}
+                  customTextStyle={[
+                    style.valueStyle,
+                    detail.isLink && style.linkStyle,
+                  ]}
+                />
+              </>
+            )}
           </View>
         ))}
       </View>
@@ -56,9 +82,15 @@ const DetailComponent = ({ details, headerText }) => {
   );
 };
 
+DetailComponent.defaultProps = {
+  headerText: "",
+  isEditable: false,
+};
+
 DetailComponent.propTypes = {
   details: PropTypes.array.isRequired,
   headerText: PropTypes.string,
+  isEditable: PropTypes.bool,
 };
 
 export default DetailComponent;
