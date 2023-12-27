@@ -142,7 +142,8 @@ const styles = {
     marginBottom:8,
     borderRadius:12,
     padding:16,
-    flexDirection:"row"
+    flexDirection:"row",
+    cursor:"pointer"
   },
   moduleActiveMenuItems:{
     marginLeft:16,
@@ -152,7 +153,8 @@ const styles = {
     borderRadius:12,
     padding:16,
     backgroundColor:colors.white,
-    flexDirection:"row"
+    flexDirection:"row",
+    cursor:"pointer"
   },
   disabled: {
     color: colors.slateGray
