@@ -1,10 +1,6 @@
-import { Platform } from "@unthinkable/react-core-components";
+import { StyleSheet } from "@unthinkable/react-core-components";
 
-const style = {
-  contentContainerStyle: {
-    flexDirection: "row",
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
-  },
+const styles = StyleSheet.create({
   iconStyle: {
     height: 20,
     width: 20,
@@ -15,9 +11,6 @@ const style = {
     fontSize: 14,
     lineHeight: 20,
   },
-  webCursor: {
-    cursor: "pointer",
-  }
-};
+});
 
-export default style;
+export default styles;
