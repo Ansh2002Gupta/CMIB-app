@@ -49,7 +49,7 @@ const AddDesignation = ({ handleCancelButton }) => {
   return (
     <ModalWithTitleButton
       heading={intl.formatMessage({ id: "label.add_designation" })}
-      isTwoEnable
+      enableBottomButton
       leftLabelTxt={intl.formatMessage({ id: "label.cancel" })}
       onClickLeftButton={handleCancelButton}
       onClickRightButton={handleSaveButton}

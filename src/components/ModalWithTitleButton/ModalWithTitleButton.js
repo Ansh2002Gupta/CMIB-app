@@ -9,7 +9,7 @@ const ModalWithTitleButton = ({
   children,
   containerStyle,
   heading,
-  isTwoEnable,
+  enableBottomButton,
   leftLabelTxt,
   leftButtonLeftImage,
   leftButtonRightImage,
@@ -33,7 +33,7 @@ const ModalWithTitleButton = ({
       }}
     >
       {children}
-      {isTwoEnable && (
+      {enableBottomButton && (
         <TwoRowButton
           leftButtonLeftImage={leftButtonLeftImage}
           leftButtonRightImage={leftButtonRightImage}
@@ -51,6 +51,25 @@ const ModalWithTitleButton = ({
       )}
     </CustomModal>
   );
+};
+
+ModalWithTitleButton.propTypes = {
+  children: PropTypes.node,
+  containerStyle: PropTypes.object,
+  heading: PropTypes.string,
+  isTwoEnable: PropTypes.bool,
+  leftLabelTxt: PropTypes.string,
+  leftButtonLeftImage: PropTypes.node,
+  leftButtonRightImage: PropTypes.node,
+  leftButtonStyle: PropTypes.object,
+  leftTextStyle: PropTypes.object,
+  onClickLeftButton: PropTypes.func,
+  onClickRightButton: PropTypes.func,
+  rightButtonLeftImage: PropTypes.node,
+  rightButtonRightImage: PropTypes.node,
+  rightLabelTxt: PropTypes.string,
+  rightButtonStyle: PropTypes.object,
+  rightTextStyle: PropTypes.object,
 };
 
 export default ModalWithTitleButton;
