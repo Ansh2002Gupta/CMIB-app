@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import CustomModal from "../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
+import ModalWithTitleButton from "../../components/ModalWithTitleButton";
 import MultiRow from "../../core/layouts/MultiRow";
-import TwoRowButton from "../../components/TwoRowButton";
 import { ENTITY_OPTIONS } from "../../constants/constants";
 import styles from "./AddDesignation.style";
-
 
 const AddDesignation = ({ handleCancelButton }) => {
   const intl = useIntl();
@@ -17,9 +15,7 @@ const AddDesignation = ({ handleCancelButton }) => {
     setCountValue(newCount);
   };
 
-  const handleSaveButton = () => {
-    console.log("Save Button clicked !!!");
-  };
+  const handleSaveButton = () => {};
 
   const addDesignation = [
     {
@@ -35,7 +31,6 @@ const AddDesignation = ({ handleCancelButton }) => {
           customStyle={styles.negativePadding}
         />
       ),
-      style: styles.vacancyStyle,
     },
     {
       content: (
@@ -48,32 +43,21 @@ const AddDesignation = ({ handleCancelButton }) => {
           customStyle={styles.negativePadding}
         />
       ),
-      style: styles.vacancyStyle,
-    },
-    {
-      content: (
-        <TwoRowButton
-          leftButtonText={intl.formatMessage({ id: "label.cancel" })}
-          onLeftButtonClick={handleCancelButton}
-          leftTextStyle={styles.leftTextStyle}
-          rightButtonText={intl.formatMessage({ id: "label.save" })}
-          rightButtonStyle={styles.saveStyle}
-          rightTextStyle={styles.rightTextStyle}
-          onRightButtonClick={handleSaveButton}
-        />
-      ),
-      style: styles.vacancyStyle,
     },
   ];
 
   return (
-      <CustomModal
-        headerText={intl.formatMessage({
-          id: "label.add_designation",
-        })}
-      >
-        <MultiRow rows={addDesignation} style={styles.parentStyle} />
-      </CustomModal>
+    <ModalWithTitleButton
+      heading={intl.formatMessage({ id: "label.add_designation" })}
+      isTwoEnable
+      leftLabelTxt={intl.formatMessage({ id: "label.cancel" })}
+      onClickLeftButton={handleCancelButton}
+      onClickRightButton={handleSaveButton}
+      rightLabelTxt={intl.formatMessage({ id: "label.save" })}
+      rightButtonStyle={{ marginLeft: 8 }}
+    >
+      <MultiRow rows={addDesignation} style={styles.parentStyle} />
+    </ModalWithTitleButton>
   );
 };
 

@@ -14,13 +14,13 @@ const styles =StyleSheet.create( {
   leftTextStyle: {
     fontSize: 14,
     fontWeight: "600",
-    color: colors.green,
+    color: colors.black,
   },
   rightButtonStyle: {
     backgroundColor: colors.green,
   },
   rightTextStyle: {
-    color: colors.grey,
+    color: colors.white,
     fontSize: 14,
     fontWeight: "600",
   },

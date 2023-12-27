@@ -16,6 +16,7 @@ const CustomCell = ({
   textStyle,
   title,
 }) => {
+
   return (
     <CustomTouchableOpacity
       onPress={onPress}

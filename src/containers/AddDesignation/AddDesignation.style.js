@@ -11,11 +11,12 @@ const styles = {
     marginLeft: 16,
   },
   negativePadding: { 
-    paddingBottom: 0 
+    paddingBottom: 0 ,
+    marginBottom: 24,
   },
-  vacancyStyle: {
-    marginTop: 24,
-  },
+  // vacancyStyle: {
+  //   marginTop: 24,
+  // },
   leftTextStyle: {
     fontSize: 14,
     fontWeight: "600",
@@ -30,6 +31,9 @@ const styles = {
       ios: {
         marginBottom: 30, 
       },
+      default:{
+        marginTop: 24, 
+      }
     }),
   },
   webView: {

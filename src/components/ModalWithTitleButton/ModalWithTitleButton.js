@@ -26,10 +26,9 @@ const ModalWithTitleButton = ({
   return (
     <CustomModal
       headerText={heading}
-      style={{ ...styles.containerStyle, ...containerStyle }}
+      style={{ ...styles.containerStyle, ...styles.parentStyle, ...containerStyle  }}
     >
       {children}
-
       {isTwoEnable && (
         <TwoRowButton
           leftButtonLeftImage={leftButtonLeftImage}
