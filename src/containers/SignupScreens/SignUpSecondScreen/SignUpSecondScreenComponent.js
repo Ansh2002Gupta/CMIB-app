@@ -63,7 +63,7 @@ const SignUpSecondScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
     return requiredFields.every((field) => String(field).trim() !== "");
   };
 
-  const validateFields = () => {
+  const validateFields = (field) => {
     let isValid = true;
     let newErrors = {
       companyName: "",
@@ -85,73 +85,95 @@ const SignUpSecondScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
       code,
     } = formData;
 
-    if (
-      companyName.length < FIELD_MIN_LENGTH ||
-      companyName.length > FIELD_MAX_LENGTH
-    ) {
-      newErrors.companyName = intl.formatMessage({
-        id: "label.company_name_validation",
-      });
-      isValid = false;
+    if (!field || field === "companyName") {
+      if (
+        companyName.length < FIELD_MIN_LENGTH ||
+        companyName.length > FIELD_MAX_LENGTH
+      ) {
+        newErrors.companyName = intl.formatMessage({
+          id: "label.company_name_validation",
+        });
+        isValid = false;
+      }
     }
 
-    if (
-      !numRegex.test(String(code)) ||
-      code.length < CODE_MIN_LENGTH ||
-      code.length > CODE_MAX_LENGTH
-    ) {
-      newErrors.code = intl.formatMessage({
-        id: "label.country_code_validation",
-      });
-      isValid = false;
+    if (!field || field === "code") {
+      if (
+        !numRegex.test(String(code)) ||
+        code.length < CODE_MIN_LENGTH ||
+        code.length > CODE_MAX_LENGTH
+      ) {
+        newErrors.code = intl.formatMessage({
+          id: "label.country_code_validation",
+        });
+        isValid = false;
+      }
     }
 
-    if (
-      !numRegex.test(String(telephoneNo)) ||
-      telephoneNo.length > NUMBER_MAX_LENGTH ||
-      telephoneNo.length < NUMBER_MIN_LENGTH
-    ) {
-      newErrors.telephoneNo = intl.formatMessage({
-        id: "label.telephone_no_validation",
-      });
-      isValid = false;
+    if (!field || field === "telephoneNo") {
+      if (
+        !numRegex.test(String(telephoneNo)) ||
+        telephoneNo.length > NUMBER_MAX_LENGTH ||
+        telephoneNo.length < NUMBER_MIN_LENGTH
+      ) {
+        newErrors.telephoneNo = intl.formatMessage({
+          id: "label.telephone_no_validation",
+        });
+        isValid = false;
+      }
     }
 
-    if (validateEmail(emailId)) {
-      newErrors.emailId = intl.formatMessage({
-        id: "label.email_id_validation",
-      });
-      isValid = false;
+    if (!field || field === "emailId") {
+      if (validateEmail(emailId)) {
+        newErrors.emailId = intl.formatMessage({
+          id: "label.email_id_validation",
+        });
+        isValid = false;
+      }
     }
 
-    if (
-      !numRegex.test(String(registrationNo)) ||
-      registrationNo.length !== REGISTRATION_NO_LENGTH
-    ) {
-      newErrors.registrationNo = intl.formatMessage({
-        id: "label.registration_no_validation",
-      });
-      isValid = false;
+    if (!field || field === "registrationNo") {
+      if (
+        !numRegex.test(String(registrationNo)) ||
+        registrationNo.length !== REGISTRATION_NO_LENGTH
+      ) {
+        newErrors.registrationNo = intl.formatMessage({
+          id: "label.registration_no_validation",
+        });
+        isValid = false;
+      }
     }
 
-    if (
-      address.length < FIELD_MIN_LENGTH ||
-      address.length > ADDRESS_MAX_LENGTH
-    ) {
-      newErrors.address = intl.formatMessage({
-        id: "label.address_validation",
-      });
-      isValid = false;
+    if (!field || field === "address") {
+      if (
+        address.length < FIELD_MIN_LENGTH ||
+        address.length > ADDRESS_MAX_LENGTH
+      ) {
+        newErrors.address = intl.formatMessage({
+          id: "label.address_validation",
+        });
+        isValid = false;
+      }
     }
 
-    if (!numRegex.test(String(noOfPartners))) {
-      newErrors.noOfPartners = intl.formatMessage({
-        id: "label.no_of_partners_validation",
-      });
-      isValid = false;
+    if (!field || field === "noOfPartners") {
+      if (!numRegex.test(String(noOfPartners))) {
+        newErrors.noOfPartners = intl.formatMessage({
+          id: "label.no_of_partners_validation",
+        });
+        isValid = false;
+      }
     }
 
-    setErrors(newErrors);
+    if (field && newErrors[field] !== undefined) {
+      setErrors({
+        ...errors,
+        [field]: newErrors[field],
+      });
+    } else {
+      setErrors(newErrors);
+    }
+
     return isValid;
   };
 
@@ -206,12 +228,17 @@ const SignUpSecondScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
     });
   };
 
+  const handleBlur = (name) => {
+    validateFields(name);
+  };
+
   return (
     <SignUpSecondScreenUI
       intl={intl}
       onGoBack={onGoBack}
       onClickNext={onClickNext}
       formData={formData}
+      handleBlur={handleBlur}
       handleInputChange={handleInputChange}
       errors={errors}
       allFieldsFilled={allFieldsFilled}

@@ -37,20 +37,19 @@ const CustomTextInput = (props) => {
     isMultiline,
     isPassword,
     label,
-    maxCount=100,
-    minCount=0,
+    maxCount = 100,
+    minCount = 0,
     options,
     onChangeValue,
     placeholder,
-    step=1,
+    step = 1,
     value,
-    onBlur,
     inputKey = "value",
     ...remainingProps
   } = props;
 
   const { isWebView } = useIsWebView();
-  const isWebPlatform =  Platform.OS === "web";
+  const isWebPlatform = Platform.OS === "web";
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
 
@@ -65,9 +64,6 @@ const CustomTextInput = (props) => {
   const handleBlur = () => {
     customHandleBlur();
     setIsFocused(false);
-    if (onBlur) {
-      onBlur()
-    }
   };
 
   return (
@@ -159,6 +155,7 @@ const CustomTextInput = (props) => {
 };
 
 CustomTextInput.defaultProps = {
+  countValue: 0,
   customHandleBlur: () => {},
   customErrorStyle: {},
   customLabelStyle: {},
@@ -167,6 +164,7 @@ CustomTextInput.defaultProps = {
   dropdownStyle: {},
   errorMessage: "",
   eyeImage: false,
+  handleCountChange: () => {},
   isCounterInput: false,
   isDropdown: false,
   isError: false,
@@ -176,11 +174,17 @@ CustomTextInput.defaultProps = {
   inputKey: "value",
   isPassword: false,
   label: "",
+  maxCount: 100,
+  minCount: 0,
+  options: [],
+  onChangeValue: () => {},
   placeholder: "",
+  step: 1,
   value: "",
 };
 
 CustomTextInput.propTypes = {
+  countValue: PropTypes.number,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
   customErrorStyle: PropTypes.object,
@@ -189,6 +193,7 @@ CustomTextInput.propTypes = {
   dropdownStyle: PropTypes.object,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
+  handleCountChange: PropTypes.func,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
   isError: PropTypes.bool,
@@ -198,7 +203,12 @@ CustomTextInput.propTypes = {
   inputKey: PropTypes.string,
   isPassword: PropTypes.bool,
   label: PropTypes.string,
+  maxCount: PropTypes.number,
+  minCount: PropTypes.number,
+  onChangeValue: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
+  step: PropTypes.number,
   value: PropTypes.string,
 };
 

@@ -24,6 +24,7 @@ const SignUpThirdScreenUI = ({
   allFieldsFilled,
   contactDetails,
   errors,
+  handleBlur,
   handleDismissToast,
   handleInputChange,
   intl,
@@ -91,6 +92,7 @@ const SignUpThirdScreenUI = ({
                   placeholder={intl.formatMessage({
                     id: "label.enter_contact_person_name",
                   })}
+                  customHandleBlur={() => handleBlur("name", index)}
                   value={contactDetails[index].name}
                   errorMessage={errors[index].name}
                   isError={!!errors[index].name}
@@ -106,6 +108,7 @@ const SignUpThirdScreenUI = ({
               placeholder={intl.formatMessage({
                 id: "label.enter_contact_person_designation",
               })}
+              customHandleBlur={() => handleBlur("designation", index)}
               errorMessage={errors[index].designation}
               isError={!!errors[index].designation}
               value={contactDetails[index].designation}
@@ -123,6 +126,7 @@ const SignUpThirdScreenUI = ({
               })}
               value={contactDetails[index].mobileNo}
               maxLength={10}
+              customHandleBlur={() => handleBlur("mobileNo", index)}
               keyboardType="numeric"
               onChangeText={(val) => handleInputChange(val, "mobileNo", index)}
               isMobileNumber
@@ -137,6 +141,7 @@ const SignUpThirdScreenUI = ({
               placeholder={intl.formatMessage({
                 id: "label.enter_contact_person_email_id",
               })}
+              customHandleBlur={() => handleBlur("emailId", index)}
               errorMessage={errors[index].emailId}
               isError={!!errors[index].emailId}
               value={contactDetails[index].emailId}
@@ -234,6 +239,7 @@ SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
   errors: PropTypes.object,
+  handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
