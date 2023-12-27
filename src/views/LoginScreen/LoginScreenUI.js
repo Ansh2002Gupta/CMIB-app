@@ -157,6 +157,7 @@ const LoginScreenUI = (props) => {
         </View>
         {active ? (
           <ScrollView
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={{
               ...styles.companyView,
               ...(isWebView && styles.webView.backGroundColor),

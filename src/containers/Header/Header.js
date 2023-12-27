@@ -14,7 +14,7 @@ const Header = () => {
     <View
       style={
         hideRightIcons
-          ? [styles.mainView, styles.headerBorder]
+          ? [styles.mainView]
           : [styles.webMainView, styles.headerBorder]
       }
     >
