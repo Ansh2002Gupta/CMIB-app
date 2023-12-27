@@ -16,7 +16,6 @@ const CustomCell = ({
   textStyle,
   title,
 }) => {
-
   return (
     <CustomTouchableOpacity
       onPress={onPress}
@@ -39,7 +38,7 @@ CustomCell.defaultProps = {
   isSvg: false,
   style: {},
   textStyle: {},
-  onPress: ()=>{},
+  onPress: () => {},
 };
 
 CustomCell.propTypes = {
@@ -48,13 +47,13 @@ CustomCell.propTypes = {
   leftSource: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
-    PropTypes.func
+    PropTypes.func,
   ]),
   onPress: PropTypes.func.isRequired,
   rightSource: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
-    PropTypes.func
+    PropTypes.func,
   ]),
   title: PropTypes.string.isRequired,
 };
