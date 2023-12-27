@@ -5,21 +5,13 @@ const style = {
     backgroundColor: colors.white,
   },
   headerContainerStyle: {
-    margin: 16,
-  },
-  iconContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  iconBar: {
-    alignSelf: "center",
-    margin: 16,
+    paddingBottom: 16,
+    paddingLeft:16
   },
   formHeaderStyle: {
     color: colors.black,
     fontSize: 20,
     fontWeight: "600",
-    marginTop: 16,
   },
   borderStyle: {
     borderWidth: 1,
