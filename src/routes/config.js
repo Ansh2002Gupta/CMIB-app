@@ -13,7 +13,6 @@ import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import Home from "../pages/Home";
 import JobsView from "../views/JobsView/JobsView";
 import LoginScreen from "../views/LoginScreen/index";
-import ProfileView from "../views/Profile";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
@@ -23,13 +22,16 @@ import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
 
+const signUpHeader =
+  Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
+
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
-const SignUpWithPublicAccess = withPublicAccess(Platform.OS.toLowerCase() === "web" ? HeaderWithContentLayout : ContentLayout);
+const SignUpWithPublicAccess = withPublicAccess(signUpHeader);
 const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
-   {
+  {
     pagePath: navigations.ROOT,
     element: <DefaultRoute />,
     views: [
@@ -38,8 +40,8 @@ const config = [
         element: <LoginWithPublicAccess />,
       },
       {
-        viewPath:navigations.DASHBOARD,
-        element:<HomeWithPrivateAccess />,
+        viewPath: navigations.DASHBOARD,
+        element: <HomeWithPrivateAccess />,
       },
     ],
   },
@@ -143,7 +145,7 @@ const config = [
       },
     ],
   },
-  
+
   {
     pagePath: navigations.JOBS,
     element: <HomeWithPrivateAccess />,

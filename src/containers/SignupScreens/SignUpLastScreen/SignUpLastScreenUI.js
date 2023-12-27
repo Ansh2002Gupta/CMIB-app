@@ -31,6 +31,7 @@ const SignUpLastScreenUI = ({
   errors,
   errorWhileDeletion,
   errorWhileUpload,
+  handleBlur,
   handleDismissToast,
   handleInputChange,
   handleSuccessModal,
@@ -87,12 +88,12 @@ const SignUpLastScreenUI = ({
             })}
             errorMessage={errors.socialMediaLinks[key]}
             isError={!!errors.socialMediaLinks[key]}
+            customHandleBlur={() => handleBlur(key)}
             value={socialMediaLinks[key]}
             onChangeText={(value) => handleInputChange(value, key)}
           />
         ))}
         <View style={style.seperator} />
-
         <CommonText
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.company_details" })}
@@ -106,6 +107,7 @@ const SignUpLastScreenUI = ({
           })}
           errorMessage={errors.companyDetails}
           isError={!!errors.companyDetails}
+          customHandleBlur={() => handleBlur("companyDetails")}
           value={companyDetails}
           onChangeText={(value) => handleInputChange(value, "companyDetails")}
           isMandatory
@@ -119,6 +121,7 @@ const SignUpLastScreenUI = ({
           placeholder={intl.formatMessage({
             id: "label.enter_your_website",
           })}
+          customHandleBlur={() => handleBlur("website")}
           value={website}
           errorMessage={errors.website}
           isError={!!errors.website}
@@ -277,8 +280,8 @@ SignUpLastScreenUI.defaultProps = {
   errors: {},
   errorWhileDeletion: "",
   handleDismissToast: () => {},
-  onDeleteImage: () => {},
   onImageUpload: () => {},
+  signUpError: "",
   validationError: "",
 };
 
@@ -289,6 +292,7 @@ SignUpLastScreenUI.propTypes = {
   errors: PropTypes.object,
   errorWhileDeletion: PropTypes.string,
   errorWhileUpload: PropTypes.string,
+  handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   handleSuccessModal: PropTypes.func.isRequired,
@@ -301,6 +305,7 @@ SignUpLastScreenUI.propTypes = {
   onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
+  signUpError: PropTypes.string,
   socialMediaLinks: PropTypes.object.isRequired,
   validationError: PropTypes.string,
   website: PropTypes.string.isRequired,

@@ -18,6 +18,7 @@ const SignUpSecondScreenUI = ({
   formData,
   handleDismissToast,
   handleInputChange,
+  handleBlur,
   industryOptions,
   intl,
   onClickNext,
@@ -53,6 +54,7 @@ const SignUpSecondScreenUI = ({
           placeholder={intl.formatMessage({
             id: "label.company_name_placeholder",
           })}
+          customHandleBlur={() => handleBlur("companyName")}
           value={companyName}
           errorMessage={errors.companyName}
           isError={!!errors.companyName}
@@ -82,6 +84,7 @@ const SignUpSecondScreenUI = ({
               placeholder={intl.formatMessage({
                 id: "label.enter_firm_no",
               })}
+              customHandleBlur={() => handleBlur("registrationNo")}
               isMandatory
               keyboardType="numeric"
               maxLength={10}
@@ -100,6 +103,7 @@ const SignUpSecondScreenUI = ({
                 id: "label.enter_no",
               })}
               isMandatory
+              customHandleBlur={() => handleBlur("noOfPartners")}
               keyboardType="numeric"
               value={noOfPartners}
               errorMessage={errors.noOfPartners}
@@ -131,6 +135,7 @@ const SignUpSecondScreenUI = ({
           height={84}
           value={address}
           errorMessage={errors.address}
+          customHandleBlur={() => handleBlur("address")}
           isError={!!errors.address}
           onChangeText={(val) => handleInputChange(val, "address")}
           placeholder={intl.formatMessage({
@@ -158,6 +163,7 @@ const SignUpSecondScreenUI = ({
             id: "label.email_id_placeholder",
           })}
           value={emailId}
+          customHandleBlur={() => handleBlur("emailId")}
           errorMessage={errors.emailId}
           isError={!!errors.emailId}
           onChangeText={(val) => handleInputChange(val, "emailId")}
@@ -171,6 +177,7 @@ const SignUpSecondScreenUI = ({
               placeholder={intl.formatMessage({
                 id: "label.enter_code",
               })}
+              customHandleBlur={() => handleBlur("code")}
               keyboardType="numeric"
               value={code}
               maxLength={15}
@@ -188,6 +195,7 @@ const SignUpSecondScreenUI = ({
               placeholder={intl.formatMessage({
                 id: "label.enter_telephone_no",
               })}
+              customHandleBlur={() => handleBlur("telephoneNo")}
               errorMessage={errors.telephoneNo}
               isError={!!errors.telephoneNo}
               isMandatory
@@ -285,6 +293,7 @@ SignUpSecondScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   formData: PropTypes.object.isRequired,
+  handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,

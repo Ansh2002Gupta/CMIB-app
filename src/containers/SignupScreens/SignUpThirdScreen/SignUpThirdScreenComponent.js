@@ -68,6 +68,7 @@ const SignUpThirdScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
   const allFieldsFilled = () => {
     return contactDetails.every((detail) => {
       const requiredFields = [
+        detail.salutation,
         detail.designation,
         detail.emailId,
         detail.mobileNo,
@@ -77,49 +78,71 @@ const SignUpThirdScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
     });
   };
 
+  const validateField = (name, index) => {
+    const value = contactDetails[index][name];
+    let error = "";
+
+    switch (name) {
+      case "name":
+        if (
+          value.length < FIELD_MIN_LENGTH ||
+          value.length > FIELD_MAX_LENGTH
+        ) {
+          error = intl.formatMessage({
+            id: "label.contact_person_validation",
+          });
+        }
+        break;
+      case "designation":
+        if (
+          value.length < FIELD_MIN_LENGTH ||
+          value.length > ADDRESS_MAX_LENGTH
+        ) {
+          error = intl.formatMessage({
+            id: "label.designation_validation",
+          });
+        }
+        break;
+      case "mobileNo":
+        if (
+          !numRegex.test(String(value)) ||
+          value.length > NUMBER_MAX_LENGTH ||
+          value.length < NUMBER_MIN_LENGTH
+        ) {
+          error = intl.formatMessage({
+            id: "label.mobile_number_validation",
+          });
+        }
+        break;
+      case "emailId":
+        if (validateEmail(value)) {
+          error = intl.formatMessage({ id: "label.email_id_validation" });
+        }
+        break;
+      default:
+        error = "";
+    }
+
+    return error;
+  };
+
+  const handleBlur = (name, index) => {
+    const fieldError = validateField(name, index);
+    const updatedErrors = [...errors];
+    updatedErrors[index] = {
+      ...updatedErrors[index],
+      [name]: fieldError,
+    };
+    setErrors(updatedErrors);
+  };
+
   const validateFields = () => {
-    let newErrors = contactDetails.map((detail) => {
-      let error = {
-        designation: "",
-        emailId: "",
-        mobileNo: "",
-        name: "",
-      };
-
-      if (
-        detail.name.length < FIELD_MIN_LENGTH ||
-        detail.name.length > FIELD_MAX_LENGTH
-      ) {
-        error.name = intl.formatMessage({
-          id: "label.contact_person_validation",
-        });
-      }
-
-      if (
-        detail.designation.length < FIELD_MIN_LENGTH ||
-        detail.designation.length > ADDRESS_MAX_LENGTH
-      ) {
-        error.designation = intl.formatMessage({
-          id: "label.designation_validation",
-        });
-      }
-
-      if (
-        !numRegex.test(String(detail.mobileNo)) ||
-        detail.mobileNo.length > NUMBER_MAX_LENGTH ||
-        detail.mobileNo.length < NUMBER_MIN_LENGTH
-      ) {
-        error.mobileNo = intl.formatMessage({
-          id: "label.mobile_number_validation",
-        });
-      }
-
-      if (validateEmail(detail.emailId)) {
-        error.emailId = intl.formatMessage({ id: "label.email_id_validation" });
-      }
-
-      return error;
-    });
+    const newErrors = contactDetails.map((detail, index) => ({
+      name: validateField("name", index),
+      designation: validateField("designation", index),
+      mobileNo: validateField("mobileNo", index),
+      emailId: validateField("emailId", index),
+    }));
 
     const emailDuplicates = contactDetails
       .map((detail) => detail.emailId)
@@ -128,17 +151,13 @@ const SignUpThirdScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
           array.indexOf(email) !== index && email.trim() !== ""
       );
 
-    if (emailDuplicates?.length) {
-      newErrors = newErrors.map((error, index) => {
+    if (emailDuplicates.length) {
+      newErrors.forEach((error, index) => {
         if (emailDuplicates.includes(contactDetails[index].emailId)) {
-          return {
-            ...error,
-            emailId: intl.formatMessage({
-              id: "label.duplicate_email_validation",
-            }),
-          };
+          error.emailId = intl.formatMessage({
+            id: "label.duplicate_email_validation",
+          });
         }
-        return error;
       });
     }
 
@@ -200,6 +219,7 @@ const SignUpThirdScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
       contactDetails={contactDetails}
       errors={errors}
       onClickGoToLogin={onClickGoToLogin}
+      handleBlur={handleBlur}
       handleDismissToast={handleDismissToast}
       handleInputChange={handleInputChange}
       intl={intl}

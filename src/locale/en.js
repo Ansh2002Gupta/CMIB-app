@@ -17,7 +17,7 @@ const locale = {
   "label.forgot_password": "Forgot Password?",
   "label.password_field_error":
     "Please provide all the necessary fields for the password.",
-  "label.dont_have_account": "Don't have an account?",
+  "label.dont_have_account": "Don't have an account? ",
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
   "label.enter_email_to_reset_password":
