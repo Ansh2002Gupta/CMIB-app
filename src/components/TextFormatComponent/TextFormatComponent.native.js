@@ -4,18 +4,16 @@ import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import useIsWebView from "../../hooks/useIsWebView";
 import {
   actions,
   RichEditor,
   RichToolbar,
 } from "react-native-pell-rich-editor";
-import styles from './TextFormatComponent.style'
+import styles from "./TextFormatComponent.style";
 
 const TextFormatComponent = ({ customLabelStyle, isMandatory, label }) => {
   const richText = useRef(null);
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
 
   const handleHead = () => (
     <CommonText
@@ -28,11 +26,7 @@ const TextFormatComponent = ({ customLabelStyle, isMandatory, label }) => {
     <View style={styles.componentView}>
       <View style={styles.labelContainer}>
         <CommonText
-          customTextStyle={[
-            styles.label,
-            isWebView && styles.webLabel,
-            customLabelStyle,
-          ]}
+          customTextStyle={[styles.label, customLabelStyle]}
           title={label}
         />
         {isMandatory && (
@@ -62,9 +56,7 @@ const TextFormatComponent = ({ customLabelStyle, isMandatory, label }) => {
           <ScrollView>
             <RichEditor
               ref={richText}
-              onChange={(descriptionText) => {
-                console.log("descriptionText:", descriptionText);
-              }}
+              onChange={() => {}}
               placeholder={intl.formatMessage({ id: "label.description" })}
             />
           </ScrollView>

@@ -20,8 +20,8 @@ const RoundOneComponent = () => {
   }));
 
   const onPressCard = (container) => {
-    setSelectedContainer(container.id);
-    switch (container.id) {
+    setSelectedContainer(container);
+    switch (container) {
       case 1:
         navigate(navigations.ROUND_ONE_APPLICATION_FORM);
         break;

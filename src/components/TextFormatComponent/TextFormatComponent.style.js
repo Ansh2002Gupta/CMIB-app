@@ -7,13 +7,9 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flexDirection: "row",
-    gap: 4,
   },
   label: {
     color: colors.darkGrey,
-  },
-  webLabel: {
-    color: colors.black,
   },
   starStyle: {
     color: colors.errorRed,
