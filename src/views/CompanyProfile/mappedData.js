@@ -1,10 +1,12 @@
 export const mapApiDataToUI = (apiData) => {
+  console.log("API", apiData);
   const {
     name,
     entity,
     frn_number,
     number_of_partner,
-    industry_type,
+    credit_amount,
+    industry,
     std_country_code,
     telephone_number,
     address,
@@ -32,7 +34,7 @@ export const mapApiDataToUI = (apiData) => {
         value: number_of_partner,
         isMinor: true,
       },
-      { title: "label.current_industry", value: industry_type },
+      { title: "label.current_industry", value: industry?.name },
       { title: "label.address_for_correspondence", value: address },
       { title: "label.email_id", value: email },
       { title: "label.isd_std_code", value: std_country_code, isMinor: true },
@@ -71,6 +73,7 @@ export const mapApiDataToUI = (apiData) => {
     ],
     sourceOfInfo: source_of_information,
     companyLogo: company_logo,
+    balanceCredit: credit_amount,
   };
 };
 

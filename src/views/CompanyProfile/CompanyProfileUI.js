@@ -12,9 +12,9 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import UploadImage from "../../components/UploadImage/UploadImage";
+import { sourceOfInfo, mapApiDataToUI } from "./mappedData";
 import images from "../../images";
 import style from "./CompanyProfile.style";
-import { sourceOfInfo, mapApiDataToUI } from "./mappedData";
 
 const CompanyProfileUI = (props) => {
   const { intl, isLoading, onGoBack, profileResult } = props;
@@ -75,11 +75,8 @@ const CompanyProfileUI = (props) => {
               <DetailComponent
                 headerText={intl.formatMessage({ id: "label.company_logo" })}
               />
-              {/* TODO: Dummy Image to be replaced by api response */}
               <UploadImage
-                imageUrl={
-                  "https://codeskulptor-demos.commondatastorage.googleapis.com/pang/FDqGDmc.png"
-                }
+                imageUrl={mappedData.companyLogo}
                 imageName={"CompanyLogo.png"}
                 intl={intl}
               />
@@ -89,8 +86,9 @@ const CompanyProfileUI = (props) => {
                 <Text style={style.headingText}>
                   {intl.formatMessage({ id: "label.balance_credit" })}:{" "}
                 </Text>
-                {/* TODO: Dummy text to be replaced by api response */}
-                <Text style={style.valueStyle}>2345 INR</Text>
+                <Text style={style.valueStyle}>{`${
+                  mappedData.balanceCredit || "00"
+                } INR`}</Text>
               </View>
             </CardComponent>
           </View>
