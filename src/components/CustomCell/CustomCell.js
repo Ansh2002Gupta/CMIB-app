@@ -46,13 +46,11 @@ CustomCell.propTypes = {
   leftSource: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
-    PropTypes.func,
   ]),
   onPress: PropTypes.func.isRequired,
   rightSource: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
-    PropTypes.func,
   ]),
   title: PropTypes.string.isRequired,
 };
