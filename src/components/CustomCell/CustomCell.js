@@ -26,7 +26,7 @@ const CustomCell = ({
         <CustomImage Icon={leftSource} source={leftSource} isSvg={isSvg} />
       )}
       <CommonText customTextStyle={textStyle} title={title} />
-      {!!leftSource && (
+      {!!rightSource && (
         <CustomImage Icon={rightSource} source={rightSource} isSvg={isSvg} />
       )}
     </CustomTouchableOpacity>
