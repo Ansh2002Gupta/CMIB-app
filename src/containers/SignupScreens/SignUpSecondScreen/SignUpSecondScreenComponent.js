@@ -27,8 +27,8 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const {
     handleSignUpValidation,
     isLoading,
-    validationError,
     setValidationError,
+    validationError,
   } = useValidateSignUp();
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
   const { getStates, stateResult } = useGetStates();
