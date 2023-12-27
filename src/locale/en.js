@@ -186,7 +186,8 @@ const locale = {
   "label.braces": ")",
   "label.left_brace": "left)",
   "label.times": "times!",
-  "label.description":"Description",
+  "label.description": "Description",
+  "label.heading": "H1",
 };
 
 export default locale;

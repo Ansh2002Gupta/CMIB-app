@@ -43,6 +43,10 @@ const style = {
     backgroundColor: colors.black,
     color: colors.white,
   },
+  headingStyle: {
+    fontSize: 18,
+    color: colors.gray,
+  },
 };
 
 export default style;

@@ -1,10 +1,7 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import {
-  ScrollView,
-  View,
-} from "@unthinkable/react-core-components";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -19,6 +16,13 @@ const TextFormatComponent = ({ isMandatory, customLabelStyle, label }) => {
   const richText = useRef(null);
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  const handleHead = () => (
+    <CommonText
+      title={intl.formatMessage({ id: "label.heading" })}
+      customTextStyle={styles.headingStyle}
+    />
+  );
 
   return (
     <View style={styles.componentView}>
@@ -39,9 +43,6 @@ const TextFormatComponent = ({ isMandatory, customLabelStyle, label }) => {
         )}
       </View>
       <View style={styles.mainView}>
-        {/* <TouchableOpacity style={styles.formatOptionStyle}>
-          <Text style={styles.activeFormatOptionTextStyle}>Format Options</Text>
-        </TouchableOpacity> */}
         <View>
           <RichToolbar
             editor={richText}
@@ -56,7 +57,7 @@ const TextFormatComponent = ({ isMandatory, customLabelStyle, label }) => {
               actions.undo,
               actions.redo,
             ]}
-            style={styles.toolBarStyle}
+            iconMap={{ [actions.heading1]: handleHead }}
           />
           <ScrollView>
             <RichEditor
