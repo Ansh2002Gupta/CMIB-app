@@ -22,9 +22,10 @@ const SignUpScreenComponent = () => {
       return prevTab;
     });
   };
+
   const onClickGoToLogin = () => {
     signUpDispatch(resetSignUpDetails());
-    navigate("/");
+    navigate("/login");
   };
 
   return (
