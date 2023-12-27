@@ -12,8 +12,7 @@ const style = {
     cursor: "pointer"
   },
   containerStyle: {
-    flexDirection: "row",
-    bottom: 16
+    flexDirection: "row"
   },
   disableButtonStyle: {
     height: 56,

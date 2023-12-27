@@ -77,6 +77,13 @@ const iconNotification = "images/iconNotification/iconNotification.png";
 const iconTick = "images/iconTick/iconTick.png";
 const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
 const iconWarning = "images/svg/iconWarning.svg";
+const iconFilter = "images/svg/iconFilter.svg";
+const iconSearch = "images/svg/iconSearch.svg";
+const iconMore = "images/svg/iconMore.svg";
+const iconArrowDown = "images/svg/iconArrowDown.svg";
+const iconArrowUp = "images/svg/iconArrowUp.svg";
+const iconAdd = "images/svg/iconAdd.svg";
+const iconStepperDone = "images/svg/iconStepperDone.svg";
 
 const images = {
   avatar,
@@ -148,6 +155,13 @@ const images = {
   iconTick,
   iconSquareEdit,
   iconWarning,
+  iconFilter,
+  iconSearch,
+  iconMore,
+  iconArrowDown,
+  iconArrowUp,
+  iconAdd,
+  iconStepperDone,
 };
 
 export default images;

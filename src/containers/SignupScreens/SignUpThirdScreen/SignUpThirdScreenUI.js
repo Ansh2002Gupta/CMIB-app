@@ -35,6 +35,8 @@ const SignUpThirdScreenUI = ({
   const isWeb = Platform.OS === "web";
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const showContentHeader =
+    currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 
   const getHeaderText = (module, intl) => {
     switch (module) {
@@ -160,6 +162,7 @@ const SignUpThirdScreenUI = ({
           hasIconRight
           isNextDisabled={!allFieldsFilled()}
           buttonTwoText={intl.formatMessage({ id: "label.next" })}
+          hasIconLeft
         />
         {isWebView && (
           <LabelWithLinkText
@@ -184,9 +187,13 @@ const SignUpThirdScreenUI = ({
         <View>
           <HeaderTextWithLabelAndDescription
             label={intl.formatMessage({ id: "label.step_three" })}
-            headerText={intl.formatMessage({
-              id: "label.contact_person_details",
-            })}
+            {...(showContentHeader
+              ? {
+                  headerText: intl.formatMessage({
+                    id: "label.contact_person_details",
+                  }),
+                }
+              : {})}
           />
         </View>
       )}

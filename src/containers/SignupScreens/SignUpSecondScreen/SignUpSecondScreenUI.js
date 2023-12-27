@@ -4,7 +4,6 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CustomTextInput from "../../../components/CustomTextInput";
-import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
@@ -42,6 +41,9 @@ const SignUpSecondScreenUI = ({
   const isWeb = Platform.OS === "web";
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const showContentHeader =
+    currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
+
   const renderFormContent = () => {
     return (
       <View style={style.formContainer}>
@@ -55,8 +57,8 @@ const SignUpSecondScreenUI = ({
           errorMessage={errors.companyName}
           isError={!!errors.companyName}
           onChangeText={(val) => {
-            console.log('val val val', val);
-            handleInputChange(val, "companyName")}}
+            handleInputChange(val, "companyName");
+          }}
         />
         <CustomTextInput
           label={intl.formatMessage({ id: "label.entity" })}
@@ -209,7 +211,8 @@ const SignUpSecondScreenUI = ({
         hasIconRight
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
-        customSaveButtonContainer={isWebView && style.customSaveButtonContainer}
+        customContainerStyle={isWebView && style.customSaveButtonContainer}
+        hasIconLeft
       />
       {isWebView && (
         <LabelWithLinkText
@@ -225,14 +228,20 @@ const SignUpSecondScreenUI = ({
     <View
       style={
         isWebView
-          ? getResponsiveStyles({str: "signupContainer", currentBreakpoint})
+          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
           : style.innerContainer
       }
     >
       {isWebView && (
         <HeaderTextWithLabelAndDescription
           label={intl.formatMessage({ id: "label.step_two" })}
-          headerText={intl.formatMessage({ id: "label.basic_details" })}
+          {...(showContentHeader
+            ? {
+                headerText: intl.formatMessage({
+                  id: "label.basic_details",
+                }),
+              }
+            : {})}
         />
       )}
       {!isWeb ? (
@@ -243,7 +252,6 @@ const SignUpSecondScreenUI = ({
           {renderFormContent()}
         </ScrollView>
       ) : (
-        <FormWrapper onSubmit={onClickNext}>
         <View
           style={
             !isWebView
@@ -254,7 +262,6 @@ const SignUpSecondScreenUI = ({
           {renderFormContent()}
           {renderFooter()}
         </View>
-        </FormWrapper>
       )}
       {!isWeb && renderFooter()}
       {!!validationError && (

@@ -19,43 +19,30 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
 
   let tabConfig = [
     {
-      id: "label.welcome_to_sign_up",
-      imageKey: "iconWalkthroughSignUpOne",
       component: SignUpWelcomeScreen,
     },
     {
-      id: "label.basic_details",
-      imageKey: "iconWalkthroughSignUpTwo",
       component: SignUpSecondScreen,
     },
     {
-      id: "label.contact_personal_details",
-      imageKey: "iconWalkthroughSignUpThree",
       component: SignUpThirdScreen,
     },
     {
-      id: "label.other_details",
-      imageKey: "iconWalkthroughSignUpLast",
       component: SignUpLastScreen,
     },
   ];
 
   const activeTabIndex = Math.min(activeTab, tabConfig.length - 1);
   const {
-    id,
-    imageKey,
     component: ActiveTabComponent,
   } = tabConfig[activeTabIndex];
-  const headerText = intl.formatMessage({ id });
-  const image = images[imageKey];
 
   return (
     <View style={!displayRowHeader ? style.container : style.webContainer}>
       <SignUpHeader
         intl={intl}
-        headerText={headerText}
         onClickGoToLogin={onClickGoToLogin}
-        image={image}
+        activeTab={activeTab}
       />
       {isWebView ? (
         <View style={displayRowHeader && style.webSubContainer}>

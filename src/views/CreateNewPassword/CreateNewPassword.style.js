@@ -1,5 +1,5 @@
-import colors from "../../assets/colors";
 import { Platform } from "@unthinkable/react-core-components";
+import colors from "../../assets/colors";
 
 const style = {
   mainView: {
@@ -43,7 +43,7 @@ const style = {
       Platform.OS.toLowerCase() === "web" ? "General sans" : "GeneralSans-Bold",
     fontWeight: "600",
     color: colors.darkBlue,
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   bullet: {
     width: 6,
@@ -142,7 +142,7 @@ const style = {
     submitText: {
       fontFamily: "General sans",
       fontWeight: "500",
-      cursor: "pointer",
+      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
     },
     submitTextContainer: {
       marginBottom: 8,
@@ -150,7 +150,7 @@ const style = {
     backBtnText: {
       fontFamily: "General sans",
       fontWeight: "600",
-      cursor: "pointer",
+      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
     },
     companyView: {
       backgroundColor: colors.white,
@@ -165,6 +165,9 @@ const style = {
     headerText: {
       fontSize: 28,
     }
+  },
+  ErrorStyle: {
+    paddingTop: 4,
   },
 };
 export default style;

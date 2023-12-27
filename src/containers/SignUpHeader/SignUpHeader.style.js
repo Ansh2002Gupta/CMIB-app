@@ -13,7 +13,6 @@ export const styles = {
     fontSize: 14,
     fontWeight: "600",
     lineHeight: 20,
-    fontFamily: "GeneralSans-Semibold",
   },
   iconBar: {
     alignSelf: "center",
@@ -43,11 +42,16 @@ export const styles = {
     flexDirection: "row-reverse",
   },
   lgStepperContainer: {
-    flex: 2.5,
+    flex: 3,
+    alignItems: "flex-end"
   },
   stepperContainer: {
     flex: 3.5,
+    alignItems: "flex-end"
   },
+  stepperParentContainer: {
+    marginTop: 24
+  }
 };
 
 export const getResponsiveStyles = ({str, currentBreakpoint}) => {

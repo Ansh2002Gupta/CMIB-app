@@ -188,6 +188,7 @@ const locale = {
   "label.basic_details": "Basic Details",
   "label.contact_person_details": "Contact Person Details",
   "label.other_details": "Other Details",
+  "label.old_password": "Old Password",
   "label.company_logo": "Company Logo",
   "label.contact_person_info": "Contact Person Information",
   "label.balance_credit": "Balance Credit",
@@ -198,12 +199,19 @@ const locale = {
   "label.braces": ")",
   "label.left_brace": "left)",
   "label.times": "times!",
+  "label.password-not-match": "The password and confirm password do not match.",
   "label.update": "Update",
   "label.add": "Add",
-  "label.error_password": "Password doesn't match",
   "label.edit": "Edit",
   "label.duplicate_email_validation": "Email addresses must be unique.",
   "label.logout_message": "Are you sure you want to logout of the portal?",
+  "label.add_designation": "Add Designation",
+  "label.designation": "Designation",
+  "label.designation_placeholder": "Select Designation",
+  "label.no_of_vacancy": "No. of. Vacancy",
+  "label.error_password": "Password doesn't match",
+  "label.old_password_placeholder": "Enter your old password",
+  
 };
 
 export default locale;

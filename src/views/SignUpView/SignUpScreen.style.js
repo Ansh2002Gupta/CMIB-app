@@ -15,12 +15,12 @@ export const style = {
     width: "100%",
   },
   webSubContainer: {
-    flex: 7,
+    flex: 5.5,
     alignItems: "flex-start",
     height: "100%",
   },
   width900pxOrLessContainer: {
-    width: "75%",
+    width: "65%",
   },
   smScreenContainer: {
     alignSelf: "center",

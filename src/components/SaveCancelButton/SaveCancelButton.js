@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
+  ActivityIndicator,
   Image,
   View,
   TouchableOpacity,
@@ -8,26 +9,27 @@ import {
 
 import CommonText from "../CommonText";
 import images from "../../images";
+import colors from "../../assets/colors";
 import styles from "./SaveCancelButton.style";
 
-const SaveCancelButton = (props) => {
-  const {
-    buttonOneText,
-    buttonTwoText,
-    onPressButtonOne,
-    onPressButtonTwo,
-    hasIconRight,
-    isNextDisabled,
-    customSaveButtonContainer,
-  } = props;
-
+const SaveCancelButton = ({
+  buttonOneText,
+  buttonTwoText,
+  customContainerStyle,
+  displayLoader,
+  hasIconRight,
+  hasIconLeft,
+  isNextDisabled,
+  onPressButtonOne,
+  onPressButtonTwo,
+}) => {
   return (
-    <View style={[styles.containerStyle, customSaveButtonContainer]}>
+    <View style={[styles.containerStyle, customContainerStyle]}>
       <TouchableOpacity
         onPress={onPressButtonOne}
         style={styles.disableButtonStyle}
       >
-        <Image source={images.iconArrowLeft} />
+        {!!hasIconLeft && <Image source={images.iconArrowLeft} />}
         <CommonText
           customTextStyle={styles.disableTextStyle}
           title={buttonOneText}
@@ -42,29 +44,37 @@ const SaveCancelButton = (props) => {
         ]}
         disabled={isNextDisabled}
       >
-        <CommonText
-          customTextStyle={styles.titleStyle}
-          title={buttonTwoText}
-        />
-        {hasIconRight && <Image source={images.iconArrowRightWhite} />}
+        {displayLoader ? (
+          <ActivityIndicator color={colors.white} />
+        ) : (
+          <CommonText
+            customTextStyle={styles.titleStyle}
+            title={buttonTwoText}
+          />
+        )}
+        {!!hasIconRight && <Image source={images.iconArrowRightWhite} />}
       </TouchableOpacity>
     </View>
   );
 };
 
 SaveCancelButton.defaultProps = {
-  customSaveButtonContainer: {},
+  customContainerStyle: {},
+  displayLoader: false,
   hasIconRight: false,
+  hasIconLeft: false,
   isNextDisabled: false,
-  onPressButtonOne: ()=>{},
-  onPressButtonTwo: ()=>{},
+  onPressButtonOne: () => {},
+  onPressButtonTwo: () => {},
 };
 
 SaveCancelButton.propTypes = {
   buttonOneText: PropTypes.string.isRequired,
   buttonTwoText: PropTypes.string.isRequired,
-  customSaveButtonContainer: PropTypes.object,
+  customContainerStyle: PropTypes.object,
+  displayLoader: PropTypes.bool,
   hasIconRight: PropTypes.bool,
+  hasIconLeft: PropTypes.bool,
   isNextDisabled: PropTypes.bool,
   onPressButtonOne: PropTypes.func,
   onPressButtonTwo: PropTypes.func,

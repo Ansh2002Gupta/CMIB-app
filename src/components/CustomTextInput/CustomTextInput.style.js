@@ -107,7 +107,7 @@ const style = {
   eyeIconContainer: {
     justifyContent: "center",
     alignItems: "center",
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
   },
   counterMainView: {
     flexDirection: "row",

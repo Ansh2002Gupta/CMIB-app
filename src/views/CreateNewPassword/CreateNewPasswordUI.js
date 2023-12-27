@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { ScrollView,TouchableOpacity,View } from "@unthinkable/react-core-components";
+import {
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 
-import CreateNewPasswordValidation from "./CreateNewPasswordValidation";
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
+import NewPasswordValidation from "../../components/NewPasswordValidation";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./CreateNewPassword.style";
@@ -17,7 +21,7 @@ function CreateNewPasswordUI(props) {
     confirmNewPassword,
     errorMessage,
     handleSubmit,
-    handleDismissToast,
+    handleConfirmPasswordBlur,
     intl,
     isLoading,
     newPassword,
@@ -26,16 +30,18 @@ function CreateNewPasswordUI(props) {
     onChangeConfirmPasswordInput,
     successLogin,
     successMsg,
+    setErrorWhileResetPassword,
     validationError,
   } = props;
 
   const [isAnyPasswordFieldLeft, setIsAnyPasswordFieldLeft] = useState(false);
   const [validations, setValidations] = useState({
     length: false,
-    numeric: false,
-    uppercase: false,
     lowercase: false,
+    numeric: false,
+    match: false,
     specialChar: false,
+    uppercase: false,
   });
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -50,11 +56,16 @@ function CreateNewPasswordUI(props) {
       !validations.numeric ||
       !validations.uppercase ||
       !validations.lowercase ||
-      !validations.specialChar 
+      !validations.specialChar
     ) {
       setIsAnyPasswordFieldLeft(true);
       return;
     }
+    setIsAnyPasswordFieldLeft(false);
+  };
+
+  const handleDismissToast = () => {
+    setErrorWhileResetPassword("");
     setIsAnyPasswordFieldLeft(false);
   };
 
@@ -141,8 +152,11 @@ function CreateNewPasswordUI(props) {
                 setIsAnyPasswordFieldLeft(false);
                 onChangePasswordInput(val);
               }}
-              eyeImage={true}
-              isPassword={true}
+              customHandleBlur={() => {
+                handleConfirmPasswordBlur();
+              }}
+              eyeImage
+              isPassword
               customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
@@ -157,17 +171,21 @@ function CreateNewPasswordUI(props) {
               onChangeText={(val) => {
                 onChangeConfirmPasswordInput(val);
               }}
+              customHandleBlur={() => {
+                handleConfirmPasswordBlur();
+              }}
               isMandatory
-              eyeImage={true}
-              isPassword={true}
+              eyeImage
+              isPassword
               customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
               errorMessage={errorMessage}
               isError={!!errorMessage}
+              customErrorStyle={styles.ErrorStyle}
             />
-            <CreateNewPasswordValidation
+            <NewPasswordValidation
               {...{
                 newPassword,
                 confirmNewPassword,
@@ -179,22 +197,13 @@ function CreateNewPasswordUI(props) {
                 isWebView ? styles.webView.requirementsPoints : {}
               }
             />
-            {isAnyPasswordFieldLeft && (
-              <View style={styles.passwordFieldsErrorContainer}>
-                <CommonText
-                  customTextStyle={styles.passwordFieldsErrorText}
-                  title={intl.formatMessage({ id: "label.password_field_error" })}
-                />
-              </View>
-            )}
           </View>
           <View style={styles.submitView}>
             <ButtonComponent
               title={intl.formatMessage({ id: "label.submit" })}
               onPress={() => {
                 areAllFieldFilledInPassword();
-                if(isAnyPasswordFieldLeft)
-                handleSubmit();
+                if (!isAnyPasswordFieldLeft) handleSubmit();
               }}
               customTitleStyle={styles.webView.submitText}
               customButtonContainer={styles.webView.submitTextContainer}
@@ -210,12 +219,6 @@ function CreateNewPasswordUI(props) {
               />
             </TouchableOpacity>
           </View>
-          {!!validationError && (
-            <ToastComponent
-              toastMessage={validationError}
-              onDismiss={handleDismissToast}
-            />
-          )}
           {successLogin && (
             <CustomModal
               headerText={successMsg}
@@ -227,6 +230,17 @@ function CreateNewPasswordUI(props) {
             />
           )}
         </View>
+        {(!!validationError || isAnyPasswordFieldLeft) && (
+          <ToastComponent
+            toastMessage={
+              validationError ||
+              intl.formatMessage({
+                id: "label.password_field_error",
+              })
+            }
+            onDismiss={handleDismissToast}
+          />
+        )}
       </WebViewLoginSignUpWrapper>
     </ScrollView>
   );

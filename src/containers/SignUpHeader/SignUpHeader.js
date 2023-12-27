@@ -1,18 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
-  Image,
   Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import Stepper from "../../components/Stepper";
 import { getResponsiveStyles, styles } from "./SignUpHeader.style";
+import { SIGN_UP_STEPPER_OPTION } from "../../constants/constants";
 
 const SignUpHeader = (props) => {
-  const { intl, onClickGoToLogin, headerText, image } = props;
+  const { intl, onClickGoToLogin, activeTab } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
   const isWeb = Platform.OS === "web";
@@ -38,19 +39,23 @@ const SignUpHeader = (props) => {
           getResponsiveStyles({ str: "steperContainer", currentBreakpoint })
         }
       >
-        <Image
-          source={image}
-          style={
-            isWebView ? [styles.iconBar, styles.webIconBar] : styles.iconBar
-          }
+        <Stepper
+          {...{
+            activeStep: activeTab,
+            steps: SIGN_UP_STEPPER_OPTION.map((step) =>
+              intl.formatMessage({ id: step.title })
+            ),
+            orientation: isWebView ? "vertical" : "horizontal",
+            showActiveLabelOnly: isWebView ? false : true,
+            customStyle: {
+              stepperHeroLabelText: { ...styles.formHeaderStyle },
+              containerStyle:
+                currentBreakpoint === "sm"
+                  ? { ...styles.stepperParentContainer }
+                  : {},
+            },
+          }}
         />
-        {/* TODO: Replace the stepper */}
-        {!isWebView && currentBreakpoint !== "sm" && (
-          <CommonText
-            customTextStyle={styles.formHeaderStyle}
-            title={headerText}
-          />
-        )}
       </View>
       {!isWebView && <View style={styles.borderStyle} />}
     </>
@@ -60,8 +65,6 @@ const SignUpHeader = (props) => {
 SignUpHeader.propTypes = {
   intl: PropTypes.object.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
-  headerText: PropTypes.string.isRequired,
-  image: PropTypes.node,
 };
 
 export default SignUpHeader;

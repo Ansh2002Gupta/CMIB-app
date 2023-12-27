@@ -7,6 +7,8 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
+import CustomLabelView from "../CustomLabelView";
+import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import Dropdown from "../Dropdown/index";
 import TextInput from "../TextInput";
@@ -17,12 +19,16 @@ import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
+    countValue,
     customLabelStyle,
     customStyle,
+    customErrorStyle,
+    customHandleBlur,
     customTextInputContainer,
     dropdownStyle,
     errorMessage,
     eyeImage,
+    handleCountChange,
     isCounterInput,
     isDropdown,
     isError,
@@ -31,20 +37,22 @@ const CustomTextInput = (props) => {
     isMultiline,
     isPassword,
     label,
+    maxCount=100,
+    minCount=0,
     options,
     onChangeValue,
     placeholder,
+    step=1,
     value,
     onBlur,
     inputKey = "value",
     ...remainingProps
   } = props;
 
-  const [count, setCount] = useState(0);
-  const [isFocused, setIsFocused] = useState(false);
-  const [isTextVisible, setIsTextVisible] = useState(false);
   const { isWebView } = useIsWebView();
   const isWebPlatform =  Platform.OS === "web";
+  const [isFocused, setIsFocused] = useState(false);
+  const [isTextVisible, setIsTextVisible] = useState(false);
 
   const toggleTextVisibility = () => {
     setIsTextVisible(!isTextVisible);
@@ -55,42 +63,16 @@ const CustomTextInput = (props) => {
   };
 
   const handleBlur = () => {
+    customHandleBlur();
     setIsFocused(false);
     if (onBlur) {
       onBlur()
     }
   };
 
-  const incrementCount = () => {
-    setCount((prev) => prev + 1);
-  };
-
-  const decrementCount = () => {
-    if (count > 0) {
-      setCount((prev) => prev - 1);
-    }
-  };
-
   return (
     <View style={[style.container, customStyle]}>
-      {!!label && (
-        <View style={style.labelContainer}>
-          <CommonText
-            customTextStyle={[
-              style.label,
-              isWebView && style.webLabel,
-              customLabelStyle,
-            ]}
-            title={label}
-          />
-          {isMandatory && (
-            <CommonText
-              customTextStyle={[style.label, style.starStyle]}
-              title={"*"}
-            />
-          )}
-        </View>
-      )}
+      {!!label && <CustomLabelView label={label} isMandatory />}
       {isDropdown ? (
         <Dropdown
           style={[
@@ -116,19 +98,13 @@ const CustomTextInput = (props) => {
           {...remainingProps}
         />
       ) : isCounterInput ? (
-        <View style={style.counterMainView}>
-          <View style={style.counterView}>
-            <CommonText customTextStyle={style.counterText} title={count} />
-          </View>
-          <View style={style.buttonsView}>
-            <TouchableOpacity onPress={incrementCount} style={style.button}>
-              <Image source={images.iconUpArrow} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={decrementCount} style={style.button}>
-              <Image source={images.iconDownArrow} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <CounterInput
+          initialCount={countValue}
+          minCount={minCount}
+          maxCount={maxCount}
+          onCountChange={handleCountChange}
+          step={step}
+        />
       ) : (
         <View
           style={[
@@ -173,13 +149,18 @@ const CustomTextInput = (props) => {
         </View>
       )}
       {isError && (
-        <CommonText customTextStyle={style.errorMsg} title={errorMessage} />
+        <CommonText
+          customTextStyle={[style.errorMsg, customErrorStyle]}
+          title={errorMessage}
+        />
       )}
     </View>
   );
 };
 
 CustomTextInput.defaultProps = {
+  customHandleBlur: () => {},
+  customErrorStyle: {},
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
@@ -200,7 +181,9 @@ CustomTextInput.defaultProps = {
 };
 
 CustomTextInput.propTypes = {
+  customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
+  customErrorStyle: PropTypes.object,
   customStyle: PropTypes.object,
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,

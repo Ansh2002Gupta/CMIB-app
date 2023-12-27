@@ -10,7 +10,7 @@ import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 import images from "../../images";
 import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
-import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
+import MultiColumn from "../../core/layouts/MultiColumn";
 import { navigations } from "../../constants/routeNames";
 import { TwoRow } from "../../core/layouts";
 import ThemeSwitcher from "../../components/ThemeSwitcher";

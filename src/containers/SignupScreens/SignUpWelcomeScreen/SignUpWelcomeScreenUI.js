@@ -25,6 +25,8 @@ const SignUpWelcomeScreenUI = ({
 }) => {
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const showContentHeader =
+    currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 
   const handleToggle = (id) => {
     const updatedItems = options.map((item) => {
@@ -58,14 +60,18 @@ const SignUpWelcomeScreenUI = ({
     <View
       style={
         isWebView
-          ? getResponsiveStyles({str: "signupContainer", currentBreakpoint})
+          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
           : style.innerContainer
       }
     >
       {isWebView && (
         <HeaderTextWithLabelAndDescription
           label={intl.formatMessage({ id: "label.step_one" })}
-          headerText={intl.formatMessage({ id: "label.welcome_to_cmib" })}
+          {...(showContentHeader
+            ? {
+                headerText: intl.formatMessage({ id: "label.welcome_to_cmib" }),
+              }
+            : {})}
         />
       )}
       <View style={style.signUpSubContainer}>

@@ -1,4 +1,4 @@
-import React , {useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { TouchableOpacity, View } from "@unthinkable/react-core-components";
@@ -12,7 +12,6 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView"
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ForgotPassword.style";
-
 
 const ForgotPasswordUI = (props) => {
   const {
@@ -156,7 +155,6 @@ const ForgotPasswordUI = (props) => {
                 onChangeInput(val);
               }}
               errorMessage={errorMessage}
-              customAsteriskStyle={styles.customAsteriskStyle}
               isMandatory
               isError={!!errorMessage}
             />
@@ -175,9 +173,7 @@ const ForgotPasswordUI = (props) => {
           />
           <TouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
-              customTextStyle={
-                isWebView ? [styles.backToLoginText] : styles.backToLoginText
-              }
+              customTextStyle={styles.backToLoginText}
               title={intl.formatMessage({ id: "label.back_to_login" })}
             />
           </TouchableOpacity>
@@ -214,8 +210,7 @@ ForgotPasswordUI.propTypes = {
   onClickGoToLogin: PropTypes.func.isRequired,
   onChangeInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
-  userName: PropTypes.string.isRequired,
-  validationError: PropTypes.bool,
+  validationError: PropTypes.string,
 };
 
 export default ForgotPasswordUI;

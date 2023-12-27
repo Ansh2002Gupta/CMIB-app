@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "@unthinkable/react-core-components";
 
 import ContentLayout from "../pages/ContentLayout";
 import CreateNewPassword from "../views/CreateNewPassword/index";
@@ -16,6 +17,7 @@ import ProfileView from "../views/Profile";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
+import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -23,23 +25,67 @@ import { navigations } from "../constants/routeNames";
 
 const HomeWithPrivateAccess = withPrivateAccess(Home);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
-const SignUpWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
+const SignUpWithPublicAccess = withPublicAccess(Platform.OS.toLowerCase() === "web" ? HeaderWithContentLayout : ContentLayout);
 const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
-  {
+   {
     pagePath: navigations.ROOT,
     element: <DefaultRoute />,
     views: [
       {
+        viewPath: navigations.LOGIN,
+        element: <LoginWithPublicAccess />,
+      },
+      {
+        viewPath:navigations.DASHBOARD,
+        element:<HomeWithPrivateAccess />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.LOGIN,
+    element: <LoginWithPublicAccess />,
+    views: [
+      {
         viewPath: "",
-        element: <DefaultRoute />,
+        element: <LoginScreen />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.FORGOT_PASSWORD,
+    element: <LoginWithPublicAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <ForgotPassword />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.CREATE_NEW_PASSWORD,
+    element: <LoginWithPublicAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <CreateNewPassword />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.SIGN_UP,
+    element: <SignUpWithPublicAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <SignUpScreen />,
       },
     ],
   },
   {
     pagePath: navigations.PROFILE,
-    element: <HomeWithPrivateAccess />, // Page
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
@@ -97,46 +143,7 @@ const config = [
       },
     ],
   },
-  {
-    pagePath: navigations.FORGOT_PASSWORD,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <ForgotPassword />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.CREATE_NEW_PASSWORD,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <CreateNewPassword />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.SIGN_UP,
-    element: <SignUpWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <SignUpScreen />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.LOGIN,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <LoginScreen />,
-      },
-    ],
-  },
+  
   {
     pagePath: navigations.JOBS,
     element: <HomeWithPrivateAccess />,
@@ -154,6 +161,16 @@ const config = [
       {
         viewPath: "",
         element: <DefaultRoute />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.WEB_VIEW,
+    element: <WebViewScreen />,
+    views: [
+      {
+        viewPath: "",
+        element: <WebViewScreen />,
       },
     ],
   },

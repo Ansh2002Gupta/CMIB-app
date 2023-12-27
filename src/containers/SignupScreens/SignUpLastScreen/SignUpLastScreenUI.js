@@ -51,6 +51,8 @@ const SignUpLastScreenUI = ({
   const isWeb = Platform.OS === "web";
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const showContentHeader =
+    currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 
   const errorMessage =
     validationError || errorWhileDeletion || errorWhileUpload || signUpError;
@@ -173,7 +175,11 @@ const SignUpLastScreenUI = ({
             id: "label.logo_info",
           })}
         />
-        <UploadImage intl={intl} onImageUpload={onImageUpload} onDeleteImage={onDeleteImage} />
+        <UploadImage
+          intl={intl}
+          onImageUpload={onImageUpload}
+          onDeleteImage={onDeleteImage}
+        />
       </View>
     );
   };
@@ -187,6 +193,7 @@ const SignUpLastScreenUI = ({
           onPressButtonTwo={() => handleSuccessModal(true)}
           isNextDisabled={!allFieldsFilled()}
           buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
+          hasIconLeft
         />
         {isWebView && (
           <LabelWithLinkText
@@ -203,7 +210,7 @@ const SignUpLastScreenUI = ({
     <View
       style={
         isWebView
-          ? getResponsiveStyles({str: "signupContainer", currentBreakpoint})
+          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
           : style.mainContainerStyle
       }
     >
@@ -226,9 +233,13 @@ const SignUpLastScreenUI = ({
         <View>
           <HeaderTextWithLabelAndDescription
             label={intl.formatMessage({ id: "label.step_four" })}
-            headerText={intl.formatMessage({
-              id: "label.other_details",
-            })}
+            {...(showContentHeader
+              ? {
+                  headerText: intl.formatMessage({
+                    id: "label.other_details",
+                  }),
+                }
+              : {})}
           />
         </View>
       )}

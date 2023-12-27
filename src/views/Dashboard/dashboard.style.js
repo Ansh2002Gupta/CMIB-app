@@ -1,39 +1,50 @@
+import colors from "../../assets/colors";
+
 const style = {
   container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 16,
-    alignItems: 'center',
-    backgroundColor:'#FFFFFF',
-  },
-  header: {
-    fontSize: 24,
-    marginBottom: 24,
-    textAlign: 'center',
-  },
-  container: {
     flex: 1,
-    justifyContent: 'center',
     padding: 16,
-    alignItems: 'center',
+    justifyContent: "flex-start",
   },
   header: {
     fontSize: 24,
     marginBottom: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
-  input: {
-    height: 40,
-    borderColor: 'gray',
+  imageParentStyle: {
     borderWidth: 1,
-    marginBottom: 12,
-    paddingLeft: 8,
+    borderColor: colors.lightGrey,
+    backgroundColor: colors.white,
+    height: 44,
+    borderRadius: 8,
+    marginLeft: 16,
+    paddingLeft: 12,
+    paddingRight: 12,
   },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 12,
-    borderRadius: 4,
-    alignItems: 'center',
+  customCellStyle: {
+    justifyContent: "flex-start",
+    padding: 14,
+    backgroundColor: colors.secondaryGrey,
+    borderColor: colors.secondaryGrey,
+  },
+  customCellTextStyle: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: colors.darkBlue,
+    lineHeight: 20,
+    marginLeft: 8,
+  },
+  webView: {
+    inputLabelText: {
+      color: colors.black,
+      fontSize: 14,
+      lineHeight: 24,
+      textTransform: "capitalize",
+    },
+    inputTextBox: {
+      background: colors.white,
+      marginTop: 0,
+    },
   },
 };
 
