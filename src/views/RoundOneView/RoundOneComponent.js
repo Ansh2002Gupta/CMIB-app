@@ -19,9 +19,9 @@ const RoundOneComponent = () => {
     subTitle: intl.formatMessage({ id: card.subTitle }),
   }));
 
-  const onPressCard = (container) => {
-    setSelectedContainer(container);
-    switch (container) {
+  const onPressCard = (id) => {
+    setSelectedContainer(id);
+    switch (id) {
       case 1:
         navigate(navigations.ROUND_ONE_APPLICATION_FORM);
         break;
