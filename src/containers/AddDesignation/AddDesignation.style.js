@@ -14,9 +14,9 @@ const styles = {
     paddingBottom: 0 ,
     marginBottom: 24,
   },
-  // vacancyStyle: {
-  //   marginTop: 24,
-  // },
+  rightButtonStyle: {
+     marginLeft: 8 
+  },
   leftTextStyle: {
     fontSize: 14,
     fontWeight: "600",

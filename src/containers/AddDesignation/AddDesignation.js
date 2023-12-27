@@ -54,7 +54,7 @@ const AddDesignation = ({ handleCancelButton }) => {
       onClickLeftButton={handleCancelButton}
       onClickRightButton={handleSaveButton}
       rightLabelTxt={intl.formatMessage({ id: "label.save" })}
-      rightButtonStyle={{ marginLeft: 8 }}
+      rightButtonStyle={styles.rightButtonStyle}
     >
       <MultiRow rows={addDesignation} style={styles.parentStyle} />
     </ModalWithTitleButton>
