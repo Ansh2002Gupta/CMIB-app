@@ -12,10 +12,8 @@ import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./SideNavBar.style";
 
 const SideNavBar = ({
-  items,
-  listItems,
   onClose,
-  resetList,
+
   showCloseIcon,
 }) => {
   const { isWebView } = useIsWebView();
@@ -35,23 +33,14 @@ const SideNavBar = ({
             : {}),
         }}
       >
-        <SideBar
-          items={items}
-          onClose={onClose}
-          listItems={listItems}
-          resetList={resetList}
-          showCloseIcon={showCloseIcon}
-        />
+        <SideBar onClose={onClose} showCloseIcon={showCloseIcon} />
       </View>
     </View>
   );
 };
 
 SideNavBar.propTypes = {
-  items: PropTypes.array.isRequired,
-  listItems: PropTypes.func.isRequired,
   onClose: PropTypes.func,
-  resetList: PropTypes.func.isRequired,
   showCloseIcon: PropTypes.bool.isRequired,
 };
 

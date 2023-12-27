@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Platform,TouchableOpacity, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
-import CustomImage from "../CustomImage/CustomImage";
-import styles from "./touchableImage.style";
+import CustomImage from "../CustomImage";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity"
+import styles from "./TouchableImage.style";
 
-const TouchableImage = ({ disabled, imageStyle, parentStyle, source,   }) => {
+const TouchableImage = ({
+  disabled=true,
+  isSelector,
+  imageStyle,
+  onPress,
+  parentStyle,
+  source
+}) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
@@ -15,14 +23,13 @@ const TouchableImage = ({ disabled, imageStyle, parentStyle, source,   }) => {
   const containerStyle = {
     ...styles.container,
     ...parentStyle,
-    ...(Platform.OS.toLowerCase() === "web" ? styles.clickable : {}),
     ...(isSelected ? styles.selected : {}),
   };
 
   return (
-    <TouchableOpacity
+    <CustomTouchableOpacity
       style={containerStyle}
-      onPress={handlePress}
+      onPress={isSelector ? handlePress : onPress}
       disabled={disabled}
     >
       <View>
@@ -33,21 +40,27 @@ const TouchableImage = ({ disabled, imageStyle, parentStyle, source,   }) => {
           isSvg={true}
         />
       </View>
-    </TouchableOpacity>
+    </CustomTouchableOpacity>
   );
 };
 
 TouchableImage.defaultProps = {
   disabled: false,
+  isSelector: false,
   imageStyle: {},
   parentStyle: {},
 };
 
 TouchableImage.propTypes = {
   disabled: PropTypes.bool,
+  isSelector: PropTypes.bool,
   imageStyle: PropTypes.object,
   parentStyle: PropTypes.object,
-  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  source: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]).isRequired,
 };
 
 export default TouchableImage;

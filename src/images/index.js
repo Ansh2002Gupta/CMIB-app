@@ -14,10 +14,10 @@ const g20Icon = "/images/svg/g20Icon.svg";
 const gloPac = "/images/svg/gloPac.svg";
 const iconWalkthroughSignUpOne =
   "/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
-const iconCheckedCheckbox =
-  "/images/iconCheckedCheckbox/iconCheckedCheckbox.png";
-const iconUncheckedCheckbox =
-  "images/iconUncheckedCheckbox/iconUncheckedCheckbox.png";
+const iconCheckbox =
+  "/images/svg/icon_check.svg";
+const iconUnCheckbox =
+  "images/svg/icon_uncheck.svg";
 const iconArrowRightWhite =
   "images/iconArrowRightWhite/iconArrowRightWhite.png";
 const iconWalkthroughSignUpTwo =
@@ -69,15 +69,13 @@ const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
-const iconCmibLogoWhite = "images/iconCmibLogoWhite/iconCmibLogoWhite.png";
+const iconCmibLogoWhite = "images/iconCmibLogowhite/iconCmibLogowhite.png";
 const iconRightArrow = "images/iconRightArrow/iconRightArrow.png";
 const iconFooterGlobal = "images/iconFooterGlobal/iconFooterGlobal.png";
 const ticketIcon = "images/ticketIcon/ticketIcon.png";
 const iconArrowDown2 = "images/iconArrowDown2/iconArrowDown2.png";
 const iconClose = "images/iconClose/iconClose.png";
 const iconLeftArrow = "images/iconLeftArrow/iconLeftArrow.png";
-const iconArrowUp = "images/iconArrowUp/iconArrowUp.png";
-const iconArrowDown = "images/iconArrowDown/iconArrowDown.png";
 const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
 const iconProfile = "/images/iconProfile/iconProfile.png";
 const iconWarning = "images/svg/iconWarning.svg";
@@ -88,6 +86,10 @@ const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconFilter = "images/svg/iconFilter.svg";
 const iconSearch = "images/svg/iconSearch.svg";
 const iconMore = "images/svg/iconMore.svg";
+const iconArrowDown = "images/svg/iconArrowDown.svg";
+const iconArrowUp = "images/svg/iconArrowUp.svg";
+const iconAdd = "images/svg/iconAdd.svg";
+const iconStepperDone = "images/svg/iconStepperDone.svg";
 
 const images = {
   iconArrowUp,
@@ -111,8 +113,8 @@ const images = {
   g20Icon,
   gloPac,
   iconWalkthroughSignUpOne,
-  iconCheckedCheckbox,
-  iconUncheckedCheckbox,
+  iconCheckbox,
+  iconUnCheckbox,
   iconArrowRightWhite,
   iconWalkthroughSignUpTwo,
   iconDownArrow,
@@ -167,12 +169,11 @@ const images = {
   iconCmibLogoWhite,
   iconRightArrow,
   iconFooterGlobal,
-  iconTick,
-  iconSquareEdit,
-  iconWarning,
   iconFilter,
   iconSearch,
   iconMore,
+  iconAdd,
+  iconStepperDone,
 };
 
 export default images;

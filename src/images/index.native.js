@@ -9,8 +9,8 @@ import homeOutline from "../../public/images/home-outline.png";
 import profileSolid from "../../public/images/profile-solid.png";
 import profileOutline from "../../public/images/profile-outline.png";
 import iconWalkthroughSignUpOne from "../../public/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
-import iconCheckedCheckbox from "../../public/images/iconCheckedCheckbox/iconCheckedCheckbox.png";
-import iconUncheckedCheckbox from "../../public/images/iconUncheckedCheckbox/iconUncheckedCheckbox.png";
+import iconCheckbox from "../../public/images/svg/icon_check.svg";
+import iconUnCheckbox from "../../public/images/svg/icon_uncheck.svg";
 import iconArrowRightWhite from "../../public/images/iconArrowRightWhite/iconArrowRightWhite.png";
 import iconWalkthroughSignUpTwo from "../../public/images/iconWalkthroughSignUpTwo/iconWalkthroughSignUpTwo.png";
 import iconDownArrow from "../../public/images/iconDownArrow/iconDownArrow.png";
@@ -57,18 +57,20 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
-import iconArrowUp from "../../public/images/iconArrowUp/iconArrowUp.png";
-import iconArrowDown from "../../public/images/iconArrowDown/iconArrowDown.png";
 import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLogowhite.png";
 import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
 import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
 import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
 import iconClose from "../../public/images/iconClose/iconClose.png";
-import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
+import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";;
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg"
 import iconFilter from "../../public/images/svg/iconFilter.svg"
 import iconMore from "../../public/images/svg/iconMore.svg"
+import iconArrowDown from "../../public/images/svg/iconArrowDown.svg"
+import iconArrowUp from "../../public/images/svg/iconArrowUp.svg"
+import iconAdd from "../../public/images/svg/iconAdd.svg"
+import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
 import iconWarning from "../../public/images/svg/iconWarning.svg";
 import iconTick from "../../public/images/iconTick/iconTick.png";
 
@@ -88,8 +90,8 @@ const images = {
   profileSolid,
   profileOutline,
   iconWalkthroughSignUpOne,
-  iconCheckedCheckbox,
-  iconUncheckedCheckbox,
+  iconCheckbox,
+  iconUnCheckbox,
   iconArrowRightWhite,
   iconWalkthroughSignUpTwo,
   iconDownArrow,
@@ -146,6 +148,8 @@ const images = {
   iconSearch,
   iconFilter,
   iconMore,
+  iconAdd,
+  iconStepperDone,
 };
 
 export default images;

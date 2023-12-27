@@ -8,12 +8,12 @@ const styles = {
   mainContainerWeb:{
     flex: 1,
     position:"relative",
-    backgroundColor: colors.black,
-    overflow:"hidden"
   },
   container: {
-    flex: 1,
+    flex:1,
+    height:"100%",
     backgroundColor: colors.black,
+    paddingBottom:80
   },
   imageView: {
     alignItems: "center",
@@ -28,28 +28,38 @@ const styles = {
   imgViewStyle: {
     paddingTop: 40,
   },
-  newQualifiedText: {
-    color: colors.backgroundColor,
-    fontSize: 14,
-    marginBottom:5,
-    cursor: "pointer",
-    flexWrap:"wrap"
-  },
   moduleText: {
-    color: colors.darkGrey,
-    fontSize: 14,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 8,
-    paddingTop: 32,
+    padding:16,
+    backgroundColor: colors.offWhite,
+    justifyContent:"space-between",
+    alignItems:"center",
+    borderBottomWidth: 1,
+    borderBottomColor: colors.slateGray,
+  },
+  openModule:{
+    padding:16,
+    backgroundColor: colors.offWhite,
+    justifyContent:"space-between",
+    alignItems:"center",
+    borderLeftWidth: 4,
+    borderLeftColor: colors.white,
   },
   leftArrow: {
-    height: 25,
-    width: 25,
+    height: 15,
+    width: 15,
+  },
+  closeButton: {
+    height: 20,
+    width: 20,
   },
   leftArrowButton: {
     paddingTop: 16,
     paddingLeft: 16,
+  },
+  menuIcons:{
+    height: 20,
+    width: 20,
+    marginRight:10,
   },
   textView: {
     flexDirection: "row",
@@ -58,8 +68,6 @@ const styles = {
     backgroundColor: colors.offWhite,
     paddingTop: 16,
     paddingBottom: 16,
-    paddingLeft: 16,
-    paddingRight: 16,
     borderBottomWidth: 1,
     borderBottomColor: colors.slateGray,
     opacity: 0.6,
@@ -75,8 +83,12 @@ const styles = {
     cursor: "pointer",
   },
   changeText: {
-    color: colors.backgroundColor,
-    fontSize: 12,
+    color: colors.white,
+    fontSize:14,
+  },
+  menuItemsText: {
+    color: colors.black,
+    fontSize:14,
   },
   sessionText: {
     color: colors.darkGrey,
@@ -95,6 +107,9 @@ const styles = {
     paddingLeft: 16,
     paddingRight: 16,
     cursor: "pointer",
+    position:"absolute",
+    bottom:0,
+    width:"100%",
   },
   imageTextView: {
     flexDirection: "row",
@@ -108,6 +123,49 @@ const styles = {
     width: 18,
     height: 18,
   },
+  moduleList: {
+    fontSize: 14,
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    cursor: 'pointer',
+  },
+  moduleListItem: {
+    padding: 16,
+    width: '100%',
+    cursor: 'pointer',
+  },
+  moduleMenuItems:{
+    marginLeft:16,
+    marginRight:16,
+    marginTop:16,
+    marginBottom:8,
+    borderRadius:12,
+    padding:16,
+    flexDirection:"row",
+    cursor:"pointer"
+  },
+  moduleActiveMenuItems:{
+    marginLeft:16,
+    marginRight:16,
+    marginTop:16,
+    marginBottom:8,
+    borderRadius:12,
+    padding:16,
+    backgroundColor:colors.white,
+    flexDirection:"row",
+    cursor:"pointer"
+  },
+  disabled: {
+    color: colors.slateGray
+  },
+  moduleSubMenuList: {
+    listStyle: 'none',
+    width: '100%',
+    overflow: 'hidden',
+  },
+
 };
 
 export default styles;

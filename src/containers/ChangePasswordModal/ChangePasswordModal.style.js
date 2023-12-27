@@ -2,6 +2,7 @@ import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
+  containerStyle: { paddingBottom: 24 },
   errorText: {
     fontSize: 14,
     color: colors.errorRed,

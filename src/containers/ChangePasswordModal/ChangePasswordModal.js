@@ -10,6 +10,7 @@ import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
+import { strongPasswordValidator } from "../../constants/validation";
 import styles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
@@ -18,52 +19,36 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   const [error, setError] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [validations, setValidations] = useState({
-    length: false,
-    lowercase: false,
-    match: false,
-    numeric: false,
-    specialChar: false,
-    uppercase: false,
-  });
+  const isPasswordStrong = strongPasswordValidator(newPassword);
+  const doPasswordsMatch = newPassword === confirmNewPassword;
+
   const { errorWhileChangePassword, handleUseChangePassword, isLoading } =
     useChangePasswordApi();
 
-  const areAllFieldsValid = () => {
+  const isNextDisabled = () => {
     return (
-      validations.length &&
-      validations.numeric &&
-      validations.uppercase &&
-      validations.lowercase &&
-      validations.specialChar
+      !confirmNewPassword ||
+      !doPasswordsMatch ||
+      !isPasswordStrong ||
+      !oldPassword ||
+      !newPassword
     );
   };
 
-  const areAllFieldFilledInPassword = () => {
-    if (newPassword !== confirmNewPassword) {
+  const handleSave = () => {
+    if (isNextDisabled()) return;
+
+    if (!doPasswordsMatch) {
       setError(intl.formatMessage({ id: "label.password-not-match" }));
       return;
     }
     setError(null);
-    if (areAllFieldsValid()) {
+    if (isPasswordStrong) {
       handleUseChangePassword({
         old_password: oldPassword,
         password: newPassword,
       });
     }
-  };
-
-  const isNextDisabled = () => {
-    return (
-      !oldPassword ||
-      !newPassword ||
-      !confirmNewPassword ||
-      !validations.length ||
-      !validations.numeric ||
-      !validations.uppercase ||
-      !validations.lowercase ||
-      !validations.specialChar
-    );
   };
 
   return (
@@ -80,6 +65,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               placeholder={intl.formatMessage({
                 id: "label.old_password_placeholder",
               })}
+              customStyle={styles.containerStyle}
               value={oldPassword}
               onChangeText={(val) => setOldPassword(val)}
               isMandatory
@@ -93,6 +79,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_your_new_password",
               })}
+              customStyle={styles.containerStyle}
               value={newPassword}
               onChangeText={(val) => setNewPassword(val)}
               isMandatory
@@ -106,6 +93,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               placeholder={intl.formatMessage({
                 id: "label.confirm_your_new_password",
               })}
+              customStyle={styles.containerStyle}
               value={confirmNewPassword}
               onChangeText={(val) => setConfirmNewPassword(val)}
               isMandatory
@@ -121,14 +109,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
                   customTextStyle={styles.passwordMatchStyle}
                 />
               )}
-              <NewPasswordValidation
-                {...{
-                  newPassword,
-                  confirmNewPassword,
-                  validations,
-                  setValidations,
-                }}
-              />
+              <NewPasswordValidation {...{ newPassword, confirmNewPassword }} />
             </View>
           }
           fiveSection={
@@ -150,7 +131,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           onPressCancel(false);
         }}
         disabled={isLoading}
-        onPressButtonTwo={() => areAllFieldFilledInPassword()}
+        onPressButtonTwo={handleSave}
         isNextDisabled={isNextDisabled()}
         buttonTwoText={intl.formatMessage({ id: "label.save" })}
       />

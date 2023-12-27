@@ -1,13 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { View, Image } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText/CommonText";
 import styles from "./CustomAvatar.style";
 
-const CustomAvatar = ({ image, text }) => {
+const CustomAvatar = ({ image = null, text = "" }) => {
   if (image) {
     return <Image source={{ uri: image }} />;
-  } else if (text) {
+  }
+  if (text) {
     const initials = text
       .split(" ")
       .map((word) => word.charAt(0))
@@ -19,9 +21,12 @@ const CustomAvatar = ({ image, text }) => {
         </View>
       </View>
     );
-  } else {
-    return null;
   }
+  return null;
 };
 
+CustomAvatar.propTypes = {
+  image: PropTypes.string,
+  text: PropTypes.string,
+};
 export default CustomAvatar;
