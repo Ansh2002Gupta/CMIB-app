@@ -16,6 +16,7 @@ import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
 import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
+import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -32,14 +33,58 @@ const config = [
     element: <DefaultRoute />,
     views: [
       {
+        viewPath: navigations.LOGIN,
+        element: <LoginWithPublicAccess />,
+      },
+      {
+        viewPath: navigations.DASHBOARD,
+        element: <HomeWithPrivateAccess />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.LOGIN,
+    element: <LoginWithPublicAccess />,
+    views: [
+      {
         viewPath: "",
-        element: <DefaultRoute />,
+        element: <LoginScreen />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.FORGOT_PASSWORD,
+    element: <LoginWithPublicAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <ForgotPassword />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.CREATE_NEW_PASSWORD,
+    element: <LoginWithPublicAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <CreateNewPassword />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.SIGN_UP,
+    element: <SignUpWithPublicAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <SignUpScreen />,
       },
     ],
   },
   {
     pagePath: navigations.PROFILE,
-    element: <HomeWithPrivateAccess />, // Page
+    element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
@@ -59,7 +104,7 @@ const config = [
   },
   {
     pagePath: navigations.COMPANY_PROFILE,
-    element: <HomeWithPrivateAccess />,
+    element: <ContentRouteWithPrivateAccess />,
     views: [
       {
         viewPath: "",
@@ -107,46 +152,7 @@ const config = [
       },
     ],
   },
-  {
-    pagePath: navigations.FORGOT_PASSWORD,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <ForgotPassword />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.CREATE_NEW_PASSWORD,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <CreateNewPassword />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.SIGN_UP,
-    element: <SignUpWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <SignUpScreen />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.LOGIN,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <LoginScreen />,
-      },
-    ],
-  },
+
   {
     pagePath: navigations.JOBS,
     element: <HomeWithPrivateAccess />,
@@ -164,6 +170,16 @@ const config = [
       {
         viewPath: "",
         element: <DefaultRoute />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.WEB_VIEW,
+    element: <WebViewScreen />,
+    views: [
+      {
+        viewPath: "",
+        element: <WebViewScreen />,
       },
     ],
   },

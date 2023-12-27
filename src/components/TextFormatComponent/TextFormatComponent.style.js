@@ -1,7 +1,10 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const style = {
-  toolbarStyle: { backgroundColor: colors.lightGray },
+const styles = StyleSheet.create({
+  toolbarStyle: {
+    backgroundColor: colors.lightGray,
+  },
   labelContainer: {
     flexDirection: "row",
     fontFamily: "General Sans",
@@ -14,7 +17,9 @@ const style = {
     fontFamily: "General Sans",
     color: colors.black,
   },
-  starStyle: { color: colors.errorRed },
+  starStyle: {
+    color: colors.errorRed,
+  },
   mainView: {
     borderWidth: 1,
     borderRadius: 5,
@@ -30,7 +35,6 @@ const style = {
     alignItems: "center",
     paddingTop: 8,
     paddingBottom: 8,
-    // Horizontal alignment
   },
   formatOptionTextStyle: {
     alignSelf: "center",
@@ -47,6 +51,6 @@ const style = {
     fontSize: 18,
     color: colors.gray,
   },
-};
+});
 
-export default style;
+export default styles;

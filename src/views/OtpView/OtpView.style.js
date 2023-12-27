@@ -1,4 +1,6 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
 const style = {
   mainView: {
     flex: 1,
@@ -59,7 +61,6 @@ const style = {
     marginTop: 24,
     marginBottom: 24,
     fontSize: 14,
-    fontFamily: "GeneralSans-Semibold",
     color: colors.darkBlue,
     fontWeight: "600",
   },
@@ -160,6 +161,7 @@ const style = {
     fontFamily: "General Sans",
     marginTop: 16,
     alignItems:"center"
-  }
+  },
 };
+
 export default style;

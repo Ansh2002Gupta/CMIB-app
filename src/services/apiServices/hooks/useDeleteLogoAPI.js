@@ -1,15 +1,15 @@
 import { useState } from "react";
 
-import Http from "../http-service";
-import { API_STATUS, STATUS_CODES } from "../../constants/constants";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import Http from "../../http-service";
+import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useDeleteLogo = () => {
   const [deletionStatus, setDeletionStatus] = useState(API_STATUS.IDLE);
   const [fileDeletionResult, setFileDeletionResult] = useState([]);
   const [errorWhileDeletion, setErrorWhileDeletion] = useState("");
 
-  const handleDeleteLogo = async (payload) => {
+  const handleDeleteLogo = async (payload, successCallback) => {
     try {
       setDeletionStatus(API_STATUS.LOADING);
       errorWhileDeletion && setErrorWhileDeletion("");
@@ -17,14 +17,17 @@ const useDeleteLogo = () => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setDeletionStatus(API_STATUS.SUCCESS);
         setFileDeletionResult(res.data);
+        successCallback();
         return;
       }
       setDeletionStatus(API_STATUS.ERROR);
       setErrorWhileDeletion(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
+      const errorMessage =
+        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       setDeletionStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileDeletion(err.response?.data?.message);
+      if (errorMessage) {
+        setErrorWhileDeletion(errorMessage);
         return;
       }
       setErrorWhileDeletion(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
@@ -43,6 +46,7 @@ const useDeleteLogo = () => {
     isError,
     isLoading,
     isSuccess,
+    setErrorWhileDeletion,
   };
 };
 

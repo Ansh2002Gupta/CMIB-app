@@ -7,15 +7,15 @@ import {
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
 
-import { TwoRow, FourColumn } from "../../core/layouts";
-
+import images from "../../images";
 import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
+import MultiColumn from "../../core/layouts/MultiColumn";
+import { navigations } from "../../constants/routeNames";
+import { TwoRow } from "../../core/layouts";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { useLocation } from "../../routes";
-import { navigations } from "../../constants/routeNames";
-import images from "../../images";
 import styles from "./bottomBar.style";
 
 function BottomBar() {
@@ -24,16 +24,15 @@ function BottomBar() {
   const { navigateScreen } = useNavigateScreen();
   const { logo, homeOutline, homeSolid, profileOutline, profileSolid } = icons;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const { pathname: currrentRoute } = useLocation();
+  const { pathname: currentRoute } = useLocation();
 
   const navigateTo = (route) => {
     navigateScreen(route);
   };
 
-  const homeIcon =
-    currrentRoute === navigations.ROOT ? homeSolid : homeOutline;
+  const homeIcon = currentRoute === navigations.ROOT ? homeSolid : homeOutline;
   const profileIcon =
-    currrentRoute === navigations.PROFILE ? profileSolid : profileOutline;
+  currentRoute === navigations.PROFILE ? profileSolid : profileOutline;
 
   if (currentBreakpoint === "md") {
     return (
@@ -80,63 +79,66 @@ function BottomBar() {
     );
   }
 
+  function createRowConfig(
+    route,
+    imageActive,
+    imageInactive,
+    messageId,
+    containerStyle = {}
+  ) {
+    return {
+      content: (
+        <ImageAndTextTab
+          isActive={currentRoute === route}
+          onPress={() => {
+            navigateTo(route);
+          }}
+          containerStyle={containerStyle}
+          imageActive={imageActive}
+          imageInactive={imageInactive}
+          text={intl.formatMessage({ id: messageId })}
+        />
+      ),
+      style: {},
+      isFillSpace: true,
+    };
+  }
+
+  const rowConfigs = [
+    createRowConfig(
+      navigations.DASHBOARD,
+      images.iconDashboard,
+      images.iconDashboard,
+      "label.dashboard",
+      styles.activeStyleMyaccount
+    ),
+    createRowConfig(
+      navigations.ROUND_ONE,
+      images.iconActiveRound1,
+      images.iconRound1,
+      "label.round1",
+      styles.activeStyleMyaccount
+    ),
+    createRowConfig(
+      navigations.ROUND_TWO,
+      images.iconActiveRound2,
+      images.iconRound2,
+      "label.round2",
+      styles.activeStyleMyaccount
+    ),
+    createRowConfig(
+      navigations.PROFILE,
+      images.iconActiveMyaccount,
+      images.iconMyaccount,
+      "label.my_account",
+      styles.activeStyleMyaccount
+    ),
+  ];
+
   return (
     <View>
-      <View style={styles.bottomBarView}>
-        <View style={styles.borderStyle}></View>
-        <View>
-          <FourColumn
-            sectionStyle={styles.sectionStyle}
-            firstSection={
-              <ImageAndTextTab
-                isActive={currrentRoute === navigations.DASHBOARD}
-                onPress={() => {
-                  navigateTo(navigations.DASHBOARD);
-                }}
-                containerStyle={styles.activeStyleDashboard}
-                imageActive={images.iconDashboard}
-                imageInactive={images.iconDashboard}
-                text={intl.formatMessage({ id: "label.dashboard" })}
-              />
-            }
-            secoundSection={
-              <ImageAndTextTab
-                isActive={currrentRoute === navigations.ROUND_ONE}
-                onPress={() => {
-                  navigateTo(navigations.ROUND_ONE);
-                }}
-                imageActive={images.iconActiveRound1}
-                imageInactive={images.iconRound1}
-                text={intl.formatMessage({ id: "label.round1" })}
-              />
-            }
-            thirdSection={
-              <ImageAndTextTab
-                isActive={currrentRoute === navigations.ROUND_TWO}
-                onPress={() => {
-                  navigateTo(navigations.ROUND_TWO);
-                }}
-                imageActive={images.iconActiveRound2}
-                imageInactive={images.iconRound2}
-                text={intl.formatMessage({ id: "label.round2" })}
-              />
-            }
-            fourthSection={
-              <ImageAndTextTab
-                isActive={currrentRoute === navigations.PROFILE}
-                onPress={() => {
-                  navigateTo(navigations.PROFILE);
-                }}
-                imageActive={images.iconActiveMyaccount}
-                imageInactive={images.iconMyaccount}
-                text={intl.formatMessage({ id: "label.my_account" })}
-                containerStyle={styles.activeStyleMyaccount}
-              />
-            }
-            isLeftFillSpace
-          />
-        </View>
-      </View>
+      <View style={styles.borderStyle}></View>
+      <MultiColumn columns={rowConfigs} />
     </View>
   );
 }

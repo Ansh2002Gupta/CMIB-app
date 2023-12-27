@@ -12,8 +12,7 @@ import {
   ADDRESS_MAX_LENGTH,
   FIELD_MAX_LENGTH,
   FIELD_MIN_LENGTH,
-  NUMBER_MAX_LENGTH,
-  NUMBER_MIN_LENGTH,
+  REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
 
 const SignUpThirdScreenComponent = ({ tabHandler }) => {
@@ -78,7 +77,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
   };
 
   const validateFields = () => {
-    const newErrors = contactDetails.map((detail) => {
+    let newErrors = contactDetails.map((detail) => {
       let error = {
         designation: "",
         emailId: "",
@@ -106,8 +105,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
 
       if (
         !numRegex.test(String(detail.mobileNo)) ||
-        detail.mobileNo.length > NUMBER_MAX_LENGTH ||
-        detail.mobileNo.length < NUMBER_MIN_LENGTH
+        detail.mobileNo.length !== REGISTRATION_NO_LENGTH
       ) {
         error.mobileNo = intl.formatMessage({
           id: "label.mobile_number_validation",
@@ -120,6 +118,27 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
 
       return error;
     });
+
+    const emailDuplicates = contactDetails
+      .map((detail) => detail.emailId)
+      .filter(
+        (email, index, array) =>
+          array.indexOf(email) !== index && email.trim() !== ""
+      );
+
+    if (emailDuplicates?.length) {
+      newErrors = newErrors.map((error, index) => {
+        if (emailDuplicates.includes(contactDetails[index].emailId)) {
+          return {
+            ...error,
+            emailId: intl.formatMessage({
+              id: "label.duplicate_email_validation",
+            }),
+          };
+        }
+        return error;
+      });
+    }
 
     setErrors(newErrors);
     return newErrors.every((error) =>
@@ -139,6 +158,7 @@ const SignUpThirdScreenComponent = ({ tabHandler }) => {
     const isValid = validateFields();
     if (isValid) {
       const updatedContactDetails = contactDetails.map((detail) => ({
+        module: detail.module,
         name: detail.name,
         email: detail.emailId,
         salutation: detail.salutation,

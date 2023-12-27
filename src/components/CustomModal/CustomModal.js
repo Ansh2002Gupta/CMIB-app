@@ -3,31 +3,36 @@ import PropTypes from "prop-types";
 import {
   Image,
   Modal,
+  Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
+import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
 
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import CommonText from "../CommonText";
 import images from "../../images";
 import style from "./CustomModal.style";
 
-const CustomModal = (props) => {
-  const {
-    headerText,
-    secondaryText,
-    buttonTitle,
-    onPress,
-    isSuccess,
-    children,
-    isIconCross,
-    onPressIconCross,
-  } = props;
-
+const CustomModal = ({
+  buttonTitle,
+  children,
+  customInnerContainerStyle,
+  headerText,
+  headerTextStyle,
+  isSuccess,
+  isIconCross,
+  onPress,
+  onPressIconCross,
+  secondaryText,
+}) => {
   return (
     <View>
       <Modal isVisible style={style.containerStyle}>
-        <View style={style.innerContainer}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={[style.innerContainer, customInnerContainerStyle]}
+        >
           {isSuccess ? (
             <>
               <Image source={images.iconSuccess} />
@@ -45,7 +50,7 @@ const CustomModal = (props) => {
             <>
               <View style={style.headerStyle}>
                 <CommonText
-                  customTextStyle={style.headerText}
+                  customTextStyle={[style.headerText, headerTextStyle]}
                   title={headerText}
                 />
                 <TouchableOpacity onPress={onPressIconCross}>
@@ -55,20 +60,34 @@ const CustomModal = (props) => {
               {children}
             </>
           )}
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );
 };
 
+CustomModal.defaultProps = {
+  buttonTitle: "",
+  customInnerContainerStyle: {},
+  headerText: "",
+  headerTextStyle: false,
+  isIconCross: false,
+  isSuccess: false,
+  onPress: () => {},
+  onPressIconCross: () => {},
+  secondaryText: "",
+};
+
 CustomModal.propTypes = {
-  buttonTitle: PropTypes.string.isRequired,
-  headerText: PropTypes.string.isRequired,
+  buttonTitle: PropTypes.string,
+  customInnerContainerStyle: PropTypes.object,
+  headerText: PropTypes.string,
+  headerTextStyle: PropTypes.bool,
   isSuccess: PropTypes.bool.isRequired,
   isIconCross: PropTypes.bool,
-  onPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func,
   onPressIconCross: PropTypes.func,
-  secondaryText: PropTypes.string.isRequired,
+  secondaryText: PropTypes.string,
 };
 
 export default CustomModal;

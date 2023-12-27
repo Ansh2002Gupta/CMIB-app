@@ -14,10 +14,10 @@ const g20Icon = "/images/svg/g20Icon.svg";
 const gloPac = "/images/svg/gloPac.svg";
 const iconWalkthroughSignUpOne =
   "/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
-const iconCheckedCheckbox =
-  "/images/iconCheckedCheckbox/iconCheckedCheckbox.png";
-const iconUncheckedCheckbox =
-  "images/iconUncheckedCheckbox/iconUncheckedCheckbox.png";
+const iconCheckbox =
+  "/images/svg/icon_check.svg";
+const iconUnCheckbox =
+  "images/svg/icon_uncheck.svg";
 const iconArrowRightWhite =
   "images/iconArrowRightWhite/iconArrowRightWhite.png";
 const iconWalkthroughSignUpTwo =
@@ -68,12 +68,22 @@ const iconDownloadDetails =
 const iconAzadiMahotsav = "images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "images/iconGloPac/iconGloPac.png";
 const iconG20 = "images/iconG20/iconG20.png";
-const ticketIcon  = "images/ticketIcon/ticketIcon.png";
+const ticketIcon = "images/ticketIcon/ticketIcon.png";
 const iconSend = "images/iconSend/iconSend.png";
 const iconSetting = "images/iconSetting/iconSetting.png";
 const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
 const iconDrawer = "images/iconDrawer/iconDrawer.png";
 const iconNotification = "images/iconNotification/iconNotification.png";
+const iconTick = "images/iconTick/iconTick.png";
+const iconSquareEdit = "images/iconSquareEdit/iconSquareEdit.png";
+const iconWarning = "images/svg/iconWarning.svg";
+const iconFilter = "images/svg/iconFilter.svg";
+const iconSearch = "images/svg/iconSearch.svg";
+const iconMore = "images/svg/iconMore.svg";
+const iconArrowDown = "images/svg/iconArrowDown.svg";
+const iconArrowUp = "images/svg/iconArrowUp.svg";
+const iconAdd = "images/svg/iconAdd.svg";
+const iconStepperDone = "images/svg/iconStepperDone.svg";
 
 const images = {
   avatar,
@@ -91,8 +101,8 @@ const images = {
   g20Icon,
   gloPac,
   iconWalkthroughSignUpOne,
-  iconCheckedCheckbox,
-  iconUncheckedCheckbox,
+  iconCheckbox,
+  iconUnCheckbox,
   iconArrowRightWhite,
   iconWalkthroughSignUpTwo,
   iconDownArrow,
@@ -142,6 +152,16 @@ const images = {
   iconSetting,
   iconUpArrow,
   iconDrawer,
+  iconTick,
+  iconSquareEdit,
+  iconWarning,
+  iconFilter,
+  iconSearch,
+  iconMore,
+  iconArrowDown,
+  iconArrowUp,
+  iconAdd,
+  iconStepperDone,
 };
 
 export default images;

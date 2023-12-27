@@ -199,6 +199,7 @@ const SignUpSecondScreenUI = (props) => {
         hasIconRight
         isNextDisabled={!allFieldsFilled()}
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
+        hasIconLeft
       />
       {!!validationError && (
         <ToastComponent

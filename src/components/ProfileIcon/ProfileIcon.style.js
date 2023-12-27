@@ -11,13 +11,6 @@ const style = {
     borderWidth: 0.5,
     borderColor: colors.lightGrey,
   },
-  editProfileContainer: {
-    alignSelf: "center",
-    height: 152,
-    width: 152,
-    marginTop: 32,
-    marginBottom: 32,
-  },
   profileImageStyle: {
     width: 104,
     height: 104,

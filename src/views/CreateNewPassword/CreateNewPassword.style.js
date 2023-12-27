@@ -1,11 +1,10 @@
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-import { Platform } from "@unthinkable/react-core-components";
 
-const style = {
+const styles = StyleSheet.create({
   mainView: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
-    // height: "100%",
   },
   container: {
     paddingLeft: 16,
@@ -40,11 +39,9 @@ const style = {
     marginTop: 24,
     marginBottom: 24,
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web" ? "General sans" : "GeneralSans-Bold",
     fontWeight: "600",
     color: colors.darkBlue,
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   bullet: {
     width: 6,
@@ -55,30 +52,27 @@ const style = {
   },
   bulletText: {
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
     color: colors.gray,
   },
   validationText: {
     marginBottom: 8,
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
     color: colors.black,
   },
-  validationView: { flexDirection: "row", marginTop: 5 },
-  scrollViewContainerStyle: { justifyContent: "space-between", flexGrow: 1 },
+  validationView: {
+    flexDirection: "row",
+    marginTop: 5,
+  },
+  scrollViewContainerStyle: {
+    justifyContent: "space-between",
+    flexGrow: 1,
+  },
   passwordFieldsErrorContainer: {
     marginTop: 16,
   },
   passwordFieldsErrorText: {
     color: colors.errorRed,
     fontSize: 14,
-    fontWeight: "600",
   },
   // web view related styles
   webView: {
@@ -91,9 +85,7 @@ const style = {
     },
     headerText: {
       color: colors.black,
-      fontFamily: "General Sans",
       fontSize: 40,
-      fontStyle: "normal",
       fontWeight: "600",
     },
     headerText1800px: {
@@ -105,53 +97,38 @@ const style = {
     headerNameText: {
       color: colors.darkGrey,
       fontSize: 16,
-      fontStyle: "normal",
-      fontWeight: "500",
       lineHeight: 24,
     },
-    headerNameText900: { fontSize: 14 },
+    headerNameText900: {
+      fontSize: 14,
+    },
     inputLabelText: {
       color: colors.black,
-      fontFamily: "General Sans",
       fontSize: 14,
-      fontStyle: "normal",
       fontWeight: "600",
       lineHeight: 24,
       textTransform: "capitalize",
     },
     inputTextBox: {
-      background: "#FFF",
-      fontFamily: "General Sans",
+      background: colors.white,
       marginTop: 0,
-      fontWeight: "500",
     },
     passwordRequirements: {
       color: colors.gray,
-      fontFamily: "General Sans",
       fontSize: 14,
-      fontStyle: "normal",
-      fontWeight: "500",
       lineHeight: 22,
-    },
-    passwordRequirementsContainer: {
-      display: "grid",
-      columnGap: 16,
-      rowGap: 16,
-      gridTemplateColumns: "1fr 1fr",
-      gridTemplateRows: "1fr 1fr 1fr",
     },
     submitText: {
       fontFamily: "General sans",
       fontWeight: "500",
-      cursor: "pointer",
+      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
     },
     submitTextContainer: {
       marginBottom: 8,
     },
     backBtnText: {
-      fontFamily: "General sans",
       fontWeight: "600",
-      cursor: "pointer",
+      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
     },
     companyView: {
       backgroundColor: colors.white,
@@ -164,5 +141,9 @@ const style = {
       marginBottom: 32,
     },
   },
-};
-export default style;
+  ErrorStyle: {
+    paddingTop: 4,
+  },
+});
+
+export default styles;
