@@ -5,25 +5,48 @@ import TwoRowButton from "../../components/TwoRowButton";
 
 import styles from "./ModalWithTitleButton.style";
 
-
-const ModalWithTitleButton = ({ heading }) => {
-
-
+const ModalWithTitleButton = ({
+  children,
+  containerStyle,
+  heading,
+  isTwoEnable,
+  leftLabelTxt,
+  leftButtonLeftImage,
+  leftButtonRightImage,
+  leftButtonStyle,
+  leftTextStyle,
+  onClickLeftButton,
+  onClickRightButton,
+  rightButtonLeftImage,
+  rightButtonRightImage,
+  rightLabelTxt,
+  rightButtonStyle,
+  rightTextStyle,
+}) => {
   return (
-      <CustomModal
-        headerText={heading}
-      >
-      
+    <CustomModal
+      headerText={heading}
+      style={{ ...styles.containerStyle, ...containerStyle }}
+    >
+      {children}
+
+      {isTwoEnable && (
         <TwoRowButton
-          leftButtonText={intl.formatMessage({ id: "label.cancel" })}
-          onLeftButtonClick={handleCancelButton}
-          leftTextStyle={styles.leftTextStyle}
-          rightButtonText={intl.formatMessage({ id: "label.save" })}
-          rightButtonStyle={styles.saveStyle}
-          rightTextStyle={styles.rightTextStyle}
-          onRightButtonClick={handleSaveButton}
+          leftButtonLeftImage={leftButtonLeftImage}
+          leftButtonRightImage={leftButtonRightImage}
+          leftButtonStyle={{...styles.leftButtonStyle, ...leftButtonStyle}}
+          leftButtonText={leftLabelTxt}
+          leftTextStyle={{...styles.leftTextStyle, ...leftTextStyle}}
+          onLeftButtonClick={onClickLeftButton}
+          onRightButtonClick={onClickRightButton}
+          rightButtonLeftImage={rightButtonLeftImage}
+          rightButtonRightImage={rightButtonRightImage}
+          rightButtonStyle={{...styles.rightButtonStyle, ...rightButtonStyle}}
+          rightButtonText={rightLabelTxt}
+          rightTextStyle={{...styles.rightTextStyle, ...rightTextStyle} }
         />
-      </CustomModal>
+      )}
+    </CustomModal>
   );
 };
 

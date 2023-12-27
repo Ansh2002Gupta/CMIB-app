@@ -5,7 +5,8 @@ import { View } from "@unthinkable/react-core-components";
 import AddDesignation from "../../containers/AddDesignation/AddDesignation";
 import CommonText from "../../components/CommonText";
 import CustomCell from "../../components/CustomCell/";
-import SearchView from "../../components/SearchView/SearchView";
+import SearchView from "../../components/SearchView";
+import ModalWithTitleButton from "../../components/ModalWithTitleButton";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
@@ -68,7 +69,7 @@ function DashboardView() {
         title={intl.formatMessage({ id: "label.dashboard" })}
       />
       <MultiColumn columns={searchData} />
-      <CustomCell
+      {/* <CustomCell
         onPress={toggleSwitch}
         title={"AddDesignation"}
         isLeft={true}
@@ -77,7 +78,15 @@ function DashboardView() {
         style={styles.customCellStyle}
         textStyle={styles.customCellTextStyle}
       />
-      {isEnabled && <AddDesignation handleCancelButton={handleCancelButton} />}
+      {isEnabled && <AddDesignation handleCancelButton={handleCancelButton} />} */}
+
+      <ModalWithTitleButton
+        heading={intl.formatMessage({ id: "label.dashboard" })}
+        isTwoEnable
+        leftLabelTxt={intl.formatMessage({ id: "label.cancel" })}
+        rightLabelTxt={intl.formatMessage({ id: "label.save" })}
+        rightButtonStyle={{marginLeft:8}}
+      />
     </View>
   );
 }

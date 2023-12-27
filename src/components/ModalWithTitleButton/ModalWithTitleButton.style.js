@@ -1,29 +1,26 @@
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform , StyleSheet} from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
-const styles = {
+const styles =StyleSheet.create( {
   containerStyle: {
     marginBottom: 0,
     marginLeft: 0,
     marginRight: 0,
   },
-  saveStyle: {
-    backgroundColor: colors.green,
-    marginLeft: 16,
-  },
-  negativePadding: { 
-    paddingBottom: 0 
-  },
-  vacancyStyle: {
-    marginTop: 24,
+  leftButtonStyle: {
+    backgroundColor: colors.white,
   },
   leftTextStyle: {
     fontSize: 14,
     fontWeight: "600",
+    color: colors.green,
+  },
+  rightButtonStyle: {
+    backgroundColor: colors.green,
   },
   rightTextStyle: {
-    color: "white",
+    color: colors.grey,
     fontSize: 14,
     fontWeight: "600",
   },
@@ -34,18 +31,6 @@ const styles = {
       },
     }),
   },
-  webView: {
-    inputLabelText: {
-      color: colors.black,
-      fontSize: 14,
-      lineHeight: 24,
-      textTransform: "capitalize",
-    },
-    inputTextBox: {
-      background: colors.white,
-      marginTop: 0,
-    },
-  },
-};
+});
 
 export default styles;
