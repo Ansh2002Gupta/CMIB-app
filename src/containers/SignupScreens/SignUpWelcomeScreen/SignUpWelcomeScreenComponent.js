@@ -8,7 +8,7 @@ import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { MODULE_OPTIONS } from "../../../constants/constants";
 
-const SignUpScreenWelcomeComponent = ({ tabHandler, onClickGoToLogin }) => {
+const SignUpScreenWelcomeComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const { handleSignUpValidation, validationError, setValidationError } =

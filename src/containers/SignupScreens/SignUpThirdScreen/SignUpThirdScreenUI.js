@@ -192,13 +192,11 @@ const SignUpThirdScreenUI = ({
         <View>
           <HeaderTextWithLabelAndDescription
             label={intl.formatMessage({ id: "label.step_three" })}
-            {...(showContentHeader
-              ? {
-                  headerText: intl.formatMessage({
-                    id: "label.contact_person_details",
-                  }),
-                }
-              : {})}
+            {...(showContentHeader && {
+              headerText: intl.formatMessage({
+                id: "label.contact_person_details",
+              }),
+            })}
           />
         </View>
       )}

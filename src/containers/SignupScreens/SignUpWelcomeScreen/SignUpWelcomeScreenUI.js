@@ -67,11 +67,9 @@ const SignUpWelcomeScreenUI = ({
       {isWebView && (
         <HeaderTextWithLabelAndDescription
           label={intl.formatMessage({ id: "label.step_one" })}
-          {...(showContentHeader
-            ? {
-                headerText: intl.formatMessage({ id: "label.welcome_to_cmib" }),
-              }
-            : {})}
+          {...(showContentHeader && {
+            headerText: intl.formatMessage({ id: "label.welcome_to_cmib" }),
+          })}
         />
       )}
       <View style={style.signUpSubContainer}>
@@ -91,20 +89,20 @@ const SignUpWelcomeScreenUI = ({
         />
       </View>
       <View style={style.signupFooterContainer}>
-          <ButtonComponent
-            title={intl.formatMessage({ id: "label.next" })}
-            onPress={onClickNext}
-            hasIconRight
-            disabled={contactDetails.length <= 0}
+        <ButtonComponent
+          title={intl.formatMessage({ id: "label.next" })}
+          onPress={onClickNext}
+          hasIconRight
+          disabled={contactDetails.length <= 0}
+        />
+        {isWebView && (
+          <LabelWithLinkText
+            labelText={intl.formatMessage({ id: "label.already_account" })}
+            linkText={intl.formatMessage({ id: "label.login_here" })}
+            onLinkClick={onClickGoToLogin}
           />
-          {isWebView && (
-            <LabelWithLinkText
-              labelText={intl.formatMessage({ id: "label.already_account" })}
-              linkText={intl.formatMessage({ id: "label.login_here" })}
-              onLinkClick={onClickGoToLogin}
-            />
-          )}
-        </View>
+        )}
+      </View>
       {!!validationError && (
         <ToastComponent
           toastMessage={validationError}
