@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../../assets/colors";
 
-export const style = {
+export const style = StyleSheet.create({
   headerText: {
     color: colors.black,
     fontSize: 16,
@@ -60,7 +62,7 @@ export const style = {
   formContainer: {
     flex: 1,
   },
-};
+});
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
   switch (str) {

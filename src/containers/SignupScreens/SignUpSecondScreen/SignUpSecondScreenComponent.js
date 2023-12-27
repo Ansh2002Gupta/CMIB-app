@@ -21,7 +21,7 @@ import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { validateEmail } from "../../../constants/commonFunctions";
 
-const SignUpSecondScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
+const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const { handleSignUpValidation, validationError, setValidationError } =

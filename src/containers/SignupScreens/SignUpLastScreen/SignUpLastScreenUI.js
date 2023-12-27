@@ -236,13 +236,11 @@ const SignUpLastScreenUI = ({
         <View>
           <HeaderTextWithLabelAndDescription
             label={intl.formatMessage({ id: "label.step_four" })}
-            {...(showContentHeader
-              ? {
-                  headerText: intl.formatMessage({
-                    id: "label.other_details",
-                  }),
-                }
-              : {})}
+            {...(showContentHeader && {
+              headerText: intl.formatMessage({
+                id: "label.other_details",
+              }),
+            })}
           />
         </View>
       )}

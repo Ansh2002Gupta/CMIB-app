@@ -243,13 +243,11 @@ const SignUpSecondScreenUI = ({
       {isWebView && (
         <HeaderTextWithLabelAndDescription
           label={intl.formatMessage({ id: "label.step_two" })}
-          {...(showContentHeader
-            ? {
-                headerText: intl.formatMessage({
-                  id: "label.basic_details",
-                }),
-              }
-            : {})}
+          {...(showContentHeader && {
+            headerText: intl.formatMessage({
+              id: "label.basic_details",
+            }),
+          })}
         />
       )}
       {!isWeb ? (

@@ -16,7 +16,7 @@ import {
   NUMBER_MIN_LENGTH,
 } from "../../../constants/constants";
 
-const SignUpThirdScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
+const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const initialContactDetails =
@@ -232,8 +232,8 @@ const SignUpThirdScreenComponent = ({ tabHandler, onClickGoToLogin }) => {
 };
 
 SignUpThirdScreenComponent.propTypes = {
-  tabHandler: PropTypes.func.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
+  tabHandler: PropTypes.func.isRequired,
 };
 
 export default SignUpThirdScreenComponent;
