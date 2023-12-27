@@ -10,7 +10,7 @@ import {
   RichEditor,
   RichToolbar,
 } from "react-native-pell-rich-editor";
-import styles from "./TextFormatComponent.style";
+import styles from './TextFormatComponent.style'
 
 const TextFormatComponent = ({ customLabelStyle, isMandatory, label }) => {
   const richText = useRef(null);
@@ -85,4 +85,5 @@ TextFormatComponent.propTypes = {
   isMandatory: PropTypes.bool,
   label: PropTypes.string,
 };
+
 export default TextFormatComponent;
