@@ -164,7 +164,10 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         }
       />
       <TouchableOpacity
-        style={styles.bottomView}
+        style={[
+          styles.bottomView,
+          Platform.OS !== "web" && styles.mobContainer,
+        ]}
         onPress={handleBottomViewNavigation}
       >
         <View style={styles.imageTextView}>
