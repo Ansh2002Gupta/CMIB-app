@@ -17,6 +17,7 @@ const UploadImage = ({
   imageUrl,
   intl,
   onDeleteImage,
+  isEditable,
   onImageUpload,
 }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -65,7 +66,7 @@ const UploadImage = ({
       style={[
         styles.contentContainerStyle,
         selectedImage && styles.selectedImageContainer,
-        imageUrl ? styles.showImageStyle : null,
+        imageUrl && !isEditable ? styles.showImageStyle : null,
         customContainerStyle,
       ]}
     >
@@ -82,7 +83,7 @@ const UploadImage = ({
               customTextStyle={styles.nameStyle}
               title={fileName || imageName}
             />
-            {!imageUrl && (
+            {(!imageUrl || isEditable) && (
               <TouchableOpacity onPress={onClickDeleteImage}>
                 <Image source={images.iconTrash} />
               </TouchableOpacity>
@@ -128,6 +129,7 @@ UploadImage.propTypes = {
   imageUrl: PropTypes.string,
   intl: PropTypes.object.isRequired,
   onDeleteImage: PropTypes.func,
+  isEditable: PropTypes.bool,
   onImageUpload: PropTypes.func,
 };
 

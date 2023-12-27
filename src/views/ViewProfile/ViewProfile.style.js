@@ -69,6 +69,9 @@ const style = {
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
+  cardStyle: {
+    marginTop: 24,
+  },
 };
 
 export default style;

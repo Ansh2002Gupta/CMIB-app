@@ -5,12 +5,38 @@ const style = {
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
+  loaderStyle: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: colors.backgroundColor,
+  },
   innerContainerStyle: {
     marginBottom: 16,
   },
   textContainer: {
     flexDirection: "row",
-    paddingBottom: 16,
+    paddingBottom: 24,
+    alignItems: "center",
+  },
+  editContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textStyle: {
+    paddingRight: 8,
+    paddingLeft: 8,
+    fontWeight: "600",
+    fontSize: 14,
+  },
+  cardContainer: {
+    paddingTop: 14,
+    paddingBottom: 14,
+  },
+  cardStyle: {
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 24,
   },
   headingText: {
     fontSize: 16,

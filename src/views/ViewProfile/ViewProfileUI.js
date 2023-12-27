@@ -95,7 +95,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
             <Image source={images.iconEdit} style={style.editIcon} />
           </TouchableOpacity>
         </View>
-        <CardComponent>
+        <CardComponent customStyle={style.cardStyle}>
           <DetailComponent details={details} />
         </CardComponent>
         {showEditModal && (
