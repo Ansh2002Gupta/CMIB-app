@@ -19,6 +19,7 @@ const ModuleList = ({ modules, onSelectItem }) => {
             style={styles.moduleListItem}
             key={module.key}
             onPress={() => !module?.subMenu?.length && onSelectItem(module)}
+            disabled={(module?.subMenu?.length)}
           >
             <CommonText
               customTextStyle={[
