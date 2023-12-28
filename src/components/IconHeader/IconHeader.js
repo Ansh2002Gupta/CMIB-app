@@ -8,8 +8,18 @@ import {
 
 import CommonText from "../CommonText";
 import styles from "./IconHeader.style";
+import useIsWebView from "../../hooks/useIsWebView";
 
-const IconHeader = ({headerText, iconLeft, iconRight, onPressLeftIcon, onPressRightIcon }) => {
+const IconHeader = ({
+  ActionComponent,
+  headerText,
+  iconLeft,
+  iconRight,
+  onPressLeftIcon,
+  onPressRightIcon,
+}) => {
+  const { isWebView } = useIsWebView();
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainerStyle}>
@@ -19,16 +29,21 @@ const IconHeader = ({headerText, iconLeft, iconRight, onPressLeftIcon, onPressRi
               <Image source={iconLeft} />
             </TouchableOpacity>
           )}
-          {iconRight && 
-          <TouchableOpacity onPress={onPressRightIcon}>
-          <Image source={iconRight} />
-          </TouchableOpacity>
-          }
+          {iconRight && (
+            <TouchableOpacity onPress={onPressRightIcon}>
+              <Image source={iconRight} />
+            </TouchableOpacity>
+          )}
         </View>
-        <CommonText
-        title={headerText}
-        customTextStyle={styles.formHeaderStyle}
-        />
+        <View style={styles.titleContainer}>
+          <CommonText
+            title={headerText}
+            customTextStyle={
+              isWebView ? styles.webHeaderStyle : styles.formHeaderStyle
+            }
+          />
+          {ActionComponent && ActionComponent}
+        </View>
       </View>
       <View style={styles.borderStyle} />
     </View>
@@ -36,6 +51,7 @@ const IconHeader = ({headerText, iconLeft, iconRight, onPressLeftIcon, onPressRi
 };
 
 IconHeader.propTypes = {
+  ActionComponent: PropTypes.element,
   headerText: PropTypes.string,
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,

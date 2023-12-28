@@ -15,6 +15,13 @@ const style = {
     alignSelf: "center",
     margin: 16,
   },
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignContent: "center",
+    margin: 8,
+  },
   formHeaderStyle: {
     color: colors.black,
     fontSize: 20,
@@ -24,6 +31,10 @@ const style = {
   borderStyle: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
+  },
+  webHeaderStyle: {
+    fontSize: 32,
+    fontWeight: "600",
   },
 };
 
