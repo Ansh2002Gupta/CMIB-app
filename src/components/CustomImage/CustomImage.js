@@ -4,23 +4,29 @@ import { Image, Platform } from "@unthinkable/react-core-components";
 
 import styles from "./customImage.style";
 
-const CustomImage = ({ Icon, isSvg, resizeMode, source, style }) => {
+const CustomImage = ({ alt, Icon, isSvg, resizeMode, source, style }) => {
   if (Platform.OS.toLowerCase() === "web") {
-    return <Image source={source} style={style} resizeMode={resizeMode} />;
+    return (
+      <Image source={source} style={style} resizeMode={resizeMode} alt={alt} />
+    );
   }
   if (isSvg) {
     return <Icon style={style} />;
   }
-  return <Image source={source} style={style} resizeMode={resizeMode} />;
+  return (
+    <Image source={source} style={style} resizeMode={resizeMode} alt={alt} />
+  );
 };
 
 CustomImage.defaultProps = {
+  alt: "",
   isSvg: false,
   resizeMode: "contain",
   style: styles.logo,
 };
 
 CustomImage.propTypes = {
+  alt: PropTypes.string,
   isSvg: PropTypes.bool,
   resizeMode: PropTypes.oneOf([
     "center",
@@ -29,9 +35,12 @@ CustomImage.propTypes = {
     "stretch",
     "repeat",
   ]),
-  source: PropTypes.oneOfType([PropTypes.string, PropTypes.object,PropTypes.func]).isRequired,
+  source: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]).isRequired,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  
 };
 
 export default CustomImage;

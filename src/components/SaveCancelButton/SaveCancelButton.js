@@ -30,7 +30,14 @@ const SaveCancelButton = ({
         onPress={onPressButtonOne}
         style={styles.disableButtonStyle}
       >
-        {!!hasIconLeft && <CustomImage Icon={images.iconArrowLeft} isSvg />}
+        {!!hasIconLeft && (
+          <CustomImage
+            alt={"left-arrow"}
+            Icon={images.iconArrowLeft}
+            isSvg
+            source={images.iconArrowLeft}
+          />
+        )}
         <CommonText
           customTextStyle={styles.disableTextStyle}
           title={buttonOneText}
@@ -54,7 +61,12 @@ const SaveCancelButton = ({
               title={buttonTwoText}
             />
             {!!hasIconRight && (
-              <CustomImage Icon={images.iconArrowRightWhite} isSvg />
+              <CustomImage
+                alt={"right-arrow"}
+                Icon={images.iconArrowRightWhite}
+                source={images.iconArrowRightWhite}
+                isSvg
+              />
             )}
           </>
         )}

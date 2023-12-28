@@ -38,7 +38,12 @@ const ButtonComponent = (props) => {
             title={title}
           />
           {hasIconRight && (
-            <CustomImage Icon={images.iconArrowRightWhite} isSvg />
+            <CustomImage
+              Icon={images.iconArrowRightWhite}
+              isSvg
+              source={images.iconArrowRightWhite}
+              alt={"right-arrow"}
+            />
           )}
         </>
       )}
