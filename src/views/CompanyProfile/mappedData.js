@@ -1,5 +1,4 @@
 export const mapApiDataToUI = (apiData) => {
-  console.log("API", apiData);
   const {
     name,
     entity,
