@@ -107,7 +107,6 @@ const PrivateHeader = ({
               </View>
             </View>
           </View>
-          <View style={styles.horizontalStyles} />
           {!!headerTextWithIcon && (
             <View style={styles.textHeader}>
               <CommonText

@@ -8,7 +8,8 @@ const styles = {
     paddingTop: 16,
     paddingBottom: 16,
     justifyContent: "space-between",
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    borderTopWidth:0,
     borderColor: colors.lightGrey,
   },
   containerWithoutBorder: {
@@ -21,8 +22,6 @@ const styles = {
   },
   webMainContainer: {
     flexWrap: "wrap",
-    borderColor: colors.lightGrey,
-    borderBottomWidth: 1,
     backgroundColor: colors.white,
   },
   webContainer: {
@@ -35,19 +34,16 @@ const styles = {
     paddingRight: 24,
     paddingBottom: 8,
   },
-  horizontalStyles: {
-    borderWidth: 0.5,
-    borderColor: colors.lightGrey,
-    width: "100%",
-  },
   textHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingTop: 8,
+    paddingTop: 10,
     paddingLeft: 24,
     paddingRight: 24,
     paddingBottom: 16,
+    borderWidth:1,
+    borderColor: colors.lightGrey,
     backgroundColor: colors.white,
   },
   icons: {
