@@ -1,7 +1,9 @@
-const styles = {
+import { StyleSheet } from "@unthinkable/react-core-components";
+
+const styles =StyleSheet.create( {
   containerStyle: {
-    marginTop: 0,
+    marginTop: 10,
   },  
-};
+});
 
 export default styles;

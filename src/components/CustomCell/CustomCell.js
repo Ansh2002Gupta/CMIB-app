@@ -2,15 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
-import CustomTouchableOpacity from "../CustomTouchableOpacity/";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CustomImage from "../CustomImage";
 import styles from "./CustomCell.style";
 
 const CustomCell = ({
-  disabled = false,
-  isLeft = false,
-  isRight = false,
-  isSvg = false,
+  disabled,
+  isSvg,
   leftSource,
   onPress,
   rightSource,
@@ -24,11 +22,11 @@ const CustomCell = ({
       style={{ ...styles.buttonContainer, ...style }}
       disabled={disabled}
     >
-      {!!isLeft && (
+      {!!leftSource && (
         <CustomImage Icon={leftSource} source={leftSource} isSvg={isSvg} />
       )}
       <CommonText customTextStyle={textStyle} title={title} />
-      {!!isRight && (
+      {!!rightSource && (
         <CustomImage Icon={rightSource} source={rightSource} isSvg={isSvg} />
       )}
     </CustomTouchableOpacity>
@@ -37,15 +35,26 @@ const CustomCell = ({
 
 CustomCell.defaultProps = {
   disabled: false,
-  iconLeft: null,
-  iconRight: null,
+  isSvg: false,
   style: {},
   textStyle: {},
+  onPress: ()=>{},
 };
 
 CustomCell.propTypes = {
   disabled: PropTypes.bool,
+  isSvg: PropTypes.bool,
+  leftSource: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func
+  ]),
   onPress: PropTypes.func.isRequired,
+  rightSource: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func
+  ]),
   title: PropTypes.string.isRequired,
 };
 

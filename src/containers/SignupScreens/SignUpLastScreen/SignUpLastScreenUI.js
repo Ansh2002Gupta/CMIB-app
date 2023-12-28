@@ -28,6 +28,7 @@ const SignUpLastScreenUI = (props) => {
     handleSuccessModal,
     handleToggle,
     intl,
+    isLoading,
     natureOfSupplier,
     onClickGoToLogin,
     onDeleteImage,
@@ -190,15 +191,16 @@ const SignUpLastScreenUI = (props) => {
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
+        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
+        displayLoader={isLoading}
+        hasIconLeft
+        isNextDisabled={!allFieldsFilled()}
         onPressButtonOne={onGoBack}
         onPressButtonTwo={() => handleSuccessModal(true)}
-        isNextDisabled={!allFieldsFilled()}
-        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
-        hasIconLeft
       />
       {!!errorMessage && (
         <ToastComponent
-          toastMessage={validationError || errorWhileDeletion}
+          toastMessage={errorMessage}
           onDismiss={handleDismissToast}
         />
       )}
@@ -212,6 +214,7 @@ SignUpLastScreenUI.defaultProps = {
   handleDismissToast: () => {},
   onDeleteImage: () => {},
   onImageUpload: () => {},
+  signUpError: "",
   validationError: "",
 };
 
@@ -227,13 +230,15 @@ SignUpLastScreenUI.propTypes = {
   handleSuccessModal: PropTypes.func.isRequired,
   handleToggle: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   natureOfSupplier: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
-  onDeleteImage: PropTypes.func.isRequired,
+  onDeleteImage: PropTypes.func,
   onGoBack: PropTypes.func.isRequired,
   onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
+  signUpError: PropTypes.string,
   socialMediaLinks: PropTypes.object.isRequired,
   validationError: PropTypes.string,
   website: PropTypes.string.isRequired,
