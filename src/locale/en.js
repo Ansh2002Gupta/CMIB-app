@@ -202,6 +202,7 @@ const locale = {
   "label.error_password": "Password doesn't match",
   "label.old_password_placeholder": "Enter your old password",
   "label.edit_company_profile": "Edit Company Profile",
+  "label.save_changes": "Save Changes",
 };
 
 export default locale;

@@ -33,6 +33,10 @@ const style = {
     paddingTop: 14,
     paddingBottom: 14,
   },
+  buttonContainer: {
+    padding: 16,
+    backgroundColor: colors.backgroundColor,
+  },
   cardStyle: {
     marginLeft: 16,
     marginRight: 16,

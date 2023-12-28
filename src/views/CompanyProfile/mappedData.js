@@ -1,4 +1,11 @@
-export const mapApiDataToUI = (apiData) => {
+import {
+  COMPANY_TYPE_OPTIONS,
+  ENTITY_OPTIONS,
+  NATURE_OF_SUPPLIER,
+  SALUTATION_OPTIONS,
+} from "../../constants/constants";
+
+export const mapApiDataToUI = (apiData, industryOptions) => {
   const {
     name,
     entity,
@@ -10,6 +17,7 @@ export const mapApiDataToUI = (apiData) => {
     telephone_number,
     address,
     email,
+    type,
     contact_person_salutation,
     contact_person_name,
     contact_person_designation,
@@ -23,52 +31,87 @@ export const mapApiDataToUI = (apiData) => {
     company_logo,
   } = apiData;
 
+  console.log("INDU", industryOptions);
   return {
     companyDetail: [
-      { title: "label.company_name", value: name },
-      { title: "label.entity", value: entity },
-      { title: "label.firm_registration_no", value: frn_number, isMajor: true },
+      { label: "label.company_name", value: name },
       {
-        title: "label.no_of_partners",
+        label: "label.entity",
+        value: entity,
+        isDropdown: true,
+        options: ENTITY_OPTIONS,
+      },
+      { label: "label.firm_registration_no", value: frn_number, isMajor: true },
+      {
+        label: "label.no_of_partners",
         value: number_of_partner,
         isMinor: true,
       },
-      { title: "label.current_industry", value: industry?.name },
-      { title: "label.address_for_correspondence", value: address },
-      { title: "label.email_id", value: email },
-      { title: "label.isd_std_code", value: std_country_code, isMinor: true },
-      { title: "label.telephone_no", value: telephone_number, isMajor: true },
+      {
+        label: "label.current_industry",
+        value: industry?.name,
+        isDropdown: true,
+        options: industryOptions,
+        labelField: "name",
+        valueField: "name",
+        inputKey: "id",
+      },
+      {
+        label: "label.address_for_correspondence",
+        value: address,
+        isMultiline: true,
+      },
+      { label: "label.email_id", value: email },
+      { label: "label.isd_std_code", value: std_country_code, isMinor: true },
+      { label: "label.telephone_no", value: telephone_number, isMajor: true },
     ],
     contactPersonInfo: [
       {
-        title: "label.salutation",
+        label: "label.salutation",
         value: contact_person_salutation,
         isMinor: true,
+        isDropdown: true,
+        options: SALUTATION_OPTIONS,
       },
       {
-        title: "label.contact_person_name",
+        label: "label.contact_person_name",
         value: contact_person_name,
         isMajor: true,
       },
       {
-        title: "label.contact_personal_designation",
+        label: "label.contact_personal_designation",
         value: contact_person_designation,
       },
       {
-        title: "label.mobile_number",
+        label: "label.mobile_number",
         value:
           contact_person_mobile_country_code +
           "-" +
           contact_person_mobile_number,
       },
-      { title: "label.email_id", value: contact_person_email },
+      { label: "label.email_id", value: contact_person_email },
     ],
     companyProfile: [
-      { title: "label.short_profile_of_the_company", value: company_details },
+      {
+        label: "label.short_profile_of_the_company",
+        value: company_details,
+        isMultiline: true,
+      },
     ],
     otherDetails: [
-      { title: "label.website", value: website, isLink: true },
-      { title: "label.nature_of_supplier", value: nature_of_supplier },
+      { label: "label.website", value: website, isLink: true },
+      {
+        label: "label.nature_of_supplier",
+        value: nature_of_supplier,
+        isDropdown: true,
+        options: NATURE_OF_SUPPLIER,
+      },
+      {
+        label: "label.company_type",
+        value: type,
+        isDropdown: true,
+        options: COMPANY_TYPE_OPTIONS,
+      },
     ],
     sourceOfInfo: source_of_information,
     companyLogo: company_logo,

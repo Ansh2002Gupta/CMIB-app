@@ -9,7 +9,7 @@ import CustomTextInput from "../CustomTextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./DetailComponent.style";
 
-const DetailComponent = ({ details, headerText, isEditable }) => {
+const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
@@ -51,19 +51,27 @@ const DetailComponent = ({ details, headerText, isEditable }) => {
               <CustomTextInput
                 value={detail.value}
                 customStyle={style.inputStyle}
-                label={detail.title}
+                label={intl.formatMessage({ id: detail.label })}
                 isDropdown={detail.isDropdown}
                 isCounterInput={detail.isCounterInput}
                 options={detail.options || []}
                 isMobileNumber={detail.isMobileNumber}
                 isMultiline={detail.isMultiline}
                 isMandatory
+                height={detail.isMultiline && 84}
+                valueField={detail.valueField || "label"}
+                labelField={detail.labelField || "label"}
+                inputKey={detail.inputKey || "value"}
+                onChangeValue={(val) => handleChange(detail.label, val)}
+                onChangeText={(val) => {
+                  handleChange(detail.label, val);
+                }}
               />
             ) : (
               <>
                 <View style={style.titleContainer}>
                   <CommonText
-                    title={intl.formatMessage({ id: detail.title })}
+                    title={intl.formatMessage({ id: detail.label })}
                     customTextStyle={style.titleStyle}
                   />
                   <CommonText title=" *" customTextStyle={style.starStyle} />

@@ -16,8 +16,8 @@ const UploadImage = ({
   imageName,
   imageUrl,
   intl,
-  onDeleteImage,
   isEditable,
+  onDeleteImage,
   onImageUpload,
 }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -119,17 +119,18 @@ UploadImage.defaultProps = {
   customContainerStyle: {},
   onDeleteImage: () => {},
   onImageUpload: () => {},
+  isEditable: false,
   imageUrl: "",
   imageName: "",
 };
 
 UploadImage.propTypes = {
   customContainerStyle: PropTypes.object,
+  isEditable: PropTypes.bool,
   imageName: PropTypes.string,
   imageUrl: PropTypes.string,
   intl: PropTypes.object.isRequired,
   onDeleteImage: PropTypes.func,
-  isEditable: PropTypes.bool,
   onImageUpload: PropTypes.func,
 };
 
