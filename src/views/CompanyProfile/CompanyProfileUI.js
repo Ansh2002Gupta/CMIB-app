@@ -142,9 +142,10 @@ const CompanyProfileUI = (props) => {
                 />
                 {isEditProfile ? (
                   <FlatList
-                    contentContainerStyle={style.contentContainerStyle}
+                    contentContainerStyle={style.contentStyle}
                     data={options}
                     renderItem={renderItem}
+                    numColumns={isWebView && 2}
                     keyExtractor={(item) => item.id}
                   />
                 ) : (

@@ -10,6 +10,9 @@ const style = {
     justifyContent: "center",
     backgroundColor: colors.backgroundColor,
   },
+  contentStyle: {
+    paddingBottom: 8,
+  },
   innerContainerStyle: {
     marginBottom: 16,
   },
