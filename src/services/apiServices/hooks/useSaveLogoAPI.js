@@ -18,7 +18,10 @@ const useSaveLogo = () => {
       };
 
       const res = await Http.post(`company/save-logo`, file, headers);
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+      if (
+        res.code === STATUS_CODES.SUCCESS_STATUS ||
+        res.status === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setUploadStatus(API_STATUS.SUCCESS);
         setFileUploadResult(res.data);
         successCallback();

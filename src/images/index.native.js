@@ -11,10 +11,8 @@ import profileOutline from "../../public/images/profile-outline.png";
 import iconWalkthroughSignUpOne from "../../public/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
 import iconCheckbox from "../../public/images/svg/icon_check.svg";
 import iconUnCheckbox from "../../public/images/svg/icon_uncheck.svg";
-import iconArrowRightWhite from "../../public/images/iconArrowRightWhite/iconArrowRightWhite.png";
 import iconWalkthroughSignUpTwo from "../../public/images/iconWalkthroughSignUpTwo/iconWalkthroughSignUpTwo.png";
 import iconDownArrow from "../../public/images/iconDownArrow/iconDownArrow.png";
-import iconArrowLeft from "../../public/images/iconArrowLeft/iconArrowLeft.png";
 import iconWalkthroughSignUpThree from "../../public/images/iconWalkthroughSignUpThree/iconWalkthroughSignUpThree.png";
 import iconWalkthroughSignUpLast from "../../public/images/iconWalkthroughSignUpLast/iconWalkthroughSignUpLast.png";
 import iconDivider from "../../public/images/iconDivider/iconDivider.png";
@@ -57,24 +55,36 @@ import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/i
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
-import iconTick from "../../public/images/iconTick/iconTick.png";
-import iconWarning from "../../public/images/svg/iconWarning.svg";
+import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLogowhite.png";
+import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
+import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
+import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
+import iconClose from "../../public/images/iconClose/iconClose.png";
+import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
-import iconSearch from "../../public/images/svg/iconSearch.svg"
-import iconFilter from "../../public/images/svg/iconFilter.svg"
-import iconMore from "../../public/images/svg/iconMore.svg"
-import iconArrowDown from "../../public/images/svg/iconArrowDown.svg"
-import iconArrowUp from "../../public/images/svg/iconArrowUp.svg"
-import iconAdd from "../../public/images/svg/iconAdd.svg"
+import iconSearch from "../../public/images/svg/iconSearch.svg";
+import iconFilter from "../../public/images/svg/iconFilter.svg";
+import iconMore from "../../public/images/svg/iconMore.svg";
+import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
+import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
+import iconAdd from "../../public/images/svg/iconAdd.svg";
 import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
+import iconArrowRightWhite from "../../public/images/svg/iconArrowRightWhite.svg";
+import iconArrowLeft from "../../public/images/svg/iconArrowLeft.svg";
+import iconWarning from "../../public/images/svg/iconWarning.svg";
+import iconTick from "../../public/images/iconTick/iconTick.png";
 
 const images = {
+  iconArrowUp,
+  iconArrowDown,
+  iconArrowDown2,
   avatar,
   logo,
   sun,
   moon,
   flagFr,
   flagUk,
+  iconLeftArrow,
   homeSolid,
   homeOutline,
   profileSolid,
@@ -97,6 +107,7 @@ const images = {
   iconEyeSlash,
   iconSuccess,
   iconMenu,
+  iconClose,
   iconNotification,
   iconProfile,
   iconLogout,
@@ -111,6 +122,7 @@ const images = {
   iconLinkedin,
   iconTelegram,
   iconTwitter,
+  iconTick,
   iconYoutube,
   iconCmibLogo,
   ticketIcon,
@@ -128,14 +140,14 @@ const images = {
   iconHiringProcess,
   iconDownloadDetails,
   iconDrawer,
-  iconTick,
+  iconCmibLogoWhite,
+  iconRightArrow,
+  iconFooterGlobal,
   iconWarning,
   iconSquareEdit,
   iconSearch,
   iconFilter,
   iconMore,
-  iconArrowDown,
-  iconArrowUp,
   iconAdd,
   iconStepperDone,
 };
