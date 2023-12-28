@@ -7,26 +7,48 @@ const styles = {
     paddingLeft: 16,
     paddingTop: 16,
     paddingBottom: 16,
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderColor: colors.lightGrey,
   },
-  sideBarVisible:{
-    justifyContent:"flex-end"
+  containerWithoutBorder: {
+    flexDirection: "row",
+    paddingRight: 16,
+    paddingLeft: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
+    justifyContent: "space-between",
   },
-  sideBarNotVisible:{
-    justifyContent:"space-between"
+  webMainContainer: {
+    flexWrap: "wrap",
+    borderColor: colors.lightGrey,
+    borderBottomWidth: 1,
+    backgroundColor: colors.white,
   },
   webContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems:"center",
+    alignItems: "center",
+    flexWrap: "wrap",
     paddingTop: 16,
-    paddingBottom: 20,
     paddingLeft: 24,
     paddingRight: 24,
-    flexWrap:"wrap"
+    paddingBottom: 8,
   },
-  borderStyling: {
+  horizontalStyles: {
+    borderWidth: 0.5,
     borderColor: colors.lightGrey,
-    borderWidth: 1,
+    width: "100%",
+  },
+  textHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: 8,
+    paddingLeft: 24,
+    paddingRight: 24,
+    paddingBottom: 16,
+    backgroundColor: colors.white,
   },
   icons: {
     width: 24,
@@ -34,6 +56,7 @@ const styles = {
   },
   textContainer: {
     flexDirection: "row",
+    alignItems: "center",
   },
   profileContainer: {
     marginTop: 16,
@@ -63,33 +86,50 @@ const styles = {
   iconNotification: {
     width: 24,
     height: 24,
+    cursor: "pointer",
   },
   overView: {
     color: colors.darkGreySecond,
     fontSize: 14,
     paddingLeft: 8,
-    paddingTop: 8,
   },
   nameText: {
     color: colors.darkBlackSecond,
     fontSize: 14,
     fontWeight: "600",
-    paddingTop: 8,
-  },
-  menuButton: {
-    paddingRight: 20,
-    paddingTop: 4,
+    marginLeft: 8,
   },
   notficationIconView: {
     flexDirection: "row",
-    alignItems:"center"
+    alignItems: "center",
   },
   profileView: {
     flexDirection: "row",
-    marginLeft: 25,
+    marginLeft: 10,
   },
-  profileNameSection:{
+  profileNameSection: {
     flexDirection: "row",
-  }
+  },
+  formHeaderStyle: {
+    color: colors.black,
+    fontSize: 20,
+    fontWeight: "600",
+    marginTop: 10,
+  },
+  headerLeftSection: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  editButton: {
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    flexDirection: "row",
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 12,
+    paddingBottom: 12,
+    alignItems: "center",
+  },
 };
 export default styles;

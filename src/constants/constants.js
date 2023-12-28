@@ -143,3 +143,20 @@ export const STEPPER_STATE = {
   DONE: "done",
   INACTIVE: "inActive",
 };
+
+export const PATH_TO_HEADER_TEXT = {
+  "/company-profile": {
+    text: "Company Profile",
+    backButton: true,
+    editButton: true,
+  },
+  "/view-profile": {
+    text: "View Profile",
+    backButton: true,
+    editButton: false,
+  },
+  "/profile": { text: "Account", backButton: false, editButton: false },
+  "/round-one": { text: "Round 1", backButton: false, editButton: false },
+  // Add more paths as needed
+};
+

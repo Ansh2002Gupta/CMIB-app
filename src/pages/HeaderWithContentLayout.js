@@ -21,7 +21,6 @@ import Styles from "./HeaderWithContentLayout.style";
 function HeaderWithContentLayout() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [menuIconVisible, setMenuIconVisible] = useState(true);
 
   useEffect(() => {
     const checkAuthToken = async () => {
@@ -38,14 +37,6 @@ function HeaderWithContentLayout() {
     };
     checkAuthToken();
   }, []);
-
-  useEffect(() => {
-    if (isSideBarVisible) {
-      setMenuIconVisible(false);
-    } else {
-      setMenuIconVisible(true);
-    }
-  }, [isSideBarVisible]);
 
   const { isWebView } = useIsWebView();
   const windowDimensions = useWindowDimensions();
@@ -88,8 +79,7 @@ function HeaderWithContentLayout() {
       <MainLayout
         header={
           <Header
-            toggleSideBar={toggleSideBar}
-            menuIconVisible={menuIconVisible}
+            onPressLeftIcon={toggleSideBar}
           />
         }
         bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
