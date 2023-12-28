@@ -18,19 +18,19 @@ function App() {
 
   return (
     // <Provider store={store}>
-      <MediaQueryProvider breakpoints={breakpoints}>
-        <ThemeProvider {...theme}>
-          <IntlProvider
-            messages={intl[localeState?.locale]}
-            locale={localeState?.locale}
-            defaultLocale="en"
-          >
-            <Router>
-              <Routes />
-            </Router>
-          </IntlProvider>
-        </ThemeProvider>
-      </MediaQueryProvider>
+    <MediaQueryProvider breakpoints={breakpoints}>
+      <ThemeProvider {...theme}>
+        <IntlProvider
+          messages={intl[localeState?.locale]}
+          locale={localeState?.locale}
+          defaultLocale="en"
+        >
+          <Router basename="/app">
+            <Routes />
+          </Router>
+        </IntlProvider>
+      </ThemeProvider>
+    </MediaQueryProvider>
     // </Provider>
   );
 }
