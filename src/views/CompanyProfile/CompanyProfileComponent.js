@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 
-import useGetCompanyProfileAPI from "../../services/apiServices/hooks/CompanyProfile/useGetCompanyProfileAPI";
-import { navigations } from "../../constants/routeNames";
 import CompanyProfileUI from "./CompanyProfileUI";
-import { mapApiDataToUI } from "./mappedData";
+import useGetCompanyProfileAPI from "../../services/apiServices/hooks/CompanyProfile/useGetCompanyProfileAPI";
 import useIndustryTypes from "../../services/apiServices/hooks/useIndustryTypes";
+import { navigations } from "../../constants/routeNames";
+import { mapApiDataToUI } from "./mappedData";
 import { INTEREST_OPTIONS } from "../../constants/constants";
 
 const CompanyProfileComponent = () => {
