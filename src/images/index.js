@@ -18,8 +18,6 @@ const iconCheckedCheckbox =
   "/images/iconCheckedCheckbox/iconCheckedCheckbox.png";
 const iconUncheckedCheckbox =
   "images/iconUncheckedCheckbox/iconUncheckedCheckbox.png";
-const iconArrowRightWhite =
-  "images/iconArrowRightWhite/iconArrowRightWhite.png";
 const iconWalkthroughSignUpTwo =
   "/images/iconWalkthroughSignUpTwo/iconWalkthroughSignUpTwo.png";
 const iconDownArrow = "/images/iconDownArrow/iconDownArrow.png";
@@ -84,6 +82,7 @@ const iconArrowDown = "images/svg/iconArrowDown.svg";
 const iconArrowUp = "images/svg/iconArrowUp.svg";
 const iconAdd = "images/svg/iconAdd.svg";
 const iconStepperDone = "images/svg/iconStepperDone.svg";
+const iconArrowRightWhite = "images/svg/iconArrowRightWhite.svg";
 
 const images = {
   avatar,

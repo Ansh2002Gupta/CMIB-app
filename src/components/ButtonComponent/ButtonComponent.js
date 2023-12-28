@@ -7,6 +7,7 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpa
 import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./ButtonComponent.style";
+import CustomImage from "../CustomImage";
 
 const ButtonComponent = (props) => {
   const {
@@ -36,7 +37,9 @@ const ButtonComponent = (props) => {
             customTextStyle={[styles.titleStyle, customTitleStyle]}
             title={title}
           />
-          {hasIconRight && <Image source={images.iconArrowRightWhite} />}
+          {hasIconRight && (
+            <CustomImage Icon={images.iconArrowRightWhite} isSvg />
+          )}
         </>
       )}
     </CustomTouchableOpacity>
