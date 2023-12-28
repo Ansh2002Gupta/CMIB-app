@@ -84,6 +84,7 @@ export const mapApiDataToUI = (apiData, industryOptions) => {
       },
       {
         label: "label.mobile_number",
+        isMobileNumber: true,
         value:
           contact_person_mobile_country_code +
           "-" +

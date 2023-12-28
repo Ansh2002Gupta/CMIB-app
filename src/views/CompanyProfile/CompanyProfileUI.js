@@ -18,6 +18,7 @@ import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import UploadImage from "../../components/UploadImage/UploadImage";
+import useIsWebView from "../../hooks/useIsWebView";
 import { sourceOfInfo } from "./mappedData";
 import images from "../../images";
 import style from "./CompanyProfile.style";
@@ -35,6 +36,7 @@ const CompanyProfileUI = (props) => {
     onGoBack,
     profileResult,
   } = props;
+  const { isWebView } = useIsWebView();
 
   const renderCardWithDetails = (
     handleChange,
@@ -71,9 +73,30 @@ const CompanyProfileUI = (props) => {
     );
   };
 
+  const renderEditActionComponent = () => {
+    if (isWebView && !isEditProfile) {
+      return (
+        <CardComponent customStyle={style.cardContainer}>
+          <TouchableOpacity
+            style={style.editContainer}
+            onPress={() => handleEdit(!isEditProfile)}
+          >
+            <Image source={images.iconSquareEdit} />
+            <CommonText
+              customTextStyle={style.textStyle}
+              title={intl.formatMessage({ id: "label.edit" })}
+            />
+          </TouchableOpacity>
+        </CardComponent>
+      );
+    }
+    return null;
+  };
+
   return (
     <>
       <IconHeader
+        ActionComponent={renderEditActionComponent()}
         intl={intl}
         headerText={
           isEditProfile
@@ -154,7 +177,7 @@ const CompanyProfileUI = (props) => {
               </CardComponent>
             </View>
           </ScrollView>
-          {!isEditProfile ? (
+          {!isEditProfile && !isWebView && (
             <View style={style.buttonContainer}>
               <CardComponent customStyle={style.cardContainer}>
                 <TouchableOpacity
@@ -171,7 +194,8 @@ const CompanyProfileUI = (props) => {
                 </TouchableOpacity>
               </CardComponent>
             </View>
-          ) : (
+          )}
+          {isEditProfile && (
             <View style={style.buttonContainer}>
               <SaveCancelButton
                 buttonOneText={intl.formatMessage({ id: "label.cancel" })}
