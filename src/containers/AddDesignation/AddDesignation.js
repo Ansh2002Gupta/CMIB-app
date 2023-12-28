@@ -46,6 +46,10 @@ const AddDesignation = ({ handleCancelButton }) => {
     },
   ];
 
+  const customStyles = {
+    rightButtonStyle: styles.rightButtonStyle, 
+  };
+
   return (
     <ModalWithTitleButton
       heading={intl.formatMessage({ id: "label.add_designation" })}
@@ -55,6 +59,7 @@ const AddDesignation = ({ handleCancelButton }) => {
       onClickRightButton={handleSaveButton}
       rightLabelTxt={intl.formatMessage({ id: "label.save" })}
       rightButtonStyle={styles.rightButtonStyle}
+      customStyles={customStyles}
     >
       <MultiRow rows={addDesignation} style={styles.parentStyle} />
     </ModalWithTitleButton>

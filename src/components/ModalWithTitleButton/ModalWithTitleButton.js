@@ -7,22 +7,25 @@ import styles from "./ModalWithTitleButton.style";
 
 const ModalWithTitleButton = ({
   children,
-  containerStyle,
+  customStyles = {},
   heading,
   enableBottomButton,
   leftLabelTxt,
   leftButtonLeftImage,
   leftButtonRightImage,
-  leftButtonStyle,
-  leftTextStyle,
   onClickLeftButton,
   onClickRightButton,
   rightButtonLeftImage,
   rightButtonRightImage,
   rightLabelTxt,
-  rightButtonStyle,
-  rightTextStyle,
 }) => {
+  const {
+    containerStyle = {},
+    leftButtonStyle = {},
+    leftTextStyle = {},
+    rightButtonStyle = {},
+    rightTextStyle = {},
+  } = customStyles;
   return (
     <CustomModal
       headerText={heading}
@@ -55,21 +58,23 @@ const ModalWithTitleButton = ({
 
 ModalWithTitleButton.propTypes = {
   children: PropTypes.node,
-  containerStyle: PropTypes.object,
+  customStyles: PropTypes.shape({
+    containerStyle: PropTypes.object,
+    leftButtonStyle: PropTypes.object,
+    leftTextStyle: PropTypes.object,
+    rightButtonStyle: PropTypes.object,
+    rightTextStyle: PropTypes.object,
+  }),
   heading: PropTypes.string,
-  isTwoEnable: PropTypes.bool,
+  enableBottomButton: PropTypes.bool,
   leftLabelTxt: PropTypes.string,
   leftButtonLeftImage: PropTypes.node,
   leftButtonRightImage: PropTypes.node,
-  leftButtonStyle: PropTypes.object,
-  leftTextStyle: PropTypes.object,
   onClickLeftButton: PropTypes.func,
   onClickRightButton: PropTypes.func,
   rightButtonLeftImage: PropTypes.node,
   rightButtonRightImage: PropTypes.node,
   rightLabelTxt: PropTypes.string,
-  rightButtonStyle: PropTypes.object,
-  rightTextStyle: PropTypes.object,
 };
 
 export default ModalWithTitleButton;
