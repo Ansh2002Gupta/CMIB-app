@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
+import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
 import images from "../../images";
 import colors from "../../assets/colors";
@@ -29,7 +30,14 @@ const SaveCancelButton = ({
         onPress={onPressButtonOne}
         style={styles.disableButtonStyle}
       >
-        {!!hasIconLeft && <Image source={images.iconArrowLeft} />}
+        {!!hasIconLeft && (
+          <CustomImage
+            alt={"left-arrow"}
+            Icon={images.iconArrowLeft}
+            isSvg
+            source={images.iconArrowLeft}
+          />
+        )}
         <CommonText
           customTextStyle={styles.disableTextStyle}
           title={buttonOneText}
@@ -42,17 +50,26 @@ const SaveCancelButton = ({
           styles.secondButotnStyle,
           isNextDisabled && styles.disableStyle,
         ]}
-        disabled={isNextDisabled}
+        disabled={isNextDisabled || displayLoader}
       >
         {displayLoader ? (
           <ActivityIndicator color={colors.white} />
         ) : (
-          <CommonText
-            customTextStyle={styles.titleStyle}
-            title={buttonTwoText}
-          />
+          <>
+            <CommonText
+              customTextStyle={styles.titleStyle}
+              title={buttonTwoText}
+            />
+            {!!hasIconRight && (
+              <CustomImage
+                alt={"right-arrow"}
+                Icon={images.iconArrowRightWhite}
+                source={images.iconArrowRightWhite}
+                isSvg
+              />
+            )}
+          </>
         )}
-        {!!hasIconRight && <Image source={images.iconArrowRightWhite} />}
       </TouchableOpacity>
     </View>
   );
