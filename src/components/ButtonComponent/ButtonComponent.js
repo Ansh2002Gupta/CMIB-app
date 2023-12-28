@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ActivityIndicator, Image } from "@unthinkable/react-core-components";
+import { ActivityIndicator } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity";
+import CustomImage from "../CustomImage";
 import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./ButtonComponent.style";
-import CustomImage from "../CustomImage";
 
 const ButtonComponent = (props) => {
   const {

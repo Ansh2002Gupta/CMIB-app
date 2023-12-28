@@ -13,7 +13,6 @@ import iconCheckedCheckbox from "../../public/images/iconCheckedCheckbox/iconChe
 import iconUncheckedCheckbox from "../../public/images/iconUncheckedCheckbox/iconUncheckedCheckbox.png";
 import iconWalkthroughSignUpTwo from "../../public/images/iconWalkthroughSignUpTwo/iconWalkthroughSignUpTwo.png";
 import iconDownArrow from "../../public/images/iconDownArrow/iconDownArrow.png";
-import iconArrowLeft from "../../public/images/iconArrowLeft/iconArrowLeft.png";
 import iconWalkthroughSignUpThree from "../../public/images/iconWalkthroughSignUpThree/iconWalkthroughSignUpThree.png";
 import iconWalkthroughSignUpLast from "../../public/images/iconWalkthroughSignUpLast/iconWalkthroughSignUpLast.png";
 import iconDivider from "../../public/images/iconDivider/iconDivider.png";
@@ -67,6 +66,7 @@ import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
 import iconAdd from "../../public/images/svg/iconAdd.svg";
 import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
 import iconArrowRightWhite from "../../public/images/svg/iconArrowRightWhite.svg";
+import iconArrowLeft from "../../public/images/svg/iconArrowLeft.svg";
 
 const images = {
   avatar,
