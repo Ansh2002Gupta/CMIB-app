@@ -1,20 +1,18 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-const styles = {
+const styles = StyleSheet.create({
   buttonContainer: {
     borderRadius: 8,
+    borderWidth: 1,
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
-    borderWidth: 1,
     flexDirection: "row",
-    minWidth: 100,
-    minHeight: 48,
+    padding: 14,
     justifyContent: "center",
     alignItems: "center",
   },
-  disabledStyle: {
-    opacity: 0.5,
-  },
-};
+});
 
 export default styles;
