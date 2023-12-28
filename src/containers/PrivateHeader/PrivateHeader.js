@@ -119,7 +119,7 @@ const PrivateHeader = ({
                   <Image source={images.iconEdit} style={styles.icons} />
                   <CommonText
                     title="Edit"
-                    customTextStyle={{ marginLeft: 8 }}
+                    customTextStyle={styles.editText}
                   />
                 </TouchableOpacity>
               )}

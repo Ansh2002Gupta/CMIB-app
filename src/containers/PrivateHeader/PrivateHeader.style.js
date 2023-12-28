@@ -67,6 +67,9 @@ const styles = {
   detailContainer: {
     marginLeft: 12,
   },
+  editText:{
+    marginLeft:8
+  },
   fullNameStyle: {
     fontSize: 14,
     fontWeight: "600",
