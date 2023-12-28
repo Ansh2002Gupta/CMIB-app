@@ -17,6 +17,14 @@ const CompanyProfileComponent = () => {
   const [profileData, setProfileData] = useState(null);
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
 
+  const [options, setOptions] = useState(
+    INTEREST_OPTIONS.map((option) => ({
+      ...option,
+      title: intl.formatMessage({ id: option.messageId }),
+      isSelected: false,
+    }))
+  );
+
   useEffect(() => {
     onGetProfile();
   }, []);
@@ -26,14 +34,6 @@ const CompanyProfileComponent = () => {
       setProfileData(mapApiDataToUI(profileResult, industryTypeResult));
     }
   }, [profileResult, industryTypeResult]);
-
-  const [options, setOptions] = useState(
-    INTEREST_OPTIONS.map((option) => ({
-      ...option,
-      title: intl.formatMessage({ id: option.messageId }),
-      isSelected: false,
-    }))
-  );
 
   const onGoBack = () => {
     if (isEditProfile) {
@@ -83,10 +83,10 @@ const CompanyProfileComponent = () => {
       handleContactPersonInfo={handleContactPersonInfo}
       handleCompanyProfile={handleCompanyProfile}
       handleEdit={handleEdit}
-      options={options}
       intl={intl}
       isLoading={isLoading}
       isEditProfile={isEditProfile}
+      options={options}
       onGoBack={onGoBack}
       profileResult={profileData}
     />

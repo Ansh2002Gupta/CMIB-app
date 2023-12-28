@@ -10,12 +10,12 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CheckBox from "../../components/CheckBox/CheckBox";
-import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
 import CardComponent from "../../components/CardComponent/CardComponent";
+import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import { sourceOfInfo } from "./mappedData";
@@ -31,9 +31,9 @@ const CompanyProfileUI = (props) => {
     intl,
     isEditProfile,
     isLoading,
+    options,
     onGoBack,
     profileResult,
-    options,
   } = props;
 
   const renderCardWithDetails = (
@@ -187,11 +187,11 @@ const CompanyProfileUI = (props) => {
 };
 
 CompanyProfileUI.propTypes = {
-  options: PropTypes.array.isRequired,
   handleEdit: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onGoBack: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired,
   profileResult: PropTypes.object,
 };
 
