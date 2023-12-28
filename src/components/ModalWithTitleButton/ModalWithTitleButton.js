@@ -26,6 +26,7 @@ const ModalWithTitleButton = ({
     rightButtonStyle = {},
     rightTextStyle = {},
   } = customStyles;
+  
   return (
     <CustomModal
       headerText={heading}
