@@ -31,7 +31,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   } = useValidateSignUp();
   const {
     handleSignUp,
-    isLoading: signUpLoader,
+    isLoading: isRegisteringUser,
     setSignUpError,
     signUpError,
   } = useSignUpUser();
@@ -251,7 +251,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       handleToggle={handleToggle}
       handleSuccessModal={handleSuccessModal}
       intl={intl}
-      isLoading={isLoading || signUpLoader}
+      isLoading={isLoading || isRegisteringUser}
       natureOfSupplier={natureOfSupplier}
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}
