@@ -211,18 +211,20 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
 
   return (
     <SignUpSecondScreenUI
-      allFieldsFilled={allFieldsFilled}
-      errors={errors}
-      formData={formData}
-      handleDismissToast={handleDismissToast}
-      handleInputChange={handleInputChange}
-      industryOptions={industryTypeResult}
-      intl={intl}
-      isLoading={isLoading}
-      onGoBack={onGoBack}
-      onClickNext={onClickNext}
-      stateOptions={stateResult}
-      validationError={validationError}
+      {...{
+        allFieldsFilled,
+        errors,
+        formData,
+        handleDismissToast,
+        handleInputChange,
+        industryOptions: industryTypeResult,
+        intl,
+        isLoading: isLoading,
+        onGoBack,
+        onClickNext,
+        stateOptions: stateResult,
+        validationError,
+      }}
     />
   );
 };
