@@ -24,6 +24,7 @@ const SignUpThirdScreenUI = (props) => {
     handleDismissToast,
     handleInputChange,
     intl,
+    isLoading,
     onClickNext,
     onGoBack,
     validationError,
@@ -146,12 +147,13 @@ const SignUpThirdScreenUI = (props) => {
       <View style={style.buttonContainer}>
         <SaveCancelButton
           buttonOneText={intl.formatMessage({ id: "label.back" })}
-          onPressButtonOne={onGoBack}
-          onPressButtonTwo={onClickNext}
+          buttonTwoText={intl.formatMessage({ id: "label.next" })}
+          displayLoader={isLoading}
+          hasIconLeft
           hasIconRight
           isNextDisabled={!allFieldsFilled()}
-          buttonTwoText={intl.formatMessage({ id: "label.next" })}
-          hasIconLeft
+          onPressButtonOne={onGoBack}
+          onPressButtonTwo={onClickNext}
         />
       </View>
       {!!validationError && (
@@ -171,6 +173,7 @@ SignUpThirdScreenUI.propTypes = {
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   onClickNext: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   validationError: PropTypes.string,
