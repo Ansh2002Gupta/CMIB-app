@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 import CustomModal from "../../components/CustomModal";
 import TwoRowButton from "../../components/TwoRowButton";
-
 import styles from "./ModalWithTitleButton.style";
 
 const ModalWithTitleButton = ({
