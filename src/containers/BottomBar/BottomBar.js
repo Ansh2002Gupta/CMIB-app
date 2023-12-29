@@ -23,7 +23,7 @@ function BottomBar() {
   const icons = useTheme("icons");
   const intl = useIntl();
   const { navigateScreen } = useNavigateScreen();
-  const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
+  const [sideBarState] = useContext(SideBarContext);
   const { SideBarDetails } = sideBarState;
   const { logo, homeOutline, homeSolid, profileOutline, profileSolid } = icons;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -101,7 +101,6 @@ function BottomBar() {
           imageActive={imageActive}
           imageInactive={imageInactive}
           text={messageId}
-          // text={intl.formatMessage({ id: messageId })}
         />
       ),
       style: {},
@@ -110,7 +109,6 @@ function BottomBar() {
   }
 
   function getIconImages(iconName) {
-    // Define a mapping from iconName to your actual image assets
     const iconMap = {
       iconDashboard: {
         activeImage: images.iconDashboard,
@@ -138,7 +136,11 @@ function BottomBar() {
   }
 
   function preprocessMenu(menuItems) {
-    const candidateKeys = new Set([navigations.JOB_APPLICANTS,navigations.JOB_SEEKERS,navigations.SAVED_CANDIDATES]);
+    const candidateKeys = new Set([
+      navigations.JOB_APPLICANTS,
+      navigations.JOB_SEEKERS,
+      navigations.SAVED_CANDIDATES,
+    ]);
     const hasCandidates = menuItems.some((item) => candidateKeys.has(item.key));
 
     if (!hasCandidates) {
@@ -155,43 +157,35 @@ function BottomBar() {
       key: navigations.JOB_APPLICANTS,
       icon: "iconCandidates",
     };
+
     filteredMenu.push(candidatesTab);
 
     return filteredMenu;
   }
+
   // Define the "My Account" configuration
   const myAccountConfig = createRowConfig(
     navigations.PROFILE,
     images.iconActiveMyaccount,
     images.iconMyaccount,
-    "My Account",
+    intl.formatMessage({ id: "label.account" }),
     styles.activeStyleMyaccount
   );
 
-  const rowConfigs = [myAccountConfig];
+  const dynamicConfigs = SideBarDetails?.children
+    ? preprocessMenu(SideBarDetails.children).map((item) =>
+        createRowConfig(
+          item.key,
+          getIconImages(item.icon).activeImage,
+          getIconImages(item.icon).inactiveImage,
+          item.label.match(/^(\w+\s+\w+)/)?.[0] || item.label,
+          styles.activeStyleMyaccount
+        )
+      )
+    : [];
 
-  if (SideBarDetails && SideBarDetails.children) {
-    // Preprocess the array to combine certain items
-    const preprocessedMenu = preprocessMenu(SideBarDetails.children);
-
-    const dynamicConfigs = preprocessedMenu.map((item) => {
-      const { activeImage, inactiveImage } = getIconImages(item.icon);
-      let displayLabel = item.label.match(/^(\w+\s+\w+)/);
-      displayLabel = displayLabel ? displayLabel[0] : item.label;
-      return createRowConfig(
-        item.key,
-        activeImage,
-        inactiveImage,
-        displayLabel,
-        styles.activeStyleMyaccount
-      );
-    });
-
-    rowConfigs.unshift(...dynamicConfigs);
-  } else {
-    console.log("SideBarDetails.children is not available.");
-  }
-
+  const rowConfigs = [...dynamicConfigs, myAccountConfig];
+  
   return (
     <View>
       <View style={styles.borderStyle}></View>
@@ -200,34 +194,3 @@ function BottomBar() {
   );
 }
 export default BottomBar;
-
-// const rowConfigs = [
-//   createRowConfig(
-//     navigations.DASHBOARD,
-//     images.iconDashboard,
-//     images.iconDashboard,
-//     "label.dashboard",
-//     styles.activeStyleMyaccount
-//   ),
-//   createRowConfig(
-//     navigations.ROUND_ONE,
-//     images.iconActiveRound1,
-//     images.iconRound1,
-//     "label.round1",
-//     styles.activeStyleMyaccount
-//   ),
-//   createRowConfig(
-//     navigations.ROUND_TWO,
-//     images.iconActiveRound2,
-//     images.iconRound2,
-//     "label.round2",
-//     styles.activeStyleMyaccount
-//   ),
-//   createRowConfig(
-//     navigations.PROFILE,
-//     images.iconActiveMyaccount,
-//     images.iconMyaccount,
-//     "label.my_account",
-//     styles.activeStyleMyaccount
-//   ),
-// ];

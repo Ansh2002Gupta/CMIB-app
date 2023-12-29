@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
       disabled: {
         color: colors.slateGray
       },
+      moduleListWithoutCursor:{
+        padding: 16,
+        width: '100%',
+      }
 })
 
 export default styles;

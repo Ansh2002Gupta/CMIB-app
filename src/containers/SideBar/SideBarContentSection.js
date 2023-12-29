@@ -27,24 +27,22 @@ import ModuleList from "../../components/ModuleList/ModuleList";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
+  const { SideBarDetails } = sideBarState;
+  
   const navigate = useNavigate();
   const isWeb = useIsWebView();
   const intl = useIntl();
 
-  const {SideBarDetails} = sideBarState;
-
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
-  const [activeMenuItem, setActiveMenuItem] = useState(SideBarDetails.children[0].key);
-  
+  const [activeMenuItem, setActiveMenuItem] = useState(
+    SideBarDetails.children[0].key
+  );
 
-  // TODO: need to create context for it if needed
   const handleOnSelectItem = (item) => {
-      // setSelectedModule(item);
     sideBarDispatch(setModuleList(item));
     setOpenModuleSelector(false);
   };
   const handleOnClickMenuItem = ({ key }) => {
-    // Not all screen is made so i commented navigate for now
     navigate(key);
     setActiveMenuItem(key);
   };

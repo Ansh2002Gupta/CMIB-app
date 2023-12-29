@@ -9,14 +9,15 @@ import CommonText from "../CommonText";
 import Styles from "./ModuleList.style"; 
 
 const ModuleList = ({ modules, onSelectItem }) => {
+  
   return (
     <FlatList
       data={modules}
       keyExtractor={(module) => module.key}
-      renderItem={({ item: module }) => (
+      renderItem={({ item: module,index }) => (
         <>
           <TouchableOpacity
-            style={Styles.moduleListItem}
+            style={index===2 ? Styles.moduleListWithoutCursor :   Styles.moduleListItem}
             key={module.key}
             onPress={() => !module?.subMenu?.length && onSelectItem(module)}
           >
@@ -32,7 +33,7 @@ const ModuleList = ({ modules, onSelectItem }) => {
             <FlatList
               data={module.subMenu}
               keyExtractor={(menu) => menu.key}
-              renderItem={({ item: menu }) => (
+              renderItem={({ item: menu}) => (
                 <TouchableOpacity
                   style={Styles.moduleListItem}
                   onPress={() => onSelectItem(menu, true)}
