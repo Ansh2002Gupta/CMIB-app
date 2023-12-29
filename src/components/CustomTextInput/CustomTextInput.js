@@ -19,10 +19,10 @@ import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
+    customErrorStyle,
     countValue,
     customLabelStyle,
     customStyle,
-    customErrorStyle,
     customHandleBlur,
     customTextInputContainer,
     dropdownStyle,
@@ -35,6 +35,7 @@ const CustomTextInput = (props) => {
     isMandatory,
     isMobileNumber,
     isMultiline,
+    isPaddingNotRequired,
     isPassword,
     label,
     maxCount = 100,
@@ -73,7 +74,11 @@ const CustomTextInput = (props) => {
   });
 
   return (
-    <View style={[style.container, customStyle]}>
+    <View
+      style={
+        !isPaddingNotRequired ? [style.container, customStyle] : customStyle
+      }
+    >
       {!!label && <CustomLabelView label={label} isMandatory />}
       {isDropdown ? (
         <Dropdown
@@ -161,8 +166,8 @@ const CustomTextInput = (props) => {
 };
 
 CustomTextInput.defaultProps = {
-  customHandleBlur: () => {},
   customErrorStyle: {},
+  customHandleBlur: () => {},
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
@@ -175,17 +180,18 @@ CustomTextInput.defaultProps = {
   isMandatory: false,
   isMobileNumber: false,
   isMultiline: false,
-  inputKey: "value",
+  isPaddingNotRequired: false,
   isPassword: false,
+  inputKey: "value",
   label: "",
   placeholder: "",
   value: "",
 };
 
 CustomTextInput.propTypes = {
+  customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
-  customErrorStyle: PropTypes.object,
   customStyle: PropTypes.object,
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
@@ -197,8 +203,9 @@ CustomTextInput.propTypes = {
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isMultiline: PropTypes.bool,
-  inputKey: PropTypes.string,
+  isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
+  inputKey: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,

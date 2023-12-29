@@ -97,9 +97,10 @@ export const styles = StyleSheet.create({
   },
   verticalLabel: {
     position: "absolute",
-    width: isWeb ? "max-content" : "100%",
     right: "125%",
-    top: "20%",
+    top: "15%",
+    width: 170,
+    textAlign: "end",
   },
   horizontalLabel: {
     marginTop: 16,

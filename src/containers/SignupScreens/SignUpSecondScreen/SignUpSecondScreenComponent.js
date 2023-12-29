@@ -24,8 +24,12 @@ import { validateEmail } from "../../../constants/commonFunctions";
 const SignUpSecondScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation, validationError, setValidationError } =
-    useValidateSignUp();
+  const {
+    handleSignUpValidation,
+    isLoading,
+    setValidationError,
+    validationError,
+  } = useValidateSignUp();
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
   const { getStates, stateResult } = useGetStates();
   const initialSignUpDetail = signUpState.signUpDetail;
@@ -207,17 +211,20 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
 
   return (
     <SignUpSecondScreenUI
-      intl={intl}
-      onGoBack={onGoBack}
-      onClickNext={onClickNext}
-      formData={formData}
-      handleInputChange={handleInputChange}
-      errors={errors}
-      allFieldsFilled={allFieldsFilled}
-      industryOptions={industryTypeResult}
-      stateOptions={stateResult}
-      handleDismissToast={handleDismissToast}
-      validationError={validationError}
+      {...{
+        allFieldsFilled,
+        errors,
+        formData,
+        handleDismissToast,
+        handleInputChange,
+        industryOptions: industryTypeResult,
+        intl,
+        isLoading: isLoading,
+        onGoBack,
+        onClickNext,
+        stateOptions: stateResult,
+        validationError,
+      }}
     />
   );
 };

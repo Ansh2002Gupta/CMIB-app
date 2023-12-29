@@ -103,6 +103,7 @@ const style = {
   webView: {
     activeTab: {
       marginBottom: -2,
+      zIndex: 1,
     },
     backGroundColor: {
       backgroundColor: colors.white,
