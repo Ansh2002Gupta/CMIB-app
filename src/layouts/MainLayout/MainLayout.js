@@ -30,12 +30,12 @@ function MainLayout({
           topSection={header}
           bottomSection={content}
           bottomSectionStyle={contentStyle}
-          isBottomFillSpace={true}
+          isBottomFillSpace
           topSectionStyle={topSectionStyle}
         />
       }
       bottomSection={bottomSection}
-      isTopFillSpace={true}
+      isTopFillSpace
       isBottomFillSpace={false}
     />
   );
@@ -44,7 +44,7 @@ function MainLayout({
     layout = (
       <TwoRow
         style={theme.mainContainerStyle}
-        isTopFillSpace={true}
+        isTopFillSpace
         topSection={
           <TwoColumn
             style={theme.mainContainerStyle}

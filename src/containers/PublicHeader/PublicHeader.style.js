@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
@@ -21,7 +22,11 @@ const style = {
     paddingRight: 72,
   },
   headerBorder: {
-    borderBottom: `1px solid ${colors.lightGrey}`,
+    ...Platform.select({
+      web: {
+        borderBottom: `1px solid ${colors.lightGrey}`,
+      },
+    }),
   },
   smContainerStyle: {
     paddingLeft: 16,
