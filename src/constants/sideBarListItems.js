@@ -114,45 +114,36 @@ const controlMenu = [
   { label: "Activity Logs", key: "activity-logs", icon: '' },
 ];
 const newlyQualifiedPlacementsMenu = [
-  { label: "Dashboard", key: "dashboard", icon: 'iconDashboard' },
+  { label: "Dashboard", key: "/dashboard", icon: 'iconDashboard' },
   {
-    label: "Round 1 Placements",
-    key: "round-1-placements",
+    label: "Round 1 ",
+    key: "/round-one",
     icon: 'iconRound1',
   },
   {
-    label: "Round 1 Placements",
-    key: "round-2-placements",
+    label: "Round 2 ",
+    key: "/round-two",
     icon: 'iconRound2',
   },
 ];
 const caJobsMenu = [
-  { label: "Dashboard", key: "dashboard", icon: '' },
-  { label: "Subscriptions", key: "subscriptions", icon: '' },
+  { label: "Dashboard", key: "/dashboard", icon: 'iconDashboard' },
+  { label: "Posted Jobs", key: "/posted-jobs", icon: 'iconPostedJobs' },
   {
-    label: "Global Configurations",
-    key: "global-configurations",
-    icon: '',
+    label: "Job Applicants",
+    key: "/job-applicants",
+    icon: 'iconJobApplicants',
   },
-  { label: "Payments", key: "payments", icon: '' },
-  { label: "Candidates", key: "candidates", icon: '' },
-  { label: "Companies", key: "companies", icon: '' },
-  { label: "All Jobs", key: "all-jobs", icon: '' },
-  { label: "Report", key: "report", icon: '' },
+  { label: "Job Seekers", key: "/job-seekers", icon: 'iconJobSeekers' },
+  { label: "Saved Candidates", key: "/saved-candidates", icon: 'iconSaved' },
 ];
 const experiencedMembersMenu = [
-  { label: "Dashboard", key: "dashboard", icon: '' },
-  { label: "Payments", key: "payments", icon: '' },
-  { label: "Candidates", key: "candidates", icon: '' },
-  { label: "Companies", key: "companies", icon: '' },
+  { label: "Dashboard", key: "/dashboard", icon: 'iconDashboard' },
   {
-    label: "Global Configurations",
-    key: "global-configurations",
-    icon: '',
+    label: "Round 1 ",
+    key: "/round-one",
+    icon: 'iconRound1',
   },
-  { label: "Session", key: "session", icon: '' },
-  { label: "Roster", key: "roster", icon: '' },
-  { label: "Report", key: "report", icon: '' },
 ];
 // TODO: need to add role based menu
 export const modules = [

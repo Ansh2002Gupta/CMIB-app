@@ -13,4 +13,8 @@ export const navigations = {
   SIGN_UP: "/sign-up",
   VIEW_PROFILE: "/view-profile",
   WEB_VIEW: "/web-view",
+  POSTED_JOBS :"/posted-jobs",
+  JOB_APPLICANTS:"/job-applicants",
+  JOB_SEEKERS:"/job-seekers",
+  SAVED_CANDIDATES:"/saved-candidates",
 };

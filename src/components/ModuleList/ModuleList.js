@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import CommonText from "../../components/CommonText";
-import styles from "./SideBar.style"; 
+import CommonText from "../CommonText";
+import Styles from "./ModuleList.style"; 
 
 const ModuleList = ({ modules, onSelectItem }) => {
   return (
@@ -16,15 +16,14 @@ const ModuleList = ({ modules, onSelectItem }) => {
       renderItem={({ item: module }) => (
         <>
           <TouchableOpacity
-            style={styles.moduleListItem}
+            style={Styles.moduleListItem}
             key={module.key}
             onPress={() => !module?.subMenu?.length && onSelectItem(module)}
-            disabled={(module?.subMenu?.length)}
           >
             <CommonText
               customTextStyle={[
-                styles.changeText,
-                module?.subMenu?.length ? styles.disabled : {},
+                Styles.changeText,
+                module?.subMenu?.length ? Styles.disabled : {},
               ]}
               title={module.label}
             />
@@ -35,11 +34,11 @@ const ModuleList = ({ modules, onSelectItem }) => {
               keyExtractor={(menu) => menu.key}
               renderItem={({ item: menu }) => (
                 <TouchableOpacity
-                  style={styles.moduleListItem}
+                  style={Styles.moduleListItem}
                   onPress={() => onSelectItem(menu, true)}
                 >
                   <CommonText
-                    customTextStyle={styles.changeText}
+                    customTextStyle={Styles.changeText}
                     title={menu.label}
                   />
                 </TouchableOpacity>

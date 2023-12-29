@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   FlatList,
@@ -15,32 +15,37 @@ import { navigations } from "../../constants/routeNames";
 import { modules, items } from "../../constants/sideBarListItems";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { setModuleList } from "../../globalContext/sidebar/sidebarActions";
 import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
 import ResponsiveTextTruncate from "../../components/ResponsiveTextTruncate/ResponsiveTextTruncate";
 import images from "../../images";
 import styles from "./SideBar.style";
 import useIsWebView from "../../hooks/useIsWebView";
-import ModuleList from "./ModuleList";
+import ModuleList from "../../components/ModuleList/ModuleList";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
+  const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const navigate = useNavigate();
   const isWeb = useIsWebView();
   const intl = useIntl();
+
+  const {SideBarDetails} = sideBarState;
+
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
-  const [selectedModule, setSelectedModule] = useState(modules[0]);
-  const [activeMenuItem, setActiveMenuItem] = useState(
-    selectedModule.children[0].key
-  );
+  const [activeMenuItem, setActiveMenuItem] = useState(SideBarDetails.children[0].key);
+  
 
   // TODO: need to create context for it if needed
   const handleOnSelectItem = (item) => {
-    setSelectedModule(item);
+      // setSelectedModule(item);
+    sideBarDispatch(setModuleList(item));
     setOpenModuleSelector(false);
   };
   const handleOnClickMenuItem = ({ key }) => {
     // Not all screen is made so i commented navigate for now
-    // navigate(key);
+    navigate(key);
     setActiveMenuItem(key);
   };
 
@@ -113,7 +118,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 style={openModuleSelector ? "" : styles.moduleSelectorheading}
               >
                 <ResponsiveTextTruncate
-                  text={selectedModule.label}
+                  text={SideBarDetails.label}
                   maxLength={22}
                   style={styles.changeText}
                   widthPercentage={0.4}
@@ -147,7 +152,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             <>
               {isWeb.isWebView ? (
                 <FlatList
-                  data={selectedModule.children}
+                  data={SideBarDetails.children}
                   renderItem={renderMenuItems}
                 />
               ) : (

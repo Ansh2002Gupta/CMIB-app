@@ -1,0 +1,1 @@
+export const MODULE_LIST = 'MODULE_LIST';

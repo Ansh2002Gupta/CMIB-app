@@ -62,6 +62,13 @@ import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.pn
 import iconClose from "../../public/images/iconClose/iconClose.png";
 import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
+import iconPostedJobs from "../../public/images/iconPostedJobs/briefcase.png";
+import iconActivePostedJobs from '../../public/images/iconActivePostedJobs/briefcase.png'
+import iconCandidates from "../../public/images/iconCandidates/people.png"
+import iconActiveCandidates from "../../public/images/iconActiveCandidates/people.png"
+import iconJobApplicants from "../../public/images/iconJobApplicants/iconJobApplicants.png";
+import iconJobSeekers from "../../public/images/iconJobSeekers/user-search.png";
+import iconSaved from "../../public/images/iconSaved/save.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg";
 import iconFilter from "../../public/images/svg/iconFilter.svg";
 import iconMore from "../../public/images/svg/iconMore.svg";
@@ -150,6 +157,13 @@ const images = {
   iconMore,
   iconAdd,
   iconStepperDone,
+  iconPostedJobs,
+  iconActivePostedJobs,
+  iconJobApplicants,
+  iconJobSeekers,
+  iconSaved,
+  iconCandidates,
+  iconActiveCandidates
 };
 
 export default images;

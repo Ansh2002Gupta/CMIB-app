@@ -14,10 +14,8 @@ const g20Icon = "/images/svg/g20Icon.svg";
 const gloPac = "/images/svg/gloPac.svg";
 const iconWalkthroughSignUpOne =
   "/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
-const iconCheckbox =
-  "/images/svg/icon_check.svg";
-const iconUnCheckbox =
-  "images/svg/icon_uncheck.svg";
+const iconCheckbox = "/images/svg/icon_check.svg";
+const iconUnCheckbox = "images/svg/icon_uncheck.svg";
 const iconWalkthroughSignUpTwo =
   "/images/iconWalkthroughSignUpTwo/iconWalkthroughSignUpTwo.png";
 const iconDownArrow = "/images/iconDownArrow/iconDownArrow.png";
@@ -80,6 +78,13 @@ const iconTick = "images/iconTick/iconTick.png";
 const iconSetting = "images/iconSetting/iconSetting.png";
 const iconSend = "images/iconSend/iconSend.png";
 const iconUpArrow = "images/iconUpArrow/iconUpArrow.png";
+const iconPostedJobs = "images/iconPostedJobs/briefcase.png";
+const iconActivePostedJobs = 'images/iconActivePostedJobs/briefcase.png'
+const iconCandidates = "images/iconCandidates/people.png"
+const iconActiveCandidates = "images/iconActiveCandidates/people.png"
+const iconJobApplicants = "images/iconJobApplicants/iconJobApplicants.png";
+const iconJobSeekers = "images/iconJobSeekers/user-search.png";
+const iconSaved = "images/iconSaved/save.png";
 const iconFilter = "images/svg/iconFilter.svg";
 const iconSearch = "images/svg/iconSearch.svg";
 const iconMore = "images/svg/iconMore.svg";
@@ -173,6 +178,13 @@ const images = {
   iconMore,
   iconAdd,
   iconStepperDone,
+  iconPostedJobs,
+  iconActivePostedJobs,
+  iconJobApplicants,
+  iconJobSeekers,
+  iconSaved,
+  iconCandidates,
+  iconActiveCandidates
 };
 
 export default images;
