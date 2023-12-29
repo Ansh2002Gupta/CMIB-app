@@ -17,7 +17,7 @@ function MainLayout({
   bottomSection,
   bottomSectionStyle,
   footer,
-}) {  
+}) {
   const theme = useComponentTheme("Auth");
   const windowDimensions = useWindowDimensions();
   const isMdOrGreater = windowDimensions.width >= 900;
@@ -30,12 +30,12 @@ function MainLayout({
           topSection={header}
           bottomSection={content}
           bottomSectionStyle={contentStyle}
-          isBottomFillSpace={true}
+          isBottomFillSpace
           topSectionStyle={topSectionStyle}
         />
       }
       bottomSection={bottomSection}
-      isTopFillSpace={true}
+      isTopFillSpace
       isBottomFillSpace={false}
     />
   );
@@ -43,6 +43,8 @@ function MainLayout({
   if (isMdOrGreater)
     layout = (
       <TwoRow
+        style={theme.mainContainerStyle}
+        isTopFillSpace
         topSection={
           <TwoColumn
             style={theme.mainContainerStyle}
@@ -63,7 +65,6 @@ function MainLayout({
           />
         }
         bottomSection={footer}
-        isTopFillSpace={!!footer ? false : true}
       />
     );
 

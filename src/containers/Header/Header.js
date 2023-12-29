@@ -27,14 +27,14 @@ const Header = ({ toggleSideBar, menuIconVisible }) => {
 
   return (
     <>
-          {isuserLoggedIn ? (
-            <PrivateHeader
-              toggleSideBar={toggleSideBar}
-              menuIconVisible={menuIconVisible}
-            />
-          ) : (
-            <PublicHeader />
-          )}
+      {isuserLoggedIn ? (
+        <PrivateHeader
+          toggleSideBar={toggleSideBar}
+          menuIconVisible={menuIconVisible}
+        />
+      ) : (
+        <PublicHeader />
+      )}
     </>
   );
 };

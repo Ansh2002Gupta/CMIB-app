@@ -6,6 +6,7 @@ export const style = {
     flexDirection: "column",
     gap: 48,
     flex: 1,
+    zIndex: 1,
   },
   responsiveContainer: { paddingTop: 48 },
   outerContainer: {

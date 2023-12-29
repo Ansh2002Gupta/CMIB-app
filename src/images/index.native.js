@@ -62,12 +62,13 @@ import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.pn
 import iconClose from "../../public/images/iconClose/iconClose.png";
 import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
-import iconSearch from "../../public/images/svg/iconSearch.svg";
-import iconFilter from "../../public/images/svg/iconFilter.svg";
-import iconMore from "../../public/images/svg/iconMore.svg";
-import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
-import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
-import iconAdd from "../../public/images/svg/iconAdd.svg";
+import iconSearch from "../../public/images/svg/iconSearch.svg"
+import iconFilter from "../../public/images/svg/iconFilter.svg"
+import iconMore from "../../public/images/svg/iconMore.svg"
+import iconFooter from "../../public/images/svg/iconFooter.svg";
+import iconArrowDown from "../../public/images/svg/iconArrowDown.svg"
+import iconArrowUp from "../../public/images/svg/iconArrowUp.svg"
+import iconAdd from "../../public/images/svg/iconAdd.svg"
 import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
 import iconArrowRightWhite from "../../public/images/svg/iconArrowRightWhite.svg";
 import iconArrowLeft from "../../public/images/svg/iconArrowLeft.svg";
@@ -148,6 +149,7 @@ const images = {
   iconSearch,
   iconFilter,
   iconMore,
+  iconFooter,
   iconAdd,
   iconStepperDone,
 };

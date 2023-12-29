@@ -11,6 +11,7 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import MainLayout from "../layouts/MainLayout";
 
 import BottomBar from "../containers/BottomBar";
+import Footer from "../containers/Footer";
 import Header from "../containers/Header";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import { getAuthToken } from "../utils/getAuthToken";
@@ -95,13 +96,8 @@ function HeaderWithContentLayout() {
         bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
-        // TODO: Footer should be added in this prop
-        // footer={!isAuthenticated && <View><Text>Hello</Text></View>}
-        topSectionStyle={
-          isMdOrGreater
-            ? commonStyles.topSectionStyle
-            : commonStyles.headerContainer
-        }
+        footer={!isAuthenticated && isWebView && <Footer />}
+        topSectionStyle={isMdOrGreater && commonStyles.headerContainer}
         isRightFillSpace={false}
         isLeftFillSpace={false}
         rightSectionStyle={Styles(currentBreakpoint).rightSectionStyle}
