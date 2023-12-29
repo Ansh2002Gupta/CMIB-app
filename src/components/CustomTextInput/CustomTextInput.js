@@ -36,14 +36,15 @@ const CustomTextInput = (props) => {
     isMultiline,
     isPassword,
     label,
-    maxCount=100,
-    minCount=0,
+    maxCount = 100,
+    minCount = 0,
     options,
     onChangeValue,
     placeholder,
-    step=1,
+    step = 1,
     value,
     inputKey = "value",
+    isPaddingNotRequired,
     ...remainingProps
   } = props;
 
@@ -65,7 +66,11 @@ const CustomTextInput = (props) => {
   };
 
   return (
-    <View style={[style.container, customStyle]}>
+    <View
+      style={
+        !isPaddingNotRequired ? [style.container, customStyle] : customStyle
+      }
+    >
       {!!label && <CustomLabelView label={label} isMandatory />}
       {isDropdown ? (
         <Dropdown
@@ -167,6 +172,7 @@ CustomTextInput.defaultProps = {
   isMandatory: false,
   isMobileNumber: false,
   isMultiline: false,
+  isPaddingNotRequired: false,
   inputKey: "value",
   isPassword: false,
   label: "",
@@ -189,6 +195,7 @@ CustomTextInput.propTypes = {
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isMultiline: PropTypes.bool,
+  isPaddingNotRequired: PropTypes.bool,
   inputKey: PropTypes.string,
   isPassword: PropTypes.bool,
   label: PropTypes.string,
