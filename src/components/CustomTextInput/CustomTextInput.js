@@ -18,10 +18,10 @@ import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
+    customErrorStyle,
     countValue,
     customLabelStyle,
     customStyle,
-    customErrorStyle,
     customHandleBlur,
     customTextInputContainer,
     dropdownStyle,
@@ -34,6 +34,7 @@ const CustomTextInput = (props) => {
     isMandatory,
     isMobileNumber,
     isMultiline,
+    isPaddingNotRequired,
     isPassword,
     label,
     maxCount = 100,
@@ -44,7 +45,6 @@ const CustomTextInput = (props) => {
     step = 1,
     value,
     inputKey = "value",
-    isPaddingNotRequired,
     ...remainingProps
   } = props;
 
@@ -158,8 +158,8 @@ const CustomTextInput = (props) => {
 };
 
 CustomTextInput.defaultProps = {
-  customHandleBlur: () => {},
   customErrorStyle: {},
+  customHandleBlur: () => {},
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
@@ -173,17 +173,17 @@ CustomTextInput.defaultProps = {
   isMobileNumber: false,
   isMultiline: false,
   isPaddingNotRequired: false,
-  inputKey: "value",
   isPassword: false,
+  inputKey: "value",
   label: "",
   placeholder: "",
   value: "",
 };
 
 CustomTextInput.propTypes = {
+  customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
-  customErrorStyle: PropTypes.object,
   customStyle: PropTypes.object,
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
@@ -196,8 +196,8 @@ CustomTextInput.propTypes = {
   isMobileNumber: PropTypes.bool,
   isMultiline: PropTypes.bool,
   isPaddingNotRequired: PropTypes.bool,
-  inputKey: PropTypes.string,
   isPassword: PropTypes.bool,
+  inputKey: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,
