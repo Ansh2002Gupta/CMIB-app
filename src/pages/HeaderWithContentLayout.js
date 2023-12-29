@@ -96,7 +96,7 @@ function HeaderWithContentLayout() {
         bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
-        footer={!isAuthenticated && <Footer />}
+        footer={!isAuthenticated && isWebView && <Footer />}
         topSectionStyle={
           isMdOrGreater
             ? commonStyles.topSectionStyle
