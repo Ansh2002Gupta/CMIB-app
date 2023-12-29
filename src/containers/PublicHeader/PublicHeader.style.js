@@ -21,9 +21,6 @@ const style = {
     paddingRight: 72,
   },
   headerBorder: {
-    // TODO : Verify and remove below comments
-    // borderBottomWidth: 1,
-    // borderColor: colors.lightGrey,
     borderBottom: `1px solid ${colors.lightGrey}`,
   },
   smContainerStyle: {

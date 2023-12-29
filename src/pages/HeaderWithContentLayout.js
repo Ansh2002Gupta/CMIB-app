@@ -97,11 +97,7 @@ function HeaderWithContentLayout() {
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
         footer={!isAuthenticated && isWebView && <Footer />}
-        topSectionStyle={
-          isMdOrGreater
-            ? commonStyles.topSectionStyle
-            : commonStyles.headerContainer
-        }
+        topSectionStyle={isMdOrGreater && commonStyles.headerContainer}
         isRightFillSpace={false}
         isLeftFillSpace={false}
         rightSectionStyle={Styles(currentBreakpoint).rightSectionStyle}
