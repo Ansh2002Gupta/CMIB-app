@@ -14,7 +14,7 @@ const Header = () => {
     <View
       style={
         hideRightIcons
-          ? [styles.mainView, styles.headerBorder]
+          ? [styles.mainView]
           : [styles.webMainView, styles.headerBorder]
       }
     >
@@ -40,11 +40,7 @@ const Header = () => {
               style={styles.iconG20}
               resizeMode="contain"
             />
-            <Image
-              source={images.iconAzadiMahotsav}
-              style={styles.azadiMahotsav}
-              resizeMode="contain"
-            />
+            <Image source={images.iconAzadiMahotsav} resizeMode="contain" />
           </View>
         )}
       </View>
