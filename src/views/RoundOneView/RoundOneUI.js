@@ -11,7 +11,6 @@ import CardComponent from "../../containers/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
 import Header from "../../components/Header/Header";
 import useIsWebView from "../../hooks/useIsWebView";
-import images from "../../images";
 import styles from "./RoundOne.style";
 
 const RoundOneUI = (props) => {
@@ -26,8 +25,6 @@ const RoundOneUI = (props) => {
           ...styles.headerTextStyle,
           ...(isWebView ? styles.webHeaderTextStyle : null),
         }}
-        iconLeft={images.iconDrawer}
-        iconRight={images.iconNotification}
       />
       <ScrollView
         style={{

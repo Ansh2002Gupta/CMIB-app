@@ -34,7 +34,10 @@ const useSaveLogo = () => {
         headers,
         otherOptions
       );
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+      if (
+        res.code === STATUS_CODES.SUCCESS_STATUS ||
+        res.status === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setUploadPercentage(100);
         setTimeout(() => {
           setUploadPercentage(0);

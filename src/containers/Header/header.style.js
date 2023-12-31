@@ -29,12 +29,12 @@ const style = {
     paddingRight: 16,
   },
   webContainerStyle: {
-    flexDirection: 'row',
+    flexDirection: "row",
     justifyContent: "space-between",
-    alignIems: 'center'
+    alignIems: "center",
   },
   rightIconContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 16,
   },
   cmibLogo: {
@@ -44,18 +44,18 @@ const style = {
   gloPac: {
     width: 82,
     height: 40,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   iconG20: {
     width: 70,
     height: 40,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   iconAzadiMahotsav: {
     width: 67,
     height: 40,
-    alignSelf: 'center'
-  }
+    alignSelf: "center",
+  },
 };
 
 export default style;

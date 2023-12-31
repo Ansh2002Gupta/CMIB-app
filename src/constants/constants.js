@@ -129,4 +129,18 @@ export const ROUND_ONE_CARD = [
   },
 ];
 
+export const VALIDATION_TYPE = [
+  { key: "length", id: "label.char_length_validation" },
+  { key: "numeric", id: "label.numeric_char_validation" },
+  { key: "uppercase", id: "label.upper_case_validation" },
+  { key: "lowercase", id: "label.lower_case_validation" },
+  { key: "specialChar", id: "label.special_char_validation" },
+];
+
 export const REDIRECT_URL = "redirectUrl";
+
+export const STEPPER_STATE = {
+  ACTIVE: "active",
+  DONE: "done",
+  INACTIVE: "inActive",
+};

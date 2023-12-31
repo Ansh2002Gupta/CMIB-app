@@ -1,62 +1,93 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import CustomColumn from "../CustomColumn/CustomColumn"
-import MultiColumn from "../../core/layouts/MultiColumn/MultiColumn";
-import images from "../../images";
-import styles from "./twoRowButton.style";
+import CustomCell from "../CustomCell";
+import MultiColumn from "../../core/layouts/MultiColumn";
 
-const TwoRowButton = (props) => {
-  const {
-    leftButtonText,
-    rightButtonText,
-    onLeftButtonClick,
-    onRightButtonClick,
-    hasIconLeft,
-    hasIconRight,
-    isDisabled,
-  } = props;
-
-  const columnConfigs = [
+const TwoRowButton = ({
+  isLeftDisabled,
+  isRightDisabled,
+  leftButtonLeftImage,
+  leftButtonRightImage,
+  leftButtonText,
+  leftButtonStyle,
+  leftTextStyle,
+  onLeftButtonClick,
+  onRightButtonClick,
+  rightButtonLeftImage,
+  rightButtonRightImage,
+  rightButtonText,
+  rightButtonStyle,
+  rightTextStyle,
+}) => {
+  const bottomButton = [
     {
-      content: <CustomColumn
-      onPress={onLeftButtonClick}
-      title={leftButtonText}
-      style={styles.disableButtonStyle}
-      textStyle={styles.disableTextStyle}
-      iconLeft={hasIconLeft ? images.iconArrowLeft : null}
-    />,
-    isFillSpace: true,
+      content: (
+        <CustomCell
+          disabled={isLeftDisabled}
+          leftSource={leftButtonLeftImage}
+          onPress={onLeftButtonClick}
+          rightSource={leftButtonRightImage}
+          style={leftButtonStyle}
+          title={leftButtonText}
+          textStyle={leftTextStyle}
+        />
+      ),
+      isFillSpace: true,
     },
     {
-      content: <CustomColumn
-      onPress={onRightButtonClick}
-      title={rightButtonText}
-      style={{...styles.buttonStyle, ...styles.secondButtonStyle}}
-      textStyle={styles.titleStyle}
-      disabled={isDisabled}
-      iconRight={hasIconRight ? images.iconArrowRightWhite : null}
-    /> ,
-    isFillSpace: true,
+      content: (
+        <CustomCell
+          disabled={isRightDisabled}
+          leftSource={rightButtonLeftImage}
+          onPress={onRightButtonClick}
+          rightSource={rightButtonRightImage}
+          style={rightButtonStyle}
+          title={rightButtonText}
+          textStyle={rightTextStyle}
+        />
+      ),
+      isFillSpace: true,
     },
-    
   ];
 
-  return (
-      <MultiColumn 
-      columns={columnConfigs}  
-      style={styles.containerStyle}
-       />
-  );
+  return <MultiColumn columns={bottomButton} />;
 };
+
+TwoRowButton.defaultProps = {
+  isLeftDisabled: false,
+  isRightDisabled: false,
+  onLeftButtonClick: () => {},
+  onRightButtonClick: () => {},
+};
+
 TwoRowButton.propTypes = {
-  hasIconLeft: PropTypes.bool,
-  hasIconRight: PropTypes.bool,
-  isDisabled: PropTypes.bool,
+  isLeftDisabled: PropTypes.bool,
+  isRightDisabled: PropTypes.bool,
   leftButtonText: PropTypes.string.isRequired,
+  leftButtonLeftImage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
+  leftButtonRightImage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
   onLeftButtonClick: PropTypes.func,
   onRightButtonClick: PropTypes.func,
   rightButtonText: PropTypes.string.isRequired,
+  rightButtonLeftImage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
+  rightButtonRightImage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
 };
 
 export default TwoRowButton;
