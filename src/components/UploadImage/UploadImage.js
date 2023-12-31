@@ -67,6 +67,8 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
         <CropAndRotateImage
           {...{
             file,
+            handleFileUpload,
+            initiateFileUpload,
             photoURL: getImageSource(file),
             setFile,
             setOpenCropView,

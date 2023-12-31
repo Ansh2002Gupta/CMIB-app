@@ -12,7 +12,9 @@ import styles from "./CropAndRotateImage.style";
 
 const CropAndRotateImage = ({
   file,
+  handleFileUpload,
   heading,
+  initiateFileUpload,
   photoURL,
   setFile,
   setOpenCropView,
@@ -26,6 +28,13 @@ const CropAndRotateImage = ({
   const [isCroppingImage, setIsCroppingImage] = useState(false);
   const [isErrorCroppingImage, setIsErrorCroppingImage] = useState(false);
 
+  const uploadImageToServer = ({ uploadedFile }) => {
+    setFile(uploadedFile);
+    const formData = new FormData();
+    formData.append("company_logo", uploadedFile);
+    handleFileUpload(formData);
+  };
+
   const cropImage = async () => {
     try {
       setIsCroppingImage(true);
@@ -36,8 +45,11 @@ const CropAndRotateImage = ({
         rotation
       );
       setIsCroppingImage(false);
-      setFile(file);
       setOpenCropView(false);
+      initiateFileUpload({
+        onLoad: () => uploadImageToServer({ uploadedFile: file }),
+        uploadedFile: file,
+      });
     } catch (error) {
       console.log(error);
       setIsErrorCroppingImage(true);

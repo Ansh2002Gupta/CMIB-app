@@ -39,14 +39,14 @@ const useUploadedFileValidations = () => {
             id: "label.allowedFileFormatsError",
           })
         );
-        resetUploadInput();
+        resetUploadInput && resetUploadInput();
         return;
       }
       if (uploadedFile.size > IMAGE_MAX_SIZE) {
         setFileTooLargeError(
           intl.formatMessage({ id: "label.fileTooLargeError" })
         );
-        resetUploadInput();
+        resetUploadInput && resetUploadInput();
         return;
       }
       const img = document.createElement("img");
@@ -63,7 +63,7 @@ const useUploadedFileValidations = () => {
         );
       };
     }
-    resetUploadInput();
+    resetUploadInput && resetUploadInput();
   };
 
   return {
