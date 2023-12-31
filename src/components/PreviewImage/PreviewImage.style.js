@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     borderBottom: `1px solid ${colors.lightGrey}`,
     alignItems: "center",
     minWidth: 250,
+    minHeight: 150,
   },
   selectedImageStyle: {
     maxWidth: 450,

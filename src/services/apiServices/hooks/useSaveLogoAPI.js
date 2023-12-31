@@ -47,14 +47,10 @@ const useSaveLogo = () => {
       setUploadStatus(API_STATUS.ERROR);
       setErrorWhileUpload(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
+      setUploadStatus(API_STATUS.ERROR);
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      if (errorMessage) {
-        setErrorWhileUpload(errorMessage);
-        return;
-      }
-      setUploadStatus(API_STATUS.ERROR);
-      setErrorWhileUpload(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setErrorWhileUpload(errorMessage);
     }
   };
 
