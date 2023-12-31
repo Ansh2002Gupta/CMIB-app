@@ -144,3 +144,9 @@ export const STEPPER_STATE = {
   DONE: "done",
   INACTIVE: "inActive",
 };
+
+export const ZOOM_CONSTANT = {
+  MAX_ZOOM: 3,
+  MIN_ZOOM: 1,
+  ZOOM_STEP: 0.1,
+};
