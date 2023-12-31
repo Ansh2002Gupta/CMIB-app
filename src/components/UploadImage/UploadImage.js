@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { useIntl } from "react-intl";
 
 import CropAndRotateImage from "../CropAndRotateImage";
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
@@ -7,11 +6,8 @@ import PreviewImage from "../PreviewImage";
 import useSaveLogo from "../../services/apiServices/hooks/useSaveLogoAPI";
 import useUploadedFileValidations from "../../hooks/useUploadedFileValidations";
 import { getImageSource } from "../../utils/util";
-import { IMAGE_MAX_SIZE } from "../../constants/constants";
-import { IMAGE_ACCEPTABLE_FORMAT_REGEX } from "../../constants/Regex";
 
 const UploadImage = ({ openCropViewAfterImageSelection }) => {
-  const intl = useIntl();
   const fileInputRef = useRef(null);
 
   const [file, setFile] = useState(null);
@@ -20,10 +16,8 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
   const {
     nonUploadableImageError,
     fileTooLargeError,
+    initiateFileUpload,
     invalidFormatError,
-    setNonUploadableImageError,
-    setFileTooLargeError,
-    setInvalidFormatError,
   } = useUploadedFileValidations();
 
   const {
@@ -36,8 +30,22 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
     fileInputRef.current.click();
   };
 
+  const onValidImageUpload = ({ uploadedFile }) => {
+    setFile(uploadedFile);
+    openCropViewAfterImageSelection && setOpenCropView(true);
+    if (!openCropViewAfterImageSelection) {
+      const formData = new FormData();
+      formData.append("company_logo", uploadedFile);
+      handleFileUpload(formData);
+    }
+  };
+
   const fileUploadHandler = (e) => {
-    initiateFileUpload(e.target.files[0], () => (e.target.value = null));
+    initiateFileUpload({
+      onLoad: onValidImageUpload,
+      resetUploadInput: () => (e.target.value = null),
+      uploadedFile: e.target.files[0],
+    });
   };
 
   const handleDragOver = (e) => {
@@ -46,52 +54,11 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    initiateFileUpload(e.dataTransfer.files?.[0], () => e.target.null);
-  };
-
-  const initiateFileUpload = (uploadedFile, resetUploadInput) => {
-    setFileTooLargeError("");
-    setInvalidFormatError("");
-    setNonUploadableImageError("");
-    const imageMimeType = IMAGE_ACCEPTABLE_FORMAT_REGEX;
-    if (uploadedFile) {
-      if (!uploadedFile.type.match(imageMimeType)) {
-        setInvalidFormatError(
-          intl.formatMessage({
-            id: "label.allowedFileFormatsError",
-          })
-        );
-        resetUploadInput();
-        return;
-      }
-      if (uploadedFile.size > IMAGE_MAX_SIZE) {
-        setFileTooLargeError(
-          intl.formatMessage({ id: "label.fileTooLargeError" })
-        );
-        resetUploadInput();
-        return;
-      }
-      const img = document.createElement("img");
-      img.src = getImageSource(uploadedFile);
-      img.alt = uploadedFile.name;
-      img.onload = () => {
-        setFile(uploadedFile);
-        openCropViewAfterImageSelection && setOpenCropView(true);
-        if (!openCropViewAfterImageSelection) {
-          const formData = new FormData();
-          formData.append("company_logo", uploadedFile);
-          handleFileUpload(formData);
-        }
-      };
-      img.onerror = () => {
-        setNonUploadableImageError(
-          intl.formatMessage({
-            id: "label.allowedFileFormatsError",
-          })
-        );
-      };
-    }
-    resetUploadInput();
+    initiateFileUpload({
+      onLoad: onValidImageUpload,
+      resetUploadInput: () => (e.target.value = null),
+      uploadedFile: e.target.files[0],
+    });
   };
 
   return (
