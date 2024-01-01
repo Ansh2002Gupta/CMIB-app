@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 
 import SignUpScreenUI from "./SignUpScreenUI";
+import { navigations } from "../../constants/routeNames";
 import { resetSignUpDetails } from "../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../globalContext/signUp/signUpProvider";
 
@@ -24,7 +25,7 @@ const SignUpScreenComponent = () => {
   };
   const onClickGoToLogin = () => {
     signUpDispatch(resetSignUpDetails());
-    navigate("/");
+    navigate(navigations.LOGIN);
   };
 
   return (

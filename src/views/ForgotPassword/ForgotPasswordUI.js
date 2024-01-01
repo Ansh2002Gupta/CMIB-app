@@ -131,7 +131,9 @@ const ForgotPasswordUI = (props) => {
             customTextStyle={
               isWebView ? getResponsiveStyles("label.forgot_password") : {}
             }
-            customContainerStyles={isWebView && styles.forgotHeaderContainer}
+            customContainerStyles={
+              isWebView ? styles.forgotHeaderContainer : {}
+            }
           />
           {!isWebView && <View style={styles.borderStyle} />}
         </View>
@@ -163,7 +165,7 @@ const ForgotPasswordUI = (props) => {
             title={intl.formatMessage({ id: "label.submit" })}
             onPress={onSendOtpClick}
             disabled={loginDisabled}
-            customTitleStyle={isWebView && styles.customBtnText}
+            customTitleStyle={isWebView ? styles.customBtnText : {}}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
