@@ -7,8 +7,8 @@ import {
 } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import styles from "./IconHeader.style";
 import useIsWebView from "../../hooks/useIsWebView";
+import styles from "./IconHeader.style";
 
 const IconHeader = ({
   ActionComponent,

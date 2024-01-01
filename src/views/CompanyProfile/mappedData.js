@@ -31,7 +31,6 @@ export const mapApiDataToUI = (apiData, industryOptions) => {
     company_logo,
   } = apiData;
 
-  console.log("INDU", industryOptions);
   return {
     companyDetail: [
       { label: "label.company_name", value: name },

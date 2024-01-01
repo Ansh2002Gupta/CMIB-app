@@ -93,12 +93,14 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
 };
 
 DetailComponent.defaultProps = {
+  handleChange: () => {},
   headerText: "",
   isEditable: false,
 };
 
 DetailComponent.propTypes = {
   details: PropTypes.array.isRequired,
+  handleChange: PropTypes.func,
   headerText: PropTypes.string,
   isEditable: PropTypes.bool,
 };
