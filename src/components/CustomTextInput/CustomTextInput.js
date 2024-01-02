@@ -20,32 +20,33 @@ import style from "./CustomTextInput.style";
 const CustomTextInput = (props) => {
   const {
     customErrorStyle,
-    countValue,
+    customHandleBlur,
     customLabelStyle,
     customStyle,
-    customHandleBlur,
     customTextInputContainer,
+    countValue,
     dropdownStyle,
     errorMessage,
     eyeImage,
     handleCountChange,
+    inputKey,
     isCounterInput,
     isDropdown,
     isError,
     isMandatory,
     isMobileNumber,
     isMultiline,
+    isNumeric,
     isPaddingNotRequired,
     isPassword,
     label,
-    maxCount = 100,
-    minCount = 0,
+    maxCount,
+    minCount,
     options,
     onChangeValue,
     placeholder,
-    step = 1,
+    step,
     value,
-    inputKey = "value",
     ...remainingProps
   } = props;
 
@@ -72,6 +73,11 @@ const CustomTextInput = (props) => {
       placeholderTextColor: colors.darkGrey,
     },
   });
+
+  const mobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { keyboardType: "numeric", returnKeyType: "done" }
+      : {};
 
   return (
     <View
@@ -141,6 +147,7 @@ const CustomTextInput = (props) => {
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
             {...platformSpecificProps}
+            {...(isNumeric && mobileProps)}
             {...remainingProps}
           />
           {eyeImage ? (
@@ -166,6 +173,7 @@ const CustomTextInput = (props) => {
 };
 
 CustomTextInput.defaultProps = {
+  countValue: 0,
   customErrorStyle: {},
   customHandleBlur: () => {},
   customLabelStyle: {},
@@ -174,40 +182,54 @@ CustomTextInput.defaultProps = {
   dropdownStyle: {},
   errorMessage: "",
   eyeImage: false,
+  handleCountChange: () => {},
   isCounterInput: false,
   isDropdown: false,
   isError: false,
+  inputKey: "value",
   isMandatory: false,
   isMobileNumber: false,
   isMultiline: false,
+  isNumeric: false,
   isPaddingNotRequired: false,
   isPassword: false,
-  inputKey: "value",
   label: "",
-  placeholder: "",
+  maxCount: 100,
+  minCount: 0,
+  options: [],
+  onChangeValue: () => {},
+  step: 1,
   value: "",
 };
 
 CustomTextInput.propTypes = {
+  countValue: PropTypes.number,
   customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
-  customStyle: PropTypes.object,
+  customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
+  handleCountChange: PropTypes.func,
+  inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
   isError: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isMultiline: PropTypes.bool,
+  isNumeric: PropTypes.bool,
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
-  inputKey: PropTypes.string,
   label: PropTypes.string,
+  maxCount: PropTypes.number,
+  minCount: PropTypes.number,
+  options: PropTypes.arrayOf(PropTypes.object),
+  onChangeValue: PropTypes.func,
   placeholder: PropTypes.string,
+  step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 

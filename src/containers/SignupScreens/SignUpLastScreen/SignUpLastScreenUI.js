@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FlatList, ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
@@ -42,20 +42,10 @@ const SignUpLastScreenUI = (props) => {
     website,
   } = props;
 
+  const isWeb = Platform.OS.toLowerCase() === "web";
+
   const errorMessage =
     validationError || errorWhileDeletion || errorWhileUpload || signUpError;
-
-  const renderItem = ({ item, index }) => {
-    return (
-      <CheckBox
-        id={item.id}
-        index={index}
-        title={item.title}
-        isSelected={item.isSelected}
-        handleCheckbox={handleToggle}
-      />
-    );
-  };
 
   return (
     <View style={style.mainContainerStyle}>
@@ -115,7 +105,7 @@ const SignUpLastScreenUI = (props) => {
           value={companyDetails}
           onChangeText={(value) => handleInputChange(value, "companyDetails")}
           isMandatory
-          isMultiline
+          isMultiline={!isWeb}
           height={84}
         />
         <CustomTextInput

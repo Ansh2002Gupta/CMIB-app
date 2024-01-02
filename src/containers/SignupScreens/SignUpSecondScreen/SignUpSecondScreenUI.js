@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CustomTextInput from "../../../components/CustomTextInput";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
@@ -36,6 +36,8 @@ const SignUpSecondScreenUI = (props) => {
     currentIndustry,
     state,
   } = formData;
+
+  const isWeb = Platform.OS.toLowerCase() === "web";
 
   return (
     <View style={style.innerContainer}>
@@ -77,7 +79,7 @@ const SignUpSecondScreenUI = (props) => {
                 id: "label.enter_firm_no",
               })}
               isMandatory
-              keyboardType="numeric"
+              isNumeric
               maxLength={10}
               errorMessage={errors.registrationNo}
               isError={!!errors.registrationNo}
@@ -94,7 +96,7 @@ const SignUpSecondScreenUI = (props) => {
                 id: "label.enter_no",
               })}
               isMandatory
-              keyboardType="numeric"
+              isNumeric
               value={noOfPartners}
               errorMessage={errors.noOfPartners}
               isError={!!errors.noOfPartners}
@@ -121,7 +123,7 @@ const SignUpSecondScreenUI = (props) => {
             id: "label.address_for_correspondence",
           })}
           isMandatory
-          isMultiline
+          isMultiline={!isWeb}
           height={84}
           value={address}
           errorMessage={errors.address}
@@ -165,7 +167,7 @@ const SignUpSecondScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_code",
               })}
-              keyboardType="numeric"
+              isNumeric
               value={code}
               maxLength={15}
               errorMessage={errors.code}
@@ -185,7 +187,7 @@ const SignUpSecondScreenUI = (props) => {
               errorMessage={errors.telephoneNo}
               isError={!!errors.telephoneNo}
               isMandatory
-              keyboardType="numeric"
+              isNumeric
               maxLength={15}
               value={telephoneNo}
               onChangeText={(val) => handleInputChange(val, "telephoneNo")}
