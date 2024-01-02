@@ -38,7 +38,6 @@ CustomCell.defaultProps = {
   isSvg: false,
   style: {},
   textStyle: {},
-  onPress: () => {},
 };
 
 CustomCell.propTypes = {

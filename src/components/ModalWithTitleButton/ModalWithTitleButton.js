@@ -7,7 +7,7 @@ import styles from "./ModalWithTitleButton.style";
 
 const ModalWithTitleButton = ({
   children,
-  customStyles = {},
+  customStyles,
   heading,
   enableBottomButton,
   leftLabelTxt,
@@ -55,6 +55,22 @@ const ModalWithTitleButton = ({
       )}
     </CustomModal>
   );
+};
+
+
+ModalWithTitleButton.defaultProps = {
+  children: null, 
+  customStyles: {}, 
+  heading: '', 
+  enableBottomButton: false, 
+  leftLabelTxt: '',
+  leftButtonLeftImage: null,
+  leftButtonRightImage: null,
+  onClickLeftButton: () => {}, 
+  onClickRightButton: () => {}, 
+  rightButtonLeftImage: null,
+  rightButtonRightImage: null,
+  rightLabelTxt: '',
 };
 
 ModalWithTitleButton.propTypes = {
