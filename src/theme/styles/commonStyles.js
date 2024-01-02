@@ -12,6 +12,12 @@ const commonStyles = {
     backgroundColor: colors.white,
     ...(Platform.OS === "web" ? { position: "sticky" } : {}),
   },
+  errorMessage: {
+    color: colors.errorRed,
+    fontSize: 14,
+    lineHeight: 18,
+    fontWeight: "600",
+  },
   contentContainer: {
     zIndex: 3,
   },

@@ -1,6 +1,8 @@
+// TODO:I have break down the UploadImage component into smaller components and have added the required styles in those components. But I haven't removed them from here because UploadImage.native file is still using it. Once it start using those components we need to remove the duplicated styles from this file.
+
 import colors from "../../assets/colors";
 
-const style = {
+const styles = {
   contentContainerStyle: {
     height: 240,
     borderWidth: 1,
@@ -19,14 +21,22 @@ const style = {
   imageContainer: {
     flex: 1,
     justifyContent: "center",
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderStyle: "solid",
+    borderColor: colors.lightGrey,
+    alignItems: "center",
   },
   selectedImageStyle: {
-    height: 120,
-    width: 120,
+    maxWidth: 450,
+    maxHeight: 200,
+    objectFit: "contain",
   },
   selectedImageContainer: {
     borderStyle: "solid",
     borderColor: colors.lightGrey,
+    borderWidth: 1,
+    borderRadius: 8,
   },
   textContainer: {
     flexDirection: "row",
@@ -69,4 +79,4 @@ const style = {
   },
 };
 
-export default style;
+export default styles;

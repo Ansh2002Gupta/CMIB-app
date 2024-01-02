@@ -10,7 +10,6 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
-import IconHeader from "../../components/IconHeader/IconHeader";
 import ImagePicker from "../../components/ImagePickerComponent/ImagePickerComponent";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
@@ -49,7 +48,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
         showEditModal={showEditModal}
         iconType={iconType}
         customContainerStyle={
-          iconType === "modalIcon" && style.editProfileContainer
+          iconType === "modalIcon" ? style.editProfileContainer : ""
         }
         firstName={firstName}
         lastName={lastName}
@@ -76,13 +75,6 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
 
   return (
     <>
-      <IconHeader
-        intl={intl}
-        headerText={intl.formatMessage({ id: "label.view_profile" })}
-        onPressLeftIcon={onGoBack}
-        iconLeft={images.iconBack}
-        iconRight={images.iconNotification}
-      />
       <View style={style.picParentContainer}>
         <View style={style.picContainer}>
           {renderProfileIcon("profileIcon")}

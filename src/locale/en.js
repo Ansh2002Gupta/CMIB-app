@@ -189,6 +189,13 @@ const locale = {
   "label.braces": ")",
   "label.left_brace": "left)",
   "label.times": "times!",
+  "label.fileTooLargeError": "Uploaded file must be less than 5MB",
+  "label.allowedFileFormatsError":
+    "Only JPEG, PNG, SVG, EPS, PDF formats are allowed",
+  "label.nonUploadableImageError":
+    "Failed to upload this file, please try uploading a different image",
+  "label.description": "Description",
+  "label.heading": "H1",
   "label.password-not-match": "The password and confirm password do not match.",
   "label.update": "Update",
   "label.add": "Add",
@@ -201,11 +208,11 @@ const locale = {
   "label.no_of_vacancy": "No. of. Vacancy",
   "label.error_password": "Password doesn't match",
   "label.old_password_placeholder": "Enter your old password",
-  "label.visit_website":"Visit Website",
-  "label.session":"Session",
-  "label.module":"Module",
-  "label.newly_qualified_placements":"Newly Qualified Placements",
-  "label.choose_a_module":"Choose a module",
+  "label.visit_website": "Visit Website",
+  "label.session": "Session",
+  "label.module": "Module",
+  "label.newly_qualified_placements": "Newly Qualified Placements",
+  "label.choose_a_module": "Choose a module",
 };
 
 export default locale;

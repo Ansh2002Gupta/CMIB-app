@@ -238,7 +238,9 @@ const LoginScreenUI = (props) => {
                     ...styles.accountText,
                     ...(isWebView ? styles.webView.dontHaveAccountText : {}),
                   }}
-                  title={intl.formatMessage({ id: "label.dont_have_account" })}
+                  title={intl.formatMessage({
+                    id: "label.dont_have_account",
+                  })}
                 />
                 <TouchableOpacity onPress={onCreateNewPasswordClick}>
                   <CommonText

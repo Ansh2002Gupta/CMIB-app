@@ -5,7 +5,7 @@ import { ScrollView, Text, View } from "@unthinkable/react-core-components";
 import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
-import IconHeader from "../../components/IconHeader/IconHeader";
+import Header from "../../containers/Header";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import images from "../../images";
 import style from "./CompanyProfile.style";
@@ -32,13 +32,6 @@ const CompanyProfileUI = (props) => {
 
   return (
     <>
-      <IconHeader
-        intl={intl}
-        headerText={intl.formatMessage({ id: "label.company_profile" })}
-        onPressLeftIcon={onGoBack}
-        iconLeft={images.iconBack}
-        iconRight={images.iconNotification}
-      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
