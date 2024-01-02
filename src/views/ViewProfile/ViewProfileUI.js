@@ -48,7 +48,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
         showEditModal={showEditModal}
         iconType={iconType}
         customContainerStyle={
-          iconType === "modalIcon" && style.editProfileContainer
+          iconType === "modalIcon" ? style.editProfileContainer : ""
         }
         firstName={firstName}
         lastName={lastName}

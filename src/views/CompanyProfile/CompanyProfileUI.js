@@ -32,13 +32,6 @@ const CompanyProfileUI = (props) => {
 
   return (
     <>
-      {/* <Header
-        intl={intl}
-        headerTextWithIcon={intl.formatMessage({ id: "label.company_profile" })}
-        leftIcon={images.iconBack}
-        onPressLeftIcon={onGoBack}
-        rightIcon={images.iconNotification}
-      /> */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}

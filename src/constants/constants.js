@@ -144,19 +144,9 @@ export const STEPPER_STATE = {
   INACTIVE: "inActive",
 };
 
-export const PATH_TO_HEADER_TEXT = {
-  "/company-profile": {
-    text: "Company Profile",
-    backButton: true,
-    editButton: true,
-  },
-  "/view-profile": {
-    text: "View Profile",
-    backButton: true,
-    editButton: false,
-  },
-  "/profile": { text: "Account", backButton: false, editButton: false },
-  "/round-one": { text: "Round 1", backButton: false, editButton: false },
-  // Add more paths as needed
+export const SCREEN_NAMES = {
+  COMPANY_PROFILE: "Company Profile",
+  VIEW_PROFILE: "View Profile",
+  PROFILE: "Account",
+  ROUND_ONE: "Round 1",
 };
-

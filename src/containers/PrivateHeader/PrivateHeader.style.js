@@ -1,28 +1,10 @@
 import colors from "../../assets/colors";
 
 const styles = {
-  container: {
-    flexDirection: "row",
-    paddingRight: 16,
-    paddingLeft: 16,
-    paddingTop: 16,
-    paddingBottom: 16,
-    justifyContent: "space-between",
-    borderWidth: 1,
-    borderTopWidth:0,
-    borderColor: colors.lightGrey,
-  },
-  containerWithoutBorder: {
-    flexDirection: "row",
-    paddingRight: 16,
-    paddingLeft: 16,
-    paddingTop: 16,
-    paddingBottom: 16,
-    justifyContent: "space-between",
-  },
   webMainContainer: {
     flexWrap: "wrap",
     backgroundColor: colors.white,
+    paddingBottom: 8,
   },
   webContainer: {
     flexDirection: "row",
@@ -43,6 +25,8 @@ const styles = {
     paddingRight: 24,
     paddingBottom: 16,
     borderWidth:1,
+    borderLeftWidth:0,
+    borderRightWidth:0,
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
   },
@@ -131,4 +115,5 @@ const styles = {
     alignItems: "center",
   },
 };
+
 export default styles;

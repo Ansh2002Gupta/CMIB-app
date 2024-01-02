@@ -5,7 +5,7 @@ import PublicHeader from "../PublicHeader/PublicHeader";
 import PrivateHeader from "../PrivateHeader/PrivateHeader";
 import { getAuthToken } from "../../utils/getAuthToken";
 
-const Header = ({ onPressLeftIcon, onPressRightIcon }) => {
+const Header = ({ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }) => {
   const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -29,8 +29,7 @@ const Header = ({ onPressLeftIcon, onPressRightIcon }) => {
     <>
       {isuserLoggedIn ? (
         <PrivateHeader
-          onPressLeftIcon={onPressLeftIcon}
-          onPressRightIcon={onPressRightIcon}
+          {...{ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }}
         />
       ) : (
         <PublicHeader />
@@ -40,8 +39,10 @@ const Header = ({ onPressLeftIcon, onPressRightIcon }) => {
 };
 
 Header.propTypes = {
-  onPressLeftIcon: PropTypes.func.isRequired,
-  onPressRightIcon: PropTypes.func.isRequired,
+  onPressLeftIcon: PropTypes.func,
+  onPressRightIcon: PropTypes.func,
+  leftIcon: PropTypes.string,
+  rightIcon: PropTypes.string,
 };
 
 export default Header;
