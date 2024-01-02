@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
 
 import RoundOneUI from "./RoundOneUI";
-import images from "../../images";
 import { ROUND_ONE_CARD } from "../../constants/constants";
+import { navigations } from "../../constants/routeNames";
+import images from "../../images";
 
 const RoundOneComponent = () => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const [selectedContainer, setSelectedContainer] = useState(null);
+
   const containers = ROUND_ONE_CARD.map((card) => ({
     title: intl.formatMessage({ id: card.title }),
     id: card.id,
@@ -15,10 +19,24 @@ const RoundOneComponent = () => {
     subTitle: intl.formatMessage({ id: card.subTitle }),
   }));
 
+  const onPressCard = (id) => {
+    setSelectedContainer(id);
+    switch (id) {
+      case 1:
+        navigate(navigations.ROUND_ONE_APPLICATION_FORM);
+        break;
+      case 2:
+        break;
+      case 3:
+      default:
+        break;
+    }
+  };
+
   return (
     <RoundOneUI
       containers={containers}
-      onPressCard={(id) => setSelectedContainer(id)}
+      onPressCard={onPressCard}
       selectedContainer={selectedContainer}
       intl={intl}
     />

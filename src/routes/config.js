@@ -13,6 +13,7 @@ import Home from "../pages/Home";
 import JobsView from "../views/JobsView/JobsView";
 import LoginScreen from "../views/LoginScreen/index";
 import RoundOne from "../views/RoundOneView";
+import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
 import WebViewScreen from "../views/WebViewScreen/index";
@@ -27,7 +28,7 @@ const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
 const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
-   {
+  {
     pagePath: navigations.ROOT,
     element: <DefaultRoute />,
     views: [
@@ -36,8 +37,8 @@ const config = [
         element: <LoginWithPublicAccess />,
       },
       {
-        viewPath:navigations.DASHBOARD,
-        element:<HomeWithPrivateAccess />,
+        viewPath: navigations.DASHBOARD,
+        element: <HomeWithPrivateAccess />,
       },
     ],
   },
@@ -112,6 +113,16 @@ const config = [
     ],
   },
   {
+    pagePath: navigations.ROUND_ONE_APPLICATION_FORM,
+    element: <ContentRouteWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <RoundOneApplicationForm />,
+      },
+    ],
+  },
+  {
     pagePath: navigations.DASHBOARD,
     element: <HomeWithPrivateAccess />,
     views: [
@@ -141,7 +152,6 @@ const config = [
       },
     ],
   },
-  
   {
     pagePath: navigations.JOBS,
     element: <HomeWithPrivateAccess />,
