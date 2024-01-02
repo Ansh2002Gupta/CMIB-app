@@ -8,3 +8,4 @@ export const COMPANY_PROFILE = "company/get-profile-details";
 export const COMPANY_SIGN_UP = "company/sign-up";
 export const COMPANY_VALIDATE_SIGN_UP = "company/sign-up/validate";
 export const COMPANY_UPDATE_PROFILE = "company/update-profile";
+export const COMPANY_SAVE_LOGO = "company/save-logo";

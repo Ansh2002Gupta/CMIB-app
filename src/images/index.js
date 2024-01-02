@@ -14,10 +14,8 @@ const g20Icon = "/images/svg/g20Icon.svg";
 const gloPac = "/images/svg/gloPac.svg";
 const iconWalkthroughSignUpOne =
   "/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
-const iconCheckbox =
-  "/images/svg/icon_check.svg";
-const iconUnCheckbox =
-  "images/svg/icon_uncheck.svg";
+const iconCheckbox = "/images/svg/icon_check.svg";
+const iconUnCheckbox = "images/svg/icon_uncheck.svg";
 const iconWalkthroughSignUpTwo =
   "/images/iconWalkthroughSignUpTwo/iconWalkthroughSignUpTwo.png";
 const iconDownArrow = "/images/iconDownArrow/iconDownArrow.png";
@@ -90,6 +88,8 @@ const iconAdd = "images/svg/iconAdd.svg";
 const iconStepperDone = "images/svg/iconStepperDone.svg";
 const iconArrowRightWhite = "images/svg/iconArrowRightWhite.svg";
 const iconArrowLeft = "images/svg/iconArrowLeft.svg";
+const addCircle = "images/svg/addCircle.svg";
+const minusCirlce = "images/svg/minusCirlce.svg";
 
 const images = {
   iconArrowUp,
@@ -175,6 +175,8 @@ const images = {
   iconFooter,
   iconAdd,
   iconStepperDone,
+  addCircle,
+  minusCirlce,
 };
 
 export default images;

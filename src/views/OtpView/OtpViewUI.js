@@ -4,7 +4,7 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity"
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ButtonComponent from "../../components/ButtonComponent";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import OtpInput from "../../components/OtpInput/index";
@@ -220,7 +220,7 @@ const OtpViewUI = ({
                     title={formattedTimerValue}
                   />
                 ) : (
-                  <CustomTouchableOpacity  onPress={onResendOtpClick}>
+                  <CustomTouchableOpacity onPress={onResendOtpClick}>
                     <CommonText
                       customTextStyle={styles.textlabelReset}
                       title={formatedOtpLeftValue}
