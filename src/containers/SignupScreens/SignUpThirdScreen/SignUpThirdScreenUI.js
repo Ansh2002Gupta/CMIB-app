@@ -54,7 +54,7 @@ const SignUpThirdScreenUI = (props) => {
         style={style.contentContainerStyle}
       >
         {contactDetails.map((detail, index) => (
-          <>
+          <View key={String(index)}>
             <CommonText
               customTextStyle={style.headerText}
               title={getHeaderText(detail.module, intl)}
@@ -141,7 +141,7 @@ const SignUpThirdScreenUI = (props) => {
             {index < contactDetails.length - 1 && contactDetails.length > 1 && (
               <View style={style.dividerStyle} />
             )}
-          </>
+          </View>
         ))}
       </ScrollView>
       <View style={style.buttonContainer}>
@@ -169,7 +169,7 @@ const SignUpThirdScreenUI = (props) => {
 SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
-  errors: PropTypes.object,
+  errors: PropTypes.array,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,

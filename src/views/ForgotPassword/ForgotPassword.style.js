@@ -61,12 +61,6 @@ const style = {
     color: colors.darkBlue,
     fontWeight: "600",
   },
-  errorMessage: {
-    color: colors.red,
-    fontSize: 12,
-    fontFamily: "GeneralSans-Medium",
-    marginTop: 2,
-  },
   whiteBackground: {
     backgroundColor: colors.white,
   },

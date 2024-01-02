@@ -208,7 +208,7 @@ CustomTextInput.propTypes = {
   inputKey: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CustomTextInput;
