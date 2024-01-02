@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   },
   percentageText: {
     fontSize: 14,
-    fontWeight: "500",
   },
 });
 
