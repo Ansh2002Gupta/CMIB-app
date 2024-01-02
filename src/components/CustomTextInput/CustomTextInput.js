@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Image,
+  Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
@@ -65,6 +66,13 @@ const CustomTextInput = (props) => {
     setIsFocused(false);
   };
 
+  const platformSpecificProps = Platform.select({
+    web: {},
+    default: {
+      placeholderTextColor: colors.darkGrey,
+    },
+  });
+
   return (
     <View
       style={
@@ -127,12 +135,12 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
-            multiline={isMultiline}
+            multiline={isMultiline || undefined}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            placeholderTextColor={colors.darkGrey}
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
+            {...platformSpecificProps}
             {...remainingProps}
           />
           {eyeImage ? (

@@ -8,9 +8,12 @@ const commonStyles = {
   },
   headerContainer: {
     top: 0,
-    zIndex: 0,
+    zIndex: 10,
     backgroundColor: colors.white,
     ...(Platform.OS === "web" ? { position: "sticky" } : {}),
+  },
+  contentContainer: {
+    zIndex: 3,
   },
   middleContainer: {
     flex: 1,
