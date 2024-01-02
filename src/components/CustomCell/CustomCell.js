@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import CustomImage from "../CustomImage";
 import styles from "./CustomCell.style";
 
 const CustomCell = ({
@@ -38,7 +38,6 @@ CustomCell.defaultProps = {
   isSvg: false,
   style: {},
   textStyle: {},
-  onPress: ()=>{},
 };
 
 CustomCell.propTypes = {
@@ -47,13 +46,13 @@ CustomCell.propTypes = {
   leftSource: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
-    PropTypes.func
+    PropTypes.func,
   ]),
   onPress: PropTypes.func.isRequired,
   rightSource: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
-    PropTypes.func
+    PropTypes.func,
   ]),
   title: PropTypes.string.isRequired,
 };
