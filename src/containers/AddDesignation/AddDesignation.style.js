@@ -20,6 +20,10 @@ const styles = StyleSheet.create({
   rightButtonStyle: {
      marginLeft: 8 
   },
+  rightButtonDisableStyle: {
+    marginLeft: 8 ,
+    backgroundColor: colors.voilet,
+ },
   leftTextStyle: {
     fontSize: 14,
     fontWeight: "600",

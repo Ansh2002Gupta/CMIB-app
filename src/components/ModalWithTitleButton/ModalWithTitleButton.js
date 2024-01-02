@@ -10,6 +10,7 @@ const ModalWithTitleButton = ({
   customStyles,
   heading,
   enableBottomButton,
+  isRightDisabled,
   leftLabelTxt,
   leftButtonLeftImage,
   leftButtonRightImage,
@@ -46,9 +47,10 @@ const ModalWithTitleButton = ({
           onLeftButtonClick={onClickLeftButton}
           onRightButtonClick={onClickRightButton}
           parentStyle={styles.bottomStyle}
+          isRightDisabled={isRightDisabled}
           rightButtonLeftImage={rightButtonLeftImage}
           rightButtonRightImage={rightButtonRightImage}
-          rightButtonStyle={{ ...styles.rightButtonStyle, ...rightButtonStyle }}
+          rightButtonStyle={{ ...styles.rightButtonStyle,...(isRightDisabled ? styles.rightButtonDisableStyle : {}), ...rightButtonStyle }}
           rightButtonText={rightLabelTxt}
           rightTextStyle={{ ...styles.rightTextStyle, ...rightTextStyle }}
         />

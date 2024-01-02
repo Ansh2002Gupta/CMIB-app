@@ -1,6 +1,7 @@
+import { StyleSheet} from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const styles = {
+const styles =StyleSheet.create({
   counterMainView: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
@@ -16,12 +17,11 @@ const styles = {
     justifyContent: "center",
   },
   counterInputText: {
-    flex:1,
+    flex: 1,
     color: colors.black,
     justifyContent: "center",
     alignItems: "center",
     fontSize: 14,
-    lineHeight: 20,
     padding: 0,
   },
   counterUp: {
@@ -46,6 +46,7 @@ const styles = {
     height: 14,
     width: 14,
   },
-};
+  arrowParent: { marginLeft: 8 },
+});
 
 export default styles;

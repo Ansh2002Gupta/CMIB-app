@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
   rightButtonStyle: {
     backgroundColor: colors.green,
   },
+  rightButtonDisableStyle: {
+    backgroundColor: colors.voilet,
+  },
   rightTextStyle: {
     color: colors.white,
     fontSize: 14,
