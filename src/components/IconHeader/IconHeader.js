@@ -42,12 +42,21 @@ const IconHeader = ({
               isWebView ? styles.webHeaderStyle : styles.formHeaderStyle
             }
           />
-          {ActionComponent && ActionComponent}
+          {ActionComponent ? ActionComponent : null}
         </View>
       </View>
       <View style={styles.borderStyle} />
     </View>
   );
+};
+
+IconHeader.defaultProps = {
+  ActionComponent: null,
+  headerText: "",
+  iconLeft: null,
+  iconRight: null,
+  onPressLeftIcon: () => {},
+  onPressRightIcon: () => {},
 };
 
 IconHeader.propTypes = {

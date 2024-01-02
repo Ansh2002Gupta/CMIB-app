@@ -24,7 +24,8 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
   const getRowStyle = (detail) => {
     if (detail.isMajor) {
       return style.rowStyle;
-    } else if (detail.isMinor) {
+    }
+    if (detail.isMinor) {
       return style.minorRowStyle;
     }
     return style.innerContainer;
