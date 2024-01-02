@@ -5,7 +5,7 @@ import PublicHeader from "../PublicHeader/PublicHeader";
 import PrivateHeader from "../PrivateHeader/PrivateHeader";
 import { getAuthToken } from "../../utils/getAuthToken";
 
-const Header = ({ toggleSideBar, menuIconVisible }) => {
+const Header = ({ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }) => {
   const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -29,8 +29,7 @@ const Header = ({ toggleSideBar, menuIconVisible }) => {
     <>
       {isuserLoggedIn ? (
         <PrivateHeader
-          toggleSideBar={toggleSideBar}
-          menuIconVisible={menuIconVisible}
+          {...{ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }}
         />
       ) : (
         <PublicHeader />
@@ -40,8 +39,10 @@ const Header = ({ toggleSideBar, menuIconVisible }) => {
 };
 
 Header.propTypes = {
-  toggleSideBar: PropTypes.func,
-  menuIconVisible:PropTypes.bool,
+  onPressLeftIcon: PropTypes.func,
+  onPressRightIcon: PropTypes.func,
+  leftIcon: PropTypes.string,
+  rightIcon: PropTypes.string,
 };
 
 export default Header;

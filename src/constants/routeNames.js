@@ -9,6 +9,7 @@ export const navigations = {
   PROFILE: "/profile",
   ROOT: "/",
   ROUND_ONE: "/round-one",
+  ROUND_ONE_APPLICATION_FORM: "/round-one-application-form",
   ROUND_TWO: "/round-two",
   SIGN_UP: "/sign-up",
   VIEW_PROFILE: "/view-profile",

@@ -55,10 +55,13 @@ import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.pn
 import iconClose from "../../public/images/iconClose/iconClose.png";
 import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
-import iconSearch from "../../public/images/svg/iconSearch.svg";
-import iconFilter from "../../public/images/svg/iconFilter.svg";
-import iconMore from "../../public/images/svg/iconMore.svg";
+import iconSearch from "../../public/images/svg/iconSearch.svg";;
+import iconFilter from "../../public/images/svg/iconFilter.svg";;
+import iconMore from "../../public/images/svg/iconMore.svg";;
 import iconFooter from "../../public/images/svg/iconFooter.svg";
+import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
+import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
+import iconAdd from "../../public/images/svg/iconAdd.svg";
 import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
 import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
 import iconAdd from "../../public/images/svg/iconAdd.svg";
@@ -89,6 +92,8 @@ import iconJobSeekers from "../../public/images/svg/iconJobSeeker.svg";
 import iconJobSeekersActive from "../../public/images/svg/iconJobSeekerActive.svg";
 import iconSaved from "../../public/images/svg/iconSavedCandidates.svg";
 import iconSavedActive from "../../public/images/svg/iconSavedCandidatesActive.svg";
+const addCircle = "images/svg/addCircle.svg";
+const minusCirlce = "images/svg/minusCirlce.svg";
 
 const images = {
   iconArrowUp,
@@ -182,6 +187,8 @@ const images = {
   iconDashboardWeb,
   iconRound1Web,
   iconPostedJobsWeb,
+  addCircle,
+  minusCirlce,
 };
 
 export default images;
