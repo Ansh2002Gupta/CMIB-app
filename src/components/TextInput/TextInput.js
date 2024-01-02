@@ -22,6 +22,7 @@ const TextInput = (
     onChangeValue,
     onKeyUp,
     secureTextEntry,
+    type,
     ...props
   },
   ref
@@ -79,7 +80,7 @@ const TextInput = (
     value = JSON.stringify(value);
   }
 
-  const inputType = secureTextEntry ? "password" : "text";
+  const inputType = secureTextEntry ? "password" : type || "text";
 
   return (
     <input
@@ -105,6 +106,7 @@ PropTypes.TextInput = {
   style: PropTypes.object,
   showSoftInputOnFocus: PropTypes.bool,
   value: PropTypes.number,
+  type: PropTypes.string,
 };
 
 export default memo(forwardRef(TextInput));

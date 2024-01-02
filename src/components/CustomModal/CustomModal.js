@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
-  Modal,
   Platform,
   TouchableOpacity,
   View,
@@ -11,6 +10,7 @@ import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Key
 
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import CommonText from "../CommonText";
+import Modal from "../Modal";
 import images from "../../images";
 import style from "./CustomModal.style";
 
