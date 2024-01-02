@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import CustomImage from "../CustomImage";
 import styles from "./CustomCell.style";
 
 const CustomCell = ({
