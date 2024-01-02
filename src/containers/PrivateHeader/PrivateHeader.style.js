@@ -63,6 +63,7 @@ const styles = {
   iconNotification: {
     width: 24,
     height: 24,
+    cursor:"pointer"
   },
   overView: {
     color: colors.darkGreySecond,

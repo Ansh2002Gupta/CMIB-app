@@ -40,8 +40,8 @@ const Header = ({ toggleSideBar, menuIconVisible }) => {
 };
 
 Header.propTypes = {
-  toggleSideBar: PropTypes.func.isRequired,
-  menuIconVisible:PropTypes.bool.isRequired,
+  toggleSideBar: PropTypes.func,
+  menuIconVisible:PropTypes.bool,
 };
 
 export default Header;

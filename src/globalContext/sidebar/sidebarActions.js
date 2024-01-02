@@ -1,6 +1,6 @@
 import * as types from "./types";
 
-export const setModuleList = (value) => {
+export const setSelectedModule = (value) => {
   return {
     type: types.MODULE_LIST,
     payload: value,

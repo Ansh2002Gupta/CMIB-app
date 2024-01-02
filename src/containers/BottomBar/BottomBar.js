@@ -1,35 +1,37 @@
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Image,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
+import { MediaQueryContext } from "@unthinkable/react-theme";
+
+import { TwoRow } from "../../core/layouts";
 
 import images from "../../images";
 import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
 import MultiColumn from "../../core/layouts/MultiColumn";
-import { navigations } from "../../constants/routeNames";
-import { TwoRow } from "../../core/layouts";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
-import { useLocation } from "../../routes";
-import styles from "./bottomBar.style";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { useLocation } from "../../routes";
+import { navigations } from "../../constants/routeNames";
+import { getIconImages } from "../../constants/sideBarHelpers";
+import styles from "./bottomBar.style";
 
 function BottomBar() {
   const icons = useTheme("icons");
   const intl = useIntl();
   const { navigateScreen } = useNavigateScreen();
   const [sideBarState] = useContext(SideBarContext);
-  const { SideBarDetails } = sideBarState;
+  const { selectedModule } = sideBarState;
   const { logo, homeOutline, homeSolid, profileOutline, profileSolid } = icons;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { pathname: currentRoute } = useLocation();
 
-  // console.log("Bottombar",SideBarDetails.children)
   const navigateTo = (route) => {
     navigateScreen(route);
   };
@@ -108,32 +110,7 @@ function BottomBar() {
     };
   }
 
-  function getIconImages(iconName) {
-    const iconMap = {
-      iconDashboard: {
-        activeImage: images.iconDashboard,
-        inactiveImage: images.iconDashboard,
-      },
-      iconRound1: {
-        activeImage: images.iconActiveRound1,
-        inactiveImage: images.iconRound1,
-      },
-      iconRound2: {
-        activeImage: images.iconActiveRound2,
-        inactiveImage: images.iconRound2,
-      },
-      iconPostedJobs: {
-        activeImage: images.iconActivePostedJobs,
-        inactiveImage: images.iconPostedJobs,
-      },
-      iconCandidates: {
-        activeImage: images.iconActiveCandidates,
-        inactiveImage: images.iconCandidates,
-      },
-      // ... other icon mappings
-    };
-    return iconMap[iconName] || { activeImage: null, inactiveImage: null };
-  }
+ 
 
   function preprocessMenu(menuItems) {
     const candidateKeys = new Set([
@@ -172,8 +149,8 @@ function BottomBar() {
     styles.activeStyleMyaccount
   );
 
-  const dynamicConfigs = SideBarDetails?.children
-    ? preprocessMenu(SideBarDetails.children).map((item) =>
+  const dynamicConfigs = selectedModule?.children
+    ? preprocessMenu(selectedModule.children).map((item) =>
         createRowConfig(
           item.key,
           getIconImages(item.icon).activeImage,

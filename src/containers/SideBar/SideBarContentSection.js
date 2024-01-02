@@ -12,34 +12,34 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 
-import { modules, items } from "../../constants/sideBarListItems";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import { modules, items } from "../../constants/sideBarHelpers";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import { setModuleList } from "../../globalContext/sidebar/sidebarActions";
+import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
 import ResponsiveTextTruncate from "../../components/ResponsiveTextTruncate/ResponsiveTextTruncate";
 import images from "../../images";
-import styles from "./SideBar.style";
-import useIsWebView from "../../hooks/useIsWebView";
 import ModuleList from "../../components/ModuleList/ModuleList";
+import useIsWebView from "../../hooks/useIsWebView";
+import styles from "./SideBar.style";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
-  const { SideBarDetails } = sideBarState;
-  
+  const { selectedModule } = sideBarState;
+
   const navigate = useNavigate();
   const isWeb = useIsWebView();
   const intl = useIntl();
 
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [activeMenuItem, setActiveMenuItem] = useState(
-    SideBarDetails.children[0].key
+    selectedModule.children[0].key
   );
 
   const handleOnSelectItem = (item) => {
-    sideBarDispatch(setModuleList(item));
+    sideBarDispatch(setSelectedModule(item));
     setOpenModuleSelector(false);
   };
   const handleOnClickMenuItem = ({ key }) => {
@@ -116,7 +116,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 style={openModuleSelector ? "" : styles.moduleSelectorheading}
               >
                 <ResponsiveTextTruncate
-                  text={SideBarDetails.label}
+                  text={selectedModule.label}
                   maxLength={22}
                   style={styles.changeText}
                   widthPercentage={0.4}
@@ -150,7 +150,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             <>
               {isWeb.isWebView ? (
                 <FlatList
-                  data={SideBarDetails.children}
+                  data={selectedModule.children}
                   renderItem={renderMenuItems}
                 />
               ) : (

@@ -1,16 +1,16 @@
 import React, { createContext, useReducer } from "react";
 import * as types from "./types";
 
-import { modules } from "../../constants/sideBarListItems";
+import { modules } from "../../constants/sideBarHelpers";
 
-const initialState = { SideBarDetails: modules[0] };
+const initialState = { selectedModule: modules[0] };
 
 const sideBarReducer = (state, action) => {
   switch (action.type) {    
     case types.MODULE_LIST:       
       return {
         ...state,
-        SideBarDetails: { ...action.payload },
+        selectedModule: { ...action.payload },
       };
     default:
       return state;

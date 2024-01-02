@@ -1,10 +1,6 @@
 import colors from "../../assets/colors";
 
 const styles = {
-  mainContainer: {
-    flex: 1,
-    position: "relative",
-  },
   mainContainerWeb: {
     flex: 1,
     position: "relative",
@@ -157,6 +153,7 @@ const styles = {
     backgroundColor: colors.white,
     flexDirection: "row",
     cursor: "pointer",
+    alignItems:"center"
   },
   disabled: {
     color: colors.slateGray,
