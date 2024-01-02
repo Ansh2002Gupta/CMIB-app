@@ -164,12 +164,18 @@ const SignUpLastScreenUI = (props) => {
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.source_of_info" })}
         />
-        <FlatList
-          contentContainerStyle={style.containerStyle}
-          data={options}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
+        <View style={style.containerStyle}>
+          {options.map((item, index) => (
+            <CheckBox
+              key={item.id}
+              id={item.id}
+              index={index}
+              title={item.title}
+              isSelected={item.isSelected}
+              handleCheckbox={handleToggle}
+            />
+          ))}
+        </View>
         <View style={style.seperator} />
 
         <CommonText
