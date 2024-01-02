@@ -35,6 +35,7 @@
     "react-native-image-crop-picker": "0.40.2",
     "react-native-image-picker": "7.0.3",
     "react-native-modal": "13.0.1",
+    "react-native-pell-rich-editor": "1.9.0",
     "react-native-svg": "^14.1.0",
     "react-native-svg-transformer": "^1.2.0",
     "react-native-webview": "^13.6.3",

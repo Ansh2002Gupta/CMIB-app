@@ -189,6 +189,8 @@ const locale = {
   "label.braces": ")",
   "label.left_brace": "left)",
   "label.times": "times!",
+  "label.description": "Description",
+  "label.heading": "H1",
   "label.password-not-match": "The password and confirm password do not match.",
   "label.update": "Update",
   "label.add": "Add",
