@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-const style = {
+const styles = StyleSheet.create( {
   container: {
     flex: 1,
     padding: 16,
@@ -46,6 +48,6 @@ const style = {
       marginTop: 0,
     },
   },
-};
+});
 
-export default style;
+export default styles;
