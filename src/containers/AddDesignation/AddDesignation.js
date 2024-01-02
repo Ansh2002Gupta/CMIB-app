@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import { useIntl } from "react-intl";
 
 import CustomTextInput from "../../components/CustomTextInput";
@@ -7,7 +8,7 @@ import MultiRow from "../../core/layouts/MultiRow";
 import { ENTITY_OPTIONS } from "../../constants/constants";
 import styles from "./AddDesignation.style";
 
-const AddDesignation = ({ handleCancelButton }) => {
+const AddDesignation = ({ resultCallback }) => {
   const intl = useIntl();
   const [countValue, setCountValue] = useState(0);
 
@@ -15,7 +16,13 @@ const AddDesignation = ({ handleCancelButton }) => {
     setCountValue(newCount);
   };
 
-  const handleSaveButton = () => {};
+  const handleCancelButton = () => {
+    resultCallback();
+  };
+
+  const handleSaveButton = () => {
+    resultCallback();
+  };
 
   const addDesignation = [
     {
@@ -62,6 +69,14 @@ const AddDesignation = ({ handleCancelButton }) => {
       <MultiRow rows={addDesignation} style={styles.parentStyle} />
     </ModalWithTitleButton>
   );
+};
+
+AddDesignation.defaultProps = {
+  resultCallback: ()=>{},
+};
+
+AddDesignation.propTypes = {
+  resultCallback: PropTypes.func.isRequired,
 };
 
 export default AddDesignation;

@@ -25,7 +25,7 @@ function DashboardView() {
     setIsEnabled((previousState) => !previousState);
   };
 
-  const handleCancelButton = () => {
+  const handleAddDesignation = () => {
     setIsEnabled((previousState) => !previousState);
   };
 
@@ -77,7 +77,7 @@ function DashboardView() {
         style={styles.customCellStyle}
         textStyle={styles.customCellTextStyle}
       />
-      {isEnabled && <AddDesignation handleCancelButton={handleCancelButton} />}
+      {isEnabled && <AddDesignation  resultCallback={handleAddDesignation}/>}
     </View>
   );
 }
