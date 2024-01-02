@@ -96,10 +96,6 @@ const AddDesignation = ({ resultCallback }) => {
   );
 };
 
-AddDesignation.defaultProps = {
-  resultCallback: () => {},
-};
-
 AddDesignation.propTypes = {
   resultCallback: PropTypes.func.isRequired,
 };
