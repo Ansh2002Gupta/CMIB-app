@@ -7,7 +7,7 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import useIsWebView from "../../hooks/useIsWebView";
-import style from "./DetailComponent.style";
+import styles, { getRowStyle } from "./DetailComponent.style";
 
 const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
   const intl = useIntl();
@@ -21,37 +21,27 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
     sm: "1fr 1fr",
   };
 
-  const getRowStyle = (detail) => {
-    if (detail.isMajor) {
-      return style.rowStyle;
-    }
-    if (detail.isMinor) {
-      return style.minorRowStyle;
-    }
-    return style.innerContainer;
-  };
-
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
   const containerStyle = isWebView
-    ? style.containerGridStyle(columnCount)
-    : style.containerStyle;
+    ? styles.containerGridStyle(columnCount)
+    : styles.containerStyle;
 
   return (
     <View>
       {!!headerText && (
-        <CommonText customTextStyle={style.headerText} title={headerText} />
+        <CommonText customTextStyle={styles.headerText} title={headerText} />
       )}
       <View style={containerStyle}>
         {details?.map((detail, index) => (
           <View
             key={index}
-            style={isWebView ? style.webContainer : getRowStyle(detail)}
+            style={isWebView ? styles.webContainer : getRowStyle(detail)}
           >
             {isEditable ? (
               <CustomTextInput
                 value={detail.value}
-                customStyle={style.inputStyle}
+                customStyle={styles.inputStyle}
                 label={intl.formatMessage({ id: detail.label })}
                 isDropdown={detail.isDropdown}
                 isCounterInput={detail.isCounterInput}
@@ -70,18 +60,18 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
               />
             ) : (
               <>
-                <View style={style.titleContainer}>
+                <View style={styles.titleContainer}>
                   <CommonText
                     title={intl.formatMessage({ id: detail.label })}
-                    customTextStyle={style.titleStyle}
+                    customTextStyle={styles.titleStyle}
                   />
-                  <CommonText title=" *" customTextStyle={style.starStyle} />
+                  <CommonText title=" *" customTextStyle={styles.starStyle} />
                 </View>
                 <CommonText
                   title={detail.value}
                   customTextStyle={[
-                    style.valueStyle,
-                    detail.isLink && style.linkStyle,
+                    styles.valueStyle,
+                    detail.isLink && styles.linkStyle,
                   ]}
                 />
               </>

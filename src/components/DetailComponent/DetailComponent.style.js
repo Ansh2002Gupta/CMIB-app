@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-const style = {
+const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
   },
@@ -54,6 +56,16 @@ const style = {
     display: "grid",
     gridTemplateColumns: columnCount || "1fr 1fr 1fr",
   }),
+});
+
+export const getRowStyle = (detail) => {
+  if (detail.isMajor) {
+    return styles.rowStyle;
+  }
+  if (detail.isMinor) {
+    return styles.minorRowStyle;
+  }
+  return styles.innerContainer;
 };
 
-export default style;
+export default styles;

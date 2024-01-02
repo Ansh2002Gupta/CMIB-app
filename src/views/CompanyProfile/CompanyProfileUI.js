@@ -68,7 +68,6 @@ const CompanyProfileUI = (props) => {
         index={index}
         title={item.title}
         isSelected={item.isSelected}
-        // handleCheckbox={handleToggle}
       />
     );
   };
