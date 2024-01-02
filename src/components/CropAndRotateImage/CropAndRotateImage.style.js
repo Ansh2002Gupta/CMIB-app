@@ -1,3 +1,6 @@
+import { Platform } from "@unthinkable/react-core-components";
+import colors from "../../assets/colors";
+
 const styles = {
   cropperContainer: {
     position: "relative",
@@ -5,16 +8,20 @@ const styles = {
     padding: "16 24",
     borderTop: `1px solid rgba(0, 0, 0, 0.12)`,
     borderBottom: `1px solid rgba(0, 0, 0, 0.12)`,
-    backgroundColor: "rgb(51, 51, 51)",
-    height: "max(20vh, 400px)",
+    backgroundColor: colors.greyFour,
+    ...Platform.select({
+      web: {
+        height: "max(20vh, 400px)",
+      },
+    }),
     borderRadius: 16,
   },
   actionBtnContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "end",
+    justifyContent: "flex-end",
     gap: 16,
-    marginTop: "32px",
+    marginTop: 32,
   },
 };
 

@@ -3,6 +3,7 @@ const black = "#000833";
 const darkBlack = "#0F0F0F";
 const darkBlackSecond = "#18181B";
 const trueBlack = "#000";
+const blackWithOneForthOpacity = "rgba(0, 0, 0, 0.25)";
 
 /* Blues */
 const backgroundColor = "#FBFCFF"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
@@ -24,6 +25,7 @@ const gray = "#5A5A5A";
 const greyOne = "#f1f1f1";
 const greyTwo = "#eee";
 const greyThree = "rgba(20, 25, 26, 0.16)";
+const greyFour = "rgb(51, 51, 51)";
 const lightGray = "#D0D5DD"; //TODO: Rename this color to something else so that it doesn't have the same name as "lightGrey" color.
 const lightGraySecond = "d3d3d3";
 const lightGrey = "#CCD0E5";
@@ -45,37 +47,39 @@ const offWhite = "#FFFFFF14";
 const yellow = "#FABB00";
 
 const colors = {
-  lightGray,
-  voilet,
-  white,
-  darkBlue,
-  black,
-  lightGrey,
-  silver,
-  backgroundColor,
-  green,
-  red,
-  gray,
-  darkGreen,
-  subHeadingGray,
-  darkGrey,
-  errorRed,
-  lightBlue,
-  secondaryGrey,
-  darkBlack,
-  errorBackground,
-  trueBlack,
-  disabledBtn,
   darkBlueShade,
-  offWhite,
-  slateGray,
-  yellow,
-  darkGreySecond,
+  disabledBtn,
+  backgroundColor,
+  black,
+  blackWithOneForthOpacity,
+  darkBlack,
   darkBlackSecond,
+  darkBlue,
+  darkGreen,
+  darkGrey,
+  darkGreySecond,
+  errorBackground,
+  errorRed,
+  gray,
+  green,
+  greenOne,
   greyOne,
   greyTwo,
   greyThree,
-  greenOne,
+  greyFour,
+  lightBlue,
+  lightGray,
   lightGraySecond,
+  lightGrey,
+  offWhite,
+  red,
+  secondaryGrey,
+  silver,
+  slateGray,
+  subHeadingGray,
+  trueBlack,
+  voilet,
+  white,
+  yellow,
 };
 export default colors;

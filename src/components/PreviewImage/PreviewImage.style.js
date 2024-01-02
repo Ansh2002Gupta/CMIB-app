@@ -12,7 +12,9 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     justifyContent: "center",
-    borderBottom: `1px solid ${colors.lightGrey}`,
+    borderBottomWidth: 1,
+    borderStyle: "solid",
+    borderColor: colors.lightGrey,
     alignItems: "center",
     minWidth: 250,
     minHeight: 150,

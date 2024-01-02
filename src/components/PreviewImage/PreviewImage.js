@@ -28,7 +28,7 @@ const PreviewImage = ({ fileName, onRemoveImage, source }) => {
 
 PreviewImage.defaultProps = {
   fileName: "",
-  onRemoveImage: "",
+  onRemoveImage: () => {},
   source: "",
 };
 

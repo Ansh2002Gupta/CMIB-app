@@ -21,7 +21,10 @@ const styles = {
   imageContainer: {
     flex: 1,
     justifyContent: "center",
-    borderBottom: `1px solid ${colors.lightGrey}`,
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderStyle: "solid",
+    borderColor: colors.lightGrey,
     alignItems: "center",
   },
   selectedImageStyle: {

@@ -4,13 +4,14 @@ import colors from "../../assets/colors";
 
 const styles = {
   defaultBtnStyles: {
-    padding: "12, 24",
     paddingTop: 12,
     paddingBottom: 12,
     paddingLeft: 24,
     paddingRight: 24,
     borderRadius: 8,
-    border: `1px solid ${colors.lightGrey}`,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: colors.lightGrey,
     backgroundColor: colors.white,
     color: colors.black,
     cursor: "pointer",

@@ -13,6 +13,11 @@ const Backdrop = ({ onClose, preventCloseOnBackdropClick }) => {
   );
 };
 
+Backdrop.defaultProps = {
+  onClose: () => {},
+  preventCloseOnBackdropClick: false,
+};
+
 Backdrop.propTypes = {
   onClose: PropTypes.func,
   preventCloseOnBackdropClick: PropTypes.bool,

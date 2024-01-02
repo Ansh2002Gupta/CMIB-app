@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { Image, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity";
 import Modal from "../Modal";
 import images from "../../images";
 import styles from "./Dialog.style";
@@ -31,9 +28,12 @@ const Dialog = ({
         </View>
         <View>
           {!omitCloseBtn ? (
-            <TouchableOpacity onPress={onClose} style={styles.dialogCloseBtn}>
+            <CustomTouchableOpacity
+              onPress={onClose}
+              style={styles.dialogCloseBtn}
+            >
               <Image source={images.iconCross} />
-            </TouchableOpacity>
+            </CustomTouchableOpacity>
           ) : (
             <></>
           )}

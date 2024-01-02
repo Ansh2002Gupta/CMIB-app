@@ -33,15 +33,6 @@ export const styles = {
     color: colors.darkGrey,
     fontSize: 14,
   },
-  activeTopTabsText: {
-    textAlign: "center",
-    color: colors.black,
-    fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Semibold",
-  },
   buttonView: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -59,15 +50,6 @@ export const styles = {
   forgotPasswordView: {
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  rememberMeText: {
-    fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
-    color: colors.black,
-    lineHeight: 20,
   },
   forgotPasswordText: {
     fontSize: 14,

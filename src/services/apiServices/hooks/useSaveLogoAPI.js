@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { COMPANY_SAVE_LOGO } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useSaveLogo = () => {
@@ -27,9 +28,8 @@ const useSaveLogo = () => {
           }
         },
       };
-
       const res = await Http.post(
-        `company/save-logo`,
+        COMPANY_SAVE_LOGO,
         file,
         headers,
         otherOptions

@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import {
   Image,
   Platform,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -52,9 +51,10 @@ const DragAndDropCard = ({
                     : {}),
                 }}
               >
-                <Text style={styles.percentageText}>{`${Math.round(
-                  uploadPercentage
-                )}%`}</Text>
+                <CommonText
+                  customTextStyle={styles.percentageText}
+                  title={`${Math.round(uploadPercentage)}%`}
+                />
               </View>
             )}
           </View>
