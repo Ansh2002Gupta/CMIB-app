@@ -62,9 +62,6 @@ import iconFooter from "../../public/images/svg/iconFooter.svg";
 import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
 import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
 import iconAdd from "../../public/images/svg/iconAdd.svg";
-import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
-import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
-import iconAdd from "../../public/images/svg/iconAdd.svg";
 import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
 import iconArrowRightWhite from "../../public/images/svg/iconArrowRightWhite.svg";
 import iconArrowLeft from "../../public/images/svg/iconArrowLeft.svg";
@@ -92,8 +89,8 @@ import iconJobSeekers from "../../public/images/svg/iconJobSeeker.svg";
 import iconJobSeekersActive from "../../public/images/svg/iconJobSeekerActive.svg";
 import iconSaved from "../../public/images/svg/iconSavedCandidates.svg";
 import iconSavedActive from "../../public/images/svg/iconSavedCandidatesActive.svg";
-const addCircle = "images/svg/addCircle.svg";
-const minusCirlce = "images/svg/minusCirlce.svg";
+import addCircle from "../../public/images/svg/addCircle.svg";
+import minusCirlce from "../../public/images/svg/minusCirlce.svg";
 
 const images = {
   iconArrowUp,
