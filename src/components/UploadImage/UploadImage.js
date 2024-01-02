@@ -57,7 +57,7 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
     initiateFileUpload({
       onLoad: onValidImageUpload,
       resetUploadInput: () => (e.target.value = null),
-      uploadedFile: e.target.files[0],
+      uploadedFile: e.dataTransfer.files?.[0],
     });
   };
 
