@@ -93,7 +93,7 @@ const PrivateHeader = ({
 };
 
 const PageHeading = ({ pageHeading, showRightButton ,isWebView}) => (
-  <View style={styles.textHeader}>
+  <View style={isWebView ? styles.textHeaderTopBorder : styles.textHeader}>
     <CommonText title={pageHeading} customTextStyle={styles.formHeaderStyle} />
     {(showRightButton && isWebView) &&(
       <TouchableOpacity style={styles.editButton}>
