@@ -84,6 +84,7 @@ const PrivateHeader = ({
           <PageHeading
             pageHeading={pageHeading}
             showRightButton={showRightButton}
+            isWebView={isWebView}
           />
         )}
       </View>
@@ -91,10 +92,10 @@ const PrivateHeader = ({
   );
 };
 
-const PageHeading = ({ pageHeading, showRightButton }) => (
+const PageHeading = ({ pageHeading, showRightButton ,isWebView}) => (
   <View style={styles.textHeader}>
     <CommonText title={pageHeading} customTextStyle={styles.formHeaderStyle} />
-    {showRightButton && (
+    {(showRightButton && isWebView) &&(
       <TouchableOpacity style={styles.editButton}>
         <Image source={images.iconEdit} style={styles.icons} />
         <CommonText title="Edit" customTextStyle={styles.editText} />

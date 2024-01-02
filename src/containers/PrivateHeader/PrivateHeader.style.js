@@ -97,7 +97,6 @@ const styles = {
     color: colors.black,
     fontSize: 20,
     fontWeight: "600",
-    marginTop: 10,
   },
   headerLeftSection: {
     flexDirection: "row",
