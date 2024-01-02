@@ -16,8 +16,8 @@ import LoginScreen from "../views/LoginScreen/index";
 import PostedJobs from "../views/PostedJobs/PostedJobs";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
-import SignUpScreen from "../views/SignUpView/index";
 import SavedCandidates from "../views/SavedCandidates/SavedCandidates";
+import SignUpScreen from "../views/SignUpView/index";
 import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";

@@ -37,38 +37,6 @@ export const items = [
   },
 ];
 
-export const weblisting = [
-  // TODO data will replace with API data
-  {
-    id: 0,
-    title: "Dashboard",
-  },
-  {
-    id: 1,
-    title: "Global configs",
-  },
-  {
-    id: 2,
-    title: "Candidates",
-  },
-  {
-    id: 3,
-    title: "Companies",
-  },
-  {
-    id: 4,
-    title: "Payments",
-  },
-  {
-    id: 5,
-    title: "Roster",
-  },
-  {
-    id: 6,
-    title: "Report",
-  },
-];
-
 const newlyQualifiedPlacementsMenu = [
   { label: "Dashboard", key: navigations.DASHBOARD, icon: "iconDashboard" },
   {
