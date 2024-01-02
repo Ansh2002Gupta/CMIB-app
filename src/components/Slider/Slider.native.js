@@ -1,5 +1,5 @@
 import React from "react";
-import View, { Text } from "@unthinkable/react-core-components";
+import { Text, View } from "@unthinkable/react-core-components";
 
 const Slider = () => {
   return (
