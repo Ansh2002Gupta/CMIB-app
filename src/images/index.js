@@ -88,6 +88,7 @@ const iconSaved = "images/iconSaved/save.png";
 const iconFilter = "images/svg/iconFilter.svg";
 const iconSearch = "images/svg/iconSearch.svg";
 const iconMore = "images/svg/iconMore.svg";
+const iconFooter = "images/svg/iconFooter.svg";
 const iconArrowDown = "images/svg/iconArrowDown.svg";
 const iconArrowUp = "images/svg/iconArrowUp.svg";
 const iconAdd = "images/svg/iconAdd.svg";
@@ -176,6 +177,7 @@ const images = {
   iconFilter,
   iconSearch,
   iconMore,
+  iconFooter,
   iconAdd,
   iconStepperDone,
   iconPostedJobs,

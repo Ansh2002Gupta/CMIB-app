@@ -69,12 +69,13 @@ import iconActiveCandidates from "../../public/images/iconActiveCandidates/peopl
 import iconJobApplicants from "../../public/images/iconJobApplicants/iconJobApplicants.png";
 import iconJobSeekers from "../../public/images/iconJobSeekers/user-search.png";
 import iconSaved from "../../public/images/iconSaved/save.png";
-import iconSearch from "../../public/images/svg/iconSearch.svg";
-import iconFilter from "../../public/images/svg/iconFilter.svg";
-import iconMore from "../../public/images/svg/iconMore.svg";
-import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
-import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
-import iconAdd from "../../public/images/svg/iconAdd.svg";
+import iconSearch from "../../public/images/svg/iconSearch.svg"
+import iconFilter from "../../public/images/svg/iconFilter.svg"
+import iconMore from "../../public/images/svg/iconMore.svg"
+import iconFooter from "../../public/images/svg/iconFooter.svg";
+import iconArrowDown from "../../public/images/svg/iconArrowDown.svg"
+import iconArrowUp from "../../public/images/svg/iconArrowUp.svg"
+import iconAdd from "../../public/images/svg/iconAdd.svg"
 import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
 import iconArrowRightWhite from "../../public/images/svg/iconArrowRightWhite.svg";
 import iconArrowLeft from "../../public/images/svg/iconArrowLeft.svg";
@@ -155,6 +156,7 @@ const images = {
   iconSearch,
   iconFilter,
   iconMore,
+  iconFooter,
   iconAdd,
   iconStepperDone,
   iconPostedJobs,
