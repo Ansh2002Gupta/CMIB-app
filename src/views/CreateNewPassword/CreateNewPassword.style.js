@@ -4,7 +4,6 @@ import colors from "../../assets/colors";
 const styles = StyleSheet.create({
   mainView: {
     flex: 1,
-    backgroundColor: colors.backgroundColor,
   },
   container: {
     paddingLeft: 16,

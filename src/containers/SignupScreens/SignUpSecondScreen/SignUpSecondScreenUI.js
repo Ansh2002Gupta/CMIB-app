@@ -17,6 +17,7 @@ const SignUpSecondScreenUI = (props) => {
     handleInputChange,
     industryOptions,
     intl,
+    isLoading,
     onClickNext,
     onGoBack,
     stateOptions,
@@ -194,12 +195,13 @@ const SignUpSecondScreenUI = (props) => {
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
+        buttonTwoText={intl.formatMessage({ id: "label.next" })}
+        displayLoader={isLoading}
+        hasIconRight
+        hasIconLeft
+        isNextDisabled={!allFieldsFilled()}
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
-        hasIconRight
-        isNextDisabled={!allFieldsFilled()}
-        buttonTwoText={intl.formatMessage({ id: "label.next" })}
-        hasIconLeft
       />
       {!!validationError && (
         <ToastComponent
@@ -219,6 +221,7 @@ SignUpSecondScreenUI.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   onClickNext: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   stateOptions: PropTypes.array,

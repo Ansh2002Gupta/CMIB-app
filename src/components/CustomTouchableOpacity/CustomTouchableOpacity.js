@@ -11,10 +11,11 @@ const CustomTouchableOpacity = ({
   style,
   ...props
 }) => {
+  const styleArray = Array.isArray(style) ? style : [style];
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={{...styles.button, ...style}}
+      style={[styles.button, disabled && styles.disabledButton, ...styleArray]}
       disabled={disabled}
       {...props}
     >

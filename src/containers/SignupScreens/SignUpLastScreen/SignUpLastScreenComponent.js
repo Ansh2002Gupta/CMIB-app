@@ -22,28 +22,17 @@ import {
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation, validationError, setValidationError } =
-    useValidateSignUp();
-  const { handleSignUp, setSignUpError, signUpError } = useSignUpUser();
-  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
-    useDeleteLogo();
-  const {
-    errorWhileUpload,
-    fileUploadResult,
-    handleFileUpload,
-    setErrorWhileUpload,
-  } = useSaveLogo();
   const initialDetails = signUpState.signUpDetail || [];
-  const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
 
+  const [showSuccessSignUp, setShowSuccessSignUp] = useState(false); //useState hooks (separated by a line above because they can be multiple)
   const [socialMediaLinks, setSocialMediaLinks] = useState({
     facebook: initialDetails.social_media_link?.facebook || "",
     linkedin: initialDetails.social_media_link?.linkedIn || "",
     twitter: initialDetails.social_media_link?.twitter || "",
     youtube: initialDetails.social_media_link?.youtube || "",
   });
-
   const [companyDetails, setCompanyDetails] = useState(
     initialDetails.company_details || ""
   );
@@ -52,7 +41,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     initialDetails.nature_of_supplier || ""
   );
   const [companyType, setCompanyType] = useState(initialDetails.type || "");
-
   const [options, setOptions] = useState(
     INTEREST_OPTIONS.map((option) => ({
       ...option,
@@ -63,9 +51,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         ) || false,
     }))
   );
-
-  const navigate = useNavigate();
-
   const [errors, setErrors] = useState({
     socialMediaLinks: {
       facebook: "",
@@ -76,6 +61,30 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     companyDetails: "",
     website: "",
   });
+
+  const {
+    handleSignUpValidation,
+    isLoading,
+    validationError,
+    setValidationError,
+  } = useValidateSignUp();
+
+  const {
+    handleSignUp,
+    isLoading: isRegisteringUser,
+    setSignUpError,
+    signUpError,
+  } = useSignUpUser();
+
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    setErrorWhileUpload,
+  } = useSaveLogo();
+
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
 
   const handleImageDeletion = (handleDeletionSuccess) => {
     if (fileUploadResult?.data?.file_name) {
@@ -242,6 +251,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       handleToggle={handleToggle}
       handleSuccessModal={handleSuccessModal}
       intl={intl}
+      isLoading={isLoading || isRegisteringUser}
       natureOfSupplier={natureOfSupplier}
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}

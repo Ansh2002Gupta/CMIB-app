@@ -14,12 +14,12 @@ const style = {
     paddingTop: 16,
     borderBottomWidth: 3,
     borderColor: colors.green,
-    zIndex: 11,
+    zIndex: 1,
     marginBottom: -1,
   },
   topTabs: {
     width: "50%",
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   inActiveStyle: {
     paddingTop: 16,
@@ -64,7 +64,7 @@ const style = {
     fontSize: 14,
     color: colors.darkBlue,
     fontWeight: "600",
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   loginButtonView: {
     marginTop: 32,
@@ -80,7 +80,7 @@ const style = {
     color: colors.darkBlue,
     fontSize: 14,
     fontWeight: "600",
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   borderStyle: {
     borderWidth: 1,
@@ -102,9 +102,8 @@ const style = {
   // Web view related Styles
   webView: {
     activeTab: {
-      borderBottom: `3px solid ${colors.green}`,
       marginBottom: -2,
-      zIndex: 10,
+      zIndex: 1,
     },
     backGroundColor: {
       backgroundColor: colors.white,
@@ -166,7 +165,7 @@ const style = {
       marginTop: 0,
     },
     loginText: {
-      ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
     },
     rememberMeText: {
       fontSize: 14,

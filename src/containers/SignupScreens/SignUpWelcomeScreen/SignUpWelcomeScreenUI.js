@@ -12,6 +12,7 @@ const SignUpWelcomeScreenUI = (props) => {
   const {
     contactDetails,
     handleDismissToast,
+    isLoading,
     intl,
     options,
     onClickNext,
@@ -63,10 +64,11 @@ const SignUpWelcomeScreenUI = (props) => {
         keyExtractor={(item) => item.id}
       />
       <ButtonComponent
-        title={intl.formatMessage({ id: "label.next" })}
-        onPress={onClickNext}
-        hasIconRight
         disabled={contactDetails.length <= 0}
+        displayLoader={isLoading}
+        hasIconRight
+        onPress={onClickNext}
+        title={intl.formatMessage({ id: "label.next" })}
       />
       {!!validationError && (
         <ToastComponent
@@ -82,6 +84,7 @@ SignUpWelcomeScreenUI.propTypes = {
   contactDetails: PropTypes.array.isRequired,
   handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   options: PropTypes.array.isRequired,
   onClickNext: PropTypes.func.isRequired,
   setContactDetails: PropTypes.func.isRequired,
