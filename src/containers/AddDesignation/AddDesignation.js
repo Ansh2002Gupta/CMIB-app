@@ -28,7 +28,6 @@ const AddDesignation = ({ handleCancelButton }) => {
           options={ENTITY_OPTIONS}
           isMandatory
           isDropdown
-          customStyle={styles.negativePadding}
         />
       ),
     },
@@ -40,7 +39,6 @@ const AddDesignation = ({ handleCancelButton }) => {
           isCounterInput
           initialCount={countValue}
           onCountChange={handleCountChange}
-          customStyle={styles.negativePadding}
         />
       ),
     },
