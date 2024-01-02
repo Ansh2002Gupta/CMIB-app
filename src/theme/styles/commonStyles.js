@@ -7,8 +7,15 @@ const commonStyles = {
     top: 0,
     zIndex: 1,
     backgroundColor: colors.white,
-    ...(Platform.OS === 'web' ? { position: "sticky" } : {}),
+    ...(Platform.OS === "web" ? { position: "sticky" } : {}),
   },
+};
+
+export const gridStyles = {
+  xl: "1fr 1fr 1fr",
+  lg: "1fr 1fr",
+  md: "1fr 1fr",
+  sm: "1fr 1fr",
 };
 
 export default commonStyles;

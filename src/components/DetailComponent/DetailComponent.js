@@ -7,19 +7,13 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import useIsWebView from "../../hooks/useIsWebView";
+import { gridStyles } from "../../theme/styles/commonStyles";
 import styles, { getRowStyle } from "./DetailComponent.style";
 
 const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
-
-  const gridStyles = {
-    xl: "1fr 1fr 1fr",
-    lg: "1fr 1fr",
-    md: "1fr 1fr",
-    sm: "1fr 1fr",
-  };
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
