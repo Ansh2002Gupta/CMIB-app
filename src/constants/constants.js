@@ -145,8 +145,8 @@ export const STEPPER_STATE = {
 };
 
 export const SCREEN_NAMES = {
-  COMPANY_PROFILE: "Company Profile",
-  VIEW_PROFILE: "View Profile",
-  PROFILE: "Account",
-  ROUND_ONE: "Round 1",
+  COMPANY_PROFILE: "label.company_profile",
+  VIEW_PROFILE: "label.view_profile",
+  PROFILE: "label.my_account",
+  ROUND_ONE: "label.round1",
 };

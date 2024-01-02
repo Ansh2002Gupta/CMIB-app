@@ -5,13 +5,13 @@ import {
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
+import { useIntl } from "react-intl";
 import CommonText from "../../components/CommonText";
 import CustomAvatar from "../../components/CustomAvatar";
 import useIsWebView from "../../hooks/useIsWebView";
-import { getSmallScreenHeaderInfo } from "../../utils/headerHelper";
+import { getSmallScreenHeaderInfo } from "../../utils/headerHelpers";
 import images from "../../images";
 import styles from "./PrivateHeader.style";
 
@@ -22,6 +22,7 @@ const PrivateHeader = ({
   rightIcon = images.iconNotification,
 }) => {
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigate();
   const windowDimensions = useWindowDimensions();
@@ -82,6 +83,7 @@ const PrivateHeader = ({
         </View>
         {pageHeading !== "" && (
           <PageHeading
+            intl={intl}
             pageHeading={pageHeading}
             showRightButton={showRightButton}
             isWebView={isWebView}
@@ -92,10 +94,13 @@ const PrivateHeader = ({
   );
 };
 
-const PageHeading = ({ pageHeading, showRightButton ,isWebView}) => (
+const PageHeading = ({ intl, pageHeading, showRightButton, isWebView }) => (
   <View style={isWebView ? styles.textHeaderTopBorder : styles.textHeader}>
-    <CommonText title={pageHeading} customTextStyle={styles.formHeaderStyle} />
-    {(showRightButton && isWebView) &&(
+    <CommonText
+      title={intl.formatMessage({ id: pageHeading })}
+      customTextStyle={styles.formHeaderStyle}
+    />
+    {showRightButton && isWebView && (
       <TouchableOpacity style={styles.editButton}>
         <Image source={images.iconEdit} style={styles.icons} />
         <CommonText title="Edit" customTextStyle={styles.editText} />
