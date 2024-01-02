@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
@@ -21,20 +22,23 @@ const style = {
     paddingRight: 72,
   },
   headerBorder: {
-    borderBottomWidth: 1,
-    borderColor: colors.lightGrey,
+    ...Platform.select({
+      web: {
+        borderBottom: `1px solid ${colors.lightGrey}`,
+      },
+    }),
   },
   smContainerStyle: {
     paddingLeft: 16,
     paddingRight: 16,
   },
   webContainerStyle: {
-    flexDirection: 'row',
+    flexDirection: "row",
     justifyContent: "space-between",
-    alignIems: 'center'
+    alignIems: "center",
   },
   rightIconContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 16,
   },
   cmibLogo: {
@@ -44,18 +48,18 @@ const style = {
   gloPac: {
     width: 82,
     height: 40,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   iconG20: {
     width: 70,
     height: 40,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   iconAzadiMahotsav: {
     width: 67,
     height: 40,
-    alignSelf: 'center'
-  }
+    alignSelf: "center",
+  },
 };
 
 export default style;

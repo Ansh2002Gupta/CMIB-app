@@ -2,7 +2,6 @@ import colors from "../../assets/colors";
 const style = {
   mainView: {
     flex: 1,
-    backgroundColor: colors.white,
   },
   container: {
     backgroundColor: colors.white,
@@ -18,7 +17,7 @@ const style = {
     fontSize: 40,
   },
   forgotHeaderContainer: {
-    marginTop: 0
+    marginTop: 0,
   },
   customSubHeading: {
     fontSize: 16,
