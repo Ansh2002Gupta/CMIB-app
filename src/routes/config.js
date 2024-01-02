@@ -10,13 +10,13 @@ import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import JobsView from "../views/JobsView/JobsView";
-import JobApplicants from "../views/JobApplicants/JobApplicants";
-import JobSeekers from "../views/JobSeekers/JobSeekers";
+import JobApplicantsView from "../views/JobApplicantsView/index";
+import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
-import PostedJobs from "../views/PostedJobs/PostedJobs";
+import PostedJobsView from "../views/PostedJobsView/index";
 import RoundOne from "../views/RoundOneView";
 import RoundTwo from "../views/RoundTwoView";
-import SavedCandidates from "../views/SavedCandidates/SavedCandidates";
+import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
 import WebViewScreen from "../views/WebViewScreen/index";
 
@@ -161,7 +161,7 @@ const config = [
     views: [
       {
         viewPath: "",
-        element: <PostedJobs />,
+        element: <PostedJobsView />,
       },
     ],
   },
@@ -171,7 +171,7 @@ const config = [
     views: [
       {
         viewPath: "",
-        element: <JobSeekers />,
+        element: <JobSeekersView />,
       },
     ],
   },
@@ -181,7 +181,7 @@ const config = [
     views: [
       {
         viewPath: "",
-        element: <JobApplicants />,
+        element: <JobApplicantsView />,
       },
     ],
   },
@@ -191,7 +191,7 @@ const config = [
     views: [
       {
         viewPath: "",
-        element: <SavedCandidates />,
+        element: <SavedCandidatesView />,
       },
     ],
   },
