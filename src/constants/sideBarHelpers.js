@@ -53,7 +53,11 @@ const newlyQualifiedPlacementsMenu = [
 
 const caJobsMenu = [
   { label: "Dashboard", key: navigations.DASHBOARD, icon: "iconDashboard" },
-  { label: "Posted Jobs", key: navigations.POSTED_JOBS, icon: "iconPostedJobs" },
+  {
+    label: "Posted Jobs",
+    key: navigations.POSTED_JOBS,
+    icon: "iconPostedJobs",
+  },
   {
     label: "Job Applicants",
     key: navigations.JOB_APPLICANTS,
@@ -149,20 +153,36 @@ export const getAccessibleModulesList = ({
 export const getIconImages = (iconName) => {
   const iconMap = {
     iconDashboard: {
-      activeImage: images.iconDashboard,
+      activeImage: images.iconDashboardActive,
       inactiveImage: images.iconDashboard,
+      webInactiveImage: images.iconDashboardWeb,
     },
     iconRound1: {
       activeImage: images.iconActiveRound1,
       inactiveImage: images.iconRound1,
+      webInactiveImage: images.iconRound1Web,
     },
     iconRound2: {
       activeImage: images.iconActiveRound2,
       inactiveImage: images.iconRound2,
+      webInactiveImage: images.iconRound2Web,
     },
     iconPostedJobs: {
       activeImage: images.iconActivePostedJobs,
       inactiveImage: images.iconPostedJobs,
+      webInactiveImage: images.iconPostedJobsWeb,
+    },
+    iconJobApplicants: {
+      activeImage: images.iconJobApplicantsActive,
+      webInactiveImage: images.iconJobApplicants,
+    },
+    iconJobSeekers: {
+      activeImage: images.iconJobSeekersActive,
+      webInactiveImage: images.iconJobSeekers,
+    },
+    iconSaved: {
+      activeImage: images.iconSavedActive,
+      webInactiveImage: images.iconSaved,
     },
     iconCandidates: {
       activeImage: images.iconActiveCandidates,
@@ -170,5 +190,11 @@ export const getIconImages = (iconName) => {
     },
     // ... other icon mappings
   };
-  return iconMap[iconName] || { activeImage: null, inactiveImage: null };
+  return (
+    iconMap[iconName] || {
+      activeImage: null,
+      inactiveImage: null,
+      webInactiveImage: null,
+    }
+  );
 };

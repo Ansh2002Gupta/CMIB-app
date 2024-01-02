@@ -14,7 +14,7 @@ import { navigations } from "../../constants/routeNames";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import { modules, items } from "../../constants/sideBarHelpers";
+import { modules, items, getIconImages } from "../../constants/sideBarHelpers";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import Config from "../../components/ReactConfig/index";
@@ -63,7 +63,14 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         style={isActive ? styles.moduleActiveMenuItems : styles.moduleMenuItems}
         onPress={() => handleOnClickMenuItem(item)}
       >
-        <Image source={images[item.icon]} style={styles.menuIcons} />
+        <Image
+          source={
+            isActive
+              ? getIconImages(item.icon).activeImage
+              : getIconImages(item.icon).webInactiveImage
+          }
+          style={styles.menuIcons}
+        />
         <CommonText
           customTextStyle={isActive ? styles.menuItemsText : styles.changeText}
           title={item.label}

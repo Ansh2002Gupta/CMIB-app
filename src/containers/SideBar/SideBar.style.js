@@ -142,6 +142,7 @@ const styles = {
     padding: 16,
     flexDirection: "row",
     cursor: "pointer",
+    alignItems:"center"
   },
   moduleActiveMenuItems: {
     marginLeft: 16,
