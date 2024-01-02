@@ -48,7 +48,7 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
             minimumValue={ZOOM_CONSTANT.MIN_ZOOM}
             onChange={setZoom}
             step={ZOOM_CONSTANT.ZOOM_STEP}
-            value={zoom}
+            value={+zoom}
           />
         </View>
         <Image

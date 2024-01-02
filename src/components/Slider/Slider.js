@@ -15,7 +15,7 @@ const Slider = ({ maximumValue, minimumValue, onChange, step, value }) => {
         step={step || 0.1}
         aria-labelledby="Label"
         onChange={(e) => {
-          onChange(e.target.value);
+          onChange(+e.target.value);
         }}
         className={styles["range"]}
       />
