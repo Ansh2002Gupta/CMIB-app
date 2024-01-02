@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   },
   percentageText: {
     fontSize: 12,
-    fontWeight: 500,
     lineHeight: 16,
     color: colors.darkGrey,
   },

@@ -4,6 +4,7 @@ import { Text } from "@unthinkable/react-core-components";
 
 import Button from "../Button/Button";
 import Spinner from "../Spinner";
+import colors from "../../assets/colors";
 import styles from "./CustomButton.style";
 
 const CustomButton = ({
@@ -29,7 +30,7 @@ const CustomButton = ({
         <Spinner
           size="xs"
           thickness={3}
-          color={withGreenBackground ? "white" : ""}
+          color={withGreenBackground ? colors.white : ""}
         />
       )}
     </Button>
