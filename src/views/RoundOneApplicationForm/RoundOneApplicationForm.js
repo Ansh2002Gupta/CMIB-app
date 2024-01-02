@@ -1,12 +1,12 @@
 import React from "react";
 import { View } from "@unthinkable/react-core-components";
 
-import TextFormatComponent from "../../components/TextFormatComponent";
+import CustomTextEditor from "../../components/CustomTextEditor";
 
 const RoundOneApplicationForm = () => {
   return (
     <View>
-      <TextFormatComponent />
+      <CustomTextEditor />
     </View>
   );
 };

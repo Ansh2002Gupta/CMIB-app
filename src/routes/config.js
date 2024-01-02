@@ -13,9 +13,9 @@ import Home from "../pages/Home";
 import JobsView from "../views/JobsView/JobsView";
 import LoginScreen from "../views/LoginScreen/index";
 import RoundOne from "../views/RoundOneView";
+import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import RoundTwo from "../views/RoundTwoView";
 import SignUpScreen from "../views/SignUpView/index";
-import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -152,7 +152,6 @@ const config = [
       },
     ],
   },
-
   {
     pagePath: navigations.JOBS,
     element: <HomeWithPrivateAccess />,

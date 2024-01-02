@@ -1,17 +1,17 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
-import { ScrollView, View } from "@unthinkable/react-core-components";
-
-import CommonText from "../CommonText";
 import {
   actions,
   RichEditor,
   RichToolbar,
 } from "react-native-pell-rich-editor";
-import styles from "./TextFormatComponent.style";
+import { useIntl } from "react-intl";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
-const TextFormatComponent = ({ customLabelStyle, isMandatory, label }) => {
+import CommonText from "../CommonText";
+import styles from "./CustomTextEditor.style";
+
+const CustomTextEditor = ({ customLabelStyle, isMandatory, label }) => {
   const richText = useRef(null);
   const intl = useIntl();
 
@@ -66,16 +66,16 @@ const TextFormatComponent = ({ customLabelStyle, isMandatory, label }) => {
   );
 };
 
-TextFormatComponent.defaultProps = {
+CustomTextEditor.defaultProps = {
   customLabelStyle: {},
   isMandatory: false,
   label: "",
 };
 
-TextFormatComponent.propTypes = {
+CustomTextEditor.propTypes = {
   customLabelStyle: PropTypes.object,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,
 };
 
-export default TextFormatComponent;
+export default CustomTextEditor;
