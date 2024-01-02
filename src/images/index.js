@@ -16,8 +16,6 @@ const iconWalkthroughSignUpOne =
   "/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
 const iconCheckbox = "/images/svg/icon_check.svg";
 const iconUnCheckbox = "images/svg/icon_uncheck.svg";
-const iconCheckbox = "/images/svg/icon_check.svg";
-const iconUnCheckbox = "images/svg/icon_uncheck.svg";
 const iconWalkthroughSignUpTwo =
   "/images/iconWalkthroughSignUpTwo/iconWalkthroughSignUpTwo.png";
 const iconDownArrow = "/images/iconDownArrow/iconDownArrow.png";
