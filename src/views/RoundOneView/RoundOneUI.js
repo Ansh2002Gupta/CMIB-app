@@ -9,7 +9,6 @@ import {
 
 import CardComponent from "../../containers/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
-import Header from "../../components/Header/Header";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./RoundOne.style";
 
@@ -19,13 +18,6 @@ const RoundOneUI = (props) => {
 
   return (
     <View style={styles.innerContainer}>
-      <Header
-        headerText={intl.formatMessage({ id: "label.round1" })}
-        customHeaderTextStyle={{
-          ...styles.headerTextStyle,
-          ...(isWebView ? styles.webHeaderTextStyle : null),
-        }}
-      />
       <ScrollView
         style={{
           ...styles.containerStyle,

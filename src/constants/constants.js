@@ -150,3 +150,10 @@ export const ZOOM_CONSTANT = {
   MIN_ZOOM: 1,
   ZOOM_STEP: 0.1,
 };
+
+export const SCREEN_NAMES = {
+  COMPANY_PROFILE: "label.company_profile",
+  VIEW_PROFILE: "label.view_profile",
+  PROFILE: "label.my_account",
+  ROUND_ONE: "label.round1",
+};
