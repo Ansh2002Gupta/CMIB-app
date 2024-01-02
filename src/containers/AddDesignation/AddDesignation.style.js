@@ -1,4 +1,4 @@
-import { Platform, StyleSheet} from "@unthinkable/react-core-components";
+import { StyleSheet} from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -11,9 +11,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.green,
     marginLeft: 16,
   },
-  negativePadding: { 
-    paddingBottom: 0 ,
+  gapBetween: { 
     marginBottom: 24,
+  },
+  gapTop: { 
+    marginTop: 24,
   },
   rightButtonStyle: {
      marginLeft: 8 
@@ -26,16 +28,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 14,
     fontWeight: "600",
-  },
-  parentStyle:{
-    ...Platform.select({
-      ios: {
-        marginBottom: 30, 
-      },
-      default:{
-        marginTop: 24, 
-      }
-    }),
   },
   webView: {
     inputLabelText: {

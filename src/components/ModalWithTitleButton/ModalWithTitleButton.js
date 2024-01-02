@@ -32,7 +32,6 @@ const ModalWithTitleButton = ({
       headerText={heading}
       style={{
         ...styles.containerStyle,
-        ...styles.parentStyle,
         ...containerStyle,
       }}
     >
@@ -46,6 +45,7 @@ const ModalWithTitleButton = ({
           leftTextStyle={{ ...styles.leftTextStyle, ...leftTextStyle }}
           onLeftButtonClick={onClickLeftButton}
           onRightButtonClick={onClickRightButton}
+          parentStyle={styles.bottomStyle}
           rightButtonLeftImage={rightButtonLeftImage}
           rightButtonRightImage={rightButtonRightImage}
           rightButtonStyle={{ ...styles.rightButtonStyle, ...rightButtonStyle }}

@@ -14,6 +14,7 @@ const TwoRowButton = ({
   leftTextStyle,
   onLeftButtonClick,
   onRightButtonClick,
+  parentStyle,
   rightButtonLeftImage,
   rightButtonRightImage,
   rightButtonText,
@@ -51,7 +52,7 @@ const TwoRowButton = ({
     },
   ];
 
-  return <MultiColumn columns={bottomButton} />;
+  return <MultiColumn columns={bottomButton} style={{...parentStyle}} />;
 };
 
 TwoRowButton.defaultProps = {

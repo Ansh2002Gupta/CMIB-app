@@ -35,8 +35,10 @@ const AddDesignation = ({ resultCallback }) => {
           options={ENTITY_OPTIONS}
           isMandatory
           isDropdown
+          isPaddingNotRequired
         />
       ),
+      style : styles.gapBetween
     },
     {
       content: (
@@ -44,10 +46,12 @@ const AddDesignation = ({ resultCallback }) => {
           label={intl.formatMessage({ id: "label.no_of_vacancy" })}
           isMandatory
           isCounterInput
+          isPaddingNotRequired
           initialCount={countValue}
           onCountChange={handleCountChange}
         />
       ),
+      style : styles.gapBetween
     },
   ];
 
@@ -66,7 +70,7 @@ const AddDesignation = ({ resultCallback }) => {
       rightButtonStyle={styles.rightButtonStyle}
       customStyles={customStyles}
     >
-      <MultiRow rows={addDesignation} style={styles.parentStyle} />
+      <MultiRow rows={addDesignation} style={styles.gapTop}/>
     </ModalWithTitleButton>
   );
 };
