@@ -1,5 +1,5 @@
-import React, { useContext, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router";
+import React from "react";
+import { useLocation } from "react-router";
 import {
   Image,
   TouchableOpacity,
@@ -7,31 +7,22 @@ import {
 } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
-import { useIntl } from "react-intl";
 import CommonText from "../../components/CommonText";
 import CustomAvatar from "../../components/CustomAvatar";
 import useIsWebView from "../../hooks/useIsWebView";
-import { getSmallScreenHeaderInfo } from "../../utils/headerHelpers";
 import images from "../../images";
 import styles from "./PrivateHeader.style";
+import { navigations } from "../../constants/routeNames";
 
 const PrivateHeader = ({
   onPressLeftIcon = () => {},
   onPressRightIcon = () => {},
-  leftIcon = images.iconMenu,
-  rightIcon = images.iconNotification,
+  leftIcon,
+  rightIcon,
 }) => {
   const { isWebView } = useIsWebView();
-  const intl = useIntl();
   const location = useLocation();
-  const navigate = useNavigate();
   const windowDimensions = useWindowDimensions();
-
-  const {
-    text: pageHeading,
-    showBackButton,
-    showRightButton,
-  } = getSmallScreenHeaderInfo(location.pathname);
 
   const profileImage = "";
   const firstName = "Elongated";
@@ -40,24 +31,18 @@ const PrivateHeader = ({
 
   const isMdOrGreater = windowDimensions.width >= 900;
 
-  const goBack = () => {
-    navigate(-1);
-  };
-
   return (
     <>
       <View style={styles.webMainContainer}>
         <View style={styles.webContainer}>
           <View style={styles.textContainer}>
             <HeaderLeft
-              showBackButton={showBackButton}
-              goBack={goBack}
               onPressLeftIcon={onPressLeftIcon}
               isMdOrGreater={isMdOrGreater}
               leftIcon={leftIcon}
             />
             {/* Right Now It's a static data, we will replace it by dynamic data as we get API */}
-            {pageHeading === "" && (
+            {location.pathname === navigations.DASHBOARD && (
               <>
                 <CommonText
                   customTextStyle={styles.nameText}
@@ -81,48 +66,12 @@ const PrivateHeader = ({
             isMdOrGreater={isMdOrGreater}
           />
         </View>
-        {pageHeading !== "" && (
-          <PageHeading
-            intl={intl}
-            pageHeading={pageHeading}
-            showRightButton={showRightButton}
-            isWebView={isWebView}
-          />
-        )}
       </View>
     </>
   );
 };
 
-const PageHeading = ({ intl, pageHeading, showRightButton, isWebView }) => (
-  <View style={isWebView ? styles.textHeaderTopBorder : styles.textHeader}>
-    <CommonText
-      title={intl.formatMessage({ id: pageHeading })}
-      customTextStyle={styles.formHeaderStyle}
-    />
-    {showRightButton && isWebView && (
-      <TouchableOpacity style={styles.editButton}>
-        <Image source={images.iconEdit} style={styles.icons} />
-        <CommonText title="Edit" customTextStyle={styles.editText} />
-      </TouchableOpacity>
-    )}
-  </View>
-);
-
-const HeaderLeft = ({
-  showBackButton,
-  goBack,
-  onPressLeftIcon,
-  isMdOrGreater,
-  leftIcon,
-}) => {
-  if (showBackButton) {
-    return (
-      <TouchableOpacity onPress={goBack}>
-        <Image source={images.iconBack} style={styles.icons} />
-      </TouchableOpacity>
-    );
-  }
+const HeaderLeft = ({ onPressLeftIcon, isMdOrGreater, leftIcon }) => {
   if (!isMdOrGreater) {
     return (
       <TouchableOpacity onPress={onPressLeftIcon}>
