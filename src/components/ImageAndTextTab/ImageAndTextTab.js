@@ -40,8 +40,8 @@ const ImageAndTextTab = ({
 
 ImageAndTextTab.propTypes = {
   onPress: PropTypes.func.isRequired,
-  imageActive: PropTypes.number.isRequired,
-  imageInactive: PropTypes.number.isRequired,
+  imageActive: PropTypes.string.isRequired,
+  imageInactive: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
   containerStyle: PropTypes.object,

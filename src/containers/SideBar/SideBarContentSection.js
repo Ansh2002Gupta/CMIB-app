@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   FlatList,
@@ -12,35 +12,38 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 
-import { modules, items } from "../../constants/sideBarListItems";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import { modules, items, getIconImages } from "../../constants/sideBarHelpers";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
 import ResponsiveTextTruncate from "../../components/ResponsiveTextTruncate/ResponsiveTextTruncate";
 import images from "../../images";
-import styles from "./SideBar.style";
+import ModuleList from "../../components/ModuleList/ModuleList";
 import useIsWebView from "../../hooks/useIsWebView";
-import ModuleList from "./ModuleList";
+import styles from "./SideBar.style";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
+  const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
+
   const navigate = useNavigate();
   const isWeb = useIsWebView();
   const intl = useIntl();
+
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
-  const [selectedModule, setSelectedModule] = useState(modules[0]);
   const [activeMenuItem, setActiveMenuItem] = useState(
     selectedModule.children[0].key
   );
 
-  // TODO: need to create context for it if needed
   const handleOnSelectItem = (item) => {
-    setSelectedModule(item);
+    sideBarDispatch(setSelectedModule(item));
     setOpenModuleSelector(false);
   };
   const handleOnClickMenuItem = ({ key }) => {
-    // Not all screen is made so i commented navigate for now
-    // navigate(key);
+    navigate(key);
     setActiveMenuItem(key);
   };
 
@@ -60,7 +63,14 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         style={isActive ? styles.moduleActiveMenuItems : styles.moduleMenuItems}
         onPress={() => handleOnClickMenuItem(item)}
       >
-        <Image source={images[item.icon]} style={styles.menuIcons} />
+        <Image
+          source={
+            isActive
+              ? getIconImages(item.icon).activeImage
+              : getIconImages(item.icon).webInactiveImage
+          }
+          style={styles.menuIcons}
+        />
         <CommonText
           customTextStyle={isActive ? styles.menuItemsText : styles.changeText}
           title={item.label}

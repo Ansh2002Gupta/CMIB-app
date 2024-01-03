@@ -46,14 +46,6 @@ const iconTwitter = "/images/iconTwitter/iconTwitter.png";
 const iconYoutube = "/images/iconYoutube/iconYoutube.png";
 const iconEyeSlash = "/images/iconEyeSlash.png";
 const iconCmibLogo = "images/iconCmibLogo/iconCmibLogo.png";
-const iconDashboard = "images/iconDashboard/iconDashboard.png";
-const iconRound1 = "images/iconRound1/iconRound1.png";
-const iconActiveRound1 = "images/iconActiveRound1/iconActiveRound1.png";
-const iconRound2 = "images/iconRound2/iconRound2.png";
-const iconActiveRound2 = "images/iconActiveRound2/iconActiveRound2.png";
-const iconMyaccount = "images/iconMyaccount/iconMyaccount.png";
-const iconActiveMyaccount =
-  "images/iconActiveMyaccount/iconActiveMyaccount.png";
 const iconAddApplicationForm =
   "images/iconAddApplicationForm/iconAddApplicationForm.png";
 const iconHiringProcess = "images/iconHiringProcess/iconHiringProcess.png";
@@ -90,6 +82,28 @@ const iconArrowRightWhite = "images/svg/iconArrowRightWhite.svg";
 const iconArrowLeft = "images/svg/iconArrowLeft.svg";
 const addCircle = "images/svg/addCircle.svg";
 const minusCirlce = "images/svg/minusCirlce.svg";
+const iconDashboard = "images/svg/iconDashboard.svg";
+const iconDashboardWeb = "images/svg/iconDashboardWeb.svg";
+const iconDashboardActive = "images/svg/iconDashboardActive.svg";
+const iconRound1 = "images/svg/iconRoundOne.svg";
+const iconRound1Web = "images/svg/iconRoundOneWeb.svg";
+const iconActiveRound1 = "images/svg/iconRoundOneActive.svg";
+const iconRound2 = "images/svg/iconRoundTwo.svg";
+const iconActiveRound2 = "images/svg/iconRoundTwoActive.svg";
+const iconRound2Web = "/images/svg/iconRoundTwoWeb.svg";
+const iconPostedJobs = "images/svg/iconPostedJobs.svg";
+const iconPostedJobsWeb = "images/svg/iconPostedJobsWeb.svg";
+const iconActivePostedJobs = "images/svg/iconPostedJobsActive.svg";
+const iconCandidates = "images/svg/iconCandidates.svg";
+const iconActiveCandidates = "images/svg/iconCandidatesActive.svg";
+const iconMyaccount = "images/svg/iconAccount.svg";
+const iconActiveMyaccount = "images/svg/iconAccountActive.svg";
+const iconJobApplicants = "images/svg/iconJobApplicant.svg";
+const iconJobApplicantsActive = "images/svg/iconJobApplicantActive.svg";
+const iconJobSeekers = "images/svg/iconJobSeeker.svg";
+const iconJobSeekersActive = "images/svg/iconJobSeekerActive.svg";
+const iconSaved = "images/svg/iconSavedCandidates.svg";
+const iconSavedActive = "images/svg/iconSavedCandidatesActive.svg";
 
 const images = {
   iconArrowUp,
@@ -148,6 +162,7 @@ const images = {
   iconCmibLogo,
   iconTick,
   iconDashboard,
+  iconDashboardActive,
   iconActiveRound1,
   iconActiveRound2,
   iconRound2,
@@ -175,6 +190,20 @@ const images = {
   iconFooter,
   iconAdd,
   iconStepperDone,
+  iconPostedJobs,
+  iconActivePostedJobs,
+  iconJobApplicants,
+  iconJobSeekers,
+  iconSaved,
+  iconCandidates,
+  iconActiveCandidates,
+  iconJobApplicantsActive,
+  iconJobSeekersActive,
+  iconSavedActive,
+  iconRound2Web,
+  iconDashboardWeb,
+  iconRound1Web,
+  iconPostedJobsWeb,
   addCircle,
   minusCirlce,
 };

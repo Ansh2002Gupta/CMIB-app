@@ -1,27 +1,33 @@
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
+import { useTheme } from "@unthinkable/react-theme";
 import {
   Image,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import { MediaQueryContext, useTheme } from "@unthinkable/react-theme";
+import { MediaQueryContext } from "@unthinkable/react-theme";
+
+import { TwoRow } from "../../core/layouts";
 
 import images from "../../images";
 import ImageAndTextTab from "../../components/ImageAndTextTab/ImageAndTextTab";
 import LocaleSwitcher from "../../components/LocaleSwitcher";
 import MultiColumn from "../../core/layouts/MultiColumn";
-import { navigations } from "../../constants/routeNames";
-import { TwoRow } from "../../core/layouts";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { useLocation } from "../../routes";
+import { navigations } from "../../constants/routeNames";
+import { getIconImages } from "../../constants/sideBarHelpers";
 import styles from "./bottomBar.style";
 
 function BottomBar() {
   const icons = useTheme("icons");
   const intl = useIntl();
   const { navigateScreen } = useNavigateScreen();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const { logo, homeOutline, homeSolid, profileOutline, profileSolid } = icons;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { pathname: currentRoute } = useLocation();
@@ -32,7 +38,7 @@ function BottomBar() {
 
   const homeIcon = currentRoute === navigations.ROOT ? homeSolid : homeOutline;
   const profileIcon =
-  currentRoute === navigations.PROFILE ? profileSolid : profileOutline;
+    currentRoute === navigations.PROFILE ? profileSolid : profileOutline;
 
   if (currentBreakpoint === "md") {
     return (
@@ -96,7 +102,7 @@ function BottomBar() {
           containerStyle={containerStyle}
           imageActive={imageActive}
           imageInactive={imageInactive}
-          text={intl.formatMessage({ id: messageId })}
+          text={messageId}
         />
       ),
       style: {},
@@ -104,37 +110,59 @@ function BottomBar() {
     };
   }
 
-  const rowConfigs = [
-    createRowConfig(
-      navigations.DASHBOARD,
-      images.iconDashboard,
-      images.iconDashboard,
-      "label.dashboard",
-      styles.activeStyleMyaccount
-    ),
-    createRowConfig(
-      navigations.ROUND_ONE,
-      images.iconActiveRound1,
-      images.iconRound1,
-      "label.round1",
-      styles.activeStyleMyaccount
-    ),
-    createRowConfig(
-      navigations.ROUND_TWO,
-      images.iconActiveRound2,
-      images.iconRound2,
-      "label.round2",
-      styles.activeStyleMyaccount
-    ),
-    createRowConfig(
-      navigations.PROFILE,
-      images.iconActiveMyaccount,
-      images.iconMyaccount,
-      "label.my_account",
-      styles.activeStyleMyaccount
-    ),
-  ];
+ 
 
+  function preprocessMenu(menuItems) {
+    const candidateKeys = new Set([
+      navigations.JOB_APPLICANTS,
+      navigations.JOB_SEEKERS,
+      navigations.SAVED_CANDIDATES,
+    ]);
+    const hasCandidates = menuItems.some((item) => candidateKeys.has(item.key));
+
+    if (!hasCandidates) {
+      return menuItems;
+    }
+
+    const filteredMenu = menuItems.filter(
+      (item) => !candidateKeys.has(item.key)
+    );
+
+    // Create and add the "Candidates" tab to the filtered menu
+    const candidatesTab = {
+      label: "Candidates",
+      key: navigations.JOB_APPLICANTS,
+      icon: "iconCandidates",
+    };
+
+    filteredMenu.push(candidatesTab);
+
+    return filteredMenu;
+  }
+
+  // Define the "My Account" configuration
+  const myAccountConfig = createRowConfig(
+    navigations.PROFILE,
+    images.iconActiveMyaccount,
+    images.iconMyaccount,
+    intl.formatMessage({ id: "label.account" }),
+    styles.activeStyleMyaccount
+  );
+
+  const dynamicConfigs = selectedModule?.children
+    ? preprocessMenu(selectedModule.children).map((item) =>
+        createRowConfig(
+          item.key,
+          getIconImages(item.icon).activeImage,
+          getIconImages(item.icon).inactiveImage,
+          item.label.match(/^(\w+\s+\w+)/)?.[0] || item.label,
+          styles.activeStyleMyaccount
+        )
+      )
+    : [];
+
+  const rowConfigs = [...dynamicConfigs, myAccountConfig];
+  
   return (
     <View>
       <View style={styles.borderStyle}></View>

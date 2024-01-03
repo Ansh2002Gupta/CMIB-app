@@ -9,12 +9,15 @@ import CompanyProfile from "../views/CompanyProfile";
 import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
-import Home from "../pages/Home";
 import JobsView from "../views/JobsView/JobsView";
+import JobApplicantsView from "../views/JobApplicantsView/index";
+import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
+import PostedJobsView from "../views/PostedJobsView/index";
 import RoundOne from "../views/RoundOneView";
 import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import RoundTwo from "../views/RoundTwoView";
+import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
 import WebViewScreen from "../views/WebViewScreen/index";
 
@@ -159,6 +162,46 @@ const config = [
       {
         viewPath: "",
         element: <JobsView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.POSTED_JOBS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <PostedJobsView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.JOB_SEEKERS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobSeekersView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.JOB_APPLICANTS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobApplicantsView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.SAVED_CANDIDATES,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <SavedCandidatesView />,
       },
     ],
   },
