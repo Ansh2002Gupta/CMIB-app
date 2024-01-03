@@ -6,9 +6,14 @@ import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./IconHeader.style";
+import CardComponent from "../CardComponent/CardComponent";
+import images from "../../images";
 
 const IconHeader = ({
-  ActionComponent,
+  buttonTitle,
+  handleButtonClick,
+  hasActionButton,
+  hasIconBar,
   headerText,
   iconLeft,
   iconRight,
@@ -19,19 +24,21 @@ const IconHeader = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainerStyle}>
-        <View style={styles.iconContainer}>
-          {iconLeft && (
-            <CustomTouchableOpacity onPress={onPressLeftIcon}>
-              <Image source={iconLeft} />
-            </CustomTouchableOpacity>
-          )}
-          {iconRight && (
-            <CustomTouchableOpacity onPress={onPressRightIcon}>
-              <Image source={iconRight} />
-            </CustomTouchableOpacity>
-          )}
-        </View>
+      <>
+        {hasIconBar && (
+          <View style={styles.iconContainer}>
+            {iconLeft && (
+              <CustomTouchableOpacity onPress={onPressLeftIcon}>
+                <Image source={iconLeft} />
+              </CustomTouchableOpacity>
+            )}
+            {iconRight && (
+              <CustomTouchableOpacity onPress={onPressRightIcon}>
+                <Image source={iconRight} />
+              </CustomTouchableOpacity>
+            )}
+          </View>
+        )}
         <View style={styles.titleContainer}>
           <CommonText
             title={headerText}
@@ -39,16 +46,32 @@ const IconHeader = ({
               isWebView ? styles.webHeaderStyle : styles.formHeaderStyle
             }
           />
-          {ActionComponent ? ActionComponent : null}
+          {hasActionButton && (
+            <CardComponent customStyle={styles.cardContainer}>
+              <CustomTouchableOpacity
+                style={styles.editContainer}
+                onPress={handleButtonClick}
+              >
+                <Image source={images.iconSquareEdit} />
+                <CommonText
+                  customTextStyle={styles.textStyle}
+                  title={buttonTitle}
+                />
+              </CustomTouchableOpacity>
+            </CardComponent>
+          )}
         </View>
-      </View>
+      </>
       <View style={styles.borderStyle} />
     </View>
   );
 };
 
 IconHeader.defaultProps = {
-  ActionComponent: null,
+  buttonTitle: "",
+  handleButtonClick: () => {},
+  hasActionButton: false,
+  hasIconBar: false,
   headerText: "",
   iconLeft: null,
   iconRight: null,
@@ -57,7 +80,10 @@ IconHeader.defaultProps = {
 };
 
 IconHeader.propTypes = {
-  ActionComponent: PropTypes.element,
+  buttonTitle: PropTypes.string,
+  handleButtonClick: PropTypes.func,
+  hasActionButton: PropTypes.bool,
+  hasIconBar: PropTypes.bool,
   headerText: PropTypes.string,
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,

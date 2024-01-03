@@ -33,39 +33,37 @@ const PrivateHeader = ({
 
   return (
     <>
-      <View style={styles.webMainContainer}>
-        <View style={styles.webContainer}>
-          <View style={styles.textContainer}>
-            <HeaderLeft
-              onPressLeftIcon={onPressLeftIcon}
-              isMdOrGreater={isMdOrGreater}
-              leftIcon={leftIcon}
-            />
-            {/* Right Now It's a static data, we will replace it by dynamic data as we get API */}
-            {location.pathname === navigations.DASHBOARD && (
-              <>
-                <CommonText
-                  customTextStyle={styles.nameText}
-                  title={"Hey John -"}
-                />
-                <CommonText
-                  customTextStyle={styles.overView}
-                  title={"here’s your overview"}
-                />
-              </>
-            )}
-          </View>
-          <HeaderRight
-            onPressRightIcon={onPressRightIcon}
-            rightIcon={rightIcon}
-            isWebView={isWebView}
-            profileImage={profileImage}
-            firstName={firstName}
-            lastName={lastName}
-            role={role}
+      <View style={styles.webContainer}>
+        <View style={styles.textContainer}>
+          <HeaderLeft
+            onPressLeftIcon={onPressLeftIcon}
             isMdOrGreater={isMdOrGreater}
+            leftIcon={leftIcon}
           />
+          {/* Right Now It's a static data, we will replace it by dynamic data as we get API */}
+          {location.pathname === navigations.DASHBOARD && (
+            <>
+              <CommonText
+                customTextStyle={styles.nameText}
+                title={"Hey John -"}
+              />
+              <CommonText
+                customTextStyle={styles.overView}
+                title={"here’s your overview"}
+              />
+            </>
+          )}
         </View>
+        <HeaderRight
+          onPressRightIcon={onPressRightIcon}
+          rightIcon={rightIcon}
+          isWebView={isWebView}
+          profileImage={profileImage}
+          firstName={firstName}
+          lastName={lastName}
+          role={role}
+          isMdOrGreater={isMdOrGreater}
+        />
       </View>
     </>
   );

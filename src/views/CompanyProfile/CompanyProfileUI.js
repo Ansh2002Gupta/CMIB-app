@@ -81,39 +81,22 @@ const CompanyProfileUI = (props) => {
     );
   };
 
-  const renderEditActionComponent = () => {
-    if (isWebView && !isEditProfile) {
-      return (
-        <CardComponent customStyle={style.cardContainer}>
-          <TouchableOpacity
-            style={style.editContainer}
-            onPress={() => handleEdit(!isEditProfile)}
-          >
-            <Image source={images.iconSquareEdit} />
-            <CommonText
-              customTextStyle={style.textStyle}
-              title={intl.formatMessage({ id: "label.edit" })}
-            />
-          </TouchableOpacity>
-        </CardComponent>
-      );
-    }
-    return null;
-  };
-
   return (
     <>
       <IconHeader
-        ActionComponent={renderEditActionComponent()}
-        intl={intl}
+        buttonTitle={intl.formatMessage({ id: "label.edit" })}
+        handleButtonClick={() => handleEdit(!isEditProfile)}
+        hasActionButton={isWebView && !isEditProfile}
+        hasIconBar
         headerText={
           isEditProfile
             ? intl.formatMessage({ id: "label.edit_company_profile" })
             : intl.formatMessage({ id: "label.company_profile" })
         }
-        onPressLeftIcon={onGoBack}
+        intl={intl}
         iconLeft={isEditProfile ? images.iconCross : images.iconBack}
         iconRight={images.iconNotification}
+        onPressLeftIcon={onGoBack}
       />
       {isLoading ? (
         <View style={style.loaderStyle}>
