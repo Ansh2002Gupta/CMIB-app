@@ -22,11 +22,8 @@ CommonText.defaultProps = {
 
 CommonText.propTypes = {
   customContainerStyle: PropTypes.object,
-  customTextStyle: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.arrayOf(PropTypes.object),
-  ]),
-  title: PropTypes.string.isRequired,
+  customTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default CommonText;

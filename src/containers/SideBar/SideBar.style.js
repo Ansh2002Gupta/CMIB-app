@@ -1,10 +1,6 @@
 import colors from "../../assets/colors";
 
 const styles = {
-  mainContainer: {
-    flex: 1,
-    position: "relative",
-  },
   mainContainerWeb: {
     flex: 1,
     position: "relative",
@@ -146,6 +142,7 @@ const styles = {
     padding: 16,
     flexDirection: "row",
     cursor: "pointer",
+    alignItems:"center"
   },
   moduleActiveMenuItems: {
     marginLeft: 16,
@@ -157,6 +154,7 @@ const styles = {
     backgroundColor: colors.white,
     flexDirection: "row",
     cursor: "pointer",
+    alignItems:"center"
   },
   disabled: {
     color: colors.slateGray,

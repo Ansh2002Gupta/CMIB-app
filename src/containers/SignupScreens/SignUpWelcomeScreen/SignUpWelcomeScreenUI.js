@@ -80,6 +80,12 @@ const SignUpWelcomeScreenUI = (props) => {
   );
 };
 
+SignUpWelcomeScreenUI.defaultProps = {
+  contactDetails: [],
+  handleDismissToast: () => {},
+  validationError: "",
+};
+
 SignUpWelcomeScreenUI.propTypes = {
   contactDetails: PropTypes.array.isRequired,
   handleDismissToast: PropTypes.func,
@@ -89,7 +95,7 @@ SignUpWelcomeScreenUI.propTypes = {
   onClickNext: PropTypes.func.isRequired,
   setContactDetails: PropTypes.func.isRequired,
   setOptions: PropTypes.func.isRequired,
-  validationError: PropTypes.bool,
+  validationError: PropTypes.string,
 };
 
 export default SignUpWelcomeScreenUI;

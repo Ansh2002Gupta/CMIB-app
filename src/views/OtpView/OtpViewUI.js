@@ -188,7 +188,9 @@ const OtpViewUI = ({
             customTextStyle={
               isWebView ? getResponsiveStyles("label.forgot_password") : {}
             }
-            customContainerStyles={isWebView && styles.forgotHeaderContainer}
+            customContainerStyles={
+              isWebView ? styles.forgotHeaderContainer : {}
+            }
           />
           {!isWebView && <View style={styles.borderStyle} />}
         </View>
@@ -260,7 +262,7 @@ const OtpViewUI = ({
             title={intl.formatMessage({ id: "label.submit" })}
             onPress={onVerifyOtpClick}
             disabled={submitDisabled}
-            customTitleStyle={isWebView && styles.customBtnText}
+            customTitleStyle={isWebView ? styles.customBtnText : {}}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }

@@ -5,28 +5,27 @@ const style = {
   },
   labelContainer: {
     flexDirection: "row",
-    marginBottom:4,
+    marginBottom: 4,
   },
   label: {
     color: colors.gray,
     fontSize: 14,
-    fontWeight:"500",
-    lineHeight:24,
+    lineHeight: 24,
   },
   webLabel: {
     fontFamily: "General Sans",
     color: colors.black,
   },
-  starStyle: { 
-    color: colors.errorRed 
+  starStyle: {
+    color: colors.errorRed,
   },
   otpContainer: {
-    flexDirection: 'row',
-    alignItems: 'center', 
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   activeOtpBox: {
-    borderColor: colors.green, 
+    borderColor: colors.green,
   },
   otpBox: {
     width: 74,
@@ -36,8 +35,7 @@ const style = {
     borderRadius: 12,
     textAlign: "center",
     fontSize: 20,
-    fontWeight:"500",
-    lineHeight: 28,
+    fontWeight: "500",
   },
   errorMsg: {
     color: colors.errorRed,

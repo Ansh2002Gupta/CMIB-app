@@ -34,10 +34,7 @@ CustomTouchableOpacity.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
   onPress: PropTypes.func,
-  style: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.arrayOf(PropTypes.object),
-  ]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 export default CustomTouchableOpacity;

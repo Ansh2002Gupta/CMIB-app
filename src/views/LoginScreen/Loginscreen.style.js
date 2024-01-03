@@ -1,6 +1,9 @@
 import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
+const isWeb = Platform.OS.toLowerCase() === "web";
+const webPointer = isWeb ? { cursor: "pointer" } : {};
+
 const style = {
   mainView: {
     flex: 1,
@@ -19,7 +22,7 @@ const style = {
   },
   topTabs: {
     width: "50%",
-    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
+    ...webPointer,
   },
   inActiveStyle: {
     paddingTop: 16,
@@ -64,11 +67,11 @@ const style = {
     fontSize: 14,
     color: colors.darkBlue,
     fontWeight: "600",
-    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
+    ...webPointer,
   },
   loginButtonView: {
     marginTop: 32,
-    cursor: "pointer",
+    ...webPointer,
   },
   accountView: {
     marginTop: 24,
@@ -80,7 +83,7 @@ const style = {
     color: colors.darkBlue,
     fontSize: 14,
     fontWeight: "600",
-    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
+    ...webPointer,
   },
   borderStyle: {
     borderWidth: 1,
@@ -121,7 +124,7 @@ const style = {
       fontSize: 14,
       fontWeight: "600",
       lineHeight: 20,
-      cursor: "pointer",
+      ...webPointer,
     },
     errorMessage: {
       marginTop: 2,
@@ -131,7 +134,7 @@ const style = {
       fontSize: 14,
       fontWeight: "600",
       lineHeight: 20,
-      cursor: "pointer",
+      ...webPointer,
     },
     headerContainer: {
       marginTop: 0,
@@ -161,24 +164,24 @@ const style = {
       textTransform: "capitalize",
     },
     inputTextBox: {
-      background: colors.white,
+      backgroundColor: colors.white,
       marginTop: 0,
     },
     loginText: {
-      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
+      ...webPointer,
     },
     rememberMeText: {
       fontSize: 14,
       lineHeight: 20,
-      cursor: "pointer",
       margin: 0,
+      ...webPointer,
     },
     selectedSectionHeading: {
       color: colors.black,
       textAlign: "center",
       fontSize: 16,
       fontWeight: "600",
-      cursor: "pointer",
+      ...webPointer,
     },
     subHeadingText: {
       color: colors.darkGrey,
@@ -196,7 +199,7 @@ const style = {
       color: colors.darkGrey,
       textAlign: "center",
       fontSize: 16,
-      cursor: "pointer",
+      ...webPointer,
     },
   },
 };

@@ -51,14 +51,22 @@ const ButtonComponent = (props) => {
   );
 };
 
+ButtonComponent.defaultProps = {
+  customButtonContainer: {},
+  customTitleStyle: {},
+  disabled: false,
+  displayLoader: false,
+  hasIconRight: false,
+};
+
 ButtonComponent.propTypes = {
-  title: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
   customButtonContainer: PropTypes.object,
   customTitleStyle: PropTypes.object,
-  hasIconRight: PropTypes.bool,
+  disabled: PropTypes.bool,
   displayLoader: PropTypes.bool,
+  hasIconRight: PropTypes.bool,
+  onPress: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default ButtonComponent;

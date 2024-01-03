@@ -129,6 +129,7 @@ const locale = {
   "label.advertisement_in_ca_journal":
     "Advertisement in the Chartered Accountant Journal",
   "label.my_account": "Account",
+  "label.account":"My Account",
   "label.view_profile": "View Profile",
   "label.edit_profile_picture": "Edit Profile Picture",
   "label.crop_profile_picture": "Crop Profile Picture",

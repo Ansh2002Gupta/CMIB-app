@@ -18,16 +18,14 @@ const style = {
   },
   buttonStyle: {
     alignItems: "center",
-    padding: 16,
+    padding:10,
   },
   inActiveTextStyle: {
     fontSize: 12,
-    fontWeight: "500",
     color: colors.darkGrey,
   },
   activeTextStyle: {
     fontSize: 12,
-    fontWeight: "500",
     color: colors.darkBlue,
   },
 };
