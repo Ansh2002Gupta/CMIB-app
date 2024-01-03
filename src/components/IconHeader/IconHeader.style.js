@@ -9,7 +9,6 @@ const style = {
     justifyContent: "space-between",
     margin: 16,
   },
-
   titleContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  ActivityIndicator,
   Image,
   ScrollView,
   Text,
@@ -16,6 +15,7 @@ import CommonText from "../../components/CommonText";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
+import Spinner from "../../components/Spinner";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import { sourceOfInfo } from "./mappedData";
@@ -84,6 +84,7 @@ const CompanyProfileUI = (props) => {
   return (
     <>
       <IconHeader
+        actionButtonIcon={images.iconSquareEdit}
         buttonTitle={intl.formatMessage({ id: "label.edit" })}
         handleButtonClick={() => handleEdit(!isEditProfile)}
         hasActionButton={isWebView && !isEditProfile}
@@ -95,12 +96,11 @@ const CompanyProfileUI = (props) => {
         }
         intl={intl}
         iconLeft={isEditProfile ? images.iconCross : images.iconBack}
-        iconRight={images.iconNotification}
         onPressLeftIcon={onGoBack}
       />
       {isLoading ? (
         <View style={style.loaderStyle}>
-          <ActivityIndicator />
+          <Spinner />
         </View>
       ) : (
         <>

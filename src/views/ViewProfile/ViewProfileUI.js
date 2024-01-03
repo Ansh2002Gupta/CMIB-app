@@ -80,9 +80,6 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
         hasIconBar
         headerText={intl.formatMessage({ id: "label.view_profile" })}
         intl={intl}
-        iconLeft={images.iconBack}
-        iconRight={images.iconNotification}
-        onPressLeftIcon={onGoBack}
       />
       <View style={style.picParentContainer}>
         <View style={style.picContainer}>

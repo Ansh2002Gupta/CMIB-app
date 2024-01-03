@@ -39,7 +39,7 @@ export const mapApiDataToUI = (apiData, industryOptions) => {
     if (code === "--" && number === "--") {
       return "--";
     }
-    return (code + "-" + number).replace(/--/g, "-"); // Replace double hyphens with single
+    return (code + "-" + number).replace(/--/g, "-");
   };
 
   const combinedMobileNumber = formatMobileNumber(

@@ -40,7 +40,7 @@ const PrivateHeader = ({
             isMdOrGreater={isMdOrGreater}
             leftIcon={leftIcon}
           />
-          {/* Right Now It's a static data, we will replace it by dynamic data as we get API */}
+          {/*TODO: Right Now It's a static data, we will replace it by dynamic data as we get API */}
           {location.pathname === navigations.DASHBOARD && (
             <>
               <CommonText

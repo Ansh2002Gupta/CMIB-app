@@ -1,15 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import PropTypes from "prop-types";
 import { Image, View } from "@unthinkable/react-core-components";
 
+import CardComponent from "../CardComponent/CardComponent";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./IconHeader.style";
-import CardComponent from "../CardComponent/CardComponent";
 import images from "../../images";
+import styles from "./IconHeader.style";
 
 const IconHeader = ({
+  actionButtonIcon,
   buttonTitle,
   handleButtonClick,
   hasActionButton,
@@ -21,6 +23,11 @@ const IconHeader = ({
   onPressRightIcon,
 }) => {
   const { isWebView } = useIsWebView();
+  const navigate = useNavigate();
+
+  const onGoBack = () => {
+    navigate(-1);
+  };
 
   return (
     <View style={styles.container}>
@@ -28,7 +35,7 @@ const IconHeader = ({
         {hasIconBar && (
           <View style={styles.iconContainer}>
             {iconLeft && (
-              <CustomTouchableOpacity onPress={onPressLeftIcon}>
+              <CustomTouchableOpacity onPress={onGoBack || onPressLeftIcon}>
                 <Image source={iconLeft} />
               </CustomTouchableOpacity>
             )}
@@ -52,7 +59,7 @@ const IconHeader = ({
                 style={styles.editContainer}
                 onPress={handleButtonClick}
               >
-                <Image source={images.iconSquareEdit} />
+                <Image source={actionButtonIcon} />
                 <CommonText
                   customTextStyle={styles.textStyle}
                   title={buttonTitle}
@@ -68,18 +75,20 @@ const IconHeader = ({
 };
 
 IconHeader.defaultProps = {
+  actionButtonIcon: "",
   buttonTitle: "",
   handleButtonClick: () => {},
   hasActionButton: false,
   hasIconBar: false,
   headerText: "",
-  iconLeft: null,
-  iconRight: null,
+  iconLeft: images.iconBack,
+  iconRight: images.iconNotification,
   onPressLeftIcon: () => {},
   onPressRightIcon: () => {},
 };
 
 IconHeader.propTypes = {
+  actionButtonIcon: PropTypes.string,
   buttonTitle: PropTypes.string,
   handleButtonClick: PropTypes.func,
   hasActionButton: PropTypes.bool,
