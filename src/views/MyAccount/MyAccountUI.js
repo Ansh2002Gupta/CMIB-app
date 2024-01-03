@@ -10,6 +10,7 @@ import {
 import CommonText from "../../components/CommonText";
 import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePasswordModal";
 import CustomModal from "../../components/CustomModal/CustomModal";
+import useIsWebView from "../../hooks/useIsWebView";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
@@ -25,6 +26,7 @@ const MyAccountUI = ({
   options,
   saveLogout,
 }) => {
+  const { isWebView } = useIsWebView();
   //TODO: Replace this dummy data with api data.
   //TODO: update image on save button (once api will come)
   const profileImage = "";
@@ -43,10 +45,14 @@ const MyAccountUI = ({
     );
   };
 
+  const renderHorizontalLine = () => {
+    return <View style={style.horizontalLine} />;
+  };
+
   return (
     <>
       <ScrollView style={style.profileParentContainer}>
-        <View style={style.profileContainer}>
+        <View style={[style.profileContainer]}>
           {renderProfileIcon()}
           <View style={style.detailContainer}>
             <CommonText
@@ -56,11 +62,15 @@ const MyAccountUI = ({
             <CommonText title={email} customTextStyle={style.emailStyle} />
           </View>
         </View>
+        {isWebView && renderHorizontalLine()}
         {options.map((option, index) => (
           <TouchableOpacity
             style={[
               style.optionCotainer,
-              index !== options.length - 1 && style.optionCotainerBorder,
+              isWebView
+                ? index === options.length - 2 && style.optionCotainerBorder
+                : index !== options.length - 1 &&
+                  style.optionCotainerBordeLight,
             ]}
             key={option.id}
             onPress={() => handleOptionClick(option)}

@@ -17,21 +17,27 @@ const style = {
     flexDirection: "row",
     paddingTop: 16,
     paddingBottom: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
     alignItems: "center",
   },
   optionCotainerBorder: {
     borderBottomWidth: 1,
     borderColor: colors.lightGrey,
   },
+  optionCotainerBordeLight: {
+    borderBottomWidth: 0.2,
+    borderColor: colors.lightGrey,
+  },
   profileParentContainer: {
-    paddingLeft: 16,
-    paddingRight: 16,
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
   profileContainer: {
     marginTop: 16,
     marginBottom: 24,
+    paddingLeft: 16,
+    paddingRight: 16,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -57,8 +63,8 @@ const style = {
   },
   titleParentStyle: {
     paddingLeft: 12,
-    paddingRight:12,
-    flex:1,
+    paddingRight: 12,
+    flex: 1,
   },
   titleStyle: {
     fontSize: 14,
@@ -85,6 +91,11 @@ const style = {
   innerContainerStyle: {
     height: modalHeight,
     maxHeight: maxHeight,
+  },
+  horizontalLine: {
+    width: "100%",
+    height: 1,
+    backgroundColor: colors.lightGrey,
   },
 };
 

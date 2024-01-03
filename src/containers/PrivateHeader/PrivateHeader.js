@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import {
   Image,
@@ -9,7 +9,7 @@ import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimen
 
 import { useIntl } from "react-intl";
 import CommonText from "../../components/CommonText";
-import CustomAvatar from "../../components/CustomAvatar";
+import HeaderRight from "../../components/HeaderRight";
 import useIsWebView from "../../hooks/useIsWebView";
 import { getSmallScreenHeaderInfo } from "../../utils/headerHelpers";
 import images from "../../images";
@@ -133,40 +133,5 @@ const HeaderLeft = ({
   return null;
 };
 
-const HeaderRight = ({
-  onPressRightIcon,
-  rightIcon,
-  isWebView,
-  profileImage,
-  firstName,
-  lastName,
-  role,
-  isMdOrGreater,
-}) => (
-  <View style={styles.notficationIconView}>
-    <TouchableOpacity onPress={onPressRightIcon}>
-      <Image source={rightIcon} style={styles.iconNotification} />
-    </TouchableOpacity>
-    {isWebView && (
-      <View style={styles.profileView}>
-        <CustomAvatar image={profileImage} text={`${firstName} ${lastName}`} />
-        {isMdOrGreater && (
-          <View style={styles.profileNameSection}>
-            <View>
-              <CommonText
-                customTextStyle={styles.fullNameStyle}
-                title={`${firstName} ${lastName}`}
-              />
-              <CommonText title={role} customTextStyle={styles.roleStyle} />
-            </View>
-            <TouchableOpacity>
-              <Image source={images.iconArrowDown2} style={styles.iconArrow} />
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-    )}
-  </View>
-);
 
 export default PrivateHeader;
