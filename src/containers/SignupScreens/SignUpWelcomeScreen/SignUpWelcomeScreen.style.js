@@ -13,6 +13,9 @@ export const style = StyleSheet.create({
   contentContainerStyle: {
     flex: 1,
   },
+  customButtonContainer: {
+    marginBottom: 16,
+  },
   innerContainer: {
     paddingLeft: 16,
     paddingRight: 16,

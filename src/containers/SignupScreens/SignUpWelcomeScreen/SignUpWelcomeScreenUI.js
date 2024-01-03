@@ -93,8 +93,10 @@ const SignUpWelcomeScreenUI = ({
         <ButtonComponent
           title={intl.formatMessage({ id: "label.next" })}
           onPress={onClickNext}
+          displayLoader={isLoading}
           hasIconRight
           disabled={contactDetails.length <= 0}
+          customButtonContainer={!isWebView && style.customButtonContainer}
         />
         {isWebView && (
           <LabelWithLinkText
