@@ -29,7 +29,7 @@ const styles = {
         ? "General sans"
         : "GeneralSans-Medium",
     fontSize: 14,
-    fontWeight: 500,
+    fontWeight: "500",
     lineHeight: 20,
   },
 };
