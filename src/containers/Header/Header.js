@@ -38,6 +38,13 @@ const Header = ({ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }) => {
   );
 };
 
+Header.defaultProps = {
+  onPressLeftIcon: () => {},
+  onPressRightIcon: () => {},
+  leftIcon: "",
+  rightIcon: "",
+};
+
 Header.propTypes = {
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,

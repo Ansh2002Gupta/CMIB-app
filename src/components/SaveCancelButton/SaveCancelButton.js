@@ -1,14 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  ActivityIndicator,
-  Image,
-  View,
-  TouchableOpacity,
-} from "@unthinkable/react-core-components";
+import { ActivityIndicator, View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./SaveCancelButton.style";
@@ -26,7 +22,7 @@ const SaveCancelButton = ({
 }) => {
   return (
     <View style={[styles.containerStyle, customContainerStyle]}>
-      <TouchableOpacity
+      <CustomTouchableOpacity
         onPress={onPressButtonOne}
         style={styles.disableButtonStyle}
       >
@@ -42,8 +38,8 @@ const SaveCancelButton = ({
           customTextStyle={styles.disableTextStyle}
           title={buttonOneText}
         />
-      </TouchableOpacity>
-      <TouchableOpacity
+      </CustomTouchableOpacity>
+      <CustomTouchableOpacity
         onPress={onPressButtonTwo}
         style={[
           styles.buttonStyle,
@@ -70,7 +66,7 @@ const SaveCancelButton = ({
             )}
           </>
         )}
-      </TouchableOpacity>
+      </CustomTouchableOpacity>
     </View>
   );
 };

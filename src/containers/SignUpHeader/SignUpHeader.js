@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { Image, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import styles from "./SignUpHeader.style";
 
 const SignUpHeader = (props) => {
@@ -14,7 +11,7 @@ const SignUpHeader = (props) => {
 
   return (
     <View>
-      <TouchableOpacity
+      <CustomTouchableOpacity
         onPress={() => {
           onClickGoToLogin();
         }}
@@ -24,7 +21,7 @@ const SignUpHeader = (props) => {
           customTextStyle={styles.headerTextStyle}
           title={intl.formatMessage({ id: "label.go_back_to_login" })}
         />
-      </TouchableOpacity>
+      </CustomTouchableOpacity>
       <Image source={image} style={styles.iconBar} />
       <CommonText customTextStyle={styles.formHeaderStyle} title={headerText} />
       <View style={styles.borderStyle} />
