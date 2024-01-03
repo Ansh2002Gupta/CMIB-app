@@ -13,7 +13,9 @@ const CustomButton = ({
   disabled,
   iconRight,
   iconLeft,
+  isLeftIconNotSvg,
   isLoading,
+  isRightIconNotSvg,
   onPress,
   style,
   withGreenBackground,
@@ -36,12 +38,13 @@ const CustomButton = ({
         />
       ) : (
         <>
-          {!!iconLeft && (
+          {!!iconLeft && !!iconLeft?.leftIconSource && (
             <CustomImage
-              alt={"left-arrow"}
-              Icon={iconLeft}
-              isSvg
-              source={iconLeft}
+              style={styles.iconRightStyle}
+              alt={iconLeft.leftIconAlt}
+              Icon={iconLeft.leftIconSource}
+              isSvg={!isLeftIconNotSvg}
+              source={iconLeft.leftIconSource}
             />
           )}
           <Text
@@ -49,12 +52,13 @@ const CustomButton = ({
           >
             {children}
           </Text>
-          {!!iconRight && (
+          {!!iconRight && !!iconRight?.rightIconSource && (
             <CustomImage
-              Icon={iconRight}
-              isSvg
-              source={iconRight}
-              alt={"right-arrow"}
+              style={styles.iconLeftStyle}
+              Icon={iconRight.rightIconSource}
+              isSvg={!isRightIconNotSvg}
+              source={iconRight.rightIconSource}
+              alt={iconRight.rightIconAlt}
             />
           )}
         </>
@@ -66,9 +70,17 @@ const CustomButton = ({
 CustomButton.defaultProps = {
   children: <></>,
   disabled: false,
-  iconLeft: "",
-  iconRight: "",
+  iconLeft: {
+    leftIconAlt: "",
+    leftIconSource: "",
+  },
+  iconRight: {
+    rightIconAlt: "",
+    rightIconSource: "",
+  },
+  isLeftIconNotSvg: true,
   isLoading: false,
+  isRightIconNotSvg: true,
   onPress: () => {},
   style: {},
   withGreenBackground: false,
@@ -77,9 +89,11 @@ CustomButton.defaultProps = {
 CustomButton.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  iconLeft: PropTypes.string,
-  iconRight: PropTypes.string,
+  iconLeft: PropTypes.object,
+  iconRight: PropTypes.object,
+  isLeftIconNotSvg: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isRightIconNotSvg: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,
   withGreenBackground: PropTypes.bool,

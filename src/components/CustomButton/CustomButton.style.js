@@ -25,6 +25,12 @@ const styles = {
   whiteText: {
     color: colors.white,
   },
+  iconRightStyle: {
+    marginRight: 8,
+  },
+  iconLeftStyle: {
+    marginLeft: 8,
+  },
   btnText: {
     fontFamily:
       Platform.OS.toLowerCase() === "web"
@@ -33,8 +39,6 @@ const styles = {
     fontSize: 16,
     fontWeight: "600",
     lineHeight: 20,
-    marginRight: 8,
-    marginLeft: 8,
   },
 };
 
