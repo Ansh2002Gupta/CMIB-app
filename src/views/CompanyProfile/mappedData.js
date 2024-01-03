@@ -31,24 +31,44 @@ export const mapApiDataToUI = (apiData, industryOptions) => {
     company_logo,
   } = apiData;
 
+  const checkValue = (value) => (value ? value : "--");
+
+  const formatMobileNumber = (countryCode, mobileNumber) => {
+    const code = checkValue(countryCode);
+    const number = checkValue(mobileNumber);
+    if (code === "--" && number === "--") {
+      return "--";
+    }
+    return (code + "-" + number).replace(/--/g, "-"); // Replace double hyphens with single
+  };
+
+  const combinedMobileNumber = formatMobileNumber(
+    contact_person_mobile_country_code,
+    contact_person_mobile_number
+  );
+
   return {
     companyDetail: [
-      { label: "label.company_name", value: name },
+      { label: "label.company_name", value: checkValue(name) },
       {
         label: "label.entity",
-        value: entity,
+        value: checkValue(entity),
         isDropdown: true,
         options: ENTITY_OPTIONS,
       },
-      { label: "label.firm_registration_no", value: frn_number, isMajor: true },
+      {
+        label: "label.firm_registration_no",
+        value: checkValue(frn_number),
+        isMajor: true,
+      },
       {
         label: "label.no_of_partners",
-        value: number_of_partner,
+        value: checkValue(number_of_partner),
         isMinor: true,
       },
       {
         label: "label.current_industry",
-        value: industry?.name,
+        value: checkValue(industry?.name),
         isDropdown: true,
         options: industryOptions,
         labelField: "name",
@@ -57,58 +77,63 @@ export const mapApiDataToUI = (apiData, industryOptions) => {
       },
       {
         label: "label.address_for_correspondence",
-        value: address,
+        value: checkValue(address),
         isMultiline: true,
       },
-      { label: "label.email_id", value: email },
-      { label: "label.isd_std_code", value: std_country_code, isMinor: true },
-      { label: "label.telephone_no", value: telephone_number, isMajor: true },
+      { label: "label.email_id", value: checkValue(email) },
+      {
+        label: "label.isd_std_code",
+        value: checkValue(std_country_code),
+        isMinor: true,
+      },
+      {
+        label: "label.telephone_no",
+        value: checkValue(telephone_number),
+        isMajor: true,
+      },
     ],
     contactPersonInfo: [
       {
         label: "label.salutation",
-        value: contact_person_salutation,
+        value: checkValue(contact_person_salutation),
         isMinor: true,
         isDropdown: true,
         options: SALUTATION_OPTIONS,
       },
       {
         label: "label.contact_person_name",
-        value: contact_person_name,
+        value: checkValue(contact_person_name),
         isMajor: true,
       },
       {
         label: "label.contact_personal_designation",
-        value: contact_person_designation,
+        value: checkValue(contact_person_designation),
       },
       {
         label: "label.mobile_number",
         isMobileNumber: true,
-        value:
-          contact_person_mobile_country_code +
-          "-" +
-          contact_person_mobile_number,
+        value: combinedMobileNumber,
       },
-      { label: "label.email_id", value: contact_person_email },
+      { label: "label.email_id", value: checkValue(contact_person_email) },
     ],
     companyProfile: [
       {
         label: "label.short_profile_of_the_company",
-        value: company_details,
+        value: checkValue(company_details),
         isMultiline: true,
       },
     ],
     otherDetails: [
-      { label: "label.website", value: website, isLink: true },
+      { label: "label.website", value: checkValue(website), isLink: true },
       {
         label: "label.nature_of_supplier",
-        value: nature_of_supplier,
+        value: checkValue(nature_of_supplier),
         isDropdown: true,
         options: NATURE_OF_SUPPLIER,
       },
       {
         label: "label.company_type",
-        value: type,
+        value: checkValue(type),
         isDropdown: true,
         options: COMPANY_TYPE_OPTIONS,
       },
