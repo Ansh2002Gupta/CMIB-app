@@ -71,6 +71,10 @@ const MainContainerTemplate = ({
   );
 };
 
+MainContainerTemplate.defaultProps = {
+  selectedContainer: null,
+};
+
 MainContainerTemplate.propTypes = {
   containers: PropTypes.array.isRequired,
   onPressCard: PropTypes.func.isRequired,

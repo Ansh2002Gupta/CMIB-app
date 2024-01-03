@@ -3,8 +3,8 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../../../routes";
 
 import { ROUND_ONE_CARD } from "../../../../constants/constants";
-import images from "../../../../images";
 import { navigations } from "../../../../constants/routeNames";
+import images from "../../../../images";
 
 const useMainContainerTabs = () => {
   const intl = useIntl();
@@ -36,7 +36,6 @@ const useMainContainerTabs = () => {
     containers,
     onPressCard,
     selectedContainer,
-    intl,
   };
 };
 
