@@ -19,7 +19,6 @@ const NewPasswordValidation = ({
   customContainerStyles,
   newPassword,
 }) => {
-
   const intl = useIntl();
   const bulletStyle = (isValid) => [
     styles.bulletIconStyle,

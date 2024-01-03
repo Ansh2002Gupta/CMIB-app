@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FlatList, ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
@@ -28,6 +28,7 @@ const SignUpLastScreenUI = (props) => {
     handleSuccessModal,
     handleToggle,
     intl,
+    isLoading,
     natureOfSupplier,
     onClickGoToLogin,
     onDeleteImage,
@@ -41,20 +42,10 @@ const SignUpLastScreenUI = (props) => {
     website,
   } = props;
 
+  const isWeb = Platform.OS.toLowerCase() === "web";
+
   const errorMessage =
     validationError || errorWhileDeletion || errorWhileUpload || signUpError;
-
-  const renderItem = ({ item, index }) => {
-    return (
-      <CheckBox
-        id={item.id}
-        index={index}
-        title={item.title}
-        isSelected={item.isSelected}
-        handleCheckbox={handleToggle}
-      />
-    );
-  };
 
   return (
     <View style={style.mainContainerStyle}>
@@ -114,7 +105,7 @@ const SignUpLastScreenUI = (props) => {
           value={companyDetails}
           onChangeText={(value) => handleInputChange(value, "companyDetails")}
           isMandatory
-          isMultiline
+          isMultiline={!isWeb}
           height={84}
         />
         <CustomTextInput
@@ -163,12 +154,18 @@ const SignUpLastScreenUI = (props) => {
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.source_of_info" })}
         />
-        <FlatList
-          contentContainerStyle={style.containerStyle}
-          data={options}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
+        <View style={style.containerStyle}>
+          {options.map((item, index) => (
+            <CheckBox
+              key={item.id}
+              id={item.id}
+              index={index}
+              title={item.title}
+              isSelected={item.isSelected}
+              handleCheckbox={handleToggle}
+            />
+          ))}
+        </View>
         <View style={style.seperator} />
 
         <CommonText
@@ -190,15 +187,16 @@ const SignUpLastScreenUI = (props) => {
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
+        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
+        displayLoader={isLoading}
+        hasIconLeft
+        isNextDisabled={!allFieldsFilled()}
         onPressButtonOne={onGoBack}
         onPressButtonTwo={() => handleSuccessModal(true)}
-        isNextDisabled={!allFieldsFilled()}
-        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
-        hasIconLeft
       />
       {!!errorMessage && (
         <ToastComponent
-          toastMessage={validationError || errorWhileDeletion}
+          toastMessage={errorMessage}
           onDismiss={handleDismissToast}
         />
       )}
@@ -212,6 +210,7 @@ SignUpLastScreenUI.defaultProps = {
   handleDismissToast: () => {},
   onDeleteImage: () => {},
   onImageUpload: () => {},
+  signUpError: "",
   validationError: "",
 };
 
@@ -227,13 +226,15 @@ SignUpLastScreenUI.propTypes = {
   handleSuccessModal: PropTypes.func.isRequired,
   handleToggle: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   natureOfSupplier: PropTypes.string.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
-  onDeleteImage: PropTypes.func.isRequired,
+  onDeleteImage: PropTypes.func,
   onGoBack: PropTypes.func.isRequired,
   onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
+  signUpError: PropTypes.string,
   socialMediaLinks: PropTypes.object.isRequired,
   validationError: PropTypes.string,
   website: PropTypes.string.isRequired,

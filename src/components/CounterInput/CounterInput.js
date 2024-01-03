@@ -102,7 +102,7 @@ const CounterInput = ({
     },
     {
       content: <MultiRow rows={arrow} />,
-      style: { marginLeft: 8 },
+      style: styles.arrowParent,
     },
   ];
 

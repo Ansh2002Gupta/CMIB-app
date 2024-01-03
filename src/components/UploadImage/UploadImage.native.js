@@ -61,6 +61,7 @@ const UploadImage = ({
       }
     });
   };
+
   return (
     <View
       style={[

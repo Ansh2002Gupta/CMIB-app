@@ -4,6 +4,7 @@ import DashboardProvider from "./dashboard/dashboardProvider";
 import LocaleProvider from "./locale/localeProviders";
 import RouteProvider from "./route/routeProvider";
 import SignUpProvider from "./signUp/signUpProvider";
+import SideBarProvider from "./sidebar/sidebarProvider";
 
 // Import other created Providers and add them here -
 const providers = [
@@ -12,6 +13,7 @@ const providers = [
   LocaleProvider,
   RouteProvider,
   SignUpProvider,
+  SideBarProvider,
 ];
 
 const combineProviders = (components) => {

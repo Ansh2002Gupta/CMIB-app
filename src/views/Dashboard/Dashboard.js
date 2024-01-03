@@ -5,7 +5,7 @@ import { View } from "@unthinkable/react-core-components";
 import AddDesignation from "../../containers/AddDesignation/AddDesignation";
 import CommonText from "../../components/CommonText";
 import CustomCell from "../../components/CustomCell/";
-import SearchView from "../../components/SearchView/SearchView";
+import SearchView from "../../components/SearchView";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
@@ -25,7 +25,7 @@ function DashboardView() {
     setIsEnabled((previousState) => !previousState);
   };
 
-  const handleCancelButton = () => {
+  const handleAddDesignation = () => {
     setIsEnabled((previousState) => !previousState);
   };
 
@@ -77,7 +77,7 @@ function DashboardView() {
         style={styles.customCellStyle}
         textStyle={styles.customCellTextStyle}
       />
-      {isEnabled && <AddDesignation handleCancelButton={handleCancelButton} />}
+      {isEnabled && <AddDesignation  resultCallback={handleAddDesignation}/>}
     </View>
   );
 }

@@ -4,7 +4,7 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity"
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ButtonComponent from "../../components/ButtonComponent";
 import HeaderText from "../../components/HeaderText/HeaderText";
 import OtpInput from "../../components/OtpInput/index";
@@ -188,7 +188,9 @@ const OtpViewUI = ({
             customTextStyle={
               isWebView ? getResponsiveStyles("label.forgot_password") : {}
             }
-            customContainerStyles={isWebView && styles.forgotHeaderContainer}
+            customContainerStyles={
+              isWebView ? styles.forgotHeaderContainer : {}
+            }
           />
           {!isWebView && <View style={styles.borderStyle} />}
         </View>
@@ -220,7 +222,7 @@ const OtpViewUI = ({
                     title={formattedTimerValue}
                   />
                 ) : (
-                  <CustomTouchableOpacity  onPress={onResendOtpClick}>
+                  <CustomTouchableOpacity onPress={onResendOtpClick}>
                     <CommonText
                       customTextStyle={styles.textlabelReset}
                       title={formatedOtpLeftValue}
@@ -260,7 +262,7 @@ const OtpViewUI = ({
             title={intl.formatMessage({ id: "label.submit" })}
             onPress={onVerifyOtpClick}
             disabled={submitDisabled}
-            customTitleStyle={isWebView && styles.customBtnText}
+            customTitleStyle={isWebView ? styles.customBtnText : {}}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }

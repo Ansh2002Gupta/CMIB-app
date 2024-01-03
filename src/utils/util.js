@@ -4,3 +4,13 @@ export const getQueryParamsAsAnObject = (queryParamString) => {
     .map((param) => param.split("="))
     .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 };
+
+export const getImageSource = (uploadedImage) => {
+  if (uploadedImage && typeof uploadedImage === "string") {
+    return uploadedImage;
+  }
+  if (uploadedImage) {
+    return URL.createObjectURL(uploadedImage);
+  }
+  return "";
+};

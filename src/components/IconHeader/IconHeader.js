@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { Image, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./IconHeader.style";
 
@@ -25,14 +22,14 @@ const IconHeader = ({
       <View style={styles.headerContainerStyle}>
         <View style={styles.iconContainer}>
           {iconLeft && (
-            <TouchableOpacity onPress={onPressLeftIcon}>
+            <CustomTouchableOpacity onPress={onPressLeftIcon}>
               <Image source={iconLeft} />
-            </TouchableOpacity>
+            </CustomTouchableOpacity>
           )}
           {iconRight && (
-            <TouchableOpacity onPress={onPressRightIcon}>
+            <CustomTouchableOpacity onPress={onPressRightIcon}>
               <Image source={iconRight} />
-            </TouchableOpacity>
+            </CustomTouchableOpacity>
           )}
         </View>
         <View style={styles.titleContainer}>

@@ -5,3 +5,7 @@ export const COMPANY_SEND_OTP = "company/send-otp";
 export const COMPANY_VERIFY_OTP = "company/verify-otp";
 export const COMPANY_LOGOUT = "company/logout";
 export const COMPANY_PROFILE = "company/get-profile-details";
+export const COMPANY_SIGN_UP = "company/sign-up";
+export const COMPANY_VALIDATE_SIGN_UP = "company/sign-up/validate";
+export const COMPANY_UPDATE_PROFILE = "company/update-profile";
+export const COMPANY_SAVE_LOGO = "company/save-logo";

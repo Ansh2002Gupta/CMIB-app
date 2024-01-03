@@ -24,6 +24,7 @@ const SignUpThirdScreenUI = (props) => {
     handleDismissToast,
     handleInputChange,
     intl,
+    isLoading,
     onClickNext,
     onGoBack,
     validationError,
@@ -53,7 +54,7 @@ const SignUpThirdScreenUI = (props) => {
         style={style.contentContainerStyle}
       >
         {contactDetails.map((detail, index) => (
-          <>
+          <View key={String(index)}>
             <CommonText
               customTextStyle={style.headerText}
               title={getHeaderText(detail.module, intl)}
@@ -117,7 +118,7 @@ const SignUpThirdScreenUI = (props) => {
               })}
               value={contactDetails[index].mobileNo}
               maxLength={10}
-              keyboardType="numeric"
+              isNumeric
               onChangeText={(val) => handleInputChange(val, "mobileNo", index)}
               isMobileNumber
               errorMessage={errors[index].mobileNo}
@@ -140,18 +141,19 @@ const SignUpThirdScreenUI = (props) => {
             {index < contactDetails.length - 1 && contactDetails.length > 1 && (
               <View style={style.dividerStyle} />
             )}
-          </>
+          </View>
         ))}
       </ScrollView>
       <View style={style.buttonContainer}>
         <SaveCancelButton
           buttonOneText={intl.formatMessage({ id: "label.back" })}
-          onPressButtonOne={onGoBack}
-          onPressButtonTwo={onClickNext}
+          buttonTwoText={intl.formatMessage({ id: "label.next" })}
+          displayLoader={isLoading}
+          hasIconLeft
           hasIconRight
           isNextDisabled={!allFieldsFilled()}
-          buttonTwoText={intl.formatMessage({ id: "label.next" })}
-          hasIconLeft
+          onPressButtonOne={onGoBack}
+          onPressButtonTwo={onClickNext}
         />
       </View>
       {!!validationError && (
@@ -167,10 +169,11 @@ const SignUpThirdScreenUI = (props) => {
 SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
-  errors: PropTypes.object,
+  errors: PropTypes.array,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   onClickNext: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   validationError: PropTypes.string,

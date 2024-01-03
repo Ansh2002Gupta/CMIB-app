@@ -1,55 +1,55 @@
-import React, { useContext } from "react";
-import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View, Image } from "@unthinkable/react-core-components";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-import images from "../../images";
-import styles from "./header.style";
+import PublicHeader from "../PublicHeader/PublicHeader";
+import PrivateHeader from "../PrivateHeader/PrivateHeader";
+import { getAuthToken } from "../../utils/getAuthToken";
 
-const Header = () => {
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const hideRightIcons =
-    currentBreakpoint === "xs" || currentBreakpoint === "sm";
+const Header = ({ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }) => {
+  const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
+
+  useEffect(() => {
+    checkAuthToken();
+  }, []);
+
+  const checkAuthToken = async () => {
+    try {
+      const authToken = await getAuthToken();
+      if (authToken) {
+        setIsuserLoggedIn(true);
+      } else {
+        setIsuserLoggedIn(false);
+      }
+    } catch (error) {
+      console.error("Error fetching authToken:", error);
+    }
+  };
 
   return (
-    <View
-      style={
-        hideRightIcons
-          ? [styles.mainView]
-          : [styles.webMainView, styles.headerBorder]
-      }
-    >
-      <View
-        style={
-          hideRightIcons ? styles.smContainerStyle : styles.webContainerStyle
-        }
-      >
-        <Image
-          source={images.iconCmibLogo}
-          style={styles.cmibLogo}
-          resizeMode="contain"
+    <>
+      {isuserLoggedIn ? (
+        <PrivateHeader
+          {...{ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }}
         />
-        {!hideRightIcons && (
-          <View style={styles.rightIconContainer}>
-            <Image
-              source={images.iconGloPac}
-              style={styles.gloPac}
-              resizeMode="contain"
-            />
-            <Image
-              source={images.iconG20}
-              style={styles.iconG20}
-              resizeMode="contain"
-            />
-            <Image
-              source={images.iconAzadiMahotsav}
-              style={styles.azadiMahotsav}
-              resizeMode="contain"
-            />
-          </View>
-        )}
-      </View>
-    </View>
+      ) : (
+        <PublicHeader />
+      )}
+    </>
   );
+};
+
+Header.defaultProps = {
+  onPressLeftIcon: () => {},
+  onPressRightIcon: () => {},
+  leftIcon: "",
+  rightIcon: "",
+};
+
+Header.propTypes = {
+  onPressLeftIcon: PropTypes.func,
+  onPressRightIcon: PropTypes.func,
+  leftIcon: PropTypes.string,
+  rightIcon: PropTypes.string,
 };
 
 export default Header;

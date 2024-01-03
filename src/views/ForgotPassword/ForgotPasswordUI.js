@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { TouchableOpacity, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderText from "../../components/HeaderText/HeaderText";
@@ -131,7 +132,9 @@ const ForgotPasswordUI = (props) => {
             customTextStyle={
               isWebView ? getResponsiveStyles("label.forgot_password") : {}
             }
-            customContainerStyles={isWebView && styles.forgotHeaderContainer}
+            customContainerStyles={
+              isWebView ? styles.forgotHeaderContainer : {}
+            }
           />
           {!isWebView && <View style={styles.borderStyle} />}
         </View>
@@ -163,18 +166,18 @@ const ForgotPasswordUI = (props) => {
             title={intl.formatMessage({ id: "label.submit" })}
             onPress={onSendOtpClick}
             disabled={loginDisabled}
-            customTitleStyle={isWebView && styles.customBtnText}
+            customTitleStyle={isWebView ? styles.customBtnText : {}}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
             displayLoader={isLoading}
           />
-          <TouchableOpacity onPress={onClickGoToLogin}>
+          <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={styles.backToLoginText}
               title={intl.formatMessage({ id: "label.back_to_login" })}
             />
-          </TouchableOpacity>
+          </CustomTouchableOpacity>
         </View>
       </View>
       {successLogin ? (

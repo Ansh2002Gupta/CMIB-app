@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
   Image,
+  Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
@@ -18,32 +19,34 @@ import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
-    countValue,
-    customLabelStyle,
-    customStyle,
     customErrorStyle,
     customHandleBlur,
+    customLabelStyle,
+    customStyle,
     customTextInputContainer,
+    countValue,
     dropdownStyle,
     errorMessage,
     eyeImage,
     handleCountChange,
+    inputKey,
     isCounterInput,
     isDropdown,
     isError,
     isMandatory,
     isMobileNumber,
     isMultiline,
+    isNumeric,
+    isPaddingNotRequired,
     isPassword,
     label,
-    maxCount=100,
-    minCount=0,
+    maxCount,
+    minCount,
     options,
     onChangeValue,
     placeholder,
-    step=1,
+    step,
     value,
-    inputKey = "value",
     ...remainingProps
   } = props;
 
@@ -64,8 +67,24 @@ const CustomTextInput = (props) => {
     setIsFocused(false);
   };
 
+  const platformSpecificProps = Platform.select({
+    web: {},
+    default: {
+      placeholderTextColor: colors.darkGrey,
+    },
+  });
+
+  const mobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { keyboardType: "numeric", returnKeyType: "done" }
+      : {};
+
   return (
-    <View style={[style.container, customStyle]}>
+    <View
+      style={
+        !isPaddingNotRequired ? [style.container, customStyle] : customStyle
+      }
+    >
       {!!label && <CustomLabelView label={label} isMandatory />}
       {isDropdown ? (
         <Dropdown
@@ -122,12 +141,13 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
-            multiline={isMultiline}
+            multiline={isMultiline || undefined}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            placeholderTextColor={colors.darkGrey}
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
+            {...platformSpecificProps}
+            {...(isNumeric ? mobileProps : {})}
             {...remainingProps}
           />
           {eyeImage ? (
@@ -153,47 +173,64 @@ const CustomTextInput = (props) => {
 };
 
 CustomTextInput.defaultProps = {
-  customHandleBlur: () => {},
+  countValue: 0,
   customErrorStyle: {},
+  customHandleBlur: () => {},
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
   dropdownStyle: {},
   errorMessage: "",
   eyeImage: false,
+  handleCountChange: () => {},
   isCounterInput: false,
   isDropdown: false,
   isError: false,
+  inputKey: "value",
   isMandatory: false,
   isMobileNumber: false,
   isMultiline: false,
-  inputKey: "value",
+  isNumeric: false,
+  isPaddingNotRequired: false,
   isPassword: false,
   label: "",
-  placeholder: "",
+  maxCount: 100,
+  minCount: 0,
+  options: [],
+  onChangeValue: () => {},
+  step: 1,
   value: "",
 };
 
 CustomTextInput.propTypes = {
+  countValue: PropTypes.number,
+  customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
-  customErrorStyle: PropTypes.object,
-  customStyle: PropTypes.object,
+  customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
+  handleCountChange: PropTypes.func,
+  inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
   isError: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isMultiline: PropTypes.bool,
-  inputKey: PropTypes.string,
+  isNumeric: PropTypes.bool,
+  isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
   label: PropTypes.string,
+  maxCount: PropTypes.number,
+  minCount: PropTypes.number,
+  options: PropTypes.arrayOf(PropTypes.object),
+  onChangeValue: PropTypes.func,
   placeholder: PropTypes.string,
-  value: PropTypes.string,
+  step: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CustomTextInput;

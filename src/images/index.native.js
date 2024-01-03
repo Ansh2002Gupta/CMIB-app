@@ -11,10 +11,8 @@ import profileOutline from "../../public/images/profile-outline.png";
 import iconWalkthroughSignUpOne from "../../public/images/iconWalkthroughSignUpOne/iconWalkthroughSignUpOne.png";
 import iconCheckbox from "../../public/images/svg/icon_check.svg";
 import iconUnCheckbox from "../../public/images/svg/icon_uncheck.svg";
-import iconArrowRightWhite from "../../public/images/iconArrowRightWhite/iconArrowRightWhite.png";
 import iconWalkthroughSignUpTwo from "../../public/images/iconWalkthroughSignUpTwo/iconWalkthroughSignUpTwo.png";
 import iconDownArrow from "../../public/images/iconDownArrow/iconDownArrow.png";
-import iconArrowLeft from "../../public/images/iconArrowLeft/iconArrowLeft.png";
 import iconWalkthroughSignUpThree from "../../public/images/iconWalkthroughSignUpThree/iconWalkthroughSignUpThree.png";
 import iconWalkthroughSignUpLast from "../../public/images/iconWalkthroughSignUpLast/iconWalkthroughSignUpLast.png";
 import iconDivider from "../../public/images/iconDivider/iconDivider.png";
@@ -45,36 +43,66 @@ import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
 import ticketIcon from "../../public/images/ticketIcon/ticketIcon.png";
 import iconSend from "../../public/images/iconSend/iconSend.png";
 import iconSetting from "../../public/images/iconSetting/iconSetting.png";
-import iconDashboard from "../../public/images/iconDashboard/iconDashboard.png";
-import iconRound1 from "../../public/images/iconRound1/iconRound1.png";
-import iconRound2 from "../../public/images/iconRound2/iconRound2.png";
-import iconMyaccount from "../../public/images/iconMyaccount/iconMyaccount.png";
-import iconActiveRound1 from "../../public/images/iconActiveRound1/iconActiveRound1.png";
-import iconActiveRound2 from "../../public/images/iconActiveRound2/iconActiveRound2.png";
-import iconActiveMyaccount from "../../public/images/iconActiveMyaccount/iconActiveMyaccount.png";
 import iconUpArrow from "../../public/images/iconUpArrow/iconUpArrow.png";
 import iconAddApplicationForm from "../../public/images/iconAddApplicationForm/iconAddApplicationForm.png";
 import iconHiringProcess from "../../public/images/iconHiringProcess/iconHiringProcess.png";
 import iconDownloadDetails from "../../public/images/iconDownloadDetails/iconDownloadDetails.png";
 import iconDrawer from "../../public/images/iconDrawer/iconDrawer.png";
-import iconTick from "../../public/images/iconTick/iconTick.png";
-import iconWarning from "../../public/images/svg/iconWarning.svg";
+import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLogowhite.png";
+import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
+import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
+import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
+import iconClose from "../../public/images/iconClose/iconClose.png";
+import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
-import iconSearch from "../../public/images/svg/iconSearch.svg"
-import iconFilter from "../../public/images/svg/iconFilter.svg"
-import iconMore from "../../public/images/svg/iconMore.svg"
-import iconArrowDown from "../../public/images/svg/iconArrowDown.svg"
-import iconArrowUp from "../../public/images/svg/iconArrowUp.svg"
-import iconAdd from "../../public/images/svg/iconAdd.svg"
+import iconSearch from "../../public/images/svg/iconSearch.svg";
+import iconFilter from "../../public/images/svg/iconFilter.svg";
+import iconMore from "../../public/images/svg/iconMore.svg";
+import iconFooter from "../../public/images/svg/iconFooter.svg";
+import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
+import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
+import iconAdd from "../../public/images/svg/iconAdd.svg";
 import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
+import iconArrowRightWhite from "../../public/images/svg/iconArrowRightWhite.svg";
+import iconArrowLeft from "../../public/images/svg/iconArrowLeft.svg";
+import iconWarning from "../../public/images/svg/iconWarning.svg";
+import iconTick from "../../public/images/iconTick/iconTick.png";
+import iconDashboard from "../../public/images/svg/iconDashboard.svg";
+import iconDashboardWeb from "../../public/images/svg/iconDashboardWeb.svg";
+import iconDashboardActive from "../../public/images/svg/iconDashboardActive.svg";
+import iconRound1 from "../../public/images/svg/iconRoundOne.svg";
+import iconRound1Web from "../../public/images/svg/iconRoundOneWeb.svg";
+import iconActiveRound1 from "../../public/images/svg/iconRoundOneActive.svg";
+import iconRound2 from "../../public/images/svg/iconRoundTwo.svg";
+import iconActiveRound2 from "../../public/images/svg/iconRoundTwoActive.svg";
+import iconRound2Web from "../../public/images/svg/iconRoundTwoWeb.svg";
+import iconPostedJobs from "../../public/images/svg/iconPostedJobs.svg";
+import iconPostedJobsWeb from "../../public/images/svg/iconPostedJobsWeb.svg";
+import iconActivePostedJobs from "../../public/images/svg/iconPostedJobsActive.svg";
+import iconCandidates from "../../public/images/svg/iconCandidates.svg";
+import iconActiveCandidates from "../../public/images/svg/iconCandidatesActive.svg";
+import iconMyaccount from "../../public/images/svg/iconAccount.svg";
+import iconActiveMyaccount from "../../public/images/svg/iconAccountActive.svg";
+import iconJobApplicants from "../../public/images/svg/iconJobApplicant.svg";
+import iconJobApplicantsActive from "../../public/images/svg/iconJobApplicantActive.svg";
+import iconJobSeekers from "../../public/images/svg/iconJobSeeker.svg";
+import iconJobSeekersActive from "../../public/images/svg/iconJobSeekerActive.svg";
+import iconSaved from "../../public/images/svg/iconSavedCandidates.svg";
+import iconSavedActive from "../../public/images/svg/iconSavedCandidatesActive.svg";
+import addCircle from "../../public/images/svg/addCircle.svg";
+import minusCirlce from "../../public/images/svg/minusCirlce.svg";
 
 const images = {
+  iconArrowUp,
+  iconArrowDown,
+  iconArrowDown2,
   avatar,
   logo,
   sun,
   moon,
   flagFr,
   flagUk,
+  iconLeftArrow,
   homeSolid,
   homeOutline,
   profileSolid,
@@ -97,6 +125,7 @@ const images = {
   iconEyeSlash,
   iconSuccess,
   iconMenu,
+  iconClose,
   iconNotification,
   iconProfile,
   iconLogout,
@@ -111,12 +140,14 @@ const images = {
   iconLinkedin,
   iconTelegram,
   iconTwitter,
+  iconTick,
   iconYoutube,
   iconCmibLogo,
   ticketIcon,
   iconSend,
   iconSetting,
   iconDashboard,
+  iconDashboardActive,
   iconRound1,
   iconRound2,
   iconMyaccount,
@@ -128,16 +159,33 @@ const images = {
   iconHiringProcess,
   iconDownloadDetails,
   iconDrawer,
-  iconTick,
+  iconCmibLogoWhite,
+  iconRightArrow,
+  iconFooterGlobal,
   iconWarning,
   iconSquareEdit,
   iconSearch,
   iconFilter,
   iconMore,
-  iconArrowDown,
-  iconArrowUp,
+  iconFooter,
   iconAdd,
   iconStepperDone,
+  iconPostedJobs,
+  iconActivePostedJobs,
+  iconJobApplicants,
+  iconJobSeekers,
+  iconSaved,
+  iconCandidates,
+  iconActiveCandidates,
+  iconJobApplicantsActive,
+  iconJobSeekersActive,
+  iconSavedActive,
+  iconRound2Web,
+  iconDashboardWeb,
+  iconRound1Web,
+  iconPostedJobsWeb,
+  addCircle,
+  minusCirlce,
 };
 
 export default images;

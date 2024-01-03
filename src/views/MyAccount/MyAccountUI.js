@@ -10,7 +10,6 @@ import {
 import CommonText from "../../components/CommonText";
 import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePasswordModal";
 import CustomModal from "../../components/CustomModal/CustomModal";
-import IconHeader from "../../components/IconHeader/IconHeader";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
@@ -46,12 +45,6 @@ const MyAccountUI = ({
 
   return (
     <>
-      <IconHeader
-        intl={intl}
-        headerText={intl.formatMessage({ id: "label.my_account" })}
-        iconLeft={images.iconMenu}
-        iconRight={images.iconNotification}
-      />
       <ScrollView style={style.profileParentContainer}>
         <View style={style.profileContainer}>
           {renderProfileIcon()}
