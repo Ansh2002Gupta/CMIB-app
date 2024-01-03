@@ -1,8 +1,8 @@
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
-const styles = {
+const styles = StyleSheet.create({
   defaultBtnStyles: {
     paddingTop: 12,
     paddingBottom: 12,
@@ -29,9 +29,9 @@ const styles = {
         ? "General sans"
         : "GeneralSans-Medium",
     fontSize: 14,
-    fontWeight: 500,
+    fontWeight: "500",
     lineHeight: 20,
   },
-};
+});
 
 export default styles;

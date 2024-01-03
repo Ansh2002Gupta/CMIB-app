@@ -156,4 +156,23 @@ export const SCREEN_NAMES = {
   VIEW_PROFILE: "label.view_profile",
   PROFILE: "label.my_account",
   ROUND_ONE: "label.round1",
+  ROUND_ONE_APPLICATION_FORM: "label.add_application_form",
 };
+
+export const APPLICATION_FORM_STEPPER_OPTION = [
+  {
+    title: "label.company_profile",
+  },
+  {
+    title: "label.job_details",
+  },
+  {
+    title: "label.pre_interview_preferences",
+  },
+  {
+    title: "label.centre_details",
+  },
+  {
+    title: "label.payment",
+  },
+];

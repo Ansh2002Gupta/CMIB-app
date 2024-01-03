@@ -1,7 +1,7 @@
-import { Platform } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
+import colors from "../../../assets/colors";
 
-const style = {
+const style = StyleSheet.create({
   main: {
     padding: 20,
   },
@@ -18,7 +18,7 @@ const style = {
   componentStyle: {
     flexDirection: "row",
     paddingBottom: 24,
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   webComponentStyle: {
     flexDirection: "column",
@@ -77,8 +77,12 @@ const style = {
     color: colors.black,
     fontWeight: "600",
   },
-  buttonStyle: { flex: 1 },
-  imageStyle: { maxWidth: 40 },
-};
+  buttonStyle: {
+    flex: 1,
+  },
+  imageStyle: {
+    maxWidth: 40,
+  },
+});
 
 export default style;

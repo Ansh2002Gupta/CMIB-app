@@ -213,6 +213,11 @@ const locale = {
   "label.module": "Module",
   "label.newly_qualified_placements": "Newly Qualified Placements",
   "label.choose_a_module": "Choose a module",
+  "label.add_application_form": "Add Application Form",
+  "label.job_details": "Job Details",
+  "label.pre_interview_preferences": "Pre-Interview Preferences",
+  "label.centre_details": "Centre Details",
+  "label.payment":"Payment"
 };
 
 export default locale;

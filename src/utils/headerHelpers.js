@@ -31,6 +31,14 @@ export const getSmallScreenHeaderInfo = (path) => {
         showRightButton: false,
       };
     }
+    case navigations.ROUND_ONE_APPLICATION: {
+      return {
+        text: SCREEN_NAMES.ROUND_ONE_APPLICATION_FORM,
+        showRightButton: true,
+        showBackButton: true,
+        actionIcontext: "Download",
+      };
+    }
     default: {
       return {
         text: "",

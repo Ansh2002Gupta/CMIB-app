@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../routes";
+import { useNavigate } from "../../../../routes";
 
-import RoundOneUI from "./RoundOneUI";
-import { ROUND_ONE_CARD } from "../../constants/constants";
-import { navigations } from "../../constants/routeNames";
-import images from "../../images";
+import { ROUND_ONE_CARD } from "../../../../constants/constants";
+import images from "../../../../images";
+import { navigations } from "../../../../constants/routeNames";
 
-const RoundOneComponent = () => {
+const useMainContainerTabs = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [selectedContainer, setSelectedContainer] = useState(null);
@@ -23,7 +22,7 @@ const RoundOneComponent = () => {
     setSelectedContainer(id);
     switch (id) {
       case 1:
-        navigate(navigations.ROUND_ONE_APPLICATION_FORM);
+        navigate(navigations.APPLICATION_FORM);
         break;
       case 2:
         break;
@@ -33,14 +32,12 @@ const RoundOneComponent = () => {
     }
   };
 
-  return (
-    <RoundOneUI
-      containers={containers}
-      onPressCard={onPressCard}
-      selectedContainer={selectedContainer}
-      intl={intl}
-    />
-  );
+  return {
+    containers,
+    onPressCard,
+    selectedContainer,
+    intl,
+  };
 };
 
-export default RoundOneComponent;
+export default useMainContainerTabs;

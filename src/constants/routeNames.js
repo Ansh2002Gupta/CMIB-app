@@ -1,4 +1,5 @@
 export const navigations = {
+  APPLICATION_FORM: "applicationForm",
   COMPANY_PROFILE: "/company-profile",
   CREATE_NEW_PASSWORD: "/create-new-password",
   DASHBOARD: "/dashboard",
@@ -9,7 +10,7 @@ export const navigations = {
   PROFILE: "/profile",
   ROOT: "/",
   ROUND_ONE: "/round-one",
-  ROUND_ONE_APPLICATION_FORM: "/round-one-application-form",
+  ROUND_ONE_APPLICATION: "/round-one/applicationForm",
   ROUND_TWO: "/round-two",
   SIGN_UP: "/sign-up",
   VIEW_PROFILE: "/view-profile",

@@ -9,7 +9,6 @@ import CompanyProfile from "../views/CompanyProfile";
 import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
-import Home from "../pages/Home";
 import JobsView from "../views/JobsView/JobsView";
 import LoginScreen from "../views/LoginScreen/index";
 import RoundOne from "../views/RoundOneView";
@@ -25,7 +24,9 @@ import { navigations } from "../constants/routeNames";
 const HomeWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
-const ContentRouteWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
+const ContentRouteWithPrivateAccess = withPrivateAccess(
+  HeaderWithContentLayout
+);
 
 const config = [
   {
@@ -113,7 +114,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.ROUND_ONE_APPLICATION_FORM,
+    pagePath: navigations.ROUND_ONE_APPLICATION,
     element: <ContentRouteWithPrivateAccess />,
     views: [
       {
@@ -139,6 +140,10 @@ const config = [
       {
         viewPath: "",
         element: <RoundOne />,
+      },
+      {
+        viewPath: "applicationForm",
+        element: <RoundOneApplicationForm />,
       },
     ],
   },
