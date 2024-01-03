@@ -60,6 +60,27 @@ const CompanyProfileUI = (props) => {
     </CardComponent>
   );
 
+  const renderSourceOfInfo = () => {
+    return isEditProfile ? (
+      <View style={style.contentStyle}>
+        {options.map((item, index) => (
+          <CheckBox
+            key={item.id}
+            id={item.id}
+            index={index}
+            title={item.title}
+            isSelected={item.isSelected}
+          />
+        ))}
+      </View>
+    ) : (
+      <BadgeLabel
+        badgeLabels={sourceOfInfo}
+        customTextStyle={style.badgeContainer}
+      />
+    );
+  };
+
   const renderEditActionComponent = () => {
     if (isWebView && !isEditProfile) {
       return (
@@ -127,24 +148,7 @@ const CompanyProfileUI = (props) => {
                     id: "label.source_of_info",
                   })}
                 />
-                {isEditProfile ? (
-                  <View style={style.contentStyle}>
-                    {options.map((item, index) => (
-                      <CheckBox
-                        key={item.id}
-                        id={item.id}
-                        index={index}
-                        title={item.title}
-                        isSelected={item.isSelected}
-                      />
-                    ))}
-                  </View>
-                ) : (
-                  <BadgeLabel
-                    badgeLabels={sourceOfInfo}
-                    customTextStyle={style.badgeContainer}
-                  />
-                )}
+                {renderSourceOfInfo()}
               </CardComponent>
               <CardComponent customStyle={style.cardStyle}>
                 <DetailComponent
