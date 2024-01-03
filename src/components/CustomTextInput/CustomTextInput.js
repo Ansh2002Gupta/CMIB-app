@@ -147,7 +147,7 @@ const CustomTextInput = (props) => {
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
             {...platformSpecificProps}
-            {...(isNumeric && mobileProps)}
+            {...(isNumeric ? mobileProps : {})}
             {...remainingProps}
           />
           {eyeImage ? (
