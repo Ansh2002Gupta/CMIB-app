@@ -85,6 +85,7 @@ const styles = {
     width: 24,
     height: 24,
     cursor: "pointer",
+    marginLeft:10,
   },
   overView: {
     color: colors.darkGreySecond,
