@@ -16,18 +16,18 @@ export const style = StyleSheet.create({
     flex: 1,
   },
   registrationInput: {
-    flex: 1
+    flex: 1,
   },
   partnerInput: {
     marginLeft: 24,
-    maxWidth: 100
+    maxWidth: 100,
   },
   noInput: {
     marginLeft: 24,
-    flex: 1
+    flex: 1,
   },
   codeInput: {
-    maxWidth: 100
+    maxWidth: 100,
   },
   innerContainer: {
     paddingLeft: 16,

@@ -1,11 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import {
-  Platform,
-  ScrollView,
-  View,
-} from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CommonText from "../../../components/CommonText";
@@ -191,6 +187,7 @@ const SignUpLastScreenUI = ({
           isNextDisabled={!allFieldsFilled()}
           buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
           hasIconLeft
+          customContainerStyle={!isWebView && style.customContainerStyle}
         />
         {isWebView && (
           <LabelWithLinkText

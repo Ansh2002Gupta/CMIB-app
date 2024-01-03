@@ -37,8 +37,7 @@ export const style = StyleSheet.create({
     flex: 1,
   },
   buttonContainer: {
-    paddingLeft: 16,
-    paddingRight: 16,
+    marginBottom: 16,
   },
   innerContainer: {
     paddingLeft: 16,

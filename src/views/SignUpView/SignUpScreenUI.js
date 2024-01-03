@@ -9,13 +9,13 @@ import SignUpSecondScreen from "../../containers/SignupScreens/SignUpSecondScree
 import SignUpThirdScreen from "../../containers/SignupScreens/SignUpThirdScreen/index";
 import SignUpLastScreen from "../../containers/SignupScreens/SignUpLastScreen/index";
 import useIsWebView from "../../hooks/useIsWebView";
-import images from "../../images";
 import { getResponsiveStyles, style } from "./SignUpScreen.style";
 
 const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
-  const displayRowHeader = currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
+  const displayRowHeader =
+    currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 
   let tabConfig = [
     {
@@ -33,9 +33,7 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
   ];
 
   const activeTabIndex = Math.min(activeTab, tabConfig.length - 1);
-  const {
-    component: ActiveTabComponent,
-  } = tabConfig[activeTabIndex];
+  const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
 
   return (
     <View style={!displayRowHeader ? style.container : style.webContainer}>
@@ -46,7 +44,12 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
       />
       {isWebView ? (
         <View style={displayRowHeader && style.webSubContainer}>
-          <View style={getResponsiveStyles({str: "signUpWebContainer", currentBreakpoint})}>
+          <View
+            style={getResponsiveStyles({
+              str: "signUpWebContainer",
+              currentBreakpoint,
+            })}
+          >
             <ActiveTabComponent
               tabHandler={onHandleTab}
               onClickGoToLogin={onClickGoToLogin}

@@ -40,7 +40,7 @@ export const style = StyleSheet.create({
   },
   secondInput: {
     marginLeft: 24,
-    flex: 1
+    flex: 1,
   },
   webContentContainer: {
     backgroundColor: colors.white,
@@ -77,6 +77,9 @@ export const style = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
+  },
+  customContainerStyle: {
+    marginBottom: 16,
   },
 });
 
