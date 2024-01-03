@@ -238,7 +238,7 @@ SignUpThirdScreenUI.defaultProps = {
 SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
-  errors: PropTypes.object,
+  errors: PropTypes.array,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,

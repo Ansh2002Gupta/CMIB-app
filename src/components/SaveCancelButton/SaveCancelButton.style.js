@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
@@ -9,10 +10,10 @@ const style = {
     flexDirection: "row",
     borderRadius: 8,
     flex: 1,
-    cursor: "pointer"
+    cursor: "pointer",
   },
   containerStyle: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   disableButtonStyle: {
     height: 56,
@@ -24,10 +25,11 @@ const style = {
     flexDirection: "row",
     borderRadius: 8,
     flex: 1,
-    cursor: "pointer"
+    cursor: "pointer",
   },
   disableStyle: {
-    opacity: 0.5,
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "not-allowed" } : {}),
+    backgroundColor: colors.voilet,
   },
   secondButtonStyle: {
     marginLeft: 8,

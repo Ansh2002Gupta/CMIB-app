@@ -222,7 +222,7 @@ const SignUpSecondScreenUI = ({
         isNextDisabled={!allFieldsFilled()}
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
-        customContainerStyle={isWebView && style.customSaveButtonContainer}
+        customContainerStyle={!!isWebView && style.customSaveButtonContainer}
       />
       {isWebView && (
         <LabelWithLinkText
