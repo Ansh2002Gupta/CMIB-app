@@ -17,6 +17,7 @@ import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
 import commonStyles from "../theme/styles/commonStyles";
+import images from "../images";
 import Styles from "./HeaderWithContentLayout.style";
 
 function HeaderWithContentLayout() {
@@ -81,6 +82,8 @@ function HeaderWithContentLayout() {
         header={
           <Header
             onPressLeftIcon={toggleSideBar}
+            leftIcon={images.iconMenu}
+            rightIcon={images.iconNotification}
           />
         }
         bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}

@@ -28,7 +28,7 @@ import { navigations } from "../constants/routeNames";
 const HomeWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
-const ContentRouteWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
+const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
   {
