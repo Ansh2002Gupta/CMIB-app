@@ -59,7 +59,7 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
                     title={intl.formatMessage({ id: detail.label })}
                     customTextStyle={styles.titleStyle}
                   />
-                  <CommonText title=" *" customTextStyle={styles.starStyle} />
+                  <CommonText title="*" customTextStyle={styles.starStyle} />
                 </View>
                 <CommonText
                   title={detail.value}

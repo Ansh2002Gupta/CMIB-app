@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     width: "30%",
   },
   starStyle: {
+    marginLeft: 4,
     color: colors.errorRed,
   },
   webContainer: {

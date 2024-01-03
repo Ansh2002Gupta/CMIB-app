@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   ActivityIndicator,
-  FlatList,
   Image,
   ScrollView,
   Text,
@@ -60,17 +59,6 @@ const CompanyProfileUI = (props) => {
       )}
     </CardComponent>
   );
-
-  const renderItem = ({ item, index }) => {
-    return (
-      <CheckBox
-        id={item.id}
-        index={index}
-        title={item.title}
-        isSelected={item.isSelected}
-      />
-    );
-  };
 
   const renderEditActionComponent = () => {
     if (isWebView && !isEditProfile) {
@@ -140,13 +128,17 @@ const CompanyProfileUI = (props) => {
                   })}
                 />
                 {isEditProfile ? (
-                  <FlatList
-                    contentContainerStyle={style.contentStyle}
-                    data={options}
-                    renderItem={renderItem}
-                    numColumns={isWebView && 2}
-                    keyExtractor={(item) => item.id}
-                  />
+                  <View style={style.contentStyle}>
+                    {options.map((item, index) => (
+                      <CheckBox
+                        key={item.id}
+                        id={item.id}
+                        index={index}
+                        title={item.title}
+                        isSelected={item.isSelected}
+                      />
+                    ))}
+                  </View>
                 ) : (
                   <BadgeLabel
                     badgeLabels={sourceOfInfo}
