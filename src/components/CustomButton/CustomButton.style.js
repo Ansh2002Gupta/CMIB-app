@@ -4,15 +4,14 @@ import colors from "../../assets/colors";
 
 const styles = {
   defaultBtnStyles: {
-    paddingTop: 12,
-    paddingBottom: 12,
-    paddingLeft: 24,
-    paddingRight: 24,
+    padding: 17,
     borderRadius: 8,
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
+    justifyContent: "center",
+    alignContent: "center",
     color: colors.black,
     cursor: "pointer",
     display: "flex",
@@ -23,14 +22,19 @@ const styles = {
     backgroundColor: colors.green,
     color: colors.white,
   },
+  whiteText: {
+    color: colors.white,
+  },
   btnText: {
     fontFamily:
       Platform.OS.toLowerCase() === "web"
         ? "General sans"
-        : "GeneralSans-Medium",
-    fontSize: 14,
-    fontWeight: "500",
+        : "GeneralSans-SemiBold",
+    fontSize: 16,
+    fontWeight: "600",
     lineHeight: 20,
+    marginRight: 8,
+    marginLeft: 8,
   },
 };
 

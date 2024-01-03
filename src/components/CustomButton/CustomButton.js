@@ -1,15 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Text } from "@unthinkable/react-core-components";
+import { Platform, Text } from "@unthinkable/react-core-components";
 
 import Button from "../Button/Button";
+import CustomImage from "../CustomImage";
 import Spinner from "../Spinner";
 import colors from "../../assets/colors";
+import images from "../../images";
 import styles from "./CustomButton.style";
 
 const CustomButton = ({
   children,
   disabled,
+  hasIconRight,
+  hasIconLeft,
   isLoading,
   onPress,
   style,
@@ -23,15 +27,38 @@ const CustomButton = ({
         ...style,
       }}
       disabled={isLoading || disabled}
-      {...{ onPress }}
+      onPress={onPress}
     >
-      <Text style={styles.btnText}>{children}</Text>
-      {isLoading && (
+      {isLoading ? (
         <Spinner
-          size="xs"
+          size={Platform.OS === "web" && "xs"}
           thickness={3}
           color={withGreenBackground ? colors.white : ""}
         />
+      ) : (
+        <>
+          {hasIconLeft && (
+            <CustomImage
+              alt={"left-arrow"}
+              Icon={images.iconArrowLeft}
+              isSvg
+              source={images.iconArrowLeft}
+            />
+          )}
+          <Text
+            style={[withGreenBackground && styles.whiteText, styles.btnText]}
+          >
+            {children}
+          </Text>
+          {hasIconRight && (
+            <CustomImage
+              Icon={images.iconArrowRightWhite}
+              isSvg
+              source={images.iconArrowRightWhite}
+              alt={"right-arrow"}
+            />
+          )}
+        </>
       )}
     </Button>
   );
@@ -40,6 +67,8 @@ const CustomButton = ({
 CustomButton.defaultProps = {
   children: <></>,
   disabled: false,
+  hasIconLeft: images.iconArrowLeft,
+  hasIconRight: images.iconArrowRightWhite,
   isLoading: false,
   onPress: () => {},
   style: {},
@@ -49,6 +78,8 @@ CustomButton.defaultProps = {
 CustomButton.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
+  hasIconLeft: PropTypes.string,
+  hasIconRight: PropTypes.string,
   isLoading: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,

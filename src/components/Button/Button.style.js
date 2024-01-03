@@ -4,7 +4,7 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   disabledBtn: {
-    backgroundColor: colors.disabledBtn,
+    backgroundColor: colors.voilet,
     cursor: Platform.OS.toLowerCase() === "web" ? "default" : "",
   },
 });
