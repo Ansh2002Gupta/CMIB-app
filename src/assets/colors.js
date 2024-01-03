@@ -59,9 +59,6 @@ const colors = {
   darkGrey,
   darkGreySecond,
   errorBackground,
-  mediumGray,
-  lightGray,
-  yellow,
   errorRed,
   green,
   greenOne,
@@ -70,8 +67,10 @@ const colors = {
   greyThree,
   greyFour,
   lightBlue,
+  lightGray,
   lightGraySecond,
   lightGrey,
+  mediumGray,
   offWhite,
   red,
   secondaryGrey,
@@ -81,5 +80,6 @@ const colors = {
   trueBlack,
   voilet,
   white,
+  yellow,
 };
 export default colors;
