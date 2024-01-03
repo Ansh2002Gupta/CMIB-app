@@ -16,8 +16,8 @@ const useApplicationForm = () => {
 
   return {
     activeStep,
-    setActiveStep,
     onHandleTab,
+    setActiveStep,
   };
 };
 

@@ -5,7 +5,6 @@ import { View } from "@unthinkable/react-core-components";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
 import CustomButton from "../../../components/CustomButton";
-
 import styles from "./ApplicationFormContainer.style";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
