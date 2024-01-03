@@ -6,14 +6,13 @@ import Button from "../Button/Button";
 import CustomImage from "../CustomImage";
 import Spinner from "../Spinner";
 import colors from "../../assets/colors";
-import images from "../../images";
 import styles from "./CustomButton.style";
 
 const CustomButton = ({
   children,
   disabled,
-  hasIconRight,
-  hasIconLeft,
+  iconRight,
+  iconLeft,
   isLoading,
   onPress,
   style,
@@ -37,12 +36,12 @@ const CustomButton = ({
         />
       ) : (
         <>
-          {hasIconLeft && (
+          {!!iconLeft && (
             <CustomImage
               alt={"left-arrow"}
-              Icon={images.iconArrowLeft}
+              Icon={iconLeft}
               isSvg
-              source={images.iconArrowLeft}
+              source={iconLeft}
             />
           )}
           <Text
@@ -50,11 +49,11 @@ const CustomButton = ({
           >
             {children}
           </Text>
-          {hasIconRight && (
+          {!!iconRight && (
             <CustomImage
-              Icon={images.iconArrowRightWhite}
+              Icon={iconRight}
               isSvg
-              source={images.iconArrowRightWhite}
+              source={iconRight}
               alt={"right-arrow"}
             />
           )}
@@ -67,8 +66,8 @@ const CustomButton = ({
 CustomButton.defaultProps = {
   children: <></>,
   disabled: false,
-  hasIconLeft: images.iconArrowLeft,
-  hasIconRight: images.iconArrowRightWhite,
+  iconLeft: "",
+  iconRight: "",
   isLoading: false,
   onPress: () => {},
   style: {},
@@ -78,8 +77,8 @@ CustomButton.defaultProps = {
 CustomButton.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  hasIconLeft: PropTypes.string,
-  hasIconRight: PropTypes.string,
+  iconLeft: PropTypes.string,
+  iconRight: PropTypes.string,
   isLoading: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,
