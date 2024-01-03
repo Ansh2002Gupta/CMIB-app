@@ -11,8 +11,12 @@ import { MODULE_OPTIONS } from "../../../constants/constants";
 const SignUpScreenWelcomeComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation, validationError, setValidationError } =
-    useValidateSignUp();
+  const {
+    handleSignUpValidation,
+    isLoading,
+    validationError,
+    setValidationError,
+  } = useValidateSignUp();
   const initialContactDetails =
     signUpState?.signUpDetail?.contact_details || [];
 
@@ -44,14 +48,15 @@ const SignUpScreenWelcomeComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   return (
     <SignUpWelcomeScreenUI
-      intl={intl}
-      onClickNext={onClickNext}
       contactDetails={contactDetails}
-      setContactDetails={setContactDetails}
-      options={options}
-      setOptions={setOptions}
-      onClickGoToLogin={onClickGoToLogin}
       handleDismissToast={handleDismissToast}
+      intl={intl}
+      isLoading={isLoading}
+      onClickGoToLogin={onClickGoToLogin}
+      onClickNext={onClickNext}
+      options={options}
+      setContactDetails={setContactDetails}
+      setOptions={setOptions}
       validationError={validationError}
     />
   );

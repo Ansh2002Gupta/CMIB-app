@@ -2,12 +2,14 @@ import { useState } from "react";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { COMPANY_SAVE_LOGO } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useSaveLogo = () => {
   const [uploadStatus, setUploadStatus] = useState(API_STATUS.IDLE);
-  const [fileUploadResult, setFileUploadResult] = useState([]);
+  const [fileUploadResult, setFileUploadResult] = useState(null);
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
+  const [uploadPercentage, setUploadPercentage] = useState(0);
 
   const handleFileUpload = async (file, successCallback) => {
     try {
@@ -17,8 +19,29 @@ const useSaveLogo = () => {
         "Content-Type": "multipart/form-data",
       };
 
-      const res = await Http.post(`company/save-logo`, file, headers);
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+      const otherOptions = {
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          if (percent < 100) {
+            setUploadPercentage(percent);
+          }
+        },
+      };
+      const res = await Http.post(
+        COMPANY_SAVE_LOGO,
+        file,
+        headers,
+        otherOptions
+      );
+      if (
+        res.code === STATUS_CODES.SUCCESS_STATUS ||
+        res.status === STATUS_CODES.SUCCESS_STATUS
+      ) {
+        setUploadPercentage(100);
+        setTimeout(() => {
+          setUploadPercentage(0);
+        }, 100);
         setUploadStatus(API_STATUS.SUCCESS);
         setFileUploadResult(res.data);
         successCallback();
@@ -27,14 +50,10 @@ const useSaveLogo = () => {
       setUploadStatus(API_STATUS.ERROR);
       setErrorWhileUpload(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
+      setUploadStatus(API_STATUS.ERROR);
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      if (errorMessage) {
-        setErrorWhileUpload(errorMessage);
-        return;
-      }
-      setUploadStatus(API_STATUS.ERROR);
-      setErrorWhileUpload(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setErrorWhileUpload(errorMessage);
     }
   };
 
@@ -50,6 +69,7 @@ const useSaveLogo = () => {
     isLoading,
     isSuccess,
     setErrorWhileUpload,
+    uploadPercentage,
     uploadStatus,
   };
 };

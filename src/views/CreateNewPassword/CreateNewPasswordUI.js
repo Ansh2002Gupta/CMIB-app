@@ -1,14 +1,11 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
@@ -191,7 +188,7 @@ function CreateNewPasswordUI(props) {
               customButtonContainer={styles.webView.submitTextContainer}
               displayLoader={isLoading}
             />
-            <TouchableOpacity onPress={onClickGoToLogin}>
+            <CustomTouchableOpacity onPress={onClickGoToLogin}>
               <CommonText
                 customTextStyle={{
                   ...styles.backToLoginText,
@@ -199,7 +196,7 @@ function CreateNewPasswordUI(props) {
                 }}
                 title={intl.formatMessage({ id: "label.back_to_login" })}
               />
-            </TouchableOpacity>
+            </CustomTouchableOpacity>
           </View>
           {successLogin && (
             <CustomModal

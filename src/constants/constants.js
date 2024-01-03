@@ -17,6 +17,7 @@ export const NUMBER_MAX_LENGTH = 15;
 export const REGISTRATION_NO_LENGTH = 10;
 export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 100;
+export const IMAGE_MAX_SIZE = 5000000;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "nqca-placement";
 export const OVERSEAS_PLACEMENTS = "overseas-placement";
@@ -158,3 +159,15 @@ export const SIGN_UP_STEPPER_OPTION = [
     title: "label.other_details",
   },
 ];
+export const ZOOM_CONSTANT = {
+  MAX_ZOOM: 3,
+  MIN_ZOOM: 1,
+  ZOOM_STEP: 0.1,
+};
+
+export const SCREEN_NAMES = {
+  COMPANY_PROFILE: "label.company_profile",
+  VIEW_PROFILE: "label.view_profile",
+  PROFILE: "label.my_account",
+  ROUND_ONE: "label.round1",
+};

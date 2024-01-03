@@ -1,16 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import {
-  Platform,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import Stepper from "../../components/Stepper";
-import { getResponsiveStyles, styles } from "./SignUpHeader.style";
 import { SIGN_UP_STEPPER_OPTION } from "../../constants/constants";
+import { getResponsiveStyles, styles } from "./SignUpHeader.style";
 
 const SignUpHeader = (props) => {
   const { intl, onClickGoToLogin, activeTab } = props;
@@ -21,7 +18,7 @@ const SignUpHeader = (props) => {
   return (
     <>
       {!isWebView && currentBreakpoint !== "sm" && (
-        <TouchableOpacity
+        <CustomTouchableOpacity
           onPress={() => {
             onClickGoToLogin();
           }}
@@ -31,7 +28,7 @@ const SignUpHeader = (props) => {
             customTextStyle={styles.headerTextStyle}
             title={intl.formatMessage({ id: "label.go_back_to_login" })}
           />
-        </TouchableOpacity>
+        </CustomTouchableOpacity>
       )}
       <View
         style={

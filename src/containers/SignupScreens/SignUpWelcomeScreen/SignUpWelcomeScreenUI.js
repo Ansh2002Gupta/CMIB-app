@@ -15,6 +15,7 @@ import { getResponsiveStyles, style } from "./SignUpWelcomeScreen.style";
 const SignUpWelcomeScreenUI = ({
   contactDetails,
   handleDismissToast,
+  isLoading,
   intl,
   onClickNext,
   onClickGoToLogin,
@@ -114,20 +115,22 @@ const SignUpWelcomeScreenUI = ({
 };
 
 SignUpWelcomeScreenUI.defaultProps = {
+  contactDetails: [],
   handleDismissToast: () => {},
-  validationError: false,
+  validationError: "",
 };
 
 SignUpWelcomeScreenUI.propTypes = {
   contactDetails: PropTypes.array.isRequired,
   handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   options: PropTypes.array.isRequired,
   onClickNext: PropTypes.func.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   setContactDetails: PropTypes.func.isRequired,
   setOptions: PropTypes.func.isRequired,
-  validationError: PropTypes.bool,
+  validationError: PropTypes.string,
 };
 
 export default SignUpWelcomeScreenUI;

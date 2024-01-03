@@ -24,8 +24,12 @@ import { validateEmail } from "../../../constants/commonFunctions";
 const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation, validationError, setValidationError } =
-    useValidateSignUp();
+  const {
+    handleSignUpValidation,
+    isLoading,
+    setValidationError,
+    validationError,
+  } = useValidateSignUp();
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
   const { getStates, stateResult } = useGetStates();
   const initialSignUpDetail = signUpState.signUpDetail;
@@ -234,19 +238,21 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   return (
     <SignUpSecondScreenUI
-      intl={intl}
-      onGoBack={onGoBack}
-      onClickNext={onClickNext}
-      formData={formData}
-      handleBlur={handleBlur}
-      handleInputChange={handleInputChange}
-      errors={errors}
-      allFieldsFilled={allFieldsFilled}
-      industryOptions={industryTypeResult}
-      stateOptions={stateResult}
-      onClickGoToLogin={onClickGoToLogin}
-      handleDismissToast={handleDismissToast}
-      validationError={validationError}
+      {...{
+        allFieldsFilled,
+        errors,
+        formData,
+        handleBlur,
+        handleDismissToast,
+        handleInputChange,
+        industryOptions: industryTypeResult,
+        intl,
+        isLoading: isLoading,
+        onGoBack,
+        onClickNext,
+        stateOptions: stateResult,
+        validationError,
+      }}
     />
   );
 };

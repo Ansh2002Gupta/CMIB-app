@@ -11,10 +11,11 @@ const CustomTouchableOpacity = ({
   style,
   ...props
 }) => {
+  const styleArray = Array.isArray(style) ? style : [style];
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={{...styles.button, ...style}}
+      style={[styles.button, disabled && styles.disabledButton, ...styleArray]}
       disabled={disabled}
       {...props}
     >
@@ -33,10 +34,7 @@ CustomTouchableOpacity.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
   onPress: PropTypes.func,
-  style: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.arrayOf(PropTypes.object),
-  ]),
+  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 export default CustomTouchableOpacity;

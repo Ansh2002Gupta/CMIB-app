@@ -28,6 +28,7 @@ const SignUpThirdScreenUI = ({
   handleDismissToast,
   handleInputChange,
   intl,
+  isLoading,
   onClickGoToLogin,
   onClickNext,
   onGoBack,
@@ -60,7 +61,7 @@ const SignUpThirdScreenUI = ({
     return (
       <View style={style.formContainer}>
         {contactDetails.map((detail, index) => (
-          <>
+          <View key={String(index)}>
             <CommonText
               customTextStyle={style.headerText}
               title={getHeaderText(detail.module, intl)}
@@ -127,7 +128,7 @@ const SignUpThirdScreenUI = ({
               value={contactDetails[index].mobileNo}
               maxLength={10}
               customHandleBlur={() => handleBlur("mobileNo", index)}
-              keyboardType="numeric"
+              isNumeric
               onChangeText={(val) => handleInputChange(val, "mobileNo", index)}
               isMobileNumber
               errorMessage={errors[index].mobileNo}
@@ -151,7 +152,7 @@ const SignUpThirdScreenUI = ({
             {index < contactDetails.length - 1 && contactDetails.length > 1 && (
               <View style={style.dividerStyle} />
             )}
-          </>
+          </View>
         ))}
       </View>
     );
@@ -162,12 +163,13 @@ const SignUpThirdScreenUI = ({
       <View style={!isWeb ? style.buttonContainer : style.webSignupFooter}>
         <SaveCancelButton
           buttonOneText={intl.formatMessage({ id: "label.back" })}
-          onPressButtonOne={onGoBack}
-          onPressButtonTwo={onClickNext}
+          buttonTwoText={intl.formatMessage({ id: "label.next" })}
+          displayLoader={isLoading}
+          hasIconLeft
           hasIconRight
           isNextDisabled={!allFieldsFilled()}
-          buttonTwoText={intl.formatMessage({ id: "label.next" })}
-          hasIconLeft
+          onPressButtonOne={onGoBack}
+          onPressButtonTwo={onClickNext}
         />
         {isWebView && (
           <LabelWithLinkText
@@ -241,6 +243,7 @@ SignUpThirdScreenUI.propTypes = {
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   onClickGoToLogin: PropTypes.func,
   onClickNext: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,

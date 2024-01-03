@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { TouchableOpacity, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
-import useIsWebView from "../../hooks/useIsWebView"
+import useIsWebView from "../../hooks/useIsWebView";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ForgotPassword.style";
 
@@ -132,8 +133,15 @@ const ForgotPasswordUI = (props) => {
               id: "label.enter_email_to_reset_password",
             })}
             headerText={intl.formatMessage({ id: "label.forgot_password" })}
-            customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.forgot_password")} : styles.headerText}
-            customContainerStyles={isWebView && styles.forgotHeaderContainer}
+            customTextStyle={
+              isWebView
+                ? {
+                    ...styles.headerText,
+                    ...getResponsiveStyles("label.forgot_password"),
+                  }
+                : styles.headerText
+            }
+            customContainerStyles={!!isWebView && styles.forgotHeaderContainer}
           />
           {!isWebView && <View style={styles.borderStyle} />}
         </View>
@@ -165,18 +173,18 @@ const ForgotPasswordUI = (props) => {
             title={intl.formatMessage({ id: "label.submit" })}
             onPress={onSendOtpClick}
             disabled={loginDisabled}
-            customTitleStyle={isWebView && styles.customBtnText}
+            customTitleStyle={isWebView ? styles.customBtnText : {}}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
             displayLoader={isLoading}
           />
-          <TouchableOpacity onPress={onClickGoToLogin}>
+          <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={styles.backToLoginText}
               title={intl.formatMessage({ id: "label.back_to_login" })}
             />
-          </TouchableOpacity>
+          </CustomTouchableOpacity>
         </View>
       </View>
       {successLogin ? (

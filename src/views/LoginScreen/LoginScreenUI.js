@@ -86,9 +86,11 @@ const LoginScreenUI = (props) => {
             description={intl.formatMessage({ id: "label.secure_login_access" })}
             customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.cmib")} : styles.headerText}
             customSecondHeadingStyles={
-              isWebView && styles.webView.subHeadingText
+              isWebView ? styles.webView.subHeadingText : {}
             }
-            customContainerStyles={isWebView && styles.webView.headerContainer}
+            customContainerStyles={
+              isWebView ? styles.webView.headerContainer : {}
+            }
           />
           <View
             style={{
@@ -182,9 +184,11 @@ const LoginScreenUI = (props) => {
                   errorMessage={errorMessage}
                   isError={!!errorMessage}
                   isMandatory
-                  customLabelStyle={isWebView && styles.webView.inputLabelText}
+                  customLabelStyle={
+                    isWebView ? styles.webView.inputLabelText : {}
+                  }
                   customTextInputContainer={
-                    isWebView && styles.webView.inputTextBox
+                    isWebView ? styles.webView.inputTextBox : {}
                   }
                 />
                 <CustomTextInput
@@ -197,9 +201,11 @@ const LoginScreenUI = (props) => {
                   isMandatory
                   eyeImage={true}
                   isPassword={true}
-                  customLabelStyle={isWebView && styles.webView.inputLabelText}
+                  customLabelStyle={
+                    isWebView ? styles.webView.inputLabelText : {}
+                  }
                   customTextInputContainer={
-                    isWebView && styles.webView.inputTextBox
+                    isWebView ? styles.webView.inputTextBox : {}
                   }
                 />
                 <TouchableOpacity
@@ -209,7 +215,7 @@ const LoginScreenUI = (props) => {
                   <CommonText
                     customTextStyle={{
                       ...styles.forgotPasswordText,
-                      ...(isWebView && styles.webView.forgotPasswordText),
+                      ...(isWebView ? styles.webView.forgotPasswordText : {}),
                     }}
                     title={intl.formatMessage({
                       id: "label.forgot_password",
@@ -222,7 +228,7 @@ const LoginScreenUI = (props) => {
                     onPress={onLogin}
                     disabled={loginDisabled}
                     displayLoader={isLoading}
-                    customTitleStyle={isWebView && styles.webView.loginText}
+                    customTitleStyle={isWebView ? styles.webView.loginText : {}}
                   />
                 </View>
               </View>
@@ -230,15 +236,17 @@ const LoginScreenUI = (props) => {
                 <CommonText
                   customTextStyle={{
                     ...styles.accountText,
-                    ...(isWebView && styles.webView.dontHaveAccountText),
+                    ...(isWebView ? styles.webView.dontHaveAccountText : {}),
                   }}
-                  title={intl.formatMessage({ id: "label.dont_have_account" })}
+                  title={intl.formatMessage({
+                    id: "label.dont_have_account",
+                  })}
                 />
                 <TouchableOpacity onPress={onCreateNewPasswordClick}>
                   <CommonText
                     customTextStyle={{
                       ...styles.newAccountText,
-                      ...(isWebView && styles.webView.createNewAccountText),
+                      ...(isWebView ? styles.webView.createNewAccountText : {}),
                     }}
                     title={intl.formatMessage({
                       id: "label.create_new_account",
@@ -286,7 +294,6 @@ LoginScreenUI.propTypes = {
   onCreateNewPasswordClick: PropTypes.func.isRequired,
   onForgotPasswordClick: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
-  options: PropTypes.array.isRequired,
   password: PropTypes.string.isRequired,
   toggleUser: PropTypes.func.isRequired,
   userName: PropTypes.string.isRequired,

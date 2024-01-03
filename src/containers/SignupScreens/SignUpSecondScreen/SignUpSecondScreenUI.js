@@ -21,6 +21,7 @@ const SignUpSecondScreenUI = ({
   handleBlur,
   industryOptions,
   intl,
+  isLoading,
   onClickNext,
   onClickGoToLogin,
   onGoBack,
@@ -39,7 +40,7 @@ const SignUpSecondScreenUI = ({
     state,
     telephoneNo,
   } = formData;
-  const isWeb = Platform.OS === "web";
+  const isWeb = Platform.OS.toLowerCase() === "web";
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const showContentHeader =
@@ -86,7 +87,7 @@ const SignUpSecondScreenUI = ({
               })}
               customHandleBlur={() => handleBlur("registrationNo")}
               isMandatory
-              keyboardType="numeric"
+              isNumeric
               maxLength={10}
               errorMessage={errors.registrationNo}
               isError={!!errors.registrationNo}
@@ -104,7 +105,7 @@ const SignUpSecondScreenUI = ({
               })}
               isMandatory
               customHandleBlur={() => handleBlur("noOfPartners")}
-              keyboardType="numeric"
+              isNumeric
               value={noOfPartners}
               errorMessage={errors.noOfPartners}
               isError={!!errors.noOfPartners}
@@ -131,7 +132,7 @@ const SignUpSecondScreenUI = ({
             id: "label.address_for_correspondence",
           })}
           isMandatory
-          isMultiline
+          isMultiline={!isWeb}
           height={84}
           value={address}
           errorMessage={errors.address}
@@ -178,7 +179,7 @@ const SignUpSecondScreenUI = ({
                 id: "label.enter_code",
               })}
               customHandleBlur={() => handleBlur("code")}
-              keyboardType="numeric"
+              isNumeric
               value={code}
               maxLength={15}
               errorMessage={errors.code}
@@ -199,7 +200,7 @@ const SignUpSecondScreenUI = ({
               errorMessage={errors.telephoneNo}
               isError={!!errors.telephoneNo}
               isMandatory
-              keyboardType="numeric"
+              isNumeric
               maxLength={15}
               value={telephoneNo}
               onChangeText={(val) => handleInputChange(val, "telephoneNo")}
@@ -214,13 +215,14 @@ const SignUpSecondScreenUI = ({
     <View style={style.signupFooterContainer}>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
+        buttonTwoText={intl.formatMessage({ id: "label.next" })}
+        displayLoader={isLoading}
+        hasIconRight
+        hasIconLeft
+        isNextDisabled={!allFieldsFilled()}
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
-        hasIconRight
-        isNextDisabled={!allFieldsFilled()}
-        buttonTwoText={intl.formatMessage({ id: "label.next" })}
         customContainerStyle={isWebView && style.customSaveButtonContainer}
-        hasIconLeft
       />
       {isWebView && (
         <LabelWithLinkText
@@ -296,6 +298,7 @@ SignUpSecondScreenUI.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   onClickNext: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   stateOptions: PropTypes.array,

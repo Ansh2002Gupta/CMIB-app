@@ -6,9 +6,9 @@ export const styles = {
     marginBottom: 16,
     marginLeft: 16,
     marginRight: 16,
+    justifyContent: "flex-end",
   },
   headerTextStyle: {
-    textAlign: "right",
     color: colors.darkBlue,
     fontSize: 14,
     fontWeight: "600",

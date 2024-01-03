@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 
-
 import ForgotPasswordUI from "./ForgotPasswordUI";
 import OtpViewComponent from "../OtpView";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";

@@ -1,29 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import CustomCell from "../CustomCell/";
+import CustomCell from "../CustomCell";
 import MultiColumn from "../../core/layouts/MultiColumn";
 
 const TwoRowButton = ({
-  isDisabled,
+  isLeftDisabled,
+  isRightDisabled,
+  leftButtonLeftImage,
+  leftButtonRightImage,
   leftButtonText,
   leftButtonStyle,
   leftTextStyle,
   onLeftButtonClick,
   onRightButtonClick,
+  parentStyle,
+  rightButtonLeftImage,
+  rightButtonRightImage,
   rightButtonText,
   rightButtonStyle,
   rightTextStyle,
 }) => {
-  const columnConfigs = [
+  const bottomButton = [
     {
       content: (
         <CustomCell
+          disabled={isLeftDisabled}
+          leftSource={leftButtonLeftImage}
           onPress={onLeftButtonClick}
-          title={leftButtonText}
+          rightSource={leftButtonRightImage}
           style={leftButtonStyle}
+          title={leftButtonText}
           textStyle={leftTextStyle}
-          disabled={isDisabled}
         />
       ),
       isFillSpace: true,
@@ -31,28 +39,56 @@ const TwoRowButton = ({
     {
       content: (
         <CustomCell
+          disabled={isRightDisabled}
+          leftSource={rightButtonLeftImage}
           onPress={onRightButtonClick}
-          title={rightButtonText}
+          rightSource={rightButtonRightImage}
           style={rightButtonStyle}
+          title={rightButtonText}
           textStyle={rightTextStyle}
-          disabled={isDisabled}
         />
       ),
       isFillSpace: true,
     },
   ];
 
-  return <MultiColumn columns={columnConfigs} />;
+  return <MultiColumn columns={bottomButton} style={{...parentStyle}} />;
+};
+
+TwoRowButton.defaultProps = {
+  isLeftDisabled: false,
+  isRightDisabled: false,
+  onLeftButtonClick: () => {},
+  onRightButtonClick: () => {},
 };
 
 TwoRowButton.propTypes = {
-  hasIconLeft: PropTypes.bool,
-  hasIconRight: PropTypes.bool,
-  isDisabled: PropTypes.bool,
+  isLeftDisabled: PropTypes.bool,
+  isRightDisabled: PropTypes.bool,
   leftButtonText: PropTypes.string.isRequired,
+  leftButtonLeftImage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
+  leftButtonRightImage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
   onLeftButtonClick: PropTypes.func,
   onRightButtonClick: PropTypes.func,
   rightButtonText: PropTypes.string.isRequired,
+  rightButtonLeftImage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
+  rightButtonRightImage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
 };
 
 export default TwoRowButton;
