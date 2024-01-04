@@ -1,7 +1,3 @@
-const styles = {
-  containerStyle: {
-    marginBottom: 24,
-  },
-};
+const styles = {};
 
 export default styles;

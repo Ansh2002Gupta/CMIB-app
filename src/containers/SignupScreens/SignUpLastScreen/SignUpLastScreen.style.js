@@ -44,7 +44,7 @@ export const style = StyleSheet.create({
   },
   webContentContainer: {
     backgroundColor: colors.white,
-    gap: 40,
+    gap: 20,
     flex: 1,
   },
   signupContainer: {
@@ -73,7 +73,7 @@ export const style = StyleSheet.create({
     bottom: 0,
   },
   formContainer: {
-    marginBottom: 24,
+    marginBottom: 48,
     flex: 1,
   },
   customContainerStyle: {
