@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { View, Image } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CustomAvatar from "../CustomAvatar";
-import images from "../../images";
 import MyAccountSection from "../MyAccountSection";
+import images from "../../images";
 import styles from "./HeaderRight.style";
+import CustomImage from "../CustomImage";
 
 const HeaderRight = ({
   firstName,
@@ -29,7 +30,7 @@ const HeaderRight = ({
     <>
       <View style={styles.notficationIconView}>
         <CustomTouchableOpacity onPress={onPressRightIcon}>
-          <Image source={rightIcon} style={styles.iconNotification} />
+          <CustomImage source={rightIcon} style={styles.iconNotification} />
         </CustomTouchableOpacity>
         {isWebView && (
           <CustomTouchableOpacity
@@ -50,9 +51,12 @@ const HeaderRight = ({
                   <CommonText title={role} customTextStyle={styles.roleStyle} />
                 </View>
                 {showAccountSection ? (
-                  <Image source={images.iconArrowUp} style={styles.iconArrow} />
+                  <CustomImage
+                    source={images.iconArrowUp}
+                    style={styles.iconArrow}
+                  />
                 ) : (
-                  <Image
+                  <CustomImage
                     source={images.iconArrowDown2}
                     style={styles.iconArrow}
                   />
@@ -67,15 +71,22 @@ const HeaderRight = ({
   );
 };
 
+HeaderRight.defaultProps = {
+  isWebView: false,
+  lastName: "",
+  profileImage: "",
+  role: "",
+};
+
 HeaderRight.propTypes = {
   firstName: PropTypes.string.isRequired,
   isMdOrGreater: PropTypes.bool.isRequired,
-  isWebView: PropTypes.bool, 
-  lastName: PropTypes.string, 
+  isWebView: PropTypes.bool,
+  lastName: PropTypes.string,
   onPressRightIcon: PropTypes.func.isRequired,
-  profileImage: PropTypes.string, 
+  profileImage: PropTypes.string,
   rightIcon: PropTypes.string.isRequired,
-  role: PropTypes.string, 
+  role: PropTypes.string,
 };
 
 export default HeaderRight;

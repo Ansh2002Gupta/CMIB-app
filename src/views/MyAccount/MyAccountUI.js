@@ -24,7 +24,7 @@ const MyAccountUI = ({
   intl,
   options,
   saveLogout,
-  showArrow = true,
+  showArrow,
 }) => {
   //TODO: Replace this dummy data with api data.
   //TODO: update image on save button (once api will come)
@@ -114,6 +114,11 @@ const MyAccountUI = ({
       )}
     </>
   );
+};
+
+MyAccountUI.defaultProps = {
+  handleChangePassword: () => {},
+  showArrow: true,
 };
 
 MyAccountUI.propTypes = {
