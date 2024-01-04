@@ -38,6 +38,7 @@ const CompanyProfileUI = (props) => {
     isLoading,
     options,
     onGoBack,
+    onSaveClick,
     profileResult,
   } = props;
   const { isWebView } = useIsWebView();
@@ -95,6 +96,7 @@ const CompanyProfileUI = (props) => {
             onPressButtonOne={onGoBack}
             buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
             isNextDisabled={!allFieldsFilled()}
+            onPressButtonTwo={onSaveClick}
           />
         </View>
       );
@@ -216,6 +218,7 @@ CompanyProfileUI.defaultProps = {
     companyLogo: "",
     balanceCredit: "00",
   },
+  onSaveClick: () => {},
 };
 
 CompanyProfileUI.propTypes = {
@@ -229,6 +232,7 @@ CompanyProfileUI.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   onGoBack: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
+  onSaveClick: PropTypes.func,
   profileResult: PropTypes.object,
 };
 

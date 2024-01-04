@@ -46,12 +46,14 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
           >
             {isEditable ? (
               <CustomTextInput
+                errorMessage={detail.error}
                 value={detail.value}
                 customStyle={styles.inputStyle}
                 label={intl.formatMessage({ id: detail.label })}
                 isDropdown={detail.isDropdown}
                 isCounterInput={detail.isCounterInput}
                 options={detail.options || []}
+                isError={!!detail.error}
                 isMobileNumber={detail.isMobileNumber}
                 isMandatory
                 valueField={detail.valueField || "label"}

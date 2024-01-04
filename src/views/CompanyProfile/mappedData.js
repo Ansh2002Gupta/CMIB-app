@@ -8,7 +8,8 @@ import {
 export const mapApiDataToUI = (
   apiData,
   industryOptions,
-  isEditMode = false
+  isEditMode = false,
+  error
 ) => {
   const {
     name,
@@ -58,7 +59,12 @@ export const mapApiDataToUI = (
 
   return {
     companyDetail: [
-      { label: "label.company_name", value: checkValue(name) },
+      {
+        label: "label.company_name",
+        value: checkValue(name),
+
+        error: error.companyName,
+      },
       {
         label: "label.entity",
         value: checkValue(entity),
@@ -70,11 +76,13 @@ export const mapApiDataToUI = (
         label: "label.firm_registration_no",
         value: checkValue(frn_number),
         isMajor: true,
+        error: error.registrationNo,
       },
       {
         label: "label.no_of_partners",
         value: checkValue(number_of_partner),
         isMinor: true,
+        error: error.noOfPartners,
       },
       {
         label: "label.current_industry",
@@ -89,17 +97,24 @@ export const mapApiDataToUI = (
         label: "label.address_for_correspondence",
         value: checkValue(address),
         isMultiline: true,
+        error: error.address,
       },
-      { label: "label.email_id", value: checkValue(email) },
+      {
+        label: "label.email_id",
+        value: checkValue(email),
+        error: error.emailId,
+      },
       {
         label: "label.isd_std_code",
         value: checkValue(std_country_code),
         isMinor: true,
+        error: error.code,
       },
       {
         label: "label.telephone_no",
         value: checkValue(telephone_number),
         isMajor: true,
+        error: error.telephoneNo,
       },
     ],
     contactPersonInfo: [
@@ -114,23 +129,31 @@ export const mapApiDataToUI = (
         label: "label.contact_person_name",
         value: checkValue(contact_person_name),
         isMajor: true,
+        error: error.name,
       },
       {
         label: "label.contact_personal_designation",
         value: checkValue(contact_person_designation),
+        error: error.designation,
       },
       {
         label: "label.mobile_number",
         isMobileNumber: true,
         value: isEditMode ? contact_person_mobile_number : combinedMobileNumber,
+        error: error.mobileNo,
       },
-      { label: "label.email_id", value: checkValue(contact_person_email) },
+      {
+        label: "label.email_id",
+        value: checkValue(contact_person_email),
+        error: error.contactEmailId,
+      },
     ],
     companyProfile: [
       {
         label: "label.short_profile_of_the_company",
         value: checkValue(company_details),
         isMultiline: true,
+        error: error.companyDetail,
       },
     ],
     otherDetails: [
@@ -138,6 +161,7 @@ export const mapApiDataToUI = (
         label: "label.website",
         value: checkValue(website),
         isLink: website && true,
+        error: error.website,
       },
       {
         label: "label.nature_of_supplier",
