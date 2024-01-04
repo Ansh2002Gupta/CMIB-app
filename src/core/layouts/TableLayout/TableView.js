@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { View } from '@unthinkable/react-core-components'; 
+import { View, Text } from '@unthinkable/react-core-components'; 
 
 import layoutStyle from './TableView.style';
 function TableView({ gridData, cellStyle, rowStyle, tableStyle }) {
@@ -10,7 +10,7 @@ function TableView({ gridData, cellStyle, rowStyle, tableStyle }) {
         <View key={`row-${rowIndex}`} style={{ ...rowStyle, ...layoutStyle }}>
           {rowData.map((cellData, colIndex) => (
             <View key={`cell-${rowIndex}-${colIndex}`} style={cellStyle}>
-              {cellData}
+              <Text>{cellData}</Text>
             </View>
           ))}
         </View>

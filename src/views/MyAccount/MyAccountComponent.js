@@ -20,6 +20,10 @@ const MyAccountComponent = () => {
     navigate(navigations.COMPANY_PROFILE);
   };
 
+  const onClickTicketView = () => {
+    navigate(navigations.TICKETS);
+  };
+
   const handleChangePassword = (val) => {
     setChangePasswordModal(val);
   };
@@ -39,6 +43,7 @@ const MyAccountComponent = () => {
         break;
       //TODO: Add the screen handling once designs are available.
       case 2:
+        onClickTicketView();
         break;
       case 3:
         break;
