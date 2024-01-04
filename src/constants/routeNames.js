@@ -12,6 +12,7 @@ export const navigations = {
   ROUND_ONE_APPLICATION_FORM: "/round-one-application-form",
   ROUND_TWO: "/round-two",
   SIGN_UP: "/sign-up",
+  TICKETS: "/tickets",
   VIEW_PROFILE: "/view-profile",
   WEB_VIEW: "/web-view",
   POSTED_JOBS :"/posted-jobs",
