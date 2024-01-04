@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Text, View } from "@unthinkable/react-core-components";
 
 const ErrorComponent = ({ errorMsg }) => {
@@ -10,7 +11,7 @@ const ErrorComponent = ({ errorMsg }) => {
 };
 
 ErrorComponent.propTypes = {
-  headerText: ErrorComponent.string.isRequired,
+  errorMsg: PropTypes.string.isRequired,
 };
 
 export default ErrorComponent;
