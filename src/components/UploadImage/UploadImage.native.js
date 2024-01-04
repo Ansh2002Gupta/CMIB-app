@@ -10,6 +10,7 @@ import PreviewImage from "../PreviewImage/PreviewImage";
 const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   const onClickDeleteImage = () => {
     onDeleteImage(() => {
@@ -32,6 +33,7 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
       } else if (response.error) {
         console.log("Image picker error: ", response.error);
       } else {
+        setIsUploading(true);
         let imageUri = response.uri || response.assets?.[0]?.uri;
         let fileName = response.fileName || response.assets?.[0]?.fileName;
         let type = response.fileName || response.assets?.[0]?.type;
@@ -45,6 +47,7 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
         onImageUpload(formData, () => {
           setSelectedImage(imageUri);
           setFileName(fileName);
+          setIsUploading(false);
         });
       }
     });
@@ -61,7 +64,10 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
         />
       ) : (
         <>
-          <DragAndDropCard handleUploadClick={openImagePicker} />
+          <DragAndDropCard
+            handleUploadClick={openImagePicker}
+            isLoading={isUploading}
+          />
         </>
       )}
     </View>
