@@ -10,12 +10,12 @@ import { launchImageLibrary } from "react-native-image-picker";
 import CommonText from "../CommonText";
 import images from "../../images";
 import styles from "./UploadImage.style";
+import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 
 const UploadImage = ({
   customContainerStyle,
   imageName,
   imageUrl,
-  intl,
   onDeleteImage,
   onImageUpload,
 }) => {
@@ -62,16 +62,16 @@ const UploadImage = ({
   };
 
   return (
-    <View
-      style={[
-        styles.contentContainerStyle,
-        selectedImage && styles.selectedImageContainer,
-        imageUrl ? styles.showImageStyle : null,
-        customContainerStyle,
-      ]}
-    >
+    <View style={styles.containerStyle}>
       {!!selectedImage || imageUrl ? (
-        <>
+        <View
+          style={[
+            styles.contentContainerStyle,
+            selectedImage && styles.selectedImageContainer,
+            imageUrl ? styles.showImageStyle : null,
+            customContainerStyle,
+          ]}
+        >
           <View style={styles.imageContainer}>
             <Image
               source={{ uri: selectedImage || imageUrl }}
@@ -89,26 +89,10 @@ const UploadImage = ({
               </TouchableOpacity>
             )}
           </View>
-        </>
+        </View>
       ) : (
         <>
-          <Image source={images.iconUpload} />
-          <View style={styles.textContainer}>
-            <CommonText
-              customTextStyle={styles.textStyle}
-              title={intl.formatMessage({ id: "label.drag_drop_files" })}
-            />
-            <TouchableOpacity onPress={openImagePicker}>
-              <CommonText
-                customTextStyle={styles.browseStyle}
-                title={` ${intl.formatMessage({ id: "label.browse" })}`}
-              />
-            </TouchableOpacity>
-          </View>
-          <CommonText
-            customTextStyle={styles.infoStyle}
-            title={intl.formatMessage({ id: "label.supported_type" })}
-          />
+          <DragAndDropCard handleUploadClick={openImagePicker} />
         </>
       )}
     </View>

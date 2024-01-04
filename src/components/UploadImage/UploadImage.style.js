@@ -3,8 +3,10 @@
 import colors from "../../assets/colors";
 
 const styles = {
-  contentContainerStyle: {
+  containerStyle: {
     marginBottom: 24,
+  },
+  contentContainerStyle: {
     height: 240,
     borderWidth: 1,
     borderRadius: 8,

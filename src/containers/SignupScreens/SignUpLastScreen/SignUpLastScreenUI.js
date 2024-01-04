@@ -169,7 +169,6 @@ const SignUpLastScreenUI = ({
           })}
         />
         <UploadImage
-          intl={intl}
           onImageUpload={onImageUpload}
           onDeleteImage={onDeleteImage}
         />
