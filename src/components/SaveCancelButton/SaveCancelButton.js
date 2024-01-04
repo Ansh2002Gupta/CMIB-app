@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ActivityIndicator, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import Spinner from "../Spinner";
 import images from "../../images";
 import colors from "../../assets/colors";
 import styles from "./SaveCancelButton.style";
@@ -20,6 +21,8 @@ const SaveCancelButton = ({
   onPressButtonOne,
   onPressButtonTwo,
 }) => {
+  const webProps = Platform.OS.toLowerCase() === "web" ? { size: "xs" } : {};
+
   return (
     <View style={[styles.containerStyle, customContainerStyle]}>
       <CustomTouchableOpacity
@@ -49,7 +52,7 @@ const SaveCancelButton = ({
         disabled={isNextDisabled || displayLoader}
       >
         {displayLoader ? (
-          <ActivityIndicator color={colors.white} />
+          <Spinner thickness={3} color={colors.white} {...webProps} />
         ) : (
           <>
             <CommonText
