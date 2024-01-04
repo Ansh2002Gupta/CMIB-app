@@ -7,7 +7,8 @@ const useApplicationForm = () => {
     setActiveStep((prevTab) => {
       if (direction === "next") {
         return prevTab + 1;
-      } else if (direction === "prev" && prevTab > 0) {
+      }
+      if (direction === "prev" && prevTab > 0) {
         return prevTab - 1;
       }
       return prevTab;
