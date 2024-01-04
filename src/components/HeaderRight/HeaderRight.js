@@ -6,9 +6,9 @@ import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CustomAvatar from "../CustomAvatar";
 import MyAccountSection from "../MyAccountSection";
+import CustomImage from "../CustomImage";
 import images from "../../images";
 import styles from "./HeaderRight.style";
-import CustomImage from "../CustomImage";
 
 const HeaderRight = ({
   firstName,
