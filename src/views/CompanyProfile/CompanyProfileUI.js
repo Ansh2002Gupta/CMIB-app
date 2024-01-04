@@ -12,6 +12,7 @@ import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
+import DetailCard from "../../components/DetailCard/DetailCard";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
@@ -38,29 +39,6 @@ const CompanyProfileUI = (props) => {
     profileResult,
   } = props;
   const { isWebView } = useIsWebView();
-
-  const renderCardWithDetails = (
-    handleChange,
-    details,
-    headerId,
-    otherDetails
-  ) => (
-    <CardComponent customStyle={style.cardStyle}>
-      <DetailComponent
-        details={details}
-        headerText={intl.formatMessage({ id: headerId })}
-        isEditable={isEditProfile}
-        handleChange={handleChange}
-      />
-      {!!otherDetails && (
-        <DetailComponent
-          details={otherDetails}
-          isEditable={isEditProfile}
-          handleChange={handleChange}
-        />
-      )}
-    </CardComponent>
-  );
 
   const renderSourceOfInfo = () => {
     return isEditProfile ? (
@@ -140,22 +118,25 @@ const CompanyProfileUI = (props) => {
           style={style.contentContainerStyle}
         >
           <View style={style.innerContainerStyle}>
-            {renderCardWithDetails(
-              handleCompanyDetailChange,
-              profileResult?.companyDetail,
-              "label.company_details"
-            )}
-            {renderCardWithDetails(
-              handleContactPersonInfo,
-              profileResult?.contactPersonInfo,
-              "label.contact_person_info"
-            )}
-            {renderCardWithDetails(
-              handleCompanyProfile,
-              profileResult?.companyProfile,
-              "label.other_details",
-              profileResult?.otherDetails
-            )}
+            <DetailCard
+              headerId="label.company_details"
+              details={profileResult?.companyDetail}
+              handleChange={handleCompanyDetailChange}
+              isEditProfile={isEditProfile}
+            />
+            <DetailCard
+              headerId="label.contact_person_info"
+              details={profileResult?.contactPersonInfo}
+              handleChange={handleContactPersonInfo}
+              isEditProfile={isEditProfile}
+            />
+            <DetailCard
+              headerId="label.other_details"
+              details={profileResult?.companyProfile}
+              otherDetails={profileResult?.otherDetails}
+              handleChange={handleCompanyProfile}
+              isEditProfile={isEditProfile}
+            />
             <CardComponent customStyle={style.cardStyle}>
               <DetailComponent
                 headerText={intl.formatMessage({
