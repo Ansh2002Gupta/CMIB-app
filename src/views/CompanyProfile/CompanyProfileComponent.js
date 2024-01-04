@@ -32,9 +32,11 @@ const CompanyProfileComponent = () => {
 
   useEffect(() => {
     if (profileResult) {
-      setProfileData(mapApiDataToUI(profileResult, industryTypeResult));
+      setProfileData(
+        mapApiDataToUI(profileResult, industryTypeResult, isEditProfile)
+      );
     }
-  }, [profileResult, industryTypeResult]);
+  }, [profileResult, industryTypeResult, isEditProfile]);
 
   const onGoBack = () => {
     if (isEditProfile) {

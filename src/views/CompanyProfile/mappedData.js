@@ -5,7 +5,11 @@ import {
   SALUTATION_OPTIONS,
 } from "../../constants/constants";
 
-export const mapApiDataToUI = (apiData, industryOptions) => {
+export const mapApiDataToUI = (
+  apiData,
+  industryOptions,
+  isEditMode = false
+) => {
   const {
     name,
     entity,
@@ -31,7 +35,12 @@ export const mapApiDataToUI = (apiData, industryOptions) => {
     company_logo,
   } = apiData;
 
-  const checkValue = (value) => (value ? value : "--");
+  const checkValue = (value, showPlaceholder = true) => {
+    if (isEditMode) {
+      return value || "";
+    }
+    return value || (showPlaceholder ? "--" : "");
+  };
 
   const formatMobileNumber = (countryCode, mobileNumber) => {
     const code = checkValue(countryCode);
@@ -112,7 +121,7 @@ export const mapApiDataToUI = (apiData, industryOptions) => {
       {
         label: "label.mobile_number",
         isMobileNumber: true,
-        value: combinedMobileNumber,
+        value: isEditMode ? contact_person_mobile_number : combinedMobileNumber,
       },
       { label: "label.email_id", value: checkValue(contact_person_email) },
     ],
