@@ -10,7 +10,6 @@ const backgroundColor = "#FBFCFF"; // TODO : Rename this style to appropriate na
 const darkBlue = "#00137E";
 const darkBlueShade = "#000833";
 const lightBlue = "#269AD4";
-const voilet = "#B1B3B5";
 
 /* Greens */
 const darkGreen = "#00873E";
@@ -21,6 +20,7 @@ const greenOne = "#04af55";
 const darkGrey = "#616C82";
 const darkGreySecond = "#71717A";
 const disabledBtn = "#aaaaaa";
+const disabledGrey = "#B1B3B5";
 const gray = "#5A5A5A";
 const greyOne = "#f1f1f1";
 const greyTwo = "#eee";
@@ -78,7 +78,7 @@ const colors = {
   slateGray,
   subHeadingGray,
   trueBlack,
-  voilet,
+  disabledGrey,
   white,
   yellow,
 };
