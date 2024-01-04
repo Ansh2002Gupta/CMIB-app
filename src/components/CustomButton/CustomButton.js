@@ -33,7 +33,7 @@ const CustomButton = ({
       {isLoading ? (
         <Spinner
           thickness={3}
-          color={withGreenBackground ? colors.white : ""}
+          color={withGreenBackground || isLoading ? colors.white : ""}
           {...webProps}
         />
       ) : (
