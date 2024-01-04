@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
+
+import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
+import PreviewImage from "../PreviewImage/PreviewImage";
 import { launchImageLibrary } from "react-native-image-picker";
 
 import styles from "./UploadImage.style";
-import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
-import PreviewImage from "../PreviewImage/PreviewImage";
 
 const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -63,12 +64,10 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
           source={{ uri: selectedImage || imageUrl }}
         />
       ) : (
-        <>
-          <DragAndDropCard
-            handleUploadClick={openImagePicker}
-            isLoading={isUploading}
-          />
-        </>
+        <DragAndDropCard
+          handleUploadClick={openImagePicker}
+          isLoading={isUploading}
+        />
       )}
     </View>
   );
