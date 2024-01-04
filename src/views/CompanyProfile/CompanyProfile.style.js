@@ -47,6 +47,9 @@ const style = {
     marginRight: 16,
     marginTop: 24,
   },
+  imageContainer: {
+    marginBottom: 24,
+  },
   headingText: {
     fontSize: 16,
     color: colors.darkGrey,

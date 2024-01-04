@@ -151,12 +151,14 @@ const CompanyProfileUI = (props) => {
               <DetailComponent
                 headerText={intl.formatMessage({ id: "label.company_logo" })}
               />
-              <UploadImage
-                imageUrl={profileResult?.companyLogo}
-                imageName={"CompanyLogo.png"}
-                intl={intl}
-                isEditable={isEditProfile}
-              />
+              <View style={style.imageContainer}>
+                <UploadImage
+                  imageUrl={profileResult?.companyLogo}
+                  imageName={"CompanyLogo.png"}
+                  intl={intl}
+                  isEditable={isEditProfile}
+                />
+              </View>
             </CardComponent>
             <CardComponent customStyle={style.cardStyle}>
               <View style={style.textContainer}>

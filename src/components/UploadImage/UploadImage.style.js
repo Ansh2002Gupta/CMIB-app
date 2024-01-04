@@ -6,7 +6,6 @@ const styles = {
   contentContainerStyle: {
     height: 240,
     borderWidth: 1,
-    marginBottom: 48,
     borderRadius: 8,
     borderColor: colors.darkGrey,
     borderStyle: "dashed",

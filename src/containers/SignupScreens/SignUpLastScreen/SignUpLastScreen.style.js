@@ -33,6 +33,9 @@ const style = {
     fontSize: 14,
     lineHeight: 24,
   },
+  imageContainer: {
+    marginBottom: 48,
+  },
   secondInput: { marginLeft: 24, flex: 1 },
 };
 

@@ -88,7 +88,6 @@ const SignUpLastScreenUI = (props) => {
           />
         ))}
         <View style={style.seperator} />
-
         <CommonText
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.company_details" })}
@@ -172,18 +171,19 @@ const SignUpLastScreenUI = (props) => {
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.uplaod_company_logo" })}
         />
-
         <CommonText
           customTextStyle={style.infoStyle}
           title={intl.formatMessage({
             id: "label.logo_info",
           })}
         />
-        <UploadImage
-          intl={intl}
-          onImageUpload={onImageUpload}
-          onDeleteImage={onDeleteImage}
-        />
+        <View style={style.imageContainer}>
+          <UploadImage
+            intl={intl}
+            onImageUpload={onImageUpload}
+            onDeleteImage={onDeleteImage}
+          />
+        </View>
       </ScrollView>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
