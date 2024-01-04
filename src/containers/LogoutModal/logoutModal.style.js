@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  saveStyle: { 
+  saveStyle: {
     backgroundColor: colors.yellow,
-     marginLeft: 16 
-    },
+    marginLeft: 16,
+  },
   rightTextStyle: {
     color: colors.black,
     fontSize: 14,
