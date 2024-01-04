@@ -20,6 +20,7 @@ const CustomButton = ({
   style,
   withGreenBackground,
 }) => {
+  const webProps = Platform.OS === "web" ? { size: "xs" } : {};
   return (
     <Button
       style={{
@@ -32,9 +33,9 @@ const CustomButton = ({
     >
       {isLoading ? (
         <Spinner
-          size={Platform.OS === "web" && "xs"}
           thickness={3}
           color={withGreenBackground ? colors.white : ""}
+          {...webProps}
         />
       ) : (
         <View style={styles.containerStyle}>

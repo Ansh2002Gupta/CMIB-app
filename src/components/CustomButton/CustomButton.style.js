@@ -4,6 +4,7 @@ import colors from "../../assets/colors";
 
 const styles = {
   defaultBtnStyles: {
+    maxHeight: 56,
     padding: 17,
     borderRadius: 8,
     borderWidth: 1,
