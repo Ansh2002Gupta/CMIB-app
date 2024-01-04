@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.green,
   },
   rightButtonDisableStyle: {
-    backgroundColor: colors.voilet,
+    backgroundColor: colors.disabledGrey,
   },
   rightTextStyle: {
     color: colors.white,
