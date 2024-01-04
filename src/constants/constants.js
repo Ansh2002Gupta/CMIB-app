@@ -159,6 +159,7 @@ export const SIGN_UP_STEPPER_OPTION = [
     title: "label.other_details",
   },
 ];
+
 export const ZOOM_CONSTANT = {
   MAX_ZOOM: 3,
   MIN_ZOOM: 1,
