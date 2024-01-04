@@ -96,6 +96,7 @@ const SignUpWelcomeScreenUI = ({
           isLoading={isLoading}
           disabled={contactDetails.length <= 0}
           withGreenBackground
+          style={!isWebView && style.customButtonContainer}
           iconRight={{
             rightIconAlt: "right-arrow",
             rightIconSource: images.iconArrowRightWhite,

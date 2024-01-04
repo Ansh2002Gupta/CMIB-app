@@ -167,6 +167,7 @@ const SignUpThirdScreenUI = ({
           displayLoader={isLoading}
           hasIconLeft
           hasIconRight
+          customContainerStyle={!isWebView && style.buttonContainer}
           isNextDisabled={!allFieldsFilled()}
           onPressButtonOne={onGoBack}
           onPressButtonTwo={onClickNext}

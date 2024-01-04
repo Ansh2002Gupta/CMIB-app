@@ -4,9 +4,9 @@ import colors from "../../assets/colors";
 
 const styles = {
   contentContainerStyle: {
+    marginBottom: 24,
     height: 240,
     borderWidth: 1,
-    marginBottom: 48,
     borderRadius: 8,
     borderColor: colors.darkGrey,
     borderStyle: "dashed",
