@@ -83,9 +83,6 @@ const styles =StyleSheet.create( {
   },
   parentStyle: {
     ...Platform.select({
-      ios: {
-        marginBottom: 18,
-      },
       web: {
         padding: 8,
       },
