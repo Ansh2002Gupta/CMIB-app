@@ -26,6 +26,23 @@ const CompanyProfileComponent = () => {
     }))
   );
 
+  const allFieldsFilled = () => {
+    const companyDetailsFilled = profileData.companyDetail.every(
+      (detail) => String(detail.value).trim() !== ""
+    );
+
+    const contactPersonInfoFilled = profileData.contactPersonInfo.every(
+      (detail) => String(detail.value).trim() !== ""
+    );
+
+    const companyProfileFilled = profileData.companyProfile.every(
+      (detail) => String(detail.value).trim() !== ""
+    );
+
+    return (
+      companyDetailsFilled && contactPersonInfoFilled && companyProfileFilled
+    );
+  };
   const handleToggle = (id) => {
     const updatedItems = options.map((item) => {
       if (item.id === id) {
@@ -75,11 +92,18 @@ const CompanyProfileComponent = () => {
   };
 
   const handleCompanyProfile = (fieldName, value) => {
+    const updatedCompanyProfile = profileData.companyProfile.map((detail) =>
+      detail.label === fieldName ? { ...detail, value: value } : detail
+    );
+
+    const updatedOtherDetails = profileData.otherDetails.map((detail) =>
+      detail.label === fieldName ? { ...detail, value: value } : detail
+    );
+
     setProfileData({
       ...profileData,
-      companyProfile: profileData.companyProfile.map((detail) =>
-        detail.label === fieldName ? { ...detail, value: value } : detail
-      ),
+      companyProfile: updatedCompanyProfile,
+      otherDetails: updatedOtherDetails,
     });
   };
 
@@ -92,6 +116,7 @@ const CompanyProfileComponent = () => {
 
   return (
     <CompanyProfileUI
+      allFieldsFilled={allFieldsFilled}
       error={errorWhileGettingResult}
       handleCompanyDetailChange={handleCompanyDetailChange}
       handleContactPersonInfo={handleContactPersonInfo}

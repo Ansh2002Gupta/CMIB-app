@@ -26,6 +26,7 @@ import style from "./CompanyProfile.style";
 
 const CompanyProfileUI = (props) => {
   const {
+    allFieldsFilled,
     error,
     handleCompanyDetailChange,
     handleContactPersonInfo,
@@ -93,6 +94,7 @@ const CompanyProfileUI = (props) => {
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}
             onPressButtonOne={onGoBack}
             buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
+            isNextDisabled={!allFieldsFilled()}
           />
         </View>
       );
@@ -201,6 +203,7 @@ const CompanyProfileUI = (props) => {
 };
 
 CompanyProfileUI.defaultProps = {
+  allFieldsFilled: () => {},
   error: "",
   handleCompanyDetailChange: () => {},
   handleContactPersonInfo: () => {},
@@ -216,6 +219,7 @@ CompanyProfileUI.defaultProps = {
 };
 
 CompanyProfileUI.propTypes = {
+  allFieldsFilled: PropTypes.func,
   error: PropTypes.string,
   handleCompanyDetailChange: PropTypes.func,
   handleContactPersonInfo: PropTypes.func,
