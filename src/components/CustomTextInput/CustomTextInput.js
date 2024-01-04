@@ -86,7 +86,7 @@ const CustomTextInput = (props) => {
         !isPaddingNotRequired ? [style.container, customStyle] : customStyle
       }
     >
-      {!!label && <CustomLabelView label={label} isMandatory />}
+      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {isDropdown ? (
         <Dropdown
           style={[
