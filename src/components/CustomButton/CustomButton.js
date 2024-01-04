@@ -43,7 +43,7 @@ const CustomButton = ({
               style={styles.iconRightStyle}
               alt={iconLeft.leftIconAlt}
               Icon={iconLeft.leftIconSource}
-              isSvg={iconLeft.isLeftIconNotSvg}
+              isSvg={!iconLeft.isLeftIconNotSvg}
               source={iconLeft.leftIconSource}
             />
           )}
@@ -56,7 +56,7 @@ const CustomButton = ({
             <CustomImage
               style={styles.iconLeftStyle}
               Icon={iconRight.rightIconSource}
-              isSvg={iconRight.isRightIconNotSvg}
+              isSvg={!iconRight.isRightIconNotSvg}
               source={iconRight.rightIconSource}
               alt={iconRight.rightIconAlt}
             />
