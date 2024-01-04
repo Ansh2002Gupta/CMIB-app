@@ -17,7 +17,7 @@ const SignUpHeader = (props) => {
 
   return (
     <>
-      {!isWebView && currentBreakpoint !== "sm" && (
+      {!isWebView && currentBreakpoint !== "sm" ? (
         <CustomTouchableOpacity
           onPress={() => {
             onClickGoToLogin();
@@ -29,7 +29,7 @@ const SignUpHeader = (props) => {
             title={intl.formatMessage({ id: "label.go_back_to_login" })}
           />
         </CustomTouchableOpacity>
-      )}
+      ) : null}
       <View
         style={
           isWeb &&
@@ -43,7 +43,7 @@ const SignUpHeader = (props) => {
               intl.formatMessage({ id: step.title })
             ),
             orientation: isWebView ? "vertical" : "horizontal",
-            showActiveLabelOnly: isWebView ? false : true,
+            showActiveLabelOnly: !isWebView,
             customStyle: {
               stepperHeroLabelText: { ...styles.formHeaderStyle },
               containerStyle:
@@ -60,6 +60,7 @@ const SignUpHeader = (props) => {
 };
 
 SignUpHeader.propTypes = {
+  activeTab: PropTypes.number.isRequired,
   intl: PropTypes.object.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
 };

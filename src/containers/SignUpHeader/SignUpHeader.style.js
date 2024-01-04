@@ -38,19 +38,19 @@ export const styles = {
   lgStepperContainer: {
     flex: 3,
     alignItems: "flex-end",
-    marginTop: 148
+    marginTop: 148,
   },
   stepperContainer: {
     flex: 3.5,
     alignItems: "flex-end",
-    marginTop: 148
+    marginTop: 148,
   },
   stepperParentContainer: {
-    marginTop: 24
-  }
+    marginTop: 24,
+  },
 };
 
-export const getResponsiveStyles = ({str, currentBreakpoint}) => {
+export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
   switch (str) {
     case "steperContainer": {
       if (currentBreakpoint === "lg") {
@@ -71,6 +71,6 @@ export const getResponsiveStyles = ({str, currentBreakpoint}) => {
       };
     }
     default:
-      return;
+      return {};
   }
 };
