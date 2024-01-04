@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { FlatList, View } from "@unthinkable/react-core-components";
 
-import ButtonComponent from "../../../components/ButtonComponent/ButtonComponent";
+import CustomButton from "../../../components/CustomButton/CustomButton";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CommonText from "../../../components/CommonText";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
@@ -11,6 +11,7 @@ import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import { getResponsiveStyles, style } from "./SignUpWelcomeScreen.style";
+import images from "../../../images";
 
 const SignUpWelcomeScreenUI = ({
   contactDetails,
@@ -90,14 +91,18 @@ const SignUpWelcomeScreenUI = ({
         />
       </View>
       <View style={style.signupFooterContainer}>
-        <ButtonComponent
-          title={intl.formatMessage({ id: "label.next" })}
+        <CustomButton
           onPress={onClickNext}
-          displayLoader={isLoading}
-          hasIconRight
+          isLoading={isLoading}
           disabled={contactDetails.length <= 0}
-          customButtonContainer={!isWebView && style.customButtonContainer}
-        />
+          withGreenBackground
+          iconRight={{
+            rightIconAlt: "right-arrow",
+            rightIconSource: images.iconArrowRightWhite,
+          }}
+        >
+          {intl.formatMessage({ id: "label.next" })}
+        </CustomButton>
         {isWebView && (
           <LabelWithLinkText
             labelText={intl.formatMessage({ id: "label.already_account" })}
