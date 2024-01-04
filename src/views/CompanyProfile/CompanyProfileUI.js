@@ -159,7 +159,7 @@ const CompanyProfileUI = (props) => {
             <CardComponent customStyle={style.cardStyle}>
               <View style={style.textContainer}>
                 <Text style={style.headingText}>
-                  {intl.formatMessage({ id: "label.balance_credit" })}:{" "}
+                  {intl.formatMessage({ id: "label.balance_credit" })}:
                 </Text>
                 <Text style={style.valueStyle}>{`${
                   profileResult?.balanceCredit || "00"

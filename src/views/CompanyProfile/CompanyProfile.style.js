@@ -52,6 +52,7 @@ const style = {
     color: colors.darkGrey,
   },
   valueStyle: {
+    marginLeft: 4,
     fontSize: 16,
     color: colors.black,
     fontWeight: "600",
