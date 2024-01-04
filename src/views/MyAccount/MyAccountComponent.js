@@ -6,9 +6,7 @@ import MyAccountUI from "./MyAccountUI";
 import { options } from "./MyAccountConstant";
 import { navigations } from "../../constants/routeNames";
 
-const MyAccountComponent = ({
-  showArrow,
-}) => {
+const MyAccountComponent = ({ showArrow }) => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [changePasswordModal, setChangePasswordModal] = useState(false);

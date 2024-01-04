@@ -1,22 +1,23 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { View, Image } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import CustomAvatar from "../CustomAvatar";
-import MyAccountSection from "../MyAccountSection";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import CustomAvatar from "../CustomAvatar";
 import images from "../../images";
+import MyAccountSection from "../MyAccountSection";
 import styles from "./HeaderRight.style";
 
 const HeaderRight = ({
-  onPressRightIcon,
-  rightIcon,
-  isWebView,
-  profileImage,
   firstName,
-  lastName,
-  role,
   isMdOrGreater,
+  isWebView,
+  lastName,
+  onPressRightIcon,
+  profileImage,
+  rightIcon,
+  role,
 }) => {
   const [showAccountSection, setShowAccountSection] = useState(false);
 
@@ -64,6 +65,17 @@ const HeaderRight = ({
       </View>
     </>
   );
+};
+
+HeaderRight.propTypes = {
+  firstName: PropTypes.string.isRequired,
+  isMdOrGreater: PropTypes.bool.isRequired,
+  isWebView: PropTypes.bool, 
+  lastName: PropTypes.string, 
+  onPressRightIcon: PropTypes.func.isRequired,
+  profileImage: PropTypes.string, 
+  rightIcon: PropTypes.string.isRequired,
+  role: PropTypes.string, 
 };
 
 export default HeaderRight;

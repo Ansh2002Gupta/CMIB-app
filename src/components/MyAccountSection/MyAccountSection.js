@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Image } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
-import styles from "./MyAccountSection.style";
 import MyAccountComponent from "../../views/MyAccount";
+import styles from "./MyAccountSection.style";
 
 const MyAccountSection = ({}) => {
   return (
