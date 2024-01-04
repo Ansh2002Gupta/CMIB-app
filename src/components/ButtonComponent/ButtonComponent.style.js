@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   disableButtonStyle: {
-    backgroundColor: colors.voilet,
+    backgroundColor: colors.disabledGrey,
   },
   titleStyle: {
     fontSize: 16,

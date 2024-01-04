@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   rightButtonDisableStyle: {
     marginLeft: 8 ,
-    backgroundColor: colors.voilet,
+    backgroundColor: colors.disabledGrey,
  },
   leftTextStyle: {
     fontSize: 14,

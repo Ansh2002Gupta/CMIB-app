@@ -1,7 +1,7 @@
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const styles = {
+const styles = StyleSheet.create({
   containerStyle: {
     marginBottom: 0,
     marginLeft: 0,
@@ -11,30 +11,38 @@ const styles = {
     fontWeight: "600",
     fontSize: 20,
     color: colors.black,
-    marginTop:20,
+    marginTop: 20,
   },
   subHeaderText: {
     fontSize: 14,
     color: colors.gray,
     lineHeight: 22,
-    marginTop:8,
+    marginTop: 8,
   },
   logo: {
-    height : 24,
-    width :24,
+    ...Platform.select({
+      web: {
+        height: 48,
+        width: 48,
+      },
+      default: {
+        height: 24,
+        width: 24,
+      },
+    }),
   },
-  innerContainer: {
-    paddingLeft: 16,
-    paddingRight: 16,
-    backgroundColor: "white",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    paddingTop: 24,
-    paddingBottom: 24,
+  cancelStyle: {
+    ...Platform.select({
+      web: {
+        paddingLeft: 16,
+        paddingRight: 16,
+        paddingTop: 12,
+        paddingBottom: 12,
+      },
+      default: {
+        padding: 14,
+      },
+    }),
   },
   saveStyle: {
     backgroundColor: colors.yellow,
@@ -44,22 +52,42 @@ const styles = {
     color: colors.black,
     fontSize: 14,
     fontWeight: "600",
-    lineHeight:20,
+    lineHeight: 20,
   },
   leftTextStyle: {
     fontSize: 14,
     fontWeight: "600",
   },
-  vacancyStyle: {
-    marginTop: 24,
-  },
-  parentStyle:{
+  gapStyle: {
     ...Platform.select({
-      ios: {
-        marginBottom: 18, 
+      web: {
+        marginTop: 32,
+      },
+      default: {
+        marginTop: 24,
       },
     }),
   },
-};
+  parentStyle: {
+    ...Platform.select({
+      web: {
+        padding: 8,
+      },
+      default: {
+        paddingLeft: 16,
+        paddingRight: 16,
+        backgroundColor: "white",
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
+        paddingTop: 24,
+        paddingBottom: 24,
+      },
+    }),
+  },
+});
 
 export default styles;
