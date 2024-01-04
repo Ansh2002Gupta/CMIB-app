@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Modal, View } from "@unthinkable/react-core-components";
+import { Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import CustomImage from "../../components/CustomImage";
+import Modal from "../../components/Modal";
 import MultiRow from "../../core/layouts/MultiRow";
 import TwoRowButton from "../../components/TwoRowButton";
 import useLogoutAPI from "../../services/apiServices/hooks/useLogoutAPI";
@@ -51,29 +52,32 @@ const LogoutModal = ({ onCancel, onSave }) => {
             onCancel(false);
           }}
           leftTextStyle={styles.leftTextStyle}
+          leftButtonStyle={styles.cancelStyle}
           rightButtonText={intl.formatMessage({ id: "label.logout" })}
           rightButtonStyle={styles.saveStyle}
           rightTextStyle={styles.rightTextStyle}
           onRightButtonClick={() => {
-            handleUserLogout(
-              () => {
-                onCancel(false);
-                onSave();
-              }
-            );
+            handleUserLogout(() => {
+              onCancel(false);
+              onSave();
+            });
           }}
         />
       ),
-      style: styles.vacancyStyle,
+      style: styles.gapStyle,
     },
   ];
 
+  const platformProps = Platform.select({
+    web: {
+      maxWidth: "xs",
+    },
+  });
+
   return (
-      <Modal isVisible style={styles.containerStyle}>
-        <View style={styles.innerContainer}>
-          <MultiRow rows={logoutConfig}  style={styles.parentStyle} />
-        </View>
-      </Modal>
+    <Modal {...platformProps} isVisible style={styles.containerStyle}>
+      <MultiRow rows={logoutConfig} style={styles.parentStyle} />
+    </Modal>
   );
 };
 
