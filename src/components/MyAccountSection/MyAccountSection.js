@@ -7,7 +7,9 @@ import MyAccountComponent from "../../views/MyAccount";
 const MyAccountSection = ({}) => {
   return (
     <View style={styles.container}>
-      <MyAccountComponent />
+      <MyAccountComponent
+        showArrow={false}
+      />
     </View>
   );
 };

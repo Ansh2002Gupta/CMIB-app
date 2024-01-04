@@ -6,7 +6,9 @@ import MyAccountUI from "./MyAccountUI";
 import { options } from "./MyAccountConstant";
 import { navigations } from "../../constants/routeNames";
 
-const MyAccountComponent = () => {
+const MyAccountComponent = ({
+  showArrow,
+}) => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [changePasswordModal, setChangePasswordModal] = useState(false);
@@ -68,6 +70,7 @@ const MyAccountComponent = () => {
       isLogout={logout}
       options={options}
       saveLogout={saveLogout}
+      showArrow={showArrow}
     />
   );
 };

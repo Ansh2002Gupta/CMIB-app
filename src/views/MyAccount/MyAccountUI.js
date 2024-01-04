@@ -10,7 +10,6 @@ import {
 import CommonText from "../../components/CommonText";
 import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePasswordModal";
 import CustomModal from "../../components/CustomModal/CustomModal";
-import useIsWebView from "../../hooks/useIsWebView";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
@@ -25,8 +24,8 @@ const MyAccountUI = ({
   intl,
   options,
   saveLogout,
+  showArrow = true,
 }) => {
-  const { isWebView } = useIsWebView();
   //TODO: Replace this dummy data with api data.
   //TODO: update image on save button (once api will come)
   const profileImage = "";
@@ -52,9 +51,17 @@ const MyAccountUI = ({
   return (
     <>
       <ScrollView style={style.profileParentContainer}>
-        <View style={[style.profileContainer]}>
+        <View
+          style={[
+            showArrow ? style.profileContainer : style.profileContainerWeb,
+          ]}
+        >
           {renderProfileIcon()}
-          <View style={style.detailContainer}>
+          <View
+            style={[
+              showArrow ? style.detailContainer : style.detailContainerWeb,
+            ]}
+          >
             <CommonText
               customTextStyle={style.fullNameStyle}
               title={`${firstName} ${lastName}`}
@@ -62,12 +69,12 @@ const MyAccountUI = ({
             <CommonText title={email} customTextStyle={style.emailStyle} />
           </View>
         </View>
-        {isWebView && renderHorizontalLine()}
+        {!showArrow && renderHorizontalLine()}
         {options.map((option, index) => (
           <TouchableOpacity
             style={[
               style.optionCotainer,
-              isWebView
+              !showArrow
                 ? index === options.length - 2 && style.optionCotainerBorder
                 : index !== options.length - 1 &&
                   style.optionCotainerBordeLight,
@@ -83,9 +90,11 @@ const MyAccountUI = ({
               />
             </View>
 
-            <View style={style.iconContainer}>
-              <Image source={images.iconArrowRight} style={style.arrowIcon} />
-            </View>
+            {showArrow && (
+              <View style={style.iconContainer}>
+                <Image source={images.iconArrowRight} style={style.arrowIcon} />
+              </View>
+            )}
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -113,6 +122,7 @@ MyAccountUI.propTypes = {
   handleChangePassword: PropTypes.func,
   intl: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
+  showArrow: PropTypes.bool,
 };
 
 export default MyAccountUI;

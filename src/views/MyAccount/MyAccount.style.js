@@ -41,6 +41,14 @@ const style = {
     flexDirection: "row",
     alignItems: "center",
   },
+  profileContainerWeb:{
+    marginTop: 16,
+    marginBottom: 24,
+    paddingLeft: 16,
+    marginRight:16,
+    alignItems: "flex-start",
+    minWidth:240,
+  },
   initialsContainer: {
     justifyContent: "center",
     backgroundColor: "white",
@@ -51,6 +59,9 @@ const style = {
   },
   detailContainer: {
     marginLeft: 12,
+  },
+  detailContainerWeb:{
+    marginTop:12
   },
   fullNameStyle: {
     fontSize: 16,
