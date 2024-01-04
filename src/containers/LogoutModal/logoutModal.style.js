@@ -1,7 +1,7 @@
 import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const styles =StyleSheet.create( {
+const styles = StyleSheet.create({
   containerStyle: {
     marginBottom: 0,
     marginLeft: 0,
@@ -44,23 +44,10 @@ const styles =StyleSheet.create( {
       },
     }),
   },
-  saveStyle: {
-    ...Platform.select({
-      web: {
-        backgroundColor: colors.yellow,
-        marginLeft: 16,
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingTop: 12,
-        paddingBottom: 12,
-      },
-      default: {
-        backgroundColor: colors.yellow,
-        marginLeft: 16,
-        padding: 14,
-      },
-    }),
-  },
+  saveStyle: { 
+    backgroundColor: colors.yellow,
+     marginLeft: 16 
+    },
   rightTextStyle: {
     color: colors.black,
     fontSize: 14,

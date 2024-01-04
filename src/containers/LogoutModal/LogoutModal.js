@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Platform, View } from "@unthinkable/react-core-components";
+import { Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import CustomButton from "../../components/CustomButton";
 import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
-import MultiColumn from "../../core/layouts/MultiColumn"
+import MultiColumn from "../../core/layouts/MultiColumn";
 import MultiRow from "../../core/layouts/MultiRow";
 import useLogoutAPI from "../../services/apiServices/hooks/useLogoutAPI";
 import images from "../../images";
@@ -15,7 +15,7 @@ import styles from "./logoutModal.style";
 
 const LogoutModal = ({ onCancel, onSave }) => {
   const intl = useIntl();
-  const {isLoading , handleUserLogout } = useLogoutAPI();
+  const { handleUserLogout, isLoading } = useLogoutAPI();
   const WarningIcon = images.iconWarning;
 
   const cancelHandler = () => {
@@ -42,8 +42,8 @@ const LogoutModal = ({ onCancel, onSave }) => {
       content: (
         <CustomButton
           onPress={saveHandler}
-          style={{ backgroundColor: "#FABB00", marginLeft: 16 }}
-          {...{isLoading}} 
+          style={styles.saveStyle}
+          {...{ isLoading }}
         >
           {intl.formatMessage({ id: "label.logout" })}
         </CustomButton>
@@ -80,9 +80,7 @@ const LogoutModal = ({ onCancel, onSave }) => {
       ),
     },
     {
-      content: (
-       <MultiColumn columns={saveCancelButton} />
-      ),
+      content: <MultiColumn columns={saveCancelButton} />,
       style: styles.gapStyle,
     },
   ];
