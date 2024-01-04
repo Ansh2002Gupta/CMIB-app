@@ -198,6 +198,9 @@ const CompanyProfileUI = (props) => {
 
 CompanyProfileUI.defaultProps = {
   error: "",
+  handleCompanyDetailChange: () => {},
+  handleContactPersonInfo: () => {},
+  handleCompanyProfile: () => {},
   profileResult: {
     companyDetail: {},
     contactPersonInfo: {},
@@ -210,6 +213,9 @@ CompanyProfileUI.defaultProps = {
 
 CompanyProfileUI.propTypes = {
   error: PropTypes.string,
+  handleCompanyDetailChange: PropTypes.func,
+  handleContactPersonInfo: PropTypes.func,
+  handleCompanyProfile: PropTypes.func,
   handleEdit: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,

@@ -48,7 +48,7 @@ const CompanyProfileComponent = () => {
     setProfileData({
       ...profileData,
       companyDetail: profileData.companyDetail.map((detail) =>
-        detail.title === fieldName ? { ...detail, value: value } : detail
+        detail.label === fieldName ? { ...detail, value: value } : detail
       ),
     });
   };
@@ -57,7 +57,7 @@ const CompanyProfileComponent = () => {
     setProfileData({
       ...profileData,
       contactPersonInfo: profileData.contactPersonInfo.map((detail) =>
-        detail.title === fieldName ? { ...detail, value: value } : detail
+        detail.label === fieldName ? { ...detail, value: value } : detail
       ),
     });
   };
@@ -66,7 +66,7 @@ const CompanyProfileComponent = () => {
     setProfileData({
       ...profileData,
       companyProfile: profileData.companyProfile.map((detail) =>
-        detail.title === fieldName ? { ...detail, value: value } : detail
+        detail.label === fieldName ? { ...detail, value: value } : detail
       ),
     });
   };
