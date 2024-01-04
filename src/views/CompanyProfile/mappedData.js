@@ -74,6 +74,8 @@ export const mapApiDataToUI = (
       {
         label: "label.firm_registration_no",
         value: checkValue(frn_number),
+        isNumeric: true,
+        maxLength: 10,
         isMajor: true,
         error: error.registrationNo,
       },
@@ -81,6 +83,7 @@ export const mapApiDataToUI = (
         label: "label.no_of_partners",
         value: checkValue(number_of_partner),
         isMinor: true,
+        isNumeric: true,
         error: error.noOfPartners,
       },
       {
@@ -105,15 +108,19 @@ export const mapApiDataToUI = (
       },
       {
         label: "label.isd_std_code",
+        isNumeric: true,
         value: checkValue(std_country_code),
         isMinor: true,
         error: error.code,
+        maxLength: 8,
       },
       {
         label: "label.telephone_no",
+        isNumeric: true,
         value: checkValue(telephone_number),
         isMajor: true,
         error: error.telephoneNo,
+        maxLength: 15,
       },
     ],
     contactPersonInfo: [
@@ -140,6 +147,8 @@ export const mapApiDataToUI = (
         isMobileNumber: true,
         value: isEditMode ? contact_person_mobile_number : combinedMobileNumber,
         error: error.mobileNo,
+        isNumeric: true,
+        maxLength: 10,
       },
       {
         label: "label.email_id",

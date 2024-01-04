@@ -56,6 +56,8 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
                 isError={!!detail.error}
                 isMobileNumber={detail.isMobileNumber}
                 isMandatory
+                maxLength={detail.maxLength}
+                isNumeric={detail.isNumeric}
                 valueField={detail.valueField || "label"}
                 labelField={detail.labelField || "label"}
                 inputKey={detail.inputKey || "value"}
