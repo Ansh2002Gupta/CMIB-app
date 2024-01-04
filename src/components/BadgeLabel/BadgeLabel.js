@@ -17,8 +17,9 @@ const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
         customContainerStyle,
       ]}
     >
-      {badgeLabels.map((label) => (
+      {badgeLabels.map((label, index) => (
         <View
+          key={index}
           style={[
             isWebView && style.webInnerContainer,
             style.innerContainerStyle,
