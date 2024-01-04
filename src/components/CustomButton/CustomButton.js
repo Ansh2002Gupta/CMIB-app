@@ -13,14 +13,13 @@ const CustomButton = ({
   disabled,
   iconRight,
   iconLeft,
-  isLeftIconNotSvg,
   isLoading,
-  isRightIconNotSvg,
   onPress,
   style,
   withGreenBackground,
 }) => {
   const webProps = Platform.OS === "web" ? { size: "xs" } : {};
+
   return (
     <Button
       style={{
@@ -44,7 +43,7 @@ const CustomButton = ({
               style={styles.iconRightStyle}
               alt={iconLeft.leftIconAlt}
               Icon={iconLeft.leftIconSource}
-              isSvg={!isLeftIconNotSvg}
+              isSvg={iconLeft.isLeftIconNotSvg}
               source={iconLeft.leftIconSource}
             />
           )}
@@ -57,7 +56,7 @@ const CustomButton = ({
             <CustomImage
               style={styles.iconLeftStyle}
               Icon={iconRight.rightIconSource}
-              isSvg={!isRightIconNotSvg}
+              isSvg={iconRight.isRightIconNotSvg}
               source={iconRight.rightIconSource}
               alt={iconRight.rightIconAlt}
             />
@@ -72,10 +71,12 @@ CustomButton.defaultProps = {
   children: <></>,
   disabled: false,
   iconLeft: {
+    isLeftIconNotSvg: false,
     leftIconAlt: "",
     leftIconSource: "",
   },
   iconRight: {
+    isRightIconNotSvg: false,
     rightIconAlt: "",
     rightIconSource: "",
   },
