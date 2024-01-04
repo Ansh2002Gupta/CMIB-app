@@ -64,8 +64,7 @@ export const mapApiDataToUI = (
         value: checkValue(entity),
         isDropdown: true,
         options: ENTITY_OPTIONS,
-        labelField: "label",
-        valueField: "value",
+        inputKey: "label",
       },
       {
         label: "label.firm_registration_no",
@@ -84,7 +83,7 @@ export const mapApiDataToUI = (
         options: industryOptions,
         labelField: "name",
         valueField: "name",
-        inputKey: "id",
+        inputKey: "name",
       },
       {
         label: "label.address_for_correspondence",
@@ -135,7 +134,11 @@ export const mapApiDataToUI = (
       },
     ],
     otherDetails: [
-      { label: "label.website", value: checkValue(website), isLink: true },
+      {
+        label: "label.website",
+        value: checkValue(website),
+        isLink: website && true,
+      },
       {
         label: "label.nature_of_supplier",
         value: checkValue(nature_of_supplier),
