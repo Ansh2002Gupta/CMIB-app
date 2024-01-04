@@ -1,7 +1,7 @@
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const styles = {
+const styles =StyleSheet.create( {
   containerStyle: {
     marginBottom: 0,
     marginLeft: 0,
@@ -104,6 +104,6 @@ const styles = {
       },
     }),
   },
-};
+});
 
 export default styles;
