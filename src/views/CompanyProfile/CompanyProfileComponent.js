@@ -12,7 +12,8 @@ import { INTEREST_OPTIONS } from "../../constants/constants";
 const CompanyProfileComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { onGetProfile, profileResult, isLoading } = useGetCompanyProfileAPI();
+  const { errorWhileGettingResult, onGetProfile, profileResult, isLoading } =
+    useGetCompanyProfileAPI();
   const [isEditProfile, showIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
@@ -79,6 +80,7 @@ const CompanyProfileComponent = () => {
 
   return (
     <CompanyProfileUI
+      error={errorWhileGettingResult}
       handleCompanyDetailChange={handleCompanyDetailChange}
       handleContactPersonInfo={handleContactPersonInfo}
       handleCompanyProfile={handleCompanyProfile}

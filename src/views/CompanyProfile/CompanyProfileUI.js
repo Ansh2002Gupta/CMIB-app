@@ -13,6 +13,7 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import Spinner from "../../components/Spinner";
@@ -24,6 +25,7 @@ import style from "./CompanyProfile.style";
 
 const CompanyProfileUI = (props) => {
   const {
+    error,
     handleCompanyDetailChange,
     handleContactPersonInfo,
     handleCompanyProfile,
@@ -81,6 +83,116 @@ const CompanyProfileUI = (props) => {
     );
   };
 
+  const renderEditButton = () => {
+    if (!isEditProfile && !isWebView) {
+      return (
+        <View style={style.buttonContainer}>
+          <CardComponent customStyle={style.cardContainer}>
+            <TouchableOpacity
+              style={style.editContainer}
+              onPress={() => handleEdit(true)}
+            >
+              <Image source={images.iconSquareEdit} />
+              <CommonText
+                customTextStyle={style.textStyle}
+                title={intl.formatMessage({ id: "label.edit" })}
+              />
+            </TouchableOpacity>
+          </CardComponent>
+        </View>
+      );
+    }
+    return null;
+  };
+
+  const renderSaveCancelButton = () => {
+    if (isEditProfile) {
+      return (
+        <View style={style.buttonContainer}>
+          <SaveCancelButton
+            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+            onPressButtonOne={onGoBack}
+            buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
+          />
+        </View>
+      );
+    }
+    return null;
+  };
+
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <View style={style.loaderStyle}>
+          <Spinner />
+        </View>
+      );
+    }
+
+    if (error) {
+      return <ErrorComponent errorMsg={error} />;
+    }
+
+    return (
+      <>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={style.contentContainerStyle}
+        >
+          <View style={style.innerContainerStyle}>
+            {renderCardWithDetails(
+              handleCompanyDetailChange,
+              profileResult?.companyDetail,
+              "label.company_details"
+            )}
+            {renderCardWithDetails(
+              handleContactPersonInfo,
+              profileResult?.contactPersonInfo,
+              "label.contact_person_info"
+            )}
+            {renderCardWithDetails(
+              handleCompanyProfile,
+              profileResult?.companyProfile,
+              "label.other_details",
+              profileResult?.otherDetails
+            )}
+            <CardComponent customStyle={style.cardStyle}>
+              <DetailComponent
+                headerText={intl.formatMessage({
+                  id: "label.source_of_info",
+                })}
+              />
+              {renderSourceOfInfo()}
+            </CardComponent>
+            <CardComponent customStyle={style.cardStyle}>
+              <DetailComponent
+                headerText={intl.formatMessage({ id: "label.company_logo" })}
+              />
+              <UploadImage
+                imageUrl={profileResult?.companyLogo}
+                imageName={"CompanyLogo.png"}
+                intl={intl}
+                isEditable={isEditProfile}
+              />
+            </CardComponent>
+            <CardComponent customStyle={style.cardStyle}>
+              <View style={style.textContainer}>
+                <Text style={style.headingText}>
+                  {intl.formatMessage({ id: "label.balance_credit" })}:{" "}
+                </Text>
+                <Text style={style.valueStyle}>{`${
+                  profileResult?.balanceCredit || "00"
+                } INR`}</Text>
+              </View>
+            </CardComponent>
+          </View>
+        </ScrollView>
+        {renderEditButton()}
+        {renderSaveCancelButton()}
+      </>
+    );
+  };
+
   return (
     <>
       <IconHeader
@@ -98,98 +210,25 @@ const CompanyProfileUI = (props) => {
         iconLeft={isEditProfile ? images.iconCross : images.iconBack}
         onPressLeftIcon={onGoBack}
       />
-      {isLoading ? (
-        <View style={style.loaderStyle}>
-          <Spinner />
-        </View>
-      ) : (
-        <>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={style.contentContainerStyle}
-          >
-            <View style={style.innerContainerStyle}>
-              {renderCardWithDetails(
-                handleCompanyDetailChange,
-                profileResult?.companyDetail,
-                "label.company_details"
-              )}
-              {renderCardWithDetails(
-                handleContactPersonInfo,
-                profileResult?.contactPersonInfo,
-                "label.contact_person_info"
-              )}
-              {renderCardWithDetails(
-                handleCompanyProfile,
-                profileResult?.companyProfile,
-                "label.other_details",
-                profileResult?.otherDetails
-              )}
-              <CardComponent customStyle={style.cardStyle}>
-                <DetailComponent
-                  headerText={intl.formatMessage({
-                    id: "label.source_of_info",
-                  })}
-                />
-                {renderSourceOfInfo()}
-              </CardComponent>
-              <CardComponent customStyle={style.cardStyle}>
-                <DetailComponent
-                  headerText={intl.formatMessage({ id: "label.company_logo" })}
-                />
-                <UploadImage
-                  imageUrl={profileResult?.companyLogo}
-                  imageName={"CompanyLogo.png"}
-                  intl={intl}
-                  isEditable={isEditProfile}
-                />
-              </CardComponent>
-              <CardComponent customStyle={style.cardStyle}>
-                <View style={style.textContainer}>
-                  <Text style={style.headingText}>
-                    {intl.formatMessage({ id: "label.balance_credit" })}:{" "}
-                  </Text>
-                  <Text style={style.valueStyle}>{`${
-                    profileResult?.balanceCredit || "00"
-                  } INR`}</Text>
-                </View>
-              </CardComponent>
-            </View>
-          </ScrollView>
-          {!isEditProfile && !isWebView && (
-            <View style={style.buttonContainer}>
-              <CardComponent customStyle={style.cardContainer}>
-                <TouchableOpacity
-                  style={style.editContainer}
-                  onPress={() => {
-                    handleEdit(!isEditProfile);
-                  }}
-                >
-                  <Image source={images.iconSquareEdit} />
-                  <CommonText
-                    customTextStyle={style.textStyle}
-                    title={intl.formatMessage({ id: "label.edit" })}
-                  />
-                </TouchableOpacity>
-              </CardComponent>
-            </View>
-          )}
-          {isEditProfile && (
-            <View style={style.buttonContainer}>
-              <SaveCancelButton
-                buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                onPressButtonOne={onGoBack}
-                buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
-              />
-            </View>
-          )}
-        </>
-      )}
+      {renderContent()}
     </>
   );
 };
 
+CompanyProfileUI.defaultProps = {
+  error: "",
+  profileResult: {
+    companyDetail: {},
+    contactPersonInfo: {},
+    companyProfile: {},
+    otherDetails: {},
+    companyLogo: "",
+    balanceCredit: "00",
+  },
+};
+
 CompanyProfileUI.propTypes = {
+  error: PropTypes.string,
   handleEdit: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
