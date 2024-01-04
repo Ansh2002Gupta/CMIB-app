@@ -64,6 +64,8 @@ export const mapApiDataToUI = (
         value: checkValue(entity),
         isDropdown: true,
         options: ENTITY_OPTIONS,
+        labelField: "label",
+        valueField: "value",
       },
       {
         label: "label.firm_registration_no",
