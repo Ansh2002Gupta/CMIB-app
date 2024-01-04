@@ -29,7 +29,7 @@ const style = {
   },
   disableStyle: {
     ...(Platform.OS.toLowerCase() === "web" ? { cursor: "not-allowed" } : {}),
-    backgroundColor: colors.voilet,
+    backgroundColor: colors.disabledGrey,
   },
   secondButtonStyle: {
     marginLeft: 8,
