@@ -32,7 +32,7 @@ const IconHeader = ({
   return (
     <View style={styles.container}>
       <>
-        {hasIconBar && (
+        {hasIconBar && !isWebView && (
           <View style={styles.iconContainer}>
             {iconLeft && (
               <CustomTouchableOpacity onPress={onGoBack || onPressLeftIcon}>
@@ -53,7 +53,7 @@ const IconHeader = ({
               isWebView ? styles.webHeaderStyle : styles.formHeaderStyle
             }
           />
-          {hasActionButton && (
+          {hasActionButton && isWebView && (
             <CardComponent customStyle={styles.cardContainer}>
               <CustomTouchableOpacity
                 style={styles.editContainer}

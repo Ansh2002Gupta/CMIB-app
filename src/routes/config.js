@@ -28,7 +28,6 @@ import { navigations } from "../constants/routeNames";
 const HomeWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
-const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
 
 const config = [
   {
@@ -97,7 +96,7 @@ const config = [
   },
   {
     pagePath: navigations.VIEW_PROFILE,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader={true} />,
     views: [
       {
         viewPath: "",
@@ -107,7 +106,7 @@ const config = [
   },
   {
     pagePath: navigations.COMPANY_PROFILE,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader={true} />,
     views: [
       {
         viewPath: "",
@@ -117,7 +116,7 @@ const config = [
   },
   {
     pagePath: navigations.ROUND_ONE_APPLICATION_FORM,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader={true} />,
     views: [
       {
         viewPath: "",
