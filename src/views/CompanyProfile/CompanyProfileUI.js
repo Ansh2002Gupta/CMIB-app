@@ -31,6 +31,7 @@ const CompanyProfileUI = (props) => {
     handleContactPersonInfo,
     handleCompanyProfile,
     handleEdit,
+    handleToggle,
     intl,
     isEditProfile,
     isLoading,
@@ -50,6 +51,7 @@ const CompanyProfileUI = (props) => {
             index={index}
             title={item.title}
             isSelected={item.isSelected}
+            handleCheckbox={handleToggle}
           />
         ))}
       </View>

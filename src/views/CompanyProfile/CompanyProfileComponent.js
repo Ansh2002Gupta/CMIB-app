@@ -26,6 +26,16 @@ const CompanyProfileComponent = () => {
     }))
   );
 
+  const handleToggle = (id) => {
+    const updatedItems = options.map((item) => {
+      if (item.id === id) {
+        return { ...item, isSelected: !item.isSelected };
+      }
+      return item;
+    });
+    setOptions(updatedItems);
+  };
+
   useEffect(() => {
     onGetProfile();
   }, []);
@@ -87,6 +97,7 @@ const CompanyProfileComponent = () => {
       handleContactPersonInfo={handleContactPersonInfo}
       handleCompanyProfile={handleCompanyProfile}
       handleEdit={handleEdit}
+      handleToggle={handleToggle}
       intl={intl}
       isLoading={isLoading}
       isEditProfile={isEditProfile}
