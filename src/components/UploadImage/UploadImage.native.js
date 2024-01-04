@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 import { launchImageLibrary } from "react-native-image-picker";
 
-import CommonText from "../CommonText";
-import images from "../../images";
 import styles from "./UploadImage.style";
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
+import PreviewImage from "../PreviewImage/PreviewImage";
 
-const UploadImage = ({
-  customContainerStyle,
-  imageName,
-  imageUrl,
-  onDeleteImage,
-  onImageUpload,
-}) => {
+const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
 
@@ -64,32 +53,12 @@ const UploadImage = ({
   return (
     <View style={styles.containerStyle}>
       {!!selectedImage || imageUrl ? (
-        <View
-          style={[
-            styles.contentContainerStyle,
-            selectedImage && styles.selectedImageContainer,
-            imageUrl ? styles.showImageStyle : null,
-            customContainerStyle,
-          ]}
-        >
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: selectedImage || imageUrl }}
-              style={styles.selectedImageStyle}
-            />
-          </View>
-          <View style={styles.innerContainer}>
-            <CommonText
-              customTextStyle={styles.nameStyle}
-              title={fileName || imageName}
-            />
-            {!imageUrl && (
-              <TouchableOpacity onPress={onClickDeleteImage}>
-                <Image source={images.iconTrash} />
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
+        <PreviewImage
+          isEditable={!!imageUrl}
+          fileName={fileName || imageName}
+          onRemoveImage={onClickDeleteImage}
+          source={{ uri: selectedImage || imageUrl }}
+        />
       ) : (
         <>
           <DragAndDropCard handleUploadClick={openImagePicker} />
@@ -100,7 +69,6 @@ const UploadImage = ({
 };
 
 UploadImage.defaultProps = {
-  customContainerStyle: {},
   onDeleteImage: () => {},
   onImageUpload: () => {},
   imageUrl: "",
@@ -108,10 +76,8 @@ UploadImage.defaultProps = {
 };
 
 UploadImage.propTypes = {
-  customContainerStyle: PropTypes.object,
   imageName: PropTypes.string,
   imageUrl: PropTypes.string,
-  intl: PropTypes.object.isRequired,
   onDeleteImage: PropTypes.func,
   onImageUpload: PropTypes.func,
 };
