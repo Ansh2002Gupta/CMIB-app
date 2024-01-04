@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Platform, Text } from "@unthinkable/react-core-components";
+import { Platform, Text, View } from "@unthinkable/react-core-components";
 
 import Button from "../Button/Button";
 import CustomImage from "../CustomImage";
@@ -37,7 +37,7 @@ const CustomButton = ({
           color={withGreenBackground ? colors.white : ""}
         />
       ) : (
-        <>
+        <View style={styles.containerStyle}>
           {!!iconLeft && !!iconLeft?.leftIconSource && (
             <CustomImage
               style={styles.iconRightStyle}
@@ -61,7 +61,7 @@ const CustomButton = ({
               alt={iconRight.rightIconAlt}
             />
           )}
-        </>
+        </View>
       )}
     </Button>
   );

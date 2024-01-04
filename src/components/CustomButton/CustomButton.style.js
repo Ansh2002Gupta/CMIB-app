@@ -27,6 +27,7 @@ const styles = {
   },
   iconRightStyle: {
     marginRight: 8,
+    top: 8,
   },
   iconLeftStyle: {
     marginLeft: 8,
@@ -39,6 +40,11 @@ const styles = {
     fontSize: 16,
     fontWeight: "600",
     lineHeight: 20,
+  },
+  containerStyle: {
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
   },
 };
 
