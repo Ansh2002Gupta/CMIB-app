@@ -3,9 +3,9 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 
 import SignUpScreenUI from "./SignUpScreenUI";
+import { navigations } from "../../constants/routeNames";
 import { resetSignUpDetails } from "../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../globalContext/signUp/signUpProvider";
-import { navigations } from "../../constants/routeNames";
 
 const SignUpScreenComponent = () => {
   const intl = useIntl();
@@ -23,6 +23,7 @@ const SignUpScreenComponent = () => {
       return prevTab;
     });
   };
+
   const onClickGoToLogin = () => {
     signUpDispatch(resetSignUpDetails());
     navigate(navigations.LOGIN);

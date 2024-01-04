@@ -1,6 +1,6 @@
 import colors from "../../assets/colors";
 
-const style = {
+export const styles = {
   headerContainerStyle: {
     marginTop: 24,
     marginBottom: 16,
@@ -35,6 +35,42 @@ const style = {
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
+  lgStepperContainer: {
+    flex: 3,
+    alignItems: "flex-end",
+    marginTop: 148,
+  },
+  stepperContainer: {
+    flex: 3.5,
+    alignItems: "flex-end",
+    marginTop: 148,
+  },
+  stepperParentContainer: {
+    marginTop: 24,
+  },
 };
 
-export default style;
+export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
+  switch (str) {
+    case "steperContainer": {
+      if (currentBreakpoint === "lg") {
+        return {
+          ...styles.lgStepperContainer,
+        };
+      }
+      if (currentBreakpoint === "md") {
+        return {
+          ...styles.lgStepperContainer,
+        };
+      }
+      if (currentBreakpoint === "xs" || currentBreakpoint === "sm") {
+        return;
+      }
+      return {
+        ...styles.stepperContainer,
+      };
+    }
+    default:
+      return {};
+  }
+};

@@ -4,7 +4,7 @@ import BaseLayout from "../Base";
 
 import layoutStyle from "./MultiColumn.style";
 
-function MultiColumn({ style, columns }) {
+function MultiColumn({ style, columns, columnStyle }) {
   return (
     <BaseLayout style={{ ...layoutStyle, ...style }}>
       {({ Row, Column }) => (
@@ -13,7 +13,7 @@ function MultiColumn({ style, columns }) {
             <Column
               key={`column-${index}`}
               isFillSpace={columnConfig.isFillSpace}
-              style={columnConfig.style}
+              style={{ ...columnConfig.style, ...columnStyle }}
             >
               {columnConfig.content}
             </Column>
@@ -27,6 +27,7 @@ function MultiColumn({ style, columns }) {
 MultiColumn.defaultProps = {
   style: {},
   columns: [],
+  columnStyle: {},
 };
 
 MultiColumn.propTypes = {
@@ -38,6 +39,7 @@ MultiColumn.propTypes = {
       content: PropTypes.node,
     })
   ),
+  columnStyle: PropTypes.object,
 };
 
 export default MultiColumn;

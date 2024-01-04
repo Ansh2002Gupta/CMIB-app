@@ -139,6 +139,9 @@ const styles = StyleSheet.create({
       gridRowGap: 16,
       marginBottom: 32,
     },
+    headerText: {
+      fontSize: 28,
+    }
   },
   ErrorStyle: {
     paddingTop: 4,
