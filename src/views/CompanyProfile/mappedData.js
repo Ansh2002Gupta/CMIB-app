@@ -62,7 +62,6 @@ export const mapApiDataToUI = (
       {
         label: "label.company_name",
         value: checkValue(name),
-
         error: error.companyName,
       },
       {
