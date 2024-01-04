@@ -35,14 +35,17 @@ const DetailCard = ({
 };
 
 DetailCard.defaultProps = {
+  details: [],
+  handleChange: () => {},
+  headerId: "",
   isEditProfile: false,
   otherDetails: [],
 };
 
 DetailCard.propTypes = {
-  details: PropTypes.array.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  headerId: PropTypes.string.isRequired,
+  details: PropTypes.array,
+  handleChange: PropTypes.func,
+  headerId: PropTypes.string,
   isEditProfile: PropTypes.bool,
   otherDetails: PropTypes.array,
 };

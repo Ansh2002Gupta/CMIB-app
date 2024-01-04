@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import CommonText from "../CommonText";
@@ -20,6 +20,18 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
   const containerStyle = isWebView
     ? styles.containerGridStyle(columnCount)
     : styles.containerStyle;
+
+  const isPlatformWeb = Platform.OS.toLowerCase() === "web";
+
+  const getMobileProps = (detail) => {
+    if (!isPlatformWeb && detail.isMultiline) {
+      return {
+        isMultiline: true,
+        height: 84,
+      };
+    }
+    return {};
+  };
 
   return (
     <View>
@@ -41,9 +53,7 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
                 isCounterInput={detail.isCounterInput}
                 options={detail.options || []}
                 isMobileNumber={detail.isMobileNumber}
-                isMultiline={detail.isMultiline}
                 isMandatory
-                height={detail.isMultiline && 84}
                 valueField={detail.valueField || "label"}
                 labelField={detail.labelField || "label"}
                 inputKey={detail.inputKey || "value"}
@@ -51,6 +61,7 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
                 onChangeText={(val) => {
                   handleChange(detail.label, val);
                 }}
+                {...getMobileProps(detail)}
               />
             ) : (
               <>
