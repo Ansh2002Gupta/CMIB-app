@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
+import JobDetails from "./JobDetails";
 import CustomButton from "../../../components/CustomButton";
 import styles from "./ApplicationFormContainer.style";
 
@@ -13,7 +14,8 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   return (
     <View>
       <ApplicationFormStepper activeStep={activeStep} intl={intl} />
-      <View style={styles.actionBtnContainer}>
+      <JobDetails />
+      {/* <View style={styles.actionBtnContainer}>
         <CustomButton
           onPress={() => {
             onHandleTab("prev");
@@ -29,7 +31,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
         >
           {intl.formatMessage({ id: "label.save" })}
         </CustomButton>
-      </View>
+      </View> */}
     </View>
   );
 };
