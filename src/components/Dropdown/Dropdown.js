@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import styles from "./Dropdown.style";
 
 const Dropdown = ({
@@ -34,23 +35,25 @@ const Dropdown = ({
         {placeholder || ""}
       </option>
       {data.map((option, index) => (
-        <option key={index} value={option.label}>
-          {option.label}
+        <option key={index} value={option[valueField]}>
+          {option[labelField]}
         </option>
       ))}
     </select>
   );
 };
+
 Dropdown.defaultProps = {
   data: [],
   dropdownStyle: {},
   labelField: "",
-  onChange: () => {},
+  onChange: ()=>{},
   placeholder: "",
   placeholderStyle: {},
   value: "",
-  valueField: "",
+  valueField: ""
 };
+
 Dropdown.propTypes = {
   data: PropTypes.array,
   dropdownStyle: PropTypes.object,
@@ -61,4 +64,5 @@ Dropdown.propTypes = {
   value: PropTypes.string,
   valueField: PropTypes.string,
 };
+
 export default Dropdown;

@@ -13,12 +13,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     cursor: "pointer",
+    position: "relative",
   },
   sessionText: (currentBreakpoint) => ({
     fontWeight: "600",
-    margin: 0,
-    padding: 0,
-    borderWidth: 0,
+    fontSize: 12,
+    marginLeft: 2,
     cursor: "pointer",
     ...Platform.select({
       web: {
@@ -29,15 +29,20 @@ const styles = StyleSheet.create({
           currentBreakpoint === "lg"
             ? "200px"
             : currentBreakpoint === "md"
-            ? "40px"
+            ? "20px"
             : currentBreakpoint === "sm"
-            ? "120px"
+            ? "90px"
             : currentBreakpoint === "sx"
             ? "50px"
             : "250px",
       },
     }),
   }),
+  iconDown: {
+    height: 15,
+    width: 15,
+    marginLeft: 5,
+  },
 });
 
 export default styles;

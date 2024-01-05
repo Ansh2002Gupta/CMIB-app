@@ -1,38 +1,49 @@
 import React, { useContext, useState } from "react";
-import PropTypes from "prop-types";
-import { View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import CommonText from "../CommonText";
-import Dropdown from "../Dropdown";
+import CustomImage from "../CustomImage";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import SessionDropdown from "../SessionDropdown";
+import images from "../../images";
 import styles from "./SessionBar.style";
 
 const SessionBar = () => {
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const [selectedValue, setSelectedValue] = useState(selectedModule.session[0]);
 
-  const handleChange = (value) => {
-    setSelectedValue(value);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(
+    selectedModule.session[0].label
+  );
+
+  const handleSelect = (option) => {
+    setSelectedValue(option);
+    handleDropdown();
+  };
+
+  const handleDropdown = () => {
+    setShowDropdown((prev) => !prev);
   };
 
   return (
-    <View style={styles.container}>
+    <CustomTouchableOpacity style={styles.container} onPress={handleDropdown}>
       <CommonText title={"Sessions :"} />
-      <Dropdown
-        data={selectedModule.session}
-        onChange={handleChange}
-        value={selectedValue}
-        dropdownStyle={styles.sessionText(currentBreakpoint)}
+      <CommonText
+        title={selectedValue}
+        customTextStyle={styles.sessionText(currentBreakpoint)}
       />
-    </View>
+      <CustomImage source={images.iconArrowDown} style={styles.iconDown} />
+      {showDropdown && (
+        <SessionDropdown
+          options={selectedModule.session}
+          onSelect={handleSelect}
+        />
+      )}
+    </CustomTouchableOpacity>
   );
-};
-
-SessionBar.propTypes = {
-  items: PropTypes.array.isRequired,
 };
 
 export default SessionBar;
