@@ -91,168 +91,56 @@ const CompanyProfileComponent = () => {
     );
   };
 
+  function isLengthValid(value, min, max) {
+    return value.length >= min && value.length <= max;
+  }
+
   const validateFields = () => {
     let isValid = true;
-    let newErrors = {
-      companyName: "",
-      registrationNo: "",
-      noOfPartners: "",
-      address: "",
-      emailId: "",
-      telephoneNo: "",
-      code: "",
-      designation: "",
-      contactEmailId: "",
-      mobileNo: "",
-      name: "",
-      companyDetail: "",
-      website: "",
-    };
-
-    const findValueByLabel = (label) => {
-      const combinedDetails = [
-        ...profileData.companyDetail,
-        ...profileData.contactPersonInfo,
-        ...profileData.companyProfile,
-        ...profileData.otherDetails,
-      ];
-
-      const detail = combinedDetails.find((d) => d.label === label);
-      return detail ? detail.value : "";
-    };
-
-    const companyName = findValueByLabel("label.company_name");
-    const registrationNo = findValueByLabel("label.registration_no");
-    const noOfPartners = findValueByLabel("label.no_of_partners");
-    const address = findValueByLabel("label.address");
-    const emailId = findValueByLabel("label.email_id");
-    const telephoneNo = findValueByLabel("label.telephone_no");
-    const code = findValueByLabel("label.country_code");
-    const name = findValueByLabel("label.contact_person_name");
-    const designation = findValueByLabel("label.contact_personal_designation");
-    const contactEmailId = findValueByLabel("label.email_id");
-    const mobileNo = findValueByLabel("label.mobile_number");
-    const companyDetail = findValueByLabel(
-      "label.short_profile_of_the_company"
-    );
-    const website = findValueByLabel("label.website");
-
-    if (
-      companyName.length < FIELD_MIN_LENGTH ||
-      companyName.length > FIELD_MAX_LENGTH
-    ) {
-      newErrors.companyName = intl.formatMessage({
-        id: "label.company_name_validation",
-      });
-      isValid = false;
-    }
-
-    if (
-      !numRegex.test(String(code)) ||
-      code.length < CODE_MIN_LENGTH ||
-      code.length > CODE_MAX_LENGTH
-    ) {
-      newErrors.code = intl.formatMessage({
-        id: "label.country_code_validation",
-      });
-      isValid = false;
-    }
-
-    if (
-      !numRegex.test(String(telephoneNo)) ||
-      telephoneNo.length > NUMBER_MAX_LENGTH ||
-      telephoneNo.length < NUMBER_MIN_LENGTH
-    ) {
-      newErrors.telephoneNo = intl.formatMessage({
-        id: "label.telephone_no_validation",
-      });
-      isValid = false;
-    }
-
-    if (validateEmail(emailId)) {
-      newErrors.emailId = intl.formatMessage({
-        id: "label.email_id_validation",
-      });
-      isValid = false;
-    }
-
-    if (
-      !numRegex.test(String(registrationNo)) ||
-      registrationNo.length !== REGISTRATION_NO_LENGTH
-    ) {
-      newErrors.registrationNo = intl.formatMessage({
-        id: "label.registration_no_validation",
-      });
-      isValid = false;
-    }
-
-    if (
-      address.length < FIELD_MIN_LENGTH ||
-      address.length > ADDRESS_MAX_LENGTH
-    ) {
-      newErrors.address = intl.formatMessage({
-        id: "label.address_validation",
-      });
-      isValid = false;
-    }
-
-    if (!numRegex.test(String(noOfPartners))) {
-      newErrors.noOfPartners = intl.formatMessage({
-        id: "label.no_of_partners_validation",
-      });
-      isValid = false;
-    }
-
-    if (name.length < FIELD_MIN_LENGTH || name.length > FIELD_MAX_LENGTH) {
-      newErrors.name = intl.formatMessage({
-        id: "label.contact_person_validation",
-      });
-    }
-
-    if (
-      designation.length < FIELD_MIN_LENGTH ||
-      designation.length > ADDRESS_MAX_LENGTH
-    ) {
-      newErrors.designation = intl.formatMessage({
-        id: "label.designation_validation",
-      });
-    }
-
-    if (
-      !numRegex.test(String(mobileNo)) ||
-      mobileNo.length !== REGISTRATION_NO_LENGTH
-    ) {
-      newErrors.mobileNo = intl.formatMessage({
-        id: "label.mobile_number_validation",
-      });
-    }
-
-    if (validateEmail(contactEmailId)) {
-      newErrors.contactEmailId = intl.formatMessage({
-        id: "label.email_id_validation",
-      });
-    }
-
-    if (
-      companyDetail.length < FIELD_MIN_LENGTH ||
-      companyDetail.length > COMPANY_DETAIL_MAX_LENGTH
-    ) {
-      newErrors.companyDetail = intl.formatMessage({
-        id: "label.company_details_validation",
-      });
-      isValid = false;
-    }
-
-    if (!urlRegex.test(String(website))) {
-      newErrors.website = intl.formatMessage({
-        id: "label.url_validation",
-      });
-      isValid = false;
-    }
-
+    const newErrors = {}; 
+    const combinedDetails = [
+      ...profileData.companyDetail,
+      ...profileData.contactPersonInfo,
+      ...profileData.companyProfile,
+      ...profileData.otherDetails,
+    ];
+    const findValueByLabel = (label) => combinedDetails.find((d) => d.label === `label.${label}`)?.value || "";
+    const fields = [
+      { key: 'companyName', label: 'company_name', min: FIELD_MIN_LENGTH, max: FIELD_MAX_LENGTH },
+      { key: 'registrationNo', label: 'registration_no', exact: REGISTRATION_NO_LENGTH },
+      { key: 'noOfPartners', label: 'no_of_partners' },
+      { key: 'address', label: 'address', min: FIELD_MIN_LENGTH, max: ADDRESS_MAX_LENGTH },
+      { key: 'emailId', label: 'email_id' },
+      { key: 'telephoneNo', label: 'telephone_no', min: NUMBER_MIN_LENGTH, max: NUMBER_MAX_LENGTH },
+      { key: 'code', label: 'country_code', min: CODE_MIN_LENGTH, max: CODE_MAX_LENGTH },
+      { key: 'name', label: 'contact_person', min: FIELD_MIN_LENGTH, max: FIELD_MAX_LENGTH },
+      { key: 'designation', label: 'designation', min: FIELD_MIN_LENGTH, max: FIELD_MAX_LENGTH },
+      { key: 'mobileNo', label: 'mobile_number', exact: REGISTRATION_NO_LENGTH },
+      { key: 'companyDetail', label: 'company_details', min: FIELD_MIN_LENGTH, max: COMPANY_DETAIL_MAX_LENGTH },
+      { key: 'website', label: 'url' },
+    ];
+    fields.forEach(({ key, label, min, max, exact }) => {
+      const value = findValueByLabel(label);
+      const lengthCheck = exact ? value.length === exact : isLengthValid(value, min, max);
+      if (key === 'emailId' || key === 'contactEmailId') {
+        if (!validateEmail(value)) {
+          newErrors[key] = intl.formatMessage({ id: `label.${label}_validation` });
+          isValid = false;
+        }
+      } else if (key === 'website') {
+        if (!urlRegex.test(value)) {
+          newErrors[key] = intl.formatMessage({ id: `label.${label}_validation` });
+          isValid = false;
+        }
+      } else if (!lengthCheck || (['code', 'telephoneNo', 'registrationNo', 'mobileNo', 'noOfPartners'].includes(key) && !numRegex.test(value))) {
+        newErrors[key] = intl.formatMessage({ id: `label.${label}_validation` });
+        isValid = false;
+      }
+    });
     setInputErrors(newErrors);
     return isValid;
   };
+  
 
   const onSaveClick = () => {
     if (validateFields()) {
