@@ -6,9 +6,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundGrey,
     padding: 24,
   },
-  cellTextStyle:(fontSize = 14, fontWeight= 500)=>({
-    fontSize:fontSize,
-    fontWeight:fontWeight,
+  cellTextStyle: (fontSize = 14, fontWeight = 500) => ({
+    fontSize: fontSize,
+    fontWeight: fontWeight,
     ...Platform.select({
       web: {
         textOverflow: "ellipsis",
@@ -17,43 +17,43 @@ const styles = StyleSheet.create({
         maxWidth: "120px",
       },
     }),
-  }) ,
-  inProgress:{
-    textAlign:"center",
-    paddingLeft:8,
-    paddingRight:8,
-    paddingTop:2,
-    paddingBottom:2,
-    borderRadius:16,
-    backgroundColor:colors.lightOrange,
-    color:colors.orange,
+  }),
+  inProgress: {
+    textAlign: "center",
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 2,
+    paddingBottom: 2,
+    borderRadius: 16,
+    backgroundColor: colors.lightOrange,
+    color: colors.orange,
   },
-  pending:{
-    textAlign:"center",
-    paddingLeft:8,
-    paddingRight:8,
-    paddingTop:2,
-    paddingBottom:2,
-    borderRadius:16,
-    backgroundColor:colors.skyBlueLight,
-    color:colors.skyBlueDark
+  pending: {
+    textAlign: "center",
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 2,
+    paddingBottom: 2,
+    borderRadius: 16,
+    backgroundColor: colors.skyBlueLight,
+    color: colors.skyBlueDark,
   },
-  close:{
-    textAlign:"center",
-    paddingLeft:8,
-    paddingRight:8,
-    paddingTop:2,
-    paddingBottom:2,
-    borderRadius:16,
-    backgroundColor:colors.lightGreen,
-    color:colors.darkGreen
+  close: {
+    textAlign: "center",
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 2,
+    paddingBottom: 2,
+    borderRadius: 16,
+    backgroundColor: colors.lightGreen,
+    color: colors.darkGreen,
   },
-  tableHeadingText:{
-    fontSize:12,
-    fontWeight:"600",
-    color:colors.darkGrey
+  tableHeadingText: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: colors.darkGrey,
   },
-  columnStyle:(WIDTH:'15%') =>({
+  columnStyle: (WIDTH: "15%") => ({
     width: WIDTH,
     paddingLeft: 24,
     paddingRight: 24,
@@ -64,16 +64,50 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderTopWidth: 0.5,
   },
-  tableSection:{
-    borderWidth:0.5,
-    borderColor:colors.lightGrey,
-    borderRadius:16,
-    overflow:"hidden"
+  tableSection: {
+    borderWidth: 0.5,
+    borderColor: colors.lightGrey,
+    borderRadius: 16,
+    overflow: "hidden",
   },
-  iconTicket:{
-    height:20,
-    width:20,
+  iconTicket: {
+    height: 20,
+    width: 20,
+  },
+  paginationFooter: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    paddingLeft: 24,
+    paddingRight: 24,
+    paddingTop: 12,
+    paddingBottom: 12,
+    borderTopWidth:0.5,
+    borderColor:colors.lightGrey
+  },
+  selectedBtn:{
+    paddingLeft:12,
+    paddingRight:12,
+    paddingTop:8,
+    paddingBottom:8,
+    borderWidth:1,
+    borderRadius:8,
+    borderColor:colors.lightGrey,
+    cursor:"pointer"
+  },
+  rowSelectedNumber:{
+    fontSize:14,
+    marginRight:8
+  },
+  rowsPerPageText:{
+    fontSize:14,
+    marginRight:14,
+    color:colors.darkGrey
+  },
+  rowsPerPage:{
+    flexDirection:"row",
+    alignItems:"center"
   }
+
 });
 
 export default styles;

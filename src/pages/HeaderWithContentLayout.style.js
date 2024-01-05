@@ -6,6 +6,7 @@ const Styles = (currentBreakpoint) => StyleSheet.create({
   },
   leftSectionStyle: {
     flex: currentBreakpoint === 'md' ? 3 : 2,
+    overflow:'hidden'
   },
   topSectionStyle: {
     flex: 1,

@@ -1,18 +1,13 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { View, FlatList, Platform, Picker } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import React, { useEffect } from "react";
+import { View, FlatList } from "@unthinkable/react-core-components";
 
-import styles from "./TicketsView.style";
-import CustomTextInput from "../../components/CustomTextInput";
-import TableView from "../../core/layouts/TableLayout/TableView";
 import CommonText from "../../components/CommonText";
-import colors from "../../assets/colors";
 import MultiColumn from "../../core/layouts/MultiColumn";
-import MultiRow from "../../core/layouts/MultiRow";
-import { items } from "../../constants/sideBarHelpers";
+import useTicketView from "./controller/useTicketView";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomImage from "../../components/CustomImage";
 import images from "../../images";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
+import styles from "./TicketsView.style";
 
 const tableHeading = {
   id: "Ticket ID",
@@ -158,124 +153,35 @@ const gridData = [
   },
 ];
 
-const reshapedGridData = gridData.map((rowData) => Object.values(rowData));
-reshapedGridData.unshift(tableHeading);
-
 const Tickets = () => {
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const [visibleData, setVisibleData] = useState([]);
-  const [rowsToShow, setRowsToShow] = useState(10);
-  const isHeading = true;
+  const {
+    visibleData,
+    setVisibleData,
+    rowsToShow,
+    setRowsToShow,
+    getStatusStyle,
+    getColoumConfigs,
+    isHeading,
+  } = useTicketView();
 
   useEffect(() => {
-    // Update visibleData whenever gridData or rowsToShow changes
     setVisibleData(gridData.slice(0, rowsToShow));
   }, [gridData, rowsToShow]);
 
-  const handleLoadMore = () => {
-    const currentLength = visibleData.length;
-    const newData = gridData.slice(currentLength, currentLength + rowsToShow);
-    setVisibleData([...visibleData, ...newData]);
-  };
-
-
-  function getStatusStyle(status, isHeading, styles) {
-    status = status.toLowerCase();
-
-    if (isHeading) {
-      return styles.tableHeadingText;
-    }
-    switch (status) {
-      case "pending":
-        return [styles.pending, styles.cellTextStyle(12)];
-      case "close":
-        return [styles.close, styles.cellTextStyle(12)];
-      case "in progress":
-        return [styles.inProgress, styles.cellTextStyle(12)];
-      default:
-        return styles.cellTextStyle(12);
-    }
-  }
-  const getColoumConfigs = (item, isHeading) => {
-    return [
-      {
-        content: (
-          <CommonText
-            title={item.id}
-            customTextStyle={
-              isHeading
-                ? styles.tableHeadingText
-                : styles.cellTextStyle(14, 600)
-            }
-          />
-        ),
-        style: styles.columnStyle("15%"),
-        isFillSpace: true,
-      },
-      {
-        content: (
-          <CommonText
-            title={item.query_type}
-            customTextStyle={
-              isHeading ? styles.tableHeadingText : styles.cellTextStyle
-            }
-          />
-        ),
-        style: styles.columnStyle("20%"),
-        isFillSpace: true,
-      },
-      {
-        content: (
-          <CommonText
-            title={item.status}
-            customTextStyle={getStatusStyle(item.status, isHeading, styles)}
-          />
-        ),
-        style: styles.columnStyle("15%"),
-        isFillSpace: true,
-      },
-      {
-        content: (
-          <CommonText
-            title={item.assigned_to}
-            customTextStyle={
-              isHeading ? styles.tableHeadingText : styles.cellTextStyle
-            }
-          />
-        ),
-        style: styles.columnStyle("20%"),
-        isFillSpace: true,
-      },
-      {
-        content: (
-          <CommonText
-            title={item.created_at}
-            customTextStyle={
-              isHeading ? styles.tableHeadingText : styles.cellTextStyle
-            }
-          />
-        ),
-        style: styles.columnStyle("15%"),
-        isFillSpace: true,
-      },
-      {
-        content: !isHeading && <CustomImage source={images.iconTicket} style={styles.iconTicket} />,
-        style: styles.columnStyle("10%"),
-        isFillSpace: true,
-      },
-    ];
-  };
-
-
   const renderButton = (label, value) => (
     <CustomTouchableOpacity
-      style={[styles.button, rowsToShow === value && styles.selectedButton]}
+      style={[
+        styles.selectedBtn,
+        rowsToShow === value && styles.selectedButton,
+      ]}
       onPress={() => setRowsToShow(value)}
       key={value}
     >
-      <CommonText title={label} />
+      <CommonText title={label} customTextStyle={styles.rowSelectedNumber} />
+      <CustomImage source={images.iconArrowDown} style={styles.iconTicket} />
     </CustomTouchableOpacity>
   );
+
   return (
     <View style={styles.container}>
       <View style={styles.tableSection}>
@@ -291,9 +197,19 @@ const Tickets = () => {
             );
           }}
         />
-           {renderButton('10', 10)}
-        {renderButton('15', 15)}
-        {renderButton('20', 20)}
+
+        <View style={styles.paginationFooter}>
+          <View style={styles.rowsPerPage}>
+            <CommonText
+              title={"Rows Per Page:"}
+              customTextStyle={styles.rowsPerPageText}
+            />
+            {renderButton("10", 10)}
+          </View>
+
+          {/* {renderButton("15", 15)} */}
+          {renderButton("20", 20)}
+        </View>
       </View>
     </View>
   );
