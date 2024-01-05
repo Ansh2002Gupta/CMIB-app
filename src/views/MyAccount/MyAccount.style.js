@@ -28,7 +28,7 @@ const style = {
   },
   profileParentContainer: {
     flex: 1,
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: colors.white,
   },
   profileContainer: {
     marginTop: 16,
