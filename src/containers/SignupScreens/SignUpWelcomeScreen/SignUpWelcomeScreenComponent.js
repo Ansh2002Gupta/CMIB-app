@@ -8,7 +8,7 @@ import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { MODULE_OPTIONS } from "../../../constants/constants";
 
-const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
+const SignUpScreenWelcomeComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const {
@@ -52,6 +52,7 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
       handleDismissToast={handleDismissToast}
       intl={intl}
       isLoading={isLoading}
+      onClickGoToLogin={onClickGoToLogin}
       onClickNext={onClickNext}
       options={options}
       setContactDetails={setContactDetails}
@@ -62,6 +63,7 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
 };
 
 SignUpScreenWelcomeComponent.propTypes = {
+  onClickGoToLogin: PropTypes.func.isRequired,
   tabHandler: PropTypes.func.isRequired,
 };
 

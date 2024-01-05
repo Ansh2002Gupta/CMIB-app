@@ -145,6 +145,21 @@ export const STEPPER_STATE = {
   INACTIVE: "inActive",
 };
 
+export const SIGN_UP_STEPPER_OPTION = [
+  {
+    title: "label.welcome_to_sign_up",
+  },
+  {
+    title: "label.basic_details",
+  },
+  {
+    title: "label.contact_personal_details",
+  },
+  {
+    title: "label.other_details",
+  },
+];
+
 export const ZOOM_CONSTANT = {
   MAX_ZOOM: 3,
   MIN_ZOOM: 1,

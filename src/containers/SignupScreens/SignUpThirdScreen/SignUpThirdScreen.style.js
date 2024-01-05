@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../../assets/colors";
 
-const style = {
+export const style = StyleSheet.create({
   headerText: {
     color: colors.black,
     fontSize: 16,
@@ -9,25 +11,76 @@ const style = {
     fontWeight: "600",
   },
   contentContainerStyle: {
-    paddingTop: 24,
-    paddingLeft: 16,
-    paddingRight: 16,
+    marginTop: 24,
+    marginBottom: 24,
     backgroundColor: colors.backgroundColor,
     flex: 1,
-    marginBottom: 24,
+  },
+  webContainerStyle: {
+    backgroundColor: colors.white,
+    gap: 32,
+    flex: 1,
   },
   inputContainer: {
     flexDirection: "row",
-    flex: 1,
   },
   dividerStyle: {
     height: 1,
     backgroundColor: colors.lightGrey,
     marginBottom: 24,
   },
-  dropdownStyle: { minWidth: 96 },
-  secondInput: { marginLeft: 24, flex: 1 },
-  buttonContainer: { paddingLeft: 16, paddingRight: 16 },
-};
+  dropdownStyle: {
+    minWidth: 96,
+  },
+  secondInput: {
+    marginLeft: 24,
+    flex: 1,
+  },
+  buttonContainer: {
+    marginBottom: 16,
+  },
+  innerContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
+  },
+  smSignupContainer: {
+    gap: 32,
+  },
+  signupContainer: {
+    flex: 1,
+    gap: 56,
+  },
+  customSaveButtonContainer: {
+    bottom: 0,
+  },
+  webSignupFooter: {
+    gap: 32,
+  },
+  formContainer: {
+    flex: 1,
+  },
+});
 
-export default style;
+export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
+  switch (str) {
+    case "signupContainer": {
+      if (
+        currentBreakpoint === "sm" ||
+        currentBreakpoint === "xs" ||
+        currentBreakpoint === "md"
+      ) {
+        return {
+          ...style.signupContainer,
+          ...style.smSignupContainer,
+        };
+      }
+      return {
+        ...style.signupContainer,
+      };
+    }
+    default:
+      return;
+  }
+};

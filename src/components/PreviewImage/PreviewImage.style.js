@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
   },
+  showImageStyle: {
+    borderStyle: "solid",
+    borderColor: colors.lightGrey,
+  },
   imageContainer: {
     flex: 1,
     justifyContent: "center",
@@ -18,8 +22,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     minWidth: 250,
     minHeight: 150,
+    padding: 10,
   },
   selectedImageStyle: {
+    minHeight: 145,
+    minWidth: 150,
     maxWidth: 450,
     maxHeight: 200,
     objectFit: "contain",

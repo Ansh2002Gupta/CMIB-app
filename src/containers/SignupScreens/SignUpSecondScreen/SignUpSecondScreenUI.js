@@ -1,60 +1,67 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CustomTextInput from "../../../components/CustomTextInput";
+import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
+import useIsWebView from "../../../hooks/useIsWebView";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
-import style from "./SignUpSecondScreen.style";
+import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
-const SignUpSecondScreenUI = (props) => {
+const SignUpSecondScreenUI = ({
+  allFieldsFilled,
+  errors,
+  formData,
+  handleDismissToast,
+  handleInputChange,
+  handleBlur,
+  industryOptions,
+  intl,
+  isLoading,
+  onClickNext,
+  onClickGoToLogin,
+  onGoBack,
+  stateOptions,
+  validationError,
+}) => {
   const {
-    allFieldsFilled,
-    errors,
-    formData,
-    handleDismissToast,
-    handleInputChange,
-    industryOptions,
-    intl,
-    isLoading,
-    onClickNext,
-    onGoBack,
-    stateOptions,
-    validationError,
-  } = props;
-
-  const {
-    companyName,
-    registrationNo,
-    noOfPartners,
     address,
-    emailId,
-    telephoneNo,
     code,
-    entity,
+    companyName,
     currentIndustry,
+    emailId,
+    entity,
+    noOfPartners,
+    registrationNo,
     state,
+    telephoneNo,
   } = formData;
-
   const isWeb = Platform.OS.toLowerCase() === "web";
+  const { isWebView } = useIsWebView();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const showContentHeader =
+    currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 
-  return (
-    <View style={style.innerContainer}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={style.contentContainerStyle}
-      >
+  const renderFormContent = () => {
+    return (
+      <View style={style.formContainer}>
         <CustomTextInput
           label={intl.formatMessage({ id: "label.company_name" })}
           isMandatory
           placeholder={intl.formatMessage({
             id: "label.company_name_placeholder",
           })}
+          customHandleBlur={() => handleBlur("companyName")}
           value={companyName}
           errorMessage={errors.companyName}
           isError={!!errors.companyName}
-          onChangeText={(val) => handleInputChange(val, "companyName")}
+          onChangeText={(val) => {
+            handleInputChange(val, "companyName");
+          }}
         />
         <CustomTextInput
           label={intl.formatMessage({ id: "label.entity" })}
@@ -78,6 +85,7 @@ const SignUpSecondScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_firm_no",
               })}
+              customHandleBlur={() => handleBlur("registrationNo")}
               isMandatory
               isNumeric
               maxLength={10}
@@ -96,6 +104,7 @@ const SignUpSecondScreenUI = (props) => {
                 id: "label.enter_no",
               })}
               isMandatory
+              customHandleBlur={() => handleBlur("noOfPartners")}
               isNumeric
               value={noOfPartners}
               errorMessage={errors.noOfPartners}
@@ -127,6 +136,7 @@ const SignUpSecondScreenUI = (props) => {
           height={84}
           value={address}
           errorMessage={errors.address}
+          customHandleBlur={() => handleBlur("address")}
           isError={!!errors.address}
           onChangeText={(val) => handleInputChange(val, "address")}
           placeholder={intl.formatMessage({
@@ -154,6 +164,7 @@ const SignUpSecondScreenUI = (props) => {
             id: "label.email_id_placeholder",
           })}
           value={emailId}
+          customHandleBlur={() => handleBlur("emailId")}
           errorMessage={errors.emailId}
           isError={!!errors.emailId}
           onChangeText={(val) => handleInputChange(val, "emailId")}
@@ -167,6 +178,7 @@ const SignUpSecondScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_code",
               })}
+              customHandleBlur={() => handleBlur("code")}
               isNumeric
               value={code}
               maxLength={15}
@@ -184,6 +196,7 @@ const SignUpSecondScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_telephone_no",
               })}
+              customHandleBlur={() => handleBlur("telephoneNo")}
               errorMessage={errors.telephoneNo}
               isError={!!errors.telephoneNo}
               isMandatory
@@ -194,7 +207,12 @@ const SignUpSecondScreenUI = (props) => {
             />
           </View>
         </View>
-      </ScrollView>
+      </View>
+    );
+  };
+
+  const renderFooter = () => (
+    <View style={style.signupFooterContainer}>
       <SaveCancelButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
@@ -204,7 +222,60 @@ const SignUpSecondScreenUI = (props) => {
         isNextDisabled={!allFieldsFilled()}
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
+        customContainerStyle={
+          !isWebView
+            ? style.customContainerStyle
+            : style.customSaveButtonContainer
+        }
       />
+      {isWebView && (
+        <LabelWithLinkText
+          labelText={intl.formatMessage({ id: "label.already_account" })}
+          linkText={intl.formatMessage({ id: "label.login_here" })}
+          onLinkClick={onClickGoToLogin}
+        />
+      )}
+    </View>
+  );
+
+  return (
+    <View
+      style={
+        isWebView
+          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+          : style.innerContainer
+      }
+    >
+      {isWebView && (
+        <HeaderTextWithLabelAndDescription
+          label={intl.formatMessage({ id: "label.step_two" })}
+          {...(showContentHeader && {
+            headerText: intl.formatMessage({
+              id: "label.basic_details",
+            }),
+          })}
+        />
+      )}
+      {!isWeb ? (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={style.contentContainerStyle}
+        >
+          {renderFormContent()}
+        </ScrollView>
+      ) : (
+        <View
+          style={
+            !isWebView
+              ? [style.contentContainerStyle, style.webContentContainer]
+              : style.webContentContainer
+          }
+        >
+          {renderFormContent()}
+          {renderFooter()}
+        </View>
+      )}
+      {!isWeb && renderFooter()}
       {!!validationError && (
         <ToastComponent
           toastMessage={validationError}
@@ -215,10 +286,18 @@ const SignUpSecondScreenUI = (props) => {
   );
 };
 
+SignUpSecondScreenUI.defaultProps = {
+  handleDismissToast: () => {},
+  industryOptions: [],
+  stateOptions: [],
+  validationError: "",
+};
+
 SignUpSecondScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   formData: PropTypes.object.isRequired,
+  handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,
