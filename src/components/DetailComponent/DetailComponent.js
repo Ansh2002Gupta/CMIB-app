@@ -10,7 +10,13 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { gridStyles } from "../../theme/styles/commonStyles";
 import styles, { getRowStyle } from "./DetailComponent.style";
 
-const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
+const DetailComponent = ({
+  customContainerStyle,
+  details,
+  headerText,
+  isEditable,
+  handleChange,
+}) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
@@ -38,7 +44,7 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
       {!!headerText && (
         <CommonText customTextStyle={styles.headerText} title={headerText} />
       )}
-      <View style={containerStyle}>
+      <View style={{ ...containerStyle, ...customContainerStyle }}>
         {details?.map((detail, index) => (
           <View
             key={index}
@@ -93,6 +99,7 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
 };
 
 DetailComponent.defaultProps = {
+  customContainerStyle: {},
   details: [],
   handleChange: () => {},
   headerText: "",
@@ -100,6 +107,7 @@ DetailComponent.defaultProps = {
 };
 
 DetailComponent.propTypes = {
+  customContainerStyle: PropTypes.object,
   details: PropTypes.array,
   handleChange: PropTypes.func,
   headerText: PropTypes.string,

@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     marginTop: 24,
   },
+  customStyle: { display: "flex" },
 });
 
 export default styles;

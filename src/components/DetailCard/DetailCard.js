@@ -18,6 +18,7 @@ const DetailCard = ({
   return (
     <CardComponent customStyle={style.cardStyle}>
       <DetailComponent
+        customContainerStyle={style.customStyle}
         details={details}
         headerText={intl.formatMessage({ id: headerId })}
         isEditable={isEditProfile}
