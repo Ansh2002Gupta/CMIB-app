@@ -5,9 +5,9 @@ import { Text, View } from "@unthinkable/react-core-components";
 import styles from "./CommonText.style";
 
 const CommonText = ({
+  children,
   customContainerStyle,
   customTextStyle,
-  children,
   fontWeight,
 }) => {
   const styleArray = Array.isArray(customTextStyle)
@@ -30,10 +30,10 @@ CommonText.defaultProps = {
 };
 
 CommonText.propTypes = {
+  children: PropTypes.any,
   customContainerStyle: PropTypes.object,
   customTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   fontWeight: PropTypes.string,
-  children: PropTypes.any,
 };
 
 export default CommonText;
