@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 
 const styles = StyleSheet.create({
   iconStyle: {
@@ -10,6 +10,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontSize: 14,
     lineHeight: 20,
+  },
+  columnStyle: {
+    ...Platform.select({
+      web: {
+        flexShrink: "unset",
+      },
+    }),
   },
 });
 

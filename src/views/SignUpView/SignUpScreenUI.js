@@ -1,56 +1,68 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
+import { View } from "@unthinkable/react-core-components";
 
-import SignUpHeader from "../../containers/SignUpHeader/SignUpHeader";
+import SignUpHeader from "../../containers/SignUpHeader/index";
 import SignUpWelcomeScreen from "../../containers/SignupScreens/SignUpWelcomeScreen/index";
 import SignUpSecondScreen from "../../containers/SignupScreens/SignUpSecondScreen/index";
 import SignUpThirdScreen from "../../containers/SignupScreens/SignUpThirdScreen/index";
 import SignUpLastScreen from "../../containers/SignupScreens/SignUpLastScreen/index";
-import images from "../../images";
+import useIsWebView from "../../hooks/useIsWebView";
+import { getResponsiveStyles, style } from "./SignUpScreen.style";
 
 const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const { isWebView } = useIsWebView();
+  const displayRowHeader =
+    currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
+
   let tabConfig = [
     {
-      id: "label.welcome_to_sign_up",
-      imageKey: "iconWalkthroughSignUpOne",
       component: SignUpWelcomeScreen,
     },
     {
-      id: "label.basic_details",
-      imageKey: "iconWalkthroughSignUpTwo",
       component: SignUpSecondScreen,
     },
     {
-      id: "label.contact_personal_details",
-      imageKey: "iconWalkthroughSignUpThree",
       component: SignUpThirdScreen,
     },
     {
-      id: "label.other_details",
-      imageKey: "iconWalkthroughSignUpLast",
       component: SignUpLastScreen,
     },
   ];
 
   const activeTabIndex = Math.min(activeTab, tabConfig.length - 1);
-  const {
-    id,
-    imageKey,
-    component: ActiveTabComponent,
-  } = tabConfig[activeTabIndex];
-  const headerText = intl.formatMessage({ id });
-  const image = images[imageKey];
+  const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
 
   return (
-    <>
+    <View style={!displayRowHeader ? style.container : style.webContainer}>
       <SignUpHeader
         intl={intl}
-        headerText={headerText}
         onClickGoToLogin={onClickGoToLogin}
-        image={image}
+        activeTab={activeTab}
       />
-      <ActiveTabComponent tabHandler={onHandleTab} />
-    </>
+      {isWebView ? (
+        <View style={displayRowHeader && style.webSubContainer}>
+          <View
+            style={getResponsiveStyles({
+              str: "signUpWebContainer",
+              currentBreakpoint,
+            })}
+          >
+            <ActiveTabComponent
+              tabHandler={onHandleTab}
+              onClickGoToLogin={onClickGoToLogin}
+            />
+          </View>
+        </View>
+      ) : (
+        <ActiveTabComponent
+          tabHandler={onHandleTab}
+          onClickGoToLogin={onClickGoToLogin}
+        />
+      )}
+    </View>
   );
 };
 

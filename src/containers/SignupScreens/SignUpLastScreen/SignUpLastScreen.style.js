@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../../assets/colors";
 
-const style = {
+export const style = StyleSheet.create({
   headerText: {
     color: colors.black,
     fontSize: 16,
@@ -12,7 +14,10 @@ const style = {
     flex: 1,
     paddingTop: 24,
   },
-  containerStyle: { paddingBottom: 16 },
+  extraSmallContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
   mainContainerStyle: {
     flex: 1,
     paddingHorizontal: 16,
@@ -33,7 +38,67 @@ const style = {
     fontSize: 14,
     lineHeight: 24,
   },
-  secondInput: { marginLeft: 24, flex: 1 },
-};
+  secondInput: {
+    marginLeft: 24,
+    flex: 1,
+  },
+  webContentContainer: {
+    backgroundColor: colors.white,
+    gap: 20,
+    flex: 1,
+  },
+  signupContainer: {
+    flex: 1,
+    gap: 56,
+  },
+  signupFooterContainer: {
+    gap: 32,
+  },
+  alreadyAccountContainer: {
+    flexDirection: "row",
+    alignSelf: "center",
+  },
+  alreadyAccountText: {
+    fontSize: 14,
+    color: colors.mediumGray,
+  },
+  loginHere: {
+    color: colors.darkBlue,
+    fontSize: 14,
+    alignSelf: "center",
+    fontWeight: "600",
+    cursor: "pointer",
+  },
+  customSaveButtonContainer: {
+    bottom: 0,
+  },
+  formContainer: {
+    marginBottom: 48,
+    flex: 1,
+  },
+  customContainerStyle: {
+    marginBottom: 16,
+  },
+});
 
-export default style;
+export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
+  switch (str) {
+    case "signupContainer": {
+      if (
+        currentBreakpoint === "sm" ||
+        currentBreakpoint === "xs" ||
+        currentBreakpoint === "md"
+      ) {
+        return {
+          ...style.signupContainer,
+          ...style.smSignupContainer,
+        };
+      }
+      return {
+        ...style.signupContainer,
+      };
+    }
+    default:
+      return;
+  }
+};

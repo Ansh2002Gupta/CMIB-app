@@ -1,8 +1,8 @@
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
-const styles = {
+const styles = StyleSheet.create({
   defaultBtnStyles: {
     maxHeight: 56,
     padding: 17,
@@ -28,7 +28,6 @@ const styles = {
   },
   iconRightStyle: {
     marginRight: 8,
-    top: 8,
   },
   iconLeftStyle: {
     marginLeft: 8,
@@ -47,6 +46,6 @@ const styles = {
     justifyContent: "center",
     flexDirection: "row",
   },
-};
+});
 
 export default styles;

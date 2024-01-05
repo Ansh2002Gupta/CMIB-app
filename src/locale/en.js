@@ -17,7 +17,7 @@ const locale = {
   "label.forgot_password": "Forgot Password?",
   "label.password_field_error":
     "Please provide all the necessary fields for the password.",
-  "label.dont_have_account": "Don't have an account?  ",
+  "label.dont_have_account": "Don't have an account? ",
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
   "label.enter_email_to_reset_password":
@@ -159,7 +159,7 @@ const locale = {
     "Country code must be a combination of numbers and between 2 and 8 digits.",
   "label.telephone_no_validation":
     "Telephone number must be a combination of numbers and between 7 and 15 digits.",
-  "label.email_id_validation": "Email ID must be valid",
+  "label.email_id_validation": "Please enter a valid email address",
   "label.registration_no_validation":
     "Registration number must be exactly 10 digits.",
   "label.address_validation": "Address must be between 6 and 500 characters.",
@@ -179,6 +179,16 @@ const locale = {
     "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
   "label.text_otp": "OTP",
   "label.jobs": "Jobs",
+  "label.welcome_to_cmib": "Welcome to CMI&B Company Sign-up",
+  "label.step_one": "Step 1",
+  "label.step_two": "Step 2",
+  "label.step_three": "Step 3",
+  "label.step_four": "Step 4",
+  "label.already_account": "Already have an account?  ",
+  "label.login_here": "Login here",
+  "label.basic_details": "Basic Details",
+  "label.contact_person_details": "Contact Person Details",
+  "label.other_details": "Other Details",
   "label.old_password": "Old Password",
   "label.company_logo": "Company Logo",
   "label.contact_person_info": "Contact Person Information",
@@ -216,6 +226,11 @@ const locale = {
   "label.choose_a_module": "Choose a module",
   "label.hey": "Hey",
   "label.here_your_overview": "here’s your overview",
+  "label.add_application_form": "Add Application Form",
+  "label.job_details": "Job Details",
+  "label.pre_interview_preferences": "Pre-Interview Preferences",
+  "label.centre_details": "Centre Details",
+  "label.payment":"Payment"
 };
 
 export default locale;
