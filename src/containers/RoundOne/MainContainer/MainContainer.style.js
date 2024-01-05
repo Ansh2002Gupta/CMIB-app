@@ -36,6 +36,16 @@ const style = StyleSheet.create({
     flexDirection: "row",
     gap: 24,
     width: "100%",
+    backgroundColor: colors.backgroundColor,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  containerStyle: {
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
+    paddingLeft: 16,
+    paddingRight: 16,
+    marginBottom: 16,
   },
   addApplicationView: {
     flex: 1,
@@ -52,12 +62,6 @@ const style = StyleSheet.create({
     color: colors.subHeadingGray,
     fontWeight: "500",
     marginTop: 8,
-  },
-  containerStyle: {
-    paddingLeft: 16,
-    paddingRight: 16,
-    backgroundColor: colors.backgroundColor,
-    marginBottom: 16,
   },
   webAddApplicationView: {
     paddingLeft: 0,

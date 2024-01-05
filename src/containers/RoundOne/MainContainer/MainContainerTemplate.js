@@ -20,54 +20,51 @@ const MainContainerTemplate = ({
   const { isWebView } = useIsWebView();
 
   return (
-    <View style={styles.innerContainer}>
-      <ScrollView
-        style={{
-          ...styles.containerStyle,
-          ...(isWebView ? styles.webContainerStyle : {}),
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        {containers.map((container) => (
-          <TouchableOpacity
-            onPress={() => {
-              onPressCard(container.id);
+    <ScrollView
+      style={{
+        ...(isWebView ? styles.webContainerStyle : styles.containerStyle),
+      }}
+      showsVerticalScrollIndicator={false}
+    >
+      {containers.map((container) => (
+        <TouchableOpacity
+          onPress={() => {
+            onPressCard(container.id);
+          }}
+          style={styles.buttonStyle}
+        >
+          <CardComponent
+            customCardComponentStyle={{
+              ...styles.componentStyle,
+              ...(isWebView && selectedContainer === container.id
+                ? styles.webActiveComponentStyle
+                : isWebView
+                ? styles.webComponentStyle
+                : {}),
             }}
-            style={styles.buttonStyle}
           >
-            <CardComponent
-              customCardComponentStyle={{
-                ...styles.componentStyle,
-                ...(isWebView && selectedContainer === container.id
-                  ? styles.webActiveComponentStyle
-                  : isWebView
-                  ? styles.webComponentStyle
-                  : {}),
+            <View>
+              <Image style={styles.imageStyle} source={container.image} />
+            </View>
+            <View
+              style={{
+                ...styles.addApplicationView,
+                ...(isWebView ? styles.webAddApplicationView : null),
               }}
             >
-              <View>
-                <Image style={styles.imageStyle} source={container.image} />
-              </View>
-              <View
-                style={{
-                  ...styles.addApplicationView,
-                  ...(isWebView ? styles.webAddApplicationView : null),
-                }}
-              >
-                <CommonText
-                  title={container.title}
-                  customTextStyle={styles.addApplicationFormText}
-                />
-                <CommonText
-                  title={container.subTitle}
-                  customTextStyle={styles.addApplicationFormDescriptionText}
-                />
-              </View>
-            </CardComponent>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View>
+              <CommonText
+                title={container.title}
+                customTextStyle={styles.addApplicationFormText}
+              />
+              <CommonText
+                title={container.subTitle}
+                customTextStyle={styles.addApplicationFormDescriptionText}
+              />
+            </View>
+          </CardComponent>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 };
 
