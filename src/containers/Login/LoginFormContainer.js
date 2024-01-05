@@ -12,7 +12,7 @@ import ButtonComponent from "../../components/ButtonComponent";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
-import HeaderText from "../../components/HeaderText/HeaderText";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import FollowUsIcons from "../../components/FollowUsIcons";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import useLoginForm from "./controllers/useLoginForm";
@@ -51,8 +51,8 @@ const LoginFormContainer = () => {
         }}
       >
         <View style={styles.container}>
-          <HeaderText
-            text={intl.formatMessage({ id: "label.login_to_cmib" })}
+          <HeaderTextWithLabelAndDescription
+            headerText={intl.formatMessage({ id: "label.login_to_cmib" })}
             label={intl.formatMessage({ id: "label.secure_login_access" })}
             customTextStyle={
               isWebView

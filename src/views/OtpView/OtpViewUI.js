@@ -6,8 +6,8 @@ import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ButtonComponent from "../../components/ButtonComponent";
-import HeaderText from "../../components/HeaderText/HeaderText";
-import OtpInput from "../../components/OtpInput/index";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
+import OtpInput from "../../components/OtpInput/index"
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import {
@@ -180,11 +180,11 @@ const OtpViewUI = ({
               : [styles.container, styles.mobContainer]
           }
         >
-          <HeaderText
+          <HeaderTextWithLabelAndDescription
             label={intl.formatMessage({
               id: "label.otp_text",
             })}
-            text={intl.formatMessage({ id: "label.forgot_password" })}
+            headerText={intl.formatMessage({ id: "label.forgot_password" })}
             customTextStyle={
               isWebView ? getResponsiveStyles("label.forgot_password") : {}
             }

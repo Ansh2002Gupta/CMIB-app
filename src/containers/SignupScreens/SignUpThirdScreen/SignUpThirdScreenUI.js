@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { MediaQueryContext } from "@unthinkable/react-theme";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
+import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
+import useIsWebView from "../../../hooks/useIsWebView";
 import {
   CAREER_ASCENTS,
   CA_JOBS,
@@ -14,21 +18,27 @@ import {
   SALUTATION_OPTIONS,
   WOMENT_PLACEMENT,
 } from "../../../constants/constants";
-import style from "./SignUpThirdScreen.style";
+import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 
-const SignUpThirdScreenUI = (props) => {
-  const {
-    allFieldsFilled,
-    contactDetails,
-    errors,
-    handleDismissToast,
-    handleInputChange,
-    intl,
-    isLoading,
-    onClickNext,
-    onGoBack,
-    validationError,
-  } = props;
+const SignUpThirdScreenUI = ({
+  allFieldsFilled,
+  contactDetails,
+  errors,
+  handleBlur,
+  handleDismissToast,
+  handleInputChange,
+  intl,
+  isLoading,
+  onClickGoToLogin,
+  onClickNext,
+  onGoBack,
+  validationError,
+}) => {
+  const isWeb = Platform.OS === "web";
+  const { isWebView } = useIsWebView();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const showContentHeader =
+    currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 
   const getHeaderText = (module, intl) => {
     switch (module) {
@@ -47,12 +57,9 @@ const SignUpThirdScreenUI = (props) => {
     }
   };
 
-  return (
-    <>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={style.contentContainerStyle}
-      >
+  const renderFormContent = () => {
+    return (
+      <View style={style.formContainer}>
         {contactDetails.map((detail, index) => (
           <View key={String(index)}>
             <CommonText
@@ -86,6 +93,7 @@ const SignUpThirdScreenUI = (props) => {
                   placeholder={intl.formatMessage({
                     id: "label.enter_contact_person_name",
                   })}
+                  customHandleBlur={() => handleBlur("name", index)}
                   value={contactDetails[index].name}
                   errorMessage={errors[index].name}
                   isError={!!errors[index].name}
@@ -101,6 +109,7 @@ const SignUpThirdScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_contact_person_designation",
               })}
+              customHandleBlur={() => handleBlur("designation", index)}
               errorMessage={errors[index].designation}
               isError={!!errors[index].designation}
               value={contactDetails[index].designation}
@@ -118,6 +127,7 @@ const SignUpThirdScreenUI = (props) => {
               })}
               value={contactDetails[index].mobileNo}
               maxLength={10}
+              customHandleBlur={() => handleBlur("mobileNo", index)}
               isNumeric
               onChangeText={(val) => handleInputChange(val, "mobileNo", index)}
               isMobileNumber
@@ -132,6 +142,7 @@ const SignUpThirdScreenUI = (props) => {
               placeholder={intl.formatMessage({
                 id: "label.enter_contact_person_email_id",
               })}
+              customHandleBlur={() => handleBlur("emailId", index)}
               errorMessage={errors[index].emailId}
               isError={!!errors[index].emailId}
               value={contactDetails[index].emailId}
@@ -143,37 +154,98 @@ const SignUpThirdScreenUI = (props) => {
             )}
           </View>
         ))}
-      </ScrollView>
-      <View style={style.buttonContainer}>
+      </View>
+    );
+  };
+
+  const renderFooterContent = () => {
+    return (
+      <View style={!isWeb ? style.buttonContainer : style.webSignupFooter}>
         <SaveCancelButton
           buttonOneText={intl.formatMessage({ id: "label.back" })}
           buttonTwoText={intl.formatMessage({ id: "label.next" })}
           displayLoader={isLoading}
           hasIconLeft
           hasIconRight
+          customContainerStyle={!isWebView && style.buttonContainer}
           isNextDisabled={!allFieldsFilled()}
           onPressButtonOne={onGoBack}
           onPressButtonTwo={onClickNext}
         />
+        {isWebView && (
+          <LabelWithLinkText
+            labelText={intl.formatMessage({ id: "label.already_account" })}
+            linkText={intl.formatMessage({ id: "label.login_here" })}
+            onLinkClick={onClickGoToLogin}
+          />
+        )}
       </View>
+    );
+  };
+
+  return (
+    <View
+      style={
+        isWebView
+          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+          : style.innerContainer
+      }
+    >
+      {isWebView && (
+        <View>
+          <HeaderTextWithLabelAndDescription
+            label={intl.formatMessage({ id: "label.step_three" })}
+            {...(showContentHeader && {
+              headerText: intl.formatMessage({
+                id: "label.contact_person_details",
+              }),
+            })}
+          />
+        </View>
+      )}
+      {isWebView ? (
+        <View style={style.webContainerStyle}>
+          {renderFormContent()}
+          {renderFooterContent()}
+        </View>
+      ) : (
+        <>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={style.contentContainerStyle}
+          >
+            {renderFormContent()}
+          </ScrollView>
+          {renderFooterContent()}
+        </>
+      )}
       {!!validationError && (
         <ToastComponent
           toastMessage={validationError}
           onDismiss={handleDismissToast}
         />
       )}
-    </>
+    </View>
   );
+};
+
+SignUpThirdScreenUI.defaultProps = {
+  errors: {},
+  handleDismissToast: () => {},
+  onClickGoToLogin: () => {},
+  validationError: "",
 };
 
 SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
   errors: PropTypes.array,
+  handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  onClickGoToLogin: PropTypes.func,
   onClickNext: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   validationError: PropTypes.string,

@@ -31,7 +31,7 @@ const CheckBox = ({ handleCheckbox, id, isSelected, title }) => {
     },
   ];
 
-  return <MultiColumn columns={rowCheckBox} />;
+  return <MultiColumn columns={rowCheckBox} columnStyle={styles.columnStyle} />;
 };
 
 CheckBox.defaultProps = {

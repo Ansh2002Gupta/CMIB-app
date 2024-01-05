@@ -85,8 +85,6 @@ const style = {
     marginTop: 4,
     borderRadius: Platform.OS === "web" ? 12 : 8,
     flexDirection: "row",
-    paddingTop: Platform.OS === "android" ? 0 : 14,
-    paddingBottom: Platform.OS === "android" ? 0 : 14,
   },
   textInputStyle: {
     flex: 1,
@@ -95,6 +93,7 @@ const style = {
         ? "General sans"
         : "GeneralSans-Medium",
     fontSize: 14,
+    height: 48,
   },
   errorMsg: {
     color: colors.errorRed,
@@ -107,7 +106,7 @@ const style = {
   eyeIconContainer: {
     justifyContent: "center",
     alignItems: "center",
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   counterMainView: {
     flexDirection: "row",
