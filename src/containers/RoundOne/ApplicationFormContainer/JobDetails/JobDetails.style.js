@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   mainView: {},
   customCardComponentStyle: {
     marginTop: 16,
-    backgroundColor: colors.red,
+    backgroundColor: colors.secondaryGrey,
     flexDirection: "row",
     paddingTop: 16,
     paddingRight: 16,
@@ -22,9 +22,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
-  addDesignationStyle: {
-    backgroundColor: "red",
-  },
+  addDesignationStyle: {},
   addDesignationTextStyle: {
     fontSize: 14,
     fontWeight: "600",
