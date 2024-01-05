@@ -6,11 +6,11 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
-import { navigations } from "../../constants/routeNames";
 
 import CommonText from "../../components/CommonText";
 import CustomAvatar from "../../components/CustomAvatar";
 import useIsWebView from "../../hooks/useIsWebView";
+import { navigations } from "../../constants/routeNames";
 import images from "../../images";
 import styles from "./PrivateHeader.style";
 
