@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import { APPLICATION_FORM_STEPPER_OPTIONS } from "../../../constants/constants";
 import Stepper from "../../../components/Stepper";
+import { APPLICATION_FORM_STEPPER_OPTIONS } from "../../../constants/constants";
 
 const ApplicationFormStepper = ({ activeStep }) => {
   const intl = useIntl();

@@ -9,9 +9,9 @@ import images from "../../../../images";
 const useMainContainerTabs = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [selectedContainer, setSelectedContainer] = useState(null);
+  const [selectedTab, setSelectedTab] = useState(null);
 
-  const containers = ROUND_ONE_CARD.map((card) => ({
+  const roundOneTabs = ROUND_ONE_CARD.map((card) => ({
     title: intl.formatMessage({ id: card.title }),
     id: card.id,
     image: images[card.image],
@@ -19,7 +19,7 @@ const useMainContainerTabs = () => {
   }));
 
   const onPressCard = (id) => {
-    setSelectedContainer(id);
+    setSelectedTab(id);
     switch (id) {
       case 1:
         navigate(navigations.APPLICATION_FORM);
@@ -33,9 +33,9 @@ const useMainContainerTabs = () => {
   };
 
   return {
-    containers,
     onPressCard,
-    selectedContainer,
+    roundOneTabs,
+    selectedTab,
   };
 };
 

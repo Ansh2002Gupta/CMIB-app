@@ -13,11 +13,7 @@ import CommonText from "../../../components/CommonText";
 import useIsWebView from "../../../hooks/useIsWebView";
 import styles from "./MainContainer.style";
 
-const MainContainerTemplate = ({
-  containers,
-  onPressCard,
-  selectedContainer,
-}) => {
+const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
   const { isWebView } = useIsWebView();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
@@ -29,7 +25,7 @@ const MainContainerTemplate = ({
       }}
       showsVerticalScrollIndicator={false}
     >
-      {containers.map((container, index) => (
+      {roundOneTabs.map((container, index) => (
         <TouchableOpacity
           key={index}
           onPress={() => {
@@ -40,7 +36,7 @@ const MainContainerTemplate = ({
           <CardComponent
             customCardComponentStyle={{
               ...styles.componentStyle,
-              ...(isWebView && selectedContainer === container.id
+              ...(isWebView && selectedTab === container.id
                 ? styles.webActiveComponentStyle
                 : isWebView
                 ? styles.webComponentStyle
@@ -71,13 +67,13 @@ const MainContainerTemplate = ({
 };
 
 MainContainerTemplate.defaultProps = {
-  selectedContainer: null,
+  selectedTab: null,
 };
 
 MainContainerTemplate.propTypes = {
-  containers: PropTypes.array.isRequired,
   onPressCard: PropTypes.func.isRequired,
-  selectedContainer: PropTypes.number,
+  roundOneTabs: PropTypes.array.isRequired,
+  selectedTab: PropTypes.number,
 };
 
 export default MainContainerTemplate;
