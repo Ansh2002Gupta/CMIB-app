@@ -210,14 +210,7 @@ CompanyProfileUI.defaultProps = {
   handleCompanyDetailChange: () => {},
   handleContactPersonInfo: () => {},
   handleCompanyProfile: () => {},
-  profileResult: {
-    companyDetail: {},
-    contactPersonInfo: {},
-    companyProfile: {},
-    otherDetails: {},
-    companyLogo: "",
-    balanceCredit: "00",
-  },
+  profileResult: {},
   onSaveClick: () => {},
 };
 
