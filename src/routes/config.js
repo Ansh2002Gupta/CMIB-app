@@ -100,7 +100,7 @@ const config = [
   },
   {
     pagePath: navigations.VIEW_PROFILE,
-    element: <HomeWithPrivateAccess doesExcludeHeader={true} />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",
@@ -110,7 +110,7 @@ const config = [
   },
   {
     pagePath: navigations.COMPANY_PROFILE,
-    element: <HomeWithPrivateAccess doesExcludeHeader={true} />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",
@@ -120,7 +120,7 @@ const config = [
   },
   {
     pagePath: navigations.ROUND_ONE_APPLICATION_FORM,
-    element: <HomeWithPrivateAccess doesExcludeHeader={true} />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",

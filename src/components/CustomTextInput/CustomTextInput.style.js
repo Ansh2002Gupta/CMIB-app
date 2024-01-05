@@ -131,6 +131,7 @@ const style = {
     marginLeft: 8,
     alignItems: "center",
   },
+  valueStyle: { paddingRight: 12 },
 };
 
 export default style;

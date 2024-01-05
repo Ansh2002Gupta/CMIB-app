@@ -63,6 +63,7 @@ export const mapApiDataToUI = (
         label: "label.company_name",
         value: checkValue(name),
         error: error.companyName,
+        maxLength: 255,
       },
       {
         label: "label.entity",
@@ -100,6 +101,7 @@ export const mapApiDataToUI = (
         value: checkValue(address),
         isMultiline: true,
         error: error.address,
+        maxLength: 500,
       },
       {
         label: "label.email_id",
@@ -136,11 +138,13 @@ export const mapApiDataToUI = (
         value: checkValue(contact_person_name),
         isMajor: true,
         error: error.name,
+        maxLength: 255,
       },
       {
         label: "label.contact_personal_designation",
         value: checkValue(contact_person_designation),
         error: error.designation,
+        maxLength: 500,
       },
       {
         label: "label.mobile_number",
@@ -162,6 +166,7 @@ export const mapApiDataToUI = (
         value: checkValue(company_details),
         isMultiline: true,
         error: error.companyDetail,
+        maxLength: 100,
       },
     ],
     otherDetails: [

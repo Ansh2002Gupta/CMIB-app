@@ -97,6 +97,7 @@ const CustomTextInput = (props) => {
             isError && style.invalidInput,
             dropdownStyle,
           ]}
+          selectedTextStyle={style.valueStyle}
           renderRightIcon={() => <Image source={images.iconDownArrow} />}
           placeholderStyle={style.placeholderStyle}
           data={options}
