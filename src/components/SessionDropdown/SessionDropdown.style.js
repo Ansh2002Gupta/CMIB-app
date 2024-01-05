@@ -4,10 +4,9 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   container: {
-    zIndex: 1,
+    flex: 1,
   },
   modalOverlay: {
-    flex: 1,
     position: "absolute",
     top: 20,
     right: 0,
@@ -16,6 +15,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     width: 250,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
     justifyContent: "center",
     alignItems: "center",
   },
