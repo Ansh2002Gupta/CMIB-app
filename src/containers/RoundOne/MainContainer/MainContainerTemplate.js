@@ -7,7 +7,7 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CardComponent from "../../CardComponent/CardComponent";
+import CardComponent from "../../CardComponent";
 import CommonText from "../../../components/CommonText";
 import useIsWebView from "../../../hooks/useIsWebView";
 import styles from "./MainContainer.style";
@@ -43,9 +43,7 @@ const MainContainerTemplate = ({
                 : {}),
             }}
           >
-            <View>
-              <Image style={styles.imageStyle} source={container.image} />
-            </View>
+            <Image style={styles.imageStyle} source={container.image} />
             <View
               style={{
                 ...styles.addApplicationView,

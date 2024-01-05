@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import CardComponent from "../../containers/CardComponent/CardComponent";
+import CardComponent from "../../containers/CardComponent";
 import CommonText from "../../components/CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./RoundOne.style";
