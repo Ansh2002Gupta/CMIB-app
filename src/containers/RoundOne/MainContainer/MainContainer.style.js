@@ -40,8 +40,10 @@ const style = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
   },
+  mobContainer: {
+    flex: 1
+  },
   containerStyle: {
-    flex: 1,
     backgroundColor: colors.backgroundColor,
     paddingLeft: 16,
     paddingRight: 16,

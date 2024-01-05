@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
+  Platform,
   ScrollView,
   TouchableOpacity,
   View,
@@ -18,10 +19,12 @@ const MainContainerTemplate = ({
   selectedContainer,
 }) => {
   const { isWebView } = useIsWebView();
+  const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
   return (
     <ScrollView
       style={{
+        ...(!isWebPlatform ? styles.mobContainer : {}),
         ...(isWebView ? styles.webContainerStyle : styles.containerStyle),
       }}
       showsVerticalScrollIndicator={false}
