@@ -230,7 +230,6 @@ const CompanyProfileComponent = () => {
       });
       isValid = false;
     }
-    console.log("NEW", newErrors);
     const profileDataWithErrors = {
       ...profileData,
       companyDetail: profileData.companyDetail.map((detail) => ({
