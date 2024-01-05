@@ -29,8 +29,9 @@ const MainContainerTemplate = ({
       }}
       showsVerticalScrollIndicator={false}
     >
-      {containers.map((container) => (
+      {containers.map((container, index) => (
         <TouchableOpacity
+          key={index}
           onPress={() => {
             onPressCard(container.id);
           }}
