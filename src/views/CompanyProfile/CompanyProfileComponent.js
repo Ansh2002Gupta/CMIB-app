@@ -252,6 +252,7 @@ const CompanyProfileComponent = () => {
     setProfileData(profileDataWithErrors);
     return isValid;
   };
+
   const onSaveClick = () => {
     if (validateFields()) {
       //TODO: CALL UPDATE API
