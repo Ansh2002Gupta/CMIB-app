@@ -42,7 +42,7 @@ const DragAndDropCard = ({
         <View style={styles.contentContainerStyle}>
           <View style={styles.loaderBox}>
             <Spinner />
-            {(uploadPercentage || uploadPercentage === 0) && isPlatformWeb && (
+            {(uploadPercentage || uploadPercentage === 0) && (
               <View
                 style={{
                   ...styles.percentageBox,
