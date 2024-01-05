@@ -107,14 +107,11 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     const isAtLeastOneInterestSelected = options.some(
       (option) => option.isSelected
     );
-    const isFileUploaded =
-      fileUploadResult &&
-      fileUploadResult.data &&
-      fileUploadResult.data.file_name;
+
     return (
       requiredFields.every((field) => String(field).trim() !== "") &&
       isAtLeastOneInterestSelected &&
-      isFileUploaded
+      fileUploadResult
     );
   };
 

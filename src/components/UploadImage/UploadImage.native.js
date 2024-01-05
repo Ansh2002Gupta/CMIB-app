@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
@@ -9,6 +10,8 @@ import { launchImageLibrary } from "react-native-image-picker";
 import styles from "./UploadImage.style";
 
 const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
+  const intl = useIntl();
+  const [errorWhileUpload, setErrorWhileUpload] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -32,9 +35,11 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
       if (response.didCancel) {
         console.log("User cancelled image picker");
       } else if (response.error) {
-        console.log("Image picker error: ", response.error);
+        setErrorWhileUpload(response.error);
       } else if (response.assets && response.assets[0].fileSize > 5242880) {
-        alert("File size should not exceed 5MB.");
+        setErrorWhileUpload(
+          intl.formatMessage({ id: "label.fileTooLargeError" })
+        );
       } else {
         setIsUploading(true);
         let imageUri = response.uri || response.assets?.[0]?.uri;
@@ -67,6 +72,7 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
         />
       ) : (
         <DragAndDropCard
+          errorMessage={errorWhileUpload}
           handleUploadClick={openImagePicker}
           isLoading={isUploading}
         />
