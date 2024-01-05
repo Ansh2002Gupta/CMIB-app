@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import {
   Image,
@@ -59,14 +59,12 @@ const PrivateHeader = ({
             {/* Right Now It's a static data, we will replace it by dynamic data as we get API */}
             {pageHeading === "" && (
               <>
-                <CommonText
-                  customTextStyle={styles.nameText}
-                  title={"Hey John -"}
-                />
-                <CommonText
-                  customTextStyle={styles.overView}
-                  title={"here’s your overview"}
-                />
+                <CommonText customTextStyle={styles.nameText} fontWeight="600">
+                  {"Hey John -"}
+                </CommonText>
+                <CommonText customTextStyle={styles.overView}>
+                  {"here’s your overview"}
+                </CommonText>
               </>
             )}
           </View>
@@ -96,14 +94,15 @@ const PrivateHeader = ({
 
 const PageHeading = ({ intl, pageHeading, showRightButton, isWebView }) => (
   <View style={isWebView ? styles.textHeaderTopBorder : styles.textHeader}>
-    <CommonText
-      title={intl.formatMessage({ id: pageHeading })}
-      customTextStyle={styles.formHeaderStyle}
-    />
+    <CommonText customTextStyle={styles.formHeaderStyle} fontWeight="600">
+      {intl.formatMessage({ id: pageHeading })}
+    </CommonText>
     {showRightButton && isWebView && (
       <TouchableOpacity style={styles.editButton}>
         <Image source={images.iconEdit} style={styles.icons} />
-        <CommonText title="Edit" customTextStyle={styles.editText} />
+        <CommonText customTextStyle={styles.editText}>
+          {intl.formatMessage({ id: "label.edit" })}
+        </CommonText>
       </TouchableOpacity>
     )}
   </View>
@@ -155,9 +154,8 @@ const HeaderRight = ({
             <View>
               <CommonText
                 customTextStyle={styles.fullNameStyle}
-                title={`${firstName} ${lastName}`}
-              />
-              <CommonText title={role} customTextStyle={styles.roleStyle} />
+              >{`${firstName} ${lastName}`}</CommonText>
+              <CommonText customTextStyle={styles.roleStyle}>{role}</CommonText>
             </View>
             <TouchableOpacity>
               <Image source={images.iconArrowDown2} style={styles.iconArrow} />

@@ -13,7 +13,6 @@ const style = {
     lineHeight: 24,
   },
   webLabel: {
-    fontFamily: "General Sans",
     color: colors.black,
   },
   starStyle: {
@@ -41,7 +40,6 @@ const style = {
     color: colors.errorRed,
     fontSize: 12,
     lineHeight: 18,
-    fontWeight: "600",
   },
 };
 

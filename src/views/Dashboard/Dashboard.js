@@ -63,10 +63,9 @@ function DashboardView() {
 
   return (
     <View style={styles.container}>
-      <CommonText
-        customTextStyle={styles.header}
-        title={intl.formatMessage({ id: "label.dashboard" })}
-      />
+      <CommonText customTextStyle={styles.header}>
+        {intl.formatMessage({ id: "label.dashboard" })}
+      </CommonText>
       <MultiColumn columns={searchData} />
       <CustomCell
         onPress={toggleSwitch}
@@ -77,7 +76,7 @@ function DashboardView() {
         style={styles.customCellStyle}
         textStyle={styles.customCellTextStyle}
       />
-      {isEnabled && <AddDesignation  resultCallback={handleAddDesignation}/>}
+      {isEnabled && <AddDesignation resultCallback={handleAddDesignation} />}
     </View>
   );
 }

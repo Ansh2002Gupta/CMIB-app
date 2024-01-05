@@ -51,9 +51,9 @@ const MyAccountUI = ({
           <View style={style.detailContainer}>
             <CommonText
               customTextStyle={style.fullNameStyle}
-              title={`${firstName} ${lastName}`}
-            />
-            <CommonText title={email} customTextStyle={style.emailStyle} />
+              fontWeight="600"
+            >{`${firstName} ${lastName}`}</CommonText>
+            <CommonText customTextStyle={style.emailStyle}>{email}</CommonText>
           </View>
         </View>
         {options.map((option, index) => (
@@ -67,10 +67,9 @@ const MyAccountUI = ({
           >
             <Image source={option.iconLeft} style={style.leftIcon} />
             <View style={style.titleParentStyle}>
-              <CommonText
-                customTextStyle={style.titleStyle}
-                title={intl.formatMessage({ id: option.title })}
-              />
+              <CommonText customTextStyle={style.titleStyle}>
+                {intl.formatMessage({ id: option.title })}
+              </CommonText>
             </View>
 
             <View style={style.iconContainer}>

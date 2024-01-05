@@ -129,7 +129,7 @@ const CustomTextInput = (props) => {
         >
           {isMobileNumber && (
             <View style={style.prefixContainer}>
-              <CommonText customTextStyle={style.prefixStyle} title={+91} />
+              <CommonText customTextStyle={style.prefixStyle}>{+91}</CommonText>
               <Image source={images.iconDownArrow} style={style.iconStyle} />
               <Image source={images.iconDivider} style={style.iconStyle} />
             </View>
@@ -166,8 +166,10 @@ const CustomTextInput = (props) => {
       {isError && (
         <CommonText
           customTextStyle={[style.errorMsg, customErrorStyle]}
-          title={errorMessage}
-        />
+          fontWeight="600"
+        >
+          {errorMessage}
+        </CommonText>
       )}
     </View>
   );

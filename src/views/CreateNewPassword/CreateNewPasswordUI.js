@@ -107,9 +107,20 @@ function CreateNewPasswordUI(props) {
         >
           <View style={styles.container}>
             <HeaderTextWithLabelAndDescription
-              headerText={intl.formatMessage({ id: "label.create_new_password" })}
-              description={intl.formatMessage({ id: "label.enter_new_password" })}
-              customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.createNewPassword")} : styles.headerText}
+              headerText={intl.formatMessage({
+                id: "label.create_new_password",
+              })}
+              description={intl.formatMessage({
+                id: "label.enter_new_password",
+              })}
+              customTextStyle={
+                isWebView
+                  ? {
+                      ...styles.headerText,
+                      ...getResponsiveStyles("label.createNewPassword"),
+                    }
+                  : styles.headerText
+              }
               customSecondHeadingStyles={
                 isWebView
                   ? getResponsiveStyles("label.createNewPasswordText")
@@ -194,8 +205,10 @@ function CreateNewPasswordUI(props) {
                   ...styles.backToLoginText,
                   ...(isWebView ? styles.webView.backBtnText : {}),
                 }}
-                title={intl.formatMessage({ id: "label.back_to_login" })}
-              />
+                fontWeight="600"
+              >
+                {intl.formatMessage({ id: "label.back_to_login" })}
+              </CommonText>
             </CustomTouchableOpacity>
           </View>
           {successLogin && (

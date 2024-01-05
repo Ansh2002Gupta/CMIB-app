@@ -4,7 +4,10 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import { getResponsiveStyles, style } from "./HeaderTextWithLabelAndDescription.style";
+import {
+  getResponsiveStyles,
+  style,
+} from "./HeaderTextWithLabelAndDescription.style";
 
 const HeaderTextWithLabelAndDescription = ({
   customContainerStyles,
@@ -18,7 +21,9 @@ const HeaderTextWithLabelAndDescription = ({
 
   return (
     <View style={[style.headerContainer, customContainerStyles]}>
-      {!!label && <CommonText title={label} customTextStyle={style.labelText} />}
+      {!!label && (
+        <CommonText title={label} customTextStyle={style.labelText} />
+      )}
       {!!headerText && (
         <CommonText
           customTextStyle={[
@@ -26,14 +31,17 @@ const HeaderTextWithLabelAndDescription = ({
             style.heading,
             customTextStyle,
           ]}
-          title={headerText}
-        />
+          fontWeight="600"
+        >
+          {headerText}
+        </CommonText>
       )}
       {!!description && (
         <CommonText
           customTextStyle={[style.secondHeading, customSecondHeadingStyles]}
-          title={description}
-        />
+        >
+          {description}
+        </CommonText>
       )}
     </View>
   );
@@ -43,9 +51,9 @@ HeaderTextWithLabelAndDescription.defaultProps = {
   customContainerStyles: {},
   customSecondHeadingStyles: {},
   customTextStyle: {},
-  description: '',
-  headerText: '',
-  label: '',
+  description: "",
+  headerText: "",
+  label: "",
 };
 
 HeaderTextWithLabelAndDescription.propTypes = {
@@ -56,6 +64,5 @@ HeaderTextWithLabelAndDescription.propTypes = {
   headerText: PropTypes.string,
   label: PropTypes.string,
 };
-
 
 export default HeaderTextWithLabelAndDescription;

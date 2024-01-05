@@ -10,10 +10,9 @@ function ProfileView(props) {
 
   return (
     <View style={styles.container}>
-      <CommonText
-        customTextStyle={styles.header}
-        title={intl.formatMessage({ id: "label.my_account" })}
-      />
+      <CommonText customTextStyle={styles.header}>
+        {intl.formatMessage({ id: "label.my_account" })}
+      </CommonText>
     </View>
   );
 }

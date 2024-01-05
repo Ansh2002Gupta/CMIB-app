@@ -20,7 +20,6 @@ const style = {
     paddingBottom: 24,
   },
   headerText: {
-    fontWeight: "600",
     fontSize: 20,
     color: colors.black,
     paddingBottom: 8,
@@ -31,7 +30,6 @@ const style = {
     alignItems: "center",
   },
   infoText: {
-    fontFamily: "GeneralSans-Medium",
     fontSize: 14,
     lineHeight: 22,
     color: colors.darkGrey,

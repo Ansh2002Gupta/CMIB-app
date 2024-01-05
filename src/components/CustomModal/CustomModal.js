@@ -36,14 +36,12 @@ const CustomModal = ({
           {isSuccess ? (
             <>
               <Image source={images.iconSuccess} />
-              <CommonText
-                customTextStyle={style.headerText}
-                title={headerText}
-              />
-              <CommonText
-                customTextStyle={style.infoText}
-                title={secondaryText}
-              />
+              <CommonText customTextStyle={style.headerText} fontWeight="600">
+                {headerText}
+              </CommonText>
+              <CommonText customTextStyle={style.infoText}>
+                {secondaryText}
+              </CommonText>
               <ButtonComponent title={buttonTitle} onPress={onPress} />
             </>
           ) : (
@@ -51,8 +49,10 @@ const CustomModal = ({
               <View style={style.headerStyle}>
                 <CommonText
                   customTextStyle={[style.headerText, headerTextStyle]}
-                  title={headerText}
-                />
+                  fontWeight="600"
+                >
+                  {headerText}
+                </CommonText>
                 <TouchableOpacity onPress={onPressIconCross}>
                   {isIconCross && <Image source={images.iconCross} />}
                 </TouchableOpacity>

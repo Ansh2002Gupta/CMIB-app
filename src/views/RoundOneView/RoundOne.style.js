@@ -18,7 +18,7 @@ const style = {
   componentStyle: {
     flexDirection: "row",
     paddingBottom: 24,
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   webComponentStyle: {
     flexDirection: "column",
@@ -45,12 +45,10 @@ const style = {
   addApplicationFormText: {
     fontSize: 18,
     color: colors.black,
-    fontWeight: "600",
   },
   addApplicationFormDescriptionText: {
     fontSize: 14,
     color: colors.subHeadingGray,
-    fontWeight: "500",
     marginTop: 8,
   },
   containerStyle: {

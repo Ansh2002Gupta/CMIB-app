@@ -48,7 +48,6 @@ const style = {
   },
   fullNameStyle: {
     fontSize: 16,
-    fontWeight: "600",
     color: colors.black,
   },
   emailStyle: {

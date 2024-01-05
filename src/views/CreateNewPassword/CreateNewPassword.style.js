@@ -38,9 +38,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 24,
     fontSize: 14,
-    fontWeight: "600",
     color: colors.darkBlue,
-    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   bullet: {
     width: 6,
@@ -126,7 +124,6 @@ const styles = StyleSheet.create({
       marginBottom: 8,
     },
     backBtnText: {
-      fontWeight: "600",
       ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
     },
     companyView: {
@@ -141,7 +138,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
       fontSize: 28,
-    }
+    },
   },
   ErrorStyle: {
     paddingTop: 4,

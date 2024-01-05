@@ -66,7 +66,6 @@ const style = {
   forgotPasswordText: {
     fontSize: 14,
     color: colors.darkBlue,
-    fontWeight: "600",
     ...webPointer,
   },
   loginButtonView: {
@@ -82,7 +81,6 @@ const style = {
   newAccountText: {
     color: colors.darkBlue,
     fontSize: 14,
-    fontWeight: "600",
     ...webPointer,
   },
   borderStyle: {

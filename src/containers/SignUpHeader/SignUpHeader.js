@@ -24,10 +24,9 @@ const SignUpHeader = (props) => {
           }}
           style={styles.headerContainerStyle}
         >
-          <CommonText
-            customTextStyle={styles.headerTextStyle}
-            title={intl.formatMessage({ id: "label.go_back_to_login" })}
-          />
+          <CommonText customTextStyle={styles.headerTextStyle} fontWeight="600">
+            {intl.formatMessage({ id: "label.go_back_to_login" })}
+          </CommonText>
         </CustomTouchableOpacity>
       ) : null}
       <View

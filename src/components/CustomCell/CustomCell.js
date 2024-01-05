@@ -25,7 +25,12 @@ const CustomCell = ({
       {!!leftSource && (
         <CustomImage Icon={leftSource} source={leftSource} isSvg={isSvg} />
       )}
-      <CommonText customTextStyle={textStyle} title={title} />
+      <CommonText
+        customTextStyle={textStyle}
+        fontWeight={textStyle?.fontWeight}
+      >
+        {title}
+      </CommonText>
       {!!rightSource && (
         <CustomImage Icon={rightSource} source={rightSource} isSvg={isSvg} />
       )}

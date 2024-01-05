@@ -57,10 +57,9 @@ const SignUpLastScreenUI = ({
   const renderFormContent = () => {
     return (
       <View style={style.formContainer}>
-        <CommonText
-          customTextStyle={style.headerText}
-          title={intl.formatMessage({ id: "label.social_media_presence" })}
-        />
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.social_media_presence" })}
+        </CommonText>
         {Object.keys(socialMediaLinks).map((key) => (
           <CustomTextInput
             key={key}
@@ -78,10 +77,9 @@ const SignUpLastScreenUI = ({
           />
         ))}
         <View style={style.seperator} />
-        <CommonText
-          customTextStyle={style.headerText}
-          title={intl.formatMessage({ id: "label.company_details" })}
-        />
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.company_details" })}
+        </CommonText>
         <CustomTextInput
           label={intl.formatMessage({
             id: "label.short_profile_of_the_company",
@@ -141,10 +139,9 @@ const SignUpLastScreenUI = ({
           isDropdown
         />
         <View style={style.seperator} />
-        <CommonText
-          customTextStyle={style.headerText}
-          title={intl.formatMessage({ id: "label.source_of_info" })}
-        />
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.source_of_info" })}
+        </CommonText>
         <View style={style.containerStyle}>
           {options.map((item, index) => (
             <CheckBox
@@ -158,16 +155,14 @@ const SignUpLastScreenUI = ({
           ))}
         </View>
         <View style={style.seperator} />
-        <CommonText
-          customTextStyle={style.headerText}
-          title={intl.formatMessage({ id: "label.uplaod_company_logo" })}
-        />
-        <CommonText
-          customTextStyle={style.infoStyle}
-          title={intl.formatMessage({
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.uplaod_company_logo" })}
+        </CommonText>
+        <CommonText customTextStyle={style.infoStyle}>
+          {intl.formatMessage({
             id: "label.logo_info",
           })}
-        />
+        </CommonText>
         <UploadImage
           onImageUpload={onImageUpload}
           onDeleteImage={onDeleteImage}

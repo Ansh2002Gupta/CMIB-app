@@ -53,8 +53,7 @@ const DragAndDropCard = ({
               >
                 <CommonText
                   customTextStyle={styles.percentageText}
-                  title={`${Math.round(uploadPercentage)}%`}
-                />
+                >{`${Math.round(uploadPercentage)}%`}</CommonText>
               </View>
             )}
           </View>
@@ -63,29 +62,27 @@ const DragAndDropCard = ({
         <View style={styles.contentContainerStyle} {...webProps}>
           <Image source={images.iconUpload} />
           <View style={styles.textContainer}>
-            <CommonText
-              customTextStyle={styles.textStyle}
-              title={intl.formatMessage({ id: "label.drag_drop_files" })}
-            />
+            <CommonText customTextStyle={styles.textStyle}>
+              {intl.formatMessage({ id: "label.drag_drop_files" })}
+            </CommonText>
             <TouchableOpacity onPress={handleUploadClick}>
               <CommonText
                 customTextStyle={styles.browseStyle}
-                title={` ${intl.formatMessage({ id: "label.browse" })}`}
-              />
+              >{` ${intl.formatMessage({ id: "label.browse" })}`}</CommonText>
             </TouchableOpacity>
           </View>
-          <CommonText
-            customTextStyle={styles.infoStyle}
-            title={intl.formatMessage({ id: "label.supported_type" })}
-          />
+          <CommonText customTextStyle={styles.infoStyle}>
+            {intl.formatMessage({ id: "label.supported_type" })}
+          </CommonText>
           {!!errorMessage && (
             <CommonText
               customTextStyle={{
                 ...styles.error,
                 ...commonStyles.errorMessage,
               }}
-              title={errorMessage}
-            />
+            >
+              {errorMessage}
+            </CommonText>
           )}
           {isPlatformWeb && (
             <TextInput

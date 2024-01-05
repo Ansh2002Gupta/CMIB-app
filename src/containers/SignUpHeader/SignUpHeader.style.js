@@ -11,7 +11,6 @@ export const styles = {
   headerTextStyle: {
     color: colors.darkBlue,
     fontSize: 14,
-    fontWeight: "600",
     lineHeight: 20,
   },
   iconBar: {

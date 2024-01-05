@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     marginRight: 0,
   },
   headerText: {
-    fontWeight: "600",
     fontSize: 20,
     color: colors.black,
     marginTop: 20,
