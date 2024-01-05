@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import CardComponent from "../../containers/CardComponent/CardComponent";
+import CardComponent from "../../components/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -38,7 +38,7 @@ const RoundOneUI = (props) => {
             style={styles.buttonStyle}
           >
             <CardComponent
-              customCardComponentStyle={{
+              customStyle={{
                 ...styles.componentStyle,
                 ...(isWebView && selectedContainer === container.id
                   ? styles.webActiveComponentStyle
