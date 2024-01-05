@@ -1,15 +1,17 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
+import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SessionDropdown from "../SessionDropdown";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import images from "../../images";
 import styles from "./SessionBar.style";
 
 const SessionBar = () => {
+  const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
@@ -45,12 +47,12 @@ const SessionBar = () => {
 
   return (
     <CustomTouchableOpacity style={styles.container} onPress={handleDropdown}>
-      <CommonText title={"Sessions :"} />
+      <CommonText title={intl.formatMessage({ id: "label.sessions" })} />
       <CommonText
         title={selectedValue}
         customTextStyle={styles.sessionText(currentBreakpoint)}
       />
-      <CustomImage source={images.iconArrowDown} style={styles.iconDown} />
+      <CustomImage source={images.iconArrowDown} style={styles.iconDown} isSvg={true} alt={"Arrow Down"} />
       {showDropdown && (
         <SessionDropdown
           options={selectedModule.session}

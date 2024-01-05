@@ -13,14 +13,12 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     flexDirection: "row",
     alignItems: "center",
-    cursor: "pointer",
     position: "relative",
   },
   sessionText: (currentBreakpoint) => ({
     fontWeight: "600",
     fontSize: 12,
     marginLeft: 2,
-    cursor: "pointer",
     ...Platform.select({
       web: {
         textOverflow: "ellipsis",

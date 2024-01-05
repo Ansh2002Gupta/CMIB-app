@@ -129,7 +129,7 @@ const locale = {
   "label.advertisement_in_ca_journal":
     "Advertisement in the Chartered Accountant Journal",
   "label.my_account": "Account",
-  "label.account":"My Account",
+  "label.account": "My Account",
   "label.view_profile": "View Profile",
   "label.edit_profile_picture": "Edit Profile Picture",
   "label.crop_profile_picture": "Crop Profile Picture",
@@ -228,7 +228,8 @@ const locale = {
   "label.job_details": "Job Details",
   "label.pre_interview_preferences": "Pre-Interview Preferences",
   "label.centre_details": "Centre Details",
-  "label.payment":"Payment"
+  "label.payment": "Payment",
+  "label.sessions": "Sessions :",
 };
 
 export default locale;

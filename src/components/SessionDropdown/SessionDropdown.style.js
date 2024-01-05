@@ -3,18 +3,26 @@ import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
-  modalContent: {
+  modalContent: (currentBreakpoint) => ({
     position: "absolute",
     top: 30,
-    right: 0,
+    left: 0,
     backgroundColor: colors.white,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.lightGrey,
-    justifyContent: "center",
-    alignItems: "center",
     zIndex: 1,
-  },
+    ...Platform.select({
+      web: {
+        width:
+          currentBreakpoint === "md"
+            ? "200%"
+            : currentBreakpoint === "sm"
+            ? "120%"
+            : "100%",
+      },
+    }),
+  }),
   option: {
     padding: 8,
     paddingLeft: 16,
@@ -22,24 +30,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.lightGrey,
   },
-  optionTextStyle: (currentBreakpoint) => ({
+  optionTextStyle:{
     fontSize: 12,
     marginLeft: 2,
     borderWidth: 0,
-    ...Platform.select({
-      web: {
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        maxWidth:
-          currentBreakpoint === "md"
-            ? "80px"
-            : currentBreakpoint === "sm"
-            ? "150px"
-            : "100%",
-      },
-    }),
-  }),
+  },
 });
 
 export default styles;
