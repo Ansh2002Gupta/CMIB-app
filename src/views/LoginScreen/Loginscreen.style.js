@@ -120,7 +120,6 @@ const style = {
     createNewAccountText: {
       color: colors.darkBlue,
       fontSize: 14,
-      fontWeight: "600",
       lineHeight: 20,
       ...webPointer,
     },
@@ -130,7 +129,6 @@ const style = {
     },
     forgotPasswordText: {
       fontSize: 14,
-      fontWeight: "600",
       lineHeight: 20,
       ...webPointer,
     },
@@ -178,7 +176,6 @@ const style = {
       color: colors.black,
       textAlign: "center",
       fontSize: 16,
-      fontWeight: "600",
       ...webPointer,
     },
     subHeadingText: {

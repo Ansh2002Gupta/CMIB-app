@@ -123,9 +123,6 @@ const styles = StyleSheet.create({
     submitTextContainer: {
       marginBottom: 8,
     },
-    backBtnText: {
-      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
-    },
     companyView: {
       backgroundColor: colors.white,
       marginTop: 40,

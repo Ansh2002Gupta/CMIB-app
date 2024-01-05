@@ -201,10 +201,7 @@ function CreateNewPasswordUI(props) {
             />
             <CustomTouchableOpacity onPress={onClickGoToLogin}>
               <CommonText
-                customTextStyle={{
-                  ...styles.backToLoginText,
-                  ...(isWebView ? styles.webView.backBtnText : {}),
-                }}
+                customTextStyle={styles.backToLoginText}
                 fontWeight="600"
               >
                 {intl.formatMessage({ id: "label.back_to_login" })}

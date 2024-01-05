@@ -35,7 +35,7 @@ const ButtonComponent = (props) => {
         <>
           <CommonText
             customTextStyle={[styles.titleStyle, customTitleStyle]}
-            fontWeight={"600"}
+            fontWeight={customTitleStyle?.fontWeight || "600"}
           >
             {title}
           </CommonText>

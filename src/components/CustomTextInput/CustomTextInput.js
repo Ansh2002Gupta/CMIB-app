@@ -166,7 +166,7 @@ const CustomTextInput = (props) => {
       {isError && (
         <CommonText
           customTextStyle={[style.errorMsg, customErrorStyle]}
-          fontWeight="600"
+          fontWeight={customErrorStyle?.fontWeight || "600"}
         >
           {errorMessage}
         </CommonText>

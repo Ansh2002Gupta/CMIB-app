@@ -23,6 +23,7 @@ const CustomLabelView = ({
             isWebView && styles.webLabel,
             customLabelStyle,
           ]}
+          fontWeight={customLabelStyle?.fontWeight}
         >
           {label}
         </CommonText>

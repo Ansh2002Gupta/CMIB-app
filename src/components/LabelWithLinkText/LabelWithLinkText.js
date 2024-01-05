@@ -9,7 +9,7 @@ const LabelWithLinkText = ({ labelText, linkText, onLinkClick }) => {
   return (
     <View style={style.textContainer}>
       {!!labelText && (
-        <CommonText customTextStyle={style.labelTextStyle} fontWeight="600">
+        <CommonText customTextStyle={style.labelTextStyle}>
           {labelText}
         </CommonText>
       )}

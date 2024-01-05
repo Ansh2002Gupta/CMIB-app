@@ -31,7 +31,7 @@ const HeaderTextWithLabelAndDescription = ({
             style.heading,
             customTextStyle,
           ]}
-          fontWeight="600"
+          fontWeight={customTextStyle?.fontWeight || "600"}
         >
           {headerText}
         </CommonText>

@@ -119,7 +119,6 @@ const LoginScreenUI = (props) => {
               >
                 {intl.formatMessage({ id: "label.member_candidate" })}
               </CommonText>
-
               <View
                 style={
                   active
