@@ -87,6 +87,7 @@ const CompanyProfileComponent = () => {
   };
 
   const validateFields = () => {
+    //TODO: Need to be optimize
     let isValid = true;
     let newErrors = {
       companyName: "",
