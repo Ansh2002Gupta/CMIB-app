@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
@@ -19,13 +19,28 @@ const SessionBar = () => {
     selectedModule.session[0].label
   );
 
-  const handleSelect = (option) => {
-    setSelectedValue(option);
-    handleDropdown();
+  const sessionRef = useRef(null);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleClickOutside = (event) => {
+    if (sessionRef?.current && !sessionRef?.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
   };
 
   const handleDropdown = () => {
     setShowDropdown((prev) => !prev);
+  };
+
+  const handleSelect = (option) => {
+    setSelectedValue(option);
+    handleDropdown();
   };
 
   return (
@@ -40,6 +55,7 @@ const SessionBar = () => {
         <SessionDropdown
           options={selectedModule.session}
           onSelect={handleSelect}
+          sessionRef={sessionRef}
         />
       )}
     </CustomTouchableOpacity>
