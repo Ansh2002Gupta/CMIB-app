@@ -13,7 +13,7 @@ const CardComponent = ({ children, customCardComponentStyle }) => {
 };
 
 CardComponent.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.array.isRequired,
   customCardComponentStyle: PropTypes.object,
 };
 

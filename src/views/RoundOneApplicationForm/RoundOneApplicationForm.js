@@ -1,13 +1,14 @@
 import React from "react";
-import { View } from "@unthinkable/react-core-components";
 
-import CustomTextEditor from "../../components/CustomTextEditor";
+import { Base } from "../../core/layouts";
+
+import ApplicationFormContainer from "../../containers/RoundOne/ApplicationFormContainer";
 
 const RoundOneApplicationForm = () => {
   return (
-    <View>
-      <CustomTextEditor />
-    </View>
+    <Base>
+      <ApplicationFormContainer />
+    </Base>
   );
 };
 
