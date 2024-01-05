@@ -2,20 +2,34 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../../../assets/colors";
 
 const styles = StyleSheet.create({
-  mainView: {
+  mainView: {},
+  customCardComponentStyle: {
+    marginTop: 16,
+    backgroundColor: colors.red,
+    flexDirection: "row",
+    paddingTop: 16,
+    paddingRight: 16,
+    paddingLeft: 16,
+    paddingBottom: 16,
+  },
+  MultiRowStyle: {
+    backgroundColor: colors.backgroundColor,
     marginTop: 16,
     marginLeft: 16,
     marginRight: 16,
   },
-  customCardComponentStyle: {
-    marginTop: 16,
-  },
-  MultiRowStyle: {
-    backgroundColor: colors.backgroundColor,
-  },
   detailHeadingTextStyle: {
     fontSize: 16,
     fontWeight: "600",
+  },
+  addDesignationStyle: {
+    backgroundColor: "red",
+  },
+  addDesignationTextStyle: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: colors.darkBlue,
+    marginLeft: 8,
   },
 });
 
