@@ -24,13 +24,14 @@ const CommonText = ({
 };
 
 CommonText.defaultProps = {
+  children: <></>,
   customContainerStyle: {},
   customTextStyle: {},
   fontWeight: "500",
 };
 
 CommonText.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
   customContainerStyle: PropTypes.object,
   customTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   fontWeight: PropTypes.string,
