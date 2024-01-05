@@ -33,11 +33,13 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
         console.log("User cancelled image picker");
       } else if (response.error) {
         console.log("Image picker error: ", response.error);
+      } else if (response.assets && response.assets[0].fileSize > 5242880) {
+        alert("File size should not exceed 5MB.");
       } else {
         setIsUploading(true);
         let imageUri = response.uri || response.assets?.[0]?.uri;
         let fileName = response.fileName || response.assets?.[0]?.fileName;
-        let type = response.fileName || response.assets?.[0]?.type;
+        let type = response.type || response.assets?.[0]?.type;
         const formData = new FormData();
         const file = {
           uri: imageUri,
