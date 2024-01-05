@@ -122,7 +122,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.ROUND_ONE_APPLICATION,
+    pagePath: navigations.APPLICATION_FORM,
     element: <ContentRouteWithPrivateAccess />,
     views: [
       {

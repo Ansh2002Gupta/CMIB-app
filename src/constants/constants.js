@@ -174,7 +174,7 @@ export const SCREEN_NAMES = {
   ROUND_ONE_APPLICATION_FORM: "label.add_application_form",
 };
 
-export const APPLICATION_FORM_STEPPER_OPTION = [
+export const APPLICATION_FORM_STEPPER_OPTIONS = [
   {
     title: "label.company_profile",
   },
