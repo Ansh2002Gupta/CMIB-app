@@ -3,9 +3,10 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 
 import CardComponent from "../../components/CardComponent/CardComponent";
-import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import DetailComponent from "../../components/DetailComponent";
 
 import style from "./DetailCard.style";
+
 const DetailCard = ({
   details,
   handleChange,
