@@ -6,10 +6,10 @@ import styles from "./MyAccountSection.style";
 
 const MyAccountSection = () => {
   return (
-    <View style={styles.container}>
-      <MyAccountComponent
-        omitArrowIcon={true}
-      />
+    <View style={styles.overlay}>
+      <View style={styles.container}>
+        <MyAccountComponent omitArrowIcon={true} />
+      </View>
     </View>
   );
 };

@@ -10,12 +10,10 @@ const styles = StyleSheet.create({
   iconNotification: {
     width: 24,
     height: 24,
-    // cursor: "pointer",
   },
   profileView: {
     flexDirection: "row",
     marginLeft: 10,
-    // cursor: "pointer",
     position: "relative",
   },
   profileNameSection: {
