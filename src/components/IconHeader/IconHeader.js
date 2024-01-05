@@ -35,7 +35,7 @@ const IconHeader = ({
         {hasIconBar && !isWebView && (
           <View style={styles.iconContainer}>
             {!!iconLeft && (
-              <CustomTouchableOpacity onPress={onGoBack || onPressLeftIcon}>
+              <CustomTouchableOpacity onPress={onPressLeftIcon || onGoBack}>
                 <Image source={iconLeft} />
               </CustomTouchableOpacity>
             )}
