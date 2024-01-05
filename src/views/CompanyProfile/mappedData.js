@@ -8,8 +8,7 @@ import {
 export const mapApiDataToUI = (
   apiData,
   industryOptions,
-  isEditMode = false,
-  error
+  isEditMode = false
 ) => {
   const {
     name,
@@ -60,9 +59,9 @@ export const mapApiDataToUI = (
   return {
     companyDetail: [
       {
+        key: "companyName",
         label: "label.company_name",
         value: checkValue(name),
-        error: error.companyName,
         maxLength: 255,
       },
       {
@@ -73,19 +72,19 @@ export const mapApiDataToUI = (
         inputKey: "label",
       },
       {
+        key: "registrationNo",
         label: "label.firm_registration_no",
         value: checkValue(frn_number),
         isNumeric: true,
         maxLength: 10,
         isMajor: true,
-        error: error.registrationNo,
       },
       {
+        key: "noOfPartners",
         label: "label.no_of_partners",
         value: checkValue(number_of_partner),
         isMinor: true,
         isNumeric: true,
-        error: error.noOfPartners,
       },
       {
         label: "label.current_industry",
@@ -97,31 +96,31 @@ export const mapApiDataToUI = (
         inputKey: "name",
       },
       {
+        key: "address",
         label: "label.address_for_correspondence",
         value: checkValue(address),
         isMultiline: true,
-        error: error.address,
         maxLength: 500,
       },
       {
+        key: "emailId",
         label: "label.email_id",
         value: checkValue(email),
-        error: error.emailId,
       },
       {
+        key: "code",
         label: "label.isd_std_code",
         isNumeric: true,
         value: checkValue(std_country_code),
         isMinor: true,
-        error: error.code,
         maxLength: 8,
       },
       {
+        key: "telephoneNo",
         label: "label.telephone_no",
         isNumeric: true,
         value: checkValue(telephone_number),
         isMajor: true,
-        error: error.telephoneNo,
         maxLength: 15,
       },
     ],
@@ -134,47 +133,47 @@ export const mapApiDataToUI = (
         options: SALUTATION_OPTIONS,
       },
       {
+        key: "name",
         label: "label.contact_person_name",
         value: checkValue(contact_person_name),
         isMajor: true,
-        error: error.name,
         maxLength: 255,
       },
       {
+        key: "designation",
         label: "label.contact_personal_designation",
         value: checkValue(contact_person_designation),
-        error: error.designation,
         maxLength: 500,
       },
       {
+        key: "mobileNo",
         label: "label.mobile_number",
         isMobileNumber: true,
         value: isEditMode ? contact_person_mobile_number : combinedMobileNumber,
-        error: error.mobileNo,
         isNumeric: true,
         maxLength: 10,
       },
       {
-        label: "label.email_id",
+        key: "contactEmailId",
+        label: "label.enter_contact_person_email_id",
         value: checkValue(contact_person_email),
-        error: error.contactEmailId,
       },
     ],
     companyProfile: [
       {
+        key: "companyDetail",
         label: "label.short_profile_of_the_company",
         value: checkValue(company_details),
         isMultiline: true,
-        error: error.companyDetail,
         maxLength: 100,
       },
     ],
     otherDetails: [
       {
+        key: "website",
         label: "label.website",
         value: checkValue(website),
         isLink: website && true,
-        error: error.website,
       },
       {
         label: "label.nature_of_supplier",
