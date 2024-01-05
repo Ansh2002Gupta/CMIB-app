@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: colors.lightGrey,
+    cursor:"default"
   },
 });
 

@@ -8,7 +8,7 @@ import CustomAvatar from "../CustomAvatar";
 import MyAccountSection from "../MyAccountSection";
 import CustomImage from "../CustomImage";
 import images from "../../images";
-import styles from "./HeaderRight.style";
+import styles from "./UserAccountInfo.style";
 
 const HeaderRight = ({
   firstName,
@@ -23,7 +23,7 @@ const HeaderRight = ({
   const [showAccountSection, setShowAccountSection] = useState(false);
 
   const handleAccountSection = () => {
-    setShowAccountSection(!showAccountSection);
+    setShowAccountSection((prev) => !prev);
   };
 
   return (

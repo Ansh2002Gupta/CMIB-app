@@ -15,10 +15,7 @@ if (deviceHeight < minHeightThreshold) {
 const style = {
   optionCotainer: {
     flexDirection: "row",
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingLeft: 16,
-    paddingRight: 16,
+    padding:16,
     alignItems: "center",
   },
   optionCotainerBorder: {
@@ -40,6 +37,7 @@ const style = {
     paddingRight: 16,
     flexDirection: "row",
     alignItems: "center",
+   
   },
   profileContainerWeb:{
     marginTop: 16,
@@ -61,7 +59,8 @@ const style = {
     marginLeft: 12,
   },
   detailContainerWeb:{
-    marginTop:12
+    marginTop:12,
+ 
   },
   fullNameStyle: {
     fontSize: 16,

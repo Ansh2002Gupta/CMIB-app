@@ -9,7 +9,7 @@ import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimen
 
 import { useIntl } from "react-intl";
 import CommonText from "../../components/CommonText";
-import HeaderRight from "../../components/HeaderRight";
+import UserAccountInfo from "../../components/UserAccountInfo";
 import useIsWebView from "../../hooks/useIsWebView";
 import { getSmallScreenHeaderInfo } from "../../utils/headerHelpers";
 import images from "../../images";
@@ -61,16 +61,16 @@ const PrivateHeader = ({
               <>
                 <CommonText
                   customTextStyle={styles.nameText}
-                  title={"Hey John -"}
+                  title={`${intl.formatMessage({ id: "label.hey" })} ${firstName} -`}
                 />
                 <CommonText
                   customTextStyle={styles.overView}
-                  title={"here’s your overview"}
+                  title={intl.formatMessage({id:"label.here_your_overview"})}
                 />
               </>
             )}
           </View>
-          <HeaderRight
+          <UserAccountInfo
             onPressRightIcon={onPressRightIcon}
             rightIcon={rightIcon}
             isWebView={isWebView}

@@ -1,6 +1,7 @@
 import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
+
 const styles = StyleSheet.create({
   notficationIconView: {
     flexDirection: "row",
@@ -9,16 +10,17 @@ const styles = StyleSheet.create({
   iconNotification: {
     width: 24,
     height: 24,
-    cursor: "pointer",
+    // cursor: "pointer",
   },
   profileView: {
     flexDirection: "row",
     marginLeft: 10,
-    cursor: "pointer",
+    // cursor: "pointer",
     position: "relative",
   },
   profileNameSection: {
     flexDirection: "row",
+    alignItems:"center"
   },
   fullNameStyle: {
     fontSize: 14,
@@ -34,7 +36,6 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     paddingLeft: 16,
-    paddingTop: 17,
   },
 });
 
