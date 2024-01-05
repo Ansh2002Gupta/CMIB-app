@@ -1,7 +1,7 @@
 import React from "react";
 
 import ApplicationFormContainerTemplate from "./ApplicationFormContainerTemplate";
-import useApplicationForm from "./controller/useApplicationForm";
+import useApplicationForm from "./controllers/useApplicationForm";
 
 const ApplicationFormContainer = () => {
   const { activeStep, onHandleTab } = useApplicationForm();
