@@ -53,6 +53,7 @@ const CustomTextInput = (props) => {
   } = props;
 
   const { isWebView } = useIsWebView();
+  const isWebPlatform = Platform.OS === "web";
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
 
@@ -87,7 +88,7 @@ const CustomTextInput = (props) => {
         !isPaddingNotRequired ? [style.container, customStyle] : customStyle
       }
     >
-      {!!label && <CustomLabelView label={label} isMandatory />}
+      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {isDropdown ? (
         <Dropdown
           style={[
@@ -107,7 +108,7 @@ const CustomTextInput = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            onChangeValue(item[inputKey]);
+            isWebPlatform ? onChangeValue(item) : onChangeValue(item[inputKey]);
             setIsFocused(false);
           }}
           {...remainingProps}
@@ -201,6 +202,7 @@ CustomTextInput.defaultProps = {
   minCount: 0,
   options: [],
   onChangeValue: () => {},
+  placeholder: "",
   step: 1,
   value: "",
   valueField: "value",
@@ -231,8 +233,8 @@ CustomTextInput.propTypes = {
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
   minCount: PropTypes.number,
-  options: PropTypes.arrayOf(PropTypes.object),
   onChangeValue: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

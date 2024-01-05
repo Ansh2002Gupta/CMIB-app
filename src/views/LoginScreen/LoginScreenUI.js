@@ -11,7 +11,7 @@ import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import FollowUsIcons from "../../components/FollowUsIcons";
-import HeaderText from "../../components/HeaderText/HeaderText";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
 import styles from "./Loginscreen.style";
@@ -81,10 +81,10 @@ const LoginScreenUI = (props) => {
         }}
       >
         <View style={styles.container}>
-          <HeaderText
-            text={intl.formatMessage({ id: "label.login_to_cmib" })}
-            label={intl.formatMessage({ id: "label.secure_login_access" })}
-            customTextStyle={isWebView ? getResponsiveStyles("label.cmib") : {}}
+          <HeaderTextWithLabelAndDescription
+            headerText={intl.formatMessage({ id: "label.login_to_cmib" })}
+            description={intl.formatMessage({ id: "label.secure_login_access" })}
+            customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.cmib")} : styles.headerText}
             customSecondHeadingStyles={
               isWebView ? styles.webView.subHeadingText : {}
             }

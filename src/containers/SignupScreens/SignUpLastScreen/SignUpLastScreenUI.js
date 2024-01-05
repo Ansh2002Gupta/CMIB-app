@@ -1,73 +1,62 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
-import CommonText from "../../../components/CommonText";
 import CheckBox from "../../../components/CheckBox/CheckBox";
+import CommonText from "../../../components/CommonText";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
+import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
-import UploadImage from "../../../components/UploadImage/UploadImage";
+import UploadImage from "../../../components/UploadImage";
+import useIsWebView from "../../../hooks/useIsWebView";
 import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
 } from "../../../constants/constants";
-import style from "./SignUpLastScreen.style";
+import { getResponsiveStyles, style } from "./SignUpLastScreen.style";
 
-const SignUpLastScreenUI = (props) => {
-  const {
-    allFieldsFilled,
-    companyDetails,
-    companyType,
-    errors,
-    errorWhileDeletion,
-    errorWhileUpload,
-    handleDismissToast,
-    handleInputChange,
-    handleSuccessModal,
-    handleToggle,
-    intl,
-    isLoading,
-    natureOfSupplier,
-    onClickGoToLogin,
-    onDeleteImage,
-    onGoBack,
-    onImageUpload,
-    options,
-    showSuccessSignUp,
-    signUpError,
-    socialMediaLinks,
-    validationError,
-    website,
-  } = props;
+const SignUpLastScreenUI = ({
+  allFieldsFilled,
+  companyDetails,
+  companyType,
+  errors,
+  errorWhileDeletion,
+  errorWhileUpload,
+  handleBlur,
+  handleDismissToast,
+  handleInputChange,
+  handleSuccessModal,
+  handleToggle,
+  intl,
+  natureOfSupplier,
+  onClickGoToLogin,
+  onDeleteImage,
+  onGoBack,
+  onImageUpload,
+  options,
+  showSuccessSignUp,
+  signUpError,
+  socialMediaLinks,
+  validationError,
+  website,
+}) => {
+  const { isWebView } = useIsWebView();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const showContentHeader =
+    currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 
   const isWeb = Platform.OS.toLowerCase() === "web";
 
   const errorMessage =
     validationError || errorWhileDeletion || errorWhileUpload || signUpError;
 
-  return (
-    <View style={style.mainContainerStyle}>
-      {showSuccessSignUp && (
-        <CustomModal
-          headerText={intl.formatMessage({
-            id: "label.signup_success",
-          })}
-          secondaryText={intl.formatMessage({
-            id: "label.signup_info",
-          })}
-          buttonTitle={intl.formatMessage({
-            id: "label.go_back_to_login",
-          })}
-          onPress={onClickGoToLogin}
-          isSuccess
-        />
-      )}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={style.contentContainerStyle}
-      >
+  const renderFormContent = () => {
+    return (
+      <View style={style.formContainer}>
         <CommonText
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.social_media_presence" })}
@@ -83,6 +72,7 @@ const SignUpLastScreenUI = (props) => {
             })}
             errorMessage={errors.socialMediaLinks[key]}
             isError={!!errors.socialMediaLinks[key]}
+            customHandleBlur={() => handleBlur(key)}
             value={socialMediaLinks[key]}
             onChangeText={(value) => handleInputChange(value, key)}
           />
@@ -101,6 +91,7 @@ const SignUpLastScreenUI = (props) => {
           })}
           errorMessage={errors.companyDetails}
           isError={!!errors.companyDetails}
+          customHandleBlur={() => handleBlur("companyDetails")}
           value={companyDetails}
           onChangeText={(value) => handleInputChange(value, "companyDetails")}
           isMandatory
@@ -114,6 +105,7 @@ const SignUpLastScreenUI = (props) => {
           placeholder={intl.formatMessage({
             id: "label.enter_your_website",
           })}
+          customHandleBlur={() => handleBlur("website")}
           value={website}
           errorMessage={errors.website}
           isError={!!errors.website}
@@ -166,7 +158,6 @@ const SignUpLastScreenUI = (props) => {
           ))}
         </View>
         <View style={style.seperator} />
-
         <CommonText
           customTextStyle={style.headerText}
           title={intl.formatMessage({ id: "label.uplaod_company_logo" })}
@@ -179,21 +170,92 @@ const SignUpLastScreenUI = (props) => {
         />
         <View style={style.imageContainer}>
           <UploadImage
-            intl={intl}
             onImageUpload={onImageUpload}
             onDeleteImage={onDeleteImage}
           />
         </View>
-      </ScrollView>
-      <SaveCancelButton
-        buttonOneText={intl.formatMessage({ id: "label.back" })}
-        buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
-        displayLoader={isLoading}
-        hasIconLeft
-        isNextDisabled={!allFieldsFilled()}
-        onPressButtonOne={onGoBack}
-        onPressButtonTwo={() => handleSuccessModal(true)}
-      />
+      </View>
+    );
+  };
+
+  const renderFooterContent = () => {
+    return (
+      <View style={style.signupFooterContainer}>
+        <SaveCancelButton
+          buttonOneText={intl.formatMessage({ id: "label.back" })}
+          onPressButtonOne={onGoBack}
+          onPressButtonTwo={() => handleSuccessModal(true)}
+          isNextDisabled={!allFieldsFilled()}
+          buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
+          hasIconLeft
+          customContainerStyle={!isWebView && style.customContainerStyle}
+        />
+        {isWebView && (
+          <LabelWithLinkText
+            labelText={intl.formatMessage({ id: "label.already_account" })}
+            linkText={intl.formatMessage({ id: "label.login_here" })}
+            onLinkClick={onClickGoToLogin}
+          />
+        )}
+      </View>
+    );
+  };
+
+  return (
+    <View
+      style={
+        isWebView
+          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+          : style.mainContainerStyle
+      }
+    >
+      {showSuccessSignUp && (
+        <CustomModal
+          headerText={intl.formatMessage({
+            id: "label.signup_success",
+          })}
+          secondaryText={intl.formatMessage({
+            id: "label.signup_info",
+          })}
+          buttonTitle={intl.formatMessage({
+            id: "label.go_back_to_login",
+          })}
+          onPress={onClickGoToLogin}
+          isSuccess
+        />
+      )}
+      {isWebView && (
+        <View>
+          <HeaderTextWithLabelAndDescription
+            label={intl.formatMessage({ id: "label.step_four" })}
+            {...(showContentHeader && {
+              headerText: intl.formatMessage({
+                id: "label.other_details",
+              }),
+            })}
+          />
+        </View>
+      )}
+      {isWeb ? (
+        <View
+          style={
+            !isWebView
+              ? [style.contentContainerStyle, style.extraSmallContainer]
+              : style.webContentContainer
+          }
+        >
+          {renderFormContent()}
+          {renderFooterContent()}
+        </View>
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={style.contentContainerStyle}
+        >
+          {renderFormContent()}
+        </ScrollView>
+      )}
+      {!isWeb && renderFooterContent()}
       {!!errorMessage && (
         <ToastComponent
           toastMessage={errorMessage}
@@ -207,8 +269,8 @@ const SignUpLastScreenUI = (props) => {
 SignUpLastScreenUI.defaultProps = {
   errors: {},
   errorWhileDeletion: "",
+  errorWhileUpload: "",
   handleDismissToast: () => {},
-  onDeleteImage: () => {},
   onImageUpload: () => {},
   signUpError: "",
   validationError: "",
@@ -221,6 +283,7 @@ SignUpLastScreenUI.propTypes = {
   errors: PropTypes.object,
   errorWhileDeletion: PropTypes.string,
   errorWhileUpload: PropTypes.string,
+  handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   handleSuccessModal: PropTypes.func.isRequired,

@@ -28,7 +28,6 @@ const styles = {
   },
   iconRightStyle: {
     marginRight: 8,
-    top: 8,
   },
   iconLeftStyle: {
     marginLeft: 8,

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Platform, Text, View } from "@unthinkable/react-core-components";
 
-import Button from "../Button/Button";
+import Button from "../Button";
 import CustomImage from "../CustomImage";
 import Spinner from "../Spinner";
 import colors from "../../assets/colors";
@@ -33,7 +33,7 @@ const CustomButton = ({
       {isLoading ? (
         <Spinner
           thickness={3}
-          color={withGreenBackground ? colors.white : ""}
+          color={withGreenBackground || isLoading ? colors.white : ""}
           {...webProps}
         />
       ) : (
