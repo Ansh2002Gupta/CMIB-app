@@ -34,12 +34,12 @@ const IconHeader = ({
       <>
         {hasIconBar && !isWebView && (
           <View style={styles.iconContainer}>
-            {iconLeft && (
+            {!!iconLeft && (
               <CustomTouchableOpacity onPress={onGoBack || onPressLeftIcon}>
                 <Image source={iconLeft} />
               </CustomTouchableOpacity>
             )}
-            {iconRight && (
+            {!!iconRight && (
               <CustomTouchableOpacity onPress={onPressRightIcon}>
                 <Image source={iconRight} />
               </CustomTouchableOpacity>
