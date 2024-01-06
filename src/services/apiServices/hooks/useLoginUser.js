@@ -2,8 +2,8 @@ import { useContext, useState } from "react";
 import { useSearchParams, useLocation, useNavigate } from "../../../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
+import CookieAndStorageService from "../../cookie-and-storage-service";
 import Http from "../../http-service";
-import Storage from "../../storage-service";
 import useNavigateScreen from "../../hooks/useNavigateScreen";
 import { AuthContext } from "../../../globalContext/auth/authProvider";
 import { RouteContext } from "../../../globalContext/route/routeProvider";
@@ -23,7 +23,7 @@ const useLoginUser = () => {
   const { navigateScreen } = useNavigateScreen();
   const [searchParams] = useSearchParams();
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
   const [loginUserResult, setLoginUserResult] = useState([]);
@@ -37,14 +37,18 @@ const useLoginUser = () => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         const authToken = res.data.data.access_token;
-        await Storage.set("auth", authToken);
+        await CookieAndStorageService.set({ key: "auth", value: authToken });
         setLoginUserResult(res.data);
         authDispatch(setAuth({ token: authToken }));
-        if (searchParams.get(REDIRECT_URL || location?.state?.redirectPath)) {
+        if (searchParams.get(REDIRECT_URL) || location?.state?.redirectPath) {
           if (Platform.OS.toLowerCase() === "web") {
-            window.location.replace(searchParams.get(REDIRECT_URL));
+            window.location.replace(
+              `${searchParams.get(REDIRECT_URL)}?isAutheticated=1`
+            );
           } else {
-            navigate(navigations.WEB_VIEW, {state: {uri: location.state.redirectPath}})
+            navigate(navigations.WEB_VIEW, {
+              state: { uri: location.state.redirectPath },
+            });
           }
           return;
         }

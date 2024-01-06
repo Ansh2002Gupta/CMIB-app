@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate, useSearchParams } from "../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
+import CookieAndStorageService from "../services/cookie-and-storage-service";
 import LoadingScreen from "../components/LoadingScreen";
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { RouteContext } from "../globalContext/route/routeProvider";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
-import { StorageService } from "../services";
 import useGetUserDetails from "../services/apiServices/hooks/UserProfile/useGetUserDetails";
 import { setLoginRedirectRoute } from "../globalContext/route/routeActions";
 import { getQueryParamsAsAnObject } from "../utils/util";
@@ -27,7 +27,7 @@ function withPrivateAccess(Component) {
     const { getUserDetails } = useGetUserDetails();
 
     useEffect(() => {
-      StorageService.get("auth").then((token) => {
+      CookieAndStorageService.get({ key: "auth" }).then((token) => {
         if (!authState?.token && !token) {
           routeDispatch(
             setLoginRedirectRoute({
