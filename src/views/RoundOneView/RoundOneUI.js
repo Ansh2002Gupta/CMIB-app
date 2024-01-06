@@ -7,11 +7,9 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import CardComponent from "../../containers/CardComponent/CardComponent";
+import CardComponent from "../../containers/CardComponent";
 import CommonText from "../../components/CommonText";
-import Header from "../../components/Header/Header";
 import useIsWebView from "../../hooks/useIsWebView";
-import images from "../../images";
 import styles from "./RoundOne.style";
 
 const RoundOneUI = (props) => {
@@ -20,15 +18,6 @@ const RoundOneUI = (props) => {
 
   return (
     <View style={styles.innerContainer}>
-      <Header
-        headerText={intl.formatMessage({ id: "label.round1" })}
-        customHeaderTextStyle={{
-          ...styles.headerTextStyle,
-          ...(isWebView ? styles.webHeaderTextStyle : null),
-        }}
-        iconLeft={images.iconDrawer}
-        iconRight={images.iconNotification}
-      />
       <ScrollView
         style={{
           ...styles.containerStyle,

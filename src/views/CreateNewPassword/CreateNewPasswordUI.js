@@ -1,19 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
-import HeaderText from "../../components/HeaderText/HeaderText";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
+import { strongPasswordValidator } from "../../constants/validation";
 import styles from "./CreateNewPassword.style";
 
 function CreateNewPasswordUI(props) {
@@ -34,39 +33,16 @@ function CreateNewPasswordUI(props) {
     validationError,
   } = props;
 
-  const [isAnyPasswordFieldLeft, setIsAnyPasswordFieldLeft] = useState(false);
-  const [validations, setValidations] = useState({
-    length: false,
-    lowercase: false,
-    numeric: false,
-    match: false,
-    specialChar: false,
-    uppercase: false,
-  });
-
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
   const width1800pxOrLess = currentBreakpoint !== "xxl";
   const width900pxOrLess =
     currentBreakpoint === "md" || currentBreakpoint === "sm";
-
-  const areAllFieldFilledInPassword = () => {
-    if (
-      !validations.length ||
-      !validations.numeric ||
-      !validations.uppercase ||
-      !validations.lowercase ||
-      !validations.specialChar
-    ) {
-      setIsAnyPasswordFieldLeft(true);
-      return;
-    }
-    setIsAnyPasswordFieldLeft(false);
-  };
+  const [toastMessage, setToastMessage] = useState("");
 
   const handleDismissToast = () => {
     setErrorWhileResetPassword("");
-    setIsAnyPasswordFieldLeft(false);
+    setToastMessage("");
   };
 
   const getResponsiveStyles = (str) => {
@@ -101,11 +77,21 @@ function CreateNewPasswordUI(props) {
     }
   };
 
-  useEffect(() => {
-    return () => {
-      setIsAnyPasswordFieldLeft(false);
-    };
-  }, []);
+  const handleSubmitClick = () => {
+    let message = "";
+    if (!strongPasswordValidator(newPassword)) {
+      message = intl.formatMessage({
+        id: "label.password_field_error",
+      });
+    } else if (newPassword !== confirmNewPassword) {
+      message = intl.formatMessage({ id: "label.password-not-match" });
+    }
+    if (message) {
+      setToastMessage(message);
+    } else {
+      handleSubmit();
+    }
+  };
 
   return (
     <ScrollView
@@ -120,12 +106,10 @@ function CreateNewPasswordUI(props) {
           }}
         >
           <View style={styles.container}>
-            <HeaderText
-              text={intl.formatMessage({ id: "label.create_new_password" })}
-              label={intl.formatMessage({ id: "label.enter_new_password" })}
-              customTextStyle={
-                isWebView ? getResponsiveStyles("label.createNewPassword") : {}
-              }
+            <HeaderTextWithLabelAndDescription
+              headerText={intl.formatMessage({ id: "label.create_new_password" })}
+              description={intl.formatMessage({ id: "label.enter_new_password" })}
+              customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.createNewPassword")} : styles.headerText}
               customSecondHeadingStyles={
                 isWebView
                   ? getResponsiveStyles("label.createNewPasswordText")
@@ -151,7 +135,6 @@ function CreateNewPasswordUI(props) {
               })}
               value={newPassword}
               onChangeText={(val) => {
-                setIsAnyPasswordFieldLeft(false);
                 onChangePasswordInput(val);
               }}
               customHandleBlur={() => {
@@ -191,9 +174,6 @@ function CreateNewPasswordUI(props) {
               {...{
                 newPassword,
                 confirmNewPassword,
-                setIsAnyPasswordFieldLeft,
-                validations,
-                setValidations,
               }}
               customContainerStyles={
                 isWebView ? styles.webView.requirementsPoints : {}
@@ -203,15 +183,12 @@ function CreateNewPasswordUI(props) {
           <View style={styles.submitView}>
             <ButtonComponent
               title={intl.formatMessage({ id: "label.submit" })}
-              onPress={() => {
-                areAllFieldFilledInPassword();
-                if (!isAnyPasswordFieldLeft) handleSubmit();
-              }}
+              onPress={handleSubmitClick}
               customTitleStyle={styles.webView.submitText}
               customButtonContainer={styles.webView.submitTextContainer}
               displayLoader={isLoading}
             />
-            <TouchableOpacity onPress={onClickGoToLogin}>
+            <CustomTouchableOpacity onPress={onClickGoToLogin}>
               <CommonText
                 customTextStyle={{
                   ...styles.backToLoginText,
@@ -219,7 +196,7 @@ function CreateNewPasswordUI(props) {
                 }}
                 title={intl.formatMessage({ id: "label.back_to_login" })}
               />
-            </TouchableOpacity>
+            </CustomTouchableOpacity>
           </View>
           {successLogin && (
             <CustomModal
@@ -232,14 +209,9 @@ function CreateNewPasswordUI(props) {
             />
           )}
         </View>
-        {(!!validationError || isAnyPasswordFieldLeft) && (
+        {(!!validationError || toastMessage !== "") && (
           <ToastComponent
-            toastMessage={
-              validationError ||
-              intl.formatMessage({
-                id: "label.password_field_error",
-              })
-            }
+            toastMessage={validationError || toastMessage}
             onDismiss={handleDismissToast}
           />
         )}
@@ -247,5 +219,30 @@ function CreateNewPasswordUI(props) {
     </ScrollView>
   );
 }
+
+CreateNewPasswordUI.defaultProps = {
+  errorMessage: "",
+  isLoading: false,
+  successLogin: false,
+  successMsg: "",
+  validationError: "",
+};
+
+CreateNewPasswordUI.propTypes = {
+  confirmNewPassword: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string,
+  handleSubmit: PropTypes.func.isRequired,
+  handleConfirmPasswordBlur: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  intl: PropTypes.object.isRequired,
+  newPassword: PropTypes.string.isRequired,
+  onClickGoToLogin: PropTypes.func.isRequired,
+  onChangePasswordInput: PropTypes.func.isRequired,
+  onChangeConfirmPasswordInput: PropTypes.func.isRequired,
+  successLogin: PropTypes.bool,
+  successMsg: PropTypes.string,
+  setErrorWhileResetPassword: PropTypes.func.isRequired,
+  validationError: PropTypes.string,
+};
 
 export default CreateNewPasswordUI;

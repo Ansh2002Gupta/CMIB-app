@@ -1,42 +1,68 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { MediaQueryContext } from "@unthinkable/react-theme";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-import styles from "./SignUpHeader.style";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
+import Stepper from "../../components/Stepper";
+import { SIGN_UP_STEPPER_OPTION } from "../../constants/constants";
+import { getResponsiveStyles, styles } from "./SignUpHeader.style";
 
 const SignUpHeader = (props) => {
-  const { intl, onClickGoToLogin, headerText, image } = props;
+  const { intl, onClickGoToLogin, activeTab } = props;
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const isWebView = currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
+  const isWeb = Platform.OS === "web";
 
   return (
-    <View>
-      <TouchableOpacity
-        onPress={() => {
-          onClickGoToLogin();
-        }}
-        style={styles.headerContainerStyle}
+    <>
+      {!isWebView && currentBreakpoint !== "sm" ? (
+        <CustomTouchableOpacity
+          onPress={() => {
+            onClickGoToLogin();
+          }}
+          style={styles.headerContainerStyle}
+        >
+          <CommonText
+            customTextStyle={styles.headerTextStyle}
+            title={intl.formatMessage({ id: "label.go_back_to_login" })}
+          />
+        </CustomTouchableOpacity>
+      ) : null}
+      <View
+        style={
+          isWeb &&
+          getResponsiveStyles({ str: "steperContainer", currentBreakpoint })
+        }
       >
-        <CommonText
-          customTextStyle={styles.headerTextStyle}
-          title={intl.formatMessage({ id: "label.go_back_to_login" })}
+        <Stepper
+          {...{
+            activeStep: activeTab,
+            steps: SIGN_UP_STEPPER_OPTION.map((step) =>
+              intl.formatMessage({ id: step.title })
+            ),
+            orientation: isWebView ? "vertical" : "horizontal",
+            showActiveLabelOnly: !isWebView,
+            customStyle: {
+              stepperHeroLabelText: { ...styles.formHeaderStyle },
+              containerStyle:
+                currentBreakpoint === "sm"
+                  ? { ...styles.stepperParentContainer }
+                  : {},
+            },
+          }}
         />
-      </TouchableOpacity>
-      <Image source={image} style={styles.iconBar} />
-      <CommonText customTextStyle={styles.formHeaderStyle} title={headerText} />
-      <View style={styles.borderStyle} />
-    </View>
+      </View>
+      {!isWebView && <View style={styles.borderStyle} />}
+    </>
   );
 };
 
 SignUpHeader.propTypes = {
+  activeTab: PropTypes.number.isRequired,
   intl: PropTypes.object.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
-  headerText: PropTypes.string.isRequired,
-  image: PropTypes.node,
 };
 
 export default SignUpHeader;

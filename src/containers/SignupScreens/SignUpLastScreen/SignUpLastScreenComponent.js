@@ -22,28 +22,17 @@ import {
 
 const SignUpLastScreenComponent = ({ tabHandler }) => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation, validationError, setValidationError } =
-    useValidateSignUp();
-  const { handleSignUp, setSignUpError, signUpError } = useSignUpUser();
-  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
-    useDeleteLogo();
-  const {
-    errorWhileUpload,
-    fileUploadResult,
-    handleFileUpload,
-    setErrorWhileUpload,
-  } = useSaveLogo();
   const initialDetails = signUpState.signUpDetail || [];
-  const [showSuccessSignUp, setShowSuccessSignUp] = useState(false);
 
+  const [showSuccessSignUp, setShowSuccessSignUp] = useState(false); //useState hooks (separated by a line above because they can be multiple)
   const [socialMediaLinks, setSocialMediaLinks] = useState({
     facebook: initialDetails.social_media_link?.facebook || "",
     linkedin: initialDetails.social_media_link?.linkedIn || "",
     twitter: initialDetails.social_media_link?.twitter || "",
     youtube: initialDetails.social_media_link?.youtube || "",
   });
-
   const [companyDetails, setCompanyDetails] = useState(
     initialDetails.company_details || ""
   );
@@ -52,7 +41,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     initialDetails.nature_of_supplier || ""
   );
   const [companyType, setCompanyType] = useState(initialDetails.type || "");
-
   const [options, setOptions] = useState(
     INTEREST_OPTIONS.map((option) => ({
       ...option,
@@ -63,9 +51,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         ) || false,
     }))
   );
-
-  const navigate = useNavigate();
-
   const [errors, setErrors] = useState({
     socialMediaLinks: {
       facebook: "",
@@ -76,6 +61,30 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     companyDetails: "",
     website: "",
   });
+
+  const {
+    handleSignUpValidation,
+    isLoading,
+    validationError,
+    setValidationError,
+  } = useValidateSignUp();
+
+  const {
+    handleSignUp,
+    isLoading: isRegisteringUser,
+    setSignUpError,
+    signUpError,
+  } = useSignUpUser();
+
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    setErrorWhileUpload,
+  } = useSaveLogo();
+
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
 
   const handleImageDeletion = (handleDeletionSuccess) => {
     if (fileUploadResult?.data?.file_name) {
@@ -219,6 +228,56 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     tabHandler("prev");
   };
 
+  const validateField = (name) => {
+    let value;
+    let error = "";
+
+    if (name in socialMediaLinks) {
+      value = socialMediaLinks[name];
+      if (value && !urlRegex.test(String(value))) {
+        error = intl.formatMessage({
+          id: "label.url_validation",
+        });
+      }
+    } else {
+      switch (name) {
+        case "companyDetails":
+          value = companyDetails;
+          if (
+            value.length < FIELD_MIN_LENGTH ||
+            value.length > COMPANY_DETAIL_MAX_LENGTH
+          ) {
+            error = intl.formatMessage({
+              id: "label.company_details_validation",
+            });
+          }
+          break;
+        case "website":
+          value = website;
+          if (!urlRegex.test(String(value))) {
+            error = intl.formatMessage({
+              id: "label.url_validation",
+            });
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    return error;
+  };
+
+  const handleBlur = (name) => {
+    const fieldError = validateField(name);
+    const updatedErrors = { ...errors };
+    if (name in socialMediaLinks) {
+      updatedErrors.socialMediaLinks[name] = fieldError;
+    } else {
+      updatedErrors[name] = fieldError;
+    }
+    setErrors(updatedErrors);
+  };
+
   const handleToggle = (id) => {
     const updatedItems = options.map((item) => {
       if (item.id === id) {
@@ -237,11 +296,13 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       errors={errors}
       errorWhileDeletion={errorWhileDeletion}
       errorWhileUpload={errorWhileUpload}
+      handleBlur={handleBlur}
       handleDismissToast={handleDismissToast}
       handleInputChange={handleInputChange}
       handleToggle={handleToggle}
       handleSuccessModal={handleSuccessModal}
       intl={intl}
+      isLoading={isLoading || isRegisteringUser}
       natureOfSupplier={natureOfSupplier}
       onClickGoToLogin={onClickGoToLogin}
       onGoBack={onGoBack}

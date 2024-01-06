@@ -8,11 +8,15 @@ import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { MODULE_OPTIONS } from "../../../constants/constants";
 
-const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
+const SignUpScreenWelcomeComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { handleSignUpValidation, validationError, setValidationError } =
-    useValidateSignUp();
+  const {
+    handleSignUpValidation,
+    isLoading,
+    validationError,
+    setValidationError,
+  } = useValidateSignUp();
   const initialContactDetails =
     signUpState?.signUpDetail?.contact_details || [];
 
@@ -44,19 +48,22 @@ const SignUpScreenWelcomeComponent = ({ tabHandler }) => {
 
   return (
     <SignUpWelcomeScreenUI
-      intl={intl}
-      onClickNext={onClickNext}
       contactDetails={contactDetails}
-      setContactDetails={setContactDetails}
-      options={options}
-      setOptions={setOptions}
       handleDismissToast={handleDismissToast}
+      intl={intl}
+      isLoading={isLoading}
+      onClickGoToLogin={onClickGoToLogin}
+      onClickNext={onClickNext}
+      options={options}
+      setContactDetails={setContactDetails}
+      setOptions={setOptions}
       validationError={validationError}
     />
   );
 };
 
 SignUpScreenWelcomeComponent.propTypes = {
+  onClickGoToLogin: PropTypes.func.isRequired,
   tabHandler: PropTypes.func.isRequired,
 };
 

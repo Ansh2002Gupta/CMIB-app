@@ -1,4 +1,6 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
 const style = {
   mainView: {
     flex: 1,
@@ -18,7 +20,7 @@ const style = {
     fontSize: 40,
   },
   forgotHeaderContainer: {
-    marginTop: 0
+    marginTop: 0,
   },
   customSubHeading: {
     fontSize: 16,
@@ -123,7 +125,7 @@ const style = {
   mdScreenContainers: {
     width: "40%",
   },
-  textlabel:{
+  textlabel: {
     color: colors.subHeadingGray,
     fontSize: 14,
     fontFamily: "General Sans",
@@ -131,14 +133,14 @@ const style = {
     fontWeight: "500",
   },
   textlabelTimer: {
-    color: colors.voilet,
+    color: colors.disabledGrey,
     fontSize: 14,
     fontFamily: "General Sans",
     lineHeight: 20,
     fontWeight: "600",
     marginLeft: 4,
   },
-  textlabelReset:{
+  textlabelReset: {
     color: colors.darkBlue,
     fontSize: 14,
     fontFamily: "General Sans",
@@ -151,17 +153,15 @@ const style = {
     flexDirection: "row",
     fontFamily: "General Sans",
     marginTop: 16,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 
   textLabelAfterParent: {
     flexDirection: "column",
     fontFamily: "General Sans",
     marginTop: 16,
-    alignItems:"center"
-  },
-  topTabs: {
-    cursor: "pointer",
+    alignItems: "center",
   },
 };
+
 export default style;

@@ -1,39 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
 
-import CommonText from '../CommonText';
-import images from "../../images";
+import CustomImage from "../CustomImage";
+import CommonText from "../CommonText";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import MultiColumn from "../../core/layouts/MultiColumn";
+import Images from "../../images";
 import styles from "./CheckBox.style";
 
-const CheckBox = (props) => {
-  const { title, isSelected, handleCheckbox, id } = props;
-  return (
-    <View style={styles.contentContainerStyle}>
-      <TouchableOpacity onPress={() => handleCheckbox(id)}>
-        <Image
-          source={
-            isSelected
-              ? images.iconCheckedCheckbox
-              : images.iconUncheckedCheckbox
-          }
-          style={styles.iconStyle}
-        />
-      </TouchableOpacity>
-      <CommonText customTextStyle ={styles.titleStyle} title={title}/>
-    </View>
-  );
+const CheckBox = ({ handleCheckbox, id, isSelected, title }) => {
+  const CheckIcon = Images.iconCheckbox;
+  const UncheckIcon = Images.iconUnCheckbox;
+
+  const rowCheckBox = [
+    {
+      content: (
+        <CustomTouchableOpacity onPress={() => handleCheckbox(id)}>
+          <CustomImage
+            Icon={isSelected ? CheckIcon : UncheckIcon}
+            style={styles.iconStyle}
+            source={isSelected ? CheckIcon : UncheckIcon}
+            isSvg={true}
+          />
+        </CustomTouchableOpacity>
+      ),
+    },
+    {
+      content: <CommonText customTextStyle={styles.titleStyle} title={title} />,
+      isFillSpace: true,
+    },
+  ];
+
+  return <MultiColumn columns={rowCheckBox} columnStyle={styles.columnStyle} />;
+};
+
+CheckBox.defaultProps = {
+  isSelected: false,
 };
 
 CheckBox.propTypes = {
-  title: PropTypes.string.isRequired,
-  isSelected: PropTypes.bool.isRequired,
   handleCheckbox: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  isSelected: PropTypes.bool,
+  title: PropTypes.string.isRequired,
 };
 
 export default CheckBox;

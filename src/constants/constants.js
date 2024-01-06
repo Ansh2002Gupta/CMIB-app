@@ -17,6 +17,7 @@ export const NUMBER_MAX_LENGTH = 15;
 export const REGISTRATION_NO_LENGTH = 10;
 export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 100;
+export const IMAGE_MAX_SIZE = 5000000;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "nqca-placement";
 export const OVERSEAS_PLACEMENTS = "overseas-placement";
@@ -128,4 +129,65 @@ export const ROUND_ONE_CARD = [
   },
 ];
 
+export const VALIDATION_TYPE = [
+  { key: "length", id: "label.char_length_validation" },
+  { key: "numeric", id: "label.numeric_char_validation" },
+  { key: "uppercase", id: "label.upper_case_validation" },
+  { key: "lowercase", id: "label.lower_case_validation" },
+  { key: "specialChar", id: "label.special_char_validation" },
+];
+
 export const REDIRECT_URL = "redirectUrl";
+
+export const STEPPER_STATE = {
+  ACTIVE: "active",
+  DONE: "done",
+  INACTIVE: "inActive",
+};
+
+export const SIGN_UP_STEPPER_OPTION = [
+  {
+    title: "label.welcome_to_sign_up",
+  },
+  {
+    title: "label.basic_details",
+  },
+  {
+    title: "label.contact_personal_details",
+  },
+  {
+    title: "label.other_details",
+  },
+];
+
+export const ZOOM_CONSTANT = {
+  MAX_ZOOM: 3,
+  MIN_ZOOM: 1,
+  ZOOM_STEP: 0.1,
+};
+
+export const SCREEN_NAMES = {
+  COMPANY_PROFILE: "label.company_profile",
+  VIEW_PROFILE: "label.view_profile",
+  PROFILE: "label.my_account",
+  ROUND_ONE: "label.round1",
+  ROUND_ONE_APPLICATION_FORM: "label.add_application_form",
+};
+
+export const APPLICATION_FORM_STEPPER_OPTIONS = [
+  {
+    title: "label.company_profile",
+  },
+  {
+    title: "label.job_details",
+  },
+  {
+    title: "label.pre_interview_preferences",
+  },
+  {
+    title: "label.centre_details",
+  },
+  {
+    title: "label.payment",
+  },
+];

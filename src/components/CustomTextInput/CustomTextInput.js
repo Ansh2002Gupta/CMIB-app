@@ -1,50 +1,59 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
   Image,
+  Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
 
+import CustomLabelView from "../CustomLabelView";
+import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import Dropdown from "../Dropdown/index";
 import TextInput from "../TextInput";
+import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
-    customLabelStyle,
-    customStyle,
     customErrorStyle,
     customHandleBlur,
+    customLabelStyle,
+    customStyle,
     customTextInputContainer,
+    countValue,
     dropdownStyle,
     errorMessage,
     eyeImage,
+    handleCountChange,
+    inputKey,
     isCounterInput,
     isDropdown,
     isError,
     isMandatory,
     isMobileNumber,
     isMultiline,
+    isNumeric,
+    isPaddingNotRequired,
     isPassword,
     label,
+    maxCount,
+    minCount,
     options,
     onChangeValue,
     placeholder,
+    step,
     value,
-    inputKey = "value",
     ...remainingProps
   } = props;
 
-  const [count, setCount] = useState(0);
+  const { isWebView } = useIsWebView();
+  const isWebPlatform = Platform.OS === "web";
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const isWebView = currentBreakpoint !== "xs";
 
   const toggleTextVisibility = () => {
     setIsTextVisible(!isTextVisible);
@@ -59,36 +68,25 @@ const CustomTextInput = (props) => {
     setIsFocused(false);
   };
 
-  const incrementCount = () => {
-    setCount((prev) => prev + 1);
-  };
+  const platformSpecificProps = Platform.select({
+    web: {},
+    default: {
+      placeholderTextColor: colors.darkGrey,
+    },
+  });
 
-  const decrementCount = () => {
-    if (count > 0) {
-      setCount((prev) => prev - 1);
-    }
-  };
+  const mobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { keyboardType: "numeric", returnKeyType: "done" }
+      : {};
 
   return (
-    <View style={[style.container, customStyle]}>
-      {!!label && (
-        <View style={style.labelContainer}>
-          <CommonText
-            customTextStyle={[
-              style.label,
-              isWebView && style.webLabel,
-              customLabelStyle,
-            ]}
-            title={label}
-          />
-          {isMandatory && (
-            <CommonText
-              customTextStyle={[style.label, style.starStyle]}
-              title={"*"}
-            />
-          )}
-        </View>
-      )}
+    <View
+      style={
+        !isPaddingNotRequired ? [style.container, customStyle] : customStyle
+      }
+    >
+      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {isDropdown ? (
         <Dropdown
           style={[
@@ -108,25 +106,19 @@ const CustomTextInput = (props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={(item) => {
-            onChangeValue(item[inputKey]);
+            isWebPlatform ? onChangeValue(item) : onChangeValue(item[inputKey]);
             setIsFocused(false);
           }}
           {...remainingProps}
         />
       ) : isCounterInput ? (
-        <View style={style.counterMainView}>
-          <View style={style.counterView}>
-            <CommonText customTextStyle={style.counterText} title={count} />
-          </View>
-          <View style={style.buttonsView}>
-            <TouchableOpacity onPress={incrementCount} style={style.button}>
-              <Image source={images.iconUpArrow} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={decrementCount} style={style.button}>
-              <Image source={images.iconDownArrow} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <CounterInput
+          initialCount={countValue}
+          minCount={minCount}
+          maxCount={maxCount}
+          onCountChange={handleCountChange}
+          step={step}
+        />
       ) : (
         <View
           style={[
@@ -150,12 +142,13 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
-            multiline={isMultiline}
+            multiline={isMultiline || undefined}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            placeholderTextColor={colors.darkGrey}
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
+            {...platformSpecificProps}
+            {...(isNumeric ? mobileProps : {})}
             {...remainingProps}
           />
           {eyeImage ? (
@@ -181,47 +174,65 @@ const CustomTextInput = (props) => {
 };
 
 CustomTextInput.defaultProps = {
-  customHandleBlur: () => {},
+  countValue: 0,
   customErrorStyle: {},
+  customHandleBlur: () => {},
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
   dropdownStyle: {},
   errorMessage: "",
   eyeImage: false,
+  handleCountChange: () => {},
   isCounterInput: false,
   isDropdown: false,
   isError: false,
+  inputKey: "value",
   isMandatory: false,
   isMobileNumber: false,
   isMultiline: false,
-  inputKey: "value",
+  isNumeric: false,
+  isPaddingNotRequired: false,
   isPassword: false,
   label: "",
+  maxCount: 100,
+  minCount: 0,
+  options: [],
+  onChangeValue: () => {},
   placeholder: "",
+  step: 1,
   value: "",
 };
 
 CustomTextInput.propTypes = {
+  countValue: PropTypes.number,
+  customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
-  customErrorStyle: PropTypes.object,
-  customStyle: PropTypes.object,
+  customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
+  handleCountChange: PropTypes.func,
+  inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
   isError: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isMultiline: PropTypes.bool,
-  inputKey: PropTypes.string,
+  isNumeric: PropTypes.bool,
+  isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
   label: PropTypes.string,
+  maxCount: PropTypes.number,
+  minCount: PropTypes.number,
+  onChangeValue: PropTypes.func,
+  options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
-  value: PropTypes.string,
+  step: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default CustomTextInput;

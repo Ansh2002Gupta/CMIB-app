@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { TouchableOpacity, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ButtonComponent from "../../components/ButtonComponent";
-import HeaderText from "../../components/HeaderText/HeaderText";
-import OtpInput from "../../components/OtpInput/index";
+import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
+import OtpInput from "../../components/OtpInput/index"
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import {
@@ -179,15 +180,17 @@ const OtpViewUI = ({
               : [styles.container, styles.mobContainer]
           }
         >
-          <HeaderText
+          <HeaderTextWithLabelAndDescription
             label={intl.formatMessage({
               id: "label.otp_text",
             })}
-            text={intl.formatMessage({ id: "label.forgot_password" })}
+            headerText={intl.formatMessage({ id: "label.forgot_password" })}
             customTextStyle={
               isWebView ? getResponsiveStyles("label.forgot_password") : {}
             }
-            customContainerStyles={isWebView && styles.forgotHeaderContainer}
+            customContainerStyles={
+              isWebView ? styles.forgotHeaderContainer : {}
+            }
           />
           {!isWebView && <View style={styles.borderStyle} />}
         </View>
@@ -203,7 +206,6 @@ const OtpViewUI = ({
             <OtpInput
               label={intl.formatMessage({ id: "label.text_otp" })}
               onOtpChange={handleOtpChange}
-              customAsteriskStyle={styles.customAsteriskStyle}
               isMandatory
               errorMessage={errorMessage}
               isError={!!errorMessage}
@@ -220,12 +222,12 @@ const OtpViewUI = ({
                     title={formattedTimerValue}
                   />
                 ) : (
-                  <TouchableOpacity style={styles.topTabs} onPress={onResendOtpClick}>
+                  <CustomTouchableOpacity onPress={onResendOtpClick}>
                     <CommonText
                       customTextStyle={styles.textlabelReset}
                       title={formatedOtpLeftValue}
                     />
-                  </TouchableOpacity>
+                  </CustomTouchableOpacity>
                 )}
               </View>
             )}
@@ -260,14 +262,13 @@ const OtpViewUI = ({
             title={intl.formatMessage({ id: "label.submit" })}
             onPress={onVerifyOtpClick}
             disabled={submitDisabled}
-            customTitleStyle={isWebView && styles.customBtnText}
+            customTitleStyle={isWebView ? styles.customBtnText : {}}
             customButtonContainer={
               isWebView ? getResponsiveStyles("submitButtonContainer") : {}
             }
             displayLoader={isLoading}
-            
           />
-          <TouchableOpacity style={styles.topTabs}  onPress={onClickGoToLogin}>
+          <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={
                 isWebView
@@ -276,7 +277,7 @@ const OtpViewUI = ({
               }
               title={intl.formatMessage({ id: "label.back_to_login" })}
             />
-          </TouchableOpacity>
+          </CustomTouchableOpacity>
         </View>
       </View>
       {!!validationError && (

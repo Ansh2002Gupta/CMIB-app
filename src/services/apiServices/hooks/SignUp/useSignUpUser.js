@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
+import { COMPANY_SIGN_UP } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useSignUpUser = () => {
@@ -13,7 +14,7 @@ const useSignUpUser = () => {
     try {
       setPostStatus(API_STATUS.LOADING);
       signUpError && setSignUpError("");
-      const res = await Http.post(`company/sign-up`, payload);
+      const res = await Http.post(COMPANY_SIGN_UP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setPostStatus(API_STATUS.SUCCESS);
         setSignUpUserResult(res.data);

@@ -1,42 +1,86 @@
-const white = "#FFF";
-const darkBlue = "#00137E";
+/* Blacks */
 const black = "#000833";
-const lightGrey = "#CCD0E5";
-const backgroundColor = "#FBFCFF";
-const green = "#04AF55";
-const red = "#D93400";
-const gray = "#5A5A5A";
-const darkGreen = "#00873E";
-const subHeadingGray = "#616C82";
-const darkGrey = "#616C82";
-const errorRed = "#D93400";
-const lightBlue = "#269AD4";
-const secondaryGrey = "#F2F4FC";
 const darkBlack = "#0F0F0F";
-const errorBackground = "#ffeded";
-const lightGray = "#D0D5DD";
-const voilet = "#B1B3B5";
-const yellow ='#FABB00';
+const darkBlackSecond = "#18181B";
+const trueBlack = "#000";
+const blackWithOneForthOpacity = "rgba(0, 0, 0, 0.25)";
+
+/* Blues */
+const backgroundColor = "#FBFCFF"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
+const darkBlue = "#00137E";
+const darkBlueShade = "#000833";
+const lightBlue = "#269AD4";
+
+/* Greens */
+const darkGreen = "#00873E";
+const green = "#04AF55";
+const greenOne = "#04af55";
+
+/* Greys */
+const darkGrey = "#616C82";
+const darkGreySecond = "#71717A";
+const disabledBtn = "#aaaaaa";
+const disabledGrey = "#B1B3B5";
+const gray = "#5A5A5A";
+const greyOne = "#f1f1f1";
+const greyTwo = "#eee";
+const greyThree = "rgba(20, 25, 26, 0.16)";
+const greyFour = "rgb(51, 51, 51)";
+const lightGray = "#D0D5DD"; //TODO: Rename this color to something else so that it doesn't have the same name as "lightGrey" color.
+const lightGraySecond = "d3d3d3";
+const lightGrey = "#CCD0E5";
+const mediumGray = "#616C82";
+const secondaryGrey = "#F2F4FC";
+const subHeadingGray = "#616C82";
+const silver = "#EBEBEB";
+const slateGray = "#616c82";
+
+/* Reds */
+const errorBackground = "#ffeded"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
+const errorRed = "#D93400";
+const red = "#D93400";
+
+/* Whites */
+const white = "#fff";
+const offWhite = "#FFFFFF14";
+
+/* Yellows */
+const yellow = "#FABB00";
 
 const colors = {
-  voilet,
-  white,
-  darkBlue,
-  black,
-  lightGrey,
+  darkBlueShade,
+  disabledBtn,
   backgroundColor,
-  green,
-  red,
-  gray,
-  darkGreen,
-  subHeadingGray,
-  darkGrey,
-  errorRed,
-  lightBlue,
-  secondaryGrey,
+  black,
+  blackWithOneForthOpacity,
   darkBlack,
+  darkBlackSecond,
+  darkBlue,
+  darkGreen,
+  darkGrey,
+  darkGreySecond,
   errorBackground,
+  errorRed,
+  green,
+  greenOne,
+  greyOne,
+  greyTwo,
+  greyThree,
+  greyFour,
+  lightBlue,
   lightGray,
+  lightGraySecond,
+  lightGrey,
+  mediumGray,
+  offWhite,
+  red,
+  secondaryGrey,
+  silver,
+  slateGray,
+  subHeadingGray,
+  trueBlack,
+  disabledGrey,
+  white,
   yellow,
 };
 export default colors;

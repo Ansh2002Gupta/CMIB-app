@@ -2,7 +2,6 @@ import colors from "../../assets/colors";
 const style = {
   mainView: {
     flex: 1,
-    backgroundColor: colors.white,
   },
   container: {
     backgroundColor: colors.white,
@@ -18,7 +17,7 @@ const style = {
     fontSize: 40,
   },
   forgotHeaderContainer: {
-    marginTop: 0
+    marginTop: 0,
   },
   customSubHeading: {
     fontSize: 16,
@@ -62,31 +61,12 @@ const style = {
     color: colors.darkBlue,
     fontWeight: "600",
   },
-  errorMessage: {
-    color: colors.red,
-    fontSize: 12,
-    fontFamily: "GeneralSans-Medium",
-    marginTop: 2,
-  },
   whiteBackground: {
     backgroundColor: colors.white,
   },
   grayBackground: {
     backgroundColor: colors.backgroundColor,
     flex: 1,
-  },
-  forgotPasswordWebContainer: {
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
-    backgroundColor: colors.white,
-    flex: 0.9,
-    padding: 40,
-    width: "32%",
-    alignSelf: "center",
-    marginTop: 48,
-    zIndex: 1,
-    boxShadow: "0px 4px 32px 0px rgba(97, 108, 130, 0.04)",
   },
   webSubmitView: {
     backgroundColor: colors.white,
@@ -123,5 +103,11 @@ const style = {
   mdScreenContainers: {
     width: "40%",
   },
+  forgotPasswordWebContainer: {
+    flex: 0.9
+  },
+  headerText: {
+    fontSize: 28
+  }
 };
 export default style;

@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "@unthinkable/react-core-components";
 
 import ContentLayout from "../pages/ContentLayout";
 import CreateNewPassword from "../views/CreateNewPassword/index";
@@ -9,12 +10,15 @@ import CompanyProfile from "../views/CompanyProfile";
 import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
-import Home from "../pages/Home";
 import JobsView from "../views/JobsView/JobsView";
+import JobApplicantsView from "../views/JobApplicantsView/index";
+import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
-import ProfileView from "../views/Profile";
+import PostedJobsView from "../views/PostedJobsView/index";
 import RoundOne from "../views/RoundOneView";
+import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import RoundTwo from "../views/RoundTwoView";
+import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
 import WebViewScreen from "../views/WebViewScreen/index";
 
@@ -22,13 +26,18 @@ import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
 
-const HomeWithPrivateAccess = withPrivateAccess(Home);
+const signUpHeader =
+  Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
+
+const HomeWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
-const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
-const ContentRouteWithPrivateAccess = withPrivateAccess(ContentLayout);
+const SignUpWithPublicAccess = withPublicAccess(signUpHeader);
+const ContentRouteWithPrivateAccess = withPrivateAccess(
+  HeaderWithContentLayout
+);
 
 const config = [
-   {
+  {
     pagePath: navigations.ROOT,
     element: <DefaultRoute />,
     views: [
@@ -37,8 +46,8 @@ const config = [
         element: <LoginWithPublicAccess />,
       },
       {
-        viewPath:navigations.DASHBOARD,
-        element:<HomeWithPrivateAccess />,
+        viewPath: navigations.DASHBOARD,
+        element: <HomeWithPrivateAccess />,
       },
     ],
   },
@@ -113,6 +122,16 @@ const config = [
     ],
   },
   {
+    pagePath: navigations.APPLICATION_FORM,
+    element: <ContentRouteWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <RoundOneApplicationForm />,
+      },
+    ],
+  },
+  {
     pagePath: navigations.DASHBOARD,
     element: <HomeWithPrivateAccess />,
     views: [
@@ -130,6 +149,10 @@ const config = [
         viewPath: "",
         element: <RoundOne />,
       },
+      {
+        viewPath: "applicationForm",
+        element: <RoundOneApplicationForm />,
+      },
     ],
   },
   {
@@ -142,7 +165,7 @@ const config = [
       },
     ],
   },
-  
+
   {
     pagePath: navigations.JOBS,
     element: <HomeWithPrivateAccess />,
@@ -150,6 +173,46 @@ const config = [
       {
         viewPath: "",
         element: <JobsView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.POSTED_JOBS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <PostedJobsView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.JOB_SEEKERS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobSeekersView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.JOB_APPLICANTS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobApplicantsView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.SAVED_CANDIDATES,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <SavedCandidatesView />,
       },
     ],
   },

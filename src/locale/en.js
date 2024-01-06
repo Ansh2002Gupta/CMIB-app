@@ -17,7 +17,7 @@ const locale = {
   "label.forgot_password": "Forgot Password?",
   "label.password_field_error":
     "Please provide all the necessary fields for the password.",
-  "label.dont_have_account": "Don't have an account?  ",
+  "label.dont_have_account": "Don't have an account? ",
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
   "label.enter_email_to_reset_password":
@@ -129,6 +129,7 @@ const locale = {
   "label.advertisement_in_ca_journal":
     "Advertisement in the Chartered Accountant Journal",
   "label.my_account": "Account",
+  "label.account":"My Account",
   "label.view_profile": "View Profile",
   "label.edit_profile_picture": "Edit Profile Picture",
   "label.crop_profile_picture": "Crop Profile Picture",
@@ -158,7 +159,7 @@ const locale = {
     "Country code must be a combination of numbers and between 2 and 8 digits.",
   "label.telephone_no_validation":
     "Telephone number must be a combination of numbers and between 7 and 15 digits.",
-  "label.email_id_validation": "Email ID must be valid",
+  "label.email_id_validation": "Please enter a valid email address",
   "label.registration_no_validation":
     "Registration number must be exactly 10 digits.",
   "label.address_validation": "Address must be between 6 and 500 characters.",
@@ -178,6 +179,16 @@ const locale = {
     "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
   "label.text_otp": "OTP",
   "label.jobs": "Jobs",
+  "label.welcome_to_cmib": "Welcome to CMI&B Company Sign-up",
+  "label.step_one": "Step 1",
+  "label.step_two": "Step 2",
+  "label.step_three": "Step 3",
+  "label.step_four": "Step 4",
+  "label.already_account": "Already have an account?  ",
+  "label.login_here": "Login here",
+  "label.basic_details": "Basic Details",
+  "label.contact_person_details": "Contact Person Details",
+  "label.other_details": "Other Details",
   "label.old_password": "Old Password",
   "label.company_logo": "Company Logo",
   "label.contact_person_info": "Contact Person Information",
@@ -189,14 +200,35 @@ const locale = {
   "label.braces": ")",
   "label.left_brace": "left)",
   "label.times": "times!",
+  "label.fileTooLargeError": "Uploaded file must be less than 5MB",
+  "label.allowedFileFormatsError":
+    "Only JPEG, PNG, SVG, EPS, PDF formats are allowed",
+  "label.nonUploadableImageError":
+    "Failed to upload this file, please try uploading a different image",
+  "label.description": "Description",
+  "label.heading": "H1",
   "label.password-not-match": "The password and confirm password do not match.",
   "label.update": "Update",
   "label.add": "Add",
   "label.edit": "Edit",
   "label.duplicate_email_validation": "Email addresses must be unique.",
   "label.logout_message": "Are you sure you want to logout of the portal?",
+  "label.add_designation": "Add Designation",
+  "label.designation": "Designation",
+  "label.designation_placeholder": "Select Designation",
+  "label.no_of_vacancy": "No. of. Vacancy",
   "label.error_password": "Password doesn't match",
   "label.old_password_placeholder": "Enter your old password",
+  "label.visit_website": "Visit Website",
+  "label.session": "Session",
+  "label.module": "Module",
+  "label.newly_qualified_placements": "Newly Qualified Placements",
+  "label.choose_a_module": "Choose a module",
+  "label.add_application_form": "Add Application Form",
+  "label.job_details": "Job Details",
+  "label.pre_interview_preferences": "Pre-Interview Preferences",
+  "label.centre_details": "Centre Details",
+  "label.payment":"Payment"
 };
 
 export default locale;

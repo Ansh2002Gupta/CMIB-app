@@ -1,4 +1,8 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const isWeb = Platform.OS.toLowerCase() === "web";
+const webPointer = isWeb ? { cursor: "pointer" } : {};
 
 const style = {
   mainView: {
@@ -13,12 +17,12 @@ const style = {
     paddingTop: 16,
     borderBottomWidth: 3,
     borderColor: colors.green,
-    zIndex: 11,
+    zIndex: 1,
     marginBottom: -1,
   },
   topTabs: {
     width: "50%",
-    cursor: "pointer",
+    ...webPointer,
   },
   inActiveStyle: {
     paddingTop: 16,
@@ -62,12 +66,12 @@ const style = {
   forgotPasswordText: {
     fontSize: 14,
     color: colors.darkBlue,
-    cursor: "pointer",
     fontWeight: "600",
+    ...webPointer,
   },
   loginButtonView: {
     marginTop: 32,
-    cursor: "pointer",
+    ...webPointer,
   },
   accountView: {
     marginTop: 24,
@@ -79,7 +83,7 @@ const style = {
     color: colors.darkBlue,
     fontSize: 14,
     fontWeight: "600",
-    cursor: "pointer",
+    ...webPointer,
   },
   borderStyle: {
     borderWidth: 1,
@@ -101,9 +105,8 @@ const style = {
   // Web view related Styles
   webView: {
     activeTab: {
-      borderBottom: `3px solid ${colors.green}`,
       marginBottom: -2,
-      zIndex: 10,
+      zIndex: 1,
     },
     backGroundColor: {
       backgroundColor: colors.white,
@@ -121,7 +124,7 @@ const style = {
       fontSize: 14,
       fontWeight: "600",
       lineHeight: 20,
-      cursor: "pointer",
+      ...webPointer,
     },
     errorMessage: {
       marginTop: 2,
@@ -131,7 +134,7 @@ const style = {
       fontSize: 14,
       fontWeight: "600",
       lineHeight: 20,
-      cursor: "pointer",
+      ...webPointer,
     },
     headerContainer: {
       marginTop: 0,
@@ -161,24 +164,24 @@ const style = {
       textTransform: "capitalize",
     },
     inputTextBox: {
-      background: colors.white,
+      backgroundColor: colors.white,
       marginTop: 0,
     },
     loginText: {
-      cursor: "pointer",
+      ...webPointer,
     },
     rememberMeText: {
       fontSize: 14,
       lineHeight: 20,
-      cursor: "pointer",
       margin: 0,
+      ...webPointer,
     },
     selectedSectionHeading: {
       color: colors.black,
       textAlign: "center",
       fontSize: 16,
       fontWeight: "600",
-      cursor: "pointer",
+      ...webPointer,
     },
     subHeadingText: {
       color: colors.darkGrey,
@@ -196,7 +199,7 @@ const style = {
       color: colors.darkGrey,
       textAlign: "center",
       fontSize: 16,
-      cursor: "pointer",
+      ...webPointer,
     },
   },
 };
