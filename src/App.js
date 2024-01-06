@@ -1,14 +1,12 @@
 import React, { useContext } from "react";
+import { Router, Routes } from "./routes";
 import { IntlProvider } from "react-intl";
 import { MediaQueryProvider, ThemeProvider } from "@unthinkable/react-theme";
-import { Provider } from "react-redux";
-import { store } from "../src/store";
 
-import intl from "./locale";
 import { LocaleContext } from "./globalContext/locale/localeProviders";
-
+import intl from "./locale";
+import appConfig from "./constants/appConfig";
 import theme from "./theme";
-import { Router, Routes } from "./routes";
 
 function App() {
   const [localeState] = useContext(LocaleContext);
@@ -16,8 +14,9 @@ function App() {
     base: { breakpoints },
   } = theme;
 
+  // useEnsureBaseName(); // Please uncomment this if you want to redirect the user to the "/app" subdomain from a route that doesn't include word 'app' in it. Kept it commented as it will redirect the user to the /app subdomain even when the user wants to view the CMS or other sub domains
+
   return (
-    // <Provider store={store}>
     <MediaQueryProvider breakpoints={breakpoints}>
       <ThemeProvider {...theme}>
         <IntlProvider
@@ -25,13 +24,12 @@ function App() {
           locale={localeState?.locale}
           defaultLocale="en"
         >
-          <Router basename="/app">
+          <Router basename={appConfig.ROUTER_BASE_NAME}>
             <Routes />
           </Router>
         </IntlProvider>
       </ThemeProvider>
     </MediaQueryProvider>
-    // </Provider>
   );
 }
 
