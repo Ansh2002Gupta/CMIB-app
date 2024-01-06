@@ -1,12 +1,12 @@
 import { useState, useContext } from "react";
 
+import CookieAndStorageService from "../../cookie-and-storage-service";
 import Http from "../../http-service";
-import Storage from "../../storage-service";
 import { AuthContext } from "../../../globalContext/auth/authProvider";
 import { clearAuthAndLogout } from "../../../globalContext/auth/authActions";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
-import {COMPANY_LOGOUT} from"../apiEndPoint"
+import { COMPANY_LOGOUT } from "../apiEndPoint";
 
 const useLogoutAPI = () => {
   const [logoutApiStatus, setLogoutApiStatus] = useState(API_STATUS.IDLE);
@@ -14,14 +14,14 @@ const useLogoutAPI = () => {
   const [errorWhileLoggingOut, setErrorWhileLoggingOut] = useState("");
   const [, authDispatch] = useContext(AuthContext);
 
-  const handleUserLogout = async (successCallback ) => {
+  const handleUserLogout = async (successCallback) => {
     try {
       setLogoutApiStatus(API_STATUS.LOADING);
       errorWhileLoggingOut && setErrorWhileLoggingOut("");
       const res = await Http.post(COMPANY_LOGOUT);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setLogoutApiStatus(API_STATUS.SUCCESS);
-        await Storage.removeAll();
+        await CookieAndStorageService.removeAll();
         authDispatch(clearAuthAndLogout());
         setLoginUserResult(res.data);
         successCallback();

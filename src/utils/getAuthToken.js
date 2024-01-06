@@ -1,8 +1,8 @@
-import Storage from "../services/storage-service";
+import CookieAndStorageService from "../services/cookie-and-storage-service";
 
 export const getAuthToken = async () => {
   try {
-    const authToken = await Storage.get("auth");
+    const authToken = await CookieAndStorageService.get({ key: "auth" });
     return authToken;
   } catch (error) {
     throw error;
