@@ -5,6 +5,7 @@ import LocaleProvider from "./locale/localeProviders";
 import RouteProvider from "./route/routeProvider";
 import SignUpProvider from "./signUp/signUpProvider";
 import SideBarProvider from "./sidebar/sidebarProvider";
+import UserProfileProvider from "./userProfile/userProfileProvider";
 
 // Import other created Providers and add them here -
 const providers = [
@@ -14,6 +15,7 @@ const providers = [
   RouteProvider,
   SignUpProvider,
   SideBarProvider,
+  UserProfileProvider,
 ];
 
 const combineProviders = (components) => {

@@ -2,9 +2,12 @@ import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate, useSearchParams } from "../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
+import LoadingScreen from "../components/LoadingScreen";
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { RouteContext } from "../globalContext/route/routeProvider";
+import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
 import { StorageService } from "../services";
+import useGetUserDetails from "../services/apiServices/hooks/UserProfile/useGetUserDetails";
 import { setLoginRedirectRoute } from "../globalContext/route/routeActions";
 import { getQueryParamsAsAnObject } from "../utils/util";
 import { navigations } from "../constants/routeNames";
@@ -19,6 +22,10 @@ function withPrivateAccess(Component) {
     const [searchParams] = useSearchParams();
     const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
+    const [userProfileDetails] = useContext(UserProfileContext);
+
+    const { getUserDetails } = useGetUserDetails();
+
     useEffect(() => {
       StorageService.get("auth").then((token) => {
         if (!authState?.token && !token) {
@@ -30,6 +37,12 @@ function withPrivateAccess(Component) {
             })
           );
           navigate(navigations.LOGIN);
+        }
+        if (
+          (token || authState?.token) &&
+          !Object.keys(userProfileDetails.userDetails)?.length
+        ) {
+          getUserDetails();
         }
       });
     }, []);
@@ -47,6 +60,10 @@ function withPrivateAccess(Component) {
           redirectPath: searchParams.get(REDIRECT_URL) || "",
         })
       );
+    }
+
+    if (userProfileDetails.isGettingUserDetails) {
+      return <LoadingScreen />;
     }
 
     return <Component {...props} />;
