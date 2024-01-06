@@ -40,7 +40,7 @@ const useLoginUser = () => {
         await CookieAndStorageService.set({ key: "auth", value: authToken });
         setLoginUserResult(res.data);
         authDispatch(setAuth({ token: authToken }));
-        if (searchParams.get(REDIRECT_URL || location?.state?.redirectPath)) {
+        if (searchParams.get(REDIRECT_URL) || location?.state?.redirectPath) {
           if (Platform.OS.toLowerCase() === "web") {
             window.location.replace(
               `${searchParams.get(REDIRECT_URL)}?isAutheticated=1`
