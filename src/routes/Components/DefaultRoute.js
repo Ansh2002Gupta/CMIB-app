@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Navigate } from "../../routes";
 
+import CookieAndStorageService from "../../services/cookie-and-storage-service";
 import { AuthContext } from "../../globalContext/auth/authProvider";
-import { StorageService } from "../../services";
 import { navigations } from "../../constants/routeNames";
 
 const DefaultRoute = () => {
@@ -11,7 +11,7 @@ const DefaultRoute = () => {
 
   useEffect(() => {
     async function checkAuthAndNavigate() {
-      const token = await StorageService.get("auth");
+      const token = await CookieAndStorageService.get({ key: "auth" });
       if (!token && !authState?.token) {
         setNavigationPath(navigations.LOGIN);
         return;
