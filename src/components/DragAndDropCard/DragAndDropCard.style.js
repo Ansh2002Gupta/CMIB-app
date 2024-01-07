@@ -53,12 +53,14 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     marginLeft: 24,
     marginRight: 24,
+    textAlign: "center",
   },
   hideRawInputField: {
     display: "none",
   },
   error: {
     marginTop: 10,
+    textAlign: "center",
   },
 });
 

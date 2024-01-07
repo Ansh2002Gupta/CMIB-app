@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     maxWidth: 450,
     maxHeight: 200,
     objectFit: "contain",
+    width: "100%",
   },
   innerContainer: {
     flexDirection: "row",

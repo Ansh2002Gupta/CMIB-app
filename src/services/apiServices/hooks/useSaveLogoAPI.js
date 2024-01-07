@@ -69,6 +69,7 @@ const useSaveLogo = () => {
     isLoading,
     isSuccess,
     setErrorWhileUpload,
+    setFileUploadResult,
     uploadPercentage,
     uploadStatus,
   };
