@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  View,
-  ScrollView,
-} from "@unthinkable/react-core-components";
+import { View, ScrollView } from "@unthinkable/react-core-components";
 
-import CommonText from "../../components/CommonText";
 import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePasswordModal";
+import CommonText from "../../components/CommonText";
 import CustomImage from "../../components/CustomImage";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
@@ -91,7 +88,10 @@ const MyAccountUI = ({
             </View>
             {!omitArrowIcon && (
               <View style={style.iconContainer}>
-                <CustomImage source={images.iconArrowRight} style={style.arrowIcon} />
+                <CustomImage
+                  source={images.iconArrowRight}
+                  style={style.arrowIcon}
+                />
               </View>
             )}
           </CustomTouchableOpacity>

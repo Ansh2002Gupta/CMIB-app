@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import { useLocation, useNavigate } from "../../routes";
 import {
   Image,
@@ -7,7 +8,6 @@ import {
 } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
-import { useIntl } from "react-intl";
 import CommonText from "../../components/CommonText";
 import UserAccountInfo from "../../components/UserAccountInfo";
 import useIsWebView from "../../hooks/useIsWebView";
