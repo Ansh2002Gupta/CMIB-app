@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import Http from "../../../http-service";
+import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 import { UserProfileContext } from "../../../../globalContext/userProfile/userProfileProvider";
 import { useHeader } from "../../../../hooks/useHeader";
 import {
@@ -8,11 +9,14 @@ import {
   setIsGettingUserDetails,
   setUserDetails,
 } from "../../../../globalContext/userProfile/userProfileActions";
+import { setSelectedModule } from "../../../../globalContext/sidebar/sidebarActions";
 import { COMPANY_PROFILE } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import { STATUS_CODES } from "../../../../constants/constants";
+import { modules } from "../../../../constants/sideBarHelpers";
 
 const useGetUserDetails = () => {
+  const [, sideBarDispatch] = useContext(SideBarContext);
   const [, userProfileDispatch] = useContext(UserProfileContext);
   const { onLogout } = useHeader();
 
@@ -27,6 +31,16 @@ const useGetUserDetails = () => {
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         userProfileDispatch(setUserDetails(res.data));
+
+        // Setting the first accessible module
+        const firstAccessibleModuleName =
+          res.data?.users?.[0]?.role?.[0]?.slug || "";
+        const moduleDetails = modules.find(
+          (module) =>
+            module.key?.toLowerCase() ===
+            firstAccessibleModuleName?.toLowerCase()
+        );
+        sideBarDispatch(setSelectedModule(moduleDetails));
         return;
       }
       userProfileDispatch(

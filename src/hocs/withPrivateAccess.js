@@ -15,16 +15,15 @@ import { REDIRECT_URL } from "../constants/constants";
 
 function withPrivateAccess(Component) {
   return (props) => {
-    const [authState] = useContext(AuthContext);
-    const navigate = useNavigate();
     const location = useLocation();
-    const [, routeDispatch] = useContext(RouteContext);
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const isWebPlatform = Platform.OS.toLowerCase() === "web";
-
+    const [authState] = useContext(AuthContext);
+    const [, routeDispatch] = useContext(RouteContext);
     const [userProfileDetails] = useContext(UserProfileContext);
-
     const { getUserDetails } = useGetUserDetails();
+
+    const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
     useEffect(() => {
       CookieAndStorageService.get({ key: "auth" }).then((token) => {
@@ -61,11 +60,9 @@ function withPrivateAccess(Component) {
         })
       );
     }
-
     if (userProfileDetails.isGettingUserDetails) {
       return <LoadingScreen />;
     }
-
     return <Component {...props} />;
   };
 }

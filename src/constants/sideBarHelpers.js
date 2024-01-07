@@ -84,43 +84,51 @@ const experiencedMembersMenu = [
   },
 ];
 
-// TODO: need to add role based menu
+const moduleKeys = {
+  NEWLY_QUALIFIED_PLACEMENTS_KEY: "newly-qualified-placements",
+  CA_JOBS_KEY: "ca-jobs",
+  EXPERIENCED_MEMBERS_KEY: "experienced-members",
+  CARRER_ASCENT_KEY: "career-ascent",
+  WOMEN_PARTTIME_KEY: "women-part-time",
+  OVERSEAS_CHAPTERS_KEY: "overseas-chapters",
+};
+
 export const modules = [
   {
     label: "Newly Qualified Placements",
-    key: "newly-qualified-placements",
+    key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
     children: newlyQualifiedPlacementsMenu,
     visible: false,
   },
   {
     label: "CA Jobs",
-    key: "ca-jobs",
+    key: moduleKeys.CA_JOBS_KEY,
     children: caJobsMenu,
     visible: false,
   },
   {
     label: "Experienced Members",
-    key: "experienced-members",
+    key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
     visible: false,
     sectionHeading: true,
   },
   {
-    key: "career-ascent",
     label: "Career Ascent",
+    key: moduleKeys.CARRER_ASCENT_KEY,
     children: experiencedMembersMenu,
     visible: false,
     isSubMenu: true,
   },
   {
-    key: "women-part-time",
     label: "Women PartTime",
+    key: moduleKeys.WOMEN_PARTTIME_KEY,
     children: experiencedMembersMenu,
     visible: false,
     isSubMenu: true,
   },
   {
-    key: "overseas-chapters",
     label: "Overseas Chapters",
+    key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
     children: experiencedMembersMenu,
     visible: false,
     isSubMenu: true,
@@ -133,16 +141,19 @@ export const getAccessibleModulesList = ({
 }) => {
   return allModules.map((item1) => {
     var itemInAccessibleModule = accessibleModules.find(
-      (item2) => item2?.name === item1?.label
+      (item2) => item2?.slug?.toLowerCase() === item1?.key?.toLowerCase()
     );
     if (itemInAccessibleModule) {
       item1.visible = true;
     }
     if (
       item1.sectionHeading &&
-      (accessibleModules.includes("Career Ascent") ||
-        accessibleModules.includes("Women PartTime") ||
-        accessibleModules.includes("Overseas Chapters"))
+      accessibleModules.find(
+        (item) =>
+          item.slug === moduleKeys.CARRER_ASCENT_KEY ||
+          item.slug === moduleKeys.WOMEN_PARTTIME_KEY ||
+          item.slug === moduleKeys.OVERSEAS_CHAPTERS_KEY
+      )
     ) {
       item1.visible = true;
     }
