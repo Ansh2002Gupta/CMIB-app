@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.lightGrey,
   },
   optionTextStyle:{
-    fontSize: 12,
+    fontSize: 14,
     marginLeft: 2,
     borderWidth: 0,
   },

@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   sessionText: (currentBreakpoint) => ({
     fontWeight: "600",
-    fontSize: 12,
+    fontSize: 14,
     marginLeft: 2,
     ...Platform.select({
       web: {
@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
     height: 15,
     width: 15,
     marginLeft: 5,
+  },
+  sessionBarText: {
+    fontSize: 14,
   },
 });
 

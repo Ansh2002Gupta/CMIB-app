@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import {
-  View,
-} from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -22,10 +20,7 @@ const SessionDropdown = ({ options, onSelect, optionStyle, sessionRef }) => {
         >
           <CommonText
             title={option.label}
-            customTextStyle={[
-              styles.optionTextStyle,
-              optionStyle,
-            ]}
+            customTextStyle={[styles.optionTextStyle, optionStyle]}
           />
         </CustomTouchableOpacity>
       ))}
@@ -35,7 +30,7 @@ const SessionDropdown = ({ options, onSelect, optionStyle, sessionRef }) => {
 
 SessionDropdown.defaultProps = {
   optionStyle: {},
-  sessionRef:{},
+  sessionRef: {},
 };
 
 SessionDropdown.propTypes = {

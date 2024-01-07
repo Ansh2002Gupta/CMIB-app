@@ -6,6 +6,7 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SessionDropdown from "../SessionDropdown";
+import useOutsideClick from '../../utils/useOutsideClick';
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import images from "../../images";
 import styles from "./SessionBar.style";
@@ -22,19 +23,7 @@ const SessionBar = () => {
   );
 
   const sessionRef = useRef(null);
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleClickOutside = (event) => {
-    if (sessionRef?.current && !sessionRef?.current.contains(event.target)) {
-      setShowDropdown(false);
-    }
-  };
+  useOutsideClick(sessionRef, () => setShowDropdown(false));
 
   const handleDropdown = () => {
     setShowDropdown((prev) => !prev);
@@ -47,7 +36,7 @@ const SessionBar = () => {
 
   return (
     <CustomTouchableOpacity style={styles.container} onPress={handleDropdown}>
-      <CommonText title={intl.formatMessage({ id: "label.sessions" })} />
+      <CommonText title={intl.formatMessage({ id: "label.sessions" })} customTextStyle={styles.sessionBarText}/>
       <CommonText
         title={selectedValue}
         customTextStyle={styles.sessionText(currentBreakpoint)}
