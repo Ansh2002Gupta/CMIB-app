@@ -45,6 +45,13 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 16,
   },
+  textContainerBox: {
+    ...Platform.select({
+      web: {
+        flexShrink: "unset",
+      },
+    }),
+  },
   nameStyle: {
     color: colors.darkBlue,
     fontSize: 14,
