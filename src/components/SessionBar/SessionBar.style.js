@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
           currentBreakpoint === "lg"
             ? "200px"
             : currentBreakpoint === "md"
-            ? "20px"
+            ? "10px"
             : currentBreakpoint === "sm"
             ? "90px"
             : currentBreakpoint === "sx"
