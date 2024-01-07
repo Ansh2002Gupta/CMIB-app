@@ -1,3 +1,3 @@
-import HeaderRight from './UserAccountInfo';
+import UserAccountInfo from './UserAccountInfo';
 
-export default HeaderRight;
+export default UserAccountInfo;

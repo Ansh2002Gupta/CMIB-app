@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "../../routes";
 import {
   Image,
   TouchableOpacity,
@@ -61,11 +61,13 @@ const PrivateHeader = ({
               <>
                 <CommonText
                   customTextStyle={styles.nameText}
-                  title={`${intl.formatMessage({ id: "label.hey" })} ${firstName} -`}
+                  title={`${intl.formatMessage({
+                    id: "label.hey",
+                  })} ${firstName} -`}
                 />
                 <CommonText
                   customTextStyle={styles.overView}
-                  title={intl.formatMessage({id:"label.here_your_overview"})}
+                  title={intl.formatMessage({ id: "label.here_your_overview" })}
                 />
               </>
             )}
@@ -132,6 +134,5 @@ const HeaderLeft = ({
   }
   return null;
 };
-
 
 export default PrivateHeader;

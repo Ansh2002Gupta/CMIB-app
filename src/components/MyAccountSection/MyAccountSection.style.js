@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "@unthinkable/react-core-components";
+import { StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 

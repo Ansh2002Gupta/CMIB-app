@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
+import CustomAvatar from "../CustomAvatar";
+import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import CustomAvatar from "../CustomAvatar";
 import MyAccountSection from "../MyAccountSection";
-import CustomImage from "../CustomImage";
 import images from "../../images";
 import styles from "./UserProfileActionDropDown.style";
 

@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
-import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CustomImage from "../CustomImage";
-import styles from "./UserAccountInfo.style";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
+import styles from "./UserAccountInfo.style";
 
-const HeaderRight = ({
+const UserAccountInfo = ({
   firstName,
   isMdOrGreater,
   isWebView,
@@ -36,14 +36,14 @@ const HeaderRight = ({
   );
 };
 
-HeaderRight.defaultProps = {
+UserAccountInfo.defaultProps = {
   isWebView: false,
   lastName: "",
   profileImage: "",
   role: "",
 };
 
-HeaderRight.propTypes = {
+UserAccountInfo.propTypes = {
   firstName: PropTypes.string.isRequired,
   isMdOrGreater: PropTypes.bool.isRequired,
   isWebView: PropTypes.bool,
@@ -54,4 +54,4 @@ HeaderRight.propTypes = {
   role: PropTypes.string,
 };
 
-export default HeaderRight;
+export default UserAccountInfo;

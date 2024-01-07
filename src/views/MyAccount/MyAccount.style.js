@@ -15,7 +15,7 @@ if (deviceHeight < minHeightThreshold) {
 const style = {
   optionCotainer: {
     flexDirection: "row",
-    padding:16,
+    padding: 16,
     alignItems: "center",
   },
   optionCotainerBorder: {
@@ -37,15 +37,14 @@ const style = {
     paddingRight: 16,
     flexDirection: "row",
     alignItems: "center",
-   
   },
-  profileContainerWeb:{
+  profileContainerWeb: {
     marginTop: 16,
     marginBottom: 24,
     paddingLeft: 16,
-    marginRight:16,
+    marginRight: 16,
     alignItems: "flex-start",
-    minWidth:240,
+    minWidth: 240,
   },
   initialsContainer: {
     justifyContent: "center",
@@ -58,9 +57,8 @@ const style = {
   detailContainer: {
     marginLeft: 12,
   },
-  detailContainerWeb:{
-    marginTop:12,
- 
+  detailContainerWeb: {
+    marginTop: 12,
   },
   fullNameStyle: {
     fontSize: 16,
