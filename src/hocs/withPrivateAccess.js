@@ -2,9 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate, useSearchParams } from "../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
+import CookieAndStorageService from "../services/cookie-and-storage-service";
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { RouteContext } from "../globalContext/route/routeProvider";
-import { StorageService } from "../services";
 import { setLoginRedirectRoute } from "../globalContext/route/routeActions";
 import { getQueryParamsAsAnObject } from "../utils/util";
 import { navigations } from "../constants/routeNames";
@@ -20,7 +20,7 @@ function withPrivateAccess(Component) {
     const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
     useEffect(() => {
-      StorageService.get("auth").then((token) => {
+      CookieAndStorageService.get({ key: "auth" }).then((token) => {
         if (!authState?.token && !token) {
           routeDispatch(
             setLoginRedirectRoute({
