@@ -183,7 +183,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   };
 
   const handleImageUpload = (file, handleUploadSuccess) => {
-    handleFileUpload(file, handleUploadSuccess);
+    handleFileUpload({ file, successCallback: handleUploadSuccess });
   };
 
   const onSuccess = async (details) => {

@@ -41,7 +41,12 @@ const UploadImage = ({
     if (!openCropViewAfterImageSelection) {
       const formData = new FormData();
       formData.append("company_logo", uploadedFile);
-      handleFileUpload(formData);
+      handleFileUpload({
+        file: formData,
+        errorCallback: () => {
+          setFile(null);
+        },
+      });
     }
   };
 
