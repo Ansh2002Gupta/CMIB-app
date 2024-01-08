@@ -3,10 +3,21 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: colors.backgroundGrey,
     padding: 24,
   },
-  cellTextStyle: (fontSize = 14, fontWeight = 500) => ({
+  mobileContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingRight: 24,
+    paddingLeft: 24,
+    borderBottomWidth: 1,
+    borderColor: colors.greyOne,
+  },
+  cellTextStyle: (fontSize = 14, fontWeight = "500") => ({
     fontSize: fontSize,
     fontWeight: fontWeight,
     ...Platform.select({
@@ -24,8 +35,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    borderRadius: 16,
-    backgroundColor: colors.lightOrange,
     color: colors.orange,
   },
   pending: {
@@ -34,8 +43,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    borderRadius: 16,
-    backgroundColor: colors.skyBlueLight,
     color: colors.skyBlueDark,
   },
   close: {
@@ -44,13 +51,43 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    borderRadius: 16,
-    backgroundColor: colors.lightGreen,
     color: colors.darkGreen,
   },
+  inProgressWeb: {
+    textAlign: "center",
+    paddingLeft: 8,
+    borderRadius: 16,
+    paddingRight: 8,
+    paddingTop: 2,
+    paddingBottom: 2,
+    backgroundColor: colors.lightOrange,
+    color: colors.orange,
+  },
+  pendingWeb: {
+    textAlign: "center",
+    borderRadius: 16,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 2,
+    paddingBottom: 2,
+    color: colors.skyBlueDark,
+    backgroundColor: colors.skyBlueLight,
+  },
+  closeWeb: {
+    borderRadius: 16,
+    textAlign: "center",
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 2,
+    paddingBottom: 2,
+    color: colors.darkGreen,
+    backgroundColor: colors.lightGreen,
+  },
   tableHeadingText: {
-    fontSize: 12,
     fontWeight: "600",
+    color: colors.darkGrey,
+  },
+  tableQueryText: {
     color: colors.darkGrey,
   },
   columnStyle: (WIDTH: "15%") => ({
@@ -73,6 +110,23 @@ const styles = StyleSheet.create({
   iconTicket: {
     height: 20,
     width: 20,
+    marginLeft: 16,
+  },
+  filterIcon:{
+    height: 20,
+    width: 20,
+    marginRight:8
+  },
+  imageParentStyle: {
+    flexDirection:"row",
+    alignItems:"center",
+    height:44,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    marginLeft: 16,
+    padding:12,
   },
   paginationFooter: {
     justifyContent: "space-between",
@@ -81,33 +135,32 @@ const styles = StyleSheet.create({
     paddingRight: 24,
     paddingTop: 12,
     paddingBottom: 12,
-    borderTopWidth:0.5,
-    borderColor:colors.lightGrey
+    borderTopWidth: 0.5,
+    borderColor: colors.lightGrey,
   },
-  selectedBtn:{
-    paddingLeft:12,
-    paddingRight:12,
-    paddingTop:8,
-    paddingBottom:8,
-    borderWidth:1,
-    borderRadius:8,
-    borderColor:colors.lightGrey,
-    cursor:"pointer"
+  selectedBtn: {
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: colors.lightGrey,
+    cursor: "pointer",
   },
-  rowSelectedNumber:{
-    fontSize:14,
-    marginRight:8
+  rowSelectedNumber: {
+    fontSize: 14,
+    marginRight: 8,
   },
-  rowsPerPageText:{
-    fontSize:14,
-    marginRight:14,
-    color:colors.darkGrey
+  rowsPerPageText: {
+    fontSize: 14,
+    marginRight: 14,
+    color: colors.darkGrey,
   },
-  rowsPerPage:{
-    flexDirection:"row",
-    alignItems:"center"
-  }
-
+  rowsPerPage: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
 });
 
 export default styles;

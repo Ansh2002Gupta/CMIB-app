@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
-import { View, FlatList } from "@unthinkable/react-core-components";
+import { View, FlatList, Text } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import useTicketView from "./controller/useTicketView";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomImage from "../../components/CustomImage";
+import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./TicketsView.style";
+import { TwoColumn, TwoRow } from "../../core/layouts";
+import TouchableImage from "../../components/TouchableImage";
+import SearchView from "../../components/SearchView";
 
 const tableHeading = {
   id: "Ticket ID",
@@ -16,6 +20,8 @@ const tableHeading = {
   assigned_to: "Assigned To",
   created_at: "Created On",
 };
+
+const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
 
 const gridData = [
   {
@@ -163,6 +169,7 @@ const Tickets = () => {
     getColoumConfigs,
     isHeading,
   } = useTicketView();
+  const { isWebView } = useIsWebView();
 
   useEffect(() => {
     setVisibleData(gridData.slice(0, rowsToShow));
@@ -182,35 +189,102 @@ const Tickets = () => {
     </CustomTouchableOpacity>
   );
 
+  const PaginationFooter = ({
+    title = "Rows Per Page:",
+    customTextStyle = {},
+  }) => {
+    return (
+      <View style={styles.paginationFooter}>
+        <View style={styles.rowsPerPage}>
+          <CommonText title={title} customTextStyle={styles.rowsPerPageText} />
+          {renderButton("10", 10)}
+        </View>
+
+        {/* {renderButton("15", 15)} */}
+        {renderButton("20", 20)}
+      </View>
+    );
+  };
+
+  const handleSearchResults = (filteredData) => {};
+
   return (
     <View style={styles.container}>
-      <View style={styles.tableSection}>
-        <MultiColumn columns={getColoumConfigs(tableHeading, isHeading)} />
-        <FlatList
-          data={visibleData}
-          renderItem={({ item, index }) => {
-            return (
+      <TwoRow
+        topSection={
+          <TwoColumn
+            leftSection={
+              <SearchView data={dataList} onSearch={handleSearchResults} />
+            }
+            isLeftFillSpace={true}
+            isRightFillSpace={false}
+            rightSection={
+              <View style={styles.imageParentStyle}>
+                <TouchableImage
+                  source={images.iconFilter}
+                  parentStyle={styles.filterIcon}
+                />
+                <CommonText title={"Filters"} />
+              </View>
+            }
+            style={{ marginBottom: 16,width: isWebView ? "30%" : "100%", }}
+          />
+        }
+        bottomSection={
+          <View style={styles.tableSection}>
+            {isWebView && (
               <MultiColumn
-                columns={getColoumConfigs(item)}
-                style={styles.columnStyleBorder}
+                columns={getColoumConfigs(tableHeading, isHeading)}
               />
-            );
-          }}
-        />
+            )}
+            <FlatList
+              data={visibleData}
+              // ListFooterComponent={<PaginationFooter />}
+              renderItem={({ item, index }) => {
+                return (
+                  <>
+                    {isWebView ? (
+                      <MultiColumn
+                        columns={getColoumConfigs(item)}
+                        style={styles.columnStyleBorder}
+                      />
+                    ) : (
+                      <View style={styles.mobileContainer}>
+                        <View>
+                          <CommonText
+                            title={item.id}
+                            customTextStyle={styles.cellTextStyle()}
+                          />
+                          <CommonText
+                            title={item.query_type}
+                            customTextStyle={styles.tableQueryText}
+                          />
+                        </View>
+                        <View style={{ flexDirection: "row" }}>
+                          <CommonText
+                            title={item.status}
+                            customTextStyle={getStatusStyle(
+                              item.status,
+                              false,
+                              styles
+                            )}
+                          />
 
-        <View style={styles.paginationFooter}>
-          <View style={styles.rowsPerPage}>
-            <CommonText
-              title={"Rows Per Page:"}
-              customTextStyle={styles.rowsPerPageText}
+                          <CustomImage
+                            source={images.iconTicket}
+                            style={styles.iconTicket}
+                          />
+                        </View>
+                      </View>
+                    )}
+                  </>
+                );
+              }}
             />
-            {renderButton("10", 10)}
+            <PaginationFooter />
           </View>
-
-          {/* {renderButton("15", 15)} */}
-          {renderButton("20", 20)}
-        </View>
-      </View>
+        }
+      />
     </View>
   );
 };

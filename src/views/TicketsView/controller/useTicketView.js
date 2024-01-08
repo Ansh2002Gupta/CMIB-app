@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import CommonText from "../../../components/CommonText";
 import CustomImage from "../../../components/CustomImage";
@@ -9,7 +9,7 @@ const useTicketView = () => {
   const [visibleData, setVisibleData] = useState([]);
   const [rowsToShow, setRowsToShow] = useState(10);
 
-  const isHeading = true;
+  let isHeading = true;
 
   function getStatusStyle(status, isHeading, styles) {
     status = status.toLowerCase();
@@ -19,11 +19,11 @@ const useTicketView = () => {
     }
     switch (status) {
       case "pending":
-        return [styles.pending, styles.cellTextStyle(12)];
+        return [!isHeading ? styles.pending : styles.pendingWeb, styles.cellTextStyle(12)];
       case "close":
-        return [styles.close, styles.cellTextStyle(12)];
+        return [!isHeading ? styles.close : styles.closeWeb, styles.cellTextStyle(12)];
       case "in progress":
-        return [styles.inProgress, styles.cellTextStyle(12)];
+        return [!isHeading ?  styles.inProgress : styles.inProgressWeb, styles.cellTextStyle(12)];
       default:
         return styles.cellTextStyle(12);
     }
