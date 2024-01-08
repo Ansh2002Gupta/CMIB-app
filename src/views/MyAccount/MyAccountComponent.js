@@ -17,7 +17,7 @@ const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
   const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const handleOptionClick = (option) => {
-    setShowAccountSection(false);
+    setShowAccountSection && setShowAccountSection(false);
     if (option?.navigateTo) {
       navigate(option?.navigateTo);
       return;
