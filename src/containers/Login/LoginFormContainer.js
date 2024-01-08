@@ -81,8 +81,9 @@ const LoginFormContainer = () => {
                     ? styles.webView.selectedSectionHeading
                     : styles.webView.unSelectedSectionHeading),
                 }}
-                title={intl.formatMessage({ id: "label.member_candidate" })}
-              />
+              >
+                {intl.formatMessage({ id: "label.member_candidate" })}
+              </CommonText>
 
               <View
                 style={
@@ -107,8 +108,9 @@ const LoginFormContainer = () => {
                       ? styles.webView.selectedSectionHeading
                       : styles.webView.unSelectedSectionHeading),
                   }}
-                  title={intl.formatMessage({ id: "label.company" })}
-                />
+                >
+                  {intl.formatMessage({ id: "label.company" })}
+                </CommonText>
               </View>
               <View
                 style={
@@ -191,10 +193,11 @@ const LoginFormContainer = () => {
                         ...styles.forgotPasswordText,
                         ...(isWebView && styles.webView.forgotPasswordText),
                       }}
-                      title={intl.formatMessage({
+                    >
+                      {intl.formatMessage({
                         id: "label.forgot_password",
                       })}
-                    />
+                    </CommonText>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.loginButtonView}>
@@ -210,10 +213,9 @@ const LoginFormContainer = () => {
               </View>
               {errorWhileLoggingIn ? (
                 <View style={styles.errorView}>
-                  <CommonText
-                    customTextStyle={styles.errorText}
-                    title={errorWhileLoggingIn}
-                  />
+                  <CommonText customTextStyle={styles.errorText}>
+                    {errorWhileLoggingIn}
+                  </CommonText>
                 </View>
               ) : null}
               <View style={styles.accountView}>
@@ -222,20 +224,22 @@ const LoginFormContainer = () => {
                     ...styles.accountText,
                     ...(isWebView && styles.webView.dontHaveAccountText),
                   }}
-                  title={intl.formatMessage({
+                >
+                  {intl.formatMessage({
                     id: "label.dont_have_account",
                   })}
-                />
+                </CommonText>
                 <TouchableOpacity onPress={onCreateNewPasswordClick}>
                   <CommonText
                     customTextStyle={{
                       ...styles.newAccountText,
                       ...(isWebView && styles.webView.createNewAccountText),
                     }}
-                    title={intl.formatMessage({
+                  >
+                    {intl.formatMessage({
                       id: "label.create_new_account",
                     })}
-                  />
+                  </CommonText>
                 </TouchableOpacity>
               </View>
               {!isWebView && (

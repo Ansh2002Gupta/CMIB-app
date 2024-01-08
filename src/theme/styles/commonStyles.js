@@ -16,7 +16,6 @@ const commonStyles = {
     color: colors.errorRed,
     fontSize: 14,
     lineHeight: 18,
-    fontWeight: "600",
   },
   contentContainer: {
     zIndex: 3,
@@ -35,7 +34,7 @@ const commonStyles = {
     marginTop: 48,
     zIndex: 1,
     boxShadow: "0px 4px 32px 0px rgba(97, 108, 130, 0.04)",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 };
 

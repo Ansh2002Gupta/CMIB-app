@@ -1,13 +1,11 @@
 import React, { createContext, useReducer } from "react";
 import * as types from "./types";
 
-import { modules } from "../../constants/sideBarHelpers";
-
-const initialState = { selectedModule: modules[0] };
+const initialState = { selectedModule: {} };
 
 const sideBarReducer = (state, action) => {
-  switch (action.type) {    
-    case types.MODULE_LIST:       
+  switch (action.type) {
+    case types.MODULE_LIST:
       return {
         ...state,
         selectedModule: { ...action.payload },
@@ -20,7 +18,10 @@ const sideBarReducer = (state, action) => {
 export const SideBarContext = createContext([initialState, () => {}]);
 
 const SideBarProvider = ({ children }) => {
-  const [sideBarState, sideBarDispatch] = useReducer(sideBarReducer, initialState);
+  const [sideBarState, sideBarDispatch] = useReducer(
+    sideBarReducer,
+    initialState
+  );
 
   return (
     <SideBarContext.Provider value={[sideBarState, sideBarDispatch]}>

@@ -37,10 +37,9 @@ const SaveCancelButton = ({
             source={images.iconArrowLeft}
           />
         )}
-        <CommonText
-          customTextStyle={styles.disableTextStyle}
-          title={buttonOneText}
-        />
+        <CommonText customTextStyle={styles.disableTextStyle}>
+          {buttonOneText}
+        </CommonText>
       </CustomTouchableOpacity>
       <CustomTouchableOpacity
         onPress={onPressButtonTwo}
@@ -55,10 +54,9 @@ const SaveCancelButton = ({
           <Spinner thickness={3} color={colors.white} {...webProps} />
         ) : (
           <>
-            <CommonText
-              customTextStyle={styles.titleStyle}
-              title={buttonTwoText}
-            />
+            <CommonText customTextStyle={styles.titleStyle}>
+              {buttonTwoText}
+            </CommonText>
             {!!hasIconRight && (
               <CustomImage
                 alt={"right-arrow"}

@@ -73,7 +73,6 @@ export const styles = StyleSheet.create({
   },
   circleText: {
     fontSize: 14,
-    fontWeight: "600",
   },
   activeCircleText: {
     color: colors.white,

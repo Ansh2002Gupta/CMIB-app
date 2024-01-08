@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   },
   leftTextStyle: {
     fontSize: 14,
-    fontWeight: "600",
     color: colors.black,
   },
   rightButtonStyle: {
@@ -25,7 +24,6 @@ const styles = StyleSheet.create({
   rightTextStyle: {
     color: colors.white,
     fontSize: 14,
-    fontWeight: "600",
   },
   bottomStyle: {
     ...Platform.select({

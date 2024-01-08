@@ -153,7 +153,6 @@ function CreateNewPasswordUI(props) {
               }}
               eyeImage
               isPassword
-              customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
@@ -173,7 +172,6 @@ function CreateNewPasswordUI(props) {
               isMandatory
               eyeImage
               isPassword
-              customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
@@ -203,17 +201,18 @@ function CreateNewPasswordUI(props) {
             </CustomButton>
             <CustomTouchableOpacity onPress={onClickGoToLogin}>
               <CommonText
-                customTextStyle={{
-                  ...styles.backToLoginText,
-                  ...(isWebView ? styles.webView.backBtnText : {}),
-                }}
-                title={intl.formatMessage({ id: "label.back_to_login" })}
-              />
+                customTextStyle={styles.backToLoginText}
+                fontWeight="600"
+              >
+                {intl.formatMessage({ id: "label.back_to_login" })}
+              </CommonText>
             </CustomTouchableOpacity>
           </View>
           {successLogin && (
             <CustomModal
-              headerText={successMsg}
+              headerText={intl.formatMessage({
+                id: "label.password_changed_successfully",
+              })}
               onPress={() => {
                 onClickGoToLogin();
               }}

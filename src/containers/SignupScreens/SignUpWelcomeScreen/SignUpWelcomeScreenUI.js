@@ -81,8 +81,10 @@ const SignUpWelcomeScreenUI = ({
               ? [style.formHeaderStyle, style.webFormHeaderStyle]
               : style.formHeaderStyle
           }
-          title={intl.formatMessage({ id: "label.choose_interest" })}
-        />
+          fontWeight="600"
+        >
+          {intl.formatMessage({ id: "label.choose_interest" })}
+        </CommonText>
         <FlatList
           contentContainerStyle={style.contentContainerStyle}
           data={options}

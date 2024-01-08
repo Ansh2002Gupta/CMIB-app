@@ -171,8 +171,10 @@ const ForgotPasswordUI = (props) => {
           <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={styles.backToLoginText}
-              title={intl.formatMessage({ id: "label.back_to_login" })}
-            />
+              fontWeight="600"
+            >
+              {intl.formatMessage({ id: "label.back_to_login" })}
+            </CommonText>
           </CustomTouchableOpacity>
         </View>
       </View>

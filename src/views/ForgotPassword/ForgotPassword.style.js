@@ -59,7 +59,6 @@ const style = {
     marginBottom: 24,
     fontSize: 14,
     color: colors.darkBlue,
-    fontWeight: "600",
   },
   whiteBackground: {
     backgroundColor: colors.white,

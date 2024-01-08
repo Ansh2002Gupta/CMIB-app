@@ -6,7 +6,6 @@ export const style = {
   },
   heading: {
     color: colors.black,
-    fontWeight: "600",
   },
   secondHeading: {
     color: colors.darkGrey,
@@ -25,7 +24,6 @@ export const style = {
   },
   headerText: {
     fontSize: 40,
-    fontWeight: "600",
   },
   labelText: {
     color: colors.subHeadingGray,
@@ -33,7 +31,7 @@ export const style = {
   },
 };
 
-export const getResponsiveStyles = ({str, currentBreakpoint}) => {
+export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
   switch (str) {
     case "headerText": {
       if (currentBreakpoint === "xs") {

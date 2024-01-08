@@ -38,9 +38,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 24,
     fontSize: 14,
-    fontWeight: "600",
     color: colors.darkBlue,
-    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   bullet: {
     width: 6,
@@ -85,7 +83,6 @@ const styles = StyleSheet.create({
     headerText: {
       color: colors.black,
       fontSize: 40,
-      fontWeight: "600",
     },
     headerText1800px: {
       fontSize: 36,
@@ -101,13 +98,6 @@ const styles = StyleSheet.create({
     headerNameText900: {
       fontSize: 14,
     },
-    inputLabelText: {
-      color: colors.black,
-      fontSize: 14,
-      fontWeight: "600",
-      lineHeight: 24,
-      textTransform: "capitalize",
-    },
     inputTextBox: {
       background: colors.white,
       marginTop: 0,
@@ -119,10 +109,6 @@ const styles = StyleSheet.create({
     },
     submitTextContainer: {
       marginBottom: 8,
-    },
-    backBtnText: {
-      fontWeight: "600",
-      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
     },
     companyView: {
       backgroundColor: colors.white,

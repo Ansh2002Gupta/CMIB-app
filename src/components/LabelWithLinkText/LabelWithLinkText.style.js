@@ -14,7 +14,6 @@ const style = {
     color: colors.darkBlue,
     fontSize: 14,
     alignSelf: "center",
-    fontWeight: "600",
     cursor: "pointer",
   },
 };

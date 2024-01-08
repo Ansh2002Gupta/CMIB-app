@@ -24,14 +24,14 @@ const styles = {
     paddingLeft: 24,
     paddingRight: 24,
     paddingBottom: 16,
-    borderWidth:1,
-    borderTopWidth:0,
-    borderLeftWidth:0,
-    borderRightWidth:0,
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
   },
-  textHeaderTopBorder:{
+  textHeaderTopBorder: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -39,9 +39,9 @@ const styles = {
     paddingLeft: 24,
     paddingRight: 24,
     paddingBottom: 16,
-    borderWidth:1,
-    borderLeftWidth:0,
-    borderRightWidth:0,
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
   },
@@ -62,12 +62,11 @@ const styles = {
   detailContainer: {
     marginLeft: 12,
   },
-  editText:{
-    marginLeft:8
+  editText: {
+    marginLeft: 8,
   },
   fullNameStyle: {
     fontSize: 14,
-    fontWeight: "600",
     color: colors.black,
   },
   roleStyle: {
@@ -84,7 +83,7 @@ const styles = {
   iconNotification: {
     width: 24,
     height: 24,
-    cursor: "pointer",
+    marginLeft:10,
   },
   overView: {
     color: colors.darkGreySecond,
@@ -94,7 +93,6 @@ const styles = {
   nameText: {
     color: colors.darkBlackSecond,
     fontSize: 14,
-    fontWeight: "600",
     marginLeft: 8,
   },
   notficationIconView: {
@@ -111,7 +109,6 @@ const styles = {
   formHeaderStyle: {
     color: colors.black,
     fontSize: 20,
-    fontWeight: "600",
   },
   headerLeftSection: {
     flexDirection: "row",

@@ -24,7 +24,7 @@ const ToastComponent = (props) => {
 
   return (
     <View style={[style.containerStyle, customToastStyle]}>
-      <CommonText customTextStyle={style.textStyle} title={toastMessage} />
+      <CommonText customTextStyle={style.textStyle}>{toastMessage} </CommonText>
     </View>
   );
 };

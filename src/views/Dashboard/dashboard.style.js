@@ -2,7 +2,7 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
@@ -31,7 +31,6 @@ const styles = StyleSheet.create( {
   },
   customCellTextStyle: {
     fontSize: 14,
-    fontWeight: "600",
     color: colors.darkBlue,
     lineHeight: 20,
     marginLeft: 8,

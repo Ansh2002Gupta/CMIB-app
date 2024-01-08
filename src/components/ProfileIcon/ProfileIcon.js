@@ -50,7 +50,9 @@ const ProfileIcon = ({
           customContainerStyle,
         ]}
       >
-        <CommonText title={initials} customTextStyle={styles.initialsText} />
+        <CommonText customTextStyle={styles.initialsText}>
+          {initials}
+        </CommonText>
       </View>
     );
   }

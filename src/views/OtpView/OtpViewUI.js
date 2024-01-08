@@ -172,12 +172,14 @@ const OtpViewUI = ({
           }
         >
           <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({
+            description={intl.formatMessage({
               id: "label.otp_text",
             })}
             headerText={intl.formatMessage({ id: "label.forgot_password" })}
             customTextStyle={
-              isWebView ? getResponsiveStyles("label.forgot_password") : {}
+              isWebView
+                ? getResponsiveStyles("label.forgot_password")
+                : { ...styles.forgotPasswordStyle }
             }
             customContainerStyles={
               isWebView ? styles.forgotHeaderContainer : {}
@@ -203,47 +205,49 @@ const OtpViewUI = ({
             />
             {otpLeft > 0 && (
               <View style={styles.textLabelParent}>
-                <CommonText
-                  customTextStyle={styles.textlabel}
-                  title={intl.formatMessage({ id: "label.otp_recieved" })}
-                />
+                <CommonText customTextStyle={styles.textlabel}>
+                  {intl.formatMessage({ id: "label.otp_recieved" })}
+                </CommonText>
                 {isCounter ? (
                   <CommonText
                     customTextStyle={styles.textlabelTimer}
-                    title={formattedTimerValue}
-                  />
+                    fontWeight="600"
+                  >
+                    {formattedTimerValue}
+                  </CommonText>
                 ) : (
                   <CustomTouchableOpacity onPress={onResendOtpClick}>
                     <CommonText
                       customTextStyle={styles.textlabelReset}
-                      title={formatedOtpLeftValue}
-                    />
+                      fontWeight="600"
+                    >
+                      {formatedOtpLeftValue}
+                    </CommonText>
                   </CustomTouchableOpacity>
                 )}
               </View>
             )}
             {otpLeft === 0 && isCounter && !afterAttempt && (
               <View style={styles.textLabelParent}>
-                <CommonText
-                  customTextStyle={styles.textlabel}
-                  title={intl.formatMessage({ id: "label.otp_recieved" })}
-                />
+                <CommonText customTextStyle={styles.textlabel}>
+                  {intl.formatMessage({ id: "label.otp_recieved" })}
+                </CommonText>
                 <CommonText
                   customTextStyle={styles.textlabelTimer}
-                  title={formattedTimerValue}
-                />
+                  fontWeight="600"
+                >
+                  {formattedTimerValue}
+                </CommonText>
               </View>
             )}
             {otpLeft === 0 && afterAttempt && (
               <View style={styles.textLabelAfterParent}>
-                <CommonText
-                  customTextStyle={styles.textlabel}
-                  title={textFirstHeading}
-                />
-                <CommonText
-                  customTextStyle={styles.textlabel}
-                  title={textSecondHeading}
-                />
+                <CommonText customTextStyle={styles.textlabel}>
+                  {textFirstHeading}
+                </CommonText>
+                <CommonText customTextStyle={styles.textlabel}>
+                  {textSecondHeading}
+                </CommonText>
               </View>
             )}
           </View>
@@ -259,13 +263,11 @@ const OtpViewUI = ({
           </CustomButton>
           <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
-              customTextStyle={
-                isWebView
-                  ? [styles.backToLoginText, styles.webFontFamily]
-                  : styles.backToLoginText
-              }
-              title={intl.formatMessage({ id: "label.back_to_login" })}
-            />
+              customTextStyle={styles.backToLoginText}
+              fontWeight="600"
+            >
+              {intl.formatMessage({ id: "label.back_to_login" })}
+            </CommonText>
           </CustomTouchableOpacity>
         </View>
       </View>
@@ -283,6 +285,7 @@ OtpViewUI.propTypes = {
   errorMessage: PropTypes.string,
   handleOtpChange: PropTypes.func.isRequired,
   isCounter: PropTypes.bool,
+  isLoading: PropTypes.bool,
   intl: PropTypes.object.isRequired,
   submitDisabled: PropTypes.bool,
   minutes: PropTypes.number,
