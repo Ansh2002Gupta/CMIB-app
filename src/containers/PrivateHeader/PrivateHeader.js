@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import {
   Image,
