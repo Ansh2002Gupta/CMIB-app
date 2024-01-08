@@ -41,6 +41,7 @@ const SignUpLastScreenUI = ({
   showSuccessSignUp,
   signUpError,
   socialMediaLinks,
+  uploadImageToServerUtils,
   validationError,
   website,
 }) => {
@@ -53,6 +54,14 @@ const SignUpLastScreenUI = ({
 
   const errorMessage =
     validationError || errorWhileDeletion || errorWhileUpload || signUpError;
+
+  const {
+    fileUploadResult,
+    handleFileUpload,
+    isUploadingImageToServer,
+    setFileUploadResult,
+    uploadPercentage,
+  } = uploadImageToServerUtils;
 
   const renderFormContent = () => {
     return (
@@ -171,6 +180,14 @@ const SignUpLastScreenUI = ({
         <UploadImage
           onImageUpload={onImageUpload}
           onDeleteImage={onDeleteImage}
+          {...{
+            errorWhileUpload,
+            fileUploadResult,
+            handleFileUpload,
+            isUploadingImageToServer,
+            setFileUploadResult,
+            uploadPercentage,
+          }}
         />
       </View>
     );
