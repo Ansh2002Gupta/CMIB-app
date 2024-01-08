@@ -59,7 +59,6 @@ const style = {
     marginBottom: 24,
     fontSize: 14,
     color: colors.darkBlue,
-    fontWeight: "600",
   },
   whiteBackground: {
     backgroundColor: colors.white,
@@ -81,8 +80,6 @@ const style = {
   },
   customBtnText: {
     fontSize: 16,
-    fontFamily: "General Sans",
-    fontWeight: "600",
   },
   footerImage: {
     position: "absolute",
@@ -104,7 +101,7 @@ const style = {
     width: "40%",
   },
   forgotPasswordWebContainer: {
-    flex: 0.9
+    flex: 0.9,
   },
   headerText: {
     fontSize: 28

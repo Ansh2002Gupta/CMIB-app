@@ -125,9 +125,10 @@ const LoginScreenUI = (props) => {
                       ? styles.webView.selectedSectionHeading
                       : styles.webView.unSelectedSectionHeading),
                   }}
-                  title={intl.formatMessage({ id: "label.member_candidate" })}
-                />
-
+                  fontWeight={!active ? "600" : "500"}
+                >
+                  {intl.formatMessage({ id: "label.member_candidate" })}
+                </CommonText>
                 <View
                   style={
                     active
@@ -151,8 +152,10 @@ const LoginScreenUI = (props) => {
                         ? styles.webView.selectedSectionHeading
                         : styles.webView.unSelectedSectionHeading),
                     }}
-                    title={intl.formatMessage({ id: "label.company" })}
-                  />
+                    fontWeight={active ? "600" : "500"}
+                  >
+                    {intl.formatMessage({ id: "label.company" })}
+                  </CommonText>
                 </View>
                 <View
                   style={
@@ -233,16 +236,18 @@ const LoginScreenUI = (props) => {
                         ...styles.forgotPasswordText,
                         ...(isWebView ? styles.webView.forgotPasswordText : {}),
                       }}
-                      title={intl.formatMessage({
+                      fontWeight="600"
+                    >
+                      {intl.formatMessage({
                         id: "label.forgot_password",
                       })}
-                    />
+                    </CommonText>
                   </TouchableOpacity>
                   <View style={styles.loginButtonView}>
                     <CustomButton
-                      onPress={onLogin}
                       disabled={loginDisabled}
                       isLoading={isLoading}
+                      onPress={onLogin}
                       withGreenBackground
                     >
                       {intl.formatMessage({ id: "label.login" })}
@@ -255,10 +260,11 @@ const LoginScreenUI = (props) => {
                       ...styles.accountText,
                       ...(isWebView ? styles.webView.dontHaveAccountText : {}),
                     }}
-                    title={intl.formatMessage({
+                  >
+                    {intl.formatMessage({
                       id: "label.dont_have_account",
                     })}
-                  />
+                  </CommonText>
                   <TouchableOpacity onPress={onCreateNewPasswordClick}>
                     <CommonText
                       customTextStyle={{
@@ -267,10 +273,12 @@ const LoginScreenUI = (props) => {
                           ? styles.webView.createNewAccountText
                           : {}),
                       }}
-                      title={intl.formatMessage({
+                      fontWeight="600"
+                    >
+                      {intl.formatMessage({
                         id: "label.create_new_account",
                       })}
-                    />
+                    </CommonText>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -291,7 +299,7 @@ const LoginScreenUI = (props) => {
           />
         )}
       </WebViewLoginSignUpWrapper>
-      </FormWrapper>
+    </FormWrapper>
   );
 };
 

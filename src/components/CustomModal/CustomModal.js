@@ -27,23 +27,30 @@ const CustomModal = ({
   secondaryText,
 }) => {
   return (
+    //TODO: Should be divided into 2 different component
     <View>
       <Modal isVisible style={style.containerStyle}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={Platform.OS === "ios" && !isSuccess ? "padding" : "height"}
           style={[style.innerContainer, customInnerContainerStyle]}
         >
           {isSuccess ? (
             <>
               <Image source={images.iconSuccess} />
               <CommonText
-                customTextStyle={style.headerText}
-                title={headerText}
-              />
-              <CommonText
-                customTextStyle={style.infoText}
-                title={secondaryText}
-              />
+                customTextStyle={[
+                  !secondaryText && style.headerTextStyle,
+                  style.textStyle,
+                ]}
+                fontWeight="600"
+              >
+                {headerText}
+              </CommonText>
+              {!!secondaryText && (
+                <CommonText customTextStyle={style.infoText}>
+                  {secondaryText}
+                </CommonText>
+              )}
               <ButtonComponent title={buttonTitle} onPress={onPress} />
             </>
           ) : (
@@ -51,8 +58,10 @@ const CustomModal = ({
               <View style={style.headerStyle}>
                 <CommonText
                   customTextStyle={[style.headerText, headerTextStyle]}
-                  title={headerText}
-                />
+                  fontWeight={headerTextStyle?.fontWeight || "600"}
+                >
+                  {headerText}
+                </CommonText>
                 <TouchableOpacity onPress={onPressIconCross}>
                   {isIconCross && <Image source={images.iconCross} />}
                 </TouchableOpacity>
@@ -83,7 +92,7 @@ CustomModal.propTypes = {
   customInnerContainerStyle: PropTypes.object,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.bool,
-  isSuccess: PropTypes.bool.isRequired,
+  isSuccess: PropTypes.bool,
   isIconCross: PropTypes.bool,
   onPress: PropTypes.func,
   onPressIconCross: PropTypes.func,

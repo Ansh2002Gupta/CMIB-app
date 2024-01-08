@@ -90,18 +90,20 @@ const OtpInput = ({
               isWebView && styles.webLabel,
               customLabelStyle,
             ]}
-            title={label}
-          />
+          >
+            {label}
+          </CommonText>
           {isMandatory && (
             <CommonText
               customTextStyle={[styles.label, styles.starStyle]}
-              title={` *`}
-            />
+            >{` *`}</CommonText>
           )}
         </View>
         <View style={styles.otpContainer}>{renderInputs()}</View>
         {isError && (
-          <CommonText customTextStyle={styles.errorMsg} title={errorMessage} />
+          <CommonText customTextStyle={styles.errorMsg} fontWeight="600">
+            {errorMessage}
+          </CommonText>
         )}
       </View>
     </View>

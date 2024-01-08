@@ -65,18 +65,16 @@ const LogoutModal = ({ onCancel, onSave }) => {
     },
     {
       content: (
-        <CommonText
-          customTextStyle={styles.headerText}
-          title={intl.formatMessage({ id: "label.logout" })}
-        />
+        <CommonText customTextStyle={styles.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.logout" })}
+        </CommonText>
       ),
     },
     {
       content: (
-        <CommonText
-          customTextStyle={styles.subHeaderText}
-          title={intl.formatMessage({ id: "label.logout_message" })}
-        />
+        <CommonText customTextStyle={styles.subHeaderText}>
+          {intl.formatMessage({ id: "label.logout_message" })}
+        </CommonText>
       ),
     },
     {

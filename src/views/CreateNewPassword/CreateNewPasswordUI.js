@@ -107,9 +107,20 @@ function CreateNewPasswordUI(props) {
         >
           <View style={styles.container}>
             <HeaderTextWithLabelAndDescription
-              headerText={intl.formatMessage({ id: "label.create_new_password" })}
-              description={intl.formatMessage({ id: "label.enter_new_password" })}
-              customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.createNewPassword")} : styles.headerText}
+              headerText={intl.formatMessage({
+                id: "label.create_new_password",
+              })}
+              description={intl.formatMessage({
+                id: "label.enter_new_password",
+              })}
+              customTextStyle={
+                isWebView
+                  ? {
+                      ...styles.headerText,
+                      ...getResponsiveStyles("label.createNewPassword"),
+                    }
+                  : styles.headerText
+              }
               customSecondHeadingStyles={
                 isWebView
                   ? getResponsiveStyles("label.createNewPasswordText")
@@ -142,7 +153,6 @@ function CreateNewPasswordUI(props) {
               }}
               eyeImage
               isPassword
-              customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
@@ -162,7 +172,6 @@ function CreateNewPasswordUI(props) {
               isMandatory
               eyeImage
               isPassword
-              customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
@@ -190,17 +199,18 @@ function CreateNewPasswordUI(props) {
             />
             <CustomTouchableOpacity onPress={onClickGoToLogin}>
               <CommonText
-                customTextStyle={{
-                  ...styles.backToLoginText,
-                  ...(isWebView ? styles.webView.backBtnText : {}),
-                }}
-                title={intl.formatMessage({ id: "label.back_to_login" })}
-              />
+                customTextStyle={styles.backToLoginText}
+                fontWeight="600"
+              >
+                {intl.formatMessage({ id: "label.back_to_login" })}
+              </CommonText>
             </CustomTouchableOpacity>
           </View>
           {successLogin && (
             <CustomModal
-              headerText={successMsg}
+              headerText={intl.formatMessage({
+                id: "label.password_changed_successfully",
+              })}
               onPress={() => {
                 onClickGoToLogin();
               }}

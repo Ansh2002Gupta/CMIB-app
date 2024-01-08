@@ -35,8 +35,10 @@ const ButtonComponent = (props) => {
         <>
           <CommonText
             customTextStyle={[styles.titleStyle, customTitleStyle]}
-            title={title}
-          />
+            fontWeight={customTitleStyle?.fontWeight || "600"}
+          >
+            {title}
+          </CommonText>
           {hasIconRight && (
             <CustomImage
               Icon={images.iconArrowRightWhite}
