@@ -4,6 +4,7 @@ import { View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import SessionBar from "../SessionBar";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
 import styles from "./UserAccountInfo.style";
 
@@ -20,6 +21,7 @@ const UserAccountInfo = ({
   return (
     <>
       <View style={styles.notficationIconView}>
+        {isWebView && <SessionBar />}
         <CustomTouchableOpacity onPress={onPressRightIcon}>
           <CustomImage source={rightIcon} style={styles.iconNotification} />
         </CustomTouchableOpacity>

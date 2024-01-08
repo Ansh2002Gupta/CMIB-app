@@ -7,6 +7,7 @@ import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import MyAccountSection from "../MyAccountSection";
+import useOutsideClick from "../../hooks/useOutsideClick";
 import images from "../../images";
 import styles from "./UserProfileActionDropDown.style";
 
@@ -21,18 +22,7 @@ const UserProfileActionDropDown = ({
   const [showAccountSection, setShowAccountSection] = useState(false);
   const accountRef = useRef(null);
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleClickOutside = (event) => {
-    if (accountRef?.current && !accountRef?.current.contains(event.target)) {
-      setShowAccountSection(false);
-    }
-  };
+  useOutsideClick(accountRef, () => setShowAccountSection(false));
 
   const handleAccountSection = () => {
     setShowAccountSection((prev) => !prev);

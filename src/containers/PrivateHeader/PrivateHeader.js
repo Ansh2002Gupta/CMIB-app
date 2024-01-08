@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext}  from "react";
 import { useIntl } from "react-intl";
 import { useLocation, useNavigate } from "../../routes";
 import {
@@ -10,6 +10,8 @@ import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimen
 
 import CommonText from "../../components/CommonText";
 import UserAccountInfo from "../../components/UserAccountInfo";
+import SessionBar from "../../components/SessionBar";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import { getSmallScreenHeaderInfo } from "../../utils/headerHelpers";
 import images from "../../images";
@@ -26,6 +28,9 @@ const PrivateHeader = ({
   const location = useLocation();
   const navigate = useNavigate();
   const windowDimensions = useWindowDimensions();
+  const [userProfileState] = useContext(UserProfileContext);
+
+  const loggedInUserInfo = userProfileState.userDetails || {};
 
   const {
     text: pageHeading,
@@ -33,10 +38,10 @@ const PrivateHeader = ({
     showRightButton,
   } = getSmallScreenHeaderInfo(location.pathname);
 
-  const profileImage = "";
-  const firstName = "Elongated";
-  const lastName = "Mask";
-  const role = "Admin";
+  const profileImage = ""; // TODO: Not getting the user profile image key in the API. Have updated the API pening document for the same.
+  const firstName = loggedInUserInfo?.name?.split(" ")?.[0] || "";
+  const lastName = loggedInUserInfo?.name?.split(" ")?.[1] || "";
+  const role = "Admin"; // TODO: Not getting type of user at the moment in the API. Have updated the API pening document for the same.
 
   const isMdOrGreater = windowDimensions.width >= 900;
 
@@ -56,7 +61,6 @@ const PrivateHeader = ({
               isMdOrGreater={isMdOrGreater}
               leftIcon={leftIcon}
             />
-            {/* Right Now It's a static data, we will replace it by dynamic data as we get API */}
             {pageHeading === "" && (
               <>
                 <CommonText

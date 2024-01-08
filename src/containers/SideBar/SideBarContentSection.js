@@ -35,7 +35,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
 
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [activeMenuItem, setActiveMenuItem] = useState(
-    selectedModule.children[0].key
+    selectedModule?.children?.[0]?.key
   );
 
   const handleOnSelectItem = (item) => {
@@ -87,7 +87,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           // TODO: Add function handling when after getting API
         }}
       >
-        <CommonText customTextStyle={styles.changeText} title={item.title} />
+        <CommonText customTextStyle={styles.changeText} title={item.label} />
       </TouchableOpacity>
     );
   };
@@ -123,7 +123,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 style={openModuleSelector ? "" : styles.moduleSelectorheading}
               >
                 <ResponsiveTextTruncate
-                  text={selectedModule.label}
+                  text={selectedModule?.label || ""}
                   maxLength={22}
                   style={styles.changeText}
                   widthPercentage={0.4}

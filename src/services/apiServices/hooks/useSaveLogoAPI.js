@@ -11,14 +11,13 @@ const useSaveLogo = () => {
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
-  const handleFileUpload = async (file, successCallback) => {
+  const handleFileUpload = async ({ file, successCallback, errorCallback }) => {
     try {
       setUploadStatus(API_STATUS.LOADING);
       errorWhileUpload && setErrorWhileUpload("");
       const headers = {
         "Content-Type": "multipart/form-data",
       };
-
       const otherOptions = {
         onUploadProgress: (progressEvent) => {
           const { loaded, total } = progressEvent;
@@ -44,12 +43,14 @@ const useSaveLogo = () => {
         }, 100);
         setUploadStatus(API_STATUS.SUCCESS);
         setFileUploadResult(res.data);
-        successCallback();
+        successCallback && successCallback();
         return;
       }
+      errorCallback && errorCallback();
       setUploadStatus(API_STATUS.ERROR);
       setErrorWhileUpload(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
+      errorCallback && errorCallback();
       setUploadStatus(API_STATUS.ERROR);
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
@@ -69,6 +70,7 @@ const useSaveLogo = () => {
     isLoading,
     isSuccess,
     setErrorWhileUpload,
+    setFileUploadResult,
     uploadPercentage,
     uploadStatus,
   };

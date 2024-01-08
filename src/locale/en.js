@@ -228,7 +228,8 @@ const locale = {
   "label.job_details": "Job Details",
   "label.pre_interview_preferences": "Pre-Interview Preferences",
   "label.centre_details": "Centre Details",
-  "label.payment":"Payment"
+  "label.payment": "Payment",
+  "label.sessions": "Sessions :",
 };
 
 export default locale;
