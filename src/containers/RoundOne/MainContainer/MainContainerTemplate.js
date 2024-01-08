@@ -50,14 +50,14 @@ const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
                 ...(isWebView ? styles.webAddApplicationView : null),
               }}
             >
+              <CommonText customTextStyle={styles.addApplicationFormText}>
+                {container.title}
+              </CommonText>
               <CommonText
-                title={container.title}
-                customTextStyle={styles.addApplicationFormText}
-              />
-              <CommonText
-                title={container.subTitle}
                 customTextStyle={styles.addApplicationFormDescriptionText}
-              />
+              >
+                {container.subTitle}
+              </CommonText>
             </View>
           </CardComponent>
         </TouchableOpacity>
