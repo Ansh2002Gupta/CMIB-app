@@ -1,5 +1,6 @@
-import React, { useContext, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router";
+import React from "react";
+import { useIntl } from "react-intl";
+import { useLocation, useNavigate } from "../../routes";
 import {
   Image,
   TouchableOpacity,
@@ -7,9 +8,9 @@ import {
 } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
-import { useIntl } from "react-intl";
 import CommonText from "../../components/CommonText";
 import CustomAvatar from "../../components/CustomAvatar";
+import SessionBar from '../../components/SessionBar';
 import useIsWebView from "../../hooks/useIsWebView";
 import { getSmallScreenHeaderInfo } from "../../utils/headerHelpers";
 import images from "../../images";
@@ -144,6 +145,7 @@ const HeaderRight = ({
   isMdOrGreater,
 }) => (
   <View style={styles.notficationIconView}>
+      {isWebView && <SessionBar /> }
     <TouchableOpacity onPress={onPressRightIcon}>
       <Image source={rightIcon} style={styles.iconNotification} />
     </TouchableOpacity>

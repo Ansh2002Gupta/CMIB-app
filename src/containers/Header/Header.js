@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import PublicHeader from "../PublicHeader/PublicHeader";
 import PrivateHeader from "../PrivateHeader/PrivateHeader";
 import { getAuthToken } from "../../utils/getAuthToken";
+import images from "../../images";
 
 const Header = ({ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }) => {
   const [isuserLoggedIn, setIsuserLoggedIn] = useState(false);
@@ -41,8 +42,8 @@ const Header = ({ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }) => {
 Header.defaultProps = {
   onPressLeftIcon: () => {},
   onPressRightIcon: () => {},
-  leftIcon: "",
-  rightIcon: "",
+  leftIcon : images.iconMenu,
+  rightIcon :images.iconNotification,
 };
 
 Header.propTypes = {
