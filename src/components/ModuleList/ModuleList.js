@@ -34,8 +34,9 @@ const ModuleList = ({ modules, onSelectItem }) => {
               styles.changeText,
               module.sectionHeading ? styles.disabled : {},
             ]}
-            title={module.label}
-          />
+          >
+            {module.label}
+          </CommonText>
         </TouchableOpacity>
       )}
     </>

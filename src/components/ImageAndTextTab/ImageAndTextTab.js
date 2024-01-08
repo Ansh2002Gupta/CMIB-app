@@ -28,11 +28,12 @@ const ImageAndTextTab = ({
       <TouchableOpacity style={style.buttonStyle} onPress={onPress}>
         <Image source={imageSource} />
         <CommonText
-          title={text}
           customTextStyle={
             isActive ? style.activeTextStyle : style.inActiveTextStyle
           }
-        />
+        >
+          {text}
+        </CommonText>
       </TouchableOpacity>
     </>
   );

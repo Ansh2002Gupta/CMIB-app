@@ -83,8 +83,17 @@ const LoginScreenUI = (props) => {
         <View style={styles.container}>
           <HeaderTextWithLabelAndDescription
             headerText={intl.formatMessage({ id: "label.login_to_cmib" })}
-            description={intl.formatMessage({ id: "label.secure_login_access" })}
-            customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.cmib")} : styles.headerText}
+            description={intl.formatMessage({
+              id: "label.secure_login_access",
+            })}
+            customTextStyle={
+              isWebView
+                ? {
+                    ...styles.webView.headerText,
+                    ...getResponsiveStyles("label.cmib"),
+                  }
+                : styles.loginHeaderText
+            }
             customSecondHeadingStyles={
               isWebView ? styles.webView.subHeadingText : {}
             }
@@ -109,9 +118,10 @@ const LoginScreenUI = (props) => {
                     ? styles.webView.selectedSectionHeading
                     : styles.webView.unSelectedSectionHeading),
                 }}
-                title={intl.formatMessage({ id: "label.member_candidate" })}
-              />
-
+                fontWeight={!active ? "600" : "500"}
+              >
+                {intl.formatMessage({ id: "label.member_candidate" })}
+              </CommonText>
               <View
                 style={
                   active
@@ -135,8 +145,10 @@ const LoginScreenUI = (props) => {
                       ? styles.webView.selectedSectionHeading
                       : styles.webView.unSelectedSectionHeading),
                   }}
-                  title={intl.formatMessage({ id: "label.company" })}
-                />
+                  fontWeight={active ? "600" : "500"}
+                >
+                  {intl.formatMessage({ id: "label.company" })}
+                </CommonText>
               </View>
               <View
                 style={
@@ -217,10 +229,12 @@ const LoginScreenUI = (props) => {
                       ...styles.forgotPasswordText,
                       ...(isWebView ? styles.webView.forgotPasswordText : {}),
                     }}
-                    title={intl.formatMessage({
+                    fontWeight="600"
+                  >
+                    {intl.formatMessage({
                       id: "label.forgot_password",
                     })}
-                  />
+                  </CommonText>
                 </TouchableOpacity>
                 <View style={styles.loginButtonView}>
                   <ButtonComponent
@@ -238,20 +252,23 @@ const LoginScreenUI = (props) => {
                     ...styles.accountText,
                     ...(isWebView ? styles.webView.dontHaveAccountText : {}),
                   }}
-                  title={intl.formatMessage({
+                >
+                  {intl.formatMessage({
                     id: "label.dont_have_account",
                   })}
-                />
+                </CommonText>
                 <TouchableOpacity onPress={onCreateNewPasswordClick}>
                   <CommonText
                     customTextStyle={{
                       ...styles.newAccountText,
                       ...(isWebView ? styles.webView.createNewAccountText : {}),
                     }}
-                    title={intl.formatMessage({
+                    fontWeight="600"
+                  >
+                    {intl.formatMessage({
                       id: "label.create_new_account",
                     })}
-                  />
+                  </CommonText>
                 </TouchableOpacity>
               </View>
             </View>

@@ -20,10 +20,18 @@ const style = {
     paddingBottom: 24,
   },
   headerText: {
-    fontWeight: "600",
     fontSize: 20,
     color: colors.black,
     paddingBottom: 8,
+  },
+  textStyle: {
+    marginTop: 20,
+    fontSize: 20,
+    color: colors.black,
+    paddingBottom: 8,
+  },
+  headerTextStyle: {
+    marginBottom: 24,
   },
   headerStyle: {
     flexDirection: "row",
@@ -31,11 +39,10 @@ const style = {
     alignItems: "center",
   },
   infoText: {
-    fontFamily: "GeneralSans-Medium",
+    paddingBottom: 36,
     fontSize: 14,
     lineHeight: 22,
     color: colors.darkGrey,
-    paddingBottom: 36,
   },
 };
 

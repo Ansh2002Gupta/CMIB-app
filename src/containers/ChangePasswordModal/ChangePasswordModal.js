@@ -104,10 +104,9 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           fourthSection={
             <View style={styles.fourthSectionStyle}>
               {!!error && (
-                <CommonText
-                  title={error}
-                  customTextStyle={styles.passwordMatchStyle}
-                />
+                <CommonText customTextStyle={styles.passwordMatchStyle}>
+                  {error}
+                </CommonText>
               )}
               <NewPasswordValidation {...{ newPassword, confirmNewPassword }} />
             </View>
@@ -115,10 +114,9 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           fiveSection={
             !!errorWhileChangePassword && (
               <View style={styles.saveAndCancelButtonView}>
-                <CommonText
-                  title={errorWhileChangePassword}
-                  customTextStyle={styles.errorText}
-                />
+                <CommonText customTextStyle={styles.errorText}>
+                  {errorWhileChangePassword}
+                </CommonText>
               </View>
             )
           }

@@ -52,10 +52,9 @@ function LoginForm(props) {
   return (
     <View style={styles.container}>
       <View>
-        <CommonText
-          customTextStyle={styles.header}
-          title={intl.formatMessage({ id: "label.welcome" })}
-        />
+        <CommonText customTextStyle={styles.header}>
+          {intl.formatMessage({ id: "label.welcome" })}
+        </CommonText>
         <TextInput
           style={styles.input}
           placeholder={intl.formatMessage({ id: "label.username" })}

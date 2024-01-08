@@ -16,10 +16,9 @@ const CustomTextEditor = ({ customLabelStyle, isMandatory, label }) => {
   const intl = useIntl();
 
   const handleHead = () => (
-    <CommonText
-      title={intl.formatMessage({ id: "label.heading" })}
-      customTextStyle={styles.headingStyle}
-    />
+    <CommonText customTextStyle={styles.headingStyle}>
+      {intl.formatMessage({ id: "label.heading" })}
+    </CommonText>
   );
 
   return (
@@ -27,13 +26,14 @@ const CustomTextEditor = ({ customLabelStyle, isMandatory, label }) => {
       <View style={styles.labelContainer}>
         <CommonText
           customTextStyle={[styles.label, customLabelStyle]}
-          title={label}
-        />
+          fontWeight={customLabelStyle?.fontWeight}
+        >
+          {label}
+        </CommonText>
         {isMandatory && (
-          <CommonText
-            customTextStyle={[styles.label, styles.starStyle]}
-            title={"*"}
-          />
+          <CommonText customTextStyle={[styles.label, styles.starStyle]}>
+            {"*"}
+          </CommonText>
         )}
       </View>
       <View style={styles.mainView}>

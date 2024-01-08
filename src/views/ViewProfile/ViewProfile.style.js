@@ -55,13 +55,11 @@ const style = {
     fontSize: 14,
     color: colors.black,
     marginLeft: 8,
-    fontWeight: "600",
   },
   saveTextStyle: {
     fontSize: 14,
     color: colors.white,
     marginLeft: 8,
-    fontWeight: "600",
   },
   picParentContainer: {
     paddingLeft: 16,

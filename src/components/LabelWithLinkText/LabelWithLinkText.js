@@ -8,17 +8,25 @@ import style from "./LabelWithLinkText.style";
 const LabelWithLinkText = ({ labelText, linkText, onLinkClick }) => {
   return (
     <View style={style.textContainer}>
-      {!!labelText && <CommonText title={labelText} customTextStyle={style.labelTextStyle} />}
-      {!!linkText && <TouchableOpacity onPress={() => onLinkClick()}>
-        <CommonText customTextStyle={style.linkTextStyle} title={linkText} />
-      </TouchableOpacity>}
+      {!!labelText && (
+        <CommonText customTextStyle={style.labelTextStyle}>
+          {labelText}
+        </CommonText>
+      )}
+      {!!linkText && (
+        <TouchableOpacity onPress={() => onLinkClick()}>
+          <CommonText customTextStyle={style.linkTextStyle} fontWeight="600">
+            {linkText}
+          </CommonText>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
 
 LabelWithLinkText.defaultProps = {
-  labelText: '',
-  linkText: '',
+  labelText: "",
+  linkText: "",
   onLinkClick: () => {},
 };
 
