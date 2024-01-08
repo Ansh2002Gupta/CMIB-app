@@ -104,7 +104,15 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       natureOfSupplier,
       companyType,
     ];
-    return requiredFields.every((field) => String(field).trim() !== "");
+    const isAtLeastOneInterestSelected = options.some(
+      (option) => option.isSelected
+    );
+
+    return (
+      requiredFields.every((field) => String(field).trim() !== "") &&
+      isAtLeastOneInterestSelected &&
+      fileUploadResult
+    );
   };
 
   const validateFields = () => {
