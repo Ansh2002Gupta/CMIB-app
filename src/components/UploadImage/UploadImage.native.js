@@ -5,6 +5,7 @@ import { View } from "@unthinkable/react-core-components";
 
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 import PreviewImage from "../PreviewImage/PreviewImage";
+import { IMAGE_MAX_SIZE } from "../../constants/constants";
 import { launchImageLibrary } from "react-native-image-picker";
 
 import styles from "./UploadImage.style";
@@ -36,7 +37,10 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
         console.log("User cancelled image picker");
       } else if (response.error) {
         setErrorWhileUpload(response.error);
-      } else if (response.assets && response.assets[0].fileSize > 5242880) {
+      } else if (
+        response.assets &&
+        response.assets[0].fileSize > IMAGE_MAX_SIZE
+      ) {
         setErrorWhileUpload(
           intl.formatMessage({ id: "label.fileTooLargeError" })
         );
