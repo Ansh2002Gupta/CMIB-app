@@ -4,6 +4,7 @@ import { Platform } from "@unthinkable/react-core-components";
 import formatKey from "./helpers";
 
 const isPlatformWeb = Platform.OS.toLowerCase() === "web";
+
 class CookieStorage {
   static set(
     key,
