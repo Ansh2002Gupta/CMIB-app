@@ -131,7 +131,7 @@ UploadImage.defaultProps = {
 };
 
 UploadImage.propTypes = {
-  errorWhileUpload: "",
+  errorWhileUpload: PropTypes.string,
   fileUploadResult: PropTypes.object,
   handleFileUpload: PropTypes.func,
   isUploadingImageToServer: PropTypes.bool,
