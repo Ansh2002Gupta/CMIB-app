@@ -27,10 +27,11 @@ const CustomModal = ({
   secondaryText,
 }) => {
   return (
+    //TODO: Should be divided into 2 different component
     <View>
       <Modal isVisible style={style.containerStyle}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={Platform.OS === "ios" && !isSuccess ? "padding" : "height"}
           style={[style.innerContainer, customInnerContainerStyle]}
         >
           {isSuccess ? (
@@ -83,7 +84,7 @@ CustomModal.propTypes = {
   customInnerContainerStyle: PropTypes.object,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.bool,
-  isSuccess: PropTypes.bool.isRequired,
+  isSuccess: PropTypes.bool,
   isIconCross: PropTypes.bool,
   onPress: PropTypes.func,
   onPressIconCross: PropTypes.func,
