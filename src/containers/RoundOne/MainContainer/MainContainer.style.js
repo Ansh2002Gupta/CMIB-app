@@ -1,7 +1,7 @@
-import { Platform } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
+import colors from "../../../assets/colors";
 
-const style = {
+const style = StyleSheet.create({
   main: {
     padding: 20,
   },
@@ -36,6 +36,18 @@ const style = {
     flexDirection: "row",
     gap: 24,
     width: "100%",
+    backgroundColor: colors.backgroundColor,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  mobContainer: {
+    flex: 1
+  },
+  containerStyle: {
+    backgroundColor: colors.backgroundColor,
+    paddingLeft: 16,
+    paddingRight: 16,
+    marginBottom: 16,
   },
   addApplicationView: {
     flex: 1,
@@ -50,12 +62,6 @@ const style = {
     fontSize: 14,
     color: colors.subHeadingGray,
     marginTop: 8,
-  },
-  containerStyle: {
-    paddingLeft: 16,
-    paddingRight: 16,
-    backgroundColor: colors.backgroundColor,
-    marginBottom: 16,
   },
   webAddApplicationView: {
     paddingLeft: 0,
@@ -75,8 +81,12 @@ const style = {
     color: colors.black,
     fontWeight: "600",
   },
-  buttonStyle: { flex: 1 },
-  imageStyle: { maxWidth: 40 },
-};
+  buttonStyle: {
+    flex: 1,
+  },
+  imageStyle: {
+    maxWidth: 40,
+  },
+});
 
 export default style;
