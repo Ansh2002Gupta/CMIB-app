@@ -4,10 +4,10 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import CustomButton from "../../components/CustomButton";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
-import ButtonComponent from "../../components/ButtonComponent";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
-import OtpInput from "../../components/OtpInput/index"
+import OtpInput from "../../components/OtpInput/index";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import {
@@ -150,15 +150,6 @@ const OtpViewUI = ({
           ...styles.webEmailInput,
         };
       }
-
-      case "submitButtonContainer": {
-        if (currentBreakpoint === "sm") {
-          return {
-            ...styles.width900pxOrLessSubmitBtn,
-          };
-        }
-        return {};
-      }
       default:
         return;
     }
@@ -258,16 +249,14 @@ const OtpViewUI = ({
           </View>
         </View>
         <View style={isWebView ? styles.webSubmitView : styles.submitView}>
-          <ButtonComponent
-            title={intl.formatMessage({ id: "label.submit" })}
-            onPress={onVerifyOtpClick}
+          <CustomButton
             disabled={submitDisabled}
-            customTitleStyle={isWebView ? styles.customBtnText : {}}
-            customButtonContainer={
-              isWebView ? getResponsiveStyles("submitButtonContainer") : {}
-            }
-            displayLoader={isLoading}
-          />
+            isLoading={isLoading}
+            onPress={onVerifyOtpClick}
+            withGreenBackground
+          >
+            {intl.formatMessage({ id: "label.submit" })}
+          </CustomButton>
           <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={

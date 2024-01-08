@@ -167,9 +167,6 @@ const style = {
       backgroundColor: colors.white,
       marginTop: 0,
     },
-    loginText: {
-      ...webPointer,
-    },
     rememberMeText: {
       fontSize: 14,
       lineHeight: 20,

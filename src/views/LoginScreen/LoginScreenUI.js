@@ -7,8 +7,8 @@ import {
   ScrollView,
 } from "@unthinkable/react-core-components";
 
-import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
+import CustomButton from "../../components/CustomButton";
 import CustomTextInput from "../../components/CustomTextInput";
 import FollowUsIcons from "../../components/FollowUsIcons";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
@@ -83,8 +83,14 @@ const LoginScreenUI = (props) => {
         <View style={styles.container}>
           <HeaderTextWithLabelAndDescription
             headerText={intl.formatMessage({ id: "label.login_to_cmib" })}
-            description={intl.formatMessage({ id: "label.secure_login_access" })}
-            customTextStyle={isWebView ? {...styles.headerText, ...getResponsiveStyles("label.cmib")} : styles.headerText}
+            description={intl.formatMessage({
+              id: "label.secure_login_access",
+            })}
+            customTextStyle={
+              isWebView
+                ? { ...styles.headerText, ...getResponsiveStyles("label.cmib") }
+                : styles.headerText
+            }
             customSecondHeadingStyles={
               isWebView ? styles.webView.subHeadingText : {}
             }
@@ -223,13 +229,14 @@ const LoginScreenUI = (props) => {
                   />
                 </TouchableOpacity>
                 <View style={styles.loginButtonView}>
-                  <ButtonComponent
-                    title={intl.formatMessage({ id: "label.login" })}
-                    onPress={onLogin}
+                  <CustomButton
                     disabled={loginDisabled}
-                    displayLoader={isLoading}
-                    customTitleStyle={isWebView ? styles.webView.loginText : {}}
-                  />
+                    isLoading={isLoading}
+                    onPress={onLogin}
+                    withGreenBackground
+                  >
+                    {intl.formatMessage({ id: "label.login" })}
+                  </CustomButton>
                 </View>
               </View>
               <View style={styles.accountView}>
