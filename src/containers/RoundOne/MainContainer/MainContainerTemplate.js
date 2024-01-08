@@ -50,7 +50,10 @@ const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
                 ...(isWebView ? styles.webAddApplicationView : null),
               }}
             >
-              <CommonText customTextStyle={styles.addApplicationFormText}>
+              <CommonText
+                customTextStyle={styles.addApplicationFormText}
+                fontWeight={"600"}
+              >
                 {container.title}
               </CommonText>
               <CommonText
