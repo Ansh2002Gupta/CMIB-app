@@ -4,10 +4,11 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import CustomButton from "../../components/CustomButton";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
-import ButtonComponent from "../../components/ButtonComponent";
+import FormWrapper from "../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
-import OtpInput from "../../components/OtpInput/index"
+import OtpInput from "../../components/OtpInput/index";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import {
@@ -165,128 +166,131 @@ const OtpViewUI = ({
   };
 
   return (
-    <View style={styles.mainView}>
-      <View
-        style={
-          isWebView
-            ? getResponsiveStyles("forgotPasswordWebContainer")
-            : styles.grayBackground
-        }
-      >
+    <FormWrapper
+      customFormStyle={styles.formContainer}
+      onSubmit={onVerifyOtpClick}
+    >
+      <View style={styles.mainView}>
         <View
           style={
             isWebView
-              ? styles.container
-              : [styles.container, styles.mobContainer]
+              ? getResponsiveStyles("forgotPasswordWebContainer")
+              : styles.grayBackground
           }
         >
-          <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({
-              id: "label.otp_text",
-            })}
-            headerText={intl.formatMessage({ id: "label.forgot_password" })}
-            customTextStyle={
-              isWebView ? getResponsiveStyles("label.forgot_password") : {}
-            }
-            customContainerStyles={
-              isWebView ? styles.forgotHeaderContainer : {}
-            }
-          />
-          {!isWebView && <View style={styles.borderStyle} />}
-        </View>
-
-        <View style={isWebView ? styles.whiteBackground : styles.companyView}>
           <View
             style={
               isWebView
-                ? getResponsiveStyles("textInputView")
-                : styles.firstTextInput
+                ? styles.container
+                : [styles.container, styles.mobContainer]
             }
           >
-            <OtpInput
-              label={intl.formatMessage({ id: "label.text_otp" })}
-              onOtpChange={handleOtpChange}
-              isMandatory
-              errorMessage={errorMessage}
-              isError={!!errorMessage}
+            <HeaderTextWithLabelAndDescription
+              description={intl.formatMessage({
+                id: "label.otp_text",
+              })}
+              headerText={intl.formatMessage({ id: "label.forgot_password" })}
+              customTextStyle={
+                isWebView ? getResponsiveStyles("label.forgot_password") : {}
+              }
+              customContainerStyles={
+                isWebView ? styles.forgotHeaderContainer : {}
+              }
             />
-            {otpLeft > 0 && (
-              <View style={styles.textLabelParent}>
-                <CommonText
-                  customTextStyle={styles.textlabel}
-                  title={intl.formatMessage({ id: "label.otp_recieved" })}
-                />
-                {isCounter ? (
+            {!isWebView && <View style={styles.borderStyle} />}
+          </View>
+
+          <View style={isWebView ? styles.whiteBackground : styles.companyView}>
+            <View
+              style={
+                isWebView
+                  ? getResponsiveStyles("textInputView")
+                  : styles.firstTextInput
+              }
+            >
+              <OtpInput
+                label={intl.formatMessage({ id: "label.text_otp" })}
+                onOtpChange={handleOtpChange}
+                isMandatory
+                errorMessage={errorMessage}
+                isError={!!errorMessage}
+              />
+              {otpLeft > 0 && (
+                <View style={styles.textLabelParent}>
+                  <CommonText
+                    customTextStyle={styles.textlabel}
+                    title={intl.formatMessage({ id: "label.otp_recieved" })}
+                  />
+                  {isCounter ? (
+                    <CommonText
+                      customTextStyle={styles.textlabelTimer}
+                      title={formattedTimerValue}
+                    />
+                  ) : (
+                    <CustomTouchableOpacity onPress={onResendOtpClick}>
+                      <CommonText
+                        customTextStyle={styles.textlabelReset}
+                        title={formatedOtpLeftValue}
+                      />
+                    </CustomTouchableOpacity>
+                  )}
+                </View>
+              )}
+              {otpLeft === 0 && isCounter && !afterAttempt && (
+                <View style={styles.textLabelParent}>
+                  <CommonText
+                    customTextStyle={styles.textlabel}
+                    title={intl.formatMessage({ id: "label.otp_recieved" })}
+                  />
                   <CommonText
                     customTextStyle={styles.textlabelTimer}
                     title={formattedTimerValue}
                   />
-                ) : (
-                  <CustomTouchableOpacity onPress={onResendOtpClick}>
-                    <CommonText
-                      customTextStyle={styles.textlabelReset}
-                      title={formatedOtpLeftValue}
-                    />
-                  </CustomTouchableOpacity>
-                )}
-              </View>
-            )}
-            {otpLeft === 0 && isCounter && !afterAttempt && (
-              <View style={styles.textLabelParent}>
-                <CommonText
-                  customTextStyle={styles.textlabel}
-                  title={intl.formatMessage({ id: "label.otp_recieved" })}
-                />
-                <CommonText
-                  customTextStyle={styles.textlabelTimer}
-                  title={formattedTimerValue}
-                />
-              </View>
-            )}
-            {otpLeft === 0 && afterAttempt && (
-              <View style={styles.textLabelAfterParent}>
-                <CommonText
-                  customTextStyle={styles.textlabel}
-                  title={textFirstHeading}
-                />
-                <CommonText
-                  customTextStyle={styles.textlabel}
-                  title={textSecondHeading}
-                />
-              </View>
-            )}
+                </View>
+              )}
+              {otpLeft === 0 && afterAttempt && (
+                <View style={styles.textLabelAfterParent}>
+                  <CommonText
+                    customTextStyle={styles.textlabel}
+                    title={textFirstHeading}
+                  />
+                  <CommonText
+                    customTextStyle={styles.textlabel}
+                    title={textSecondHeading}
+                  />
+                </View>
+              )}
+            </View>
+          </View>
+          <View style={isWebView ? styles.webSubmitView : styles.submitView}>
+            <CustomButton
+              onPress={onVerifyOtpClick}
+              disabled={submitDisabled}
+              isLoading={isLoading}
+              withGreenBackground
+            >
+              {intl.formatMessage({ id: "label.submit" })}
+            </CustomButton>
+            <CustomTouchableOpacity onPress={onClickGoToLogin}>
+              <CommonText
+                customTextStyle={
+                  isWebView
+                    ? [styles.backToLoginText, styles.webFontFamily]
+                    : styles.backToLoginText
+                }
+                title={intl.formatMessage({ id: "label.back_to_login" })}
+              />
+            </CustomTouchableOpacity>
           </View>
         </View>
-        <View style={isWebView ? styles.webSubmitView : styles.submitView}>
-          <ButtonComponent
-            title={intl.formatMessage({ id: "label.submit" })}
-            onPress={onVerifyOtpClick}
-            disabled={submitDisabled}
-            customTitleStyle={isWebView ? styles.customBtnText : {}}
-            customButtonContainer={
-              isWebView ? getResponsiveStyles("submitButtonContainer") : {}
-            }
-            displayLoader={isLoading}
+        {!!validationError && (
+          <ToastComponent
+            toastMessage={validationError}
+            onDismiss={handleDismissToast}
           />
-          <CustomTouchableOpacity onPress={onClickGoToLogin}>
-            <CommonText
-              customTextStyle={
-                isWebView
-                  ? [styles.backToLoginText, styles.webFontFamily]
-                  : styles.backToLoginText
-              }
-              title={intl.formatMessage({ id: "label.back_to_login" })}
-            />
-          </CustomTouchableOpacity>
-        </View>
+        )}
       </View>
-      {!!validationError && (
-        <ToastComponent
-          toastMessage={validationError}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </View>
+    </FormWrapper>
   );
 };
 

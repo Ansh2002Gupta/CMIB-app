@@ -5,6 +5,7 @@ const style = {
   mainView: {
     flex: 1,
     backgroundColor: colors.white,
+    display: "flex"
   },
   container: {
     backgroundColor: colors.white,
@@ -162,6 +163,10 @@ const style = {
     marginTop: 16,
     alignItems: "center",
   },
+  formContainer: {
+    flex: 1,
+    display: "flex"
+  }
 };
 
 export default style;
