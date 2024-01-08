@@ -1,5 +1,6 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useIntl } from "react-intl";
+import { useLocation, useNavigate } from "../../routes";
 import {
   Image,
   TouchableOpacity,
@@ -7,7 +8,6 @@ import {
 } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
-import { useIntl } from "react-intl";
 import CommonText from "../../components/CommonText";
 import CustomAvatar from "../../components/CustomAvatar";
 import SessionBar from '../../components/SessionBar';
