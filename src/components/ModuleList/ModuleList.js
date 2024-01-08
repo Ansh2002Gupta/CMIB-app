@@ -12,7 +12,7 @@ const ModuleList = ({ modules, onSelectItem }) => {
 
   const renderrableModules = getAccessibleModulesList({
     allModules: modules,
-    accessibleModules: userProfileState.userDetails?.users?.[0]?.role || [],
+    accessibleModules: userProfileState.userDetails?.role || [],
   });
 
   const renderItem = ({ item: module }) => (

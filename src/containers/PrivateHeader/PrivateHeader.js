@@ -29,7 +29,7 @@ const PrivateHeader = ({
   const windowDimensions = useWindowDimensions();
   const [userProfileState] = useContext(UserProfileContext);
 
-  const loggedInUserInfo = userProfileState.userDetails?.users?.[0] || {};
+  const loggedInUserInfo = userProfileState.userDetails || {};
 
   const {
     text: pageHeading,
@@ -37,7 +37,7 @@ const PrivateHeader = ({
     showRightButton,
   } = getSmallScreenHeaderInfo(location.pathname);
 
-  const profileImage = ""; // TODO: Not getting the user profile image key in the users array at the moment in the API. Have updated the API pening document for the same.
+  const profileImage = ""; // TODO: Not getting the user profile image key in the API. Have updated the API pening document for the same.
   const firstName = loggedInUserInfo?.name?.split(" ")?.[0] || "";
   const lastName = loggedInUserInfo?.name?.split(" ")?.[1] || "";
   const role = "Admin"; // TODO: Not getting type of user at the moment in the API. Have updated the API pening document for the same.
