@@ -92,6 +92,7 @@ import iconSavedActive from "../../public/images/svg/iconSavedCandidatesActive.s
 import addCircle from "../../public/images/svg/addCircle.svg";
 import minusCirlce from "../../public/images/svg/minusCirlce.svg";
 import iconTicket from "../../public/images/svg/iconTicket.svg";
+import iconArrowRightBlack from "../../public/images/svg/iconArrowRightBlack.svg";
 
 const images = {
   iconArrowUp,
@@ -187,7 +188,8 @@ const images = {
   iconPostedJobsWeb,
   addCircle,
   minusCirlce,
-  iconTicket
+  iconTicket,
+  iconArrowRightBlack
 };
 
 export default images;

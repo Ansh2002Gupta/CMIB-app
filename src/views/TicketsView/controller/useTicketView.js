@@ -2,16 +2,30 @@ import React, { useState } from "react";
 
 import CommonText from "../../../components/CommonText";
 import CustomImage from "../../../components/CustomImage";
+import { gridData } from "../constant";
 import images from "../../../images";
 import styles from "../TicketsView.style";
 
+const rowsLimit = [
+ { value:10, label:"10"},
+  {value:15, label:"15"},
+  {value:20, label:"20"},
+];
+
 const useTicketView = () => {
-  const [visibleData, setVisibleData] = useState([]);
   const [rowsToShow, setRowsToShow] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastRecord = currentPage * rowsToShow;
+  const indexOfFirstRecord = indexOfLastRecord - rowsToShow;
+
+  const currentRecords = gridData.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  const totalcards = gridData.length;
 
   let isHeading = true;
 
-  function getStatusStyle(status, isHeading, styles) {
+  function getStatusStyle(status, isHeading, styles, isWebView) {
     status = status.toLowerCase();
 
     if (isHeading) {
@@ -19,11 +33,20 @@ const useTicketView = () => {
     }
     switch (status) {
       case "pending":
-        return [!isHeading ? styles.pending : styles.pendingWeb, styles.cellTextStyle(12)];
+        return [
+          !isWebView ? styles.pending : styles.pendingWeb,
+          styles.cellTextStyle(12),
+        ];
       case "close":
-        return [!isHeading ? styles.close : styles.closeWeb, styles.cellTextStyle(12)];
+        return [
+          !isWebView ? styles.close : styles.closeWeb,
+          styles.cellTextStyle(12),
+        ];
       case "in progress":
-        return [!isHeading ?  styles.inProgress : styles.inProgressWeb, styles.cellTextStyle(12)];
+        return [
+          !isWebView ? styles.inProgress : styles.inProgressWeb,
+          styles.cellTextStyle(12),
+        ];
       default:
         return styles.cellTextStyle(12);
     }
@@ -61,7 +84,12 @@ const useTicketView = () => {
         content: (
           <CommonText
             title={item.status}
-            customTextStyle={getStatusStyle(item.status, isHeading, styles)}
+            customTextStyle={getStatusStyle(
+              item.status,
+              isHeading,
+              styles,
+              true
+            )}
           />
         ),
         style: styles.columnStyle("15%"),
@@ -102,13 +130,18 @@ const useTicketView = () => {
   };
 
   return {
-    visibleData,
-    setVisibleData,
     rowsToShow,
     setRowsToShow,
     getStatusStyle,
     getColoumConfigs,
     isHeading,
+    currentPage,
+    setCurrentPage,
+    currentRecords,
+    totalcards,
+    rowsLimit,
+    indexOfFirstRecord,
+    indexOfLastRecord
   };
 };
 

@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     borderBottomWidth: 1,
     borderColor: colors.greyOne,
+    backgroundColor: colors.white,
   },
   cellTextStyle: (fontSize = 14, fontWeight = "500") => ({
     fontSize: fontSize,
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
   }),
   inProgress: {
     textAlign: "center",
+    marginRight: 16,
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 2,
@@ -39,6 +41,7 @@ const styles = StyleSheet.create({
   },
   pending: {
     textAlign: "center",
+    marginRight: 16,
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 2,
@@ -47,6 +50,7 @@ const styles = StyleSheet.create({
   },
   close: {
     textAlign: "center",
+    marginRight: 16,
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 2,
@@ -110,25 +114,22 @@ const styles = StyleSheet.create({
   iconTicket: {
     height: 20,
     width: 20,
-    marginLeft: 16,
   },
-  filterIcon:{
-    height: 20,
-    width: 20,
-    marginRight:8
+  filterText:{
+    marginLeft: 8,
   },
   imageParentStyle: {
-    flexDirection:"row",
-    alignItems:"center",
-    height:44,
+    flexDirection: "row",
+    alignItems: "center",
+    height: 44,
     borderWidth: 1,
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
     borderRadius: 8,
     marginLeft: 16,
-    padding:12,
+    padding: 12,
   },
-  paginationFooter: {
+  paginationFooterWeb: {
     justifyContent: "space-between",
     flexDirection: "row",
     paddingLeft: 24,
@@ -137,6 +138,28 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     borderTopWidth: 0.5,
     borderColor: colors.lightGrey,
+  },
+  paginationFooter: {
+    paddingTop: 12,
+    paddingBottom: 12,
+    borderColor: colors.lightGrey,
+  },
+  previousButton: {
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: colors.lightGrey,
+    backgroundColor: colors.white,
+  },
+  previousButtonWeb: {
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: colors.lightGrey,
+    backgroundColor: colors.white,
   },
   selectedBtn: {
     paddingLeft: 12,
@@ -160,7 +183,16 @@ const styles = StyleSheet.create({
   rowsPerPage: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 16,
   },
+  rowsPerPageWeb: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  bottomPaginationStyle:{
+    alignSelf: "center",
+  }
 });
 
 export default styles;

@@ -12,6 +12,9 @@ import styles from "./TicketsView.style";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import TouchableImage from "../../components/TouchableImage";
 import SearchView from "../../components/SearchView";
+import Pagination from "../../components/Pagination/Pagination";
+import Dropdown from "../../components/Dropdown";
+import CustomDropdown from "../../components/CustomDropdown";
 
 const tableHeading = {
   id: "Ticket ID",
@@ -23,190 +26,69 @@ const tableHeading = {
 
 const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
 
-const gridData = [
-  {
-    id: "T0123456",
-    query_type: "General Inquiry",
-    status: "Pending",
-    assigned_to: "-",
-    created_at: "10/10/2010",
-  },
-  {
-    id: "T0123457",
-    query_type: "Technical Support",
-    status: "In Progress",
-    assigned_to: "John Doe",
-    created_at: "11/15/2011",
-  },
-  {
-    id: "T0123458",
-    query_type: "Account Issue",
-    status: "In Progress",
-    assigned_to: "Alice Smith",
-    created_at: "05/20/2012",
-  },
-  {
-    id: "T0123459",
-    query_type: "Feedback",
-    status: "Pending",
-    assigned_to: "-",
-    created_at: "03/07/2013",
-  },
-  {
-    id: "T0123460",
-    query_type: "Feature Request",
-    status: "Close",
-    assigned_to: "Bob Johnson",
-    created_at: "08/22/2014",
-  },
-  {
-    id: "T0123461",
-    query_type: "Bug Report",
-    status: "Close",
-    assigned_to: "Eve Brown",
-    created_at: "12/18/2015",
-  },
-  {
-    id: "T0123462",
-    query_type: "Urgent Matter",
-    status: "Pending",
-    assigned_to: "-",
-    created_at: "09/05/2016",
-  },
-  {
-    id: "T0123460",
-    query_type: "Feature Request",
-    status: "Close",
-    assigned_to: "Bob Johnson",
-    created_at: "08/22/2014",
-  },
-  {
-    id: "T0123461",
-    query_type: "Bug Report",
-    status: "Close",
-    assigned_to: "Eve Brown",
-    created_at: "12/18/2015",
-  },
-  {
-    id: "T0123462",
-    query_type: "Urgent Matter",
-    status: "Pending",
-    assigned_to: "-",
-    created_at: "09/05/2016",
-  },
-  {
-    id: "T0123456",
-    query_type: "General Inquiry",
-    status: "Pending",
-    assigned_to: "-",
-    created_at: "10/10/2010",
-  },
-  {
-    id: "T0123457",
-    query_type: "Technical Support",
-    status: "In Progress",
-    assigned_to: "John Doe",
-    created_at: "11/15/2011",
-  },
-  {
-    id: "T0123458",
-    query_type: "Account Issue",
-    status: "In Progress",
-    assigned_to: "Alice Smith",
-    created_at: "05/20/2012",
-  },
-  {
-    id: "T0123459",
-    query_type: "Feedback",
-    status: "Pending",
-    assigned_to: "-",
-    created_at: "03/07/2013",
-  },
-  {
-    id: "T0123460",
-    query_type: "Feature Request",
-    status: "Close",
-    assigned_to: "Bob Johnson",
-    created_at: "08/22/2014",
-  },
-  {
-    id: "T0123461",
-    query_type: "Bug Report",
-    status: "Close",
-    assigned_to: "Eve Brown",
-    created_at: "12/18/2015",
-  },
-  {
-    id: "T0123462",
-    query_type: "Urgent Matter",
-    status: "Pending",
-    assigned_to: "-",
-    created_at: "09/05/2016",
-  },
-  {
-    id: "T0123460",
-    query_type: "Feature Request",
-    status: "Close",
-    assigned_to: "Bob Johnson",
-    created_at: "08/22/2014",
-  },
-  {
-    id: "T0123461",
-    query_type: "Bug Report",
-    status: "Close",
-    assigned_to: "Eve Brown",
-    created_at: "12/18/2015",
-  },
-];
-
 const Tickets = () => {
   const {
-    visibleData,
-    setVisibleData,
     rowsToShow,
     setRowsToShow,
     getStatusStyle,
     getColoumConfigs,
     isHeading,
+    currentPage,
+    setCurrentPage,
+    currentRecords,
+    totalcards,
+    rowsLimit,
+    indexOfFirstRecord,
+    indexOfLastRecord,
   } = useTicketView();
   const { isWebView } = useIsWebView();
 
-  useEffect(() => {
-    setVisibleData(gridData.slice(0, rowsToShow));
-  }, [gridData, rowsToShow]);
-
-  const renderButton = (label, value) => (
-    <CustomTouchableOpacity
-      style={[
-        styles.selectedBtn,
-        rowsToShow === value && styles.selectedButton,
-      ]}
-      onPress={() => setRowsToShow(value)}
-      key={value}
-    >
-      <CommonText title={label} customTextStyle={styles.rowSelectedNumber} />
-      <CustomImage source={images.iconArrowDown} style={styles.iconTicket} />
-    </CustomTouchableOpacity>
-  );
-
-  const PaginationFooter = ({
-    title = "Rows Per Page:",
-    customTextStyle = {},
-  }) => {
+  const PaginationFooter = ({ title = "Rows Per Page:", isWebView }) => {
     return (
-      <View style={styles.paginationFooter}>
-        <View style={styles.rowsPerPage}>
-          <CommonText title={title} customTextStyle={styles.rowsPerPageText} />
-          {renderButton("10", 10)}
+      <View
+        style={isWebView ? styles.paginationFooterWeb : styles.paginationFooter}
+      >
+        <View style={isWebView ? styles.rowsPerPageWeb : styles.rowsPerPage}>
+          <View style={styles.rowsPerPageWeb}>
+            <CommonText
+              title={title}
+              customTextStyle={styles.rowsPerPageText}
+            />
+            <CustomDropdown
+              options={rowsLimit}
+              onSelect={handleSelect}
+              placeholder={rowsToShow}
+              dropdownIcon={images.iconArrowDown}
+            />
+          </View>
+          {!isWebView && (
+            <CommonText
+              title={`${indexOfFirstRecord} - ${indexOfLastRecord} of ${totalcards}`}
+              customTextStyle={styles.rowsPerPageText}
+            />
+          )}
         </View>
 
-        {/* {renderButton("15", 15)} */}
-        {renderButton("20", 20)}
+        <Pagination
+          cardsPerPage={rowsToShow}
+          totalCards={totalcards}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pageStyles
+          siblingCount={1}
+          isWebView={isWebView}
+          prevNextBtnstyles={
+            isWebView ? styles.previousButtonWeb : styles.previousButton
+          }
+        />
       </View>
     );
   };
 
   const handleSearchResults = (filteredData) => {};
+  const handleSelect = (option) => {
+    setRowsToShow(option.value);
+  };
 
   return (
     <View style={styles.container}>
@@ -222,67 +104,85 @@ const Tickets = () => {
               <View style={styles.imageParentStyle}>
                 <TouchableImage
                   source={images.iconFilter}
-                  parentStyle={styles.filterIcon}
+                  parentStyle={styles.iconTicket}
                 />
-                <CommonText title={"Filters"} />
+                {isWebView &&   <CommonText title={"Filters"} customTextStyle={styles.filterText} /> }
+              
               </View>
             }
-            style={{ marginBottom: 16,width: isWebView ? "30%" : "100%", }}
+            style={{ marginBottom: 16, width: isWebView ? "40%" : "100%" }}
           />
         }
+        isTopFillSpace={false}
+        isBottomFillSpace={true}
         bottomSection={
-          <View style={styles.tableSection}>
-            {isWebView && (
-              <MultiColumn
-                columns={getColoumConfigs(tableHeading, isHeading)}
-              />
-            )}
-            <FlatList
-              data={visibleData}
-              // ListFooterComponent={<PaginationFooter />}
-              renderItem={({ item, index }) => {
-                return (
-                  <>
-                    {isWebView ? (
-                      <MultiColumn
-                        columns={getColoumConfigs(item)}
-                        style={styles.columnStyleBorder}
-                      />
-                    ) : (
-                      <View style={styles.mobileContainer}>
-                        <View>
-                          <CommonText
-                            title={item.id}
-                            customTextStyle={styles.cellTextStyle()}
+          <TwoRow
+            style={{ flex: 1 }}
+            topSectionStyle={{
+              height: isWebView ? "100%" : "85%",
+            }}
+            topSection={
+              <View style={styles.tableSection}>
+                {isWebView && (
+                  <MultiColumn
+                    columns={getColoumConfigs(tableHeading, isHeading)}
+                  />
+                )}
+                <FlatList
+                  data={currentRecords}
+                  showsVerticalScrollIndicator={false}
+                  renderItem={({ item, index }) => {
+                    return (
+                      <>
+                        {isWebView ? (
+                          <MultiColumn
+                            columns={getColoumConfigs(item)}
+                            style={styles.columnStyleBorder}
                           />
-                          <CommonText
-                            title={item.query_type}
-                            customTextStyle={styles.tableQueryText}
-                          />
-                        </View>
-                        <View style={{ flexDirection: "row" }}>
-                          <CommonText
-                            title={item.status}
-                            customTextStyle={getStatusStyle(
-                              item.status,
-                              false,
-                              styles
-                            )}
-                          />
+                        ) : (
+                          <View style={styles.mobileContainer}>
+                            <View>
+                              <CommonText
+                                title={item.id}
+                                customTextStyle={styles.cellTextStyle()}
+                              />
+                              <CommonText
+                                title={item.query_type}
+                                customTextStyle={styles.tableQueryText}
+                              />
+                            </View>
+                            <View style={{ flexDirection: "row" }}>
+                              <CommonText
+                                title={item.status}
+                                customTextStyle={getStatusStyle(
+                                  item.status,
+                                  false,
+                                  styles,
+                                  isWebView
+                                )}
+                              />
 
-                          <CustomImage
-                            source={images.iconTicket}
-                            style={styles.iconTicket}
-                          />
-                        </View>
-                      </View>
-                    )}
-                  </>
-                );
-              }}
-            />
-            <PaginationFooter />
-          </View>
+                              <CustomImage
+                                source={images.iconTicket}
+                                style={styles.iconTicket}
+                              />
+                            </View>
+                          </View>
+                        )}
+                      </>
+                    );
+                  }}
+                />
+                {isWebView && <PaginationFooter isWebView={isWebView} />}
+              </View>
+            }
+            isTopFillSpace={false}
+            isBottomFillSpace={true}
+            bottomSection={
+              !isWebView && <PaginationFooter isWebView={isWebView} />
+            }
+            bottomSectionStyle={styles.bottomPaginationStyle}
+          />
         }
       />
     </View>

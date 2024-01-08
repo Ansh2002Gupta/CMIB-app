@@ -105,6 +105,7 @@ const iconJobSeekersActive = "/images/svg/iconJobSeekerActive.svg";
 const iconSaved = "/images/svg/iconSavedCandidates.svg";
 const iconSavedActive = "/images/svg/iconSavedCandidatesActive.svg";
 const iconTicket = "/images/svg/iconTicket.svg";
+const iconArrowRightBlack = "/images/svg/iconArrowRightBlack.svg";
 
 const images = {
   iconArrowUp,
@@ -207,7 +208,8 @@ const images = {
   iconPostedJobsWeb,
   addCircle,
   minusCirlce,
-  iconTicket
+  iconTicket,
+  iconArrowRightBlack
 };
 
 export default images;
