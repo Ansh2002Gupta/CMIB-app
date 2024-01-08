@@ -85,12 +85,12 @@ const experiencedMembersMenu = [
 ];
 
 const moduleKeys = {
-  NEWLY_QUALIFIED_PLACEMENTS_KEY: "newly-qualified-placements",
+  NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placement",
   CA_JOBS_KEY: "ca-jobs",
   EXPERIENCED_MEMBERS_KEY: "experienced-members",
   CARRER_ASCENT_KEY: "career-ascent",
-  WOMEN_PARTTIME_KEY: "women-part-time",
-  OVERSEAS_CHAPTERS_KEY: "overseas-chapters",
+  WOMEN_PARTTIME_KEY: "women-placement",
+  OVERSEAS_CHAPTERS_KEY: "overseas-placement",
 };
 
 export const modules = [
