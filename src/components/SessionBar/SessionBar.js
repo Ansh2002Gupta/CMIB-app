@@ -6,7 +6,7 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SessionDropdown from "../SessionDropdown";
-import useOutsideClick from '../../utils/useOutsideClick';
+import useOutsideClick from '../../hooks/useOutsideClick';
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import images from "../../images";
 import styles from "./SessionBar.style";
