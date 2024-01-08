@@ -2,7 +2,26 @@ import colors from "../../assets/colors";
 import { Platform } from "@unthinkable/react-core-components";
 
 const getFontFamily = (fontWeight) => {
-  return fontWeight === "600" ? "GeneralSans-Semibold" : "GeneralSans-Medium";
+  switch (fontWeight) {
+    case "400": {
+      return "GeneralSans-Regular";
+    }
+    case "500": {
+      return "GeneralSans-Medium";
+    }
+    case "600": {
+      return "GeneralSans-Semibold";
+    }
+    case "bold": {
+      return "GeneralSans-Semibold";
+    }
+    case "700": {
+      return "GeneralSans-Bold";
+    }
+    default: {
+      return "GeneralSans-Medium";
+    }
+  }
 };
 
 const style = {
