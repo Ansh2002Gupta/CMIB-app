@@ -1,17 +1,23 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 
 import SignUpScreenUI from "./SignUpScreenUI";
+import { navigations } from "../../constants/routeNames";
 import { resetSignUpDetails } from "../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../globalContext/signUp/signUpProvider";
-import { navigations } from "../../constants/routeNames";
 
 const SignUpScreenComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [, signUpDispatch] = useContext(SignUpContext);
+
+  useEffect(() => {
+    return () => {
+      signUpDispatch(resetSignUpDetails());
+    };
+  }, []);
 
   const onHandleTab = (direction) => {
     setActiveTab((prevTab) => {
@@ -23,6 +29,7 @@ const SignUpScreenComponent = () => {
       return prevTab;
     });
   };
+
   const onClickGoToLogin = () => {
     signUpDispatch(resetSignUpDetails());
     navigate(navigations.LOGIN);

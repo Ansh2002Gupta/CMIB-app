@@ -34,6 +34,7 @@ const greyFour = "rgb(51, 51, 51)";
 const lightGray = "#D0D5DD"; //TODO: Rename this color to something else so that it doesn't have the same name as "lightGrey" color.
 const lightGraySecond = "d3d3d3";
 const lightGrey = "#CCD0E5";
+const mediumGray = "#616C82";
 const secondaryGrey = "#F2F4FC";
 const subHeadingGray = "#616C82";
 const silver = "#EBEBEB";
@@ -69,7 +70,6 @@ const colors = {
   darkGreySecond,
   errorBackground,
   errorRed,
-  gray,
   green,
   greenOne,
   greyOne,
@@ -80,6 +80,7 @@ const colors = {
   lightGray,
   lightGraySecond,
   lightGrey,
+  mediumGray,
   offWhite,
   red,
   secondaryGrey,

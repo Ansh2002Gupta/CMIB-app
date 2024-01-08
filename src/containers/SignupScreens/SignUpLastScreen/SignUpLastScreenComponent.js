@@ -80,7 +80,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     errorWhileUpload,
     fileUploadResult,
     handleFileUpload,
+    isLoading: isUploadingImageToServer,
     setErrorWhileUpload,
+    setFileUploadResult,
+    uploadPercentage,
   } = useSaveLogo();
 
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
@@ -104,7 +107,15 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       natureOfSupplier,
       companyType,
     ];
-    return requiredFields.every((field) => String(field).trim() !== "");
+    const isAtLeastOneInterestSelected = options.some(
+      (option) => option.isSelected
+    );
+
+    return (
+      requiredFields.every((field) => String(field).trim() !== "") &&
+      isAtLeastOneInterestSelected &&
+      fileUploadResult
+    );
   };
 
   const validateFields = () => {
@@ -180,7 +191,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   };
 
   const handleImageUpload = (file, handleUploadSuccess) => {
-    handleFileUpload(file, handleUploadSuccess);
+    handleFileUpload({ file, successCallback: handleUploadSuccess });
   };
 
   const onSuccess = async (details) => {
@@ -228,6 +239,56 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     tabHandler("prev");
   };
 
+  const validateField = (name) => {
+    let value;
+    let error = "";
+
+    if (name in socialMediaLinks) {
+      value = socialMediaLinks[name];
+      if (value && !urlRegex.test(String(value))) {
+        error = intl.formatMessage({
+          id: "label.url_validation",
+        });
+      }
+    } else {
+      switch (name) {
+        case "companyDetails":
+          value = companyDetails;
+          if (
+            value.length < FIELD_MIN_LENGTH ||
+            value.length > COMPANY_DETAIL_MAX_LENGTH
+          ) {
+            error = intl.formatMessage({
+              id: "label.company_details_validation",
+            });
+          }
+          break;
+        case "website":
+          value = website;
+          if (!urlRegex.test(String(value))) {
+            error = intl.formatMessage({
+              id: "label.url_validation",
+            });
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    return error;
+  };
+
+  const handleBlur = (name) => {
+    const fieldError = validateField(name);
+    const updatedErrors = { ...errors };
+    if (name in socialMediaLinks) {
+      updatedErrors.socialMediaLinks[name] = fieldError;
+    } else {
+      updatedErrors[name] = fieldError;
+    }
+    setErrors(updatedErrors);
+  };
+
   const handleToggle = (id) => {
     const updatedItems = options.map((item) => {
       if (item.id === id) {
@@ -246,6 +307,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       errors={errors}
       errorWhileDeletion={errorWhileDeletion}
       errorWhileUpload={errorWhileUpload}
+      handleBlur={handleBlur}
       handleDismissToast={handleDismissToast}
       handleInputChange={handleInputChange}
       handleToggle={handleToggle}
@@ -261,6 +323,13 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       showSuccessSignUp={showSuccessSignUp}
       signUpError={signUpError}
       socialMediaLinks={socialMediaLinks}
+      uploadImageToServerUtils={{
+        fileUploadResult,
+        handleFileUpload,
+        isUploadingImageToServer,
+        setFileUploadResult,
+        uploadPercentage,
+      }}
       validationError={validationError}
       website={website}
     />

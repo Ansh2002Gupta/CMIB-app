@@ -1,26 +1,21 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
+import { View } from "@unthinkable/react-core-components";
+
+import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
+import PreviewImage from "../PreviewImage/PreviewImage";
+import { IMAGE_MAX_SIZE } from "../../constants/constants";
 import { launchImageLibrary } from "react-native-image-picker";
 
-import CommonText from "../CommonText";
-import images from "../../images";
 import styles from "./UploadImage.style";
 
-const UploadImage = ({
-  customContainerStyle,
-  imageName,
-  imageUrl,
-  intl,
-  onDeleteImage,
-  onImageUpload,
-}) => {
+const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
+  const intl = useIntl();
+  const [errorWhileUpload, setErrorWhileUpload] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   const onClickDeleteImage = () => {
     onDeleteImage(() => {
@@ -41,11 +36,19 @@ const UploadImage = ({
       if (response.didCancel) {
         console.log("User cancelled image picker");
       } else if (response.error) {
-        console.log("Image picker error: ", response.error);
+        setErrorWhileUpload(response.error);
+      } else if (
+        response.assets &&
+        response.assets[0].fileSize > IMAGE_MAX_SIZE
+      ) {
+        setErrorWhileUpload(
+          intl.formatMessage({ id: "label.fileTooLargeError" })
+        );
       } else {
+        setIsUploading(true);
         let imageUri = response.uri || response.assets?.[0]?.uri;
         let fileName = response.fileName || response.assets?.[0]?.fileName;
-        let type = response.fileName || response.assets?.[0]?.type;
+        let type = response.type || response.assets?.[0]?.type;
         const formData = new FormData();
         const file = {
           uri: imageUri,
@@ -56,67 +59,33 @@ const UploadImage = ({
         onImageUpload(formData, () => {
           setSelectedImage(imageUri);
           setFileName(fileName);
+          setIsUploading(false);
         });
       }
     });
   };
 
   return (
-    <View
-      style={[
-        styles.contentContainerStyle,
-        selectedImage && styles.selectedImageContainer,
-        imageUrl ? styles.showImageStyle : null,
-        customContainerStyle,
-      ]}
-    >
+    <View style={styles.containerStyle}>
       {!!selectedImage || imageUrl ? (
-        <>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: selectedImage || imageUrl }}
-              style={styles.selectedImageStyle}
-            />
-          </View>
-          <View style={styles.innerContainer}>
-            <CommonText
-              customTextStyle={styles.nameStyle}
-              title={fileName || imageName}
-            />
-            {!imageUrl && (
-              <TouchableOpacity onPress={onClickDeleteImage}>
-                <Image source={images.iconTrash} />
-              </TouchableOpacity>
-            )}
-          </View>
-        </>
+        <PreviewImage
+          isEditable={!!imageUrl}
+          fileName={fileName || imageName}
+          onRemoveImage={onClickDeleteImage}
+          source={{ uri: selectedImage || imageUrl }}
+        />
       ) : (
-        <>
-          <Image source={images.iconUpload} />
-          <View style={styles.textContainer}>
-            <CommonText
-              customTextStyle={styles.textStyle}
-              title={intl.formatMessage({ id: "label.drag_drop_files" })}
-            />
-            <TouchableOpacity onPress={openImagePicker}>
-              <CommonText
-                customTextStyle={styles.browseStyle}
-                title={` ${intl.formatMessage({ id: "label.browse" })}`}
-              />
-            </TouchableOpacity>
-          </View>
-          <CommonText
-            customTextStyle={styles.infoStyle}
-            title={intl.formatMessage({ id: "label.supported_type" })}
-          />
-        </>
+        <DragAndDropCard
+          errorMessage={errorWhileUpload}
+          handleUploadClick={openImagePicker}
+          isLoading={isUploading}
+        />
       )}
     </View>
   );
 };
 
 UploadImage.defaultProps = {
-  customContainerStyle: {},
   onDeleteImage: () => {},
   onImageUpload: () => {},
   imageUrl: "",
@@ -124,10 +93,8 @@ UploadImage.defaultProps = {
 };
 
 UploadImage.propTypes = {
-  customContainerStyle: PropTypes.object,
   imageName: PropTypes.string,
   imageUrl: PropTypes.string,
-  intl: PropTypes.object.isRequired,
   onDeleteImage: PropTypes.func,
   onImageUpload: PropTypes.func,
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Text, TouchableOpacity } from "@unthinkable/react-core-components";
+import { TouchableOpacity } from "@unthinkable/react-core-components";
 
 import styles from "./Button.style";
 
@@ -10,7 +10,7 @@ const Button = ({ children, disabled, onPress, style }) => {
       {...{ disabled, onPress }}
       style={{ ...style, ...(disabled ? styles.disabledBtn : {}) }}
     >
-      <Text>{children}</Text>
+      {children}
     </TouchableOpacity>
   );
 };

@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
   },
+  showImageStyle: {
+    borderStyle: "solid",
+    borderColor: colors.lightGrey,
+  },
   imageContainer: {
     flex: 1,
     justifyContent: "center",
@@ -18,11 +22,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     minWidth: 250,
     minHeight: 150,
+    padding: 10,
   },
   selectedImageStyle: {
-    maxWidth: 450,
+    minHeight: 145,
+    minWidth: 150,
     maxHeight: 200,
     objectFit: "contain",
+    ...Platform.select({
+      web: {
+        maxWidth: "100%",
+      },
+    }),
   },
   innerContainer: {
     flexDirection: "row",
@@ -36,6 +47,13 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 8,
     paddingTop: 16,
     paddingBottom: 16,
+  },
+  textContainerBox: {
+    ...Platform.select({
+      web: {
+        flexShrink: "unset",
+      },
+    }),
   },
   nameStyle: {
     color: colors.darkBlue,

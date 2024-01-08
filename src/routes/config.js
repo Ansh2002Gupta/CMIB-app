@@ -1,4 +1,5 @@
 import React from "react";
+import { Platform } from "@unthinkable/react-core-components";
 
 import ContentLayout from "../pages/ContentLayout";
 import CreateNewPassword from "../views/CreateNewPassword/index";
@@ -26,10 +27,15 @@ import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
 
+const signUpHeader =
+  Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
+
 const HomeWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
-const SignUpWithPublicAccess = withPublicAccess(ContentLayout);
-const ContentRouteWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
+const SignUpWithPublicAccess = withPublicAccess(signUpHeader);
+const ContentRouteWithPrivateAccess = withPrivateAccess(
+  HeaderWithContentLayout
+);
 
 const config = [
   {
@@ -127,7 +133,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.ROUND_ONE_APPLICATION_FORM,
+    pagePath: navigations.APPLICATION_FORM,
     element: <ContentRouteWithPrivateAccess />,
     views: [
       {
@@ -154,6 +160,10 @@ const config = [
         viewPath: "",
         element: <RoundOne />,
       },
+      {
+        viewPath: "applicationForm",
+        element: <RoundOneApplicationForm />,
+      },
     ],
   },
   {
@@ -166,6 +176,7 @@ const config = [
       },
     ],
   },
+
   {
     pagePath: navigations.JOBS,
     element: <HomeWithPrivateAccess />,

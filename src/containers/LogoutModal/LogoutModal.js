@@ -1,20 +1,56 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Modal, View } from "@unthinkable/react-core-components";
+import { Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import CustomButton from "../../components/CustomButton";
 import CustomImage from "../../components/CustomImage";
+import Modal from "../../components/Modal";
+import MultiColumn from "../../core/layouts/MultiColumn";
 import MultiRow from "../../core/layouts/MultiRow";
-import TwoRowButton from "../../components/TwoRowButton";
 import useLogoutAPI from "../../services/apiServices/hooks/useLogoutAPI";
 import images from "../../images";
 import styles from "./logoutModal.style";
 
 const LogoutModal = ({ onCancel, onSave }) => {
   const intl = useIntl();
-  const { handleUserLogout } = useLogoutAPI();
+  const { handleUserLogout, isLoading } = useLogoutAPI();
   const WarningIcon = images.iconWarning;
+
+  const cancelHandler = () => {
+    onCancel(false);
+  };
+
+  const saveHandler = () => {
+    handleUserLogout(() => {
+      onCancel(false);
+      onSave();
+    });
+  };
+
+  const saveCancelButton = [
+    {
+      content: (
+        <CustomButton onPress={cancelHandler}>
+          {intl.formatMessage({ id: "label.cancel" })}
+        </CustomButton>
+      ),
+      isFillSpace: true,
+    },
+    {
+      content: (
+        <CustomButton
+          onPress={saveHandler}
+          style={styles.saveStyle}
+          {...{ isLoading }}
+        >
+          {intl.formatMessage({ id: "label.logout" })}
+        </CustomButton>
+      ),
+      isFillSpace: true,
+    },
+  ];
 
   const logoutConfig = [
     {
@@ -44,36 +80,21 @@ const LogoutModal = ({ onCancel, onSave }) => {
       ),
     },
     {
-      content: (
-        <TwoRowButton
-          leftButtonText={intl.formatMessage({ id: "label.cancel" })}
-          onLeftButtonClick={() => {
-            onCancel(false);
-          }}
-          leftTextStyle={styles.leftTextStyle}
-          rightButtonText={intl.formatMessage({ id: "label.logout" })}
-          rightButtonStyle={styles.saveStyle}
-          rightTextStyle={styles.rightTextStyle}
-          onRightButtonClick={() => {
-            handleUserLogout(
-              () => {
-                onCancel(false);
-                onSave();
-              }
-            );
-          }}
-        />
-      ),
-      style: styles.vacancyStyle,
+      content: <MultiColumn columns={saveCancelButton} />,
+      style: styles.gapStyle,
     },
   ];
 
+  const platformProps = Platform.select({
+    web: {
+      maxWidth: "xs",
+    },
+  });
+
   return (
-      <Modal isVisible style={styles.containerStyle}>
-        <View style={styles.innerContainer}>
-          <MultiRow rows={logoutConfig}  style={styles.parentStyle} />
-        </View>
-      </Modal>
+    <Modal {...platformProps} isVisible style={styles.containerStyle}>
+      <MultiRow rows={logoutConfig} style={styles.parentStyle} />
+    </Modal>
   );
 };
 
