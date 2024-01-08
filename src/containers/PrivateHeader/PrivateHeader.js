@@ -10,6 +10,7 @@ import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimen
 
 import CommonText from "../../components/CommonText";
 import CustomAvatar from "../../components/CustomAvatar";
+import SessionBar from "../../components/SessionBar";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import { getSmallScreenHeaderInfo } from "../../utils/headerHelpers";
@@ -147,6 +148,7 @@ const HeaderRight = ({
   isMdOrGreater,
 }) => (
   <View style={styles.notficationIconView}>
+    {isWebView && <SessionBar />}
     <TouchableOpacity onPress={onPressRightIcon}>
       <Image source={rightIcon} style={styles.iconNotification} />
     </TouchableOpacity>

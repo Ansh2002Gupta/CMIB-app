@@ -5,35 +5,35 @@ export const items = [
   // TODO data will replace with API data
   {
     id: 0,
-    title: "2023 Aug - Sept Campus Placement",
+    label: "2023 Aug - Sept Campus Placement",
   },
   {
     id: 1,
-    title: "2023 Feb - Mar Campus Placement",
+    label: "2023 Feb - Mar Campus Placement",
   },
   {
     id: 2,
-    title: "2022 Aug - Sept Campus Placement",
+    label: "2022 Aug - Sept Campus Placement",
   },
   {
     id: 3,
-    title: "2022 Feb - Mar Campus Placement",
+    label: "2022 Feb - Mar Campus Placement",
   },
   {
     id: 4,
-    title: "2022 Aug - Sept Campus Placement",
+    label: "2022 Aug - Sept Campus Placement",
   },
   {
     id: 5,
-    title: "2022 Feb - Mar Campus Placement",
+    label: "2022 Feb - Mar Campus Placement",
   },
   {
     id: 6,
-    title: "2022 Aug - Sept Campus Placement",
+    label: "2022 Aug - Sept Campus Placement",
   },
   {
     id: 7,
-    title: "2022 Feb - Mar Campus Placement",
+    label: "2022 Feb - Mar Campus Placement",
   },
 ];
 
@@ -98,12 +98,14 @@ export const modules = [
     label: "Newly Qualified Placements",
     key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
     children: newlyQualifiedPlacementsMenu,
+    session: items,
     visible: false,
   },
   {
     label: "CA Jobs",
     key: moduleKeys.CA_JOBS_KEY,
     children: caJobsMenu,
+    session: items,
     visible: false,
   },
   {
@@ -116,6 +118,7 @@ export const modules = [
     label: "Career Ascent",
     key: moduleKeys.CARRER_ASCENT_KEY,
     children: experiencedMembersMenu,
+    session: items,
     visible: false,
     isSubMenu: true,
   },
@@ -123,6 +126,7 @@ export const modules = [
     label: "Women PartTime",
     key: moduleKeys.WOMEN_PARTTIME_KEY,
     children: experiencedMembersMenu,
+    session: items,
     visible: false,
     isSubMenu: true,
   },
@@ -130,6 +134,7 @@ export const modules = [
     label: "Overseas Chapters",
     key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
     children: experiencedMembersMenu,
+    session: items,
     visible: false,
     isSubMenu: true,
   },
