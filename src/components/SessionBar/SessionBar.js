@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
