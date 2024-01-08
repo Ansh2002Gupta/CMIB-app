@@ -1,4 +1,3 @@
-import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
@@ -138,19 +137,19 @@ const style = {
     lineHeight: 20,
     marginLeft: 4,
   },
-
   textLabelParent: {
     flexDirection: "row",
-    fontFamily: "General Sans",
     marginTop: 16,
     justifyContent: "center",
   },
-
   textLabelAfterParent: {
     flexDirection: "column",
-    fontFamily: "General Sans",
     marginTop: 16,
     alignItems: "center",
+  },
+  forgotPasswordStyle: {
+    fontSize: 28,
+    color: colors.black,
   },
 };
 

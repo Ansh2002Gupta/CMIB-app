@@ -30,7 +30,7 @@ const style = {
     width: 74,
     height: 56,
     borderWidth: 1,
-    borderColor: colors.gray,
+    borderColor: colors.lightGray,
     borderRadius: 12,
     textAlign: "center",
     fontSize: 20,

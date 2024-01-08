@@ -181,12 +181,14 @@ const OtpViewUI = ({
           }
         >
           <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({
+            description={intl.formatMessage({
               id: "label.otp_text",
             })}
             headerText={intl.formatMessage({ id: "label.forgot_password" })}
             customTextStyle={
-              isWebView ? getResponsiveStyles("label.forgot_password") : {}
+              isWebView
+                ? getResponsiveStyles("label.forgot_password")
+                : { ...styles.forgotPasswordStyle }
             }
             customContainerStyles={
               isWebView ? styles.forgotHeaderContainer : {}

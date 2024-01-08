@@ -88,8 +88,11 @@ const LoginScreenUI = (props) => {
             })}
             customTextStyle={
               isWebView
-                ? { ...styles.headerText, ...getResponsiveStyles("label.cmib") }
-                : styles.headerText
+                ? {
+                    ...styles.webView.headerText,
+                    ...getResponsiveStyles("label.cmib"),
+                  }
+                : styles.loginHeaderText
             }
             customSecondHeadingStyles={
               isWebView ? styles.webView.subHeadingText : {}

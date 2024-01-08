@@ -141,8 +141,6 @@ const style = {
     headerText: {
       color: colors.black,
       fontSize: 40,
-      fontWeight: "600",
-      letterSpacing: -2,
     },
     headerText1800px: {
       fontSize: 36,
@@ -196,6 +194,10 @@ const style = {
       fontSize: 16,
       ...webPointer,
     },
+  },
+  loginHeaderText: {
+    fontSize: 28,
+    color: colors.black,
   },
 };
 
