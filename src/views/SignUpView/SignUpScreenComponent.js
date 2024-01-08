@@ -17,7 +17,7 @@ const SignUpScreenComponent = () => {
     return () => {
       signUpDispatch(resetSignUpDetails());
     };
-  }, [signUpDispatch]);
+  }, []);
 
   const onHandleTab = (direction) => {
     setActiveTab((prevTab) => {
