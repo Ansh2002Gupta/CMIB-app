@@ -1,13 +1,22 @@
 import React, { useRef, useState } from "react";
+import PropTypes from "prop-types";
 
 import CropAndRotateImage from "../CropAndRotateImage";
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 import PreviewImage from "../PreviewImage";
-import useSaveLogo from "../../services/apiServices/hooks/useSaveLogoAPI";
 import useUploadedFileValidations from "../../hooks/useUploadedFileValidations";
 import { getImageSource } from "../../utils/util";
 
-const UploadImage = ({ openCropViewAfterImageSelection }) => {
+const UploadImage = ({
+  errorWhileUpload,
+  fileUploadResult,
+  handleFileUpload,
+  isUploadingImageToServer,
+  onDeleteImage,
+  openCropViewAfterImageSelection,
+  setFileUploadResult,
+  uploadPercentage,
+}) => {
   const fileInputRef = useRef(null);
 
   const [file, setFile] = useState(null);
@@ -20,11 +29,7 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
     invalidFormatError,
   } = useUploadedFileValidations();
 
-  const {
-    handleFileUpload,
-    isLoading: isUploadingImageToServer,
-    uploadPercentage,
-  } = useSaveLogo();
+  const imageUploadedToServer = fileUploadResult?.data;
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
@@ -36,7 +41,12 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
     if (!openCropViewAfterImageSelection) {
       const formData = new FormData();
       formData.append("company_logo", uploadedFile);
-      handleFileUpload(formData);
+      handleFileUpload({
+        file: formData,
+        errorCallback: () => {
+          setFile(null);
+        },
+      });
     }
   };
 
@@ -61,6 +71,12 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
     });
   };
 
+  const handleDeleteImage = () => {
+    setFile(null);
+    setFileUploadResult(null);
+    onDeleteImage();
+  };
+
   return (
     <>
       {!!file && openCropView && (
@@ -75,22 +91,25 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
           }}
         />
       )}
-      {!isUploadingImageToServer && !!file && !openCropView && (
-        <PreviewImage
-          {...{
-            fileName: file?.name,
-            onRemoveImage: () => setFile(null),
-            source: getImageSource(file),
-          }}
-        />
-      )}
-      {(!file || openCropView || isUploadingImageToServer) && (
+      {!isUploadingImageToServer &&
+        !!imageUploadedToServer &&
+        !openCropView && (
+          <PreviewImage
+            {...{
+              fileName: imageUploadedToServer?.["file_name"] || "",
+              onRemoveImage: handleDeleteImage,
+              source: imageUploadedToServer?.url || "",
+            }}
+          />
+        )}
+      {!imageUploadedToServer && (
         <DragAndDropCard
           {...{
             errorMessage:
               nonUploadableImageError ||
               fileTooLargeError ||
-              invalidFormatError,
+              invalidFormatError ||
+              errorWhileUpload,
             fileInputRef,
             fileUploadHandler,
             handleDragOver,
@@ -103,6 +122,28 @@ const UploadImage = ({ openCropViewAfterImageSelection }) => {
       )}
     </>
   );
+};
+
+UploadImage.defaultProps = {
+  errorWhileUpload: "",
+  fileUploadResult: {},
+  handleFileUpload: () => {},
+  isUploadingImageToServer: false,
+  onDeleteImage: () => {},
+  openCropViewAfterImageSelection: false,
+  setFileUploadResult: () => {},
+  uploadPercentage: 0,
+};
+
+UploadImage.propTypes = {
+  errorWhileUpload: PropTypes.string,
+  fileUploadResult: PropTypes.object,
+  handleFileUpload: PropTypes.func,
+  isUploadingImageToServer: PropTypes.bool,
+  onDeleteImage: PropTypes.func,
+  openCropViewAfterImageSelection: PropTypes.bool,
+  setFileUploadResult: PropTypes.func,
+  uploadPercentage: PropTypes.number,
 };
 
 export default UploadImage;
