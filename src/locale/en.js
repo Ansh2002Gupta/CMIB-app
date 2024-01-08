@@ -229,6 +229,7 @@ const locale = {
   "label.payment": "Payment",
   "label.password_changed_successfully":
     "Your password has been changed successfully",
+  "label.sessions": "Sessions :",
 };
 
 export default locale;

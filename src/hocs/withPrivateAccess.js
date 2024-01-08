@@ -3,8 +3,11 @@ import { useLocation, useNavigate, useSearchParams } from "../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
 import CookieAndStorageService from "../services/cookie-and-storage-service";
+import LoadingScreen from "../components/LoadingScreen";
 import { AuthContext } from "../globalContext/auth/authProvider";
 import { RouteContext } from "../globalContext/route/routeProvider";
+import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
+import useGetUserDetails from "../services/apiServices/hooks/UserProfile/useGetUserDetails";
 import { setLoginRedirectRoute } from "../globalContext/route/routeActions";
 import { getQueryParamsAsAnObject } from "../utils/util";
 import { navigations } from "../constants/routeNames";
@@ -12,11 +15,14 @@ import { REDIRECT_URL } from "../constants/constants";
 
 function withPrivateAccess(Component) {
   return (props) => {
-    const [authState] = useContext(AuthContext);
-    const navigate = useNavigate();
     const location = useLocation();
-    const [, routeDispatch] = useContext(RouteContext);
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const [authState] = useContext(AuthContext);
+    const [, routeDispatch] = useContext(RouteContext);
+    const [userProfileDetails] = useContext(UserProfileContext);
+    const { getUserDetails } = useGetUserDetails();
+
     const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
     useEffect(() => {
@@ -30,6 +36,12 @@ function withPrivateAccess(Component) {
             })
           );
           navigate(navigations.LOGIN);
+        }
+        if (
+          (token || authState?.token) &&
+          !Object.keys(userProfileDetails.userDetails)?.length
+        ) {
+          getUserDetails();
         }
       });
     }, []);
@@ -48,7 +60,9 @@ function withPrivateAccess(Component) {
         })
       );
     }
-
+    if (userProfileDetails.isGettingUserDetails) {
+      return <LoadingScreen />;
+    }
     return <Component {...props} />;
   };
 }

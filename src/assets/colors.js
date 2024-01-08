@@ -83,5 +83,6 @@ const colors = {
   disabledGrey,
   white,
   yellow,
+  gray,
 };
 export default colors;

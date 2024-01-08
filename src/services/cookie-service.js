@@ -1,9 +1,17 @@
 import Cookies from "js-cookie";
+import { Platform } from "@unthinkable/react-core-components";
 
 import formatKey from "./helpers";
 
+const isPlatformWeb = Platform.OS.toLowerCase() === "web";
+
 class CookieStorage {
-  static set(key, value, expires = 1, domain = window.location.hostname) {
+  static set(
+    key,
+    value,
+    expires = 1,
+    domain = isPlatformWeb ? window.location.hostname : ""
+  ) {
     if (!value) return;
     try {
       Cookies.set(formatKey(key), value, {
