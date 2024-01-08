@@ -22,7 +22,12 @@ const PreviewImage = ({ fileName, isEditable, onRemoveImage, source }) => {
         <Image source={source} style={styles.selectedImageStyle} />
       </View>
       <View style={styles.innerContainer}>
-        <CommonText customTextStyle={styles.nameStyle}>{fileName}</CommonText>
+        <CommonText
+          customContainerStyle={styles.textContainerBox}
+          customTextStyle={styles.nameStyle}
+        >
+          {fileName}
+        </CommonText>
         <TouchableOpacity onPress={onRemoveImage}>
           <Image source={images.iconTrash} style={styles.deleteIcon} />
         </TouchableOpacity>

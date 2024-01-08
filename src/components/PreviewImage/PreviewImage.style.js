@@ -27,9 +27,13 @@ const styles = StyleSheet.create({
   selectedImageStyle: {
     minHeight: 145,
     minWidth: 150,
-    maxWidth: 450,
     maxHeight: 200,
     objectFit: "contain",
+    ...Platform.select({
+      web: {
+        maxWidth: "100%",
+      },
+    }),
   },
   innerContainer: {
     flexDirection: "row",
@@ -43,6 +47,13 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 8,
     paddingTop: 16,
     paddingBottom: 16,
+  },
+  textContainerBox: {
+    ...Platform.select({
+      web: {
+        flexShrink: "unset",
+      },
+    }),
   },
   nameStyle: {
     color: colors.darkBlue,

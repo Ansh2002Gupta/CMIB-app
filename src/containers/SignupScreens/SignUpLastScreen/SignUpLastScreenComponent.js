@@ -80,7 +80,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     errorWhileUpload,
     fileUploadResult,
     handleFileUpload,
+    isLoading: isUploadingImageToServer,
     setErrorWhileUpload,
+    setFileUploadResult,
+    uploadPercentage,
   } = useSaveLogo();
 
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
@@ -188,7 +191,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   };
 
   const handleImageUpload = (file, handleUploadSuccess) => {
-    handleFileUpload(file, handleUploadSuccess);
+    handleFileUpload({ file, successCallback: handleUploadSuccess });
   };
 
   const onSuccess = async (details) => {
@@ -320,6 +323,13 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       showSuccessSignUp={showSuccessSignUp}
       signUpError={signUpError}
       socialMediaLinks={socialMediaLinks}
+      uploadImageToServerUtils={{
+        fileUploadResult,
+        handleFileUpload,
+        isUploadingImageToServer,
+        setFileUploadResult,
+        uploadPercentage,
+      }}
       validationError={validationError}
       website={website}
     />
