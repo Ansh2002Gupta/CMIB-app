@@ -22,7 +22,7 @@ const HeaderTextWithLabelAndDescription = ({
   return (
     <View style={[style.headerContainer, customContainerStyles]}>
       {!!label && (
-        <CommonText title={label} customTextStyle={style.labelText} />
+        <CommonText customTextStyle={style.labelText}> {label}</CommonText>
       )}
       {!!headerText && (
         <CommonText
