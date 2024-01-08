@@ -24,16 +24,25 @@ const style = {
     color: colors.black,
     paddingBottom: 8,
   },
+  textStyle: {
+    marginTop: 20,
+    fontSize: 20,
+    color: colors.black,
+    paddingBottom: 8,
+  },
+  headerTextStyle: {
+    marginBottom: 24,
+  },
   headerStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   infoText: {
+    paddingBottom: 36,
     fontSize: 14,
     lineHeight: 22,
     color: colors.darkGrey,
-    paddingBottom: 36,
   },
 };
 

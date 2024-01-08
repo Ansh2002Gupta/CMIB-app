@@ -98,13 +98,6 @@ const styles = StyleSheet.create({
     headerNameText900: {
       fontSize: 14,
     },
-    inputLabelText: {
-      color: colors.black,
-      fontSize: 14,
-      fontWeight: "600",
-      lineHeight: 24,
-      textTransform: "capitalize",
-    },
     inputTextBox: {
       background: colors.white,
       marginTop: 0,

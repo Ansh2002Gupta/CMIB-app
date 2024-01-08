@@ -37,12 +37,20 @@ const CustomModal = ({
           {isSuccess ? (
             <>
               <Image source={images.iconSuccess} />
-              <CommonText customTextStyle={style.headerText} fontWeight="600">
+              <CommonText
+                customTextStyle={[
+                  !secondaryText && style.headerTextStyle,
+                  style.textStyle,
+                ]}
+                fontWeight="600"
+              >
                 {headerText}
               </CommonText>
-              <CommonText customTextStyle={style.infoText}>
-                {secondaryText}
-              </CommonText>
+              {!!secondaryText && (
+                <CommonText customTextStyle={style.infoText}>
+                  {secondaryText}
+                </CommonText>
+              )}
               <ButtonComponent title={buttonTitle} onPress={onPress} />
             </>
           ) : (

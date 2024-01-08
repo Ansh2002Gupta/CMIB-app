@@ -153,7 +153,6 @@ function CreateNewPasswordUI(props) {
               }}
               eyeImage
               isPassword
-              customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
@@ -173,7 +172,6 @@ function CreateNewPasswordUI(props) {
               isMandatory
               eyeImage
               isPassword
-              customLabelStyle={isWebView ? styles.webView.inputLabelText : {}}
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
@@ -210,7 +208,9 @@ function CreateNewPasswordUI(props) {
           </View>
           {successLogin && (
             <CustomModal
-              headerText={successMsg}
+              headerText={intl.formatMessage({
+                id: "label.password_changed_successfully",
+              })}
               onPress={() => {
                 onClickGoToLogin();
               }}
