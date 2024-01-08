@@ -13,6 +13,7 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ForgotPassword.style";
+import CustomButton from "../../components/CustomButton";
 
 const ForgotPasswordUI = (props) => {
   const {
@@ -98,15 +99,6 @@ const ForgotPasswordUI = (props) => {
           ...styles.webEmailInput,
         };
       }
-
-      case "submitButtonContainer": {
-        if (currentBreakpoint === "sm") {
-          return {
-            ...styles.width900pxOrLessSubmitBtn,
-          };
-        }
-        return {};
-      }
       default:
         return;
     }
@@ -169,16 +161,14 @@ const ForgotPasswordUI = (props) => {
           </View>
         </View>
         <View style={isWebView ? styles.webSubmitView : styles.submitView}>
-          <ButtonComponent
-            title={intl.formatMessage({ id: "label.submit" })}
-            onPress={onSendOtpClick}
+          <CustomButton
             disabled={loginDisabled}
-            customTitleStyle={isWebView ? styles.customBtnText : {}}
-            customButtonContainer={
-              isWebView ? getResponsiveStyles("submitButtonContainer") : {}
-            }
-            displayLoader={isLoading}
-          />
+            isLoading={isLoading}
+            onPress={onSendOtpClick}
+            withGreenBackground
+          >
+            {intl.formatMessage({ id: "label.submit" })}
+          </CustomButton>
           <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={styles.backToLoginText}

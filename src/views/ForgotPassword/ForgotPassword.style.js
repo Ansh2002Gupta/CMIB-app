@@ -79,11 +79,6 @@ const style = {
   customAsteriskStyle: {
     color: colors.red,
   },
-  customBtnText: {
-    fontSize: 16,
-    fontFamily: "General Sans",
-    fontWeight: "600",
-  },
   footerImage: {
     position: "absolute",
     bottom: 0,
@@ -104,10 +99,10 @@ const style = {
     width: "40%",
   },
   forgotPasswordWebContainer: {
-    flex: 0.9
+    flex: 0.9,
   },
   headerText: {
-    fontSize: 28
-  }
+    fontSize: 28,
+  },
 };
 export default style;
