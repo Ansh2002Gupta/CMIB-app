@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   sessionText: (currentBreakpoint) => ({
-    fontWeight: "600",
     fontSize: 14,
     marginLeft: 2,
     ...Platform.select({

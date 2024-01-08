@@ -50,49 +50,47 @@ const PrivateHeader = ({
   };
 
   return (
-    <>
-      <View style={styles.webMainContainer}>
-        <View style={styles.webContainer}>
-          <View style={styles.textContainer}>
-            <HeaderLeft
-              showBackButton={showBackButton}
-              goBack={goBack}
-              onPressLeftIcon={onPressLeftIcon}
-              isMdOrGreater={isMdOrGreater}
-              leftIcon={leftIcon}
-            />
-            {pageHeading === "" && (
-              <>
-                <CommonText customTextStyle={styles.nameText} fontWeight="600">
-                  {`Hey ${firstName} -`}
-                </CommonText>
-                <CommonText customTextStyle={styles.overView}>
-                  {"here’s your overview"}
-                </CommonText>
-              </>
-            )}
-          </View>
-          <HeaderRight
-            onPressRightIcon={onPressRightIcon}
-            rightIcon={rightIcon}
-            isWebView={isWebView}
-            profileImage={profileImage}
-            firstName={firstName}
-            lastName={lastName}
-            role={role}
+    <View style={styles.webMainContainer}>
+      <View style={styles.webContainer}>
+        <View style={styles.textContainer}>
+          <HeaderLeft
+            showBackButton={showBackButton}
+            goBack={goBack}
+            onPressLeftIcon={onPressLeftIcon}
             isMdOrGreater={isMdOrGreater}
+            leftIcon={leftIcon}
           />
+          {pageHeading === "" && (
+            <>
+              <CommonText customTextStyle={styles.nameText} fontWeight="600">
+                {`Hey ${firstName} -`}
+              </CommonText>
+              <CommonText customTextStyle={styles.overView}>
+                {"here’s your overview"}
+              </CommonText>
+            </>
+          )}
         </View>
-        {pageHeading !== "" && (
-          <PageHeading
-            intl={intl}
-            pageHeading={pageHeading}
-            showRightButton={showRightButton}
-            isWebView={isWebView}
-          />
-        )}
+        <HeaderRight
+          onPressRightIcon={onPressRightIcon}
+          rightIcon={rightIcon}
+          isWebView={isWebView}
+          profileImage={profileImage}
+          firstName={firstName}
+          lastName={lastName}
+          role={role}
+          isMdOrGreater={isMdOrGreater}
+        />
       </View>
-    </>
+      {pageHeading !== "" && (
+        <PageHeading
+          intl={intl}
+          pageHeading={pageHeading}
+          showRightButton={showRightButton}
+          isWebView={isWebView}
+        />
+      )}
+    </View>
   );
 };
 
