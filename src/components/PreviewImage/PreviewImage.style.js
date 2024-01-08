@@ -27,10 +27,13 @@ const styles = StyleSheet.create({
   selectedImageStyle: {
     minHeight: 145,
     minWidth: 150,
-    maxWidth: 450,
     maxHeight: 200,
     objectFit: "contain",
-    width: "100%",
+    ...Platform.select({
+      web: {
+        maxWidth: "100%",
+      },
+    }),
   },
   innerContainer: {
     flexDirection: "row",
