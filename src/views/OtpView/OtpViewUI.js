@@ -296,6 +296,7 @@ OtpViewUI.propTypes = {
   errorMessage: PropTypes.string,
   handleOtpChange: PropTypes.func.isRequired,
   isCounter: PropTypes.bool,
+  isLoading: PropTypes.bool,
   intl: PropTypes.object.isRequired,
   submitDisabled: PropTypes.bool,
   minutes: PropTypes.number,

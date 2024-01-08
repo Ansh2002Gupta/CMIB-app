@@ -80,6 +80,7 @@ const DragAndDropCard = ({
                 ...styles.error,
                 ...commonStyles.errorMessage,
               }}
+              fontWeight="600"
             >
               {errorMessage}
             </CommonText>
