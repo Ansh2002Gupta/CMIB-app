@@ -10,7 +10,7 @@ class CookieAndStorageService {
     key,
     value,
     expires = 1,
-    domain = window.location.hostname,
+    domain = isPlatformWeb ? window.location.hostname : "",
   }) {
     if (!value) return;
     try {
