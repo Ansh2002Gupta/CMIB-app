@@ -108,6 +108,10 @@ const style = {
   },
   headerText: {
     fontSize: 28
+  },
+  customFormStyle: {
+    flex: 1,
+    display: "flex"
   }
 };
 export default style;

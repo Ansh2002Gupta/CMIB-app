@@ -7,6 +7,7 @@ const webPointer = isWeb ? { cursor: "pointer" } : {};
 const style = {
   mainView: {
     flex: 1,
+    display: "flex"
   },
   container: {
     backgroundColor: colors.white,
@@ -166,9 +167,6 @@ const style = {
     inputTextBox: {
       backgroundColor: colors.white,
       marginTop: 0,
-    },
-    loginText: {
-      ...webPointer,
     },
     rememberMeText: {
       fontSize: 14,
