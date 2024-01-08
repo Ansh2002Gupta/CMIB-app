@@ -5,35 +5,35 @@ export const items = [
   // TODO data will replace with API data
   {
     id: 0,
-    title: "2023 Aug - Sept Campus Placement",
+    label: "2023 Aug - Sept Campus Placement",
   },
   {
     id: 1,
-    title: "2023 Feb - Mar Campus Placement",
+    label: "2023 Feb - Mar Campus Placement",
   },
   {
     id: 2,
-    title: "2022 Aug - Sept Campus Placement",
+    label: "2022 Aug - Sept Campus Placement",
   },
   {
     id: 3,
-    title: "2022 Feb - Mar Campus Placement",
+    label: "2022 Feb - Mar Campus Placement",
   },
   {
     id: 4,
-    title: "2022 Aug - Sept Campus Placement",
+    label: "2022 Aug - Sept Campus Placement",
   },
   {
     id: 5,
-    title: "2022 Feb - Mar Campus Placement",
+    label: "2022 Feb - Mar Campus Placement",
   },
   {
     id: 6,
-    title: "2022 Aug - Sept Campus Placement",
+    label: "2022 Aug - Sept Campus Placement",
   },
   {
     id: 7,
-    title: "2022 Feb - Mar Campus Placement",
+    label: "2022 Feb - Mar Campus Placement",
   },
 ];
 
@@ -90,12 +90,14 @@ export const modules = [
     label: "Newly Qualified Placements",
     key: "newly-qualified-placements",
     children: newlyQualifiedPlacementsMenu,
+    session: items,
     visible: false,
   },
   {
     label: "CA Jobs",
     key: "ca-jobs",
     children: caJobsMenu,
+    session: items,
     visible: false,
   },
   {
@@ -108,6 +110,7 @@ export const modules = [
     key: "career-ascent",
     label: "Career Ascent",
     children: experiencedMembersMenu,
+    session: items,
     visible: false,
     isSubMenu: true,
   },
@@ -115,6 +118,7 @@ export const modules = [
     key: "women-part-time",
     label: "Women PartTime",
     children: experiencedMembersMenu,
+    session: items,
     visible: false,
     isSubMenu: true,
   },
@@ -122,6 +126,7 @@ export const modules = [
     key: "overseas-chapters",
     label: "Overseas Chapters",
     children: experiencedMembersMenu,
+    session: items,
     visible: false,
     isSubMenu: true,
   },

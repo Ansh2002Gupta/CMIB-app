@@ -87,7 +87,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           // TODO: Add function handling when after getting API
         }}
       >
-        <CommonText customTextStyle={styles.changeText} title={item.title} />
+        <CommonText customTextStyle={styles.changeText} title={item.label} />
       </TouchableOpacity>
     );
   };
