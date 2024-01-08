@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Platform, Text, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import Button from "../Button";
+import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import Spinner from "../Spinner";
 import colors from "../../assets/colors";
@@ -47,11 +48,15 @@ const CustomButton = ({
               source={iconLeft.leftIconSource}
             />
           )}
-          <Text
-            style={[withGreenBackground && styles.whiteText, styles.btnText]}
+          <CommonText
+            customTextStyle={[
+              withGreenBackground && styles.whiteText,
+              styles.btnText,
+            ]}
+            fontWeight={"600"}
           >
             {children}
-          </Text>
+          </CommonText>
           {!!iconRight && !!iconRight?.rightIconSource && (
             <CustomImage
               style={styles.iconLeftStyle}

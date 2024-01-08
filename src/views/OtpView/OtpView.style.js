@@ -98,8 +98,6 @@ const style = {
   },
   customBtnText: {
     fontSize: 16,
-    fontFamily: "General Sans",
-    fontWeight: "600",
   },
   footerImage: {
     position: "absolute",

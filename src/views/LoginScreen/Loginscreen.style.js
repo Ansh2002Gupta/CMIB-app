@@ -34,12 +34,6 @@ const style = {
     color: colors.darkGrey,
     fontSize: 14,
   },
-  activeTopTabsText: {
-    textAlign: "center",
-    color: colors.black,
-    fontSize: 14,
-    fontWeight: "600",
-  },
   buttonView: {
     flexDirection: "row",
     justifyContent: "space-between",

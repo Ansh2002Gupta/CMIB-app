@@ -20,7 +20,6 @@ export const styles = {
   formHeaderStyle: {
     color: colors.black,
     fontSize: 18,
-    fontWeight: "600",
     alignSelf: "center",
     marginBottom: 24,
   },

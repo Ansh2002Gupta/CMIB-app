@@ -80,8 +80,6 @@ const style = {
   },
   customBtnText: {
     fontSize: 16,
-    fontFamily: "General Sans",
-    fontWeight: "600",
   },
   footerImage: {
     position: "absolute",
@@ -103,10 +101,10 @@ const style = {
     width: "40%",
   },
   forgotPasswordWebContainer: {
-    flex: 0.9
+    flex: 0.9,
   },
   headerText: {
-    fontSize: 28
-  }
+    fontSize: 28,
+  },
 };
 export default style;

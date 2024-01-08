@@ -56,8 +56,8 @@ const style = {
   },
   titleParentStyle: {
     paddingLeft: 12,
-    paddingRight:12,
-    flex:1,
+    paddingRight: 12,
+    flex: 1,
   },
   titleStyle: {
     fontSize: 14,
@@ -78,7 +78,6 @@ const style = {
   },
   headerTextStyle: {
     paddingTop: 0,
-    fontWeight: "600",
     paddingBottom: 16,
   },
   innerContainerStyle: {

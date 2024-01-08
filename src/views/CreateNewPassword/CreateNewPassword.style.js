@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     headerText: {
       color: colors.black,
       fontSize: 40,
-      fontWeight: "600",
     },
     headerText1800px: {
       fontSize: 36,

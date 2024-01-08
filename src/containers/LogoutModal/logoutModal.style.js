@@ -50,12 +50,10 @@ const styles = StyleSheet.create({
   rightTextStyle: {
     color: colors.black,
     fontSize: 14,
-    fontWeight: "600",
     lineHeight: 20,
   },
   leftTextStyle: {
     fontSize: 14,
-    fontWeight: "600",
   },
   gapStyle: {
     ...Platform.select({

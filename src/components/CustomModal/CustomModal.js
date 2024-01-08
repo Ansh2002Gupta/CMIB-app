@@ -49,7 +49,7 @@ const CustomModal = ({
               <View style={style.headerStyle}>
                 <CommonText
                   customTextStyle={[style.headerText, headerTextStyle]}
-                  fontWeight="600"
+                  fontWeight={headerTextStyle?.fontWeight || "600"}
                 >
                   {headerText}
                 </CommonText>

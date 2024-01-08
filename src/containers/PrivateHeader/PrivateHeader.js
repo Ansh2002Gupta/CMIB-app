@@ -154,6 +154,7 @@ const HeaderRight = ({
             <View>
               <CommonText
                 customTextStyle={styles.fullNameStyle}
+                fontWeight="600"
               >{`${firstName} ${lastName}`}</CommonText>
               <CommonText customTextStyle={styles.roleStyle}>{role}</CommonText>
             </View>

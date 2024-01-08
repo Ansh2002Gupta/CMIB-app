@@ -27,7 +27,7 @@ const CustomCell = ({
       )}
       <CommonText
         customTextStyle={textStyle}
-        fontWeight={textStyle?.fontWeight}
+        fontWeight={textStyle?.fontWeight || "600"}
       >
         {title}
       </CommonText>
@@ -59,6 +59,8 @@ CustomCell.propTypes = {
     PropTypes.object,
     PropTypes.func,
   ]),
+  style: PropTypes.object,
+  textStyle: PropTypes.object,
   title: PropTypes.string.isRequired,
 };
 
