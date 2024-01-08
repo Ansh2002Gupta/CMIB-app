@@ -5,7 +5,7 @@ import colors from "../../assets/colors";
 const styles = StyleSheet.create({
   modalContent: (currentBreakpoint) => ({
     position: "absolute",
-    top: 30,
+    top: 35,
     left: 0,
     backgroundColor: colors.white,
     borderRadius: 12,
@@ -16,21 +16,20 @@ const styles = StyleSheet.create({
       web: {
         width:
           currentBreakpoint === "md"
-            ? "200%"
+            ? "205%"
             : currentBreakpoint === "sm"
-            ? "120%"
+            ? "125%"
             : "100%",
       },
     }),
   }),
   option: {
-    padding: 8,
+    padding: 12,
     paddingLeft: 16,
     paddingRight: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.lightGrey,
+    justifyContent: "flex-start",
   },
-  optionTextStyle:{
+  optionTextStyle: {
     fontSize: 14,
     marginLeft: 2,
     borderWidth: 0,
