@@ -8,7 +8,6 @@ export const style = StyleSheet.create({
     fontSize: 18,
     marginBottom: 24,
     paddingTop: 24,
-    fontWeight: "600",
   },
   contentContainerStyle: {
     flex: 1,

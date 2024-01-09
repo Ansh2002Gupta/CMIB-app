@@ -50,64 +50,61 @@ const PrivateHeader = ({
   };
 
   return (
-    <>
-      <View style={styles.webMainContainer}>
-        <View style={styles.webContainer}>
-          <View style={styles.textContainer}>
-            <HeaderLeft
-              showBackButton={showBackButton}
-              goBack={goBack}
-              onPressLeftIcon={onPressLeftIcon}
-              isMdOrGreater={isMdOrGreater}
-              leftIcon={leftIcon}
-            />
-            {pageHeading === "" && (
-              <>
-                <CommonText
-                  customTextStyle={styles.nameText}
-                  title={`Hey ${firstName} -`}
-                />
-                <CommonText
-                  customTextStyle={styles.overView}
-                  title={"here’s your overview"}
-                />
-              </>
-            )}
-          </View>
-          <HeaderRight
-            onPressRightIcon={onPressRightIcon}
-            rightIcon={rightIcon}
-            isWebView={isWebView}
-            profileImage={profileImage}
-            firstName={firstName}
-            lastName={lastName}
-            role={role}
+    <View style={styles.webMainContainer}>
+      <View style={styles.webContainer}>
+        <View style={styles.textContainer}>
+          <HeaderLeft
+            showBackButton={showBackButton}
+            goBack={goBack}
+            onPressLeftIcon={onPressLeftIcon}
             isMdOrGreater={isMdOrGreater}
+            leftIcon={leftIcon}
           />
+          {pageHeading === "" && (
+            <>
+              <CommonText customTextStyle={styles.nameText} fontWeight="600">
+                {`Hey ${firstName} -`}
+              </CommonText>
+              <CommonText customTextStyle={styles.overView}>
+                {"here’s your overview"}
+              </CommonText>
+            </>
+          )}
         </View>
-        {pageHeading !== "" && (
-          <PageHeading
-            intl={intl}
-            pageHeading={pageHeading}
-            showRightButton={showRightButton}
-            isWebView={isWebView}
-          />
-        )}
+        <HeaderRight
+          onPressRightIcon={onPressRightIcon}
+          rightIcon={rightIcon}
+          isWebView={isWebView}
+          profileImage={profileImage}
+          firstName={firstName}
+          lastName={lastName}
+          role={role}
+          isMdOrGreater={isMdOrGreater}
+        />
       </View>
-    </>
+      {pageHeading !== "" && (
+        <PageHeading
+          intl={intl}
+          pageHeading={pageHeading}
+          showRightButton={showRightButton}
+          isWebView={isWebView}
+        />
+      )}
+    </View>
   );
 };
 
 const PageHeading = ({ intl, pageHeading, showRightButton, isWebView }) => (
   <View style={isWebView ? styles.textHeaderTopBorder : styles.textHeader}>
-    <CommonText
-      title={intl.formatMessage({ id: pageHeading })}
-      customTextStyle={styles.formHeaderStyle}
-    />
+    <CommonText customTextStyle={styles.formHeaderStyle} fontWeight="600">
+      {intl.formatMessage({ id: pageHeading })}
+    </CommonText>
     {showRightButton && isWebView && (
       <TouchableOpacity style={styles.editButton}>
         <Image source={images.iconEdit} style={styles.icons} />
-        <CommonText title="Edit" customTextStyle={styles.editText} />
+        <CommonText customTextStyle={styles.editText}>
+          {intl.formatMessage({ id: "label.edit" })}
+        </CommonText>
       </TouchableOpacity>
     )}
   </View>
@@ -160,9 +157,9 @@ const HeaderRight = ({
             <View>
               <CommonText
                 customTextStyle={styles.fullNameStyle}
-                title={`${firstName} ${lastName}`}
-              />
-              <CommonText title={role} customTextStyle={styles.roleStyle} />
+                fontWeight="600"
+              >{`${firstName} ${lastName}`}</CommonText>
+              <CommonText customTextStyle={styles.roleStyle}>{role}</CommonText>
             </View>
             <TouchableOpacity>
               <Image source={images.iconArrowDown2} style={styles.iconArrow} />

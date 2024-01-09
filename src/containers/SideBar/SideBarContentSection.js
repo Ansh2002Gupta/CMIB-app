@@ -73,8 +73,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         />
         <CommonText
           customTextStyle={isActive ? styles.menuItemsText : styles.changeText}
-          title={item.label}
-        />
+        >
+          {item.label}
+        </CommonText>
       </TouchableOpacity>
     );
   };
@@ -87,7 +88,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           // TODO: Add function handling when after getting API
         }}
       >
-        <CommonText customTextStyle={styles.changeText} title={item.label} />
+        <CommonText customTextStyle={styles.changeText}>
+          {item.label}
+        </CommonText>
       </TouchableOpacity>
     );
   };
@@ -108,10 +111,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         <Image source={images.iconCmibLogoWhite} />
       </View>
       {!openModuleSelector && (
-        <CommonText
-          customTextStyle={styles.sessionText}
-          title={intl.formatMessage({ id: "label.module" })}
-        />
+        <CommonText customTextStyle={styles.sessionText}>
+          {intl.formatMessage({ id: "label.module" })}
+        </CommonText>
       )}
       <TwoRow
         isBottomFillSpace={true}
@@ -141,10 +143,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                     style={styles.leftArrow}
                   />
                 ) : (
-                  <CommonText
-                    customTextStyle={styles.changeText}
-                    title={intl.formatMessage({ id: "label.change" })}
-                  />
+                  <CommonText customTextStyle={styles.changeText}>
+                    {intl.formatMessage({ id: "label.change" })}
+                  </CommonText>
                 )}
               </TouchableOpacity>
             }
@@ -162,10 +163,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 />
               ) : (
                 <>
-                  <CommonText
-                    customTextStyle={styles.sessionText}
-                    title={intl.formatMessage({ id: "label.session" })}
-                  />
+                  <CommonText customTextStyle={styles.sessionText}>
+                    {intl.formatMessage({ id: "label.session" })}
+                  </CommonText>
                   <FlatList data={items} renderItem={renderSessions} />
                 </>
               )}
@@ -182,10 +182,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       >
         <View style={styles.imageTextView}>
           <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
-          <CommonText
-            customTextStyle={styles.visitWebsiteText}
-            title={intl.formatMessage({ id: "label.visit_website" })}
-          />
+          <CommonText customTextStyle={styles.visitWebsiteText}>
+            {intl.formatMessage({ id: "label.visit_website" })}
+          </CommonText>
         </View>
         <Image source={images.iconRightArrow} style={styles.globalIcon} />
       </TouchableOpacity>

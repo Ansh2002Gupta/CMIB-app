@@ -8,7 +8,9 @@ import styles from "./SubHeading.style";
 const SubHeadingText = ({ text }) => {
   return (
     <View>
-      <CommonText customTextStyle={styles.heading} title={text} />
+      <CommonText customTextStyle={styles.heading} fontWeight="600">
+        {text}
+      </CommonText>
     </View>
   );
 };

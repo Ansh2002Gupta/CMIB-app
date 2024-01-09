@@ -70,6 +70,7 @@ const colors = {
   darkGreySecond,
   errorBackground,
   errorRed,
+  gray,
   green,
   greenOne,
   greyOne,

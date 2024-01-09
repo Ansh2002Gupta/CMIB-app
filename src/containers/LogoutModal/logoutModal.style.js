@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     marginRight: 0,
   },
   headerText: {
-    fontWeight: "600",
     fontSize: 20,
     color: colors.black,
     marginTop: 20,
@@ -51,12 +50,10 @@ const styles = StyleSheet.create({
   rightTextStyle: {
     color: colors.black,
     fontSize: 14,
-    fontWeight: "600",
     lineHeight: 20,
   },
   leftTextStyle: {
     fontSize: 14,
-    fontWeight: "600",
   },
   gapStyle: {
     ...Platform.select({

@@ -61,8 +61,8 @@ const Stepper = ({
                         getStepStatus,
                       }),
                     }}
-                    title={`${index + 1}`}
-                  />
+                    fontWeight="600"
+                  >{`${index + 1}`}</CommonText>
                 )}
               </View>
               {!showActiveLabelOnly && (
@@ -75,7 +75,6 @@ const Stepper = ({
                   }}
                 >
                   <CommonText
-                    title={label}
                     customTextStyle={{
                       ...styles.label,
                       ...getAppropriateStyle({
@@ -85,7 +84,9 @@ const Stepper = ({
                       }),
                       ...stepperLabel,
                     }}
-                  />
+                  >
+                    {label}
+                  </CommonText>
                 </View>
               )}
             </View>
@@ -112,12 +113,14 @@ const Stepper = ({
       {showActiveLabelOnly && (
         <View style={styles.onlyActiveLabelBox}>
           <CommonText
-            title={steps.find((label, idx) => idx === activeStep)}
             customTextStyle={{
               ...styles.onlyActiveLabel,
               ...stepperHeroLabelText,
             }}
-          />
+            fontWeight="600"
+          >
+            {steps.find((label, idx) => idx === activeStep)}
+          </CommonText>
         </View>
       )}
     </React.Fragment>

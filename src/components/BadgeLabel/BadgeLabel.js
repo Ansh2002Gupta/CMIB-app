@@ -25,7 +25,7 @@ const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
             customTextStyle,
           ]}
         >
-          <CommonText title={label} customTextStyle={style.badgeStyle} />
+          <CommonText customTextStyle={style.badgeStyle}>{label}</CommonText>
         </View>
       ))}
     </View>

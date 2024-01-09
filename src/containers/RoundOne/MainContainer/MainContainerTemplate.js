@@ -51,13 +51,16 @@ const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
               }}
             >
               <CommonText
-                title={container.title}
                 customTextStyle={styles.addApplicationFormText}
-              />
+                fontWeight={"600"}
+              >
+                {container.title}
+              </CommonText>
               <CommonText
-                title={container.subTitle}
                 customTextStyle={styles.addApplicationFormDescriptionText}
-              />
+              >
+                {container.subTitle}
+              </CommonText>
             </View>
           </CardComponent>
         </TouchableOpacity>

@@ -62,10 +62,9 @@ const SignUpThirdScreenUI = ({
       <View style={style.formContainer}>
         {contactDetails.map((detail, index) => (
           <View key={String(index)}>
-            <CommonText
-              customTextStyle={style.headerText}
-              title={getHeaderText(detail.module, intl)}
-            />
+            <CommonText fontWeight="600" customTextStyle={style.headerText}>
+              {getHeaderText(detail.module, intl)}
+            </CommonText>
             <View style={style.inputContainer}>
               <CustomTextInput
                 label={intl.formatMessage({
