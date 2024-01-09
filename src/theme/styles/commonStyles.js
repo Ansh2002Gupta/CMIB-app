@@ -35,8 +35,14 @@ const commonStyles = {
     marginTop: 48,
     zIndex: 1,
     boxShadow: "0px 4px 32px 0px rgba(97, 108, 130, 0.04)",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 };
 
+export const gridStyles = {
+  xl: "1fr 1fr 1fr",
+  lg: "1fr 1fr",
+  md: "1fr 1fr",
+  sm: "1fr 1fr",
+};
 export default commonStyles;

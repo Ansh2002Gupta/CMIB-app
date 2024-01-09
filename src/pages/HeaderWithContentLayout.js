@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet } from "../routes";
+import { useLocation } from "react-router-dom";
 import {
   Modal,
   Platform,
@@ -16,12 +17,14 @@ import Header from "../containers/Header";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
+import { navigations } from "../constants/routeNames";
 import commonStyles from "../theme/styles/commonStyles";
 import Styles from "./HeaderWithContentLayout.style";
 
 function HeaderWithContentLayout() {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const checkAuthToken = async () => {
@@ -53,6 +56,18 @@ function HeaderWithContentLayout() {
     setSideBarVisible(!isSideBarVisible);
   };
 
+  const showBottomBar = () => {
+    const routeName = location.pathname;
+    const includedRoutes = [
+      navigations.DASHBOARD,
+      navigations.ROUND_ONE,
+      navigations.ROUND_TWO,
+      navigations.PROFILE,
+    ];
+
+    return includedRoutes.includes(routeName);
+  };
+
   // Components for rendering the sidebar in a modal or inline
   const sidebarComponent = (
     <SideNavBar onClose={toggleSideBar} showCloseIcon={modalSideBar} />
@@ -78,12 +93,11 @@ function HeaderWithContentLayout() {
       )}
 
       <MainLayout
-        header={
-          <Header
-            onPressLeftIcon={toggleSideBar}
-          />
+        header={<Header onPressLeftIcon={toggleSideBar} />}
+        bottomSection={
+          isAuthenticated &&
+          (!isWebView && showBottomBar() ? <BottomBar /> : null)
         }
-        bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
         footer={!isAuthenticated && isWebView && <Footer />}

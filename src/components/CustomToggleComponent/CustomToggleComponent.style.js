@@ -1,9 +1,11 @@
+import { Platform } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
+
 const style = {
   mainView: {
     flexDirection: "row",
     alignItems: "center",
-    paddingTop: 4,
   },
   yesButtonStyle: {
     width: 16,
@@ -13,7 +15,7 @@ const style = {
     borderColor: colors.lightGray,
     justifyContent: "center",
     alignItems: "center",
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   noButtonStyle: {
     width: 16,
@@ -23,7 +25,7 @@ const style = {
     borderColor: colors.lightGray,
     justifyContent: "center",
     alignItems: "center",
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   activeButtonStyle: {
     borderColor: colors.green,

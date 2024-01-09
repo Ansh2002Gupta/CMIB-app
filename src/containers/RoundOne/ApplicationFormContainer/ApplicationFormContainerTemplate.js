@@ -12,7 +12,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const intl = useIntl();
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <ApplicationFormStepper activeStep={activeStep} intl={intl} />
       <JobDetails />
       {/* <View style={styles.actionBtnContainer}>

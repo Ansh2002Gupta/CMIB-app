@@ -2,7 +2,9 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../../../assets/colors";
 
 const styles = StyleSheet.create({
-  mainView: {},
+  mainView: {
+    flex: 1,
+  },
   customCardComponentStyle: {
     marginTop: 16,
     backgroundColor: colors.secondaryGrey,
@@ -13,6 +15,12 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   MultiRowStyle: {
+    backgroundColor: colors.backgroundColor,
+    marginTop: 16,
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  MultiRowPhoneStyle: {
     backgroundColor: colors.backgroundColor,
     marginTop: 16,
     marginLeft: 16,
@@ -29,6 +37,10 @@ const styles = StyleSheet.create({
     color: colors.darkBlue,
     marginLeft: 8,
   },
+  containerGridStyle: (columnCount) => ({
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+  }),
 });
 
 export default styles;
