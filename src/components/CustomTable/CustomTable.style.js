@@ -102,8 +102,12 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   }),
   columnStyleBorder: {
+    backgroundColor:colors.white,
     borderColor: colors.lightGrey,
     borderTopWidth: 0.5,
+  },
+  columnHeaderStyle:{
+    backgroundColor:colors.white,
   },
   tableSection: {
     borderWidth: 0.5,
@@ -138,6 +142,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     borderTopWidth: 0.5,
     borderColor: colors.lightGrey,
+    backgroundColor:colors.white,
   },
   paginationFooter: {
     paddingTop: 12,

@@ -111,6 +111,7 @@ const CustomTable = ({
                 {isWebView && (
                   <MultiColumn
                     columns={getColoumConfigs(tableHeading, isHeading)}
+                    style={styles.columnHeaderStyle}
                   />
                 )}
                 <FlatList
