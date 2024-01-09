@@ -7,6 +7,7 @@ const webPointer = isWeb ? { cursor: "pointer" } : {};
 const style = {
   mainView: {
     flex: 1,
+    display: "flex"
   },
   container: {
     backgroundColor: colors.white,

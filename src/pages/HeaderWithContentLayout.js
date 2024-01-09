@@ -19,9 +19,10 @@ import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
 import { navigations } from "../constants/routeNames";
 import commonStyles from "../theme/styles/commonStyles";
+import images from "../images";
 import Styles from "./HeaderWithContentLayout.style";
 
-function HeaderWithContentLayout() {
+function HeaderWithContentLayout({ doesExcludeHeader }) {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
@@ -93,10 +94,19 @@ function HeaderWithContentLayout() {
       )}
 
       <MainLayout
-        header={<Header onPressLeftIcon={toggleSideBar} />}
+        // header={<Header onPressLeftIcon={toggleSideBar} />}
         bottomSection={
           isAuthenticated &&
           (!isWebView && showBottomBar() ? <BottomBar /> : null)
+        }
+        header={
+          doesExcludeHeader && !isWebView ? null : (
+            <Header
+              onPressLeftIcon={toggleSideBar}
+              leftIcon={images.iconMenu}
+              rightIcon={images.iconNotification}
+            />
+          )
         }
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}

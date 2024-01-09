@@ -41,12 +41,10 @@ const DetailComponent = ({
     return {};
   };
 
-  console.log({ ...containerStyle, ...customContainerStyle }, "containerStyle");
-
   return (
     <View>
       {!!headerText && (
-        <CommonText customTextStyle={styles.headerText}>
+        <CommonText customTextStyle={styles.headerText} fontWeight="600">
           {headerText}
         </CommonText>
       )}
@@ -83,19 +81,21 @@ const DetailComponent = ({
             ) : (
               <>
                 <View style={styles.titleContainer}>
-                  <CommonText
-                    title={intl.formatMessage({ id: detail.label })}
-                    customTextStyle={styles.titleStyle}
-                  />
-                  <CommonText title="*" customTextStyle={styles.starStyle} />
+                  <CommonText customTextStyle={styles.titleStyle}>
+                    {intl.formatMessage({ id: detail.label })}
+                  </CommonText>
+                  <CommonText customTextStyle={styles.starStyle}>
+                    {" *"}
+                  </CommonText>
                 </View>
                 <CommonText
-                  title={detail.value}
                   customTextStyle={[
                     styles.valueStyle,
                     detail.isLink && styles.linkStyle,
                   ]}
-                />
+                >
+                  {detail.value}
+                </CommonText>
               </>
             )}
           </View>

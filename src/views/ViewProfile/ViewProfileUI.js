@@ -10,6 +10,7 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import IconHeader from "../../components/IconHeader/IconHeader";
 import ImagePicker from "../../components/ImagePickerComponent/ImagePickerComponent";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
@@ -24,9 +25,9 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   const firstName = "Kashish";
   const lastName = "Bhatheja";
   const details = [
-    { title: "Designation", value: "Senior Chartered Accountant" },
-    { title: "Mobile Number", value: "+91-1234 5678 21" },
-    { title: "Email ID", value: "pooja.dhar@j&k.co" },
+    { label: "Designation", value: "Senior Chartered Accountant" },
+    { label: "Mobile Number", value: "+91-1234 5678 21" },
+    { label: "Email ID", value: "pooja.dhar@j&k.co" },
   ];
   const buttonTitle = profileImage
     ? intl.formatMessage({ id: "label.change" })
@@ -75,6 +76,11 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
 
   return (
     <>
+      <IconHeader
+        hasIconBar
+        headerText={intl.formatMessage({ id: "label.view_profile" })}
+        intl={intl}
+      />
       <View style={style.picParentContainer}>
         <View style={style.picContainer}>
           {renderProfileIcon("profileIcon")}
@@ -87,7 +93,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
             <Image source={images.iconEdit} style={style.editIcon} />
           </TouchableOpacity>
         </View>
-        <CardComponent>
+        <CardComponent customStyle={style.cardStyle}>
           <DetailComponent details={details} />
         </CardComponent>
         {showEditModal && (

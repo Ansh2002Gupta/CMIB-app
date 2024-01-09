@@ -4,6 +4,7 @@ const style = {
   mainView: {
     flex: 1,
     backgroundColor: colors.white,
+    display: "flex"
   },
   container: {
     backgroundColor: colors.white,
@@ -143,6 +144,10 @@ const style = {
     fontSize: 28,
     color: colors.black,
   },
+  formContainer: {
+    flex: 1,
+    display: "flex"
+  }
 };
 
 export default style;

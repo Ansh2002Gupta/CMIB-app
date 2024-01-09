@@ -4,9 +4,19 @@ const style = {
   container: {
     backgroundColor: colors.white,
   },
-  headerContainerStyle: {
-    paddingBottom: 16,
-    paddingLeft: 16,
+  iconContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: 16,
+  },
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignContent: "center",
+    marginBottom: 16,
+    marginLeft: 16,
+    marginRight: 16,
   },
   formHeaderStyle: {
     color: colors.black,
@@ -15,6 +25,20 @@ const style = {
   borderStyle: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
+  },
+  cardContainer: {
+    paddingTop: 14,
+    paddingBottom: 14,
+  },
+  editContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textStyle: {
+    paddingRight: 8,
+    paddingLeft: 8,
+    fontSize: 14,
   },
 };
 

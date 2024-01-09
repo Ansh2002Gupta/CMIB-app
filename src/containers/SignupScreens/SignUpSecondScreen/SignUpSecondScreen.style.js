@@ -54,7 +54,7 @@ export const style = StyleSheet.create({
     color: colors.mediumGray,
   },
   customSaveButtonContainer: {
-    bottom: 0,
+    marginBottom: 16,
   },
   formContainer: {
     flex: 1,
