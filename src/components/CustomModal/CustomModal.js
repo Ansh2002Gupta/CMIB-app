@@ -26,9 +26,12 @@ const CustomModal = ({
   onPressIconCross,
   secondaryText,
 }) => {
+  const webProps =
+    Platform.OS.toLowerCase() === "web" ? { maxWidth: "sm" } : {};
+
   return (
-    <View>
-      <Modal isVisible style={style.containerStyle}>
+    <>
+      <Modal isVisible style={style.containerStyle} {...webProps}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={[style.innerContainer, customInnerContainerStyle]}
@@ -62,7 +65,7 @@ const CustomModal = ({
           )}
         </KeyboardAvoidingView>
       </Modal>
-    </View>
+    </>
   );
 };
 
