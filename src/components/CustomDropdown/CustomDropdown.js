@@ -26,10 +26,9 @@ const CustomDropdown = ({ options, onSelect, placeholder, dropdownIcon }) => {
         style={styles.dropdownButton}
         onPress={toggleDropdown}
       >
-        <CommonText
-          title={selectedOption ? selectedOption.label : placeholder}
-          customTextStyle={styles.rowSelectedNumber}
-        />
+        <CommonText customTextStyle={styles.rowSelectedNumber}>
+          {selectedOption ? selectedOption.label : placeholder}
+        </CommonText>
         <CustomImage source={dropdownIcon} style={styles.iconTicket} />
       </CustomTouchableOpacity>
 
