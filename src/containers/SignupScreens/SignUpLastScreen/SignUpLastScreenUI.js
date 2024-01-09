@@ -3,16 +3,17 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
+import ActionPairButton from "../../../components/ActionPairButton";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CommonText from "../../../components/CommonText";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../../components/UploadImage";
 import useIsWebView from "../../../hooks/useIsWebView";
+import images from "../../../images";
 import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
@@ -32,6 +33,7 @@ const SignUpLastScreenUI = ({
   handleSuccessModal,
   handleToggle,
   intl,
+  isLoading,
   natureOfSupplier,
   onClickGoToLogin,
   onDeleteImage,
@@ -191,13 +193,17 @@ const SignUpLastScreenUI = ({
   const renderFooterContent = () => {
     return (
       <View style={style.signupFooterContainer}>
-        <SaveCancelButton
+        <ActionPairButton
           buttonOneText={intl.formatMessage({ id: "label.back" })}
+          buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
+          displayLoader={isLoading}
+          iconLeft={{
+            leftIconAlt: "left-arrow",
+            leftIconSource: images.iconArrowLeft,
+          }}
+          isDisabled={!allFieldsFilled()}
           onPressButtonOne={onGoBack}
           onPressButtonTwo={() => handleSuccessModal(true)}
-          isNextDisabled={!allFieldsFilled()}
-          buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
-          hasIconLeft
           customContainerStyle={!isWebView && style.customContainerStyle}
         />
         {isWebView && (
