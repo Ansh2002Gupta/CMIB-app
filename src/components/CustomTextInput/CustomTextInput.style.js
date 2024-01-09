@@ -130,6 +130,16 @@ const style = {
     marginLeft: 8,
     alignItems: "center",
   },
+  searchStyle: {
+    fontSize: 14,
+    fontFamily:
+      Platform.OS.toLowerCase() === "web"
+        ? "General sans"
+        : "GeneralSans-Medium",
+    color: colors.black,
+    fontWeight: "500",
+    borderRadius: 4,
+  },
 };
 
 export default style;
