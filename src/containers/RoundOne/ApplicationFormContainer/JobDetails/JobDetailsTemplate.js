@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import {
   View,
   ScrollView,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { useIntl } from "react-intl";
 
 import useIsWebView from "../../../../hooks/useIsWebView";
 
@@ -101,7 +102,7 @@ const JobDetailsTemplate = ({
           />
           <View style={{ ...containerStyle }}>
             <CustomTextInput
-              customStyle={[isWebView && styles.customStyleCompensation]}
+              customStyle={isWebView && { ...styles.customStyleCompensation }}
               label={intl.formatMessage({ id: "label.compensation" })}
               placeholder={intl.formatMessage({ id: "label.compensation" })}
               isMandatory
@@ -179,32 +180,31 @@ const JobDetailsTemplate = ({
               isMandatory
               customToggleStyle={styles.customToggleStyle}
             />
-            <View style={{ flexDirection: "row" }}>
-              <CustomTextInput
-                customStyle={styles.bondCustomInputStyle}
-                label={intl.formatMessage({
-                  id: "label.months_bond_period",
-                })}
-                placeholder={intl.formatMessage({
-                  id: "label.months_bond_period",
-                })}
-                isMandatory
-                value={bondPeriod}
-                onChangeText={(val) => handleBondPeriod(val)}
-              />
-              <CustomTextInput
-                customStyle={styles.bondCustomInputStyle}
-                label={intl.formatMessage({
-                  id: "label.exit_amount",
-                })}
-                placeholder={intl.formatMessage({
-                  id: "label.exit_amount",
-                })}
-                isMandatory
-                value={exitAmount}
-                onChangeText={(val) => handleExitAmount(val)}
-              />
-            </View>
+
+            <CustomTextInput
+              customStyle={styles.bondCustomInputStyle}
+              label={intl.formatMessage({
+                id: "label.months_bond_period",
+              })}
+              placeholder={intl.formatMessage({
+                id: "label.months_bond_period",
+              })}
+              isMandatory
+              value={bondPeriod}
+              onChangeText={(val) => handleBondPeriod(val)}
+            />
+            <CustomTextInput
+              customStyle={styles.bondCustomInputStyles}
+              label={intl.formatMessage({
+                id: "label.exit_amount",
+              })}
+              placeholder={intl.formatMessage({
+                id: "label.exit_amount",
+              })}
+              isMandatory
+              value={exitAmount}
+              onChangeText={(val) => handleExitAmount(val)}
+            />
           </View>
         </CardComponent>
       ),
@@ -260,6 +260,37 @@ const JobDetailsTemplate = ({
       )}
     </ScrollView>
   );
+};
+
+JobDetailsTemplate.propTypes = {
+  addDesignation: PropTypes.bool,
+  bondPeriod: PropTypes.string,
+  compensation: PropTypes.string,
+  CTCDetail: PropTypes.string,
+  designationName: PropTypes.string,
+  exitAmount: PropTypes.string,
+  handleBondPeriod: PropTypes.func,
+  handleCompensation: PropTypes.func,
+  handleCTCDetail: PropTypes.func,
+  handleDesignationName: PropTypes.func,
+  handleExitAmount: PropTypes.func,
+  handleMonthlyData: PropTypes.func,
+  handleStartingSalary: PropTypes.func,
+  handleYearlyData: PropTypes.func,
+  handleToggle: PropTypes.func,
+  jobDetailData: PropTypes.shape({
+    Monthly: PropTypes.string,
+    Yearly: PropTypes.string,
+  }),
+  onClickAddDesignation: PropTypes.func,
+  selectionProcess: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      title: PropTypes.string,
+      isSelected: PropTypes.bool,
+    })
+  ),
+  startingSalary: PropTypes.string,
 };
 
 export default JobDetailsTemplate;

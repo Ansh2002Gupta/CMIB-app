@@ -70,15 +70,19 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     marginBottom: 12,
     paddingBottom: 12,
+    marginRight: 12,
   },
   bondCustomInputStyle: {
-    marginRight: 12,
-    width: "50%",
+    marginLeft: 12,
   },
   selectionProcessTextStyle: {
     marginBottom: 8,
   },
   customStyleCompensation: { marginRight: 24 },
+  bondCustomInputStyles: {
+    marginLeft: 12,
+    marginRight: 12,
+  },
 });
 
 export default styles;

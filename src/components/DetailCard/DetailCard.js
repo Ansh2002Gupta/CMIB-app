@@ -19,7 +19,7 @@ const DetailCard = ({
   const intl = useIntl();
 
   return (
-    <CardComponent customStyle={[style.cardStyle, customCardStyle]}>
+    <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
       <DetailComponent
         customContainerStyle={isRow && style.customStyle}
         details={details}
