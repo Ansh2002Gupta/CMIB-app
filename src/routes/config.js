@@ -119,7 +119,7 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.ROUND_ONE_APPLICATION_FORM,
+    pagePath: navigations.APPLICATION_FORM,
     element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
@@ -145,6 +145,10 @@ const config = [
       {
         viewPath: "",
         element: <RoundOne />,
+      },
+      {
+        viewPath: "applicationForm",
+        element: <RoundOneApplicationForm />,
       },
     ],
   },

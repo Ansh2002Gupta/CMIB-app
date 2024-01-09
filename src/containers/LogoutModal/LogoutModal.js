@@ -9,30 +9,19 @@ import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import MultiRow from "../../core/layouts/MultiRow";
-import useLogoutAPI from "../../services/apiServices/hooks/useLogoutAPI";
+import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
 import styles from "./logoutModal.style";
 
-const LogoutModal = ({ onCancel, onSave }) => {
+const LogoutModal = ({ onCancel }) => {
   const intl = useIntl();
-  const { handleUserLogout, isLoading } = useLogoutAPI();
+  const { isLoggingUserOut, onLogout } = useHeader();
   const WarningIcon = images.iconWarning;
-
-  const cancelHandler = () => {
-    onCancel(false);
-  };
-
-  const saveHandler = () => {
-    handleUserLogout(() => {
-      onCancel(false);
-      onSave();
-    });
-  };
 
   const saveCancelButton = [
     {
       content: (
-        <CustomButton onPress={cancelHandler}>
+        <CustomButton onPress={() => onCancel(false)}>
           {intl.formatMessage({ id: "label.cancel" })}
         </CustomButton>
       ),
@@ -41,9 +30,9 @@ const LogoutModal = ({ onCancel, onSave }) => {
     {
       content: (
         <CustomButton
-          onPress={saveHandler}
+          onPress={() => onLogout()}
           style={styles.saveStyle}
-          {...{ isLoading }}
+          {...{ isLoading: isLoggingUserOut }}
         >
           {intl.formatMessage({ id: "label.logout" })}
         </CustomButton>
@@ -65,18 +54,16 @@ const LogoutModal = ({ onCancel, onSave }) => {
     },
     {
       content: (
-        <CommonText
-          customTextStyle={styles.headerText}
-          title={intl.formatMessage({ id: "label.logout" })}
-        />
+        <CommonText customTextStyle={styles.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.logout" })}
+        </CommonText>
       ),
     },
     {
       content: (
-        <CommonText
-          customTextStyle={styles.subHeaderText}
-          title={intl.formatMessage({ id: "label.logout_message" })}
-        />
+        <CommonText customTextStyle={styles.subHeaderText}>
+          {intl.formatMessage({ id: "label.logout_message" })}
+        </CommonText>
       ),
     },
     {
@@ -100,7 +87,6 @@ const LogoutModal = ({ onCancel, onSave }) => {
 
 LogoutModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
 };
 
 export default LogoutModal;

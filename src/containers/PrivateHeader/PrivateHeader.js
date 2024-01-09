@@ -1,5 +1,7 @@
-import React from "react";
-import { useLocation } from "react-router";
+import React, { useContext } from "react";
+
+import { useIntl } from "react-intl";
+import { useLocation } from "../../routes";
 import {
   Image,
   TouchableOpacity,
@@ -8,10 +10,11 @@ import {
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
 import CommonText from "../../components/CommonText";
-import CustomAvatar from "../../components/CustomAvatar";
+import UserAccountInfo from "../../components/UserAccountInfo";
 import useIsWebView from "../../hooks/useIsWebView";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { navigations } from "../../constants/routeNames";
-import images from "../../images";
+
 import styles from "./PrivateHeader.style";
 
 const PrivateHeader = ({
@@ -21,51 +24,53 @@ const PrivateHeader = ({
   rightIcon,
 }) => {
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
   const location = useLocation();
   const windowDimensions = useWindowDimensions();
+  const [userProfileState] = useContext(UserProfileContext);
 
-  const profileImage = "";
-  const firstName = "Elongated";
-  const lastName = "Mask";
-  const role = "Admin";
+  const loggedInUserInfo = userProfileState.userDetails || {};
+
+  const profileImage = ""; // TODO: Not getting the user profile image key in the API. Have updated the API pening document for the same.
+  const firstName = loggedInUserInfo?.name?.split(" ")?.[0] || "";
+  const lastName = loggedInUserInfo?.name?.split(" ")?.[1] || "";
+  const role = "Admin"; // TODO: Not getting type of user at the moment in the API. Have updated the API pening document for the same.
 
   const isMdOrGreater = windowDimensions.width >= 900;
 
   return (
-    <>
-      <View style={styles.webContainer}>
-        <View style={styles.textContainer}>
-          <HeaderLeft
-            onPressLeftIcon={onPressLeftIcon}
-            isMdOrGreater={isMdOrGreater}
-            leftIcon={leftIcon}
-          />
-          {/*TODO: Right Now It's a static data, we will replace it by dynamic data as we get API */}
-          {location.pathname === navigations.DASHBOARD && (
-            <>
-              <CommonText
-                customTextStyle={styles.nameText}
-                title={"Hey John -"}
-              />
-              <CommonText
-                customTextStyle={styles.overView}
-                title={"here’s your overview"}
-              />
-            </>
-          )}
-        </View>
-        <HeaderRight
-          onPressRightIcon={onPressRightIcon}
-          rightIcon={rightIcon}
-          isWebView={isWebView}
-          profileImage={profileImage}
-          firstName={firstName}
-          lastName={lastName}
-          role={role}
+    <View style={styles.webContainer}>
+      <View style={styles.textContainer}>
+        <HeaderLeft
+          onPressLeftIcon={onPressLeftIcon}
           isMdOrGreater={isMdOrGreater}
+          leftIcon={leftIcon}
         />
+        {/*TODO: Right Now It's a static data, we will replace it by dynamic data as we get API */}
+        {location.pathname === navigations.DASHBOARD && (
+          <>
+            <CommonText
+              customTextStyle={styles.nameText}
+            >{`${intl.formatMessage({
+              id: "label.hey",
+            })} ${firstName} -`}</CommonText>
+            <CommonText customTextStyle={styles.overView}>
+              {"here’s your overview"}
+            </CommonText>
+          </>
+        )}
       </View>
-    </>
+      <UserAccountInfo
+        onPressRightIcon={onPressRightIcon}
+        rightIcon={rightIcon}
+        isWebView={isWebView}
+        profileImage={profileImage}
+        firstName={firstName}
+        lastName={lastName}
+        role={role}
+        isMdOrGreater={isMdOrGreater}
+      />
+    </View>
   );
 };
 
@@ -79,41 +84,5 @@ const HeaderLeft = ({ onPressLeftIcon, isMdOrGreater, leftIcon }) => {
   }
   return null;
 };
-
-const HeaderRight = ({
-  onPressRightIcon,
-  rightIcon,
-  isWebView,
-  profileImage,
-  firstName,
-  lastName,
-  role,
-  isMdOrGreater,
-}) => (
-  <View style={styles.notficationIconView}>
-    <TouchableOpacity onPress={onPressRightIcon}>
-      <Image source={rightIcon} style={styles.iconNotification} />
-    </TouchableOpacity>
-    {isWebView && (
-      <View style={styles.profileView}>
-        <CustomAvatar image={profileImage} text={`${firstName} ${lastName}`} />
-        {isMdOrGreater && (
-          <View style={styles.profileNameSection}>
-            <View>
-              <CommonText
-                customTextStyle={styles.fullNameStyle}
-                title={`${firstName} ${lastName}`}
-              />
-              <CommonText title={role} customTextStyle={styles.roleStyle} />
-            </View>
-            <TouchableOpacity>
-              <Image source={images.iconArrowDown2} style={styles.iconArrow} />
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-    )}
-  </View>
-);
 
 export default PrivateHeader;

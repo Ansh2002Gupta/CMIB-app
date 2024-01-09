@@ -21,15 +21,10 @@ const style = {
   formHeaderStyle: {
     color: colors.black,
     fontSize: 20,
-    fontWeight: "600",
   },
   borderStyle: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
-  },
-  webHeaderStyle: {
-    fontSize: 32,
-    fontWeight: "600",
   },
   cardContainer: {
     paddingTop: 14,
@@ -43,7 +38,6 @@ const style = {
   textStyle: {
     paddingRight: 8,
     paddingLeft: 8,
-    fontWeight: "600",
     fontSize: 14,
   },
 };

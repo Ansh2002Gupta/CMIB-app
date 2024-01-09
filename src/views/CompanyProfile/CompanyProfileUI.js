@@ -16,7 +16,7 @@ import DetailCard from "../../components/DetailCard/DetailCard";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
+import ActionPairButton from "../../components/ActionPairButton";
 import Spinner from "../../components/Spinner";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -75,10 +75,9 @@ const CompanyProfileUI = (props) => {
               onPress={() => handleEdit(true)}
             >
               <Image source={images.iconSquareEdit} />
-              <CommonText
-                customTextStyle={style.textStyle}
-                title={intl.formatMessage({ id: "label.edit" })}
-              />
+              <CommonText customTextStyle={style.textStyle} fontWeight="600">
+                {intl.formatMessage({ id: "label.edit" })}
+              </CommonText>
             </TouchableOpacity>
           </CardComponent>
         </View>
@@ -91,11 +90,12 @@ const CompanyProfileUI = (props) => {
     if (isEditProfile) {
       return (
         <View style={style.buttonContainer}>
-          <SaveCancelButton
+          <ActionPairButton
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            onPressButtonOne={onGoBack}
             buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
-            isNextDisabled={!allFieldsFilled()}
+            isButtonTwoGreen
+            isDisabled={!allFieldsFilled()}
+            onPressButtonOne={onGoBack}
             onPressButtonTwo={onSaveClick}
           />
         </View>
@@ -167,12 +167,13 @@ const CompanyProfileUI = (props) => {
             </CardComponent>
             <CardComponent customStyle={style.cardStyle}>
               <View style={style.textContainer}>
-                <Text style={style.headingText}>
+                <CommonText customTextStyle={style.headingText}>
                   {intl.formatMessage({ id: "label.balance_credit" })}:
-                </Text>
-                <Text style={style.valueStyle}>{`${
-                  profileResult?.balanceCredit || "00"
-                } INR`}</Text>
+                </CommonText>
+                <CommonText
+                  customTextStyle={style.valueStyle}
+                  fontWeight="600"
+                >{`${profileResult?.balanceCredit || "00"} INR`}</CommonText>
               </View>
             </CardComponent>
           </View>

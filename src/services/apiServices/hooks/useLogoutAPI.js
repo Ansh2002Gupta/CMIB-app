@@ -1,45 +1,37 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import Http from "../../http-service";
-import Storage from "../../storage-service";
-import { AuthContext } from "../../../globalContext/auth/authProvider";
-import { clearAuthAndLogout } from "../../../globalContext/auth/authActions";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
-import {COMPANY_LOGOUT} from"../apiEndPoint"
+import { COMPANY_LOGOUT } from "../apiEndPoint";
 
 const useLogoutAPI = () => {
   const [logoutApiStatus, setLogoutApiStatus] = useState(API_STATUS.IDLE);
   const [loginUserResult, setLoginUserResult] = useState([]);
   const [errorWhileLoggingOut, setErrorWhileLoggingOut] = useState("");
-  const [, authDispatch] = useContext(AuthContext);
 
-  const handleUserLogout = async (successCallback ) => {
+  const handleUserLogout = async ({ successCallback }) => {
     try {
       setLogoutApiStatus(API_STATUS.LOADING);
       errorWhileLoggingOut && setErrorWhileLoggingOut("");
       const res = await Http.post(COMPANY_LOGOUT);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setLogoutApiStatus(API_STATUS.SUCCESS);
-        await Storage.removeAll();
-        authDispatch(clearAuthAndLogout());
         setLoginUserResult(res.data);
-        successCallback();
+        successCallback && successCallback();
         return;
       }
       setLogoutApiStatus(API_STATUS.ERROR);
       setErrorWhileLoggingOut(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setLogoutApiStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileLoggingOut(err.response?.data?.message);
-        return;
-      }
-      setErrorWhileLoggingOut(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      const errorMessage =
+        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      setErrorWhileLoggingOut(errorMessage);
     }
   };
 
-  const isLoading = logoutApiStatus === API_STATUS.LOADING;
+  const isLoggingUserOut = logoutApiStatus === API_STATUS.LOADING;
   const isSuccess = logoutApiStatus === API_STATUS.SUCCESS;
   const isError = logoutApiStatus === API_STATUS.ERROR;
 
@@ -47,7 +39,7 @@ const useLogoutAPI = () => {
     errorWhileLoggingOut,
     handleUserLogout,
     isError,
-    isLoading,
+    isLoggingUserOut,
     isSuccess,
     loginUserResult,
     logoutApiStatus,

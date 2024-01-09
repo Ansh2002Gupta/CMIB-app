@@ -17,7 +17,7 @@ const useDeleteLogo = () => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setDeletionStatus(API_STATUS.SUCCESS);
         setFileDeletionResult(res.data);
-        successCallback();
+        successCallback && successCallback();
         return;
       }
       setDeletionStatus(API_STATUS.ERROR);

@@ -48,11 +48,11 @@ const IconHeader = ({
         )}
         <View style={styles.titleContainer}>
           <CommonText
-            title={headerText}
-            customTextStyle={
-              isWebView ? styles.webHeaderStyle : styles.formHeaderStyle
-            }
-          />
+            customTextStyle={!isWebView && styles.formHeaderStyle}
+            fontWeight="600"
+          >
+            {headerText}
+          </CommonText>
           {hasActionButton && isWebView && (
             <CardComponent customStyle={styles.cardContainer}>
               <CustomTouchableOpacity
@@ -60,10 +60,9 @@ const IconHeader = ({
                 onPress={handleButtonClick}
               >
                 <Image source={actionButtonIcon} />
-                <CommonText
-                  customTextStyle={styles.textStyle}
-                  title={buttonTitle}
-                />
+                <CommonText customTextStyle={styles.textStyle}>
+                  {buttonTitle}
+                </CommonText>
               </CustomTouchableOpacity>
             </CardComponent>
           )}

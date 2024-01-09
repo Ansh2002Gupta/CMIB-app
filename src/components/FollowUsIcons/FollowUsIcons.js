@@ -11,10 +11,9 @@ const FollowUsIcons = () => {
   const icons = useTheme("icons");
   return (
     <View style={styles.containerStyle}>
-      <CommonText
-        customTextStyle={styles.followUsText}
-        title={intl.formatMessage({ id: "label.follow_us" })}
-      />
+      <CommonText customTextStyle={styles.followUsText} fontWeight="600">
+        {intl.formatMessage({ id: "label.follow_us" })}
+      </CommonText>
       <View style={styles.imageView}>
         <View style={styles.imageStyle}>
           <Image source={icons.iconTwitter} />

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
 
-import CardComponent from "../../components/CardComponent/CardComponent";
+import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -57,13 +57,16 @@ const RoundOneUI = (props) => {
                 }}
               >
                 <CommonText
-                  title={container.title}
                   customTextStyle={styles.addApplicationFormText}
-                />
+                  fontWeight="600"
+                >
+                  {container.title}
+                </CommonText>
                 <CommonText
-                  title={container.subTitle}
                   customTextStyle={styles.addApplicationFormDescriptionText}
-                />
+                >
+                  {container.subTitle}
+                </CommonText>
               </View>
             </CardComponent>
           </TouchableOpacity>

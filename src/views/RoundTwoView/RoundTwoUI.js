@@ -10,10 +10,9 @@ function RoundTwoUI(props) {
 
   return (
     <View style={styles.container}>
-      <CommonText
-        customTextStyle={styles.header}
-        title={intl.formatMessage({ id: "label.round2" })}
-      />
+      <CommonText customTextStyle={styles.header}>
+        {intl.formatMessage({ id: "label.round2" })}
+      </CommonText>
     </View>
   );
 }

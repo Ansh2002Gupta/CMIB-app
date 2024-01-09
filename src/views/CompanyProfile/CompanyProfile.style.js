@@ -31,7 +31,6 @@ const style = {
   textStyle: {
     paddingRight: 8,
     paddingLeft: 8,
-    fontWeight: "600",
     fontSize: 14,
   },
   cardContainer: {
@@ -58,7 +57,6 @@ const style = {
     marginLeft: 4,
     fontSize: 16,
     color: colors.black,
-    fontWeight: "600",
   },
   badgeContainer: {
     marginBottom: 8,

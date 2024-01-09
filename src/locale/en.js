@@ -186,9 +186,7 @@ const locale = {
   "label.step_four": "Step 4",
   "label.already_account": "Already have an account?  ",
   "label.login_here": "Login here",
-  "label.basic_details": "Basic Details",
   "label.contact_person_details": "Contact Person Details",
-  "label.other_details": "Other Details",
   "label.old_password": "Old Password",
   "label.company_logo": "Company Logo",
   "label.contact_person_info": "Contact Person Information",
@@ -226,6 +224,16 @@ const locale = {
   "label.module": "Module",
   "label.newly_qualified_placements": "Newly Qualified Placements",
   "label.choose_a_module": "Choose a module",
+  "label.hey": "Hey",
+  "label.here_your_overview": "here’s your overview",
+  "label.add_application_form": "Add Application Form",
+  "label.job_details": "Job Details",
+  "label.pre_interview_preferences": "Pre-Interview Preferences",
+  "label.centre_details": "Centre Details",
+  "label.payment": "Payment",
+  "label.password_changed_successfully":
+    "Your password has been changed successfully",
+  "label.sessions": "Sessions :",
 };
 
 export default locale;

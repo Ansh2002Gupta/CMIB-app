@@ -61,9 +61,8 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
         />
       </View>
       <CommonText
-        title={`${zoomPercentage}%`}
         customTextStyle={styles.percentageText}
-      />
+      >{`${zoomPercentage}%`}</CommonText>
     </View>
   );
 };

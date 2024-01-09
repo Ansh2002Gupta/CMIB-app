@@ -11,7 +11,6 @@ export const styles = {
   headerTextStyle: {
     color: colors.darkBlue,
     fontSize: 14,
-    fontWeight: "600",
     lineHeight: 20,
   },
   iconBar: {
@@ -21,7 +20,6 @@ export const styles = {
   formHeaderStyle: {
     color: colors.black,
     fontSize: 18,
-    fontWeight: "600",
     alignSelf: "center",
     marginBottom: 24,
   },

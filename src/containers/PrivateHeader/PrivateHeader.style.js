@@ -22,7 +22,6 @@ const styles = {
   },
   fullNameStyle: {
     fontSize: 14,
-    fontWeight: "600",
     color: colors.black,
   },
   roleStyle: {
@@ -39,7 +38,7 @@ const styles = {
   iconNotification: {
     width: 24,
     height: 24,
-    cursor: "pointer",
+    marginLeft:10,
   },
   overView: {
     color: colors.darkGreySecond,
@@ -49,7 +48,6 @@ const styles = {
   nameText: {
     color: colors.darkBlackSecond,
     fontSize: 14,
-    fontWeight: "600",
     marginLeft: 8,
   },
   notficationIconView: {
@@ -59,6 +57,7 @@ const styles = {
   profileView: {
     flexDirection: "row",
     marginLeft: 10,
+    cursor:"pointer"
   },
   profileNameSection: {
     flexDirection: "row",

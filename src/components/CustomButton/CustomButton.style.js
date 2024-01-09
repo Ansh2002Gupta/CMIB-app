@@ -1,8 +1,8 @@
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
-const styles = {
+const styles = StyleSheet.create({
   defaultBtnStyles: {
     maxHeight: 56,
     padding: 17,
@@ -33,12 +33,7 @@ const styles = {
     marginLeft: 8,
   },
   btnText: {
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-SemiBold",
     fontSize: 16,
-    fontWeight: "600",
     lineHeight: 20,
   },
   containerStyle: {
@@ -46,6 +41,6 @@ const styles = {
     justifyContent: "center",
     flexDirection: "row",
   },
-};
+});
 
 export default styles;

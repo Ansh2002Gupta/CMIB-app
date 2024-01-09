@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
+import ActionPairButton from "../../../components/ActionPairButton";
 import CustomTextInput from "../../../components/CustomTextInput";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
+import images from "../../../images";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
@@ -213,20 +214,22 @@ const SignUpSecondScreenUI = ({
 
   const renderFooter = () => (
     <View style={style.signupFooterContainer}>
-      <SaveCancelButton
+      <ActionPairButton
         buttonOneText={intl.formatMessage({ id: "label.back" })}
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
         displayLoader={isLoading}
-        hasIconRight
-        hasIconLeft
-        isNextDisabled={!allFieldsFilled()}
+        iconRight={{
+          rightIconAlt: "right-arrow",
+          rightIconSource: images.iconArrowRightWhite,
+        }}
+        iconLeft={{
+          leftIconAlt: "left-arrow",
+          leftIconSource: images.iconArrowLeft,
+        }}
+        isDisabled={!allFieldsFilled()}
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
-        customContainerStyle={
-          !isWebView
-            ? style.customContainerStyle
-            : style.customSaveButtonContainer
-        }
+        customContainerStyle={!isWebView && style.customSaveButtonContainer}
       />
       {isWebView && (
         <LabelWithLinkText

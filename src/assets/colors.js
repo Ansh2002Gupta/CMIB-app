@@ -61,6 +61,7 @@ const colors = {
   darkGreySecond,
   errorBackground,
   errorRed,
+  gray,
   green,
   greenOne,
   greyOne,
@@ -82,5 +83,6 @@ const colors = {
   disabledGrey,
   white,
   yellow,
+  gray,
 };
 export default colors;

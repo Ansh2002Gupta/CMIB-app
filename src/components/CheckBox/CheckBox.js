@@ -26,7 +26,9 @@ const CheckBox = ({ handleCheckbox, id, isSelected, title }) => {
       ),
     },
     {
-      content: <CommonText customTextStyle={styles.titleStyle} title={title} />,
+      content: (
+        <CommonText customTextStyle={styles.titleStyle}>{title}</CommonText>
+      ),
       isFillSpace: true,
     },
   ];

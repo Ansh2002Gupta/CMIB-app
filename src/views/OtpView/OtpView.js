@@ -30,7 +30,7 @@ function OtpView({ email }) {
   const { handleVerifyOtpAPI, isLoading } = useVerifyOtpAPI();
 
   useEffect(() => {
-    if (otpValue !== "") {
+    if (otpValue !== "" && otpValue?.length === 4) {
       setSubmitDisabled(false);
     } else {
       setSubmitDisabled(true);

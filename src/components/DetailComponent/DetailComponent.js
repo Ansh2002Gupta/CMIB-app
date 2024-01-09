@@ -42,7 +42,9 @@ const DetailComponent = ({
   return (
     <View>
       {!!headerText && (
-        <CommonText customTextStyle={styles.headerText} title={headerText} />
+        <CommonText customTextStyle={styles.headerText} fontWeight="600">
+          {headerText}
+        </CommonText>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
         {details?.map((detail, index) => (
@@ -76,19 +78,21 @@ const DetailComponent = ({
             ) : (
               <>
                 <View style={styles.titleContainer}>
-                  <CommonText
-                    title={intl.formatMessage({ id: detail.label })}
-                    customTextStyle={styles.titleStyle}
-                  />
-                  <CommonText title="*" customTextStyle={styles.starStyle} />
+                  <CommonText customTextStyle={styles.titleStyle}>
+                    {intl.formatMessage({ id: detail.label })}
+                  </CommonText>
+                  <CommonText customTextStyle={styles.starStyle}>
+                    {" *"}
+                  </CommonText>
                 </View>
                 <CommonText
-                  title={detail.value}
                   customTextStyle={[
                     styles.valueStyle,
                     detail.isLink && styles.linkStyle,
                   ]}
-                />
+                >
+                  {detail.value}
+                </CommonText>
               </>
             )}
           </View>
