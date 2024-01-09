@@ -12,6 +12,8 @@ const ActionPairButton = ({
   displayLoader,
   iconRight,
   iconLeft,
+  isButtonOneGreen,
+  isButtonTwoGreen,
   isDisabled,
   onPressButtonOne,
   onPressButtonTwo,
@@ -24,6 +26,7 @@ const ActionPairButton = ({
           onPress={onPressButtonOne}
           style={styles.buttonStyle}
           iconLeft={iconLeft}
+          withGreenBackground={isButtonOneGreen}
         >
           {buttonOneText}
         </CustomButton>
@@ -34,14 +37,14 @@ const ActionPairButton = ({
           disabled={isDisabled}
           onPress={onPressButtonTwo}
           iconRight={iconRight}
-          withGreenBackground
+          withGreenBackground={isButtonTwoGreen}
         >
           {buttonTwoText}
         </CustomButton>
       }
       leftSectionStyle={styles.buttonStyle}
       rightSectionStyle={{ ...styles.secondButtonStyle, ...styles.buttonStyle }}
-    ></TwoColumn>
+    />
   );
 };
 
@@ -59,6 +62,8 @@ ActionPairButton.defaultProps = {
     rightIconSource: "",
   },
   isDisabled: false,
+  isButtonOneGreen: false,
+  isButtonTwoGreen: false,
   onPressButtonOne: () => {},
   onPressButtonTwo: () => {},
 };
@@ -71,6 +76,8 @@ ActionPairButton.propTypes = {
   iconLeft: PropTypes.object,
   iconRight: PropTypes.object,
   isDisabled: PropTypes.bool,
+  isButtonOneGreen: PropTypes.bool,
+  isButtonTwoGreen: PropTypes.bool,
   onPressButtonOne: PropTypes.func,
   onPressButtonTwo: PropTypes.func,
 };

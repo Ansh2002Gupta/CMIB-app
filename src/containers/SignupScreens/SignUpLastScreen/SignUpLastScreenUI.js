@@ -202,6 +202,7 @@ const SignUpLastScreenUI = ({
             leftIconSource: images.iconArrowLeft,
           }}
           isDisabled={!allFieldsFilled()}
+          isButtonTwoGreen
           onPressButtonOne={onGoBack}
           onPressButtonTwo={() => handleSuccessModal(true)}
           customContainerStyle={!isWebView && style.customContainerStyle}
