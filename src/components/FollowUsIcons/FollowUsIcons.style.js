@@ -3,7 +3,7 @@ import colors from "../../assets/colors";
 const style = {
   containerStyle: {
     alignItems: "center",
-    paddingTop: 24,
+    paddingTop: 16,
   },
   mainContainerStyle: {},
   followUsText: {

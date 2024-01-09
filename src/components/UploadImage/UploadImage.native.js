@@ -88,6 +88,7 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
 UploadImage.defaultProps = {
   onDeleteImage: () => {},
   onImageUpload: () => {},
+  isEditable: false,
   imageUrl: "",
   imageName: "",
 };

@@ -17,12 +17,12 @@ import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
 import commonStyles from "../theme/styles/commonStyles";
+import images from "../images";
 import Styles from "./HeaderWithContentLayout.style";
 
-function HeaderWithContentLayout() {
+function HeaderWithContentLayout({ doesExcludeHeader }) {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   useEffect(() => {
     const checkAuthToken = async () => {
       try {
@@ -79,9 +79,13 @@ function HeaderWithContentLayout() {
 
       <MainLayout
         header={
-          <Header
-            onPressLeftIcon={toggleSideBar}
-          />
+          doesExcludeHeader && !isWebView ? null : (
+            <Header
+              onPressLeftIcon={toggleSideBar}
+              leftIcon={images.iconMenu}
+              rightIcon={images.iconNotification}
+            />
+          )
         }
         bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
