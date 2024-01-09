@@ -12,19 +12,16 @@ export const options = [
     title: "label.tickets",
     id: 2,
     iconLeft: images.ticketIcon,
-    navigateTo: '',
   },
   {
     title: "label.feedback",
     id: 3,
     iconLeft: images.iconSend,
-    navigateTo: "",
   },
   {
     title: "label.notification_settings",
     id: 4,
     iconLeft: images.iconSetting,
-    navigateTo: "",
   },
   {
     title: "label.company_profile",
@@ -36,12 +33,12 @@ export const options = [
     title: "label.change_password",
     id: 6,
     iconLeft: images.iconLock,
-    navigateTo: "",
+    showModal: true,
   },
   {
     title: "label.logout",
     id: 7,
     iconLeft: images.iconLogout,
-    navigateTo: "",
+    showModal: true,
   },
 ];

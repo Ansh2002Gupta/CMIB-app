@@ -1,45 +1,33 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types"; 
-
-import { useIntl } from "react-intl";
+import React, { useContext } from "react";
 import { useNavigate } from "../../routes";
+import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
+
 import MyAccountUI from "./MyAccountUI";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import {
+  setShowChangePasswordModal,
+  setShowLogoutModal,
+} from "../../globalContext/userProfile/userProfileActions";
 import { options } from "./MyAccountConstant";
-import { navigations } from "../../constants/routeNames";
 
 const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [changePasswordModal, setChangePasswordModal] = useState(false);
-  const [logout, setLogout] = useState(false);
-
-  const handleChangePassword = (val) => {
-    setChangePasswordModal(val);
-  };
-
-  const handleLogout = (val) => {
-    setLogout(val);
-  };
-
-  const saveLogout = () => {
-    navigate(navigations.LOGIN);
-  };
+  const [, userProfileDispatch] = useContext(UserProfileContext);
 
   const handleOptionClick = (option) => {
-    //TODO: need to settle the position of the change pasword and logout modal code. will uncomment the below then
-    // setShowAccountSection(false);
+    setShowAccountSection && setShowAccountSection(false);
     if (option?.navigateTo) {
       navigate(option?.navigateTo);
       return;
     }
-    
     switch (option.id) {
-      //TODO: Add the screen handling once designs are available.
       case 6:
-        handleChangePassword(true);
+        userProfileDispatch(setShowChangePasswordModal(true));
         break;
       case 7:
-        handleLogout(true);
+        userProfileDispatch(setShowLogoutModal(true));
         break;
       default:
         break;
@@ -48,14 +36,9 @@ const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
 
   return (
     <MyAccountUI
-      changePasswordModal={changePasswordModal}
       handleOptionClick={handleOptionClick}
-      handleChangePassword={handleChangePassword}
-      handleLogoutClick={handleLogout}
       intl={intl}
-      isLogout={logout}
       options={options}
-      saveLogout={saveLogout}
       omitArrowIcon={omitArrowIcon}
     />
   );

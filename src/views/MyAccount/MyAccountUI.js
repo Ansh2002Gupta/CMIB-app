@@ -2,27 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { View, ScrollView } from "@unthinkable/react-core-components";
 
-import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePasswordModal";
 import CommonText from "../../components/CommonText";
 import CustomImage from "../../components/CustomImage";
-import CustomModal from "../../components/CustomModal/CustomModal";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
-import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
 import style from "./MyAccount.style";
 
-const MyAccountUI = ({
-  changePasswordModal,
-  handleOptionClick,
-  handleChangePassword,
-  handleLogoutClick,
-  isLogout,
-  intl,
-  options,
-  saveLogout,
-  omitArrowIcon,
-}) => {
+const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
   //TODO: Replace this dummy data with api data.
   //TODO: update image on save button (once api will come)
   const profileImage = "";
@@ -96,33 +83,16 @@ const MyAccountUI = ({
           </CustomTouchableOpacity>
         ))}
       </ScrollView>
-      {changePasswordModal ? (
-        <CustomModal
-          headerText={intl.formatMessage({
-            id: "label.change_password",
-          })}
-          customInnerContainerStyle={style.innerContainerStyle}
-          headerTextStyle={style.headerTextStyle}
-        >
-          <ChangePasswordModal onPressCancel={handleChangePassword} />
-        </CustomModal>
-      ) : null}
-      {isLogout && (
-        <LogoutModal onCancel={handleLogoutClick} onSave={saveLogout} />
-      )}
     </>
   );
 };
 
 MyAccountUI.defaultProps = {
-  handleChangePassword: () => {},
   omitArrowIcon: false,
 };
 
 MyAccountUI.propTypes = {
-  changePasswordModal: PropTypes.bool,
   handleOptionClick: PropTypes.func.isRequired,
-  handleChangePassword: PropTypes.func,
   intl: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
   omitArrowIcon: PropTypes.bool,
