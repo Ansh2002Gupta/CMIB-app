@@ -180,6 +180,7 @@ const ForgotPasswordUI = (props) => {
               onPress={onSendOtpClick}
               disabled={loginDisabled}
               isLoading={isLoading}
+              type={"submit"}
               withGreenBackground
             >
               {intl.formatMessage({ id: "label.submit" })}

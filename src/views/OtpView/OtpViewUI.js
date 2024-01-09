@@ -201,7 +201,6 @@ const OtpViewUI = ({
             />
             {!isWebView && <View style={styles.borderStyle} />}
           </View>
-
           <View style={isWebView ? styles.whiteBackground : styles.companyView}>
             <View
               style={
@@ -271,6 +270,7 @@ const OtpViewUI = ({
               disabled={submitDisabled}
               isLoading={isLoading}
               onPress={onVerifyOtpClick}
+              type={"submit"}
               withGreenBackground
             >
               {intl.formatMessage({ id: "label.submit" })}

@@ -248,6 +248,7 @@ const LoginScreenUI = (props) => {
                       disabled={loginDisabled}
                       isLoading={isLoading}
                       onPress={onLogin}
+                      type={"submit"}
                       withGreenBackground
                     >
                       {intl.formatMessage({ id: "label.login" })}
