@@ -1,4 +1,5 @@
 import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -72,10 +73,12 @@ const styles = StyleSheet.create({
   },
   bondCustomInputStyle: {
     marginRight: 12,
+    width: "50%",
   },
   selectionProcessTextStyle: {
     marginBottom: 8,
   },
+  customStyleCompensation: { marginRight: 24 },
 });
 
 export default styles;

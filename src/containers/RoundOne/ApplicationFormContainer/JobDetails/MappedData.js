@@ -78,7 +78,6 @@ export const mapApiDataToUI = () => {
         label: "label.ctc",
         value: "",
         placeholder: "label.ctc",
-        isRow: true,
       },
     ],
   };

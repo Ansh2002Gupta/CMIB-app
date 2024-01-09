@@ -95,7 +95,7 @@ const JobDetailsTemplate = ({
           />
           <View style={{ ...containerStyle }}>
             <CustomTextInput
-              customStyle={{ marginRight: 24 }}
+              customStyle={[isWebView && styles.customStyleCompensation]}
               label={intl.formatMessage({ id: "label.compensation" })}
               placeholder={intl.formatMessage({ id: "label.compensation" })}
               isMandatory
@@ -173,12 +173,7 @@ const JobDetailsTemplate = ({
               isMandatory
               customToggleStyle={styles.customToggleStyle}
             />
-            <View
-              style={{
-                width: "50%",
-                flexDirection: "row",
-              }}
-            >
+            <View style={{ flexDirection: "row" }}>
               <CustomTextInput
                 customStyle={styles.bondCustomInputStyle}
                 label={intl.formatMessage({
