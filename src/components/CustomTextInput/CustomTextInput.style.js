@@ -80,8 +80,8 @@ const style = {
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
     borderWidth: 1,
-    paddingLeft: 14,
-    paddingRight: 14,
+    paddingLeft: 16,
+    paddingRight: 16,
     marginTop: 4,
     borderRadius: Platform.OS === "web" ? 12 : 8,
     flexDirection: "row",
@@ -100,6 +100,8 @@ const style = {
     lineHeight: 18,
   },
   textAlignStyle: {
+    paddingTop: 16,
+    paddingBottom: 16,
     textAlignVertical: "top",
   },
   eyeIconContainer: {
