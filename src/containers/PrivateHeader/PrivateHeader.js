@@ -102,14 +102,15 @@ const PrivateHeader = ({
 
 const PageHeading = ({ intl, pageHeading, showRightButton, isWebView }) => (
   <View style={isWebView ? styles.textHeaderTopBorder : styles.textHeader}>
-    <CommonText
-      title={intl.formatMessage({ id: pageHeading })}
-      customTextStyle={styles.formHeaderStyle}
-    />
+    <CommonText customTextStyle={styles.formHeaderStyle} fontWeight="600">
+      {intl.formatMessage({ id: pageHeading })}
+    </CommonText>
     {showRightButton && isWebView && (
       <TouchableOpacity style={styles.editButton}>
         <Image source={images.iconEdit} style={styles.icons} />
-        <CommonText title="Edit" customTextStyle={styles.editText} />
+        <CommonText customTextStyle={styles.editText}>
+          {intl.formatMessage({ id: "label.edit" })}
+        </CommonText>
       </TouchableOpacity>
     )}
   </View>

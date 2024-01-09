@@ -61,9 +61,9 @@ const MyAccountUI = ({
           >
             <CommonText
               customTextStyle={style.fullNameStyle}
-              title={`${firstName} ${lastName}`}
-            />
-            <CommonText title={email} customTextStyle={style.emailStyle} />
+              fontWeight="600"
+            >{`${firstName} ${lastName}`}</CommonText>
+            <CommonText customTextStyle={style.emailStyle}>{email}</CommonText>
           </View>
         </View>
         {omitArrowIcon && renderHorizontalLine()}
@@ -81,10 +81,9 @@ const MyAccountUI = ({
           >
             <CustomImage source={option.iconLeft} style={style.leftIcon} />
             <View style={style.titleParentStyle}>
-              <CommonText
-                customTextStyle={style.titleStyle}
-                title={intl.formatMessage({ id: option.title })}
-              />
+              <CommonText customTextStyle={style.titleStyle}>
+                {intl.formatMessage({ id: option.title })}
+              </CommonText>
             </View>
             {!omitArrowIcon && (
               <View style={style.iconContainer}>

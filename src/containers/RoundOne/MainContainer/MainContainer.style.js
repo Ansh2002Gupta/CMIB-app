@@ -41,7 +41,7 @@ const style = StyleSheet.create({
     paddingRight: 16,
   },
   mobContainer: {
-    flex: 1
+    flex: 1,
   },
   containerStyle: {
     backgroundColor: colors.backgroundColor,
@@ -57,31 +57,19 @@ const style = StyleSheet.create({
   addApplicationFormText: {
     fontSize: 18,
     color: colors.black,
-    fontWeight: "600",
   },
   addApplicationFormDescriptionText: {
     fontSize: 14,
     color: colors.subHeadingGray,
-    fontWeight: "500",
     marginTop: 8,
   },
   webAddApplicationView: {
     paddingLeft: 0,
     paddingTop: 16,
   },
-  webHeaderTextStyle: {
-    fontSize: 32,
-    color: colors.black,
-    fontWeight: "600",
-  },
   innerContainer: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
-  },
-  headerTextStyle: {
-    fontSize: 20,
-    color: colors.black,
-    fontWeight: "600",
   },
   buttonStyle: {
     flex: 1,

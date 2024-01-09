@@ -5,16 +5,18 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import FiveColumn from "../../core/layouts/FiveColumn";
 
+import ActionPairButton from "../../components/ActionPairButton/ActionPairButton";
 import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
-import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
+import useIsWebView from "../../hooks/useIsWebView";
 import { strongPasswordValidator } from "../../constants/validation";
 import styles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [error, setError] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -104,10 +106,9 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           fourthSection={
             <View style={styles.fourthSectionStyle}>
               {!!error && (
-                <CommonText
-                  title={error}
-                  customTextStyle={styles.passwordMatchStyle}
-                />
+                <CommonText customTextStyle={styles.passwordMatchStyle}>
+                  {error}
+                </CommonText>
               )}
               <NewPasswordValidation {...{ newPassword, confirmNewPassword }} />
             </View>
@@ -115,25 +116,24 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           fiveSection={
             !!errorWhileChangePassword && (
               <View style={styles.saveAndCancelButtonView}>
-                <CommonText
-                  title={errorWhileChangePassword}
-                  customTextStyle={styles.errorText}
-                />
+                <CommonText customTextStyle={styles.errorText}>
+                  {errorWhileChangePassword}
+                </CommonText>
               </View>
             )
           }
         ></FiveColumn>
       </ScrollView>
-      <SaveCancelButton
-        customContainerStyle={styles.customContainerStyle}
+      <ActionPairButton
         buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+        buttonTwoText={intl.formatMessage({ id: "label.save" })}
+        customContainerStyle={styles.customContainerStyle}
+        displayLoader={isLoading}
+        isDisabled={isNextDisabled()}
         onPressButtonOne={() => {
           onPressCancel(false);
         }}
-        disabled={isLoading}
         onPressButtonTwo={handleSave}
-        isNextDisabled={isNextDisabled()}
-        buttonTwoText={intl.formatMessage({ id: "label.save" })}
       />
     </>
   );

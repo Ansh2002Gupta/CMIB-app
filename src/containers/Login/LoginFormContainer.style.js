@@ -172,10 +172,6 @@ export const styles = {
       fontFamily: "General Sans",
       marginTop: 0,
     },
-    loginText: {
-      cursor: "pointer",
-      fontFamily: "General Sans",
-    },
     rememberMeText: {
       fontFamily: "General Sans",
       fontSize: 14,

@@ -62,7 +62,6 @@ const style = {
   },
   fullNameStyle: {
     fontSize: 16,
-    fontWeight: "600",
     color: colors.black,
   },
   emailStyle: {
@@ -93,7 +92,6 @@ const style = {
   },
   headerTextStyle: {
     paddingTop: 0,
-    fontWeight: "600",
     paddingBottom: 16,
   },
   innerContainerStyle: {

@@ -9,10 +9,9 @@ const IconHeader = ({ headerText }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainerStyle}>
-        <CommonText
-          title={headerText}
-          customTextStyle={styles.formHeaderStyle}
-        />
+        <CommonText customTextStyle={styles.formHeaderStyle} fontWeight="600">
+          {headerText}
+        </CommonText>
       </View>
       <View style={styles.borderStyle} />
     </View>

@@ -21,7 +21,9 @@ const Dialog = ({
       <View style={styles.headingRow}>
         <View>
           {heading ? (
-            <CommonText title={heading} customTextStyle={styles.heading} />
+            <CommonText customTextStyle={styles.heading} fontWeight="600">
+              {heading}
+            </CommonText>
           ) : (
             <></>
           )}

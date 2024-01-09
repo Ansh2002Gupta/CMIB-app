@@ -7,11 +7,9 @@ const style = {
   titleStyle: {
     color: colors.darkGrey,
     fontSize: 12,
-    fontWeight: "500",
     marginBottom: 8,
   },
   headerText: {
-    fontWeight: "600",
     fontSize: 16,
     paddingBottom: 24,
   },
@@ -28,7 +26,6 @@ const style = {
     fontSize: 14,
     color: colors.black,
     marginBottom: 24,
-    fontWeight: "500",
   },
   containerStyle: {
     flexDirection: "row",

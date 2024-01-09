@@ -6,7 +6,7 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SessionDropdown from "../SessionDropdown";
-import useOutsideClick from '../../hooks/useOutsideClick';
+import useOutsideClick from "../../hooks/useOutsideClick";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import images from "../../images";
 import styles from "./SessionBar.style";
@@ -36,12 +36,21 @@ const SessionBar = () => {
 
   return (
     <CustomTouchableOpacity style={styles.container} onPress={handleDropdown}>
-      <CommonText title={intl.formatMessage({ id: "label.sessions" })} customTextStyle={styles.sessionBarText}/>
+      <CommonText customTextStyle={styles.sessionBarText}>
+        {intl.formatMessage({ id: "label.sessions" })}
+      </CommonText>
       <CommonText
-        title={selectedValue}
         customTextStyle={styles.sessionText(currentBreakpoint)}
+        fontWeight="600"
+      >
+        {selectedValue}
+      </CommonText>
+      <CustomImage
+        source={images.iconArrowDown}
+        style={styles.iconDown}
+        isSvg={true}
+        alt={"Arrow Down"}
       />
-      <CustomImage source={images.iconArrowDown} style={styles.iconDown} isSvg={true} alt={"Arrow Down"} />
       {showDropdown && (
         <SessionDropdown
           options={selectedModule.session}

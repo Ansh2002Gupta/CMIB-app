@@ -1,7 +1,7 @@
-import { StyleSheet} from "@unthinkable/react-core-components";
+import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const styles =StyleSheet.create({
+const styles = StyleSheet.create({
   counterMainView: {
     borderWidth: 1,
     borderColor: colors.lightGrey,
@@ -40,7 +40,6 @@ const styles =StyleSheet.create({
   errorMsg: {
     color: colors.errorRed,
     lineHeight: 18,
-    fontWeight: "600",
   },
   img: {
     height: 14,

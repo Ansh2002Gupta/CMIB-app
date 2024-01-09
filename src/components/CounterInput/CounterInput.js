@@ -112,8 +112,10 @@ const CounterInput = ({
       {isError && (
         <CommonText
           customTextStyle={[styles.errorMsg, customErrorStyle]}
-          title={errorMessage}
-        />
+          fontWeight={customErrorStyle?.fontWeight || "600"}
+        >
+          {errorMessage}
+        </CommonText>
       )}
     </View>
   );

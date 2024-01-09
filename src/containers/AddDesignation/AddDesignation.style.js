@@ -1,4 +1,4 @@
-import { StyleSheet} from "@unthinkable/react-core-components";
+import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -11,27 +11,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.green,
     marginLeft: 16,
   },
-  gapBetween: { 
+  gapBetween: {
     marginBottom: 24,
   },
-  gapTop: { 
+  gapTop: {
     marginTop: 24,
   },
   rightButtonStyle: {
-     marginLeft: 8 
+    marginLeft: 8,
   },
   rightButtonDisableStyle: {
-    marginLeft: 8 ,
+    marginLeft: 8,
     backgroundColor: colors.disabledGrey,
- },
-  leftTextStyle: {
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  rightTextStyle: {
-    color: "white",
-    fontSize: 14,
-    fontWeight: "600",
   },
   webView: {
     inputLabelText: {
@@ -44,7 +35,6 @@ const styles = StyleSheet.create({
       background: colors.white,
       marginTop: 0,
     },
-   
   },
 });
 
