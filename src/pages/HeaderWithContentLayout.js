@@ -25,11 +25,8 @@ import Styles from "./HeaderWithContentLayout.style";
 function HeaderWithContentLayout({ doesExcludeHeader }) {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-<<<<<<< HEAD
   const location = useLocation();
 
-=======
->>>>>>> development
   useEffect(() => {
     const checkAuthToken = async () => {
       try {
