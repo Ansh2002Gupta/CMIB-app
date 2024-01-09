@@ -1,39 +1,38 @@
-import { Dimensions } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-
-const deviceHeight = Dimensions.get("window").height;
-const maxHeightPercentage = 0.8;
-const minHeightThreshold = 500;
-const maxHeight = deviceHeight * maxHeightPercentage;
-
-let modalHeight = maxHeight;
-
-if (deviceHeight < minHeightThreshold) {
-  modalHeight = minHeightThreshold;
-}
 
 const style = {
   optionCotainer: {
     flexDirection: "row",
-    paddingTop: 16,
-    paddingBottom: 16,
+    padding: 16,
     alignItems: "center",
   },
   optionCotainerBorder: {
     borderBottomWidth: 1,
     borderColor: colors.lightGrey,
   },
+  optionCotainerBordeLight: {
+    borderBottomWidth: 0.2,
+    borderColor: colors.lightGrey,
+  },
   profileParentContainer: {
-    paddingLeft: 16,
-    paddingRight: 16,
     flex: 1,
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: colors.white,
   },
   profileContainer: {
     marginTop: 16,
     marginBottom: 24,
+    paddingLeft: 16,
+    paddingRight: 16,
     flexDirection: "row",
     alignItems: "center",
+  },
+  profileContainerWeb: {
+    marginTop: 16,
+    marginBottom: 24,
+    paddingLeft: 16,
+    marginRight: 16,
+    alignItems: "flex-start",
+    minWidth: 240,
   },
   initialsContainer: {
     justifyContent: "center",
@@ -45,6 +44,9 @@ const style = {
   },
   detailContainer: {
     marginLeft: 12,
+  },
+  detailContainerWeb: {
+    marginTop: 12,
   },
   fullNameStyle: {
     fontSize: 16,
@@ -76,13 +78,10 @@ const style = {
     width: 16,
     height: 16,
   },
-  headerTextStyle: {
-    paddingTop: 0,
-    paddingBottom: 16,
-  },
-  innerContainerStyle: {
-    height: modalHeight,
-    maxHeight: maxHeight,
+  horizontalLine: {
+    width: "100%",
+    height: 1,
+    backgroundColor: colors.lightGrey,
   },
 };
 

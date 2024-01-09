@@ -35,7 +35,6 @@ const iconMenu = "/images/iconMenu/iconMenu.png";
 const iconLogout = "/images/iconLogout/iconLogout.png";
 const iconBuilding = "/images/iconBuilding/iconBuilding.png";
 const iconLock = "/images/iconLock/iconLock.png";
-const iconArrowRight = "/images/iconArrowRight/iconArrowRight.png";
 const iconBack = "/images/iconBack/iconBack.png";
 const iconEdit = "/images/iconEdit/iconEdit.png";
 const iconDelete = "/images/iconDelete/iconDelete.png";
@@ -47,10 +46,10 @@ const iconYoutube = "/images/iconYoutube/iconYoutube.png";
 const iconEyeSlash = "/images/iconEyeSlash.png";
 const iconCmibLogo = "/images/iconCmibLogo/iconCmibLogo.png";
 const iconAddApplicationForm =
-  "/images/iconAddApplicationForm/iconAddApplicationForm.png";
+"/images/iconAddApplicationForm/iconAddApplicationForm.png";
 const iconHiringProcess = "/images/iconHiringProcess/iconHiringProcess.png";
 const iconDownloadDetails =
-  "/images/iconDownloadDetails/iconDownloadDetails.png";
+"/images/iconDownloadDetails/iconDownloadDetails.png";
 const iconAzadiMahotsav = "/images/iconAzadiMahotsav/iconAzadiMahotsav.png";
 const iconGloPac = "/images/iconGloPac/iconGloPac.png";
 const iconG20 = "/images/iconG20/iconG20.png";
@@ -106,6 +105,7 @@ const iconSaved = "/images/svg/iconSavedCandidates.svg";
 const iconSavedActive = "/images/svg/iconSavedCandidatesActive.svg";
 const iconTicket = "/images/svg/iconTicket.svg";
 const iconArrowRightBlack = "/images/svg/iconArrowRightBlack.svg";
+const iconArrowRight = "/images/svg/iconArrowRight.svg";
 
 const images = {
   iconArrowUp,

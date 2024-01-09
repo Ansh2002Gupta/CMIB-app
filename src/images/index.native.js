@@ -29,7 +29,6 @@ import iconProfile from "../../public/images/iconProfile/iconProfile.png";
 import iconLogout from "../../public/images/iconLogout/iconLogout.png";
 import iconBuilding from "../../public/images/iconBuilding/iconBuilding.png";
 import iconLock from "../../public/images/iconLock/iconLock.png";
-import iconArrowRight from "../../public/images/iconArrowRight/iconArrowRight.png";
 import iconBack from "../../public/images/iconBack/iconBack.png";
 import iconEdit from "../../public/images/iconEdit/iconEdit.png";
 import iconDelete from "../../public/images/iconDelete/iconDelete.png";
@@ -93,6 +92,7 @@ import addCircle from "../../public/images/svg/addCircle.svg";
 import minusCirlce from "../../public/images/svg/minusCirlce.svg";
 import iconTicket from "../../public/images/svg/iconTicket.svg";
 import iconArrowRightBlack from "../../public/images/svg/iconArrowRightBlack.svg";
+import iconArrowRight from "../../public/images/svg/iconArrowRight.svg";
 
 const images = {
   iconArrowUp,
@@ -133,7 +133,6 @@ const images = {
   iconLogout,
   iconBuilding,
   iconLock,
-  iconArrowRight,
   iconBack,
   iconEdit,
   iconChange,
