@@ -130,6 +130,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
         customContainerStyle={styles.customContainerStyle}
         displayLoader={isLoading}
         isDisabled={isNextDisabled()}
+        isButtonTwoGreen
         onPressButtonOne={() => {
           onPressCancel(false);
         }}

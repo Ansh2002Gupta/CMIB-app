@@ -13,7 +13,7 @@ CardComponent.defaultProps = {
 };
 
 CardComponent.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   customStyle: PropTypes.object,
 };
 

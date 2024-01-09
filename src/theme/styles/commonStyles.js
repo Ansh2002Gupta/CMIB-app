@@ -38,4 +38,10 @@ const commonStyles = {
   },
 };
 
+export const gridStyles = {
+  xl: "1fr 1fr 1fr",
+  lg: "1fr 1fr",
+  md: "1fr 1fr",
+  sm: "1fr 1fr",
+};
 export default commonStyles;

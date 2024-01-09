@@ -8,7 +8,7 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CardComponent from "../../CardComponent";
+import CardComponent from "../../../components/CardComponent";
 import CommonText from "../../../components/CommonText";
 import useIsWebView from "../../../hooks/useIsWebView";
 import styles from "./MainContainer.style";
