@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
-  filterText:{
+  filterText: {
     marginLeft: 8,
   },
   imageParentStyle: {
@@ -190,9 +190,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  bottomPaginationStyle:{
+  bottomPaginationStyle: {
     alignSelf: "center",
-  }
+  },
+  filterTopSection: (isWebView) => ({
+    marginBottom: 16,
+    width: isWebView ? "40%" : "100%",
+  }),
+  tableTopSection: {
+    flex: 1,
+  },
+  tableTopSectionStyle: (isWebView) => ({
+    height: isWebView ? "100%" : "85%",
+  }),
 });
 
 export default styles;

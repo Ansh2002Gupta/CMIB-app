@@ -25,6 +25,12 @@ const useTicketView = () => {
 
   let isHeading = true;
 
+  const handleSearchResults = (filteredData) => {};
+
+  const handleSelect = (option) => {
+    setRowsToShow(option.value);
+  };
+
   function getStatusStyle(status, isHeading, styles, isWebView) {
     status = status.toLowerCase();
 
@@ -141,7 +147,9 @@ const useTicketView = () => {
     totalcards,
     rowsLimit,
     indexOfFirstRecord,
-    indexOfLastRecord
+    indexOfLastRecord,
+    handleSearchResults,
+    handleSelect
   };
 };
 

@@ -10,8 +10,6 @@ import CustomButton from "../CustomButton";
 import images from "../../images";
 import styles from "./Pagination.style";
 
-// Assume that you have styles defined in a separate file for React Native
-
 export const DOTS = "...";
 
 const range = (start, end) => {
@@ -156,11 +154,12 @@ Pagination.propTypes = {
   totalCards: PropTypes.number,
   setCurrentPage: PropTypes.func,
   currentPage: PropTypes.number,
-  pageStyles: PropTypes.object, // Use object for styles in React Native
+  pageStyles: PropTypes.object, 
   customPageBtnStyles: PropTypes.object,
   customSelectedPageStyles: PropTypes.object,
   prevNextBtnstyles: PropTypes.object,
   siblingCount: PropTypes.number,
+  isWebView : PropTypes.bool,
 };
 
 export default Pagination;
