@@ -151,15 +151,6 @@ const OtpViewUI = ({
           ...styles.webEmailInput,
         };
       }
-
-      case "submitButtonContainer": {
-        if (currentBreakpoint === "sm") {
-          return {
-            ...styles.width900pxOrLessSubmitBtn,
-          };
-        }
-        return {};
-      }
       default:
         return;
     }
@@ -294,6 +285,22 @@ const OtpViewUI = ({
       </View>
     </FormWrapper>
   );
+};
+
+OtpViewUI.defaultProps = {
+  errorMessage: "",
+  isCounter: false,
+  isLoading: false,
+  submitDisabled: false,
+  minutes: 0,
+  onVerifyOtpClick: () => {},
+  onClickGoToLogin: () => {},
+  otpLeft: 0,
+  setOtpLeft: () => {},
+  setIsCounter: () => {},
+  setMinutes: () => {},
+  seconds: 0,
+  setSeconds: () => {},
 };
 
 OtpViewUI.propTypes = {

@@ -99,15 +99,6 @@ const ForgotPasswordUI = (props) => {
           ...styles.webEmailInput,
         };
       }
-
-      case "submitButtonContainer": {
-        if (currentBreakpoint === "sm") {
-          return {
-            ...styles.width900pxOrLessSubmitBtn,
-          };
-        }
-        return {};
-      }
       default:
         return;
     }
@@ -177,9 +168,9 @@ const ForgotPasswordUI = (props) => {
           </View>
           <View style={isWebView ? styles.webSubmitView : styles.submitView}>
             <CustomButton
-              onPress={onSendOtpClick}
               disabled={loginDisabled}
               isLoading={isLoading}
+              onPress={onSendOtpClick}
               type={"submit"}
               withGreenBackground
             >
@@ -208,6 +199,7 @@ const ForgotPasswordUI = (props) => {
             isSuccess
           />
         ) : null}
+
         {!!validationError && (
           <ToastComponent
             toastMessage={validationError}
@@ -218,6 +210,14 @@ const ForgotPasswordUI = (props) => {
     </FormWrapper>
   );
 };
+
+ForgotPasswordUI.defaultProps = {
+  errorMessage: "",
+  handleDismissToast: () => {},
+  onSendOtpClick: () => {},
+  successLogin: false,
+  validationError: "",
+}
 
 ForgotPasswordUI.propTypes = {
   errorMessage: PropTypes.string,

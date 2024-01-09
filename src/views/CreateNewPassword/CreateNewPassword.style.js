@@ -107,11 +107,6 @@ const styles = StyleSheet.create({
       fontSize: 14,
       lineHeight: 22,
     },
-    submitText: {
-      fontFamily: "General sans",
-      fontWeight: "500",
-      ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
-    },
     submitTextContainer: {
       marginBottom: 8,
     },

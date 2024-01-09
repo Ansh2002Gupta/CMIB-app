@@ -8,8 +8,8 @@ import {
 } from "@unthinkable/react-core-components";
 import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
 
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import CommonText from "../CommonText";
+import CustomButton from "../CustomButton/CustomButton";
 import Modal from "../Modal";
 import images from "../../images";
 import style from "./CustomModal.style";
@@ -51,7 +51,9 @@ const CustomModal = ({
                   {secondaryText}
                 </CommonText>
               )}
-              <ButtonComponent title={buttonTitle} onPress={onPress} />
+              <CustomButton onPress={onPress} withGreenBackground>
+                {buttonTitle}
+              </CustomButton>
             </>
           ) : (
             <>
@@ -77,6 +79,7 @@ const CustomModal = ({
 
 CustomModal.defaultProps = {
   buttonTitle: "",
+  children: <></>,
   customInnerContainerStyle: {},
   headerText: "",
   headerTextStyle: false,
@@ -89,6 +92,7 @@ CustomModal.defaultProps = {
 
 CustomModal.propTypes = {
   buttonTitle: PropTypes.string,
+  children: PropTypes.node,
   customInnerContainerStyle: PropTypes.object,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.bool,

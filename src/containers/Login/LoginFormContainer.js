@@ -8,9 +8,9 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import ButtonComponent from "../../components/ButtonComponent";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
+import CustomButton from "../../components/CustomButton";
 import CustomTextInput from "../../components/CustomTextInput";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import FollowUsIcons from "../../components/FollowUsIcons";
@@ -201,13 +201,14 @@ const LoginFormContainer = () => {
                   </TouchableOpacity>
                 </View>
                 <View style={styles.loginButtonView}>
-                  <ButtonComponent
-                    title={intl.formatMessage({ id: "label.login" })}
-                    onPress={onLogin}
+                  <CustomButton
                     disabled={loginDisabled}
-                    displayLoader={isLoading}
-                    customTitleStyle={isWebView && styles.webView.loginText}
-                  />
+                    isLoading={isLoading}
+                    onPress={onLogin}
+                    withGreenBackground
+                  >
+                    {intl.formatMessage({ id: "label.login" })}
+                  </CustomButton>
                 </View>
               </View>
               {errorWhileLoggingIn ? (
