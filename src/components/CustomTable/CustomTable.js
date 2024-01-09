@@ -12,19 +12,11 @@ import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
-import styles from "./TicketsView.style";
-
-const tableHeading = {
-  id: "Ticket ID",
-  query_type: "Query Type",
-  status: "Status",
-  assigned_to: "Assigned To",
-  created_at: "Created On",
-};
+import styles from "./CustomTable.style";
 
 const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
 
-const TicketsViewTemplate = ({
+const CustomTable = ({
   rowsToShow,
   getStatusStyle,
   getColoumConfigs,
@@ -38,6 +30,7 @@ const TicketsViewTemplate = ({
   indexOfLastRecord,
   handleSearchResults,
   handleSelect,
+  tableHeading,
 }) => {
   const { isWebView } = useIsWebView();
 
@@ -144,7 +137,7 @@ const TicketsViewTemplate = ({
                                 customTextStyle={styles.tableQueryText}
                               />
                             </View>
-                            <View style={{ flexDirection: "row" }}>
+                            <View style={styles.rowsPerPageWeb}>
                               <CommonText
                                 title={item.status}
                                 customTextStyle={getStatusStyle(
@@ -182,4 +175,4 @@ const TicketsViewTemplate = ({
   );
 };
 
-export default TicketsViewTemplate;
+export default CustomTable;

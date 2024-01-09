@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  View,
-  Text,
-} from "@unthinkable/react-core-components";
+import { View, Text } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
@@ -88,7 +85,7 @@ function Pagination(props) {
   const lastPage = paginationRange()[paginationRange().length - 1];
 
   if (!totalPages) {
-    return <View />; 
+    return <View />;
   }
 
   return (
@@ -102,7 +99,10 @@ function Pagination(props) {
           leftIconSource: images.iconArrowLeft,
         }}
       >
-        <CommonText title={isWebView ? "Previous" : ""} customTextStyle={styles.previousText} />
+        <CommonText
+          title={isWebView ? "Previous" : ""}
+          customTextStyle={styles.previousText}
+        />
       </CustomButton>
       <View style={styles.paginationRange}>
         {paginationRange().map((page, idx) => {
@@ -143,7 +143,10 @@ function Pagination(props) {
           rightIconSource: images.iconArrowRightBlack,
         }}
       >
-        <CommonText title={isWebView ? "Next" : ""} customTextStyle={styles.previousText} />
+        <CommonText
+          title={isWebView ? "Next" : ""}
+          customTextStyle={styles.previousText}
+        />
       </CustomButton>
     </View>
   );
@@ -154,12 +157,12 @@ Pagination.propTypes = {
   totalCards: PropTypes.number,
   setCurrentPage: PropTypes.func,
   currentPage: PropTypes.number,
-  pageStyles: PropTypes.object, 
+  pageStyles: PropTypes.object,
   customPageBtnStyles: PropTypes.object,
   customSelectedPageStyles: PropTypes.object,
   prevNextBtnstyles: PropTypes.object,
   siblingCount: PropTypes.number,
-  isWebView : PropTypes.bool,
+  isWebView: PropTypes.bool,
 };
 
 export default Pagination;

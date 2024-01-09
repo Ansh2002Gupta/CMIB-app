@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   activeText: {
     fontSize: 14,
-    color:colors.darkBlue,
+    color: colors.darkBlue,
   },
   inActiveText: {
     fontSize: 14,

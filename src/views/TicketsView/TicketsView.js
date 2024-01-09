@@ -1,7 +1,7 @@
 import React from "react";
 
-import TicketViewTemplate from "./TicketsViewTemplate";
 import useTicketView from "./controller/useTicketView";
+import CustomTable from "../../components/CustomTable";
 
 const TicketsView = () => {
   const {
@@ -18,9 +18,10 @@ const TicketsView = () => {
     indexOfLastRecord,
     handleSearchResults,
     handleSelect,
+    tableHeading,
   } = useTicketView();
   return (
-    <TicketViewTemplate
+    <CustomTable
       rowsToShow={rowsToShow}
       getStatusStyle={getStatusStyle}
       getColoumConfigs={getColoumConfigs}
@@ -34,6 +35,7 @@ const TicketsView = () => {
       indexOfLastRecord={indexOfLastRecord}
       handleSearchResults={handleSearchResults}
       handleSelect={handleSelect}
+      tableHeading={tableHeading}
     />
   );
 };

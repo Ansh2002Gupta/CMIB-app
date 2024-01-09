@@ -2,22 +2,6 @@ import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.backgroundGrey,
-    padding: 24,
-  },
-  mobileContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingRight: 24,
-    paddingLeft: 24,
-    borderBottomWidth: 1,
-    borderColor: colors.greyOne,
-    backgroundColor: colors.white,
-  },
   cellTextStyle: (fontSize = 14, fontWeight = "500") => ({
     fontSize: fontSize,
     fontWeight: fontWeight,
@@ -91,9 +75,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.darkGrey,
   },
-  tableQueryText: {
-    color: colors.darkGrey,
-  },
   columnStyle: (WIDTH: "15%") => ({
     width: WIDTH,
     paddingLeft: 24,
@@ -101,108 +82,10 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 16,
   }),
-  columnStyleBorder: {
-    borderColor: colors.lightGrey,
-    borderTopWidth: 0.5,
-  },
-  tableSection: {
-    borderWidth: 0.5,
-    borderColor: colors.lightGrey,
-    borderRadius: 16,
-    overflow: "hidden",
-  },
   iconTicket: {
     height: 20,
     width: 20,
   },
-  filterText: {
-    marginLeft: 8,
-  },
-  imageParentStyle: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 44,
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
-    backgroundColor: colors.white,
-    borderRadius: 8,
-    marginLeft: 16,
-    padding: 12,
-  },
-  paginationFooterWeb: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingTop: 12,
-    paddingBottom: 12,
-    borderTopWidth: 0.5,
-    borderColor: colors.lightGrey,
-  },
-  paginationFooter: {
-    paddingTop: 12,
-    paddingBottom: 12,
-    borderColor: colors.lightGrey,
-  },
-  previousButton: {
-    padding: 8,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: colors.lightGrey,
-    backgroundColor: colors.white,
-  },
-  previousButtonWeb: {
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingTop: 8,
-    paddingBottom: 8,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: colors.lightGrey,
-    backgroundColor: colors.white,
-  },
-  selectedBtn: {
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingTop: 8,
-    paddingBottom: 8,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: colors.lightGrey,
-    cursor: "pointer",
-  },
-  rowSelectedNumber: {
-    fontSize: 14,
-    marginRight: 8,
-  },
-  rowsPerPageText: {
-    fontSize: 14,
-    marginRight: 14,
-    color: colors.darkGrey,
-  },
-  rowsPerPage: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 16,
-  },
-  rowsPerPageWeb: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  bottomPaginationStyle: {
-    alignSelf: "center",
-  },
-  filterTopSection: (isWebView) => ({
-    marginBottom: 16,
-    width: isWebView ? "40%" : "100%",
-  }),
-  tableTopSection: {
-    flex: 1,
-  },
-  tableTopSectionStyle: (isWebView) => ({
-    height: isWebView ? "100%" : "85%",
-  }),
 });
 
 export default styles;

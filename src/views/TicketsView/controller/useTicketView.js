@@ -7,10 +7,18 @@ import images from "../../../images";
 import styles from "../TicketsView.style";
 
 const rowsLimit = [
- { value:10, label:"10"},
-  {value:15, label:"15"},
-  {value:20, label:"20"},
+  { value: 10, label: "10" },
+  { value: 15, label: "15" },
+  { value: 20, label: "20" },
 ];
+
+const tableHeading = {
+  id: "Ticket ID",
+  query_type: "Query Type",
+  status: "Status",
+  assigned_to: "Assigned To",
+  created_at: "Created On",
+};
 
 const useTicketView = () => {
   const [rowsToShow, setRowsToShow] = useState(10);
@@ -19,7 +27,7 @@ const useTicketView = () => {
   const indexOfLastRecord = currentPage * rowsToShow;
   const indexOfFirstRecord = indexOfLastRecord - rowsToShow;
 
-  const currentRecords = gridData.slice(indexOfFirstRecord, indexOfLastRecord);
+  let currentRecords = gridData.slice(indexOfFirstRecord, indexOfLastRecord);
 
   const totalcards = gridData.length;
 
@@ -149,7 +157,8 @@ const useTicketView = () => {
     indexOfFirstRecord,
     indexOfLastRecord,
     handleSearchResults,
-    handleSelect
+    handleSelect,
+    tableHeading,
   };
 };
 
