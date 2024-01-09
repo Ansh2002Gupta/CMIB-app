@@ -10,7 +10,6 @@ import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimen
 
 import CommonText from "../../components/CommonText";
 import UserAccountInfo from "../../components/UserAccountInfo";
-import SessionBar from "../../components/SessionBar";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import { getSmallScreenHeaderInfo } from "../../utils/headerHelpers";
