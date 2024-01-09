@@ -17,6 +17,7 @@ const CustomButton = ({
   isLoading,
   onPress,
   style,
+  type,
   withGreenBackground,
 }) => {
   const webProps = Platform.OS === "web" ? { size: "xs" } : {};
@@ -30,6 +31,7 @@ const CustomButton = ({
       }}
       disabled={isLoading || disabled}
       onPress={onPress}
+      type={type}
     >
       {isLoading ? (
         <Spinner
@@ -88,6 +90,7 @@ CustomButton.defaultProps = {
   isLoading: false,
   onPress: () => {},
   style: {},
+  type: "",
   withGreenBackground: false,
 };
 
@@ -101,6 +104,7 @@ CustomButton.propTypes = {
   isRightIconNotSvg: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,
+  type: PropTypes.string,
   withGreenBackground: PropTypes.bool,
 };
 

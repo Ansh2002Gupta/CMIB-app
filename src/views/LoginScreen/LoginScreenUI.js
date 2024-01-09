@@ -11,6 +11,7 @@ import CommonText from "../../components/CommonText";
 import CustomButton from "../../components/CustomButton";
 import CustomTextInput from "../../components/CustomTextInput";
 import FollowUsIcons from "../../components/FollowUsIcons";
+import FormWrapper from "../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
@@ -73,111 +74,112 @@ const LoginScreenUI = (props) => {
   };
 
   return (
-    <WebViewLoginSignUpWrapper shouldApplyStyles={isWebView}>
-      <View
-        style={{
-          ...styles.mainView,
-          ...(isWebView && styles.gapForWebView),
-        }}
-      >
-        <View style={styles.container}>
-          <HeaderTextWithLabelAndDescription
-            headerText={intl.formatMessage({ id: "label.login_to_cmib" })}
-            description={intl.formatMessage({
-              id: "label.secure_login_access",
-            })}
-            customTextStyle={
-              isWebView
-                ? {
-                    ...styles.webView.headerText,
-                    ...getResponsiveStyles("label.cmib"),
-                  }
-                : styles.loginHeaderText
-            }
-            customSecondHeadingStyles={
-              isWebView ? styles.webView.subHeadingText : {}
-            }
-            customContainerStyles={
-              isWebView ? styles.webView.headerContainer : {}
-            }
-          />
-          <View
-            style={{
-              ...styles.buttonView,
-              ...(isWebView && styles.webView.extraMargin),
-            }}
-          >
-            <TouchableOpacity
-              style={styles.topTabs}
-              onPress={() => toggleUser(false)}
+    <FormWrapper
+      onSubmit={onLogin}
+      customFormStyle={{
+        ...styles.mainView,
+      }}
+    >
+      <WebViewLoginSignUpWrapper shouldApplyStyles={isWebView}>
+        <View
+          style={{
+            ...styles.mainView,
+            ...(isWebView && styles.gapForWebView),
+          }}
+        >
+          <View style={styles.container}>
+            <HeaderTextWithLabelAndDescription
+              headerText={intl.formatMessage({ id: "label.login_to_cmib" })}
+              description={intl.formatMessage({
+                id: "label.secure_login_access",
+              })}
+              customTextStyle={
+                isWebView
+                  ? {
+                      ...styles.webView.headerText,
+                      ...getResponsiveStyles("label.cmib"),
+                    }
+                  : styles.loginHeaderText
+              }
+              customSecondHeadingStyles={
+                isWebView ? styles.webView.subHeadingText : {}
+              }
+              customContainerStyles={
+                isWebView ? styles.webView.headerContainer : {}
+              }
+            />
+            <View
+              style={{
+                ...styles.buttonView,
+                ...(isWebView && styles.webView.extraMargin),
+              }}
             >
-              <CommonText
-                customTextStyle={{
-                  ...styles.topTabsText,
-                  ...(!active
-                    ? styles.webView.selectedSectionHeading
-                    : styles.webView.unSelectedSectionHeading),
-                }}
-                fontWeight={!active ? "600" : "500"}
+              <TouchableOpacity
+                style={styles.topTabs}
+                onPress={() => toggleUser(false)}
               >
-                {intl.formatMessage({ id: "label.member_candidate" })}
-              </CommonText>
-              <View
-                style={
-                  active
-                    ? styles.inActiveStyle
-                    : {
-                        ...styles.activeStyle,
-                        ...(isWebView && styles.webView.activeTab),
-                      }
-                }
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.topTabs}
-              onPress={() => toggleUser(true)}
-            >
-              <View>
                 <CommonText
                   customTextStyle={{
                     ...styles.topTabsText,
-                    ...(active
+                    ...(!active
                       ? styles.webView.selectedSectionHeading
                       : styles.webView.unSelectedSectionHeading),
                   }}
-                  fontWeight={active ? "600" : "500"}
+                  fontWeight={!active ? "600" : "500"}
                 >
-                  {intl.formatMessage({ id: "label.company" })}
+                  {intl.formatMessage({ id: "label.member_candidate" })}
                 </CommonText>
-              </View>
-              <View
-                style={
-                  !active
-                    ? styles.inActiveStyle
-                    : {
-                        ...styles.activeStyle,
-                        ...(isWebView && styles.webView.activeTab),
-                      }
-                }
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              ...styles.borderStyle,
-              ...(isWebView && styles.webView.tabsBottomGreyLine),
-            }}
-          />
-        </View>
-        {active ? (
-          <ScrollView
-            contentContainerStyle={{
-              ...styles.companyView,
-              ...(isWebView && styles.webView.backGroundColor),
-            }}
-          >
+                <View
+                  style={
+                    active
+                      ? styles.inActiveStyle
+                      : {
+                          ...styles.activeStyle,
+                          ...(isWebView && styles.webView.activeTab),
+                        }
+                  }
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.topTabs}
+                onPress={() => toggleUser(true)}
+              >
+                <View>
+                  <CommonText
+                    customTextStyle={{
+                      ...styles.topTabsText,
+                      ...(active
+                        ? styles.webView.selectedSectionHeading
+                        : styles.webView.unSelectedSectionHeading),
+                    }}
+                    fontWeight={active ? "600" : "500"}
+                  >
+                    {intl.formatMessage({ id: "label.company" })}
+                  </CommonText>
+                </View>
+                <View
+                  style={
+                    !active
+                      ? styles.inActiveStyle
+                      : {
+                          ...styles.activeStyle,
+                          ...(isWebView && styles.webView.activeTab),
+                        }
+                  }
+                />
+              </TouchableOpacity>
+            </View>
             <View
               style={{
+                ...styles.borderStyle,
+                ...(isWebView && styles.webView.tabsBottomGreyLine),
+              }}
+            />
+          </View>
+          {active ? (
+            <ScrollView
+              contentContainerStyle={{
+                ...styles.companyView,
                 ...(isWebView && styles.webView.backGroundColor),
               }}
             >
@@ -186,110 +188,119 @@ const LoginScreenUI = (props) => {
                   ...(isWebView && styles.webView.backGroundColor),
                 }}
               >
-                <CustomTextInput
-                  label={intl.formatMessage({ id: "label.username" })}
-                  placeholder={intl.formatMessage({
-                    id: "label.email_id_placeholder",
-                  })}
-                  value={userName}
-                  onChangeText={(val) => onChangeUsername(val)}
-                  errorMessage={errorMessage}
-                  isError={!!errorMessage}
-                  isMandatory
-                  customLabelStyle={
-                    isWebView ? styles.webView.inputLabelText : {}
-                  }
-                  customTextInputContainer={
-                    isWebView ? styles.webView.inputTextBox : {}
-                  }
-                />
-                <CustomTextInput
-                  label={intl.formatMessage({ id: "label.password" })}
-                  placeholder={intl.formatMessage({
-                    id: "label.password_placeholder",
-                  })}
-                  value={password}
-                  onChangeText={(val) => onChangePassword(val)}
-                  isMandatory
-                  eyeImage={true}
-                  isPassword={true}
-                  customLabelStyle={
-                    isWebView ? styles.webView.inputLabelText : {}
-                  }
-                  customTextInputContainer={
-                    isWebView ? styles.webView.inputTextBox : {}
-                  }
-                />
-                <TouchableOpacity
-                  onPress={onForgotPasswordClick}
-                  style={styles.forgotPasswordView}
-                >
-                  <CommonText
-                    customTextStyle={{
-                      ...styles.forgotPasswordText,
-                      ...(isWebView ? styles.webView.forgotPasswordText : {}),
-                    }}
-                    fontWeight="600"
-                  >
-                    {intl.formatMessage({
-                      id: "label.forgot_password",
-                    })}
-                  </CommonText>
-                </TouchableOpacity>
-                <View style={styles.loginButtonView}>
-                  <CustomButton
-                    disabled={loginDisabled}
-                    isLoading={isLoading}
-                    onPress={onLogin}
-                    withGreenBackground
-                  >
-                    {intl.formatMessage({ id: "label.login" })}
-                  </CustomButton>
-                </View>
-              </View>
-              <View style={styles.accountView}>
-                <CommonText
-                  customTextStyle={{
-                    ...styles.accountText,
-                    ...(isWebView ? styles.webView.dontHaveAccountText : {}),
+                <View
+                  style={{
+                    ...(isWebView && styles.webView.backGroundColor),
                   }}
                 >
-                  {intl.formatMessage({
-                    id: "label.dont_have_account",
-                  })}
-                </CommonText>
-                <TouchableOpacity onPress={onCreateNewPasswordClick}>
+                  <CustomTextInput
+                    label={intl.formatMessage({ id: "label.username" })}
+                    placeholder={intl.formatMessage({
+                      id: "label.email_id_placeholder",
+                    })}
+                    value={userName}
+                    onChangeText={(val) => onChangeUsername(val)}
+                    errorMessage={errorMessage}
+                    isError={!!errorMessage}
+                    isMandatory
+                    customLabelStyle={
+                      isWebView ? styles.webView.inputLabelText : {}
+                    }
+                    customTextInputContainer={
+                      isWebView ? styles.webView.inputTextBox : {}
+                    }
+                  />
+                  <CustomTextInput
+                    label={intl.formatMessage({ id: "label.password" })}
+                    placeholder={intl.formatMessage({
+                      id: "label.password_placeholder",
+                    })}
+                    value={password}
+                    onChangeText={(val) => onChangePassword(val)}
+                    isMandatory
+                    eyeImage={true}
+                    isPassword={true}
+                    customLabelStyle={
+                      isWebView ? styles.webView.inputLabelText : {}
+                    }
+                    customTextInputContainer={
+                      isWebView ? styles.webView.inputTextBox : {}
+                    }
+                  />
+                  <TouchableOpacity
+                    onPress={onForgotPasswordClick}
+                    style={styles.forgotPasswordView}
+                  >
+                    <CommonText
+                      customTextStyle={{
+                        ...styles.forgotPasswordText,
+                        ...(isWebView ? styles.webView.forgotPasswordText : {}),
+                      }}
+                      fontWeight="600"
+                    >
+                      {intl.formatMessage({
+                        id: "label.forgot_password",
+                      })}
+                    </CommonText>
+                  </TouchableOpacity>
+                  <View style={styles.loginButtonView}>
+                    <CustomButton
+                      disabled={loginDisabled}
+                      isLoading={isLoading}
+                      onPress={onLogin}
+                      type={"submit"}
+                      withGreenBackground
+                    >
+                      {intl.formatMessage({ id: "label.login" })}
+                    </CustomButton>
+                  </View>
+                </View>
+                <View style={styles.accountView}>
                   <CommonText
                     customTextStyle={{
-                      ...styles.newAccountText,
-                      ...(isWebView ? styles.webView.createNewAccountText : {}),
+                      ...styles.accountText,
+                      ...(isWebView ? styles.webView.dontHaveAccountText : {}),
                     }}
-                    fontWeight="600"
                   >
                     {intl.formatMessage({
-                      id: "label.create_new_account",
+                      id: "label.dont_have_account",
                     })}
                   </CommonText>
-                </TouchableOpacity>
+                  <TouchableOpacity onPress={onCreateNewPasswordClick}>
+                    <CommonText
+                      customTextStyle={{
+                        ...styles.newAccountText,
+                        ...(isWebView
+                          ? styles.webView.createNewAccountText
+                          : {}),
+                      }}
+                      fontWeight="600"
+                    >
+                      {intl.formatMessage({
+                        id: "label.create_new_account",
+                      })}
+                    </CommonText>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            {!isWebView && (
-              <View style={styles.followUsImageView}>
-                <FollowUsIcons />
-              </View>
-            )}
-          </ScrollView>
-        ) : (
-          <View style={styles.minHeight}></View>
+              {!isWebView && (
+                <View style={styles.followUsImageView}>
+                  <FollowUsIcons />
+                </View>
+              )}
+            </ScrollView>
+          ) : (
+            <View style={styles.minHeight}></View>
+          )}
+        </View>
+        {!!errorWhileLoggingIn && (
+          <ToastComponent
+            toastMessage={errorWhileLoggingIn}
+            onDismiss={handleDismissToast}
+          />
         )}
-      </View>
-      {!!errorWhileLoggingIn && (
-        <ToastComponent
-          toastMessage={errorWhileLoggingIn}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </WebViewLoginSignUpWrapper>
+      </WebViewLoginSignUpWrapper>
+    </FormWrapper>
   );
 };
 

@@ -8,6 +8,7 @@ import CustomButton from "../../components/CustomButton";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
+import FormWrapper from "../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -104,103 +105,120 @@ const ForgotPasswordUI = (props) => {
   };
 
   return (
-    <View style={styles.mainView}>
-      <View
-        style={
-          isWebView
-            ? getResponsiveStyles("forgotPasswordWebContainer")
-            : styles.grayBackground
-        }
-      >
+    <FormWrapper
+      customFormStyle={styles.customFormStyle}
+      onSubmit={onSendOtpClick}
+    >
+      <View style={styles.mainView}>
         <View
           style={
             isWebView
-              ? styles.container
-              : [styles.container, styles.mobContainer]
+              ? getResponsiveStyles("forgotPasswordWebContainer")
+              : styles.grayBackground
           }
         >
-          <HeaderTextWithLabelAndDescription
-            description={intl.formatMessage({
-              id: "label.enter_email_to_reset_password",
-            })}
-            headerText={intl.formatMessage({ id: "label.forgot_password" })}
-            customTextStyle={
-              isWebView
-                ? {
-                    ...styles.headerText,
-                    ...getResponsiveStyles("label.forgot_password"),
-                  }
-                : styles.headerText
-            }
-            customContainerStyles={!!isWebView && styles.forgotHeaderContainer}
-          />
-          {!isWebView && <View style={styles.borderStyle} />}
-        </View>
-        <View style={isWebView ? styles.whiteBackground : styles.companyView}>
           <View
             style={
               isWebView
-                ? getResponsiveStyles("textInputView")
-                : styles.firstTextInput
+                ? styles.container
+                : [styles.container, styles.mobContainer]
             }
           >
-            <CustomTextInput
-              label={intl.formatMessage({ id: "label.enter_id" })}
-              placeholder={intl.formatMessage({
-                id: "label.email_id_placeholder",
+            <HeaderTextWithLabelAndDescription
+              description={intl.formatMessage({
+                id: "label.enter_email_to_reset_password",
               })}
-              value={userEmail}
-              onChangeText={(val) => {
-                onChangeInput(val);
-              }}
-              errorMessage={errorMessage}
-              isMandatory
-              isError={!!errorMessage}
+              headerText={intl.formatMessage({ id: "label.forgot_password" })}
+              customTextStyle={
+                isWebView
+                  ? {
+                      ...styles.headerText,
+                      ...getResponsiveStyles("label.forgot_password"),
+                    }
+                  : styles.headerText
+              }
+              customContainerStyles={
+                !!isWebView && styles.forgotHeaderContainer
+              }
             />
+            {!isWebView && <View style={styles.borderStyle} />}
+          </View>
+          <View style={isWebView ? styles.whiteBackground : styles.companyView}>
+            <View
+              style={
+                isWebView
+                  ? getResponsiveStyles("textInputView")
+                  : styles.firstTextInput
+              }
+            >
+              <CustomTextInput
+                label={intl.formatMessage({ id: "label.enter_id" })}
+                placeholder={intl.formatMessage({
+                  id: "label.email_id_placeholder",
+                })}
+                value={userEmail}
+                onChangeText={(val) => {
+                  onChangeInput(val);
+                }}
+                errorMessage={errorMessage}
+                isMandatory
+                isError={!!errorMessage}
+              />
+            </View>
+          </View>
+          <View style={isWebView ? styles.webSubmitView : styles.submitView}>
+            <CustomButton
+              disabled={loginDisabled}
+              isLoading={isLoading}
+              onPress={onSendOtpClick}
+              type={"submit"}
+              withGreenBackground
+            >
+              {intl.formatMessage({ id: "label.submit" })}
+            </CustomButton>
+            <CustomTouchableOpacity onPress={onClickGoToLogin}>
+              <CommonText
+                customTextStyle={styles.backToLoginText}
+                fontWeight="600"
+              >
+                {intl.formatMessage({ id: "label.back_to_login" })}
+              </CommonText>
+            </CustomTouchableOpacity>
           </View>
         </View>
-        <View style={isWebView ? styles.webSubmitView : styles.submitView}>
-          <CustomButton
-            disabled={loginDisabled}
-            isLoading={isLoading}
-            onPress={onSendOtpClick}
-            withGreenBackground
-          >
-            {intl.formatMessage({ id: "label.submit" })}
-          </CustomButton>
-          <CustomTouchableOpacity onPress={onClickGoToLogin}>
-            <CommonText
-              customTextStyle={styles.backToLoginText}
-              fontWeight="600"
-            >
-              {intl.formatMessage({ id: "label.back_to_login" })}
-            </CommonText>
-          </CustomTouchableOpacity>
-        </View>
-      </View>
-      {successLogin ? (
-        <CustomModal
-          headerText={intl.formatMessage({ id: "label.thanks" })}
-          secondaryText={intl.formatMessage({
-            id: "label.reset_password_info_text",
-          })}
-          onPress={() => {
-            onClickGoToLogin();
-          }}
-          buttonTitle={intl.formatMessage({ id: "label.go_back_to_login" })}
-          isSuccess
-        />
-      ) : null}
+        {successLogin ? (
+          <CustomModal
+            headerText={intl.formatMessage({ id: "label.thanks" })}
+            secondaryText={intl.formatMessage({
+              id: "label.reset_password_info_text",
+            })}
+            onPress={() => {
+              onClickGoToLogin();
+            }}
+            buttonTitle={intl.formatMessage({ id: "label.go_back_to_login" })}
+            isSuccess
+          />
+        ) : null}
 
-      {!!validationError && (
-        <ToastComponent
-          toastMessage={validationError}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </View>
+        {!!validationError && (
+          <ToastComponent
+            toastMessage={validationError}
+            onDismiss={handleDismissToast}
+          />
+        )}
+      </View>
+    </FormWrapper>
   );
 };
+
+ForgotPasswordUI.defaultProps = {
+  errorMessage: "",
+  handleDismissToast: () => {},
+  onSendOtpClick: () => {},
+  successLogin: false,
+  validationError: "",
+}
+
 ForgotPasswordUI.propTypes = {
   errorMessage: PropTypes.string,
   handleDismissToast: PropTypes.func,
