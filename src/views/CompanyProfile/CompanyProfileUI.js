@@ -138,6 +138,7 @@ const CompanyProfileUI = (props) => {
             />
             <DetailCard
               headerId="label.other_details"
+              isRow
               details={profileResult?.companyProfile}
               otherDetails={profileResult?.otherDetails}
               handleChange={handleCompanyProfile}

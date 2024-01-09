@@ -12,6 +12,7 @@ const DetailCard = ({
   handleChange,
   headerId,
   isEditProfile,
+  isRow,
   otherDetails,
 }) => {
   const intl = useIntl();
@@ -19,7 +20,7 @@ const DetailCard = ({
   return (
     <CardComponent customStyle={style.cardStyle}>
       <DetailComponent
-        customContainerStyle={style.customStyle}
+        customContainerStyle={isRow && style.customStyle}
         details={details}
         headerText={intl.formatMessage({ id: headerId })}
         isEditable={isEditProfile}
@@ -41,6 +42,7 @@ DetailCard.defaultProps = {
   handleChange: () => {},
   headerId: "",
   isEditProfile: false,
+  isRow: false,
   otherDetails: [],
 };
 
@@ -49,6 +51,7 @@ DetailCard.propTypes = {
   handleChange: PropTypes.func,
   headerId: PropTypes.string,
   isEditProfile: PropTypes.bool,
+  isRow: PropTypes.bool,
   otherDetails: PropTypes.array,
 };
 
