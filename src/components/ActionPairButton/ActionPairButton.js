@@ -8,6 +8,8 @@ import styles from "./ActionPairButton.style";
 const ActionPairButton = ({
   buttonOneText,
   buttonTwoText,
+  buttonOneStyle,
+  buttonTwoStyle,
   customContainerStyle,
   displayLoader,
   iconRight,
@@ -23,9 +25,9 @@ const ActionPairButton = ({
       style={{ ...styles.containerStyle, ...customContainerStyle }}
       leftSection={
         <CustomButton
-          onPress={onPressButtonOne}
-          style={styles.buttonStyle}
           iconLeft={iconLeft}
+          onPress={onPressButtonOne}
+          style={{ ...styles.buttonStyle, ...buttonOneStyle }}
           withGreenBackground={isButtonOneGreen}
         >
           {buttonOneText}
@@ -33,10 +35,11 @@ const ActionPairButton = ({
       }
       rightSection={
         <CustomButton
-          isLoading={displayLoader}
           disabled={isDisabled}
-          onPress={onPressButtonTwo}
           iconRight={iconRight}
+          isLoading={displayLoader}
+          onPress={onPressButtonTwo}
+          style={buttonTwoStyle}
           withGreenBackground={isButtonTwoGreen}
         >
           {buttonTwoText}
@@ -49,6 +52,8 @@ const ActionPairButton = ({
 };
 
 ActionPairButton.defaultProps = {
+  buttonOneStyle: {},
+  buttonTwoStyle: {},
   customContainerStyle: {},
   displayLoader: false,
   iconLeft: {
@@ -71,6 +76,8 @@ ActionPairButton.defaultProps = {
 ActionPairButton.propTypes = {
   buttonOneText: PropTypes.string.isRequired,
   buttonTwoText: PropTypes.string.isRequired,
+  buttonOneStyle: PropTypes.object,
+  buttonTwoStyle: PropTypes.object,
   customContainerStyle: PropTypes.object,
   displayLoader: PropTypes.bool,
   iconLeft: PropTypes.object,

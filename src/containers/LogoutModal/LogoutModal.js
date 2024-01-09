@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Platform } from "@unthinkable/react-core-components";
 
+import ActionPairButton from "../../components/ActionPairButton";
 import CommonText from "../../components/CommonText";
-import CustomButton from "../../components/CustomButton";
 import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
-import MultiColumn from "../../core/layouts/MultiColumn";
 import MultiRow from "../../core/layouts/MultiRow";
 import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
@@ -17,29 +16,6 @@ const LogoutModal = ({ onCancel }) => {
   const intl = useIntl();
   const { isLoggingUserOut, onLogout } = useHeader();
   const WarningIcon = images.iconWarning;
-
-  const saveCancelButton = [
-    {
-      content: (
-        <CustomButton onPress={() => onCancel(false)}>
-          {intl.formatMessage({ id: "label.cancel" })}
-        </CustomButton>
-      ),
-      isFillSpace: true,
-    },
-    {
-      content: (
-        <CustomButton
-          onPress={() => onLogout()}
-          style={styles.saveStyle}
-          {...{ isLoading: isLoggingUserOut }}
-        >
-          {intl.formatMessage({ id: "label.logout" })}
-        </CustomButton>
-      ),
-      isFillSpace: true,
-    },
-  ];
 
   const logoutConfig = [
     {
@@ -67,7 +43,16 @@ const LogoutModal = ({ onCancel }) => {
       ),
     },
     {
-      content: <MultiColumn columns={saveCancelButton} />,
+      content: (
+        <ActionPairButton
+          buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+          buttonTwoText={intl.formatMessage({ id: "label.logout" })}
+          buttonTwoStyle={styles.logoutStyle}
+          displayLoader={isLoggingUserOut}
+          onPressButtonOne={() => onCancel(false)}
+          onPressButtonTwo={() => onLogout()}
+        />
+      ),
       style: styles.gapStyle,
     },
   ];
