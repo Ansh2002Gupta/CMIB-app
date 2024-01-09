@@ -16,7 +16,6 @@ const commonStyles = {
     color: colors.errorRed,
     fontSize: 14,
     lineHeight: 18,
-    fontWeight: "600",
   },
   contentContainer: {
     zIndex: 3,

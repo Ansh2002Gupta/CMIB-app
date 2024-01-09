@@ -24,13 +24,13 @@ const CustomToggleComponent = ({ customToggleStyle,customLabelStyle, isMandatory
             isWebView && styles.webLabel,
             customLabelStyle,
           ]}
-          title={label}
-        />
+        >
+          {label}
+        </CommonText>
         {isMandatory && (
-          <CommonText
-            customTextStyle={[styles.label, styles.starStyle]}
-            title={"*"}
-          />
+          <CommonText customTextStyle={[styles.label, styles.starStyle]}>
+            {"*"}
+          </CommonText>
         )}
       </View>
 
@@ -51,10 +51,9 @@ const CustomToggleComponent = ({ customToggleStyle,customLabelStyle, isMandatory
             }}
           />
         </TouchableOpacity>
-        <CommonText
-          title={intl.formatMessage({ id: "label.yes" })}
-          customTextStyle={styles.textStyle}
-        />
+        <CommonText customTextStyle={styles.textStyle}>
+          {intl.formatMessage({ id: "label.yes" })}
+        </CommonText>
         <TouchableOpacity
           style={{
             ...styles.noButtonStyle,
@@ -71,10 +70,9 @@ const CustomToggleComponent = ({ customToggleStyle,customLabelStyle, isMandatory
             }}
           />
         </TouchableOpacity>
-        <CommonText
-          title={intl.formatMessage({ id: "label.no" })}
-          customTextStyle={styles.textStyle}
-        />
+        <CommonText customTextStyle={styles.textStyle}>
+          {intl.formatMessage({ id: "label.no" })}
+        </CommonText>
       </View>
     </View>
   );

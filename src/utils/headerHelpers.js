@@ -1,6 +1,8 @@
 import { navigations } from "../constants/routeNames";
 import { SCREEN_NAMES } from "../constants/constants";
 
+const ROUNDONE_APPLICATION_FORM = `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`;
+
 export const getSmallScreenHeaderInfo = (path) => {
   switch (path) {
     case navigations.COMPANY_PROFILE: {
@@ -31,12 +33,11 @@ export const getSmallScreenHeaderInfo = (path) => {
         showRightButton: false,
       };
     }
-    case navigations.ROUND_ONE_APPLICATION: {
+    case ROUNDONE_APPLICATION_FORM: {
       return {
         text: SCREEN_NAMES.ROUND_ONE_APPLICATION_FORM,
         showRightButton: true,
         showBackButton: true,
-        actionIcontext: "Download",
       };
     }
     default: {

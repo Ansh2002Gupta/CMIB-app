@@ -2,83 +2,81 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
   Image,
+  Platform,
   ScrollView,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
 
-import CardComponent from "../../CardComponent/CardComponent";
+import CardComponent from "../../CardComponent";
 import CommonText from "../../../components/CommonText";
 import useIsWebView from "../../../hooks/useIsWebView";
 import styles from "./MainContainer.style";
 
-const MainContainerTemplate = ({
-  containers,
-  onPressCard,
-  selectedContainer,
-}) => {
+const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
   const { isWebView } = useIsWebView();
+  const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
   return (
-    <View style={styles.innerContainer}>
-      <ScrollView
-        style={{
-          ...styles.containerStyle,
-          ...(isWebView ? styles.webContainerStyle : {}),
-        }}
-        showsVerticalScrollIndicator={false}
-      >
-        {containers.map((container) => (
-          <TouchableOpacity
-            onPress={() => {
-              onPressCard(container.id);
+    <ScrollView
+      style={{
+        ...(!isWebPlatform ? styles.mobContainer : {}),
+        ...(isWebView ? styles.webContainerStyle : styles.containerStyle),
+      }}
+      showsVerticalScrollIndicator={false}
+    >
+      {roundOneTabs.map((container, index) => (
+        <TouchableOpacity
+          key={index}
+          onPress={() => {
+            onPressCard(container.id);
+          }}
+          style={styles.buttonStyle}
+        >
+          <CardComponent
+            customCardComponentStyle={{
+              ...styles.componentStyle,
+              ...(isWebView && selectedTab === container.id
+                ? styles.webActiveComponentStyle
+                : isWebView
+                ? styles.webComponentStyle
+                : {}),
             }}
-            style={styles.buttonStyle}
           >
-            <CardComponent
-              customCardComponentStyle={{
-                ...styles.componentStyle,
-                ...(isWebView && selectedContainer === container.id
-                  ? styles.webActiveComponentStyle
-                  : isWebView
-                  ? styles.webComponentStyle
-                  : {}),
+            <Image style={styles.imageStyle} source={container.image} />
+            <View
+              style={{
+                ...styles.addApplicationView,
+                ...(isWebView ? styles.webAddApplicationView : null),
               }}
             >
-              <View>
-                <Image style={styles.imageStyle} source={container.image} />
-              </View>
-              <View
-                style={{
-                  ...styles.addApplicationView,
-                  ...(isWebView ? styles.webAddApplicationView : null),
-                }}
+              <CommonText
+                customTextStyle={styles.addApplicationFormText}
+                fontWeight={"600"}
               >
-                <CommonText
-                  title={container.title}
-                  customTextStyle={styles.addApplicationFormText}
-                />
-                <CommonText
-                  title={container.subTitle}
-                  customTextStyle={styles.addApplicationFormDescriptionText}
-                />
-              </View>
-            </CardComponent>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View>
+                {container.title}
+              </CommonText>
+              <CommonText
+                customTextStyle={styles.addApplicationFormDescriptionText}
+              >
+                {container.subTitle}
+              </CommonText>
+            </View>
+          </CardComponent>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 };
 
 MainContainerTemplate.defaultProps = {
-  selectedContainer: null,
+  selectedTab: null,
 };
 
 MainContainerTemplate.propTypes = {
-  containers: PropTypes.array.isRequired,
   onPressCard: PropTypes.func.isRequired,
-  selectedContainer: PropTypes.number,
+  roundOneTabs: PropTypes.array.isRequired,
+  selectedTab: PropTypes.number,
 };
 
 export default MainContainerTemplate;

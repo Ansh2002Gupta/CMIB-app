@@ -1,16 +1,16 @@
 import React from "react";
 
 import MainContainerTemplate from "./MainContainerTemplate";
-import useMainContainerTabs from "./controller/useMainContainerTabs";
+import useMainContainerTabs from "./controllers/useMainContainerTabs";
 
 const MainContainer = () => {
-  const { containers, onPressCard, selectedContainer } = useMainContainerTabs();
+  const { onPressCard, roundOneTabs, selectedTab } = useMainContainerTabs();
 
   return (
     <MainContainerTemplate
-      containers={containers}
       onPressCard={onPressCard}
-      selectedContainer={selectedContainer}
+      roundOneTabs={roundOneTabs}
+      selectedTab={selectedTab}
     />
   );
 };

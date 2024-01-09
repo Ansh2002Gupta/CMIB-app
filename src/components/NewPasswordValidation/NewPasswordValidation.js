@@ -36,20 +36,18 @@ const NewPasswordValidation = ({
 
   return (
     <View>
-      <CommonText
-        customTextStyle={styles.validationText}
-        title={intl.formatMessage({ id: "label.password_requirment_text" })}
-      />
+      <CommonText customTextStyle={styles.validationText}>
+        {intl.formatMessage({ id: "label.password_requirment_text" })}
+      </CommonText>
       <View style={customContainerStyles}>
         {VALIDATION_TYPE.map((validation) => (
           <View key={validation.key} style={styles.validationView}>
             <View
               style={bulletStyle(currentValidations[validation.key])}
             ></View>
-            <CommonText
-              customTextStyle={styles.bulletText}
-              title={intl.formatMessage({ id: validation.id })}
-            />
+            <CommonText customTextStyle={styles.bulletText}>
+              {intl.formatMessage({ id: validation.id })}
+            </CommonText>
           </View>
         ))}
       </View>

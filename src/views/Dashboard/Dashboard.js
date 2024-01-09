@@ -5,6 +5,7 @@ import { View } from "@unthinkable/react-core-components";
 import AddDesignation from "../../containers/AddDesignation/AddDesignation";
 import CommonText from "../../components/CommonText";
 import CustomCell from "../../components/CustomCell/";
+import JobDetails from "../../containers/RoundOne/ApplicationFormContainer/JobDetails";
 import SearchView from "../../components/SearchView";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../../components/TouchableImage";
@@ -63,10 +64,9 @@ function DashboardView() {
 
   return (
     <View style={styles.container}>
-      <CommonText
-        customTextStyle={styles.header}
-        title={intl.formatMessage({ id: "label.dashboard" })}
-      />
+      {/* <CommonText customTextStyle={styles.header}>
+        {intl.formatMessage({ id: "label.dashboard" })}
+      </CommonText>
       <MultiColumn columns={searchData} />
       <CustomCell
         onPress={toggleSwitch}
@@ -77,7 +77,8 @@ function DashboardView() {
         style={styles.customCellStyle}
         textStyle={styles.customCellTextStyle}
       />
-      {isEnabled && <AddDesignation  resultCallback={handleAddDesignation}/>}
+      {isEnabled && <AddDesignation resultCallback={handleAddDesignation} />} */}
+      <JobDetails />
     </View>
   );
 }

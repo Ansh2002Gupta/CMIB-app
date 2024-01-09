@@ -1,8 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function formatKey(name) {
-  return `react_app_${name}`;
-}
+import formatKey from "./helpers";
 
 class Storage {
   static async set(key, value) {
@@ -37,7 +35,7 @@ class Storage {
   static async removeAll() {
     try {
       const keys = await AsyncStorage.getAllKeys();
-      const formattedKeys = keys.filter(key => key.startsWith('react_app_'));
+      const formattedKeys = keys.filter((key) => key.startsWith("react_app_"));
       await AsyncStorage.multiRemove(formattedKeys);
     } catch (error) {
       console.error(error);

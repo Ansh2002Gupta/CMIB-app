@@ -36,6 +36,18 @@ const style = StyleSheet.create({
     flexDirection: "row",
     gap: 24,
     width: "100%",
+    backgroundColor: colors.backgroundColor,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  mobContainer: {
+    flex: 1,
+  },
+  containerStyle: {
+    backgroundColor: colors.backgroundColor,
+    paddingLeft: 16,
+    paddingRight: 16,
+    marginBottom: 16,
   },
   addApplicationView: {
     flex: 1,
@@ -45,37 +57,19 @@ const style = StyleSheet.create({
   addApplicationFormText: {
     fontSize: 18,
     color: colors.black,
-    fontWeight: "600",
   },
   addApplicationFormDescriptionText: {
     fontSize: 14,
     color: colors.subHeadingGray,
-    fontWeight: "500",
     marginTop: 8,
-  },
-  containerStyle: {
-    paddingLeft: 16,
-    paddingRight: 16,
-    backgroundColor: colors.backgroundColor,
-    marginBottom: 16,
   },
   webAddApplicationView: {
     paddingLeft: 0,
     paddingTop: 16,
   },
-  webHeaderTextStyle: {
-    fontSize: 32,
-    color: colors.black,
-    fontWeight: "600",
-  },
   innerContainer: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
-  },
-  headerTextStyle: {
-    fontSize: 20,
-    color: colors.black,
-    fontWeight: "600",
   },
   buttonStyle: {
     flex: 1,

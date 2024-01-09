@@ -12,7 +12,6 @@ const CustomLabelView = ({
   isMandatory,
   label,
   style,
-  ...props
 }) => {
   const { isWebView } = useIsWebView();
   return (
@@ -24,13 +23,14 @@ const CustomLabelView = ({
             isWebView && styles.webLabel,
             customLabelStyle,
           ]}
-          title={label}
-        />
+          fontWeight={customLabelStyle?.fontWeight}
+        >
+          {label}
+        </CommonText>
         {isMandatory && (
-          <CommonText
-            customTextStyle={[styles.labelStar, styles.starStyle]}
-            title={"*"}
-          />
+          <CommonText customTextStyle={[styles.labelStar, styles.starStyle]}>
+            {"*"}
+          </CommonText>
         )}
       </View>
       {children}

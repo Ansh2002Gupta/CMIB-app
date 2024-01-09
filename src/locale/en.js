@@ -186,9 +186,7 @@ const locale = {
   "label.step_four": "Step 4",
   "label.already_account": "Already have an account?  ",
   "label.login_here": "Login here",
-  "label.basic_details": "Basic Details",
   "label.contact_person_details": "Contact Person Details",
-  "label.other_details": "Other Details",
   "label.old_password": "Old Password",
   "label.company_logo": "Company Logo",
   "label.contact_person_info": "Contact Person Information",
@@ -239,7 +237,9 @@ const locale = {
   "label.months_bond_period": "Bond period in months",
   "label.exit_amount": "Exit amount",
   "label.selection_process": "Selection Process",
-  "label.designation":""
+  "label.password_changed_successfully":
+    "Your password has been changed successfully",
+  "label.sessions": "Sessions",
 };
 
 export default locale;

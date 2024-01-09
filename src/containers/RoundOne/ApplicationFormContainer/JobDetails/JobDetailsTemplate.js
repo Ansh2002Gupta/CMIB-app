@@ -10,7 +10,7 @@ import { useIntl } from "react-intl";
 
 import useIsWebView from "../../../../hooks/useIsWebView";
 
-import CardComponent from "../../../CardComponent/CardComponent";
+import CardComponent from "../../../../components/CardComponent/CardComponent";
 import CheckBox from "../../../../components/CheckBox";
 import CommonText from "../../../../components/CommonText";
 import CustomImage from "../../../../components/CustomImage";
@@ -39,6 +39,8 @@ const JobDetailsTemplate = ({
   const [compensation, setCompensation] = useState(null);
   const [startingSalary, setStartingSalary] = useState(null);
   const [CTCDetail, setCTCDetail] = useState(null);
+  const [bondPeriod, setBondPeriod] = useState(null);
+  const [exitAmount, setExitAmount] = useState(null);
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
   const containerStyle = isWebView
@@ -66,18 +68,15 @@ const JobDetailsTemplate = ({
       content: (
         <View style={styles.addDesignationStyle}>
           <TouchableOpacity onPress={onClickAddDesignation}>
-            <CardComponent
-              customCardComponentStyle={styles.customCardComponentStyle}
-            >
+            <CardComponent customStyle={styles.customCardComponentStyle}>
               <CustomImage
                 Icon={images.iconAdd}
                 isSvg
                 source={images.iconAdd}
               />
-              <CommonText
-                title={intl.formatMessage({ id: "label.add_designation" })}
-                customTextStyle={styles.addDesignationTextStyle}
-              />
+              <CommonText customTextStyle={styles.addDesignationTextStyle}>
+                {intl.formatMessage({ id: "label.add_designation" })}
+              </CommonText>
             </CardComponent>
           </TouchableOpacity>
         </View>
@@ -85,7 +84,7 @@ const JobDetailsTemplate = ({
     },
     {
       content: (
-        <CardComponent>
+        <CardComponent customStyle={{ marginBottom: 16 }}>
           <CustomTextInput
             label={intl.formatMessage({ id: "label.designationName" })}
             placeholder={intl.formatMessage({ id: "label.designationName" })}
@@ -138,26 +137,28 @@ const JobDetailsTemplate = ({
     },
     {
       content: (
-        <View>
+        <View style={{ marginBottom: 16 }}>
           <DetailCard
             headerId="Monthly"
             details={jobDetailData?.Monthly}
             handleChange={handleMonthlyData}
             isEditProfile
+            customCardStyle={{ marginLeft: 0, marginRight: 0, marginTop: 0 }}
           />
           <DetailCard
             headerId="Yearly"
             details={jobDetailData?.Yearly}
             handleChange={handleYearlyData}
             isEditProfile
+            customCardStyle={{ marginLeft: 0, marginRight: 0, marginTop: 24 }}
           />
         </View>
       ),
     },
     {
       content: (
-        <CardComponent>
-          <View style={{ marginBottom: 24 }}>
+        <CardComponent customStyle={{ marginBottom: 16 }}>
+          <View style={{ marginBottom: 16 }}>
             <CommonText
               title={intl.formatMessage({
                 id: "label.bond_if_any",
@@ -183,6 +184,8 @@ const JobDetailsTemplate = ({
                 id: "label.months_bond_period",
               })}
               isMandatory
+              value={bondPeriod}
+              onChangeText={(val) => setBondPeriod(val)}
             />
             <CustomTextInput
               customStyle={{ marginRight: 10 }}
@@ -193,7 +196,8 @@ const JobDetailsTemplate = ({
                 id: "label.exit_amount",
               })}
               isMandatory
-              onChangeText={(val) => setStartingSalary(val)}
+              value={exitAmount}
+              onChangeText={(val) => setExitAmount(val)}
             />
           </View>
         </CardComponent>
@@ -201,7 +205,7 @@ const JobDetailsTemplate = ({
     },
     {
       content: (
-        <CardComponent>
+        <CardComponent customStyle={{ marginBottom: 16 }}>
           <CommonText
             title={intl.formatMessage({
               id: "label.selection_process",
@@ -230,7 +234,7 @@ const JobDetailsTemplate = ({
   }
 
   return (
-    <ScrollView style={{ marginBottom: 24 }}>
+    <ScrollView style={{ marginBottom: 16 }}>
       {currentBreakpoint === "xs" ? (
         <MultiRow
           rows={filteredJobDetailsConfig}
@@ -253,9 +257,9 @@ const JobDetailsTemplate = ({
               />
             </CardComponent>
           }
-          leftSectionStyle={{ flex: 3, marginLeft: 24, marginRight: 16 }}
+          leftSectionStyle={{ flex: 3 }}
           rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
-          rightSectionStyle={{ flex: 7, marginRight: 16 }}
+          rightSectionStyle={{ flex: 7 }}
         />
       )}
     </ScrollView>

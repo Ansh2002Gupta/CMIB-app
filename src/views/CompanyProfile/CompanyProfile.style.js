@@ -19,7 +19,6 @@ const style = {
   valueStyle: {
     fontSize: 16,
     color: colors.black,
-    fontWeight: "600",
   },
   badgeContainer: {
     marginBottom: 8,

@@ -11,7 +11,6 @@ const style = {
     fontSize: 14,
     alignSelf: "center",
     justifyContent: "center",
-    fontWeight: "600",
   },
   imageView: {
     flexDirection: "row",

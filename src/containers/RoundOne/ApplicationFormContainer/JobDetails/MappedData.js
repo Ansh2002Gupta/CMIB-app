@@ -2,50 +2,65 @@ export const mapApiDataToUI = () => {
   return {
     Monthly: [
       {
+        key: "Basic",
         label: "Basic",
-        value: "Basic",
+        value: "",
+        placeholder:"Basic"
       },
       {
+        key: "HRA",
         label: "HRA",
-        value: "HRA",
+        value: "",
+        placeholder:"Basic"
       },
       {
+        key: "Others",
         label: "Others",
-        value: "Other",
+        value: "",
+        placeholder:"Basic"
       },
       {
+        key: "Gross Salary",
         label: "GrossSalary",
-        value: "Gross Salary",
+        value: "",
+        placeholder:"Basic"
       },
       {
+        key: "Fixed Pay",
         label: "Fixed Pay",
-        value: "Fixed Pay",
+        value: "",
       },
       {
+        key: "Variable Pay",
         label: "Variable Pay",
-        value: "Variable Pay",
+        value: "",
       },
       {
+        key: "Semi Variable",
         label: "Semi Variable",
-        value: "Semi Variable",
+        value: "",
       },
       {
+        key: "Take Home",
         label: "Take Home",
-        value: "Take Home",
+        value: "",
       },
     ],
     Yearly: [
       {
+        key: "Basic",
         label: "Total Gross Salary",
-        value: "Basic",
+        value: "",
       },
       {
+        key: "One Time Payment",
         label: "One Time Payment",
-        value: "HRA",
+        value: "",
       },
       {
+        key: "CTC",
         label: "CTC",
-        value: "Other",
+        value: "",
       },
     ],
   };

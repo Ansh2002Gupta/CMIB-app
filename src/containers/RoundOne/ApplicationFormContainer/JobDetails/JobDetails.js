@@ -17,6 +17,7 @@ const JobDetails = () => {
   }, []);
 
   const handleMonthlyData = (fieldName, value) => {
+    console.log(value, "value");
     setJobDetailData({
       ...jobDetailData,
       Monthly: jobDetailData.Monthly.map((detail) =>

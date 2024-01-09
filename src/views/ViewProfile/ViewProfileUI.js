@@ -111,8 +111,10 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
                 >
                   <CommonText
                     customTextStyle={style.textStyle}
-                    title={buttonTitle}
-                  />
+                    fontWeight="600"
+                  >
+                    {buttonTitle}
+                  </CommonText>
                 </TouchableOpacity>
               </View>
               {!!profileImage &&
@@ -123,16 +125,20 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
                     <Image source={images.iconTick} />
                     <CommonText
                       customTextStyle={style.saveTextStyle}
-                      title={intl.formatMessage({ id: "label.save" })}
-                    />
+                      fontWeight="600"
+                    >
+                      {intl.formatMessage({ id: "label.save" })}
+                    </CommonText>
                   </View>
                 ) : (
                   <View style={[style.buttonStyle, style.secondButtonStyle]}>
                     <Image source={images.iconDelete} />
                     <CommonText
                       customTextStyle={style.textStyle}
-                      title={intl.formatMessage({ id: "label.remove" })}
-                    />
+                      fontWeight="600"
+                    >
+                      {intl.formatMessage({ id: "label.remove" })}
+                    </CommonText>
                   </View>
                 ))}
             </View>

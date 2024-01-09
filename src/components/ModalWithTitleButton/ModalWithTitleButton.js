@@ -27,7 +27,7 @@ const ModalWithTitleButton = ({
     rightButtonStyle = {},
     rightTextStyle = {},
   } = customStyles;
-  
+
   return (
     <CustomModal
       headerText={heading}
@@ -50,7 +50,11 @@ const ModalWithTitleButton = ({
           isRightDisabled={isRightDisabled}
           rightButtonLeftImage={rightButtonLeftImage}
           rightButtonRightImage={rightButtonRightImage}
-          rightButtonStyle={{ ...styles.rightButtonStyle,...(isRightDisabled ? styles.rightButtonDisableStyle : {}), ...rightButtonStyle }}
+          rightButtonStyle={{
+            ...styles.rightButtonStyle,
+            ...(isRightDisabled ? styles.rightButtonDisableStyle : {}),
+            ...rightButtonStyle,
+          }}
           rightButtonText={rightLabelTxt}
           rightTextStyle={{ ...styles.rightTextStyle, ...rightTextStyle }}
         />
@@ -59,20 +63,20 @@ const ModalWithTitleButton = ({
   );
 };
 
-
 ModalWithTitleButton.defaultProps = {
-  children: null, 
-  customStyles: {}, 
-  heading: '', 
-  enableBottomButton: false, 
-  leftLabelTxt: '',
+  children: null,
+  customStyles: {},
+  heading: "",
+  enableBottomButton: false,
+  isRightDisabled: PropTypes.bool,
+  leftLabelTxt: "",
   leftButtonLeftImage: null,
   leftButtonRightImage: null,
-  onClickLeftButton: () => {}, 
-  onClickRightButton: () => {}, 
+  onClickLeftButton: () => {},
+  onClickRightButton: () => {},
   rightButtonLeftImage: null,
   rightButtonRightImage: null,
-  rightLabelTxt: '',
+  rightLabelTxt: "",
 };
 
 ModalWithTitleButton.propTypes = {
@@ -84,8 +88,8 @@ ModalWithTitleButton.propTypes = {
     rightButtonStyle: PropTypes.object,
     rightTextStyle: PropTypes.object,
   }),
-  heading: PropTypes.string,
   enableBottomButton: PropTypes.bool,
+  heading: PropTypes.string,
   leftLabelTxt: PropTypes.string,
   leftButtonLeftImage: PropTypes.node,
   leftButtonRightImage: PropTypes.node,

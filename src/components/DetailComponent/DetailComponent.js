@@ -24,7 +24,9 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
   return (
     <View>
       {!!headerText && (
-        <CommonText customTextStyle={styles.headerText} title={headerText} />
+        <CommonText customTextStyle={styles.headerText} fontWeight="600">
+          {headerText}
+        </CommonText>
       )}
       <View style={containerStyle}>
         {details?.map((detail, index) => (
@@ -39,10 +41,11 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
                 label={intl.formatMessage({ id: detail.label })}
                 isDropdown={detail.isDropdown}
                 isCounterInput={detail.isCounterInput}
-                options={detail.options || []}
                 isMobileNumber={detail.isMobileNumber}
                 isMultiline={detail.isMultiline}
                 isMandatory
+                options={detail.options || []}
+                placeholder={detail?.placeholder}
                 height={detail.isMultiline && 84}
                 valueField={detail.valueField || "label"}
                 labelField={detail.labelField || "label"}
@@ -54,20 +57,20 @@ const DetailComponent = ({ details, headerText, isEditable, handleChange }) => {
               />
             ) : (
               <>
-                <View style={styles.titleContainer}>
-                  <CommonText
-                    title={intl.formatMessage({ id: detail.label })}
-                    customTextStyle={styles.titleStyle}
-                  />
-                  <CommonText title="*" customTextStyle={styles.starStyle} />
+                <View style={[styles.titleContainer]}>
+                  <CommonText customTextStyle={styles.titleStyle}>
+                    {detail.title}
+                  </CommonText>
+                  <CommonText customTextStyle={styles.starStyle}></CommonText>
                 </View>
                 <CommonText
-                  title={detail.value}
                   customTextStyle={[
                     styles.valueStyle,
                     detail.isLink && styles.linkStyle,
                   ]}
-                />
+                >
+                  {detail.value}
+                </CommonText>
               </>
             )}
           </View>

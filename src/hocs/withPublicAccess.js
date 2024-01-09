@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate, useSearchParams } from "../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
+import CookieAndStorageService from "../services/cookie-and-storage-service";
 import { AuthContext } from "../globalContext/auth/authProvider";
-import { StorageService } from "../services";
 import { navigations } from "../constants/routeNames";
 import { REDIRECT_URL } from "../constants/constants";
 
@@ -31,7 +31,7 @@ function withPublicAccess(Component) {
     }
 
     useEffect(() => {
-      StorageService.get("auth").then((token) => {
+      CookieAndStorageService.get({ key: "auth" }).then((token) => {
         if (authState?.token || token) {
           navigate(navigations.DASHBOARD);
         }

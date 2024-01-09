@@ -12,11 +12,12 @@ const DetailCard = ({
   headerId,
   isEditProfile,
   otherDetails,
+  customCardStyle,
 }) => {
   const intl = useIntl();
 
   return (
-    <CardComponent customStyle={style.cardStyle}>
+    <CardComponent customStyle={[style.cardStyle, customCardStyle]}>
       <DetailComponent
         details={details}
         headerText={intl.formatMessage({ id: headerId })}
