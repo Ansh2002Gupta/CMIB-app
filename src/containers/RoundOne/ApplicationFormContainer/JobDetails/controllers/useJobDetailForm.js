@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import JobDetails from "../JobDetails";
 import { SELECTION_PROCESS } from "../../../../../constants/constants";
 import { mapApiDataToUI } from "../MappedData";
 
