@@ -3,9 +3,10 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 
 import CardComponent from "../../components/CardComponent/CardComponent";
-import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import DetailComponent from "../../components/DetailComponent";
 
 import style from "./DetailCard.style";
+
 const DetailCard = ({
   details,
   handleChange,
@@ -16,9 +17,11 @@ const DetailCard = ({
 }) => {
   const intl = useIntl();
 
+  console.log(headerId, "headerId");
   return (
-    <CardComponent customStyle={[style.cardStyle, customCardStyle]}>
+    <CardComponent customStyle={(style.cardStyle, customCardStyle)}>
       <DetailComponent
+        customContainerStyle={style.customStyle}
         details={details}
         headerText={intl.formatMessage({ id: headerId })}
         isEditable={isEditProfile}
@@ -36,14 +39,17 @@ const DetailCard = ({
 };
 
 DetailCard.defaultProps = {
+  details: [],
+  handleChange: () => {},
+  headerId: "",
   isEditProfile: false,
   otherDetails: [],
 };
 
 DetailCard.propTypes = {
-  details: PropTypes.array.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  headerId: PropTypes.string.isRequired,
+  details: PropTypes.array,
+  handleChange: PropTypes.func,
+  headerId: PropTypes.string,
   isEditProfile: PropTypes.bool,
   otherDetails: PropTypes.array,
 };

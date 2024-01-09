@@ -98,6 +98,7 @@ const style = {
   errorMsg: {
     color: colors.errorRed,
     lineHeight: 18,
+    fontWeight: "600",
   },
   textAlignStyle: {
     textAlignVertical: "top",
@@ -130,6 +131,7 @@ const style = {
     marginLeft: 8,
     alignItems: "center",
   },
+  valueStyle: { paddingRight: 12 },
 };
 
 export default style;

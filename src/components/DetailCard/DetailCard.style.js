@@ -6,7 +6,11 @@ const styles = StyleSheet.create({
     marginRight: 16,
     marginTop: 24,
   },
-  customStyle: { display: "flex" },
+  customStyle: {
+    // width: "30%",
+    // flexDirection: "row",
+    // flexWrap: "wrap",
+  },
 });
 
 export default styles;

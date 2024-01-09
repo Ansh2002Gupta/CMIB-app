@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
+import { View } from "@unthinkable/react-core-components";
 
+import { SELECTION_PROCESS } from "../../../../constants/constants";
 import JobDetailsTemplate from "./JobDetailsTemplate";
 import { mapApiDataToUI } from "./MappedData";
 
 const JobDetails = () => {
+  const intl = useIntl();
   const [addDesignation, setAddDesignation] = useState(false);
   const [jobDetailData, setJobDetailData] = useState(null);
+  const [selectionProcess, setSelectionProcess] = useState(
+    SELECTION_PROCESS.map((option) => ({
+      ...option,
+      title: intl.formatMessage({ id: option.messageId }),
+    }))
+  );
 
   const onClickAddDesignation = () => {
     setAddDesignation(true);
@@ -35,11 +44,16 @@ const JobDetails = () => {
     });
   };
 
-  const options = [
-    { messageId: "label.email_from_cpaib", isSelected: false, id: 1 },
-    { messageId: "label.campus", isSelected: false, id: 2 },
-    { messageId: "label.programme_brouchers", isSelected: false, id: 3 },
-  ];
+  const handleToggle = (id) => {
+    const updatedItems = selectionProcess.map((item) => {
+      if (item.id === id) {
+        console.log(item, "item");
+        return { ...item, isSelected: !item.isSelected };
+      }
+      return item;
+    });
+    setSelectionProcess(updatedItems);
+  };
 
   return (
     <View>
@@ -49,7 +63,8 @@ const JobDetails = () => {
         jobDetailData={jobDetailData}
         handleMonthlyData={handleMonthlyData}
         handleYearlyData={handleYearlyData}
-        options={options}
+        selectionProcess={selectionProcess}
+        handleToggle={handleToggle}
       />
     </View>
   );

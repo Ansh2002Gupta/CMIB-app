@@ -30,17 +30,52 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
-  addDesignationStyle: {},
   addDesignationTextStyle: {
     fontSize: 14,
     fontWeight: "600",
     color: colors.darkBlue,
     marginLeft: 8,
   },
-  containerGridStyle: (columnCount) => ({
+  designationTextStyle: {
+    fontSize: 14,
+    fontWeight: "600",
+    marginLeft: 8,
+    alignItem: "center",
+  },
+  selectionProcessStyle: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.black,
+  },
+  bottomMargin: { marginBottom: 16 },
+  checkBoxStyle: { marginTop: 16 },
+  ctcTextInputStyle: { marginTop: 24 },
+  containerGridStyle: () => ({
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
   }),
+  monthlyCustomCardStyle: {
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 0,
+  },
+  yearlyCustomCardStyle: {
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 24,
+  },
+  bondIfAnyText: { fontSize: 16, fontWeight: "600" },
+  customToggleStyle: {
+    paddingTop: 12,
+    marginBottom: 12,
+    paddingBottom: 12,
+  },
+  bondCustomInputStyle: {
+    marginRight: 12,
+  },
+  selectionProcessTextStyle: {
+    marginBottom: 8,
+  },
 });
 
 export default styles;

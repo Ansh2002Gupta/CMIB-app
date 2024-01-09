@@ -40,7 +40,7 @@ const style = {
     backgroundColor: colors.green,
   },
   textStyle: {
-    fontSize: 14,
+    fontSize: 12,
     color: colors.black,
     paddingLeft: 8,
     paddingRight: 16,

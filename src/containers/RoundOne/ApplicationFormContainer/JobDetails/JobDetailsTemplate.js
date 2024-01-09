@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import {
   View,
-  Text,
   ScrollView,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
@@ -30,7 +29,8 @@ const JobDetailsTemplate = ({
   handleMonthlyData,
   handleYearlyData,
   onClickAddDesignation,
-  options,
+  selectionProcess,
+  handleToggle,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
@@ -49,14 +49,15 @@ const JobDetailsTemplate = ({
 
   const renderSelectionProcess = () => {
     return (
-      <View style={styles.contentStyle}>
-        {options.map((item, index) => (
+      <View style={styles.checkBoxStyle}>
+        {selectionProcess.map((item, index) => (
           <CheckBox
             key={item.id}
             id={item.id}
             index={index}
             title={item.title}
             isSelected={item.isSelected}
+            handleCheckbox={handleToggle}
           />
         ))}
       </View>
@@ -84,7 +85,7 @@ const JobDetailsTemplate = ({
     },
     {
       content: (
-        <CardComponent customStyle={{ marginBottom: 16 }}>
+        <CardComponent customStyle={styles.bottomMargin}>
           <CustomTextInput
             label={intl.formatMessage({ id: "label.designationName" })}
             placeholder={intl.formatMessage({ id: "label.designationName" })}
@@ -94,7 +95,7 @@ const JobDetailsTemplate = ({
           />
           <View style={{ ...containerStyle }}>
             <CustomTextInput
-              customStyle={{ marginRight: 10 }}
+              customStyle={{ marginRight: 24 }}
               label={intl.formatMessage({ id: "label.compensation" })}
               placeholder={intl.formatMessage({ id: "label.compensation" })}
               isMandatory
@@ -102,7 +103,6 @@ const JobDetailsTemplate = ({
               onChangeText={(val) => setCompensation(val)}
             />
             <CustomTextInput
-              customStyle={{ marginRight: 10 }}
               label={intl.formatMessage({
                 id: "label.starting_salary_including_perks",
               })}
@@ -121,7 +121,7 @@ const JobDetailsTemplate = ({
             isMandatory
           />
           <CustomTextInput
-            customStyle={{ marginRight: 10, marginTop: 24 }}
+            customStyle={styles.ctcTextInputStyle}
             label={intl.formatMessage({
               id: "label.details_of_ctc",
             })}
@@ -137,34 +137,33 @@ const JobDetailsTemplate = ({
     },
     {
       content: (
-        <View style={{ marginBottom: 16 }}>
+        <View style={styles.bottomMargin}>
           <DetailCard
-            headerId="Monthly"
+            headerId="label.monthly"
             details={jobDetailData?.Monthly}
             handleChange={handleMonthlyData}
             isEditProfile
-            customCardStyle={{ marginLeft: 0, marginRight: 0, marginTop: 0 }}
+            customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
-            headerId="Yearly"
+            headerId="label.yearly"
             details={jobDetailData?.Yearly}
             handleChange={handleYearlyData}
             isEditProfile
-            customCardStyle={{ marginLeft: 0, marginRight: 0, marginTop: 24 }}
+            customCardStyle={styles.yearlyCustomCardStyle}
           />
         </View>
       ),
     },
     {
       content: (
-        <CardComponent customStyle={{ marginBottom: 16 }}>
-          <View style={{ marginBottom: 16 }}>
-            <CommonText
-              title={intl.formatMessage({
+        <CardComponent customStyle={styles.bottomMargin}>
+          <View style={styles.bottomMargin}>
+            <CommonText customTextStyle={styles.bondIfAnyText}>
+              {intl.formatMessage({
                 id: "label.bond_if_any",
               })}
-              customTextStyle={{ fontSize: 16, fontWeight: "600" }}
-            />
+            </CommonText>
           </View>
           <View style={{ ...containerStyle }}>
             <CustomToggleComponent
@@ -172,45 +171,55 @@ const JobDetailsTemplate = ({
                 id: "label.bond_required",
               })}
               isMandatory
-              customToggleStyle={{ paddingTop: 16, marginBottom: 12 }}
+              customToggleStyle={styles.customToggleStyle}
             />
-
-            <CustomTextInput
-              customStyle={{ marginRight: 10 }}
-              label={intl.formatMessage({
-                id: "label.months_bond_period",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.months_bond_period",
-              })}
-              isMandatory
-              value={bondPeriod}
-              onChangeText={(val) => setBondPeriod(val)}
-            />
-            <CustomTextInput
-              customStyle={{ marginRight: 10 }}
-              label={intl.formatMessage({
-                id: "label.exit_amount",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.exit_amount",
-              })}
-              isMandatory
-              value={exitAmount}
-              onChangeText={(val) => setExitAmount(val)}
-            />
+            <View
+              style={{
+                width: "50%",
+                flexDirection: "row",
+              }}
+            >
+              <CustomTextInput
+                customStyle={styles.bondCustomInputStyle}
+                label={intl.formatMessage({
+                  id: "label.months_bond_period",
+                })}
+                placeholder={intl.formatMessage({
+                  id: "label.months_bond_period",
+                })}
+                isMandatory
+                value={bondPeriod}
+                onChangeText={(val) => setBondPeriod(val)}
+              />
+              <CustomTextInput
+                customStyle={styles.bondCustomInputStyle}
+                label={intl.formatMessage({
+                  id: "label.exit_amount",
+                })}
+                placeholder={intl.formatMessage({
+                  id: "label.exit_amount",
+                })}
+                isMandatory
+                value={exitAmount}
+                onChangeText={(val) => setExitAmount(val)}
+              />
+            </View>
           </View>
         </CardComponent>
       ),
     },
     {
       content: (
-        <CardComponent customStyle={{ marginBottom: 16 }}>
+        <CardComponent customStyle={styles.bottomMargin}>
           <CommonText
-            title={intl.formatMessage({
+            customContainerStyle={styles.selectionProcessTextStyle}
+            customTextStyle={styles.selectionProcessStyle}
+          >
+            {intl.formatMessage({
               id: "label.selection_process",
             })}
-          />
+          </CommonText>
+
           {renderSelectionProcess()}
         </CardComponent>
       ),
@@ -234,7 +243,7 @@ const JobDetailsTemplate = ({
   }
 
   return (
-    <ScrollView style={{ marginBottom: 16 }}>
+    <ScrollView style={{ marginBottom: 64 }}>
       {currentBreakpoint === "xs" ? (
         <MultiRow
           rows={filteredJobDetailsConfig}
@@ -242,21 +251,7 @@ const JobDetailsTemplate = ({
         />
       ) : (
         <TwoColumn
-          leftSection={
-            <CardComponent
-              customCardComponentStyle={styles.customCardComponentStyle}
-            >
-              <CommonText
-                title={intl.formatMessage({ id: "label.designation" })}
-                customTextStyle={styles.addDesignationTextStyle}
-              />
-              <CustomImage
-                Icon={images.iconAdd}
-                isSvg
-                source={images.iconAdd}
-              />
-            </CardComponent>
-          }
+          leftSection={[]}
           leftSectionStyle={{ flex: 3 }}
           rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
           rightSectionStyle={{ flex: 7 }}

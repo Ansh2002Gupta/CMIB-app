@@ -240,6 +240,22 @@ const locale = {
   "label.password_changed_successfully":
     "Your password has been changed successfully",
   "label.sessions": "Sessions",
+  "label.basic": "Basic",
+  "label.hra": "HRA",
+  "label.others": "Others",
+  "label.grossSalary": "Gross Salary",
+  "label.fixedPay": "Fixed Pay",
+  "label.variablePay": "Variable Pay",
+  "label.semiVariable": "Semi Variable",
+  "label.takeHome": "Take Home",
+  "label.totalGrossSalary": "Total Gross Salary",
+  "label.oneTimePayment": "One Time Payment",
+  "label.ctc": "CTC",
+  "label.monthly": "Monthly",
+  "label.yearly": "Yearly",
+  "label.group_discussion": "Group Discussion",
+  "label.psychometric_test": "Psychometric Test/ Written Test",
+  "label.personal_interview": "Personal Interview",
 };
 
 export default locale;
