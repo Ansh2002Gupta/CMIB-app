@@ -9,6 +9,12 @@ const useJobDetailForm = () => {
   const intl = useIntl();
   const [addDesignation, setAddDesignation] = useState(false);
   const [jobDetailData, setJobDetailData] = useState(null);
+  const [designationName, setDesignationName] = useState(null);
+  const [compensation, setCompensation] = useState(null);
+  const [startingSalary, setStartingSalary] = useState(null);
+  const [CTCDetail, setCTCDetail] = useState(null);
+  const [bondPeriod, setBondPeriod] = useState(null);
+  const [exitAmount, setExitAmount] = useState(null);
   const [selectionProcess, setSelectionProcess] = useState(
     SELECTION_PROCESS.map((option) => ({
       ...option,
@@ -54,17 +60,50 @@ const useJobDetailForm = () => {
     setSelectionProcess(updatedItems);
   };
 
-  return (
-    <JobDetails
-      onClickAddDesignation={onClickAddDesignation}
-      addDesignation={addDesignation}
-      jobDetailData={jobDetailData}
-      handleMonthlyData={handleMonthlyData}
-      handleYearlyData={handleYearlyData}
-      selectionProcess={selectionProcess}
-      handleToggle={handleToggle}
-    />
-  );
+  const handleBondPeriod = (val) => {
+    setBondPeriod(val);
+  };
+
+  const handleCompensation = (val) => {
+    setCompensation(val);
+  };
+
+  const handleCTCDetail = (val) => {
+    setCTCDetail(val);
+  };
+
+  const handleDesignationName = (val) => {
+    setDesignationName(val);
+  };
+
+  const handleExitAmount = (val) => {
+    setExitAmount(val);
+  };
+
+  const handleStartingSalary = (val) => {
+    setStartingSalary(val);
+  };
+  return {
+    addDesignation,
+    bondPeriod,
+    compensation,
+    CTCDetail,
+    designationName,
+    exitAmount,
+    handleMonthlyData,
+    handleYearlyData,
+    handleToggle,
+    jobDetailData,
+    onClickAddDesignation,
+    selectionProcess,
+    startingSalary,
+    handleBondPeriod,
+    handleCompensation,
+    handleCTCDetail,
+    handleDesignationName,
+    handleExitAmount,
+    handleStartingSalary,
+  };
 };
 
 export default useJobDetailForm;

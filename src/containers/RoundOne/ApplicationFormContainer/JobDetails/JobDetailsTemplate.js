@@ -25,22 +25,28 @@ import styles from "./JobDetails.style";
 
 const JobDetailsTemplate = ({
   addDesignation,
-  jobDetailData,
+  bondPeriod,
+  compensation,
+  CTCDetail,
+  designationName,
+  exitAmount,
+  handleBondPeriod,
+  handleCompensation,
+  handleCTCDetail,
+  handleDesignationName,
+  handleExitAmount,
   handleMonthlyData,
+  handleStartingSalary,
   handleYearlyData,
+  handleToggle,
+  jobDetailData,
   onClickAddDesignation,
   selectionProcess,
-  handleToggle,
+  startingSalary,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
-  const [designationName, setDesignationName] = useState(null);
-  const [compensation, setCompensation] = useState(null);
-  const [startingSalary, setStartingSalary] = useState(null);
-  const [CTCDetail, setCTCDetail] = useState(null);
-  const [bondPeriod, setBondPeriod] = useState(null);
-  const [exitAmount, setExitAmount] = useState(null);
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
   const containerStyle = isWebView
@@ -91,7 +97,7 @@ const JobDetailsTemplate = ({
             placeholder={intl.formatMessage({ id: "label.designationName" })}
             isMandatory
             value={designationName}
-            onChangeText={(val) => setDesignationName(val)}
+            onChangeText={(val) => handleDesignationName(val)}
           />
           <View style={{ ...containerStyle }}>
             <CustomTextInput
@@ -100,7 +106,7 @@ const JobDetailsTemplate = ({
               placeholder={intl.formatMessage({ id: "label.compensation" })}
               isMandatory
               value={compensation}
-              onChangeText={(val) => setCompensation(val)}
+              onChangeText={(val) => handleCompensation(val)}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -111,7 +117,7 @@ const JobDetailsTemplate = ({
               })}
               isMandatory
               value={startingSalary}
-              onChangeText={(val) => setStartingSalary(val)}
+              onChangeText={(val) => handleStartingSalary(val)}
             />
           </View>
           <CustomTextEditor
@@ -130,7 +136,7 @@ const JobDetailsTemplate = ({
             })}
             isMandatory
             value={CTCDetail}
-            onChangeText={(val) => setCTCDetail(val)}
+            onChangeText={(val) => handleCTCDetail(val)}
           />
         </CardComponent>
       ),
@@ -184,7 +190,7 @@ const JobDetailsTemplate = ({
                 })}
                 isMandatory
                 value={bondPeriod}
-                onChangeText={(val) => setBondPeriod(val)}
+                onChangeText={(val) => handleBondPeriod(val)}
               />
               <CustomTextInput
                 customStyle={styles.bondCustomInputStyle}
@@ -196,7 +202,7 @@ const JobDetailsTemplate = ({
                 })}
                 isMandatory
                 value={exitAmount}
-                onChangeText={(val) => setExitAmount(val)}
+                onChangeText={(val) => handleExitAmount(val)}
               />
             </View>
           </View>
