@@ -71,13 +71,14 @@ const useTicketView = () => {
       {
         content: (
           <CommonText
-            title={item.id}
             customTextStyle={
               isHeading
                 ? styles.tableHeadingText
                 : styles.cellTextStyle(14, 600)
             }
-          />
+          >
+            {item.id}
+          </CommonText>
         ),
         style: styles.columnStyle("15%"),
         isFillSpace: true,
@@ -85,11 +86,12 @@ const useTicketView = () => {
       {
         content: (
           <CommonText
-            title={item.query_type}
             customTextStyle={
               isHeading ? styles.tableHeadingText : styles.cellTextStyle()
             }
-          />
+          >
+            {item.query_type}
+          </CommonText>
         ),
         style: styles.columnStyle("20%"),
         isFillSpace: true,
@@ -97,14 +99,15 @@ const useTicketView = () => {
       {
         content: (
           <CommonText
-            title={item.status}
             customTextStyle={getStatusStyle(
               item.status,
               isHeading,
               styles,
               true
             )}
-          />
+          >
+            {item.status}
+          </CommonText>
         ),
         style: styles.columnStyle("15%"),
         isFillSpace: true,
@@ -112,11 +115,12 @@ const useTicketView = () => {
       {
         content: (
           <CommonText
-            title={item.assigned_to}
             customTextStyle={
               isHeading ? styles.tableHeadingText : styles.cellTextStyle()
             }
-          />
+          >
+            {item.assigned_to}
+          </CommonText>
         ),
         style: styles.columnStyle("20%"),
         isFillSpace: true,
@@ -124,11 +128,12 @@ const useTicketView = () => {
       {
         content: (
           <CommonText
-            title={item.created_at}
             customTextStyle={
               isHeading ? styles.tableHeadingText : styles.cellTextStyle()
             }
-          />
+          >
+            {item.created_at}
+          </CommonText>
         ),
         style: styles.columnStyle("15%"),
         isFillSpace: true,

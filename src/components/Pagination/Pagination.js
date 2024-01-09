@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { View, Text } from "@unthinkable/react-core-components";
 
@@ -27,6 +28,8 @@ function Pagination(props) {
     siblingCount = 1,
     isWebView,
   } = props;
+
+  const intl = useIntl();
 
   const totalPages = totalCards ? Math.ceil(totalCards / cardsPerPage) : null;
 
@@ -99,10 +102,11 @@ function Pagination(props) {
           leftIconSource: images.iconArrowLeft,
         }}
       >
-        <CommonText
-          title={isWebView ? "Previous" : ""}
-          customTextStyle={styles.previousText}
-        />
+        {isWebView && (
+          <CommonText customTextStyle={styles.previousText}>
+            {intl.formatMessage({ id: "label.previous" })}
+          </CommonText>
+        )}
       </CustomButton>
       <View style={styles.paginationRange}>
         {paginationRange().map((page, idx) => {
@@ -124,11 +128,12 @@ function Pagination(props) {
               onPress={() => paginate(page)}
             >
               <CommonText
-                title={page}
                 customTextStyle={
                   currentPage === page ? styles.activeText : styles.inActiveText
                 }
-              />
+              >
+                {page}
+              </CommonText>
             </CustomButton>
           );
         })}
@@ -143,10 +148,11 @@ function Pagination(props) {
           rightIconSource: images.iconArrowRightBlack,
         }}
       >
-        <CommonText
-          title={isWebView ? "Next" : ""}
-          customTextStyle={styles.previousText}
-        />
+        {isWebView && (
+          <CommonText customTextStyle={styles.previousText}>
+            {intl.formatMessage({ id: "label.next" })}
+          </CommonText>
+        )}
       </CustomButton>
     </View>
   );

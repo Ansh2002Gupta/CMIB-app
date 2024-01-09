@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import { View, FlatList } from "@unthinkable/react-core-components";
 
 import MultiColumn from "../../core/layouts/MultiColumn";
@@ -33,18 +34,18 @@ const CustomTable = ({
   tableHeading,
 }) => {
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
 
-  const PaginationFooter = ({ title = "Rows Per Page:", isWebView }) => {
+  const PaginationFooter = ({ isWebView }) => {
     return (
       <View
         style={isWebView ? styles.paginationFooterWeb : styles.paginationFooter}
       >
         <View style={isWebView ? styles.rowsPerPageWeb : styles.rowsPerPage}>
           <View style={styles.rowsPerPageWeb}>
-            <CommonText
-              title={title}
-              customTextStyle={styles.rowsPerPageText}
-            />
+            <CommonText customTextStyle={styles.rowsPerPageText}>
+              {intl.formatMessage({ id: "label.rows_per_page" })}
+            </CommonText>
             <CustomDropdown
               options={rowsLimit}
               onSelect={handleSelect}
@@ -53,10 +54,9 @@ const CustomTable = ({
             />
           </View>
           {!isWebView && (
-            <CommonText
-              title={`${indexOfFirstRecord} - ${indexOfLastRecord} of ${totalcards}`}
-              customTextStyle={styles.rowsPerPageText}
-            />
+            <CommonText customTextStyle={styles.rowsPerPageText}>
+              {`${indexOfFirstRecord} - ${indexOfLastRecord} of ${totalcards}`}
+            </CommonText>
           )}
         </View>
         <Pagination
@@ -91,10 +91,9 @@ const CustomTable = ({
                   parentStyle={styles.iconTicket}
                 />
                 {isWebView && (
-                  <CommonText
-                    title={"Filters"}
-                    customTextStyle={styles.filterText}
-                  />
+                  <CommonText customTextStyle={styles.filterText}>
+                    {"Filters"}
+                  </CommonText>
                 )}
               </View>
             }
@@ -129,25 +128,27 @@ const CustomTable = ({
                           <View style={styles.mobileContainer}>
                             <View>
                               <CommonText
-                                title={item.id}
                                 customTextStyle={styles.cellTextStyle()}
-                              />
+                              >
+                                {item.id}
+                              </CommonText>
                               <CommonText
-                                title={item.query_type}
                                 customTextStyle={styles.tableQueryText}
-                              />
+                              >
+                                {item.query_type}
+                              </CommonText>
                             </View>
                             <View style={styles.rowsPerPageWeb}>
                               <CommonText
-                                title={item.status}
                                 customTextStyle={getStatusStyle(
                                   item.status,
                                   false,
                                   styles,
                                   isWebView
                                 )}
-                              />
-
+                              >
+                                {item.status}
+                              </CommonText>
                               <CustomImage
                                 source={images.iconTicket}
                                 style={styles.iconTicket}
