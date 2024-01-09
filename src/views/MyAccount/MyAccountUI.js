@@ -1,30 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-  ScrollView,
-} from "@unthinkable/react-core-components";
+import { View, ScrollView } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-import ChangePasswordModal from "../../containers/ChangePasswordModal/ChangePasswordModal";
-import CustomModal from "../../components/CustomModal/CustomModal";
-import LogoutModal from "../../containers/LogoutModal/LogoutModal";
+import CustomImage from "../../components/CustomImage";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
 import style from "./MyAccount.style";
 
-const MyAccountUI = ({
-  changePasswordModal,
-  handleOptionClick,
-  handleChangePassword,
-  handleLogoutClick,
-  isLogout,
-  intl,
-  options,
-  saveLogout,
-}) => {
+const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
   //TODO: Replace this dummy data with api data.
   //TODO: update image on save button (once api will come)
   const profileImage = "";
@@ -43,12 +28,24 @@ const MyAccountUI = ({
     );
   };
 
+  const renderHorizontalLine = () => {
+    return <View style={style.horizontalLine} />;
+  };
+
   return (
     <>
       <ScrollView style={style.profileParentContainer}>
-        <View style={style.profileContainer}>
+        <View
+          style={[
+            !omitArrowIcon ? style.profileContainer : style.profileContainerWeb,
+          ]}
+        >
           {renderProfileIcon()}
-          <View style={style.detailContainer}>
+          <View
+            style={[
+              !omitArrowIcon ? style.detailContainer : style.detailContainerWeb,
+            ]}
+          >
             <CommonText
               customTextStyle={style.fullNameStyle}
               fontWeight="600"
@@ -56,52 +53,49 @@ const MyAccountUI = ({
             <CommonText customTextStyle={style.emailStyle}>{email}</CommonText>
           </View>
         </View>
+        {omitArrowIcon && renderHorizontalLine()}
         {options.map((option, index) => (
-          <TouchableOpacity
+          <CustomTouchableOpacity
             style={[
               style.optionCotainer,
-              index !== options.length - 1 && style.optionCotainerBorder,
+              omitArrowIcon
+                ? index === options.length - 2 && style.optionCotainerBorder
+                : index !== options.length - 1 &&
+                  style.optionCotainerBordeLight,
             ]}
             key={option.id}
             onPress={() => handleOptionClick(option)}
           >
-            <Image source={option.iconLeft} style={style.leftIcon} />
+            <CustomImage source={option.iconLeft} style={style.leftIcon} />
             <View style={style.titleParentStyle}>
               <CommonText customTextStyle={style.titleStyle}>
                 {intl.formatMessage({ id: option.title })}
               </CommonText>
             </View>
-
-            <View style={style.iconContainer}>
-              <Image source={images.iconArrowRight} style={style.arrowIcon} />
-            </View>
-          </TouchableOpacity>
+            {!omitArrowIcon && (
+              <View style={style.iconContainer}>
+                <CustomImage
+                  source={images.iconArrowRight}
+                  style={style.arrowIcon}
+                />
+              </View>
+            )}
+          </CustomTouchableOpacity>
         ))}
       </ScrollView>
-      {changePasswordModal ? (
-        <CustomModal
-          headerText={intl.formatMessage({
-            id: "label.change_password",
-          })}
-          customInnerContainerStyle={style.innerContainerStyle}
-          headerTextStyle={style.headerTextStyle}
-        >
-          <ChangePasswordModal onPressCancel={handleChangePassword} />
-        </CustomModal>
-      ) : null}
-      {isLogout && (
-        <LogoutModal onCancel={handleLogoutClick} onSave={saveLogout} />
-      )}
     </>
   );
 };
 
+MyAccountUI.defaultProps = {
+  omitArrowIcon: false,
+};
+
 MyAccountUI.propTypes = {
-  changePasswordModal: PropTypes.bool,
   handleOptionClick: PropTypes.func.isRequired,
-  handleChangePassword: PropTypes.func,
   intl: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
+  omitArrowIcon: PropTypes.bool,
 };
 
 export default MyAccountUI;

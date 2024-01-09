@@ -2,22 +2,29 @@ import { useContext } from "react";
 
 import CookieAndStorageService from "../services/cookie-and-storage-service";
 import { AuthContext } from "../globalContext/auth/authProvider";
-import { clearAuthAndLogout } from "../globalContext/auth/authActions";
+import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
+import useLogoutAPI from "../services/apiServices/hooks/useLogoutAPI";
 import useNavigateScreen from "../services/hooks/useNavigateScreen";
+import { clearAuthAndLogout } from "../globalContext/auth/authActions";
+import { setShowLogoutModal } from "../globalContext/userProfile/userProfileActions";
 import { navigations } from "../constants/routeNames";
 
 export const useHeader = () => {
   const { navigateScreen: navigate } = useNavigateScreen();
-
   const [, authDispatch] = useContext(AuthContext);
+  const [, userProfileDispatch] = useContext(UserProfileContext);
+
+  const { handleUserLogout, isLoggingUserOut } = useLogoutAPI();
 
   const onLogout = async () => {
-    authDispatch(clearAuthAndLogout());
-    navigate(navigations.LOGIN);
+    await handleUserLogout({});
     await CookieAndStorageService.remove({ key: "auth" });
-    // TODO: Also include the logout API call here and then use this method in the LogoutModal's Logout button too.
+    authDispatch(clearAuthAndLogout());
+    userProfileDispatch(setShowLogoutModal(false));
+    navigate(navigations.LOGIN);
   };
   return {
+    isLoggingUserOut,
     onLogout,
   };
 };
