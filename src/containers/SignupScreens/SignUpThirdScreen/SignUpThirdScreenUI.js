@@ -175,6 +175,7 @@ const SignUpThirdScreenUI = ({
             leftIconSource: images.iconArrowLeft,
           }}
           isDisabled={!allFieldsFilled()}
+          isButtonTwoGreen
           onPressButtonOne={onGoBack}
           onPressButtonTwo={onClickNext}
         />

@@ -17,7 +17,10 @@ const useGetCompanyProfileAPI = () => {
       setCompanyProfileApiStatus(API_STATUS.LOADING);
       errorWhileGettingResult && setErrorWhileGettingResult("");
       const res = await Http.get(COMPANY_PROFILE);
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+      if (
+        res.status === STATUS_CODES.SUCCESS_STATUS ||
+        res.code === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setCompanyProfileApiStatus(API_STATUS.SUCCESS);
         setProfileResult(res.data);
         return;
