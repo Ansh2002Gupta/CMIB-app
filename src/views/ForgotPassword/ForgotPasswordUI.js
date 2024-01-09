@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
-import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
+import CustomButton from "../../components/CustomButton";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
@@ -98,15 +98,6 @@ const ForgotPasswordUI = (props) => {
           ...styles.webEmailInput,
         };
       }
-
-      case "submitButtonContainer": {
-        if (currentBreakpoint === "sm") {
-          return {
-            ...styles.width900pxOrLessSubmitBtn,
-          };
-        }
-        return {};
-      }
       default:
         return;
     }
@@ -169,16 +160,14 @@ const ForgotPasswordUI = (props) => {
           </View>
         </View>
         <View style={isWebView ? styles.webSubmitView : styles.submitView}>
-          <ButtonComponent
-            title={intl.formatMessage({ id: "label.submit" })}
-            onPress={onSendOtpClick}
+          <CustomButton
             disabled={loginDisabled}
-            customTitleStyle={isWebView ? styles.customBtnText : {}}
-            customButtonContainer={
-              isWebView ? getResponsiveStyles("submitButtonContainer") : {}
-            }
-            displayLoader={isLoading}
-          />
+            isLoading={isLoading}
+            onPress={onSendOtpClick}
+            withGreenBackground
+          >
+            {intl.formatMessage({ id: "label.submit" })}
+          </CustomButton>
           <CustomTouchableOpacity onPress={onClickGoToLogin}>
             <CommonText
               customTextStyle={styles.backToLoginText}

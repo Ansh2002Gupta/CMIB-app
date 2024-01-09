@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
-import ButtonComponent from "../../components/ButtonComponent";
 import CommonText from "../../components/CommonText";
+import CustomButton from "../../components/CustomButton";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomModal from "../../components/CustomModal";
 import CustomTextInput from "../../components/CustomTextInput";
@@ -190,13 +190,15 @@ function CreateNewPasswordUI(props) {
             />
           </View>
           <View style={styles.submitView}>
-            <ButtonComponent
-              title={intl.formatMessage({ id: "label.submit" })}
+            <CustomButton
+              disabled={!newPassword || !confirmNewPassword}
+              isLoading={isLoading}
               onPress={handleSubmitClick}
-              customTitleStyle={styles.webView.submitText}
-              customButtonContainer={styles.webView.submitTextContainer}
-              displayLoader={isLoading}
-            />
+              withGreenBackground
+              style={styles.webView.submitTextContainer}
+            >
+              {intl.formatMessage({ id: "label.submit" })}
+            </CustomButton>
             <CustomTouchableOpacity onPress={onClickGoToLogin}>
               <CommonText
                 customTextStyle={styles.backToLoginText}

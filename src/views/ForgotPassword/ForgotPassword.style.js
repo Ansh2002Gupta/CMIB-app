@@ -78,9 +78,6 @@ const style = {
   customAsteriskStyle: {
     color: colors.red,
   },
-  customBtnText: {
-    fontSize: 16,
-  },
   footerImage: {
     position: "absolute",
     bottom: 0,
