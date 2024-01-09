@@ -227,6 +227,7 @@ const SignUpSecondScreenUI = ({
           leftIconSource: images.iconArrowLeft,
         }}
         isDisabled={!allFieldsFilled()}
+        isButtonTwoGreen
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
         customContainerStyle={!isWebView && style.customSaveButtonContainer}
