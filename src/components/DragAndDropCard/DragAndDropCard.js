@@ -44,12 +44,14 @@ const DragAndDropCard = ({
             <Spinner />
             {(uploadPercentage || uploadPercentage === 0) && (
               <View
-                style={{
-                  ...styles.percentageBox,
-                  ...(Math.round(uploadPercentage) > 9
-                    ? styles.percentageBoxTwoDigitNumber
-                    : {}),
-                }}
+                style={
+                  isPlatformWeb && {
+                    ...styles.percentageBox,
+                    ...(Math.round(uploadPercentage) > 9
+                      ? styles.percentageBoxTwoDigitNumber
+                      : {}),
+                  }
+                }
               >
                 <CommonText
                   customTextStyle={styles.percentageText}
