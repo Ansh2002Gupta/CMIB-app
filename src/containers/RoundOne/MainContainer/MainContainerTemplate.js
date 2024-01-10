@@ -34,7 +34,7 @@ const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
           style={styles.buttonStyle}
         >
           <CardComponent
-            customCardComponentStyle={{
+            customStyle={{
               ...styles.componentStyle,
               ...(isWebView && selectedTab === container.id
                 ? styles.webActiveComponentStyle
