@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
   logoutStyle: {
     backgroundColor: colors.yellow,
+    borderWidth: 0,
   },
   rightTextStyle: {
     color: colors.black,
