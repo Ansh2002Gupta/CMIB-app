@@ -81,7 +81,10 @@ const JobDetailsTemplate = ({
                 isSvg
                 source={images.iconAdd}
               />
-              <CommonText customTextStyle={styles.addDesignationTextStyle}>
+              <CommonText
+                customTextStyle={styles.addDesignationTextStyle}
+                fontWeight="600"
+              >
                 {intl.formatMessage({ id: "label.add_designation" })}
               </CommonText>
             </CardComponent>
@@ -165,7 +168,7 @@ const JobDetailsTemplate = ({
       content: (
         <CardComponent customStyle={styles.bottomMargin}>
           <View style={styles.bondIfAnyView}>
-            <CommonText customTextStyle={styles.bondIfAnyText}>
+            <CommonText customTextStyle={styles.bondIfAnyText} fontWeight="600">
               {intl.formatMessage({
                 id: "label.bond_if_any",
               })}
@@ -214,6 +217,7 @@ const JobDetailsTemplate = ({
           <CommonText
             customContainerStyle={styles.selectionProcessTextStyle}
             customTextStyle={styles.selectionProcessStyle}
+            fontWeight="600"
           >
             {intl.formatMessage({
               id: "label.selection_process",

@@ -94,7 +94,6 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
       )}
 
       <MainLayout
-        // header={<Header onPressLeftIcon={toggleSideBar} />}
         bottomSection={
           isAuthenticated &&
           (!isWebView && showBottomBar() ? <BottomBar /> : null)

@@ -27,25 +27,13 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 16,
   },
-  detailHeadingTextStyle: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
   addDesignationTextStyle: {
     fontSize: 14,
-    fontWeight: "600",
     color: colors.darkBlue,
     marginLeft: 8,
   },
-  designationTextStyle: {
-    fontSize: 14,
-    fontWeight: "600",
-    marginLeft: 8,
-    alignItem: "center",
-  },
   selectionProcessStyle: {
     fontSize: 16,
-    fontWeight: "600",
     color: colors.black,
   },
   bottomMargin: {
@@ -56,8 +44,12 @@ const styles = StyleSheet.create({
   bondIfAnyView: {
     marginBottom: 16,
   },
-  checkBoxStyle: { marginTop: 16 },
-  ctcTextInputStyle: { marginTop: 24 },
+  checkBoxStyle: {
+    marginTop: 16,
+  },
+  ctcTextInputStyle: {
+    marginTop: 24,
+  },
   containerGridStyle: () => ({
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
@@ -72,7 +64,9 @@ const styles = StyleSheet.create({
     marginRight: 0,
     marginTop: 24,
   },
-  bondIfAnyText: { fontSize: 16, fontWeight: "600" },
+  bondIfAnyText: {
+    fontSize: 16,
+  },
   customToggleStyle: {
     paddingTop: 12,
     marginBottom: 12,
@@ -85,7 +79,9 @@ const styles = StyleSheet.create({
   selectionProcessTextStyle: {
     marginBottom: 8,
   },
-  customStyleCompensation: { marginRight: 24 },
+  customStyleCompensation: {
+    marginRight: 24,
+  },
 });
 
 export default styles;

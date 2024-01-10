@@ -9,14 +9,12 @@ const styles = StyleSheet.create({
   titleStyle: {
     color: colors.darkGrey,
     fontSize: 12,
-    fontWeight: "500",
     marginBottom: 8,
   },
   inputStyle: {
     paddingBottom: 24,
   },
   headerText: {
-    fontWeight: "600",
     fontSize: 16,
     paddingBottom: 24,
   },
@@ -45,7 +43,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.black,
     marginBottom: 24,
-    fontWeight: "500",
   },
   containerStyle: {
     flexDirection: "row",

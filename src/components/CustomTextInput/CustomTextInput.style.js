@@ -98,7 +98,6 @@ const style = {
   errorMsg: {
     color: colors.errorRed,
     lineHeight: 18,
-    fontWeight: "600",
   },
   textAlignStyle: {
     textAlignVertical: "top",

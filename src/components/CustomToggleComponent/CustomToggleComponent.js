@@ -13,7 +13,7 @@ const CustomToggleComponent = ({
   isMandatory,
   label,
 }) => {
-  const [selectedToggleOption, setSelectedToggleOption] = useState(2);
+  const [selectedToggleOption, setSelectedToggleOption] = useState(-1);
   const intl = useIntl();
   const handleOptionSelect = (option) => {
     setSelectedToggleOption(option);
