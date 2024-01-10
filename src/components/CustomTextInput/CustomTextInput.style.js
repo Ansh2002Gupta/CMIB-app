@@ -142,6 +142,7 @@ const style = {
     fontWeight: "500",
     borderRadius: 4,
   },
+  valueStyle: { paddingRight: 12 },
 };
 
 export default style;

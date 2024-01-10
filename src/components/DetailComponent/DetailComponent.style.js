@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-const style = {
+const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
   },
@@ -9,14 +11,29 @@ const style = {
     fontSize: 12,
     marginBottom: 8,
   },
+  inputStyle: {
+    paddingBottom: 24,
+  },
   headerText: {
     fontSize: 16,
     paddingBottom: 24,
   },
-  innerContainer: { width: "100%" },
-  rowStyle: { width: "50%" },
+  innerContainer: {
+    width: "100%",
+    marginRight: 24,
+  },
+  rowStyle: {
+    width: "60%",
+  },
+  minorRowStyle: {
+    width: "30%",
+  },
   starStyle: {
+    marginLeft: 4,
     color: colors.errorRed,
+  },
+  webContainer: {
+    marginRight: 24,
   },
   linkStyle: {
     color: colors.darkBlue,
@@ -37,6 +54,16 @@ const style = {
     display: "grid",
     gridTemplateColumns: columnCount || "1fr 1fr 1fr",
   }),
+});
+
+export const getRowStyle = (detail) => {
+  if (detail.isMajor) {
+    return styles.rowStyle;
+  }
+  if (detail.isMinor) {
+    return styles.minorRowStyle;
+  }
+  return styles.innerContainer;
 };
 
-export default style;
+export default styles;

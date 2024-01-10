@@ -71,6 +71,9 @@ export const style = StyleSheet.create({
   customContainerStyle: {
     marginBottom: 16,
   },
+  imageContainer: {
+    marginBottom: 48,
+  },
 });
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
