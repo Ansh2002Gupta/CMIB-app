@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import CommonText from "../../../components/CommonText";
 import CustomImage from "../../../components/CustomImage";
-import { gridData } from "../constant";
 import images from "../../../images";
 import styles from "../TicketsView.style";
 
@@ -20,16 +19,16 @@ const tableHeading = {
   created_at: "Created On",
 };
 
-const useTicketView = () => {
+const useTicketView = (data) => {
   const [rowsToShow, setRowsToShow] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastRecord = currentPage * rowsToShow;
   const indexOfFirstRecord = indexOfLastRecord - rowsToShow;
 
-  let currentRecords = gridData.slice(indexOfFirstRecord, indexOfLastRecord);
+  let currentRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
 
-  const totalcards = gridData.length;
+  const totalcards = data.length;
 
   let isHeading = true;
 
@@ -39,7 +38,12 @@ const useTicketView = () => {
     setRowsToShow(option.value);
   };
 
-  function getStatusStyle(status, isHeading, styles, isWebView) {
+  let headingTexts = ["id"];
+  let subHeadingText = ["query_type"];
+  let statusText = ["status"];
+  let tableIcon = images.iconTicket;
+
+  function getStatusStyle(status, isHeading, isWebView) {
     status = status.toLowerCase();
 
     if (isHeading) {
@@ -73,9 +77,7 @@ const useTicketView = () => {
           <CommonText
             fontWeight={"600"}
             customTextStyle={
-              isHeading
-                ? styles.tableHeadingText
-                : styles.cellTextStyle()
+              isHeading ? styles.tableHeadingText : styles.cellTextStyle()
             }
           >
             {item.id}
@@ -141,7 +143,7 @@ const useTicketView = () => {
       },
       {
         content: !isHeading && (
-          <CustomImage source={images.iconTicket} style={styles.iconTicket} />
+          <CustomImage source={tableIcon} style={styles.iconTicket} />
         ),
         style: styles.columnStyle("10%"),
         isFillSpace: true,
@@ -150,21 +152,24 @@ const useTicketView = () => {
   };
 
   return {
-    rowsToShow,
-    setRowsToShow,
-    getStatusStyle,
-    getColoumConfigs,
-    isHeading,
     currentPage,
-    setCurrentPage,
     currentRecords,
-    totalcards,
-    rowsLimit,
-    indexOfFirstRecord,
-    indexOfLastRecord,
+    getColoumConfigs,
+    getStatusStyle,
     handleSearchResults,
     handleSelect,
+    headingTexts,
+    indexOfFirstRecord,
+    indexOfLastRecord,
+    isHeading,
+    rowsLimit,
+    rowsToShow,
+    setCurrentPage,
+    statusText,
+    subHeadingText,
     tableHeading,
+    tableIcon,
+    totalcards,
   };
 };
 

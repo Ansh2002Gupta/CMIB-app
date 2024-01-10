@@ -14,3 +14,10 @@ export const getImageSource = (uploadedImage) => {
   }
   return "";
 };
+
+export const getRenderText = (items, keys) => {
+  if (keys.length === 0) {
+    return "";
+  }
+  return keys.map((key) => items[key]).join(" ");
+};

@@ -4,6 +4,7 @@ export const navigations = {
   CREATE_NEW_PASSWORD: "/create-new-password",
   DASHBOARD: "/dashboard",
   FORGOT_PASSWORD: "/forgot-password",
+  FEEDBACK: "/feedback",
   JOBS: "/jobs",
   JOB_APPLICANTS: "/job-applicants",
   JOB_SEEKERS: "/job-seekers",

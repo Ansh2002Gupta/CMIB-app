@@ -40,7 +40,7 @@ const CustomDropdown = ({ dropdownIcon, onSelect, options, placeholder }) => {
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (
               <CustomTouchableOpacity onPress={() => handleOptionSelect(item)}>
-                <Text style={styles.optionText}>{item.label}</Text>
+                <CommonText customTextStyle={styles.optionText}>{item.label}</CommonText>
               </CustomTouchableOpacity>
             )}
           />
@@ -51,14 +51,14 @@ const CustomDropdown = ({ dropdownIcon, onSelect, options, placeholder }) => {
 };
 
 CustomDropdown.defaultProps = {
-  dropdownIcon: {},
+  dropdownIcon: "",
   onSelect: () => {},
   options: [],
   placeholder: "Select an option",
 };
 
 CustomDropdown.propTypes = {
-  dropdownIcon: PropTypes.object,
+  dropdownIcon: PropTypes.string,
   onSelect: PropTypes.func,
   options: PropTypes.array,
   placeholder: PropTypes.string,

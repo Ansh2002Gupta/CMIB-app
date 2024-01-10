@@ -1,5 +1,11 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
+import {
+  StyleSheet,
+  Platform,
+  Dimensions,
+} from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const { width: WIDTH } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -30,63 +36,6 @@ const styles = StyleSheet.create({
       },
     }),
   }),
-  inProgress: {
-    textAlign: "center",
-    marginRight: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
-    color: colors.orange,
-  },
-  pending: {
-    textAlign: "center",
-    marginRight: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
-    color: colors.skyBlueDark,
-  },
-  close: {
-    textAlign: "center",
-    marginRight: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
-    color: colors.darkGreen,
-  },
-  inProgressWeb: {
-    textAlign: "center",
-    paddingLeft: 8,
-    borderRadius: 16,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
-    backgroundColor: colors.lightOrange,
-    color: colors.orange,
-  },
-  pendingWeb: {
-    textAlign: "center",
-    borderRadius: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
-    color: colors.skyBlueDark,
-    backgroundColor: colors.skyBlueLight,
-  },
-  closeWeb: {
-    borderRadius: 16,
-    textAlign: "center",
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
-    color: colors.darkGreen,
-    backgroundColor: colors.lightGreen,
-  },
   tableHeadingText: {
     fontWeight: "600",
     color: colors.darkGrey,
@@ -102,12 +51,12 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   }),
   columnStyleBorder: {
-    backgroundColor:colors.white,
+    backgroundColor: colors.white,
     borderColor: colors.lightGrey,
     borderTopWidth: 0.5,
   },
-  columnHeaderStyle:{
-    backgroundColor:colors.white,
+  columnHeaderStyle: {
+    backgroundColor: colors.white,
   },
   tableSection: {
     borderWidth: 0.5,
@@ -142,12 +91,13 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     borderTopWidth: 0.5,
     borderColor: colors.lightGrey,
-    backgroundColor:colors.white,
+    backgroundColor: colors.white,
   },
   paginationFooter: {
     paddingTop: 12,
     paddingBottom: 12,
     borderColor: colors.lightGrey,
+    width: WIDTH - 2 * 24,
   },
   previousButton: {
     padding: 8,

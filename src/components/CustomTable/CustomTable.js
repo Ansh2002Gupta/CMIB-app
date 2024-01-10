@@ -12,6 +12,7 @@ import CustomImage from "../../components/CustomImage";
 import Pagination from "../../components/Pagination/Pagination";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
+import { getRenderText } from "../../utils/util";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
@@ -25,13 +26,18 @@ const CustomTable = ({
   getStatusStyle,
   handleSearchResults,
   handleSelect,
+  headingTexts,
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
   rowsLimit,
   rowsToShow,
   setCurrentPage,
+  showSearchBar,
+  statusText,
+  subHeadingText,
   tableHeading,
+  tableIcon,
   totalcards,
 }) => {
   const { isWebView } = useIsWebView();
@@ -66,7 +72,6 @@ const CustomTable = ({
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           siblingCount={1}
-          isWebView={isWebView}
           prevNextBtnstyles={
             isWebView ? styles.previousButtonWeb : styles.previousButton
           }
@@ -79,27 +84,29 @@ const CustomTable = ({
     <View style={styles.container}>
       <TwoRow
         topSection={
-          <TwoColumn
-            leftSection={
-              <SearchView data={dataList} onSearch={handleSearchResults} />
-            }
-            isLeftFillSpace
-            isRightFillSpace={false}
-            rightSection={
-              <View style={styles.imageParentStyle}>
-                <TouchableImage
-                  source={images.iconFilter}
-                  parentStyle={styles.iconTicket}
-                />
-                {isWebView && (
-                  <CommonText customTextStyle={styles.filterText}>
-                    {intl.formatMessage({ id: "label.filters" })}
-                  </CommonText>
-                )}
-              </View>
-            }
-            style={styles.filterTopSection(isWebView)}
-          />
+          showSearchBar && (
+            <TwoColumn
+              leftSection={
+                <SearchView data={dataList} onSearch={handleSearchResults} />
+              }
+              isLeftFillSpace
+              isRightFillSpace={false}
+              rightSection={
+                <View style={styles.imageParentStyle}>
+                  <TouchableImage
+                    source={images.iconFilter}
+                    parentStyle={styles.iconTicket}
+                  />
+                  {isWebView && (
+                    <CommonText customTextStyle={styles.filterText}>
+                      {intl.formatMessage({ id: "label.filters" })}
+                    </CommonText>
+                  )}
+                </View>
+              }
+              style={styles.filterTopSection(isWebView)}
+            />
+          )
         }
         isTopFillSpace={false}
         isBottomFillSpace
@@ -132,27 +139,26 @@ const CustomTable = ({
                               <CommonText
                                 customTextStyle={styles.cellTextStyle()}
                               >
-                                {item.id}
+                                {getRenderText(item, headingTexts)}
                               </CommonText>
                               <CommonText
                                 customTextStyle={styles.tableQueryText}
                               >
-                                {item.query_type}
+                                {getRenderText(item, subHeadingText)}
                               </CommonText>
                             </View>
                             <View style={styles.rowsPerPageWeb}>
                               <CommonText
                                 customTextStyle={getStatusStyle(
                                   item.status,
-                                  false,
-                                  styles,
+                                  false,                      
                                   isWebView
                                 )}
                               >
-                                {item.status}
+                                {getRenderText(item, statusText)}
                               </CommonText>
                               <CustomImage
-                                source={images.iconTicket}
+                                source={tableIcon}
                                 style={styles.iconTicket}
                               />
                             </View>
@@ -191,7 +197,11 @@ CustomTable.defaultProps = {
   rowsLimit: [],
   rowsToShow: 10,
   setCurrentPage: () => {},
+  showSearchBar: true,
+  statusText: '',
+  subHeadingText: '',
   tableHeading: [],
+  tableIcon:images.ticketIcon,
   totalcards: 0,
 };
 
@@ -202,13 +212,18 @@ CustomTable.propTypes = {
   getStatusStyle: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
+  headingTexts: PropTypes.array,
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   isHeading: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
+  showSearchBar: PropTypes.bool,
+  statusText: PropTypes.array,
+  subHeadingText: PropTypes.array,
   tableHeading: PropTypes.array.isRequired,
+  tableIcon: PropTypes.string.isRequired,
   totalcards: PropTypes.number.isRequired,
 };
 

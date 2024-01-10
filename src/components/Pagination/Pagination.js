@@ -2,6 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { View, Text } from "@unthinkable/react-core-components";
+import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
@@ -21,16 +22,13 @@ function Pagination(props) {
     totalCards,
     setCurrentPage,
     currentPage,
-    pageStyles,
-    customPageBtnStyles,
-    customSelectedPageStyles,
     prevNextBtnstyles,
     siblingCount,
-    isWebView,
   } = props;
 
   const intl = useIntl();
-
+  const windowDimensions = useWindowDimensions();
+  const showbuttonTextButton = windowDimensions.width >= 900;
   const totalPages = totalCards ? Math.ceil(totalCards / cardsPerPage) : null;
 
   const paginationRange = () => {
@@ -102,7 +100,7 @@ function Pagination(props) {
           leftIconSource: images.iconArrowLeft,
         }}
       >
-        {isWebView && (
+        {showbuttonTextButton && (
           <CommonText customTextStyle={styles.previousText}>
             {intl.formatMessage({ id: "label.previous" })}
           </CommonText>
@@ -148,7 +146,7 @@ function Pagination(props) {
           rightIconSource: images.iconArrowRightBlack,
         }}
       >
-        {isWebView && (
+        {showbuttonTextButton && (
           <CommonText customTextStyle={styles.previousText}>
             {intl.formatMessage({ id: "label.next" })}
           </CommonText>
@@ -161,7 +159,6 @@ function Pagination(props) {
 Pagination.defaultProps = {
   cardsPerPage: 10,
   currentPage: 1,
-  isWebView: false,
   siblingCount: 1,
   totalCards: 0,
   pageStyles: {},
@@ -176,7 +173,6 @@ Pagination.propTypes = {
   currentPage: PropTypes.number,
   customPageBtnStyles: PropTypes.object,
   customSelectedPageStyles: PropTypes.object,
-  isWebView: PropTypes.bool,
   pageStyles: PropTypes.object,
   prevNextBtnstyles: PropTypes.object,
   setCurrentPage: PropTypes.func,
