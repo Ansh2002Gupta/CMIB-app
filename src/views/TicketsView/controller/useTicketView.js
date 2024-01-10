@@ -71,10 +71,11 @@ const useTicketView = () => {
       {
         content: (
           <CommonText
+            fontWeight={"600"}
             customTextStyle={
               isHeading
                 ? styles.tableHeadingText
-                : styles.cellTextStyle(14, 600)
+                : styles.cellTextStyle()
             }
           >
             {item.id}

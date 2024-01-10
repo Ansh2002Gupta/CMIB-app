@@ -188,7 +188,8 @@ const images = {
   addCircle,
   minusCirlce,
   iconTicket,
-  iconArrowRightBlack
+  iconArrowRightBlack,
+  iconArrowRight,
 };
 
 export default images;

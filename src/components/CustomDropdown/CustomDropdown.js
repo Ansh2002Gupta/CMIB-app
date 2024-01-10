@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { View, Text, FlatList } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
@@ -6,7 +7,7 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CustomImage from "../CustomImage";
 import styles from "./CustomDropdown.style";
 
-const CustomDropdown = ({ options, onSelect, placeholder, dropdownIcon }) => {
+const CustomDropdown = ({ dropdownIcon, onSelect, options, placeholder }) => {
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -47,6 +48,20 @@ const CustomDropdown = ({ options, onSelect, placeholder, dropdownIcon }) => {
       )}
     </View>
   );
+};
+
+CustomDropdown.defaultProps = {
+  dropdownIcon: {},
+  onSelect: () => {},
+  options: [],
+  placeholder: "Select an option",
+};
+
+CustomDropdown.propTypes = {
+  dropdownIcon: PropTypes.object,
+  onSelect: PropTypes.func,
+  options: PropTypes.array,
+  placeholder: PropTypes.string,
 };
 
 export default CustomDropdown;
