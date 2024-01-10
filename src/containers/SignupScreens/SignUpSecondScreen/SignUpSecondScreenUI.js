@@ -12,6 +12,7 @@ import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
+import { numericValidator } from "../../../constants/validation";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = ({
@@ -94,7 +95,10 @@ const SignUpSecondScreenUI = ({
               errorMessage={errors.registrationNo}
               isError={!!errors.registrationNo}
               value={registrationNo}
-              onChangeText={(val) => handleInputChange(val, "registrationNo")}
+              onChangeText={(val) =>
+                numericValidator(val) &&
+                handleInputChange(val, "registrationNo")
+              }
             />
           </View>
           <View style={style.partnerInput}>
@@ -111,7 +115,9 @@ const SignUpSecondScreenUI = ({
               value={noOfPartners}
               errorMessage={errors.noOfPartners}
               isError={!!errors.noOfPartners}
-              onChangeText={(val) => handleInputChange(val, "noOfPartners")}
+              onChangeText={(val) =>
+                numericValidator(val) && handleInputChange(val, "noOfPartners")
+              }
             />
           </View>
         </View>
@@ -186,7 +192,9 @@ const SignUpSecondScreenUI = ({
               maxLength={15}
               errorMessage={errors.code}
               isError={!!errors.code}
-              onChangeText={(val) => handleInputChange(val, "code")}
+              onChangeText={(val) =>
+                numericValidator(val) && handleInputChange(val, "code")
+              }
               isMandatory
             />
           </View>
@@ -205,7 +213,9 @@ const SignUpSecondScreenUI = ({
               isNumeric
               maxLength={15}
               value={telephoneNo}
-              onChangeText={(val) => handleInputChange(val, "telephoneNo")}
+              onChangeText={(val) =>
+                numericValidator(val) && handleInputChange(val, "telephoneNo")
+              }
             />
           </View>
         </View>

@@ -20,6 +20,7 @@ import {
   SALUTATION_OPTIONS,
   WOMENT_PLACEMENT,
 } from "../../../constants/constants";
+import { numericValidator } from "../../../constants/validation";
 import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 
 const SignUpThirdScreenUI = ({
@@ -130,7 +131,10 @@ const SignUpThirdScreenUI = ({
               maxLength={10}
               customHandleBlur={() => handleBlur("mobileNo", index)}
               isNumeric
-              onChangeText={(val) => handleInputChange(val, "mobileNo", index)}
+              onChangeText={(val) =>
+                numericValidator(val) &&
+                handleInputChange(val, "mobileNo", index)
+              }
               isMobileNumber
               errorMessage={errors[index].mobileNo}
               isError={!!errors[index].mobileNo}
