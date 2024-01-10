@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     gap: 16,
-    marginTop: 32,
+    marginTop: 8,
   },
   mainViewStyle: {
     flex: 1,

@@ -73,23 +73,20 @@ const JobDetailsTemplate = ({
   const JobDetailsConfig = [
     {
       content: (
-        <View style={styles.addDesignationStyle}>
-          <TouchableOpacity onPress={onClickAddDesignation}>
-            <CardComponent customStyle={styles.customCardComponentStyle}>
-              <CustomImage
-                Icon={images.iconAdd}
-                isSvg
-                source={images.iconAdd}
-              />
-              <CommonText
-                customTextStyle={styles.addDesignationTextStyle}
-                fontWeight="600"
-              >
-                {intl.formatMessage({ id: "label.add_designation" })}
-              </CommonText>
-            </CardComponent>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={onClickAddDesignation}
+          style={styles.addDesignationView}
+        >
+          <CardComponent customStyle={styles.customCardComponentStyle}>
+            <CustomImage Icon={images.iconAdd} isSvg source={images.iconAdd} />
+            <CommonText
+              customTextStyle={styles.addDesignationTextStyle}
+              fontWeight="600"
+            >
+              {intl.formatMessage({ id: "label.add_designation" })}
+            </CommonText>
+          </CardComponent>
+        </TouchableOpacity>
       ),
     },
     {
@@ -102,9 +99,9 @@ const JobDetailsTemplate = ({
             value={designationName}
             onChangeText={(val) => handleDesignationName(val)}
           />
-          <View style={{ ...containerStyle }}>
+          <View style={containerStyle}>
             <CustomTextInput
-              customStyle={isWebView && { ...styles.customStyleCompensation }}
+              customStyle={isWebView && { ...styles.bondCustomInputStyle }}
               label={intl.formatMessage({ id: "label.compensation" })}
               placeholder={intl.formatMessage({ id: "label.compensation" })}
               isMandatory
@@ -174,7 +171,7 @@ const JobDetailsTemplate = ({
               })}
             </CommonText>
           </View>
-          <View style={{ ...containerStyle }}>
+          <View style={containerStyle}>
             <CustomToggleComponent
               label={intl.formatMessage({
                 id: "label.bond_required",
@@ -182,7 +179,6 @@ const JobDetailsTemplate = ({
               isMandatory
               customToggleStyle={styles.customToggleStyle}
             />
-
             <CustomTextInput
               customStyle={isWebView && { ...styles.bondCustomInputStyle }}
               label={intl.formatMessage({
@@ -223,7 +219,6 @@ const JobDetailsTemplate = ({
               id: "label.selection_process",
             })}
           </CommonText>
-
           {renderSelectionProcess()}
         </CardComponent>
       ),
@@ -247,15 +242,15 @@ const JobDetailsTemplate = ({
   }
 
   return (
-    <ScrollView style={{ marginBottom: 64 }}>
+    <ScrollView>
       {currentBreakpoint === "xs" ? (
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
         <TwoColumn
           leftSection={[]}
-          leftSectionStyle={{ flex: 3 }}
+          leftSectionStyle={styles.leftSectionStyle}
           rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
-          rightSectionStyle={{ flex: 7 }}
+          rightSectionStyle={styles.rightSectionStyle}
         />
       )}
     </ScrollView>

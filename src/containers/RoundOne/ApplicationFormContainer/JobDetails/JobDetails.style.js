@@ -10,16 +10,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
     backgroundColor: colors.secondaryGrey,
     flexDirection: "row",
-    paddingTop: 16,
-    paddingRight: 16,
     paddingLeft: 16,
-    paddingBottom: 16,
-  },
-  MultiRowStyle: {
-    backgroundColor: colors.backgroundColor,
-    marginTop: 16,
-    marginLeft: 16,
-    marginRight: 16,
+    paddingRight: 16,
+    paddingTop: 14,
+    paddingBottom: 14,
   },
   MultiRowPhoneStyle: {
     backgroundColor: colors.backgroundColor,
@@ -50,9 +44,9 @@ const styles = StyleSheet.create({
   ctcTextInputStyle: {
     marginTop: 24,
   },
-  containerGridStyle: () => ({
+  containerGridStyle: (columnCount) => ({
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
+    gridTemplateColumns: columnCount || "1fr 1fr 1fr",
   }),
   monthlyCustomCardStyle: {
     marginLeft: 0,
@@ -81,6 +75,16 @@ const styles = StyleSheet.create({
   },
   customStyleCompensation: {
     marginRight: 24,
+  },
+  leftSectionStyle: {
+    flex: 3,
+  },
+  rightSectionStyle: {
+    flex: 7,
+  },
+  addDesignationView: {
+    marginLeft: 16,
+    marginRight: 16,
   },
 });
 

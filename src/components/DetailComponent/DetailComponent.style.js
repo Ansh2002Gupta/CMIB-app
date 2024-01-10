@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   containerGridStyle: (columnCount) => ({
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
+    gridTemplateColumns: columnCount || "1fr 1fr 1fr",
   }),
 });
 

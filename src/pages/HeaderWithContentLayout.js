@@ -12,13 +12,13 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import MainLayout from "../layouts/MainLayout";
 
 import BottomBar from "../containers/BottomBar";
+import commonStyles from "../theme/styles/commonStyles";
 import Footer from "../containers/Footer";
 import Header from "../containers/Header";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
-import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
+import { getAuthToken } from "../utils/getAuthToken";
 import { navigations } from "../constants/routeNames";
-import commonStyles from "../theme/styles/commonStyles";
 import images from "../images";
 import Styles from "./HeaderWithContentLayout.style";
 

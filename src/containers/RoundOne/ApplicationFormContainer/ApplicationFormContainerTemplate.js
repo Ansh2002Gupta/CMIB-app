@@ -15,6 +15,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
     <View style={styles.mainViewStyle}>
       <ApplicationFormStepper activeStep={activeStep} intl={intl} />
       <JobDetails />
+      {/* TODO This button will be in seprate form file*/}
       <View style={styles.actionBtnContainer}>
         <CustomButton
           onPress={() => {
