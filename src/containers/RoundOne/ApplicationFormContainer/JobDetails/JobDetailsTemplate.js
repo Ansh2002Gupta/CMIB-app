@@ -8,8 +8,6 @@ import {
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import useIsWebView from "../../../../hooks/useIsWebView";
-
 import CardComponent from "../../../../components/CardComponent/CardComponent";
 import CheckBox from "../../../../components/CheckBox";
 import CommonText from "../../../../components/CommonText";
@@ -20,6 +18,7 @@ import CustomToggleComponent from "../../../../components/CustomToggleComponent/
 import DetailCard from "../../../../components/DetailCard";
 import MultiRow from "../../../../core/layouts/MultiRow";
 import TwoColumn from "../../../../core/layouts/TwoColumn/TwoColumn";
+import useIsWebView from "../../../../hooks/useIsWebView";
 import { gridStyles } from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
 import styles from "./JobDetails.style";

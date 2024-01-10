@@ -20,16 +20,16 @@ const useJobDetailForm = () => {
     }))
   );
   const [startingSalary, setStartingSalary] = useState(null);
-  const onClickAddDesignation = () => {
-    setAddDesignation(true);
-  };
 
   useEffect(() => {
     setJobDetailData(mapApiDataToUI);
   }, []);
 
+  const onClickAddDesignation = () => {
+    setAddDesignation(true);
+  };
+
   const handleMonthlyData = (fieldName, value) => {
-    console.log(value, "value");
     setJobDetailData({
       ...jobDetailData,
       Monthly: jobDetailData.Monthly.map((detail) =>
@@ -50,7 +50,6 @@ const useJobDetailForm = () => {
   const handleToggle = (id) => {
     const updatedItems = selectionProcess.map((item) => {
       if (item.id === id) {
-        console.log(item, "item");
         return { ...item, isSelected: !item.isSelected };
       }
       return item;
