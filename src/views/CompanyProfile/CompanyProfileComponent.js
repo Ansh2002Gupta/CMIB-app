@@ -279,7 +279,7 @@ const CompanyProfileComponent = () => {
     if (isEditProfile) {
       handleEdit(false);
     } else {
-      navigate(navigations.PROFILE);
+      navigate(-1);
     }
   };
 

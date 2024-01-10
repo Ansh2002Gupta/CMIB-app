@@ -15,7 +15,7 @@ const ViewProfieComponent = () => {
   };
 
   const onGoBack = () => {
-    navigate(navigations.PROFILE);
+    navigate(-1);
   };
 
   return (
