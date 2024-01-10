@@ -4,8 +4,8 @@ import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
-import JobDetails from "./JobDetails";
 import CustomButton from "../../../components/CustomButton";
+import JobDetails from "./JobDetails";
 import styles from "./ApplicationFormContainer.style";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
