@@ -32,7 +32,9 @@ const useTicketView = (data) => {
 
   let isHeading = true;
 
-  const handleSearchResults = (filteredData) => {};
+  const handleSearchResults = (filteredData) => {
+    //TODO: Implement searching 
+  };
 
   const handleSelect = (option) => {
     setRowsToShow(option.value);

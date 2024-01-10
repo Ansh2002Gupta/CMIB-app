@@ -34,6 +34,11 @@ const style = {
     color: colors.black,
     fontWeight: fontWeight,
   }),
+  horizontalLine:(color)=>({
+    borderTopWidth:1,
+    width:'100%',
+    color:color
+  })
 };
 
 export default style;

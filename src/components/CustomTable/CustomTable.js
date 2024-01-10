@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { View, FlatList } from "@unthinkable/react-core-components";
@@ -9,6 +9,7 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import CommonText from "../../components/CommonText";
 import CustomDropdown from "../../components/CustomDropdown";
 import CustomImage from "../../components/CustomImage";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import Pagination from "../../components/Pagination/Pagination";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
@@ -16,8 +17,7 @@ import { getRenderText } from "../../utils/util";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
-
-const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
+import FilterModal from "../../containers/FilterModal";
 
 const CustomTable = ({
   currentPage,
@@ -42,6 +42,12 @@ const CustomTable = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleFilterModal = () => {
+    setShowModal((prev) => !prev);
+  };
 
   const PaginationFooter = ({ isWebView }) => {
     return (
@@ -87,22 +93,26 @@ const CustomTable = ({
           showSearchBar && (
             <TwoColumn
               leftSection={
-                <SearchView data={dataList} onSearch={handleSearchResults} />
+                <SearchView data={currentRecords} onSearch={handleSearchResults} />
               }
               isLeftFillSpace
               isRightFillSpace={false}
               rightSection={
-                <View style={styles.imageParentStyle}>
+                <CustomTouchableOpacity
+                  onPress={handleFilterModal}
+                  style={styles.imageParentStyle}
+                >
                   <TouchableImage
                     source={images.iconFilter}
                     parentStyle={styles.iconTicket}
+                    onPress={handleFilterModal}
                   />
                   {isWebView && (
                     <CommonText customTextStyle={styles.filterText}>
                       {intl.formatMessage({ id: "label.filters" })}
                     </CommonText>
                   )}
-                </View>
+                </CustomTouchableOpacity>
               }
               style={styles.filterTopSection(isWebView)}
             />
@@ -151,7 +161,7 @@ const CustomTable = ({
                               <CommonText
                                 customTextStyle={getStatusStyle(
                                   item.status,
-                                  false,                      
+                                  false,
                                   isWebView
                                 )}
                               >
@@ -180,6 +190,7 @@ const CustomTable = ({
           />
         }
       />
+      {showModal && <FilterModal onPressIconCross={handleFilterModal} />}
     </View>
   );
 };
@@ -198,10 +209,10 @@ CustomTable.defaultProps = {
   rowsToShow: 10,
   setCurrentPage: () => {},
   showSearchBar: true,
-  statusText: '',
-  subHeadingText: '',
+  statusText: "",
+  subHeadingText: "",
   tableHeading: [],
-  tableIcon:images.ticketIcon,
+  tableIcon: images.ticketIcon,
   totalcards: 0,
 };
 
