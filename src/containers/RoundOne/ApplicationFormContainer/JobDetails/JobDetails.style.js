@@ -48,7 +48,14 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: colors.black,
   },
-  bottomMargin: { marginBottom: 16 },
+  bottomMargin: {
+    marginBottom: 16,
+    marginRight: 16,
+    marginLeft: 16,
+  },
+  bondIfAnyView: {
+    marginBottom: 16,
+  },
   checkBoxStyle: { marginTop: 16 },
   ctcTextInputStyle: { marginTop: 24 },
   containerGridStyle: () => ({

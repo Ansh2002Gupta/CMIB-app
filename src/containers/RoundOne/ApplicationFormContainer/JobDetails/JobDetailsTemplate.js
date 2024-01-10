@@ -165,7 +165,7 @@ const JobDetailsTemplate = ({
     {
       content: (
         <CardComponent customStyle={styles.bottomMargin}>
-          <View style={styles.bottomMargin}>
+          <View style={styles.bondIfAnyView}>
             <CommonText customTextStyle={styles.bondIfAnyText}>
               {intl.formatMessage({
                 id: "label.bond_if_any",
@@ -182,7 +182,7 @@ const JobDetailsTemplate = ({
             />
 
             <CustomTextInput
-              customStyle={styles.bondCustomInputStyle}
+              customStyle={isWebView && { ...styles.bondCustomInputStyle }}
               label={intl.formatMessage({
                 id: "label.months_bond_period",
               })}
@@ -194,7 +194,7 @@ const JobDetailsTemplate = ({
               onChangeText={(val) => handleBondPeriod(val)}
             />
             <CustomTextInput
-              customStyle={styles.bondCustomInputStyles}
+              customStyle={isWebView && { ...styles.bondCustomInputStyle }}
               label={intl.formatMessage({
                 id: "label.exit_amount",
               })}
@@ -246,10 +246,7 @@ const JobDetailsTemplate = ({
   return (
     <ScrollView style={{ marginBottom: 64 }}>
       {currentBreakpoint === "xs" ? (
-        <MultiRow
-          rows={filteredJobDetailsConfig}
-          style={{ marginLeft: 16, marginRight: 16 }}
-        />
+        <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
         <TwoColumn
           leftSection={[]}
