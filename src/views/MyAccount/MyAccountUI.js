@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { View, ScrollView } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import IconHeader from "../../components/IconHeader/IconHeader";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
@@ -34,6 +35,10 @@ const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
 
   return (
     <>
+      <IconHeader
+        headerText={intl.formatMessage({ id: "label.account" })}
+        intl={intl}
+      />
       <ScrollView style={style.profileParentContainer}>
         <View
           style={[

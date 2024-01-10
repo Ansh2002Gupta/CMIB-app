@@ -16,6 +16,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
   },
   componentStyle: {
+    marginTop: 24,
     flexDirection: "row",
     paddingBottom: 24,
     ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),

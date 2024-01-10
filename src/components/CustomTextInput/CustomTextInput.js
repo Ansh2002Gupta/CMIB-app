@@ -47,6 +47,8 @@ const CustomTextInput = (props) => {
     placeholder,
     step,
     value,
+    labelField,
+    valueField,
     ...remainingProps
   } = props;
 
@@ -95,12 +97,13 @@ const CustomTextInput = (props) => {
             isError && style.invalidInput,
             dropdownStyle,
           ]}
+          selectedTextStyle={style.valueStyle}
           renderRightIcon={() => <Image source={images.iconDownArrow} />}
           placeholderStyle={style.placeholderStyle}
           data={options}
           maxHeight={200}
-          labelField="label"
-          valueField="value"
+          labelField={labelField}
+          valueField={valueField}
           placeholder={placeholder || ""}
           value={value}
           onFocus={handleFocus}
@@ -197,6 +200,7 @@ CustomTextInput.defaultProps = {
   isPaddingNotRequired: false,
   isPassword: false,
   label: "",
+  labelField: "label",
   maxCount: 100,
   minCount: 0,
   options: [],
@@ -204,6 +208,7 @@ CustomTextInput.defaultProps = {
   placeholder: "",
   step: 1,
   value: "",
+  valueField: "value",
 };
 
 CustomTextInput.propTypes = {
@@ -228,6 +233,7 @@ CustomTextInput.propTypes = {
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
   label: PropTypes.string,
+  labelField: PropTypes.string,
   maxCount: PropTypes.number,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
@@ -235,6 +241,7 @@ CustomTextInput.propTypes = {
   placeholder: PropTypes.string,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  valueField: PropTypes.string,
 };
 
 export default CustomTextInput;

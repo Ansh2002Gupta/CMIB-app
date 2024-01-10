@@ -32,9 +32,6 @@ const signUpHeader =
 const HomeWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(signUpHeader);
-const ContentRouteWithPrivateAccess = withPrivateAccess(
-  HeaderWithContentLayout
-);
 
 const config = [
   {
@@ -103,7 +100,7 @@ const config = [
   },
   {
     pagePath: navigations.VIEW_PROFILE,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",
@@ -113,7 +110,7 @@ const config = [
   },
   {
     pagePath: navigations.COMPANY_PROFILE,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",
@@ -123,7 +120,7 @@ const config = [
   },
   {
     pagePath: navigations.APPLICATION_FORM,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",
