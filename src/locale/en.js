@@ -235,7 +235,8 @@ const locale = {
     "Your password has been changed successfully",
   "label.sessions": "Sessions :",
   "label.previous":"Previous",
-  "label.rows_per_page":"Rows Per Page:"
+  "label.rows_per_page":"Rows Per Page:",
+  "label.filters":"Filters",
 };
 
 export default locale;

@@ -1,5 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import PropTypes from "prop-types";
 import { View, FlatList } from "@unthinkable/react-core-components";
 
 import MultiColumn from "../../core/layouts/MultiColumn";
@@ -18,20 +19,20 @@ import styles from "./CustomTable.style";
 const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
 
 const CustomTable = ({
-  rowsToShow,
-  getStatusStyle,
-  getColoumConfigs,
-  isHeading,
   currentPage,
-  setCurrentPage,
   currentRecords,
-  totalcards,
-  rowsLimit,
-  indexOfFirstRecord,
-  indexOfLastRecord,
+  getColoumConfigs,
+  getStatusStyle,
   handleSearchResults,
   handleSelect,
+  indexOfFirstRecord,
+  indexOfLastRecord,
+  isHeading,
+  rowsLimit,
+  rowsToShow,
+  setCurrentPage,
   tableHeading,
+  totalcards,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -82,7 +83,7 @@ const CustomTable = ({
             leftSection={
               <SearchView data={dataList} onSearch={handleSearchResults} />
             }
-            isLeftFillSpace={true}
+            isLeftFillSpace
             isRightFillSpace={false}
             rightSection={
               <View style={styles.imageParentStyle}>
@@ -92,7 +93,7 @@ const CustomTable = ({
                 />
                 {isWebView && (
                   <CommonText customTextStyle={styles.filterText}>
-                    {"Filters"}
+                    {intl.formatMessage({ id: "label.filters" })}
                   </CommonText>
                 )}
               </View>
@@ -101,7 +102,7 @@ const CustomTable = ({
           />
         }
         isTopFillSpace={false}
-        isBottomFillSpace={true}
+        isBottomFillSpace
         bottomSection={
           <TwoRow
             style={styles.tableTopSection}
@@ -164,8 +165,8 @@ const CustomTable = ({
                 {isWebView && <PaginationFooter isWebView={isWebView} />}
               </View>
             }
-            isTopFillSpace={false}
-            isBottomFillSpace={true}
+            isTopFillSpace
+            isBottomFillSpace={false}
             bottomSection={
               !isWebView && <PaginationFooter isWebView={isWebView} />
             }
@@ -175,6 +176,40 @@ const CustomTable = ({
       />
     </View>
   );
+};
+
+CustomTable.defaultProps = {
+  currentPage: 1,
+  currentRecords: [],
+  getColoumConfigs: () => {},
+  getStatusStyle: () => {},
+  handleSearchResults: () => {},
+  handleSelect: () => {},
+  indexOfFirstRecord: 0,
+  indexOfLastRecord: 0,
+  isHeading: false,
+  rowsLimit: [],
+  rowsToShow: 10,
+  setCurrentPage: () => {},
+  tableHeading: [],
+  totalcards: 0,
+};
+
+CustomTable.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  currentRecords: PropTypes.array.isRequired,
+  getColoumConfigs: PropTypes.func.isRequired,
+  getStatusStyle: PropTypes.func.isRequired,
+  handleSearchResults: PropTypes.func.isRequired,
+  handleSelect: PropTypes.func.isRequired,
+  indexOfFirstRecord: PropTypes.number.isRequired,
+  indexOfLastRecord: PropTypes.number.isRequired,
+  isHeading: PropTypes.bool.isRequired,
+  rowsLimit: PropTypes.array.isRequired,
+  rowsToShow: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  tableHeading: PropTypes.array.isRequired,
+  totalcards: PropTypes.number.isRequired,
 };
 
 export default CustomTable;

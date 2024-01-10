@@ -121,7 +121,7 @@ const config = [
   },
   {
     pagePath: navigations.TICKETS,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",

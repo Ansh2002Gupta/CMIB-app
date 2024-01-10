@@ -25,7 +25,7 @@ function Pagination(props) {
     customPageBtnStyles,
     customSelectedPageStyles,
     prevNextBtnstyles,
-    siblingCount = 1,
+    siblingCount,
     isWebView,
   } = props;
 
@@ -158,17 +158,30 @@ function Pagination(props) {
   );
 }
 
+Pagination.defaultProps = {
+  cardsPerPage: 10,
+  currentPage: 1,
+  isWebView: false,
+  siblingCount: 1,
+  totalCards: 0,
+  pageStyles: {},
+  customPageBtnStyles: {},
+  customSelectedPageStyles: {},
+  prevNextBtnstyles: {},
+  setCurrentPage: () => {},
+};
+
 Pagination.propTypes = {
   cardsPerPage: PropTypes.number,
-  totalCards: PropTypes.number,
-  setCurrentPage: PropTypes.func,
   currentPage: PropTypes.number,
-  pageStyles: PropTypes.object,
   customPageBtnStyles: PropTypes.object,
   customSelectedPageStyles: PropTypes.object,
-  prevNextBtnstyles: PropTypes.object,
-  siblingCount: PropTypes.number,
   isWebView: PropTypes.bool,
+  pageStyles: PropTypes.object,
+  prevNextBtnstyles: PropTypes.object,
+  setCurrentPage: PropTypes.func,
+  siblingCount: PropTypes.number,
+  totalCards: PropTypes.number,
 };
 
 export default Pagination;

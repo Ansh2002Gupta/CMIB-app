@@ -2,9 +2,8 @@ import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
-  cellTextStyle: (fontSize = 14, fontWeight = "500") => ({
-    fontSize: fontSize,
-    fontWeight: fontWeight,
+  cellTextStyle: (fontSize = 14) => ({
+    fontSize,
     ...Platform.select({
       web: {
         textOverflow: "ellipsis",

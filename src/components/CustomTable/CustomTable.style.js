@@ -166,16 +166,6 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
   },
-  selectedBtn: {
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingTop: 8,
-    paddingBottom: 8,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: colors.lightGrey,
-    cursor: "pointer",
-  },
   rowSelectedNumber: {
     fontSize: 14,
     marginRight: 8,
@@ -206,7 +196,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   tableTopSectionStyle: (isWebView) => ({
-    height: isWebView ? "100%" : "85%",
+    height: isWebView ? "100%" : "80%",
   }),
 });
 

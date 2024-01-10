@@ -1,7 +1,10 @@
 import React from "react";
+import { useIntl } from "react-intl";
 
-import useTicketView from "./controller/useTicketView";
+import { useNavigate } from "../../routes";
 import CustomTable from "../../components/CustomTable";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import useTicketView from "./controller/useTicketView";
 
 const TicketsView = () => {
   const {
@@ -20,23 +23,40 @@ const TicketsView = () => {
     handleSelect,
     tableHeading,
   } = useTicketView();
+  const intl = useIntl();
+  const navigate = useNavigate();
+
+  const onGoBack = () => {
+    navigate(-1);
+  };
+
   return (
-    <CustomTable
-      rowsToShow={rowsToShow}
-      getStatusStyle={getStatusStyle}
-      getColoumConfigs={getColoumConfigs}
-      isHeading={isHeading}
-      currentPage={currentPage}
-      setCurrentPage={setCurrentPage}
-      currentRecords={currentRecords}
-      totalcards={totalcards}
-      rowsLimit={rowsLimit}
-      indexOfFirstRecord={indexOfFirstRecord}
-      indexOfLastRecord={indexOfLastRecord}
-      handleSearchResults={handleSearchResults}
-      handleSelect={handleSelect}
-      tableHeading={tableHeading}
-    />
+    <>
+      <IconHeader
+        intl={intl}
+        headerText={intl.formatMessage({ id: "label.tickets" })}
+        onPressLeftIcon={onGoBack}
+        hasIconBar
+      />
+      <CustomTable
+        {...{
+          rowsToShow,
+          getStatusStyle,
+          getColoumConfigs,
+          isHeading,
+          currentPage,
+          setCurrentPage,
+          currentRecords,
+          totalcards,
+          rowsLimit,
+          indexOfFirstRecord,
+          indexOfLastRecord,
+          handleSearchResults,
+          handleSelect,
+          tableHeading,
+        }}
+      />
+    </>
   );
 };
 

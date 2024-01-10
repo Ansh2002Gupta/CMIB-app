@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { View, Text } from '@unthinkable/react-core-components'; 
+import { View } from '@unthinkable/react-core-components'; 
 
 import layoutStyle from './TableView.style';
+import CommonText from '../../../components/CommonText';
 function TableView({ gridData, cellStyle, rowStyle, tableStyle }) {
   return (
     <View style={tableStyle}>
@@ -10,7 +11,7 @@ function TableView({ gridData, cellStyle, rowStyle, tableStyle }) {
         <View key={`row-${rowIndex}`} style={{ ...rowStyle, ...layoutStyle }}>
           {rowData.map((cellData, colIndex) => (
             <View key={`cell-${rowIndex}-${colIndex}`} style={cellStyle}>
-              <Text>{cellData}</Text>
+              <CommonText>{cellData}</CommonText>
             </View>
           ))}
         </View>
