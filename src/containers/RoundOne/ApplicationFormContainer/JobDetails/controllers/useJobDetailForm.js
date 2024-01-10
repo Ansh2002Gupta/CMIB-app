@@ -57,6 +57,9 @@ const useJobDetailForm = () => {
     setSelectionProcess(updatedItems);
   };
 
+  // TODO
+  // I have created function for single line code we have to add code later 
+
   const handleDesignationName = (val) => {
     setDesignationName(val);
   };
