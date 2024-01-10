@@ -112,6 +112,7 @@ const SignUpSecondScreenUI = ({
               isMandatory
               customHandleBlur={() => handleBlur("noOfPartners")}
               isNumeric
+              maxLength={3}
               value={noOfPartners}
               errorMessage={errors.noOfPartners}
               isError={!!errors.noOfPartners}
@@ -189,7 +190,7 @@ const SignUpSecondScreenUI = ({
               customHandleBlur={() => handleBlur("code")}
               isNumeric
               value={code}
-              maxLength={15}
+              maxLength={4}
               errorMessage={errors.code}
               isError={!!errors.code}
               onChangeText={(val) =>
