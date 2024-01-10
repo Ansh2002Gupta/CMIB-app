@@ -25,30 +25,30 @@ const JobDetails = () => {
     onClickAddDesignation,
     selectionProcess,
     startingSalary,
-    
   } = useJobDetailForm();
+
   return (
     <View>
       <JobDetailsTemplate
+        addDesignation={addDesignation}
         bondPeriod={bondPeriod}
         compensation={compensation}
         CTCDetail={CTCDetail}
         designationName={designationName}
         exitAmount={exitAmount}
-        onClickAddDesignation={onClickAddDesignation}
-        addDesignation={addDesignation}
-        jobDetailData={jobDetailData}
-        handleMonthlyData={handleMonthlyData}
-        handleYearlyData={handleYearlyData}
-        selectionProcess={selectionProcess}
-        handleToggle={handleToggle}
-        startingSalary={startingSalary}
         handleBondPeriod={handleBondPeriod}
         handleCompensation={handleCompensation}
         handleCTCDetail={handleCTCDetail}
         handleDesignationName={handleDesignationName}
         handleExitAmount={handleExitAmount}
+        handleMonthlyData={handleMonthlyData}
         handleStartingSalary={handleStartingSalary}
+        handleYearlyData={handleYearlyData}
+        handleToggle={handleToggle}
+        jobDetailData={jobDetailData}
+        onClickAddDesignation={onClickAddDesignation}
+        selectionProcess={selectionProcess}
+        startingSalary={startingSalary}
       />
     </View>
   );

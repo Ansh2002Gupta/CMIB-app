@@ -12,10 +12,10 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const intl = useIntl();
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.mainViewStyle}>
       <ApplicationFormStepper activeStep={activeStep} intl={intl} />
       <JobDetails />
-      {/* <View style={styles.actionBtnContainer}>
+      <View style={styles.actionBtnContainer}>
         <CustomButton
           onPress={() => {
             onHandleTab("prev");
@@ -31,7 +31,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
         >
           {intl.formatMessage({ id: "label.save" })}
         </CustomButton>
-      </View> */}
+      </View>
     </View>
   );
 };

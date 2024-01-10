@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     gap: 16,
     marginTop: 32,
   },
+  mainViewStyle: { flex: 1 },
 });
 
 export default styles;

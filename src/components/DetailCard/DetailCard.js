@@ -8,13 +8,13 @@ import DetailComponent from "../../components/DetailComponent";
 import style from "./DetailCard.style";
 
 const DetailCard = ({
+  customCardStyle,
   details,
   handleChange,
   headerId,
   isEditProfile,
   isRow,
   otherDetails,
-  customCardStyle,
 }) => {
   const intl = useIntl();
 

@@ -1,26 +1,25 @@
 import { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import { SELECTION_PROCESS } from "../../../../../constants/constants";
 import { mapApiDataToUI } from "../MappedData";
+import { SELECTION_PROCESS } from "../../../../../constants/constants";
 
 const useJobDetailForm = () => {
   const intl = useIntl();
   const [addDesignation, setAddDesignation] = useState(false);
-  const [jobDetailData, setJobDetailData] = useState(null);
-  const [designationName, setDesignationName] = useState(null);
-  const [compensation, setCompensation] = useState(null);
-  const [startingSalary, setStartingSalary] = useState(null);
-  const [CTCDetail, setCTCDetail] = useState(null);
   const [bondPeriod, setBondPeriod] = useState(null);
+  const [compensation, setCompensation] = useState(null);
+  const [CTCDetail, setCTCDetail] = useState(null);
+  const [designationName, setDesignationName] = useState(null);
   const [exitAmount, setExitAmount] = useState(null);
+  const [jobDetailData, setJobDetailData] = useState(null);
   const [selectionProcess, setSelectionProcess] = useState(
     SELECTION_PROCESS.map((option) => ({
       ...option,
       title: intl.formatMessage({ id: option.messageId }),
     }))
   );
-
+  const [startingSalary, setStartingSalary] = useState(null);
   const onClickAddDesignation = () => {
     setAddDesignation(true);
   };
@@ -59,6 +58,10 @@ const useJobDetailForm = () => {
     setSelectionProcess(updatedItems);
   };
 
+  const handleDesignationName = (val) => {
+    setDesignationName(val);
+  };
+
   const handleBondPeriod = (val) => {
     setBondPeriod(val);
   };
@@ -71,10 +74,6 @@ const useJobDetailForm = () => {
     setCTCDetail(val);
   };
 
-  const handleDesignationName = (val) => {
-    setDesignationName(val);
-  };
-
   const handleExitAmount = (val) => {
     setExitAmount(val);
   };
@@ -82,6 +81,7 @@ const useJobDetailForm = () => {
   const handleStartingSalary = (val) => {
     setStartingSalary(val);
   };
+
   return {
     addDesignation,
     bondPeriod,

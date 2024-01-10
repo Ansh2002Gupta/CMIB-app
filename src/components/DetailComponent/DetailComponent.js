@@ -23,8 +23,6 @@ const DetailComponent = ({
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
-  console.log(headerText, "headerText");
-
   const containerStyle = isWebView
     ? styles.containerGridStyle(columnCount)
     : styles.containerStyle;
