@@ -263,34 +263,34 @@ const JobDetailsTemplate = ({
 };
 
 JobDetailsTemplate.propTypes = {
-  addDesignation: PropTypes.bool,
-  bondPeriod: PropTypes.string,
-  compensation: PropTypes.string,
-  CTCDetail: PropTypes.string,
-  designationName: PropTypes.string,
-  exitAmount: PropTypes.string,
-  handleBondPeriod: PropTypes.func,
-  handleCompensation: PropTypes.func,
-  handleCTCDetail: PropTypes.func,
-  handleDesignationName: PropTypes.func,
-  handleExitAmount: PropTypes.func,
-  handleMonthlyData: PropTypes.func,
-  handleStartingSalary: PropTypes.func,
-  handleYearlyData: PropTypes.func,
-  handleToggle: PropTypes.func,
+  addDesignation: PropTypes.bool.isRequired,
+  bondPeriod: PropTypes.string.isRequired,
+  compensation: PropTypes.string.isRequired,
+  CTCDetail: PropTypes.string.isRequired,
+  designationName: PropTypes.string.isRequired,
+  exitAmount: PropTypes.string.isRequired,
+  handleBondPeriod: PropTypes.func.isRequired,
+  handleCompensation: PropTypes.func.isRequired,
+  handleCTCDetail: PropTypes.func.isRequired,
+  handleDesignationName: PropTypes.func.isRequired,
+  handleExitAmount: PropTypes.func.isRequired,
+  handleMonthlyData: PropTypes.func.isRequired,
+  handleStartingSalary: PropTypes.func.isRequired,
+  handleYearlyData: PropTypes.func.isRequired,
+  handleToggle: PropTypes.func.isRequired,
   jobDetailData: PropTypes.shape({
-    Monthly: PropTypes.string,
-    Yearly: PropTypes.string,
-  }),
-  onClickAddDesignation: PropTypes.func,
+    Monthly: PropTypes.string.isRequired,
+    Yearly: PropTypes.string.isRequired,
+  }).isRequired,
+  onClickAddDesignation: PropTypes.func.isRequired,
   selectionProcess: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-      isSelected: PropTypes.bool,
-    })
-  ),
-  startingSalary: PropTypes.string,
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      isSelected: PropTypes.bool.isRequired,
+    }).isRequired
+  ).isRequired,
+  startingSalary: PropTypes.string.isRequired,
 };
 
 export default JobDetailsTemplate;
