@@ -39,8 +39,7 @@ const useGetUserDetails = () => {
             module.key?.toLowerCase() ===
             firstAccessibleModuleName?.toLowerCase()
         );
-        sideBarDispatch(setSelectedModule(modules[0]));
-
+        sideBarDispatch(setSelectedModule(moduleDetails));
         return;
       }
       userProfileDispatch(
