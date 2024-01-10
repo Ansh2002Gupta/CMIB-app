@@ -6,6 +6,7 @@ import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import ActionPairButton from "../../../components/ActionPairButton";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
+import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
@@ -191,48 +192,55 @@ const SignUpThirdScreenUI = ({
   };
 
   return (
-    <View
-      style={
-        isWebView
-          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-          : style.innerContainer
-      }
+    <FormWrapper
+      onSubmit={onClickNext}
+      customFormStyle={{
+        ...style.mainView,
+      }}
     >
-      {isWebView && (
-        <View>
-          <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({ id: "label.step_three" })}
-            {...(showContentHeader && {
-              headerText: intl.formatMessage({
-                id: "label.contact_person_details",
-              }),
-            })}
-          />
-        </View>
-      )}
-      {isWebView ? (
-        <View style={style.webContainerStyle}>
-          {renderFormContent()}
-          {renderFooterContent()}
-        </View>
-      ) : (
-        <>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={style.contentContainerStyle}
-          >
+      <View
+        style={
+          isWebView
+            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+            : style.innerContainer
+        }
+      >
+        {isWebView && (
+          <View>
+            <HeaderTextWithLabelAndDescription
+              label={intl.formatMessage({ id: "label.step_three" })}
+              {...(showContentHeader && {
+                headerText: intl.formatMessage({
+                  id: "label.contact_person_details",
+                }),
+              })}
+            />
+          </View>
+        )}
+        {isWebView ? (
+          <View style={style.webContainerStyle}>
             {renderFormContent()}
-          </ScrollView>
-          {renderFooterContent()}
-        </>
-      )}
-      {!!validationError && (
-        <ToastComponent
-          toastMessage={validationError}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </View>
+            {renderFooterContent()}
+          </View>
+        ) : (
+          <>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={style.contentContainerStyle}
+            >
+              {renderFormContent()}
+            </ScrollView>
+            {renderFooterContent()}
+          </>
+        )}
+        {!!validationError && (
+          <ToastComponent
+            toastMessage={validationError}
+            onDismiss={handleDismissToast}
+          />
+        )}
+      </View>
+    </FormWrapper>
   );
 };
 

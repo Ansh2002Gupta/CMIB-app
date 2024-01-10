@@ -60,6 +60,10 @@ export const style = StyleSheet.create({
   formContainer: {
     flex: 1,
   },
+  mainView: {
+    flex: 1,
+    display: "flex",
+  },
 });
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {

@@ -5,6 +5,7 @@ import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CustomTextInput from "../../../components/CustomTextInput";
+import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
@@ -215,6 +216,7 @@ const SignUpSecondScreenUI = ({
   const renderFooter = () => (
     <View style={style.signupFooterContainer}>
       <ActionPairButton
+        customContainerStyle={!isWebView && style.customSaveButtonContainer}
         buttonOneText={intl.formatMessage({ id: "label.back" })}
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
         displayLoader={isLoading}
@@ -230,7 +232,6 @@ const SignUpSecondScreenUI = ({
         isButtonTwoGreen
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
-        customContainerStyle={!isWebView && style.customSaveButtonContainer}
       />
       {isWebView && (
         <LabelWithLinkText
@@ -243,50 +244,57 @@ const SignUpSecondScreenUI = ({
   );
 
   return (
-    <View
-      style={
-        isWebView
-          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-          : style.innerContainer
-      }
+    <FormWrapper
+      onSubmit={onClickNext}
+      customFormStyle={{
+        ...style.mainView,
+      }}
     >
-      {isWebView && (
-        <HeaderTextWithLabelAndDescription
-          label={intl.formatMessage({ id: "label.step_two" })}
-          {...(showContentHeader && {
-            headerText: intl.formatMessage({
-              id: "label.basic_details",
-            }),
-          })}
-        />
-      )}
-      {!isWeb ? (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={style.contentContainerStyle}
-        >
-          {renderFormContent()}
-        </ScrollView>
-      ) : (
-        <View
-          style={
-            !isWebView
-              ? [style.contentContainerStyle, style.webContentContainer]
-              : style.webContentContainer
-          }
-        >
-          {renderFormContent()}
-          {renderFooter()}
-        </View>
-      )}
-      {!isWeb && renderFooter()}
-      {!!validationError && (
-        <ToastComponent
-          toastMessage={validationError}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </View>
+      <View
+        style={
+          isWebView
+            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+            : style.innerContainer
+        }
+      >
+        {isWebView && (
+          <HeaderTextWithLabelAndDescription
+            label={intl.formatMessage({ id: "label.step_two" })}
+            {...(showContentHeader && {
+              headerText: intl.formatMessage({
+                id: "label.basic_details",
+              }),
+            })}
+          />
+        )}
+        {!isWeb ? (
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={style.contentContainerStyle}
+          >
+            {renderFormContent()}
+          </ScrollView>
+        ) : (
+          <View
+            style={
+              !isWebView
+                ? [style.contentContainerStyle, style.webContentContainer]
+                : style.webContentContainer
+            }
+          >
+            {renderFormContent()}
+            {renderFooter()}
+          </View>
+        )}
+        {!isWeb && renderFooter()}
+        {!!validationError && (
+          <ToastComponent
+            toastMessage={validationError}
+            onDismiss={handleDismissToast}
+          />
+        )}
+      </View>
+    </FormWrapper>
   );
 };
 

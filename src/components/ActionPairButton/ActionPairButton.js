@@ -33,6 +33,7 @@ const ActionPairButton = ({
       }
       rightSection={
         <CustomButton
+          type="submit"
           isLoading={displayLoader}
           disabled={isDisabled}
           onPress={onPressButtonTwo}
