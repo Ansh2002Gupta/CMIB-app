@@ -1,11 +1,14 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet , Dimensions} from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const {width:WIDTH} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   pagination: {
     borderRadius: 2,
     alignItems: "center",
     flexDirection: "row",
+    justifyContent:"space-between"
   },
   paginationRange: {
     flexDirection: "row",
@@ -28,6 +31,7 @@ const styles = StyleSheet.create({
   activeButton: {
     paddingLeft: 12,
     paddingRight: 12,
+    width:36,
     paddingTop: 8,
     paddingBottom: 8,
     borderColor: colors.darkBlue,

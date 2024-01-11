@@ -1,11 +1,21 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform , Dimensions} from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const {width:WIDTH} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundGrey,
     padding: 24,
+  },
+  mobileMainContainer:{
+    flex: 1,
+    backgroundColor: colors.backgroundGrey,
+    paddingTop:24,
+    paddingBottom:24,
+    paddingLeft:16,
+    paddingRight:16,
   },
   mobileContainer: {
     flexDirection: "row",
@@ -92,6 +102,7 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
   },
   tableQueryText: {
+    marginTop:2,
     color: colors.darkGrey,
   },
   columnStyle: (WIDTH: "15%") => ({
@@ -148,6 +159,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 12,
     borderColor: colors.lightGrey,
+    width:WIDTH-2*24,
   },
   previousButton: {
     padding: 8,

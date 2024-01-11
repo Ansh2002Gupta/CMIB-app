@@ -75,7 +75,7 @@ const CustomTable = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
         topSection={
           <TwoColumn
@@ -117,6 +117,7 @@ const CustomTable = ({
                 <FlatList
                   data={currentRecords}
                   showsVerticalScrollIndicator={false}
+                  keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item, index }) => {
                     return (
                       <>
