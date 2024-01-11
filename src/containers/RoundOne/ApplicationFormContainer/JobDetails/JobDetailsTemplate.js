@@ -263,11 +263,7 @@ const JobDetailsTemplate = ({
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
         <TwoColumn
-          leftSection={
-            <View>
-              <CommonText>Hello</CommonText>
-            </View>
-          }
+          leftSection={[]}
           isLeftFillSpace={false}
           isRightFillSpace
           rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
@@ -277,35 +273,57 @@ const JobDetailsTemplate = ({
   );
 };
 
+JobDetailsTemplate.defaultProps = {
+  addDesignation: false,
+  bondPeriod: "",
+  compensation: "",
+  CTCDetail: "",
+  designationName: "",
+  exitAmount: "",
+  handleBondPeriod: () => {},
+  handleCompensation: () => {},
+  handleCTCDetail: () => {},
+  handleDesignationName: () => {},
+  handleExitAmount: () => {},
+  handleMonthlyData: () => {},
+  handleStartingSalary: () => {},
+  handleYearlyData: () => {},
+  handleToggle: () => {},
+  jobDetailData: { Monthly: "", Yearly: "" },
+  onClickAddDesignation: () => {},
+  selectionProcess: [],
+  startingSalary: "",
+};
+
 JobDetailsTemplate.propTypes = {
-  addDesignation: PropTypes.bool.isRequired,
-  bondPeriod: PropTypes.string.isRequired,
-  compensation: PropTypes.string.isRequired,
-  CTCDetail: PropTypes.string.isRequired,
-  designationName: PropTypes.string.isRequired,
-  exitAmount: PropTypes.string.isRequired,
-  handleBondPeriod: PropTypes.func.isRequired,
-  handleCompensation: PropTypes.func.isRequired,
-  handleCTCDetail: PropTypes.func.isRequired,
-  handleDesignationName: PropTypes.func.isRequired,
-  handleExitAmount: PropTypes.func.isRequired,
-  handleMonthlyData: PropTypes.func.isRequired,
-  handleStartingSalary: PropTypes.func.isRequired,
-  handleYearlyData: PropTypes.func.isRequired,
-  handleToggle: PropTypes.func.isRequired,
+  addDesignation: PropTypes.bool,
+  bondPeriod: PropTypes.string,
+  compensation: PropTypes.string,
+  CTCDetail: PropTypes.string,
+  designationName: PropTypes.string,
+  exitAmount: PropTypes.string,
+  handleBondPeriod: PropTypes.func,
+  handleCompensation: PropTypes.func,
+  handleCTCDetail: PropTypes.func,
+  handleDesignationName: PropTypes.func,
+  handleExitAmount: PropTypes.func,
+  handleMonthlyData: PropTypes.func,
+  handleStartingSalary: PropTypes.func,
+  handleYearlyData: PropTypes.func,
+  handleToggle: PropTypes.func,
   jobDetailData: PropTypes.shape({
-    Monthly: PropTypes.string.isRequired,
-    Yearly: PropTypes.string.isRequired,
-  }).isRequired,
-  onClickAddDesignation: PropTypes.func.isRequired,
+    Monthly: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    Yearly: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  }),
+  onClickAddDesignation: PropTypes.func,
   selectionProcess: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      isSelected: PropTypes.bool.isRequired,
-    }).isRequired
-  ).isRequired,
-  startingSalary: PropTypes.string.isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      title: PropTypes.string,
+      isSelected: PropTypes.bool,
+    })
+  ),
+  startingSalary: PropTypes.string,
 };
 
 export default JobDetailsTemplate;

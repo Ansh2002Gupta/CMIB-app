@@ -21,7 +21,7 @@ const DetailCard = ({
   return (
     <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
       <DetailComponent
-        customContainerStyle={isRow && style.customStyle}
+        customContainerStyle={isRow ? style.customStyle : {}}
         details={details}
         headerText={intl.formatMessage({ id: headerId })}
         isEditable={isEditProfile}
