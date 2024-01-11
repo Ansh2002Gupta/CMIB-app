@@ -8,9 +8,7 @@ import styles from "./ActionPairButton.style";
 const ActionPairButton = ({
   buttonOneText,
   buttonTwoText,
-  buttonOneStyle,
-  buttonTwoStyle,
-  customContainerStyle,
+  customStyles,
   displayLoader,
   iconRight,
   iconLeft,
@@ -20,6 +18,12 @@ const ActionPairButton = ({
   onPressButtonOne,
   onPressButtonTwo,
 }) => {
+  const {
+    buttonOneStyle = {},
+    buttonTwoStyle = {},
+    customContainerStyle = {},
+  } = customStyles;
+
   return (
     <TwoColumn
       style={{ ...styles.containerStyle, ...customContainerStyle }}
@@ -52,9 +56,7 @@ const ActionPairButton = ({
 };
 
 ActionPairButton.defaultProps = {
-  buttonOneStyle: {},
-  buttonTwoStyle: {},
-  customContainerStyle: {},
+  customStyles: {},
   displayLoader: false,
   iconLeft: {
     isLeftIconNotSvg: false,
@@ -76,9 +78,7 @@ ActionPairButton.defaultProps = {
 ActionPairButton.propTypes = {
   buttonOneText: PropTypes.string.isRequired,
   buttonTwoText: PropTypes.string.isRequired,
-  buttonOneStyle: PropTypes.object,
-  buttonTwoStyle: PropTypes.object,
-  customContainerStyle: PropTypes.object,
+  customStyles: PropTypes.object,
   displayLoader: PropTypes.bool,
   iconLeft: PropTypes.object,
   iconRight: PropTypes.object,

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  logoutStyle: {
+  logoutButtonStyle: {
     backgroundColor: colors.yellow,
     borderWidth: 0,
   },

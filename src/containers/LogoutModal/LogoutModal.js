@@ -47,7 +47,9 @@ const LogoutModal = ({ onCancel }) => {
         <ActionPairButton
           buttonOneText={intl.formatMessage({ id: "label.cancel" })}
           buttonTwoText={intl.formatMessage({ id: "label.logout" })}
-          buttonTwoStyle={styles.logoutStyle}
+          customStyles={{
+            buttonTwoStyle: styles.logoutButtonStyle,
+          }}
           displayLoader={isLoggingUserOut}
           onPressButtonOne={() => onCancel(false)}
           onPressButtonTwo={() => onLogout()}
