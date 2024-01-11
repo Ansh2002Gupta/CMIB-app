@@ -9,6 +9,7 @@ import CustomTextInput from "../CustomTextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import { gridStyles } from "../../theme/styles/commonStyles";
 import styles, { getRowStyle } from "./DetailComponent.style";
+import { numericValidator } from "../../constants/validation";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -72,8 +73,13 @@ const DetailComponent = ({
                 inputKey={detail.inputKey || "value"}
                 onChangeValue={(val) => handleChange(detail.label, val)}
                 onChangeText={(val) => {
-                  handleChange(detail.label, val);
+                  if (detail?.isNumeric) {
+                    if (numericValidator(val)) handleChange(detail.label, val);
+                  } else {
+                    handleChange(detail.label, val);
+                  }
                 }}
+                isRupee={detail?.isRupee}
                 {...getMobileProps(detail)}
               />
             ) : (

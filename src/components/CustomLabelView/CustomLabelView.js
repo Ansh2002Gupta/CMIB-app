@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./CustomLabelView.style";
 
 const CustomLabelView = ({
@@ -13,16 +12,11 @@ const CustomLabelView = ({
   label,
   style,
 }) => {
-  const { isWebView } = useIsWebView();
   return (
     <View style={[styles.parentContainer, style]}>
       <View style={styles.labelContainer}>
         <CommonText
-          customTextStyle={[
-            styles.label,
-            isWebView && styles.webLabel,
-            customLabelStyle,
-          ]}
+          customTextStyle={[styles.label, customLabelStyle]}
           fontWeight={customLabelStyle?.fontWeight}
         >
           {label}

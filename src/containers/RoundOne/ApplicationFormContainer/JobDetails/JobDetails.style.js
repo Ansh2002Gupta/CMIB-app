@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   customToggleStyle: {
-    paddingTop: 12,
+    paddingTop: 20,
     marginBottom: 12,
     paddingBottom: 12,
     marginRight: 24,
@@ -78,15 +78,19 @@ const styles = StyleSheet.create({
   customStyleCompensation: {
     marginRight: 24,
   },
-  leftSectionStyle: {
-    flex: 3,
-  },
-  rightSectionStyle: {
-    flex: 7,
-  },
   addDesignationView: {
     marginLeft: 16,
     marginRight: 16,
+  },
+  customLabelStyle: {
+    color: colors.darkGrey,
+  },
+  bondMobileStyle: {
+    width: "50%",
+    display: "flex",
+  },
+  scrollViewStyle: {
+    backgroundColor: colors.backgroundColor,
   },
 });
 

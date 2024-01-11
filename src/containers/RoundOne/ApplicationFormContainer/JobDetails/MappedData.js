@@ -7,6 +7,9 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.basic",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
       {
         key: "hra",
@@ -14,6 +17,9 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.hra",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
       {
         key: "others",
@@ -21,6 +27,9 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.others",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
       {
         key: "grossSalary",
@@ -28,6 +37,9 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.grossSalary",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
       {
         key: "fixedPay",
@@ -35,6 +47,9 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.fixedPay",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
       {
         key: "variablePay",
@@ -42,6 +57,9 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.variablePay",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
       {
         key: "semiVariable",
@@ -49,6 +67,9 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.semiVariable",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
       {
         key: "takeHome",
@@ -56,6 +77,9 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.takeHome",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
     ],
     Yearly: [
@@ -65,6 +89,9 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.totalGrossSalary",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
       {
         key: "oneTimePayment",
@@ -72,12 +99,18 @@ export const mapApiDataToUI = () => {
         value: "",
         placeholder: "label.oneTimePayment",
         isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
       {
         key: "ctc",
         label: "label.ctc",
         value: "",
         placeholder: "label.ctc",
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
       },
     ],
   };

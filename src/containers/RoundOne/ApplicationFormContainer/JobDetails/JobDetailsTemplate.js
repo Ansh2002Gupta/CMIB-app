@@ -23,6 +23,7 @@ import { gridStyles } from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
 import { numericValidator } from "../../../../constants/validation";
+import colors from "../../../../assets/colors";
 
 const JobDetailsTemplate = ({
   addDesignation,
@@ -95,7 +96,9 @@ const JobDetailsTemplate = ({
         <CardComponent customStyle={styles.bottomMargin}>
           <CustomTextInput
             label={intl.formatMessage({ id: "label.designationName" })}
-            placeholder={intl.formatMessage({ id: "label.designationName" })}
+            placeholder={intl.formatMessage({
+              id: "label.enter_designationName",
+            })}
             isMandatory
             value={designationName}
             onChangeText={(val) => handleDesignationName(val)}
@@ -105,7 +108,9 @@ const JobDetailsTemplate = ({
             <CustomTextInput
               customStyle={isWebView && { ...styles.bondCustomInputStyle }}
               label={intl.formatMessage({ id: "label.compensation" })}
-              placeholder={intl.formatMessage({ id: "label.compensation" })}
+              placeholder={intl.formatMessage({
+                id: "label.enter_compensation",
+              })}
               isMandatory
               value={compensation}
               onChangeText={(val) =>
@@ -119,7 +124,7 @@ const JobDetailsTemplate = ({
                 id: "label.starting_salary_including_perks",
               })}
               placeholder={intl.formatMessage({
-                id: "label.starting_salary_including_perks",
+                id: "label.enter_starting_salary_including_perks",
               })}
               isMandatory
               value={startingSalary}
@@ -142,7 +147,7 @@ const JobDetailsTemplate = ({
               id: "label.details_of_ctc",
             })}
             placeholder={intl.formatMessage({
-              id: "label.details_of_ctc",
+              id: "label.enter_details_of_ctc",
             })}
             isMandatory
             value={CTCDetail}
@@ -188,6 +193,7 @@ const JobDetailsTemplate = ({
               })}
               isMandatory
               customToggleStyle={styles.customToggleStyle}
+              customLabelStyle={styles.customLabelStyle}
             />
             <CustomTextInput
               customStyle={isWebView && { ...styles.bondCustomInputStyle }}
@@ -195,7 +201,7 @@ const JobDetailsTemplate = ({
                 id: "label.months_bond_period",
               })}
               placeholder={intl.formatMessage({
-                id: "label.months_bond_period",
+                id: "label.enter_months_bond_period",
               })}
               isMandatory
               value={bondPeriod}
@@ -207,7 +213,7 @@ const JobDetailsTemplate = ({
                 id: "label.exit_amount",
               })}
               placeholder={intl.formatMessage({
-                id: "label.exit_amount",
+                id: "label.enter_exit_amount",
               })}
               isMandatory
               value={exitAmount}
@@ -252,15 +258,19 @@ const JobDetailsTemplate = ({
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollViewStyle}>
       {currentBreakpoint === "xs" ? (
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
         <TwoColumn
-          leftSection={[]}
-          leftSectionStyle={styles.leftSectionStyle}
+          leftSection={
+            <View>
+              <CommonText>Hello</CommonText>
+            </View>
+          }
+          isLeftFillSpace={false}
+          isRightFillSpace
           rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
-          rightSectionStyle={styles.rightSectionStyle}
         />
       )}
     </ScrollView>
