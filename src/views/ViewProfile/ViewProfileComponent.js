@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 
 import ViewProfileUI from "./ViewProfileUI";
-import { navigations } from "../../constants/routeNames";
+import { PREVIOUS_SCREEN } from "../../constants/constants";
 
 const ViewProfieComponent = () => {
   const intl = useIntl();
@@ -15,7 +15,7 @@ const ViewProfieComponent = () => {
   };
 
   const onGoBack = () => {
-    navigate(-1);
+    navigate(PREVIOUS_SCREEN);
   };
 
   return (
