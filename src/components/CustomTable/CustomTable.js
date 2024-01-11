@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useIntl } from "react-intl";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { View, FlatList } from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
+import { FlatList, View } from "@unthinkable/react-core-components";
 
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -10,14 +10,15 @@ import CommonText from "../../components/CommonText";
 import CustomDropdown from "../../components/CustomDropdown";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import FilterModal from "../../containers/FilterModal";
 import Pagination from "../../components/Pagination/Pagination";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
 import { getRenderText } from "../../utils/util";
+import { TicketScreenContext } from "../../globalContext/ticketsScreen/ticketsScreenProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
-import FilterModal from "../../containers/FilterModal";
 
 const CustomTable = ({
   currentPage,
@@ -33,6 +34,7 @@ const CustomTable = ({
   rowsLimit,
   rowsToShow,
   setCurrentPage,
+  setCurrentRecords,
   showSearchBar,
   statusText,
   subHeadingText,
@@ -42,11 +44,18 @@ const CustomTable = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const [ticketScreenState] = useContext(TicketScreenContext);
+  const { ticketScreenList } = ticketScreenState;
 
   const [showModal, setShowModal] = useState(false);
 
   const handleFilterModal = () => {
     setShowModal((prev) => !prev);
+  };
+
+  const onApplyFilter = (filterData) => {
+    setCurrentRecords(filterData);
+    handleFilterModal();
   };
 
   const PaginationFooter = () => {
@@ -93,7 +102,10 @@ const CustomTable = ({
           showSearchBar && (
             <TwoColumn
               leftSection={
-                <SearchView data={currentRecords} onSearch={handleSearchResults} />
+                <SearchView
+                  data={ticketScreenList}
+                  onSearch={handleSearchResults}
+                />
               }
               isLeftFillSpace
               isRightFillSpace={false}
@@ -184,14 +196,18 @@ const CustomTable = ({
             }
             isTopFillSpace
             isBottomFillSpace={false}
-            bottomSection={
-              !isWebView && <PaginationFooter />
-            }
+            bottomSection={!isWebView && <PaginationFooter />}
             bottomSectionStyle={styles.bottomPaginationStyle}
           />
         }
       />
-      {showModal && <FilterModal onPressIconCross={handleFilterModal} data={currentRecords} />}
+      {showModal && (
+        <FilterModal
+          onPressIconCross={handleFilterModal}
+          data={ticketScreenList}
+          onApplyFilter={onApplyFilter}
+        />
+      )}
     </View>
   );
 };
@@ -209,10 +225,11 @@ CustomTable.defaultProps = {
   rowsLimit: [],
   rowsToShow: 10,
   setCurrentPage: () => {},
+  setCurrentrecords: [],
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
-  tableHeading: [],
+  tableHeading: {},
   tableIcon: images.ticketIcon,
   totalcards: 0,
 };
@@ -231,10 +248,11 @@ CustomTable.propTypes = {
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
+  setCurrentrecords: PropTypes.array.isRequired,
   showSearchBar: PropTypes.bool,
   statusText: PropTypes.array,
   subHeadingText: PropTypes.array,
-  tableHeading: PropTypes.array.isRequired,
+  tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.string.isRequired,
   totalcards: PropTypes.number.isRequired,
 };

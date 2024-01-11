@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    color: colors.orange,
+    color: colors.skyBlueDark,
   },
   pending: {
     textAlign: "center",
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    color: colors.skyBlueDark,
+    color: colors.orange,
   },
   close: {
     textAlign: "center",
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    backgroundColor: colors.lightOrange,
-    color: colors.orange,
+    backgroundColor: colors.skyBlueLight,
+    color: colors.skyBlueDark,
   },
   pendingWeb: {
     textAlign: "center",
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    color: colors.skyBlueDark,
-    backgroundColor: colors.skyBlueLight,
+    color: colors.orange,
+    backgroundColor: colors.lightOrange,
   },
   closeWeb: {
     borderRadius: 16,

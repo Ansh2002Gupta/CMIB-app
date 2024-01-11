@@ -32,6 +32,7 @@ const FeedbackView = () => {
     rowsLimit,
     rowsToShow,
     setCurrentPage,
+    setCurrentRecords,
     totalcards,
   } = useTicketView(feedbackData);
 
@@ -69,6 +70,7 @@ const FeedbackView = () => {
             rowsLimit,
             rowsToShow,
             setCurrentPage,
+            setCurrentRecords,
             statusText,
             subHeadingText,
             tableHeading,

@@ -48,8 +48,11 @@ const styles = StyleSheet.create({
     padding: 16,
     borderColor: colors.lightGrey,
   },
-  middleSectionStyle: {
+  middleSectionWeb:{
     minHeight:278,
+  },
+  middleSectionStyle: {
+    height:278,
   },
   arrowRight: {
     height: 16,

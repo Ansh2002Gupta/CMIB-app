@@ -1,7 +1,9 @@
-import React, {useEffect, useState } from "react";
+import React, {useContext, useEffect, useState } from "react";
 
 import CommonText from "../../../components/CommonText";
 import CustomImage from "../../../components/CustomImage";
+import { setTicketScreenList } from "../../../globalContext/ticketsScreen/ticketScreenActions";
+import { TicketScreenContext } from "../../../globalContext/ticketsScreen/ticketsScreenProvider";
 import images from "../../../images";
 import styles from "../TicketsView.style";
 
@@ -23,6 +25,7 @@ const useTicketView = (data) => {
   const [rowsToShow, setRowsToShow] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentRecords, setCurrentRecords] = useState([]);
+  const [ ,ticketScreenDispatch] = useContext(TicketScreenContext);
 
   const indexOfLastRecord = currentPage * rowsToShow;
   const indexOfFirstRecord = indexOfLastRecord - rowsToShow;
@@ -30,13 +33,14 @@ const useTicketView = (data) => {
   useEffect(() => {
     let newRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
     setCurrentRecords(newRecords);
+    ticketScreenDispatch(setTicketScreenList(data));
   }, [rowsToShow, currentPage]);
 
   const totalcards = data.length;
 
   let isHeading = true;
 
-  const handleSearchResults = (filteredData) => {
+  const handleSearchResults = (searchedData) => {
     //TODO: Implement searching 
   };
 
@@ -171,6 +175,7 @@ const useTicketView = (data) => {
     rowsLimit,
     rowsToShow,
     setCurrentPage,
+    setCurrentRecords,
     statusText,
     subHeadingText,
     tableHeading,

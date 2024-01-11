@@ -1,66 +1,50 @@
-import React, { useState, useMemo } from "react";
+import React, {useMemo } from "react";
+import PropTypes from "prop-types"; 
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { View, ScrollView, Platform } from "@unthinkable/react-core-components";
+
 import { ThreeRow, TwoColumn } from "../../core/layouts";
+
 import ActionPairButton from "../../components/ActionPairButton";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
-import useIsWebView from "../../hooks/useIsWebView";
-import images from "../../images";
-import styles from "./FilterModal.style";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
+import useFilterModal from "./controller/useFilterModal";
+import useIsWebView from "../../hooks/useIsWebView";
+import images from "../../images";
+import styles from "./FilterModal.style";
 
 const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
-  const [filterState, setFilterState] = useState({
-    selectedStatus: [],
-    selectedButton: null,
-    selectedQueryType: [],
-    activeCategory: null,
-  });
 
-  const { selectedStatus, selectedButton, selectedQueryType, activeCategory } = filterState;
+  const {
+    activeCategories,
+    filterData,
+    handleCategoryChange,
+    handleStatusChange,
+    handleQueryTypeChange,
+    handleClearFilter,
+    selectedStatus,
+    selectedQueryType,
+  } = useFilterModal(data, onApplyFilter);
+
+  const isWeb = Platform.OS.toLowerCase() === "web";
+  const intl = useIntl();
+  const { isWebView } = useIsWebView();
 
   const { statusCounts, queryTypeCounts } = useMemo(() => {
     const statusCounters = {};
     const queryTypeCounters = {};
-
     data.forEach((item) => {
       statusCounters[item.status] = (statusCounters[item.status] || 0) + 1;
-      queryTypeCounters[item.query_type] = (queryTypeCounters[item.query_type] || 0) + 1;
+      queryTypeCounters[item.query_type] =
+        (queryTypeCounters[item.query_type] || 0) + 1;
     });
-
     return { statusCounts: statusCounters, queryTypeCounts: queryTypeCounters };
   }, [data]);
 
-  const handleCategoryChange = (category) => {
-    const newSelectedButton = category === selectedButton ? null : category;
-    setFilterState(prevState => ({ ...prevState, selectedButton: newSelectedButton, activeCategory: newSelectedButton }));
-  };
-
-  const handleStatusChange = (status) => {
-    setFilterState(prevState => {
-      const newSelectedStatus = prevState.selectedStatus.includes(status)
-        ? prevState.selectedStatus.filter(s => s !== status)
-        : [...prevState.selectedStatus, status];
-      return { ...prevState, selectedStatus: newSelectedStatus };
-    });
-  };
-
-  const handleQueryTypeChange = (queryType) => {
-    setFilterState(prevState => {
-      const newSelectedQueryType = prevState.selectedQueryType.includes(queryType)
-        ? prevState.selectedQueryType.filter(q => q !== queryType)
-        : [...prevState.selectedQueryType, queryType];
-      return { ...prevState, selectedQueryType: newSelectedQueryType };
-    });
-  };
-
-  const intl = useIntl();
-  const { isWebView } = useIsWebView();
-
-  const RenderCheckButton = React.memo(({ title, count, onChange, isSelected }) => {
+  const RenderCheckButton = ({ title, count, onChange, isSelected }) => {
     const displayTitle = count ? `${title} (${count})` : title;
     return (
       <View style={styles.renderCheckButton}>
@@ -68,35 +52,17 @@ const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
           title={displayTitle}
           isSelected={isSelected}
           handleCheckbox={() => onChange(title)}
-          id={"1"}
+          id={title}
         />
       </View>
     );
-  });
-
-  const RenderCategoryButton = React.memo(({ title, isLeftArrow = true, onClick }) => {
-    return (
-      <View style={styles.renderCheckButton}>
-        <CheckBox
-          title={title}
-          isSelected={selectedButton === title}
-          handleCheckbox={() => onClick(title)}
-          id={"1"}
-        />
-        {isLeftArrow && (
-          <CustomImage
-            source={images.iconArrowRight}
-            style={styles.arrowRight}
-          />
-        )}
-      </View>
-    );
-  });
+  };
 
   const renderOptionsByCategory = () => {
-    switch (activeCategory) {
-      case "Status":
-        return Object.keys(statusCounts).map((status) => (
+    const options = [];
+    if (activeCategories.includes("Status")) {
+      options.push(
+        ...Object.keys(statusCounts).map((status) => (
           <RenderCheckButton
             key={status}
             title={status}
@@ -104,9 +70,12 @@ const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
             onChange={handleStatusChange}
             isSelected={selectedStatus.includes(status)}
           />
-        ));
-      case "Query Type":
-        return Object.keys(queryTypeCounts).map((queryType) => (
+        ))
+      );
+    }
+    if (activeCategories.includes("Query Type")) {
+      options.push(
+        ...Object.keys(queryTypeCounts).map((queryType) => (
           <RenderCheckButton
             key={queryType}
             title={queryType}
@@ -114,21 +83,30 @@ const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
             onChange={handleQueryTypeChange}
             isSelected={selectedQueryType.includes(queryType)}
           />
-        ));
-      default:
-        return null;
+        ))
+      );
     }
+    return options.length > 0 ? options : null;
   };
 
-  const filterData = () => {
-    const filteredData = data.filter((item) => {
-      return (
-        (!selectedStatus.length || selectedStatus.includes(item.status)) &&
-        (!selectedQueryType.length || selectedQueryType.includes(item.query_type))
-      );
-    });
-    // onApplyFilter(filteredData);
-    console.log("filtered data", filteredData);
+  const RenderCategoryButton = ({ title, isLeftArrow = true, onClick }) => {
+    const isActive = activeCategories.includes(title);
+    return (
+      <View style={styles.renderCheckButton}>
+        <CheckBox
+          title={title}
+          isSelected={isActive}
+          handleCheckbox={() => onClick(title)}
+          id={title}
+        />
+        {isLeftArrow && isActive && (
+          <CustomImage
+            source={images.iconArrowRight}
+            style={styles.arrowRight}
+          />
+        )}
+      </View>
+    );
   };
 
   const CANCEL_TEXT = intl.formatMessage({ id: "label.cancel" });
@@ -142,14 +120,16 @@ const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
             <CommonText fontWeight={"600"} customTextStyle={styles.headerText}>
               {intl.formatMessage({ id: "label.filters" })}
             </CommonText>
-            <CustomTouchableOpacity>
+            <CustomTouchableOpacity onPress={handleClearFilter}>
               <CommonText customTextStyle={styles.clearAll} isunderLine>
                 {intl.formatMessage({ id: "label.clear_all" })}
               </CommonText>
             </CustomTouchableOpacity>
           </View>
         }
-        middleSectionStyle={styles.middleSectionStyle}
+        middleSectionStyle={
+          isWeb ? styles.middleSectionWeb : styles.middleSectionStyle
+        }
         middleSection={
           <TwoColumn
             leftSection={
@@ -166,7 +146,15 @@ const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
             }
             leftSectionStyle={styles.leftSection}
             rightSectionStyle={styles.rightSection}
-            rightSection={renderOptionsByCategory()}
+            rightSection={
+              isWeb ? (
+                renderOptionsByCategory()
+              ) : (
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {renderOptionsByCategory()}
+                </ScrollView>
+              )
+            }
           />
         }
         bottomSection={
@@ -190,5 +178,11 @@ const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
     </CustomModal>
   );
 };
+
+FilterModal.propTypes = {
+  onPressIconCross: PropTypes.func.isRequired,
+  data: PropTypes.array.isRequired,
+  onApplyFilter: PropTypes.func.isRequired,
+}
 
 export default FilterModal;
