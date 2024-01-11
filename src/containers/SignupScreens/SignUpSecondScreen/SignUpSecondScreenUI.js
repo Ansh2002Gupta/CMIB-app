@@ -231,7 +231,9 @@ const SignUpSecondScreenUI = ({
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
         customStyles={{
-          customContainerStyle: !isWebView && style.customSaveButtonContainer,
+          customContainerStyle: !isWebView
+            ? { ...style.customSaveButtonContainer }
+            : {},
         }}
       />
       {isWebView && (

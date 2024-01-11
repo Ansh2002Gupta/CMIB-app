@@ -165,7 +165,9 @@ const SignUpThirdScreenUI = ({
           buttonOneText={intl.formatMessage({ id: "label.back" })}
           buttonTwoText={intl.formatMessage({ id: "label.next" })}
           customStyles={{
-            customContainerStyle: !isWebView && style.buttonContainer,
+            customContainerStyle: !isWebView
+              ? { ...style.buttonContainer }
+              : {},
           }}
           displayLoader={isLoading}
           iconRight={{
