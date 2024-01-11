@@ -151,6 +151,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             }
           />
         }
+        bottomSectionStyle={styles.bottomSection}
         bottomSection={
           openModuleSelector ? (
             <ModuleList modules={modules} onSelectItem={handleOnSelectItem} />
