@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  saveStyle: {
+  logoutButtonStyle: {
     backgroundColor: colors.yellow,
-    marginLeft: 16,
+    borderWidth: 0,
   },
   rightTextStyle: {
     color: colors.black,

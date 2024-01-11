@@ -70,6 +70,10 @@ const styles = {
     opacity: 0.6,
     flexWrap: "wrap",
   },
+  bottomSection:{
+    flex:1,
+    zIndex:1
+  },
   changeTextContainer: {
     backgroundColor: colors.offWhite,
     paddingTop: 6,
@@ -107,6 +111,7 @@ const styles = {
     position: "absolute",
     bottom: 0,
     width: "100%",
+    zIndex:2,
   },
   imageTextView: {
     flexDirection: "row",

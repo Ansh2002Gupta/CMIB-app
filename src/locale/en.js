@@ -237,6 +237,7 @@ const locale = {
   "label.previous":"Previous",
   "label.rows_per_page":"Rows Per Page:",
   "label.filters":"Filters",
+  "label.search": "Search",
 };
 
 export default locale;
