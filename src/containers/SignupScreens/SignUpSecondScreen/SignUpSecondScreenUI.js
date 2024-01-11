@@ -5,12 +5,15 @@ import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CustomTextInput from "../../../components/CustomTextInput";
+import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
+import { numericValidator } from "../../../constants/validation";
+import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = ({
@@ -93,7 +96,10 @@ const SignUpSecondScreenUI = ({
               errorMessage={errors.registrationNo}
               isError={!!errors.registrationNo}
               value={registrationNo}
-              onChangeText={(val) => handleInputChange(val, "registrationNo")}
+              onChangeText={(val) =>
+                numericValidator(val) &&
+                handleInputChange(val, "registrationNo")
+              }
             />
           </View>
           <View style={style.partnerInput}>
@@ -107,10 +113,13 @@ const SignUpSecondScreenUI = ({
               isMandatory
               customHandleBlur={() => handleBlur("noOfPartners")}
               isNumeric
+              maxLength={3}
               value={noOfPartners}
               errorMessage={errors.noOfPartners}
               isError={!!errors.noOfPartners}
-              onChangeText={(val) => handleInputChange(val, "noOfPartners")}
+              onChangeText={(val) =>
+                numericValidator(val) && handleInputChange(val, "noOfPartners")
+              }
             />
           </View>
         </View>
@@ -182,10 +191,12 @@ const SignUpSecondScreenUI = ({
               customHandleBlur={() => handleBlur("code")}
               isNumeric
               value={code}
-              maxLength={15}
+              maxLength={4}
               errorMessage={errors.code}
               isError={!!errors.code}
-              onChangeText={(val) => handleInputChange(val, "code")}
+              onChangeText={(val) =>
+                numericValidator(val) && handleInputChange(val, "code")
+              }
               isMandatory
             />
           </View>
@@ -204,7 +215,9 @@ const SignUpSecondScreenUI = ({
               isNumeric
               maxLength={15}
               value={telephoneNo}
-              onChangeText={(val) => handleInputChange(val, "telephoneNo")}
+              onChangeText={(val) =>
+                numericValidator(val) && handleInputChange(val, "telephoneNo")
+              }
             />
           </View>
         </View>
@@ -247,50 +260,52 @@ const SignUpSecondScreenUI = ({
   );
 
   return (
-    <View
-      style={
-        isWebView
-          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-          : style.innerContainer
-      }
-    >
-      {isWebView && (
-        <HeaderTextWithLabelAndDescription
-          label={intl.formatMessage({ id: "label.step_two" })}
-          {...(showContentHeader && {
-            headerText: intl.formatMessage({
-              id: "label.basic_details",
-            }),
-          })}
-        />
-      )}
-      {!isWeb ? (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={style.contentContainerStyle}
-        >
-          {renderFormContent()}
-        </ScrollView>
-      ) : (
-        <View
-          style={
-            !isWebView
-              ? [style.contentContainerStyle, style.webContentContainer]
-              : style.webContentContainer
-          }
-        >
-          {renderFormContent()}
-          {renderFooter()}
-        </View>
-      )}
-      {!isWeb && renderFooter()}
-      {!!validationError && (
-        <ToastComponent
-          toastMessage={validationError}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </View>
+    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
+      <View
+        style={
+          isWebView
+            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+            : style.innerContainer
+        }
+      >
+        {isWebView && (
+          <HeaderTextWithLabelAndDescription
+            label={intl.formatMessage({ id: "label.step_two" })}
+            {...(showContentHeader && {
+              headerText: intl.formatMessage({
+                id: "label.basic_details",
+              }),
+            })}
+          />
+        )}
+        {!isWeb ? (
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={style.contentContainerStyle}
+          >
+            {renderFormContent()}
+          </ScrollView>
+        ) : (
+          <View
+            style={
+              !isWebView
+                ? [style.contentContainerStyle, style.webContentContainer]
+                : style.webContentContainer
+            }
+          >
+            {renderFormContent()}
+            {renderFooter()}
+          </View>
+        )}
+        {!isWeb && renderFooter()}
+        {!!validationError && (
+          <ToastComponent
+            toastMessage={validationError}
+            onDismiss={handleDismissToast}
+          />
+        )}
+      </View>
+    </FormWrapper>
   );
 };
 

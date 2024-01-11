@@ -36,6 +36,10 @@ const commonStyles = {
     boxShadow: "0px 4px 32px 0px rgba(97, 108, 130, 0.04)",
     justifyContent: "center",
   },
+  mainView: {
+    flex: 1,
+    display: "flex",
+  },
 };
 
 export const gridStyles = {
