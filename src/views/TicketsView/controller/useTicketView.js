@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import CommonText from "../../../components/CommonText";
 import CustomImage from "../../../components/CustomImage";
@@ -22,10 +22,11 @@ const tableHeading = {
 };
 
 const useTicketView = (data) => {
+  const [, ticketScreenDispatch] = useContext(TicketScreenContext);
   const [rowsToShow, setRowsToShow] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentRecords, setCurrentRecords] = useState([]);
-  const [ ,ticketScreenDispatch] = useContext(TicketScreenContext);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const indexOfLastRecord = currentPage * rowsToShow;
   const indexOfFirstRecord = indexOfLastRecord - rowsToShow;
@@ -36,12 +37,26 @@ const useTicketView = (data) => {
     ticketScreenDispatch(setTicketScreenList(data));
   }, [rowsToShow, currentPage]);
 
-  const totalcards = data.length;
+  const handleLoadMore = () => {
+    if (loadingMore) return;
+    setLoadingMore(true);
+
+    setTimeout(() => {
+      const startIndex = currentRecords.length;
+      const endIndex = startIndex + rowsToShow;
+      const additionalRecords = data.slice(startIndex, endIndex);
+      if (additionalRecords.length > 0) {
+        const newRecords = currentRecords.concat(additionalRecords);
+        setCurrentRecords(newRecords);
+      }
+      setLoadingMore(false);
+    }, 1000);
+  };
 
   let isHeading = true;
 
   const handleSearchResults = (searchedData) => {
-    //TODO: Implement searching 
+    //TODO: Implement searching
   };
 
   const handleSelect = (option) => {
@@ -169,9 +184,9 @@ const useTicketView = (data) => {
     handleSearchResults,
     handleSelect,
     headingTexts,
-    indexOfFirstRecord,
-    indexOfLastRecord,
+    handleLoadMore,
     isHeading,
+    loadingMore,
     rowsLimit,
     rowsToShow,
     setCurrentPage,
@@ -180,7 +195,7 @@ const useTicketView = (data) => {
     subHeadingText,
     tableHeading,
     tableIcon,
-    totalcards,
+    totalcards: data.length,
   };
 };
 

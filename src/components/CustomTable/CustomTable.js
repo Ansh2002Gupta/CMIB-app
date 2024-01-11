@@ -11,6 +11,7 @@ import CustomDropdown from "../../components/CustomDropdown";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
+import LoadingScreen from "../LoadingScreen";
 import Pagination from "../../components/Pagination/Pagination";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
@@ -27,9 +28,8 @@ const CustomTable = ({
   getStatusStyle,
   handleSearchResults,
   handleSelect,
+  handleLoadMore,
   headingTexts,
-  indexOfFirstRecord,
-  indexOfLastRecord,
   isHeading,
   rowsLimit,
   rowsToShow,
@@ -75,11 +75,6 @@ const CustomTable = ({
               dropdownIcon={images.iconArrowDown}
             />
           </View>
-          {!isWebView && (
-            <CommonText customTextStyle={styles.rowsPerPageText}>
-              {`${indexOfFirstRecord} - ${indexOfLastRecord} of ${totalcards}`}
-            </CommonText>
-          )}
         </View>
         <Pagination
           cardsPerPage={rowsToShow}
@@ -148,7 +143,7 @@ const CustomTable = ({
                   data={currentRecords}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item, index }) => {
+                  renderItem={({ item }) => {
                     return (
                       <>
                         {isWebView ? (
@@ -190,14 +185,14 @@ const CustomTable = ({
                       </>
                     );
                   }}
+                  onEndReached={isWebView ? null : handleLoadMore} 
+                  onEndReachedThreshold={isWebView ? null : 0.1}
+                  ListFooterComponent={<LoadingScreen />}
                 />
                 {isWebView && <PaginationFooter />}
               </View>
             }
             isTopFillSpace
-            isBottomFillSpace={false}
-            bottomSection={!isWebView && <PaginationFooter />}
-            bottomSectionStyle={styles.bottomPaginationStyle}
           />
         }
       />
@@ -219,8 +214,7 @@ CustomTable.defaultProps = {
   getStatusStyle: () => {},
   handleSearchResults: () => {},
   handleSelect: () => {},
-  indexOfFirstRecord: 0,
-  indexOfLastRecord: 0,
+  handleLoadMore: () => {},
   isHeading: false,
   rowsLimit: [],
   rowsToShow: 10,
@@ -241,9 +235,8 @@ CustomTable.propTypes = {
   getStatusStyle: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
+  handleLoadMore:PropTypes.func.isRequired,
   headingTexts: PropTypes.array,
-  indexOfFirstRecord: PropTypes.number.isRequired,
-  indexOfLastRecord: PropTypes.number.isRequired,
   isHeading: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
