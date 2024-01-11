@@ -110,9 +110,9 @@ function Pagination(props) {
         {paginationRange().map((page, idx) => {
           if (page === DOTS) {
             return (
-              <Text key={idx} style={{ marginHorizontal: 5 }}>
+              <CommonText key={idx} customTextStyle={styles.dotsStyle}>
                 {DOTS}
-              </Text>
+              </CommonText>
             );
           }
           return (

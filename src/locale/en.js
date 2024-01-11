@@ -239,6 +239,7 @@ const locale = {
   "label.filters":"Filters",
   "label.show_result":"Show results",
   "label.search": "Search",
+  "label.clear_all":"Clear All",
 };
 
 export default locale;

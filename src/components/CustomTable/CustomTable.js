@@ -49,7 +49,7 @@ const CustomTable = ({
     setShowModal((prev) => !prev);
   };
 
-  const PaginationFooter = ({ isWebView }) => {
+  const PaginationFooter = () => {
     return (
       <View
         style={isWebView ? styles.paginationFooterWeb : styles.paginationFooter}
@@ -87,7 +87,7 @@ const CustomTable = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
         topSection={
           showSearchBar && (
@@ -135,6 +135,7 @@ const CustomTable = ({
                 <FlatList
                   data={currentRecords}
                   showsVerticalScrollIndicator={false}
+                  keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item, index }) => {
                     return (
                       <>
@@ -178,19 +179,19 @@ const CustomTable = ({
                     );
                   }}
                 />
-                {isWebView && <PaginationFooter isWebView={isWebView} />}
+                {isWebView && <PaginationFooter />}
               </View>
             }
             isTopFillSpace
             isBottomFillSpace={false}
             bottomSection={
-              !isWebView && <PaginationFooter isWebView={isWebView} />
+              !isWebView && <PaginationFooter />
             }
             bottomSectionStyle={styles.bottomPaginationStyle}
           />
         }
       />
-      {showModal && <FilterModal onPressIconCross={handleFilterModal} />}
+      {showModal && <FilterModal onPressIconCross={handleFilterModal} data={currentRecords} />}
     </View>
   );
 };

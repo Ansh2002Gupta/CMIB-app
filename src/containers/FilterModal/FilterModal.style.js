@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
   },
   middleSectionStyle: {
-    height: 278,
+    minHeight:278,
   },
   arrowRight: {
     height: 16,
@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
     position: "relative",
     paddingTop: 16,
     alignItems: "center",
+  },
+  bottomView: {
+    width: "50%",
   },
 });
 

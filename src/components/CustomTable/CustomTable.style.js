@@ -13,6 +13,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundGrey,
     padding: 24,
   },
+  mobileMainContainer:{
+    flex: 1,
+    backgroundColor: colors.backgroundGrey,
+    paddingTop:24,
+    paddingBottom:24,
+    paddingLeft:16,
+    paddingRight:16,
+  },
   mobileContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -41,6 +49,7 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
   },
   tableQueryText: {
+    marginTop:2,
     color: colors.darkGrey,
   },
   columnStyle: (WIDTH: "15%") => ({

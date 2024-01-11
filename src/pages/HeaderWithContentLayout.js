@@ -87,7 +87,7 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
             />
           )
         }
-        bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
+        bottomSection={isAuthenticated && (!isWebView && !doesExcludeHeader ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
         footer={!isAuthenticated && isWebView && <Footer />}

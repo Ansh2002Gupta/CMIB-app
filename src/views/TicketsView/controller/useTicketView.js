@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 
 import CommonText from "../../../components/CommonText";
 import CustomImage from "../../../components/CustomImage";
@@ -22,11 +22,15 @@ const tableHeading = {
 const useTicketView = (data) => {
   const [rowsToShow, setRowsToShow] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentRecords, setCurrentRecords] = useState([]);
 
   const indexOfLastRecord = currentPage * rowsToShow;
   const indexOfFirstRecord = indexOfLastRecord - rowsToShow;
 
-  let currentRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
+  useEffect(() => {
+    let newRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
+    setCurrentRecords(newRecords);
+  }, [rowsToShow, currentPage]);
 
   const totalcards = data.length;
 
