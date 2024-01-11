@@ -8,6 +8,7 @@ import CheckBox from "../../../components/CheckBox/CheckBox";
 import CommonText from "../../../components/CommonText";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
+import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
@@ -18,6 +19,7 @@ import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
 } from "../../../constants/constants";
+import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = ({
@@ -38,7 +40,6 @@ const SignUpLastScreenUI = ({
   onClickGoToLogin,
   onDeleteImage,
   onGoBack,
-  onImageUpload,
   options,
   showSuccessSignUp,
   signUpError,
@@ -175,9 +176,8 @@ const SignUpLastScreenUI = ({
           })}
         </CommonText>
         <UploadImage
-          onImageUpload={onImageUpload}
-          onDeleteImage={onDeleteImage}
           {...{
+            onDeleteImage,
             errorWhileUpload,
             fileUploadResult,
             handleFileUpload,
@@ -205,7 +205,9 @@ const SignUpLastScreenUI = ({
           isButtonTwoGreen
           onPressButtonOne={onGoBack}
           onPressButtonTwo={() => handleSuccessModal(true)}
-          customContainerStyle={!isWebView && style.customContainerStyle}
+          customStyles={{
+            customContainerStyle: !isWebView && style.customContainerStyle,
+          }}
         />
         {isWebView && (
           <LabelWithLinkText
@@ -219,67 +221,72 @@ const SignUpLastScreenUI = ({
   };
 
   return (
-    <View
-      style={
-        isWebView
-          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-          : style.mainContainerStyle
-      }
+    <FormWrapper
+      onSubmit={() => handleSuccessModal(true)}
+      customFormStyle={commonStyles.mainView}
     >
-      {showSuccessSignUp && (
-        <CustomModal
-          headerText={intl.formatMessage({
-            id: "label.signup_success",
-          })}
-          secondaryText={intl.formatMessage({
-            id: "label.signup_info",
-          })}
-          buttonTitle={intl.formatMessage({
-            id: "label.go_back_to_login",
-          })}
-          onPress={onClickGoToLogin}
-          isSuccess
-        />
-      )}
-      {isWebView && (
-        <View>
-          <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({ id: "label.step_four" })}
-            {...(showContentHeader && {
-              headerText: intl.formatMessage({
-                id: "label.other_details",
-              }),
+      <View
+        style={
+          isWebView
+            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+            : style.mainContainerStyle
+        }
+      >
+        {showSuccessSignUp && (
+          <CustomModal
+            headerText={intl.formatMessage({
+              id: "label.signup_success",
             })}
+            secondaryText={intl.formatMessage({
+              id: "label.signup_info",
+            })}
+            buttonTitle={intl.formatMessage({
+              id: "label.go_back_to_login",
+            })}
+            onPress={onClickGoToLogin}
+            isSuccess
           />
-        </View>
-      )}
-      {isWeb ? (
-        <View
-          style={
-            !isWebView
-              ? [style.contentContainerStyle, style.extraSmallContainer]
-              : style.webContentContainer
-          }
-        >
-          {renderFormContent()}
-          {renderFooterContent()}
-        </View>
-      ) : (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={style.contentContainerStyle}
-        >
-          {renderFormContent()}
-        </ScrollView>
-      )}
-      {!isWeb && renderFooterContent()}
-      {!!errorMessage && (
-        <ToastComponent
-          toastMessage={errorMessage}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </View>
+        )}
+        {isWebView && (
+          <View>
+            <HeaderTextWithLabelAndDescription
+              label={intl.formatMessage({ id: "label.step_four" })}
+              {...(showContentHeader && {
+                headerText: intl.formatMessage({
+                  id: "label.other_details",
+                }),
+              })}
+            />
+          </View>
+        )}
+        {isWeb ? (
+          <View
+            style={
+              !isWebView
+                ? [style.contentContainerStyle, style.extraSmallContainer]
+                : style.webContentContainer
+            }
+          >
+            {renderFormContent()}
+            {renderFooterContent()}
+          </View>
+        ) : (
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={style.contentContainerStyle}
+          >
+            {renderFormContent()}
+          </ScrollView>
+        )}
+        {!isWeb && renderFooterContent()}
+        {!!errorMessage && (
+          <ToastComponent
+            toastMessage={errorMessage}
+            onDismiss={handleDismissToast}
+          />
+        )}
+      </View>
+    </FormWrapper>
   );
 };
 
@@ -288,7 +295,7 @@ SignUpLastScreenUI.defaultProps = {
   errorWhileDeletion: "",
   errorWhileUpload: "",
   handleDismissToast: () => {},
-  onImageUpload: () => {},
+  onDeleteImage: () => {},
   signUpError: "",
   validationError: "",
 };
@@ -311,7 +318,6 @@ SignUpLastScreenUI.propTypes = {
   onClickGoToLogin: PropTypes.func.isRequired,
   onDeleteImage: PropTypes.func,
   onGoBack: PropTypes.func.isRequired,
-  onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
   signUpError: PropTypes.string,

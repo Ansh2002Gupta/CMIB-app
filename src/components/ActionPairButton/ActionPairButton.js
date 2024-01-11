@@ -8,7 +8,8 @@ import styles from "./ActionPairButton.style";
 const ActionPairButton = ({
   buttonOneText,
   buttonTwoText,
-  customContainerStyle,
+  buttonsType,
+  customStyles,
   displayLoader,
   iconRight,
   iconLeft,
@@ -18,14 +19,18 @@ const ActionPairButton = ({
   onPressButtonOne,
   onPressButtonTwo,
 }) => {
+  const { buttonOneStyle, buttonTwoStyle, customContainerStyle } = customStyles;
+  const { buttonOneType, buttonTwoType } = buttonsType || {};
+
   return (
     <TwoColumn
       style={{ ...styles.containerStyle, ...customContainerStyle }}
       leftSection={
         <CustomButton
-          onPress={onPressButtonOne}
-          style={styles.buttonStyle}
           iconLeft={iconLeft}
+          onPress={onPressButtonOne}
+          style={{ ...styles.buttonStyle, ...buttonOneStyle }}
+          type={buttonOneType}
           withGreenBackground={isButtonOneGreen}
         >
           {buttonOneText}
@@ -33,10 +38,12 @@ const ActionPairButton = ({
       }
       rightSection={
         <CustomButton
-          isLoading={displayLoader}
           disabled={isDisabled}
-          onPress={onPressButtonTwo}
           iconRight={iconRight}
+          isLoading={displayLoader}
+          onPress={onPressButtonTwo}
+          style={buttonTwoStyle}
+          type={buttonTwoType}
           withGreenBackground={isButtonTwoGreen}
         >
           {buttonTwoText}
@@ -49,7 +56,15 @@ const ActionPairButton = ({
 };
 
 ActionPairButton.defaultProps = {
-  customContainerStyle: {},
+  buttonsType: {
+    buttonOneType: "button",
+    buttonTwoType: "submit",
+  },
+  customStyles: {
+    buttonOneStyle: {},
+    buttonTwoStyle: {},
+    customContainerStyle: {},
+  },
   displayLoader: false,
   iconLeft: {
     isLeftIconNotSvg: false,
@@ -71,7 +86,8 @@ ActionPairButton.defaultProps = {
 ActionPairButton.propTypes = {
   buttonOneText: PropTypes.string.isRequired,
   buttonTwoText: PropTypes.string.isRequired,
-  customContainerStyle: PropTypes.object,
+  buttonsType: PropTypes.object,
+  customStyles: PropTypes.object,
   displayLoader: PropTypes.bool,
   iconLeft: PropTypes.object,
   iconRight: PropTypes.object,

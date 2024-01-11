@@ -10,13 +10,11 @@ import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
-import useIsWebView from "../../hooks/useIsWebView";
 import { strongPasswordValidator } from "../../constants/validation";
 import styles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [error, setError] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -127,7 +125,9 @@ const ChangePasswordModal = ({ onPressCancel }) => {
       <ActionPairButton
         buttonOneText={intl.formatMessage({ id: "label.cancel" })}
         buttonTwoText={intl.formatMessage({ id: "label.save" })}
-        customContainerStyle={styles.customContainerStyle}
+        customStyles={{
+          customContainerStyle: styles.customContainerStyle,
+        }}
         displayLoader={isLoading}
         isDisabled={isNextDisabled()}
         isButtonTwoGreen

@@ -6,6 +6,7 @@ import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import ActionPairButton from "../../../components/ActionPairButton";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
+import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
@@ -19,6 +20,8 @@ import {
   SALUTATION_OPTIONS,
   WOMENT_PLACEMENT,
 } from "../../../constants/constants";
+import { numericValidator } from "../../../constants/validation";
+import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 
 const SignUpThirdScreenUI = ({
@@ -129,7 +132,10 @@ const SignUpThirdScreenUI = ({
               maxLength={10}
               customHandleBlur={() => handleBlur("mobileNo", index)}
               isNumeric
-              onChangeText={(val) => handleInputChange(val, "mobileNo", index)}
+              onChangeText={(val) =>
+                numericValidator(val) &&
+                handleInputChange(val, "mobileNo", index)
+              }
               isMobileNumber
               errorMessage={errors[index].mobileNo}
               isError={!!errors[index].mobileNo}
@@ -164,7 +170,11 @@ const SignUpThirdScreenUI = ({
         <ActionPairButton
           buttonOneText={intl.formatMessage({ id: "label.back" })}
           buttonTwoText={intl.formatMessage({ id: "label.next" })}
-          customContainerStyle={!isWebView && style.buttonContainer}
+          customStyles={{
+            customContainerStyle: !isWebView
+              ? { ...style.buttonContainer }
+              : {},
+          }}
           displayLoader={isLoading}
           iconRight={{
             rightIconAlt: "right-arrow",
@@ -191,48 +201,50 @@ const SignUpThirdScreenUI = ({
   };
 
   return (
-    <View
-      style={
-        isWebView
-          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-          : style.innerContainer
-      }
-    >
-      {isWebView && (
-        <View>
-          <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({ id: "label.step_three" })}
-            {...(showContentHeader && {
-              headerText: intl.formatMessage({
-                id: "label.contact_person_details",
-              }),
-            })}
-          />
-        </View>
-      )}
-      {isWebView ? (
-        <View style={style.webContainerStyle}>
-          {renderFormContent()}
-          {renderFooterContent()}
-        </View>
-      ) : (
-        <>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={style.contentContainerStyle}
-          >
+    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
+      <View
+        style={
+          isWebView
+            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+            : style.innerContainer
+        }
+      >
+        {isWebView && (
+          <View>
+            <HeaderTextWithLabelAndDescription
+              label={intl.formatMessage({ id: "label.step_three" })}
+              {...(showContentHeader && {
+                headerText: intl.formatMessage({
+                  id: "label.contact_person_details",
+                }),
+              })}
+            />
+          </View>
+        )}
+        {isWebView ? (
+          <View style={style.webContainerStyle}>
             {renderFormContent()}
-          </ScrollView>
-          {renderFooterContent()}
-        </>
-      )}
-      {!!validationError && (
-        <ToastComponent
-          toastMessage={validationError}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </View>
+            {renderFooterContent()}
+          </View>
+        ) : (
+          <>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={style.contentContainerStyle}
+            >
+              {renderFormContent()}
+            </ScrollView>
+            {renderFooterContent()}
+          </>
+        )}
+        {!!validationError && (
+          <ToastComponent
+            toastMessage={validationError}
+            onDismiss={handleDismissToast}
+          />
+        )}
+      </View>
+    </FormWrapper>
   );
 };
 

@@ -1,4 +1,5 @@
 import { NEW_PASSWORD_VALIDATIONS } from "./Regex";
+import { numRegex } from "./constants";
 
 export const isStringContainsNumber = (string) =>
   NEW_PASSWORD_VALIDATIONS.numeric.test(string);
@@ -19,3 +20,6 @@ export const strongPasswordValidator = (password) => {
     isStringContainsSpecialChar(password)
   );
 };
+
+export const numericValidator = (val) =>
+  numRegex.test(String(val).toLocaleLowerCase());
