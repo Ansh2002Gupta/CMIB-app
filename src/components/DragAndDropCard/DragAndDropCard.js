@@ -36,6 +36,16 @@ const DragAndDropCard = ({
 
   const intl = useIntl();
 
+  let additionalStyle = {};
+  if (isPlatformWeb) {
+    additionalStyle = {
+      ...styles.percentageBox,
+      ...(Math.round(uploadPercentage) > 9
+        ? styles.percentageBoxTwoDigitNumber
+        : {}),
+    };
+  }
+
   return (
     <>
       {isLoading ? (
@@ -43,16 +53,7 @@ const DragAndDropCard = ({
           <View style={styles.loaderBox}>
             <Spinner />
             {(uploadPercentage || uploadPercentage === 0) && (
-              <View
-                style={
-                  isPlatformWeb && {
-                    ...styles.percentageBox,
-                    ...(Math.round(uploadPercentage) > 9
-                      ? styles.percentageBoxTwoDigitNumber
-                      : {}),
-                  }
-                }
-              >
+              <View style={additionalStyle}>
                 <CommonText
                   customTextStyle={styles.percentageText}
                 >{`${Math.round(uploadPercentage)}%`}</CommonText>
