@@ -260,6 +260,7 @@ const locale = {
   "label.group_discussion": "Group Discussion",
   "label.psychometric_test": "Psychometric Test/ Written Test",
   "label.personal_interview": "Personal Interview",
+  "label.search": "Search",
 };
 
 export default locale;

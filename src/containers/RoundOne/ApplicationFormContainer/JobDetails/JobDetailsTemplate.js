@@ -22,6 +22,7 @@ import useIsWebView from "../../../../hooks/useIsWebView";
 import { gridStyles } from "../../../../theme/styles/commonStyles";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
+import { numericValidator } from "../../../../constants/validation";
 
 const JobDetailsTemplate = ({
   addDesignation,
@@ -99,8 +100,6 @@ const JobDetailsTemplate = ({
             value={designationName}
             onChangeText={(val) => handleDesignationName(val)}
             isNumeric
-            maxLength={9}
-            isRupee
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -109,7 +108,11 @@ const JobDetailsTemplate = ({
               placeholder={intl.formatMessage({ id: "label.compensation" })}
               isMandatory
               value={compensation}
-              onChangeText={(val) => handleCompensation(val)}
+              onChangeText={(val) =>
+                numericValidator(val) && handleCompensation(val)
+              }
+              maxLength={9}
+              isRupee
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -120,7 +123,11 @@ const JobDetailsTemplate = ({
               })}
               isMandatory
               value={startingSalary}
-              onChangeText={(val) => handleStartingSalary(val)}
+              onChangeText={(val) =>
+                numericValidator(val) && handleStartingSalary(val)
+              }
+              maxLength={9}
+              isRupee
             />
           </View>
           <CustomTextEditor
