@@ -84,11 +84,11 @@ const CustomTextInput = (props) => {
       ? { keyboardType: "numeric", returnKeyType: "done" }
       : {};
 
-  const inputStyle = [
-    style.inputContainer,
-    isFocused && style.focusedStyle,
-    isError && style.invalidInput,
-  ];
+  const inputStyle = {
+    ...style.inputContainer,
+    ...(isFocused ? style.focusedStyle : {}),
+    ...(isError ? style.invalidInput : {}),
+  };
 
   const renderTextInput = () => {
     if (isDropdown) {
@@ -137,7 +137,7 @@ const CustomTextInput = (props) => {
       <View style={inputStyle}>
         {isMobileNumber && (
           <View style={style.prefixContainer}>
-            <CommonText customTextStyle={style.prefixStyle}>{+91}</CommonText>
+            <CommonText customTextStyle={style.prefixStyle}>{"+91"}</CommonText>
             <Image source={images.iconDownArrow} style={style.iconStyle} />
             <Image source={images.iconDivider} style={style.iconStyle} />
           </View>
@@ -175,9 +175,10 @@ const CustomTextInput = (props) => {
 
   return (
     <View
-      style={
-        !isPaddingNotRequired ? [style.container, customStyle] : customStyle
-      }
+      style={{
+        ...(!isPaddingNotRequired ? style.container : {}),
+        ...customStyle,
+      }}
     >
       {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {renderTextInput()}

@@ -1,4 +1,5 @@
 import { Platform } from "@unthinkable/react-core-components";
+import { fontFamily } from "../../theme/styles/commonStyles";
 import colors from "../../assets/colors";
 
 const style = {
@@ -37,10 +38,7 @@ const style = {
   placeholderStyle: {
     fontSize: 14,
     color: colors.darkGrey,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
+    fontFamily,
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -88,10 +86,7 @@ const style = {
   },
   textInputStyle: {
     flex: 1,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
+    fontFamily,
     fontSize: 14,
     height: 48,
   },
@@ -134,10 +129,7 @@ const style = {
   },
   searchStyle: {
     fontSize: 14,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
+    fontFamily,
     color: colors.black,
     fontWeight: "500",
     borderRadius: 4,
