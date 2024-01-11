@@ -90,7 +90,7 @@ CustomButton.defaultProps = {
   isLoading: false,
   onPress: () => {},
   style: {},
-  type: "",
+  type: "button",
   withGreenBackground: false,
 };
 

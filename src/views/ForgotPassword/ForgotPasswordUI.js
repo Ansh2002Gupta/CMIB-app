@@ -106,7 +106,7 @@ const ForgotPasswordUI = (props) => {
 
   return (
     <FormWrapper
-      customFormStyle={styles.customFormStyle}
+      customFormStyle={commonStyles.mainView}
       onSubmit={onSendOtpClick}
     >
       <View style={styles.mainView}>
@@ -217,7 +217,7 @@ ForgotPasswordUI.defaultProps = {
   onSendOtpClick: () => {},
   successLogin: false,
   validationError: "",
-}
+};
 
 ForgotPasswordUI.propTypes = {
   errorMessage: PropTypes.string,
