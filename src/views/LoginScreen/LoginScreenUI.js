@@ -15,6 +15,7 @@ import FormWrapper from "../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
+import { mainView } from "../../theme/styles/commonStyles";
 import styles from "./Loginscreen.style";
 
 const LoginScreenUI = (props) => {
@@ -74,16 +75,11 @@ const LoginScreenUI = (props) => {
   };
 
   return (
-    <FormWrapper
-      onSubmit={onLogin}
-      customFormStyle={{
-        ...styles.mainView,
-      }}
-    >
+    <FormWrapper onSubmit={onLogin} customFormStyle={mainView}>
       <WebViewLoginSignUpWrapper shouldApplyStyles={isWebView}>
         <View
           style={{
-            ...styles.mainView,
+            ...mainView,
             ...(isWebView && styles.gapForWebView),
           }}
         >

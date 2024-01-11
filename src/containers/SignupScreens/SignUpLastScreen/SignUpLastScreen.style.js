@@ -74,10 +74,6 @@ export const style = StyleSheet.create({
   imageContainer: {
     marginBottom: 48,
   },
-  mainView: {
-    flex: 1,
-    display: "flex",
-  },
 });
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {

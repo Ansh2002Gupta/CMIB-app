@@ -48,4 +48,9 @@ export const gridStyles = {
 export const fontFamily =
   Platform.OS.toLowerCase() === "web" ? "General sans" : "GeneralSans-Medium";
 
+export const mainView = {
+  flex: 1,
+  display: "flex",
+};
+
 export default commonStyles;

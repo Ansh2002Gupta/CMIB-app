@@ -5,10 +5,6 @@ const isWeb = Platform.OS.toLowerCase() === "web";
 const webPointer = isWeb ? { cursor: "pointer" } : {};
 
 const style = {
-  mainView: {
-    flex: 1,
-    display: "flex"
-  },
   container: {
     backgroundColor: colors.white,
     paddingRight: 16,

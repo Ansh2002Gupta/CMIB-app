@@ -15,6 +15,7 @@ import {
   OTP_TRY_COUNT,
   OTP_TIMER_MAX_MINUTES,
 } from "../../constants/constants";
+import { mainView } from "../../theme/styles/commonStyles";
 import styles from "./OtpView.style";
 
 const OtpViewUI = ({
@@ -157,10 +158,7 @@ const OtpViewUI = ({
   };
 
   return (
-    <FormWrapper
-      customFormStyle={styles.formContainer}
-      onSubmit={onVerifyOtpClick}
-    >
+    <FormWrapper customFormStyle={mainView} onSubmit={onVerifyOtpClick}>
       <View style={styles.mainView}>
         <View
           style={
