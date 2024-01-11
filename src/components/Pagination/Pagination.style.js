@@ -1,14 +1,12 @@
-import { StyleSheet , Dimensions} from "@unthinkable/react-core-components";
+import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-
-const {width:WIDTH} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   pagination: {
     borderRadius: 2,
     alignItems: "center",
     flexDirection: "row",
-    justifyContent:"space-between"
+    justifyContent: "space-between",
   },
   paginationRange: {
     flexDirection: "row",
@@ -23,15 +21,17 @@ const styles = StyleSheet.create({
   activeText: {
     fontSize: 14,
     color: colors.darkBlue,
+    lineHeight: 20,
   },
   inActiveText: {
     fontSize: 14,
     color: colors.darkGrey,
   },
   activeButton: {
-    paddingLeft: 12,
-    paddingRight: 12,
-    width:36,
+    paddingLeft: 8,
+    paddingRight: 8,
+    width: 36,
+    height: 36,
     paddingTop: 8,
     paddingBottom: 8,
     borderColor: colors.darkBlue,
@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderWidth: 0,
   },
-  dotsStyles:{
-    marginHorizontal:5
-  }
+  dotsStyles: {
+    marginHorizontal: 5,
+  },
 });
 
 export default styles;
