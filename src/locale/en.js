@@ -234,6 +234,7 @@ const locale = {
   "label.password_changed_successfully":
     "Your password has been changed successfully",
   "label.sessions": "Sessions :",
+  "label.search": "Search",
 };
 
 export default locale;
