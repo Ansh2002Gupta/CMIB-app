@@ -5,7 +5,7 @@ import colors from "../../assets/colors";
 export const styles = StyleSheet.create({
   modal: {
     position: "fixed",
-    top: "20vh",
+    top: "35vh",
     width: "100%",
     zIndex: 30,
     display: "flex",

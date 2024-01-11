@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import Select from "react-select";
+import colors from "../../assets/colors";
 import styles from "./Dropdown.style";
 
 const Dropdown = ({
@@ -13,33 +15,53 @@ const Dropdown = ({
   value,
   valueField,
 }) => {
+  const options = data.map((option) => ({
+    value: String(option[valueField]),
+    label: String(option[labelField]),
+  }));
+  const selectedOption = options.find((option) => option[valueField] === value);
+
+  const handleChange = (selectedOption) => {
+    onChange(selectedOption);
+  };
+
   return (
-    <select
-      style={{
-        ...styles.dropdownContainer,
-        ...dropdownStyle,
-        ...(value === "" ? placeholderStyle : {}),
-      }}
-      value={value}
-      onChange={(e) => {
-        onChange(e.target.value);
-      }}
-      placeholder={placeholder}
-    >
-      <option
-        value=""
-        disabled={value !== ""}
-        hidden={value !== ""}
-        selected={value === ""}
-      >
-        {placeholder || ""}
-      </option>
-      {data.map((option, index) => (
-        <option key={index} value={option[valueField]}>
-          {option[labelField]}
-        </option>
-      ))}
-    </select>
+    <div>
+      <Select
+        value={selectedOption}
+        placeholder={placeholder}
+        options={options}
+        theme={(theme) => ({
+          ...theme,
+          colors: {
+            ...theme.colors,
+            primary25: colors.secondaryGrey,
+            primary: colors.lightBlue,
+            primary50: colors.lightBlue,
+            primary75: colors.lightBlue,
+          },
+        })}
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            ...styles.control(state.isFocused),
+            ...dropdownStyle,
+          }),
+          placeholder: (baseStyles) => ({
+            ...baseStyles,
+            ...placeholderStyle,
+          }),
+          singleValue: (baseStyles) => ({
+            ...baseStyles,
+            ...styles.valueStyle,
+            ...dropdownStyle,
+          }),
+        }}
+        onChange={(selectedOption) => {
+          handleChange(selectedOption.value);
+        }}
+      />
+    </div>
   );
 };
 
@@ -47,11 +69,11 @@ Dropdown.defaultProps = {
   data: [],
   dropdownStyle: {},
   labelField: "",
-  onChange: ()=>{},
+  onChange: () => {},
   placeholder: "",
   placeholderStyle: {},
   value: "",
-  valueField: ""
+  valueField: "",
 };
 
 Dropdown.propTypes = {

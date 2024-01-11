@@ -10,6 +10,7 @@ import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Key
 
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
+import CustomImage from "../CustomImage";
 import Modal from "../Modal";
 import images from "../../images";
 import style from "./CustomModal.style";
@@ -27,7 +28,7 @@ const CustomModal = ({
   secondaryText,
 }) => {
   const webProps =
-    Platform.OS.toLowerCase() === "web" ? { maxWidth: "sm" } : {};
+    Platform.OS.toLowerCase() === "web" ? { maxWidth: "xs" } : {};
 
   return (
     <>
@@ -38,7 +39,13 @@ const CustomModal = ({
         >
           {isSuccess ? (
             <>
-              <Image source={images.iconSuccess} />
+              <CustomImage
+                alt={"success-icon"}
+                source={images.iconSuccess}
+                Icon={images.iconSuccess}
+                isSvg
+                style={style.iconStyle}
+              />
               <CommonText
                 customTextStyle={[
                   !secondaryText && style.headerTextStyle,

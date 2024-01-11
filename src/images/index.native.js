@@ -22,7 +22,6 @@ import iconEye from "../../public/images/iconEye/iconEye.png";
 import iconFacebook from "../../public/images/iconFacebook/iconFacebook.png";
 import iconInstagram from "../../public/images/iconInstagram/iconInstagram.png";
 import iconLinkedin from "../../public/images/iconLinkedin/iconLinkedin.png";
-import iconSuccess from "../../public/images/iconSuccess/iconSuccess.png";
 import iconMenu from "../../public/images/iconMenu/iconMenu.png";
 import iconNotification from "../../public/images/iconNotification/iconNotification.png";
 import iconProfile from "../../public/images/iconProfile/iconProfile.png";
@@ -91,6 +90,7 @@ import iconSavedActive from "../../public/images/svg/iconSavedCandidatesActive.s
 import addCircle from "../../public/images/svg/addCircle.svg";
 import minusCirlce from "../../public/images/svg/minusCirlce.svg";
 import iconArrowRight from "../../public/images/svg/iconArrowRight.svg";
+import iconSuccess from "../../public/images/svg/iconSuccess.svg";
 
 const images = {
   iconArrowUp,
