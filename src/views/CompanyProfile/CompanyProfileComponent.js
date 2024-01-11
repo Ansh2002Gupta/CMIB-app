@@ -20,7 +20,7 @@ import {
   urlRegex,
 } from "../../constants/constants";
 import { mapApiDataToUI } from "./mappedData";
-import { navigations } from "../../constants/routeNames";
+import { PREVIOUS_SCREEN } from "../../constants/constants";
 import { validateEmail } from "../../constants/commonFunctions";
 
 const CompanyProfileComponent = () => {
@@ -279,7 +279,7 @@ const CompanyProfileComponent = () => {
     if (isEditProfile) {
       handleEdit(false);
     } else {
-      navigate(navigations.PROFILE);
+      navigate(PREVIOUS_SCREEN);
     }
   };
 

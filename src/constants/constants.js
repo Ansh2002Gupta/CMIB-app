@@ -29,6 +29,7 @@ export const OTP_TIMER_SECOND = 0;
 export const OTP_TIMER_MIN_MINUTES = 1;
 export const OTP_TIMER_MAX_MINUTES = 15;
 export const DEBOUNCE_TIME = 300;
+export const PREVIOUS_SCREEN = -1;
 
 export const API_STATUS = {
   IDLE: "idle",
