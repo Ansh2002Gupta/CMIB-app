@@ -35,10 +35,12 @@ const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
 
   return (
     <>
-      <IconHeader
-        headerText={intl.formatMessage({ id: "label.account" })}
-        intl={intl}
-      />
+      {!omitArrowIcon && (
+        <IconHeader
+          headerText={intl.formatMessage({ id: "label.account" })}
+          intl={intl}
+        />
+      )}
       <ScrollView style={style.profileParentContainer}>
         <View
           style={[

@@ -227,7 +227,6 @@ const SignUpSecondScreenUI = ({
   const renderFooter = () => (
     <View style={style.signupFooterContainer}>
       <ActionPairButton
-        customContainerStyle={!isWebView && style.customSaveButtonContainer}
         buttonOneText={intl.formatMessage({ id: "label.back" })}
         buttonTwoText={intl.formatMessage({ id: "label.next" })}
         displayLoader={isLoading}
@@ -243,6 +242,11 @@ const SignUpSecondScreenUI = ({
         isButtonTwoGreen
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
+        customStyles={{
+          customContainerStyle: !isWebView
+            ? { ...style.customSaveButtonContainer }
+            : {},
+        }}
       />
       {isWebView && (
         <LabelWithLinkText

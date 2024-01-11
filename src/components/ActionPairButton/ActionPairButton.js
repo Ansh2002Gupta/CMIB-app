@@ -8,7 +8,7 @@ import styles from "./ActionPairButton.style";
 const ActionPairButton = ({
   buttonOneText,
   buttonTwoText,
-  customContainerStyle,
+  customStyles,
   displayLoader,
   iconRight,
   iconLeft,
@@ -18,14 +18,20 @@ const ActionPairButton = ({
   onPressButtonOne,
   onPressButtonTwo,
 }) => {
+  const {
+    buttonOneStyle = {},
+    buttonTwoStyle = {},
+    customContainerStyle = {},
+  } = customStyles;
+
   return (
     <TwoColumn
       style={{ ...styles.containerStyle, ...customContainerStyle }}
       leftSection={
         <CustomButton
-          onPress={onPressButtonOne}
-          style={styles.buttonStyle}
           iconLeft={iconLeft}
+          onPress={onPressButtonOne}
+          style={{ ...styles.buttonStyle, ...buttonOneStyle }}
           withGreenBackground={isButtonOneGreen}
         >
           {buttonOneText}
@@ -34,10 +40,11 @@ const ActionPairButton = ({
       rightSection={
         <CustomButton
           type="submit"
-          isLoading={displayLoader}
           disabled={isDisabled}
-          onPress={onPressButtonTwo}
           iconRight={iconRight}
+          isLoading={displayLoader}
+          onPress={onPressButtonTwo}
+          style={buttonTwoStyle}
           withGreenBackground={isButtonTwoGreen}
         >
           {buttonTwoText}
@@ -50,7 +57,7 @@ const ActionPairButton = ({
 };
 
 ActionPairButton.defaultProps = {
-  customContainerStyle: {},
+  customStyles: {},
   displayLoader: false,
   iconLeft: {
     isLeftIconNotSvg: false,
@@ -72,7 +79,7 @@ ActionPairButton.defaultProps = {
 ActionPairButton.propTypes = {
   buttonOneText: PropTypes.string.isRequired,
   buttonTwoText: PropTypes.string.isRequired,
-  customContainerStyle: PropTypes.object,
+  customStyles: PropTypes.object,
   displayLoader: PropTypes.bool,
   iconLeft: PropTypes.object,
   iconRight: PropTypes.object,

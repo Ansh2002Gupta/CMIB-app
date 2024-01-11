@@ -206,7 +206,9 @@ const SignUpLastScreenUI = ({
           isButtonTwoGreen
           onPressButtonOne={onGoBack}
           onPressButtonTwo={() => handleSuccessModal(true)}
-          customContainerStyle={!isWebView && style.customContainerStyle}
+          customStyles={{
+            customContainerStyle: !isWebView && style.customContainerStyle,
+          }}
         />
         {isWebView && (
           <LabelWithLinkText
