@@ -230,7 +230,11 @@ const SignUpSecondScreenUI = ({
         isButtonTwoGreen
         onPressButtonOne={onGoBack}
         onPressButtonTwo={onClickNext}
-        customContainerStyle={!isWebView && style.customSaveButtonContainer}
+        customStyles={{
+          customContainerStyle: !isWebView
+            ? { ...style.customSaveButtonContainer }
+            : {},
+        }}
       />
       {isWebView && (
         <LabelWithLinkText
