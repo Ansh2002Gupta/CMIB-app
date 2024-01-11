@@ -98,6 +98,9 @@ const JobDetailsTemplate = ({
             isMandatory
             value={designationName}
             onChangeText={(val) => handleDesignationName(val)}
+            isNumeric
+            maxLength={9}
+            isRupee
           />
           <View style={containerStyle}>
             <CustomTextInput

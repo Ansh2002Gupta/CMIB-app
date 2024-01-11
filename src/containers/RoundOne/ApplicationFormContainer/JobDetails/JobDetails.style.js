@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingTop: 14,
     paddingBottom: 14,
+    borderWidth: 0,
+    borderRadius: 8,
   },
   MultiRowPhoneStyle: {
     backgroundColor: colors.backgroundColor,

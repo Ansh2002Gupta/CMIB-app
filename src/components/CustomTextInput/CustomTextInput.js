@@ -39,6 +39,7 @@ const CustomTextInput = (props) => {
     isNumeric,
     isPaddingNotRequired,
     isPassword,
+    isRupee,
     label,
     maxCount,
     minCount,
@@ -135,6 +136,11 @@ const CustomTextInput = (props) => {
               <CommonText customTextStyle={style.prefixStyle}>{+91}</CommonText>
               <Image source={images.iconDownArrow} style={style.iconStyle} />
               <Image source={images.iconDivider} style={style.iconStyle} />
+            </View>
+          )}
+          {isRupee && !!value && (
+            <View style={style.prefixContainer}>
+              <CommonText customTextStyle={style.prefixStyle}>{"₹"}</CommonText>
             </View>
           )}
           <TextInput
