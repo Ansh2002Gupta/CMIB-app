@@ -5,10 +5,10 @@ import { View, Text } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
+import { DOTS } from "../../constants/constants";
+import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./Pagination.style";
-
-export const DOTS = "...";
 
 const range = (start, end) => {
   const length = end - start + 1;
@@ -18,18 +18,18 @@ const range = (start, end) => {
 function Pagination(props) {
   const {
     cardsPerPage,
-    totalCards,
-    setCurrentPage,
     currentPage,
-    pageStyles,
     customPageBtnStyles,
     customSelectedPageStyles,
+    pageStyles,
     prevNextBtnstyles,
+    setCurrentPage,
     siblingCount,
-    isWebView,
+    totalCards,
   } = props;
 
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
 
   const totalPages = totalCards ? Math.ceil(totalCards / cardsPerPage) : null;
 
@@ -110,30 +110,23 @@ function Pagination(props) {
       </CustomButton>
       <View style={styles.paginationRange}>
         {paginationRange().map((page, idx) => {
+          const activePage = currentPage === page;
+          const activeButton = activePage ? styles.activeButton : styles.inActiveButton;
+          const activeText = activePage ? styles.activeText : styles.inActiveText;
           if (page === DOTS) {
             return (
-              <Text key={idx} style={{ marginHorizontal: 5 }}>
+              <CommonText key={idx} style={styles.dotsStyles}>
                 {DOTS}
-              </Text>
+              </CommonText>
             );
           }
           return (
             <CustomButton
-              style={
-                currentPage === page
-                  ? styles.activeButton
-                  : styles.inActiveButton
-              }
+              style={activeButton}
               key={idx}
               onPress={() => paginate(page)}
             >
-              <CommonText
-                customTextStyle={
-                  currentPage === page ? styles.activeText : styles.inActiveText
-                }
-              >
-                {page}
-              </CommonText>
+              <CommonText customTextStyle={activeText}>{page}</CommonText>
             </CustomButton>
           );
         })}
@@ -161,14 +154,13 @@ function Pagination(props) {
 Pagination.defaultProps = {
   cardsPerPage: 10,
   currentPage: 1,
-  isWebView: false,
-  siblingCount: 1,
-  totalCards: 0,
-  pageStyles: {},
   customPageBtnStyles: {},
   customSelectedPageStyles: {},
+  pageStyles: {},
   prevNextBtnstyles: {},
   setCurrentPage: () => {},
+  siblingCount: 1,
+  totalCards: 0,
 };
 
 Pagination.propTypes = {
@@ -176,7 +168,6 @@ Pagination.propTypes = {
   currentPage: PropTypes.number,
   customPageBtnStyles: PropTypes.object,
   customSelectedPageStyles: PropTypes.object,
-  isWebView: PropTypes.bool,
   pageStyles: PropTypes.object,
   prevNextBtnstyles: PropTypes.object,
   setCurrentPage: PropTypes.func,

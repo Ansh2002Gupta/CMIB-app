@@ -37,7 +37,7 @@ const CustomTable = ({
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 
-  const PaginationFooter = ({ isWebView }) => {
+  const PaginationFooter = () => {
     return (
       <View
         style={isWebView ? styles.paginationFooterWeb : styles.paginationFooter}
@@ -66,7 +66,6 @@ const CustomTable = ({
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           siblingCount={1}
-          isWebView={isWebView}
           prevNextBtnstyles={
             isWebView ? styles.previousButtonWeb : styles.previousButton
           }
@@ -162,14 +161,12 @@ const CustomTable = ({
                     );
                   }}
                 />
-                {isWebView && <PaginationFooter isWebView={isWebView} />}
+                {isWebView && <PaginationFooter />}
               </View>
             }
             isTopFillSpace
             isBottomFillSpace={false}
-            bottomSection={
-              !isWebView && <PaginationFooter isWebView={isWebView} />
-            }
+            bottomSection={!isWebView && <PaginationFooter />}
             bottomSectionStyle={styles.bottomPaginationStyle}
           />
         }

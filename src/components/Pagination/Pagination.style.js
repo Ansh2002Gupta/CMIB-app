@@ -43,6 +43,9 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderWidth: 0,
   },
+  dotsStyles:{
+    marginHorizontal:5
+  }
 });
 
 export default styles;

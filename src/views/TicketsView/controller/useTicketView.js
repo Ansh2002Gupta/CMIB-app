@@ -3,22 +3,12 @@ import React, { useState } from "react";
 import CommonText from "../../../components/CommonText";
 import CustomImage from "../../../components/CustomImage";
 import { gridData } from "../constant";
+import {
+  ROWSLIMIT as rowsLimit,
+  TABLE_HEADING as tableHeading,
+} from "../../../constants/constants";
 import images from "../../../images";
 import styles from "../TicketsView.style";
-
-const rowsLimit = [
-  { value: 10, label: "10" },
-  { value: 15, label: "15" },
-  { value: 20, label: "20" },
-];
-
-const tableHeading = {
-  id: "Ticket ID",
-  query_type: "Query Type",
-  status: "Status",
-  assigned_to: "Assigned To",
-  created_at: "Created On",
-};
 
 const useTicketView = () => {
   const [rowsToShow, setRowsToShow] = useState(10);
@@ -67,17 +57,13 @@ const useTicketView = () => {
   }
 
   const getColoumConfigs = (item, isHeading) => {
+    const tableStyle = isHeading
+      ? styles.tableHeadingText
+      : styles.cellTextStyle();
     return [
       {
         content: (
-          <CommonText
-            fontWeight={"600"}
-            customTextStyle={
-              isHeading
-                ? styles.tableHeadingText
-                : styles.cellTextStyle()
-            }
-          >
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
             {item.id}
           </CommonText>
         ),
@@ -86,11 +72,7 @@ const useTicketView = () => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={
-              isHeading ? styles.tableHeadingText : styles.cellTextStyle()
-            }
-          >
+          <CommonText customTextStyle={tableStyle}>
             {item.query_type}
           </CommonText>
         ),
@@ -115,11 +97,7 @@ const useTicketView = () => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={
-              isHeading ? styles.tableHeadingText : styles.cellTextStyle()
-            }
-          >
+          <CommonText customTextStyle={tableStyle}>
             {item.assigned_to}
           </CommonText>
         ),
@@ -128,11 +106,7 @@ const useTicketView = () => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={
-              isHeading ? styles.tableHeadingText : styles.cellTextStyle()
-            }
-          >
+          <CommonText customTextStyle={tableStyle}>
             {item.created_at}
           </CommonText>
         ),

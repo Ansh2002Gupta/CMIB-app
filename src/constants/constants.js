@@ -30,6 +30,7 @@ export const OTP_TIMER_MIN_MINUTES = 1;
 export const OTP_TIMER_MAX_MINUTES = 15;
 export const DEBOUNCE_TIME = 300;
 export const PREVIOUS_SCREEN = -1;
+export const DOTS = "...";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -192,3 +193,17 @@ export const APPLICATION_FORM_STEPPER_OPTIONS = [
     title: "label.payment",
   },
 ];
+
+export const ROWSLIMIT = [
+  { value: 10, label: "10" },
+  { value: 15, label: "15" },
+  { value: 20, label: "20" },
+];
+
+export const TABLE_HEADING = {
+  id: "Ticket ID",
+  query_type: "Query Type",
+  status: "Status",
+  assigned_to: "Assigned To",
+  created_at: "Created On",
+};
