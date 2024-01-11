@@ -12,7 +12,7 @@ import FormWrapper from "../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLabelAndDescription";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
-import commonStyles, { mainView } from "../../theme/styles/commonStyles";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ForgotPassword.style";
 
 const ForgotPasswordUI = (props) => {
@@ -105,7 +105,10 @@ const ForgotPasswordUI = (props) => {
   };
 
   return (
-    <FormWrapper customFormStyle={mainView} onSubmit={onSendOtpClick}>
+    <FormWrapper
+      customFormStyle={commonStyles.mainView}
+      onSubmit={onSendOtpClick}
+    >
       <View style={styles.mainView}>
         <View
           style={

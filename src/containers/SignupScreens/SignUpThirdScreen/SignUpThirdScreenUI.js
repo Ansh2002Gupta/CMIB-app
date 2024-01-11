@@ -21,7 +21,7 @@ import {
   WOMENT_PLACEMENT,
 } from "../../../constants/constants";
 import { numericValidator } from "../../../constants/validation";
-import { mainView } from "../../../theme/styles/commonStyles";
+import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 
 const SignUpThirdScreenUI = ({
@@ -201,7 +201,7 @@ const SignUpThirdScreenUI = ({
   };
 
   return (
-    <FormWrapper onSubmit={onClickNext} customFormStyle={mainView}>
+    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
       <View
         style={
           isWebView

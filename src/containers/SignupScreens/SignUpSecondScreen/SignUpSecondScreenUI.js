@@ -13,7 +13,7 @@ import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
 import { numericValidator } from "../../../constants/validation";
-import { mainView } from "../../../theme/styles/commonStyles";
+import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = ({
@@ -260,7 +260,7 @@ const SignUpSecondScreenUI = ({
   );
 
   return (
-    <FormWrapper onSubmit={onClickNext} customFormStyle={mainView}>
+    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
       <View
         style={
           isWebView

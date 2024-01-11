@@ -19,7 +19,7 @@ import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
 } from "../../../constants/constants";
-import { mainView } from "../../../theme/styles/commonStyles";
+import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = ({
@@ -225,7 +225,7 @@ const SignUpLastScreenUI = ({
   return (
     <FormWrapper
       onSubmit={() => handleSuccessModal(true)}
-      customFormStyle={mainView}
+      customFormStyle={commonStyles.mainView}
     >
       <View
         style={
