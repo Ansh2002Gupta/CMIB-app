@@ -89,14 +89,11 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
 
-  const handleImageDeletion = (handleDeletionSuccess) => {
+  const handleImageDeletion = () => {
     if (fileUploadResult?.data?.file_name) {
-      handleDeleteLogo(
-        {
-          file_path: fileUploadResult?.data?.file_name,
-        },
-        handleDeletionSuccess
-      );
+      handleDeleteLogo({
+        file_path: fileUploadResult?.data?.file_name,
+      });
     }
   };
 
@@ -188,10 +185,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           break;
       }
     }
-  };
-
-  const handleImageUpload = (file, handleUploadSuccess) => {
-    handleFileUpload({ file, successCallback: handleUploadSuccess });
   };
 
   const onSuccess = async (details) => {
@@ -319,7 +312,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       onGoBack={onGoBack}
       options={options}
       onDeleteImage={handleImageDeletion}
-      onImageUpload={handleImageUpload}
       showSuccessSignUp={showSuccessSignUp}
       signUpError={signUpError}
       socialMediaLinks={socialMediaLinks}

@@ -38,7 +38,6 @@ const SignUpLastScreenUI = ({
   onClickGoToLogin,
   onDeleteImage,
   onGoBack,
-  onImageUpload,
   options,
   showSuccessSignUp,
   signUpError,
@@ -175,9 +174,8 @@ const SignUpLastScreenUI = ({
           })}
         </CommonText>
         <UploadImage
-          onImageUpload={onImageUpload}
-          onDeleteImage={onDeleteImage}
           {...{
+            onDeleteImage,
             errorWhileUpload,
             fileUploadResult,
             handleFileUpload,
@@ -290,7 +288,7 @@ SignUpLastScreenUI.defaultProps = {
   errorWhileDeletion: "",
   errorWhileUpload: "",
   handleDismissToast: () => {},
-  onImageUpload: () => {},
+  onDeleteImage: () => {},
   signUpError: "",
   validationError: "",
 };
@@ -313,7 +311,6 @@ SignUpLastScreenUI.propTypes = {
   onClickGoToLogin: PropTypes.func.isRequired,
   onDeleteImage: PropTypes.func,
   onGoBack: PropTypes.func.isRequired,
-  onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
   signUpError: PropTypes.string,
