@@ -55,6 +55,7 @@ const Dropdown = ({
         value={selectedOption}
         placeholder={placeholder}
         options={options}
+        style={customStyles}
         theme={customTheme}
         onChange={(selectedOption) => {
           onChange(selectedOption.value);
