@@ -19,11 +19,13 @@ export const style = {
     height: "100%",
   },
   width900pxOrLessContainer: {
-    width: "65%",
+    width: "75%",
   },
   smScreenContainer: {
     alignSelf: "center",
-    width: "65%",
+    width: "auto",
+    minWidth:"70%",
+    maxWidth:"70%"
   },
   largeScreenContainer: {
     width: "56%",
