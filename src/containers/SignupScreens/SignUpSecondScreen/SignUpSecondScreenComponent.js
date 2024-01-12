@@ -214,7 +214,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         telephone_number: telephoneNo,
         address: address,
         std_country_code: code,
-        industry_type: currentIndustry,
+        industry_type: parseInt(currentIndustry),
         state_code: state,
       };
 
