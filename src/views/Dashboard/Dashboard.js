@@ -5,7 +5,6 @@ import { View } from "@unthinkable/react-core-components";
 import AddDesignation from "../../containers/AddDesignation/AddDesignation";
 import CommonText from "../../components/CommonText";
 import CustomCell from "../../components/CustomCell/";
-import JobDetails from "../../containers/RoundOne/ApplicationFormContainer/JobDetails";
 import SearchView from "../../components/SearchView";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../../components/TouchableImage";
