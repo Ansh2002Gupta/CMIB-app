@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import Select from "react-select";
+
 import colors from "../../assets/colors";
 import styles from "./Dropdown.style";
 
@@ -21,8 +21,32 @@ const Dropdown = ({
   }));
   const selectedOption = options.find((option) => option[valueField] === value);
 
-  const handleChange = (selectedOption) => {
-    onChange(selectedOption);
+  const customTheme = (theme) => ({
+    ...theme,
+    colors: {
+      ...theme.colors,
+      primary25: colors.secondaryGrey,
+      primary: colors.lightBlue,
+      primary50: colors.lightBlue,
+      primary75: colors.lightBlue,
+    },
+  });
+
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      ...(styles.control ? styles.control(state.isFocused) : {}),
+      ...dropdownStyle,
+    }),
+    placeholder: (base) => ({
+      ...base,
+      ...placeholderStyle,
+    }),
+    singleValue: (base) => ({
+      ...base,
+      ...(styles.valueStyle || {}),
+      ...dropdownStyle,
+    }),
   };
 
   return (
@@ -31,34 +55,9 @@ const Dropdown = ({
         value={selectedOption}
         placeholder={placeholder}
         options={options}
-        theme={(theme) => ({
-          ...theme,
-          colors: {
-            ...theme.colors,
-            primary25: colors.secondaryGrey,
-            primary: colors.lightBlue,
-            primary50: colors.lightBlue,
-            primary75: colors.lightBlue,
-          },
-        })}
-        styles={{
-          control: (baseStyles, state) => ({
-            ...baseStyles,
-            ...styles.control(state.isFocused),
-            ...dropdownStyle,
-          }),
-          placeholder: (baseStyles) => ({
-            ...baseStyles,
-            ...placeholderStyle,
-          }),
-          singleValue: (baseStyles) => ({
-            ...baseStyles,
-            ...styles.valueStyle,
-            ...dropdownStyle,
-          }),
-        }}
+        theme={customTheme}
         onChange={(selectedOption) => {
-          handleChange(selectedOption.value);
+          onChange(selectedOption.value);
         }}
       />
     </div>

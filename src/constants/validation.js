@@ -22,8 +22,5 @@ export const strongPasswordValidator = (password) => {
 };
 
 export const numericValidator = (val) => {
-  if (val === "") {
-    return true;
-  }
-  return numRegex.test(String(val).toLowerCase());
+  return val === "" || numRegex.test(String(val));
 };
