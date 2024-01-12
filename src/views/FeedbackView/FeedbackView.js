@@ -22,6 +22,7 @@ const FeedbackView = () => {
   } = useFeedbackView();
 
   const {
+    allDataLoaded,
     currentPage,
     currentRecords,
     handleSearchResults,
@@ -57,6 +58,7 @@ const FeedbackView = () => {
       bottomSection={
         <CustomTable
           {...{
+            allDataLoaded,
             currentPage,
             currentRecords,
             getColoumConfigs,

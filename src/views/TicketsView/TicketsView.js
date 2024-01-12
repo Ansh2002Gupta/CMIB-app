@@ -11,6 +11,7 @@ import { gridData } from "./constant";
 
 const TicketsView = () => {
   const {
+    allDataLoaded,
     currentPage,
     currentRecords,
     getColoumConfigs,
@@ -53,6 +54,7 @@ const TicketsView = () => {
       bottomSection={
         <CustomTable
           {...{
+            allDataLoaded,
             currentPage,
             currentRecords,
             getColoumConfigs,

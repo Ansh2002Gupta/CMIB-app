@@ -22,6 +22,7 @@ import images from "../../images";
 import styles from "./CustomTable.style";
 
 const CustomTable = ({
+  allDataLoaded,
   currentPage,
   currentRecords,
   getColoumConfigs,
@@ -189,11 +190,23 @@ const CustomTable = ({
                   }}
                   onEndReached={isWebView ? null : handleLoadMore}
                   onEndReachedThreshold={isWebView ? null : 0.1}
-                  ListFooterComponent={loadingMore &&
-                    <View style={styles.loadingStyle}>
-                      <Spinner />
-                    </View>
-                  }
+                  ListFooterComponent={() => {
+                    if (loadingMore) {
+                      return (
+                        <View style={styles.loadingStyle}>
+                          <Spinner />
+                        </View>
+                      );
+                    } else if (allDataLoaded) {
+                      return (
+                        <View style={styles.loadingStyle}>
+                          <CommonText customTextStyle={styles.noMoreData}>{intl.formatMessage({ id: "label.no_more_data" })}</CommonText>
+                        </View>
+                      );
+                    } else {
+                      return null;
+                    }
+                  }}
                 />
                 {isWebView && <PaginationFooter />}
               </View>

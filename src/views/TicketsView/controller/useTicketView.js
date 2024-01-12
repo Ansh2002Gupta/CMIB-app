@@ -27,6 +27,7 @@ const useTicketView = (data) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [allDataLoaded, setAllDataLoaded] = useState(false);
 
   const indexOfLastRecord = currentPage * rowsToShow;
   const indexOfFirstRecord = indexOfLastRecord - rowsToShow;
@@ -38,9 +39,8 @@ const useTicketView = (data) => {
   }, [rowsToShow, currentPage]);
 
   const handleLoadMore = () => {
-    if (loadingMore) return;
+    if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
-
     setTimeout(() => {
       const startIndex = currentRecords.length;
       const endIndex = startIndex + rowsToShow;
@@ -48,6 +48,8 @@ const useTicketView = (data) => {
       if (additionalRecords.length > 0) {
         const newRecords = currentRecords.concat(additionalRecords);
         setCurrentRecords(newRecords);
+      } else {
+        setAllDataLoaded(true);
       }
       setLoadingMore(false);
     }, 1000);
@@ -177,6 +179,7 @@ const useTicketView = (data) => {
   };
 
   return {
+    allDataLoaded,
     currentPage,
     currentRecords,
     getColoumConfigs,
