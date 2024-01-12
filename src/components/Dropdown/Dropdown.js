@@ -19,7 +19,9 @@ const Dropdown = ({
     value: String(option[valueField]),
     label: String(option[labelField]),
   }));
-  const selectedOption = options.find((option) => option[valueField] === value);
+  const selectedOption = options.find(
+    (option) => option.value === String(value)
+  );
 
   const customTheme = (theme) => ({
     ...theme,
