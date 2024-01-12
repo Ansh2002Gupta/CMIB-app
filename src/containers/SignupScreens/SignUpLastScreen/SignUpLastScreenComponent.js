@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
-import useDeleteLogo from "../../../services/apiServices/hooks/useDeleteLogoAPI";
+import useDeleteLogo from "../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpUser";
-import useSaveLogo from "../../../services/apiServices/hooks/useSaveLogoAPI";
+import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
