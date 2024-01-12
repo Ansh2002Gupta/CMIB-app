@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     }),
   }),
   tableHeadingText: {
-    fontWeight: "600",
     color: colors.darkGrey,
   },
   tableQueryText: {
@@ -157,6 +156,10 @@ const styles = StyleSheet.create({
   tableTopSectionStyle: (isWebView) => ({
     height: isWebView ? "100%" : "80%",
   }),
+  loadingStyle:{
+    backgroundColor:colors.white,
+    padding:12,
+  }
 });
 
 export default styles;

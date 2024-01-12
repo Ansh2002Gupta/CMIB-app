@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.greyOne,
   },
   tableHeadingText: {
-    fontWeight: "600",
     color: colors.darkGrey,
   },
   columnStyle: (WIDTH: "15%") => ({

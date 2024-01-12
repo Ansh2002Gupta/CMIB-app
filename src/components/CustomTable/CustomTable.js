@@ -11,7 +11,7 @@ import CustomDropdown from "../../components/CustomDropdown";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
-import LoadingScreen from "../LoadingScreen";
+import Spinner from "../Spinner";
 import Pagination from "../../components/Pagination/Pagination";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
@@ -31,6 +31,7 @@ const CustomTable = ({
   handleLoadMore,
   headingTexts,
   isHeading,
+  loadingMore,
   rowsLimit,
   rowsToShow,
   setCurrentPage,
@@ -155,6 +156,7 @@ const CustomTable = ({
                           <View style={styles.mobileContainer}>
                             <View>
                               <CommonText
+                                fontWeight={"600"}
                                 customTextStyle={styles.cellTextStyle()}
                               >
                                 {getRenderText(item, headingTexts)}
@@ -185,9 +187,13 @@ const CustomTable = ({
                       </>
                     );
                   }}
-                  onEndReached={isWebView ? null : handleLoadMore} 
+                  onEndReached={isWebView ? null : handleLoadMore}
                   onEndReachedThreshold={isWebView ? null : 0.1}
-                  ListFooterComponent={<LoadingScreen />}
+                  ListFooterComponent={loadingMore &&
+                    <View style={styles.loadingStyle}>
+                      <Spinner />
+                    </View>
+                  }
                 />
                 {isWebView && <PaginationFooter />}
               </View>
@@ -216,6 +222,7 @@ CustomTable.defaultProps = {
   handleSelect: () => {},
   handleLoadMore: () => {},
   isHeading: false,
+  loadingMore:true,
   rowsLimit: [],
   rowsToShow: 10,
   setCurrentPage: () => {},
@@ -235,9 +242,10 @@ CustomTable.propTypes = {
   getStatusStyle: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
-  handleLoadMore:PropTypes.func.isRequired,
+  handleLoadMore: PropTypes.func.isRequired,
   headingTexts: PropTypes.array,
   isHeading: PropTypes.bool.isRequired,
+  loadingMore:PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
