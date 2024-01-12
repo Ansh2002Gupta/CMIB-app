@@ -8,8 +8,8 @@ import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import { gridStyles } from "../../theme/styles/commonStyles";
-import styles, { getRowStyle } from "./DetailComponent.style";
 import { numericValidator } from "../../constants/validation";
+import styles, { getRowStyle } from "./DetailComponent.style";
 
 const DetailComponent = ({
   customContainerStyle,

@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import {
-  View,
   ScrollView,
   TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
@@ -20,10 +20,9 @@ import MultiRow from "../../../../core/layouts/MultiRow";
 import TwoColumn from "../../../../core/layouts/TwoColumn/TwoColumn";
 import useIsWebView from "../../../../hooks/useIsWebView";
 import { gridStyles } from "../../../../theme/styles/commonStyles";
+import { numericValidator } from "../../../../constants/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
-import { numericValidator } from "../../../../constants/validation";
-import colors from "../../../../assets/colors";
 
 const JobDetailsTemplate = ({
   addDesignation,
@@ -205,7 +204,9 @@ const JobDetailsTemplate = ({
               })}
               isMandatory
               value={bondPeriod}
-              onChangeText={(val) => handleBondPeriod(val)}
+              onChangeText={(val) =>
+                numericValidator(val) && handleBondPeriod(val)
+              }
             />
             <CustomTextInput
               customStyle={isWebView && { ...styles.bondCustomInputStyle }}
@@ -217,7 +218,10 @@ const JobDetailsTemplate = ({
               })}
               isMandatory
               value={exitAmount}
-              onChangeText={(val) => handleExitAmount(val)}
+              onChangeText={(val) =>
+                numericValidator(val) && handleExitAmount(val)
+              }
+              isRupee
             />
           </View>
         </CardComponent>
