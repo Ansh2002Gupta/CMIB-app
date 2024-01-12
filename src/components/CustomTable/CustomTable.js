@@ -130,6 +130,7 @@ const CustomTable = ({
                           <View style={styles.mobileContainer}>
                             <View>
                               <CommonText
+                                fontWeight={"600"}
                                 customTextStyle={styles.cellTextStyle()}
                               >
                                 {item.id}
