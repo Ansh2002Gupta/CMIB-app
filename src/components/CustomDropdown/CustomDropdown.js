@@ -51,17 +51,17 @@ const CustomDropdown = ({ dropdownIcon, onSelect, options, placeholder }) => {
 };
 
 CustomDropdown.defaultProps = {
-  dropdownIcon: {},
+  dropdownIcon: null,
   onSelect: () => {},
   options: [],
   placeholder: "Select an option",
 };
 
 CustomDropdown.propTypes = {
-  dropdownIcon: PropTypes.object,
+  dropdownIcon: PropTypes.node,
   onSelect: PropTypes.func,
   options: PropTypes.array,
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.number,
 };
 
 export default CustomDropdown;

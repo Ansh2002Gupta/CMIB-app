@@ -131,7 +131,6 @@ function Pagination(props) {
           );
         })}
       </View>
-
       <CustomButton
         style={prevNextBtnstyles}
         onPress={nextPageHandler}

@@ -191,7 +191,7 @@ CustomTable.defaultProps = {
   rowsLimit: [],
   rowsToShow: 10,
   setCurrentPage: () => {},
-  tableHeading: [],
+  tableHeading: {},
   totalcards: 0,
 };
 
@@ -208,7 +208,7 @@ CustomTable.propTypes = {
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
-  tableHeading: PropTypes.array.isRequired,
+  tableHeading: PropTypes.object.isRequired,
   totalcards: PropTypes.number.isRequired,
 };
 
