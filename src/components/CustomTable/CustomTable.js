@@ -16,7 +16,8 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
 
-const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
+//TODO: adding searching data here
+const dataList = [""]
 
 const CustomTable = ({
   currentPage,
