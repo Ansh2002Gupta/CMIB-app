@@ -2,15 +2,35 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import { fontFamily } from "../../theme/styles/commonStyles";
 import colors from "../../assets/colors";
 
-const styles = StyleSheet.create({
-  dropdownContainer: {
-    padding: 14,
-    backgroundColor: colors.white,
-    borderColor: colors.lightGrey,
-    borderWidth: 1,
-    borderRadius: 12,
-    marginTop: 4,
+export const customTheme = (theme) => ({
+  ...theme,
+  colors: {
+    ...theme.colors,
+    primary25: colors.secondaryGrey,
+    primary: colors.lightBlue,
+    primary50: colors.lightBlue,
+    primary75: colors.lightBlue,
   },
+});
+
+export const customStyles = (dropdownStyle, placeholderStyle) => ({
+  control: (base, state) => ({
+    ...base,
+    ...(styles.control ? styles.control(state.isFocused) : {}),
+    ...dropdownStyle,
+  }),
+  placeholder: (base) => ({
+    ...base,
+    ...placeholderStyle,
+  }),
+  singleValue: (base) => ({
+    ...base,
+    ...(styles.valueStyle || {}),
+    ...dropdownStyle,
+  }),
+});
+
+export const styles = StyleSheet.create({
   control: (isFocused) => ({
     borderWidth: isFocused ? 0 : 1,
     marginTop: 4,
@@ -23,5 +43,3 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
 });
-
-export default styles;

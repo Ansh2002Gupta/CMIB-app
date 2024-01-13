@@ -40,7 +40,7 @@ const CustomModal = ({
           {isSuccess ? (
             <>
               <CustomImage
-                alt={"success-icon"}
+                alt={"Success Icon"}
                 source={images.iconSuccess}
                 Icon={images.iconSuccess}
                 isSvg
