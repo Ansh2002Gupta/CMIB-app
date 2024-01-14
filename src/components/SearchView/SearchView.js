@@ -54,7 +54,7 @@ const SearchView = ({ data, onSearch }) => {
 };
 
 SearchView.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.string).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSearch: PropTypes.func,
 };
 

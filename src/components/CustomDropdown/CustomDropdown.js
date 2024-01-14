@@ -63,7 +63,7 @@ CustomDropdown.propTypes = {
   dropdownIcon: PropTypes.string,
   onSelect: PropTypes.func,
   options: PropTypes.array,
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.number,
 };
 
 export default CustomDropdown;

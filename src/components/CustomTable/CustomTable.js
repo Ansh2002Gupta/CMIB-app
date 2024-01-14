@@ -197,15 +197,17 @@ const CustomTable = ({
                           <Spinner />
                         </View>
                       );
-                    } else if (allDataLoaded) {
+                    }
+                    if (allDataLoaded) {
                       return (
                         <View style={styles.loadingStyle}>
-                          <CommonText customTextStyle={styles.noMoreData}>{intl.formatMessage({ id: "label.no_more_data" })}</CommonText>
+                          <CommonText customTextStyle={styles.noMoreData}>
+                            {intl.formatMessage({ id: "label.no_more_data" })}
+                          </CommonText>
                         </View>
                       );
-                    } else {
-                      return null;
                     }
+                    return null;
                   }}
                 />
                 {isWebView && <PaginationFooter />}
@@ -235,7 +237,7 @@ CustomTable.defaultProps = {
   handleSelect: () => {},
   handleLoadMore: () => {},
   isHeading: false,
-  loadingMore:true,
+  loadingMore: true,
   rowsLimit: [],
   rowsToShow: 10,
   setCurrentPage: () => {},
@@ -258,7 +260,7 @@ CustomTable.propTypes = {
   handleLoadMore: PropTypes.func.isRequired,
   headingTexts: PropTypes.array,
   isHeading: PropTypes.bool.isRequired,
-  loadingMore:PropTypes.bool.isRequired,
+  loadingMore: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
