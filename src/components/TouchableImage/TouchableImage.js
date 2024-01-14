@@ -3,16 +3,17 @@ import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity"
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import styles from "./TouchableImage.style";
 
 const TouchableImage = ({
-  disabled=true,
+  disabled = true,
   isSelector,
   imageStyle,
+  isSvg,
   onPress,
   parentStyle,
-  source
+  source,
 }) => {
   const [isSelected, setIsSelected] = useState(false);
 
@@ -37,7 +38,7 @@ const TouchableImage = ({
           Icon={source}
           style={imageStyle}
           source={source}
-          isSvg={true}
+          isSvg={isSvg}
         />
       </View>
     </CustomTouchableOpacity>
@@ -48,6 +49,7 @@ TouchableImage.defaultProps = {
   disabled: false,
   isSelector: false,
   imageStyle: {},
+  isSvg: true,
   parentStyle: {},
 };
 
@@ -55,6 +57,7 @@ TouchableImage.propTypes = {
   disabled: PropTypes.bool,
   isSelector: PropTypes.bool,
   imageStyle: PropTypes.object,
+  isSvg: PropTypes.bool,
   parentStyle: PropTypes.object,
   source: PropTypes.oneOfType([
     PropTypes.string,

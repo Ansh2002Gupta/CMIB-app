@@ -194,7 +194,7 @@ export const APPLICATION_FORM_STEPPER_OPTIONS = [
   },
 ];
 
-export const ROWSLIMIT = [
+export const ROWS_PER_PAGE_ARRAY = [
   { value: 10, label: "10" },
   { value: 15, label: "15" },
   { value: 20, label: "20" },

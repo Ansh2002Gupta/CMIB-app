@@ -17,6 +17,10 @@ const styles = {
     marginLeft: 8,
     flex: 1,
   },
+  clearIcon:{
+    height:15,
+    width:15,
+  }
 };
 
 export default styles;

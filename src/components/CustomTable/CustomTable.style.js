@@ -1,7 +1,5 @@
-import { StyleSheet, Platform , Dimensions} from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-
-const {width:WIDTH} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -9,13 +7,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundGrey,
     padding: 24,
   },
-  mobileMainContainer:{
+  mobileMainContainer: {
     flex: 1,
     backgroundColor: colors.backgroundGrey,
-    paddingTop:24,
-    paddingBottom:24,
-    paddingLeft:16,
-    paddingRight:16,
+    paddingTop: 24,
+    paddingBottom: 24,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   mobileContainer: {
     flexDirection: "row",
@@ -101,7 +99,7 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
   },
   tableQueryText: {
-    marginTop:2,
+    marginTop: 2,
     color: colors.darkGrey,
   },
   columnStyle: (WIDTH: "15%") => ({
@@ -112,12 +110,12 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   }),
   columnStyleBorder: {
-    backgroundColor:colors.white,
+    backgroundColor: colors.white,
     borderColor: colors.lightGrey,
     borderTopWidth: 0.5,
   },
-  columnHeaderStyle:{
-    backgroundColor:colors.white,
+  columnHeaderStyle: {
+    backgroundColor: colors.white,
   },
   tableSection: {
     borderWidth: 0.5,
@@ -143,54 +141,9 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     padding: 12,
   },
-  paginationFooterWeb: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingTop: 12,
-    paddingBottom: 12,
-    borderTopWidth: 0.5,
-    borderColor: colors.lightGrey,
-    backgroundColor:colors.white,
-  },
-  paginationFooter: {
-    paddingTop: 12,
-    paddingBottom: 12,
-    borderColor: colors.lightGrey,
-    width:WIDTH-2*24,
-  },
-  previousButton: {
-    padding: 8,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: colors.lightGrey,
-    backgroundColor: colors.white,
-  },
-  previousButtonWeb: {
-    paddingLeft: 12,
-    paddingRight: 12,
-    paddingTop: 8,
-    paddingBottom: 8,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: colors.lightGrey,
-    backgroundColor: colors.white,
-  },
   rowSelectedNumber: {
     fontSize: 14,
     marginRight: 8,
-  },
-  rowsPerPageText: {
-    fontSize: 14,
-    marginRight: 14,
-    color: colors.darkGrey,
-  },
-  rowsPerPage: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 16,
   },
   rowsPerPageWeb: {
     flexDirection: "row",

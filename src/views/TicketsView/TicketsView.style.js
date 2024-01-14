@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         overflow: "hidden",
-        maxWidth: "120px",
+        maxWidth: "100%",
       },
     }),
   }),
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    color: colors.skyBlueDark,
+    color: colors.orange,
   },
   close: {
     textAlign: "center",
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    backgroundColor: colors.lightOrange,
-    color: colors.orange,
+    backgroundColor: colors.skyBlueLight,
+    color: colors.skyBlueDark,
   },
   pendingWeb: {
     textAlign: "center",
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 2,
     paddingBottom: 2,
-    color: colors.skyBlueDark,
-    backgroundColor: colors.skyBlueLight,
+    color: colors.orange,
+    backgroundColor: colors.lightOrange,
   },
   closeWeb: {
     borderRadius: 16,
@@ -84,6 +84,9 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
+  statusStyle:{
+    alignItems:"flex-start"
+  }
 });
 
 export default styles;

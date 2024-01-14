@@ -99,6 +99,5 @@ const colors = {
   darkSecondGreen,
   skyBlueDark,
   skyBlueLight,
-  gray,
 };
 export default colors;

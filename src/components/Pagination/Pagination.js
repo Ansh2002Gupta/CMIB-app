@@ -1,13 +1,13 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { View, Text } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
-import { DOTS } from "../../constants/constants";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
+import { DOTS } from "../../constants/constants";
 import styles from "./Pagination.style";
 
 const range = (start, end) => {
@@ -19,9 +19,7 @@ function Pagination(props) {
   const {
     cardsPerPage,
     currentPage,
-    customPageBtnStyles,
-    customSelectedPageStyles,
-    pageStyles,
+    handlePageChange,
     prevNextBtnstyles,
     setCurrentPage,
     siblingCount,
@@ -71,7 +69,7 @@ function Pagination(props) {
   };
 
   const nextPageHandler = () => {
-    setCurrentPage(currentPage + 1);
+    handlePageChange(currentPage + 1)
   };
 
   const paginate = (number) => {
@@ -82,13 +80,13 @@ function Pagination(props) {
   };
 
   if (totalPages && currentPage > totalPages) {
-    setCurrentPage(currentPage - 1);
+    handlePageChange(1)
   }
 
   const lastPage = paginationRange()[paginationRange().length - 1];
 
   if (!totalPages) {
-    return <View />;
+    return <></>;
   }
 
   return (
@@ -155,6 +153,7 @@ Pagination.defaultProps = {
   currentPage: 1,
   customPageBtnStyles: {},
   customSelectedPageStyles: {},
+  handlePageChange: ()=>{},
   pageStyles: {},
   prevNextBtnstyles: {},
   setCurrentPage: () => {},
@@ -167,6 +166,7 @@ Pagination.propTypes = {
   currentPage: PropTypes.number,
   customPageBtnStyles: PropTypes.object,
   customSelectedPageStyles: PropTypes.object,
+  handlePageChange:PropTypes.func,
   pageStyles: PropTypes.object,
   prevNextBtnstyles: PropTypes.object,
   setCurrentPage: PropTypes.func,

@@ -9,19 +9,22 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import CommonText from "../../components/CommonText";
 import CustomDropdown from "../../components/CustomDropdown";
 import CustomImage from "../../components/CustomImage";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import Pagination from "../../components/Pagination/Pagination";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
+import PaginationFooter from "../PaginationFooter";
 
 //TODO: adding searching data here
-const dataList = [""]
+const dataList = [""];
 
 const CustomTable = ({
   currentPage,
   currentRecords,
+  handlePageChange,
   getColoumConfigs,
   getStatusStyle,
   handleSearchResults,
@@ -38,43 +41,6 @@ const CustomTable = ({
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 
-  const PaginationFooter = () => {
-    return (
-      <View
-        style={isWebView ? styles.paginationFooterWeb : styles.paginationFooter}
-      >
-        <View style={isWebView ? styles.rowsPerPageWeb : styles.rowsPerPage}>
-          <View style={styles.rowsPerPageWeb}>
-            <CommonText customTextStyle={styles.rowsPerPageText}>
-              {intl.formatMessage({ id: "label.rows_per_page" })}
-            </CommonText>
-            <CustomDropdown
-              options={rowsLimit}
-              onSelect={handleSelect}
-              placeholder={rowsToShow}
-              dropdownIcon={images.iconArrowDown}
-            />
-          </View>
-          {!isWebView && (
-            <CommonText customTextStyle={styles.rowsPerPageText}>
-              {`${indexOfFirstRecord} - ${indexOfLastRecord} of ${totalcards}`}
-            </CommonText>
-          )}
-        </View>
-        <Pagination
-          cardsPerPage={rowsToShow}
-          totalCards={totalcards}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          siblingCount={1}
-          prevNextBtnstyles={
-            isWebView ? styles.previousButtonWeb : styles.previousButton
-          }
-        />
-      </View>
-    );
-  };
-
   return (
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
@@ -86,7 +52,7 @@ const CustomTable = ({
             isLeftFillSpace
             isRightFillSpace={false}
             rightSection={
-              <View style={styles.imageParentStyle}>
+              <CustomTouchableOpacity style={styles.imageParentStyle}>
                 <TouchableImage
                   source={images.iconFilter}
                   parentStyle={styles.iconTicket}
@@ -96,7 +62,7 @@ const CustomTable = ({
                     {intl.formatMessage({ id: "label.filters" })}
                   </CommonText>
                 )}
-              </View>
+              </CustomTouchableOpacity>
             }
             style={styles.filterTopSection(isWebView)}
           />
@@ -164,12 +130,44 @@ const CustomTable = ({
                     );
                   }}
                 />
-                {isWebView && <PaginationFooter />}
+                {isWebView && (
+                  <PaginationFooter
+                    {...{
+                      currentPage,
+                      handlePageChange,
+                      handleSelect,
+                      indexOfFirstRecord,
+                      indexOfLastRecord,
+                      rowsLimit,
+                      rowsToShow,
+                      setCurrentPage,
+                      siblingCount:1,
+                      totalcards,
+                    }}
+                  />
+                )}
               </View>
             }
             isTopFillSpace
             isBottomFillSpace={false}
-            bottomSection={!isWebView && <PaginationFooter />}
+            bottomSection={
+              !isWebView && (
+                <PaginationFooter
+                  {...{
+                    currentPage,
+                    handlePageChange,
+                    handleSelect,
+                    indexOfFirstRecord,
+                    indexOfLastRecord,
+                    rowsLimit,
+                    rowsToShow,
+                    setCurrentPage,
+                    siblingCount:1,
+                    totalcards,
+                  }}
+                />
+              )
+            }
             bottomSectionStyle={styles.bottomPaginationStyle}
           />
         }

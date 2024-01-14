@@ -5,29 +5,33 @@ import { useNavigate } from "../../routes";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketView from "./controller/useTicketView";
+import { navigations } from "../../constants/routeNames";
+import {
+  ROWS_PER_PAGE_ARRAY as rowsLimit,
+  TABLE_HEADING as tableHeading,
+} from "../../constants/constants";
 
 const TicketsView = () => {
   const {
     rowsToShow,
     getStatusStyle,
     getColoumConfigs,
+    handleSearchResults,
+    handleSelect,
+    handlePageChange,
     isHeading,
     currentPage,
     setCurrentPage,
     currentRecords,
     totalcards,
-    rowsLimit,
     indexOfFirstRecord,
     indexOfLastRecord,
-    handleSearchResults,
-    handleSelect,
-    tableHeading,
   } = useTicketView();
   const intl = useIntl();
   const navigate = useNavigate();
 
   const onGoBack = () => {
-    navigate(-1);
+    navigate(navigations.PROFILE);
   };
 
   return (
@@ -43,6 +47,9 @@ const TicketsView = () => {
           rowsToShow,
           getStatusStyle,
           getColoumConfigs,
+          handleSearchResults,
+          handleSelect,
+          handlePageChange,
           isHeading,
           currentPage,
           setCurrentPage,
@@ -51,8 +58,6 @@ const TicketsView = () => {
           rowsLimit,
           indexOfFirstRecord,
           indexOfLastRecord,
-          handleSearchResults,
-          handleSelect,
           tableHeading,
         }}
       />
