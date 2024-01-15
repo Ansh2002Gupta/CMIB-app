@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-import Http from "../../http-service";
-import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import Http from "../../../http-service";
+import { AuthContext } from "../../../../globalContext/auth/authProvider";
+import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
+import {
+  COMPANY_DELETE_LOGO,
+  COMPANY_DELETE_LOGO_AUTH,
+} from "../../apiEndPoint";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useDeleteLogo = () => {
+  const [authState] = useContext(AuthContext);
   const [deletionStatus, setDeletionStatus] = useState(API_STATUS.IDLE);
   const [fileDeletionResult, setFileDeletionResult] = useState([]);
   const [errorWhileDeletion, setErrorWhileDeletion] = useState("");
@@ -13,7 +19,10 @@ const useDeleteLogo = () => {
     try {
       setDeletionStatus(API_STATUS.LOADING);
       errorWhileDeletion && setErrorWhileDeletion("");
-      const res = await Http.post(`company/delete-logo`, payload);
+      const res = await Http.post(
+        authState?.token ? COMPANY_DELETE_LOGO_AUTH : COMPANY_DELETE_LOGO,
+        payload
+      );
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setDeletionStatus(API_STATUS.SUCCESS);
         setFileDeletionResult(res.data);
