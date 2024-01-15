@@ -6,17 +6,16 @@ import { FlatList, View } from "@unthinkable/react-core-components";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
-import CustomDropdown from "../../components/CustomDropdown";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import Pagination from "../../components/Pagination/Pagination";
+import PaginationFooter from "../PaginationFooter";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
-import PaginationFooter from "../PaginationFooter";
 
 //TODO: adding searching data here
 const dataList = [""];
@@ -34,7 +33,6 @@ const CustomTable = ({
   isHeading,
   rowsLimit,
   rowsToShow,
-  setCurrentPage,
   tableHeading,
   totalcards,
 }) => {
@@ -109,16 +107,14 @@ const CustomTable = ({
                               </CommonText>
                             </View>
                             <View style={styles.rowsPerPageWeb}>
-                              <CommonText
-                                customTextStyle={getStatusStyle(
+                              <Chip
+                                label={item.status}
+                                style={getStatusStyle(
                                   item.status,
                                   false,
-                                  styles,
-                                  isWebView
+                                  styles
                                 )}
-                              >
-                                {item.status}
-                              </CommonText>
+                              />
                               <CustomImage
                                 source={images.iconTicket}
                                 style={styles.iconTicket}
@@ -140,8 +136,7 @@ const CustomTable = ({
                       indexOfLastRecord,
                       rowsLimit,
                       rowsToShow,
-                      setCurrentPage,
-                      siblingCount:1,
+                      siblingCount: 1,
                       totalcards,
                     }}
                   />
@@ -161,8 +156,7 @@ const CustomTable = ({
                     indexOfLastRecord,
                     rowsLimit,
                     rowsToShow,
-                    setCurrentPage,
-                    siblingCount:1,
+                    siblingCount: 1,
                     totalcards,
                   }}
                 />
@@ -183,12 +177,12 @@ CustomTable.defaultProps = {
   getStatusStyle: () => {},
   handleSearchResults: () => {},
   handleSelect: () => {},
+  handlePageChange: () => {},
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,
   isHeading: false,
   rowsLimit: [],
   rowsToShow: 10,
-  setCurrentPage: () => {},
   tableHeading: {},
   totalcards: 0,
 };
@@ -200,12 +194,12 @@ CustomTable.propTypes = {
   getStatusStyle: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,
   handleSelect: PropTypes.func.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   isHeading: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
   tableHeading: PropTypes.object.isRequired,
   totalcards: PropTypes.number.isRequired,
 };

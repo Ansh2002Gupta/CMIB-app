@@ -2,17 +2,26 @@ import React, { useEffect, useState } from "react";
 import { View } from "@unthinkable/react-core-components";
 import { useSearchParams } from "../../../routes";
 
+import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
 import { gridData } from "../constant";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import { getValidCurrentPage } from "../../../utils/queryParamsHelpers";
+import {
+  getValidCurrentPage,
+  getValidRowPerPage,
+} from "../../../utils/queryParamsHelpers";
+import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import styles from "../TicketsView.style";
 
 const useTicketView = () => {
+  const { isWebView } = useIsWebView();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [rowsToShow, setRowsToShow] = useState(parseInt(searchParams.get("rowsPerPage")) || ROWS_PER_PAGE_ARRAY[0].value);
+  const [rowsToShow, setRowsToShow] = useState(
+    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+      ROWS_PER_PAGE_ARRAY[0].value
+  );
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(searchParams.get("page"))
   );
@@ -27,8 +36,18 @@ const useTicketView = () => {
   }, [rowsToShow, currentPage]);
 
   useEffect(() => {
-    setSearchParams({ page: currentPage, rowsPerPage: rowsToShow });
-  }, [currentPage, rowsToShow, setSearchParams]);
+    setSearchParams((prev) => {
+      prev.set("page", getValidCurrentPage(+searchParams.get("page")));
+      return prev;
+    });
+    setSearchParams((prev) => {
+      prev.set(
+        "rowsPerPage",
+        getValidRowPerPage(+searchParams.get("rowsPerPage"))
+      );
+      return prev;
+    });
+  }, []);
 
   const totalcards = gridData.length;
 
@@ -38,34 +57,41 @@ const useTicketView = () => {
 
   const handleSelect = (option) => {
     setRowsToShow(option.value);
+    setSearchParams((prev) => {
+      prev.set("rowsPerPage", option.value);
+      return prev;
+    });
   };
 
-  const handlePageChange=()=>{
-    setCurrentPage(currentPage+1);
-  }
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    setSearchParams((prev) => {
+      prev.set("page", page);
+      return prev;
+    });
+  };
 
-  function getStatusStyle(status, isHeading, styles, isWebView) {
+  function getStatusStyle(status, isHeading, styles) {
     status = status.toLowerCase();
-
     if (isHeading) {
       return styles.tableHeadingText;
     }
     switch (status) {
       case "pending":
-        return [
-          !isWebView ? styles.pending : styles.pendingWeb,
-          styles.cellTextStyle(12),
-        ];
+        return {
+          ...(!isWebView ? styles.pending : styles.pendingWeb),
+          ...styles.cellTextStyle(12),
+        };
       case "close":
-        return [
-          !isWebView ? styles.close : styles.closeWeb,
-          styles.cellTextStyle(12),
-        ];
+        return {
+          ...(!isWebView ? styles.close : styles.closeWeb),
+          ...styles.cellTextStyle(12),
+        };
       case "in progress":
-        return [
-          !isWebView ? styles.inProgress : styles.inProgressWeb,
-          styles.cellTextStyle(12),
-        ];
+        return {
+          ...(!isWebView ? styles.inProgress : styles.inProgressWeb),
+          ...styles.cellTextStyle(12),
+        };
       default:
         return styles.cellTextStyle(12);
     }
@@ -97,16 +123,16 @@ const useTicketView = () => {
       {
         content: (
           <View style={styles.statusStyle}>
-            <CommonText
-              customTextStyle={getStatusStyle(
-                item.status,
-                isHeading,
-                styles,
-                true
-              )}
-            >
-              {item.status}
-            </CommonText>
+            {isHeading ? (
+              <CommonText customTextStyle={tableStyle}>
+                {item.status}
+              </CommonText>
+            ) : (
+              <Chip
+                label={item.status}
+                style={getStatusStyle(item.status, isHeading, styles)}
+              />
+            )}
           </View>
         ),
         style: styles.columnStyle("15%"),
@@ -134,7 +160,8 @@ const useTicketView = () => {
         content: !isHeading && (
           <TouchableImage
             source={images.iconTicket}
-            style={styles.iconTicket}
+            imageStyle={styles.iconTicket}
+            isSvg={true}
           />
         ),
         style: styles.columnStyle("10%"),
@@ -153,7 +180,6 @@ const useTicketView = () => {
     handlePageChange,
     isHeading,
     currentPage,
-    setCurrentPage,
     currentRecords,
     totalcards,
     indexOfFirstRecord,

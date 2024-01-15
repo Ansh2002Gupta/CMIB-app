@@ -21,7 +21,6 @@ function Pagination(props) {
     currentPage,
     handlePageChange,
     prevNextBtnstyles,
-    setCurrentPage,
     siblingCount,
     totalCards,
   } = props;
@@ -65,10 +64,16 @@ function Pagination(props) {
   };
 
   const previousPageHandler = () => {
-    setCurrentPage(currentPage - 1);
+    if(currentPage<=1){
+      return;
+    }
+    handlePageChange(currentPage - 1);
   };
 
   const nextPageHandler = () => {
+    if(currentPage === lastPage){
+      return;
+    }
     handlePageChange(currentPage + 1)
   };
 
@@ -76,7 +81,7 @@ function Pagination(props) {
     if (+currentPage === +number) {
       return;
     }
-    setCurrentPage(number);
+    handlePageChange(number);
   };
 
   if (totalPages && currentPage > totalPages) {
@@ -156,7 +161,6 @@ Pagination.defaultProps = {
   handlePageChange: ()=>{},
   pageStyles: {},
   prevNextBtnstyles: {},
-  setCurrentPage: () => {},
   siblingCount: 1,
   totalCards: 0,
 };
@@ -169,7 +173,6 @@ Pagination.propTypes = {
   handlePageChange:PropTypes.func,
   pageStyles: PropTypes.object,
   prevNextBtnstyles: PropTypes.object,
-  setCurrentPage: PropTypes.func,
   siblingCount: PropTypes.number,
   totalCards: PropTypes.number,
 };

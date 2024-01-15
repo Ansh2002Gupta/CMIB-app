@@ -18,7 +18,6 @@ const PaginationFooter = ({
   indexOfLastRecord,
   rowsLimit,
   rowsToShow,
-  setCurrentPage,
   siblingCount,
   totalcards,
 }) => {
@@ -49,7 +48,6 @@ const PaginationFooter = ({
       <Pagination
         cardsPerPage={rowsToShow}
         totalCards={totalcards}
-        setCurrentPage={setCurrentPage}
         handlePageChange={handlePageChange}
         currentPage={currentPage}
         siblingCount={siblingCount}
@@ -69,7 +67,6 @@ PaginationFooter.defaultProps = {
   indexOfLastRecord: 0,
   rowsLimit: [],
   rowsToShow: 10,
-  setCurrentPage: () => {},
   siblingCount:1,
   totalcards: 0,
 };
@@ -82,7 +79,6 @@ PaginationFooter.propTypes = {
   indexOfLastRecord: PropTypes.number.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
   siblingCount: PropTypes.number.isRequired,
   totalcards: PropTypes.number.isRequired,
 };
