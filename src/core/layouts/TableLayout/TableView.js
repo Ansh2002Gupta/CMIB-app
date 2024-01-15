@@ -5,6 +5,7 @@ import { View } from '@unthinkable/react-core-components';
 import layoutStyle from './TableView.style';
 import CommonText from '../../../components/CommonText';
 function TableView({ gridData, cellStyle, rowStyle, tableStyle }) {
+  
   return (
     <View style={tableStyle}>
       {gridData.map((rowData, rowIndex) => (

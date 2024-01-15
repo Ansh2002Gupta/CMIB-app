@@ -7,22 +7,21 @@ import {
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
-import { navigations } from "../../constants/routeNames";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import { modules, items, getIconImages } from "../../constants/sideBarHelpers";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
 import ResponsiveTextTruncate from "../../components/ResponsiveTextTruncate/ResponsiveTextTruncate";
-import images from "../../images";
 import ModuleList from "../../components/ModuleList/ModuleList";
 import useIsWebView from "../../hooks/useIsWebView";
+import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { navigations } from "../../constants/routeNames";
+import { modules, items, getIconImages } from "../../constants/sideBarHelpers";
+import images from "../../images";
 import styles from "./SideBar.style";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {

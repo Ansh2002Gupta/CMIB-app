@@ -51,7 +51,6 @@ import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLog
 import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
 import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
 import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
-import iconClose from "../../public/images/iconClose/iconClose.png";
 import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg";
@@ -93,6 +92,7 @@ import minusCirlce from "../../public/images/svg/minusCirlce.svg";
 import iconTicket from "../../public/images/svg/iconTicket.svg";
 import iconArrowRightBlack from "../../public/images/svg/iconArrowRightBlack.svg";
 import iconArrowRight from "../../public/images/svg/iconArrowRight.svg";
+import iconClose from "../../public/images/svg/iconClose.svg";
 
 const images = {
   iconArrowUp,

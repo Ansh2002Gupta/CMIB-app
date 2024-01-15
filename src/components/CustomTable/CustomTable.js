@@ -1,17 +1,19 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import PropTypes from "prop-types";
 import { FlatList, View } from "@unthinkable/react-core-components";
 
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
-import CustomDropdown from "../../components/CustomDropdown";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
-import Pagination from "../../components/Pagination/Pagination";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import PaginationFooter from "../PaginationFooter";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
 import { getRenderText } from "../../utils/util";
@@ -23,17 +25,17 @@ import styles from "./CustomTable.style";
 const CustomTable = ({
   currentPage,
   currentRecords,
+  handlePageChange,
   getColoumConfigs,
   getStatusStyle,
   handleSearchResults,
-  handleSelect,
+  handleRowPerPageChange,
   headingTexts,
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
   rowsLimit,
   rowsToShow,
-  setCurrentPage,
   setCurrentRecords,
   showSearchBar,
   statusText,
@@ -44,58 +46,9 @@ const CustomTable = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
-  const [ticketScreenState] = useContext(TicketScreenContext);
-  const { ticketScreenList } = ticketScreenState;
-
-  const [showModal, setShowModal] = useState(false);
-
-  const handleFilterModal = () => {
-    setShowModal((prev) => !prev);
-  };
-
-  const onApplyFilter = (filterData) => {
-    setCurrentRecords(filterData);
-    handleFilterModal();
-  };
-
-  const PaginationFooter = () => {
-    return (
-      <View
-        style={isWebView ? styles.paginationFooterWeb : styles.paginationFooter}
-      >
-        <View style={isWebView ? styles.rowsPerPageWeb : styles.rowsPerPage}>
-          <View style={styles.rowsPerPageWeb}>
-            <CommonText customTextStyle={styles.rowsPerPageText}>
-              {intl.formatMessage({ id: "label.rows_per_page" })}
-            </CommonText>
-            <CustomDropdown
-              options={rowsLimit}
-              onSelect={handleSelect}
-              placeholder={rowsToShow}
-              dropdownIcon={images.iconArrowDown}
-            />
-          </View>
-          {!isWebView && (
-            <CommonText customTextStyle={styles.rowsPerPageText}>
-              {`${indexOfFirstRecord} - ${indexOfLastRecord} of ${totalcards}`}
-            </CommonText>
-          )}
-        </View>
-        <Pagination
-          cardsPerPage={rowsToShow}
-          totalCards={totalcards}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          siblingCount={1}
-          prevNextBtnstyles={
-            isWebView ? styles.previousButtonWeb : styles.previousButton
-          }
-        />
-      </View>
-    );
-  };
 
   return (
+    <View style={isWebView ? styles.container : styles.mobileMainContainer}>
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
         topSection={
@@ -148,6 +101,7 @@ const CustomTable = ({
                   data={currentRecords}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
+                  keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item, index }) => {
                     return (
                       <>
@@ -160,6 +114,7 @@ const CustomTable = ({
                           <View style={styles.mobileContainer}>
                             <View>
                               <CommonText
+                                fontWeight={"600"}
                                 customTextStyle={styles.cellTextStyle()}
                               >
                                 {getRenderText(item, headingTexts)}
@@ -171,8 +126,9 @@ const CustomTable = ({
                               </CommonText>
                             </View>
                             <View style={styles.rowsPerPageWeb}>
-                              <CommonText
-                                customTextStyle={getStatusStyle(
+                              <Chip
+                                label={item.status}
+                                style={getStatusStyle(
                                   item.status,
                                   false,
                                   isWebView
@@ -191,12 +147,42 @@ const CustomTable = ({
                     );
                   }}
                 />
-                {isWebView && <PaginationFooter />}
+                {isWebView && (
+                  <PaginationFooter
+                    {...{
+                      currentPage,
+                      handlePageChange,
+                      handleRowPerPageChange,
+                      indexOfFirstRecord,
+                      indexOfLastRecord,
+                      rowsLimit,
+                      rowsToShow,
+                      siblingCount: 1,
+                      totalcards,
+                    }}
+                  />
+                )}
               </View>
             }
             isTopFillSpace
             isBottomFillSpace={false}
-            bottomSection={!isWebView && <PaginationFooter />}
+            bottomSection={
+              !isWebView && (
+                <PaginationFooter
+                  {...{
+                    currentPage,
+                    handlePageChange,
+                    handleRowPerPageChange,
+                    indexOfFirstRecord,
+                    indexOfLastRecord,
+                    rowsLimit,
+                    rowsToShow,
+                    siblingCount: 1,
+                    totalcards,
+                  }}
+                />
+              )
+            }
             bottomSectionStyle={styles.bottomPaginationStyle}
           />
         }
@@ -218,7 +204,8 @@ CustomTable.defaultProps = {
   getColoumConfigs: () => {},
   getStatusStyle: () => {},
   handleSearchResults: () => {},
-  handleSelect: () => {},
+  handleRowPerPageChange: () => {},
+  handlePageChange: () => {},
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,
   isHeading: false,
@@ -240,18 +227,18 @@ CustomTable.propTypes = {
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,
-  handleSelect: PropTypes.func.isRequired,
+  handleRowPerPageChange: PropTypes.func.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
   headingTexts: PropTypes.array,
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   isHeading: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
   setCurrentrecords: PropTypes.array.isRequired,
   showSearchBar: PropTypes.bool,
   statusText: PropTypes.array,
-  subHeadingText: PropTypes.array,
+  subHeadingText: PropTypes.object,
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.string.isRequired,
   totalcards: PropTypes.number.isRequired,

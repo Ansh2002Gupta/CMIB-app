@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { FlatList, View } from "@unthinkable/react-core-components";
+import { FlatList, Text, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -32,7 +32,6 @@ const CustomDropdown = ({ dropdownIcon, onSelect, options, placeholder }) => {
         </CommonText>
         <CustomImage source={dropdownIcon} style={styles.iconTicket} />
       </CustomTouchableOpacity>
-
       {isDropdownVisible && (
         <View style={styles.dropdown}>
           <FlatList
@@ -53,17 +52,17 @@ const CustomDropdown = ({ dropdownIcon, onSelect, options, placeholder }) => {
 };
 
 CustomDropdown.defaultProps = {
-  dropdownIcon: "",
+  dropdownIcon: null,
   onSelect: () => {},
   options: [],
   placeholder: "Select an option",
 };
 
 CustomDropdown.propTypes = {
-  dropdownIcon: PropTypes.string,
+  dropdownIcon: PropTypes.node,
   onSelect: PropTypes.func,
   options: PropTypes.array,
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.number,
 };
 
 export default CustomDropdown;
