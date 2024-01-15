@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 
 import Http from "../../../http-service";
-import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { AuthContext } from "../../../../globalContext/auth/authProvider";
+import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import {
   COMPANY_DELETE_LOGO,
   COMPANY_DELETE_LOGO_AUTH,
