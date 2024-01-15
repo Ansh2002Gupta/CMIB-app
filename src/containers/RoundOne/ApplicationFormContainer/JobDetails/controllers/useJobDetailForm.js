@@ -32,7 +32,7 @@ const useJobDetailForm = () => {
   const handleMonthlyData = (fieldName, value) => {
     setJobDetailData({
       ...jobDetailData,
-      Monthly: jobDetailData.Monthly.map((detail) =>
+      monthly: jobDetailData.monthly.map((detail) =>
         detail.label === fieldName ? { ...detail, value: value } : detail
       ),
     });
@@ -41,7 +41,7 @@ const useJobDetailForm = () => {
   const handleYearlyData = (fieldName, value) => {
     setJobDetailData({
       ...jobDetailData,
-      Yearly: jobDetailData.Yearly.map((detail) =>
+      yearly: jobDetailData.yearly.map((detail) =>
         detail.label === fieldName ? { ...detail, value: value } : detail
       ),
     });
@@ -58,7 +58,7 @@ const useJobDetailForm = () => {
   };
 
   // TODO
-  // I have created function for single line code we have to add code later 
+  // I have created function for single line code we have to add code later
 
   const handleDesignationName = (val) => {
     setDesignationName(val);

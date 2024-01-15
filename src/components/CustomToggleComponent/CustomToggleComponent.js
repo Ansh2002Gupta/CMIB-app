@@ -38,7 +38,6 @@ const CustomToggleComponent = ({
           </CommonText>
         )}
       </View>
-
       <View style={[styles.mainView, customToggleStyle]}>
         <TouchableOpacity
           style={{

@@ -13,7 +13,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
 
   return (
     <View style={styles.mainViewStyle}>
-      <ApplicationFormStepper activeStep={activeStep} intl={intl} />
+      <ApplicationFormStepper activeStep={activeStep} />
       <JobDetails />
       {/* TODO This button will be in seprate form file*/}
       <View style={styles.actionBtnContainer}>

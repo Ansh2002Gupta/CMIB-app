@@ -160,14 +160,14 @@ const JobDetailsTemplate = ({
         <View style={styles.bottomMargin}>
           <DetailCard
             headerId="label.monthly"
-            details={jobDetailData?.Monthly}
+            details={jobDetailData?.monthly}
             handleChange={handleMonthlyData}
             isEditProfile
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
             headerId="label.yearly"
-            details={jobDetailData?.Yearly}
+            details={jobDetailData?.yearly}
             handleChange={handleYearlyData}
             isEditProfile
             customCardStyle={styles.yearlyCustomCardStyle}
@@ -293,7 +293,7 @@ JobDetailsTemplate.defaultProps = {
   handleStartingSalary: () => {},
   handleYearlyData: () => {},
   handleToggle: () => {},
-  jobDetailData: { Monthly: "", Yearly: "" },
+  jobDetailData: { monthly: "", yearly: "" },
   onClickAddDesignation: () => {},
   selectionProcess: [],
   startingSalary: "",
@@ -316,8 +316,8 @@ JobDetailsTemplate.propTypes = {
   handleYearlyData: PropTypes.func,
   handleToggle: PropTypes.func,
   jobDetailData: PropTypes.shape({
-    Monthly: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-    Yearly: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    monthly: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    yearly: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }),
   onClickAddDesignation: PropTypes.func,
   selectionProcess: PropTypes.arrayOf(

@@ -147,7 +147,7 @@ const config = [
         element: <RoundOne />,
       },
       {
-        viewPath: "applicationForm",
+        viewPath: navigations.APPLICATION_FORM,
         element: <RoundOneApplicationForm />,
       },
     ],

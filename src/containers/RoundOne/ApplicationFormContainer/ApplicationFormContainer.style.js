@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     gap: 16,
     marginTop: 8,
+    marginRight: 16,
   },
   mainViewStyle: {
     flex: 1,

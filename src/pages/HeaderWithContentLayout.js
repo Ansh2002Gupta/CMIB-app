@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet } from "../routes";
-import { useLocation } from "react-router-dom";
 import {
   Modal,
   Platform,
@@ -12,20 +11,19 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import MainLayout from "../layouts/MainLayout";
 
 import BottomBar from "../containers/BottomBar";
-import commonStyles from "../theme/styles/commonStyles";
+import SidebarModal from "../components/SideBarModal";
 import Footer from "../containers/Footer";
 import Header from "../containers/Header";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import useIsWebView from "../hooks/useIsWebView";
 import { getAuthToken } from "../utils/getAuthToken";
-import { navigations } from "../constants/routeNames";
 import images from "../images";
-import Styles from "./HeaderWithContentLayout.style";
+import commonStyles from "../theme/styles/commonStyles";
+import styles from "./HeaderWithContentLayout.style";
 
 function HeaderWithContentLayout({ doesExcludeHeader }) {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const location = useLocation();
 
   useEffect(() => {
     const checkAuthToken = async () => {
@@ -57,18 +55,6 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
     setSideBarVisible(!isSideBarVisible);
   };
 
-  const showBottomBar = () => {
-    const routeName = location.pathname;
-    const includedRoutes = [
-      navigations.DASHBOARD,
-      navigations.ROUND_ONE,
-      navigations.ROUND_TWO,
-      navigations.PROFILE,
-    ];
-
-    return includedRoutes.includes(routeName);
-  };
-
   // Components for rendering the sidebar in a modal or inline
   const sidebarComponent = (
     <SideNavBar onClose={toggleSideBar} showCloseIcon={modalSideBar} />
@@ -77,27 +63,24 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
   return (
     <>
       {modalSideBar && (
-        <Modal
+        <SidebarModal
           isVisible={modalSideBar}
           animationIn="slideInLeft"
           animationOut="slideOutLeft"
-          style={Styles().modalStyle}
+          style={styles().modalStyle}
         >
           {Platform.OS.toLowerCase() === "web" ? (
-            <ScrollView style={Styles().sideBarSection}>
+            <ScrollView style={styles().sideBarSection}>
               {sidebarComponent}
             </ScrollView>
           ) : (
             sidebarComponent
           )}
-        </Modal>
+        </SidebarModal>
       )}
 
       <MainLayout
-        bottomSection={
-          isAuthenticated &&
-          (!isWebView && showBottomBar() ? <BottomBar /> : null)
-        }
+        bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         header={
           doesExcludeHeader && !isWebView ? null : (
             <Header
@@ -113,10 +96,10 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
         topSectionStyle={isMdOrGreater && commonStyles.headerContainer}
         isRightFillSpace={false}
         isLeftFillSpace={false}
-        rightSectionStyle={Styles(currentBreakpoint).rightSectionStyle}
-        leftSectionStyle={Styles(currentBreakpoint).leftSectionStyle}
+        rightSectionStyle={styles(currentBreakpoint).rightSectionStyle}
+        leftSectionStyle={styles(currentBreakpoint).leftSectionStyle}
         bottomSectionStyle={
-          isMdOrGreater ? Styles().bottomSectionStyle : Styles().bottomBar
+          isMdOrGreater ? styles().bottomSectionStyle : styles().bottomBar
         }
       />
     </>

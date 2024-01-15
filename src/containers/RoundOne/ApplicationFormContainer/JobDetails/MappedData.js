@@ -1,6 +1,6 @@
 export const mapApiDataToUI = () => {
   return {
-    Monthly: [
+    monthly: [
       {
         key: "basic",
         label: "label.basic",
@@ -82,7 +82,7 @@ export const mapApiDataToUI = () => {
         isNumeric: true,
       },
     ],
-    Yearly: [
+    yearly: [
       {
         key: "totalGrossSalary",
         label: "label.totalGrossSalary",

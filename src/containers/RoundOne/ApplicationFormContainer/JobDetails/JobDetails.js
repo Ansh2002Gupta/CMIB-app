@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "@unthinkable/react-core-components";
 
 import JobDetailsTemplate from "./JobDetailsTemplate";
 import useJobDetailForm from "./controllers/useJobDetailForm";
