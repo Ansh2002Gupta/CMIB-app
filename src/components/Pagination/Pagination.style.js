@@ -3,16 +3,16 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   pagination: {
-    justifyContent: "space-between",
+    borderRadius: 2,
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
   },
   paginationRange: {
     flexDirection: "row",
-    alignItems: "center",
     marginLeft: 16,
     marginRight: 16,
+    alignItems: "center",
   },
   previousText: {
     fontSize: 14,

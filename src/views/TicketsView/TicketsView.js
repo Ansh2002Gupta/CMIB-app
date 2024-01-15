@@ -1,40 +1,38 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
 
 import { TwoRow } from "../../core/layouts";
 
-import { useNavigate } from "../../routes";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketView from "./controller/useTicketView";
 import { navigations } from "../../constants/routeNames";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
-  TABLE_HEADING as tableHeading,
+  TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
 import { gridData } from "./constant";
 
 const TicketsView = () => {
   const {
-    rowsToShow,
-    getStatusStyle,
-    getColoumConfigs,
-    handleSearchResults,
-    handleRowPerPageChange,
-    handlePageChange,
-    isHeading,
     currentPage,
     currentRecords,
-    totalcards,
+    getColoumConfigs,
+    getStatusStyle,
+    handlePageChange,
+    handleRowPerPageChange,
+    handleSearchResults,
+    headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
-    headingTexts,
-    setCurrentPage,
+    isHeading,
     setCurrentRecords,
     statusText,
     subHeadingText,
-
     tableIcon,
+    totalcards,
+    rowsToShow,
   } = useTicketView(gridData);
 
   const intl = useIntl();
@@ -72,7 +70,6 @@ const TicketsView = () => {
             indexOfLastRecord,
             tableHeading,
             headingTexts,
-            setCurrentPage,
             setCurrentRecords,
             statusText,
             subHeadingText,

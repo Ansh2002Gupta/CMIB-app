@@ -23,24 +23,24 @@ import styles from "./CustomTable.style";
 const CustomTable = ({
   currentPage,
   currentRecords,
-  handlePageChange,
   getColoumConfigs,
   getStatusStyle,
-  handleSearchResults,
+  handlePageChange,
   handleRowPerPageChange,
+  handleSearchResults,
+  headingTexts,
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
   rowsLimit,
   rowsToShow,
-  tableHeading,
-  totalcards,
-  headingTexts,
   setCurrentRecords,
   showSearchBar,
   statusText,
   subHeadingText,
+  tableHeading,
   tableIcon,
+  totalcards,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -137,7 +137,7 @@ const CustomTable = ({
                             <View style={styles.rowsPerPageWeb}>
                               <Chip
                                 label={getRenderText(item, statusText)}
-                                style={getStatusStyle(item.status, false)}
+                                style={getStatusStyle(item.status)}
                               />
                               <CustomImage
                                 source={tableIcon}
@@ -206,24 +206,22 @@ CustomTable.defaultProps = {
   currentRecords: [],
   getColoumConfigs: () => {},
   getStatusStyle: () => {},
-  handleSearchResults: () => {},
-  handleRowPerPageChange: () => {},
   handlePageChange: () => {},
+  handleRowPerPageChange: () => {},
+  handleSearchResults: () => {},
+  headingTexts: [],
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,
   isHeading: false,
   rowsLimit: [],
   rowsToShow: 10,
-  tableHeading: {},
-  totalcards: 0,
-
-  setCurrentPage: () => {},
   setCurrentrecords: [],
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
-
+  tableHeading: {},
   tableIcon: images.ticketIcon,
+  totalcards: 0,
 };
 
 CustomTable.propTypes = {
@@ -231,26 +229,22 @@ CustomTable.propTypes = {
   currentRecords: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func.isRequired,
-  handleSearchResults: PropTypes.func.isRequired,
-  handleRowPerPageChange: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
+  handleRowPerPageChange: PropTypes.func.isRequired,
+  handleSearchResults: PropTypes.func.isRequired,
+  headingTexts: PropTypes.array,
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   isHeading: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
-  tableHeading: PropTypes.object.isRequired,
-  totalcards: PropTypes.number.isRequired,
-
-  headingTexts: PropTypes.array,
-
-  setCurrentPage: PropTypes.func.isRequired,
   setCurrentrecords: PropTypes.array.isRequired,
   showSearchBar: PropTypes.bool,
   statusText: PropTypes.array,
   subHeadingText: PropTypes.array,
-
+  tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.string.isRequired,
+  totalcards: PropTypes.number.isRequired,
 };
 
 export default CustomTable;

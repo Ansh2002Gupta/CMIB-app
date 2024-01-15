@@ -87,11 +87,8 @@ const useTicketView = (data) => {
   let statusText = ["status"];
   let tableIcon = images.iconTicket;
 
-  function getStatusStyle(status, isHeading) {
+  function getStatusStyle(status) {
     status = status.toLowerCase();
-    if (isHeading) {
-      return styles.tableHeadingText;
-    }
     switch (status) {
       case "pending":
         return {
@@ -144,10 +141,7 @@ const useTicketView = (data) => {
                 {item.status}
               </CommonText>
             ) : (
-              <Chip
-                label={item.status}
-                style={getStatusStyle(item.status, isHeading)}
-              />
+              <Chip label={item.status} style={getStatusStyle(item.status)} />
             )}
           </View>
         ),
@@ -187,25 +181,23 @@ const useTicketView = (data) => {
   };
 
   return {
-    rowsToShow,
-    setRowsToShow,
-    getStatusStyle,
-    getColoumConfigs,
-    handleSearchResults,
-    handleRowPerPageChange,
-    handlePageChange,
-    isHeading,
     currentPage,
     currentRecords,
-    totalcards,
+    getColoumConfigs,
+    getStatusStyle,
+    handlePageChange,
+    handleRowPerPageChange,
+    handleSearchResults,
+    headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
-    headingTexts,
-    setCurrentPage,
+    isHeading,
+    rowsToShow,
     setCurrentRecords,
     statusText,
     subHeadingText,
     tableIcon,
+    totalcards,
   };
 };
 

@@ -85,6 +85,12 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
+  statusStyle:{
+    alignItems:"flex-start"
+  },
+  iconTicketColoum:{
+    alignItems:"center"
+  }
 });
 
 export default styles;
