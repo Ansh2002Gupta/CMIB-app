@@ -1,19 +1,15 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet } from "../routes";
-import {
-  Modal,
-  Platform,
-  ScrollView,
-} from "@unthinkable/react-core-components";
+import { Platform, ScrollView } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import MainLayout from "../layouts/MainLayout";
 
 import BottomBar from "../containers/BottomBar";
-import SidebarModal from "../components/SideBarModal";
 import Footer from "../containers/Footer";
 import Header from "../containers/Header";
+import SidebarModal from "../components/SideBarModal";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import useIsWebView from "../hooks/useIsWebView";
 import { getAuthToken } from "../utils/getAuthToken";
@@ -78,7 +74,6 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
           )}
         </SidebarModal>
       )}
-
       <MainLayout
         bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         header={
