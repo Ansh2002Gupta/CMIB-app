@@ -85,6 +85,12 @@ export const INTEREST_OPTIONS = [
   { messageId: "label.advertisement_in_ca_journal", isSelected: false, id: 6 },
 ];
 
+export const SELECTION_PROCESS = [
+  { messageId: "label.group_discussion", isSelected: false, id: 1 },
+  { messageId: "label.psychometric_test", isSelected: false, id: 2 },
+  { messageId: "label.personal_interview", isSelected: false, id: 3 },
+];
+
 export const MODULE_OPTIONS = [
   {
     id: "ca-jobs",
