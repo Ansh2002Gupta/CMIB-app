@@ -7,8 +7,13 @@ import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./CustomToggleComponent.style";
 
-const CustomToggleComponent = ({ customLabelStyle, isMandatory, label }) => {
-  const [selectedToggleOption, setSelectedToggleOption] = useState(2);
+const CustomToggleComponent = ({
+  customLabelStyle,
+  customToggleStyle,
+  isMandatory,
+  label,
+}) => {
+  const [selectedToggleOption, setSelectedToggleOption] = useState(-1);
   const intl = useIntl();
   const handleOptionSelect = (option) => {
     setSelectedToggleOption(option);
@@ -33,8 +38,7 @@ const CustomToggleComponent = ({ customLabelStyle, isMandatory, label }) => {
           </CommonText>
         )}
       </View>
-
-      <View style={styles.mainView}>
+      <View style={[styles.mainView, customToggleStyle]}>
         <TouchableOpacity
           style={{
             ...styles.yesButtonStyle,

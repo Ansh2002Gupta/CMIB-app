@@ -8,6 +8,7 @@ import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import { gridStyles } from "../../theme/styles/commonStyles";
+import { numericValidator } from "../../constants/validation";
 import styles, { getRowStyle } from "./DetailComponent.style";
 
 const DetailComponent = ({
@@ -60,10 +61,11 @@ const DetailComponent = ({
                 label={intl.formatMessage({ id: detail.label })}
                 isDropdown={detail.isDropdown}
                 isCounterInput={detail.isCounterInput}
-                options={detail.options || []}
                 isError={!!detail.error}
                 isMobileNumber={detail.isMobileNumber}
                 isMandatory
+                options={detail.options || []}
+                placeholder={intl.formatMessage({ id: detail.placeholder })}
                 maxLength={detail.maxLength}
                 isNumeric={detail.isNumeric}
                 valueField={detail.valueField || "label"}
@@ -71,8 +73,13 @@ const DetailComponent = ({
                 inputKey={detail.inputKey || "value"}
                 onChangeValue={(val) => handleChange(detail.label, val)}
                 onChangeText={(val) => {
-                  handleChange(detail.label, val);
+                  if (detail?.isNumeric) {
+                    if (numericValidator(val)) handleChange(detail.label, val);
+                  } else {
+                    handleChange(detail.label, val);
+                  }
                 }}
+                isRupee={detail?.isRupee}
                 {...getMobileProps(detail)}
               />
             ) : (
