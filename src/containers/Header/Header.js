@@ -30,7 +30,7 @@ const Header = ({ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }) => {
     <>
       {isuserLoggedIn ? (
         <PrivateHeader
-          {...{ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }}
+          {...{ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon   }}
         />
       ) : (
         <PublicHeader />

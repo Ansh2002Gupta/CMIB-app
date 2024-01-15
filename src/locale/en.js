@@ -249,6 +249,9 @@ const locale = {
   "label.selection_process": "Selection Process",
   "label.password_changed_successfully":
     "Your password has been changed successfully",
+  "label.previous":"Previous",
+  "label.rows_per_page":"Rows Per Page:",
+  "label.filters":"Filters",
   "label.sessions": "Sessions",
   "label.basic": "Basic",
   "label.hra": "HRA",

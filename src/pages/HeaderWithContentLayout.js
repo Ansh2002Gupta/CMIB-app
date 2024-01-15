@@ -75,7 +75,6 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
         </SidebarModal>
       )}
       <MainLayout
-        bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
         header={
           doesExcludeHeader && !isWebView ? null : (
             <Header
@@ -85,6 +84,7 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
             />
           )
         }
+        bottomSection={isAuthenticated && (!isWebView && !doesExcludeHeader ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
         footer={!isAuthenticated && isWebView && <Footer />}

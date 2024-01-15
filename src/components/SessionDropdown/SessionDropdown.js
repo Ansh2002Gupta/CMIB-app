@@ -18,10 +18,9 @@ const SessionDropdown = ({ options, onSelect, optionStyle, sessionRef }) => {
           style={styles.option}
           onPress={() => onSelect(option.label)}
         >
-          <CommonText
-            title={option.label}
-            customTextStyle={[styles.optionTextStyle, optionStyle]}
-          />
+          <CommonText customTextStyle={[styles.optionTextStyle, optionStyle]}>
+            {option.label}
+          </CommonText>
         </CustomTouchableOpacity>
       ))}
     </View>

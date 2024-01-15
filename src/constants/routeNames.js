@@ -16,6 +16,7 @@ export const navigations = {
   ROUND_TWO: "/round-two",
   SAVED_CANDIDATES: "/saved-candidates",
   SIGN_UP: "/sign-up",
+  TICKETS: "/tickets",
   VIEW_PROFILE: "/view-profile",
   WEB_VIEW: "/web-view",
 
