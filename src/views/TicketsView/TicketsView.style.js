@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     fontWeight:"600",
     color: colors.darkGrey,
   },
-  columnStyle: (WIDTH: "15%") => ({
+  columnStyle: (WIDTH= "15%") => ({
     width: WIDTH,
     paddingLeft: 24,
     paddingRight: 24,
@@ -87,6 +87,9 @@ const styles = StyleSheet.create({
   },
   statusStyle:{
     alignItems:"flex-start"
+  },
+  iconTicketColoum:{
+    alignItems:"center"
   }
 });
 

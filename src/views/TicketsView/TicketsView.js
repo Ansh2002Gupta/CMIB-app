@@ -36,7 +36,6 @@ const TicketsView = () => {
   return (
     <>
       <IconHeader
-        intl={intl}
         headerText={intl.formatMessage({ id: "label.tickets" })}
         onPressLeftIcon={onGoBack}
         hasIconBar

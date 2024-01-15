@@ -164,7 +164,7 @@ const useTicketView = () => {
             isSvg={true}
           />
         ),
-        style: styles.columnStyle("10%"),
+        style: { ...styles.columnStyle("10%"), ...styles.iconTicketColoum },
         isFillSpace: true,
       },
     ];
