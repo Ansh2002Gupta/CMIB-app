@@ -27,13 +27,16 @@ const useTicketView = () => {
   );
   const [currentRecords, setCurrentRecords] = useState([]);
 
-  const indexOfLastRecord = currentPage * rowsToShow;
-  const indexOfFirstRecord = indexOfLastRecord - rowsToShow;
+  let indexOfLastRecord;
+  let indexOfFirstRecord;
 
-  useEffect(() => {
+  const fetchData = (pageNumber, rowPerPage) => {
+    // TODO: Integrate an API call here
+    indexOfLastRecord = pageNumber * rowPerPage;
+    indexOfFirstRecord = indexOfLastRecord - rowPerPage;
     let newRecords = gridData.slice(indexOfFirstRecord, indexOfLastRecord);
     setCurrentRecords(newRecords);
-  }, [rowsToShow, currentPage]);
+  };
 
   useEffect(() => {
     setSearchParams((prev) => {
@@ -47,6 +50,7 @@ const useTicketView = () => {
       );
       return prev;
     });
+    fetchData(currentPage, rowsToShow);
   }, []);
 
   const totalcards = gridData.length;
@@ -61,6 +65,7 @@ const useTicketView = () => {
       prev.set("rowsPerPage", option.value);
       return prev;
     });
+    fetchData(currentPage, option.value);
   };
 
   const handlePageChange = (page) => {
@@ -69,6 +74,7 @@ const useTicketView = () => {
       prev.set("page", page);
       return prev;
     });
+    fetchData(page, rowsToShow);
   };
 
   function getStatusStyle(status, isHeading, styles) {
