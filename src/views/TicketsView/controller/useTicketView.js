@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
@@ -27,8 +27,7 @@ const useTicketView = (data) => {
     getValidCurrentPage(searchParams.get("page"))
   );
   const [currentRecords, setCurrentRecords] = useState([]);
-  const [ ,ticketScreenDispatch] = useContext(TicketScreenContext);
-  const [currentRecords, setCurrentRecords] = useState([]);
+  const [, ticketScreenDispatch] = useContext(TicketScreenContext);
 
   let indexOfLastRecord;
   let indexOfFirstRecord;
@@ -37,8 +36,9 @@ const useTicketView = (data) => {
     // TODO: Integrate an API call here
     indexOfLastRecord = pageNumber * rowPerPage;
     indexOfFirstRecord = indexOfLastRecord - rowPerPage;
-    let newRecords = gridData.slice(indexOfFirstRecord, indexOfLastRecord);
+    let newRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
     setCurrentRecords(newRecords);
+    ticketScreenDispatch(setTicketScreenList(data));
   };
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const useTicketView = (data) => {
   let isHeading = true;
 
   const handleSearchResults = (searchedData) => {
-    //TODO: Implement searching 
+    //TODO: Implement searching
   };
 
   const handleRowPerPageChange = (option) => {
@@ -87,7 +87,7 @@ const useTicketView = (data) => {
   let statusText = ["status"];
   let tableIcon = images.iconTicket;
 
-  function getStatusStyle(status, isHeading, isWebView) {
+  function getStatusStyle(status, isHeading) {
     status = status.toLowerCase();
     if (isHeading) {
       return styles.tableHeadingText;
@@ -146,7 +146,7 @@ const useTicketView = (data) => {
             ) : (
               <Chip
                 label={item.status}
-                style={getStatusStyle(item.status, isHeading, styles)}
+                style={getStatusStyle(item.status, isHeading)}
               />
             )}
           </View>
@@ -200,16 +200,12 @@ const useTicketView = (data) => {
     totalcards,
     indexOfFirstRecord,
     indexOfLastRecord,
-    isHeading,
-    rowsLimit,
-    rowsToShow,
+    headingTexts,
     setCurrentPage,
     setCurrentRecords,
     statusText,
     subHeadingText,
-    tableHeading,
     tableIcon,
-    totalcards,
   };
 };
 

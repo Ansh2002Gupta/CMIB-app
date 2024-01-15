@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import PropTypes from "prop-types";
 import { FlatList, View } from "@unthinkable/react-core-components";
 
 import MultiColumn from "../../core/layouts/MultiColumn";
@@ -12,7 +11,6 @@ import CommonText from "../../components/CommonText";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
-import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import PaginationFooter from "../PaginationFooter";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
@@ -30,25 +28,37 @@ const CustomTable = ({
   getStatusStyle,
   handleSearchResults,
   handleRowPerPageChange,
-  headingTexts,
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
   rowsLimit,
   rowsToShow,
+  tableHeading,
+  totalcards,
+  headingTexts,
   setCurrentRecords,
   showSearchBar,
   statusText,
   subHeadingText,
-  tableHeading,
   tableIcon,
-  totalcards,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const [ticketScreenState] = useContext(TicketScreenContext);
+  const { ticketScreenList } = ticketScreenState;
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleFilterModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
+  const onApplyFilter = (filterData) => {
+    setCurrentRecords(filterData);
+    handleFilterModal();
+  };
 
   return (
-    <View style={isWebView ? styles.container : styles.mobileMainContainer}>
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
         topSection={
@@ -101,7 +111,6 @@ const CustomTable = ({
                   data={currentRecords}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
-                  keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item, index }) => {
                     return (
                       <>
@@ -127,15 +136,9 @@ const CustomTable = ({
                             </View>
                             <View style={styles.rowsPerPageWeb}>
                               <Chip
-                                label={item.status}
-                                style={getStatusStyle(
-                                  item.status,
-                                  false,
-                                  isWebView
-                                )}
-                              >
-                                {getRenderText(item, statusText)}
-                              </CommonText>
+                                label={getRenderText(item, statusText)}
+                                style={getStatusStyle(item.status, false)}
+                              />
                               <CustomImage
                                 source={tableIcon}
                                 style={styles.iconTicket}
@@ -211,14 +214,16 @@ CustomTable.defaultProps = {
   isHeading: false,
   rowsLimit: [],
   rowsToShow: 10,
+  tableHeading: {},
+  totalcards: 0,
+
   setCurrentPage: () => {},
   setCurrentrecords: [],
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
-  tableHeading: {},
+
   tableIcon: images.ticketIcon,
-  totalcards: 0,
 };
 
 CustomTable.propTypes = {
@@ -229,19 +234,23 @@ CustomTable.propTypes = {
   handleSearchResults: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  headingTexts: PropTypes.array,
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   isHeading: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
+  tableHeading: PropTypes.object.isRequired,
+  totalcards: PropTypes.number.isRequired,
+
+  headingTexts: PropTypes.array,
+
+  setCurrentPage: PropTypes.func.isRequired,
   setCurrentrecords: PropTypes.array.isRequired,
   showSearchBar: PropTypes.bool,
   statusText: PropTypes.array,
-  subHeadingText: PropTypes.object,
-  tableHeading: PropTypes.object.isRequired,
+  subHeadingText: PropTypes.array,
+
   tableIcon: PropTypes.string.isRequired,
-  totalcards: PropTypes.number.isRequired,
 };
 
 export default CustomTable;

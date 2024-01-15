@@ -25,24 +25,16 @@ const TicketsView = () => {
     isHeading,
     currentPage,
     currentRecords,
-    getColoumConfigs,
-    getStatusStyle,
-    handleSearchResults,
-    handleSelect,
-    headingTexts,
     totalcards,
     indexOfFirstRecord,
     indexOfLastRecord,
-    isHeading,
-    rowsLimit,
-    rowsToShow,
+    headingTexts,
     setCurrentPage,
     setCurrentRecords,
     statusText,
     subHeadingText,
-    tableHeading,
+
     tableIcon,
-    totalcards,
   } = useTicketView(gridData);
 
   const intl = useIntl();
@@ -56,7 +48,6 @@ const TicketsView = () => {
     <TwoRow
       topSection={
         <IconHeader
-          intl={intl}
           headerText={intl.formatMessage({ id: "label.tickets" })}
           onPressLeftIcon={onGoBack}
           hasIconBar
@@ -66,25 +57,26 @@ const TicketsView = () => {
       bottomSection={
         <CustomTable
           {...{
+            rowsToShow,
+            getStatusStyle,
+            getColoumConfigs,
+            handleSearchResults,
+            handleRowPerPageChange,
+            handlePageChange,
+            isHeading,
             currentPage,
             currentRecords,
-            getColoumConfigs,
-            getStatusStyle,
-            handleSearchResults,
-            handleSelect,
-            headingTexts,
+            totalcards,
+            rowsLimit,
             indexOfFirstRecord,
             indexOfLastRecord,
-            isHeading,
-            rowsLimit,
-            rowsToShow,
+            tableHeading,
+            headingTexts,
             setCurrentPage,
             setCurrentRecords,
             statusText,
             subHeadingText,
-            tableHeading,
             tableIcon,
-            totalcards,
           }}
         />
       }
