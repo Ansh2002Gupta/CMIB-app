@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View } from "@unthinkable/react-core-components";
 import { useSearchParams } from "../../../routes";
+import { View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
-import { gridData } from "../constant";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import useIsWebView from "../../../hooks/useIsWebView";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import useIsWebView from "../../../hooks/useIsWebView";
+import { gridData } from "../constant";
+import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import images from "../../../images";
 import styles from "../TicketsView.style";
 
@@ -55,7 +55,7 @@ const useTicketView = () => {
 
   const handleSearchResults = (filteredData) => {};
 
-  const handleSelect = (option) => {
+  const handleRowPerPageChange = (option) => {
     setRowsToShow(option.value);
     setSearchParams((prev) => {
       prev.set("rowsPerPage", option.value);
@@ -176,7 +176,7 @@ const useTicketView = () => {
     getStatusStyle,
     getColoumConfigs,
     handleSearchResults,
-    handleSelect,
+    handleRowPerPageChange,
     handlePageChange,
     isHeading,
     currentPage,

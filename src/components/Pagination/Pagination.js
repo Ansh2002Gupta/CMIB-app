@@ -22,13 +22,13 @@ function Pagination(props) {
     handlePageChange,
     prevNextBtnstyles,
     siblingCount,
-    totalCards,
+    totalcards,
   } = props;
 
   const intl = useIntl();
   const { isWebView } = useIsWebView();
 
-  const totalPages = totalCards ? Math.ceil(totalCards / cardsPerPage) : null;
+  const totalPages = totalcards ? Math.ceil(totalcards / cardsPerPage) : null;
 
   const paginationRange = () => {
     const totalPageNumbers = siblingCount + 5;
@@ -162,7 +162,7 @@ Pagination.defaultProps = {
   pageStyles: {},
   prevNextBtnstyles: {},
   siblingCount: 1,
-  totalCards: 0,
+  totalcards: 0,
 };
 
 Pagination.propTypes = {
@@ -174,7 +174,7 @@ Pagination.propTypes = {
   pageStyles: PropTypes.object,
   prevNextBtnstyles: PropTypes.object,
   siblingCount: PropTypes.number,
-  totalCards: PropTypes.number,
+  totalcards: PropTypes.number,
 };
 
 export default Pagination;

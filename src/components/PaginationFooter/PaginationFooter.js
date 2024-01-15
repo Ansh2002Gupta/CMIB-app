@@ -7,13 +7,13 @@ import CommonText from "../CommonText";
 import CustomDropdown from "../CustomDropdown";
 import Pagination from "../Pagination/Pagination";
 import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./PaginationFooter.style";
 import images from "../../images";
+import styles from "./PaginationFooter.style";
 
 const PaginationFooter = ({
   currentPage,
   handlePageChange,
-  handleSelect,
+  handleRowPerPageChange,
   indexOfFirstRecord,
   indexOfLastRecord,
   rowsLimit,
@@ -34,7 +34,7 @@ const PaginationFooter = ({
           </CommonText>
           <CustomDropdown
             options={rowsLimit}
-            onSelect={handleSelect}
+            onSelect={handleRowPerPageChange}
             placeholder={rowsToShow}
             dropdownIcon={images.iconArrowDown}
           />
@@ -46,14 +46,14 @@ const PaginationFooter = ({
         )}
       </View>
       <Pagination
-        cardsPerPage={rowsToShow}
-        totalCards={totalcards}
-        handlePageChange={handlePageChange}
-        currentPage={currentPage}
-        siblingCount={siblingCount}
-        prevNextBtnstyles={
-          isWebView ? styles.previousButtonWeb : styles.previousButton
-        }
+        {...{
+          cardsPerPage: rowsToShow,
+          currentPage,
+          handlePageChange,
+          prevNextBtnstyles:isWebView ? styles.previousButtonWeb : styles.previousButton,
+          siblingCount,
+          totalcards,
+          }}
       />
     </View>
   );
@@ -62,7 +62,7 @@ const PaginationFooter = ({
 PaginationFooter.defaultProps = {
   currentPage: 1,
   handlePageChange: () => {},
-  handleSelect: () => {},
+  handleRowPerPageChange: () => {},
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,
   rowsLimit: [],
@@ -74,7 +74,7 @@ PaginationFooter.defaultProps = {
 PaginationFooter.propTypes = {
   currentPage: PropTypes.number.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  handleSelect: PropTypes.func.isRequired,
+  handleRowPerPageChange: PropTypes.func.isRequired,
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   rowsLimit: PropTypes.array.isRequired,

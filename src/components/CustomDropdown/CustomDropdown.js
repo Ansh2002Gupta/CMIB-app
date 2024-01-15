@@ -32,7 +32,6 @@ const CustomDropdown = ({ dropdownIcon, onSelect, options, placeholder }) => {
         </CommonText>
         <CustomImage source={dropdownIcon} style={styles.iconTicket} />
       </CustomTouchableOpacity>
-
       {isDropdownVisible && (
         <View style={styles.dropdown}>
           <FlatList
