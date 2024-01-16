@@ -2,10 +2,11 @@ import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
+import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
+
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
 import images from "../../images";
-import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 import { DOTS } from "../../constants/constants";
 import styles from "./Pagination.style";
 
@@ -24,7 +25,7 @@ function Pagination(props) {
   } = props;
   const intl = useIntl();
   const windowDimensions = useWindowDimensions();
-  const showbuttonTextButton = windowDimensions.width >= 900;
+  const showbuttonText = windowDimensions.width >= 900;
 
   const totalPages = totalcards ? Math.ceil(totalcards / cardsPerPage) : null;
 
@@ -93,7 +94,7 @@ function Pagination(props) {
           leftIconSource: images.iconArrowLeft,
         }}
       >
-        {showbuttonTextButton && (
+        {showbuttonText && (
           <CommonText customTextStyle={styles.previousText}>
             {intl.formatMessage({ id: "label.previous" })}
           </CommonText>
@@ -135,7 +136,7 @@ function Pagination(props) {
           rightIconSource: images.iconArrowRightBlack,
         }}
       >
-        {showbuttonTextButton && (
+        {showbuttonText && (
           <CommonText customTextStyle={styles.previousText}>
             {intl.formatMessage({ id: "label.next" })}
           </CommonText>

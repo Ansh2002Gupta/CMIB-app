@@ -15,7 +15,6 @@ import PaginationFooter from "../PaginationFooter";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
 import { getRenderText } from "../../utils/util";
-import { TicketScreenContext } from "../../globalContext/ticketsScreen/ticketsScreenProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
@@ -23,6 +22,7 @@ import styles from "./CustomTable.style";
 const CustomTable = ({
   currentPage,
   currentRecords,
+  data,
   getColoumConfigs,
   getStatusStyle,
   handlePageChange,
@@ -44,8 +44,6 @@ const CustomTable = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
-  const [ticketScreenState] = useContext(TicketScreenContext);
-  const { ticketScreenList } = ticketScreenState;
 
   const [showModal, setShowModal] = useState(false);
 
@@ -65,10 +63,7 @@ const CustomTable = ({
           showSearchBar && (
             <TwoColumn
               leftSection={
-                <SearchView
-                  data={ticketScreenList}
-                  onSearch={handleSearchResults}
-                />
+                <SearchView data={data} onSearch={handleSearchResults} />
               }
               isLeftFillSpace
               isRightFillSpace={false}
@@ -193,7 +188,7 @@ const CustomTable = ({
       {showModal && (
         <FilterModal
           onPressIconCross={handleFilterModal}
-          data={ticketScreenList}
+          data={data}
           onApplyFilter={onApplyFilter}
         />
       )}
@@ -204,6 +199,7 @@ const CustomTable = ({
 CustomTable.defaultProps = {
   currentPage: 1,
   currentRecords: [],
+  data: [{}],
   getColoumConfigs: () => {},
   getStatusStyle: () => {},
   handlePageChange: () => {},
@@ -227,6 +223,7 @@ CustomTable.defaultProps = {
 CustomTable.propTypes = {
   currentPage: PropTypes.number.isRequired,
   currentRecords: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,

@@ -7,12 +7,12 @@ import { TwoRow } from "../../core/layouts";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketView from "./controller/useTicketView";
+import { gridData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
-import { gridData } from "./constant";
 
 const TicketsView = () => {
   const {
@@ -27,12 +27,12 @@ const TicketsView = () => {
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
+    rowsToShow,
     setCurrentRecords,
     statusText,
     subHeadingText,
     tableIcon,
     totalcards,
-    rowsToShow,
   } = useTicketView(gridData);
 
   const intl = useIntl();
@@ -55,25 +55,26 @@ const TicketsView = () => {
       bottomSection={
         <CustomTable
           {...{
-            rowsToShow,
+            currentPage,
+            currentRecords,
+            data: gridData,
             getStatusStyle,
             getColoumConfigs,
             handleSearchResults,
             handleRowPerPageChange,
             handlePageChange,
-            isHeading,
-            currentPage,
-            currentRecords,
-            totalcards,
-            rowsLimit,
+            headingTexts,
             indexOfFirstRecord,
             indexOfLastRecord,
-            tableHeading,
-            headingTexts,
+            isHeading,
+            rowsLimit,
+            rowsToShow,
             setCurrentRecords,
             statusText,
             subHeadingText,
+            tableHeading,
             tableIcon,
+            totalcards,
           }}
         />
       }

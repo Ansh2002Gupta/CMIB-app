@@ -62,6 +62,7 @@ const FeedbackView = () => {
           {...{
             currentPage,
             currentRecords,
+            data: feedbackData,
             getColoumConfigs,
             getStatusStyle,
             handlePageChange,

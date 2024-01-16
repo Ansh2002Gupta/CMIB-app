@@ -37,7 +37,7 @@ const style = {
   horizontalLine:(color)=>({
     borderTopWidth:1,
     width:'100%',
-    color:color
+    color,
   })
 };
 
