@@ -19,7 +19,7 @@ const SessionBar = () => {
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedValue, setSelectedValue] = useState(
-    selectedModule.session[0].label
+    selectedModule.session?.[0]?.label
   );
 
   const sessionRef = useRef(null);
@@ -37,7 +37,7 @@ const SessionBar = () => {
   return (
     <CustomTouchableOpacity style={styles.container} onPress={handleDropdown}>
       <CommonText customTextStyle={styles.sessionBarText}>
-        {intl.formatMessage({ id: "label.sessions" })}
+        {intl.formatMessage({ id: "label.sessions" })}&nbsp;&#58;
       </CommonText>
       <CommonText
         customTextStyle={styles.sessionText(currentBreakpoint)}

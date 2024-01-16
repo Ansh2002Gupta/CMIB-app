@@ -1,13 +1,18 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import { useNavigate } from "../../routes";
 
 import { TwoRow } from "../../core/layouts";
 
-import { useNavigate } from "../../routes";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketView from "./controller/useTicketView";
 import { gridData } from "./constant";
+import { navigations } from "../../constants/routeNames";
+import {
+  ROWS_PER_PAGE_ARRAY as rowsLimit,
+  TICKET_TABLE_HEADING as tableHeading,
+} from "../../constants/constants";
 
 const TicketsView = () => {
   const {
@@ -16,19 +21,17 @@ const TicketsView = () => {
     currentRecords,
     getColoumConfigs,
     getStatusStyle,
+    handlePageChange,
+    handleRowPerPageChange,
     handleSearchResults,
-    handleSelect,
     handleLoadMore,
     headingTexts,
     isHeading,
     loadingMore,
-    rowsLimit,
     rowsToShow,
-    setCurrentPage,
     setCurrentRecords,
     statusText,
     subHeadingText,
-    tableHeading,
     tableIcon,
     totalcards,
   } = useTicketView(gridData);
@@ -37,14 +40,13 @@ const TicketsView = () => {
   const navigate = useNavigate();
 
   const onGoBack = () => {
-    navigate(-1);
+    navigate(navigations.PROFILE);
   };
 
   return (
     <TwoRow
       topSection={
         <IconHeader
-          intl={intl}
           headerText={intl.formatMessage({ id: "label.tickets" })}
           onPressLeftIcon={onGoBack}
           hasIconBar
@@ -57,17 +59,18 @@ const TicketsView = () => {
             allDataLoaded,
             currentPage,
             currentRecords,
-            getColoumConfigs,
+            data: gridData,
             getStatusStyle,
+            getColoumConfigs,
             handleSearchResults,
-            handleSelect,
             handleLoadMore,
+            handleRowPerPageChange,
+            handlePageChange,
             headingTexts,
             isHeading,
             loadingMore,
             rowsLimit,
             rowsToShow,
-            setCurrentPage,
             setCurrentRecords,
             statusText,
             subHeadingText,

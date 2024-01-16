@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         overflow: "hidden",
-        maxWidth: "120px",
+        maxWidth: "100%",
       },
     }),
   }),
@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightGreen,
   },
   tableHeadingText: {
-    fontWeight: "600",
+    fontWeight:"600",
     color: colors.darkGrey,
   },
-  columnStyle: (WIDTH: "15%") => ({
+  columnStyle: (WIDTH= "15%") => ({
     width: WIDTH,
     paddingLeft: 24,
     paddingRight: 24,
@@ -85,6 +85,12 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
+  statusStyle:{
+    alignItems:"flex-start"
+  },
+  iconTicketColoum:{
+    alignItems:"center"
+  }
 });
 
 export default styles;

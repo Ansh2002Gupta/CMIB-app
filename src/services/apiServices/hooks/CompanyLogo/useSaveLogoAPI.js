@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-import Http from "../../http-service";
-import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
-import { COMPANY_SAVE_LOGO } from "../apiEndPoint";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import Http from "../../../http-service";
+import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
+import { AuthContext } from "../../../../globalContext/auth/authProvider";
+import { COMPANY_SAVE_LOGO, COMPANY_SAVE_LOGO_AUTH } from "../../apiEndPoint";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useSaveLogo = () => {
+  const [authState] = useContext(AuthContext);
   const [uploadStatus, setUploadStatus] = useState(API_STATUS.IDLE);
   const [fileUploadResult, setFileUploadResult] = useState(null);
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
@@ -28,7 +30,7 @@ const useSaveLogo = () => {
         },
       };
       const res = await Http.post(
-        COMPANY_SAVE_LOGO,
+        authState?.token ? COMPANY_SAVE_LOGO_AUTH : COMPANY_SAVE_LOGO,
         file,
         headers,
         otherOptions

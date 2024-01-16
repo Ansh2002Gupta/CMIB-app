@@ -9,6 +9,7 @@ import styles from "./searchView.style";
 
 const SearchView = ({ data, onSearch }) => {
   const SearchIcon = images.iconSearch;
+  const ClearIcon = images.iconCross; 
   const [query, setQuery] = useState("");
   const debounceTimeout = useRef(null);
 
@@ -40,6 +41,10 @@ const SearchView = ({ data, onSearch }) => {
     setQuery(text);
   };
 
+  const clearSearch = () => {
+    setQuery('');
+  };
+
   return (
     <View style={styles.searchParent}>
       <TouchableImage source={SearchIcon} disabled={true} />
@@ -49,6 +54,14 @@ const SearchView = ({ data, onSearch }) => {
         onChangeText={handleSearch}
         placeholder="Search"
       />
+       {query.length > 0 && (
+        <TouchableImage
+          source={ClearIcon}
+          onPress={clearSearch}
+          imageStyle={styles.clearIcon} 
+          isSvg={false}
+        />
+      )}
     </View>
   );
 };

@@ -3,15 +3,16 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   pagination: {
-    justifyContent: "space-between",
+    borderRadius: 2,
     alignItems: "center",
     flexDirection: "row",
+    justifyContent: "space-between",
   },
   paginationRange: {
     flexDirection: "row",
-    alignItems: "center",
     marginLeft: 16,
     marginRight: 16,
+    alignItems: "center",
   },
   previousText: {
     fontSize: 14,
@@ -20,14 +21,17 @@ const styles = StyleSheet.create({
   activeText: {
     fontSize: 14,
     color: colors.darkBlue,
+    lineHeight: 20,
   },
   inActiveText: {
     fontSize: 14,
     color: colors.darkGrey,
   },
   activeButton: {
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingLeft: 8,
+    paddingRight: 8,
+    width: 36,
+    height: 36,
     paddingTop: 8,
     paddingBottom: 8,
     borderColor: colors.darkBlue,
@@ -43,9 +47,9 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderWidth: 0,
   },
-  dotsStyle:{
-    marginHorizontal:5,
-  }
+  dotsStyles: {
+    marginHorizontal: 5,
+  },
 });
 
 export default styles;

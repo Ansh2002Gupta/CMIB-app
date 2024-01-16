@@ -1,10 +1,10 @@
 export const navigations = {
-  APPLICATION_FORM: "applicationForm",
+  //routes
   COMPANY_PROFILE: "/company-profile",
   CREATE_NEW_PASSWORD: "/create-new-password",
   DASHBOARD: "/dashboard",
-  FORGOT_PASSWORD: "/forgot-password",
   FEEDBACK: "/feedback",
+  FORGOT_PASSWORD: "/forgot-password",
   JOBS: "/jobs",
   JOB_APPLICANTS: "/job-applicants",
   JOB_SEEKERS: "/job-seekers",
@@ -20,4 +20,7 @@ export const navigations = {
   TICKETS: "/tickets",
   VIEW_PROFILE: "/view-profile",
   WEB_VIEW: "/web-view",
+
+  //sub routes
+  APPLICATION_FORM: "application-form",
 };

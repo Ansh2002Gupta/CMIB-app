@@ -30,6 +30,7 @@ export const OTP_TIMER_MIN_MINUTES = 1;
 export const OTP_TIMER_MAX_MINUTES = 15;
 export const DEBOUNCE_TIME = 300;
 export const PREVIOUS_SCREEN = -1;
+export const DOTS = "...";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -83,6 +84,12 @@ export const INTEREST_OPTIONS = [
   { messageId: "label.based_on_prev_participation", isSelected: false, id: 4 },
   { messageId: "label.telephonic_call_from_icai", isSelected: false, id: 5 },
   { messageId: "label.advertisement_in_ca_journal", isSelected: false, id: 6 },
+];
+
+export const SELECTION_PROCESS = [
+  { messageId: "label.group_discussion", isSelected: false, id: 1 },
+  { messageId: "label.psychometric_test", isSelected: false, id: 2 },
+  { messageId: "label.personal_interview", isSelected: false, id: 3 },
 ];
 
 export const MODULE_OPTIONS = [
@@ -192,3 +199,23 @@ export const APPLICATION_FORM_STEPPER_OPTIONS = [
     title: "label.payment",
   },
 ];
+
+export const ROWS_PER_PAGE_ARRAY = [
+  { value: 10, label: "10" },
+  { value: 15, label: "15" },
+  { value: 20, label: "20" },
+];
+
+export const TICKET_TABLE_HEADING = {
+  id: "Ticket ID",
+  query_type: "Query Type",
+  status: "Status",
+  assigned_to: "Assigned To",
+  created_at: "Created On",
+};
+
+export const FEEDBACK_TABLE_HEADING = {
+  id: "Feedback ID",
+  status: "Status",
+  created_at: "Created On",
+};

@@ -3,10 +3,11 @@ import React from "react";
 import { Base } from "../../core/layouts";
 
 import RoundOneContainer from "../../containers/RoundOne/MainContainer";
+import styles from "./RoundOneView.style";
 
 const RoundOneView = () => {
   return (
-    <Base>
+    <Base style={styles.containerViewStyle}>
       <RoundOneContainer />
     </Base>
   );
