@@ -15,6 +15,7 @@ const useFeedbackView = () => {
   let subHeadingText = ["created_at"];
   let statusText = ["status"];
   let tableIcon = images.iconEye;
+  let filterCategory = ["Status", "Role"];
 
   function getStatusStyle(status) {
     status = status.toLowerCase();
@@ -93,6 +94,7 @@ const useFeedbackView = () => {
   return {
     getColoumConfigs,
     getStatusStyle,
+    filterCategory,
     headingTexts,
     statusText,
     subHeadingText,

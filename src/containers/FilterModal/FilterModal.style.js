@@ -34,18 +34,10 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   bottomSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     width: "100%",
     borderTopWidth: 1,
     padding: 16,
     paddingBottom: 0,
-    borderColor: colors.lightGrey,
-  },
-  bottomSectionMobile: {
-    width: "100%",
-    borderTopWidth: 1,
-    padding: 16,
     borderColor: colors.lightGrey,
   },
   middleSectionWeb:{
@@ -66,9 +58,6 @@ const styles = StyleSheet.create({
     position: "relative",
     paddingTop: 16,
     alignItems: "center",
-  },
-  bottomView: {
-    width: "50%",
   },
 });
 

@@ -86,6 +86,7 @@ const useTicketView = (data) => {
   let subHeadingText = ["query_type"];
   let statusText = ["status"];
   let tableIcon = images.iconTicket;
+  let filterCategory = ["Status", "Query Type"];
 
   function getStatusStyle(status) {
     status = status.toLowerCase();
@@ -185,6 +186,7 @@ const useTicketView = (data) => {
     currentRecords,
     getColoumConfigs,
     getStatusStyle,
+    filterCategory,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,

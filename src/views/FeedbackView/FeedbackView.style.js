@@ -1,6 +1,15 @@
 import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
+const baseStatusCellStyle = {
+  textAlign: "center",
+  marginRight: 16,
+  paddingLeft: 8,
+  paddingRight: 8,
+  paddingTop: 2,
+  paddingBottom: 2,
+};
+
 const styles = StyleSheet.create({
   cellTextStyle: (fontSize = 14) => ({
     fontSize,
@@ -14,59 +23,28 @@ const styles = StyleSheet.create({
     }),
   }),
   pending: {
-    textAlign: "center",
-    marginRight: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
     color: colors.orange,
   },
   published: {
-    textAlign: "center",
-    marginRight: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
+    ...baseStatusCellStyle,
     color: colors.skyBlueDark,
   },
   notPublished: {
-    textAlign: "center",
-    marginRight: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
+    ...baseStatusCellStyle,
     color: colors.darkBlueShade,
   },
   pendingWeb: {
-    textAlign: "center",
-    paddingLeft: 8,
-    borderRadius: 16,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
+    ...baseStatusCellStyle,
     backgroundColor: colors.lightOrange,
     color: colors.orange,
   },
   publishedWeb: {
-    textAlign: "center",
-    borderRadius: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
+    ...baseStatusCellStyle,
     color: colors.skyBlueDark,
     backgroundColor: colors.skyBlueLight,
   },
   notPublishedWeb: {
-    borderRadius: 16,
-    textAlign: "center",
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingTop: 2,
-    paddingBottom: 2,
+    ...baseStatusCellStyle,
     color: colors.darkBlueShade,
     backgroundColor: colors.greyOne,
   },
@@ -85,12 +63,12 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
-  statusStyle:{
-    alignItems:"flex-start"
+  statusStyle: {
+    alignItems: "flex-start",
   },
-  iconTicketColoum:{
-    alignItems:"center"
-  }
+  iconTicketColoum: {
+    alignItems: "center",
+  },
 });
 
 export default styles;
