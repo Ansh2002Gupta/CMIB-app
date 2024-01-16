@@ -50,7 +50,6 @@ import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLog
 import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
 import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
 import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
-import iconClose from "../../public/images/iconClose/iconClose.png";
 import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg";
@@ -89,8 +88,11 @@ import iconSaved from "../../public/images/svg/iconSavedCandidates.svg";
 import iconSavedActive from "../../public/images/svg/iconSavedCandidatesActive.svg";
 import addCircle from "../../public/images/svg/addCircle.svg";
 import minusCirlce from "../../public/images/svg/minusCirlce.svg";
+import iconTicket from "../../public/images/svg/iconTicket.svg";
+import iconArrowRightBlack from "../../public/images/svg/iconArrowRightBlack.svg";
 import iconArrowRight from "../../public/images/svg/iconArrowRight.svg";
 import iconSuccess from "../../public/images/svg/iconSuccess.svg";
+import iconClose from "../../public/images/svg/iconClose.svg";
 
 const images = {
   iconArrowUp,
@@ -131,7 +133,6 @@ const images = {
   iconLogout,
   iconBuilding,
   iconLock,
-  iconArrowRight,
   iconBack,
   iconEdit,
   iconChange,
@@ -186,6 +187,9 @@ const images = {
   iconPostedJobsWeb,
   addCircle,
   minusCirlce,
+  iconTicket,
+  iconArrowRightBlack,
+  iconArrowRight,
 };
 
 export default images;

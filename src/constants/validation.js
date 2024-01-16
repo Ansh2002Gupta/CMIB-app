@@ -1,5 +1,5 @@
-import { NEW_PASSWORD_VALIDATIONS } from "./Regex";
 import { numRegex } from "./constants";
+import { NEW_PASSWORD_VALIDATIONS } from "./Regex";
 
 export const isStringContainsNumber = (string) =>
   NEW_PASSWORD_VALIDATIONS.numeric.test(string);

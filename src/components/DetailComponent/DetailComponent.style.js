@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     flexWrap: "wrap",
   },
+  divideInputStyle: {
+    width: "48%",
+  },
   containerGridStyle: (columnCount) => ({
     display: "grid",
     gridTemplateColumns: columnCount || "1fr 1fr 1fr",
@@ -62,6 +65,9 @@ export const getRowStyle = (detail) => {
   }
   if (detail.isMinor) {
     return styles.minorRowStyle;
+  }
+  if (detail.isRow) {
+    return styles.divideInputStyle;
   }
   return styles.innerContainer;
 };

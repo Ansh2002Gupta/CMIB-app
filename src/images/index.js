@@ -59,7 +59,6 @@ const iconRightArrow = "/images/iconRightArrow/iconRightArrow.png";
 const iconFooterGlobal = "/images/iconFooterGlobal/iconFooterGlobal.png";
 const ticketIcon = "/images/ticketIcon/ticketIcon.png";
 const iconArrowDown2 = "/images/iconArrowDown2/iconArrowDown2.png";
-const iconClose = "/images/iconClose/iconClose.png";
 const iconLeftArrow = "/images/iconLeftArrow/iconLeftArrow.png";
 const iconSquareEdit = "/images/iconSquareEdit/iconSquareEdit.png";
 const iconProfile = "/images/iconProfile/iconProfile.png";
@@ -102,8 +101,11 @@ const iconJobSeekers = "/images/svg/iconJobSeeker.svg";
 const iconJobSeekersActive = "/images/svg/iconJobSeekerActive.svg";
 const iconSaved = "/images/svg/iconSavedCandidates.svg";
 const iconSavedActive = "/images/svg/iconSavedCandidatesActive.svg";
+const iconTicket = "/images/svg/iconTicket.svg";
+const iconArrowRightBlack = "/images/svg/iconArrowRightBlack.svg";
 const iconArrowRight = "/images/svg/iconArrowRight.svg";
 const iconSuccess = "/images/svg/iconSuccess.svg";
+const iconClose = "/images/svg/iconClose.svg";
 
 const images = {
   iconArrowUp,
@@ -206,6 +208,8 @@ const images = {
   iconPostedJobsWeb,
   addCircle,
   minusCirlce,
+  iconTicket,
+  iconArrowRightBlack
 };
 
 export default images;

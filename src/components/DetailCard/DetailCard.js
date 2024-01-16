@@ -8,6 +8,7 @@ import DetailComponent from "../../components/DetailComponent";
 import style from "./DetailCard.style";
 
 const DetailCard = ({
+  customCardStyle,
   details,
   handleChange,
   headerId,
@@ -18,9 +19,9 @@ const DetailCard = ({
   const intl = useIntl();
 
   return (
-    <CardComponent customStyle={style.cardStyle}>
+    <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
       <DetailComponent
-        customContainerStyle={isRow && style.customStyle}
+        customContainerStyle={isRow ? style.customStyle : {}}
         details={details}
         headerText={intl.formatMessage({ id: headerId })}
         isEditable={isEditProfile}

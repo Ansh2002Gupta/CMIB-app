@@ -17,6 +17,7 @@ const style = {
     borderBottomWidth: 1,
   },
   buttonStyle: {
+    backgroundColor:colors.white,
     alignItems: "center",
     padding:10,
   },
