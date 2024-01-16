@@ -28,6 +28,16 @@ export const customStyles = (dropdownStyle, placeholderStyle) => ({
     ...(styles.valueStyle || {}),
     ...dropdownStyle,
   }),
+  option: (base, state) => ({
+    ...base,
+    backgroundColor: state.isSelected ? colors.lightGray : "inherit",
+    color: colors.black,
+    "&:hover": {
+      backgroundColor: state.isSelected
+        ? colors.lightGray
+        : colors.secondaryGrey,
+    },
+  }),
 });
 
 export const styles = StyleSheet.create({
