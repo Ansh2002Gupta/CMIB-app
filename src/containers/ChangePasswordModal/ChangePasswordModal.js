@@ -5,10 +5,10 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import FiveColumn from "../../core/layouts/FiveColumn";
 
+import ActionPairButton from "../../components/ActionPairButton/ActionPairButton";
 import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
-import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
 import { strongPasswordValidator } from "../../constants/validation";
 import styles from "./ChangePasswordModal.style";
@@ -104,10 +104,9 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           fourthSection={
             <View style={styles.fourthSectionStyle}>
               {!!error && (
-                <CommonText
-                  title={error}
-                  customTextStyle={styles.passwordMatchStyle}
-                />
+                <CommonText customTextStyle={styles.passwordMatchStyle}>
+                  {error}
+                </CommonText>
               )}
               <NewPasswordValidation {...{ newPassword, confirmNewPassword }} />
             </View>
@@ -115,25 +114,27 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           fiveSection={
             !!errorWhileChangePassword && (
               <View style={styles.saveAndCancelButtonView}>
-                <CommonText
-                  title={errorWhileChangePassword}
-                  customTextStyle={styles.errorText}
-                />
+                <CommonText customTextStyle={styles.errorText}>
+                  {errorWhileChangePassword}
+                </CommonText>
               </View>
             )
           }
         ></FiveColumn>
       </ScrollView>
-      <SaveCancelButton
-        customContainerStyle={styles.customContainerStyle}
+      <ActionPairButton
         buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+        buttonTwoText={intl.formatMessage({ id: "label.save" })}
+        customStyles={{
+          customContainerStyle: styles.customContainerStyle,
+        }}
+        displayLoader={isLoading}
+        isDisabled={isNextDisabled()}
+        isButtonTwoGreen
         onPressButtonOne={() => {
           onPressCancel(false);
         }}
-        disabled={isLoading}
         onPressButtonTwo={handleSave}
-        isNextDisabled={isNextDisabled()}
-        buttonTwoText={intl.formatMessage({ id: "label.save" })}
       />
     </>
   );

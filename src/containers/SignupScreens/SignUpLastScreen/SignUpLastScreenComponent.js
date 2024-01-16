@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpLastScreenUI from "./SignUpLastScreenUI";
-import useDeleteLogo from "../../../services/apiServices/hooks/useDeleteLogoAPI";
+import useDeleteLogo from "../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpUser";
-import useSaveLogo from "../../../services/apiServices/hooks/useSaveLogoAPI";
+import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
@@ -80,20 +80,20 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     errorWhileUpload,
     fileUploadResult,
     handleFileUpload,
+    isLoading: isUploadingImageToServer,
     setErrorWhileUpload,
+    setFileUploadResult,
+    uploadPercentage,
   } = useSaveLogo();
 
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
 
-  const handleImageDeletion = (handleDeletionSuccess) => {
+  const handleImageDeletion = () => {
     if (fileUploadResult?.data?.file_name) {
-      handleDeleteLogo(
-        {
-          file_path: fileUploadResult?.data?.file_name,
-        },
-        handleDeletionSuccess
-      );
+      handleDeleteLogo({
+        file_path: fileUploadResult?.data?.file_name,
+      });
     }
   };
 
@@ -104,7 +104,15 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       natureOfSupplier,
       companyType,
     ];
-    return requiredFields.every((field) => String(field).trim() !== "");
+    const isAtLeastOneInterestSelected = options.some(
+      (option) => option.isSelected
+    );
+
+    return (
+      requiredFields.every((field) => String(field).trim() !== "") &&
+      isAtLeastOneInterestSelected &&
+      fileUploadResult
+    );
   };
 
   const validateFields = () => {
@@ -177,10 +185,6 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           break;
       }
     }
-  };
-
-  const handleImageUpload = (file, handleUploadSuccess) => {
-    handleFileUpload(file, handleUploadSuccess);
   };
 
   const onSuccess = async (details) => {
@@ -308,10 +312,16 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       onGoBack={onGoBack}
       options={options}
       onDeleteImage={handleImageDeletion}
-      onImageUpload={handleImageUpload}
       showSuccessSignUp={showSuccessSignUp}
       signUpError={signUpError}
       socialMediaLinks={socialMediaLinks}
+      uploadImageToServerUtils={{
+        fileUploadResult,
+        handleFileUpload,
+        isUploadingImageToServer,
+        setFileUploadResult,
+        uploadPercentage,
+      }}
       validationError={validationError}
       website={website}
     />

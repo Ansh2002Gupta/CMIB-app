@@ -53,15 +53,8 @@ export const style = StyleSheet.create({
     fontSize: 14,
     color: colors.mediumGray,
   },
-  loginHere: {
-    color: colors.darkBlue,
-    fontSize: 14,
-    alignSelf: "center",
-    fontWeight: "600",
-    cursor: "pointer",
-  },
   customSaveButtonContainer: {
-    bottom: 0,
+    marginBottom: 16,
   },
   formContainer: {
     flex: 1,

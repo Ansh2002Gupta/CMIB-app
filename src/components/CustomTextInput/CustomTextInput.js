@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import {
   Image,
   Platform,
@@ -39,6 +40,7 @@ const CustomTextInput = (props) => {
     isNumeric,
     isPaddingNotRequired,
     isPassword,
+    isRupee,
     label,
     maxCount,
     minCount,
@@ -47,10 +49,13 @@ const CustomTextInput = (props) => {
     placeholder,
     step,
     value,
+    labelField,
+    valueField,
     ...remainingProps
   } = props;
 
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
   const isWebPlatform = Platform.OS === "web";
   const [isFocused, setIsFocused] = useState(false);
   const [isTextVisible, setIsTextVisible] = useState(false);
@@ -80,27 +85,32 @@ const CustomTextInput = (props) => {
       ? { keyboardType: "numeric", returnKeyType: "done" }
       : {};
 
-  return (
-    <View
-      style={
-        !isPaddingNotRequired ? [style.container, customStyle] : customStyle
-      }
-    >
-      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
-      {isDropdown ? (
+  const inputStyle = {
+    ...style.inputContainer,
+    ...(isFocused ? style.focusedStyle : {}),
+    ...(isError ? style.invalidInput : {}),
+  };
+
+  const renderTextInput = () => {
+    if (isDropdown) {
+      return (
         <Dropdown
+          search
+          searchPlaceholder={intl.formatMessage({ id: "label.search" })}
+          inputSearchStyle={style.searchStyle}
           style={[
             style.dropdown,
             isFocused && style.focusedStyle,
             isError && style.invalidInput,
             dropdownStyle,
           ]}
+          selectedTextStyle={style.valueStyle}
           renderRightIcon={() => <Image source={images.iconDownArrow} />}
           placeholderStyle={style.placeholderStyle}
           data={options}
           maxHeight={200}
-          labelField="label"
-          valueField="value"
+          labelField={labelField}
+          valueField={valueField}
           placeholder={placeholder || ""}
           value={value}
           onFocus={handleFocus}
@@ -111,7 +121,10 @@ const CustomTextInput = (props) => {
           }}
           {...remainingProps}
         />
-      ) : isCounterInput ? (
+      );
+    }
+    if (isCounterInput) {
+      return (
         <CounterInput
           initialCount={countValue}
           minCount={minCount}
@@ -119,55 +132,69 @@ const CustomTextInput = (props) => {
           onCountChange={handleCountChange}
           step={step}
         />
-      ) : (
-        <View
+      );
+    }
+    return (
+      <View style={inputStyle}>
+        {isMobileNumber && (
+          <View style={style.prefixContainer}>
+            <CommonText customTextStyle={style.prefixStyle}>{"+91"}</CommonText>
+            <Image source={images.iconDownArrow} style={style.iconStyle} />
+            <Image source={images.iconDivider} style={style.iconStyle} />
+          </View>
+        )}
+        {isRupee && !!value && (
+          <View style={style.prefixContainer}>
+            <CommonText customTextStyle={style.prefixStyle}>{"₹"}</CommonText>
+          </View>
+        )}
+        <TextInput
+          value={value}
           style={[
-            style.inputContainer,
-            isFocused && style.focusedStyle,
-            isError && style.invalidInput,
+            style.textInputStyle,
+            isMultiline && style.textAlignStyle,
+            isWebView && style.webLabel,
+            customTextInputContainer,
           ]}
-        >
-          {isMobileNumber && (
-            <View style={style.prefixContainer}>
-              <CommonText customTextStyle={style.prefixStyle} title={+91} />
-              <Image source={images.iconDownArrow} style={style.iconStyle} />
-              <Image source={images.iconDivider} style={style.iconStyle} />
-            </View>
-          )}
-          <TextInput
-            value={value}
-            style={[
-              style.textInputStyle,
-              isMultiline && style.textAlignStyle,
-              isWebView && style.webLabel,
-              customTextInputContainer,
-            ]}
-            multiline={isMultiline || undefined}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            placeholder={placeholder}
-            secureTextEntry={isPassword && !isTextVisible}
-            {...platformSpecificProps}
-            {...(isNumeric ? mobileProps : {})}
-            {...remainingProps}
-          />
-          {eyeImage ? (
-            <TouchableOpacity
-              style={style.eyeIconContainer}
-              onPress={toggleTextVisibility}
-            >
-              <Image
-                source={isTextVisible ? images.iconEyeSlash : images.iconEye}
-              />
-            </TouchableOpacity>
-          ) : null}
-        </View>
-      )}
+          multiline={isMultiline || undefined}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          placeholder={placeholder}
+          secureTextEntry={isPassword && !isTextVisible}
+          {...platformSpecificProps}
+          {...(isNumeric ? mobileProps : {})}
+          {...remainingProps}
+        />
+        {eyeImage && (
+          <TouchableOpacity
+            style={style.eyeIconContainer}
+            onPress={toggleTextVisibility}
+          >
+            <Image
+              source={isTextVisible ? images.iconEyeSlash : images.iconEye}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  };
+
+  return (
+    <View
+      style={{
+        ...(!isPaddingNotRequired ? style.container : {}),
+        ...customStyle,
+      }}
+    >
+      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
+      {renderTextInput()}
       {isError && (
         <CommonText
           customTextStyle={[style.errorMsg, customErrorStyle]}
-          title={errorMessage}
-        />
+          fontWeight={customErrorStyle?.fontWeight || "600"}
+        >
+          {errorMessage}
+        </CommonText>
       )}
     </View>
   );
@@ -195,6 +222,7 @@ CustomTextInput.defaultProps = {
   isPaddingNotRequired: false,
   isPassword: false,
   label: "",
+  labelField: "label",
   maxCount: 100,
   minCount: 0,
   options: [],
@@ -202,6 +230,7 @@ CustomTextInput.defaultProps = {
   placeholder: "",
   step: 1,
   value: "",
+  valueField: "value",
 };
 
 CustomTextInput.propTypes = {
@@ -226,6 +255,7 @@ CustomTextInput.propTypes = {
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
   label: PropTypes.string,
+  labelField: PropTypes.string,
   maxCount: PropTypes.number,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
@@ -233,6 +263,7 @@ CustomTextInput.propTypes = {
   placeholder: PropTypes.string,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  valueField: PropTypes.string,
 };
 
 export default CustomTextInput;

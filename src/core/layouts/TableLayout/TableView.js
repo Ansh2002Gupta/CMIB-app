@@ -3,14 +3,16 @@ import PropTypes from "prop-types";
 import { View } from '@unthinkable/react-core-components'; 
 
 import layoutStyle from './TableView.style';
+import CommonText from '../../../components/CommonText';
 function TableView({ gridData, cellStyle, rowStyle, tableStyle }) {
+  
   return (
     <View style={tableStyle}>
       {gridData.map((rowData, rowIndex) => (
         <View key={`row-${rowIndex}`} style={{ ...rowStyle, ...layoutStyle }}>
           {rowData.map((cellData, colIndex) => (
             <View key={`cell-${rowIndex}-${colIndex}`} style={cellStyle}>
-              {cellData}
+              <CommonText>{cellData}</CommonText>
             </View>
           ))}
         </View>

@@ -22,14 +22,12 @@ import iconEye from "../../public/images/iconEye/iconEye.png";
 import iconFacebook from "../../public/images/iconFacebook/iconFacebook.png";
 import iconInstagram from "../../public/images/iconInstagram/iconInstagram.png";
 import iconLinkedin from "../../public/images/iconLinkedin/iconLinkedin.png";
-import iconSuccess from "../../public/images/iconSuccess/iconSuccess.png";
 import iconMenu from "../../public/images/iconMenu/iconMenu.png";
 import iconNotification from "../../public/images/iconNotification/iconNotification.png";
 import iconProfile from "../../public/images/iconProfile/iconProfile.png";
 import iconLogout from "../../public/images/iconLogout/iconLogout.png";
 import iconBuilding from "../../public/images/iconBuilding/iconBuilding.png";
 import iconLock from "../../public/images/iconLock/iconLock.png";
-import iconArrowRight from "../../public/images/iconArrowRight/iconArrowRight.png";
 import iconBack from "../../public/images/iconBack/iconBack.png";
 import iconEdit from "../../public/images/iconEdit/iconEdit.png";
 import iconDelete from "../../public/images/iconDelete/iconDelete.png";
@@ -52,7 +50,6 @@ import iconCmibLogoWhite from "../../public/images/iconCmibLogowhite/iconCmibLog
 import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.png";
 import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
 import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
-import iconClose from "../../public/images/iconClose/iconClose.png";
 import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg";
@@ -91,6 +88,11 @@ import iconSaved from "../../public/images/svg/iconSavedCandidates.svg";
 import iconSavedActive from "../../public/images/svg/iconSavedCandidatesActive.svg";
 import addCircle from "../../public/images/svg/addCircle.svg";
 import minusCirlce from "../../public/images/svg/minusCirlce.svg";
+import iconTicket from "../../public/images/svg/iconTicket.svg";
+import iconArrowRightBlack from "../../public/images/svg/iconArrowRightBlack.svg";
+import iconArrowRight from "../../public/images/svg/iconArrowRight.svg";
+import iconSuccess from "../../public/images/svg/iconSuccess.svg";
+import iconClose from "../../public/images/svg/iconClose.svg";
 
 const images = {
   iconArrowUp,
@@ -131,7 +133,6 @@ const images = {
   iconLogout,
   iconBuilding,
   iconLock,
-  iconArrowRight,
   iconBack,
   iconEdit,
   iconChange,
@@ -186,6 +187,9 @@ const images = {
   iconPostedJobsWeb,
   addCircle,
   minusCirlce,
+  iconTicket,
+  iconArrowRightBlack,
+  iconArrowRight,
 };
 
 export default images;

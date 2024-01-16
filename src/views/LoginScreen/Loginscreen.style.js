@@ -5,9 +5,6 @@ const isWeb = Platform.OS.toLowerCase() === "web";
 const webPointer = isWeb ? { cursor: "pointer" } : {};
 
 const style = {
-  mainView: {
-    flex: 1,
-  },
   container: {
     backgroundColor: colors.white,
     paddingRight: 16,
@@ -33,12 +30,6 @@ const style = {
     textAlign: "center",
     color: colors.darkGrey,
     fontSize: 14,
-  },
-  activeTopTabsText: {
-    textAlign: "center",
-    color: colors.black,
-    fontSize: 14,
-    fontWeight: "600",
   },
   buttonView: {
     flexDirection: "row",
@@ -66,7 +57,6 @@ const style = {
   forgotPasswordText: {
     fontSize: 14,
     color: colors.darkBlue,
-    fontWeight: "600",
     ...webPointer,
   },
   loginButtonView: {
@@ -82,7 +72,6 @@ const style = {
   newAccountText: {
     color: colors.darkBlue,
     fontSize: 14,
-    fontWeight: "600",
     ...webPointer,
   },
   borderStyle: {
@@ -122,7 +111,6 @@ const style = {
     createNewAccountText: {
       color: colors.darkBlue,
       fontSize: 14,
-      fontWeight: "600",
       lineHeight: 20,
       ...webPointer,
     },
@@ -132,7 +120,6 @@ const style = {
     },
     forgotPasswordText: {
       fontSize: 14,
-      fontWeight: "600",
       lineHeight: 20,
       ...webPointer,
     },
@@ -145,8 +132,6 @@ const style = {
     headerText: {
       color: colors.black,
       fontSize: 40,
-      fontWeight: "600",
-      letterSpacing: -2,
     },
     headerText1800px: {
       fontSize: 36,
@@ -167,9 +152,6 @@ const style = {
       backgroundColor: colors.white,
       marginTop: 0,
     },
-    loginText: {
-      ...webPointer,
-    },
     rememberMeText: {
       fontSize: 14,
       lineHeight: 20,
@@ -180,7 +162,6 @@ const style = {
       color: colors.black,
       textAlign: "center",
       fontSize: 16,
-      fontWeight: "600",
       ...webPointer,
     },
     subHeadingText: {
@@ -201,6 +182,10 @@ const style = {
       fontSize: 16,
       ...webPointer,
     },
+  },
+  loginHeaderText: {
+    fontSize: 28,
+    color: colors.black,
   },
 };
 

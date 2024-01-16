@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 
@@ -13,11 +13,18 @@ const SignUpScreenComponent = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [, signUpDispatch] = useContext(SignUpContext);
 
+  useEffect(() => {
+    return () => {
+      signUpDispatch(resetSignUpDetails());
+    };
+  }, []);
+
   const onHandleTab = (direction) => {
     setActiveTab((prevTab) => {
       if (direction === "next") {
         return prevTab + 1;
-      } else if (direction === "prev" && prevTab > 0) {
+      }
+      if (direction === "prev" && prevTab > 0) {
         return prevTab - 1;
       }
       return prevTab;

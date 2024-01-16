@@ -20,6 +20,7 @@ import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import RoundTwo from "../views/RoundTwoView";
 import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
+import TicketsView from '../views/TicketsView/index'
 import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -32,9 +33,6 @@ const signUpHeader =
 const HomeWithPrivateAccess = withPrivateAccess(HeaderWithContentLayout);
 const LoginWithPublicAccess = withPublicAccess(HeaderWithContentLayout);
 const SignUpWithPublicAccess = withPublicAccess(signUpHeader);
-const ContentRouteWithPrivateAccess = withPrivateAccess(
-  HeaderWithContentLayout
-);
 
 const config = [
   {
@@ -103,7 +101,7 @@ const config = [
   },
   {
     pagePath: navigations.VIEW_PROFILE,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",
@@ -113,7 +111,7 @@ const config = [
   },
   {
     pagePath: navigations.COMPANY_PROFILE,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",
@@ -122,8 +120,18 @@ const config = [
     ],
   },
   {
+    pagePath: navigations.TICKETS,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
+    views: [
+      {
+        viewPath: "",
+        element: <TicketsView />,
+      },
+    ],
+  },
+  {
     pagePath: navigations.APPLICATION_FORM,
-    element: <ContentRouteWithPrivateAccess />,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
       {
         viewPath: "",
@@ -150,7 +158,7 @@ const config = [
         element: <RoundOne />,
       },
       {
-        viewPath: "applicationForm",
+        viewPath: navigations.APPLICATION_FORM,
         element: <RoundOneApplicationForm />,
       },
     ],

@@ -3,7 +3,7 @@ import colors from "../../assets/colors";
 const style = {
   containerStyle: {
     alignItems: "center",
-    paddingTop: 24,
+    paddingTop: 16,
   },
   mainContainerStyle: {},
   followUsText: {
@@ -11,7 +11,6 @@ const style = {
     fontSize: 14,
     alignSelf: "center",
     justifyContent: "center",
-    fontWeight: "600",
   },
   imageView: {
     flexDirection: "row",

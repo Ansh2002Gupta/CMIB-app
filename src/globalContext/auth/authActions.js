@@ -1,5 +1,4 @@
-import * as types from './types';
-import { StorageService } from './../../services'
+import * as types from "./types";
 
 export const setAuth = (values) => {
   return {

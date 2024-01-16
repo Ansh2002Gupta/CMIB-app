@@ -1,10 +1,10 @@
-import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
   mainView: {
     flex: 1,
     backgroundColor: colors.white,
+    display: "flex",
   },
   container: {
     backgroundColor: colors.white,
@@ -12,9 +12,6 @@ const style = {
   mobContainer: {
     paddingRight: 16,
     paddingLeft: 16,
-  },
-  webFontFamily: {
-    fontFamily: "General Sans",
   },
   forgotHeaderText: {
     fontSize: 40,
@@ -62,7 +59,6 @@ const style = {
     marginBottom: 24,
     fontSize: 14,
     color: colors.darkBlue,
-    fontWeight: "600",
   },
   errorMessage: {
     color: colors.red,
@@ -101,17 +97,9 @@ const style = {
   customAsteriskStyle: {
     color: colors.red,
   },
-  customBtnText: {
-    fontSize: 16,
-    fontFamily: "General Sans",
-    fontWeight: "600",
-  },
   footerImage: {
     position: "absolute",
     bottom: 0,
-  },
-  width900pxOrLessSubmitBtn: {
-    height: 44,
   },
   width900pxOrLessForgotHeading: {
     fontSize: 30,
@@ -128,39 +116,33 @@ const style = {
   textlabel: {
     color: colors.subHeadingGray,
     fontSize: 14,
-    fontFamily: "General Sans",
     lineHeight: 20,
-    fontWeight: "500",
   },
   textlabelTimer: {
     color: colors.disabledGrey,
     fontSize: 14,
-    fontFamily: "General Sans",
     lineHeight: 20,
-    fontWeight: "600",
     marginLeft: 4,
   },
   textlabelReset: {
     color: colors.darkBlue,
     fontSize: 14,
-    fontFamily: "General Sans",
     lineHeight: 20,
-    fontWeight: "600",
     marginLeft: 4,
   },
-
   textLabelParent: {
     flexDirection: "row",
-    fontFamily: "General Sans",
     marginTop: 16,
     justifyContent: "center",
   },
-
   textLabelAfterParent: {
     flexDirection: "column",
-    fontFamily: "General Sans",
     marginTop: 16,
     alignItems: "center",
+  },
+  forgotPasswordStyle: {
+    fontSize: 28,
+    color: colors.black,
   },
 };
 

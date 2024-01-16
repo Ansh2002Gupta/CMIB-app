@@ -8,7 +8,6 @@ export const style = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 24,
-    fontWeight: "600",
   },
   contentContainerStyle: {
     flex: 1,
@@ -62,13 +61,6 @@ export const style = StyleSheet.create({
     fontSize: 14,
     color: colors.mediumGray,
   },
-  loginHere: {
-    color: colors.darkBlue,
-    fontSize: 14,
-    alignSelf: "center",
-    fontWeight: "600",
-    cursor: "pointer",
-  },
   customSaveButtonContainer: {
     bottom: 0,
   },
@@ -78,6 +70,9 @@ export const style = StyleSheet.create({
   },
   customContainerStyle: {
     marginBottom: 16,
+  },
+  imageContainer: {
+    marginBottom: 48,
   },
 });
 

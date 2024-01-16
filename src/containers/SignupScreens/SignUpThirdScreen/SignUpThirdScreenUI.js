@@ -3,13 +3,15 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
+import ActionPairButton from "../../../components/ActionPairButton";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
+import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
+import images from "../../../images";
 import {
   CAREER_ASCENTS,
   CA_JOBS,
@@ -18,6 +20,8 @@ import {
   SALUTATION_OPTIONS,
   WOMENT_PLACEMENT,
 } from "../../../constants/constants";
+import { numericValidator } from "../../../constants/validation";
+import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 
 const SignUpThirdScreenUI = ({
@@ -62,10 +66,9 @@ const SignUpThirdScreenUI = ({
       <View style={style.formContainer}>
         {contactDetails.map((detail, index) => (
           <View key={String(index)}>
-            <CommonText
-              customTextStyle={style.headerText}
-              title={getHeaderText(detail.module, intl)}
-            />
+            <CommonText fontWeight="600" customTextStyle={style.headerText}>
+              {getHeaderText(detail.module, intl)}
+            </CommonText>
             <View style={style.inputContainer}>
               <CustomTextInput
                 label={intl.formatMessage({
@@ -129,7 +132,10 @@ const SignUpThirdScreenUI = ({
               maxLength={10}
               customHandleBlur={() => handleBlur("mobileNo", index)}
               isNumeric
-              onChangeText={(val) => handleInputChange(val, "mobileNo", index)}
+              onChangeText={(val) =>
+                numericValidator(val) &&
+                handleInputChange(val, "mobileNo", index)
+              }
               isMobileNumber
               errorMessage={errors[index].mobileNo}
               isError={!!errors[index].mobileNo}
@@ -160,15 +166,26 @@ const SignUpThirdScreenUI = ({
 
   const renderFooterContent = () => {
     return (
-      <View style={!isWeb ? style.buttonContainer : style.webSignupFooter}>
-        <SaveCancelButton
+      <View style={isWeb && style.webSignupFooter}>
+        <ActionPairButton
           buttonOneText={intl.formatMessage({ id: "label.back" })}
           buttonTwoText={intl.formatMessage({ id: "label.next" })}
+          customStyles={{
+            customContainerStyle: !isWebView
+              ? { ...style.buttonContainer }
+              : {},
+          }}
           displayLoader={isLoading}
-          hasIconLeft
-          hasIconRight
-          customContainerStyle={!isWebView && style.buttonContainer}
-          isNextDisabled={!allFieldsFilled()}
+          iconRight={{
+            rightIconAlt: "right-arrow",
+            rightIconSource: images.iconArrowRightWhite,
+          }}
+          iconLeft={{
+            leftIconAlt: "left-arrow",
+            leftIconSource: images.iconArrowLeft,
+          }}
+          isDisabled={!allFieldsFilled()}
+          isButtonTwoGreen
           onPressButtonOne={onGoBack}
           onPressButtonTwo={onClickNext}
         />
@@ -184,48 +201,50 @@ const SignUpThirdScreenUI = ({
   };
 
   return (
-    <View
-      style={
-        isWebView
-          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-          : style.innerContainer
-      }
-    >
-      {isWebView && (
-        <View>
-          <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({ id: "label.step_three" })}
-            {...(showContentHeader && {
-              headerText: intl.formatMessage({
-                id: "label.contact_person_details",
-              }),
-            })}
-          />
-        </View>
-      )}
-      {isWebView ? (
-        <View style={style.webContainerStyle}>
-          {renderFormContent()}
-          {renderFooterContent()}
-        </View>
-      ) : (
-        <>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={style.contentContainerStyle}
-          >
+    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
+      <View
+        style={
+          isWebView
+            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+            : style.innerContainer
+        }
+      >
+        {isWebView && (
+          <View>
+            <HeaderTextWithLabelAndDescription
+              label={intl.formatMessage({ id: "label.step_three" })}
+              {...(showContentHeader && {
+                headerText: intl.formatMessage({
+                  id: "label.contact_person_details",
+                }),
+              })}
+            />
+          </View>
+        )}
+        {isWebView ? (
+          <View style={style.webContainerStyle}>
             {renderFormContent()}
-          </ScrollView>
-          {renderFooterContent()}
-        </>
-      )}
-      {!!validationError && (
-        <ToastComponent
-          toastMessage={validationError}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </View>
+            {renderFooterContent()}
+          </View>
+        ) : (
+          <>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={style.contentContainerStyle}
+            >
+              {renderFormContent()}
+            </ScrollView>
+            {renderFooterContent()}
+          </>
+        )}
+        {!!validationError && (
+          <ToastComponent
+            toastMessage={validationError}
+            onDismiss={handleDismissToast}
+          />
+        )}
+      </View>
+    </FormWrapper>
   );
 };
 

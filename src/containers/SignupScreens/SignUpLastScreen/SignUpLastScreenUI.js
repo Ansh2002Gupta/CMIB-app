@@ -3,20 +3,23 @@ import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
+import ActionPairButton from "../../../components/ActionPairButton";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CommonText from "../../../components/CommonText";
 import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
+import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
-import SaveCancelButton from "../../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../../components/UploadImage";
 import useIsWebView from "../../../hooks/useIsWebView";
+import images from "../../../images";
 import {
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
 } from "../../../constants/constants";
+import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpLastScreen.style";
 
 const SignUpLastScreenUI = ({
@@ -32,15 +35,16 @@ const SignUpLastScreenUI = ({
   handleSuccessModal,
   handleToggle,
   intl,
+  isLoading,
   natureOfSupplier,
   onClickGoToLogin,
   onDeleteImage,
   onGoBack,
-  onImageUpload,
   options,
   showSuccessSignUp,
   signUpError,
   socialMediaLinks,
+  uploadImageToServerUtils,
   validationError,
   website,
 }) => {
@@ -54,13 +58,20 @@ const SignUpLastScreenUI = ({
   const errorMessage =
     validationError || errorWhileDeletion || errorWhileUpload || signUpError;
 
+  const {
+    fileUploadResult,
+    handleFileUpload,
+    isUploadingImageToServer,
+    setFileUploadResult,
+    uploadPercentage,
+  } = uploadImageToServerUtils;
+
   const renderFormContent = () => {
     return (
       <View style={style.formContainer}>
-        <CommonText
-          customTextStyle={style.headerText}
-          title={intl.formatMessage({ id: "label.social_media_presence" })}
-        />
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.social_media_presence" })}
+        </CommonText>
         {Object.keys(socialMediaLinks).map((key) => (
           <CustomTextInput
             key={key}
@@ -78,10 +89,9 @@ const SignUpLastScreenUI = ({
           />
         ))}
         <View style={style.seperator} />
-        <CommonText
-          customTextStyle={style.headerText}
-          title={intl.formatMessage({ id: "label.company_details" })}
-        />
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.company_details" })}
+        </CommonText>
         <CustomTextInput
           label={intl.formatMessage({
             id: "label.short_profile_of_the_company",
@@ -141,10 +151,9 @@ const SignUpLastScreenUI = ({
           isDropdown
         />
         <View style={style.seperator} />
-        <CommonText
-          customTextStyle={style.headerText}
-          title={intl.formatMessage({ id: "label.source_of_info" })}
-        />
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.source_of_info" })}
+        </CommonText>
         <View style={style.containerStyle}>
           {options.map((item, index) => (
             <CheckBox
@@ -158,19 +167,24 @@ const SignUpLastScreenUI = ({
           ))}
         </View>
         <View style={style.seperator} />
-        <CommonText
-          customTextStyle={style.headerText}
-          title={intl.formatMessage({ id: "label.uplaod_company_logo" })}
-        />
-        <CommonText
-          customTextStyle={style.infoStyle}
-          title={intl.formatMessage({
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.uplaod_company_logo" })}
+        </CommonText>
+        <CommonText customTextStyle={style.infoStyle}>
+          {intl.formatMessage({
             id: "label.logo_info",
           })}
-        />
+        </CommonText>
         <UploadImage
-          onImageUpload={onImageUpload}
-          onDeleteImage={onDeleteImage}
+          {...{
+            onDeleteImage,
+            errorWhileUpload,
+            fileUploadResult,
+            handleFileUpload,
+            isUploadingImageToServer,
+            setFileUploadResult,
+            uploadPercentage,
+          }}
         />
       </View>
     );
@@ -179,14 +193,21 @@ const SignUpLastScreenUI = ({
   const renderFooterContent = () => {
     return (
       <View style={style.signupFooterContainer}>
-        <SaveCancelButton
+        <ActionPairButton
           buttonOneText={intl.formatMessage({ id: "label.back" })}
+          buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
+          displayLoader={isLoading}
+          iconLeft={{
+            leftIconAlt: "left-arrow",
+            leftIconSource: images.iconArrowLeft,
+          }}
+          isDisabled={!allFieldsFilled()}
+          isButtonTwoGreen
           onPressButtonOne={onGoBack}
           onPressButtonTwo={() => handleSuccessModal(true)}
-          isNextDisabled={!allFieldsFilled()}
-          buttonTwoText={intl.formatMessage({ id: "label.sign_up" })}
-          hasIconLeft
-          customContainerStyle={!isWebView && style.customContainerStyle}
+          customStyles={{
+            customContainerStyle: !isWebView && style.customContainerStyle,
+          }}
         />
         {isWebView && (
           <LabelWithLinkText
@@ -200,67 +221,72 @@ const SignUpLastScreenUI = ({
   };
 
   return (
-    <View
-      style={
-        isWebView
-          ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-          : style.mainContainerStyle
-      }
+    <FormWrapper
+      onSubmit={() => handleSuccessModal(true)}
+      customFormStyle={commonStyles.mainView}
     >
-      {showSuccessSignUp && (
-        <CustomModal
-          headerText={intl.formatMessage({
-            id: "label.signup_success",
-          })}
-          secondaryText={intl.formatMessage({
-            id: "label.signup_info",
-          })}
-          buttonTitle={intl.formatMessage({
-            id: "label.go_back_to_login",
-          })}
-          onPress={onClickGoToLogin}
-          isSuccess
-        />
-      )}
-      {isWebView && (
-        <View>
-          <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({ id: "label.step_four" })}
-            {...(showContentHeader && {
-              headerText: intl.formatMessage({
-                id: "label.other_details",
-              }),
+      <View
+        style={
+          isWebView
+            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
+            : style.mainContainerStyle
+        }
+      >
+        {showSuccessSignUp && (
+          <CustomModal
+            headerText={intl.formatMessage({
+              id: "label.signup_success",
             })}
+            secondaryText={intl.formatMessage({
+              id: "label.signup_info",
+            })}
+            buttonTitle={intl.formatMessage({
+              id: "label.go_back_to_login",
+            })}
+            onPress={onClickGoToLogin}
+            isSuccess
           />
-        </View>
-      )}
-      {isWeb ? (
-        <View
-          style={
-            !isWebView
-              ? [style.contentContainerStyle, style.extraSmallContainer]
-              : style.webContentContainer
-          }
-        >
-          {renderFormContent()}
-          {renderFooterContent()}
-        </View>
-      ) : (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={style.contentContainerStyle}
-        >
-          {renderFormContent()}
-        </ScrollView>
-      )}
-      {!isWeb && renderFooterContent()}
-      {!!errorMessage && (
-        <ToastComponent
-          toastMessage={errorMessage}
-          onDismiss={handleDismissToast}
-        />
-      )}
-    </View>
+        )}
+        {isWebView && (
+          <View>
+            <HeaderTextWithLabelAndDescription
+              label={intl.formatMessage({ id: "label.step_four" })}
+              {...(showContentHeader && {
+                headerText: intl.formatMessage({
+                  id: "label.other_details",
+                }),
+              })}
+            />
+          </View>
+        )}
+        {isWeb ? (
+          <View
+            style={
+              !isWebView
+                ? [style.contentContainerStyle, style.extraSmallContainer]
+                : style.webContentContainer
+            }
+          >
+            {renderFormContent()}
+            {renderFooterContent()}
+          </View>
+        ) : (
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={style.contentContainerStyle}
+          >
+            {renderFormContent()}
+          </ScrollView>
+        )}
+        {!isWeb && renderFooterContent()}
+        {!!errorMessage && (
+          <ToastComponent
+            toastMessage={errorMessage}
+            onDismiss={handleDismissToast}
+          />
+        )}
+      </View>
+    </FormWrapper>
   );
 };
 
@@ -269,7 +295,7 @@ SignUpLastScreenUI.defaultProps = {
   errorWhileDeletion: "",
   errorWhileUpload: "",
   handleDismissToast: () => {},
-  onImageUpload: () => {},
+  onDeleteImage: () => {},
   signUpError: "",
   validationError: "",
 };
@@ -292,7 +318,6 @@ SignUpLastScreenUI.propTypes = {
   onClickGoToLogin: PropTypes.func.isRequired,
   onDeleteImage: PropTypes.func,
   onGoBack: PropTypes.func.isRequired,
-  onImageUpload: PropTypes.func,
   options: PropTypes.array.isRequired,
   showSuccessSignUp: PropTypes.bool.isRequired,
   signUpError: PropTypes.string,

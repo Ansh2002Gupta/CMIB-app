@@ -1,23 +1,33 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 import PreviewImage from "../PreviewImage/PreviewImage";
+import { IMAGE_MAX_SIZE } from "../../constants/constants";
 import { launchImageLibrary } from "react-native-image-picker";
 
 import styles from "./UploadImage.style";
 
-const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [fileName, setFileName] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
+const UploadImage = ({
+  imageName,
+  imageUrl,
+  errorWhileUpload: errorWhileUploading,
+  fileUploadResult,
+  handleFileUpload,
+  isUploadingImageToServer,
+  onDeleteImage,
+  setFileUploadResult,
+  uploadPercentage,
+}) => {
+  const intl = useIntl();
+  const [errorWhileUpload, setErrorWhileUpload] = useState("");
+  const imageUploadedToServer = fileUploadResult?.data;
 
   const onClickDeleteImage = () => {
-    onDeleteImage(() => {
-      setFileName("");
-      setSelectedImage(null);
-    });
+    setFileUploadResult(null);
+    onDeleteImage();
   };
 
   const openImagePicker = () => {
@@ -32,12 +42,18 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
       if (response.didCancel) {
         console.log("User cancelled image picker");
       } else if (response.error) {
-        console.log("Image picker error: ", response.error);
+        setErrorWhileUpload(response.error);
+      } else if (
+        response.assets &&
+        response.assets[0].fileSize > IMAGE_MAX_SIZE
+      ) {
+        setErrorWhileUpload(
+          intl.formatMessage({ id: "label.fileTooLargeError" })
+        );
       } else {
-        setIsUploading(true);
         let imageUri = response.uri || response.assets?.[0]?.uri;
         let fileName = response.fileName || response.assets?.[0]?.fileName;
-        let type = response.fileName || response.assets?.[0]?.type;
+        let type = response.type || response.assets?.[0]?.type;
         const formData = new FormData();
         const file = {
           uri: imageUri,
@@ -45,10 +61,8 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
           type: type,
         };
         formData.append("company_logo", file);
-        onImageUpload(formData, () => {
-          setSelectedImage(imageUri);
-          setFileName(fileName);
-          setIsUploading(false);
+        handleFileUpload({
+          file: formData,
         });
       }
     });
@@ -56,17 +70,25 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
 
   return (
     <View style={styles.containerStyle}>
-      {!!selectedImage || imageUrl ? (
+      {((!isUploadingImageToServer && !!imageUploadedToServer) ||
+        !!imageUrl) && (
         <PreviewImage
-          isEditable={!!imageUrl}
-          fileName={fileName || imageName}
-          onRemoveImage={onClickDeleteImage}
-          source={{ uri: selectedImage || imageUrl }}
+          {...{
+            fileName: imageUploadedToServer?.["file_name"] || imageName || "",
+            isEditable: !!imageUrl,
+            onRemoveImage: onClickDeleteImage,
+            source: { uri: imageUploadedToServer?.url || imageUrl || "" },
+          }}
         />
-      ) : (
+      )}
+      {!imageUploadedToServer && !imageUrl && (
         <DragAndDropCard
-          handleUploadClick={openImagePicker}
-          isLoading={isUploading}
+          {...{
+            errorMessage: errorWhileUpload || errorWhileUploading,
+            handleUploadClick: openImagePicker,
+            isLoading: isUploadingImageToServer,
+            uploadPercentage,
+          }}
         />
       )}
     </View>
@@ -74,10 +96,10 @@ const UploadImage = ({ imageName, imageUrl, onDeleteImage, onImageUpload }) => {
 };
 
 UploadImage.defaultProps = {
+  imageName: "",
+  imageUrl: "",
   onDeleteImage: () => {},
   onImageUpload: () => {},
-  imageUrl: "",
-  imageName: "",
 };
 
 UploadImage.propTypes = {

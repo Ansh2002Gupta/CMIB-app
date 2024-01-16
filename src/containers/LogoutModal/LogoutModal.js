@@ -3,54 +3,19 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Platform } from "@unthinkable/react-core-components";
 
+import ActionPairButton from "../../components/ActionPairButton";
 import CommonText from "../../components/CommonText";
-import CustomButton from "../../components/CustomButton";
 import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
-import MultiColumn from "../../core/layouts/MultiColumn";
 import MultiRow from "../../core/layouts/MultiRow";
-import useLogoutAPI from "../../services/apiServices/hooks/useLogoutAPI";
+import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
 import styles from "./logoutModal.style";
 
-const LogoutModal = ({ onCancel, onSave }) => {
+const LogoutModal = ({ onCancel }) => {
   const intl = useIntl();
-  const { handleUserLogout, isLoading } = useLogoutAPI();
+  const { isLoggingUserOut, onLogout } = useHeader();
   const WarningIcon = images.iconWarning;
-
-  const cancelHandler = () => {
-    onCancel(false);
-  };
-
-  const saveHandler = () => {
-    handleUserLogout(() => {
-      onCancel(false);
-      onSave();
-    });
-  };
-
-  const saveCancelButton = [
-    {
-      content: (
-        <CustomButton onPress={cancelHandler}>
-          {intl.formatMessage({ id: "label.cancel" })}
-        </CustomButton>
-      ),
-      isFillSpace: true,
-    },
-    {
-      content: (
-        <CustomButton
-          onPress={saveHandler}
-          style={styles.saveStyle}
-          {...{ isLoading }}
-        >
-          {intl.formatMessage({ id: "label.logout" })}
-        </CustomButton>
-      ),
-      isFillSpace: true,
-    },
-  ];
 
   const logoutConfig = [
     {
@@ -65,22 +30,31 @@ const LogoutModal = ({ onCancel, onSave }) => {
     },
     {
       content: (
-        <CommonText
-          customTextStyle={styles.headerText}
-          title={intl.formatMessage({ id: "label.logout" })}
-        />
+        <CommonText customTextStyle={styles.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.logout" })}
+        </CommonText>
       ),
     },
     {
       content: (
-        <CommonText
-          customTextStyle={styles.subHeaderText}
-          title={intl.formatMessage({ id: "label.logout_message" })}
-        />
+        <CommonText customTextStyle={styles.subHeaderText}>
+          {intl.formatMessage({ id: "label.logout_message" })}
+        </CommonText>
       ),
     },
     {
-      content: <MultiColumn columns={saveCancelButton} />,
+      content: (
+        <ActionPairButton
+          buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+          buttonTwoText={intl.formatMessage({ id: "label.logout" })}
+          customStyles={{
+            buttonTwoStyle: styles.logoutButtonStyle,
+          }}
+          displayLoader={isLoggingUserOut}
+          onPressButtonOne={() => onCancel(false)}
+          onPressButtonTwo={() => onLogout()}
+        />
+      ),
       style: styles.gapStyle,
     },
   ];
@@ -100,7 +74,6 @@ const LogoutModal = ({ onCancel, onSave }) => {
 
 LogoutModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
 };
 
 export default LogoutModal;

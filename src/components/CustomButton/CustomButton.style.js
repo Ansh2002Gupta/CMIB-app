@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
@@ -33,12 +33,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   btnText: {
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-SemiBold",
     fontSize: 16,
-    fontWeight: "600",
     lineHeight: 20,
   },
   containerStyle: {

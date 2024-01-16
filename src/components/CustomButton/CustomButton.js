@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Platform, Text, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import Button from "../Button";
+import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import Spinner from "../Spinner";
 import colors from "../../assets/colors";
@@ -16,6 +17,7 @@ const CustomButton = ({
   isLoading,
   onPress,
   style,
+  type,
   withGreenBackground,
 }) => {
   const webProps = Platform.OS === "web" ? { size: "xs" } : {};
@@ -29,6 +31,7 @@ const CustomButton = ({
       }}
       disabled={isLoading || disabled}
       onPress={onPress}
+      type={type}
     >
       {isLoading ? (
         <Spinner
@@ -47,11 +50,15 @@ const CustomButton = ({
               source={iconLeft.leftIconSource}
             />
           )}
-          <Text
-            style={[withGreenBackground && styles.whiteText, styles.btnText]}
+          <CommonText
+            customTextStyle={[
+              withGreenBackground && styles.whiteText,
+              styles.btnText,
+            ]}
+            fontWeight={"600"}
           >
             {children}
-          </Text>
+          </CommonText>
           {!!iconRight && !!iconRight?.rightIconSource && (
             <CustomImage
               style={styles.iconLeftStyle}
@@ -83,6 +90,7 @@ CustomButton.defaultProps = {
   isLoading: false,
   onPress: () => {},
   style: {},
+  type: "button",
   withGreenBackground: false,
 };
 
@@ -96,6 +104,7 @@ CustomButton.propTypes = {
   isRightIconNotSvg: PropTypes.bool,
   onPress: PropTypes.func,
   style: PropTypes.object,
+  type: PropTypes.string,
   withGreenBackground: PropTypes.bool,
 };
 

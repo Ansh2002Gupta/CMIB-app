@@ -7,22 +7,21 @@ import {
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
-import { navigations } from "../../constants/routeNames";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import { modules, items, getIconImages } from "../../constants/sideBarHelpers";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
 import ResponsiveTextTruncate from "../../components/ResponsiveTextTruncate/ResponsiveTextTruncate";
-import images from "../../images";
 import ModuleList from "../../components/ModuleList/ModuleList";
 import useIsWebView from "../../hooks/useIsWebView";
+import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { navigations } from "../../constants/routeNames";
+import { modules, items, getIconImages } from "../../constants/sideBarHelpers";
+import images from "../../images";
 import styles from "./SideBar.style";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
@@ -35,7 +34,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
 
   const [openModuleSelector, setOpenModuleSelector] = useState(false);
   const [activeMenuItem, setActiveMenuItem] = useState(
-    selectedModule.children[0].key
+    selectedModule?.children?.[0]?.key
   );
 
   const handleOnSelectItem = (item) => {
@@ -73,8 +72,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         />
         <CommonText
           customTextStyle={isActive ? styles.menuItemsText : styles.changeText}
-          title={item.label}
-        />
+        >
+          {item.label}
+        </CommonText>
       </TouchableOpacity>
     );
   };
@@ -87,7 +87,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           // TODO: Add function handling when after getting API
         }}
       >
-        <CommonText customTextStyle={styles.changeText} title={item.title} />
+        <CommonText customTextStyle={styles.changeText}>
+          {item.label}
+        </CommonText>
       </TouchableOpacity>
     );
   };
@@ -108,10 +110,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         <Image source={images.iconCmibLogoWhite} />
       </View>
       {!openModuleSelector && (
-        <CommonText
-          customTextStyle={styles.sessionText}
-          title={intl.formatMessage({ id: "label.module" })}
-        />
+        <CommonText customTextStyle={styles.sessionText}>
+          {intl.formatMessage({ id: "label.module" })}
+        </CommonText>
       )}
       <TwoRow
         isBottomFillSpace={true}
@@ -123,7 +124,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 style={openModuleSelector ? "" : styles.moduleSelectorheading}
               >
                 <ResponsiveTextTruncate
-                  text={selectedModule.label}
+                  text={selectedModule?.label || ""}
                   maxLength={22}
                   style={styles.changeText}
                   widthPercentage={0.4}
@@ -141,15 +142,15 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                     style={styles.leftArrow}
                   />
                 ) : (
-                  <CommonText
-                    customTextStyle={styles.changeText}
-                    title={intl.formatMessage({ id: "label.change" })}
-                  />
+                  <CommonText customTextStyle={styles.changeText}>
+                    {intl.formatMessage({ id: "label.change" })}
+                  </CommonText>
                 )}
               </TouchableOpacity>
             }
           />
         }
+        bottomSectionStyle={styles.bottomSection}
         bottomSection={
           openModuleSelector ? (
             <ModuleList modules={modules} onSelectItem={handleOnSelectItem} />
@@ -162,10 +163,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 />
               ) : (
                 <>
-                  <CommonText
-                    customTextStyle={styles.sessionText}
-                    title={intl.formatMessage({ id: "label.session" })}
-                  />
+                  <CommonText customTextStyle={styles.sessionText}>
+                    {intl.formatMessage({ id: "label.session" })}
+                  </CommonText>
                   <FlatList data={items} renderItem={renderSessions} />
                 </>
               )}
@@ -182,10 +182,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       >
         <View style={styles.imageTextView}>
           <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
-          <CommonText
-            customTextStyle={styles.visitWebsiteText}
-            title={intl.formatMessage({ id: "label.visit_website" })}
-          />
+          <CommonText customTextStyle={styles.visitWebsiteText}>
+            {intl.formatMessage({ id: "label.visit_website" })}
+          </CommonText>
         </View>
         <Image source={images.iconRightArrow} style={styles.globalIcon} />
       </TouchableOpacity>

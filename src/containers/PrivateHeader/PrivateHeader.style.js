@@ -1,49 +1,16 @@
 import colors from "../../assets/colors";
 
 const styles = {
-  webMainContainer: {
+  webContainer: {
     flexWrap: "wrap",
     backgroundColor: colors.white,
-    paddingBottom: 8,
-  },
-  webContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    flexWrap: "wrap",
     paddingTop: 16,
     paddingLeft: 24,
     paddingRight: 24,
-    paddingBottom: 8,
-  },
-  textHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingTop: 10,
-    paddingLeft: 24,
-    paddingRight: 24,
     paddingBottom: 16,
-    borderWidth:1,
-    borderTopWidth:0,
-    borderLeftWidth:0,
-    borderRightWidth:0,
-    borderColor: colors.lightGrey,
-    backgroundColor: colors.white,
-  },
-  textHeaderTopBorder:{
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingTop: 10,
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingBottom: 16,
-    borderWidth:1,
-    borderLeftWidth:0,
-    borderRightWidth:0,
-    borderColor: colors.lightGrey,
-    backgroundColor: colors.white,
   },
   icons: {
     width: 24,
@@ -53,21 +20,8 @@ const styles = {
     flexDirection: "row",
     alignItems: "center",
   },
-  profileContainer: {
-    marginTop: 16,
-    marginBottom: 16,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  detailContainer: {
-    marginLeft: 12,
-  },
-  editText:{
-    marginLeft:8
-  },
   fullNameStyle: {
     fontSize: 14,
-    fontWeight: "600",
     color: colors.black,
   },
   roleStyle: {
@@ -84,7 +38,7 @@ const styles = {
   iconNotification: {
     width: 24,
     height: 24,
-    cursor: "pointer",
+    marginLeft:10,
   },
   overView: {
     color: colors.darkGreySecond,
@@ -94,7 +48,6 @@ const styles = {
   nameText: {
     color: colors.darkBlackSecond,
     fontSize: 14,
-    fontWeight: "600",
     marginLeft: 8,
   },
   notficationIconView: {
@@ -104,29 +57,10 @@ const styles = {
   profileView: {
     flexDirection: "row",
     marginLeft: 10,
+    cursor:"pointer"
   },
   profileNameSection: {
     flexDirection: "row",
-  },
-  formHeaderStyle: {
-    color: colors.black,
-    fontSize: 20,
-    fontWeight: "600",
-  },
-  headerLeftSection: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  editButton: {
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
-    flexDirection: "row",
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 12,
-    paddingBottom: 12,
-    alignItems: "center",
   },
 };
 

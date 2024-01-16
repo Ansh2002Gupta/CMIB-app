@@ -40,14 +40,10 @@ const iconInstagram = appendAppBaseURl(
   "/images/iconInstagram/iconInstagram.png"
 );
 const iconLinkedin = appendAppBaseURl("/images/iconLinkedin/iconLinkedin.png");
-const iconSuccess = appendAppBaseURl("/images/iconSuccess/iconSuccess.png");
 const iconMenu = appendAppBaseURl("/images/iconMenu/iconMenu.png");
 const iconLogout = appendAppBaseURl("/images/iconLogout/iconLogout.png");
 const iconBuilding = appendAppBaseURl("/images/iconBuilding/iconBuilding.png");
 const iconLock = appendAppBaseURl("/images/iconLock/iconLock.png");
-const iconArrowRight = appendAppBaseURl(
-  "/images/iconArrowRight/iconArrowRight.png"
-);
 const iconBack = appendAppBaseURl("/images/iconBack/iconBack.png");
 const iconEdit = appendAppBaseURl("/images/iconEdit/iconEdit.png");
 const iconDelete = appendAppBaseURl("/images/iconDelete/iconDelete.png");
@@ -89,7 +85,6 @@ const ticketIcon = appendAppBaseURl("/images/ticketIcon/ticketIcon.png");
 const iconArrowDown2 = appendAppBaseURl(
   "/images/iconArrowDown2/iconArrowDown2.png"
 );
-const iconClose = appendAppBaseURl("/images/iconClose/iconClose.png");
 const iconLeftArrow = appendAppBaseURl(
   "/images/iconLeftArrow/iconLeftArrow.png"
 );
@@ -152,6 +147,13 @@ const iconSaved = appendAppBaseURl("/images/svg/iconSavedCandidates.svg");
 const iconSavedActive = appendAppBaseURl(
   "/images/svg/iconSavedCandidatesActive.svg"
 );
+const iconTicket = appendAppBaseURl("/images/svg/iconTicket.svg");
+const iconArrowRightBlack = appendAppBaseURl(
+  "/images/svg/iconArrowRightBlack.svg"
+);
+const iconArrowRight = appendAppBaseURl("/images/svg/iconArrowRight.svg");
+const iconSuccess = appendAppBaseURl("/images/svg/iconSuccess.svg");
+const iconClose = appendAppBaseURl("/images/svg/iconClose.svg");
 
 const images = {
   iconArrowUp,
@@ -254,6 +256,8 @@ const images = {
   iconPostedJobsWeb,
   addCircle,
   minusCirlce,
+  iconTicket,
+  iconArrowRightBlack,
 };
 
 export default images;

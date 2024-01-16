@@ -9,7 +9,6 @@ const styles = {
   },
   heading: {
     fontSize: 20,
-    fontWeight: 600,
   },
 };
 

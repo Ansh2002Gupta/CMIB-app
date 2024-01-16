@@ -1,8 +1,6 @@
 import colors from "../../assets/colors";
 
 const styles = {
-  parentContainer: {
-  },
   labelContainer: {
     flexDirection: "row",
     marginBottom: 4,
@@ -12,7 +10,7 @@ const styles = {
     color: colors.darkGrey,
   },
   labelStar: {
-   marginLeft: 4
+    marginLeft: 4,
   },
   webLabel: {
     color: colors.black,

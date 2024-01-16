@@ -1,4 +1,5 @@
 import { Platform } from "@unthinkable/react-core-components";
+import { fontFamily } from "../../theme/styles/commonStyles";
 import colors from "../../assets/colors";
 
 const style = {
@@ -37,10 +38,7 @@ const style = {
   placeholderStyle: {
     fontSize: 14,
     color: colors.darkGrey,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
+    fontFamily,
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -80,27 +78,25 @@ const style = {
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
     borderWidth: 1,
-    paddingLeft: 14,
-    paddingRight: 14,
+    paddingLeft: 16,
+    paddingRight: 16,
     marginTop: 4,
     borderRadius: Platform.OS === "web" ? 12 : 8,
     flexDirection: "row",
   },
   textInputStyle: {
     flex: 1,
-    fontFamily:
-      Platform.OS.toLowerCase() === "web"
-        ? "General sans"
-        : "GeneralSans-Medium",
+    fontFamily,
     fontSize: 14,
     height: 48,
   },
   errorMsg: {
     color: colors.errorRed,
     lineHeight: 18,
-    fontWeight: "600",
   },
   textAlignStyle: {
+    paddingTop: 16,
+    paddingBottom: 16,
     textAlignVertical: "top",
   },
   eyeIconContainer: {
@@ -131,6 +127,14 @@ const style = {
     marginLeft: 8,
     alignItems: "center",
   },
+  searchStyle: {
+    fontSize: 14,
+    fontFamily,
+    color: colors.black,
+    fontWeight: "500",
+    borderRadius: 4,
+  },
+  valueStyle: { paddingRight: 12 },
 };
 
 export default style;

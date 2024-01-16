@@ -1,54 +1,107 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { View } from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import CustomTextInput from "../CustomTextInput";
 import useIsWebView from "../../hooks/useIsWebView";
-import style from "./DetailComponent.style";
+import { gridStyles } from "../../theme/styles/commonStyles";
+import { numericValidator } from "../../constants/validation";
+import styles, { getRowStyle } from "./DetailComponent.style";
 
-const DetailComponent = ({ details, headerText }) => {
+const DetailComponent = ({
+  customContainerStyle,
+  details,
+  headerText,
+  isEditable,
+  handleChange,
+}) => {
+  const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
-
-  const gridStyles = {
-    xl: "1fr 1fr 1fr",
-    lg: "1fr 1fr",
-    md: "1fr 1fr",
-    sm: "1fr 1fr",
-  };
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
   const containerStyle = isWebView
-    ? style.containerGridStyle(columnCount)
-    : style.containerStyle;
+    ? styles.containerGridStyle(columnCount)
+    : styles.containerStyle;
+
+  const isPlatformWeb = Platform.OS.toLowerCase() === "web";
+
+  const getMobileProps = (detail) => {
+    if (!isPlatformWeb && detail.isMultiline) {
+      return {
+        isMultiline: true,
+        height: 84,
+      };
+    }
+    return {};
+  };
 
   return (
     <View>
       {!!headerText && (
-        <CommonText customTextStyle={style.headerText} title={headerText} />
+        <CommonText customTextStyle={styles.headerText} fontWeight="600">
+          {headerText}
+        </CommonText>
       )}
-      <View style={containerStyle}>
+      <View style={{ ...containerStyle, ...customContainerStyle }}>
         {details?.map((detail, index) => (
           <View
             key={index}
-            style={detail.isRow ? style.rowStyle : style.innerContainer}
+            style={isWebView ? styles.webContainer : getRowStyle(detail)}
           >
-            <View style={[style.titleContainer]}>
-              <CommonText
-                title={detail.title}
-                customTextStyle={style.titleStyle}
+            {isEditable ? (
+              <CustomTextInput
+                errorMessage={detail.error}
+                value={detail.value}
+                customStyle={styles.inputStyle}
+                label={intl.formatMessage({ id: detail.label })}
+                isDropdown={detail.isDropdown}
+                isCounterInput={detail.isCounterInput}
+                isError={!!detail.error}
+                isMobileNumber={detail.isMobileNumber}
+                isMandatory
+                options={detail.options || []}
+                placeholder={intl.formatMessage({ id: detail.placeholder })}
+                maxLength={detail.maxLength}
+                isNumeric={detail.isNumeric}
+                valueField={detail.valueField || "label"}
+                labelField={detail.labelField || "label"}
+                inputKey={detail.inputKey || "value"}
+                onChangeValue={(val) => handleChange(detail.label, val)}
+                onChangeText={(val) => {
+                  if (detail?.isNumeric) {
+                    if (numericValidator(val)) handleChange(detail.label, val);
+                  } else {
+                    handleChange(detail.label, val);
+                  }
+                }}
+                isRupee={detail?.isRupee}
+                {...getMobileProps(detail)}
               />
-              <CommonText title=" *" customTextStyle={style.starStyle} />
-            </View>
-            <CommonText
-              title={detail.value}
-              customTextStyle={[
-                style.valueStyle,
-                detail.isLink && style.linkStyle,
-              ]}
-            />
+            ) : (
+              <>
+                <View style={styles.titleContainer}>
+                  <CommonText customTextStyle={styles.titleStyle}>
+                    {intl.formatMessage({ id: detail.label })}
+                  </CommonText>
+                  <CommonText customTextStyle={styles.starStyle}>
+                    {" *"}
+                  </CommonText>
+                </View>
+                <CommonText
+                  customTextStyle={[
+                    styles.valueStyle,
+                    detail.isLink && styles.linkStyle,
+                  ]}
+                >
+                  {detail.value}
+                </CommonText>
+              </>
+            )}
           </View>
         ))}
       </View>
@@ -56,9 +109,20 @@ const DetailComponent = ({ details, headerText }) => {
   );
 };
 
+DetailComponent.defaultProps = {
+  customContainerStyle: {},
+  details: [],
+  handleChange: () => {},
+  headerText: "",
+  isEditable: false,
+};
+
 DetailComponent.propTypes = {
-  details: PropTypes.array.isRequired,
+  customContainerStyle: PropTypes.object,
+  details: PropTypes.array,
+  handleChange: PropTypes.func,
   headerText: PropTypes.string,
+  isEditable: PropTypes.bool,
 };
 
 export default DetailComponent;

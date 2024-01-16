@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.secondaryGrey,
     alignItems: "center",
-    minWidth: 300,
+    width: "auto",
   },
   loaderBox: {
     position: "relative",
@@ -49,16 +49,19 @@ const styles = StyleSheet.create({
     cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : "",
   },
   infoStyle: {
+    textAlign: "center",
     color: colors.darkGrey,
     lineHeight: 18,
     marginLeft: 24,
     marginRight: 24,
+    textAlign: "center",
   },
   hideRawInputField: {
     display: "none",
   },
   error: {
     marginTop: 10,
+    textAlign: "center",
   },
 });
 

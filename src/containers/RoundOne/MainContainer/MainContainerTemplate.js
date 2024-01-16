@@ -8,7 +8,7 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CardComponent from "../../CardComponent";
+import CardComponent from "../../../components/CardComponent";
 import CommonText from "../../../components/CommonText";
 import useIsWebView from "../../../hooks/useIsWebView";
 import styles from "./MainContainer.style";
@@ -34,7 +34,7 @@ const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
           style={styles.buttonStyle}
         >
           <CardComponent
-            customCardComponentStyle={{
+            customStyle={{
               ...styles.componentStyle,
               ...(isWebView && selectedTab === container.id
                 ? styles.webActiveComponentStyle
@@ -51,13 +51,16 @@ const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
               }}
             >
               <CommonText
-                title={container.title}
                 customTextStyle={styles.addApplicationFormText}
-              />
+                fontWeight={"600"}
+              >
+                {container.title}
+              </CommonText>
               <CommonText
-                title={container.subTitle}
                 customTextStyle={styles.addApplicationFormDescriptionText}
-              />
+              >
+                {container.subTitle}
+              </CommonText>
             </View>
           </CardComponent>
         </TouchableOpacity>

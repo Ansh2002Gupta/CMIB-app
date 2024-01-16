@@ -18,15 +18,16 @@ const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
       ]}
     >
       {badgeLabels.map((label) => (
-        <View
-          style={[
+        <CommonText
+          customTextStyle={style.badgeStyle}
+          customContainerStyle={[
             isWebView && style.webInnerContainer,
             style.innerContainerStyle,
             customTextStyle,
           ]}
         >
-          <CommonText title={label} customTextStyle={style.badgeStyle} />
-        </View>
+          {label}
+        </CommonText>
       ))}
     </View>
   );

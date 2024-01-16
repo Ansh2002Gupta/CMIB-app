@@ -21,10 +21,6 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGray,
     marginTop: 4,
   },
-  componentView: {
-    marginLeft: 24,
-    marginRight: 24,
-  },
   formatOptionStyle: {
     alignItems: "center",
     paddingTop: 8,
