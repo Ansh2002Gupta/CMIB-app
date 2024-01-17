@@ -43,7 +43,7 @@ const useLoginUser = () => {
         if (searchParams.get(REDIRECT_URL) || location?.state?.redirectPath) {
           if (Platform.OS.toLowerCase() === "web") {
             window.location.replace(
-              `${searchParams.get(REDIRECT_URL)}?isAutheticated=1`
+              `${searchParams.get(REDIRECT_URL)}?isAuthenticated=1`
             );
           } else {
             navigate(navigations.WEB_VIEW, {
