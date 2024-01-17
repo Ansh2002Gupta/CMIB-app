@@ -1,7 +1,6 @@
 import colors from "../../assets/colors";
 
 const screenContainerWidth = {
-  width: "75%",
   maxWidth: 600,
 };
 
@@ -98,6 +97,7 @@ const style = {
     fontSize: 34,
   },
   commonScreenContainers: {
+    width: "75% ",
     ...screenContainerWidth,
   },
   forgotPasswordWebContainer: {
