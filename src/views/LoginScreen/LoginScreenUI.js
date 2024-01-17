@@ -126,14 +126,15 @@ const LoginScreenUI = (props) => {
                   {intl.formatMessage({ id: "label.member_candidate" })}
                 </CommonText>
                 <View
-                  style={
-                    active
+                  style={{
+                    ...styles.marginBottom,
+                    ...(active
                       ? styles.inActiveStyle
                       : {
                           ...styles.activeStyle,
                           ...(isWebView && styles.webView.activeTab),
-                        }
-                  }
+                        }),
+                  }}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -154,14 +155,15 @@ const LoginScreenUI = (props) => {
                   </CommonText>
                 </View>
                 <View
-                  style={
-                    !active
+                  style={{
+                    ...styles.marginBottom,
+                    ...(!active
                       ? styles.inActiveStyle
                       : {
                           ...styles.activeStyle,
                           ...(isWebView && styles.webView.activeTab),
-                        }
-                  }
+                        }),
+                  }}
                 />
               </TouchableOpacity>
             </View>
