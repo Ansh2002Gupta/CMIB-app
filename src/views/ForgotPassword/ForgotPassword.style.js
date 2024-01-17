@@ -1,6 +1,6 @@
 import colors from "../../assets/colors";
 
-const screeContainerWidth = {
+const screenContainerWidth = {
   width: "75%",
   maxWidth: 600,
 };
@@ -97,15 +97,12 @@ const style = {
   width1200pxOrLessForgotHeading: {
     fontSize: 34,
   },
-  smScreenContainers: {
-    ...screeContainerWidth,
-  },
-  mdScreenContainers: {
-    ...screeContainerWidth,
+  commonScreenContainers: {
+    ...screenContainerWidth,
   },
   forgotPasswordWebContainer: {
     flex: 0.9,
-    ...screeContainerWidth,
+    ...screenContainerWidth,
     maxHeight: 780,
   },
   headerText: {
