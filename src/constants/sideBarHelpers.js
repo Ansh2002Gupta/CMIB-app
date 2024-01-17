@@ -21,51 +21,51 @@ export const items = [
   },
   {
     id: 4,
-    label: "2022 Aug - Sept Campus Placement",
+    label: "2021 Aug - Sept Campus Placement",
   },
   {
     id: 5,
-    label: "2022 Feb - Mar Campus Placement",
+    label: "2021 Feb - Mar Campus Placement",
   },
   {
     id: 6,
-    label: "2022 Aug - Sept Campus Placement",
+    label: "2020 Aug - Sept Campus Placement",
   },
   {
     id: 7,
-    label: "2022 Feb - Mar Campus Placement",
+    label: "2020 Feb - Mar Campus Placement",
   },
   {
     id: 8,
-    label: "2023 Aug - Sept Campus Placement",
+    label: "2019 Aug - Sept Campus Placement",
   },
   {
     id: 9,
-    label: "2023 Feb - Mar Campus Placement",
+    label: "2019 Feb - Mar Campus Placement",
   },
   {
     id: 10,
-    label: "2022 Aug - Sept Campus Placement",
+    label: "2018 Aug - Sept Campus Placement",
   },
   {
     id: 11,
-    label: "2022 Feb - Mar Campus Placement",
+    label: "2018 Feb - Mar Campus Placement",
   },
   {
     id: 12,
-    label: "2022 Aug - Sept Campus Placement",
+    label: "2017 Aug - Sept Campus Placement",
   },
   {
     id: 13,
-    label: "2022 Feb - Mar Campus Placement",
+    label: "2017 Feb - Mar Campus Placement",
   },
   {
     id: 14,
-    label: "2022 Aug - Sept Campus Placement",
+    label: "2016 Aug - Sept Campus Placement",
   },
   {
     id: 15,
-    label: "2022 Feb - Mar Campus Placement",
+    label: "2016 Feb - Mar Campus Placement",
   },
 ];
 

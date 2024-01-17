@@ -56,6 +56,7 @@ const SessionBar = () => {
           options={selectedModule.session}
           onSelect={handleSelect}
           sessionRef={sessionRef}
+          selectedItem={selectedValue}
         />
       )}
     </CustomTouchableOpacity>

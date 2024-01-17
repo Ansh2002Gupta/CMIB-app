@@ -7,7 +7,7 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CommonText from "../CommonText";
 import styles from "./SessionDropdown.style";
 
-const SessionDropdown = ({ options, onSelect, optionStyle, sessionRef }) => {
+const SessionDropdown = ({ options, onSelect, optionStyle, sessionRef, selectedItem }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   return (
@@ -21,7 +21,10 @@ const SessionDropdown = ({ options, onSelect, optionStyle, sessionRef }) => {
             style={styles.option}
             onPress={() => onSelect(option.label)}
           >
-            <CommonText customTextStyle={[styles.optionTextStyle, optionStyle]}>
+            <CommonText
+              customTextStyle={[styles.optionTextStyle, optionStyle]}
+              fontWeight={option.label === selectedItem ? '600' : '500' }
+            >
               {option.label}
             </CommonText>
           </CustomTouchableOpacity>
@@ -47,6 +50,7 @@ SessionDropdown.propTypes = {
   sessionRef: PropTypes.object,
   onSelect: PropTypes.func.isRequired,
   optionStyle: PropTypes.object,
+  selectedItem: PropTypes.string.isRequired,
 };
 
 export default SessionDropdown;
