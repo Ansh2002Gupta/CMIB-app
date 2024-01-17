@@ -30,7 +30,7 @@ const Header = ({ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }) => {
     <>
       {isuserLoggedIn ? (
         <PrivateHeader
-          {...{ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon   }}
+          {...{ onPressLeftIcon, onPressRightIcon, leftIcon, rightIcon }}
         />
       ) : (
         <PublicHeader />
@@ -49,8 +49,8 @@ Header.defaultProps = {
 Header.propTypes = {
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,
-  leftIcon: PropTypes.string,
-  rightIcon: PropTypes.string,
+  leftIcon: PropTypes.any,
+  rightIcon: PropTypes.any,
 };
 
 export default Header;
