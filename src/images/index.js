@@ -106,6 +106,12 @@ const iconArrowRightBlack = "/images/svg/iconArrowRightBlack.svg";
 const iconArrowRight = "/images/svg/iconArrowRight.svg";
 const iconSuccess = "/images/svg/iconSuccess.svg";
 const iconClose = "/images/svg/iconClose.svg";
+const iconFacebookWeb = "/images/svg/iconFacebookWeb.svg";
+const iconInstagramWeb = "/images/svg/iconInstagramWeb.svg";
+const iconLinkedinWeb = "/images/svg/iconLinkedInWeb.svg";
+const iconTelegramWeb = "/images/svg/iconTelegramWeb.svg";
+const iconYoutubeWeb = "/images/svg/iconYoutubeWeb.svg";
+const iconTwitterWeb = "/images/svg/iconTwitterWeb.svg";
 
 const images = {
   iconArrowUp,
@@ -209,7 +215,13 @@ const images = {
   addCircle,
   minusCirlce,
   iconTicket,
-  iconArrowRightBlack
+  iconArrowRightBlack,
+  iconLinkedinWeb,
+  iconFacebookWeb,
+  iconTwitterWeb,
+  iconTelegramWeb,
+  iconYoutubeWeb,
+  iconInstagramWeb,
 };
 
 export default images;
