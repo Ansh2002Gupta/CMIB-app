@@ -31,7 +31,6 @@ const useTicketView = (data) => {
   );
   const [currentRecords, setCurrentRecords] = useState([]);
 
-
   let indexOfLastRecord;
   let indexOfFirstRecord;
 

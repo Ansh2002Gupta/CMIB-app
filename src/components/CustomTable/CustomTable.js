@@ -162,11 +162,12 @@ const CustomTable = ({
                     }
                     if (allDataLoaded) {
                       return (
-                        <View style={styles.loadingStyle}>
-                          <CommonText customTextStyle={styles.noMoreData}>
-                            {intl.formatMessage({ id: "label.no_more_data" })}
-                          </CommonText>
-                        </View>
+                        <CommonText
+                          customContainerStyle={styles.loadingStyle}
+                          customTextStyle={styles.noMoreData}
+                        >
+                          {intl.formatMessage({ id: "label.no_more_data" })}
+                        </CommonText>
                       );
                     }
                     return null;
