@@ -35,6 +35,38 @@ export const items = [
     id: 7,
     label: "2022 Feb - Mar Campus Placement",
   },
+  {
+    id: 8,
+    label: "2023 Aug - Sept Campus Placement",
+  },
+  {
+    id: 9,
+    label: "2023 Feb - Mar Campus Placement",
+  },
+  {
+    id: 10,
+    label: "2022 Aug - Sept Campus Placement",
+  },
+  {
+    id: 11,
+    label: "2022 Feb - Mar Campus Placement",
+  },
+  {
+    id: 12,
+    label: "2022 Aug - Sept Campus Placement",
+  },
+  {
+    id: 13,
+    label: "2022 Feb - Mar Campus Placement",
+  },
+  {
+    id: 14,
+    label: "2022 Aug - Sept Campus Placement",
+  },
+  {
+    id: 15,
+    label: "2022 Feb - Mar Campus Placement",
+  },
 ];
 
 const newlyQualifiedPlacementsMenu = [
@@ -99,19 +131,19 @@ export const modules = [
     key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
     children: newlyQualifiedPlacementsMenu,
     session: items,
-    visible: false,
+    visible: true,
   },
   {
     label: "CA Jobs",
     key: moduleKeys.CA_JOBS_KEY,
     children: caJobsMenu,
     session: items,
-    visible: false,
+    visible: true,
   },
   {
     label: "Experienced Members",
     key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
-    visible: false,
+    visible: true,
     sectionHeading: true,
   },
   {
@@ -119,7 +151,7 @@ export const modules = [
     key: moduleKeys.CARRER_ASCENT_KEY,
     children: experiencedMembersMenu,
     session: items,
-    visible: false,
+    visible: true,
     isSubMenu: true,
   },
   {
@@ -127,7 +159,7 @@ export const modules = [
     key: moduleKeys.WOMEN_PARTTIME_KEY,
     children: experiencedMembersMenu,
     session: items,
-    visible: false,
+    visible: true,
     isSubMenu: true,
   },
   {
@@ -135,7 +167,7 @@ export const modules = [
     key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
     children: experiencedMembersMenu,
     session: items,
-    visible: false,
+    visible: true,
     isSubMenu: true,
   },
 ];

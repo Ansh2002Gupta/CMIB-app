@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { FlatList, TouchableOpacity } from "@unthinkable/react-core-components";
+import { FlatList } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getAccessibleModulesList } from "../../constants/sideBarHelpers";
 import styles from "./ModuleList.style";
 
-const ModuleList = ({ modules, onSelectItem }) => {
+const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
   const [userProfileState] = useContext(UserProfileContext);
 
   const renderrableModules = getAccessibleModulesList({
@@ -18,11 +19,11 @@ const ModuleList = ({ modules, onSelectItem }) => {
   const renderItem = ({ item: module }) => (
     <>
       {module.visible && (
-        <TouchableOpacity
+        <CustomTouchableOpacity
           style={
             module.sectionHeading
               ? styles.moduleListWithoutCursor
-              : styles.moduleListItem
+              : styles.moduleListItem(selectedModule === module)
           }
           key={module.key}
           onPress={() =>
@@ -37,7 +38,7 @@ const ModuleList = ({ modules, onSelectItem }) => {
           >
             {module.label}
           </CommonText>
-        </TouchableOpacity>
+        </CustomTouchableOpacity>
       )}
     </>
   );
@@ -54,6 +55,7 @@ const ModuleList = ({ modules, onSelectItem }) => {
 ModuleList.propTypes = {
   modules: PropTypes.array.isRequired,
   onSelectItem: PropTypes.func.isRequired,
+  selectedModule: PropTypes.object.isRequired,
 };
 
 export default ModuleList;

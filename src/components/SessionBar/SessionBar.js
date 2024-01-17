@@ -19,7 +19,7 @@ const SessionBar = () => {
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedValue, setSelectedValue] = useState(
-    selectedModule.session[0].label
+    selectedModule?.session?.[0]?.label
   );
 
   const sessionRef = useRef(null);

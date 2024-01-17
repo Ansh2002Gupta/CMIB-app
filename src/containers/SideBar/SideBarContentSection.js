@@ -2,27 +2,29 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   FlatList,
-  Image,
   Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../routes";
-import { navigations } from "../../constants/routeNames";
 
-import { TwoColumn, TwoRow } from "../../core/layouts";
+import { TwoRow } from "../../core/layouts";
 
-import { modules, items, getIconImages } from "../../constants/sideBarHelpers";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import Config from "../../components/ReactConfig/index";
 import CommonText from "../../components/CommonText";
-import ResponsiveTextTruncate from "../../components/ResponsiveTextTruncate/ResponsiveTextTruncate";
-import images from "../../images";
+import CustomImage from "../../components/CustomImage";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ModuleList from "../../components/ModuleList/ModuleList";
+import SessionList from "../../components/SessionList/SessionList";
+import SideBarEnum from "./sideBarEnum";
+import SideBarItemView from "../../components/SideBarItemView/SideBarItemView";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { setSelectedModule, setSelectedSession } from "../../globalContext/sidebar/sidebarActions";
 import useIsWebView from "../../hooks/useIsWebView";
+import { navigations } from "../../constants/routeNames";
+import { useNavigate } from "../../routes";
+import { modules, getIconImages } from "../../constants/sideBarHelpers";
+import images from "../../images";
 import styles from "./SideBar.style";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
@@ -30,18 +32,41 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const { selectedModule } = sideBarState;
 
   const navigate = useNavigate();
-  const isWeb = useIsWebView();
+  const { isWebView } = useIsWebView();
   const intl = useIntl();
 
-  const [openModuleSelector, setOpenModuleSelector] = useState(false);
+  const [sideBarSubMenu, setSideBarSubMenu] = useState(SideBarEnum.NONE);
   const [activeMenuItem, setActiveMenuItem] = useState(
     selectedModule?.children?.[0]?.key
   );
 
-  const handleOnSelectItem = (item) => {
+  const [selectedModuleItem, setSelectedModuleItem] = useState(
+    modules[0]
+ );
+
+  const [selectedSessionItem, setSelectedSessionItem] = useState(
+     selectedModuleItem?.session?.[0]
+  );
+
+  useEffect(() => {
+    if (isWebView && sideBarSubMenu === SideBarEnum.SESSION) {
+      setSideBarSubMenu(SideBarEnum.NONE);
+    }
+  }, [isWebView, sideBarSubMenu]);
+
+  const handleOnSelectModuleItem = (item) => {
+    setSelectedModuleItem(item);
+    setSelectedSessionItem(item?.session?.[0]);
     sideBarDispatch(setSelectedModule(item));
-    setOpenModuleSelector(false);
+    setSideBarSubMenu(SideBarEnum.NONE);
   };
+
+  const handleOnSelectSessionItem = (item) => {
+    setSelectedSessionItem(item)
+    sideBarDispatch(setSelectedSession(item));
+    setSideBarSubMenu(SideBarEnum.NONE);
+  }
+
   const handleOnClickMenuItem = ({ key }) => {
     navigate(key);
     setActiveMenuItem(key);
@@ -59,11 +84,11 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const renderMenuItems = ({ item, index }) => {
     const isActive = activeMenuItem === item.key;
     return (
-      <TouchableOpacity
+      <CustomTouchableOpacity
         style={isActive ? styles.moduleActiveMenuItems : styles.moduleMenuItems}
         onPress={() => handleOnClickMenuItem(item)}
       >
-        <Image
+        <CustomImage
           source={
             isActive
               ? getIconImages(item.icon).activeImage
@@ -76,119 +101,75 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         >
           {item.label}
         </CommonText>
-      </TouchableOpacity>
-    );
-  };
-
-  const renderSessions = ({ item, index }) => {
-    return (
-      <TouchableOpacity
-        style={styles.moduleListItem}
-        onPress={() => {
-          // TODO: Add function handling when after getting API
-        }}
-      >
-        <CommonText customTextStyle={styles.changeText}>
-          {item.label}
-        </CommonText>
-      </TouchableOpacity>
+      </CustomTouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
       {showCloseIcon && (
-        <TouchableOpacity onPress={onClose} style={styles.leftArrowButton}>
-          <Image source={images.iconClose} style={styles.closeButton} />
+        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+          <CustomImage source={images.iconClose} />
         </TouchableOpacity>
       )}
-      <View
-        style={[
-          styles.imageView,
-          showCloseIcon ? styles.imageViewStyles : styles.imgViewStyle,
-        ]}
-      >
-        <Image source={images.iconCmibLogoWhite} />
+      <View style={styles.imageView} >
+        <CustomImage
+          source={images.iconCmibLogoWhite}
+          style={styles.logoImage} />
       </View>
-      {!openModuleSelector && (
-        <CommonText customTextStyle={styles.sessionText}>
-          {intl.formatMessage({ id: "label.module" })}
-        </CommonText>
-      )}
-      <TwoRow
-        isBottomFillSpace={true}
+      {sideBarSubMenu === SideBarEnum.NONE && <TwoRow
+        isBottomFillSpace={isWebView}
         topSection={
-          <TwoColumn
-            style={openModuleSelector ? styles.openModule : styles.moduleText}
-            leftSection={
-              <View
-                style={openModuleSelector ? "" : styles.moduleSelectorheading}
-              >
-                <ResponsiveTextTruncate
-                  text={selectedModule?.label || ""}
-                  maxLength={22}
-                  style={styles.changeText}
-                  widthPercentage={0.4}
-                />
-              </View>
-            }
-            rightSection={
-              <TouchableOpacity
-                onPress={() => setOpenModuleSelector((prev) => !prev)}
-                style={styles.changeTextContainer}
-              >
-                {openModuleSelector ? (
-                  <Image
-                    source={images.iconLeftArrow}
-                    style={styles.leftArrow}
-                  />
-                ) : (
-                  <CommonText customTextStyle={styles.changeText}>
-                    {intl.formatMessage({ id: "label.change" })}
-                  </CommonText>
-                )}
-              </TouchableOpacity>
-            }
-          />
+          <SideBarItemView 
+                  title= {intl.formatMessage({ id: "label.module" })}
+                  content={selectedModuleItem.label}
+                  onPressChange={() => setSideBarSubMenu(SideBarEnum.MODULE)}
+            />
         }
-        bottomSectionStyle={styles.bottomSection}
         bottomSection={
-          openModuleSelector ? (
-            <ModuleList modules={modules} onSelectItem={handleOnSelectItem} />
-          ) : (
-            <>
-              {isWeb.isWebView ? (
-                <FlatList
-                  data={selectedModule.children}
-                  renderItem={renderMenuItems}
-                />
-              ) : (
-                <>
-                  <CommonText customTextStyle={styles.sessionText}>
-                    {intl.formatMessage({ id: "label.session" })}
-                  </CommonText>
-                  <FlatList data={items} renderItem={renderSessions} />
-                </>
-              )}
-            </>
-          )
+          <>
+            {isWebView ? (
+              <FlatList
+                data={selectedModule.children}
+                renderItem={renderMenuItems}
+              />
+            ) : (
+                <SideBarItemView 
+                  title={intl.formatMessage({ id: "label.session" })}
+                  content={selectedSessionItem?.label || ""}
+                  onPressChange={() => setSideBarSubMenu(SideBarEnum.SESSION)}
+            />
+            )}
+          </>
         }
-      />
-      <TouchableOpacity
-        style={[
-          styles.bottomView,
-          Platform.OS !== "web" && styles.mobContainer,
-        ]}
+      />}
+      {sideBarSubMenu === SideBarEnum.MODULE &&
+        <ModuleList
+        modules={modules}
+        onSelectItem={handleOnSelectModuleItem}
+        selectedModule={selectedModuleItem} />
+      }
+      {!isWebView && sideBarSubMenu === SideBarEnum.SESSION &&
+        <SessionList
+        sessionList={selectedModuleItem?.session}
+        onSelectItem={handleOnSelectSessionItem}
+        selectedSession={selectedSessionItem} />
+       }
+      <CustomTouchableOpacity
+        style={{
+          ...styles.bottomView,
+          ...(Platform.OS !== "web" && styles.mobContainer),
+        }}
         onPress={handleBottomViewNavigation}
       >
         <View style={styles.imageTextView}>
-          <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
+          <CustomImage source={images.iconFooterGlobal} style={styles.globalIcon} />
           <CommonText customTextStyle={styles.visitWebsiteText}>
             {intl.formatMessage({ id: "label.visit_website" })}
           </CommonText>
         </View>
-        <Image source={images.iconRightArrow} style={styles.globalIcon} />
-      </TouchableOpacity>
+        <CustomImage source={images.iconRightArrow} style={styles.globalIcon} />
+      </CustomTouchableOpacity>
     </View>
   );
 };
