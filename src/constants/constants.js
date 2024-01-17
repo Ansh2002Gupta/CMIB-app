@@ -46,11 +46,11 @@ export const STATUS_CODES = {
 };
 
 export const ENTITY_OPTIONS = [
-  { label: "Corporate", value: "corporate" },
-  { label: "Non-Corporate", value: "non-corporate" },
+  { label: "Corporate", value: "Corporate" },
+  { label: "Non-Corporate", value: "Non-corporate" },
   {
     label: "Firm of Chartered Accountants",
-    value: "firm of chartered accountants",
+    value: "Firm of chartered accountants",
   },
 ];
 
