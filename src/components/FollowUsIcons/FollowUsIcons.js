@@ -5,34 +5,45 @@ import { View, Image } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import styles from "./FollowUsIcons.style";
+import useIsWebView from "../../hooks/useIsWebView";
+
+const socialMediaPlatforms = [
+  "Twitter",
+  "Facebook",
+  "Youtube",
+  "Linkedin",
+  "Instagram",
+  "Telegram",
+];
 
 const FollowUsIcons = () => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
   const icons = useTheme("icons");
+
   return (
     <View style={styles.containerStyle}>
-      <CommonText customTextStyle={styles.followUsText} fontWeight="600">
+      <CommonText
+        customTextStyle={{ ...styles.followUsText, ...styles.webFollowUsText }}
+        fontWeight={isWebView ? "500" : "600"}
+      >
         {intl.formatMessage({ id: "label.follow_us" })}
       </CommonText>
-      <View style={styles.imageView}>
-        <View style={styles.imageStyle}>
-          <Image source={icons.iconTwitter} />
-        </View>
-        <View style={styles.imageStyle}>
-          <Image source={icons.iconFacebook} />
-        </View>
-        <View style={styles.imageStyle}>
-          <Image source={icons.iconYoutube} />
-        </View>
-        <View style={styles.imageStyle}>
-          <Image source={icons.iconLinkedin} />
-        </View>
-        <View style={styles.imageStyle}>
-          <Image source={icons.iconInstagram} />
-        </View>
-        <View style={styles.imageStyle}>
-          <Image source={icons.iconTelegram} />
-        </View>
+      <View style={isWebView ? styles.webImageView : styles.imageView}>
+        {socialMediaPlatforms.map((platform, index) => (
+          <View
+            key={index}
+            style={isWebView ? styles.webImageStyle : styles.imageStyle}
+          >
+            <Image
+              source={
+                isWebView
+                  ? icons[`icon${platform}Web`]
+                  : icons[`icon${platform}`]
+              }
+            />
+          </View>
+        ))}
       </View>
     </View>
   );
