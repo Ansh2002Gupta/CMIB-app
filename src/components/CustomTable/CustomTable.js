@@ -26,6 +26,7 @@ const CustomTable = ({
   currentPage,
   currentRecords,
   data,
+  filterCategory,
   getColoumConfigs,
   getStatusStyle,
   handlePageChange,
@@ -192,8 +193,9 @@ const CustomTable = ({
       />
       {showModal && (
         <FilterModal
-          onPressIconCross={handleFilterModal}
+          filterCategory={filterCategory}
           data={data}
+          onPressIconCross={handleFilterModal}
           onApplyFilter={onApplyFilter}
         />
       )}
@@ -206,6 +208,7 @@ CustomTable.defaultProps = {
   currentPage: 1,
   currentRecords: [],
   data: [{}],
+  filterCategory: [],
   getColoumConfigs: () => {},
   getStatusStyle: () => {},
   handlePageChange: () => {},
@@ -231,6 +234,7 @@ CustomTable.propTypes = {
   currentPage: PropTypes.number.isRequired,
   currentRecords: PropTypes.array.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,

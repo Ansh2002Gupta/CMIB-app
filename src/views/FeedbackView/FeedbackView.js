@@ -19,6 +19,7 @@ const FeedbackView = () => {
   const {
     getColoumConfigs,
     getStatusStyle,
+    filterCategory,
     headingTexts,
     statusText,
     subHeadingText,
@@ -64,6 +65,7 @@ const FeedbackView = () => {
             currentPage,
             currentRecords,
             data: feedbackData,
+            filterCategory,
             getColoumConfigs,
             getStatusStyle,
             handlePageChange,

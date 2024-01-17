@@ -1,5 +1,5 @@
-import React, {useMemo } from "react";
-import PropTypes from "prop-types"; 
+import React, { useMemo } from "react";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View, ScrollView, Platform } from "@unthinkable/react-core-components";
 
@@ -16,8 +16,12 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./FilterModal.style";
 
-const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
-
+const FilterModal = ({
+  onPressIconCross,
+  data,
+  onApplyFilter,
+  filterCategory,
+}) => {
   const {
     activeCategories,
     filterData,
@@ -134,14 +138,14 @@ const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
           <TwoColumn
             leftSection={
               <>
-                <RenderCategoryButton
-                  title={"Status"}
-                  onClick={handleCategoryChange}
-                />
-                <RenderCategoryButton
-                  title={"Query Type"}
-                  onClick={handleCategoryChange}
-                />
+                {filterCategory.map((item) => {
+                  return (
+                    <RenderCategoryButton
+                      title={item}
+                      onClick={handleCategoryChange}
+                    />
+                  );
+                })}
               </>
             }
             leftSectionStyle={styles.leftSection}
@@ -158,12 +162,7 @@ const FilterModal = ({ onPressIconCross, data, onApplyFilter }) => {
           />
         }
         bottomSection={
-          <View
-            style={
-              isWebView ? styles.bottomSection : styles.bottomSectionMobile
-            }
-          >
-            {isWebView && <View style={styles.bottomView} />}
+          <View style={styles.bottomSection}>
             <ActionPairButton
               buttonOneText={CANCEL_TEXT}
               buttonTwoText={SHOW_RESULT_TEXT}
@@ -183,6 +182,6 @@ FilterModal.propTypes = {
   onPressIconCross: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
   onApplyFilter: PropTypes.func.isRequired,
-}
+};
 
 export default FilterModal;
