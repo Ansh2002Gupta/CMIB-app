@@ -11,23 +11,29 @@ const SessionDropdown = ({ options, onSelect, optionStyle, sessionRef }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   return (
-    <View style={styles.modalContent(currentBreakpoint)} ref={sessionRef}>
-      {options.map((option, index) => (
-        <CustomTouchableOpacity
-          key={index}
-          style={styles.option}
-          onPress={() => onSelect(option.label)}
-        >
-          <CommonText customTextStyle={[styles.optionTextStyle, optionStyle]}>
-            {option.label}
-          </CommonText>
-        </CustomTouchableOpacity>
-      ))}
-    </View>
+    <>
+      {
+      options.length > 0 &&
+      <View style={styles.modalContent(currentBreakpoint)} ref={sessionRef}>
+        {options.map((option, index) => (
+          <CustomTouchableOpacity
+            key={index}
+            style={styles.option}
+            onPress={() => onSelect(option.label)}
+          >
+            <CommonText customTextStyle={[styles.optionTextStyle, optionStyle]}>
+              {option.label}
+            </CommonText>
+          </CustomTouchableOpacity>
+        ))}
+      </View>
+    }
+    </>
   );
 };
 
 SessionDropdown.defaultProps = {
+  options: [],
   optionStyle: {},
   sessionRef: {},
 };

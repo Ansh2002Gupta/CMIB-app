@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
@@ -48,8 +48,6 @@ const styles = StyleSheet.create({
     width: 15,
   },
   closeButton: {
-    height: 24,
-    width: 24,
     marginTop: 16,
     marginLeft: 16,
   },
@@ -122,6 +120,18 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     height: 54,
+  },
+  closeIcon: {
+    ...Platform.select({
+      web: {
+        height: 15,
+        width: 15,
+      },
+      default: {
+        height: 24,
+        width: 24,
+      }
+    }),
   }
 });
 

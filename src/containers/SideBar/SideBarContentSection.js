@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import {
   FlatList,
   Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import { useIntl } from "react-intl";
 
 import { TwoRow } from "../../core/layouts";
 
@@ -16,7 +16,7 @@ import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ModuleList from "../../components/ModuleList/ModuleList";
 import SessionList from "../../components/SessionList/SessionList";
-import SideBarEnum from "./sideBarEnum";
+import SideBarContentEnum from "./sideBarEnum";
 import SideBarItemView from "../../components/SideBarItemView/SideBarItemView";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { setSelectedModule, setSelectedSession } from "../../globalContext/sidebar/sidebarActions";
@@ -35,7 +35,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 
-  const [sideBarSubMenu, setSideBarSubMenu] = useState(SideBarEnum.NONE);
+  const [sideBarContent, setSideBarSubMenu] = useState(SideBarContentEnum.NONE);
   const [activeMenuItem, setActiveMenuItem] = useState(
     selectedModule?.children?.[0]?.key
   );
@@ -49,22 +49,22 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   );
 
   useEffect(() => {
-    if (isWebView && sideBarSubMenu === SideBarEnum.SESSION) {
-      setSideBarSubMenu(SideBarEnum.NONE);
+    if (isWebView && sideBarContent === SideBarContentEnum.SESSION) {
+      setSideBarSubMenu(SideBarContentEnum.NONE);
     }
-  }, [isWebView, sideBarSubMenu]);
+  }, [isWebView, sideBarContent]);
 
   const handleOnSelectModuleItem = (item) => {
     setSelectedModuleItem(item);
     setSelectedSessionItem(item?.session?.[0]);
     sideBarDispatch(setSelectedModule(item));
-    setSideBarSubMenu(SideBarEnum.NONE);
+    setSideBarSubMenu(SideBarContentEnum.NONE);
   };
 
   const handleOnSelectSessionItem = (item) => {
     setSelectedSessionItem(item)
     sideBarDispatch(setSelectedSession(item));
-    setSideBarSubMenu(SideBarEnum.NONE);
+    setSideBarSubMenu(SideBarContentEnum.NONE);
   }
 
   const handleOnClickMenuItem = ({ key }) => {
@@ -108,8 +108,13 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   return (
     <View style={styles.container}>
       {showCloseIcon && (
-        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-          <CustomImage source={images.iconClose} />
+        <TouchableOpacity
+          onPress={onClose}
+          style={styles.closeButton}>
+          <CustomImage
+            source={images.iconClose} 
+            style={styles.closeIcon}
+            />
         </TouchableOpacity>
       )}
       <View style={styles.imageView} >
@@ -117,13 +122,13 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           source={images.iconCmibLogoWhite}
           style={styles.logoImage} />
       </View>
-      {sideBarSubMenu === SideBarEnum.NONE && <TwoRow
+      {sideBarContent === SideBarContentEnum.NONE && <TwoRow
         isBottomFillSpace={isWebView}
         topSection={
           <SideBarItemView 
                   title= {intl.formatMessage({ id: "label.module" })}
                   content={selectedModuleItem.label}
-                  onPressChange={() => setSideBarSubMenu(SideBarEnum.MODULE)}
+                  onPressChange={() => setSideBarSubMenu(SideBarContentEnum.MODULE)}
             />
         }
         bottomSection={
@@ -137,19 +142,19 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 <SideBarItemView 
                   title={intl.formatMessage({ id: "label.session" })}
                   content={selectedSessionItem?.label || ""}
-                  onPressChange={() => setSideBarSubMenu(SideBarEnum.SESSION)}
+                  onPressChange={() => setSideBarSubMenu(SideBarContentEnum.SESSION)}
             />
             )}
           </>
         }
       />}
-      {sideBarSubMenu === SideBarEnum.MODULE &&
+      {sideBarContent === SideBarContentEnum.MODULE &&
         <ModuleList
         modules={modules}
         onSelectItem={handleOnSelectModuleItem}
         selectedModule={selectedModuleItem} />
       }
-      {!isWebView && sideBarSubMenu === SideBarEnum.SESSION &&
+      {!isWebView && sideBarContent === SideBarContentEnum.SESSION &&
         <SessionList
         sessionList={selectedModuleItem?.session}
         onSelectItem={handleOnSelectSessionItem}

@@ -1,7 +1,7 @@
-const SideBarEnum = {
+const SideBarContentEnum = {
     MODULE: 'MODULE',
     SESSION: 'SESSION',
     NONE: 'NONE'
 }
 
-export default SideBarEnum;
+export default SideBarContentEnum;
