@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { FlatList } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
+import { FlatList } from "@unthinkable/react-core-components";
 
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import ResponsiveTextTruncate from "../ResponsiveTextTruncate/ResponsiveTextTruncate";
 import SearchView from "../SearchView";
 import styles from "./SessionList.style"
 
-const SessionList = ({ sessionList, onSelectItem, selectedSession }) => {
-
+const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
     const [searchList, setSearchList] = useState(sessionList);
 
     const renderItem = ({ item: session }) => (
@@ -53,9 +52,9 @@ const SessionList = ({ sessionList, onSelectItem, selectedSession }) => {
 };
 
 SessionList.propTypes = {
-    sessionList: PropTypes.array.isRequired,
     onSelectItem: PropTypes.func.isRequired,
     selectedSession: PropTypes.object.isRequired,
+    sessionList: PropTypes.array.isRequired,
 };
 
 export default SessionList;

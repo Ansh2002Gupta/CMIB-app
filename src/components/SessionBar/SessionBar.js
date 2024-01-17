@@ -16,12 +16,10 @@ const SessionBar = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
-
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedValue, setSelectedValue] = useState(
     selectedModule?.session?.[0]?.label
   );
-
   const sessionRef = useRef(null);
   useOutsideClick(sessionRef, () => setShowDropdown(false));
 

@@ -1,7 +1,7 @@
 const SideBarContentEnum = {
     MODULE: 'MODULE',
+    NONE: 'NONE',
     SESSION: 'SESSION',
-    NONE: 'NONE'
 }
 
 export default SideBarContentEnum;

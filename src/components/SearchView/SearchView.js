@@ -1,20 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Platform, TextInput, View } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
+import { Platform, TextInput, View } from "@unthinkable/react-core-components";
 
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
 import { DEBOUNCE_TIME } from "../../constants/constants";
 import styles from "./searchView.style";
 
-const SearchView = ({ data,
-  onSearch,
-  customParentStyle,
-  customInputStyle,
-  searchLogic }) => {
+const SearchView = ({ customInputStyle, customParentStyle, data, onSearch, searchLogic }) => {
   const SearchIcon = images.iconSearch;
-  const ClearIcon = images.iconCross; 
+  const ClearIcon = images.iconCross;
   const [query, setQuery] = useState("");
   const debounceTimeout = useRef(null);
   const intl = useIntl();
@@ -71,11 +67,11 @@ const SearchView = ({ data,
         placeholder={intl.formatMessage({ id: "label.search" })}
         {...platformSpecificProps}
       />
-       {query.length > 0 && (
+      {query.length > 0 && (
         <TouchableImage
           source={ClearIcon}
           onPress={clearSearch}
-          imageStyle={styles.clearIcon} 
+          imageStyle={styles.clearIcon}
           isSvg={false}
         />
       )}
@@ -84,20 +80,20 @@ const SearchView = ({ data,
 };
 
 SearchView.defaultProps = {
-  onSearch: () => {},
+  customInputStyle: {},
   customParentStyle: {},
-  inputParentStyle: {},
-  searchLogic: () => {},
+  onSearch: () => { },
+  searchLogic: () => { },
 }
 
 SearchView.propTypes = {
+  customInputStyle: PropTypes.object,
+  customParentStyle: PropTypes.object,
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.object),
   ]).isRequired,
   onSearch: PropTypes.func,
-  customParentStyle: PropTypes.object,
-  inputParentStyle: PropTypes.object,
   searchLogic: PropTypes.func,
 };
 

@@ -16,7 +16,7 @@ import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ModuleList from "../../components/ModuleList/ModuleList";
 import SessionList from "../../components/SessionList/SessionList";
-import SideBarContentEnum from "./sideBarEnum";
+import SideBarContentEnum from "./sideBarContentEnum";
 import SideBarItemView from "../../components/SideBarItemView/SideBarItemView";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { setSelectedModule, setSelectedSession } from "../../globalContext/sidebar/sidebarActions";
@@ -30,22 +30,18 @@ import styles from "./SideBar.style";
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
-
   const navigate = useNavigate();
   const { isWebView } = useIsWebView();
   const intl = useIntl();
-
   const [sideBarContent, setSideBarSubMenu] = useState(SideBarContentEnum.NONE);
   const [activeMenuItem, setActiveMenuItem] = useState(
     selectedModule?.children?.[0]?.key
   );
-
   const [selectedModuleItem, setSelectedModuleItem] = useState(
     modules[0]
- );
-
+  );
   const [selectedSessionItem, setSelectedSessionItem] = useState(
-     selectedModuleItem?.session?.[0]
+    selectedModuleItem?.session?.[0]
   );
 
   useEffect(() => {
@@ -112,9 +108,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           onPress={onClose}
           style={styles.closeButton}>
           <CustomImage
-            source={images.iconClose} 
+            source={images.iconClose}
             style={styles.closeIcon}
-            />
+          />
         </TouchableOpacity>
       )}
       <View style={styles.imageView} >
@@ -125,11 +121,11 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       {sideBarContent === SideBarContentEnum.NONE && <TwoRow
         isBottomFillSpace={isWebView}
         topSection={
-          <SideBarItemView 
-                  title= {intl.formatMessage({ id: "label.module" })}
-                  content={selectedModuleItem.label}
-                  onPressChange={() => setSideBarSubMenu(SideBarContentEnum.MODULE)}
-            />
+          <SideBarItemView
+            title={intl.formatMessage({ id: "label.module" })}
+            content={selectedModuleItem.label}
+            onPressChange={() => setSideBarSubMenu(SideBarContentEnum.MODULE)}
+          />
         }
         bottomSection={
           <>
@@ -139,27 +135,27 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 renderItem={renderMenuItems}
               />
             ) : (
-                <SideBarItemView 
-                  title={intl.formatMessage({ id: "label.session" })}
-                  content={selectedSessionItem?.label || ""}
-                  onPressChange={() => setSideBarSubMenu(SideBarContentEnum.SESSION)}
-            />
+              <SideBarItemView
+                title={intl.formatMessage({ id: "label.session" })}
+                content={selectedSessionItem?.label || ""}
+                onPressChange={() => setSideBarSubMenu(SideBarContentEnum.SESSION)}
+              />
             )}
           </>
         }
       />}
       {sideBarContent === SideBarContentEnum.MODULE &&
         <ModuleList
-        modules={modules}
-        onSelectItem={handleOnSelectModuleItem}
-        selectedModule={selectedModuleItem} />
+          modules={modules}
+          onSelectItem={handleOnSelectModuleItem}
+          selectedModule={selectedModuleItem} />
       }
       {!isWebView && sideBarContent === SideBarContentEnum.SESSION &&
         <SessionList
-        sessionList={selectedModuleItem?.session}
-        onSelectItem={handleOnSelectSessionItem}
-        selectedSession={selectedSessionItem} />
-       }
+          sessionList={selectedModuleItem?.session}
+          onSelectItem={handleOnSelectSessionItem}
+          selectedSession={selectedSessionItem} />
+      }
       <CustomTouchableOpacity
         style={{
           ...styles.bottomView,

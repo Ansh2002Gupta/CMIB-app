@@ -10,7 +10,6 @@ import styles from "./ModuleList.style";
 
 const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
   const [userProfileState] = useContext(UserProfileContext);
-
   const renderrableModules = getAccessibleModulesList({
     allModules: modules,
     accessibleModules: userProfileState.userDetails?.role || [],
@@ -27,7 +26,7 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
           }
           key={module.key}
           onPress={() =>
-            !module.sectionHeading ? onSelectItem(module) : () => {}
+            !module.sectionHeading ? onSelectItem(module) : () => { }
           }
         >
           <CommonText

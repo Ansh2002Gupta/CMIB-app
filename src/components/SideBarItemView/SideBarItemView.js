@@ -9,7 +9,7 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import ResponsiveTextTruncate from "../ResponsiveTextTruncate/ResponsiveTextTruncate";
 import styles from "./SideBarItemView.style"
 
-const SideBarItemView = ({ title, content, onPressChange }) => {
+const SideBarItemView = ({ content, onPressChange, title }) => {
     const intl = useIntl();
 
     return (
@@ -17,7 +17,6 @@ const SideBarItemView = ({ title, content, onPressChange }) => {
             <CommonText customTextStyle={styles.titleText}>
                 {title}
             </CommonText>
-
             <TwoColumn
                 style={styles.contentText}
                 leftSection={
@@ -43,9 +42,9 @@ const SideBarItemView = ({ title, content, onPressChange }) => {
 }
 
 SideBarItemView.propTypes = {
-    title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     onPressChange: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
 };
 
 export default SideBarItemView;
