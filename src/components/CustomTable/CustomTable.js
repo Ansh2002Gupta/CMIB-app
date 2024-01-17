@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { FlatList, View } from "@unthinkable/react-core-components";
+import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -61,6 +61,16 @@ const CustomTable = ({
   };
 
   useHandleInfiniteScroll(handleLoadMore);
+
+  const flatlistProps =
+    Platform.OS.toLowerCase() === "web"
+      ? {}
+      : {
+          onEndReached: handleLoadMore,
+          onEndReachedThreshold: 0.1,
+        };
+
+  const webProps = Platform.OS === "web" ? { size: "xs" } : {};
 
   return (
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
@@ -150,13 +160,12 @@ const CustomTable = ({
                       </>
                     );
                   }}
-                  onEndReached={isWebView ? null : handleLoadMore}
-                  onEndReachedThreshold={isWebView ? null : 0.1}
+                  {...flatlistProps}
                   ListFooterComponent={() => {
                     if (loadingMore) {
                       return (
                         <View style={styles.loadingStyle}>
-                          <Spinner size={"sm"} thickness={3} />
+                          <Spinner thickness={2} {...webProps} />
                         </View>
                       );
                     }

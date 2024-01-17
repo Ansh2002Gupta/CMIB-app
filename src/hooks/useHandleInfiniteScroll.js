@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
+import { Platform } from "@unthinkable/react-core-components";
+
 import useIsWebView from "./useIsWebView";
+
+const isWeb = Platform.OS.toLowerCase() === "web";
 
 const useHandleInfiniteScroll = (scrollHandler) => {
   const { isWebView } = useIsWebView();
@@ -17,8 +21,11 @@ const useHandleInfiniteScroll = (scrollHandler) => {
     }
   };
   useEffect(() => {
-    window.addEventListener("scroll", handleInfinteScroll);
-    return () => window.removeEventListener("scroll", handleInfinteScroll);
+    if (isWeb) {
+      window.addEventListener("scroll", handleInfinteScroll);
+      return () => window.removeEventListener("scroll", handleInfinteScroll);
+    }
+    return;
   }, [handleInfinteScroll]);
 };
 
