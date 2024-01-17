@@ -1,11 +1,11 @@
 import { Platform } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
 const style = {
   mainView: {
     flexDirection: "row",
     alignItems: "center",
-    paddingTop: 4,
   },
   yesButtonStyle: {
     width: 16,
@@ -40,7 +40,7 @@ const style = {
     backgroundColor: colors.green,
   },
   textStyle: {
-    fontSize: 14,
+    fontSize: 12,
     color: colors.black,
     paddingLeft: 8,
     paddingRight: 16,

@@ -5,14 +5,17 @@ import { View } from "@unthinkable/react-core-components";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
 import CustomButton from "../../../components/CustomButton";
+import JobDetails from "./JobDetails";
 import styles from "./ApplicationFormContainer.style";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const intl = useIntl();
 
   return (
-    <View>
-      <ApplicationFormStepper activeStep={activeStep} intl={intl} />
+    <View style={styles.mainViewStyle}>
+      <ApplicationFormStepper activeStep={activeStep} />
+      <JobDetails />
+      {/* TODO This button will be in seprate form file*/}
       <View style={styles.actionBtnContainer}>
         <CustomButton
           onPress={() => {

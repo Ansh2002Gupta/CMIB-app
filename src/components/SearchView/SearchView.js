@@ -14,6 +14,7 @@ const SearchView = ({ data,
   customInputStyle,
   searchLogic }) => {
   const SearchIcon = images.iconSearch;
+  const ClearIcon = images.iconCross; 
   const [query, setQuery] = useState("");
   const debounceTimeout = useRef(null);
   const intl = useIntl();
@@ -56,6 +57,10 @@ const SearchView = ({ data,
     setQuery(text);
   };
 
+  const clearSearch = () => {
+    setQuery('');
+  };
+
   return (
     <View style={{ ...styles.searchParent, ...customParentStyle }}>
       <TouchableImage source={SearchIcon} disabled={true} />
@@ -66,6 +71,14 @@ const SearchView = ({ data,
         placeholder={intl.formatMessage({ id: "label.search" })}
         {...platformSpecificProps}
       />
+       {query.length > 0 && (
+        <TouchableImage
+          source={ClearIcon}
+          onPress={clearSearch}
+          imageStyle={styles.clearIcon} 
+          isSvg={false}
+        />
+      )}
     </View>
   );
 };

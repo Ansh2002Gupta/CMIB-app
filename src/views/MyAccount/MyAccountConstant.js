@@ -12,6 +12,7 @@ export const options = [
     title: "label.tickets",
     id: 2,
     iconLeft: images.ticketIcon,
+    navigateTo: navigations.TICKETS,
   },
   {
     title: "label.feedback",

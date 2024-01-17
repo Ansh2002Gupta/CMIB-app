@@ -20,6 +20,7 @@ import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import RoundTwo from "../views/RoundTwoView";
 import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
+import TicketsView from '../views/TicketsView/index'
 import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -119,6 +120,16 @@ const config = [
     ],
   },
   {
+    pagePath: navigations.TICKETS,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
+    views: [
+      {
+        viewPath: "",
+        element: <TicketsView />,
+      },
+    ],
+  },
+  {
     pagePath: navigations.APPLICATION_FORM,
     element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
@@ -147,7 +158,7 @@ const config = [
         element: <RoundOne />,
       },
       {
-        viewPath: "applicationForm",
+        viewPath: navigations.APPLICATION_FORM,
         element: <RoundOneApplicationForm />,
       },
     ],

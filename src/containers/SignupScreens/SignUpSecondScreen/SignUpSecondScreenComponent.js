@@ -21,7 +21,7 @@ import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { validateEmail } from "../../../constants/commonFunctions";
 
-const SignUpSecondScreenComponent = ({ tabHandler }) => {
+const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
   const {
@@ -214,7 +214,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
         telephone_number: telephoneNo,
         address: address,
         std_country_code: code,
-        industry_type: currentIndustry,
+        industry_type: parseInt(currentIndustry),
         state_code: state,
       };
 
@@ -249,6 +249,7 @@ const SignUpSecondScreenComponent = ({ tabHandler }) => {
         intl,
         isLoading: isLoading,
         onGoBack,
+        onClickGoToLogin,
         onClickNext,
         stateOptions: stateResult,
         validationError,

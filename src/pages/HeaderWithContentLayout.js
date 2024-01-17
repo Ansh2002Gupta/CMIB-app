@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Outlet } from "../routes";
-import {
-  Modal,
-  Platform,
-  ScrollView,
-} from "@unthinkable/react-core-components";
+import { Platform, ScrollView } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
@@ -13,16 +9,18 @@ import MainLayout from "../layouts/MainLayout";
 import BottomBar from "../containers/BottomBar";
 import Footer from "../containers/Footer";
 import Header from "../containers/Header";
+import SidebarModal from "../components/SideBarModal";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
-import { getAuthToken } from "../utils/getAuthToken";
 import useIsWebView from "../hooks/useIsWebView";
-import commonStyles from "../theme/styles/commonStyles";
+import { getAuthToken } from "../utils/getAuthToken";
 import images from "../images";
-import Styles from "./HeaderWithContentLayout.style";
+import commonStyles from "../theme/styles/commonStyles";
+import styles from "./HeaderWithContentLayout.style";
 
 function HeaderWithContentLayout({ doesExcludeHeader }) {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   useEffect(() => {
     const checkAuthToken = async () => {
       try {
@@ -61,22 +59,21 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
   return (
     <>
       {modalSideBar && (
-        <Modal
+        <SidebarModal
           isVisible={modalSideBar}
           animationIn="slideInLeft"
           animationOut="slideOutLeft"
-          style={Styles().modalStyle}
+          style={styles().modalStyle}
         >
           {Platform.OS.toLowerCase() === "web" ? (
-            <ScrollView style={Styles().sideBarSection}>
+            <ScrollView style={styles().sideBarSection}>
               {sidebarComponent}
             </ScrollView>
           ) : (
             sidebarComponent
           )}
-        </Modal>
+        </SidebarModal>
       )}
-
       <MainLayout
         header={
           doesExcludeHeader && !isWebView ? null : (
@@ -87,17 +84,17 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
             />
           )
         }
-        bottomSection={isAuthenticated && (!isWebView ? <BottomBar /> : null)}
+        bottomSection={isAuthenticated && (!isWebView && !doesExcludeHeader ? <BottomBar /> : null)}
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
         footer={!isAuthenticated && isWebView && <Footer />}
         topSectionStyle={isMdOrGreater && commonStyles.headerContainer}
         isRightFillSpace={false}
         isLeftFillSpace={false}
-        rightSectionStyle={Styles(currentBreakpoint).rightSectionStyle}
-        leftSectionStyle={Styles(currentBreakpoint).leftSectionStyle}
+        rightSectionStyle={styles(currentBreakpoint).rightSectionStyle}
+        leftSectionStyle={styles(currentBreakpoint).leftSectionStyle}
         bottomSectionStyle={
-          isMdOrGreater ? Styles().bottomSectionStyle : Styles().bottomBar
+          isMdOrGreater ? styles().bottomSectionStyle : styles().bottomBar
         }
       />
     </>
