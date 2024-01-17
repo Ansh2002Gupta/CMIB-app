@@ -16,6 +16,7 @@ import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
 import { getRenderText } from "../../utils/util";
+import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
@@ -57,6 +58,8 @@ const CustomTable = ({
     setCurrentRecords(filterData);
     handleFilterModal();
   };
+
+  useHandleInfiniteScroll(handleLoadMore);
 
   return (
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
@@ -152,7 +155,7 @@ const CustomTable = ({
                     if (loadingMore) {
                       return (
                         <View style={styles.loadingStyle}>
-                          <Spinner />
+                          <Spinner size={"sm"} thickness={3} />
                         </View>
                       );
                     }
@@ -174,8 +177,6 @@ const CustomTable = ({
                       currentPage,
                       handlePageChange,
                       handleRowPerPageChange,
-                      // indexOfFirstRecord,
-                      // indexOfLastRecord,
                       rowsLimit,
                       rowsToShow,
                       siblingCount: 1,
