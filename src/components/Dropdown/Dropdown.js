@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Select from "react-select";
 
-import styles from "./Dropdown.style";
+import { customTheme, customStyles } from "./Dropdown.style";
 
 const Dropdown = ({
   data,
@@ -13,33 +14,27 @@ const Dropdown = ({
   value,
   valueField,
 }) => {
+  const options = data.map((option) => ({
+    value: String(option[valueField]),
+    label: String(option[labelField]),
+  }));
+  const selectedOption = options.find(
+    (option) => option.value === String(value)
+  );
+
   return (
-    <select
-      style={{
-        ...styles.dropdownContainer,
-        ...dropdownStyle,
-        ...(value === "" ? placeholderStyle : {}),
-      }}
-      value={value}
-      onChange={(e) => {
-        onChange(e.target.value);
-      }}
-      placeholder={placeholder}
-    >
-      <option
-        value=""
-        disabled={value !== ""}
-        hidden={value !== ""}
-        selected={value === ""}
-      >
-        {placeholder || ""}
-      </option>
-      {data.map((option, index) => (
-        <option key={index} value={option[valueField]}>
-          {option[labelField]}
-        </option>
-      ))}
-    </select>
+    <div>
+      <Select
+        value={selectedOption}
+        placeholder={placeholder}
+        options={options}
+        styles={customStyles(dropdownStyle, placeholderStyle)}
+        theme={customTheme}
+        onChange={(selectedItem) => {
+          onChange(selectedItem.value);
+        }}
+      />
+    </div>
   );
 };
 
@@ -47,11 +42,11 @@ Dropdown.defaultProps = {
   data: [],
   dropdownStyle: {},
   labelField: "",
-  onChange: ()=>{},
+  onChange: () => {},
   placeholder: "",
   placeholderStyle: {},
   value: "",
-  valueField: ""
+  valueField: "",
 };
 
 Dropdown.propTypes = {

@@ -44,6 +44,10 @@ const style = {
     lineHeight: 22,
     color: colors.darkGrey,
   },
+  iconStyle: {
+    height: 48,
+    width: 48,
+  },
 };
 
 export default style;
