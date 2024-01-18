@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { FlatList, View } from "@unthinkable/react-core-components";
@@ -200,7 +200,7 @@ const CustomTable = ({
           filterState={filterState}
           initialFilterState={initialFilterState}
           setFilterState={setFilterState}
-          onPressIconCross={handleFilterModal}
+          setShowModal={setShowModal}
           onApplyFilter={onApplyFilter}
         />
       )}

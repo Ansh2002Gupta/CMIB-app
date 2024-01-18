@@ -12,7 +12,6 @@ import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import useFilterModal from "./controller/useFilterModal";
-import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./FilterModal.style";
 
@@ -21,9 +20,9 @@ const FilterModal = ({
   filterCategory,
   filterState,
   initialFilterState,
-  onPressIconCross,
   onApplyFilter,
   setFilterState,
+  setShowModal,
 }) => {
   const {
     activeCategories,
@@ -34,17 +33,18 @@ const FilterModal = ({
     handleClearFilter,
     selectedStatus,
     selectedQueryType,
+    onCancel,
   } = useFilterModal(
     data,
     filterState,
     initialFilterState,
     onApplyFilter,
-    setFilterState
+    setFilterState,
+    setShowModal
   );
 
   const isWeb = Platform.OS.toLowerCase() === "web";
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
 
   const { statusCounts, queryTypeCounts } = useMemo(() => {
     const statusCounters = {};
@@ -178,7 +178,7 @@ const FilterModal = ({
               buttonTwoText={SHOW_RESULT_TEXT}
               displayLoader={false}
               isButtonTwoGreen
-              onPressButtonOne={onPressIconCross}
+              onPressButtonOne={onCancel}
               onPressButtonTwo={filterData}
             />
           </View>
@@ -192,9 +192,9 @@ FilterModal.propTypes = {
   data: PropTypes.array.isRequired,
   filterState: PropTypes.object.isRequired,
   initialFilterState: PropTypes.object.isRequired,
-  setFilterState: PropTypes.func.isRequired,
-  onPressIconCross: PropTypes.func.isRequired,
   onApplyFilter: PropTypes.func.isRequired,
+  setFilterState: PropTypes.func.isRequired,
+  setShowModal: PropTypes.func.isRequired,
 };
 
 export default FilterModal;

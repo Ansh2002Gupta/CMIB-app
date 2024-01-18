@@ -1,11 +1,21 @@
+import { useRef } from "react";
+
 const useFilterModal = (
   data,
   filterState,
   initialFilterState,
   onApplyFilter,
-  setFilterState
+  setFilterState,
+  setShowModal
 ) => {
   const { selectedStatus, selectedQueryType, activeCategories } = filterState;
+
+  const prevFilterState = useRef(filterState);
+
+  const onCancel = () => {
+    setShowModal(false);
+    setFilterState(prevFilterState.current);
+  };
 
   const handleCategoryChange = (category) => {
     setFilterState((prevState) => {
@@ -60,14 +70,15 @@ const useFilterModal = (
   };
 
   return {
-    selectedStatus,
-    selectedQueryType,
     activeCategories,
     handleCategoryChange,
     handleStatusChange,
     handleQueryTypeChange,
-    filterData,
     handleClearFilter,
+    filterData,
+    onCancel,
+    selectedStatus,
+    selectedQueryType,
   };
 };
 
