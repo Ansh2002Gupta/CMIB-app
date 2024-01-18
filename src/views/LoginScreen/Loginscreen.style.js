@@ -88,8 +88,15 @@ const style = {
     paddingBottom: 16,
     paddingTop: 32,
   },
-  minHeight: { minHeight: 500 },
-  gapForWebView: { gap: 24 },
+  minHeight: {
+    minHeight: 500,
+  },
+  gapForWebView: {
+    gap: 24,
+  },
+  marginBottom: {
+    marginBottom: 0,
+  },
 
   // Web view related Styles
   webView: {
