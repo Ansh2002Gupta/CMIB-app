@@ -7,13 +7,18 @@ import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import styles from "./SessionDropdown.style";
 
-const SessionDropdown = ({ onSelect, options, optionStyle, selectedItem, sessionRef }) => {
+const SessionDropdown = ({
+  onSelect,
+  options,
+  optionStyle,
+  selectedItem,
+  sessionRef,
+}) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   return (
     <>
-      {
-        options.length > 0 &&
+      {options.length > 0 && (
         <View style={styles.modalContent(currentBreakpoint)} ref={sessionRef}>
           {options.map((option, index) => (
             <CustomTouchableOpacity
@@ -23,14 +28,14 @@ const SessionDropdown = ({ onSelect, options, optionStyle, selectedItem, session
             >
               <CommonText
                 customTextStyle={[styles.optionTextStyle, optionStyle]}
-                fontWeight={option.label === selectedItem ? '600' : '500'}
+                fontWeight={option.label === selectedItem ? "600" : "500"}
               >
                 {option.label}
               </CommonText>
             </CustomTouchableOpacity>
           ))}
         </View>
-      }
+      )}
     </>
   );
 };

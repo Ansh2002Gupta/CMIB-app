@@ -17,13 +17,13 @@ const sideBarReducer = (state, action) => {
       return {
         ...state,
         selectedSession: { ...action.payload },
-      }
+      };
     default:
       return state;
   }
 };
 
-export const SideBarContext = createContext([initialState, () => { }]);
+export const SideBarContext = createContext([initialState, () => {}]);
 
 const SideBarProvider = ({ children }) => {
   const [sideBarState, sideBarDispatch] = useReducer(

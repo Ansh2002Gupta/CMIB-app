@@ -8,7 +8,13 @@ import images from "../../images";
 import { DEBOUNCE_TIME } from "../../constants/constants";
 import styles from "./searchView.style";
 
-const SearchView = ({ customInputStyle, customParentStyle, data, onSearch, searchLogic }) => {
+const SearchView = ({
+  customInputStyle,
+  customParentStyle,
+  data,
+  onSearch,
+  searchLogic,
+}) => {
   const SearchIcon = images.iconSearch;
   const ClearIcon = images.iconCross;
   const [query, setQuery] = useState("");
@@ -17,7 +23,7 @@ const SearchView = ({ customInputStyle, customParentStyle, data, onSearch, searc
   const platformSpecificProps = Platform.select({
     web: {},
     default: {
-      placeholderTextColor: customInputStyle?.color
+      placeholderTextColor: customInputStyle?.color,
     },
   });
 
@@ -54,7 +60,7 @@ const SearchView = ({ customInputStyle, customParentStyle, data, onSearch, searc
   };
 
   const clearSearch = () => {
-    setQuery('');
+    setQuery("");
   };
 
   return (
@@ -82,9 +88,9 @@ const SearchView = ({ customInputStyle, customParentStyle, data, onSearch, searc
 SearchView.defaultProps = {
   customInputStyle: {},
   customParentStyle: {},
-  onSearch: () => { },
-  searchLogic: () => { },
-}
+  onSearch: () => {},
+  searchLogic: () => {},
+};
 
 SearchView.propTypes = {
   customInputStyle: PropTypes.object,

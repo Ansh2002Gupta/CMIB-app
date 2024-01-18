@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
     paddingBottom: 18,
     width: "100%",
     cursor: "pointer",
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     borderLeftWidth: isSelected ? 3 : 0,
     borderColor: colors.white,
-    backgroundColor: isSelected ? colors.offWhite : 'transparent',
+    backgroundColor: isSelected ? colors.offWhite : "transparent",
   }),
   changeText: {
     color: colors.white,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingTop: 18,
     paddingBottom: 18,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
   },
 });
 

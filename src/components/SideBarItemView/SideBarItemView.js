@@ -7,44 +7,43 @@ import { TwoColumn } from "../../core/layouts";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import ResponsiveTextTruncate from "../ResponsiveTextTruncate/ResponsiveTextTruncate";
-import styles from "./SideBarItemView.style"
+import styles from "./SideBarItemView.style";
 
 const SideBarItemView = ({ content, onPressChange, title }) => {
-    const intl = useIntl();
+  const intl = useIntl();
 
-    return (
-        <>
-            <CommonText customTextStyle={styles.titleText}>
-                {title}
+  return (
+    <>
+      <CommonText customTextStyle={styles.titleText}>{title}</CommonText>
+      <TwoColumn
+        style={styles.contentText}
+        leftSection={
+          <ResponsiveTextTruncate
+            text={content}
+            maxLength={25}
+            style={styles.changeText}
+            widthPercentage={0.4}
+          />
+        }
+        rightSection={
+          <CustomTouchableOpacity
+            onPress={onPressChange}
+            style={styles.changeTextContainer}
+          >
+            <CommonText customTextStyle={styles.changeText}>
+              {intl.formatMessage({ id: "label.change" })}
             </CommonText>
-            <TwoColumn
-                style={styles.contentText}
-                leftSection={
-                    <ResponsiveTextTruncate
-                        text={content}
-                        maxLength={25}
-                        style={styles.changeText}
-                        widthPercentage={0.4}
-                    />
-                }
-                rightSection={
-                    <CustomTouchableOpacity
-                        onPress={onPressChange}
-                        style={styles.changeTextContainer}
-                    >
-                        <CommonText customTextStyle={styles.changeText}>
-                            {intl.formatMessage({ id: "label.change" })}
-                        </CommonText>
-                    </CustomTouchableOpacity>
-                }
-            />
-        </>);
-}
+          </CustomTouchableOpacity>
+        }
+      />
+    </>
+  );
+};
 
 SideBarItemView.propTypes = {
-    content: PropTypes.string.isRequired,
-    onPressChange: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  onPressChange: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default SideBarItemView;

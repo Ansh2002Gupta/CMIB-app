@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
-    zIndex:2,
+    zIndex: 2,
   },
   imageTextView: {
     flexDirection: "row",
@@ -130,9 +130,9 @@ const styles = StyleSheet.create({
       default: {
         height: 24,
         width: 24,
-      }
+      },
     }),
-  }
+  },
 });
 
 export default styles;

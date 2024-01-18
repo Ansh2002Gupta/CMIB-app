@@ -26,7 +26,7 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
           }
           key={module.key}
           onPress={() =>
-            !module.sectionHeading ? onSelectItem(module) : () => { }
+            !module.sectionHeading ? onSelectItem(module) : () => {}
           }
         >
           <CommonText
