@@ -33,6 +33,7 @@ const style = {
   },
   webImageStyle: {
     padding: 4,
+    cursor: "pointer",
   },
 };
 export default style;

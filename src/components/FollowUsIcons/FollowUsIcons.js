@@ -1,25 +1,76 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { useTheme } from "@unthinkable/react-theme";
-import { View, Image } from "@unthinkable/react-core-components";
+import {
+  Image,
+  Linking,
+  Platform,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./FollowUsIcons.style";
 
 const socialMediaPlatforms = [
-  "Twitter",
-  "Facebook",
-  "Youtube",
-  "Linkedin",
-  "Instagram",
-  "Telegram",
+  {
+    id: 1,
+    name: "Twitter",
+    webIcon: "iconTwitterWeb",
+    mobileIcon: "iconTwitter",
+    link: "https://www.google.com/",
+  },
+  {
+    id: 2,
+    name: "Facebook",
+    webIcon: "iconFacebookWeb",
+    mobileIcon: "iconFacebook",
+    link: "https://www.google.com/",
+  },
+  {
+    id: 3,
+    name: "Youtube",
+    webIcon: "iconYoutubeWeb",
+    mobileIcon: "iconYoutube",
+    link: "https://www.google.com/",
+  },
+  {
+    id: 4,
+    name: "Linkedin",
+    webIcon: "iconLinkedinWeb",
+    mobileIcon: "iconLinkedin",
+    link: "https://www.google.com/",
+  },
+  {
+    id: 5,
+    name: "Instagram",
+    webIcon: "iconInstagramWeb",
+    mobileIcon: "iconInstagram",
+    link: "https://www.google.com/",
+  },
+  {
+    id: 6,
+    name: "Telegram",
+    webIcon: "iconTelegramWeb",
+    mobileIcon: "iconTelegram",
+    link: "https://www.google.com/",
+  },
 ];
 
 const FollowUsIcons = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const icons = useTheme("icons");
+  const isWeb = Platform.OS.toLowerCase() === "web";
+
+  const handleRedirect = (url) => {
+    if (isWeb) {
+      window.location.href = url;
+    } else {
+      Linking.openURL(url);
+    }
+  };
 
   return (
     <View style={styles.containerStyle}>
@@ -34,18 +85,18 @@ const FollowUsIcons = () => {
       </CommonText>
       <View style={isWebView ? styles.webImageView : styles.imageView}>
         {socialMediaPlatforms.map((platform, index) => (
-          <View
+          <TouchableOpacity
             key={index}
             style={isWebView ? styles.webImageStyle : styles.imageStyle}
+            onPress={() => handleRedirect(platform.link)}
+            accessibilityRole="link"
           >
             <Image
               source={
-                isWebView
-                  ? icons[`icon${platform}Web`]
-                  : icons[`icon${platform}`]
+                isWebView ? icons[platform.webIcon] : icons[platform.mobileIcon]
               }
             />
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>
