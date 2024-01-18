@@ -76,7 +76,10 @@ const LoginScreenUI = (props) => {
 
   return (
     <FormWrapper onSubmit={onLogin} customFormStyle={commonStyles.mainView}>
-      <WebViewLoginSignUpWrapper shouldApplyStyles={isWebView}>
+      <WebViewLoginSignUpWrapper
+        shouldApplyStyles={isWebView}
+        shouldShowFollowUs
+      >
         <View
           style={{
             ...commonStyles.mainView,
