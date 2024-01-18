@@ -24,7 +24,10 @@ const FollowUsIcons = () => {
   return (
     <View style={styles.containerStyle}>
       <CommonText
-        customTextStyle={{ ...styles.followUsText, ...styles.webFollowUsText }}
+        customTextStyle={{
+          ...styles.followUsText,
+          ...(isWebView ? styles.webFollowUsText : {}),
+        }}
         fontWeight={isWebView ? "500" : "600"}
       >
         {intl.formatMessage({ id: "label.follow_us" })}
