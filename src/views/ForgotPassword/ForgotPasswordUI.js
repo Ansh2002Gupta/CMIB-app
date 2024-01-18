@@ -40,14 +40,14 @@ const ForgotPasswordUI = (props) => {
           return {
             ...commonStyles.commonWebContainer,
             ...styles.forgotPasswordWebContainer,
-            ...styles.smScreenContainers,
+            ...styles.commonScreenContainers,
           };
         }
         if (currentBreakpoint === "md") {
           return {
             ...commonStyles.commonWebContainer,
             ...styles.forgotPasswordWebContainer,
-            ...styles.mdScreenContainers,
+            ...styles.commonScreenContainers,
           };
         }
         return {

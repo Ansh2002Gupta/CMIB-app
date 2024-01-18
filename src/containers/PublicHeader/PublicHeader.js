@@ -16,18 +16,20 @@ const PublicHeader = () => {
     <>
       {isWebView ? (
         <View
-          style={
-            hideRightIcons
-              ? [styles.mainView, styles.headerBorder]
-              : [styles.webMainView, styles.headerBorder]
-          }
+          style={{
+            ...styles.webResetMainView,
+            ...(hideRightIcons
+              ? { ...styles.mainView, ...styles.headerBorder }
+              : { ...styles.webMainView, ...styles.headerBorder }),
+          }}
         >
           <View
-            style={
-              hideRightIcons
+            style={{
+              ...styles.webResetContainerStyle,
+              ...(hideRightIcons
                 ? styles.smContainerStyle
-                : styles.webContainerStyle
-            }
+                : styles.webContainerStyle),
+            }}
           >
             <Image
               source={images.iconCmibLogo}
@@ -56,8 +58,18 @@ const PublicHeader = () => {
           </View>
         </View>
       ) : (
-        <View style={styles.mainView}>
-          <View style={styles.containerStyle}>
+        <View
+          style={{
+            ...styles.byDefaultPhonePadding,
+            ...styles.mainView,
+          }}
+        >
+          <View
+            style={{
+              ...styles.byDefaultPhonePadding,
+              ...styles.containerStyle,
+            }}
+          >
             <Image source={images.iconCmibLogo} />
           </View>
         </View>
