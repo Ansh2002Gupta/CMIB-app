@@ -22,7 +22,7 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
           style={
             module.sectionHeading
               ? styles.moduleListWithoutCursor
-              : styles.moduleListItem(selectedModule === module)
+              : styles.moduleListItem(module.key === selectedModule.key)
           }
           key={module.key}
           onPress={() =>

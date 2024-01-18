@@ -29,19 +29,13 @@ import styles from "./SideBar.style";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState;
+  const { selectedModule, selectedSession } = sideBarState;
   const navigate = useNavigate();
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const [sideBarContent, setSideBarSubMenu] = useState(SideBarContentEnum.NONE);
   const [activeMenuItem, setActiveMenuItem] = useState(
     selectedModule?.children?.[0]?.key
-  );
-  const [selectedModuleItem, setSelectedModuleItem] = useState(
-    modules[0]
-  );
-  const [selectedSessionItem, setSelectedSessionItem] = useState(
-    selectedModuleItem?.session?.[0]
   );
 
   useEffect(() => {
@@ -51,14 +45,12 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   }, [isWebView, sideBarContent]);
 
   const handleOnSelectModuleItem = (item) => {
-    setSelectedModuleItem(item);
-    setSelectedSessionItem(item?.session?.[0]);
+    sideBarDispatch(setSelectedSession(item?.session?.[0]));
     sideBarDispatch(setSelectedModule(item));
     setSideBarSubMenu(SideBarContentEnum.NONE);
   };
 
   const handleOnSelectSessionItem = (item) => {
-    setSelectedSessionItem(item)
     sideBarDispatch(setSelectedSession(item));
     setSideBarSubMenu(SideBarContentEnum.NONE);
   }
@@ -123,7 +115,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         topSection={
           <SideBarItemView
             title={intl.formatMessage({ id: "label.module" })}
-            content={selectedModuleItem.label}
+            content={selectedModule.label}
             onPressChange={() => setSideBarSubMenu(SideBarContentEnum.MODULE)}
           />
         }
@@ -137,7 +129,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             ) : (
               <SideBarItemView
                 title={intl.formatMessage({ id: "label.session" })}
-                content={selectedSessionItem?.label || ""}
+                content={selectedSession?.label || ""}
                 onPressChange={() => setSideBarSubMenu(SideBarContentEnum.SESSION)}
               />
             )}
@@ -148,13 +140,13 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         <ModuleList
           modules={modules}
           onSelectItem={handleOnSelectModuleItem}
-          selectedModule={selectedModuleItem} />
+          selectedModule={selectedModule} />
       }
       {!isWebView && sideBarContent === SideBarContentEnum.SESSION &&
         <SessionList
-          sessionList={selectedModuleItem?.session}
+          sessionList={selectedModule?.session}
           onSelectItem={handleOnSelectSessionItem}
-          selectedSession={selectedSessionItem} />
+          selectedSession={selectedSession} />
       }
       <CustomTouchableOpacity
         style={{

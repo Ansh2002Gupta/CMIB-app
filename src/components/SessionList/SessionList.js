@@ -13,12 +13,12 @@ const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
     const renderItem = ({ item: session }) => (
         <CustomTouchableOpacity
             key={session.id}
-            style={styles.listItem(selectedSession === session)}
+            style={styles.listItem(selectedSession.id === session.id)}
             onPress={() => onSelectItem(session)}>
             <ResponsiveTextTruncate
                 text={session.label}
                 maxLength={40}
-                style={styles.text(selectedSession === session)}
+                style={styles.text(selectedSession.id === session.id)}
             />
         </CustomTouchableOpacity>
     );

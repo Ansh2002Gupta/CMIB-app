@@ -9,7 +9,7 @@ import {
   setIsGettingUserDetails,
   setUserDetails,
 } from "../../../../globalContext/userProfile/userProfileActions";
-import { setSelectedModule } from "../../../../globalContext/sidebar/sidebarActions";
+import { setSelectedModule, setSelectedSession } from "../../../../globalContext/sidebar/sidebarActions";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import { modules } from "../../../../constants/sideBarHelpers";
 import { STATUS_CODES } from "../../../../constants/constants";
@@ -40,6 +40,7 @@ const useGetUserDetails = () => {
             firstAccessibleModuleName?.toLowerCase()
         );
         sideBarDispatch(setSelectedModule(moduleDetails));
+        sideBarDispatch(setSelectedSession(moduleDetails.session?.[0]));
         return;
       }
       userProfileDispatch(
