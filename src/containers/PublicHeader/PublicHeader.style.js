@@ -1,6 +1,12 @@
 import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
+const commomResetStyle = {
+  paddingLeft: 0,
+  paddingRight: 0,
+  borderBottom: 0,
+};
+
 const style = {
   mainView: {
     backgroundColor: colors.white,
@@ -10,8 +16,6 @@ const style = {
   containerStyle: {
     marginRight: 16,
     marginLeft: 16,
-    marinTop: 16,
-    marinBottom: 16,
     width: "30%",
     minWidth: 120,
   },
@@ -59,6 +63,19 @@ const style = {
     width: 67,
     height: 40,
     alignSelf: "center",
+  },
+  byDefaultPhonePadding: {
+    ...commomResetStyle,
+  },
+  webResetMainView: {
+    ...commomResetStyle,
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  webResetContainerStyle: {
+    ...commomResetStyle,
+    marginRight: 0,
+    marginLeft: 0,
   },
 };
 
