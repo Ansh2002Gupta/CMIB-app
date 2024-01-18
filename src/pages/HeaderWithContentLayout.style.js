@@ -3,9 +3,11 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 const Styles = (currentBreakpoint) =>
   StyleSheet.create({
     rightSectionStyle: {
+      minWidth: currentBreakpoint === "md" ? "70%" : "80%",
       flex: currentBreakpoint === "md" ? 7 : 8,
     },
     leftSectionStyle: {
+      minWidth: currentBreakpoint === "md" ? "30%" : "20%",
       flex: currentBreakpoint === "md" ? 3 : 2,
     },
     topSectionStyle: {

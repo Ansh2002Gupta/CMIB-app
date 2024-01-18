@@ -7,6 +7,7 @@ export const style = {
     gap: 48,
     flex: 1,
     zIndex: 1,
+    paddingTop: 0,
   },
   responsiveContainer: { paddingTop: 48 },
   outerContainer: {
@@ -15,14 +16,20 @@ export const style = {
     paddingBottom: 48,
     display: "flex",
     alignItems: "center",
+    flex: 1,
   },
   defaultInnerContainerStyles: {
     flex: 1,
+    border: 0,
+    marginLeft: 0,
+    marginRight: 0,
   },
   defaultOuterContainerStyles: {
     flex: 1,
+    paddingBottom: 0,
   },
   innerContainer: {
+    flex: 1,
     borderRadius: 24,
     border: `1px solid ${colors.lightGrey}`,
     background: "#FFF",
