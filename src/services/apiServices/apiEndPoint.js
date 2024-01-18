@@ -17,3 +17,4 @@ export const COMPANY_DELETE_LOGO = `${USER_TYPE_COMPANY}/delete-logo`;
 export const USER_PROFILE = `${USER_TYPE_COMPANY}/user/profile`;
 export const COMPANY_SAVE_LOGO_AUTH = `${USER_TYPE_COMPANY}/save-logo-auth`;
 export const COMPANY_DELETE_LOGO_AUTH = `${USER_TYPE_COMPANY}/delete-logo-auth`;
+export const MENU_PROFILE = `core/menu-profile/${USER_TYPE_COMPANY}`;

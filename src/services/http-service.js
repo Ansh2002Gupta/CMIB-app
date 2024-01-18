@@ -1,17 +1,13 @@
-import Config from "../components/ReactConfig/index";
 import axios from "axios";
 
 import axiosInstance from "../axios/axiosInstance";
 
-const baseUrl = Config.REACT_APP_API_URL;
-
 export default class Http {
   static async get(_url, apiOptions = {}, handleDiscard = () => {}) {
-    const url = `${baseUrl}${_url}`;
     try {
       const cancelGetRequest = axios.CancelToken.source();
       handleDiscard(cancelGetRequest);
-      const response = await axiosInstance.get(url, {
+      const response = await axiosInstance.get(_url, {
         cancelToken: cancelGetRequest.token,
         ...apiOptions,
       });
@@ -28,11 +24,10 @@ export default class Http {
     otherOptions = {},
     handleDiscard = () => {}
   ) {
-    const url = `${baseUrl}${_url}`;
     try {
       const cancelPostRequest = axios.CancelToken.source();
       handleDiscard(cancelPostRequest);
-      const response = await axiosInstance.post(url, data, {
+      const response = await axiosInstance.post(_url, data, {
         headers: headers,
         cancelToken: cancelPostRequest.token,
         ...otherOptions,
@@ -44,18 +39,16 @@ export default class Http {
   }
 
   static async put(_url, data) {
-    const url = `${baseUrl}${_url}`;
     try {
-      const response = await axios.put(url, data);
+      const response = await axiosInstance.put(_url, data);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
   static async delete(_url) {
-    const url = `${baseUrl}${_url}`;
     try {
-      const response = await axios.delete(url);
+      const response = await axiosInstance.delete(_url);
       return response.data;
     } catch (error) {
       throw error;

@@ -43,11 +43,12 @@ const UserProfileActionDropDown = ({
             {isMdOrGreater && (
               <View style={styles.profileNameSection}>
                 <View>
-                  <CommonText
-                    customTextStyle={styles.fullNameStyle}
-                    title={`${firstName} ${lastName}`}
-                  />
-                  <CommonText title={role} customTextStyle={styles.roleStyle} />
+                  <CommonText customTextStyle={styles.fullNameStyle} fontWeight={'600'}>
+                    {`${firstName} ${lastName}`}
+                  </CommonText>
+                  <CommonText customTextStyle={styles.roleStyle} fontWeight={'500'}>
+                    {role}
+                  </CommonText>
                 </View>
                 {showAccountSection ? (
                   <CustomImage
