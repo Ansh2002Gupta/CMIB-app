@@ -10,6 +10,8 @@ const style = {
   },
   container: {
     backgroundColor: colors.white,
+    paddingRight: 0,
+    paddingLeft: 0,
   },
   mobContainer: {
     paddingRight: 16,
@@ -67,6 +69,9 @@ const style = {
   },
   whiteBackground: {
     backgroundColor: colors.white,
+    paddingRight: 0,
+    paddingLeft: 0,
+    paddingTop: 0,
   },
   grayBackground: {
     backgroundColor: colors.backgroundColor,

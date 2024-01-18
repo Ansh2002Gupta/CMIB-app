@@ -20,7 +20,7 @@ const HeaderTextWithLabelAndDescription = ({
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   return (
-    <View style={[style.headerContainer, customContainerStyles]}>
+    <View style={{ ...style.headerContainer, ...customContainerStyles }}>
       {!!label && (
         <CommonText customTextStyle={style.labelText}> {label}</CommonText>
       )}
