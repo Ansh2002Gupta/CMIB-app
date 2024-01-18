@@ -18,10 +18,6 @@ const FollowUsIcons = () => {
   const { isWebView } = useIsWebView();
   const icons = useTheme("icons");
 
-  const handleRedirect = (url) => {
-    Linking.openURL(url, "_blank");
-  };
-
   return (
     <View style={styles.containerStyle}>
       <CommonText
@@ -38,7 +34,7 @@ const FollowUsIcons = () => {
           <TouchableOpacity
             key={index}
             style={isWebView ? styles.webImageStyle : styles.imageStyle}
-            onPress={() => handleRedirect(item.link)}
+            onPress={() => Linking.openURL(item.link, "_blank")}
             accessibilityRole="link"
           >
             <Image
