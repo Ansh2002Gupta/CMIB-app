@@ -154,6 +154,12 @@ const iconArrowRightBlack = appendAppBaseURl(
 const iconArrowRight = appendAppBaseURl("/images/svg/iconArrowRight.svg");
 const iconSuccess = appendAppBaseURl("/images/svg/iconSuccess.svg");
 const iconClose = appendAppBaseURl("/images/svg/iconClose.svg");
+const iconFacebookWeb = appendAppBaseURl("/images/svg/iconFacebookWeb.svg");
+const iconInstagramWeb = appendAppBaseURl("/images/svg/iconInstagramWeb.svg");
+const iconLinkedinWeb = appendAppBaseURl("/images/svg/iconLinkedInWeb.svg");
+const iconTelegramWeb = appendAppBaseURl("/images/svg/iconTelegramWeb.svg");
+const iconYoutubeWeb = appendAppBaseURl("/images/svg/iconYoutubeWeb.svg");
+const iconTwitterWeb = appendAppBaseURl("/images/svg/iconTwitterWeb.svg");
 
 const images = {
   iconArrowUp,
@@ -258,6 +264,12 @@ const images = {
   minusCirlce,
   iconTicket,
   iconArrowRightBlack,
+  iconLinkedinWeb,
+  iconFacebookWeb,
+  iconTwitterWeb,
+  iconTelegramWeb,
+  iconYoutubeWeb,
+  iconInstagramWeb,
 };
 
 export default images;
