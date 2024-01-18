@@ -19,6 +19,12 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
 
+const initialFilterState = {
+  selectedStatus: [],
+  selectedQueryType: [],
+  activeCategories: [],
+};
+
 const CustomTable = ({
   currentPage,
   currentRecords,
@@ -47,6 +53,7 @@ const CustomTable = ({
   const intl = useIntl();
 
   const [showModal, setShowModal] = useState(false);
+  const [filterState, setFilterState] = useState(initialFilterState);
 
   const handleFilterModal = () => {
     setShowModal((prev) => !prev);
@@ -188,8 +195,11 @@ const CustomTable = ({
       />
       {showModal && (
         <FilterModal
-          filterCategory={filterCategory}
           data={data}
+          filterCategory={filterCategory}
+          filterState={filterState}
+          initialFilterState={initialFilterState}
+          setFilterState={setFilterState}
           onPressIconCross={handleFilterModal}
           onApplyFilter={onApplyFilter}
         />

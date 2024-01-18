@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-
-const initialState = {
-  selectedStatus: [],
-  selectedQueryType: [],
-  activeCategories: [],
-};
-
-const useFilterModal = (data,onApplyFilter) => {
-  const [filterState, setFilterState] = useState(initialState);
+const useFilterModal = (
+  data,
+  filterState,
+  initialFilterState,
+  onApplyFilter,
+  setFilterState
+) => {
   const { selectedStatus, selectedQueryType, activeCategories } = filterState;
 
   const handleCategoryChange = (category) => {
@@ -59,7 +56,7 @@ const useFilterModal = (data,onApplyFilter) => {
   };
 
   const handleClearFilter = () => {
-    setFilterState(initialState);
+    setFilterState(initialFilterState);
   };
 
   return {

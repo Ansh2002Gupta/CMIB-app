@@ -17,10 +17,13 @@ import images from "../../images";
 import styles from "./FilterModal.style";
 
 const FilterModal = ({
-  onPressIconCross,
   data,
-  onApplyFilter,
   filterCategory,
+  filterState,
+  initialFilterState,
+  onPressIconCross,
+  onApplyFilter,
+  setFilterState,
 }) => {
   const {
     activeCategories,
@@ -31,7 +34,13 @@ const FilterModal = ({
     handleClearFilter,
     selectedStatus,
     selectedQueryType,
-  } = useFilterModal(data, onApplyFilter);
+  } = useFilterModal(
+    data,
+    filterState,
+    initialFilterState,
+    onApplyFilter,
+    setFilterState
+  );
 
   const isWeb = Platform.OS.toLowerCase() === "web";
   const intl = useIntl();
@@ -141,6 +150,7 @@ const FilterModal = ({
                 {filterCategory.map((item) => {
                   return (
                     <RenderCategoryButton
+                      key={item}
                       title={item}
                       onClick={handleCategoryChange}
                     />
@@ -179,8 +189,11 @@ const FilterModal = ({
 };
 
 FilterModal.propTypes = {
-  onPressIconCross: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
+  filterState: PropTypes.object.isRequired,
+  initialFilterState: PropTypes.object.isRequired,
+  setFilterState: PropTypes.func.isRequired,
+  onPressIconCross: PropTypes.func.isRequired,
   onApplyFilter: PropTypes.func.isRequired,
 };
 
