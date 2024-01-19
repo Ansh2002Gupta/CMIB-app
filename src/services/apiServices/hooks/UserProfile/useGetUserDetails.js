@@ -13,7 +13,7 @@ import { setSelectedModule } from "../../../../globalContext/sidebar/sidebarActi
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import { modules } from "../../../../constants/sideBarHelpers";
 import { STATUS_CODES } from "../../../../constants/constants";
-import { MENU_PROFILE } from "../../apiEndPoint";
+import { USER_PROFILE } from "../../apiEndPoint";
 
 const useGetUserDetails = () => {
   const [, sideBarDispatch] = useContext(SideBarContext);
@@ -24,7 +24,7 @@ const useGetUserDetails = () => {
     try {
       userProfileDispatch(setIsGettingUserDetails(true));
       userProfileDispatch(setErrorGetingUserDetails(""));
-      const res = await Http.get(MENU_PROFILE);
+      const res = await Http.get(USER_PROFILE);
       userProfileDispatch(setIsGettingUserDetails(false));
       if (
         res.status === STATUS_CODES.SUCCESS_STATUS ||
@@ -33,7 +33,7 @@ const useGetUserDetails = () => {
         userProfileDispatch(setUserDetails(res.data));
 
         // Setting the first accessible module
-        const moduleKeys = Object.keys(res.data.menu_items)
+        const moduleKeys = Object.keys(res.data.menu_items);
         const firstAccessibleModuleName = moduleKeys?.[0] || "";
         const moduleDetails = modules.find(
           (module) =>

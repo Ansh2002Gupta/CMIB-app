@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
@@ -43,10 +43,13 @@ const UserProfileActionDropDown = ({
             {isMdOrGreater && (
               <View style={styles.profileNameSection}>
                 <View>
-                  <CommonText customTextStyle={styles.fullNameStyle} fontWeight={'600'}>
+                  <CommonText
+                    customTextStyle={styles.fullNameStyle}
+                    fontWeight={"600"}
+                  >
                     {`${firstName} ${lastName}`}
                   </CommonText>
-                  <CommonText customTextStyle={styles.roleStyle} fontWeight={'500'}>
+                  <CommonText customTextStyle={styles.roleStyle}>
                     {role}
                   </CommonText>
                 </View>
