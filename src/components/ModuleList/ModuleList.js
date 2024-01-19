@@ -12,7 +12,9 @@ const ModuleList = ({ modules, onSelectItem }) => {
 
   const renderrableModules = getAccessibleModulesList({
     allModules: modules,
-    accessibleModules: userProfileState.userDetails?.role || [],
+    accessibleModules: Object.keys(
+      userProfileState.userDetails?.menu_items || {}
+    ),
   });
 
   const renderItem = ({ item: module }) => (

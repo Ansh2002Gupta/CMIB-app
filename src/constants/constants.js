@@ -71,10 +71,10 @@ export const COMPANY_TYPE_OPTIONS = [
 ];
 
 export const NATURE_OF_SUPPLIER = [
-  { label: "Registered", value: "registered" },
-  { label: "Unregistered", value: "unregistered" },
-  { label: "Composition Supplier", value: "composition supplier" },
-  { label: "UIN Holder", value: "UIN holder" },
+  { label: "Registered", value: "Registered" },
+  { label: "Unregistered", value: "Unregistered" },
+  { label: "Composition Supplier", value: "Composition Supplier" },
+  { label: "UIN Holder", value: "UIN Holder" },
 ];
 
 export const INTEREST_OPTIONS = [
