@@ -35,13 +35,13 @@ const SessionBar = () => {
   return (
     <CustomTouchableOpacity style={styles.container} onPress={handleDropdown}>
       <CommonText customTextStyle={styles.sessionBarText}>
-        {intl.formatMessage({ id: "label.sessions" })}&nbsp;&#58;
+        {intl.formatMessage({ id: "label.sessions" })}&nbsp;&#58;&nbsp;
       </CommonText>
       <CommonText
         customTextStyle={styles.sessionText(currentBreakpoint)}
         fontWeight="600"
       >
-        {selectedValue}
+        {selectedValue ?? intl.formatMessage({ id: "label.select_session" })}
       </CommonText>
       <CustomImage
         source={images.iconArrowDown}

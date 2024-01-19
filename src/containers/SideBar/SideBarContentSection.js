@@ -122,6 +122,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 intl.formatMessage({ id: "label.no_module_available" })
               }
               onPressChange={() => setSideBarSubMenu(SideBarContentEnum.MODULE)}
+              showChangeButton={!!selectedModule?.label}
             />
           }
           bottomSection={
@@ -132,13 +133,15 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                   renderItem={renderMenuItems}
                 />
               ) : (
-                <SideBarItemView
-                  title={intl.formatMessage({ id: "label.session" })}
-                  content={selectedSession?.label || ""}
-                  onPressChange={() =>
-                    setSideBarSubMenu(SideBarContentEnum.SESSION)
-                  }
-                />
+                !!selectedModule?.label && (
+                  <SideBarItemView
+                    title={intl.formatMessage({ id: "label.session" })}
+                    content={selectedSession?.label || ""}
+                    onPressChange={() =>
+                      setSideBarSubMenu(SideBarContentEnum.SESSION)
+                    }
+                  />
+                )
               )}
             </>
           }
@@ -151,13 +154,15 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           selectedModule={selectedModule}
         />
       )}
-      {!isWebView && sideBarContent === SideBarContentEnum.SESSION && (
-        <SessionList
-          sessionList={selectedModule?.session}
-          onSelectItem={handleOnSelectSessionItem}
-          selectedSession={selectedSession}
-        />
-      )}
+      {!isWebView &&
+        !!selectedModule?.label &&
+        sideBarContent === SideBarContentEnum.SESSION && (
+          <SessionList
+            sessionList={selectedModule?.session}
+            onSelectItem={handleOnSelectSessionItem}
+            selectedSession={selectedSession}
+          />
+        )}
       <CustomTouchableOpacity
         style={{
           ...styles.bottomView,

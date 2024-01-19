@@ -271,6 +271,7 @@ const locale = {
   "label.personal_interview": "Personal Interview",
   "label.search": "Search",
   "label.no_module_available": "No module available",
+  "label.select_session": "Select Session"
 };
 
 export default locale;
