@@ -15,7 +15,10 @@ const useDeleteLogo = () => {
       setDeletionStatus(API_STATUS.LOADING);
       errorWhileDeletion && setErrorWhileDeletion("");
       const res = await Http.delete(`${COMPANY_LOGO}/${fileName}`);
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+      if (
+        res.status === STATUS_CODES.SUCCESS_STATUS ||
+        res.code === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setDeletionStatus(API_STATUS.SUCCESS);
         setFileDeletionResult(res.data);
         successCallback && successCallback();
