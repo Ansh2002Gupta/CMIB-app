@@ -16,7 +16,7 @@ export const getImageSource = (uploadedImage) => {
 };
 
 export const getRenderText = (items, keys) => {
-  if (keys.length === 0) {
+  if (!keys.length) {
     return "";
   }
   return keys.map((key) => items[key]).join(" ");

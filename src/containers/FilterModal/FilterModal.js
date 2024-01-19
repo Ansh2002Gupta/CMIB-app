@@ -22,7 +22,7 @@ const FilterModal = ({
   initialFilterState,
   onApplyFilter,
   setFilterState,
-  setShowModal,
+  setShowFilterOptions,
 }) => {
   const {
     activeCategories,
@@ -40,7 +40,7 @@ const FilterModal = ({
     initialFilterState,
     onApplyFilter,
     setFilterState,
-    setShowModal
+    setShowFilterOptions
   );
 
   const isWeb = Platform.OS.toLowerCase() === "web";
@@ -194,7 +194,7 @@ FilterModal.propTypes = {
   initialFilterState: PropTypes.object.isRequired,
   onApplyFilter: PropTypes.func.isRequired,
   setFilterState: PropTypes.func.isRequired,
-  setShowModal: PropTypes.func.isRequired,
+  setShowFilterOptions: PropTypes.func.isRequired,
 };
 
 export default FilterModal;

@@ -7,7 +7,7 @@ import { TwoRow } from "../../core/layouts";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useFeedbackView from "./controller/useFeedbackView";
-import useTicketView from "../TicketsView/controller/useTicketView";
+import useCustomTablePagination from "../../hooks/useCustomTablePagination";
 import { feedbackData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
@@ -21,6 +21,7 @@ const FeedbackView = () => {
     getStatusStyle,
     filterCategory,
     headingTexts,
+    isHeading,
     statusText,
     subHeadingText,
     tableIcon,
@@ -32,13 +33,10 @@ const FeedbackView = () => {
     handleSearchResults,
     handleRowPerPageChange,
     handlePageChange,
-    indexOfFirstRecord,
-    indexOfLastRecord,
-    isHeading,
     rowsToShow,
     setCurrentRecords,
     totalcards,
-  } = useTicketView(feedbackData);
+  } = useCustomTablePagination(feedbackData);
 
   const intl = useIntl();
   const navigate = useNavigate();
@@ -51,7 +49,6 @@ const FeedbackView = () => {
     <TwoRow
       topSection={
         <IconHeader
-          intl={intl}
           headerText={intl.formatMessage({ id: "label.feedback" })}
           onPressLeftIcon={onGoBack}
           hasIconBar
@@ -71,8 +68,6 @@ const FeedbackView = () => {
             handleRowPerPageChange,
             handleSearchResults,
             headingTexts,
-            indexOfFirstRecord,
-            indexOfLastRecord,
             isHeading,
             rowsLimit,
             rowsToShow,

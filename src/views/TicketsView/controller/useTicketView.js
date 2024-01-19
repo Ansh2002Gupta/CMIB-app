@@ -1,92 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "../../../routes";
+import React from "react";
 import { View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
 import useIsWebView from "../../../hooks/useIsWebView";
-import {
-  getValidCurrentPage,
-  getValidRowPerPage,
-} from "../../../utils/queryParamsHelpers";
-import { setTicketScreenList } from "../../../globalContext/ticketsScreen/ticketScreenActions";
-import { TicketScreenContext } from "../../../globalContext/ticketsScreen/ticketsScreenProvider";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import images from "../../../images";
+import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsView.style";
 
-const useTicketView = (data) => {
+const useTicketView = () => {
   const { isWebView } = useIsWebView();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [rowsToShow, setRowsToShow] = useState(
-    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
-      ROWS_PER_PAGE_ARRAY[0].value
-  );
-  const [currentPage, setCurrentPage] = useState(
-    getValidCurrentPage(searchParams.get("page"))
-  );
-  const [currentRecords, setCurrentRecords] = useState([]);
-  const [, ticketScreenDispatch] = useContext(TicketScreenContext);
-
-  let indexOfLastRecord;
-  let indexOfFirstRecord;
-
-  const fetchData = (pageNumber, rowPerPage) => {
-    // TODO: Integrate an API call here
-    indexOfLastRecord = pageNumber * rowPerPage;
-    indexOfFirstRecord = indexOfLastRecord - rowPerPage;
-    let newRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
-    setCurrentRecords(newRecords);
-    ticketScreenDispatch(setTicketScreenList(data));
-  };
-
-  useEffect(() => {
-    setSearchParams((prev) => {
-      prev.set("page", getValidCurrentPage(+searchParams.get("page")));
-      return prev;
-    });
-    setSearchParams((prev) => {
-      prev.set(
-        "rowsPerPage",
-        getValidRowPerPage(+searchParams.get("rowsPerPage"))
-      );
-      return prev;
-    });
-    fetchData(currentPage, rowsToShow);
-  }, []);
-
-  const totalcards = data.length;
-
-  let isHeading = true;
-
-  const handleSearchResults = (searchedData) => {
-    //TODO: Implement searching
-  };
-
-  const handleRowPerPageChange = (option) => {
-    setRowsToShow(option.value);
-    setSearchParams((prev) => {
-      prev.set("rowsPerPage", option.value);
-      return prev;
-    });
-    fetchData(currentPage, option.value);
-  };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    setSearchParams((prev) => {
-      prev.set("page", page);
-      return prev;
-    });
-    fetchData(page, rowsToShow);
-  };
 
   let headingTexts = ["id"];
   let subHeadingText = ["query_type"];
   let statusText = ["status"];
   let tableIcon = images.iconTicket;
   let filterCategory = ["Status", "Query Type"];
+  let isHeading = true;
 
   function getStatusStyle(status) {
     status = status.toLowerCase();
@@ -122,7 +53,7 @@ const useTicketView = (data) => {
             {item.id}
           </CommonText>
         ),
-        style: styles.columnStyle("15%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
@@ -131,7 +62,7 @@ const useTicketView = (data) => {
             {item.query_type}
           </CommonText>
         ),
-        style: styles.columnStyle("20%"),
+        style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
@@ -146,7 +77,7 @@ const useTicketView = (data) => {
             )}
           </View>
         ),
-        style: styles.columnStyle("15%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
@@ -155,7 +86,7 @@ const useTicketView = (data) => {
             {item.assigned_to}
           </CommonText>
         ),
-        style: styles.columnStyle("20%"),
+        style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
@@ -164,7 +95,7 @@ const useTicketView = (data) => {
             {item.created_at}
           </CommonText>
         ),
-        style: styles.columnStyle("15%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
@@ -175,31 +106,24 @@ const useTicketView = (data) => {
             isSvg={true}
           />
         ),
-        style: { ...styles.columnStyle("10%"), ...styles.iconTicketColoum },
+        style: {
+          ...commonStyles.columnStyle("10%"),
+          ...styles.iconTicketColoum,
+        },
         isFillSpace: true,
       },
     ];
   };
 
   return {
-    currentPage,
-    currentRecords,
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
-    handlePageChange,
-    handleRowPerPageChange,
-    handleSearchResults,
     headingTexts,
-    indexOfFirstRecord,
-    indexOfLastRecord,
     isHeading,
-    rowsToShow,
-    setCurrentRecords,
     statusText,
     subHeadingText,
     tableIcon,
-    totalcards,
   };
 };
 

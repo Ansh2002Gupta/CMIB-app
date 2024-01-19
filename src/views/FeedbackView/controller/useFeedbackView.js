@@ -6,16 +6,18 @@ import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
+import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../FeedbackView.style";
 
 const useFeedbackView = () => {
-  const {isWebView} = useIsWebView();
+  const { isWebView } = useIsWebView();
 
   let headingTexts = ["id"];
   let subHeadingText = ["created_at"];
   let statusText = ["status"];
   let tableIcon = images.iconEye;
   let filterCategory = ["Status", "Role"];
+  let isHeading = true;
 
   function getStatusStyle(status) {
     status = status.toLowerCase();
@@ -51,7 +53,7 @@ const useFeedbackView = () => {
             {item.id}
           </CommonText>
         ),
-        style: styles.columnStyle("25%"),
+        style: commonStyles.columnStyle("25%"),
         isFillSpace: true,
       },
       {
@@ -62,14 +64,11 @@ const useFeedbackView = () => {
                 {item.status}
               </CommonText>
             ) : (
-              <Chip
-                label={item.status}
-                style={getStatusStyle(item.status)}
-              />
+              <Chip label={item.status} style={getStatusStyle(item.status)} />
             )}
           </View>
         ),
-        style: styles.columnStyle("25%"),
+        style: commonStyles.columnStyle("25%"),
         isFillSpace: true,
       },
       {
@@ -78,14 +77,17 @@ const useFeedbackView = () => {
             {item.created_at}
           </CommonText>
         ),
-        style: styles.columnStyle("30%"),
+        style: commonStyles.columnStyle("30%"),
         isFillSpace: true,
       },
       {
         content: !isHeading && (
           <TouchableImage source={tableIcon} style={styles.iconTicket} />
         ),
-        style: { ...styles.columnStyle("10%"), ...styles.iconTicketColoum },
+        style: {
+          ...commonStyles.columnStyle("10%"),
+          ...styles.iconTicketColoum,
+        },
         isFillSpace: true,
       },
     ];
@@ -96,6 +98,7 @@ const useFeedbackView = () => {
     getStatusStyle,
     filterCategory,
     headingTexts,
+    isHeading,
     statusText,
     subHeadingText,
     tableIcon,

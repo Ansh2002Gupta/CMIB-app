@@ -6,14 +6,14 @@ const useFilterModal = (
   initialFilterState,
   onApplyFilter,
   setFilterState,
-  setShowModal
+  setShowFilterOptions
 ) => {
   const { selectedStatus, selectedQueryType, activeCategories } = filterState;
 
   const prevFilterState = useRef(filterState);
 
   const onCancel = () => {
-    setShowModal(false);
+    setShowFilterOptions(false);
     setFilterState(prevFilterState.current);
   };
 
@@ -25,12 +25,11 @@ const useFilterModal = (
           ...prevState,
           activeCategories: activeCategories.filter((c) => c !== category),
         };
-      } else {
-        return {
-          ...prevState,
-          activeCategories: [...activeCategories, category],
-        };
       }
+      return {
+        ...prevState,
+        activeCategories: [...activeCategories, category],
+      };
     });
   };
 

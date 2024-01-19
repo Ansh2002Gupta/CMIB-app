@@ -36,8 +36,6 @@ const CustomTable = ({
   handleRowPerPageChange,
   handleSearchResults,
   headingTexts,
-  indexOfFirstRecord,
-  indexOfLastRecord,
   isHeading,
   rowsLimit,
   rowsToShow,
@@ -52,11 +50,11 @@ const CustomTable = ({
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 
-  const [showModal, setShowModal] = useState(false);
+  const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [filterState, setFilterState] = useState(initialFilterState);
 
   const handleFilterModal = () => {
-    setShowModal((prev) => !prev);
+    setShowFilterOptions((prev) => !prev);
   };
 
   const onApplyFilter = (filterData) => {
@@ -114,7 +112,7 @@ const CustomTable = ({
                   data={currentRecords}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item, index }) => {
+                  renderItem={({ item }) => {
                     return (
                       <>
                         {isWebView ? (
@@ -159,8 +157,6 @@ const CustomTable = ({
                       currentPage,
                       handlePageChange,
                       handleRowPerPageChange,
-                      indexOfFirstRecord,
-                      indexOfLastRecord,
                       rowsLimit,
                       rowsToShow,
                       siblingCount: 1,
@@ -179,8 +175,6 @@ const CustomTable = ({
                     currentPage,
                     handlePageChange,
                     handleRowPerPageChange,
-                    indexOfFirstRecord,
-                    indexOfLastRecord,
                     rowsLimit,
                     rowsToShow,
                     siblingCount: 1,
@@ -193,15 +187,17 @@ const CustomTable = ({
           />
         }
       />
-      {showModal && (
+      {showFilterOptions && (
         <FilterModal
-          data={data}
-          filterCategory={filterCategory}
-          filterState={filterState}
-          initialFilterState={initialFilterState}
-          setFilterState={setFilterState}
-          setShowModal={setShowModal}
-          onApplyFilter={onApplyFilter}
+          {...{
+            data,
+            filterCategory,
+            filterState,
+            initialFilterState,
+            setFilterState,
+            setShowFilterOptions,
+            onApplyFilter,
+          }}
         />
       )}
     </View>
@@ -219,12 +215,10 @@ CustomTable.defaultProps = {
   handleRowPerPageChange: () => {},
   handleSearchResults: () => {},
   headingTexts: [],
-  indexOfFirstRecord: 0,
-  indexOfLastRecord: 0,
   isHeading: false,
   rowsLimit: [],
   rowsToShow: 10,
-  setCurrentrecords: [],
+  setCurrentRecords: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
@@ -244,17 +238,15 @@ CustomTable.propTypes = {
   handleRowPerPageChange: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,
   headingTexts: PropTypes.array,
-  indexOfFirstRecord: PropTypes.number.isRequired,
-  indexOfLastRecord: PropTypes.number.isRequired,
   isHeading: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsToShow: PropTypes.number.isRequired,
-  setCurrentrecords: PropTypes.array.isRequired,
+  setCurrentRecords: PropTypes.array.isRequired,
   showSearchBar: PropTypes.bool,
   statusText: PropTypes.array,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,
-  tableIcon: PropTypes.string.isRequired,
+  tableIcon: PropTypes.any.isRequired,
   totalcards: PropTypes.number.isRequired,
 };
 

@@ -7,34 +7,36 @@ import { TwoRow } from "../../core/layouts";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketView from "./controller/useTicketView";
-import { gridData } from "./constant";
+import { TicketData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
+import useCustomTablePagination from "../../hooks/useCustomTablePagination";
 
 const TicketsView = () => {
   const {
-    currentPage,
-    currentRecords,
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
-    handlePageChange,
-    handleRowPerPageChange,
-    handleSearchResults,
     headingTexts,
-    indexOfFirstRecord,
-    indexOfLastRecord,
     isHeading,
-    rowsToShow,
-    setCurrentRecords,
     statusText,
     subHeadingText,
     tableIcon,
+  } = useTicketView();
+
+  const {
+    currentPage,
+    currentRecords,
+    handlePageChange,
+    handleRowPerPageChange,
+    handleSearchResults,
+    rowsToShow,
+    setCurrentRecords,
     totalcards,
-  } = useTicketView(gridData);
+  } = useCustomTablePagination(TicketData);
 
   const intl = useIntl();
   const navigate = useNavigate();
@@ -58,7 +60,7 @@ const TicketsView = () => {
           {...{
             currentPage,
             currentRecords,
-            data: gridData,
+            data: TicketData,
             getStatusStyle,
             getColoumConfigs,
             filterCategory,
@@ -66,8 +68,6 @@ const TicketsView = () => {
             handleRowPerPageChange,
             handlePageChange,
             headingTexts,
-            indexOfFirstRecord,
-            indexOfLastRecord,
             isHeading,
             rowsLimit,
             rowsToShow,

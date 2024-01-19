@@ -1,7 +1,4 @@
-import {
-  StyleSheet,
-  Platform,
-} from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -48,13 +45,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
     color: colors.darkGrey,
   },
-  columnStyle: (WIDTH= "15%") => ({
-    width: WIDTH,
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingTop: 16,
-    paddingBottom: 16,
-  }),
   columnStyleBorder: {
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
