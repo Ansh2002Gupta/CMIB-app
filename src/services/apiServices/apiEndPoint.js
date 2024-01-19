@@ -1,5 +1,6 @@
 /* User Types */
 export const USER_TYPE_COMPANY = "company";
+export const CORE = "core";
 
 /* API Endpoints */
 export const COMPANY_RESET_PASSWORD_OTP = `${USER_TYPE_COMPANY}/reset-password`;
@@ -17,3 +18,5 @@ export const COMPANY_DELETE_LOGO = `${USER_TYPE_COMPANY}/delete-logo`;
 export const USER_PROFILE = `${USER_TYPE_COMPANY}/user/profile`;
 export const COMPANY_SAVE_LOGO_AUTH = `${USER_TYPE_COMPANY}/save-logo-auth`;
 export const COMPANY_DELETE_LOGO_AUTH = `${USER_TYPE_COMPANY}/delete-logo-auth`;
+export const CORE_INDUSTRY_TYPE = `${CORE}/industry-types`;
+export const CORE_STATE = `${CORE}/states`;
