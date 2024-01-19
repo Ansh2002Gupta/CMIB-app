@@ -6,15 +6,15 @@ import { TwoRow } from "../../core/layouts";
 
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import useTicketView from "./controller/useTicketView";
-import { ticketData } from "./constant";
+import useFeedbackView from "./controller/useFeedbackView";
+import { feedbackData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
-  TICKET_TABLE_HEADING as tableHeading,
+  FEEDBACK_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
 
-const TicketsView = () => {
+const FeedbackView = () => {
   const {
     currentRecords,
     currentPage,
@@ -32,7 +32,7 @@ const TicketsView = () => {
     tableIcon,
     setCurrentRecords,
     totalcards,
-  } = useTicketView();
+  } = useFeedbackView();
 
   const intl = useIntl();
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const TicketsView = () => {
     <TwoRow
       topSection={
         <IconHeader
-          headerText={intl.formatMessage({ id: "label.tickets" })}
+          headerText={intl.formatMessage({ id: "label.feedback" })}
           onPressLeftIcon={onGoBack}
           hasIconBar
         />
@@ -56,13 +56,13 @@ const TicketsView = () => {
           {...{
             currentPage,
             currentRecords,
-            data: ticketData,
-            getStatusStyle,
-            getColoumConfigs,
+            data: feedbackData,
             filterCategory,
-            handleSearchResults,
-            handleRowPerPageChange,
+            getColoumConfigs,
+            getStatusStyle,
             handlePageChange,
+            handleRowPerPageChange,
+            handleSearchResults,
             headingTexts,
             isHeading,
             rowsLimit,
@@ -80,4 +80,4 @@ const TicketsView = () => {
   );
 };
 
-export default TicketsView;
+export default FeedbackView;

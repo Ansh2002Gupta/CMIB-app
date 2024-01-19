@@ -52,6 +52,7 @@ export const ENTITY_OPTIONS = [
     label: "Firm of Chartered Accountants",
     value: "Firm of chartered accountants",
   },
+  { label: "PSU", value: "PSU" },
 ];
 
 export const SALUTATION_OPTIONS = [
@@ -206,10 +207,16 @@ export const ROWS_PER_PAGE_ARRAY = [
   { value: 20, label: "20" },
 ];
 
-export const TABLE_HEADING = {
+export const TICKET_TABLE_HEADING = {
   id: "Ticket ID",
   query_type: "Query Type",
   status: "Status",
   assigned_to: "Assigned To",
+  created_at: "Created On",
+};
+
+export const FEEDBACK_TABLE_HEADING = {
+  id: "Feedback ID",
+  status: "Status",
   created_at: "Created On",
 };

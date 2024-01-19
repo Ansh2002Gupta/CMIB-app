@@ -21,9 +21,9 @@ const SearchView = ({ data, onSearch }) => {
       let filtered = data;
       if (query) {
         const formattedQuery = query.toLowerCase();
-        filtered = data.filter((item) => {
-          return item.toLowerCase().includes(formattedQuery);
-        });
+        filtered = data.filter((item) =>
+          item.id.toLowerCase().includes(formattedQuery)
+        );
       }
       if (onSearch) {
         onSearch(filtered);
@@ -67,7 +67,7 @@ const SearchView = ({ data, onSearch }) => {
 };
 
 SearchView.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.string).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSearch: PropTypes.func,
 };
 

@@ -46,6 +46,7 @@ export default class Http {
       throw error;
     }
   }
+
   static async delete(_url) {
     try {
       const response = await axiosInstance.delete(_url);

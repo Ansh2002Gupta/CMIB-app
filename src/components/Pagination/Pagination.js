@@ -2,10 +2,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
+import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
-import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import { DOTS } from "../../constants/constants";
 import styles from "./Pagination.style";
@@ -14,7 +14,6 @@ const range = (start, end) => {
   const length = end - start + 1;
   return Array.from({ length }, (_, idx) => idx + start);
 };
-
 function Pagination(props) {
   const {
     cardsPerPage,
@@ -24,9 +23,9 @@ function Pagination(props) {
     siblingCount,
     totalcards,
   } = props;
-
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
+  const windowDimensions = useWindowDimensions();
+  const showbuttonText = windowDimensions.width >= 900;
 
   const totalPages = totalcards ? Math.ceil(totalcards / cardsPerPage) : null;
 
@@ -47,53 +46,43 @@ function Pagination(props) {
     if (!shouldShowLeftDots && shouldShowRightDots) {
       const leftItemCount = 3 + 2 * siblingCount;
       const leftRange = range(1, leftItemCount);
-
       return [...leftRange, DOTS, totalPages];
     }
-
     if (shouldShowLeftDots && !shouldShowRightDots) {
       const rightItemCount = 3 + 2 * siblingCount;
       const rightRange = range(totalPages - rightItemCount + 1, totalPages);
       return [firstPageIndex, DOTS, ...rightRange];
     }
-
     if (shouldShowLeftDots && shouldShowRightDots) {
       const middleRange = range(leftSiblingIndex, rightSiblingIndex);
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
     }
   };
-
   const previousPageHandler = () => {
-    if(currentPage<=1){
+    if (currentPage <= 1) {
       return;
     }
     handlePageChange(currentPage - 1);
   };
-
   const nextPageHandler = () => {
-    if(currentPage === lastPage){
+    if (currentPage === lastPage) {
       return;
     }
-    handlePageChange(currentPage + 1)
+    handlePageChange(currentPage + 1);
   };
-
   const paginate = (number) => {
     if (+currentPage === +number) {
       return;
     }
     handlePageChange(number);
   };
-
   if (totalPages && currentPage > totalPages) {
-    handlePageChange(1)
+    handlePageChange(1);
   }
-
   const lastPage = paginationRange()[paginationRange().length - 1];
-
   if (!totalPages) {
     return <></>;
   }
-
   return (
     <View style={styles.pagination}>
       <CustomButton
@@ -105,7 +94,7 @@ function Pagination(props) {
           leftIconSource: images.iconArrowLeft,
         }}
       >
-        {isWebView && (
+        {showbuttonText && (
           <CommonText customTextStyle={styles.previousText}>
             {intl.formatMessage({ id: "label.previous" })}
           </CommonText>
@@ -114,8 +103,12 @@ function Pagination(props) {
       <View style={styles.paginationRange}>
         {paginationRange().map((page, idx) => {
           const activePage = currentPage === page;
-          const activeButton = activePage ? styles.activeButton : styles.inActiveButton;
-          const activeText = activePage ? styles.activeText : styles.inActiveText;
+          const activeButton = activePage
+            ? styles.activeButton
+            : styles.inActiveButton;
+          const activeText = activePage
+            ? styles.activeText
+            : styles.inActiveText;
           if (page === DOTS) {
             return (
               <CommonText key={idx} style={styles.dotsStyles}>
@@ -143,7 +136,7 @@ function Pagination(props) {
           rightIconSource: images.iconArrowRightBlack,
         }}
       >
-        {isWebView && (
+        {showbuttonText && (
           <CommonText customTextStyle={styles.previousText}>
             {intl.formatMessage({ id: "label.next" })}
           </CommonText>
@@ -156,25 +149,17 @@ function Pagination(props) {
 Pagination.defaultProps = {
   cardsPerPage: 10,
   currentPage: 1,
-  customPageBtnStyles: {},
-  customSelectedPageStyles: {},
-  handlePageChange: ()=>{},
-  pageStyles: {},
+  handlePageChange: () => {},
   prevNextBtnstyles: {},
   siblingCount: 1,
   totalcards: 0,
 };
-
 Pagination.propTypes = {
   cardsPerPage: PropTypes.number,
   currentPage: PropTypes.number,
-  customPageBtnStyles: PropTypes.object,
-  customSelectedPageStyles: PropTypes.object,
-  handlePageChange:PropTypes.func,
-  pageStyles: PropTypes.object,
+  handlePageChange: PropTypes.func,
   prevNextBtnstyles: PropTypes.object,
   siblingCount: PropTypes.number,
   totalcards: PropTypes.number,
 };
-
 export default Pagination;
