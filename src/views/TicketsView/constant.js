@@ -1,4 +1,4 @@
-export const TicketData = [
+export const ticketData = [
   {
     id: "T0123456",
     query_type: "General Inquiry",

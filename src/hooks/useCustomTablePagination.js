@@ -22,7 +22,6 @@ const useCustomTablePagination = (data) => {
   let indexOfFirstRecord;
 
   const fetchData = (pageNumber, rowPerPage) => {
-    // TODO: Integrate an API call here
     indexOfLastRecord = pageNumber * rowPerPage;
     indexOfFirstRecord = indexOfLastRecord - rowPerPage;
     let newRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);

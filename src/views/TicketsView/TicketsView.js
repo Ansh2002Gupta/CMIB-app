@@ -8,7 +8,7 @@ import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketView from "./controller/useTicketView";
 import useCustomTablePagination from "../../hooks/useCustomTablePagination";
-import { TicketData } from "./constant";
+import { ticketData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
@@ -36,7 +36,7 @@ const TicketsView = () => {
     rowsToShow,
     setCurrentRecords,
     totalcards,
-  } = useCustomTablePagination(TicketData);
+  } = useCustomTablePagination(ticketData);
 
   const intl = useIntl();
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const TicketsView = () => {
           {...{
             currentPage,
             currentRecords,
-            data: TicketData,
+            data: ticketData,
             getStatusStyle,
             getColoumConfigs,
             filterCategory,
