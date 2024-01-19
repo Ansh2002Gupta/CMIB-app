@@ -226,6 +226,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleInputChange = (value, name) => {
+    errors[name] && validateFields(name);
     setFormData({
       ...formData,
       [name]: value,
