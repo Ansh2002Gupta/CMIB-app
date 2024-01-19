@@ -252,6 +252,9 @@ const locale = {
   "label.previous":"Previous",
   "label.rows_per_page":"Rows Per Page:",
   "label.filters":"Filters",
+  "label.show_result":"Show results",
+  "label.search": "Search",
+  "label.clear_all":"Clear All",
   "label.sessions": "Sessions",
   "label.basic": "Basic",
   "label.hra": "HRA",
@@ -269,7 +272,6 @@ const locale = {
   "label.group_discussion": "Group Discussion",
   "label.psychometric_test": "Psychometric Test/ Written Test",
   "label.personal_interview": "Personal Interview",
-  "label.search": "Search",
 };
 
 export default locale;

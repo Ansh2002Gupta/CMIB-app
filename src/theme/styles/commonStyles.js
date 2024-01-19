@@ -40,6 +40,13 @@ const commonStyles = {
     flex: 1,
     display: "flex",
   },
+  columnStyle: (WIDTH = "15%") => ({
+    width: WIDTH,
+    paddingLeft: 24,
+    paddingRight: 24,
+    paddingTop: 16,
+    paddingBottom: 16,
+  }),
 };
 
 export const gridStyles = {
@@ -47,6 +54,15 @@ export const gridStyles = {
   lg: "1fr 1fr",
   md: "1fr 1fr",
   sm: "1fr 1fr",
+};
+
+export const baseChipStyle = {
+  textAlign: "center",
+  marginRight: 16,
+  paddingLeft: 8,
+  paddingRight: 8,
+  paddingTop: 2,
+  paddingBottom: 2,
 };
 
 export const fontFamily =

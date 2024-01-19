@@ -18,6 +18,7 @@ export const options = [
     title: "label.feedback",
     id: 3,
     iconLeft: images.iconSend,
+    navigateTo: navigations.FEEDBACK,
   },
   {
     title: "label.notification_settings",

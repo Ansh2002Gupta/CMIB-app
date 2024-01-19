@@ -10,36 +10,35 @@ const styles = StyleSheet.create({
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         overflow: "hidden",
-        maxWidth: "100%",
+        maxWidth: "120px",
       },
     }),
   }),
-  inProgress: {
-    ...baseChipStyle,
-    color: colors.skyBlueDark,
-  },
   pending: {
-    ...baseChipStyle,
     color: colors.orange,
   },
-  close: {
+  published: {
     ...baseChipStyle,
-    color: colors.darkGreen,
-  },
-  inProgressWeb: {
-    ...baseChipStyle,
-    backgroundColor: colors.skyBlueLight,
     color: colors.skyBlueDark,
+  },
+  notPublished: {
+    ...baseChipStyle,
+    color: colors.darkBlueShade,
   },
   pendingWeb: {
     ...baseChipStyle,
-    color: colors.orange,
     backgroundColor: colors.lightOrange,
+    color: colors.orange,
   },
-  closeWeb: {
+  publishedWeb: {
     ...baseChipStyle,
-    color: colors.darkGreen,
-    backgroundColor: colors.lightGreen,
+    color: colors.skyBlueDark,
+    backgroundColor: colors.skyBlueLight,
+  },
+  notPublishedWeb: {
+    ...baseChipStyle,
+    color: colors.darkBlueShade,
+    backgroundColor: colors.greyOne,
   },
   tableHeadingText: {
     fontWeight: "600",
