@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-const style = {
+const style = StyleSheet.create({
   mainView: {
     flex: 1,
     backgroundColor: colors.white,
@@ -8,6 +10,8 @@ const style = {
   },
   container: {
     backgroundColor: colors.white,
+    paddingRight: 0,
+    paddingLeft: 0,
   },
   mobContainer: {
     paddingRight: 16,
@@ -68,6 +72,9 @@ const style = {
   },
   whiteBackground: {
     backgroundColor: colors.white,
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingLeft: 0,
   },
   grayBackground: {
     backgroundColor: colors.backgroundColor,
@@ -144,6 +151,6 @@ const style = {
     fontSize: 28,
     color: colors.black,
   },
-};
+});
 
 export default style;
