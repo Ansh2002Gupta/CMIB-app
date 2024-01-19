@@ -33,7 +33,7 @@ const useGetUserDetails = () => {
         userProfileDispatch(setUserDetails(res.data));
 
         // Setting the first accessible module
-        const moduleKeys = Object.keys(res.data.menu_items);
+        const moduleKeys = Object.keys(res.data?.menu_items || {});
         const firstAccessibleModuleName = moduleKeys?.[0] || "";
         const moduleDetails = modules.find(
           (module) =>
