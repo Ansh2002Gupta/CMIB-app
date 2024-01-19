@@ -1,10 +1,12 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
 const screenContainerWidth = {
   maxWidth: 600,
 };
 
-const style = {
+const style = StyleSheet.create({
   mainView: {
     flex: 1,
   },
@@ -76,6 +78,7 @@ const style = {
   grayBackground: {
     backgroundColor: colors.backgroundColor,
     flex: 1,
+    marginTop: 0,
   },
   webSubmitView: {
     backgroundColor: colors.white,
@@ -113,5 +116,6 @@ const style = {
   headerText: {
     fontSize: 28,
   },
-};
+});
+
 export default style;
