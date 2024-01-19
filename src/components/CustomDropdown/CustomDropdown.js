@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { FlatList, Text, View } from "@unthinkable/react-core-components";
+import { FlatList, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -39,7 +39,9 @@ const CustomDropdown = ({ dropdownIcon, onSelect, options, placeholder }) => {
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (
               <CustomTouchableOpacity onPress={() => handleOptionSelect(item)}>
-                <Text style={styles.optionText}>{item.label}</Text>
+                <CommonText customTextStyle={styles.optionText}>
+                  {item.label}
+                </CommonText>
               </CustomTouchableOpacity>
             )}
           />
