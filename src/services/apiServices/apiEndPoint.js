@@ -17,3 +17,4 @@ export const COMPANY_LOGO = `${CORE}/${USER_TYPE_COMPANY}/file`;
 export const USER_PROFILE = `${USER_TYPE_COMPANY}/user/profile`;
 export const CORE_INDUSTRY_TYPE = `${CORE}/industry-types`;
 export const CORE_STATE = `${CORE}/states`;
+export const MENU_PROFILE = `core/menu-profile/${USER_TYPE_COMPANY}`;
