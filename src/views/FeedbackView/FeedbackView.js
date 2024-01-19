@@ -7,7 +7,6 @@ import { TwoRow } from "../../core/layouts";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useFeedbackView from "./controller/useFeedbackView";
-import useCustomTablePagination from "../../hooks/useCustomTablePagination";
 import { feedbackData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
@@ -17,26 +16,23 @@ import {
 
 const FeedbackView = () => {
   const {
+    currentRecords,
+    currentPage,
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
     headingTexts,
+    handlePageChange,
+    handleRowPerPageChange,
+    handleSearchResults,
     isHeading,
+    rowsPerPage,
     statusText,
     subHeadingText,
     tableIcon,
-  } = useFeedbackView();
-
-  const {
-    currentPage,
-    currentRecords,
-    handleSearchResults,
-    handleRowPerPageChange,
-    handlePageChange,
-    rowsToShow,
     setCurrentRecords,
     totalcards,
-  } = useCustomTablePagination(feedbackData);
+  } = useFeedbackView();
 
   const intl = useIntl();
   const navigate = useNavigate();
@@ -70,7 +66,7 @@ const FeedbackView = () => {
             headingTexts,
             isHeading,
             rowsLimit,
-            rowsToShow,
+            rowsPerPage,
             setCurrentRecords,
             statusText,
             subHeadingText,

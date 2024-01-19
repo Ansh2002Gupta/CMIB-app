@@ -7,7 +7,6 @@ import { TwoRow } from "../../core/layouts";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketView from "./controller/useTicketView";
-import useCustomTablePagination from "../../hooks/useCustomTablePagination";
 import { ticketData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
@@ -17,26 +16,23 @@ import {
 
 const TicketsView = () => {
   const {
+    currentRecords,
+    currentPage,
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
     headingTexts,
-    isHeading,
-    statusText,
-    subHeadingText,
-    tableIcon,
-  } = useTicketView();
-
-  const {
-    currentPage,
-    currentRecords,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
-    rowsToShow,
+    isHeading,
+    rowsPerPage,
+    statusText,
+    subHeadingText,
+    tableIcon,
     setCurrentRecords,
     totalcards,
-  } = useCustomTablePagination(ticketData);
+  } = useTicketView();
 
   const intl = useIntl();
   const navigate = useNavigate();
@@ -70,7 +66,7 @@ const TicketsView = () => {
             headingTexts,
             isHeading,
             rowsLimit,
-            rowsToShow,
+            rowsPerPage,
             setCurrentRecords,
             statusText,
             subHeadingText,

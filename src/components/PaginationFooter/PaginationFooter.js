@@ -15,7 +15,7 @@ const PaginationFooter = ({
   handlePageChange,
   handleRowPerPageChange,
   rowsLimit,
-  rowsToShow,
+  rowsPerPage,
   siblingCount,
   totalcards,
 }) => {
@@ -33,14 +33,14 @@ const PaginationFooter = ({
           <CustomDropdown
             options={rowsLimit}
             onSelect={handleRowPerPageChange}
-            placeholder={rowsToShow}
+            placeholder={rowsPerPage}
             dropdownIcon={images.iconArrowDown}
           />
         </View>
       </View>
       <Pagination
         {...{
-          cardsPerPage: rowsToShow,
+          cardsPerPage: rowsPerPage,
           currentPage,
           handlePageChange,
           prevNextBtnstyles: isWebView
@@ -59,7 +59,7 @@ PaginationFooter.defaultProps = {
   handlePageChange: () => {},
   handleRowPerPageChange: () => {},
   rowsLimit: [],
-  rowsToShow: 10,
+  rowsPerPage: 10,
   siblingCount: 1,
   totalcards: 0,
 };
@@ -69,7 +69,7 @@ PaginationFooter.propTypes = {
   handlePageChange: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,
   rowsLimit: PropTypes.array.isRequired,
-  rowsToShow: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
   siblingCount: PropTypes.number.isRequired,
   totalcards: PropTypes.number.isRequired,
 };

@@ -38,7 +38,7 @@ const CustomTable = ({
   headingTexts,
   isHeading,
   rowsLimit,
-  rowsToShow,
+  rowsPerPage,
   setCurrentRecords,
   showSearchBar,
   statusText,
@@ -58,7 +58,7 @@ const CustomTable = ({
   };
 
   const onApplyFilter = (filterData) => {
-    setCurrentRecords(filterData);
+    setCurrentRecords(filterData.slice(0, rowsPerPage));
     handleFilterModal();
   };
 
@@ -158,7 +158,7 @@ const CustomTable = ({
                       handlePageChange,
                       handleRowPerPageChange,
                       rowsLimit,
-                      rowsToShow,
+                      rowsPerPage,
                       siblingCount: 1,
                       totalcards,
                     }}
@@ -176,7 +176,7 @@ const CustomTable = ({
                     handlePageChange,
                     handleRowPerPageChange,
                     rowsLimit,
-                    rowsToShow,
+                    rowsPerPage,
                     siblingCount: 1,
                     totalcards,
                   }}
@@ -217,7 +217,7 @@ CustomTable.defaultProps = {
   headingTexts: [],
   isHeading: false,
   rowsLimit: [],
-  rowsToShow: 10,
+  rowsPerPage: 10,
   setCurrentRecords: () => {},
   showSearchBar: true,
   statusText: "",
@@ -240,7 +240,7 @@ CustomTable.propTypes = {
   headingTexts: PropTypes.array,
   isHeading: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
-  rowsToShow: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
   setCurrentRecords: PropTypes.array.isRequired,
   showSearchBar: PropTypes.bool,
   statusText: PropTypes.array,
