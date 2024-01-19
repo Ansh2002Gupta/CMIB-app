@@ -89,8 +89,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     switch (name) {
       case "name":
         if (
-          value.length < FIELD_MIN_LENGTH ||
-          value.length > FIELD_MAX_LENGTH
+          value.trim().length < FIELD_MIN_LENGTH ||
+          value.trim().length > FIELD_MAX_LENGTH
         ) {
           error = intl.formatMessage({
             id: "label.contact_person_validation",
@@ -99,8 +99,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         break;
       case "designation":
         if (
-          value.length < FIELD_MIN_LENGTH ||
-          value.length > ADDRESS_MAX_LENGTH
+          value.trim().length < FIELD_MIN_LENGTH ||
+          value.trim().length > ADDRESS_MAX_LENGTH
         ) {
           error = intl.formatMessage({
             id: "label.designation_validation",
@@ -110,8 +110,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       case "mobileNo":
         if (
           !numRegex.test(String(value)) ||
-          value.length > NUMBER_MAX_LENGTH ||
-          value.length < NUMBER_MIN_LENGTH
+          value.trim().length > NUMBER_MAX_LENGTH ||
+          value.trim().length < NUMBER_MIN_LENGTH
         ) {
           error = intl.formatMessage({
             id: "label.mobile_number_validation",
