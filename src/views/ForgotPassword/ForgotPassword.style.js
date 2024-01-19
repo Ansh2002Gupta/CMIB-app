@@ -108,5 +108,8 @@ const style = {
   headerText: {
     fontSize: 28,
   },
+  backButtonStyle: {
+    justifyContent: "center",
+  },
 };
 export default style;
