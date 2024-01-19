@@ -48,7 +48,7 @@ const SignUpHeader = (props) => {
               containerStyle:
                 currentBreakpoint === "sm"
                   ? { ...styles.stepperParentContainer }
-                  : {},
+                  : { ...styles.resetStepperParentContainer },
             },
           }}
         />
