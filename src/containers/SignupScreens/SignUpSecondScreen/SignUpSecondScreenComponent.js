@@ -37,13 +37,13 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const [formData, setFormData] = useState({
     companyName: initialSignUpDetail.name || "",
     registrationNo: initialSignUpDetail.frn_number || "",
-    noOfPartners: initialSignUpDetail.number_of_partner || "",
+    noOfPartners: initialSignUpDetail.number_of_partners || "",
     address: initialSignUpDetail.address || "",
     emailId: initialSignUpDetail.email || "",
     telephoneNo: initialSignUpDetail.telephone_number || "",
     code: initialSignUpDetail.std_country_code || "",
     entity: initialSignUpDetail.entity || "",
-    currentIndustry: initialSignUpDetail.industry_type || "",
+    currentIndustry: initialSignUpDetail.industry_type_id || "",
     state: initialSignUpDetail.state_code || "",
   });
 
@@ -210,11 +210,11 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         email: emailId,
         entity: entity,
         frn_number: registrationNo,
-        number_of_partner: parseInt(noOfPartners, 10),
+        number_of_partners: parseInt(noOfPartners, 10),
         telephone_number: telephoneNo,
         address: address,
         std_country_code: code,
-        industry_type: parseInt(currentIndustry),
+        industry_type_id: parseInt(currentIndustry),
         state_code: state,
       };
 

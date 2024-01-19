@@ -12,12 +12,12 @@ import {
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import { ticketData } from "../constant";
+import { feedbackData } from "../constant";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../TicketsView.style";
+import styles from "../FeedbackView.style";
 
-const useTicketView = () => {
+const useFeedbackView = () => {
   const { isWebView } = useIsWebView();
   const [searchParams, setSearchParams] = useSearchParams();
   const [rowsPerPage, setRowPerPage] = useState(
@@ -29,7 +29,7 @@ const useTicketView = () => {
   );
 
   const [currentRecords, setCurrentRecords] = useState(
-    ticketData.slice(0, rowsPerPage)
+    feedbackData.slice(0, rowsPerPage)
   );
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
@@ -58,28 +58,28 @@ const useTicketView = () => {
   };
 
   let headingTexts = ["id"];
-  let subHeadingText = ["query_type"];
+  let subHeadingText = ["created_at"];
   let statusText = ["status"];
-  let tableIcon = images.iconTicket;
-  let filterCategory = ["Status", "Query Type"];
+  let tableIcon = images.iconEye;
+  let filterCategory = ["Status", "Role"];
   let isHeading = true;
 
   function getStatusStyle(status) {
     status = status.toLowerCase();
     switch (status) {
+      case "published":
+        return {
+          ...(!isWebView ? styles.published : styles.publishedWeb),
+          ...styles.cellTextStyle(12),
+        };
+      case "not published":
+        return {
+          ...(!isWebView ? styles.notPublished : styles.notPublishedWeb),
+          ...styles.cellTextStyle(12),
+        };
       case "pending":
         return {
           ...(!isWebView ? styles.pending : styles.pendingWeb),
-          ...styles.cellTextStyle(12),
-        };
-      case "close":
-        return {
-          ...(!isWebView ? styles.close : styles.closeWeb),
-          ...styles.cellTextStyle(12),
-        };
-      case "in progress":
-        return {
-          ...(!isWebView ? styles.inProgress : styles.inProgressWeb),
           ...styles.cellTextStyle(12),
         };
       default:
@@ -98,16 +98,7 @@ const useTicketView = () => {
             {item.id}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("15%"),
-        isFillSpace: true,
-      },
-      {
-        content: (
-          <CommonText customTextStyle={tableStyle}>
-            {item.query_type}
-          </CommonText>
-        ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("25%"),
         isFillSpace: true,
       },
       {
@@ -122,16 +113,7 @@ const useTicketView = () => {
             )}
           </View>
         ),
-        style: commonStyles.columnStyle("15%"),
-        isFillSpace: true,
-      },
-      {
-        content: (
-          <CommonText customTextStyle={tableStyle}>
-            {item.assigned_to}
-          </CommonText>
-        ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("25%"),
         isFillSpace: true,
       },
       {
@@ -140,16 +122,12 @@ const useTicketView = () => {
             {item.created_at}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("15%"),
+        style: commonStyles.columnStyle("30%"),
         isFillSpace: true,
       },
       {
         content: !isHeading && (
-          <TouchableImage
-            source={images.iconTicket}
-            imageStyle={styles.iconTicket}
-            isSvg={true}
-          />
+          <TouchableImage source={tableIcon} style={styles.iconTicket} />
         ),
         style: {
           ...commonStyles.columnStyle("10%"),
@@ -176,8 +154,8 @@ const useTicketView = () => {
     subHeadingText,
     tableIcon,
     setCurrentRecords,
-    totalcards: ticketData.length,
+    totalcards: feedbackData.length,
   };
 };
 
-export default useTicketView;
+export default useFeedbackView;
