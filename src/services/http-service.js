@@ -52,10 +52,11 @@ export default class Http {
       throw error;
     }
   }
+
   static async delete(_url) {
     const url = `${baseUrl}${_url}`;
     try {
-      const response = await axios.delete(url);
+      const response = await axiosInstance.delete(url);
       return response.data;
     } catch (error) {
       throw error;
