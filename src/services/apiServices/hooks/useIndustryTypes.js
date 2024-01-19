@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { CORE_INDUSTRY_TYPE } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useIndustryTypes = () => {
@@ -13,7 +14,7 @@ const useIndustryTypes = () => {
     try {
       setGetStatus(API_STATUS.LOADING);
       setError("");
-      const res = await Http.get(`core/get-industry-types`);
+      const res = await Http.get(CORE_INDUSTRY_TYPE);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setGetStatus(API_STATUS.SUCCESS);
         setIndustryTypeResult(res.data);
