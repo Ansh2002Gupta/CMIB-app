@@ -52,6 +52,7 @@ export const ENTITY_OPTIONS = [
     label: "Firm of Chartered Accountants",
     value: "Firm of chartered accountants",
   },
+  { label: "PSU", value: "PSU" },
 ];
 
 export const SALUTATION_OPTIONS = [
