@@ -131,19 +131,19 @@ export const modules = [
     key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
     children: newlyQualifiedPlacementsMenu,
     session: items,
-    visible: true, //TODO: to be set false before PR is merged.
+    visible: false,
   },
   {
     label: "CA Jobs",
     key: moduleKeys.CA_JOBS_KEY,
     children: caJobsMenu,
     session: items,
-    visible: true, //TODO: to be set false before PR is merged.
+    visible: false,
   },
   {
     label: "Experienced Members",
     key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
-    visible: true, //TODO: to be set false before PR is merged.
+    visible: false,
     sectionHeading: true,
   },
   {
@@ -151,7 +151,7 @@ export const modules = [
     key: moduleKeys.CARRER_ASCENT_KEY,
     children: experiencedMembersMenu,
     session: items,
-    visible: true, //TODO: to be set false before PR is merged.
+    visible: false,
     isSubMenu: true,
   },
   {
@@ -159,7 +159,7 @@ export const modules = [
     key: moduleKeys.WOMEN_PARTTIME_KEY,
     children: experiencedMembersMenu,
     session: items,
-    visible: true, //TODO: to be set false before PR is merged.
+    visible: false,
     isSubMenu: true,
   },
   {
@@ -167,7 +167,7 @@ export const modules = [
     key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
     children: experiencedMembersMenu,
     session: items,
-    visible: true, //TODO: to be set false before PR is merged.
+    visible: false,
     isSubMenu: true,
   },
 ];

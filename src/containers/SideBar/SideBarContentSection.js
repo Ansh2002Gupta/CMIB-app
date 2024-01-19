@@ -48,8 +48,10 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   }, [isWebView, sideBarContent]);
 
   const handleOnSelectModuleItem = (item) => {
-    sideBarDispatch(setSelectedSession(item?.session?.[0]));
-    sideBarDispatch(setSelectedModule(item));
+    if (item.key !== selectedModule.key) {
+      sideBarDispatch(setSelectedSession(item?.session?.[0]));
+      sideBarDispatch(setSelectedModule(item));
+    }
     setSideBarSubMenu(SideBarContentEnum.NONE);
   };
 
@@ -115,7 +117,10 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           topSection={
             <SideBarItemView
               title={intl.formatMessage({ id: "label.module" })}
-              content={selectedModule.label}
+              content={
+                selectedModule?.label ||
+                intl.formatMessage({ id: "label.no_module_available" })
+              }
               onPressChange={() => setSideBarSubMenu(SideBarContentEnum.MODULE)}
             />
           }
@@ -123,7 +128,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             <>
               {isWebView ? (
                 <FlatList
-                  data={selectedModule.children}
+                  data={selectedModule?.children || []}
                   renderItem={renderMenuItems}
                 />
               ) : (

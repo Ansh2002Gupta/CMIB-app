@@ -270,6 +270,7 @@ const locale = {
   "label.psychometric_test": "Psychometric Test/ Written Test",
   "label.personal_interview": "Personal Interview",
   "label.search": "Search",
+  "label.no_module_available": "No module available",
 };
 
 export default locale;
