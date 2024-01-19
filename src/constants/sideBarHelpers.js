@@ -178,7 +178,7 @@ export const getAccessibleModulesList = ({
 }) => {
   return allModules.map((item1) => {
     var itemInAccessibleModule = accessibleModules.find(
-      (item2) => item2?.slug?.toLowerCase() === item1?.key?.toLowerCase()
+      (item2) => item2.toLowerCase() === item1?.key?.toLowerCase()
     );
     if (itemInAccessibleModule) {
       item1.visible = true;
@@ -187,9 +187,9 @@ export const getAccessibleModulesList = ({
       item1.sectionHeading &&
       accessibleModules.find(
         (item) =>
-          item.slug === moduleKeys.CARRER_ASCENT_KEY ||
-          item.slug === moduleKeys.WOMEN_PARTTIME_KEY ||
-          item.slug === moduleKeys.OVERSEAS_CHAPTERS_KEY
+          item === moduleKeys.CARRER_ASCENT_KEY ||
+          item === moduleKeys.WOMEN_PARTTIME_KEY ||
+          item === moduleKeys.OVERSEAS_CHAPTERS_KEY
       )
     ) {
       item1.visible = true;

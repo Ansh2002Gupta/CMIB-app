@@ -36,7 +36,8 @@ const useGetUserDetails = () => {
         userProfileDispatch(setUserDetails(res.data));
 
         // Setting the first accessible module
-        const firstAccessibleModuleName = res.data?.role?.[0]?.slug || "";
+        const moduleKeys = Object.keys(res.data?.menu_items || {});
+        const firstAccessibleModuleName = moduleKeys?.[0] || "";
         const moduleDetails = modules.find(
           (module) =>
             module.key?.toLowerCase() ===
