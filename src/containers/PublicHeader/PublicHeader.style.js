@@ -59,6 +59,9 @@ const style = {
     height: 40,
     alignSelf: "center",
   },
+  imagesContainer: {
+    justifyContent: "flex-start",
+  },
   iconAzadiMahotsav: {
     width: 67,
     height: 40,

@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
-
+import { useNavigate } from "../../routes";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View, Image } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
+import TouchableImage from "../../components/TouchableImage";
+import CustomImage from "../../components/CustomImage";
+import { navigations } from "../../constants/routeNames";
 import images from "../../images";
 import styles from "./PublicHeader.style";
 
@@ -11,6 +14,11 @@ const PublicHeader = () => {
   const hideRightIcons =
     currentBreakpoint === "xs" || currentBreakpoint === "sm";
   const isWebView = currentBreakpoint !== "xs";
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(navigations.LOGIN);
+  };
 
   return (
     <>
@@ -31,24 +39,26 @@ const PublicHeader = () => {
                 : styles.webContainerStyle),
             }}
           >
-            <Image
+            <TouchableImage
+              onPress={handleNavigate}
+              parentStyle={styles.imagesContainer}
+              resizeMode="contain"
               source={images.iconCmibLogo}
               style={styles.cmibLogo}
-              resizeMode="contain"
             />
             {!hideRightIcons && (
               <View style={styles.rightIconContainer}>
-                <Image
+                <CustomImage
                   source={images.iconGloPac}
                   style={styles.gloPac}
                   resizeMode="contain"
                 />
-                <Image
+                <CustomImage
                   source={images.iconG20}
                   style={styles.iconG20}
                   resizeMode="contain"
                 />
-                <Image
+                <CustomImage
                   source={images.iconAzadiMahotsav}
                   style={styles.azadiMahotsav}
                   resizeMode="contain"
@@ -70,7 +80,7 @@ const PublicHeader = () => {
               ...styles.containerStyle,
             }}
           >
-            <Image source={images.iconCmibLogo} />
+            <CustomImage source={images.iconCmibLogo} style={styles.cmibLogo} />
           </View>
         </View>
       )}
