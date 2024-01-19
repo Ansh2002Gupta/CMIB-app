@@ -13,8 +13,8 @@ const usePagination = ({
   setCurrentPage,
   setRowPerPage,
 }) => {
-  const pageParam = `${pageQueryParamName || "page"}`;
-  const rowPerPageParam = `${rowPerPageQueryParamName || "rowsPerPage"}`;
+  const pageParam = pageQueryParamName || "page";
+  const rowPerPageParam = rowPerPageQueryParamName || "rowsPerPage";
 
   const [searchParams, setSearchParams] = useSearchParams();
 
