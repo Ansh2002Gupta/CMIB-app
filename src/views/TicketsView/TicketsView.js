@@ -7,13 +7,13 @@ import { TwoRow } from "../../core/layouts";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketView from "./controller/useTicketView";
+import useCustomTablePagination from "../../hooks/useCustomTablePagination";
 import { TicketData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
-import useCustomTablePagination from "../../hooks/useCustomTablePagination";
 
 const TicketsView = () => {
   const {
