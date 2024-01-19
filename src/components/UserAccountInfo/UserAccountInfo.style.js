@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   headerTextStyle: {
     paddingTop: 0,
     fontWeight: "600",
-    paddingBottom: 16,
+    paddingBottom: 24,
   },
   innerContainerStyle: {
     height: getModalHeight(),
