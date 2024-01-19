@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Http from "../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { CORE_STATE } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useGetStates = () => {
@@ -15,7 +16,7 @@ const useGetStates = () => {
     try {
       setGettingStatesStatus(API_STATUS.LOADING);
       setError("");
-      const res = await Http.get(`core/all-states`);
+      const res = await Http.get(CORE_STATE);
       if (res.code === STATUS_CODES.SUCCESS_STATUS) {
         setGettingStatesStatus(API_STATUS.SUCCESS);
         setStateResult(res.data);

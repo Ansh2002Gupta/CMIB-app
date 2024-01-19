@@ -91,9 +91,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const handleImageDeletion = () => {
     if (fileUploadResult?.data?.file_name) {
-      handleDeleteLogo({
-        file_path: fileUploadResult?.data?.file_name,
-      });
+      const fileName = fileUploadResult?.data?.file_name.split("/");
+      handleDeleteLogo(fileName[fileName.length - 1]);
     }
   };
 

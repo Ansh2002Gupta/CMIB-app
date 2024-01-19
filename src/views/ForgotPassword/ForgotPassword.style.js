@@ -1,4 +1,9 @@
 import colors from "../../assets/colors";
+
+const screenContainerWidth = {
+  maxWidth: 600,
+};
+
 const style = {
   mainView: {
     flex: 1,
@@ -91,14 +96,14 @@ const style = {
   width1200pxOrLessForgotHeading: {
     fontSize: 34,
   },
-  smScreenContainers: {
-    width: "60%",
-  },
-  mdScreenContainers: {
-    width: "40%",
+  commonScreenContainers: {
+    width: "75% ",
+    ...screenContainerWidth,
   },
   forgotPasswordWebContainer: {
     flex: 0.9,
+    ...screenContainerWidth,
+    maxHeight: 780,
   },
   headerText: {
     fontSize: 28,

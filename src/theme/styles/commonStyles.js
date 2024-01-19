@@ -29,7 +29,7 @@ const commonStyles = {
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
     padding: 40,
-    width: "32%",
+    width: "45%",
     alignSelf: "center",
     marginTop: 48,
     zIndex: 1,

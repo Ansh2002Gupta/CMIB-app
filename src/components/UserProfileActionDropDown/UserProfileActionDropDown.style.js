@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   },
   fullNameStyle: {
     fontSize: 14,
-    fontWeight: "600",
     color: colors.black,
   },
   roleStyle: {
     paddingTop: 5,
     fontSize: 12,
     color: colors.subHeadingGray,
+    textTransform: 'capitalize'
   },
   iconArrow: {
     width: 16,
