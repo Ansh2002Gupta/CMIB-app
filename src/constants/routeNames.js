@@ -2,6 +2,7 @@ export const navigations = {
   //routes
   COMPANY_PROFILE: "/company-profile",
   DASHBOARD: "/dashboard",
+  FEEDBACK: "/feedback",
   FORGOT_PASSWORD: "/forgot-password",
   JOBS: "/jobs",
   JOB_APPLICANTS: "/job-applicants",

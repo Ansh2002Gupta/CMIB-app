@@ -8,6 +8,7 @@ import ViewProfile from "../views/ViewProfile";
 import CompanyProfile from "../views/CompanyProfile";
 import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
+import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import JobsView from "../views/JobsView/JobsView";
 import JobApplicantsView from "../views/JobApplicantsView/index";
@@ -115,6 +116,16 @@ const config = [
       {
         viewPath: "",
         element: <TicketsView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.FEEDBACK,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
+    views: [
+      {
+        viewPath: "",
+        element: <FeedbackView />,
       },
     ],
   },

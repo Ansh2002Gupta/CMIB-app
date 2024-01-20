@@ -543,7 +543,7 @@
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = BoilerPlate/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = BoilerPlate;
+				INFOPLIST_KEY_CFBundleDisplayName = "ICAI CMIB";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -553,7 +553,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.boilerplate.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.icai.cmib;
 				PRODUCT_NAME = BoilerPlate;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -573,7 +573,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = BoilerPlate/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = BoilerPlate;
+				INFOPLIST_KEY_CFBundleDisplayName = "ICAI CMIB";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -583,7 +583,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.boilerplate.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.icai.cmib;
 				PRODUCT_NAME = BoilerPlate;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
