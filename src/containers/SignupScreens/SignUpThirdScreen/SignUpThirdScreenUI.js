@@ -20,7 +20,7 @@ import {
   SALUTATION_OPTIONS,
   WOMENT_PLACEMENT,
 } from "../../../constants/constants";
-import { numericValidator } from "../../../constants/validation";
+import { numericValidator } from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 

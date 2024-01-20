@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 
 import useNavigateScreen from "../../../services/hooks/useNavigateScreen";
 import useLoginUser from "../../../services/apiServices/hooks/useLoginUser";
-import { validateEmail } from "../../../constants/commonFunctions";
+import { validateEmail } from "../../../utils/validation";
 import { navigations } from "../../../constants/routeNames";
 
 const useLoginForm = () => {

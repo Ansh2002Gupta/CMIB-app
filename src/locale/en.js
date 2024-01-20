@@ -99,7 +99,6 @@ const locale = {
     "Enter your address for correspondance",
   "label.select_state": "Select state",
   "label.email_id_placeholder": "Enter your email ID",
-  "label.enter_code": "Enter code",
   "label.enter_firm_no": "Enter firm registration no.",
   "label.enter_telephone_no": "Enter phone no.",
   "label.enter_contact_person_designation": "Enter contact person designation",
@@ -114,7 +113,6 @@ const locale = {
   "label.enter_your_website": "Enter your website",
   "label.select_nature_of_supplier": "Select nature of supplier",
   "label.select_company_type": "Select company type",
-  "label.enter_no": "Enter no.",
   "label.select": "Select",
   "label.ca_jobs": "CA Jobs",
   "label.newly_qualified_ca": "Newly Qualified CA's Placement",
@@ -273,6 +271,7 @@ const locale = {
   "label.group_discussion": "Group Discussion",
   "label.psychometric_test": "Psychometric Test/ Written Test",
   "label.personal_interview": "Personal Interview",
+  "label.enter": "Enter",
 };
 
 export default locale;

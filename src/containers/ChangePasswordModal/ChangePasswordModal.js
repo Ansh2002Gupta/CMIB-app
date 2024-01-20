@@ -10,7 +10,7 @@ import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
-import { strongPasswordValidator } from "../../constants/validation";
+import { strongPasswordValidator } from "../../utils/validation";
 import styles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {

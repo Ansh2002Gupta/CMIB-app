@@ -21,7 +21,7 @@ import {
 } from "../../constants/constants";
 import { mapApiDataToUI } from "./mappedData";
 import { PREVIOUS_SCREEN } from "../../constants/constants";
-import { validateEmail } from "../../constants/commonFunctions";
+import { validateEmail } from "../../utils/validation";
 
 const CompanyProfileComponent = () => {
   const intl = useIntl();

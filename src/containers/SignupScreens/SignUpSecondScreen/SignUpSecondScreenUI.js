@@ -12,7 +12,7 @@ import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
-import { numericValidator } from "../../../constants/validation";
+import { numericValidator } from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
@@ -108,7 +108,7 @@ const SignUpSecondScreenUI = ({
                 id: "label.no_of_partners",
               })}
               placeholder={intl.formatMessage({
-                id: "label.enter_no",
+                id: "label.enter",
               })}
               isMandatory
               customHandleBlur={() => handleBlur("noOfPartners")}
@@ -186,7 +186,7 @@ const SignUpSecondScreenUI = ({
                 id: "label.isd_std_code",
               })}
               placeholder={intl.formatMessage({
-                id: "label.enter_code",
+                id: "label.enter",
               })}
               customHandleBlur={() => handleBlur("code")}
               isNumeric
