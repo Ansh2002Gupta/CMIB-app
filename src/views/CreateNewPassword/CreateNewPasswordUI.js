@@ -12,7 +12,7 @@ import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLa
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
-import { strongPasswordValidator } from "../../constants/validation";
+import { strongPasswordValidator } from "../../utils/validation";
 import styles from "./CreateNewPassword.style";
 
 function CreateNewPasswordUI(props) {
