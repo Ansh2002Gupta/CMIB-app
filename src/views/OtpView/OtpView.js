@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
 
-import { navigations } from "../../constants/routeNames";
+import CreateNewPasswordComponent from "../CreateNewPassword";
 import OtpViewUI from "./OtpViewUI";
-import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
 import useVerifyOtpAPI from "../../services/apiServices/hooks/useVerifyOtpAPI";
-import { validateOtp } from "../../constants/commonFunctions";
+import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
+import { navigations } from "../../constants/routeNames";
 import {
-  OTP_TRY_COUNT,
   OTP_TIMER_SECOND,
   OTP_TIMER_MIN_MINUTES,
+  OTP_TRY_COUNT,
 } from "../../constants/constants";
+import { validateOtp } from "../../constants/commonFunctions";
 
 function OtpView({ email }) {
   const navigate = useNavigate();
@@ -24,10 +25,15 @@ function OtpView({ email }) {
   const [otpLeft, setOtpLeft] = useState(OTP_TRY_COUNT);
   const [otpValue, setOtpValue] = useState("");
   const [seconds, setSeconds] = useState(OTP_TIMER_SECOND);
-  const [validationError, setValidationError] = useState("");
 
   const { handleSendOtpAPI } = useSendOtpAPI();
-  const { handleVerifyOtpAPI, isLoading } = useVerifyOtpAPI();
+  const {
+    errorWhileResetPassword,
+    handleVerifyOtpAPI,
+    isLoading,
+    isSuccess,
+    setErrorWhileResetPassword,
+  } = useVerifyOtpAPI();
 
   useEffect(() => {
     if (otpValue !== "" && otpValue?.length === 4) {
@@ -49,17 +55,7 @@ function OtpView({ email }) {
     } else {
       setErrorMessage("");
     }
-    handleVerifyOtpAPI(
-      { email: email, otp: otpValue },
-      (result) => {
-        navigate(navigations.CREATE_NEW_PASSWORD, {
-          state: { token: result.token },
-        });
-      },
-      (error) => {
-        setValidationError(error);
-      }
-    );
+    handleVerifyOtpAPI({ payload: { email, otp: otpValue } });
   };
 
   const handleOtpChange = (otp) => {
@@ -76,31 +72,39 @@ function OtpView({ email }) {
   };
 
   const handleDismissToast = () => {
-    setValidationError("");
+    setErrorWhileResetPassword("");
   };
 
   return (
-    <OtpViewUI
-      otpValue={otpValue}
-      handleOtpChange={handleOtpChange}
-      onVerifyOtpClick={onVerifyOtpClick}
-      onClickGoToLogin={onClickGoToLogin}
-      errorMessage={errorMessage}
-      intl={intl}
-      submitDisabled={submitDisabled}
-      onResendOtpClick={onResendOtpClick}
-      otpLeft={otpLeft}
-      setOtpLeft={setOtpLeft}
-      isLoading={isLoading}
-      isCounter={isCounter}
-      setIsCounter={setIsCounter}
-      minutes={minutes}
-      setMinutes={setMinutes}
-      seconds={seconds}
-      setSeconds={setSeconds}
-      handleDismissToast={handleDismissToast}
-      validationError={validationError}
-    />
+    <>
+      {isSuccess ? (
+        <CreateNewPasswordComponent />
+      ) : (
+        <OtpViewUI
+          {...{
+            errorMessage,
+            handleDismissToast,
+            handleOtpChange,
+            intl,
+            isCounter,
+            isLoading,
+            minutes,
+            onClickGoToLogin,
+            onResendOtpClick,
+            onVerifyOtpClick,
+            otpLeft,
+            otpValue,
+            seconds,
+            setIsCounter,
+            setMinutes,
+            setOtpLeft,
+            setSeconds,
+            submitDisabled,
+            validationError: errorWhileResetPassword,
+          }}
+        />
+      )}
+    </>
   );
 }
 

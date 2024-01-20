@@ -12,7 +12,7 @@ import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
-import { numericValidator } from "../../../constants/validation";
+import { numericValidator } from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
