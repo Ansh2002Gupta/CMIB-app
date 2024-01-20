@@ -60,15 +60,20 @@ const DropDownModal = ({
           headerTextStyle={styles.headerText}
           customInnerContainerStyle={styles.modalInnerContainer}
         >
-          {options.length >= 5 && (
-            <SearchView
-              data={data}
-              onSearch={onSearch}
-              searchLogic={handleSearch}
-            />
+          {options.length >= 20 && (
+            <>
+              <SearchView
+                data={data}
+                onSearch={onSearch}
+                customSearchCriteria={handleSearch}
+              />
+              {selectedOption.length === 0 && (
+                <CommonText>No results found</CommonText>
+              )}
+            </>
           )}
           <ScrollView style={styles.optionMainContainer}>
-            {(selectedOption.length > 0 ? selectedOption : data).map(
+            {(!!selectedOption.length ? selectedOption : data).map(
               (item, index) => (
                 <TouchableOpacity
                   key={index}

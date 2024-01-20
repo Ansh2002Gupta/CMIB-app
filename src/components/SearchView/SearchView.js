@@ -13,7 +13,7 @@ const SearchView = ({
   customParentStyle,
   data,
   onSearch,
-  searchLogic,
+  customSearchCriteria,
 }) => {
   const SearchIcon = images.iconSearch;
   const ClearIcon = images.iconCross;
@@ -35,13 +35,15 @@ const SearchView = ({
       let filtered = data;
       if (query) {
         const formattedQuery = query.toLowerCase();
-        if (searchLogic) {
-          filtered = searchLogic(formattedQuery);
+        if (customSearchCriteria) {
+          filtered = customSearchCriteria(formattedQuery);
         } else {
           filtered = data.filter((item) => {
             return item.toLowerCase().includes(formattedQuery);
           });
         }
+      } else {
+        filtered = data;
       }
       if (onSearch) {
         onSearch(filtered);
@@ -53,7 +55,7 @@ const SearchView = ({
         clearTimeout(debounceTimeout.current);
       }
     };
-  }, [query, data, onSearch, searchLogic]);
+  }, [query]);
 
   const handleSearch = (text) => {
     setQuery(text);
@@ -90,7 +92,7 @@ SearchView.defaultProps = {
   customInputStyle: {},
   customParentStyle: {},
   onSearch: () => {},
-  searchLogic: () => {},
+  customSearchCriteria: () => {},
 };
 
 SearchView.propTypes = {
@@ -101,7 +103,7 @@ SearchView.propTypes = {
     PropTypes.arrayOf(PropTypes.object),
   ]).isRequired,
   onSearch: PropTypes.func,
-  searchLogic: PropTypes.func,
+  customSearchCriteria: PropTypes.func,
 };
 
 export default SearchView;

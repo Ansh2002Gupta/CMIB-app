@@ -97,13 +97,13 @@ const CustomTextInput = (props) => {
     if (dropDownModal) {
       return (
         <DropDownModal
-          value={value}
-          placeholder={placeholder}
-          options={options}
-          labelField={labelField}
-          valueField={valueField}
-          onChangeValue={(item) => {
-            onChangeValue(item);
+          {...{
+            labelField,
+            onChangeValue,
+            options,
+            placeholder,
+            value,
+            valueField,
           }}
         />
       );
