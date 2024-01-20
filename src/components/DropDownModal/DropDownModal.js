@@ -11,6 +11,7 @@ import CommonText from "../CommonText";
 import SearchView from "../SearchView";
 import styles from "./DropDownModal.style";
 import images from "../../images";
+import { useIntl } from "react-intl";
 
 const DropDownModal = ({
   labelField,
@@ -20,6 +21,7 @@ const DropDownModal = ({
   value,
   valueField,
 }) => {
+  const intl = useIntl();
   const [selectedOption, setSelectedOption] = useState([]);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
@@ -60,39 +62,44 @@ const DropDownModal = ({
           headerTextStyle={styles.headerText}
           customInnerContainerStyle={styles.modalInnerContainer}
         >
-          {options.length >= 20 && (
+          {/* If the list items greater than 20 then we have to implement search */}
+          {data.length >= 20 && (
             <>
               <SearchView
                 data={data}
                 onSearch={onSearch}
                 customSearchCriteria={handleSearch}
               />
-              {selectedOption.length === 0 && (
-                <CommonText>No results found</CommonText>
-              )}
             </>
           )}
+
           <ScrollView style={styles.optionMainContainer}>
-            {(!!selectedOption.length ? selectedOption : data).map(
-              (item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    onChangeValue(item.value);
-                    handleDropDown();
-                  }}
-                  style={styles.optionContainer}
-                >
-                  <CommonText
-                    customTextStyle={
-                      value === item.value
-                        ? styles.selectedOption
-                        : styles.optionsText
-                    }
+            {data.length >= 20 && selectedOption.length === 0 ? (
+              <CommonText customContainerStyle={styles.nothingFoundText}>
+                {intl.formatMessage({ id: "label.no_result_found" })}
+              </CommonText>
+            ) : (
+              (selectedOption.length > 0 ? selectedOption : data).map(
+                (item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      onChangeValue(item.value);
+                      handleDropDown();
+                    }}
+                    style={styles.optionContainer}
                   >
-                    {item.label}
-                  </CommonText>
-                </TouchableOpacity>
+                    <CommonText
+                      customTextStyle={
+                        value === item.value
+                          ? styles.selectedOption
+                          : styles.optionsText
+                      }
+                    >
+                      {item.label}
+                    </CommonText>
+                  </TouchableOpacity>
+                )
               )
             )}
           </ScrollView>

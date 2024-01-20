@@ -49,6 +49,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   optionMainContainer: { marginTop: 8 },
+  nothingFoundText: {
+    alignItems: "center",
+    padding: 16,
+  },
 });
 
 export default styles;
