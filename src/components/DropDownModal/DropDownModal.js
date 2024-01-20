@@ -74,7 +74,7 @@ const DropDownModal = ({
           )}
 
           <ScrollView style={styles.optionMainContainer}>
-            {data.length >= 20 && selectedOption.length === 0 ? (
+            {data.length >= 20 && !selectedOption.length ? (
               <CommonText customContainerStyle={styles.nothingFoundText}>
                 {intl.formatMessage({ id: "label.no_result_found" })}
               </CommonText>
