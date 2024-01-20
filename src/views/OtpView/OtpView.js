@@ -55,7 +55,7 @@ function OtpView({ email }) {
     } else {
       setErrorMessage("");
     }
-    handleVerifyOtpAPI({ email, otp: otpValue });
+    handleVerifyOtpAPI({ payload: { email, otp: otpValue } });
   };
 
   const handleOtpChange = (otp) => {
