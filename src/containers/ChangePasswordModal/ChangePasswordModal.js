@@ -45,8 +45,8 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     setError(null);
     if (isPasswordStrong) {
       handleUseChangePassword({
-        old_password: oldPassword,
-        password: newPassword,
+        current_password: oldPassword,
+        new_password: newPassword,
       });
     }
   };

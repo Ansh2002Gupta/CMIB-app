@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Http from "../../http-service";
+import Storage from "../../storage-service";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { COMPANY_VERIFY_OTP } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
@@ -21,6 +22,7 @@ const useVerifyOtpAPI = () => {
       ) {
         setApiStatus(API_STATUS.SUCCESS);
         setVerifyOtpResult(res.data);
+        await Storage.set("token", res?.data);
         return;
       }
       setApiStatus(API_STATUS.ERROR);

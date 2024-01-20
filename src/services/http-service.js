@@ -38,6 +38,27 @@ export default class Http {
     }
   }
 
+  static async patch(
+    _url,
+    data,
+    headers = {},
+    otherOptions = {},
+    handleDiscard = () => {}
+  ) {
+    try {
+      const cancelPatchRequest = axios.CancelToken.source();
+      handleDiscard(cancelPatchRequest);
+      const response = await axiosInstance.patch(_url, data, {
+        headers: headers,
+        cancelToken: cancelPatchRequest.token,
+        ...otherOptions,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async put(_url, data) {
     try {
       const response = await axiosInstance.put(_url, data);

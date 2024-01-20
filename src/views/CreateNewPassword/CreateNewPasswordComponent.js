@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import Storage from "../../services/storage-service";
 import { useNavigate, useLocation } from "../../routes";
 
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
@@ -8,13 +9,25 @@ import { navigations } from "../../constants/routeNames";
 
 function CreateNewPasswordComponent() {
   const navigate = useNavigate();
-  const location = useLocation();
   const intl = useIntl();
-  const { token } = location.state || {};
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [token, setToken] = useState(null); // State to hold the token
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const storedToken = await Storage.get("token");
+        setToken(storedToken?.data?.reset_token);
+      } catch (error) {
+        console.error("Error retrieving token from storage:", error);
+      }
+    };
+
+    fetchToken();
+  }, []);
 
   const {
     isLoading,
@@ -60,7 +73,7 @@ function CreateNewPasswordComponent() {
     if (doPasswordsMatch()) {
       setErrorMessage("");
       handleResetPasswordAPI({
-        token,
+        reset_token: token,
         password: newPassword,
       });
     } else {

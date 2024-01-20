@@ -14,7 +14,7 @@ const useResetPasswordAPI = () => {
     try {
       setApiStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const res = await Http.post(COMPANY_RESET_PASSWORD_OTP, payload);
+      const res = await Http.patch(COMPANY_RESET_PASSWORD_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setApiStatus(API_STATUS.SUCCESS);
         setResetPasswordResult(res.data);
