@@ -27,11 +27,9 @@ const useVerifyOtpAPI = () => {
       setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setErrorWhileResetPassword(err.response?.data?.message);
-        return;
-      }
-      setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      setErrorWhileResetPassword(
+        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+      );
     }
   };
 

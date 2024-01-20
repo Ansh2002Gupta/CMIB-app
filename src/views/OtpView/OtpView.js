@@ -81,25 +81,27 @@ function OtpView({ email }) {
         <CreateNewPasswordComponent />
       ) : (
         <OtpViewUI
-          otpValue={otpValue}
-          handleOtpChange={handleOtpChange}
-          onVerifyOtpClick={onVerifyOtpClick}
-          onClickGoToLogin={onClickGoToLogin}
-          errorMessage={errorMessage}
-          intl={intl}
-          submitDisabled={submitDisabled}
-          onResendOtpClick={onResendOtpClick}
-          otpLeft={otpLeft}
-          setOtpLeft={setOtpLeft}
-          isLoading={isLoading}
-          isCounter={isCounter}
-          setIsCounter={setIsCounter}
-          minutes={minutes}
-          setMinutes={setMinutes}
-          seconds={seconds}
-          setSeconds={setSeconds}
-          handleDismissToast={handleDismissToast}
-          validationError={errorWhileResetPassword}
+          {...{
+            errorMessage,
+            handleDismissToast,
+            handleOtpChange,
+            intl,
+            isCounter,
+            isLoading,
+            minutes,
+            onClickGoToLogin,
+            onResendOtpClick,
+            onVerifyOtpClick,
+            otpLeft,
+            otpValue,
+            seconds,
+            setIsCounter,
+            setMinutes,
+            setOtpLeft,
+            setSeconds,
+            submitDisabled,
+            validationError: errorWhileResetPassword,
+          }}
         />
       )}
     </>
