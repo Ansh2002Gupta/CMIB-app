@@ -108,7 +108,7 @@ const SignUpSecondScreenUI = ({
                 id: "label.no_of_partners",
               })}
               placeholder={intl.formatMessage({
-                id: "label.enter_no",
+                id: "label.enter",
               })}
               isMandatory
               customHandleBlur={() => handleBlur("noOfPartners")}
@@ -186,7 +186,7 @@ const SignUpSecondScreenUI = ({
                 id: "label.isd_std_code",
               })}
               placeholder={intl.formatMessage({
-                id: "label.enter_code",
+                id: "label.enter",
               })}
               customHandleBlur={() => handleBlur("code")}
               isNumeric
