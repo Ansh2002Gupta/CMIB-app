@@ -22,14 +22,9 @@ const CheckBox = ({ handleCheckbox, id, isSelected, title }) => {
             source={isSelected ? CheckIcon : UncheckIcon}
             isSvg={true}
           />
+          <CommonText customTextStyle={styles.titleStyle}>{title}</CommonText>
         </CustomTouchableOpacity>
       ),
-    },
-    {
-      content: (
-        <CommonText customTextStyle={styles.titleStyle}>{title}</CommonText>
-      ),
-      isFillSpace: true,
     },
   ];
 

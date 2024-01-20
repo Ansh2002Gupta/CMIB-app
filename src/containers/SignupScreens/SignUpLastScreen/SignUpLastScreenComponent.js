@@ -140,8 +140,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     });
 
     if (
-      companyDetails.length < FIELD_MIN_LENGTH ||
-      companyDetails.length > COMPANY_DETAIL_MAX_LENGTH
+      companyDetails.trim().length < FIELD_MIN_LENGTH ||
+      companyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH
     ) {
       newErrors.companyDetails = intl.formatMessage({
         id: "label.company_details_validation",
