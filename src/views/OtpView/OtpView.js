@@ -28,10 +28,10 @@ function OtpView({ email }) {
 
   const { handleSendOtpAPI } = useSendOtpAPI();
   const {
+    errorWhileResetPassword,
     handleVerifyOtpAPI,
     isLoading,
     isSuccess,
-    errorWhileResetPassword,
     setErrorWhileResetPassword,
   } = useVerifyOtpAPI();
 
@@ -55,7 +55,7 @@ function OtpView({ email }) {
     } else {
       setErrorMessage("");
     }
-    handleVerifyOtpAPI({ email: email, otp: otpValue });
+    handleVerifyOtpAPI({ email, otp: otpValue });
   };
 
   const handleOtpChange = (otp) => {
