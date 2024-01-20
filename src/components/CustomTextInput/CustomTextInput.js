@@ -11,6 +11,7 @@ import {
 import CustomLabelView from "../CustomLabelView";
 import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
+import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -27,6 +28,7 @@ const CustomTextInput = (props) => {
     customTextInputContainer,
     countValue,
     dropdownStyle,
+    dropDownModal,
     errorMessage,
     eyeImage,
     handleCountChange,
@@ -92,6 +94,20 @@ const CustomTextInput = (props) => {
   };
 
   const renderTextInput = () => {
+    if (dropDownModal) {
+      return (
+        <DropDownModal
+          {...{
+            labelField,
+            onChangeValue,
+            options,
+            placeholder,
+            value,
+            valueField,
+          }}
+        />
+      );
+    }
     if (isDropdown) {
       return (
         <Dropdown
@@ -208,6 +224,7 @@ CustomTextInput.defaultProps = {
   customStyle: {},
   customTextInputContainer: {},
   dropdownStyle: {},
+  dropDownModal: false,
   errorMessage: "",
   eyeImage: false,
   handleCountChange: () => {},
@@ -241,6 +258,7 @@ CustomTextInput.propTypes = {
   customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
+  dropDownModal: PropTypes.bool,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
   handleCountChange: PropTypes.func,
