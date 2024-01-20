@@ -19,7 +19,7 @@ import {
 } from "../../../constants/constants";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
-import { validateEmail } from "../../../constants/commonFunctions";
+import { validateEmail } from "../../../utils/validation";
 
 const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();

@@ -12,7 +12,7 @@ import {
   OTP_TIMER_MIN_MINUTES,
   OTP_TRY_COUNT,
 } from "../../constants/constants";
-import { validateOtp } from "../../constants/commonFunctions";
+import { validateOtp } from "../../utils/validation";
 
 function OtpView({ email }) {
   const navigate = useNavigate();
