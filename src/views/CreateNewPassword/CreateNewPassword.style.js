@@ -123,6 +123,9 @@ const styles = StyleSheet.create({
   ErrorStyle: {
     paddingTop: 4,
   },
+  backButtonStyle: {
+    justifyContent: "center",
+  },
 });
 
 export default styles;
