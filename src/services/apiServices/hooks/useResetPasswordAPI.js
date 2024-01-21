@@ -15,13 +15,16 @@ const useResetPasswordAPI = () => {
       setApiStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
       const res = await Http.patch(COMPANY_RESET_PASSWORD_OTP, payload);
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+      if (
+        res.status === STATUS_CODES.SUCCESS_STATUS ||
+        res.code === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setApiStatus(API_STATUS.SUCCESS);
-        setResetPasswordResult(res.data);
+        setResetPasswordResult(res);
         return;
       }
       setApiStatus(API_STATUS.ERROR);
-      setErrorWhileResetPassword(res);
+      setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {

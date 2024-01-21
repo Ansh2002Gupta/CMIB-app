@@ -28,7 +28,6 @@ function CreateNewPasswordUI(props) {
     onChangePasswordInput,
     onChangeConfirmPasswordInput,
     successLogin,
-    successMsg,
     setErrorWhileResetPassword,
     validationError,
   } = props;
@@ -238,7 +237,6 @@ CreateNewPasswordUI.defaultProps = {
   errorMessage: "",
   isLoading: false,
   successLogin: false,
-  successMsg: "",
   validationError: "",
 };
 
@@ -254,7 +252,6 @@ CreateNewPasswordUI.propTypes = {
   onChangePasswordInput: PropTypes.func.isRequired,
   onChangeConfirmPasswordInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
-  successMsg: PropTypes.string,
   setErrorWhileResetPassword: PropTypes.func.isRequired,
   validationError: PropTypes.string,
 };

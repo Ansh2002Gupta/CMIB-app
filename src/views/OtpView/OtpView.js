@@ -33,6 +33,7 @@ function OtpView({ email }) {
     isLoading,
     isSuccess,
     setErrorWhileResetPassword,
+    verifyOtpResult,
   } = useVerifyOtpAPI();
 
   useEffect(() => {
@@ -78,7 +79,9 @@ function OtpView({ email }) {
   return (
     <>
       {isSuccess ? (
-        <CreateNewPasswordComponent />
+        <CreateNewPasswordComponent
+          resetToken={verifyOtpResult?.data?.reset_token}
+        />
       ) : (
         <OtpViewUI
           {...{

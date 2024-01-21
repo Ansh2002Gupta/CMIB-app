@@ -228,22 +228,26 @@ const LoginScreenUI = (props) => {
                       isWebView ? styles.webView.inputTextBox : {}
                     }
                   />
-                  <TouchableOpacity
-                    onPress={onForgotPasswordClick}
-                    style={styles.forgotPasswordView}
-                  >
-                    <CommonText
-                      customTextStyle={{
-                        ...styles.forgotPasswordText,
-                        ...(isWebView ? styles.webView.forgotPasswordText : {}),
-                      }}
-                      fontWeight="600"
+                  <View style={styles.forgotButtonContainere}>
+                    <TouchableOpacity
+                      onPress={onForgotPasswordClick}
+                      style={styles.forgotPasswordView}
                     >
-                      {intl.formatMessage({
-                        id: "label.forgot_password",
-                      })}
-                    </CommonText>
-                  </TouchableOpacity>
+                      <CommonText
+                        customTextStyle={{
+                          ...styles.forgotPasswordText,
+                          ...(isWebView
+                            ? styles.webView.forgotPasswordText
+                            : {}),
+                        }}
+                        fontWeight="600"
+                      >
+                        {intl.formatMessage({
+                          id: "label.forgot_password",
+                        })}
+                      </CommonText>
+                    </TouchableOpacity>
+                  </View>
                   <View style={styles.loginButtonView}>
                     <CustomButton
                       disabled={loginDisabled}

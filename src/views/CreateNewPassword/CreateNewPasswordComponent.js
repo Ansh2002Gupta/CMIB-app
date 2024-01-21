@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
-import Storage from "../../services/storage-service";
-import { useNavigate, useLocation } from "../../routes";
+import { useNavigate } from "../../routes";
 
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
 import useResetPasswordAPI from "../../services/apiServices/hooks/useResetPasswordAPI";
 import { navigations } from "../../constants/routeNames";
 
-function CreateNewPasswordComponent() {
+function CreateNewPasswordComponent({ resetToken }) {
   const navigate = useNavigate();
   const intl = useIntl();
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [token, setToken] = useState(null); // State to hold the token
-
-  useEffect(() => {
-    const fetchToken = async () => {
-      try {
-        const storedToken = await Storage.get("token");
-        setToken(storedToken?.data?.reset_token);
-      } catch (error) {
-        console.error("Error retrieving token from storage:", error);
-      }
-    };
-
-    fetchToken();
-  }, []);
 
   const {
     isLoading,
@@ -73,7 +58,7 @@ function CreateNewPasswordComponent() {
     if (doPasswordsMatch()) {
       setErrorMessage("");
       handleResetPasswordAPI({
-        reset_token: token,
+        reset_token: resetToken,
         password: newPassword,
       });
     } else {
@@ -94,7 +79,6 @@ function CreateNewPasswordComponent() {
       isLoading={isLoading}
       handleConfirmPasswordBlur={handleConfirmPasswordBlur}
       successLogin={!!resetPasswordResult?.message}
-      successMsg={resetPasswordResult?.message}
       validationError={errorWhileResetPassword}
       setErrorWhileResetPassword={setErrorWhileResetPassword}
     />
