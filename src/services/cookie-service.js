@@ -1,9 +1,14 @@
 import Cookies from "js-cookie";
 import { Platform } from "@unthinkable/react-core-components";
 
+import appConfig from "../constants/appConfig";
 import formatKey from "./helpers";
 
 const isPlatformWeb = Platform.OS.toLowerCase() === "web";
+let isLocalhost = false;
+if (isPlatformWeb) {
+  isLocalhost = window.location.hostname === "localhost";
+}
 
 class CookieStorage {
   static set(
@@ -35,7 +40,11 @@ class CookieStorage {
   static remove(key) {
     if (!key) return;
     try {
-      Cookies.remove(formatKey(key));
+      Cookies.remove(formatKey(key), {
+        path: isLocalhost ? "/" : appConfig.ROUTER_BASE_NAME,
+        domain: isLocalhost ? "" : appConfig.DOMAIN,
+        secure: !isLocalhost,
+      });
     } catch (error) {
       console.error(error);
     }
