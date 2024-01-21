@@ -7,7 +7,9 @@ import formatKey from "./helpers";
 const isPlatformWeb = Platform.OS.toLowerCase() === "web";
 let isLocalhost = false;
 if (isPlatformWeb) {
-  isLocalhost = window.location.hostname === "localhost";
+  isLocalhost =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1";
 }
 
 class CookieStorage {
