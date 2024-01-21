@@ -50,6 +50,11 @@ const SignUpSecondScreenUI = ({
   const showContentHeader =
     currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
 
+  const mobileProps =
+    Platform.OS.toLowerCase() === "web"
+      ? { isDropdown: true }
+      : { dropDownModal: true };
+
   const renderFormContent = () => {
     return (
       <View style={style.formContainer}>
@@ -68,9 +73,9 @@ const SignUpSecondScreenUI = ({
           }}
         />
         <CustomTextInput
+          {...mobileProps}
           label={intl.formatMessage({ id: "label.entity" })}
           isMandatory
-          isDropdown
           placeholder={intl.formatMessage({
             id: "label.select_entity_placeholder",
           })}
@@ -124,9 +129,9 @@ const SignUpSecondScreenUI = ({
           </View>
         </View>
         <CustomTextInput
+          {...mobileProps}
           label={intl.formatMessage({ id: "label.current_industry" })}
           isMandatory
-          isDropdown
           placeholder={intl.formatMessage({
             id: "label.select_current_indusrty_placeholder",
           })}
@@ -154,9 +159,9 @@ const SignUpSecondScreenUI = ({
           })}
         />
         <CustomTextInput
+          {...mobileProps}
           label={intl.formatMessage({ id: "label.state" })}
           isMandatory
-          isDropdown
           labelField="name"
           valueField="state_code"
           placeholder={intl.formatMessage({
