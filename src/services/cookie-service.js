@@ -43,7 +43,7 @@ class CookieStorage {
     if (!key) return;
     try {
       Cookies.remove(formatKey(key), {
-        path: isLocalhost ? "/" : appConfig.ROUTER_BASE_NAME,
+        path: "/",
         domain: isLocalhost ? "" : appConfig.DOMAIN,
         secure: !isLocalhost,
       });
