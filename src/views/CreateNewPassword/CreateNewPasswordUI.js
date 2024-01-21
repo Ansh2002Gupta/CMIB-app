@@ -28,7 +28,6 @@ function CreateNewPasswordUI(props) {
     onChangePasswordInput,
     onChangeConfirmPasswordInput,
     successLogin,
-    successMsg,
     setErrorWhileResetPassword,
     validationError,
   } = props;
@@ -201,7 +200,10 @@ function CreateNewPasswordUI(props) {
             >
               {intl.formatMessage({ id: "label.submit" })}
             </CustomButton>
-            <CustomTouchableOpacity onPress={onClickGoToLogin}>
+            <CustomTouchableOpacity
+              onPress={onClickGoToLogin}
+              style={styles.backButtonStyle}
+            >
               <CommonText
                 customTextStyle={styles.backToLoginText}
                 fontWeight="600"
@@ -238,7 +240,6 @@ CreateNewPasswordUI.defaultProps = {
   errorMessage: "",
   isLoading: false,
   successLogin: false,
-  successMsg: "",
   validationError: "",
 };
 
@@ -254,7 +255,6 @@ CreateNewPasswordUI.propTypes = {
   onChangePasswordInput: PropTypes.func.isRequired,
   onChangeConfirmPasswordInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
-  successMsg: PropTypes.string,
   setErrorWhileResetPassword: PropTypes.func.isRequired,
   validationError: PropTypes.string,
 };
