@@ -96,7 +96,7 @@ const style = {
   marginBottom: {
     marginBottom: 0,
   },
-  forgotButtonContainere: {
+  forgotButtonContainer: {
     justifyContent: "flex-end",
     flexDirection: "row",
   },

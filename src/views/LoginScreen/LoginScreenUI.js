@@ -228,7 +228,7 @@ const LoginScreenUI = (props) => {
                       isWebView ? styles.webView.inputTextBox : {}
                     }
                   />
-                  <View style={styles.forgotButtonContainere}>
+                  <View style={styles.forgotButtonContainer}>
                     <TouchableOpacity
                       onPress={onForgotPasswordClick}
                       style={styles.forgotPasswordView}
