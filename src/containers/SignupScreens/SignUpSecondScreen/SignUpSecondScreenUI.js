@@ -12,7 +12,7 @@ import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import { ENTITY_OPTIONS } from "../../../constants/constants";
-import { numericValidator } from "../../../constants/validation";
+import { numericValidator } from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
@@ -70,10 +70,10 @@ const SignUpSecondScreenUI = ({
         <CustomTextInput
           label={intl.formatMessage({ id: "label.entity" })}
           isMandatory
-          isDropdown
           placeholder={intl.formatMessage({
             id: "label.select_entity_placeholder",
           })}
+          isDropdown
           value={entity}
           errorMessage={errors.entity}
           isError={!!errors.entity}
@@ -108,7 +108,7 @@ const SignUpSecondScreenUI = ({
                 id: "label.no_of_partners",
               })}
               placeholder={intl.formatMessage({
-                id: "label.enter_no",
+                id: "label.enter",
               })}
               isMandatory
               customHandleBlur={() => handleBlur("noOfPartners")}
@@ -126,10 +126,10 @@ const SignUpSecondScreenUI = ({
         <CustomTextInput
           label={intl.formatMessage({ id: "label.current_industry" })}
           isMandatory
-          isDropdown
           placeholder={intl.formatMessage({
             id: "label.select_current_indusrty_placeholder",
           })}
+          isDropdown
           labelField="name"
           valueField="id"
           inputKey="id"
@@ -156,12 +156,12 @@ const SignUpSecondScreenUI = ({
         <CustomTextInput
           label={intl.formatMessage({ id: "label.state" })}
           isMandatory
-          isDropdown
           labelField="name"
           valueField="state_code"
           placeholder={intl.formatMessage({
             id: "label.select_state",
           })}
+          isDropdown
           inputKey="state_code"
           value={state}
           options={stateOptions || []}
@@ -186,7 +186,7 @@ const SignUpSecondScreenUI = ({
                 id: "label.isd_std_code",
               })}
               placeholder={intl.formatMessage({
-                id: "label.enter_code",
+                id: "label.enter",
               })}
               customHandleBlur={() => handleBlur("code")}
               isNumeric

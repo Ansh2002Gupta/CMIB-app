@@ -47,7 +47,6 @@ const style = {
   },
   forgotPasswordView: {
     flexDirection: "row",
-    justifyContent: "flex-end",
   },
   rememberMeText: {
     fontSize: 14,
@@ -96,6 +95,10 @@ const style = {
   },
   marginBottom: {
     marginBottom: 0,
+  },
+  forgotButtonContainer: {
+    justifyContent: "flex-end",
+    flexDirection: "row",
   },
 
   // Web view related Styles

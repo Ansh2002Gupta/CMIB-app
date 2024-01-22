@@ -3,8 +3,6 @@ import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
     ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   disabledButton: {

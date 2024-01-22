@@ -14,10 +14,8 @@ const PaginationFooter = ({
   currentPage,
   handlePageChange,
   handleRowPerPageChange,
-  indexOfFirstRecord,
-  indexOfLastRecord,
   rowsLimit,
-  rowsToShow,
+  rowsPerPage,
   siblingCount,
   totalcards,
 }) => {
@@ -35,25 +33,22 @@ const PaginationFooter = ({
           <CustomDropdown
             options={rowsLimit}
             onSelect={handleRowPerPageChange}
-            placeholder={rowsToShow}
+            placeholder={rowsPerPage}
             dropdownIcon={images.iconArrowDown}
           />
         </View>
-        {!isWebView && (
-          <CommonText customTextStyle={styles.rowsPerPageText}>
-            {`${indexOfFirstRecord} - ${indexOfLastRecord} of ${totalcards}`}
-          </CommonText>
-        )}
       </View>
       <Pagination
         {...{
-          cardsPerPage: rowsToShow,
+          cardsPerPage: rowsPerPage,
           currentPage,
           handlePageChange,
-          prevNextBtnstyles:isWebView ? styles.previousButtonWeb : styles.previousButton,
+          prevNextBtnstyles: isWebView
+            ? styles.previousButtonWeb
+            : styles.previousButton,
           siblingCount,
           totalcards,
-          }}
+        }}
       />
     </View>
   );
@@ -63,11 +58,9 @@ PaginationFooter.defaultProps = {
   currentPage: 1,
   handlePageChange: () => {},
   handleRowPerPageChange: () => {},
-  indexOfFirstRecord: 0,
-  indexOfLastRecord: 0,
   rowsLimit: [],
-  rowsToShow: 10,
-  siblingCount:1,
+  rowsPerPage: 10,
+  siblingCount: 1,
   totalcards: 0,
 };
 
@@ -75,10 +68,8 @@ PaginationFooter.propTypes = {
   currentPage: PropTypes.number.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,
-  indexOfFirstRecord: PropTypes.number.isRequired,
-  indexOfLastRecord: PropTypes.number.isRequired,
   rowsLimit: PropTypes.array.isRequired,
-  rowsToShow: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
   siblingCount: PropTypes.number.isRequired,
   totalcards: PropTypes.number.isRequired,
 };

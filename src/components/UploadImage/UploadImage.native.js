@@ -60,7 +60,7 @@ const UploadImage = ({
           name: fileName,
           type: type,
         };
-        formData.append("company_logo", file);
+        formData.append("file", file);
         handleFileUpload({
           file: formData,
         });

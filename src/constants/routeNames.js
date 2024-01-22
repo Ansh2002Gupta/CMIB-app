@@ -1,8 +1,8 @@
 export const navigations = {
   //routes
   COMPANY_PROFILE: "/company-profile",
-  CREATE_NEW_PASSWORD: "/create-new-password",
   DASHBOARD: "/dashboard",
+  FEEDBACK: "/feedback",
   FORGOT_PASSWORD: "/forgot-password",
   JOBS: "/jobs",
   JOB_APPLICANTS: "/job-applicants",

@@ -41,7 +41,7 @@ const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
         onSearch={onSearchSession}
         customInputStyle={styles.searchInput}
         customParentStyle={styles.searchParent}
-        searchLogic={handleSearching}
+        customSearchCriteria={handleSearching}
       />
       <FlatList
         data={searchList}

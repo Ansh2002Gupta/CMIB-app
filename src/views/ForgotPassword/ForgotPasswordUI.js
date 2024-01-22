@@ -176,14 +176,19 @@ const ForgotPasswordUI = (props) => {
             >
               {intl.formatMessage({ id: "label.submit" })}
             </CustomButton>
-            <CustomTouchableOpacity onPress={onClickGoToLogin}>
-              <CommonText
-                customTextStyle={styles.backToLoginText}
-                fontWeight="600"
+            <View style={styles.backToLoginContainer}>
+              <CustomTouchableOpacity
+                onPress={onClickGoToLogin}
+                style={styles.backButtonStyle}
               >
-                {intl.formatMessage({ id: "label.back_to_login" })}
-              </CommonText>
-            </CustomTouchableOpacity>
+                <CommonText
+                  customTextStyle={styles.backToLoginText}
+                  fontWeight="600"
+                >
+                  {intl.formatMessage({ id: "label.back_to_login" })}
+                </CommonText>
+              </CustomTouchableOpacity>
+            </View>
           </View>
         </View>
         {successLogin ? (

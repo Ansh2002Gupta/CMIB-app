@@ -11,9 +11,9 @@ import styles from "./searchView.style";
 const SearchView = ({
   customInputStyle,
   customParentStyle,
+  customSearchCriteria,
   data,
   onSearch,
-  searchLogic,
 }) => {
   const SearchIcon = images.iconSearch;
   const ClearIcon = images.iconCross;
@@ -35,14 +35,14 @@ const SearchView = ({
       let filtered = data;
       if (query) {
         const formattedQuery = query.toLowerCase();
-        if (searchLogic) {
-          filtered = searchLogic(formattedQuery);
+        if (customSearchCriteria) {
+          filtered = customSearchCriteria(formattedQuery);
         } else {
           filtered = data.filter((item) => {
             return item.toLowerCase().includes(formattedQuery);
           });
         }
-      }
+      } 
       if (onSearch) {
         onSearch(filtered);
       }
@@ -53,7 +53,7 @@ const SearchView = ({
         clearTimeout(debounceTimeout.current);
       }
     };
-  }, [query, data, onSearch, searchLogic]);
+  }, [query, data, onSearch, customSearchCriteria]);
 
   const handleSearch = (text) => {
     setQuery(text);
@@ -61,6 +61,7 @@ const SearchView = ({
 
   const clearSearch = () => {
     setQuery("");
+    onSearch([]);
   };
 
   return (
@@ -88,19 +89,19 @@ const SearchView = ({
 SearchView.defaultProps = {
   customInputStyle: {},
   customParentStyle: {},
+  customSearchCriteria: () => {},
   onSearch: () => {},
-  searchLogic: () => {},
 };
 
 SearchView.propTypes = {
   customInputStyle: PropTypes.object,
   customParentStyle: PropTypes.object,
+  customSearchCriteria: PropTypes.func,
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.object),
   ]).isRequired,
   onSearch: PropTypes.func,
-  searchLogic: PropTypes.func,
 };
 
 export default SearchView;
