@@ -38,7 +38,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   );
   const [website, setWebsite] = useState(initialDetails.website || "");
   const [natureOfSupplier, setNatureOfSupplier] = useState(
-    initialDetails.nature_of_supplier || ""
+    initialDetails.nature_of_suppliers || ""
   );
   const [companyType, setCompanyType] = useState(initialDetails.type || "");
   const [options, setOptions] = useState(
@@ -91,9 +91,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const handleImageDeletion = () => {
     if (fileUploadResult?.data?.file_name) {
-      handleDeleteLogo({
-        file_path: fileUploadResult?.data?.file_name,
-      });
+      const fileName = fileUploadResult?.data?.file_name.split("/");
+      handleDeleteLogo(fileName[fileName.length - 1]);
     }
   };
 
@@ -141,8 +140,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     });
 
     if (
-      companyDetails.length < FIELD_MIN_LENGTH ||
-      companyDetails.length > COMPANY_DETAIL_MAX_LENGTH
+      companyDetails.trim().length < FIELD_MIN_LENGTH ||
+      companyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH
     ) {
       newErrors.companyDetails = intl.formatMessage({
         id: "label.company_details_validation",
@@ -199,7 +198,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         const details = {
           social_media_link: socialMediaLinks,
           website: website,
-          nature_of_supplier: natureOfSupplier,
+          nature_of_suppliers: natureOfSupplier,
           type: companyType,
           company_details: companyDetails,
           company_logo: fileUploadResult?.data?.file_name,

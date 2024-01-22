@@ -10,7 +10,7 @@ import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
-import { strongPasswordValidator } from "../../constants/validation";
+import { strongPasswordValidator } from "../../utils/validation";
 import styles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
@@ -45,8 +45,8 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     setError(null);
     if (isPasswordStrong) {
       handleUseChangePassword({
-        old_password: oldPassword,
-        password: newPassword,
+        current_password: oldPassword,
+        new_password: newPassword,
       });
     }
   };

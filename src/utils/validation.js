@@ -1,5 +1,9 @@
-import { numRegex } from "./constants";
-import { NEW_PASSWORD_VALIDATIONS } from "./Regex";
+import { numRegex, VALID_EMAIL, VALID_OTP } from "../constants/constants";
+import {
+  mailformat,
+  NEW_PASSWORD_VALIDATIONS,
+  otpRegex,
+} from "../constants/Regex";
 
 export const isStringContainsNumber = (string) =>
   NEW_PASSWORD_VALIDATIONS.numeric.test(string);
@@ -23,4 +27,18 @@ export const strongPasswordValidator = (password) => {
 
 export const numericValidator = (val) => {
   return val === "" || numRegex.test(String(val));
+};
+
+export const validateEmail = (userEmail) => {
+  if (!userEmail.match(mailformat)) {
+    return VALID_EMAIL;
+  }
+  return "";
+};
+
+export const validateOtp = (username) => {
+  if (!username.match(otpRegex)) {
+    return VALID_OTP;
+  }
+  return "";
 };

@@ -1,17 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { View, TextInput } from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
+import { Platform, TextInput, View } from "@unthinkable/react-core-components";
 
 import { DEBOUNCE_TIME } from "../../constants/constants";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
 import styles from "./searchView.style";
 
-const SearchView = ({ data, onSearch }) => {
+const SearchView = ({
+  customInputStyle,
+  customParentStyle,
+  data,
+  onSearch,
+  customSearchCriteria,
+}) => {
   const SearchIcon = images.iconSearch;
-  const ClearIcon = images.iconCross; 
+  const ClearIcon = images.iconCross;
   const [query, setQuery] = useState("");
   const debounceTimeout = useRef(null);
+  const intl = useIntl();
+  const platformSpecificProps = Platform.select({
+    web: {},
+    default: {
+      placeholderTextColor: customInputStyle?.color,
+    },
+  });
 
   useEffect(() => {
     if (debounceTimeout.current) {
@@ -21,9 +35,15 @@ const SearchView = ({ data, onSearch }) => {
       let filtered = data;
       if (query) {
         const formattedQuery = query.toLowerCase();
-        filtered = data.filter((item) => {
-          return item.toLowerCase().includes(formattedQuery);
-        });
+        if (customSearchCriteria) {
+          filtered = customSearchCriteria(formattedQuery);
+        } else {
+          filtered = data.filter((item) => {
+            return item.toLowerCase().includes(formattedQuery);
+          });
+        }
+      } else {
+        filtered = data;
       }
       if (onSearch) {
         onSearch(filtered);
@@ -35,30 +55,32 @@ const SearchView = ({ data, onSearch }) => {
         clearTimeout(debounceTimeout.current);
       }
     };
-  }, [query, data, onSearch]);
+  }, [query]);
 
   const handleSearch = (text) => {
     setQuery(text);
   };
 
   const clearSearch = () => {
-    setQuery('');
+    setQuery("");
+    onSearch([]);
   };
 
   return (
-    <View style={styles.searchParent}>
+    <View style={{ ...styles.searchParent, ...customParentStyle }}>
       <TouchableImage source={SearchIcon} disabled={true} />
       <TextInput
-        style={styles.searchInput}
+        style={{ ...styles.searchInput, ...customInputStyle }}
         value={query}
         onChangeText={handleSearch}
-        placeholder="Search"
+        placeholder={intl.formatMessage({ id: "label.search" })}
+        {...platformSpecificProps}
       />
-       {query.length > 0 && (
+      {query.length > 0 && (
         <TouchableImage
           source={ClearIcon}
           onPress={clearSearch}
-          imageStyle={styles.clearIcon} 
+          imageStyle={styles.clearIcon}
           isSvg={false}
         />
       )}
@@ -66,9 +88,22 @@ const SearchView = ({ data, onSearch }) => {
   );
 };
 
+SearchView.defaultProps = {
+  customInputStyle: {},
+  customParentStyle: {},
+  onSearch: () => {},
+  customSearchCriteria: () => {},
+};
+
 SearchView.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.string).isRequired,
+  customInputStyle: PropTypes.object,
+  customParentStyle: PropTypes.object,
+  data: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.arrayOf(PropTypes.object),
+  ]).isRequired,
   onSearch: PropTypes.func,
+  customSearchCriteria: PropTypes.func,
 };
 
 export default SearchView;

@@ -20,7 +20,7 @@ import MultiRow from "../../../../core/layouts/MultiRow";
 import TwoColumn from "../../../../core/layouts/TwoColumn/TwoColumn";
 import useIsWebView from "../../../../hooks/useIsWebView";
 import { gridStyles } from "../../../../theme/styles/commonStyles";
-import { numericValidator } from "../../../../constants/validation";
+import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
 

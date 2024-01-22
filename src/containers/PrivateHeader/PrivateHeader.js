@@ -31,10 +31,10 @@ const PrivateHeader = ({
 
   const loggedInUserInfo = userProfileState.userDetails || {};
 
-  const profileImage = ""; // TODO: Not getting the user profile image key in the API. Have updated the API pening document for the same.
+  const profileImage = loggedInUserInfo?.profile_photo || "" ;
   const firstName = loggedInUserInfo?.name?.split(" ")?.[0] || "";
   const lastName = loggedInUserInfo?.name?.split(" ")?.[1] || "";
-  const role = "Admin"; // TODO: Not getting type of user at the moment in the API. Have updated the API pening document for the same.
+  const role = loggedInUserInfo?.user_type || "";
 
   const isMdOrGreater = windowDimensions.width >= 900;
 
