@@ -33,7 +33,7 @@ const SignUpScreenComponent = () => {
 
   const onClickGoToLogin = () => {
     signUpDispatch(resetSignUpDetails());
-    navigate(navigations.LOGIN);
+    navigate(navigations.LOGIN, { state: { activeTab: true } });
   };
 
   return (
