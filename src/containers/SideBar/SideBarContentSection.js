@@ -15,6 +15,7 @@ import Config from "../../components/ReactConfig/index";
 import CustomImage from "../../components/CustomImage";
 import CommonText from "../../components/CommonText";
 import ResponsiveTextTruncate from "../../components/ResponsiveTextTruncate/ResponsiveTextTruncate";
+import TouchableImage from "../../components/TouchableImage";
 import ModuleList from "../../components/ModuleList/ModuleList";
 import useIsWebView from "../../hooks/useIsWebView";
 import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
@@ -97,9 +98,11 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   return (
     <View style={styles.container}>
       {showCloseIcon && (
-        <TouchableOpacity onPress={onClose} style={styles.leftArrowButton}>
-          <CustomImage source={images.iconClose} style={styles.closeButton} />
-        </TouchableOpacity>
+        <TouchableImage
+          onPress={onClose}
+          source={images.iconClose}
+          parentStyle={styles.closeButton}
+        />
       )}
       <View
         style={[

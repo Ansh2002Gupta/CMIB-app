@@ -48,10 +48,8 @@ const styles = {
   closeButton: {
     height: 20,
     width: 20,
-  },
-  leftArrowButton: {
-    paddingTop: 16,
-    paddingLeft: 16,
+    marginTop: 16,
+    marginLeft: 16,
   },
   menuIcons: {
     height: 20,
