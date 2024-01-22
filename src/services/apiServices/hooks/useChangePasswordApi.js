@@ -29,7 +29,7 @@ const useChangePasswordApi = () => {
       ) {
         setChangePasswordStatus(API_STATUS.SUCCESS);
         setChangePasswordResult(res.data);
-        onLogout();
+        await onLogout();
         userProfileDispatch(setShowChangePasswordModal(false));
         return;
       }
