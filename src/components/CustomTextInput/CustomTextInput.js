@@ -28,7 +28,6 @@ const CustomTextInput = (props) => {
     customTextInputContainer,
     countValue,
     dropdownStyle,
-    dropDownModal,
     errorMessage,
     eyeImage,
     handleCountChange,
@@ -94,7 +93,39 @@ const CustomTextInput = (props) => {
   };
 
   const renderTextInput = () => {
-    if (dropDownModal) {
+    if (isDropdown) {
+      if (Platform.OS.toLowerCase() === "web")
+        return (
+          <Dropdown
+            search
+            searchPlaceholder={intl.formatMessage({ id: "label.search" })}
+            inputSearchStyle={style.searchStyle}
+            style={[
+              style.dropdown,
+              isFocused && style.focusedStyle,
+              isError && style.invalidInput,
+              dropdownStyle,
+            ]}
+            selectedTextStyle={style.valueStyle}
+            renderRightIcon={() => <Image source={images.iconDownArrow} />}
+            placeholderStyle={style.placeholderStyle}
+            data={options}
+            maxHeight={200}
+            labelField={labelField}
+            valueField={valueField}
+            placeholder={placeholder || ""}
+            value={value}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={(item) => {
+              isWebPlatform
+                ? onChangeValue(item)
+                : onChangeValue(item[inputKey]);
+              setIsFocused(false);
+            }}
+            {...remainingProps}
+          />
+        );
       return (
         <DropDownModal
           {...{
@@ -105,37 +136,6 @@ const CustomTextInput = (props) => {
             value,
             valueField,
           }}
-        />
-      );
-    }
-    if (isDropdown) {
-      return (
-        <Dropdown
-          search
-          searchPlaceholder={intl.formatMessage({ id: "label.search" })}
-          inputSearchStyle={style.searchStyle}
-          style={[
-            style.dropdown,
-            isFocused && style.focusedStyle,
-            isError && style.invalidInput,
-            dropdownStyle,
-          ]}
-          selectedTextStyle={style.valueStyle}
-          renderRightIcon={() => <Image source={images.iconDownArrow} />}
-          placeholderStyle={style.placeholderStyle}
-          data={options}
-          maxHeight={200}
-          labelField={labelField}
-          valueField={valueField}
-          placeholder={placeholder || ""}
-          value={value}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={(item) => {
-            isWebPlatform ? onChangeValue(item) : onChangeValue(item[inputKey]);
-            setIsFocused(false);
-          }}
-          {...remainingProps}
         />
       );
     }
@@ -224,7 +224,6 @@ CustomTextInput.defaultProps = {
   customStyle: {},
   customTextInputContainer: {},
   dropdownStyle: {},
-  dropDownModal: false,
   errorMessage: "",
   eyeImage: false,
   handleCountChange: () => {},
@@ -258,7 +257,6 @@ CustomTextInput.propTypes = {
   customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
-  dropDownModal: PropTypes.bool,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
   handleCountChange: PropTypes.func,

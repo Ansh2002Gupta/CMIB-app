@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconArrow: {
+    marginLeft: 6,
     height: 16,
     width: 16,
   },
