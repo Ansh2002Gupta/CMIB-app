@@ -16,6 +16,7 @@ import {
 
 const FeedbackView = () => {
   const {
+    allDataLoaded,
     currentRecords,
     currentPage,
     getColoumConfigs,
@@ -25,7 +26,11 @@ const FeedbackView = () => {
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    handleLoadMore,
     isHeading,
+    indexOfFirstRecord,
+    indexOfLastRecord,
+    loadingMore,
     rowsPerPage,
     statusText,
     subHeadingText,
@@ -67,6 +72,8 @@ const FeedbackView = () => {
             handleLoadMore,
             headingTexts,
             isHeading,
+            indexOfFirstRecord,
+            indexOfLastRecord,
             loadingMore,
             rowsLimit,
             rowsPerPage,

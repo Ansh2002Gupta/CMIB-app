@@ -16,7 +16,6 @@ import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
 import { getRenderText } from "../../utils/util";
-import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
@@ -41,6 +40,8 @@ const CustomTable = ({
   handleLoadMore,
   headingTexts,
   isHeading,
+  indexOfFirstRecord,
+  indexOfLastRecord,
   loadingMore,
   rowsLimit,
   rowsPerPage,
@@ -54,6 +55,7 @@ const CustomTable = ({
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const isWeb = Platform.OS.toLowerCase() === "web";
 
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [filterState, setFilterState] = useState(initialFilterState);
@@ -67,17 +69,14 @@ const CustomTable = ({
     handleFilterModal();
   };
 
-  useHandleInfiniteScroll(handleLoadMore);
+  const flatlistProps = isWeb
+    ? {}
+    : {
+        onEndReached: handleLoadMore,
+        onEndReachedThreshold: 0.1,
+      };
 
-  const flatlistProps =
-    Platform.OS.toLowerCase() === "web"
-      ? {}
-      : {
-          onEndReached: handleLoadMore,
-          onEndReachedThreshold: 0.1,
-        };
-
-  const webProps = Platform.OS === "web" ? { size: "xs" } : {};
+  const webProps = isWeb ? { size: "xs" } : {};
 
   return (
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
@@ -169,6 +168,7 @@ const CustomTable = ({
                   }}
                   {...flatlistProps}
                   ListFooterComponent={() => {
+                    if (isWeb) return <></>;
                     if (loadingMore) {
                       return (
                         <View style={styles.loadingStyle}>
@@ -207,12 +207,14 @@ const CustomTable = ({
             isTopFillSpace
             isBottomFillSpace={false}
             bottomSection={
-              !isWebView && (
+              isWeb && (
                 <PaginationFooter
                   {...{
                     currentPage,
                     handlePageChange,
                     handleRowPerPageChange,
+                    indexOfFirstRecord,
+                    indexOfLastRecord,
                     rowsLimit,
                     rowsPerPage,
                     siblingCount: 1,
@@ -256,6 +258,8 @@ CustomTable.defaultProps = {
   headingTexts: [],
   handleLoadMore: () => {},
   isHeading: false,
+  indexOfFirstRecord: 0,
+  indexOfLastRecord: 0,
   loadingMore: true,
   rowsLimit: [],
   rowsPerPage: 10,
@@ -282,6 +286,8 @@ CustomTable.propTypes = {
   handleLoadMore: PropTypes.func.isRequired,
   headingTexts: PropTypes.array,
   isHeading: PropTypes.bool.isRequired,
+  indexOfFirstRecord: PropTypes.number.isRequired,
+  indexOfLastRecord: PropTypes.number.isRequired,
   loadingMore: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
