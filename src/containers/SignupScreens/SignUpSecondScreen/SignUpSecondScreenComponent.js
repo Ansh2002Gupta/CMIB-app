@@ -19,7 +19,7 @@ import {
 } from "../../../constants/constants";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
-import { validateEmail } from "../../../constants/commonFunctions";
+import { validateEmail } from "../../../utils/validation";
 
 const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
@@ -37,13 +37,13 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const [formData, setFormData] = useState({
     companyName: initialSignUpDetail.name || "",
     registrationNo: initialSignUpDetail.frn_number || "",
-    noOfPartners: initialSignUpDetail.number_of_partner || "",
+    noOfPartners: initialSignUpDetail.number_of_partners || "",
     address: initialSignUpDetail.address || "",
     emailId: initialSignUpDetail.email || "",
     telephoneNo: initialSignUpDetail.telephone_number || "",
     code: initialSignUpDetail.std_country_code || "",
     entity: initialSignUpDetail.entity || "",
-    currentIndustry: initialSignUpDetail.industry_type || "",
+    currentIndustry: initialSignUpDetail.industry_type_id || "",
     state: initialSignUpDetail.state_code || "",
   });
 
@@ -91,8 +91,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
     if (!field || field === "companyName") {
       if (
-        companyName.length < FIELD_MIN_LENGTH ||
-        companyName.length > FIELD_MAX_LENGTH
+        companyName.trim().length < FIELD_MIN_LENGTH ||
+        companyName.trim().length > FIELD_MAX_LENGTH
       ) {
         newErrors.companyName = intl.formatMessage({
           id: "label.company_name_validation",
@@ -150,8 +150,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
     if (!field || field === "address") {
       if (
-        address.length < FIELD_MIN_LENGTH ||
-        address.length > ADDRESS_MAX_LENGTH
+        address.trim().length < FIELD_MIN_LENGTH ||
+        address.trim().length > ADDRESS_MAX_LENGTH
       ) {
         newErrors.address = intl.formatMessage({
           id: "label.address_validation",
@@ -210,11 +210,11 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         email: emailId,
         entity: entity,
         frn_number: registrationNo,
-        number_of_partner: parseInt(noOfPartners, 10),
+        number_of_partners: parseInt(noOfPartners, 10),
         telephone_number: telephoneNo,
         address: address,
         std_country_code: code,
-        industry_type: parseInt(currentIndustry),
+        industry_type_id: parseInt(currentIndustry),
         state_code: state,
       };
 
@@ -226,6 +226,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleInputChange = (value, name) => {
+    errors[name] && validateFields(name);
     setFormData({
       ...formData,
       [name]: value,

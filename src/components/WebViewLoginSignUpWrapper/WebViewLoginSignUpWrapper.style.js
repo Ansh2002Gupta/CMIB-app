@@ -37,16 +37,16 @@ const style = StyleSheet.create({
     background: "#FFF",
     boxShadow: "0px 4px 32px 0px rgba(97, 108, 130, 0.04)",
     padding: 40,
-    width: "30%",
+    width: "40%",
     marginLeft: "auto",
     marginRight: "auto",
     maxWidth: 600,
   },
   innerContainer1800: {
-    width: "40%",
+    width: "50%",
   },
   innerContainer1400: {
-    width: "45%",
+    width: "50%",
   },
   innerContainer1000: {
     width: "75%",

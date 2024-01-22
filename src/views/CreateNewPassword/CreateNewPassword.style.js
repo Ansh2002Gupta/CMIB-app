@@ -119,18 +119,17 @@ const styles = StyleSheet.create({
       backgroundColor: colors.white,
       marginTop: 40,
     },
-    requirementsPoints: {
+    requirementsPoints: (currentBreakpoint) => ({
       display: "grid",
-      gridTemplateColumns: "1fr 1fr",
+      gridTemplateColumns: currentBreakpoint === "sm" ? "1fr" : "1fr 1fr",
       gridRowGap: 16,
-      marginBottom: 32,
-    },
-    headerText: {
-      fontSize: 28,
-    },
+    }),
   },
   ErrorStyle: {
     paddingTop: 4,
+  },
+  backButtonStyle: {
+    justifyContent: "center",
   },
 });
 

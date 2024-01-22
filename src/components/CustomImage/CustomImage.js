@@ -39,6 +39,7 @@ CustomImage.propTypes = {
     PropTypes.string,
     PropTypes.object,
     PropTypes.func,
+    PropTypes.any,
   ]).isRequired,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };

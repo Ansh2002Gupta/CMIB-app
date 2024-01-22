@@ -17,11 +17,11 @@ const style = {
     paddingTop: 24,
   },
   customContainerStyle: {
-    bottom: Platform.OS === "android" ? 0 : 16,
+    paddingBottom: Platform.OS === "android" ? 0 : 21,
   },
   contentContainerStyle: {
     flexGrow: 1,
-    paddingBottom: 16,
+    paddingBottom: 24,
     justifyContent: "space-between",
   },
   fourthSectionStyle: { paddingBottom: 16 },

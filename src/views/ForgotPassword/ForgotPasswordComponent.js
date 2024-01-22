@@ -5,7 +5,7 @@ import { useNavigate } from "../../routes";
 import ForgotPasswordUI from "./ForgotPasswordUI";
 import OtpViewComponent from "../OtpView";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
-import { validateEmail } from "../../constants/commonFunctions";
+import { validateEmail } from "../../utils/validation";
 import { navigations } from "../../constants/routeNames";
 
 function ForgotPasswordComponent() {

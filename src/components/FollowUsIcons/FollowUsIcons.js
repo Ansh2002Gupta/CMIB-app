@@ -4,6 +4,7 @@ import { useTheme } from "@unthinkable/react-theme";
 import {
   Image,
   Linking,
+  Platform,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
@@ -12,6 +13,13 @@ import CommonText from "../CommonText";
 import socialMediaConfig from "../../constants/socialMediaConfig";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./FollowUsIcons.style";
+
+const mobileProps =
+  Platform.OS.toLowerCase() === "web"
+    ? {}
+    : {
+        accessibilityRole: "link",
+      };
 
 const FollowUsIcons = () => {
   const intl = useIntl();
@@ -35,7 +43,7 @@ const FollowUsIcons = () => {
             key={index}
             style={isWebView ? styles.webImageStyle : styles.imageStyle}
             onPress={() => Linking.openURL(item.link, "_blank")}
-            accessibilityRole="link"
+            {...mobileProps}
           >
             <Image
               source={isWebView ? icons[item.webIcon] : icons[item.mobileIcon]}

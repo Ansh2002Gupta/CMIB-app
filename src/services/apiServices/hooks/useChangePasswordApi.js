@@ -23,8 +23,11 @@ const useChangePasswordApi = () => {
     try {
       setChangePasswordStatus(API_STATUS.LOADING);
       errorWhileChangePassword && setErrorWhileChangePassword("");
-      const res = await Http.post(COMPANY_CHANGE_PASSWORD_OTP, payload);
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+      const res = await Http.patch(COMPANY_CHANGE_PASSWORD_OTP, payload);
+      if (
+        res.status === STATUS_CODES.SUCCESS_STATUS ||
+        res.code === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setChangePasswordStatus(API_STATUS.SUCCESS);
         setChangePasswordResult(res.data);
         navigateScreen(navigations.DASHBOARD);
