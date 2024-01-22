@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../routes";
+import { useLocation, useNavigate } from "../../routes";
 import { useTheme } from "@unthinkable/react-theme";
 
 import LoginScreenUI from "./LoginScreenUI";
@@ -10,12 +10,14 @@ import { validateEmail } from "../../utils/validation";
 
 function LoginScreenComponent() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const activeTab = location?.state?.activeTab;
   const icons = useTheme("icons");
   const intl = useIntl();
 
   const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(activeTab ? activeTab : false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
   const {
