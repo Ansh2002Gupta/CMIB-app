@@ -1,15 +1,12 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import Http from "../../http-service";
-import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
-import { setShowChangePasswordModal } from "../../../globalContext/userProfile/userProfileActions";
 import { useHeader } from "../../../hooks/useHeader";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { COMPANY_CHANGE_PASSWORD_OTP } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useChangePasswordApi = () => {
-  const [, userProfileDispatch] = useContext(UserProfileContext);
   const { onLogout } = useHeader();
 
   const [changePasswordStatus, setChangePasswordStatus] = useState(
@@ -30,7 +27,6 @@ const useChangePasswordApi = () => {
         setChangePasswordStatus(API_STATUS.SUCCESS);
         setChangePasswordResult(res.data);
         onLogout();
-        userProfileDispatch(setShowChangePasswordModal(false));
         return;
       }
       setChangePasswordStatus(API_STATUS.ERROR);
