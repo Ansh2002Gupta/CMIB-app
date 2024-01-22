@@ -45,7 +45,7 @@ function OtpView({ email }) {
   }, [otpValue]);
 
   const onClickGoToLogin = () => {
-    navigate(navigations.LOGIN);
+    navigate(navigations.LOGIN, { state: { activeTab: true } });
   };
 
   const onVerifyOtpClick = () => {

@@ -1,17 +1,13 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import Http from "../../http-service";
-import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
-import useNavigateScreen from "../../hooks/useNavigateScreen";
-import { setShowChangePasswordModal } from "../../../globalContext/userProfile/userProfileActions";
+import { useHeader } from "../../../hooks/useHeader";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { COMPANY_CHANGE_PASSWORD_OTP } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
-import { navigations } from "../../../constants/routeNames";
 
 const useChangePasswordApi = () => {
-  const [, userProfileDispatch] = useContext(UserProfileContext);
-  const { navigateScreen } = useNavigateScreen();
+  const { onLogout } = useHeader();
 
   const [changePasswordStatus, setChangePasswordStatus] = useState(
     API_STATUS.IDLE
@@ -30,8 +26,7 @@ const useChangePasswordApi = () => {
       ) {
         setChangePasswordStatus(API_STATUS.SUCCESS);
         setChangePasswordResult(res.data);
-        navigateScreen(navigations.DASHBOARD);
-        userProfileDispatch(setShowChangePasswordModal(false));
+        await onLogout();
         return;
       }
       setChangePasswordStatus(API_STATUS.ERROR);
