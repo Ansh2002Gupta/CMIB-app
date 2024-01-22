@@ -30,7 +30,7 @@ function ForgotPasswordComponent() {
 
   const onClickGoToLogin = () => {
     setSuccessLogin(false);
-    navigate(navigations.LOGIN);
+    navigate(navigations.LOGIN, { state: { activeTab: true } });
   };
 
   const onSendOtpClick = () => {
