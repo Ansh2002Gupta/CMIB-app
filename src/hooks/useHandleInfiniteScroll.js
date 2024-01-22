@@ -20,13 +20,17 @@ const useHandleInfiniteScroll = (scrollHandler) => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     if (isWeb) {
       window.addEventListener("scroll", handleInfinteScroll);
-      return () => window.removeEventListener("scroll", handleInfinteScroll);
     }
-    return;
-  }, [handleInfinteScroll]);
+    return () => {
+      if (isWeb) {
+        window.removeEventListener("scroll", handleInfinteScroll);
+      }
+    };
+  }, []);
 };
 
 export default useHandleInfiniteScroll;
