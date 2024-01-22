@@ -10,7 +10,7 @@ import {
   isStringContainsLowercase,
   isStringContainsSpecialChar,
   isStringLengthValid,
-} from "../../constants/validation";
+} from "../../utils/validation";
 import { VALIDATION_TYPE } from "../../constants/constants";
 import styles from "./NewPasswordValidation.style";
 

@@ -55,10 +55,14 @@ const style = {
   submitView: { padding: 16, flex: 1, justifyContent: "flex-end" },
   backToLoginText: {
     textAlign: "center",
-    marginTop: 24,
-    marginBottom: 24,
     fontSize: 14,
     color: colors.darkBlue,
+  },
+  backToLoginContainer: {
+    marginTop: 24,
+    marginBottom: 24,
+    justifyContent: "center",
+    flexDirection: "row",
   },
   errorMessage: {
     color: colors.red,

@@ -59,9 +59,6 @@ const style = {
   },
   submitView: { padding: 16, flex: 1, justifyContent: "flex-end" },
   backToLoginText: {
-    textAlign: "center",
-    marginTop: 24,
-    marginBottom: 24,
     fontSize: 14,
     color: colors.darkBlue,
   },
@@ -108,5 +105,14 @@ const style = {
   headerText: {
     fontSize: 28,
   },
+  backButtonStyle: {
+    marginTop: 24,
+    marginBottom: 24,
+  },
+  backToLoginContainer: {
+    justifyContent: "center",
+    flexDirection: "row",
+  },
 };
+
 export default style;

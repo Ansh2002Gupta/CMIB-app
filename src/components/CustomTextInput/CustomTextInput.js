@@ -11,6 +11,7 @@ import {
 import CustomLabelView from "../CustomLabelView";
 import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
+import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -93,33 +94,48 @@ const CustomTextInput = (props) => {
 
   const renderTextInput = () => {
     if (isDropdown) {
+      if (Platform.OS.toLowerCase() === "web")
+        return (
+          <Dropdown
+            search
+            searchPlaceholder={intl.formatMessage({ id: "label.search" })}
+            inputSearchStyle={style.searchStyle}
+            style={[
+              style.dropdown,
+              isFocused && style.focusedStyle,
+              isError && style.invalidInput,
+              dropdownStyle,
+            ]}
+            selectedTextStyle={style.valueStyle}
+            renderRightIcon={() => <Image source={images.iconDownArrow} />}
+            placeholderStyle={style.placeholderStyle}
+            data={options}
+            maxHeight={200}
+            labelField={labelField}
+            valueField={valueField}
+            placeholder={placeholder || ""}
+            value={value}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={(item) => {
+              isWebPlatform
+                ? onChangeValue(item)
+                : onChangeValue(item[inputKey]);
+              setIsFocused(false);
+            }}
+            {...remainingProps}
+          />
+        );
       return (
-        <Dropdown
-          search
-          searchPlaceholder={intl.formatMessage({ id: "label.search" })}
-          inputSearchStyle={style.searchStyle}
-          style={[
-            style.dropdown,
-            isFocused && style.focusedStyle,
-            isError && style.invalidInput,
-            dropdownStyle,
-          ]}
-          selectedTextStyle={style.valueStyle}
-          renderRightIcon={() => <Image source={images.iconDownArrow} />}
-          placeholderStyle={style.placeholderStyle}
-          data={options}
-          maxHeight={200}
-          labelField={labelField}
-          valueField={valueField}
-          placeholder={placeholder || ""}
-          value={value}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={(item) => {
-            isWebPlatform ? onChangeValue(item) : onChangeValue(item[inputKey]);
-            setIsFocused(false);
+        <DropDownModal
+          {...{
+            labelField,
+            onChangeValue,
+            options,
+            placeholder,
+            value,
+            valueField,
           }}
-          {...remainingProps}
         />
       );
     }
