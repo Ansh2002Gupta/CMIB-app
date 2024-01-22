@@ -32,6 +32,8 @@ const LoginScreenUI = (props) => {
     onForgotPasswordClick,
     onLogin,
     onCreateNewPasswordClick,
+    logoutState,
+    logoutToastMessage,
     password,
     toggleUser,
     userName,
@@ -301,6 +303,12 @@ const LoginScreenUI = (props) => {
         {!!errorWhileLoggingIn && (
           <ToastComponent
             toastMessage={errorWhileLoggingIn}
+            onDismiss={handleDismissToast}
+          />
+        )}
+        {logoutState && (
+          <ToastComponent
+            toastMessage={logoutToastMessage}
             onDismiss={handleDismissToast}
           />
         )}

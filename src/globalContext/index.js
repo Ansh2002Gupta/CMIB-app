@@ -6,7 +6,7 @@ import RouteProvider from "./route/routeProvider";
 import SignUpProvider from "./signUp/signUpProvider";
 import SideBarProvider from "./sidebar/sidebarProvider";
 import UserProfileProvider from "./userProfile/userProfileProvider";
-
+import LogoutProvider from "./logout/logoutProvider";
 // Import other created Providers and add them here -
 const providers = [
   authProvider,
@@ -16,6 +16,7 @@ const providers = [
   SignUpProvider,
   SideBarProvider,
   UserProfileProvider,
+  LogoutProvider,
 ];
 
 const combineProviders = (components) => {

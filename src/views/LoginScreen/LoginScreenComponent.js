@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useIntl } from "react-intl";
 import { useLocation, useNavigate } from "../../routes";
 import { useTheme } from "@unthinkable/react-theme";
@@ -7,8 +7,12 @@ import LoginScreenUI from "./LoginScreenUI";
 import useLoginUser from "../../services/apiServices/hooks/useLoginUser";
 import { navigations } from "../../constants/routeNames";
 import { validateEmail } from "../../utils/validation";
+import { LogoutContext } from "../../globalContext/logout/logoutProvider";
+import { setLogoutToast } from "../../globalContext/logout/logoutActions";
 
 function LoginScreenComponent() {
+  const [logoutState, setLogoutDispatch] = useContext(LogoutContext);
+  const { isLogoutToast } = logoutState;
   const navigate = useNavigate();
   const location = useLocation();
   const activeTab = location?.state?.activeTab;
@@ -19,6 +23,9 @@ function LoginScreenComponent() {
   const [password, setPassword] = useState("");
   const [active, setActive] = useState(activeTab ? activeTab : false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [logoutToastMessage, setLogoutToastMessage] = useState(
+    intl.formatMessage({ id: "label.logout_successfully" })
+  );
   const [loginDisabled, setLoginDisabled] = useState(true);
   const {
     handleUserLogin,
@@ -29,6 +36,8 @@ function LoginScreenComponent() {
 
   const handleDismissToast = () => {
     setErrorWhileLoggingIn("");
+    setLogoutToastMessage("");
+    setLogoutDispatch(setLogoutToast(false));
   };
 
   const onForgotPasswordClick = async () => {
@@ -87,6 +96,8 @@ function LoginScreenComponent() {
       onForgotPasswordClick={onForgotPasswordClick}
       onLogin={onLogin}
       password={password}
+      logoutState={isLogoutToast}
+      logoutToastMessage={logoutToastMessage}
       toggleUser={toggleUser}
       userName={userName}
     />
