@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     marginTop: 0,
   },
   resetContainerFlex: {
-    flex: 1,
+    flex: 0.1,
   }
 });
 
