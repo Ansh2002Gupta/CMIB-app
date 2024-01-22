@@ -25,7 +25,7 @@ function CreateNewPasswordComponent({ resetToken }) {
 
   const onClickGoToLogin = () => {
     setResetPasswordResult({});
-    navigate(navigations.LOGIN);
+    navigate(navigations.LOGIN, { state: { activeTab: true } });
   };
 
   const onChangePasswordInput = (val) => {
