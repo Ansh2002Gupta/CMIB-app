@@ -3,7 +3,7 @@ import { View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import FollowUsIcons from "../FollowUsIcons/FollowUsIcons.js";
-import { style } from "./WebViewLoginSignUpWrapper.style.js";
+import style from "./WebViewLoginSignUpWrapper.style.js";
 
 const WebViewLoginSignUpWrapper = ({
   children,
