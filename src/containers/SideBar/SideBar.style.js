@@ -70,9 +70,9 @@ const styles = {
     opacity: 0.6,
     flexWrap: "wrap",
   },
-  bottomSection:{
-    flex:1,
-    zIndex:1
+  bottomSection: {
+    flex: 1,
+    zIndex: 1,
   },
   changeTextContainer: {
     backgroundColor: colors.offWhite,
@@ -111,7 +111,7 @@ const styles = {
     position: "absolute",
     bottom: 0,
     width: "100%",
-    zIndex:2,
+    zIndex: 2,
   },
   imageTextView: {
     flexDirection: "row",
@@ -147,7 +147,7 @@ const styles = {
     padding: 16,
     flexDirection: "row",
     cursor: "pointer",
-    alignItems:"center"
+    alignItems: "center",
   },
   moduleActiveMenuItems: {
     marginLeft: 16,
@@ -159,7 +159,7 @@ const styles = {
     backgroundColor: colors.white,
     flexDirection: "row",
     cursor: "pointer",
-    alignItems:"center"
+    alignItems: "center",
   },
   disabled: {
     color: colors.slateGray,
@@ -171,6 +171,9 @@ const styles = {
   },
   mobContainer: {
     marginBottom: 16,
+  },
+  cmiLogo: {
+    height: 50,
   },
 };
 

@@ -107,7 +107,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           showCloseIcon ? styles.imageViewStyles : styles.imgViewStyle,
         ]}
       >
-        <CustomImage source={images.cmibIcon} />
+        <CustomImage source={images.cmibIcon} style={styles.cmiLogo} />
       </View>
       {!openModuleSelector && (
         <CommonText customTextStyle={styles.sessionText}>
