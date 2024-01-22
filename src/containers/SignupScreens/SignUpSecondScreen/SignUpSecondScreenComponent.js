@@ -34,6 +34,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const { getStates, stateResult } = useGetStates();
   const initialSignUpDetail = signUpState.signUpDetail;
 
+  const [fieldToValidate, setFieldToValidate] = useState(null);
   const [formData, setFormData] = useState({
     companyName: initialSignUpDetail.name || "",
     registrationNo: initialSignUpDetail.frn_number || "",
@@ -61,6 +62,14 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     getIndustryTypes();
     getStates();
   }, []);
+
+  useEffect(() => {
+    console.log(fieldToValidate, "fieldToValidate");
+    if (fieldToValidate && errors[fieldToValidate]) {
+      validateFields(fieldToValidate);
+      setFieldToValidate(null);
+    }
+  }, [formData, fieldToValidate]);
 
   const allFieldsFilled = () => {
     const requiredFields = Object.values(formData);
@@ -231,6 +240,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       ...formData,
       [name]: value,
     });
+    setFieldToValidate(name);
   };
 
   const handleBlur = (name) => {
