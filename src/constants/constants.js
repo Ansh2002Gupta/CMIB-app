@@ -95,23 +95,23 @@ export const SELECTION_PROCESS = [
 
 export const MODULE_OPTIONS = [
   {
-    id: "ca-jobs",
+    id: CA_JOBS,
     messageId: "label.ca_jobs",
   },
   {
-    id: "nqca-placement",
+    id: NEWLY_QUALIFIED,
     messageId: "label.newly_qualified_ca",
   },
   {
-    id: "overseas-placement",
+    id: OVERSEAS_PLACEMENTS,
     messageId: "label.overseas_placements",
   },
   {
-    id: "career-ascent",
+    id: CAREER_ASCENTS,
     messageId: "label.career_ascents",
   },
   {
-    id: "women-placement",
+    id: WOMENT_PLACEMENT,
     messageId: "label.women_placements",
   },
 ];
