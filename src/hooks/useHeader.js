@@ -6,7 +6,7 @@ import { UserProfileContext } from "../globalContext/userProfile/userProfileProv
 import useLogoutAPI from "../services/apiServices/hooks/useLogoutAPI";
 import useNavigateScreen from "../services/hooks/useNavigateScreen";
 import { clearAuthAndLogout } from "../globalContext/auth/authActions";
-import { setShowLogoutModal } from "../globalContext/userProfile/userProfileActions";
+import { resetUserDetails } from "../globalContext/userProfile/userProfileActions";
 import { navigations } from "../constants/routeNames";
 
 export const useHeader = () => {
@@ -20,7 +20,7 @@ export const useHeader = () => {
     await handleUserLogout({});
     await CookieAndStorageService.remove({ key: "auth" });
     authDispatch(clearAuthAndLogout());
-    userProfileDispatch(setShowLogoutModal(false));
+    userProfileDispatch(resetUserDetails());
     navigate(navigations.LOGIN);
   };
   return {

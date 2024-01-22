@@ -19,7 +19,7 @@ import {
 } from "../../../constants/constants";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
-import { validateEmail } from "../../../constants/commonFunctions";
+import { validateEmail } from "../../../utils/validation";
 
 const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
@@ -91,8 +91,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
     if (!field || field === "companyName") {
       if (
-        companyName.length < FIELD_MIN_LENGTH ||
-        companyName.length > FIELD_MAX_LENGTH
+        companyName.trim().length < FIELD_MIN_LENGTH ||
+        companyName.trim().length > FIELD_MAX_LENGTH
       ) {
         newErrors.companyName = intl.formatMessage({
           id: "label.company_name_validation",
@@ -150,8 +150,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
     if (!field || field === "address") {
       if (
-        address.length < FIELD_MIN_LENGTH ||
-        address.length > ADDRESS_MAX_LENGTH
+        address.trim().length < FIELD_MIN_LENGTH ||
+        address.trim().length > ADDRESS_MAX_LENGTH
       ) {
         newErrors.address = intl.formatMessage({
           id: "label.address_validation",
@@ -226,6 +226,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleInputChange = (value, name) => {
+    errors[name] && validateFields(name);
     setFormData({
       ...formData,
       [name]: value,

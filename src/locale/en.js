@@ -57,7 +57,7 @@ const locale = {
   "label.firm_registration_no": "Firm Registration No. [FRN]",
   "label.no_of_partners": "No. of Partners",
   "label.isd_std_code": "ISD/STD Code",
-  "label.telephone_no": "Telephone Number",
+  "label.telephone_no": "Phone Number",
   "label.back": "Back",
   "label.contact_personal_details": "Contact Person Details",
   "label.source_of_info":
@@ -99,9 +99,8 @@ const locale = {
     "Enter your address for correspondance",
   "label.select_state": "Select state",
   "label.email_id_placeholder": "Enter your email ID",
-  "label.enter_code": "Enter code",
   "label.enter_firm_no": "Enter firm registration no.",
-  "label.enter_telephone_no": "Enter telephone no.",
+  "label.enter_telephone_no": "Enter phone no.",
   "label.enter_contact_person_designation": "Enter contact person designation",
   "label.enter_contact_person_email_id": "Enter contact person email ID",
   "label.enter_contact_person_mobile_no": "Enter contact person mobile number",
@@ -114,7 +113,6 @@ const locale = {
   "label.enter_your_website": "Enter your website",
   "label.select_nature_of_supplier": "Select nature of supplier",
   "label.select_company_type": "Select company type",
-  "label.enter_no": "Enter no.",
   "label.select": "Select",
   "label.ca_jobs": "CA Jobs",
   "label.newly_qualified_ca": "Newly Qualified CA's Placement",
@@ -158,7 +156,7 @@ const locale = {
   "label.country_code_validation":
     "Country code must be a combination of numbers and between 2 and 8 digits.",
   "label.telephone_no_validation":
-    "Telephone number must be a combination of numbers and between 7 and 15 digits.",
+    "Phone number must be a combination of numbers and between 7 and 15 digits.",
   "label.email_id_validation": "Please enter a valid email address",
   "label.registration_no_validation":
     "Registration number must be exactly 10 digits.",
@@ -236,7 +234,8 @@ const locale = {
   "label.compensation": "Compensation",
   "label.enter_compensation": "Enter Compensation",
   "label.starting_salary_including_perks": "Starting Salary Including Perks",
-  "label.enter_starting_salary_including_perks": "Enter Starting Salary Including Perks",
+  "label.enter_starting_salary_including_perks":
+    "Enter Starting Salary Including Perks",
   "label.roles_and_responsibility": "Role and Responsibility",
   "label.details_of_ctc": "Details of CTC",
   "label.enter_details_of_ctc": "Enter Details of CTC",
@@ -249,12 +248,12 @@ const locale = {
   "label.selection_process": "Selection Process",
   "label.password_changed_successfully":
     "Your password has been changed successfully",
-  "label.previous":"Previous",
-  "label.rows_per_page":"Rows Per Page:",
-  "label.filters":"Filters",
-  "label.show_result":"Show results",
+  "label.previous": "Previous",
+  "label.rows_per_page": "Rows Per Page:",
+  "label.filters": "Filters",
+  "label.show_result": "Show results",
   "label.search": "Search",
-  "label.clear_all":"Clear All",
+  "label.clear_all": "Clear All",
   "label.sessions": "Sessions",
   "label.basic": "Basic",
   "label.hra": "HRA",
@@ -272,6 +271,8 @@ const locale = {
   "label.group_discussion": "Group Discussion",
   "label.psychometric_test": "Psychometric Test/ Written Test",
   "label.personal_interview": "Personal Interview",
+  "label.enter": "Enter",
+  "label.no_result_found": "No Result Found",
 };
 
 export default locale;
