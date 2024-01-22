@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate, useLocation } from "../../routes";
+import { useNavigate } from "../../routes";
 
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
 import useResetPasswordAPI from "../../services/apiServices/hooks/useResetPasswordAPI";
 import { navigations } from "../../constants/routeNames";
 
-function CreateNewPasswordComponent() {
+function CreateNewPasswordComponent({ resetToken }) {
   const navigate = useNavigate();
-  const location = useLocation();
   const intl = useIntl();
-  const { token } = location.state || {};
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -27,7 +25,7 @@ function CreateNewPasswordComponent() {
 
   const onClickGoToLogin = () => {
     setResetPasswordResult({});
-    navigate(navigations.LOGIN);
+    navigate(navigations.LOGIN, { state: { activeTab: true } });
   };
 
   const onChangePasswordInput = (val) => {
@@ -60,7 +58,7 @@ function CreateNewPasswordComponent() {
     if (doPasswordsMatch()) {
       setErrorMessage("");
       handleResetPasswordAPI({
-        token,
+        reset_token: resetToken,
         password: newPassword,
       });
     } else {
@@ -81,7 +79,6 @@ function CreateNewPasswordComponent() {
       isLoading={isLoading}
       handleConfirmPasswordBlur={handleConfirmPasswordBlur}
       successLogin={!!resetPasswordResult?.message}
-      successMsg={resetPasswordResult?.message}
       validationError={errorWhileResetPassword}
       setErrorWhileResetPassword={setErrorWhileResetPassword}
     />

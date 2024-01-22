@@ -1,10 +1,19 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
-const style = {
+
+const screenContainerWidth = {
+  maxWidth: 600,
+};
+
+const style = StyleSheet.create({
   mainView: {
     flex: 1,
   },
   container: {
     backgroundColor: colors.white,
+    paddingRight: 0,
+    paddingLeft: 0,
   },
   mobContainer: {
     paddingRight: 16,
@@ -54,18 +63,19 @@ const style = {
   },
   submitView: { padding: 16, flex: 1, justifyContent: "flex-end" },
   backToLoginText: {
-    textAlign: "center",
-    marginTop: 24,
-    marginBottom: 24,
     fontSize: 14,
     color: colors.darkBlue,
   },
   whiteBackground: {
     backgroundColor: colors.white,
+    paddingRight: 0,
+    paddingLeft: 0,
+    paddingTop: 0,
   },
   grayBackground: {
     backgroundColor: colors.backgroundColor,
     flex: 1,
+    marginTop: 0,
   },
   webSubmitView: {
     backgroundColor: colors.white,
@@ -91,17 +101,26 @@ const style = {
   width1200pxOrLessForgotHeading: {
     fontSize: 34,
   },
-  smScreenContainers: {
-    width: "60%",
-  },
-  mdScreenContainers: {
-    width: "40%",
+  commonScreenContainers: {
+    width: "75% ",
+    ...screenContainerWidth,
   },
   forgotPasswordWebContainer: {
     flex: 0.9,
+    ...screenContainerWidth,
+    maxHeight: 780,
   },
   headerText: {
     fontSize: 28,
   },
-};
+  backButtonStyle: {
+    marginTop: 24,
+    marginBottom: 24,
+  },
+  backToLoginContainer: {
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+});
+
 export default style;

@@ -76,7 +76,10 @@ const LoginScreenUI = (props) => {
 
   return (
     <FormWrapper onSubmit={onLogin} customFormStyle={commonStyles.mainView}>
-      <WebViewLoginSignUpWrapper shouldApplyStyles={isWebView}>
+      <WebViewLoginSignUpWrapper
+        shouldApplyStyles={isWebView}
+        shouldShowFollowUs
+      >
         <View
           style={{
             ...commonStyles.mainView,
@@ -126,14 +129,15 @@ const LoginScreenUI = (props) => {
                   {intl.formatMessage({ id: "label.member_candidate" })}
                 </CommonText>
                 <View
-                  style={
-                    active
+                  style={{
+                    ...styles.marginBottom,
+                    ...(active
                       ? styles.inActiveStyle
                       : {
                           ...styles.activeStyle,
                           ...(isWebView && styles.webView.activeTab),
-                        }
-                  }
+                        }),
+                  }}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -154,14 +158,15 @@ const LoginScreenUI = (props) => {
                   </CommonText>
                 </View>
                 <View
-                  style={
-                    !active
+                  style={{
+                    ...styles.marginBottom,
+                    ...(!active
                       ? styles.inActiveStyle
                       : {
                           ...styles.activeStyle,
                           ...(isWebView && styles.webView.activeTab),
-                        }
-                  }
+                        }),
+                  }}
                 />
               </TouchableOpacity>
             </View>
@@ -223,22 +228,26 @@ const LoginScreenUI = (props) => {
                       isWebView ? styles.webView.inputTextBox : {}
                     }
                   />
-                  <TouchableOpacity
-                    onPress={onForgotPasswordClick}
-                    style={styles.forgotPasswordView}
-                  >
-                    <CommonText
-                      customTextStyle={{
-                        ...styles.forgotPasswordText,
-                        ...(isWebView ? styles.webView.forgotPasswordText : {}),
-                      }}
-                      fontWeight="600"
+                  <View style={styles.forgotButtonContainer}>
+                    <TouchableOpacity
+                      onPress={onForgotPasswordClick}
+                      style={styles.forgotPasswordView}
                     >
-                      {intl.formatMessage({
-                        id: "label.forgot_password",
-                      })}
-                    </CommonText>
-                  </TouchableOpacity>
+                      <CommonText
+                        customTextStyle={{
+                          ...styles.forgotPasswordText,
+                          ...(isWebView
+                            ? styles.webView.forgotPasswordText
+                            : {}),
+                        }}
+                        fontWeight="600"
+                      >
+                        {intl.formatMessage({
+                          id: "label.forgot_password",
+                        })}
+                      </CommonText>
+                    </TouchableOpacity>
+                  </View>
                   <View style={styles.loginButtonView}>
                     <CustomButton
                       disabled={loginDisabled}

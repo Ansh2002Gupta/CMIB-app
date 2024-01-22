@@ -7,7 +7,6 @@ import { TwoRow } from "../../core/layouts";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useFeedbackView from "./controller/useFeedbackView";
-import useTicketView from "../TicketsView/controller/useTicketView";
 import { feedbackData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
@@ -17,29 +16,23 @@ import {
 
 const FeedbackView = () => {
   const {
+    currentRecords,
+    currentPage,
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
     headingTexts,
+    handlePageChange,
+    handleRowPerPageChange,
+    handleSearchResults,
+    isHeading,
+    rowsPerPage,
     statusText,
     subHeadingText,
     tableIcon,
-  } = useFeedbackView();
-
-  const {
-    allDataLoaded,
-    currentPage,
-    currentRecords,
-    handleSearchResults,
-    handleRowPerPageChange,
-    handlePageChange,
-    handleLoadMore,
-    loadingMore,
-    isHeading,
-    rowsToShow,
     setCurrentRecords,
     totalcards,
-  } = useTicketView(feedbackData);
+  } = useFeedbackView();
 
   const intl = useIntl();
   const navigate = useNavigate();
@@ -52,7 +45,6 @@ const FeedbackView = () => {
     <TwoRow
       topSection={
         <IconHeader
-          intl={intl}
           headerText={intl.formatMessage({ id: "label.feedback" })}
           onPressLeftIcon={onGoBack}
           hasIconBar
@@ -77,7 +69,7 @@ const FeedbackView = () => {
             isHeading,
             loadingMore,
             rowsLimit,
-            rowsToShow,
+            rowsPerPage,
             setCurrentRecords,
             statusText,
             subHeadingText,

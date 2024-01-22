@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSearchParams } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
@@ -6,58 +6,43 @@ import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
 import useIsWebView from "../../../hooks/useIsWebView";
+import usePagination from "../../../hooks/usePagination";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { setTicketScreenList } from "../../../globalContext/ticketsScreen/ticketScreenActions";
-import { TicketScreenContext } from "../../../globalContext/ticketsScreen/ticketsScreenProvider";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import { ticketData } from "../constant";
 import images from "../../../images";
+import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsView.style";
 
-const useTicketView = (data) => {
+const useTicketView = () => {
   const [, ticketScreenDispatch] = useContext(TicketScreenContext);
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const { isWebView } = useIsWebView();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [rowsToShow, setRowsToShow] = useState(
+  const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(searchParams.get("page"))
   );
-  const [currentRecords, setCurrentRecords] = useState([]);
 
-  let indexOfLastRecord;
-  let indexOfFirstRecord;
+  const [currentRecords, setCurrentRecords] = useState(
+    ticketData.slice(0, rowsPerPage)
+  );
 
-  const fetchData = (pageNumber, rowPerPage) => {
-    // TODO: Integrate an API call here
-    indexOfLastRecord = pageNumber * rowPerPage;
-    indexOfFirstRecord = indexOfLastRecord - rowPerPage;
-    let newRecords = data.slice(indexOfFirstRecord, indexOfLastRecord);
-    setCurrentRecords(newRecords);
-    ticketScreenDispatch(setTicketScreenList(data));
-  };
+  const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
+    shouldSetQueryParamsOnMount: true,
+    setCurrentPage,
+    setRowPerPage,
+  });
 
-  useEffect(() => {
-    setSearchParams((prev) => {
-      prev.set("page", getValidCurrentPage(+searchParams.get("page")));
-      return prev;
-    });
-    setSearchParams((prev) => {
-      prev.set(
-        "rowsPerPage",
-        getValidRowPerPage(+searchParams.get("rowsPerPage"))
-      );
-      return prev;
-    });
-    fetchData(currentPage, rowsToShow);
-  }, []);
-
+  //TODO: We use this hook when we implementing API
+  // const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch();
   const handleLoadMore = () => {
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
@@ -75,28 +60,20 @@ const useTicketView = (data) => {
     }, 1000);
   };
 
-  let isHeading = true;
-
-  const handleSearchResults = (searchedData) => {
-    //TODO: Implement searching
+  const handlePageChange = (page) => {
+    //TODO : we fetch data on changing page
+    // fetchData()
+    handlePagePerChange(page);
   };
 
   const handleRowPerPageChange = (option) => {
-    setRowsToShow(option.value);
-    setSearchParams((prev) => {
-      prev.set("rowsPerPage", option.value);
-      return prev;
-    });
-    fetchData(currentPage, option.value);
+    //TODO : we fetch data on row changing per page
+    // fetchData()
+    handleRowsPerPageChange(option.value);
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    setSearchParams((prev) => {
-      prev.set("page", page);
-      return prev;
-    });
-    fetchData(page, rowsToShow);
+  const handleSearchResults = (searchedData) => {
+    //TODO: Implement searching
   };
 
   let headingTexts = ["id"];
@@ -104,6 +81,7 @@ const useTicketView = (data) => {
   let statusText = ["status"];
   let tableIcon = images.iconTicket;
   let filterCategory = ["Status", "Query Type"];
+  let isHeading = true;
 
   function getStatusStyle(status) {
     status = status.toLowerCase();
@@ -139,7 +117,7 @@ const useTicketView = (data) => {
             {item.id}
           </CommonText>
         ),
-        style: styles.columnStyle("15%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
@@ -148,7 +126,7 @@ const useTicketView = (data) => {
             {item.query_type}
           </CommonText>
         ),
-        style: styles.columnStyle("20%"),
+        style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
@@ -163,7 +141,7 @@ const useTicketView = (data) => {
             )}
           </View>
         ),
-        style: styles.columnStyle("15%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
@@ -172,7 +150,7 @@ const useTicketView = (data) => {
             {item.assigned_to}
           </CommonText>
         ),
-        style: styles.columnStyle("20%"),
+        style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
@@ -181,7 +159,7 @@ const useTicketView = (data) => {
             {item.created_at}
           </CommonText>
         ),
-        style: styles.columnStyle("15%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
@@ -192,7 +170,10 @@ const useTicketView = (data) => {
             isSvg={true}
           />
         ),
-        style: { ...styles.columnStyle("10%"), ...styles.iconTicketColoum },
+        style: {
+          ...commonStyles.columnStyle("10%"),
+          ...styles.iconTicketColoum,
+        },
         isFillSpace: true,
       },
     ];
@@ -200,11 +181,12 @@ const useTicketView = (data) => {
 
   return {
     allDataLoaded,
-    currentPage,
     currentRecords,
+    currentPage,
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
+    headingTexts,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
@@ -212,12 +194,12 @@ const useTicketView = (data) => {
     handleLoadMore,
     isHeading,
     loadingMore,
-    rowsToShow,
-    setCurrentRecords,
+    rowsPerPage,
     statusText,
     subHeadingText,
     tableIcon,
-    totalcards: data.length,
+    setCurrentRecords,
+    totalcards: ticketData.length,
   };
 };
 

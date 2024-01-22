@@ -12,15 +12,17 @@ import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import useFilterModal from "./controller/useFilterModal";
-import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./FilterModal.style";
 
 const FilterModal = ({
-  onPressIconCross,
   data,
-  onApplyFilter,
   filterCategory,
+  filterState,
+  initialFilterState,
+  onApplyFilter,
+  setFilterState,
+  setShowFilterOptions,
 }) => {
   const {
     activeCategories,
@@ -31,11 +33,18 @@ const FilterModal = ({
     handleClearFilter,
     selectedStatus,
     selectedQueryType,
-  } = useFilterModal(data, onApplyFilter);
+    onCancel,
+  } = useFilterModal(
+    data,
+    filterState,
+    initialFilterState,
+    onApplyFilter,
+    setFilterState,
+    setShowFilterOptions
+  );
 
   const isWeb = Platform.OS.toLowerCase() === "web";
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
 
   const { statusCounts, queryTypeCounts } = useMemo(() => {
     const statusCounters = {};
@@ -141,6 +150,7 @@ const FilterModal = ({
                 {filterCategory.map((item) => {
                   return (
                     <RenderCategoryButton
+                      key={item}
                       title={item}
                       onClick={handleCategoryChange}
                     />
@@ -168,7 +178,7 @@ const FilterModal = ({
               buttonTwoText={SHOW_RESULT_TEXT}
               displayLoader={false}
               isButtonTwoGreen
-              onPressButtonOne={onPressIconCross}
+              onPressButtonOne={onCancel}
               onPressButtonTwo={filterData}
             />
           </View>
@@ -179,9 +189,12 @@ const FilterModal = ({
 };
 
 FilterModal.propTypes = {
-  onPressIconCross: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
+  filterState: PropTypes.object.isRequired,
+  initialFilterState: PropTypes.object.isRequired,
   onApplyFilter: PropTypes.func.isRequired,
+  setFilterState: PropTypes.func.isRequired,
+  setShowFilterOptions: PropTypes.func.isRequired,
 };
 
 export default FilterModal;

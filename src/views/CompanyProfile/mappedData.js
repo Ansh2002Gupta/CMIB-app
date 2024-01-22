@@ -63,6 +63,7 @@ export const mapApiDataToUI = (
         label: "label.company_name",
         value: checkValue(name),
         maxLength: 255,
+        placeholder: "label.company_name_placeholder",
       },
       {
         label: "label.entity",
@@ -70,6 +71,7 @@ export const mapApiDataToUI = (
         isDropdown: true,
         options: ENTITY_OPTIONS,
         inputKey: "label",
+        placeholder: "label.select_entity_placeholder",
       },
       {
         key: "registrationNo",
@@ -78,6 +80,7 @@ export const mapApiDataToUI = (
         isNumeric: true,
         maxLength: 10,
         isMajor: true,
+        placeholder: "label.enter_firm_no",
       },
       {
         key: "noOfPartners",
@@ -85,6 +88,7 @@ export const mapApiDataToUI = (
         value: checkValue(number_of_partner),
         isMinor: true,
         isNumeric: true,
+        placeholder: "label.enter_no",
       },
       {
         label: "label.current_industry",
@@ -94,6 +98,7 @@ export const mapApiDataToUI = (
         labelField: "name",
         valueField: "name",
         inputKey: "name",
+        placeholder: "label.select_current_indusrty_placeholder",
       },
       {
         key: "address",
@@ -101,11 +106,13 @@ export const mapApiDataToUI = (
         value: checkValue(address),
         isMultiline: true,
         maxLength: 500,
+        placeholder: "label.address_for_correspondance_placeholder",
       },
       {
         key: "emailId",
         label: "label.email_id",
         value: checkValue(email),
+        placeholder: "label.email_id_placeholder",
       },
       {
         key: "code",
@@ -114,6 +121,7 @@ export const mapApiDataToUI = (
         value: checkValue(std_country_code),
         isMinor: true,
         maxLength: 8,
+        placeholder: "label.enter_code",
       },
       {
         key: "telephoneNo",
@@ -122,6 +130,7 @@ export const mapApiDataToUI = (
         value: checkValue(telephone_number),
         isMajor: true,
         maxLength: 15,
+        placeholder: "Enter Telephone Number",
       },
     ],
     contactPersonInfo: [
@@ -131,6 +140,7 @@ export const mapApiDataToUI = (
         isMinor: true,
         isDropdown: true,
         options: SALUTATION_OPTIONS,
+        placeholder: "label.select",
       },
       {
         key: "name",
@@ -138,12 +148,14 @@ export const mapApiDataToUI = (
         value: checkValue(contact_person_name),
         isMajor: true,
         maxLength: 255,
+        placeholder: "label.enter_contact_person_name",
       },
       {
         key: "designation",
         label: "label.contact_personal_designation",
         value: checkValue(contact_person_designation),
         maxLength: 500,
+        placeholder: "label.enter_contact_person_designation",
       },
       {
         key: "mobileNo",
@@ -152,11 +164,13 @@ export const mapApiDataToUI = (
         value: isEditMode ? contact_person_mobile_number : combinedMobileNumber,
         isNumeric: true,
         maxLength: 10,
+        placeholder: "label.enter_contact_person_mobile_no",
       },
       {
         key: "contactEmailId",
-        label: "label.enter_contact_person_email_id",
+        label: "label.email_id",
         value: checkValue(contact_person_email),
+        placeholder: "label.enter_contact_person_email_id",
       },
     ],
     companyProfile: [
@@ -166,6 +180,7 @@ export const mapApiDataToUI = (
         value: checkValue(company_details),
         isMultiline: true,
         maxLength: 100,
+        placeholder: "label.enter_profile_of_company",
       },
     ],
     otherDetails: [
@@ -174,18 +189,21 @@ export const mapApiDataToUI = (
         label: "label.website",
         value: checkValue(website),
         isLink: website && true,
+        placeholder: "label.enter_your_website",
       },
       {
         label: "label.nature_of_supplier",
         value: checkValue(nature_of_supplier),
         isDropdown: true,
         options: NATURE_OF_SUPPLIER,
+        placeholder: "label.select_nature_of_supplier",
       },
       {
         label: "label.company_type",
         value: checkValue(type),
         isDropdown: true,
         options: COMPANY_TYPE_OPTIONS,
+        placeholder: "label.select_company_type",
       },
     ],
     sourceOfInfo: source_of_information,

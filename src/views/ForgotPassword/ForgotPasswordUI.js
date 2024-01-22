@@ -40,14 +40,14 @@ const ForgotPasswordUI = (props) => {
           return {
             ...commonStyles.commonWebContainer,
             ...styles.forgotPasswordWebContainer,
-            ...styles.smScreenContainers,
+            ...styles.commonScreenContainers,
           };
         }
         if (currentBreakpoint === "md") {
           return {
             ...commonStyles.commonWebContainer,
             ...styles.forgotPasswordWebContainer,
-            ...styles.mdScreenContainers,
+            ...styles.commonScreenContainers,
           };
         }
         return {
@@ -138,7 +138,7 @@ const ForgotPasswordUI = (props) => {
                   : styles.headerText
               }
               customContainerStyles={
-                !!isWebView && styles.forgotHeaderContainer
+                isWebView ? styles.forgotHeaderContainer : {}
               }
             />
             {!isWebView && <View style={styles.borderStyle} />}
@@ -176,14 +176,19 @@ const ForgotPasswordUI = (props) => {
             >
               {intl.formatMessage({ id: "label.submit" })}
             </CustomButton>
-            <CustomTouchableOpacity onPress={onClickGoToLogin}>
-              <CommonText
-                customTextStyle={styles.backToLoginText}
-                fontWeight="600"
+            <View style={styles.backToLoginContainer}>
+              <CustomTouchableOpacity
+                onPress={onClickGoToLogin}
+                style={styles.backButtonStyle}
               >
-                {intl.formatMessage({ id: "label.back_to_login" })}
-              </CommonText>
-            </CustomTouchableOpacity>
+                <CommonText
+                  customTextStyle={styles.backToLoginText}
+                  fontWeight="600"
+                >
+                  {intl.formatMessage({ id: "label.back_to_login" })}
+                </CommonText>
+              </CustomTouchableOpacity>
+            </View>
           </View>
         </View>
         {successLogin ? (

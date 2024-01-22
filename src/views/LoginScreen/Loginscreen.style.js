@@ -47,7 +47,6 @@ const style = {
   },
   forgotPasswordView: {
     flexDirection: "row",
-    justifyContent: "flex-end",
   },
   rememberMeText: {
     fontSize: 14,
@@ -88,8 +87,19 @@ const style = {
     paddingBottom: 16,
     paddingTop: 32,
   },
-  minHeight: { minHeight: 500 },
-  gapForWebView: { gap: 24 },
+  minHeight: {
+    minHeight: 500,
+  },
+  gapForWebView: {
+    gap: 24,
+  },
+  marginBottom: {
+    marginBottom: 0,
+  },
+  forgotButtonContainer: {
+    justifyContent: "flex-end",
+    flexDirection: "row",
+  },
 
   // Web view related Styles
   webView: {

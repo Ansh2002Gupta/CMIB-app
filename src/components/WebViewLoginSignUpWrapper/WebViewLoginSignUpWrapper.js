@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
-
 import { View } from "@unthinkable/react-core-components";
-import { style } from "./WebViewLoginSignUpWrapper.style.js";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
-const WebViewLoginSignUpWrapper = ({ shouldApplyStyles, children }) => {
+import FollowUsIcons from "../FollowUsIcons/FollowUsIcons.js";
+import style from "./WebViewLoginSignUpWrapper.style.js";
+
+const WebViewLoginSignUpWrapper = ({
+  children,
+  shouldApplyStyles,
+  shouldShowFollowUs,
+}) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWidthLessThan1800 = currentBreakpoint === "xl";
   const isWidthLessThan1400 = currentBreakpoint === "lg";
@@ -70,6 +75,7 @@ const WebViewLoginSignUpWrapper = ({ shouldApplyStyles, children }) => {
           >
             {children}
           </View>
+          {shouldShowFollowUs && shouldApplyStyles && <FollowUsIcons />}
         </View>
       </View>
     </>

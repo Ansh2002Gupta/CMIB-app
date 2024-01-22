@@ -7,7 +7,7 @@ import { TwoRow } from "../../core/layouts";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketView from "./controller/useTicketView";
-import { gridData } from "./constant";
+import { ticketData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
@@ -17,11 +17,12 @@ import {
 const TicketsView = () => {
   const {
     allDataLoaded,
-    currentPage,
     currentRecords,
+    currentPage,
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
+    headingTexts,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
@@ -29,13 +30,13 @@ const TicketsView = () => {
     headingTexts,
     isHeading,
     loadingMore,
-    rowsToShow,
-    setCurrentRecords,
+    rowsPerPage,
     statusText,
     subHeadingText,
     tableIcon,
+    setCurrentRecords,
     totalcards,
-  } = useTicketView(gridData);
+  } = useTicketView();
 
   const intl = useIntl();
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const TicketsView = () => {
             allDataLoaded,
             currentPage,
             currentRecords,
-            data: gridData,
+            data: ticketData,
             getStatusStyle,
             getColoumConfigs,
             filterCategory,
@@ -72,7 +73,7 @@ const TicketsView = () => {
             isHeading,
             loadingMore,
             rowsLimit,
-            rowsToShow,
+            rowsPerPage,
             setCurrentRecords,
             statusText,
             subHeadingText,

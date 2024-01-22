@@ -21,6 +21,12 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
 
+const initialFilterState = {
+  selectedStatus: [],
+  selectedQueryType: [],
+  activeCategories: [],
+};
+
 const CustomTable = ({
   allDataLoaded,
   currentPage,
@@ -37,7 +43,7 @@ const CustomTable = ({
   isHeading,
   loadingMore,
   rowsLimit,
-  rowsToShow,
+  rowsPerPage,
   setCurrentRecords,
   showSearchBar,
   statusText,
@@ -49,14 +55,15 @@ const CustomTable = ({
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 
-  const [showModal, setShowModal] = useState(false);
+  const [showFilterOptions, setShowFilterOptions] = useState(false);
+  const [filterState, setFilterState] = useState(initialFilterState);
 
   const handleFilterModal = () => {
-    setShowModal((prev) => !prev);
+    setShowFilterOptions((prev) => !prev);
   };
 
   const onApplyFilter = (filterData) => {
-    setCurrentRecords(filterData);
+    setCurrentRecords(filterData.slice(0, rowsPerPage));
     handleFilterModal();
   };
 
@@ -189,7 +196,7 @@ const CustomTable = ({
                       handlePageChange,
                       handleRowPerPageChange,
                       rowsLimit,
-                      rowsToShow,
+                      rowsPerPage,
                       siblingCount: 1,
                       totalcards,
                     }}
@@ -198,15 +205,37 @@ const CustomTable = ({
               </View>
             }
             isTopFillSpace
+            isBottomFillSpace={false}
+            bottomSection={
+              !isWebView && (
+                <PaginationFooter
+                  {...{
+                    currentPage,
+                    handlePageChange,
+                    handleRowPerPageChange,
+                    rowsLimit,
+                    rowsPerPage,
+                    siblingCount: 1,
+                    totalcards,
+                  }}
+                />
+              )
+            }
+            bottomSectionStyle={styles.bottomPaginationStyle}
           />
         }
       />
-      {showModal && (
+      {showFilterOptions && (
         <FilterModal
-          filterCategory={filterCategory}
-          data={data}
-          onPressIconCross={handleFilterModal}
-          onApplyFilter={onApplyFilter}
+          {...{
+            data,
+            filterCategory,
+            filterState,
+            initialFilterState,
+            setFilterState,
+            setShowFilterOptions,
+            onApplyFilter,
+          }}
         />
       )}
     </View>
@@ -229,8 +258,8 @@ CustomTable.defaultProps = {
   isHeading: false,
   loadingMore: true,
   rowsLimit: [],
-  rowsToShow: 10,
-  setCurrentrecords: [],
+  rowsPerPage: 10,
+  setCurrentRecords: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
@@ -255,13 +284,13 @@ CustomTable.propTypes = {
   isHeading: PropTypes.bool.isRequired,
   loadingMore: PropTypes.bool.isRequired,
   rowsLimit: PropTypes.array.isRequired,
-  rowsToShow: PropTypes.number.isRequired,
-  setCurrentrecords: PropTypes.array.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+  setCurrentRecords: PropTypes.array.isRequired,
   showSearchBar: PropTypes.bool,
   statusText: PropTypes.array,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,
-  tableIcon: PropTypes.string.isRequired,
+  tableIcon: PropTypes.any.isRequired,
   totalcards: PropTypes.number.isRequired,
 };
 

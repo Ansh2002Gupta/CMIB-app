@@ -1,14 +1,6 @@
 import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-
-const baseStatusCellStyle = {
-  textAlign: "center",
-  marginRight: 16,
-  paddingLeft: 8,
-  paddingRight: 8,
-  paddingTop: 2,
-  paddingBottom: 2,
-};
+import { baseChipStyle } from "../../theme/styles/commonStyles";
 
 const styles = StyleSheet.create({
   cellTextStyle: (fontSize = 14) => ({
@@ -26,38 +18,31 @@ const styles = StyleSheet.create({
     color: colors.orange,
   },
   published: {
-    ...baseStatusCellStyle,
+    ...baseChipStyle,
     color: colors.skyBlueDark,
   },
   notPublished: {
-    ...baseStatusCellStyle,
+    ...baseChipStyle,
     color: colors.darkBlueShade,
   },
   pendingWeb: {
-    ...baseStatusCellStyle,
+    ...baseChipStyle,
     backgroundColor: colors.lightOrange,
     color: colors.orange,
   },
   publishedWeb: {
-    ...baseStatusCellStyle,
+    ...baseChipStyle,
     color: colors.skyBlueDark,
     backgroundColor: colors.skyBlueLight,
   },
   notPublishedWeb: {
-    ...baseStatusCellStyle,
+    ...baseChipStyle,
     color: colors.darkBlueShade,
     backgroundColor: colors.greyOne,
   },
   tableHeadingText: {
     color: colors.darkGrey,
   },
-  columnStyle: (WIDTH: "15%") => ({
-    width: WIDTH,
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingTop: 16,
-    paddingBottom: 16,
-  }),
   iconTicket: {
     height: 20,
     width: 20,

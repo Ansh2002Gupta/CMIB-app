@@ -2,7 +2,6 @@ import React from "react";
 import { Platform } from "@unthinkable/react-core-components";
 
 import ContentLayout from "../pages/ContentLayout";
-import CreateNewPassword from "../views/CreateNewPassword/index";
 import DashboardView from "../views/Dashboard";
 import MyAccount from "../views/MyAccount";
 import ViewProfile from "../views/ViewProfile";
@@ -21,7 +20,7 @@ import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import RoundTwo from "../views/RoundTwoView";
 import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
-import TicketsView from '../views/TicketsView/index'
+import TicketsView from "../views/TicketsView/index";
 import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -67,16 +66,6 @@ const config = [
       {
         viewPath: "",
         element: <ForgotPassword />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.CREATE_NEW_PASSWORD,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <CreateNewPassword />,
       },
     ],
   },

@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import { useRef } from "react";
 
-const initialState = {
-  selectedStatus: [],
-  selectedQueryType: [],
-  activeCategories: [],
-};
-
-const useFilterModal = (data,onApplyFilter) => {
-  const [filterState, setFilterState] = useState(initialState);
+const useFilterModal = (
+  data,
+  filterState,
+  initialFilterState,
+  onApplyFilter,
+  setFilterState,
+  setShowFilterOptions
+) => {
   const { selectedStatus, selectedQueryType, activeCategories } = filterState;
+
+  const prevFilterState = useRef(filterState);
+
+  const onCancel = () => {
+    setShowFilterOptions(false);
+    setFilterState(prevFilterState.current);
+  };
 
   const handleCategoryChange = (category) => {
     setFilterState((prevState) => {
@@ -18,12 +25,11 @@ const useFilterModal = (data,onApplyFilter) => {
           ...prevState,
           activeCategories: activeCategories.filter((c) => c !== category),
         };
-      } else {
-        return {
-          ...prevState,
-          activeCategories: [...activeCategories, category],
-        };
       }
+      return {
+        ...prevState,
+        activeCategories: [...activeCategories, category],
+      };
     });
   };
 
@@ -59,18 +65,19 @@ const useFilterModal = (data,onApplyFilter) => {
   };
 
   const handleClearFilter = () => {
-    setFilterState(initialState);
+    setFilterState(initialFilterState);
   };
 
   return {
-    selectedStatus,
-    selectedQueryType,
     activeCategories,
     handleCategoryChange,
     handleStatusChange,
     handleQueryTypeChange,
-    filterData,
     handleClearFilter,
+    filterData,
+    onCancel,
+    selectedStatus,
+    selectedQueryType,
   };
 };
 
