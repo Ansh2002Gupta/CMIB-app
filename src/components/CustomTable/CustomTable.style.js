@@ -98,6 +98,15 @@ const styles = StyleSheet.create({
   tableTopSectionStyle: (isWebView) => ({
     height: isWebView ? "100%" : "80%",
   }),
+  loadingStyle: {
+    backgroundColor: colors.white,
+    padding: 12,
+    alignItems: "center",
+  },
+  noMoreData: {
+    textAlign: "center",
+    color: colors.lightGrey,
+  },
 });
 
 export default styles;

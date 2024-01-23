@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import {
   FlatList,
-  Image,
   Platform,
   TouchableOpacity,
   View,
@@ -13,8 +12,10 @@ import { useNavigate } from "../../routes";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import Config from "../../components/ReactConfig/index";
+import CustomImage from "../../components/CustomImage";
 import CommonText from "../../components/CommonText";
 import ResponsiveTextTruncate from "../../components/ResponsiveTextTruncate/ResponsiveTextTruncate";
+import TouchableImage from "../../components/TouchableImage";
 import ModuleList from "../../components/ModuleList/ModuleList";
 import useIsWebView from "../../hooks/useIsWebView";
 import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
@@ -62,7 +63,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         style={isActive ? styles.moduleActiveMenuItems : styles.moduleMenuItems}
         onPress={() => handleOnClickMenuItem(item)}
       >
-        <Image
+        <CustomImage
           source={
             isActive
               ? getIconImages(item.icon).activeImage
@@ -97,9 +98,11 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   return (
     <View style={styles.container}>
       {showCloseIcon && (
-        <TouchableOpacity onPress={onClose} style={styles.leftArrowButton}>
-          <Image source={images.iconClose} style={styles.closeButton} />
-        </TouchableOpacity>
+        <TouchableImage
+          onPress={onClose}
+          source={images.iconClose}
+          parentStyle={styles.closeButton}
+        />
       )}
       <View
         style={[
@@ -107,7 +110,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           showCloseIcon ? styles.imageViewStyles : styles.imgViewStyle,
         ]}
       >
-        <Image source={images.iconCmibLogoWhite} />
+        <CustomImage source={images.cmibIcon} style={styles.cmiLogo} />
       </View>
       {!openModuleSelector && (
         <CommonText customTextStyle={styles.sessionText}>
@@ -137,7 +140,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
                 style={styles.changeTextContainer}
               >
                 {openModuleSelector ? (
-                  <Image
+                  <CustomImage
                     source={images.iconLeftArrow}
                     style={styles.leftArrow}
                   />
@@ -173,21 +176,34 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           )
         }
       />
-      <TouchableOpacity
-        style={[
-          styles.bottomView,
-          Platform.OS !== "web" && styles.mobContainer,
-        ]}
-        onPress={handleBottomViewNavigation}
-      >
-        <View style={styles.imageTextView}>
-          <Image source={images.iconFooterGlobal} style={styles.globalIcon} />
-          <CommonText customTextStyle={styles.visitWebsiteText}>
-            {intl.formatMessage({ id: "label.visit_website" })}
-          </CommonText>
-        </View>
-        <Image source={images.iconRightArrow} style={styles.globalIcon} />
-      </TouchableOpacity>
+      <View style={styles.bottomView}>
+        <CustomImage
+          source={images.iconCmibCALogo}
+          style={styles.logoStyle}
+          alt={"cmib logo"}
+        />
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            Platform.OS !== "web" && styles.mobContainer,
+          ]}
+          onPress={handleBottomViewNavigation}
+        >
+          <View style={styles.imageTextView}>
+            <CustomImage
+              source={images.iconFooterGlobal}
+              style={styles.globalIcon}
+            />
+            <CommonText customTextStyle={styles.visitWebsiteText}>
+              {intl.formatMessage({ id: "label.visit_website" })}
+            </CommonText>
+          </View>
+          <CustomImage
+            source={images.iconRightArrow}
+            style={styles.globalIcon}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

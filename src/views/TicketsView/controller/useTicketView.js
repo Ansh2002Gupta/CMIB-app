@@ -20,6 +20,8 @@ import styles from "../TicketsView.style";
 const useTicketView = () => {
   const { isWebView } = useIsWebView();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -32,6 +34,9 @@ const useTicketView = () => {
     ticketData.slice(0, rowsPerPage)
   );
 
+  const indexOfLastRecord = currentPage * rowsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
+
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
     setCurrentPage,
@@ -40,6 +45,23 @@ const useTicketView = () => {
 
   //TODO: We use this hook when we implementing API
   // const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch();
+
+  const handleLoadMore = () => {
+    if (loadingMore || allDataLoaded) return;
+    setLoadingMore(true);
+    setTimeout(() => {
+      const startIndex = currentRecords.length;
+      const endIndex = startIndex + rowsPerPage;
+      const additionalRecords = ticketData.slice(startIndex, endIndex);
+      if (additionalRecords.length > 0) {
+        const newRecords = currentRecords.concat(additionalRecords);
+        setCurrentRecords(newRecords);
+      } else {
+        setAllDataLoaded(true);
+      }
+      setLoadingMore(false);
+    }, 1000);
+  };
 
   const handlePageChange = (page) => {
     //TODO : we fetch data on changing page
@@ -161,6 +183,7 @@ const useTicketView = () => {
   };
 
   return {
+    allDataLoaded,
     currentRecords,
     currentPage,
     getColoumConfigs,
@@ -170,7 +193,11 @@ const useTicketView = () => {
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    handleLoadMore,
     isHeading,
+    indexOfFirstRecord,
+    indexOfLastRecord,
+    loadingMore,
     rowsPerPage,
     statusText,
     subHeadingText,

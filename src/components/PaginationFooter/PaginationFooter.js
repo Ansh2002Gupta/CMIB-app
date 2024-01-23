@@ -14,6 +14,8 @@ const PaginationFooter = ({
   currentPage,
   handlePageChange,
   handleRowPerPageChange,
+  indexOfFirstRecord,
+  indexOfLastRecord,
   rowsLimit,
   rowsPerPage,
   siblingCount,
@@ -37,6 +39,11 @@ const PaginationFooter = ({
             dropdownIcon={images.iconArrowDown}
           />
         </View>
+        {!isWebView && (
+          <CommonText customTextStyle={styles.rowsPerPageText}>
+            {`${indexOfFirstRecord} - ${indexOfLastRecord} of ${totalcards}`}
+          </CommonText>
+        )}
       </View>
       <Pagination
         {...{
@@ -58,6 +65,8 @@ PaginationFooter.defaultProps = {
   currentPage: 1,
   handlePageChange: () => {},
   handleRowPerPageChange: () => {},
+  indexOfFirstRecord: 0,
+  indexOfLastRecord: 0,
   rowsLimit: [],
   rowsPerPage: 10,
   siblingCount: 1,
@@ -68,6 +77,8 @@ PaginationFooter.propTypes = {
   currentPage: PropTypes.number.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,
+  indexOfFirstRecord: PropTypes.number.isRequired,
+  indexOfLastRecord: PropTypes.number.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   siblingCount: PropTypes.number.isRequired,

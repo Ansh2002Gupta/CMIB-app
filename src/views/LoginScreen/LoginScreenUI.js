@@ -32,6 +32,7 @@ const LoginScreenUI = (props) => {
     onForgotPasswordClick,
     onLogin,
     onCreateNewPasswordClick,
+    isUserSuccessfullyLoggedOut,
     password,
     toggleUser,
     userName,
@@ -304,6 +305,14 @@ const LoginScreenUI = (props) => {
             onDismiss={handleDismissToast}
           />
         )}
+        {isUserSuccessfullyLoggedOut && (
+          <ToastComponent
+            toastMessage={intl.formatMessage({
+              id: "label.logout_successfully",
+            })}
+            onDismiss={handleDismissToast}
+          />
+        )}
       </WebViewLoginSignUpWrapper>
     </FormWrapper>
   );
@@ -323,6 +332,7 @@ LoginScreenUI.propTypes = {
   handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  isUserSuccessfullyLoggedOut: PropTypes.bool.isRequired,
   loginDisabled: PropTypes.bool.isRequired,
   onChangePassword: PropTypes.func.isRequired,
   onChangeUsername: PropTypes.func.isRequired,

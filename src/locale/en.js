@@ -254,6 +254,7 @@ const locale = {
   "label.show_result": "Show results",
   "label.search": "Search",
   "label.clear_all": "Clear All",
+  "label.no_more_data": "No more data",
   "label.sessions": "Sessions",
   "label.basic": "Basic",
   "label.hra": "HRA",
@@ -273,6 +274,7 @@ const locale = {
   "label.personal_interview": "Personal Interview",
   "label.enter": "Enter",
   "label.no_result_found": "No Result Found",
+  "label.logout_successfully": "You are logged out successfully.",
 };
 
 export default locale;
