@@ -273,7 +273,7 @@ const locale = {
   "label.personal_interview": "Personal Interview",
   "label.enter": "Enter",
   "label.no_result_found": "No Result Found",
-  "label.logout_successfully": "Logout successfully",
+  "label.logout_successfully": "You are logged out successfully.",
 };
 
 export default locale;

@@ -3,14 +3,14 @@ import { useNavigate } from "../routes";
 
 import CookieAndStorageService from "../services/cookie-and-storage-service";
 import { AuthContext } from "../globalContext/auth/authProvider";
+import { LogoutContext } from "../globalContext/logout/logoutProvider";
 import { UserProfileContext } from "../globalContext/userProfile/userProfileProvider";
 
 import useLogoutAPI from "../services/apiServices/hooks/useLogoutAPI";
 import { clearAuthAndLogout } from "../globalContext/auth/authActions";
 import { resetUserDetails } from "../globalContext/userProfile/userProfileActions";
-import { navigations } from "../constants/routeNames";
-import { LogoutContext } from "../globalContext/logout/logoutProvider";
 import { setLogoutToast } from "../globalContext/logout/logoutActions";
+import { navigations } from "../constants/routeNames";
 
 export const useHeader = () => {
   const navigate = useNavigate();
