@@ -43,6 +43,7 @@ const style = {
   },
   webOtpBox: {
     width: "100%",
+    borderStyle: "solid",
   },
   errorMsg: {
     color: colors.errorRed,
