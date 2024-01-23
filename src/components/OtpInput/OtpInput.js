@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import PropTypes from "prop-types";
-import { Platform, TextInput, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./OtpInput.style";
 
@@ -47,6 +48,19 @@ const OtpInput = ({
     }
   };
 
+  const onKeyUp = useCallback(
+    (e, index) => {
+      const { key } = e;
+      if (key === "Backspace" && !otp[index] && index > 0) {
+        const newOtp = [...otp];
+        newOtp[index - 1] = "";
+        setOtp(newOtp);
+        inputsRef.current[index - 1].focus();
+      }
+    },
+    [otp]
+  );
+
   const platformSpecificProps = Platform.select({
     web: {
       type: "numeric",
@@ -65,16 +79,18 @@ const OtpInput = ({
         ref={(input) => {
           inputsRef.current[index] = input;
         }}
-        style={[
-          styles.otpBox,
-          index === activeInputIndex ? styles.activeOtpBox : null,
-        ]}
+        style={{
+          ...styles.otpBox,
+          ...(isWebView ? styles.webOtpBox : {}),
+          ...(index === activeInputIndex ? styles.activeOtpBox : null),
+        }}
         value={otp[index]}
         onChangeText={(text) => handleOtpChange(text, index)}
         onKeyPress={(e) => onKeyPress(e, index)}
         maxLength={1}
         onFocus={() => handleInputFocus(index)}
         onBlur={handleInputBlur}
+        onKeyUp={(e) => onKeyUp(e, index)}
         {...platformSpecificProps}
       />
     ));
@@ -99,7 +115,14 @@ const OtpInput = ({
             >{` *`}</CommonText>
           )}
         </View>
-        <View style={styles.otpContainer}>{renderInputs()}</View>
+        <View
+          style={{
+            ...styles.otpContainer,
+            ...(isWebView ? styles.webOtpContainer : styles.appOtpContainer),
+          }}
+        >
+          {renderInputs()}
+        </View>
         {isError && (
           <CommonText customTextStyle={styles.errorMsg} fontWeight="600">
             {errorMessage}

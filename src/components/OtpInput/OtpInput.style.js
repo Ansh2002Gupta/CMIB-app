@@ -21,6 +21,11 @@ const style = {
   otpContainer: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  webOtpContainer: {
+    gap: 16,
+  },
+  appOtpContainer: {
     justifyContent: "space-between",
   },
   activeOtpBox: {
@@ -35,6 +40,9 @@ const style = {
     textAlign: "center",
     fontSize: 20,
     fontWeight: "500",
+  },
+  webOtpBox: {
+    width: "100%",
   },
   errorMsg: {
     color: colors.errorRed,
