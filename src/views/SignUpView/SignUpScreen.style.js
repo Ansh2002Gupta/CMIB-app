@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import commonStyles from "../../theme/styles/commonStyles";
 
-export const style = {
+export const style = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -14,7 +16,7 @@ export const style = {
     width: "100%",
   },
   webSubContainer: {
-    flex: 5.5,
+    width: '65%',
     alignItems: "flex-start",
     height: "100%",
   },
@@ -39,7 +41,7 @@ export const style = {
     minHeight: "70vH",
     marginBottom: 48
   },
-};
+});
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
   switch (str) {
