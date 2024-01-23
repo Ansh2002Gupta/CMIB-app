@@ -64,7 +64,6 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   }, []);
 
   useEffect(() => {
-    console.log(fieldToValidate, "fieldToValidate");
     if (fieldToValidate && errors[fieldToValidate]) {
       validateFields(fieldToValidate);
       setFieldToValidate(null);
