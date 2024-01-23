@@ -16,6 +16,7 @@ import {
 
 const TicketsView = () => {
   const {
+    allDataLoaded,
     currentRecords,
     currentPage,
     getColoumConfigs,
@@ -25,7 +26,11 @@ const TicketsView = () => {
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    handleLoadMore,
     isHeading,
+    indexOfFirstRecord,
+    indexOfLastRecord,
+    loadingMore,
     rowsPerPage,
     statusText,
     subHeadingText,
@@ -54,6 +59,7 @@ const TicketsView = () => {
       bottomSection={
         <CustomTable
           {...{
+            allDataLoaded,
             currentPage,
             currentRecords,
             data: ticketData,
@@ -61,10 +67,14 @@ const TicketsView = () => {
             getColoumConfigs,
             filterCategory,
             handleSearchResults,
+            handleLoadMore,
             handleRowPerPageChange,
             handlePageChange,
             headingTexts,
             isHeading,
+            indexOfFirstRecord,
+            indexOfLastRecord,
+            loadingMore,
             rowsLimit,
             rowsPerPage,
             setCurrentRecords,

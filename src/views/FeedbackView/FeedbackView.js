@@ -16,6 +16,7 @@ import {
 
 const FeedbackView = () => {
   const {
+    allDataLoaded,
     currentRecords,
     currentPage,
     getColoumConfigs,
@@ -25,7 +26,11 @@ const FeedbackView = () => {
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    handleLoadMore,
     isHeading,
+    indexOfFirstRecord,
+    indexOfLastRecord,
+    loadingMore,
     rowsPerPage,
     statusText,
     subHeadingText,
@@ -54,6 +59,7 @@ const FeedbackView = () => {
       bottomSection={
         <CustomTable
           {...{
+            allDataLoaded,
             currentPage,
             currentRecords,
             data: feedbackData,
@@ -63,8 +69,12 @@ const FeedbackView = () => {
             handlePageChange,
             handleRowPerPageChange,
             handleSearchResults,
+            handleLoadMore,
             headingTexts,
             isHeading,
+            indexOfFirstRecord,
+            indexOfLastRecord,
+            loadingMore,
             rowsLimit,
             rowsPerPage,
             setCurrentRecords,
