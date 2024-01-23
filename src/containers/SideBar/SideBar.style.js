@@ -48,10 +48,8 @@ const styles = {
   closeButton: {
     height: 20,
     width: 20,
-  },
-  leftArrowButton: {
-    paddingTop: 16,
-    paddingLeft: 16,
+    marginTop: 16,
+    marginLeft: 16,
   },
   menuIcons: {
     height: 20,
@@ -70,9 +68,10 @@ const styles = {
     opacity: 0.6,
     flexWrap: "wrap",
   },
-  bottomSection:{
-    flex:1,
-    zIndex:1
+  bottomSection: {
+    flex: 1,
+    zIndex: 1,
+    paddingBottom: 60,
   },
   changeTextContainer: {
     backgroundColor: colors.offWhite,
@@ -100,6 +99,12 @@ const styles = {
     paddingTop: 16,
   },
   bottomView: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    zIndex: 2,
+  },
+  bottomButton: {
     paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: colors.offWhite,
@@ -108,10 +113,6 @@ const styles = {
     paddingLeft: 16,
     paddingRight: 16,
     cursor: "pointer",
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    zIndex:2,
   },
   imageTextView: {
     flexDirection: "row",
@@ -120,6 +121,11 @@ const styles = {
     color: colors.lightGrey,
     paddingLeft: 12,
     fontSize: 14,
+  },
+  logoStyle: {
+    margin: 20,
+    height: 40,
+    width: 53,
   },
   globalIcon: {
     width: 18,
@@ -147,7 +153,7 @@ const styles = {
     padding: 16,
     flexDirection: "row",
     cursor: "pointer",
-    alignItems:"center"
+    alignItems: "center",
   },
   moduleActiveMenuItems: {
     marginLeft: 16,
@@ -159,7 +165,7 @@ const styles = {
     backgroundColor: colors.white,
     flexDirection: "row",
     cursor: "pointer",
-    alignItems:"center"
+    alignItems: "center",
   },
   disabled: {
     color: colors.slateGray,
@@ -171,6 +177,9 @@ const styles = {
   },
   mobContainer: {
     marginBottom: 16,
+  },
+  cmiLogo: {
+    height: 50,
   },
 };
 

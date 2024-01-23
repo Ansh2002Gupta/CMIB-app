@@ -160,6 +160,9 @@ const iconLinkedinWeb = appendAppBaseURl("/images/svg/iconLinkedInWeb.svg");
 const iconTelegramWeb = appendAppBaseURl("/images/svg/iconTelegramWeb.svg");
 const iconYoutubeWeb = appendAppBaseURl("/images/svg/iconYoutubeWeb.svg");
 const iconTwitterWeb = appendAppBaseURl("/images/svg/iconTwitterWeb.svg");
+const iconCmibCALogo = appendAppBaseURl(
+  "/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png"
+);
 
 const images = {
   iconArrowUp,
@@ -270,6 +273,7 @@ const images = {
   iconTelegramWeb,
   iconYoutubeWeb,
   iconInstagramWeb,
+  iconCmibCALogo,
 };
 
 export default images;
