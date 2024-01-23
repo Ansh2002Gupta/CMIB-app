@@ -83,7 +83,7 @@ const OtpInput = ({
         style={{
           ...styles.otpBox,
           ...(isWebView ? styles.webOtpBox : {}),
-          ...(index === activeInputIndex ? styles.activeOtpBox : null),
+          ...(index === activeInputIndex ? styles.activeOtpBox : {}),
         }}
         value={otp[index]}
         onChangeText={(text) =>
