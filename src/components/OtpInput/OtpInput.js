@@ -5,6 +5,7 @@ import { Platform, View } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
+import { numericValidator } from "../../../src/utils/validation";
 import styles from "./OtpInput.style";
 
 const OtpInput = ({
@@ -85,7 +86,9 @@ const OtpInput = ({
           ...(index === activeInputIndex ? styles.activeOtpBox : null),
         }}
         value={otp[index]}
-        onChangeText={(text) => handleOtpChange(text, index)}
+        onChangeText={(text) =>
+          numericValidator(text) && handleOtpChange(text, index)
+        }
         onKeyPress={(e) => onKeyPress(e, index)}
         maxLength={1}
         onFocus={() => handleInputFocus(index)}
