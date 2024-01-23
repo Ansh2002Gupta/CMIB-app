@@ -55,6 +55,18 @@ const DropDownModal = ({
     return filteredData;
   };
 
+  const scrollToIndex = (info) => {
+    const wait = new Promise((resolve) => setTimeout(resolve, 500));
+    wait.then(() => {
+      if (flatListRef.current !== null) {
+        flatListRef.current.scrollToIndex({
+          index: info.index,
+          animated: true,
+        });
+      }
+    });
+  };
+
   const renderOptions = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -109,17 +121,7 @@ const DropDownModal = ({
             data={selectedOption}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderOptions}
-            onScrollToIndexFailed={(info) => {
-              const wait = new Promise((resolve) => setTimeout(resolve, 500));
-              wait.then(() => {
-                if (flatListRef.current !== null) {
-                  flatListRef.current.scrollToIndex({
-                    index: info.index,
-                    animated: true,
-                  });
-                }
-              });
-            }}
+            onScrollToIndexFailed={scrollToIndex}
             getItemLayout={(data, index) => ({
               length: 50,
               offset: 50 * index,
