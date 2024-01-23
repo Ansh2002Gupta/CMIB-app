@@ -26,9 +26,12 @@ const CustomModal = ({
   onPress,
   onPressIconCross,
   secondaryText,
+  onBackdropPress,
 }) => {
   const webProps =
-    Platform.OS.toLowerCase() === "web" ? { maxWidth: "xs" } : {};
+    Platform.OS.toLowerCase() === "web"
+      ? { maxWidth: "xs" }
+      : { onBackdropPress };
 
   return (
     <>
