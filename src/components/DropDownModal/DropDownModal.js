@@ -6,7 +6,6 @@ import { FlatList, TouchableOpacity } from "@unthinkable/react-core-components";
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CommonText from "../CommonText";
-import LoadingScreen from "../LoadingScreen";
 import SearchView from "../SearchView";
 import images from "../../images";
 import styles from "./DropDownModal.style";
@@ -105,37 +104,33 @@ const DropDownModal = ({
               />
             </>
           )}
-          {data.length ? (
-            <FlatList
-              ListEmptyComponent={
-                <CommonText customContainerStyle={styles.nothingFoundText}>
-                  {intl.formatMessage({ id: "label.no_result_found" })}
-                </CommonText>
-              }
-              ref={flatListRef}
-              data={selectedOption}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={renderOptions}
-              onScrollToIndexFailed={(info) => {
-                const wait = new Promise((resolve) => setTimeout(resolve, 500));
-                wait.then(() => {
-                  if (flatListRef.current !== null) {
-                    flatListRef.current.scrollToIndex({
-                      index: info.index,
-                      animated: true,
-                    });
-                  }
-                });
-              }}
-              getItemLayout={(data, index) => ({
-                length: 50,
-                offset: 50 * index,
-                index,
-              })}
-            />
-          ) : (
-            <LoadingScreen />
-          )}
+          <FlatList
+            ref={flatListRef}
+            data={selectedOption}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderOptions}
+            onScrollToIndexFailed={(info) => {
+              const wait = new Promise((resolve) => setTimeout(resolve, 500));
+              wait.then(() => {
+                if (flatListRef.current !== null) {
+                  flatListRef.current.scrollToIndex({
+                    index: info.index,
+                    animated: true,
+                  });
+                }
+              });
+            }}
+            getItemLayout={(data, index) => ({
+              length: 50,
+              offset: 50 * index,
+              index,
+            })}
+            ListEmptyComponent={
+              <CommonText customContainerStyle={styles.nothingFoundText}>
+                {intl.formatMessage({ id: "label.no_result_found" })}
+              </CommonText>
+            }
+          />
         </CustomModal>
       )}
     </>
