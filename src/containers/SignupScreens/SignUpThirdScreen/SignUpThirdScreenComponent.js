@@ -81,8 +81,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     });
   };
 
-  const validateField = (name, index) => {
-    const value = contactDetails[index][name];
+  const validateField = (name, index, enteredValue) => {
+    const value = enteredValue || contactDetails[index][name];
     let error = "";
 
     switch (name) {
@@ -208,6 +208,14 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       [name]: value,
     };
     setContactDetails(updatedDetails);
+    if (errors[index][name] && !validateField(name, index, value)) {
+      const updatedErrors = [...errors];
+      updatedErrors[index] = {
+        ...updatedErrors[index],
+        [name]: "",
+      };
+      setErrors(updatedErrors);
+    }
   };
 
   return (
