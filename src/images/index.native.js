@@ -94,6 +94,7 @@ import iconArrowRightBlack from "../../public/images/svg/iconArrowRightBlack.svg
 import iconArrowRight from "../../public/images/svg/iconArrowRight.svg";
 import iconSuccess from "../../public/images/svg/iconSuccess.svg";
 import iconClose from "../../public/images/svg/iconClose.svg";
+import iconCmibCALogo from "../../public/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png";
 
 const images = {
   iconArrowUp,
@@ -192,6 +193,7 @@ const images = {
   iconTicket,
   iconArrowRightBlack,
   iconArrowRight,
+  iconCmibCALogo,
 };
 
 export default images;

@@ -176,24 +176,34 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           )
         }
       />
-      <TouchableOpacity
-        style={[
-          styles.bottomView,
-          Platform.OS !== "web" && styles.mobContainer,
-        ]}
-        onPress={handleBottomViewNavigation}
-      >
-        <View style={styles.imageTextView}>
+      <View style={styles.bottomView}>
+        <CustomImage
+          source={images.iconCmibCALogo}
+          style={styles.logoStyle}
+          alt={"cmib logo"}
+        />
+        <TouchableOpacity
+          style={[
+            styles.bottomButton,
+            Platform.OS !== "web" && styles.mobContainer,
+          ]}
+          onPress={handleBottomViewNavigation}
+        >
+          <View style={styles.imageTextView}>
+            <CustomImage
+              source={images.iconFooterGlobal}
+              style={styles.globalIcon}
+            />
+            <CommonText customTextStyle={styles.visitWebsiteText}>
+              {intl.formatMessage({ id: "label.visit_website" })}
+            </CommonText>
+          </View>
           <CustomImage
-            source={images.iconFooterGlobal}
+            source={images.iconRightArrow}
             style={styles.globalIcon}
           />
-          <CommonText customTextStyle={styles.visitWebsiteText}>
-            {intl.formatMessage({ id: "label.visit_website" })}
-          </CommonText>
-        </View>
-        <CustomImage source={images.iconRightArrow} style={styles.globalIcon} />
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

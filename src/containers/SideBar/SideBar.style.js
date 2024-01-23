@@ -71,6 +71,7 @@ const styles = {
   bottomSection: {
     flex: 1,
     zIndex: 1,
+    paddingBottom: 60,
   },
   changeTextContainer: {
     backgroundColor: colors.offWhite,
@@ -98,6 +99,12 @@ const styles = {
     paddingTop: 16,
   },
   bottomView: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    zIndex: 2,
+  },
+  bottomButton: {
     paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: colors.offWhite,
@@ -106,10 +113,6 @@ const styles = {
     paddingLeft: 16,
     paddingRight: 16,
     cursor: "pointer",
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    zIndex: 2,
   },
   imageTextView: {
     flexDirection: "row",
@@ -118,6 +121,11 @@ const styles = {
     color: colors.lightGrey,
     paddingLeft: 12,
     fontSize: 14,
+  },
+  logoStyle: {
+    margin: 20,
+    height: 40,
+    width: 53,
   },
   globalIcon: {
     width: 18,
