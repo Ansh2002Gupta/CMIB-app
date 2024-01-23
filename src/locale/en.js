@@ -254,6 +254,7 @@ const locale = {
   "label.show_result": "Show results",
   "label.search": "Search",
   "label.clear_all": "Clear All",
+  "label.no_more_data": "No more data",
   "label.sessions": "Sessions",
   "label.basic": "Basic",
   "label.hra": "HRA",

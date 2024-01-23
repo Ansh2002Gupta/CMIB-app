@@ -138,7 +138,7 @@ const ForgotPasswordUI = (props) => {
                   : styles.headerText
               }
               customContainerStyles={
-                !!isWebView && styles.forgotHeaderContainer
+                isWebView ? styles.forgotHeaderContainer : {}
               }
             />
             {!isWebView && <View style={styles.borderStyle} />}
