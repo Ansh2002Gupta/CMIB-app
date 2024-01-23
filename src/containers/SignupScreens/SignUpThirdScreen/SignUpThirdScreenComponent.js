@@ -208,7 +208,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       [name]: value,
     };
     setContactDetails(updatedDetails);
-    errors[index][name] && validateField(name, index, value);
     if (errors[index][name] && !validateField(name, index, value)) {
       const updatedErrors = [...errors];
       updatedErrors[index] = {
