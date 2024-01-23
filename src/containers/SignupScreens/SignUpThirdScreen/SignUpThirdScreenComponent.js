@@ -38,8 +38,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }))
   );
 
-  const [fieldToValidate, setFieldToValidate] = useState(null);
-  const [fieldToValidateName, setFieldToValidateName] = useState(null);
   const [errors, setErrors] = useState(
     contactDetails.map(() => ({
       designation: "",
@@ -83,8 +81,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     });
   };
 
-  const validateField = (name, index) => {
-    const value = contactDetails[index][name];
+  const validateField = (name, index, enteredValue) => {
+    const value = enteredValue || contactDetails[index][name];
     let error = "";
 
     switch (name) {
@@ -129,20 +127,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
     return error;
   };
-
-  useEffect(() => {
-    if (fieldToValidateName && errors[0][fieldToValidateName]) {
-      const fieldError = validateField(fieldToValidateName, fieldToValidate);
-      const updatedErrors = [...errors];
-      updatedErrors[fieldToValidate] = {
-        ...updatedErrors[fieldToValidate],
-        [fieldToValidateName]: fieldError,
-      };
-      setErrors(updatedErrors);
-      setFieldToValidate(null);
-      setFieldToValidateName(null);
-    }
-  }, [contactDetails]);
 
   const handleBlur = (name, index) => {
     const fieldError = validateField(name, index);
@@ -224,8 +208,15 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       [name]: value,
     };
     setContactDetails(updatedDetails);
-    setFieldToValidate(index);
-    setFieldToValidateName(name);
+    errors[index][name] && validateField(name, index, value);
+    if (errors[index][name] && !validateField(name, index, value)) {
+      const updatedErrors = [...errors];
+      updatedErrors[index] = {
+        ...updatedErrors[index],
+        [name]: "",
+      };
+      setErrors(updatedErrors);
+    }
   };
 
   return (
