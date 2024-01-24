@@ -136,14 +136,13 @@ const SignUpThirdScreenUI = ({
                 value={contactDetails[index].countryCode}
                 options={countryCodeResult}
                 isMandatory
-                onChangeValue={(val) => {
-                  console.log("value", val);
-                  handleInputChange(val, "countryCode", index);
-                }}
+                onChangeValue={(val) =>
+                  handleInputChange(val, "countryCode", index)
+                }
                 labelField="dial_code"
                 valueField="dial_code"
                 inputKey="country_code"
-                exclusiveKey="name"
+                exclusiveKey={isWeb ? "" : "name"}
                 isDropdown
               />
               <View style={style.secondInput}>
@@ -151,7 +150,7 @@ const SignUpThirdScreenUI = ({
                   label={intl.formatMessage({
                     id: "label.mobile_number",
                   })}
-                  maxLength={10}
+                  maxLength={15}
                   placeholder={intl.formatMessage({
                     id: "label.enter_contact_person_mobile_no",
                   })}

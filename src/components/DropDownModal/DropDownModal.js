@@ -66,23 +66,20 @@ const DropDownModal = ({
           customInnerContainerStyle={styles.modalInnerContainer}
         >
           {/* If the list items greater than 20 then we have to implement search */}
-          {data.length >= 20 && (
-            <>
-              <SearchView
-                data={data}
-                onSearch={onSearch}
-                customSearchCriteria={handleSearch}
-              />
-            </>
+          {data?.length >= 20 && (
+            <SearchView
+              data={data}
+              onSearch={onSearch}
+              customSearchCriteria={handleSearch}
+            />
           )}
-
           <ScrollView style={styles.optionMainContainer}>
-            {data.length >= 20 && !selectedOption.length ? (
+            {data?.length >= 20 && !selectedOption?.length ? (
               <CommonText customContainerStyle={styles.nothingFoundText}>
                 {intl.formatMessage({ id: "label.no_result_found" })}
               </CommonText>
             ) : (
-              (selectedOption.length > 0 ? selectedOption : data).map(
+              (selectedOption?.length > 0 ? selectedOption : data).map(
                 (item, index) => (
                   <TouchableOpacity
                     key={index}

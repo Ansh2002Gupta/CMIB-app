@@ -9,11 +9,12 @@ import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../utils/validation";
 import {
-  numRegex,
   ADDRESS_MAX_LENGTH,
   FIELD_MAX_LENGTH,
   FIELD_MIN_LENGTH,
-  REGISTRATION_NO_LENGTH,
+  NUMBER_MIN_LENGTH,
+  NUMBER_MAX_LENGTH,
+  numRegex,
 } from "../../../constants/constants";
 
 const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
@@ -118,7 +119,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       case "mobileNo":
         if (
           !numRegex.test(String(value)) ||
-          value.trim().length !== REGISTRATION_NO_LENGTH
+          value.trim().length < NUMBER_MIN_LENGTH ||
+          value.trim().length > NUMBER_MAX_LENGTH
         ) {
           error = intl.formatMessage({
             id: "label.mobile_number_validation",
