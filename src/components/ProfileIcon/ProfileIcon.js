@@ -17,7 +17,7 @@ const ProfileIcon = ({
 }) => {
   if (profileImage) {
     return (
-      <View style={(styles.initialsContainer, customContainerStyle)}>
+      <View style={{ ...styles.initialsContainer, ...customContainerStyle }}>
         <Image
           source={{ uri: profileImage }}
           style={[
@@ -39,7 +39,9 @@ const ProfileIcon = ({
           customContainerStyle,
         ]}
       >
-        <CommonText customTextStyle={[styles.initialsText, customTextStyle]}>
+        <CommonText
+          customTextStyle={{ ...styles.initialsText, ...customTextStyle }}
+        >
           {initials}
         </CommonText>
       </View>
