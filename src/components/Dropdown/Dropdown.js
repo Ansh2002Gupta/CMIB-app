@@ -56,7 +56,7 @@ Dropdown.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   placeholderStyle: PropTypes.object,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
 };
 

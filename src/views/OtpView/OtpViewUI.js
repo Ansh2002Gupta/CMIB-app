@@ -92,16 +92,10 @@ const OtpViewUI = ({
   const getResponsiveStyles = (str) => {
     switch (str) {
       case "forgotPasswordWebContainer": {
-        if (currentBreakpoint === "sm") {
+        if (currentBreakpoint === "sm" || currentBreakpoint === "md") {
           return {
             ...styles.forgotPasswordWebContainer,
-            ...styles.smScreenContainers,
-          };
-        }
-        if (currentBreakpoint === "md") {
-          return {
-            ...styles.forgotPasswordWebContainer,
-            ...styles.mdScreenContainers,
+            ...styles.commonScreenContainers,
           };
         }
         return {

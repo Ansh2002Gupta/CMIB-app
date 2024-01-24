@@ -8,6 +8,7 @@ import useDeleteLogo from "../../../services/apiServices/hooks/CompanyLogo/useDe
 import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpUser";
 import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
+import { navigations } from "../../../constants/routeNames";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
@@ -224,7 +225,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const onClickGoToLogin = () => {
     handleSuccessModal(false);
     signUpDispatch(resetSignUpDetails());
-    navigate("/");
+    navigate(navigations.LOGIN, { state: { activeTab: true } });
   };
 
   const onGoBack = () => {
