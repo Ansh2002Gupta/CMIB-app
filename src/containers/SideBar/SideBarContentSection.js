@@ -2,31 +2,27 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import {
-  FlatList,
-  Platform,
-  View,
-} from "@unthinkable/react-core-components";
+import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
+import CommonText from "../../components/CommonText";
 import Config from "../../components/ReactConfig/index";
 import CustomImage from "../../components/CustomImage";
-import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
-import TouchableImage from "../../components/TouchableImage";
 import ModuleList from "../../components/ModuleList/ModuleList";
 import SessionList from "../../components/SessionList/SessionList";
 import SideBarContentEnum from "./sideBarContentEnum";
 import SideBarItemView from "../../components/SideBarItemView/SideBarItemView";
+import TouchableImage from "../../components/TouchableImage";
+import useIsWebView from "../../hooks/useIsWebView";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import {
   setSelectedModule,
   setSelectedSession,
 } from "../../globalContext/sidebar/sidebarActions";
-import useIsWebView from "../../hooks/useIsWebView";
 import { navigations } from "../../constants/routeNames";
-import { modules, getIconImages } from "../../constants/sideBarHelpers";
+import { getIconImages, modules } from "../../constants/sideBarHelpers";
 import images from "../../images";
 import styles from "./SideBar.style";
 
@@ -163,11 +159,13 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           />
         )}
       <View style={styles.bottomView}>
-        <CustomImage
-          source={images.iconCmibCALogo}
-          style={styles.logoStyle}
-          alt={"cmib logo"}
-        />
+        {sideBarContent === SideBarContentEnum.NONE && (
+          <CustomImage
+            source={images.iconCmibCALogo}
+            style={styles.logoStyle}
+            alt={"cmib logo"}
+          />
+        )}
         <CustomTouchableOpacity
           style={{
             ...styles.bottomButton,
