@@ -7,7 +7,6 @@ import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CommonText from "../CommonText";
 import SearchView from "../SearchView";
-import { scrollToIndex } from "../../utils/scrollToIndex";
 import images from "../../images";
 import styles from "./DropDownModal.style";
 
@@ -56,6 +55,26 @@ const DropDownModal = ({
     return filteredData;
   };
 
+  const scrollToIndex = (info) => {
+    const wait = new Promise((resolve) => setTimeout(resolve, 500));
+    wait.then(() => {
+      if (flatListRef.current !== null) {
+        flatListRef.current.scrollToIndex({
+          index: info.index,
+          animated: true,
+        });
+      }
+    });
+  };
+
+  const getLayout = (index) => {
+    return {
+      length: 50,
+      offset: 50 * index,
+      index,
+    };
+  };
+
   const renderOptions = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -77,6 +96,13 @@ const DropDownModal = ({
     );
   };
 
+  const renderEmptyFooter = () => {
+    return (
+      <CommonText customContainerStyle={styles.nothingFoundText}>
+        {intl.formatMessage({ id: "label.no_result_found" })}
+      </CommonText>
+    );
+  };
   return (
     <>
       <TouchableOpacity onPress={handleDropDown} style={styles.textButton}>
@@ -110,17 +136,9 @@ const DropDownModal = ({
             data={selectedOption}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderOptions}
-            onScrollToIndexFailed={() => scrollToIndex(value, flatListRef)}
-            getItemLayout={(data, index) => ({
-              length: 50,
-              offset: 50 * index,
-              index,
-            })}
-            ListEmptyComponent={
-              <CommonText customContainerStyle={styles.nothingFoundText}>
-                {intl.formatMessage({ id: "label.no_result_found" })}
-              </CommonText>
-            }
+            onScrollToIndexFailed={scrollToIndex}
+            getItemLayout={getLayout}
+            ListEmptyComponent={renderEmptyFooter()}
           />
         </CustomModal>
       )}
