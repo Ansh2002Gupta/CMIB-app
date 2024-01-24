@@ -74,6 +74,13 @@ export const style = StyleSheet.create({
   imageContainer: {
     marginBottom: 48,
   },
+  labelStar: {
+    marginLeft: 4,
+    color: colors.red,
+  },
+  uploadImageTextStyle: {
+    flexDirection: "row",
+  },
 });
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View } from "@unthinkable/react-core-components";
+import { View, ScrollView } from "@unthinkable/react-core-components";
 
 import SignUpHeader from "../../containers/SignUpHeader/index";
 import SignUpWelcomeScreen from "../../containers/SignupScreens/SignUpWelcomeScreen/index";
@@ -11,7 +11,13 @@ import SignUpLastScreen from "../../containers/SignupScreens/SignUpLastScreen/in
 import useIsWebView from "../../hooks/useIsWebView";
 import { getResponsiveStyles, style } from "./SignUpScreen.style";
 
-const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
+const SignUpScreenUI = ({
+  activeTab,
+  intl,
+  onClickGoToLogin,
+  onHandleTab,
+  scrollRef,
+}) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const displayRowHeader =
@@ -43,7 +49,7 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
         activeTab={activeTab}
       />
       {isWebView ? (
-        <View style={displayRowHeader && style.webSubContainer}>
+        <View style={displayRowHeader && style.webSubContainer} ref={scrollRef}>
           <View
             style={getResponsiveStyles({
               str: "signUpWebContainer",
@@ -57,10 +63,12 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
           </View>
         </View>
       ) : (
-        <ActiveTabComponent
-          tabHandler={onHandleTab}
-          onClickGoToLogin={onClickGoToLogin}
-        />
+        <ScrollView ref={scrollRef} contentContainerStyle={style.contentContainerStyle}>
+          <ActiveTabComponent
+            tabHandler={onHandleTab}
+            onClickGoToLogin={onClickGoToLogin}
+          />
+        </ScrollView>
       )}
     </View>
   );
