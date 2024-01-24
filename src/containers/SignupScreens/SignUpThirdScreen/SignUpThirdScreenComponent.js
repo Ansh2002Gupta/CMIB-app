@@ -8,12 +8,12 @@ import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../utils/validation";
 import {
-  numRegex,
   ADDRESS_MAX_LENGTH,
   FIELD_MAX_LENGTH,
   FIELD_MIN_LENGTH,
   REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
+import { indianPhoneRegex } from "../../../constants/Regex";
 
 const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
@@ -108,7 +108,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         break;
       case "mobileNo":
         if (
-          !numRegex.test(String(value)) ||
+          !indianPhoneRegex.test(String(value)) ||
           value.trim().length !== REGISTRATION_NO_LENGTH
         ) {
           error = intl.formatMessage({
