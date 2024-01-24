@@ -153,11 +153,28 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
           array.indexOf(email) !== index && email.trim() !== ""
       );
 
+    const mobileNoDuplicates = contactDetails
+      .map((detail) => detail.mobileNo)
+      .filter(
+        (mobileNo, index, array) =>
+          array.indexOf(mobileNo) !== index && mobileNo.trim() !== ""
+      );
+
     if (emailDuplicates.length) {
       newErrors.forEach((error, index) => {
         if (emailDuplicates.includes(contactDetails[index].emailId)) {
           error.emailId = intl.formatMessage({
             id: "label.duplicate_email_validation",
+          });
+        }
+      });
+    }
+
+    if (mobileNoDuplicates.length) {
+      newErrors.forEach((error, index) => {
+        if (mobileNoDuplicates.includes(contactDetails[index].mobileNo)) {
+          error.mobileNo = intl.formatMessage({
+            id: "label.duplicate_mobileNo_validation",
           });
         }
       });
