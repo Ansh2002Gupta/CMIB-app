@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
+import useGetCountryCodeApi from "../../../services/apiServices/hooks/useGetCountryCodeApi";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
@@ -18,6 +19,7 @@ import {
 const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
+  const { getCountryCode, countryCodeResult } = useGetCountryCodeApi();
   const initialContactDetails =
     signUpState?.signUpDetail?.contact_details || [];
   const {
@@ -29,6 +31,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const [contactDetails, setContactDetails] = useState(
     initialContactDetails.map((contact) => ({
+      countryCode: contact.mobile_country_code || "",
       designation: contact.designation || "",
       emailId: contact.email || "",
       mobileNo: contact.mobile_number || "",
@@ -48,8 +51,13 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   );
 
   useEffect(() => {
+    getCountryCode();
+  }, []);
+
+  useEffect(() => {
     setContactDetails(
       initialContactDetails.map((contact) => ({
+        countryCode: contact.mobile_country_code || "",
         designation: contact.designation || "",
         emailId: contact.email || "",
         mobileNo: contact.mobile_number || "",
@@ -71,6 +79,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const allFieldsFilled = () => {
     return contactDetails.every((detail) => {
       const requiredFields = [
+        detail.countryCode,
         detail.salutation,
         detail.designation,
         detail.emailId,
@@ -187,7 +196,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         salutation: detail.salutation,
         mobile_number: detail.mobileNo,
         designation: detail.designation,
-        mobile_country_code: "+91",
+        mobile_country_code: detail.countryCode,
       }));
 
       const newContactDetails = {
@@ -222,6 +231,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     <SignUpThirdScreenUI
       allFieldsFilled={allFieldsFilled}
       contactDetails={contactDetails}
+      countryCodeResult={countryCodeResult}
       errors={errors}
       onClickGoToLogin={onClickGoToLogin}
       handleBlur={handleBlur}

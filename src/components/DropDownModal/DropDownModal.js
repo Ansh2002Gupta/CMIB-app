@@ -29,18 +29,18 @@ const DropDownModal = ({
     setIsDropDownOpen((prev) => !prev);
   };
 
-  const data = options.map((option) => ({
+  const data = options?.map((option) => ({
     value: String(option[valueField]),
     label: String(option[labelField]),
   }));
-  let selectedValue = data.find((option) => option.value === String(value));
+  let selectedValue = data?.find((option) => option.value === String(value));
 
   const onSearch = (filteredData) => {
     setSelectedOption(filteredData);
   };
 
   const handleSearch = (formattedQuery) => {
-    const filteredData = data.filter((item) => {
+    const filteredData = data?.filter((item) => {
       return item.label.toLowerCase().includes(formattedQuery.toLowerCase());
     });
     return filteredData;

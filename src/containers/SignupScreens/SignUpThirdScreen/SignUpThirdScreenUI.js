@@ -27,6 +27,7 @@ import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 const SignUpThirdScreenUI = ({
   allFieldsFilled,
   contactDetails,
+  countryCodeResult,
   errors,
   handleBlur,
   handleDismissToast,
@@ -121,26 +122,51 @@ const SignUpThirdScreenUI = ({
               }
               isMandatory
             />
-            <CustomTextInput
-              label={intl.formatMessage({
-                id: "label.mobile_number",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_contact_person_mobile_no",
-              })}
-              value={contactDetails[index].mobileNo}
-              maxLength={10}
-              customHandleBlur={() => handleBlur("mobileNo", index)}
-              isNumeric
-              onChangeText={(val) =>
-                numericValidator(val) &&
-                handleInputChange(val, "mobileNo", index)
-              }
-              isMobileNumber
-              errorMessage={errors[index].mobileNo}
-              isError={!!errors[index].mobileNo}
-              isMandatory
-            />
+            <View style={style.inputContainer}>
+              <CustomTextInput
+                label={intl.formatMessage({
+                  id: "label.country_code",
+                })}
+                dropdownStyle={style.dropdownStyle}
+                placeholder={intl.formatMessage({
+                  id: "label.select",
+                })}
+                errorMessage={errors[index].countryCode}
+                isError={!!errors[index].countryCode}
+                value={contactDetails[index].countryCode}
+                options={countryCodeResult}
+                isMandatory
+                onChangeValue={(val) => {
+                  console.log("value", val);
+                  handleInputChange(val, "countryCode", index);
+                }}
+                labelField="dial_code"
+                valueField="dial_code"
+                inputKey="country_code"
+                isDropdown
+              />
+              <View style={style.secondInput}>
+                <CustomTextInput
+                  label={intl.formatMessage({
+                    id: "label.mobile_number",
+                  })}
+                  maxLength={10}
+                  placeholder={intl.formatMessage({
+                    id: "label.enter_contact_person_mobile_no",
+                  })}
+                  customHandleBlur={() => handleBlur("mobileNo", index)}
+                  value={contactDetails[index].mobileNo}
+                  errorMessage={errors[index].mobileNo}
+                  isError={!!errors[index].mobileNo}
+                  isNumeric
+                  onChangeText={(val) =>
+                    numericValidator(val) &&
+                    handleInputChange(val, "mobileNo", index)
+                  }
+                  isMandatory
+                />
+              </View>
+            </View>
             <CustomTextInput
               label={intl.formatMessage({
                 id: "label.email_id",
@@ -258,6 +284,7 @@ SignUpThirdScreenUI.defaultProps = {
 SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
+  countryCodeResult: PropTypes.array,
   errors: PropTypes.array,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,

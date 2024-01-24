@@ -14,11 +14,11 @@ const Dropdown = ({
   value,
   valueField,
 }) => {
-  const options = data.map((option) => ({
+  const options = data?.map((option) => ({
     value: String(option[valueField]),
     label: String(option[labelField]),
   }));
-  const selectedOption = options.find(
+  const selectedOption = options?.find(
     (option) => option.value === String(value)
   );
 
