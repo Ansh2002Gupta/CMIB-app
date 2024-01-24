@@ -143,6 +143,7 @@ const SignUpThirdScreenUI = ({
                 labelField="dial_code"
                 valueField="dial_code"
                 inputKey="country_code"
+                exclusiveKey="name"
                 isDropdown
               />
               <View style={style.secondInput}>

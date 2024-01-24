@@ -5,6 +5,7 @@ import Select from "react-select";
 import { customTheme, customStyles } from "./Dropdown.style";
 
 const Dropdown = ({
+  exclusiveKey,
   data,
   dropdownStyle,
   labelField,
@@ -16,7 +17,9 @@ const Dropdown = ({
 }) => {
   const options = data?.map((option) => ({
     value: String(option[valueField]),
-    label: String(option[labelField]),
+    label: exclusiveKey
+      ? `${String(option[labelField])} (${String(option[exclusiveKey])})`
+      : String(option[labelField]),
   }));
   const selectedOption = options?.find(
     (option) => option.value === String(value)
@@ -41,6 +44,7 @@ const Dropdown = ({
 Dropdown.defaultProps = {
   data: [],
   dropdownStyle: {},
+  exclusiveKey: "",
   labelField: "",
   onChange: () => {},
   placeholder: "",
@@ -52,6 +56,7 @@ Dropdown.defaultProps = {
 Dropdown.propTypes = {
   data: PropTypes.array,
   dropdownStyle: PropTypes.object,
+  exclusiveKey: PropTypes.string,
   labelField: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,

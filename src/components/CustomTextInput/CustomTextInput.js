@@ -21,6 +21,7 @@ import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
+    exclusiveKey,
     customErrorStyle,
     customHandleBlur,
     customLabelStyle,
@@ -97,6 +98,7 @@ const CustomTextInput = (props) => {
       if (Platform.OS.toLowerCase() === "web")
         return (
           <Dropdown
+            exclusiveKey={exclusiveKey}
             search
             searchPlaceholder={intl.formatMessage({ id: "label.search" })}
             inputSearchStyle={style.searchStyle}
@@ -129,6 +131,7 @@ const CustomTextInput = (props) => {
       return (
         <DropDownModal
           {...{
+            exclusiveKey,
             labelField,
             onChangeValue,
             options,
@@ -225,6 +228,7 @@ CustomTextInput.defaultProps = {
   customTextInputContainer: {},
   dropdownStyle: {},
   errorMessage: "",
+  exclusiveKey: "",
   eyeImage: false,
   handleCountChange: () => {},
   isCounterInput: false,
@@ -258,6 +262,7 @@ CustomTextInput.propTypes = {
   customTextInputContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
   errorMessage: PropTypes.string,
+  exclusiveKey: PropTypes.string,
   eyeImage: PropTypes.bool,
   handleCountChange: PropTypes.func,
   inputKey: PropTypes.string,

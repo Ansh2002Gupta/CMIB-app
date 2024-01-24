@@ -14,6 +14,7 @@ import images from "../../images";
 import { useIntl } from "react-intl";
 
 const DropDownModal = ({
+  exclusiveKey,
   labelField,
   onChangeValue,
   options,
@@ -31,7 +32,9 @@ const DropDownModal = ({
 
   const data = options?.map((option) => ({
     value: String(option[valueField]),
-    label: String(option[labelField]),
+    label: exclusiveKey
+      ? `${String(option[labelField])} (${String(option[exclusiveKey])})`
+      : String(option[labelField]),
   }));
   let selectedValue = data?.find((option) => option.value === String(value));
 
@@ -110,6 +113,7 @@ const DropDownModal = ({
 };
 
 DropDownModal.defaultProps = {
+  exclusiveKey: "",
   labelField: "label",
   onChangeValue: () => {},
   options: [],
@@ -119,6 +123,7 @@ DropDownModal.defaultProps = {
 };
 
 DropDownModal.propTypes = {
+  exclusiveKey: PropTypes.string,
   labelField: PropTypes.string.isRequired,
   onChangeValue: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
