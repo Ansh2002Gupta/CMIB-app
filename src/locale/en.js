@@ -16,7 +16,7 @@ const locale = {
   "label.remember_me": "Remember Me",
   "label.forgot_password": "Forgot Password?",
   "label.password_field_error":
-    "Please provide all the necessary fields for the password.",
+    "Please provide all the necessary requirements for the password.",
   "label.dont_have_account": "Don't have an account? ",
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
@@ -275,7 +275,8 @@ const locale = {
   "label.enter": "Enter",
   "label.no_result_found": "No Result Found",
   "label.no_module_available": "No module available",
-  "label.select_session": "Select Session"
+  "label.select_session": "Select Session",
+  "label.logout_successfully": "You are logged out successfully.",
 };
 
 export default locale;

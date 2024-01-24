@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     minHeight: 145,
     minWidth: 150,
     maxHeight: 200,
-    objectFit: "contain",
+    resizeMode: "contain",
     ...Platform.select({
       web: {
         maxWidth: "100%",
@@ -61,7 +61,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   deleteIcon: {
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : "",
+    ...Platform.select({
+      web: {
+        cursor: "pointer",
+      },
+    }),
   },
 });
 

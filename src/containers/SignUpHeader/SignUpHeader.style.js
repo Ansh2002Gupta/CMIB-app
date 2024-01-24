@@ -1,6 +1,8 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-export const styles = {
+export const styles = StyleSheet.create({
   headerContainerStyle: {
     marginTop: 24,
     marginBottom: 16,
@@ -46,7 +48,13 @@ export const styles = {
   stepperParentContainer: {
     marginTop: 24,
   },
-};
+  resetStepperParentContainer: {
+    marginTop: 0,
+  },
+  resetContainerFlex: {
+    flex: 0.1,
+  }
+});
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
   switch (str) {
@@ -62,7 +70,7 @@ export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
         };
       }
       if (currentBreakpoint === "xs" || currentBreakpoint === "sm") {
-        return;
+        return { ...styles.resetStepperParentContainer, ...styles.resetContainerFlex };
       }
       return {
         ...styles.stepperContainer,

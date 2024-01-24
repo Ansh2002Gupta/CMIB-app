@@ -1,4 +1,5 @@
 import avatar from "../../public/images/Avatar.svg";
+import cmibIcon from "../../public/images/svg/cmibIcon.svg";
 import logo from "../../public/images/logo.png";
 import sun from "../../public/images/sun.png";
 import moon from "../../public/images/moon.png";
@@ -93,6 +94,7 @@ import iconArrowRightBlack from "../../public/images/svg/iconArrowRightBlack.svg
 import iconArrowRight from "../../public/images/svg/iconArrowRight.svg";
 import iconSuccess from "../../public/images/svg/iconSuccess.svg";
 import iconClose from "../../public/images/svg/iconClose.svg";
+import iconCmibCALogo from "../../public/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png";
 
 const images = {
   iconArrowUp,
@@ -100,6 +102,7 @@ const images = {
   iconArrowDown2,
   avatar,
   logo,
+  cmibIcon,
   sun,
   moon,
   flagFr,
@@ -190,6 +193,7 @@ const images = {
   iconTicket,
   iconArrowRightBlack,
   iconArrowRight,
+  iconCmibCALogo,
 };
 
 export default images;

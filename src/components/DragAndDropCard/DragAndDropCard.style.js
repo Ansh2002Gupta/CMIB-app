@@ -46,7 +46,9 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: colors.green,
     textDecorationLine: "underline",
-    cursor: Platform.OS.toLowerCase() === "web" ? "pointer" : "",
+    ...Platform.select({
+      web: { cursor: "pointer" }
+    })
   },
   infoStyle: {
     textAlign: "center",
@@ -54,7 +56,6 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     marginLeft: 24,
     marginRight: 24,
-    textAlign: "center",
   },
   hideRawInputField: {
     display: "none",

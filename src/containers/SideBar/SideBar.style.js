@@ -50,11 +50,26 @@ const styles = StyleSheet.create({
   closeButton: {
     marginTop: 16,
     marginLeft: 16,
+    ...Platform.select({
+      web: {
+        height: 15,
+        width: 15,
+      },
+      default: {
+        height: 24,
+        width: 24,
+      },
+    }),
   },
   menuIcons: {
     height: 20,
     width: 20,
     marginRight: 10,
+  },
+  bottomSection: {
+    flex: 1,
+    zIndex: 1,
+    paddingBottom: 60,
   },
   changeText: {
     color: colors.white,
@@ -65,13 +80,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   bottomView: {
-    paddingTop: 20,
-    paddingBottom: 20,
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    zIndex: 2,
+  },
+  bottomButton: {
+    padding: 24,
     backgroundColor: colors.offWhite,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingLeft: 16,
-    paddingRight: 16,
     cursor: "pointer",
     position: "absolute",
     bottom: 0,
@@ -85,6 +103,19 @@ const styles = StyleSheet.create({
     color: colors.lightGrey,
     paddingLeft: 12,
     fontSize: 14,
+  },
+  logoStyle: {
+    margin: 20,
+    height: 40,
+    width: 53,
+    ...Platform.select({
+      web: {
+        marginBottom: 90,
+      },
+      default: {
+        marginBottom: 100,
+      },
+    }),
   },
   globalIcon: {
     width: 18,
@@ -118,20 +149,8 @@ const styles = StyleSheet.create({
   mobContainer: {
     marginBottom: 16,
   },
-  logoImage: {
-    height: 54,
-  },
-  closeIcon: {
-    ...Platform.select({
-      web: {
-        height: 15,
-        width: 15,
-      },
-      default: {
-        height: 24,
-        width: 24,
-      },
-    }),
+  cmiLogo: {
+    height: 50,
   },
 });
 

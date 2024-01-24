@@ -5,16 +5,16 @@ import { useIntl } from "react-intl";
 import {
   FlatList,
   Platform,
-  TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
 import Config from "../../components/ReactConfig/index";
-import CommonText from "../../components/CommonText";
 import CustomImage from "../../components/CustomImage";
+import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
+import TouchableImage from "../../components/TouchableImage";
 import ModuleList from "../../components/ModuleList/ModuleList";
 import SessionList from "../../components/SessionList/SessionList";
 import SideBarContentEnum from "./sideBarContentEnum";
@@ -101,15 +101,14 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   return (
     <View style={styles.container}>
       {showCloseIcon && (
-        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-          <CustomImage source={images.iconClose} style={styles.closeIcon} />
-        </TouchableOpacity>
+        <TouchableImage
+          onPress={onClose}
+          source={images.iconClose}
+          parentStyle={styles.closeButton}
+        />
       )}
       <View style={styles.imageView}>
-        <CustomImage
-          source={images.iconCmibLogoWhite}
-          style={styles.logoImage}
-        />
+        <CustomImage source={images.cmibIcon} style={styles.cmiLogo} />
       </View>
       {sideBarContent === SideBarContentEnum.NONE && (
         <TwoRow
@@ -163,24 +162,34 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             selectedSession={selectedSession}
           />
         )}
-      <CustomTouchableOpacity
-        style={{
-          ...styles.bottomView,
-          ...(Platform.OS !== "web" && styles.mobContainer),
-        }}
-        onPress={handleBottomViewNavigation}
-      >
-        <View style={styles.imageTextView}>
+      <View style={styles.bottomView}>
+        <CustomImage
+          source={images.iconCmibCALogo}
+          style={styles.logoStyle}
+          alt={"cmib logo"}
+        />
+        <CustomTouchableOpacity
+          style={{
+            ...styles.bottomButton,
+            ...(Platform.OS !== "web" && styles.mobContainer),
+          }}
+          onPress={handleBottomViewNavigation}
+        >
+          <View style={styles.imageTextView}>
+            <CustomImage
+              source={images.iconFooterGlobal}
+              style={styles.globalIcon}
+            />
+            <CommonText customTextStyle={styles.visitWebsiteText}>
+              {intl.formatMessage({ id: "label.visit_website" })}
+            </CommonText>
+          </View>
           <CustomImage
-            source={images.iconFooterGlobal}
+            source={images.iconRightArrow}
             style={styles.globalIcon}
           />
-          <CommonText customTextStyle={styles.visitWebsiteText}>
-            {intl.formatMessage({ id: "label.visit_website" })}
-          </CommonText>
-        </View>
-        <CustomImage source={images.iconRightArrow} style={styles.globalIcon} />
-      </CustomTouchableOpacity>
+        </CustomTouchableOpacity>
+      </View>
     </View>
   );
 };
