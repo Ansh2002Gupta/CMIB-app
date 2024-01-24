@@ -110,8 +110,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     return (
       requiredFields.every((field) => String(field).trim() !== "") &&
-      isAtLeastOneInterestSelected &&
-      fileUploadResult
+      isAtLeastOneInterestSelected
     );
   };
 
