@@ -153,6 +153,7 @@ const SignUpLastScreenUI = ({
         <View style={style.seperator} />
         <CommonText customTextStyle={style.headerText} fontWeight="600">
           {intl.formatMessage({ id: "label.source_of_info" })}
+          <CommonText customTextStyle={style.labelStar}>{"*"}</CommonText>
         </CommonText>
         <View style={style.containerStyle}>
           {options.map((item, index) => (
@@ -167,13 +168,9 @@ const SignUpLastScreenUI = ({
           ))}
         </View>
         <View style={style.seperator} />
-        <View style={style.uploadImageTextStyle}>
-          <CommonText customTextStyle={style.headerText} fontWeight="600">
-            {intl.formatMessage({ id: "label.uplaod_company_logo" })}
-          </CommonText>
-          <CommonText customTextStyle={style.labelStar}>{"*"}</CommonText>
-        </View>
-
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({ id: "label.uplaod_company_logo" })}
+        </CommonText>
         <CommonText customTextStyle={style.infoStyle}>
           {intl.formatMessage({
             id: "label.logo_info",

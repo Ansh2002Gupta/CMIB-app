@@ -77,9 +77,7 @@ export const style = StyleSheet.create({
   labelStar: {
     marginLeft: 4,
     color: colors.red,
-  },
-  uploadImageTextStyle: {
-    flexDirection: "row",
+    fontSize: 18,
   },
 });
 
