@@ -11,11 +11,16 @@ import {
 import CardComponent from "../../../components/CardComponent";
 import CommonText from "../../../components/CommonText";
 import useIsWebView from "../../../hooks/useIsWebView";
+import classes from "../../../theme/styles/CssClassProvider";
 import styles from "./MainContainer.style";
 
 const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
   const { isWebView } = useIsWebView();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
+
+  const cardComponentWebProps = isWebPlatform
+    ? { className: classes["card-box__outline--green"] }
+    : {};
 
   return (
     <ScrollView
@@ -36,12 +41,9 @@ const MainContainerTemplate = ({ onPressCard, roundOneTabs, selectedTab }) => {
           <CardComponent
             customStyle={{
               ...styles.componentStyle,
-              ...(isWebView && selectedTab === container.id
-                ? styles.webActiveComponentStyle
-                : isWebView
-                ? styles.webComponentStyle
-                : {}),
+              ...(isWebView ? styles.webComponentStyle : {}),
             }}
+            {...cardComponentWebProps}
           >
             <Image style={styles.imageStyle} source={container.image} />
             <View
