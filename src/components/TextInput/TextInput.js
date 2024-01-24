@@ -47,7 +47,7 @@ const TextInput = (
       if (keyCode === 13) {
         onSubmitEditing && onSubmitEditing(e);
       }
-      onKeyUp && onKeyUp(e);
+      onKeyUp && onKeyUp(e, keyCode);
     },
     [onKeyUp, onSubmitEditing]
   );
@@ -91,6 +91,7 @@ const TextInput = (
       style={{ ...defaultStyle, ...style, ...extraStyle }}
       value={value}
       onChange={onChangeCallback}
+      onKeyUp={onKeyUpCallback}
     />
   );
 };

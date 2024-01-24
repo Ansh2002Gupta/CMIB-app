@@ -123,7 +123,7 @@ DropDownModal.propTypes = {
   onChangeValue: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   placeholder: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   valueField: PropTypes.string.isRequired,
 };
 

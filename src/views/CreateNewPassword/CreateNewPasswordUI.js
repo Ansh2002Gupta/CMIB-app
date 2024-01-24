@@ -186,7 +186,7 @@ function CreateNewPasswordUI(props) {
               customContainerStyles={
                 isWebView
                   ? styles.webView.requirementsPoints(currentBreakpoint)
-                  : {}
+                  : styles.requirementsPoints
               }
             />
           </View>

@@ -1,6 +1,12 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-const style = {
+const screenContainerWidth = {
+  maxWidth: 600,
+};
+
+const style = StyleSheet.create({
   mainView: {
     flex: 1,
     backgroundColor: colors.white,
@@ -8,6 +14,8 @@ const style = {
   },
   container: {
     backgroundColor: colors.white,
+    paddingRight: 0,
+    paddingLeft: 0,
   },
   mobContainer: {
     paddingRight: 16,
@@ -38,7 +46,9 @@ const style = {
     paddingRight: 16,
     paddingLeft: 16,
   },
-  firstTextInput: { marginTop: 8 },
+  firstTextInput: {
+    marginTop: 8,
+  },
   width900pxOrWebEmailInput: {
     marginTop: 16,
   },
@@ -52,7 +62,11 @@ const style = {
     marginRight: -16,
     marginTop: 24,
   },
-  submitView: { padding: 16, flex: 1, justifyContent: "flex-end" },
+  submitView: {
+    padding: 16,
+    flex: 1,
+    justifyContent: "flex-end",
+  },
   backToLoginText: {
     textAlign: "center",
     fontSize: 14,
@@ -72,6 +86,9 @@ const style = {
   },
   whiteBackground: {
     backgroundColor: colors.white,
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingLeft: 0,
   },
   grayBackground: {
     backgroundColor: colors.backgroundColor,
@@ -111,11 +128,9 @@ const style = {
   width1200pxOrLessForgotHeading: {
     fontSize: 34,
   },
-  smScreenContainers: {
-    width: "60%",
-  },
-  mdScreenContainers: {
-    width: "40%",
+  commonScreenContainers: {
+    width: "75%",
+    ...screenContainerWidth,
   },
   textlabel: {
     color: colors.subHeadingGray,
@@ -148,6 +163,6 @@ const style = {
     fontSize: 28,
     color: colors.black,
   },
-};
+});
 
 export default style;
