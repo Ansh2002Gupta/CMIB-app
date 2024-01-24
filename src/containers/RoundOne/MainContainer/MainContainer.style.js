@@ -26,13 +26,6 @@ const style = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
-  webActiveComponentStyle: {
-    flexDirection: "column",
-    flex: 1,
-    width: "100%",
-    borderWidth: 1,
-    borderColor: colors.green,
-  },
   webContainerStyle: {
     flexDirection: "row",
     gap: 24,
