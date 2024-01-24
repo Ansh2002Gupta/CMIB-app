@@ -7,6 +7,7 @@ import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CommonText from "../CommonText";
 import SearchView from "../SearchView";
+import { scrollToIndex } from "../../utils/scrollToIndex";
 import images from "../../images";
 import styles from "./DropDownModal.style";
 
@@ -53,18 +54,6 @@ const DropDownModal = ({
       return item.label.toLowerCase().includes(formattedQuery.toLowerCase());
     });
     return filteredData;
-  };
-
-  const scrollToIndex = (info) => {
-    const wait = new Promise((resolve) => setTimeout(resolve, 500));
-    wait.then(() => {
-      if (flatListRef.current !== null) {
-        flatListRef.current.scrollToIndex({
-          index: info.index,
-          animated: true,
-        });
-      }
-    });
   };
 
   const renderOptions = ({ item, index }) => {
@@ -121,7 +110,7 @@ const DropDownModal = ({
             data={selectedOption}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderOptions}
-            onScrollToIndexFailed={scrollToIndex}
+            onScrollToIndexFailed={() => scrollToIndex(value, flatListRef)}
             getItemLayout={(data, index) => ({
               length: 50,
               offset: 50 * index,
