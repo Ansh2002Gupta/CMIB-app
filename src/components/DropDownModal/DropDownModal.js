@@ -17,6 +17,7 @@ const DropDownModal = ({
   exclusiveKey,
   labelField,
   onChangeValue,
+  menuOptions,
   options,
   placeholder,
   value,
@@ -30,12 +31,15 @@ const DropDownModal = ({
     setIsDropDownOpen((prev) => !prev);
   };
 
-  const data = options?.map((option) => ({
+  const defaultOptions = options?.map((option) => ({
     value: String(option[valueField]),
     label: exclusiveKey
       ? `${String(option[labelField])} (${String(option[exclusiveKey])})`
       : String(option[labelField]),
   }));
+
+  const data = menuOptions || defaultOptions;
+
   let selectedValue = data?.find((option) => option.value === String(value));
 
   const onSearch = (filteredData) => {
@@ -113,6 +117,7 @@ DropDownModal.defaultProps = {
   exclusiveKey: "",
   labelField: "label",
   onChangeValue: () => {},
+  menuOptions: {},
   options: [],
   placeholder: "",
   value: "",
@@ -123,6 +128,7 @@ DropDownModal.propTypes = {
   exclusiveKey: PropTypes.string,
   labelField: PropTypes.string.isRequired,
   onChangeValue: PropTypes.func.isRequired,
+  menuOptions: PropTypes.object,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
