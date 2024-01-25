@@ -163,6 +163,20 @@ const style = StyleSheet.create({
     fontSize: 28,
     color: colors.black,
   },
+  emailStyle: {
+    color: colors.darkGrey,
+    fontSize: 14,
+  },
+  containerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 8,
+  },
+  changeStyle: {
+    color: colors.darkBlue,
+    fontSize: 14,
+  },
+  webContainerStyle: { paddingTop: 16 },
 });
 
 export default style;
