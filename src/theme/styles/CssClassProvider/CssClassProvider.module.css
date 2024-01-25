@@ -1,0 +1,11 @@
+:root {
+  --green: #04af55;
+  --greenOne: rgba(4, 175, 85, 0.04);
+  --white: #fff;
+}
+
+.card-box__outline--green:hover {
+  border-color: var(--green) !important;
+  background: linear-gradient(0deg, var(--greenOne) 0%, var(--greenOne) 100%),
+    var(--white);
+}

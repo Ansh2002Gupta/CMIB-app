@@ -11,6 +11,9 @@ const style = {
     borderWidth: 0.5,
     borderColor: colors.lightGrey,
   },
+  containerStyle: {
+    backgroundColor: colors.black,
+  },
   profileImageStyle: {
     width: 104,
     height: 104,
@@ -22,7 +25,8 @@ const style = {
     borderRadius: 76,
   },
   initialsText: {
-    fontSize: 14,
+    fontSize: 36,
+    color: colors.white,
   },
 };
 
