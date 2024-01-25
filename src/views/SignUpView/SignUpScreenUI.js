@@ -66,15 +66,10 @@ const SignUpScreenUI = ({
             </View>
           </View>
         ) : (
-          <ScrollView
-            ref={scrollRef}
-            contentContainerStyle={style.contentContainerStyle}
-          >
-            <ActiveTabComponent
-              tabHandler={onHandleTab}
-              onClickGoToLogin={onClickGoToLogin}
-            />
-          </ScrollView>
+          <ActiveTabComponent
+            tabHandler={onHandleTab}
+            onClickGoToLogin={onClickGoToLogin}
+          />
         )}
       </View>
     </View>

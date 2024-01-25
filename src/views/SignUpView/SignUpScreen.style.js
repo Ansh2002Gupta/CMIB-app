@@ -44,9 +44,6 @@ export const style = StyleSheet.create({
     alignSelf: "flex-start",
     marginBottom: 48,
   },
-  contentContainerStyle: {
-    flex: 1,
-  },
 });
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CustomTextInput from "../../../components/CustomTextInput";

@@ -89,6 +89,7 @@ const style = {
     fontFamily,
     fontSize: 14,
     height: 48,
+    width: "100%",
   },
   errorMsg: {
     color: colors.errorRed,
