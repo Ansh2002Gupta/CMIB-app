@@ -167,8 +167,7 @@ const locale = {
     "Contact Person Name must be between 6 and 255 characters.",
   "label.designation_validation":
     "Designation must be between 6 and 500 characters.",
-  "label.mobile_number_validation":
-    "Mobile number must be a valid 10-digit Indian phone number.",
+  "label.mobile_number_validation": "Please enter a valid mobile number.",
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
