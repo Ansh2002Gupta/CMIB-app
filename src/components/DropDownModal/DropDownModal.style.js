@@ -4,11 +4,13 @@ import colors from "../../assets/colors";
 const styles = StyleSheet.create({
   optionsText: {
     fontSize: 14,
+    marginLeft: 12,
   },
   optionContainer: {
     padding: 16,
     borderBottomWidth: 0.2,
     borderColor: colors.lightGrey,
+    flexDirection: "row",
   },
   valueText: {
     fontSize: 14,
@@ -41,6 +43,7 @@ const styles = StyleSheet.create({
     color: colors.green,
     fontSize: 14,
     fontWeight: "600",
+    marginLeft: 12,
   },
   modalInnerContainer: {
     maxHeight: 588,
@@ -49,10 +52,25 @@ const styles = StyleSheet.create({
   headerText: {
     marginBottom: 16,
   },
-  optionMainContainer: { marginTop: 8 },
   nothingFoundText: {
     alignItems: "center",
     padding: 16,
+  },
+  iconStyle: {
+    height: 20,
+    width: 20,
+  },
+  prefixContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  prefixStyle: {
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  searchView: {
+    marginBottom: 8,
   },
 });
 

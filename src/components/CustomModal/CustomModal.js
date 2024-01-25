@@ -23,12 +23,14 @@ const CustomModal = ({
   headerTextStyle,
   isSuccess,
   isIconCross,
+  maxWidth,
   onPress,
   onPressIconCross,
   secondaryText,
+  onBackdropPress,
 }) => {
   const webProps =
-    Platform.OS.toLowerCase() === "web" ? { maxWidth: "xs" } : {};
+    Platform.OS.toLowerCase() === "web" ? { maxWidth } : { onBackdropPress };
 
   return (
     <>
@@ -94,8 +96,10 @@ CustomModal.defaultProps = {
   headerTextStyle: {},
   isIconCross: false,
   isSuccess: false,
+  maxWidth: "xs",
   onPress: () => {},
   onPressIconCross: () => {},
+  onBackdropPress: () => {},
   secondaryText: "",
 };
 
@@ -107,8 +111,10 @@ CustomModal.propTypes = {
   headerTextStyle: PropTypes.object,
   isSuccess: PropTypes.bool,
   isIconCross: PropTypes.bool,
+  maxWidth: PropTypes.string,
   onPress: PropTypes.func,
   onPressIconCross: PropTypes.func,
+  onBackdropPress: PropTypes.func,
   secondaryText: PropTypes.string,
 };
 

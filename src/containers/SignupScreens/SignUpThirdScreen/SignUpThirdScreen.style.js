@@ -33,7 +33,7 @@ export const style = StyleSheet.create({
   },
   secondInput: {
     marginLeft: 24,
-    flex: 1,
+    flex: 2,
   },
   buttonContainer: {
     marginBottom: 16,
@@ -58,6 +58,9 @@ export const style = StyleSheet.create({
     gap: 32,
   },
   formContainer: {
+    flex: 1,
+  },
+  firstInput: {
     flex: 1,
   },
 });

@@ -153,6 +153,7 @@ const SignUpLastScreenUI = ({
         <View style={style.seperator} />
         <CommonText customTextStyle={style.headerText} fontWeight="600">
           {intl.formatMessage({ id: "label.source_of_info" })}
+          <CommonText customTextStyle={style.labelStar}>{"*"}</CommonText>
         </CommonText>
         <View style={style.containerStyle}>
           {options.map((item, index) => (

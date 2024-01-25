@@ -21,7 +21,7 @@ const locale = {
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
   "label.enter_email_to_reset_password":
-    "Enter your email address to reset your password. Upon submission, if an account is associated with this email, we'll send the reset instructions.",
+    " Enter your email address to reset your password. Upon submission, if an account is associated with the email address entered below, we'll send the one time password.",
   "label.enter_id": "Enter ID",
   "label.back_to_login": "Back to Login",
   "label.submit": "Submit",
@@ -167,14 +167,14 @@ const locale = {
     "Contact Person Name must be between 6 and 255 characters.",
   "label.designation_validation":
     "Designation must be between 6 and 500 characters.",
-  "label.mobile_number_validation": "Mobile number must be exactly 10 digits.",
+  "label.mobile_number_validation": "Please enter a valid mobile number.",
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
   "label.yes": "Yes",
   "label.no": "No",
   "label.otp_text":
-    "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
+    "Please enter the one time password that you have received on your registered email address to continue to reset your password.",
   "label.text_otp": "OTP",
   "label.jobs": "Jobs",
   "label.welcome_to_cmib": "Welcome to CMI&B Company Sign-up",
@@ -208,6 +208,7 @@ const locale = {
   "label.add": "Add",
   "label.edit": "Edit",
   "label.duplicate_email_validation": "Email addresses must be unique.",
+  "label.duplicate_mobileNo_validation": "Mobile Number must be unique",
   "label.logout_message": "Are you sure you want to logout of the portal?",
   "label.add_designation": "Add Designation",
   "label.designation": "Designation",
@@ -275,6 +276,9 @@ const locale = {
   "label.enter": "Enter",
   "label.no_result_found": "No Result Found",
   "label.logout_successfully": "You are logged out successfully.",
+  "label.country_code": "Country Code",
+  "label.email_address": "Email Address: ",
+  "label.change_email_address": "Change Email Address",
 };
 
 export default locale;
