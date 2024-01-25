@@ -19,6 +19,7 @@ import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./OtpView.style";
 
 const OtpViewUI = ({
+  email,
   errorMessage,
   handleOtpChange,
   intl,
@@ -31,6 +32,7 @@ const OtpViewUI = ({
   onClickGoToLogin,
   onResendOtpClick,
   setIsCounter,
+  setIsShowOtpView,
   setMinutes,
   seconds,
   setOtpLeft,
@@ -92,14 +94,9 @@ const OtpViewUI = ({
   const getResponsiveStyles = (str) => {
     switch (str) {
       case "forgotPasswordWebContainer": {
-        if (currentBreakpoint === "sm" || currentBreakpoint === "md") {
-          return {
-            ...styles.forgotPasswordWebContainer,
-            ...styles.commonScreenContainers,
-          };
-        }
         return {
           ...styles.forgotPasswordWebContainer,
+          ...styles.commonScreenContainers,
         };
       }
 
@@ -185,6 +182,32 @@ const OtpViewUI = ({
                 isWebView ? styles.forgotHeaderContainer : {}
               }
             />
+            <View
+              style={{
+                ...styles.containerStyle,
+                ...(isWebView ? styles.webContainerStyle : {}),
+              }}
+            >
+              <CommonText customTextStyle={styles.emailStyle}>
+                {`${intl.formatMessage({ id: "label.email_address" })}${email}`}
+              </CommonText>
+              <CustomTouchableOpacity
+                onPress={() => {
+                  setIsShowOtpView(false);
+                }}
+              >
+                <CommonText
+                  customTextStyle={styles.changeStyle}
+                  fontWeight="600"
+                >
+                  {intl.formatMessage({
+                    id: isWebView
+                      ? "label.change_email_address"
+                      : "label.change",
+                  })}
+                </CommonText>
+              </CustomTouchableOpacity>
+            </View>
             {!isWebView && <View style={styles.borderStyle} />}
           </View>
           <View style={isWebView ? styles.whiteBackground : styles.companyView}>
@@ -293,8 +316,9 @@ OtpViewUI.defaultProps = {
   onVerifyOtpClick: () => {},
   onClickGoToLogin: () => {},
   otpLeft: 0,
-  setOtpLeft: () => {},
   setIsCounter: () => {},
+  setIsShowOtpView: () => {},
+  setOtpLeft: () => {},
   setMinutes: () => {},
   seconds: 0,
   setSeconds: () => {},
@@ -302,10 +326,12 @@ OtpViewUI.defaultProps = {
 
 OtpViewUI.propTypes = {
   errorMessage: PropTypes.string,
+  email: PropTypes.string.isRequired,
   handleOtpChange: PropTypes.func.isRequired,
   isCounter: PropTypes.bool,
   isLoading: PropTypes.bool,
   intl: PropTypes.object.isRequired,
+  setIsShowOtpView: PropTypes.func,
   submitDisabled: PropTypes.bool,
   minutes: PropTypes.number,
   onVerifyOtpClick: PropTypes.func,

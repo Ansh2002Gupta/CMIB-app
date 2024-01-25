@@ -207,7 +207,8 @@ const CustomTable = ({
             isTopFillSpace
             isBottomFillSpace={false}
             bottomSection={
-              isWeb && (
+              isWeb &&
+              !isWebView && (
                 <PaginationFooter
                   {...{
                     currentPage,
