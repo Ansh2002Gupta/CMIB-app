@@ -7,18 +7,34 @@ import { customTheme, customStyles } from "./Dropdown.style";
 const Dropdown = ({
   data,
   dropdownStyle,
+  includeAllKeys,
   labelField,
+  menuOptions,
   onChange,
   placeholder,
   placeholderStyle,
   value,
   valueField,
 }) => {
-  const options = data.map((option) => ({
+  const getAllKeys = (option) => {
+    let finalObj = {};
+    Object.keys(option).forEach((key) => {
+      if (key !== valueField && key !== labelField) {
+        finalObj = { ...finalObj, [key]: option[key] };
+      }
+    });
+    return finalObj;
+  };
+
+  const defaultOptions = data?.map((option) => ({
     value: String(option[valueField]),
     label: String(option[labelField]),
+    ...(includeAllKeys ? { ...getAllKeys(option) } : {}),
   }));
-  const selectedOption = options.find(
+
+  const options = menuOptions || defaultOptions;
+
+  const selectedOption = options?.find(
     (option) => option.value === String(value)
   );
 
@@ -47,17 +63,20 @@ Dropdown.defaultProps = {
   placeholderStyle: {},
   value: "",
   valueField: "",
+  urlField: "",
 };
 
 Dropdown.propTypes = {
   data: PropTypes.array,
   dropdownStyle: PropTypes.object,
+  includeAllKeys: PropTypes.bool,
   labelField: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   placeholderStyle: PropTypes.object,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
+  urlField: PropTypes.string,
 };
 
 export default Dropdown;

@@ -27,6 +27,7 @@ const CustomTextInput = (props) => {
     customStyle,
     customTextInputContainer,
     countValue,
+    codeValue,
     dropdownStyle,
     errorMessage,
     eyeImage,
@@ -52,6 +53,8 @@ const CustomTextInput = (props) => {
     value,
     labelField,
     valueField,
+    urlField,
+    menuOptions,
     ...remainingProps
   } = props;
 
@@ -109,6 +112,7 @@ const CustomTextInput = (props) => {
             selectedTextStyle={style.valueStyle}
             renderRightIcon={() => <Image source={images.iconDownArrow} />}
             placeholderStyle={style.placeholderStyle}
+            menuOptions={menuOptions}
             data={options}
             maxHeight={200}
             labelField={labelField}
@@ -117,6 +121,7 @@ const CustomTextInput = (props) => {
             value={value}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            urlField={urlField}
             onChange={(item) => {
               isWebPlatform
                 ? onChangeValue(item)
@@ -153,11 +158,20 @@ const CustomTextInput = (props) => {
     return (
       <View style={inputStyle}>
         {isMobileNumber && (
-          <View style={style.prefixContainer}>
-            <CommonText customTextStyle={style.prefixStyle}>{"+91"}</CommonText>
-            <Image source={images.iconDownArrow} style={style.iconStyle} />
-            <Image source={images.iconDivider} style={style.iconStyle} />
-          </View>
+          <DropDownModal
+            {...{
+              codeValue,
+              labelField,
+              menuOptions,
+              onChangeValue,
+              options,
+              isMobileNumber,
+              placeholder,
+              value: codeValue,
+              valueField,
+              urlField,
+            }}
+          />
         )}
         {isRupee && !!value && (
           <View style={style.prefixContainer}>
@@ -218,6 +232,7 @@ const CustomTextInput = (props) => {
 
 CustomTextInput.defaultProps = {
   countValue: 0,
+  codeValue: "",
   customErrorStyle: {},
   customHandleBlur: () => {},
   customLabelStyle: {},
@@ -247,10 +262,12 @@ CustomTextInput.defaultProps = {
   step: 1,
   value: "",
   valueField: "value",
+  urlField: "url",
 };
 
 CustomTextInput.propTypes = {
   countValue: PropTypes.number,
+  codeValue: PropTypes.string,
   customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
@@ -273,6 +290,7 @@ CustomTextInput.propTypes = {
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
+  menuOptions: PropTypes.array,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
@@ -280,6 +298,7 @@ CustomTextInput.propTypes = {
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
+  urlField: PropTypes.string,
 };
 
 export default CustomTextInput;

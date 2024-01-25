@@ -3,21 +3,25 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
+import useFetch from "../../../hooks/useFetch";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { validateEmail } from "../../../utils/validation";
 import {
-  numRegex,
   ADDRESS_MAX_LENGTH,
   FIELD_MAX_LENGTH,
   FIELD_MIN_LENGTH,
-  REGISTRATION_NO_LENGTH,
+  NUMBER_MIN_LENGTH,
+  NUMBER_MAX_LENGTH,
+  numRegex,
 } from "../../../constants/constants";
+import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
 
 const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
+  const { data } = useFetch({ url: COUNTRY_CODE });
   const initialContactDetails =
     signUpState?.signUpDetail?.contact_details || [];
   const {
@@ -29,6 +33,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const [contactDetails, setContactDetails] = useState(
     initialContactDetails.map((contact) => ({
+      countryCode: contact.mobile_country_code || "",
       designation: contact.designation || "",
       emailId: contact.email || "",
       mobileNo: contact.mobile_number || "",
@@ -50,6 +55,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   useEffect(() => {
     setContactDetails(
       initialContactDetails.map((contact) => ({
+        countryCode: contact.mobile_country_code || "",
         designation: contact.designation || "",
         emailId: contact.email || "",
         mobileNo: contact.mobile_number || "",
@@ -71,6 +77,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const allFieldsFilled = () => {
     return contactDetails.every((detail) => {
       const requiredFields = [
+        detail.countryCode,
         detail.salutation,
         detail.designation,
         detail.emailId,
@@ -109,7 +116,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       case "mobileNo":
         if (
           !numRegex.test(String(value)) ||
-          value.trim().length !== REGISTRATION_NO_LENGTH
+          value.trim().length < NUMBER_MIN_LENGTH ||
+          value.trim().length > NUMBER_MAX_LENGTH
         ) {
           error = intl.formatMessage({
             id: "label.mobile_number_validation",
@@ -186,7 +194,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         salutation: detail.salutation,
         mobile_number: detail.mobileNo,
         designation: detail.designation,
-        mobile_country_code: "+91",
+        mobile_country_code: detail.countryCode,
       }));
 
       const newContactDetails = {
@@ -219,18 +227,21 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   return (
     <SignUpThirdScreenUI
-      allFieldsFilled={allFieldsFilled}
-      contactDetails={contactDetails}
-      errors={errors}
-      onClickGoToLogin={onClickGoToLogin}
-      handleBlur={handleBlur}
-      handleDismissToast={handleDismissToast}
-      handleInputChange={handleInputChange}
-      intl={intl}
-      isLoading={isLoading}
-      onClickNext={onClickNext}
-      onGoBack={onGoBack}
-      validationError={validationError}
+      {...{
+        allFieldsFilled,
+        contactDetails,
+        countryCodeResult: data,
+        errors,
+        handleBlur,
+        handleDismissToast,
+        handleInputChange,
+        intl,
+        isLoading,
+        onClickGoToLogin,
+        onClickNext,
+        onGoBack,
+        validationError,
+      }}
     />
   );
 };

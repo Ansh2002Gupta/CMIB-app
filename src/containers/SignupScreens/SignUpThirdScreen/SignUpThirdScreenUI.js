@@ -9,6 +9,7 @@ import CustomTextInput from "../../../components/CustomTextInput";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
+import MobileNumberInput from "../../../components/MobileNumberInput";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
@@ -27,6 +28,7 @@ import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 const SignUpThirdScreenUI = ({
   allFieldsFilled,
   contactDetails,
+  countryCodeResult,
   errors,
   handleBlur,
   handleDismissToast,
@@ -70,24 +72,26 @@ const SignUpThirdScreenUI = ({
               {getHeaderText(detail.module, intl)}
             </CommonText>
             <View style={style.inputContainer}>
-              <CustomTextInput
-                label={intl.formatMessage({
-                  id: "label.salutation",
-                })}
-                dropdownStyle={style.dropdownStyle}
-                placeholder={intl.formatMessage({
-                  id: "label.select",
-                })}
-                errorMessage={errors[index].salutation}
-                isError={!!errors[index].salutation}
-                value={contactDetails[index].salutation}
-                options={SALUTATION_OPTIONS}
-                isMandatory
-                onChangeValue={(val) =>
-                  handleInputChange(val, "salutation", index)
-                }
-                isDropdown
-              />
+              <View style={style.firstInput}>
+                <CustomTextInput
+                  label={intl.formatMessage({
+                    id: "label.salutation",
+                  })}
+                  dropdownStyle={style.dropdownStyle}
+                  placeholder={intl.formatMessage({
+                    id: "label.select",
+                  })}
+                  errorMessage={errors[index].salutation}
+                  isError={!!errors[index].salutation}
+                  value={contactDetails[index].salutation}
+                  options={SALUTATION_OPTIONS}
+                  isMandatory
+                  onChangeValue={(val) =>
+                    handleInputChange(val, "salutation", index)
+                  }
+                  isDropdown
+                />
+              </View>
               <View style={style.secondInput}>
                 <CustomTextInput
                   label={intl.formatMessage({
@@ -121,25 +125,20 @@ const SignUpThirdScreenUI = ({
               }
               isMandatory
             />
-            <CustomTextInput
-              label={intl.formatMessage({
-                id: "label.mobile_number",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_contact_person_mobile_no",
-              })}
-              value={contactDetails[index].mobileNo}
-              maxLength={10}
+            <MobileNumberInput
+              codeError={errors[index].countryCode}
+              codeValue={contactDetails[index].countryCode}
               customHandleBlur={() => handleBlur("mobileNo", index)}
-              isNumeric
-              onChangeText={(val) =>
+              onChangeCode={(val) =>
+                handleInputChange(val, "countryCode", index)
+              }
+              onChangeMobNumber={(val) =>
                 numericValidator(val) &&
                 handleInputChange(val, "mobileNo", index)
               }
-              isMobileNumber
-              errorMessage={errors[index].mobileNo}
-              isError={!!errors[index].mobileNo}
-              isMandatory
+              options={countryCodeResult}
+              mobNumberValue={contactDetails[index].mobileNo}
+              mobNumberError={errors[index].mobileNo}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -258,6 +257,7 @@ SignUpThirdScreenUI.defaultProps = {
 SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
+  countryCodeResult: PropTypes.array,
   errors: PropTypes.array,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,

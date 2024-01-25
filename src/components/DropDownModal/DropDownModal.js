@@ -10,34 +10,47 @@ import {
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CommonText from "../CommonText";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SearchView from "../SearchView";
+import SvgUri from "../SvgUri";
 import images from "../../images";
 import styles from "./DropDownModal.style";
 
 const DropDownModal = ({
+  isMobileNumber,
   labelField,
   onChangeValue,
+  menuOptions,
   options,
   placeholder,
   value,
   valueField,
+  urlField,
 }) => {
-  const data = options.map((option) => ({
-    value: String(option[valueField]),
-    label: String(option[labelField]),
-  }));
   const intl = useIntl();
   const flatListRef = useRef();
+
+  const defaultOptions = options?.map((option) => ({
+    value: String(option[valueField]),
+    label: String(option[labelField]),
+    url: String(option[urlField]),
+  }));
+
+  const data = menuOptions?.length ? menuOptions : defaultOptions;
   const [selectedOption, setSelectedOption] = useState(data);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
+  const handleDropDown = () => {
+    setIsDropDownOpen((prev) => !prev);
+  };
+
   const scrollAnimation = (index) => {
     if (Platform.OS.toLowerCase() === "web") {
-      flatListRef.current.scrollIntoViewIfNeeded({
+      flatListRef?.current?.scrollIntoViewIfNeeded({
         behavior: "smooth",
       });
     } else {
-      flatListRef.current.scrollToIndex({
+      flatListRef?.current?.scrollToIndex({
         index,
         animated: true,
       });
@@ -45,32 +58,31 @@ const DropDownModal = ({
   };
 
   useEffect(() => {
-    const selectedIndex = data.findIndex((item) => item.value === value);
-    if (selectedIndex > -1 && !!flatListRef.current) {
+    const selectedIndex = data?.findIndex((item) => item.value === value);
+    if (
+      selectedIndex > -1 &&
+      selectedIndex < selectedOption.length &&
+      flatListRef.current
+    ) {
       scrollAnimation(selectedIndex);
     }
   }, [selectedOption]);
 
-  const isSearchView = data.length >= 20;
-  const selectedValue = data.find((option) => option.value === String(value));
-
-  const handleDropDown = () => {
-    setIsDropDownOpen((prev) => !prev);
-  };
+  let selectedValue = data?.find((option) => option.value === String(value));
 
   const onSearch = (filteredData) => {
     setSelectedOption(filteredData);
   };
 
   const handleSearch = (formattedQuery) => {
-    const filteredData = data.filter((item) => {
+    const filteredData = data?.filter((item) => {
       return item.label.toLowerCase().includes(formattedQuery.toLowerCase());
     });
     return filteredData;
   };
 
   const scrollToIndex = (info) => {
-    if (flatListRef.current !== null) {
+    if (flatListRef.current && selectedOption.length > info.index) {
       scrollAnimation(info.index);
     }
   };
@@ -85,6 +97,7 @@ const DropDownModal = ({
         }}
         style={styles.optionContainer}
       >
+        <SvgUri width={20} height={20} uri={item?.url} />
         <CommonText
           customTextStyle={
             value === item.value ? styles.selectedOption : styles.optionsText
@@ -112,14 +125,28 @@ const DropDownModal = ({
 
   return (
     <>
-      <TouchableOpacity onPress={handleDropDown} style={styles.textButton}>
-        <CommonText
-          customTextStyle={value ? styles.valueText : styles.placeHolderText}
+      {isMobileNumber ? (
+        <CustomTouchableOpacity
+          style={styles.prefixContainer}
+          onPress={handleDropDown}
         >
-          {selectedValue?.label || placeholder}
-        </CommonText>
-        <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
-      </TouchableOpacity>
+          <SvgUri width={20} height={20} uri={selectedValue?.url} />
+          <CommonText customTextStyle={styles.prefixStyle}>
+            {selectedValue?.value || "+91"}
+          </CommonText>
+          <CustomImage source={images.iconDownArrow} style={styles.iconStyle} />
+          <CustomImage source={images.iconDivider} style={styles.iconStyle} />
+        </CustomTouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={handleDropDown} style={styles.textButton}>
+          <CommonText
+            customTextStyle={value ? styles.valueText : styles.placeHolderText}
+          >
+            {selectedValue?.label || placeholder}
+          </CommonText>
+          <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
+        </TouchableOpacity>
+      )}
       {isDropDownOpen && (
         <CustomModal
           headerText={placeholder}
@@ -128,15 +155,13 @@ const DropDownModal = ({
           onBackdropPress={handleDropDown}
         >
           {/* If the list items greater than 20 then we have to implement search */}
-          {isSearchView && (
-            <>
-              <SearchView
-                data={data}
-                onSearch={onSearch}
-                customSearchCriteria={handleSearch}
-                customParentStyle={styles.searchView}
-              />
-            </>
+          {data?.length >= 20 && (
+            <SearchView
+              data={data}
+              onSearch={onSearch}
+              customSearchCriteria={handleSearch}
+              customParentStyle={styles.searchView}
+            />
           )}
           <FlatList
             data={selectedOption}
@@ -155,20 +180,26 @@ const DropDownModal = ({
 
 DropDownModal.defaultProps = {
   labelField: "label",
+  isMobileNumber: false,
   onChangeValue: () => {},
+  menuOptions: {},
   options: [],
   placeholder: "",
   value: "",
   valueField: "value",
+  urlField: "url",
 };
 
 DropDownModal.propTypes = {
-  labelField: PropTypes.string.isRequired,
-  onChangeValue: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  placeholder: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  valueField: PropTypes.string.isRequired,
+  labelField: PropTypes.string,
+  isMobileNumber: PropTypes.bool,
+  onChangeValue: PropTypes.func,
+  menuOptions: PropTypes.object,
+  options: PropTypes.arrayOf(PropTypes.object),
+  placeholder: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  valueField: PropTypes.string,
+  urlField: PropTypes.string,
 };
 
 export default DropDownModal;

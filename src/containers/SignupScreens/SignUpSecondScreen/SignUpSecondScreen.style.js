@@ -18,8 +18,8 @@ export const style = StyleSheet.create({
     flex: 2,
   },
   partnerInput: {
-    marginLeft: 24,
     flex: 1,
+    marginLeft: 24,
   },
   noInput: {
     marginLeft: 24,
