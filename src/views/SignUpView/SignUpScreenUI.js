@@ -27,9 +27,9 @@ const SignUpScreenUI = ({
     {
       component: SignUpWelcomeScreen,
     },
-    // {
-    //   component: SignUpSecondScreen,
-    // },
+    {
+      component: SignUpSecondScreen,
+    },
     {
       component: SignUpThirdScreen,
     },
