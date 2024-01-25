@@ -23,11 +23,9 @@ const useIndustryTypes = () => {
       setGetStatus(API_STATUS.ERROR);
     } catch (err) {
       setGetStatus(API_STATUS.ERROR);
-      if (err.response?.data?.message) {
-        setError(err.response?.data?.message);
-        return;
-      }
-      setError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+      const errorMessage =
+        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      setError(errorMessage);
     }
   };
 

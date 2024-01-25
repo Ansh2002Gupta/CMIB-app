@@ -5,9 +5,11 @@ import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CustomTextInput from "../../../components/CustomTextInput";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
+import LoadingScreen from "../../../components/LoadingScreen";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
@@ -19,13 +21,21 @@ import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 const SignUpSecondScreenUI = ({
   allFieldsFilled,
   errors,
+  errorGettingIndustries,
+  errorGettingStates,
   formData,
+  getStates,
+  getIndustryTypes,
   handleDismissToast,
   handleInputChange,
   handleBlur,
-  industryOptions,
   intl,
+  industryOptions,
+  isErrorGettingStates,
+  isErrorGettingIndustries,
+  isIndustryLoader,
   isLoading,
+  isStatesLoader,
   onClickNext,
   onClickGoToLogin,
   onGoBack,
@@ -259,53 +269,95 @@ const SignUpSecondScreenUI = ({
     </View>
   );
 
+  const isLoadingAPIs = isIndustryLoader || isStatesLoader;
+
+  const getErrors = () => {
+    if (isErrorGettingIndustries)
+      return {
+        errorMessage: errorGettingIndustries,
+        onRetry: getIndustryTypes,
+      };
+    if (isErrorGettingStates)
+      return {
+        errorMessage: errorGettingStates,
+        onRetry: getStates,
+      };
+    return {
+      errorMessage: "",
+      onRetry: () => {},
+    };
+  };
+
   return (
-    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
-      <View
-        style={
-          isWebView
-            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-            : style.innerContainer
-        }
-      >
-        {isWebView && (
-          <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({ id: "label.step_two" })}
-            {...(showContentHeader && {
-              headerText: intl.formatMessage({
-                id: "label.basic_details",
-              }),
-            })}
-          />
-        )}
-        {!isWeb ? (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={style.contentContainerStyle}
+    <>
+      {isLoadingAPIs && <LoadingScreen />}
+      {!isLoadingAPIs &&
+        !!industryOptions?.length &&
+        !!stateOptions?.length &&
+        !isErrorGettingStates &&
+        !isErrorGettingIndustries && (
+          <FormWrapper
+            onSubmit={onClickNext}
+            customFormStyle={commonStyles.mainView}
           >
-            {renderFormContent()}
-          </ScrollView>
-        ) : (
-          <View
-            style={
-              !isWebView
-                ? [style.contentContainerStyle, style.webContentContainer]
-                : style.webContentContainer
-            }
-          >
-            {renderFormContent()}
-            {renderFooter()}
-          </View>
+            <View
+              style={
+                isWebView
+                  ? getResponsiveStyles({
+                      str: "signupContainer",
+                      currentBreakpoint,
+                    })
+                  : style.innerContainer
+              }
+            >
+              {isWebView && (
+                <HeaderTextWithLabelAndDescription
+                  label={intl.formatMessage({ id: "label.step_two" })}
+                  {...(showContentHeader && {
+                    headerText: intl.formatMessage({
+                      id: "label.basic_details",
+                    }),
+                  })}
+                />
+              )}
+              {!isWeb ? (
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  style={style.contentContainerStyle}
+                >
+                  {renderFormContent()}
+                </ScrollView>
+              ) : (
+                <View
+                  style={
+                    !isWebView
+                      ? [style.contentContainerStyle, style.webContentContainer]
+                      : style.webContentContainer
+                  }
+                >
+                  {renderFormContent()}
+                  {renderFooter()}
+                </View>
+              )}
+              {!isWeb && renderFooter()}
+              {!!validationError && (
+                <ToastComponent
+                  toastMessage={validationError}
+                  onDismiss={handleDismissToast}
+                />
+              )}
+            </View>
+          </FormWrapper>
         )}
-        {!isWeb && renderFooter()}
-        {!!validationError && (
-          <ToastComponent
-            toastMessage={validationError}
-            onDismiss={handleDismissToast}
+      {!!getErrors().errorMessage && (
+        <View>
+          <ErrorComponent
+            errorMsg={getErrors().errorMessage}
+            onRetry={getErrors().onRetry}
           />
-        )}
-      </View>
-    </FormWrapper>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -319,14 +371,23 @@ SignUpSecondScreenUI.defaultProps = {
 SignUpSecondScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  errorGettingIndustries: PropTypes.string.isRequired,
+  errorGettingStates: PropTypes.string.isRequired,
   formData: PropTypes.object.isRequired,
+  getStates: PropTypes.func.isRequired,
+  getIndustryTypes: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,
   intl: PropTypes.object.isRequired,
+  isErrorGettingStates: PropTypes.bool.isRequired,
+  isErrorGettingIndustries: PropTypes.bool.isRequired,
+  isIndustryLoader: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  isStatesLoader: PropTypes.bool.isRequired,
   onClickNext: PropTypes.func.isRequired,
+  onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   stateOptions: PropTypes.array,
   validationError: PropTypes.string,

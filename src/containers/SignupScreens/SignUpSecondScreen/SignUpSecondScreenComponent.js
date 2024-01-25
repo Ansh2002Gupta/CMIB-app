@@ -30,8 +30,20 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     setValidationError,
     validationError,
   } = useValidateSignUp();
-  const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
-  const { getStates, stateResult } = useGetStates();
+  const {
+    error: errorGettingIndustries,
+    getIndustryTypes,
+    industryTypeResult,
+    isLoading: isIndustryLoader,
+    isError: isErrorGettingIndustries,
+  } = useIndustryTypes();
+  const {
+    error: errorGettingStates,
+    getStates,
+    stateResult,
+    isLoading: isStatesLoader,
+    isError: isErrorGettingStates,
+  } = useGetStates();
   const initialSignUpDetail = signUpState.signUpDetail;
 
   const [formData, setFormData] = useState({
@@ -58,8 +70,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   });
 
   useEffect(() => {
-    getIndustryTypes();
     getStates();
+    getIndustryTypes();
   }, []);
 
   const allFieldsFilled = () => {
@@ -249,13 +261,21 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       {...{
         allFieldsFilled,
         errors,
+        errorGettingIndustries,
+        errorGettingStates,
         formData,
+        getStates,
+        getIndustryTypes,
         handleBlur,
         handleDismissToast,
         handleInputChange,
         industryOptions: industryTypeResult,
         intl,
+        isErrorGettingStates,
+        isErrorGettingIndustries,
+        isIndustryLoader,
         isLoading: isLoading,
+        isStatesLoader,
         onGoBack,
         onClickGoToLogin,
         onClickNext,

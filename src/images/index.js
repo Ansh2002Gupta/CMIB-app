@@ -163,6 +163,7 @@ const iconTwitterWeb = appendAppBaseURl("/images/svg/iconTwitterWeb.svg");
 const iconCmibCALogo = appendAppBaseURl(
   "/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png"
 );
+const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
 
 const images = {
   iconArrowUp,
@@ -274,6 +275,7 @@ const images = {
   iconYoutubeWeb,
   iconInstagramWeb,
   iconCmibCALogo,
+  iconRetry,
 };
 
 export default images;

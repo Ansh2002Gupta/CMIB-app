@@ -67,14 +67,6 @@ const DropDownModal = ({
     });
   };
 
-  const getLayout = (index) => {
-    return {
-      length: 50,
-      offset: 50 * index,
-      index,
-    };
-  };
-
   const renderOptions = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -96,6 +88,12 @@ const DropDownModal = ({
     );
   };
 
+  const getItemLayout = (data, index) => ({
+    length: 50,
+    offset: 50 * index,
+    index,
+  });
+
   const renderEmptyFooter = () => {
     return (
       <CommonText customContainerStyle={styles.nothingFoundText}>
@@ -103,6 +101,7 @@ const DropDownModal = ({
       </CommonText>
     );
   };
+
   return (
     <>
       <TouchableOpacity onPress={handleDropDown} style={styles.textButton}>
@@ -137,7 +136,7 @@ const DropDownModal = ({
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderOptions}
             onScrollToIndexFailed={scrollToIndex}
-            getItemLayout={getLayout}
+            getItemLayout={getItemLayout}
             ListEmptyComponent={renderEmptyFooter()}
           />
         </CustomModal>
