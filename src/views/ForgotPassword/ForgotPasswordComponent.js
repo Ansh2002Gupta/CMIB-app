@@ -18,7 +18,8 @@ function ForgotPasswordComponent() {
   const [userEmail, setuserEmail] = useState("");
   const [validationError, setValidationError] = useState("");
 
-  const { handleSendOtpAPI, isLoading, isShowOtpView } = useSendOtpAPI();
+  const { handleSendOtpAPI, isLoading, isShowOtpView, setIsShowOtpView } =
+    useSendOtpAPI();
 
   useEffect(() => {
     if (userEmail !== "") {
@@ -58,7 +59,10 @@ function ForgotPasswordComponent() {
   return (
     <>
       {isShowOtpView ? (
-        <OtpViewComponent email={userEmail} />
+        <OtpViewComponent
+          email={userEmail}
+          setIsShowOtpView={setIsShowOtpView}
+        />
       ) : (
         <ForgotPasswordUI
           successLogin={successLogin}

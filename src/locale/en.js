@@ -21,7 +21,7 @@ const locale = {
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
   "label.enter_email_to_reset_password":
-    "Enter your email address to reset your password. Upon submission, if an account is associated with this email, we'll send the reset instructions.",
+    " Enter your email address to reset your password. Upon submission, if an account is associated with the email address entered below, we'll send the one time password.",
   "label.enter_id": "Enter ID",
   "label.back_to_login": "Back to Login",
   "label.submit": "Submit",
@@ -174,7 +174,7 @@ const locale = {
   "label.yes": "Yes",
   "label.no": "No",
   "label.otp_text":
-    "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
+    "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
   "label.text_otp": "OTP",
   "label.jobs": "Jobs",
   "label.welcome_to_cmib": "Welcome to CMI&B Company Sign-up",
