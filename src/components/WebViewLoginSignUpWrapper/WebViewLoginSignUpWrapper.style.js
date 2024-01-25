@@ -19,6 +19,7 @@ const style = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     flex: 1,
+    justifyContent: "center",
   },
   defaultInnerContainerStyles: {
     flex: 1,
@@ -41,7 +42,7 @@ const style = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     maxWidth: 600,
-    maxHeight: 700,
+    maxHeight: 780,
   },
   innerContainer1800: {
     width: "50%",

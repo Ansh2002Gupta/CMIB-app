@@ -11,6 +11,7 @@ const style = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     display: "flex",
+    justifyContent: "center",
   },
   container: {
     backgroundColor: colors.white,
@@ -106,7 +107,7 @@ const style = StyleSheet.create({
     marginTop: 48,
     zIndex: 1,
     boxShadow: "0px 4px 32px 0px rgba(97, 108, 130, 0.04)",
-    maxHeight: 700,
+    maxHeight: 780,
   },
   webSubmitView: {
     backgroundColor: colors.white,
