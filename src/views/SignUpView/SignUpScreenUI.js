@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import SignUpHeader from "../../containers/SignUpHeader/index";
 import SignUpWelcomeScreen from "../../containers/SignupScreens/SignUpWelcomeScreen/index";
@@ -11,13 +11,7 @@ import SignUpLastScreen from "../../containers/SignupScreens/SignUpLastScreen/in
 import useIsWebView from "../../hooks/useIsWebView";
 import { getResponsiveStyles, style } from "./SignUpScreen.style";
 
-const SignUpScreenUI = ({
-  activeTab,
-  intl,
-  onClickGoToLogin,
-  onHandleTab,
-  scrollRef,
-}) => {
+const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const displayRowHeader =
