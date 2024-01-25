@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import SignUpHeader from "../../containers/SignUpHeader/index";
 import SignUpWelcomeScreen from "../../containers/SignupScreens/SignUpWelcomeScreen/index";
@@ -11,13 +11,7 @@ import SignUpLastScreen from "../../containers/SignupScreens/SignUpLastScreen/in
 import useIsWebView from "../../hooks/useIsWebView";
 import { getResponsiveStyles, style } from "./SignUpScreen.style";
 
-const SignUpScreenUI = ({
-  activeTab,
-  intl,
-  onClickGoToLogin,
-  onHandleTab,
-  scrollRef,
-}) => {
+const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const displayRowHeader =
@@ -42,37 +36,36 @@ const SignUpScreenUI = ({
   const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
 
   return (
-    <View style={!displayRowHeader ? style.container : style.webContainer}>
-      <SignUpHeader
-        intl={intl}
-        onClickGoToLogin={onClickGoToLogin}
-        activeTab={activeTab}
-      />
-      {isWebView ? (
-        <View style={displayRowHeader && style.webSubContainer}>
-          <View
-            style={getResponsiveStyles({
-              str: "signUpWebContainer",
-              currentBreakpoint,
-            })}
-          >
-            <ActiveTabComponent
-              tabHandler={onHandleTab}
-              onClickGoToLogin={onClickGoToLogin}
-            />
+    <View style={style.containerStyle}>
+      <View
+        style={!displayRowHeader ? style.container : style.webInnerContainer}
+      >
+        <SignUpHeader
+          intl={intl}
+          onClickGoToLogin={onClickGoToLogin}
+          activeTab={activeTab}
+        />
+        {isWebView ? (
+          <View style={displayRowHeader && style.webSubContainer}>
+            <View
+              style={getResponsiveStyles({
+                str: "signUpWebContainer",
+                currentBreakpoint,
+              })}
+            >
+              <ActiveTabComponent
+                tabHandler={onHandleTab}
+                onClickGoToLogin={onClickGoToLogin}
+              />
+            </View>
           </View>
-        </View>
-      ) : (
-        <ScrollView
-          ref={scrollRef}
-          contentContainerStyle={style.contentContainerStyle}
-        >
+        ) : (
           <ActiveTabComponent
             tabHandler={onHandleTab}
             onClickGoToLogin={onClickGoToLogin}
           />
-        </ScrollView>
-      )}
+        )}
+      </View>
     </View>
   );
 };

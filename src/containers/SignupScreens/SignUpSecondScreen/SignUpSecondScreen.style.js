@@ -8,7 +8,6 @@ export const style = StyleSheet.create({
   },
   contentContainerStyle: {
     marginTop: 24,
-    marginBottom: 24,
     flex: 1,
   },
   webContentContainer: {

@@ -60,7 +60,7 @@ TouchableImage.propTypes = {
   isSvg: PropTypes.bool,
   parentStyle: PropTypes.object,
   source: PropTypes.oneOfType([
-    PropTypes.string,
+    PropTypes.node,
     PropTypes.object,
     PropTypes.func,
   ]).isRequired,
