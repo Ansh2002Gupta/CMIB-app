@@ -71,24 +71,26 @@ const SignUpThirdScreenUI = ({
               {getHeaderText(detail.module, intl)}
             </CommonText>
             <View style={style.inputContainer}>
-              <CustomTextInput
-                label={intl.formatMessage({
-                  id: "label.salutation",
-                })}
-                dropdownStyle={style.dropdownStyle}
-                placeholder={intl.formatMessage({
-                  id: "label.select",
-                })}
-                errorMessage={errors[index].salutation}
-                isError={!!errors[index].salutation}
-                value={contactDetails[index].salutation}
-                options={SALUTATION_OPTIONS}
-                isMandatory
-                onChangeValue={(val) =>
-                  handleInputChange(val, "salutation", index)
-                }
-                isDropdown
-              />
+              <View style={style.firstInput}>
+                <CustomTextInput
+                  label={intl.formatMessage({
+                    id: "label.salutation",
+                  })}
+                  dropdownStyle={style.dropdownStyle}
+                  placeholder={intl.formatMessage({
+                    id: "label.select",
+                  })}
+                  errorMessage={errors[index].salutation}
+                  isError={!!errors[index].salutation}
+                  value={contactDetails[index].salutation}
+                  options={SALUTATION_OPTIONS}
+                  isMandatory
+                  onChangeValue={(val) =>
+                    handleInputChange(val, "salutation", index)
+                  }
+                  isDropdown
+                />
+              </View>
               <View style={style.secondInput}>
                 <CustomTextInput
                   label={intl.formatMessage({
@@ -123,28 +125,30 @@ const SignUpThirdScreenUI = ({
               isMandatory
             />
             <View style={style.inputContainer}>
-              <CustomTextInput
-                label={intl.formatMessage({
-                  id: "label.country_code",
-                })}
-                dropdownStyle={style.dropdownStyle}
-                placeholder={intl.formatMessage({
-                  id: "label.select",
-                })}
-                errorMessage={errors[index].countryCode}
-                isError={!!errors[index].countryCode}
-                value={contactDetails[index].countryCode}
-                options={countryCodeResult}
-                isMandatory
-                onChangeValue={(val) =>
-                  handleInputChange(val, "countryCode", index)
-                }
-                labelField="dial_code"
-                valueField="dial_code"
-                inputKey="country_code"
-                exclusiveKey={isWeb ? "" : "name"}
-                isDropdown
-              />
+              <View style={style.firstInput}>
+                <CustomTextInput
+                  label={intl.formatMessage({
+                    id: "label.country_code",
+                  })}
+                  dropdownStyle={style.dropdownStyle}
+                  placeholder={intl.formatMessage({
+                    id: "label.select",
+                  })}
+                  errorMessage={errors[index].countryCode}
+                  isError={!!errors[index].countryCode}
+                  value={contactDetails[index].countryCode}
+                  options={countryCodeResult}
+                  isMandatory
+                  onChangeValue={(val) =>
+                    handleInputChange(val, "countryCode", index)
+                  }
+                  labelField="dial_code"
+                  valueField="dial_code"
+                  inputKey="country_code"
+                  exclusiveKey={isWeb ? "" : "name"}
+                  isDropdown
+                />
+              </View>
               <View style={style.secondInput}>
                 <CustomTextInput
                   label={intl.formatMessage({
