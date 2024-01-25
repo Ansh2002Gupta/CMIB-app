@@ -38,7 +38,7 @@ const DropDownModal = ({
   }, [selectedOption]);
 
   const isSearchView = data.length >= 20;
-  let selectedValue = data.find((option) => option.value === String(value));
+  const selectedValue = data.find((option) => option.value === String(value));
 
   const handleDropDown = () => {
     setIsDropDownOpen((prev) => !prev);
@@ -131,13 +131,13 @@ const DropDownModal = ({
             </>
           )}
           <FlatList
-            ref={flatListRef}
             data={selectedOption}
+            getItemLayout={getItemLayout}
             keyExtractor={(item, index) => index.toString()}
+            ListEmptyComponent={renderEmptyFooter()}
+            ref={flatListRef}
             renderItem={renderOptions}
             onScrollToIndexFailed={scrollToIndex}
-            getItemLayout={getItemLayout}
-            ListEmptyComponent={renderEmptyFooter()}
           />
         </CustomModal>
       )}

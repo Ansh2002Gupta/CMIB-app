@@ -21,11 +21,8 @@ import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 const SignUpSecondScreenUI = ({
   allFieldsFilled,
   errors,
-  errorGettingIndustries,
-  errorGettingStates,
   formData,
-  getStates,
-  getIndustryTypes,
+  getErrorDetails,
   handleDismissToast,
   handleInputChange,
   handleBlur,
@@ -33,9 +30,9 @@ const SignUpSecondScreenUI = ({
   industryOptions,
   isErrorGettingStates,
   isErrorGettingIndustries,
-  isIndustryLoader,
+  isGettingIndustries,
   isLoading,
-  isStatesLoader,
+  isGettingStates,
   onClickNext,
   onClickGoToLogin,
   onGoBack,
@@ -269,24 +266,7 @@ const SignUpSecondScreenUI = ({
     </View>
   );
 
-  const isLoadingAPIs = isIndustryLoader || isStatesLoader;
-
-  const getErrors = () => {
-    if (isErrorGettingIndustries)
-      return {
-        errorMessage: errorGettingIndustries,
-        onRetry: getIndustryTypes,
-      };
-    if (isErrorGettingStates)
-      return {
-        errorMessage: errorGettingStates,
-        onRetry: getStates,
-      };
-    return {
-      errorMessage: "",
-      onRetry: () => {},
-    };
-  };
+  const isLoadingAPIs = isGettingIndustries || isGettingStates;
 
   return (
     <>
@@ -349,13 +329,12 @@ const SignUpSecondScreenUI = ({
             </View>
           </FormWrapper>
         )}
-      {!!getErrors().errorMessage && (
-        <View>
-          <ErrorComponent
-            errorMsg={getErrors().errorMessage}
-            onRetry={getErrors().onRetry}
-          />
-        </View>
+      {!isLoadingAPIs && !!getErrorDetails().errorMessage && (
+        <ErrorComponent
+          errorMsg={getErrorDetails().errorMessage}
+          onRetry={getErrorDetails().onRetry}
+          disableRetryBtn={isLoadingAPIs}
+        />
       )}
     </>
   );
@@ -371,11 +350,8 @@ SignUpSecondScreenUI.defaultProps = {
 SignUpSecondScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  errorGettingIndustries: PropTypes.string.isRequired,
-  errorGettingStates: PropTypes.string.isRequired,
   formData: PropTypes.object.isRequired,
-  getStates: PropTypes.func.isRequired,
-  getIndustryTypes: PropTypes.func.isRequired,
+  getErrorDetails: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
@@ -383,9 +359,9 @@ SignUpSecondScreenUI.propTypes = {
   intl: PropTypes.object.isRequired,
   isErrorGettingStates: PropTypes.bool.isRequired,
   isErrorGettingIndustries: PropTypes.bool.isRequired,
-  isIndustryLoader: PropTypes.bool.isRequired,
+  isGettingIndustries: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  isStatesLoader: PropTypes.bool.isRequired,
+  isGettingStates: PropTypes.bool.isRequired,
   onClickNext: PropTypes.func.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,

@@ -7,7 +7,12 @@ import CustomButton from "../CustomButton";
 import images from "../../images";
 import styles from "./ErrorComponent.style";
 
-const ErrorComponent = ({ errorMsg, onRetry, retryButtonText }) => {
+const ErrorComponent = ({
+  errorMsg,
+  onRetry,
+  retryButtonText,
+  disableRetryBtn,
+}) => {
   return (
     <View style={styles.containerStyle}>
       <CommonText fontWeight={"600"} customTextStyle={styles.errorMessage}>
@@ -15,6 +20,7 @@ const ErrorComponent = ({ errorMsg, onRetry, retryButtonText }) => {
       </CommonText>
       {!!onRetry && (
         <CustomButton
+          disabled={disableRetryBtn}
           iconRight={{
             isRightIconNotSvg: true,
             rightIconAlt: "",
@@ -31,12 +37,14 @@ const ErrorComponent = ({ errorMsg, onRetry, retryButtonText }) => {
 
 ErrorComponent.defaultProps = {
   retryButtonText: "Try Again",
+  disableRetryBtn: false,
 };
 
 ErrorComponent.propTypes = {
   errorMsg: PropTypes.string.isRequired,
   onRetry: PropTypes.func,
   retryButtonText: PropTypes.string,
+  disableRetryBtn: PropTypes.bool,
 };
 
 export default ErrorComponent;

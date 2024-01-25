@@ -20,6 +20,7 @@ import {
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { validateEmail } from "../../../utils/validation";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
@@ -34,14 +35,14 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     error: errorGettingIndustries,
     getIndustryTypes,
     industryTypeResult,
-    isLoading: isIndustryLoader,
+    isLoading: isGettingIndustries,
     isError: isErrorGettingIndustries,
   } = useIndustryTypes();
   const {
     error: errorGettingStates,
     getStates,
     stateResult,
-    isLoading: isStatesLoader,
+    isLoading: isGettingStates,
     isError: isErrorGettingStates,
   } = useGetStates();
   const initialSignUpDetail = signUpState.signUpDetail;
@@ -256,16 +257,48 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     validateFields(name);
   };
 
+  const getErrorDetails = () => {
+    if (isErrorGettingIndustries && isErrorGettingStates) {
+      let errorMessage = "";
+      if (
+        errorGettingIndustries === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
+        errorGettingStates === GENERIC_GET_API_FAILED_ERROR_MESSAGE
+      ) {
+        errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      } else {
+        errorMessage = `${errorGettingIndustries} , ${errorGettingStates}`;
+      }
+      return {
+        errorMessage,
+        onRetry: () => {
+          getStates();
+          getIndustryTypes();
+        },
+      };
+    }
+    if (isErrorGettingIndustries)
+      return {
+        errorMessage: errorGettingIndustries,
+        onRetry: getIndustryTypes,
+      };
+    if (isErrorGettingStates)
+      return {
+        errorMessage: errorGettingStates,
+        onRetry: getStates,
+      };
+    return {
+      errorMessage: "",
+      onRetry: () => {},
+    };
+  };
+
   return (
     <SignUpSecondScreenUI
       {...{
         allFieldsFilled,
         errors,
-        errorGettingIndustries,
-        errorGettingStates,
         formData,
-        getStates,
-        getIndustryTypes,
+        getErrorDetails,
         handleBlur,
         handleDismissToast,
         handleInputChange,
@@ -273,9 +306,9 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         intl,
         isErrorGettingStates,
         isErrorGettingIndustries,
-        isIndustryLoader,
+        isGettingIndustries,
         isLoading: isLoading,
-        isStatesLoader,
+        isGettingStates,
         onGoBack,
         onClickGoToLogin,
         onClickNext,
