@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
   },
   valueText: {
     fontSize: 14,
+    maxWidth: "75%",
   },
   textButton: {
     paddingLeft: 16,
