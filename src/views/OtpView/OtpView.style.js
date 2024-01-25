@@ -170,7 +170,7 @@ const style = StyleSheet.create({
   containerStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 4,
+    paddingTop: 8,
   },
   changeStyle: {
     color: colors.darkBlue,

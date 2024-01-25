@@ -45,13 +45,13 @@ const useSendOtpAPI = () => {
   return {
     apiStatus,
     errorWhileResetPassword,
-    sendOtpResult,
-    setIsShowOtpView,
     handleSendOtpAPI,
     isError,
     isLoading,
     isShowOtpView,
     isSuccess,
+    sendOtpResult,
+    setIsShowOtpView,
   };
 };
 
