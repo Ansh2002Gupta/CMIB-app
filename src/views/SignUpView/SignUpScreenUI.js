@@ -42,37 +42,41 @@ const SignUpScreenUI = ({
   const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
 
   return (
-    <View style={!displayRowHeader ? style.container : style.webContainer}>
-      <SignUpHeader
-        intl={intl}
-        onClickGoToLogin={onClickGoToLogin}
-        activeTab={activeTab}
-      />
-      {isWebView ? (
-        <View style={displayRowHeader && style.webSubContainer}>
-          <View
-            style={getResponsiveStyles({
-              str: "signUpWebContainer",
-              currentBreakpoint,
-            })}
+    <View style={style.containerStyle}>
+      <View
+        style={!displayRowHeader ? style.container : style.webInnerContainer}
+      >
+        <SignUpHeader
+          intl={intl}
+          onClickGoToLogin={onClickGoToLogin}
+          activeTab={activeTab}
+        />
+        {isWebView ? (
+          <View style={displayRowHeader && style.webSubContainer}>
+            <View
+              style={getResponsiveStyles({
+                str: "signUpWebContainer",
+                currentBreakpoint,
+              })}
+            >
+              <ActiveTabComponent
+                tabHandler={onHandleTab}
+                onClickGoToLogin={onClickGoToLogin}
+              />
+            </View>
+          </View>
+        ) : (
+          <ScrollView
+            ref={scrollRef}
+            contentContainerStyle={style.contentContainerStyle}
           >
             <ActiveTabComponent
               tabHandler={onHandleTab}
               onClickGoToLogin={onClickGoToLogin}
             />
-          </View>
-        </View>
-      ) : (
-        <ScrollView
-          ref={scrollRef}
-          contentContainerStyle={style.contentContainerStyle}
-        >
-          <ActiveTabComponent
-            tabHandler={onHandleTab}
-            onClickGoToLogin={onClickGoToLogin}
-          />
-        </ScrollView>
-      )}
+          </ScrollView>
+        )}
+      </View>
     </View>
   );
 };

@@ -9,6 +9,7 @@ const screenContainerWidth = {
 const style = StyleSheet.create({
   mainView: {
     flex: 1,
+    justifyContent: "center",
   },
   container: {
     backgroundColor: colors.white,
