@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View, ScrollView } from "@unthinkable/react-core-components";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import SignUpHeader from "../../containers/SignUpHeader/index";
 import SignUpWelcomeScreen from "../../containers/SignupScreens/SignUpWelcomeScreen/index";
@@ -49,7 +49,7 @@ const SignUpScreenUI = ({
         activeTab={activeTab}
       />
       {isWebView ? (
-        <View style={displayRowHeader && style.webSubContainer} ref={scrollRef}>
+        <View style={displayRowHeader && style.webSubContainer}>
           <View
             style={getResponsiveStyles({
               str: "signUpWebContainer",
@@ -63,7 +63,10 @@ const SignUpScreenUI = ({
           </View>
         </View>
       ) : (
-        <ScrollView ref={scrollRef} contentContainerStyle={style.contentContainerStyle}>
+        <ScrollView
+          ref={scrollRef}
+          contentContainerStyle={style.contentContainerStyle}
+        >
           <ActiveTabComponent
             tabHandler={onHandleTab}
             onClickGoToLogin={onClickGoToLogin}

@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
+import { Platform } from "@unthinkable/react-core-components";
 
 import SignUpScreenUI from "./SignUpScreenUI";
-import useIsWebView from "../../hooks/useIsWebView";
 import { navigations } from "../../constants/routeNames";
 import { resetSignUpDetails } from "../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../globalContext/signUp/signUpProvider";
@@ -12,7 +12,7 @@ const SignUpScreenComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const scrollRef = useRef();
-  const { isWebView } = useIsWebView();
+  const isWebPlatform = Platform.OS.toLowerCase() === "web";
   const [activeTab, setActiveTab] = useState(0);
   const [, signUpDispatch] = useContext(SignUpContext);
 
@@ -32,7 +32,7 @@ const SignUpScreenComponent = () => {
       }
       return prevTab;
     });
-    if (isWebView) {
+    if (isWebPlatform) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       scrollRef.current?.scrollTo({
