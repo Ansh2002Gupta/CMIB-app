@@ -174,7 +174,7 @@ const locale = {
   "label.yes": "Yes",
   "label.no": "No",
   "label.otp_text":
-    "Please enter the one time password that you have received on your registered email address to continue to rest your password.",
+    "Please enter the one time password that you have received on your registered email address to continue to reset your password.",
   "label.text_otp": "OTP",
   "label.jobs": "Jobs",
   "label.welcome_to_cmib": "Welcome to CMI&B Company Sign-up",
