@@ -21,10 +21,11 @@ const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
   const renderProfileIcon = () => {
     return (
       <ProfileIcon
+        customContainerStyle={style.initialsContainer}
+        customTextStyle={style.initialTextStyle}
         firstName={firstName}
         lastName={lastName}
         profileImage={profileImage}
-        customContainerStyle={style.initialsContainer}
       />
     );
   };

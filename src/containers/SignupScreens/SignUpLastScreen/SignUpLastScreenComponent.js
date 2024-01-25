@@ -110,12 +110,11 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     return (
       requiredFields.every((field) => String(field).trim() !== "") &&
-      isAtLeastOneInterestSelected &&
-      fileUploadResult
+      isAtLeastOneInterestSelected
     );
   };
 
-  const validateFields = () => {
+  const validateFields = (value, name) => {
     let isValid = true;
     let newErrors = {
       socialMediaLinks: {
@@ -140,24 +139,37 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       }
     });
 
-    if (
-      companyDetails.trim().length < FIELD_MIN_LENGTH ||
-      companyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH
-    ) {
-      newErrors.companyDetails = intl.formatMessage({
-        id: "label.company_details_validation",
-      });
-      isValid = false;
+    if (!name || name === "companyDetails") {
+      const enteredCompanyDetails = value || companyDetails;
+      if (
+        enteredCompanyDetails.trim().length < FIELD_MIN_LENGTH ||
+        enteredCompanyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH
+      ) {
+        newErrors.companyDetails = intl.formatMessage({
+          id: "label.company_details_validation",
+        });
+        isValid = false;
+      }
     }
 
-    if (!urlRegex.test(String(website))) {
-      newErrors.website = intl.formatMessage({
-        id: "label.url_validation",
-      });
-      isValid = false;
+    if (!name || name === "website") {
+      const enteredWebsite = value || website;
+      if (!urlRegex.test(String(enteredWebsite))) {
+        newErrors.website = intl.formatMessage({
+          id: "label.url_validation",
+        });
+        isValid = false;
+      }
     }
 
-    setErrors(newErrors);
+    if (name && newErrors[name] !== undefined) {
+      setErrors({
+        ...errors,
+        [name]: newErrors[name],
+      });
+    } else {
+      setErrors(newErrors);
+    }
     return isValid;
   };
 
@@ -185,6 +197,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           break;
       }
     }
+    errors[name] && validateFields(value, name);
   };
 
   const onSuccess = async (details) => {

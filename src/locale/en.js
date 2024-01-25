@@ -167,7 +167,7 @@ const locale = {
     "Contact Person Name must be between 6 and 255 characters.",
   "label.designation_validation":
     "Designation must be between 6 and 500 characters.",
-  "label.mobile_number_validation": "Mobile number must be exactly 10 digits.",
+  "label.mobile_number_validation": "Please enter a valid mobile number.",
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
@@ -208,6 +208,7 @@ const locale = {
   "label.add": "Add",
   "label.edit": "Edit",
   "label.duplicate_email_validation": "Email addresses must be unique.",
+  "label.duplicate_mobileNo_validation": "Mobile Number must be unique",
   "label.logout_message": "Are you sure you want to logout of the portal?",
   "label.add_designation": "Add Designation",
   "label.designation": "Designation",
