@@ -130,10 +130,26 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const handleBlur = (name, index) => {
     const fieldError = validateField(name, index);
+    let isDuplicate = false;
+
+    if (name === "emailId" || name === "mobileNo") {
+      isDuplicate = contactDetails.some((detail, i) => {
+        return i !== index && detail[name] === contactDetails[index][name];
+      });
+    }
     const updatedErrors = [...errors];
     updatedErrors[index] = {
       ...updatedErrors[index],
-      [name]: fieldError,
+      [name]:
+        fieldError ||
+        (isDuplicate
+          ? intl.formatMessage({
+              id:
+                name === "emailId"
+                  ? "label.duplicate_email_validation"
+                  : "label.duplicate_mobileNo_validation",
+            })
+          : ""),
     };
     setErrors(updatedErrors);
   };
@@ -145,40 +161,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       mobileNo: validateField("mobileNo", index),
       emailId: validateField("emailId", index),
     }));
-
-    const emailDuplicates = contactDetails
-      .map((detail) => detail.emailId)
-      .filter(
-        (email, index, array) =>
-          array.indexOf(email) !== index && email.trim() !== ""
-      );
-
-    const mobileNoDuplicates = contactDetails
-      .map((detail) => detail.mobileNo)
-      .filter(
-        (mobileNo, index, array) =>
-          array.indexOf(mobileNo) !== index && mobileNo.trim() !== ""
-      );
-
-    if (emailDuplicates.length) {
-      newErrors.forEach((error, index) => {
-        if (emailDuplicates.includes(contactDetails[index].emailId)) {
-          error.emailId = intl.formatMessage({
-            id: "label.duplicate_email_validation",
-          });
-        }
-      });
-    }
-
-    if (mobileNoDuplicates.length) {
-      newErrors.forEach((error, index) => {
-        if (mobileNoDuplicates.includes(contactDetails[index].mobileNo)) {
-          error.mobileNo = intl.formatMessage({
-            id: "label.duplicate_mobileNo_validation",
-          });
-        }
-      });
-    }
 
     setErrors(newErrors);
     return newErrors.every((error) =>
