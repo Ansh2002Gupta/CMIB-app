@@ -143,11 +143,15 @@ MobileNumberInput.propTypes = {
   codeError: PropTypes.string,
   codeValue: PropTypes.string,
   customHandleBlur: PropTypes.func,
+  countryNameField: PropTypes.string,
+  labelField: PropTypes.string,
   onChangeCode: PropTypes.func,
   onChangeMobNumber: PropTypes.func,
   options: PropTypes.array,
   mobNumberError: PropTypes.string,
   mobNumberValue: PropTypes.string,
+  urlField: PropTypes.string,
+  valueField: PropTypes.string,
 };
 
 export default MobileNumberInput;
