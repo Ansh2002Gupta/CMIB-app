@@ -116,10 +116,8 @@ const MobileNumberInput = ({
           onChangeValue={(val) => onChangeCode(val)}
           labelField="dial_code"
           valueField="dial_code"
-          // urlField="flag"
           inputKey="country_code"
           menuOptions={menuOptions}
-          // exclusiveKey={"name"}
         />
       )}
     </>
