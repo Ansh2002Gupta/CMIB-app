@@ -182,7 +182,12 @@ const OtpViewUI = ({
                 isWebView ? styles.forgotHeaderContainer : {}
               }
             />
-            <View style={styles.containerStyle}>
+            <View
+              style={{
+                ...styles.containerStyle,
+                ...(isWebView ? styles.webContainerStyle : {}),
+              }}
+            >
               <CommonText customTextStyle={styles.emailStyle}>
                 {`${intl.formatMessage({ id: "label.email_address" })}${email}`}
               </CommonText>

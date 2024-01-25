@@ -176,6 +176,7 @@ const style = StyleSheet.create({
     color: colors.darkBlue,
     fontSize: 14,
   },
+  webContainerStyle: { paddingTop: 16 },
 });
 
 export default style;
