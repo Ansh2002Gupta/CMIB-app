@@ -6,7 +6,11 @@ export const style = StyleSheet.create({
   container: {
     flex: 1,
   },
-  webContainer: {
+  containerStyle: {
+    flexDirection: "row",
+    flex: 1,
+  },
+  webInnerContainer: {
     flexDirection: "row",
     flex: 1,
     justifyContent: "center",
