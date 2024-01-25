@@ -38,7 +38,7 @@ const DropDownModal = ({
       : String(option[labelField]),
   }));
 
-  const data = menuOptions || defaultOptions;
+  const data = menuOptions?.length ? menuOptions : defaultOptions;
 
   let selectedValue = data?.find((option) => option.value === String(value));
 
