@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { FlatList, TouchableOpacity } from "@unthinkable/react-core-components";
+import {
+  FlatList,
+  Platform,
+  TouchableOpacity,
+} from "@unthinkable/react-core-components";
 
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
@@ -27,13 +31,23 @@ const DropDownModal = ({
   const [selectedOption, setSelectedOption] = useState(data);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
+  const scrollAnimation = (index) => {
+    if (Platform.OS.toLowerCase() === "web") {
+      flatListRef.current.scrollIntoViewIfNeeded({
+        behavior: "smooth",
+      });
+    } else {
+      flatListRef.current.scrollToIndex({
+        index,
+        animated: true,
+      });
+    }
+  };
+
   useEffect(() => {
     const selectedIndex = data.findIndex((item) => item.value === value);
     if (selectedIndex > -1 && !!flatListRef.current) {
-      flatListRef.current.scrollToIndex({
-        index: selectedIndex,
-        animated: true,
-      });
+      scrollAnimation(selectedIndex);
     }
   }, [selectedOption]);
 
@@ -56,15 +70,9 @@ const DropDownModal = ({
   };
 
   const scrollToIndex = (info) => {
-    const wait = new Promise((resolve) => setTimeout(resolve, 500));
-    wait.then(() => {
-      if (flatListRef.current !== null) {
-        flatListRef.current.scrollToIndex({
-          index: info.index,
-          animated: true,
-        });
-      }
-    });
+    if (flatListRef.current !== null) {
+      scrollAnimation(info.index);
+    }
   };
 
   const renderOptions = ({ item, index }) => {

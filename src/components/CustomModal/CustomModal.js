@@ -99,6 +99,7 @@ CustomModal.defaultProps = {
   maxWidth: "xs",
   onPress: () => {},
   onPressIconCross: () => {},
+  onBackdropPress: () => {},
   secondaryText: "",
 };
 
@@ -113,6 +114,7 @@ CustomModal.propTypes = {
   maxWidth: PropTypes.string,
   onPress: PropTypes.func,
   onPressIconCross: PropTypes.func,
+  onBackdropPress: PropTypes.func,
   secondaryText: PropTypes.string,
 };
 
