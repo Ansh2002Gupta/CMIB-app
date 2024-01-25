@@ -49,10 +49,12 @@ const styles = StyleSheet.create({
   headerText: {
     marginBottom: 16,
   },
-  optionMainContainer: { marginTop: 8 },
   nothingFoundText: {
     alignItems: "center",
     padding: 16,
+  },
+  searchView: {
+    marginBottom: 8,
   },
 });
 

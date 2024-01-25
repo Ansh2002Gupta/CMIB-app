@@ -5,10 +5,12 @@ import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CustomTextInput from "../../../components/CustomTextInput";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import KeyboardAvoidingScrollView from "../../../components/KeyboardAvoidingScrollView";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
+import LoadingScreen from "../../../components/LoadingScreen";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
@@ -21,12 +23,17 @@ const SignUpSecondScreenUI = ({
   allFieldsFilled,
   errors,
   formData,
+  getErrorDetails,
   handleDismissToast,
   handleInputChange,
   handleBlur,
-  industryOptions,
   intl,
+  industryOptions,
+  isErrorGettingStates,
+  isErrorGettingIndustries,
+  isGettingIndustries,
   isLoading,
+  isGettingStates,
   onClickNext,
   onClickGoToLogin,
   onGoBack,
@@ -260,53 +267,78 @@ const SignUpSecondScreenUI = ({
     </View>
   );
 
+  const isLoadingAPIs = isGettingIndustries || isGettingStates;
+
   return (
-    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
-      <View
-        style={
-          isWebView
-            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-            : style.innerContainer
-        }
-      >
-        {isWebView && (
-          <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({ id: "label.step_two" })}
-            {...(showContentHeader && {
-              headerText: intl.formatMessage({
-                id: "label.basic_details",
-              }),
-            })}
-          />
-        )}
-        {!isWeb ? (
-          <KeyboardAvoidingScrollView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={style.contentContainerStyle}
+    <>
+      {isLoadingAPIs && <LoadingScreen />}
+      {!isLoadingAPIs &&
+        !!industryOptions?.length &&
+        !!stateOptions?.length &&
+        !isErrorGettingStates &&
+        !isErrorGettingIndustries && (
+          <FormWrapper
+            onSubmit={onClickNext}
+            customFormStyle={commonStyles.mainView}
           >
-            {renderFormContent()}
-          </KeyboardAvoidingScrollView>
-        ) : (
-          <View
-            style={
-              !isWebView
-                ? [style.contentContainerStyle, style.webContentContainer]
-                : style.webContentContainer
-            }
-          >
-            {renderFormContent()}
-            {renderFooter()}
-          </View>
+            <View
+              style={
+                isWebView
+                  ? getResponsiveStyles({
+                      str: "signupContainer",
+                      currentBreakpoint,
+                    })
+                  : style.innerContainer
+              }
+            >
+              {isWebView && (
+                <HeaderTextWithLabelAndDescription
+                  label={intl.formatMessage({ id: "label.step_two" })}
+                  {...(showContentHeader && {
+                    headerText: intl.formatMessage({
+                      id: "label.basic_details",
+                    }),
+                  })}
+                />
+              )}
+              {!isWeb ? (
+                <KeyboardAvoidingScrollView
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                  style={style.contentContainerStyle}
+                  showsVerticalScrollIndicator={false}
+                >
+                  {renderFormContent()}
+                </KeyboardAvoidingScrollView>
+              ) : (
+                <View
+                  style={
+                    !isWebView
+                      ? [style.contentContainerStyle, style.webContentContainer]
+                      : style.webContentContainer
+                  }
+                >
+                  {renderFormContent()}
+                  {renderFooter()}
+                </View>
+              )}
+              {!isWeb && renderFooter()}
+              {!!validationError && (
+                <ToastComponent
+                  toastMessage={validationError}
+                  onDismiss={handleDismissToast}
+                />
+              )}
+            </View>
+          </FormWrapper>
         )}
-        {!isWeb && renderFooter()}
-        {!!validationError && (
-          <ToastComponent
-            toastMessage={validationError}
-            onDismiss={handleDismissToast}
-          />
-        )}
-      </View>
-    </FormWrapper>
+      {!isLoadingAPIs && !!getErrorDetails().errorMessage && (
+        <ErrorComponent
+          errorMsg={getErrorDetails().errorMessage}
+          onRetry={getErrorDetails().onRetry}
+          disableRetryBtn={isLoadingAPIs}
+        />
+      )}
+    </>
   );
 };
 
@@ -321,13 +353,19 @@ SignUpSecondScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   formData: PropTypes.object.isRequired,
+  getErrorDetails: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,
   intl: PropTypes.object.isRequired,
+  isErrorGettingStates: PropTypes.bool.isRequired,
+  isErrorGettingIndustries: PropTypes.bool.isRequired,
+  isGettingIndustries: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  isGettingStates: PropTypes.bool.isRequired,
   onClickNext: PropTypes.func.isRequired,
+  onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   stateOptions: PropTypes.array,
   validationError: PropTypes.string,
