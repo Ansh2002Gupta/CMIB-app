@@ -16,7 +16,7 @@ export const style = StyleSheet.create({
     width: "100%",
   },
   webSubContainer: {
-    width: '65%',
+    width: "65%",
     alignItems: "flex-start",
     height: "100%",
   },
@@ -39,7 +39,10 @@ export const style = StyleSheet.create({
     width: "45%",
     alignSelf: "flex-start",
     minHeight: "70vH",
-    marginBottom: 48
+    marginBottom: 48,
+  },
+  contentContainerStyle: {
+    flex: 1,
   },
 });
 
