@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
+import { View } from "@unthinkable/react-core-components";
 
-import { customTheme, customStyles } from "./Dropdown.style";
+import SvgUri from "../SvgUri";
+import CommonText from "../CommonText";
+import { customTheme, customStyles, styles } from "./Dropdown.style";
 
 const Dropdown = ({
   exclusiveKey,
@@ -14,13 +17,25 @@ const Dropdown = ({
   placeholderStyle,
   value,
   valueField,
+  urlField,
 }) => {
   const options = data?.map((option) => ({
     value: String(option[valueField]),
-    label: exclusiveKey
-      ? `${String(option[labelField])} (${String(option[exclusiveKey])})`
-      : String(option[labelField]),
+    label: (
+      <View style={styles.selectedView}>
+        {urlField && (
+          <SvgUri
+            source={{
+              uri: option[urlField] || "http://api.cmib.cloudzmall.com/in.svg",
+            }}
+            style={{ height: 20, width: 20 }}
+          />
+        )}
+        <CommonText style={styles.labelField}>{option[labelField]}</CommonText>
+      </View>
+    ),
   }));
+
   const selectedOption = options?.find(
     (option) => option.value === String(value)
   );
@@ -51,6 +66,7 @@ Dropdown.defaultProps = {
   placeholderStyle: {},
   value: "",
   valueField: "",
+  urlField: "",
 };
 
 Dropdown.propTypes = {
@@ -63,6 +79,7 @@ Dropdown.propTypes = {
   placeholderStyle: PropTypes.object,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
+  urlField: PropTypes.string,
 };
 
 export default Dropdown;

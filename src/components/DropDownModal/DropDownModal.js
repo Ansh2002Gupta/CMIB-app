@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import {
   ScrollView,
@@ -8,13 +9,15 @@ import {
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CommonText from "../CommonText";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SearchView from "../SearchView";
-import styles from "./DropDownModal.style";
+import SvgUri from "../SvgUri";
 import images from "../../images";
-import { useIntl } from "react-intl";
+import styles from "./DropDownModal.style";
 
 const DropDownModal = ({
   exclusiveKey,
+  isMobileNumber,
   labelField,
   onChangeValue,
   menuOptions,
@@ -22,6 +25,7 @@ const DropDownModal = ({
   placeholder,
   value,
   valueField,
+  urlField,
 }) => {
   const intl = useIntl();
   const [selectedOption, setSelectedOption] = useState([]);
@@ -36,6 +40,7 @@ const DropDownModal = ({
     label: exclusiveKey
       ? `${String(option[labelField])} (${String(option[exclusiveKey])})`
       : String(option[labelField]),
+    url: String(option[urlField]),
   }));
 
   const data = menuOptions?.length ? menuOptions : defaultOptions;
@@ -55,14 +60,33 @@ const DropDownModal = ({
 
   return (
     <>
-      <TouchableOpacity onPress={handleDropDown} style={styles.textButton}>
-        <CommonText
-          customTextStyle={value ? styles.valueText : styles.placeHolderText}
+      {isMobileNumber ? (
+        <CustomTouchableOpacity
+          style={styles.prefixContainer}
+          onPress={handleDropDown}
         >
-          {selectedValue?.label || placeholder}
-        </CommonText>
-        <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
-      </TouchableOpacity>
+          <SvgUri
+            width={20}
+            height={20}
+            uri="https://api.cmib.cloudzmall.com/in.svg"
+          />
+          <CommonText customTextStyle={styles.prefixStyle}>
+            {selectedValue?.value || "+91"}
+          </CommonText>
+          <CustomImage source={images.iconDownArrow} style={styles.iconStyle} />
+          <CustomImage source={images.iconDivider} style={styles.iconStyle} />
+        </CustomTouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={handleDropDown} style={styles.textButton}>
+          <CommonText
+            customTextStyle={value ? styles.valueText : styles.placeHolderText}
+          >
+            {selectedValue?.label || placeholder}
+          </CommonText>
+          <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
+        </TouchableOpacity>
+      )}
+
       {isDropDownOpen && (
         <CustomModal
           headerText={placeholder}
@@ -116,23 +140,27 @@ const DropDownModal = ({
 DropDownModal.defaultProps = {
   exclusiveKey: "",
   labelField: "label",
+  isMobileNumber: false,
   onChangeValue: () => {},
   menuOptions: {},
   options: [],
   placeholder: "",
   value: "",
   valueField: "value",
+  urlField: "url",
 };
 
 DropDownModal.propTypes = {
   exclusiveKey: PropTypes.string,
   labelField: PropTypes.string.isRequired,
+  isMobileNumber: PropTypes.bool,
   onChangeValue: PropTypes.func.isRequired,
   menuOptions: PropTypes.object,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   placeholder: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   valueField: PropTypes.string.isRequired,
+  urlField: PropTypes.string.isRequired,
 };
 
 export default DropDownModal;

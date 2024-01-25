@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
   },
   valueText: {
     fontSize: 14,
-    maxWidth: "75%",
   },
   textButton: {
     paddingLeft: 16,
@@ -54,6 +53,19 @@ const styles = StyleSheet.create({
   nothingFoundText: {
     alignItems: "center",
     padding: 16,
+  },
+  iconStyle: {
+    height: 20,
+    width: 20,
+  },
+  prefixContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  prefixStyle: {
+    marginLeft: 5,
+    marginRight: 5,
   },
 });
 
