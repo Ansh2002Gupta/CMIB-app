@@ -30,7 +30,7 @@ export const numericValidator = (val) => {
 };
 
 export const validateEmail = (userEmail) => {
-  if (!userEmail.match(mailformat)) {
+  if (!userEmail.toLowerCase().match(mailformat)) {
     return VALID_EMAIL;
   }
   return "";
