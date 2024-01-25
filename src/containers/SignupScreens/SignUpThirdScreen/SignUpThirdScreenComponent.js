@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
-import useGetCountryCodeApi from "../../../services/apiServices/hooks/useGetCountryCodeApi";
+import useFetch from "../../../hooks/useFetch";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
@@ -16,11 +16,12 @@ import {
   NUMBER_MAX_LENGTH,
   numRegex,
 } from "../../../constants/constants";
+import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
 
 const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { getCountryCode, countryCodeResult } = useGetCountryCodeApi();
+  const { data } = useFetch({ url: COUNTRY_CODE });
   const initialContactDetails =
     signUpState?.signUpDetail?.contact_details || [];
   const {
@@ -50,10 +51,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       name: "",
     }))
   );
-
-  useEffect(() => {
-    getCountryCode();
-  }, []);
 
   useEffect(() => {
     setContactDetails(
@@ -232,7 +229,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     <SignUpThirdScreenUI
       allFieldsFilled={allFieldsFilled}
       contactDetails={contactDetails}
-      countryCodeResult={countryCodeResult}
+      countryCodeResult={data}
       errors={errors}
       onClickGoToLogin={onClickGoToLogin}
       handleBlur={handleBlur}
