@@ -41,6 +41,7 @@ const style = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     maxWidth: 600,
+    maxHeight: 700,
   },
   innerContainer1800: {
     width: "50%",
