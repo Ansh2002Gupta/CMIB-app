@@ -62,7 +62,7 @@ const DropDownModal = ({
           style={styles.prefixContainer}
           onPress={handleDropDown}
         >
-          <SvgUri width={20} height={20} source={selectedValue?.url} />
+          <SvgUri width={20} height={20} uri={selectedValue?.url} />
           <CommonText customTextStyle={styles.prefixStyle}>
             {selectedValue?.value || "+91"}
           </CommonText>
@@ -110,6 +110,7 @@ const DropDownModal = ({
                     }}
                     style={styles.optionContainer}
                   >
+                    <SvgUri width={20} height={20} uri={item?.url} />
                     <CommonText
                       customTextStyle={
                         value === item.value
@@ -119,7 +120,6 @@ const DropDownModal = ({
                     >
                       {item.label}
                     </CommonText>
-                    <SvgUri width={20} height={20} uri={item.url} />
                   </TouchableOpacity>
                 )
               )

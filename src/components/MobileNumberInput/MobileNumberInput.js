@@ -43,9 +43,9 @@ const MobileNumberInput = ({
         </View>
       );
     }
-    return `${String(option[labelField])} ${String(
+    return `${String(option[labelField])} (${String(
       option[countryNameField]
-    )}`;
+    )})`;
   };
 
   const menuOptions = options?.map((option) => ({
