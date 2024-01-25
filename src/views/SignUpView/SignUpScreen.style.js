@@ -38,7 +38,6 @@ export const style = StyleSheet.create({
     display: "flex",
     width: "45%",
     alignSelf: "flex-start",
-    minHeight: "85%",
     marginBottom: 48,
   },
   contentContainerStyle: {
