@@ -13,6 +13,9 @@ export const style = {
     lineHeight: 20,
     marginTop: 8,
   },
+  webDescriptionStyle: {
+    marginTop: 16,
+  },
   smHeaderText: {
     fontSize: 18,
   },
