@@ -11,7 +11,6 @@ import { SignUpContext } from "../../globalContext/signUp/signUpProvider";
 const SignUpScreenComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const scrollRef = useRef();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
   const [activeTab, setActiveTab] = useState(0);
   const [, signUpDispatch] = useContext(SignUpContext);
@@ -34,11 +33,6 @@ const SignUpScreenComponent = () => {
     });
     if (isWebPlatform) {
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      scrollRef.current?.scrollTo({
-        y: 0,
-        animated: true,
-      });
     }
   };
 
@@ -49,11 +43,12 @@ const SignUpScreenComponent = () => {
 
   return (
     <SignUpScreenUI
-      intl={intl}
-      onClickGoToLogin={onClickGoToLogin}
-      onHandleTab={onHandleTab}
-      activeTab={activeTab}
-      scrollRef={scrollRef}
+      {...{
+        activeTab,
+        intl,
+        onClickGoToLogin,
+        onHandleTab,
+      }}
     />
   );
 };
