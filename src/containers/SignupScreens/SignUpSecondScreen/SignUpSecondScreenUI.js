@@ -281,7 +281,7 @@ const SignUpSecondScreenUI = ({
         )}
         {!isWeb ? (
           <KeyboardAvoidingScrollView
-            behavior="padding"
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={style.contentContainerStyle}
           >
             {renderFormContent()}
