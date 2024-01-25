@@ -11,4 +11,16 @@ export const styles = StyleSheet.create({
     marginLeft: 24,
     flex: 2,
   },
+  selectedView: {
+    flexDirection: "row",
+    gap: 5,
+    alignItems: "center",
+  },
+  labelField: {
+    fontSize: 14,
+  },
+  iconStyles: {
+    height: 20,
+    width: 20,
+  },
 });

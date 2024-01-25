@@ -1,40 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { View } from "@unthinkable/react-core-components";
 
-import SvgUri from "../SvgUri";
-import CommonText from "../CommonText";
-import { customTheme, customStyles, styles } from "./Dropdown.style";
+import { customTheme, customStyles } from "./Dropdown.style";
 
 const Dropdown = ({
-  exclusiveKey,
   data,
   dropdownStyle,
+  includeAllKeys,
   labelField,
+  menuOptions,
   onChange,
   placeholder,
   placeholderStyle,
   value,
   valueField,
-  urlField,
 }) => {
-  const options = data?.map((option) => ({
+  const getAllKeys = (option) => {
+    let finalObj = {};
+    Object.keys(option).forEach((key) => {
+      if (key !== valueField && key !== labelField) {
+        finalObj = { ...finalObj, [key]: option[key] };
+      }
+    });
+    return finalObj;
+  };
+
+  const defaultOptions = data?.map((option) => ({
     value: String(option[valueField]),
-    label: (
-      <View style={styles.selectedView}>
-        {urlField && (
-          <SvgUri
-            source={{
-              uri: option[urlField] || "http://api.cmib.cloudzmall.com/in.svg",
-            }}
-            style={{ height: 20, width: 20 }}
-          />
-        )}
-        <CommonText style={styles.labelField}>{option[labelField]}</CommonText>
-      </View>
-    ),
+    label: String(option[labelField]),
+    ...(includeAllKeys ? { ...getAllKeys(option) } : {}),
   }));
+
+  const options = menuOptions || defaultOptions;
 
   const selectedOption = options?.find(
     (option) => option.value === String(value)
@@ -59,7 +57,6 @@ const Dropdown = ({
 Dropdown.defaultProps = {
   data: [],
   dropdownStyle: {},
-  exclusiveKey: "",
   labelField: "",
   onChange: () => {},
   placeholder: "",
@@ -72,7 +69,7 @@ Dropdown.defaultProps = {
 Dropdown.propTypes = {
   data: PropTypes.array,
   dropdownStyle: PropTypes.object,
-  exclusiveKey: PropTypes.string,
+  includeAllKeys: PropTypes.bool,
   labelField: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,

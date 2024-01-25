@@ -3,49 +3,63 @@ import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { View, Platform } from "@unthinkable/react-core-components";
 
+import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
-import useIsWebView from "../../hooks/useIsWebView";
+import SvgUri from "../SvgUri";
 import { styles } from "./MobileNumberInput.style";
 
 const MobileNumberInput = ({
   codeError,
   codeValue,
   customHandleBlur,
+  labelField,
+  mobNumberError,
+  mobNumberValue,
   onChangeCode,
   onChangeMobNumber,
   options,
-  mobNumberError,
-  mobNumberValue,
+  urlField,
+  valueField,
 }) => {
   const isWeb = Platform.OS === "web";
-  const { isWebView } = useIsWebView();
   const intl = useIntl();
+
+  const menuOptions = options?.map((option) => ({
+    value: String(option[valueField]),
+    label: (
+      <View style={styles.selectedView}>
+        {urlField && (
+          <SvgUri
+            source={{
+              uri: option[urlField],
+            }}
+            style={styles.iconStyles}
+          />
+        )}
+        <CommonText style={styles.labelField}>{option[labelField]}</CommonText>
+      </View>
+    ),
+  }));
 
   return (
     <>
-      {isWebView ? (
+      {isWeb ? (
         <View style={styles.inputContainer}>
           <View style={styles.codeInputStyle}>
             <CustomTextInput
+              errorMessage={codeError}
+              isError={!!codeError}
               label={intl.formatMessage({
                 id: "label.country_code",
               })}
-              dropdownStyle={{}}
+              isDropdown
+              isMandatory
+              onChangeValue={(val) => onChangeCode(val)}
+              menuOptions={menuOptions}
               placeholder={intl.formatMessage({
                 id: "label.select",
               })}
-              errorMessage={codeError}
-              isError={!!codeError}
               value={codeValue}
-              options={options}
-              isMandatory
-              onChangeValue={(val) => onChangeCode(val)}
-              labelField="dial_code"
-              valueField="dial_code"
-              urlField="flag"
-              inputKey="country_code"
-              exclusiveKey={"name"}
-              isDropdown
             />
           </View>
           <View style={styles.numberInputStyle}>
@@ -102,11 +116,14 @@ MobileNumberInput.defaultProps = {
   codeError: "",
   codeValue: "",
   customHandleBlur: () => {},
+  labelField: "dial_code",
   onChangeCode: () => {},
   onChangeMobNumber: () => {},
   options: [],
   mobNumberError: "",
   mobNumberValue: "",
+  urlField: "flag",
+  valueField: "dial_code",
 };
 
 MobileNumberInput.propTypes = {

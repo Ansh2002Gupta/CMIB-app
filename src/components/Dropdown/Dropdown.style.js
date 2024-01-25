@@ -52,12 +52,4 @@ export const styles = StyleSheet.create({
   valueStyle: {
     color: colors.black,
   },
-  selectedView: {
-    flexDirection: "row",
-    gap: 5,
-    alignItems: "center",
-  },
-  labelField: {
-    fontSize: 14,
-  },
 });

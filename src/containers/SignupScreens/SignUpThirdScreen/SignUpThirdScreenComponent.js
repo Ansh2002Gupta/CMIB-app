@@ -227,19 +227,21 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   return (
     <SignUpThirdScreenUI
-      allFieldsFilled={allFieldsFilled}
-      contactDetails={contactDetails}
-      countryCodeResult={data}
-      errors={errors}
-      onClickGoToLogin={onClickGoToLogin}
-      handleBlur={handleBlur}
-      handleDismissToast={handleDismissToast}
-      handleInputChange={handleInputChange}
-      intl={intl}
-      isLoading={isLoading}
-      onClickNext={onClickNext}
-      onGoBack={onGoBack}
-      validationError={validationError}
+      {...{
+        allFieldsFilled,
+        contactDetails,
+        countryCodeResult: data,
+        errors,
+        handleBlur,
+        handleDismissToast,
+        handleInputChange,
+        intl,
+        isLoading,
+        onClickGoToLogin,
+        onClickNext,
+        onGoBack,
+        validationError,
+      }}
     />
   );
 };

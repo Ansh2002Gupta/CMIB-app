@@ -55,6 +55,7 @@ const CustomTextInput = (props) => {
     labelField,
     valueField,
     urlField,
+    menuOptions,
     ...remainingProps
   } = props;
 
@@ -113,6 +114,7 @@ const CustomTextInput = (props) => {
             selectedTextStyle={style.valueStyle}
             renderRightIcon={() => <Image source={images.iconDownArrow} />}
             placeholderStyle={style.placeholderStyle}
+            menuOptions={menuOptions}
             data={options}
             maxHeight={200}
             labelField={labelField}
@@ -293,6 +295,7 @@ CustomTextInput.propTypes = {
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
+  menuOptions: PropTypes.array,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
