@@ -12,6 +12,7 @@ const MobileNumberInput = ({
   codeError,
   codeValue,
   customHandleBlur,
+  countryNameField,
   labelField,
   mobNumberError,
   mobNumberValue,
@@ -24,21 +25,33 @@ const MobileNumberInput = ({
   const isWeb = Platform.OS === "web";
   const intl = useIntl();
 
+  const getLabel = (option) => {
+    if (isWeb) {
+      return (
+        <View style={styles.selectedView}>
+          {urlField && (
+            <SvgUri
+              source={{
+                uri: option[urlField],
+              }}
+              style={styles.iconStyles}
+            />
+          )}
+          <CommonText style={styles.labelField}>
+            {option[labelField]}
+          </CommonText>
+        </View>
+      );
+    }
+    return `${String(option[labelField])} ${String(
+      option[countryNameField]
+    )}`;
+  };
+
   const menuOptions = options?.map((option) => ({
     value: String(option[valueField]),
-    label: (
-      <View style={styles.selectedView}>
-        {urlField && (
-          <SvgUri
-            source={{
-              uri: option[urlField],
-            }}
-            style={styles.iconStyles}
-          />
-        )}
-        <CommonText style={styles.labelField}>{option[labelField]}</CommonText>
-      </View>
-    ),
+    label: getLabel(option),
+    url: String(option[urlField]),
   }));
 
   return (
@@ -103,9 +116,10 @@ const MobileNumberInput = ({
           onChangeValue={(val) => onChangeCode(val)}
           labelField="dial_code"
           valueField="dial_code"
-          urlField="flag"
+          // urlField="flag"
           inputKey="country_code"
-          exclusiveKey={isWeb ? "" : "name"}
+          menuOptions={menuOptions}
+          // exclusiveKey={"name"}
         />
       )}
     </>
@@ -116,6 +130,7 @@ MobileNumberInput.defaultProps = {
   codeError: "",
   codeValue: "",
   customHandleBlur: () => {},
+  countryNameField: "name",
   labelField: "dial_code",
   onChangeCode: () => {},
   onChangeMobNumber: () => {},

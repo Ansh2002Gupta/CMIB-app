@@ -16,7 +16,6 @@ import images from "../../images";
 import styles from "./DropDownModal.style";
 
 const DropDownModal = ({
-  exclusiveKey,
   isMobileNumber,
   labelField,
   onChangeValue,
@@ -37,9 +36,7 @@ const DropDownModal = ({
 
   const defaultOptions = options?.map((option) => ({
     value: String(option[valueField]),
-    label: exclusiveKey
-      ? `${String(option[labelField])} (${String(option[exclusiveKey])})`
-      : String(option[labelField]),
+    label: String(option[labelField]),
     url: String(option[urlField]),
   }));
 
@@ -65,11 +62,7 @@ const DropDownModal = ({
           style={styles.prefixContainer}
           onPress={handleDropDown}
         >
-          <SvgUri
-            width={20}
-            height={20}
-            uri="https://api.cmib.cloudzmall.com/in.svg"
-          />
+          <SvgUri width={20} height={20} source={selectedValue?.url} />
           <CommonText customTextStyle={styles.prefixStyle}>
             {selectedValue?.value || "+91"}
           </CommonText>
@@ -126,6 +119,7 @@ const DropDownModal = ({
                     >
                       {item.label}
                     </CommonText>
+                    <SvgUri width={20} height={20} uri={item.url} />
                   </TouchableOpacity>
                 )
               )
@@ -138,7 +132,6 @@ const DropDownModal = ({
 };
 
 DropDownModal.defaultProps = {
-  exclusiveKey: "",
   labelField: "label",
   isMobileNumber: false,
   onChangeValue: () => {},
@@ -151,7 +144,6 @@ DropDownModal.defaultProps = {
 };
 
 DropDownModal.propTypes = {
-  exclusiveKey: PropTypes.string,
   labelField: PropTypes.string.isRequired,
   isMobileNumber: PropTypes.bool,
   onChangeValue: PropTypes.func.isRequired,
