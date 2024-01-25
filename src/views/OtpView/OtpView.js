@@ -14,7 +14,7 @@ import {
 } from "../../constants/constants";
 import { validateOtp } from "../../utils/validation";
 
-function OtpView({ email }) {
+function OtpView({ email, setIsShowOtpView }) {
   const navigate = useNavigate();
   const intl = useIntl();
 
@@ -85,6 +85,7 @@ function OtpView({ email }) {
       ) : (
         <OtpViewUI
           {...{
+            email,
             errorMessage,
             handleDismissToast,
             handleOtpChange,
@@ -99,6 +100,7 @@ function OtpView({ email }) {
             otpValue,
             seconds,
             setIsCounter,
+            setIsShowOtpView,
             setMinutes,
             setOtpLeft,
             setSeconds,

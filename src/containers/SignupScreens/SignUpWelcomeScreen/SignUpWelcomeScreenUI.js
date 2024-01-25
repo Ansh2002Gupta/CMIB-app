@@ -86,7 +86,7 @@ const SignUpWelcomeScreenUI = ({
           {intl.formatMessage({ id: "label.choose_interest" })}
         </CommonText>
         <FlatList
-          contentContainerStyle={style.contentContainerStyle}
+          contentContainerStyle={isWebView ? style.contentContainerStyle : {}}
           data={options}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}

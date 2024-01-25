@@ -10,7 +10,7 @@ export const style = StyleSheet.create({
     paddingTop: 24,
   },
   contentContainerStyle: {
-    flex: 1,
+    marginBottom: 120,
   },
   customButtonContainer: {
     marginBottom: 16,

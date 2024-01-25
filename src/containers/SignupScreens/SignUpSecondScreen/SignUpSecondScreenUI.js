@@ -8,6 +8,7 @@ import CustomTextInput from "../../../components/CustomTextInput";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import KeyboardAvoidingScrollView from "../../../components/KeyboardAvoidingScrollView";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import LoadingScreen from "../../../components/LoadingScreen";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
@@ -301,12 +302,13 @@ const SignUpSecondScreenUI = ({
                 />
               )}
               {!isWeb ? (
-                <ScrollView
-                  showsVerticalScrollIndicator={false}
+                <KeyboardAvoidingScrollView
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
                   style={style.contentContainerStyle}
+                  showsVerticalScrollIndicator={false}
                 >
                   {renderFormContent()}
-                </ScrollView>
+                </KeyboardAvoidingScrollView>
               ) : (
                 <View
                   style={
