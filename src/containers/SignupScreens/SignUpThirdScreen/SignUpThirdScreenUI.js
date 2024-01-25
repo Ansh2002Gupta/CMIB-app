@@ -9,6 +9,7 @@ import CustomTextInput from "../../../components/CustomTextInput";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
+import MobileNumberInput from "../../../components/MobileNumberInput";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
@@ -124,53 +125,21 @@ const SignUpThirdScreenUI = ({
               }
               isMandatory
             />
-            <View style={style.inputContainer}>
-              <View style={style.firstInput}>
-                <CustomTextInput
-                  label={intl.formatMessage({
-                    id: "label.country_code",
-                  })}
-                  dropdownStyle={style.dropdownStyle}
-                  placeholder={intl.formatMessage({
-                    id: "label.select",
-                  })}
-                  errorMessage={errors[index].countryCode}
-                  isError={!!errors[index].countryCode}
-                  value={contactDetails[index].countryCode}
-                  options={countryCodeResult}
-                  isMandatory
-                  onChangeValue={(val) =>
-                    handleInputChange(val, "countryCode", index)
-                  }
-                  labelField="dial_code"
-                  valueField="dial_code"
-                  inputKey="country_code"
-                  exclusiveKey={isWeb ? "" : "name"}
-                  isDropdown
-                />
-              </View>
-              <View style={style.secondInput}>
-                <CustomTextInput
-                  label={intl.formatMessage({
-                    id: "label.mobile_number",
-                  })}
-                  maxLength={15}
-                  placeholder={intl.formatMessage({
-                    id: "label.enter_contact_person_mobile_no",
-                  })}
-                  customHandleBlur={() => handleBlur("mobileNo", index)}
-                  value={contactDetails[index].mobileNo}
-                  errorMessage={errors[index].mobileNo}
-                  isError={!!errors[index].mobileNo}
-                  isNumeric
-                  onChangeText={(val) =>
-                    numericValidator(val) &&
-                    handleInputChange(val, "mobileNo", index)
-                  }
-                  isMandatory
-                />
-              </View>
-            </View>
+            <MobileNumberInput
+              codeError={errors[index].countryCode}
+              codeValue={contactDetails[index].countryCode}
+              customHandleBlur={() => handleBlur("mobileNo", index)}
+              onChangeCode={(val) =>
+                handleInputChange(val, "countryCode", index)
+              }
+              onChangeMobNumber={(val) =>
+                numericValidator(val) &&
+                handleInputChange(val, "mobileNo", index)
+              }
+              options={countryCodeResult}
+              mobNumberValue={contactDetails[index].mobileNo}
+              mobNumberError={errors[index].mobileNo}
+            />
             <CustomTextInput
               label={intl.formatMessage({
                 id: "label.email_id",
