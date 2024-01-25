@@ -7,6 +7,7 @@ import ActionPairButton from "../../../components/ActionPairButton";
 import CustomTextInput from "../../../components/CustomTextInput";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import KeyboardAvoidingScrollView from "../../../components/KeyboardAvoidingScrollView";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
@@ -279,12 +280,12 @@ const SignUpSecondScreenUI = ({
           />
         )}
         {!isWeb ? (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
+          <KeyboardAvoidingScrollView
+            behavior="padding"
             style={style.contentContainerStyle}
           >
             {renderFormContent()}
-          </ScrollView>
+          </KeyboardAvoidingScrollView>
         ) : (
           <View
             style={
