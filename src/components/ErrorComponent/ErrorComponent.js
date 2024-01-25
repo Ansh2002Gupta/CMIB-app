@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import styles from "./ErrorComponent.style";
 import CustomButton from "../CustomButton";
 import images from "../../images";
+import styles from "./ErrorComponent.style";
 
 const ErrorComponent = ({ errorMsg, onRetry, retryButtonText }) => {
   return (
