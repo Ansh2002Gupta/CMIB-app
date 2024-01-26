@@ -80,7 +80,7 @@ const MobileNumberInput = ({
               label={intl.formatMessage({
                 id: "label.mobile_number",
               })}
-              maxLength={15}
+              maxLength={13}
               placeholder={intl.formatMessage({
                 id: "label.enter_contact_person_mobile_no",
               })}
@@ -104,7 +104,7 @@ const MobileNumberInput = ({
           })}
           codeValue={codeValue}
           value={mobNumberValue}
-          maxLength={15}
+          maxLength={13}
           customHandleBlur={customHandleBlur}
           isNumeric
           onChangeText={(val) => onChangeMobNumber(val)}

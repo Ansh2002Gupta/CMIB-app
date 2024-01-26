@@ -6,9 +6,11 @@ import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import ActionPairButton from "../../../components/ActionPairButton";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
+import LoadingScreen from "../../../components/LoadingScreen";
 import MobileNumberInput from "../../../components/MobileNumberInput";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
@@ -30,9 +32,12 @@ const SignUpThirdScreenUI = ({
   contactDetails,
   countryCodeResult,
   errors,
+  getErrorDetails,
   handleBlur,
   handleDismissToast,
   handleInputChange,
+  isErrorCountryCodes,
+  isGettingCountryCodes,
   intl,
   isLoading,
   onClickGoToLogin,
@@ -200,50 +205,68 @@ const SignUpThirdScreenUI = ({
   };
 
   return (
-    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
-      <View
-        style={
-          isWebView
-            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-            : style.innerContainer
-        }
-      >
-        {isWebView && (
-          <View>
-            <HeaderTextWithLabelAndDescription
-              label={intl.formatMessage({ id: "label.step_three" })}
-              {...(showContentHeader && {
-                headerText: intl.formatMessage({
-                  id: "label.contact_person_details",
-                }),
-              })}
-            />
+    <>
+      {isGettingCountryCodes && <LoadingScreen />}
+      {countryCodeResult && !isErrorCountryCodes && (
+        <FormWrapper
+          onSubmit={onClickNext}
+          customFormStyle={commonStyles.mainView}
+        >
+          <View
+            style={
+              isWebView
+                ? getResponsiveStyles({
+                    str: "signupContainer",
+                    currentBreakpoint,
+                  })
+                : style.innerContainer
+            }
+          >
+            {isWebView && (
+              <View>
+                <HeaderTextWithLabelAndDescription
+                  label={intl.formatMessage({ id: "label.step_three" })}
+                  {...(showContentHeader && {
+                    headerText: intl.formatMessage({
+                      id: "label.contact_person_details",
+                    }),
+                  })}
+                />
+              </View>
+            )}
+            {isWebView ? (
+              <View style={style.webContainerStyle}>
+                {renderFormContent()}
+                {renderFooterContent()}
+              </View>
+            ) : (
+              <>
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  style={style.contentContainerStyle}
+                >
+                  {renderFormContent()}
+                </ScrollView>
+                {renderFooterContent()}
+              </>
+            )}
+            {!!validationError && (
+              <ToastComponent
+                toastMessage={validationError}
+                onDismiss={handleDismissToast}
+              />
+            )}
           </View>
-        )}
-        {isWebView ? (
-          <View style={style.webContainerStyle}>
-            {renderFormContent()}
-            {renderFooterContent()}
-          </View>
-        ) : (
-          <>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              style={style.contentContainerStyle}
-            >
-              {renderFormContent()}
-            </ScrollView>
-            {renderFooterContent()}
-          </>
-        )}
-        {!!validationError && (
-          <ToastComponent
-            toastMessage={validationError}
-            onDismiss={handleDismissToast}
-          />
-        )}
-      </View>
-    </FormWrapper>
+        </FormWrapper>
+      )}
+      {!isGettingCountryCodes && !!getErrorDetails().errorMessage && (
+        <ErrorComponent
+          errorMsg={getErrorDetails().errorMessage}
+          onRetry={getErrorDetails().onRetry}
+          disableRetryBtn={isGettingCountryCodes}
+        />
+      )}
+    </>
   );
 };
 
@@ -259,10 +282,13 @@ SignUpThirdScreenUI.propTypes = {
   contactDetails: PropTypes.array.isRequired,
   countryCodeResult: PropTypes.array,
   errors: PropTypes.array,
+  getErrorDetails: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  isErrorCountryCodes: PropTypes.bool.isRequired,
+  isGettingCountryCodes: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onClickGoToLogin: PropTypes.func,
   onClickNext: PropTypes.func.isRequired,

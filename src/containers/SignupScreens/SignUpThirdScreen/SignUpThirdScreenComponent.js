@@ -12,8 +12,8 @@ import {
   ADDRESS_MAX_LENGTH,
   FIELD_MAX_LENGTH,
   FIELD_MIN_LENGTH,
-  NUMBER_MIN_LENGTH,
-  NUMBER_MAX_LENGTH,
+  MOBILE_NUMBER_MIN_LENGTH,
+  MOBILE_NUMBER_MAX_LENGTH,
   numRegex,
 } from "../../../constants/constants";
 import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
@@ -21,7 +21,13 @@ import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
 const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
   const [signUpState, signUpDispatch] = useContext(SignUpContext);
-  const { data } = useFetch({ url: COUNTRY_CODE });
+  const {
+    data,
+    isLoading: isGettingCountryCodes,
+    isError: isErrorCountryCodes,
+    error: errorCountryCodes,
+    fetchData,
+  } = useFetch({ url: COUNTRY_CODE });
   const initialContactDetails =
     signUpState?.signUpDetail?.contact_details || [];
   const {
@@ -116,8 +122,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       case "mobileNo":
         if (
           !numRegex.test(String(value)) ||
-          value.trim().length < NUMBER_MIN_LENGTH ||
-          value.trim().length > NUMBER_MAX_LENGTH
+          value.trim().length < MOBILE_NUMBER_MIN_LENGTH ||
+          value.trim().length > MOBILE_NUMBER_MAX_LENGTH
         ) {
           error = intl.formatMessage({
             id: "label.mobile_number_validation",
@@ -225,6 +231,18 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }
   };
 
+  const getErrorDetails = () => {
+    if (isErrorCountryCodes)
+      return {
+        errorMessage: errorCountryCodes,
+        onRetry: fetchData,
+      };
+    return {
+      errorMessage: "",
+      onRetry: () => {},
+    };
+  };
+
   return (
     <SignUpThirdScreenUI
       {...{
@@ -232,10 +250,13 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         contactDetails,
         countryCodeResult: data,
         errors,
+        getErrorDetails,
         handleBlur,
         handleDismissToast,
         handleInputChange,
         intl,
+        isErrorCountryCodes,
+        isGettingCountryCodes,
         isLoading,
         onClickGoToLogin,
         onClickNext,
