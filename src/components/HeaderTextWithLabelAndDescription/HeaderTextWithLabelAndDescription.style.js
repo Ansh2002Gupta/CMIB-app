@@ -28,6 +28,7 @@ export const style = {
   labelText: {
     color: colors.subHeadingGray,
     fontSize: 16,
+    paddingBottom: 8,
   },
 };
 
