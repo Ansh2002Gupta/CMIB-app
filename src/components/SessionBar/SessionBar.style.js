@@ -2,6 +2,21 @@ import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
+const getMaxWidth = (currentBreakpoint) => {
+  switch (currentBreakpoint) {
+    case "lg":
+      return "200px";
+    case "md":
+      return "10px";
+    case "sm":
+      return "90px";
+    case "xs":
+      return "50px";
+    default:
+      return "250px";
+  }
+};
+
 const styles = StyleSheet.create({
   container: {
     paddingTop: 8,
@@ -23,16 +38,7 @@ const styles = StyleSheet.create({
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         overflow: "hidden",
-        maxWidth:
-          currentBreakpoint === "lg"
-            ? "200px"
-            : currentBreakpoint === "md"
-            ? "10px"
-            : currentBreakpoint === "sm"
-            ? "90px"
-            : currentBreakpoint === "sx"
-            ? "50px"
-            : "250px",
+        maxWidth: getMaxWidth(currentBreakpoint),
       },
     }),
   }),

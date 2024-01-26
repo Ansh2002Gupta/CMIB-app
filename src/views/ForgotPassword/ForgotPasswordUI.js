@@ -219,8 +219,11 @@ const ForgotPasswordUI = (props) => {
 ForgotPasswordUI.defaultProps = {
   errorMessage: "",
   handleDismissToast: () => {},
+  isLoading: false,
+  loginDisabled: false,
   onSendOtpClick: () => {},
   successLogin: false,
+  userEmail: "",
   validationError: "",
 };
 
@@ -228,10 +231,13 @@ ForgotPasswordUI.propTypes = {
   errorMessage: PropTypes.string,
   handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool,
+  loginDisabled: PropTypes.bool,
   onSendOtpClick: PropTypes.func,
   onClickGoToLogin: PropTypes.func.isRequired,
   onChangeInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
+  userEmail: PropTypes.string,
   validationError: PropTypes.string,
 };
 
