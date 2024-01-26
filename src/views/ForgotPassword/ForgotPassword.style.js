@@ -4,7 +4,8 @@ import colors from "../../assets/colors";
 
 const screenContainerWidth = {
   maxWidth: 600,
-  minHeight: 780,
+  minHeight: 700,
+  marginBottom: 30,
 };
 
 const style = StyleSheet.create({
