@@ -4,7 +4,8 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   disabledBtn: {
-    opacity:0.5,
+    opacity: 0.5,
+    backgroundColor: colors.darkGrey,
     cursor: Platform.OS.toLowerCase() === "web" ? "default" : "",
   },
 });

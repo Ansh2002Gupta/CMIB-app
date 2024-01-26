@@ -155,11 +155,12 @@ const OtpViewUI = ({
     >
       <View style={styles.mainView}>
         <View
-          style={
-            isWebView
+          style={{
+            ...styles.forgotHeaderContainer,
+            ...(isWebView
               ? getResponsiveStyles("forgotPasswordWebContainer")
-              : styles.grayBackground
-          }
+              : styles.grayBackground),
+          }}
         >
           <View
             style={
@@ -188,7 +189,10 @@ const OtpViewUI = ({
                 ...(isWebView ? styles.webContainerStyle : {}),
               }}
             >
-              <CommonText customTextStyle={styles.emailStyle}>
+              <CommonText
+                customTextStyle={styles.emailStyle}
+                customContainerStyle={styles.emailContainerStyle}
+              >
                 {`${intl.formatMessage({ id: "label.email_address" })}${email}`}
               </CommonText>
               <CustomTouchableOpacity
@@ -201,9 +205,10 @@ const OtpViewUI = ({
                   fontWeight="600"
                 >
                   {intl.formatMessage({
-                    id: isWebView
-                      ? "label.change_email_address"
-                      : "label.change",
+                    id:
+                      currentBreakpoint === "sm" || currentBreakpoint === "xs"
+                        ? "label.change"
+                        : "label.change_email_address",
                   })}
                 </CommonText>
               </CustomTouchableOpacity>
@@ -276,6 +281,7 @@ const OtpViewUI = ({
           </View>
           <View style={isWebView ? styles.webSubmitView : styles.submitView}>
             <CustomButton
+              style={styles.submitButton}
               disabled={submitDisabled}
               isLoading={isLoading}
               onPress={onVerifyOtpClick}
@@ -309,6 +315,7 @@ const OtpViewUI = ({
 
 OtpViewUI.defaultProps = {
   errorMessage: "",
+  handleDismissToast: () => {},
   isCounter: false,
   isLoading: false,
   submitDisabled: false,
@@ -321,12 +328,14 @@ OtpViewUI.defaultProps = {
   setMinutes: () => {},
   seconds: 0,
   setSeconds: () => {},
+  validationError: "",
 };
 
 OtpViewUI.propTypes = {
   errorMessage: PropTypes.string,
   email: PropTypes.string.isRequired,
   handleOtpChange: PropTypes.func.isRequired,
+  handleDismissToast: PropTypes.func,
   isCounter: PropTypes.bool,
   isLoading: PropTypes.bool,
   intl: PropTypes.object.isRequired,
@@ -341,6 +350,7 @@ OtpViewUI.propTypes = {
   setMinutes: PropTypes.func,
   seconds: PropTypes.number,
   setSeconds: PropTypes.func,
+  validationError: PropTypes.string,
 };
 
 export default OtpViewUI;
