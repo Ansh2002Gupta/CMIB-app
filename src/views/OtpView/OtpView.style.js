@@ -4,7 +4,6 @@ import colors from "../../assets/colors";
 
 const screenContainerWidth = {
   maxWidth: 600,
-  minHeight: 700,
   marginBottom: 30,
 };
 
@@ -77,7 +76,6 @@ const style = StyleSheet.create({
   },
   backToLoginContainer: {
     marginTop: 24,
-    marginBottom: 24,
     justifyContent: "center",
     flexDirection: "row",
   },
@@ -181,6 +179,9 @@ const style = StyleSheet.create({
     fontSize: 14,
   },
   webContainerStyle: { paddingTop: 16 },
+  submitButton: {
+    marginTop: 50,
+  },
 });
 
 export default style;

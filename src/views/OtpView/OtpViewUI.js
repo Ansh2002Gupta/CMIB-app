@@ -276,6 +276,7 @@ const OtpViewUI = ({
           </View>
           <View style={isWebView ? styles.webSubmitView : styles.submitView}>
             <CustomButton
+              style={styles.submitButton}
               disabled={submitDisabled}
               isLoading={isLoading}
               onPress={onVerifyOtpClick}
