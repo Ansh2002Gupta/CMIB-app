@@ -102,6 +102,9 @@ const MobileNumberInput = ({
           placeholder={intl.formatMessage({
             id: "label.enter_contact_person_mobile_no",
           })}
+          customHeading={intl.formatMessage({
+            id: "label.country_codes",
+          })}
           codeValue={codeValue}
           value={mobNumberValue}
           maxLength={15}

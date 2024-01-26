@@ -17,6 +17,7 @@ import images from "../../images";
 import styles from "./DropDownModal.style";
 
 const DropDownModal = ({
+  customHeading,
   isMobileNumber,
   labelField,
   onChangeValue,
@@ -149,7 +150,7 @@ const DropDownModal = ({
       )}
       {isDropDownOpen && (
         <CustomModal
-          headerText={placeholder}
+          headerText={customHeading || placeholder}
           headerTextStyle={styles.headerText}
           customInnerContainerStyle={styles.modalInnerContainer}
           onBackdropPress={handleDropDown}
@@ -179,6 +180,7 @@ const DropDownModal = ({
 };
 
 DropDownModal.defaultProps = {
+  customHeading: "",
   labelField: "label",
   isMobileNumber: false,
   onChangeValue: () => {},
@@ -191,6 +193,7 @@ DropDownModal.defaultProps = {
 };
 
 DropDownModal.propTypes = {
+  customHeading: PropTypes.string,
   labelField: PropTypes.string,
   isMobileNumber: PropTypes.bool,
   onChangeValue: PropTypes.func,
