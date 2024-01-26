@@ -36,12 +36,6 @@ const style = StyleSheet.create({
   width900pxOrCustomSubHeading: {
     fontSize: 14,
   },
-  buttonView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 40,
-  },
   companyView: {
     backgroundColor: colors.backgroundColor,
     paddingTop: 24,
@@ -178,7 +172,12 @@ const style = StyleSheet.create({
     color: colors.darkBlue,
     fontSize: 14,
   },
-  webContainerStyle: { paddingTop: 16 },
+  webContainerStyle: {
+    paddingTop: 16,
+  },
+  emailContainerStyle: {
+    width: "70%",
+  },
   submitButton: {
     marginTop: 50,
   },
