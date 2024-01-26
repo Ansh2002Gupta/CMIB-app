@@ -84,15 +84,22 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
             />
           )
         }
-        bottomSection={isAuthenticated && (!isWebView && !doesExcludeHeader ? <BottomBar /> : null)}
+        bottomSection={
+          isAuthenticated &&
+          (!isWebView && !doesExcludeHeader ? <BottomBar /> : null)
+        }
         menu={isAuthenticated ? sidebarComponent : null}
         content={<Outlet />}
         footer={!isAuthenticated && isWebView && <Footer />}
         topSectionStyle={isMdOrGreater && commonStyles.headerContainer}
         isRightFillSpace={false}
         isLeftFillSpace={false}
-        rightSectionStyle={styles(currentBreakpoint).rightSectionStyle}
-        leftSectionStyle={styles(currentBreakpoint).leftSectionStyle}
+        rightSectionStyle={
+          styles(currentBreakpoint, isAuthenticated).rightSectionStyle
+        }
+        leftSectionStyle={
+          styles(currentBreakpoint, isAuthenticated).leftSectionStyle
+        }
         bottomSectionStyle={
           isMdOrGreater ? styles().bottomSectionStyle : styles().bottomBar
         }

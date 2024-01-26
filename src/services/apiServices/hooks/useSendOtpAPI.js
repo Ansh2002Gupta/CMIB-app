@@ -6,12 +6,11 @@ import { COMPANY_SEND_OTP } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useSendOtpAPI = () => {
-  const [isShowOtpView, setIsShowOtpView] = useState(false);
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
-  const [sendOtpResult, setSendOtpResult] = useState([]);
+  const [sendOtpResult, setSendOtpResult] = useState({});
   const [apiStatus, setAPIStatus] = useState(API_STATUS.IDLE);
 
-  const handleSendOtpAPI = async (payload, isNavigate, errorCallback) => {
+  const handleSendOtpAPI = async (payload, errorCallback) => {
     try {
       setAPIStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
@@ -19,7 +18,6 @@ const useSendOtpAPI = () => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setAPIStatus(API_STATUS.SUCCESS);
         setSendOtpResult(res.data);
-        if (isNavigate) setIsShowOtpView(true);
         return;
       } else {
         setAPIStatus(API_STATUS.ERROR);
@@ -48,10 +46,9 @@ const useSendOtpAPI = () => {
     handleSendOtpAPI,
     isError,
     isLoading,
-    isShowOtpView,
     isSuccess,
     sendOtpResult,
-    setIsShowOtpView,
+    setSendOtpResult,
   };
 };
 
