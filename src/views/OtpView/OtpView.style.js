@@ -4,6 +4,7 @@ import colors from "../../assets/colors";
 
 const screenContainerWidth = {
   maxWidth: 600,
+  marginBottom: 30,
 };
 
 const style = StyleSheet.create({
@@ -69,7 +70,6 @@ const style = StyleSheet.create({
   },
   backToLoginContainer: {
     marginTop: 24,
-    marginBottom: 24,
     justifyContent: "center",
     flexDirection: "row",
   },
@@ -177,6 +177,9 @@ const style = StyleSheet.create({
   },
   emailContainerStyle: {
     width: "70%",
+  },
+  submitButton: {
+    marginTop: 50,
   },
 });
 
