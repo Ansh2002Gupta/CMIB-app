@@ -1,9 +1,6 @@
 import colors from "../../assets/colors";
 
 export const style = {
-  headerContainer: {
-    marginTop: 24,
-  },
   heading: {
     color: colors.black,
   },
