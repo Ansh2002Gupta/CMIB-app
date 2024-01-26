@@ -32,7 +32,7 @@ const OtpViewUI = ({
   onClickGoToLogin,
   onResendOtpClick,
   setIsCounter,
-  setIsShowOtpView,
+  setSendOtpResult,
   setMinutes,
   seconds,
   setOtpLeft,
@@ -193,7 +193,7 @@ const OtpViewUI = ({
               </CommonText>
               <CustomTouchableOpacity
                 onPress={() => {
-                  setIsShowOtpView(false);
+                  setSendOtpResult({});
                 }}
               >
                 <CommonText
@@ -317,7 +317,6 @@ OtpViewUI.defaultProps = {
   onClickGoToLogin: () => {},
   otpLeft: 0,
   setIsCounter: () => {},
-  setIsShowOtpView: () => {},
   setOtpLeft: () => {},
   setMinutes: () => {},
   seconds: 0,
@@ -331,7 +330,6 @@ OtpViewUI.propTypes = {
   isCounter: PropTypes.bool,
   isLoading: PropTypes.bool,
   intl: PropTypes.object.isRequired,
-  setIsShowOtpView: PropTypes.func,
   submitDisabled: PropTypes.bool,
   minutes: PropTypes.number,
   onVerifyOtpClick: PropTypes.func,

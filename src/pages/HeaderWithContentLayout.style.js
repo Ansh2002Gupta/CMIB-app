@@ -4,22 +4,22 @@ const baseLayoutStyle = {
   ...Platform.select({
     web: {
       height: "100vh",
-      overflowY: "scroll",
+      overflowY: "auto",
     },
   }),
 };
 
-const Styles = (currentBreakpoint) =>
+const Styles = (currentBreakpoint, isAuthenticated) =>
   StyleSheet.create({
     rightSectionStyle: {
       minWidth: currentBreakpoint === "md" ? "70%" : "80%",
       flex: currentBreakpoint === "md" ? 7 : 8,
-      ...baseLayoutStyle,
+      ...(isAuthenticated ? baseLayoutStyle : {}),
     },
     leftSectionStyle: {
       minWidth: currentBreakpoint === "md" ? "30%" : "20%",
       flex: currentBreakpoint === "md" ? 3 : 2,
-      ...baseLayoutStyle,
+      ...(isAuthenticated ? baseLayoutStyle : {}),
     },
     topSectionStyle: {
       flex: 1,

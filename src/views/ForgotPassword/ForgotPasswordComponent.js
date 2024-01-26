@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 
 import ForgotPasswordUI from "./ForgotPasswordUI";
-import OtpViewComponent from "../OtpView";
+import OtpView from "../OtpView";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
 import { validateEmail } from "../../utils/validation";
 import { navigations } from "../../constants/routeNames";
@@ -18,7 +18,7 @@ function ForgotPasswordComponent() {
   const [userEmail, setuserEmail] = useState("");
   const [validationError, setValidationError] = useState("");
 
-  const { handleSendOtpAPI, isLoading, isShowOtpView, setIsShowOtpView } =
+  const { handleSendOtpAPI, isLoading, sendOtpResult, setSendOtpResult } =
     useSendOtpAPI();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function ForgotPasswordComponent() {
     } else {
       setErrorMessage("");
     }
-    handleSendOtpAPI({ email: userEmail }, true, (error) => {
+    handleSendOtpAPI({ email: userEmail }, (error) => {
       setValidationError(error);
     });
     setSuccessLogin(false);
@@ -58,10 +58,11 @@ function ForgotPasswordComponent() {
 
   return (
     <>
-      {isShowOtpView ? (
-        <OtpViewComponent
+      {!!sendOtpResult && !!Object.keys(sendOtpResult)?.length ? (
+        <OtpView
           email={userEmail}
-          setIsShowOtpView={setIsShowOtpView}
+          token={sendOtpResult?.data?.token}
+          setSendOtpResult={setSendOtpResult}
         />
       ) : (
         <ForgotPasswordUI

@@ -14,7 +14,7 @@ import {
 } from "../../constants/constants";
 import { validateOtp } from "../../utils/validation";
 
-function OtpView({ email, setIsShowOtpView }) {
+function OtpView({ email, setSendOtpResult, token }) {
   const navigate = useNavigate();
   const intl = useIntl();
 
@@ -56,7 +56,7 @@ function OtpView({ email, setIsShowOtpView }) {
     } else {
       setErrorMessage("");
     }
-    handleVerifyOtpAPI({ payload: { email, otp: otpValue } });
+    handleVerifyOtpAPI({ payload: { token, otp: otpValue } });
   };
 
   const handleOtpChange = (otp) => {
@@ -68,7 +68,7 @@ function OtpView({ email, setIsShowOtpView }) {
       setMinutes(OTP_TIMER_MIN_MINUTES);
       setSeconds(OTP_TIMER_SECOND);
       setIsCounter(true);
-      handleSendOtpAPI({ email }, false);
+      handleSendOtpAPI({ email });
     }
   };
 
@@ -79,9 +79,7 @@ function OtpView({ email, setIsShowOtpView }) {
   return (
     <>
       {isSuccess ? (
-        <CreateNewPasswordComponent
-          resetToken={verifyOtpResult?.data?.reset_token}
-        />
+        <CreateNewPasswordComponent resetToken={verifyOtpResult?.data?.token} />
       ) : (
         <OtpViewUI
           {...{
@@ -100,7 +98,7 @@ function OtpView({ email, setIsShowOtpView }) {
             otpValue,
             seconds,
             setIsCounter,
-            setIsShowOtpView,
+            setSendOtpResult,
             setMinutes,
             setOtpLeft,
             setSeconds,

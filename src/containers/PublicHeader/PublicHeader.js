@@ -60,7 +60,7 @@ const PublicHeader = () => {
                 />
                 <CustomImage
                   source={images.iconAzadiMahotsav}
-                  style={styles.azadiMahotsav}
+                  style={styles.iconAzadiMahotsav}
                   resizeMode="contain"
                 />
               </View>
