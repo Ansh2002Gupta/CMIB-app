@@ -22,7 +22,7 @@ const HeaderTextWithLabelAndDescription = ({
   const { isWebView } = useIsWebView();
 
   return (
-    <View style={{ ...style.headerContainer, ...customContainerStyles }}>
+    <View style={{ ...customContainerStyles }}>
       {!!label && (
         <CommonText customTextStyle={style.labelText}> {label}</CommonText>
       )}
