@@ -155,11 +155,12 @@ const OtpViewUI = ({
     >
       <View style={styles.mainView}>
         <View
-          style={
-            isWebView
+          style={{
+            ...styles.forgotHeaderContainer,
+            ...(isWebView
               ? getResponsiveStyles("forgotPasswordWebContainer")
-              : styles.grayBackground
-          }
+              : styles.grayBackground),
+          }}
         >
           <View
             style={
