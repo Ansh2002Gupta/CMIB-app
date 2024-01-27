@@ -3,7 +3,7 @@ import { useState } from "react";
 import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_SIGN_UP } from "../../apiEndPoint";
-import { formatErrorMessages } from "../../../../utils/util";
+import { removeFullStopsBetweenStrings } from "../../../../utils/util";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useSignUpUser = () => {
@@ -34,7 +34,7 @@ const useSignUpUser = () => {
             errorMessages.push(errors[field][0]);
           }
         }
-        errorMessage = formatErrorMessages(errorMessages);
+        errorMessage = removeFullStopsBetweenStrings(errorMessages);
       } else {
         errorMessage =
           err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;

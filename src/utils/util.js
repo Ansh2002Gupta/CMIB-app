@@ -22,7 +22,7 @@ export const getRenderText = (items, keys) => {
   return keys.map((key) => items[key]).join(" ");
 };
 
-export const formatErrorMessages = (errorMessages) => {
+export const removeFullStopsBetweenStrings = (errorMessages) => {
   const formattedMessages = errorMessages
     .map((message) => message.replace(/\.+$/, ""))
     .join(", ");
