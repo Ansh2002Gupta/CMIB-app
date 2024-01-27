@@ -132,10 +132,14 @@ const DropDownModal = ({
           onPress={handleDropDown}
         >
           <SvgUri width={20} height={20} uri={selectedValue?.url} />
-          <CommonText customTextStyle={styles.prefixStyle}>
-            {selectedValue?.value || "+91"}
+          <CommonText
+            customTextStyle={
+              selectedValue?.value ? styles.prefixStyle : styles.placeHolderText
+            }
+          >
+            {selectedValue?.value || intl.formatMessage({ id: "label.select" })}
           </CommonText>
-          <CustomImage source={images.iconDownArrow} style={styles.iconStyle} />
+          <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
           <CustomImage source={images.iconDivider} style={styles.iconStyle} />
         </CustomTouchableOpacity>
       ) : (
