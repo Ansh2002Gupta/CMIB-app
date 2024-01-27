@@ -43,6 +43,7 @@ export const style = StyleSheet.create({
     width: "45%",
     alignSelf: "flex-start",
     marginBottom: 48,
+    minHeight: 600, // TODO: This is just temporary change we will remove it when we implement loader on dropdownModal Click
   },
 });
 
