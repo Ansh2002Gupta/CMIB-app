@@ -6,6 +6,7 @@ import { View, Platform } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import SvgUri from "../SvgUri";
+import { MOBILE_NUMBER_MAX_LENGTH } from "../../constants/constants";
 import { styles } from "./MobileNumberInput.style";
 
 const MobileNumberInput = ({
@@ -80,7 +81,7 @@ const MobileNumberInput = ({
               label={intl.formatMessage({
                 id: "label.mobile_number",
               })}
-              maxLength={13}
+              maxLength={MOBILE_NUMBER_MAX_LENGTH}
               placeholder={intl.formatMessage({
                 id: "label.enter_contact_person_mobile_no",
               })}
@@ -104,7 +105,7 @@ const MobileNumberInput = ({
           })}
           codeValue={codeValue}
           value={mobNumberValue}
-          maxLength={13}
+          maxLength={MOBILE_NUMBER_MAX_LENGTH}
           customHandleBlur={customHandleBlur}
           isNumeric
           onChangeText={(val) => onChangeMobNumber(val)}

@@ -207,58 +207,60 @@ const SignUpThirdScreenUI = ({
   return (
     <>
       {isGettingCountryCodes && <LoadingScreen />}
-      {countryCodeResult && !isErrorCountryCodes && (
-        <FormWrapper
-          onSubmit={onClickNext}
-          customFormStyle={commonStyles.mainView}
-        >
-          <View
-            style={
-              isWebView
-                ? getResponsiveStyles({
-                    str: "signupContainer",
-                    currentBreakpoint,
-                  })
-                : style.innerContainer
-            }
+      {!isGettingCountryCodes &&
+        !!countryCodeResult?.length &&
+        !isErrorCountryCodes && (
+          <FormWrapper
+            onSubmit={onClickNext}
+            customFormStyle={commonStyles.mainView}
           >
-            {isWebView && (
-              <View>
-                <HeaderTextWithLabelAndDescription
-                  label={intl.formatMessage({ id: "label.step_three" })}
-                  {...(showContentHeader && {
-                    headerText: intl.formatMessage({
-                      id: "label.contact_person_details",
-                    }),
-                  })}
-                />
-              </View>
-            )}
-            {isWebView ? (
-              <View style={style.webContainerStyle}>
-                {renderFormContent()}
-                {renderFooterContent()}
-              </View>
-            ) : (
-              <>
-                <ScrollView
-                  showsVerticalScrollIndicator={false}
-                  style={style.contentContainerStyle}
-                >
+            <View
+              style={
+                isWebView
+                  ? getResponsiveStyles({
+                      str: "signupContainer",
+                      currentBreakpoint,
+                    })
+                  : style.innerContainer
+              }
+            >
+              {isWebView && (
+                <View>
+                  <HeaderTextWithLabelAndDescription
+                    label={intl.formatMessage({ id: "label.step_three" })}
+                    {...(showContentHeader && {
+                      headerText: intl.formatMessage({
+                        id: "label.contact_person_details",
+                      }),
+                    })}
+                  />
+                </View>
+              )}
+              {isWebView ? (
+                <View style={style.webContainerStyle}>
                   {renderFormContent()}
-                </ScrollView>
-                {renderFooterContent()}
-              </>
-            )}
-            {!!validationError && (
-              <ToastComponent
-                toastMessage={validationError}
-                onDismiss={handleDismissToast}
-              />
-            )}
-          </View>
-        </FormWrapper>
-      )}
+                  {renderFooterContent()}
+                </View>
+              ) : (
+                <>
+                  <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={style.contentContainerStyle}
+                  >
+                    {renderFormContent()}
+                  </ScrollView>
+                  {renderFooterContent()}
+                </>
+              )}
+              {!!validationError && (
+                <ToastComponent
+                  toastMessage={validationError}
+                  onDismiss={handleDismissToast}
+                />
+              )}
+            </View>
+          </FormWrapper>
+        )}
       {!isGettingCountryCodes && !!getErrorDetails().errorMessage && (
         <ErrorComponent
           errorMsg={getErrorDetails().errorMessage}

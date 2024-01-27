@@ -28,8 +28,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     error: errorCountryCodes,
     fetchData,
   } = useFetch({ url: COUNTRY_CODE });
-  const initialContactDetails =
-    signUpState?.signUpDetail?.contact_details || [];
   const {
     handleSignUpValidation,
     isLoading,
@@ -38,7 +36,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   } = useValidateSignUp();
 
   const [contactDetails, setContactDetails] = useState(
-    initialContactDetails.map((contact) => ({
+    signUpState?.signUpDetail?.contact_details.map((contact) => ({
       countryCode: contact.mobile_country_code || "",
       designation: contact.designation || "",
       emailId: contact.email || "",
@@ -60,7 +58,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   useEffect(() => {
     setContactDetails(
-      initialContactDetails.map((contact) => ({
+      signUpState?.signUpDetail?.contact_details.map((contact) => ({
         countryCode: contact.mobile_country_code || "",
         designation: contact.designation || "",
         emailId: contact.email || "",
@@ -71,14 +69,14 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       }))
     );
     setErrors(
-      initialContactDetails.map(() => ({
+      signUpState?.signUpDetail?.contact_details.map(() => ({
         designation: "",
         emailId: "",
         mobileNo: "",
         name: "",
       }))
     );
-  }, [initialContactDetails]);
+  }, [signUpState?.signUpDetail?.contact_details]);
 
   const allFieldsFilled = () => {
     return contactDetails.every((detail) => {
