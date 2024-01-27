@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "../../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -9,6 +9,7 @@ import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpU
 import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { navigations } from "../../../constants/routeNames";
+import { scrollToRef } from "../../../utils/util";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
@@ -63,6 +64,14 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     website: "",
   });
 
+  const facebookRef = useRef(null);
+  const linkedInRef = useRef(null);
+  const twitterRef = useRef(null);
+  const youtubeRef = useRef(null);
+
+  const companyDetailsRef = useRef(null);
+  const websiteRef = useRef(null);
+
   const {
     handleSignUpValidation,
     isLoading,
@@ -114,7 +123,22 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     );
   };
 
-  const validateFields = (value, name) => {
+  const getSocialMediaRef = (key) => {
+    switch (key) {
+      case "facebook":
+        return facebookRef;
+      case "linkedin":
+        return linkedInRef;
+      case "youtube":
+        return youtubeRef;
+      case "twitter":
+        return twitterRef;
+      default:
+        return null;
+    }
+  };
+
+  const validateFields = ({ name, shouldSrollToError, value }) => {
     let isValid = true;
     let newErrors = {
       socialMediaLinks: {
@@ -135,6 +159,9 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         newErrors.socialMediaLinks[key] = intl.formatMessage({
           id: "label.url_validation",
         });
+        if (shouldSrollToError && isValid) {
+          scrollToRef(getSocialMediaRef(key));
+        }
         isValid = false;
       }
     });
@@ -148,6 +175,9 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         newErrors.companyDetails = intl.formatMessage({
           id: "label.company_details_validation",
         });
+        if (shouldSrollToError && isValid) {
+          scrollToRef(companyDetailsRef);
+        }
         isValid = false;
       }
     }
@@ -158,6 +188,9 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         newErrors.website = intl.formatMessage({
           id: "label.url_validation",
         });
+        if (shouldSrollToError && isValid) {
+          scrollToRef(websiteRef);
+        }
         isValid = false;
       }
     }
@@ -197,7 +230,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           break;
       }
     }
-    errors[name] && validateFields(value, name);
+    errors[name] && validateFields({ value, name });
   };
 
   const onSuccess = async (details) => {
@@ -208,7 +241,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const handleSuccessModal = (value) => {
     if (value) {
-      if (validateFields()) {
+      if (validateFields({ shouldSrollToError: true })) {
         const details = {
           social_media_link: socialMediaLinks,
           website: website,
@@ -309,10 +342,12 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     <SignUpLastScreenUI
       allFieldsFilled={allFieldsFilled}
       companyDetails={companyDetails}
+      companyDetailsRef={companyDetailsRef}
       companyType={companyType}
       errors={errors}
       errorWhileDeletion={errorWhileDeletion}
       errorWhileUpload={errorWhileUpload}
+      getSocialMediaRef={getSocialMediaRef}
       handleBlur={handleBlur}
       handleDismissToast={handleDismissToast}
       handleInputChange={handleInputChange}
@@ -337,6 +372,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       }}
       validationError={validationError}
       website={website}
+      websiteRef={websiteRef}
     />
   );
 };

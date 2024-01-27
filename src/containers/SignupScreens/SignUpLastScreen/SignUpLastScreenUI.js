@@ -25,10 +25,12 @@ import { getResponsiveStyles, style } from "./SignUpLastScreen.style";
 const SignUpLastScreenUI = ({
   allFieldsFilled,
   companyDetails,
+  companyDetailsRef,
   companyType,
   errors,
   errorWhileDeletion,
   errorWhileUpload,
+  getSocialMediaRef,
   handleBlur,
   handleDismissToast,
   handleInputChange,
@@ -47,6 +49,7 @@ const SignUpLastScreenUI = ({
   uploadImageToServerUtils,
   validationError,
   website,
+  websiteRef,
 }) => {
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -85,6 +88,7 @@ const SignUpLastScreenUI = ({
             isError={!!errors.socialMediaLinks[key]}
             customHandleBlur={() => handleBlur(key)}
             value={socialMediaLinks[key]}
+            fieldRef={getSocialMediaRef(key)}
             onChangeText={(value) => handleInputChange(value, key)}
           />
         ))}
@@ -107,6 +111,7 @@ const SignUpLastScreenUI = ({
           isMandatory
           isMultiline={!isWeb}
           height={84}
+          fieldRef={companyDetailsRef}
         />
         <CustomTextInput
           label={intl.formatMessage({
@@ -121,6 +126,7 @@ const SignUpLastScreenUI = ({
           isError={!!errors.website}
           onChangeText={(value) => handleInputChange(value, "website")}
           isMandatory
+          fieldRef={websiteRef}
         />
         <CustomTextInput
           label={intl.formatMessage({
@@ -295,6 +301,7 @@ SignUpLastScreenUI.defaultProps = {
   errors: {},
   errorWhileDeletion: "",
   errorWhileUpload: "",
+  getSocialMediaRef: () => {},
   handleDismissToast: () => {},
   onDeleteImage: () => {},
   signUpError: "",
@@ -304,10 +311,12 @@ SignUpLastScreenUI.defaultProps = {
 SignUpLastScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   companyDetails: PropTypes.string.isRequired,
+  companyDetailsRef: PropTypes.any,
   companyType: PropTypes.string.isRequired,
   errors: PropTypes.object,
   errorWhileDeletion: PropTypes.string,
   errorWhileUpload: PropTypes.string,
+  getSocialMediaRef: PropTypes.func,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
@@ -325,6 +334,7 @@ SignUpLastScreenUI.propTypes = {
   socialMediaLinks: PropTypes.object.isRequired,
   validationError: PropTypes.string,
   website: PropTypes.string.isRequired,
+  websiteRef: PropTypes.any,
 };
 
 export default SignUpLastScreenUI;
