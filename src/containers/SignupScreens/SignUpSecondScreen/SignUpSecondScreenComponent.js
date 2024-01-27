@@ -89,7 +89,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     return requiredFields.every((field) => String(field).trim() !== "");
   };
 
-  const validateFields = (field, value) => {
+  const validateFields = ({ field, value, shouldSrollToError }) => {
     let isValid = true;
     let newErrors = {
       companyName: "",
@@ -120,7 +120,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.companyName = intl.formatMessage({
           id: "label.company_name_validation",
         });
-        if (!field) {
+        if (shouldSrollToError) {
           scrollToRef(companyNameRef);
         }
         isValid = false;
@@ -136,7 +136,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.registrationNo = intl.formatMessage({
           id: "label.registration_no_validation",
         });
-        if (isValid && !field) {
+        if (isValid && shouldSrollToError) {
           scrollToRef(firmRegistrationRef);
         }
         isValid = false;
@@ -149,7 +149,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.noOfPartners = intl.formatMessage({
           id: "label.no_of_partners_validation",
         });
-        if (isValid && !field) {
+        if (isValid && shouldSrollToError) {
           scrollToRef(noOfPartnersRef);
         }
         isValid = false;
@@ -165,7 +165,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.address = intl.formatMessage({
           id: "label.address_validation",
         });
-        if (isValid && !field) {
+        if (isValid && shouldSrollToError) {
           scrollToRef(addressRef);
         }
         isValid = false;
@@ -178,7 +178,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.emailId = intl.formatMessage({
           id: "label.email_id_validation",
         });
-        if (isValid && !field) {
+        if (isValid && shouldSrollToError) {
           scrollToRef(emailIdRef);
         }
         isValid = false;
@@ -195,7 +195,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.code = intl.formatMessage({
           id: "label.country_code_validation",
         });
-        if (isValid && !field) {
+        if (isValid && shouldSrollToError) {
           scrollToRef(codeRef);
         }
         isValid = false;
@@ -212,7 +212,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.telephoneNo = intl.formatMessage({
           id: "label.telephone_no_validation",
         });
-        if (isValid && !field) {
+        if (isValid && shouldSrollToError) {
           scrollToRef(telephoneNoRef);
         }
         isValid = false;
@@ -241,7 +241,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const onClickNext = (event) => {
     event?.preventDefault();
-    if (validateFields()) {
+    if (validateFields({ shouldSrollToError: true })) {
       const {
         companyName,
         emailId,
@@ -276,7 +276,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleInputChange = (value, name) => {
-    errors[name] && validateFields(name, value);
+    errors[name] && validateFields({ field: name, value });
     setFormData({
       ...formData,
       [name]: value,
@@ -284,7 +284,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleBlur = (name) => {
-    validateFields(name);
+    validateFields({ field: name });
   };
 
   const getErrorDetails = () => {

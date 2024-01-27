@@ -32,11 +32,13 @@ export const removeFullStopsBetweenStrings = (string) => {
 };
 
 export const scrollToRef = (ref) => {
-  if (Platform.OS.toLowerCase() === "web") {
-    ref?.current?.scrollIntoViewIfNeeded({
-      behaviour: "smooth",
-    });
-  } else {
-    ref?.current?.focus();
+  if (ref?.current) {
+    if (Platform.OS.toLowerCase() === "web") {
+      ref.current?.scrollIntoViewIfNeeded({
+        behaviour: "smooth",
+      });
+    } else {
+      ref.current?.focus();
+    }
   }
 };
