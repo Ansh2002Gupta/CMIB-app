@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
@@ -6,6 +6,7 @@ import SignUpSecondScreenUI from "./SignUpSecondScreenUI";
 import useGetStates from "../../../services/apiServices/hooks/useGetStates";
 import useIndustryTypes from "../../../services/apiServices/hooks/useIndustryTypes";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import {
   numRegex,
   ADDRESS_MAX_LENGTH,
@@ -17,10 +18,10 @@ import {
   NUMBER_MIN_LENGTH,
   REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
+import { scrollToRef } from "../../../utils/util";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { validateEmail } from "../../../utils/validation";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const intl = useIntl();
@@ -70,6 +71,14 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     code: "",
   });
 
+  const companyNameRef = useRef(null);
+  const firmRegistrationRef = useRef(null);
+  const noOfPartnersRef = useRef(null);
+  const addressRef = useRef(null);
+  const emailIdRef = useRef(null);
+  const telephoneNoRef = useRef(null);
+  const codeRef = useRef(null);
+
   useEffect(() => {
     getStates();
     getIndustryTypes();
@@ -111,6 +120,67 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.companyName = intl.formatMessage({
           id: "label.company_name_validation",
         });
+        if (!field) {
+          scrollToRef(companyNameRef);
+        }
+        isValid = false;
+      }
+    }
+
+    if (!field || field === "registrationNo") {
+      const enteredRegistrationNo = value || registrationNo;
+      if (
+        !numRegex.test(String(enteredRegistrationNo)) ||
+        enteredRegistrationNo.length !== REGISTRATION_NO_LENGTH
+      ) {
+        newErrors.registrationNo = intl.formatMessage({
+          id: "label.registration_no_validation",
+        });
+        if (isValid && !field) {
+          scrollToRef(firmRegistrationRef);
+        }
+        isValid = false;
+      }
+    }
+
+    if (!field || field === "noOfPartners") {
+      const enteredNoOfPartners = value || noOfPartners;
+      if (!numRegex.test(String(enteredNoOfPartners))) {
+        newErrors.noOfPartners = intl.formatMessage({
+          id: "label.no_of_partners_validation",
+        });
+        if (isValid && !field) {
+          scrollToRef(noOfPartnersRef);
+        }
+        isValid = false;
+      }
+    }
+
+    if (!field || field === "address") {
+      const enteredaddress = value || address;
+      if (
+        enteredaddress.trim().length < FIELD_MIN_LENGTH ||
+        enteredaddress.trim().length > ADDRESS_MAX_LENGTH
+      ) {
+        newErrors.address = intl.formatMessage({
+          id: "label.address_validation",
+        });
+        if (isValid && !field) {
+          scrollToRef(addressRef);
+        }
+        isValid = false;
+      }
+    }
+
+    if (!field || field === "emailId") {
+      const enteredEmailId = value || emailId;
+      if (validateEmail(enteredEmailId)) {
+        newErrors.emailId = intl.formatMessage({
+          id: "label.email_id_validation",
+        });
+        if (isValid && !field) {
+          scrollToRef(emailIdRef);
+        }
         isValid = false;
       }
     }
@@ -125,6 +195,9 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.code = intl.formatMessage({
           id: "label.country_code_validation",
         });
+        if (isValid && !field) {
+          scrollToRef(codeRef);
+        }
         isValid = false;
       }
     }
@@ -139,52 +212,9 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         newErrors.telephoneNo = intl.formatMessage({
           id: "label.telephone_no_validation",
         });
-        isValid = false;
-      }
-    }
-
-    if (!field || field === "emailId") {
-      const enteredEmailId = value || emailId;
-      if (validateEmail(enteredEmailId)) {
-        newErrors.emailId = intl.formatMessage({
-          id: "label.email_id_validation",
-        });
-        isValid = false;
-      }
-    }
-
-    if (!field || field === "registrationNo") {
-      const enteredRegistrationNo = value || registrationNo;
-      if (
-        !numRegex.test(String(enteredRegistrationNo)) ||
-        enteredRegistrationNo.length !== REGISTRATION_NO_LENGTH
-      ) {
-        newErrors.registrationNo = intl.formatMessage({
-          id: "label.registration_no_validation",
-        });
-        isValid = false;
-      }
-    }
-
-    if (!field || field === "address") {
-      const enteredaddress = value || address;
-      if (
-        enteredaddress.trim().length < FIELD_MIN_LENGTH ||
-        enteredaddress.trim().length > ADDRESS_MAX_LENGTH
-      ) {
-        newErrors.address = intl.formatMessage({
-          id: "label.address_validation",
-        });
-        isValid = false;
-      }
-    }
-
-    if (!field || field === "noOfPartners") {
-      const enteredNoOfPartners = value || noOfPartners;
-      if (!numRegex.test(String(enteredNoOfPartners))) {
-        newErrors.noOfPartners = intl.formatMessage({
-          id: "label.no_of_partners_validation",
-        });
+        if (isValid && !field) {
+          scrollToRef(telephoneNoRef);
+        }
         isValid = false;
       }
     }
@@ -295,8 +325,13 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   return (
     <SignUpSecondScreenUI
       {...{
+        addressRef,
         allFieldsFilled,
+        codeRef,
+        companyNameRef,
+        emailIdRef,
         errors,
+        firmRegistrationRef,
         formData,
         getErrorDetails,
         handleBlur,
@@ -309,10 +344,12 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         isGettingIndustries,
         isLoading: isLoading,
         isGettingStates,
+        noOfPartnersRef,
         onGoBack,
         onClickGoToLogin,
         onClickNext,
         stateOptions: stateResult,
+        telephoneNoRef,
         validationError,
       }}
     />
