@@ -21,3 +21,10 @@ export const getRenderText = (items, keys) => {
   }
   return keys.map((key) => items[key]).join(" ");
 };
+
+export const formatErrorMessages = (errorMessages) => {
+  const formattedMessages = errorMessages
+    .map((message) => message.replace(/\.+$/, ""))
+    .join(", ");
+  return formattedMessages + ".";
+};

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_VALIDATE_SIGN_UP } from "../../apiEndPoint";
+import { formatErrorMessages } from "../../../../utils/util";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useValidateSignUp = () => {
@@ -22,8 +23,22 @@ const useValidateSignUp = () => {
         setPostStatus(API_STATUS.ERROR);
       }
     } catch (err) {
-      const errorMessage =
-        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      let errorMessage;
+      const errors = err.response?.data.data.errors;
+
+      if (errors) {
+        const errorMessages = [];
+        for (const field in errors) {
+          if (errors.hasOwnProperty(field)) {
+            errorMessages.push(errors[field][0]);
+          }
+        }
+        errorMessage = formatErrorMessages(errorMessages);
+      } else {
+        errorMessage =
+          err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      }
+
       setValidationError(errorMessage);
       setPostStatus(API_STATUS.ERROR);
     }

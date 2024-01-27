@@ -3,6 +3,7 @@ import { useState } from "react";
 import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_SIGN_UP } from "../../apiEndPoint";
+import { formatErrorMessages } from "../../../../utils/util";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useSignUpUser = () => {
@@ -24,9 +25,21 @@ const useSignUpUser = () => {
       setPostStatus(API_STATUS.ERROR);
       setSignUpError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
+      let errorMessage;
+      const errors = err.response?.data.data.errors;
+      if (errors) {
+        const errorMessages = [];
+        for (const field in errors) {
+          if (errors.hasOwnProperty(field)) {
+            errorMessages.push(errors[field][0]);
+          }
+        }
+        errorMessage = formatErrorMessages(errorMessages);
+      } else {
+        errorMessage =
+          err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      }
       setPostStatus(API_STATUS.ERROR);
-      const errorMessage =
-        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       setSignUpError(errorMessage);
     }
   };
