@@ -99,7 +99,7 @@ const locale = {
     "Enter your address for correspondance",
   "label.select_state": "Select state",
   "label.email_id_placeholder": "Enter your email ID",
-  "label.enter_firm_no": "Enter firm registration no.",
+  "label.enter_firm_no": "Enter FRN",
   "label.enter_telephone_no": "Enter phone no.",
   "label.enter_contact_person_designation": "Enter contact person designation",
   "label.enter_contact_person_email_id": "Enter contact person email ID",
@@ -279,6 +279,7 @@ const locale = {
   "label.country_code": "Country Code",
   "label.email_address": "Email Address: ",
   "label.change_email_address": "Change Email Address",
+  "label.country_codes": "Country Codes",
 };
 
 export default locale;

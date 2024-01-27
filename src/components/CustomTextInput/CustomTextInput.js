@@ -23,6 +23,7 @@ const CustomTextInput = (props) => {
   const {
     customErrorStyle,
     customHandleBlur,
+    customHeading,
     customLabelStyle,
     customStyle,
     customTextInputContainer,
@@ -161,6 +162,7 @@ const CustomTextInput = (props) => {
           <DropDownModal
             {...{
               codeValue,
+              customHeading,
               labelField,
               menuOptions,
               onChangeValue,
@@ -235,6 +237,7 @@ CustomTextInput.defaultProps = {
   codeValue: "",
   customErrorStyle: {},
   customHandleBlur: () => {},
+  customHeading: "",
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
@@ -270,6 +273,7 @@ CustomTextInput.propTypes = {
   codeValue: PropTypes.string,
   customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
+  customHeading: PropTypes.string,
   customLabelStyle: PropTypes.object,
   customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customTextInputContainer: PropTypes.object,
