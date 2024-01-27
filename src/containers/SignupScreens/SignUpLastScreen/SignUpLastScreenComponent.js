@@ -208,7 +208,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const handleSuccessModal = (value) => {
     if (value) {
-      if (validateFields() && fileUploadResult) {
+      if (validateFields()) {
         const details = {
           social_media_link: socialMediaLinks,
           website: website,
