@@ -14,6 +14,7 @@ const TouchableImage = ({
   onPress,
   parentStyle,
   source,
+  style,
 }) => {
   const [isSelected, setIsSelected] = useState(false);
 
@@ -36,7 +37,7 @@ const TouchableImage = ({
       <View>
         <CustomImage
           Icon={source}
-          style={imageStyle}
+          style={{ ...imageStyle, ...style }}
           source={source}
           isSvg={isSvg}
         />

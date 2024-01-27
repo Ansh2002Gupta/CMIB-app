@@ -46,7 +46,7 @@ const style = {
     gap: 16,
   },
   cmibLogo: {
-    width: 166,
+    width: 140,
     height: 54,
   },
   gloPac: {

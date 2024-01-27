@@ -20,9 +20,14 @@ const CommonText = ({
   const textStyles = [styles.textStyle(fontWeight), ...styleArray];
 
   return (
-    <View style={customContainerStyle}>
+    <View
+      style={{
+        ...styles.container,
+        ...customContainerStyle,
+      }}
+    >
       <Text style={textStyles}>{children}</Text>
-     { isunderLine && <View style={styles.horizontalLine(underLinecolor)} />}
+      {isunderLine && <View style={styles.horizontalLine(underLinecolor)} />}
     </View>
   );
 };
@@ -32,8 +37,8 @@ CommonText.defaultProps = {
   customContainerStyle: {},
   customTextStyle: {},
   fontWeight: "500",
-  isunderLine:false,
-  underLinecolor:colors.black,
+  isunderLine: false,
+  underLinecolor: colors.black,
 };
 
 CommonText.propTypes = {
@@ -41,8 +46,8 @@ CommonText.propTypes = {
   customContainerStyle: PropTypes.object,
   customTextStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   fontWeight: PropTypes.string,
-  isunderLine:PropTypes.bool,
-  underLinecolor:PropTypes.string,
+  isunderLine: PropTypes.bool,
+  underLinecolor: PropTypes.string,
 };
 
 export default CommonText;
