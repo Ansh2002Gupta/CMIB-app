@@ -26,7 +26,7 @@ const useSignUpUser = () => {
       setSignUpError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       let errorMessage;
-      const errors = err.response?.data.data.errors;
+      const errors = err.response?.data?.data?.errors;
       if (errors) {
         const errorMessages = [];
         for (const field in errors) {

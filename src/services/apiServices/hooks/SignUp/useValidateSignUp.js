@@ -24,7 +24,7 @@ const useValidateSignUp = () => {
       }
     } catch (err) {
       let errorMessage;
-      const errors = err.response?.data.data.errors;
+      const errors = err.response?.data?.data?.errors;
 
       if (errors) {
         const errorMessages = [];
