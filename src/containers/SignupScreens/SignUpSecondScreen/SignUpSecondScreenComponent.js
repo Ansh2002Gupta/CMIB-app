@@ -89,7 +89,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     return requiredFields.every((field) => String(field).trim() !== "");
   };
 
-  const validateFields = ({ field, value, shouldSrollToError }) => {
+  const validateFields = ({ field, shouldSrollToError, value }) => {
     let isValid = true;
     let newErrors = {
       companyName: "",
