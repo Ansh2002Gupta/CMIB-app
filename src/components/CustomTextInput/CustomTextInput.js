@@ -32,6 +32,7 @@ const CustomTextInput = (props) => {
     dropdownStyle,
     errorMessage,
     eyeImage,
+    fieldRef,
     handleCountChange,
     inputKey,
     isCounterInput,
@@ -193,6 +194,7 @@ const CustomTextInput = (props) => {
           onBlur={handleBlur}
           placeholder={placeholder}
           secureTextEntry={isPassword && !isTextVisible}
+          ref={fieldRef}
           {...platformSpecificProps}
           {...(isNumeric ? mobileProps : {})}
           {...remainingProps}
@@ -280,6 +282,7 @@ CustomTextInput.propTypes = {
   dropdownStyle: PropTypes.object,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
+  fieldRef: PropTypes.any,
   handleCountChange: PropTypes.func,
   inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,

@@ -20,9 +20,14 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = ({
+  addressRef,
   allFieldsFilled,
+  codeRef,
+  companyNameRef,
   errors,
+  emailIdRef,
   formData,
+  firmRegistrationRef,
   getErrorDetails,
   handleDismissToast,
   handleInputChange,
@@ -34,10 +39,12 @@ const SignUpSecondScreenUI = ({
   isGettingIndustries,
   isLoading,
   isGettingStates,
+  noOfPartnersRef,
   onClickNext,
   onClickGoToLogin,
   onGoBack,
   stateOptions,
+  telephoneNoRef,
   validationError,
 }) => {
   const {
@@ -64,6 +71,7 @@ const SignUpSecondScreenUI = ({
         <CustomTextInput
           customHandleBlur={() => handleBlur("companyName")}
           errorMessage={errors.companyName}
+          fieldRef={companyNameRef}
           isError={!!errors.companyName}
           isMandatory
           label={intl.formatMessage({ id: "label.company_name" })}
@@ -94,6 +102,7 @@ const SignUpSecondScreenUI = ({
             <CustomTextInput
               customHandleBlur={() => handleBlur("registrationNo")}
               errorMessage={errors.registrationNo}
+              fieldRef={firmRegistrationRef}
               isError={!!errors.registrationNo}
               isMandatory
               isNumeric
@@ -115,6 +124,7 @@ const SignUpSecondScreenUI = ({
             <CustomTextInput
               customHandleBlur={() => handleBlur("noOfPartners")}
               errorMessage={errors.noOfPartners}
+              fieldRef={noOfPartnersRef}
               isError={!!errors.noOfPartners}
               isMandatory
               isNumeric
@@ -149,6 +159,7 @@ const SignUpSecondScreenUI = ({
         <CustomTextInput
           customHandleBlur={() => handleBlur("address")}
           errorMessage={errors.address}
+          fieldRef={addressRef}
           height={84}
           isError={!!errors.address}
           isMandatory
@@ -180,6 +191,7 @@ const SignUpSecondScreenUI = ({
         <CustomTextInput
           customHandleBlur={() => handleBlur("emailId")}
           errorMessage={errors.emailId}
+          fieldRef={emailIdRef}
           isError={!!errors.emailId}
           isMandatory
           label={intl.formatMessage({ id: "label.email_id" })}
@@ -194,6 +206,7 @@ const SignUpSecondScreenUI = ({
             <CustomTextInput
               customHandleBlur={() => handleBlur("code")}
               errorMessage={errors.code}
+              fieldRef={codeRef}
               isError={!!errors.code}
               isMandatory
               isNumeric
@@ -214,6 +227,7 @@ const SignUpSecondScreenUI = ({
             <CustomTextInput
               customHandleBlur={() => handleBlur("telephoneNo")}
               errorMessage={errors.telephoneNo}
+              fieldRef={telephoneNoRef}
               isError={!!errors.telephoneNo}
               isMandatory
               isNumeric
@@ -352,9 +366,14 @@ SignUpSecondScreenUI.defaultProps = {
 };
 
 SignUpSecondScreenUI.propTypes = {
+  addressRef: PropTypes.any,
   allFieldsFilled: PropTypes.func.isRequired,
+  codeRef: PropTypes.any,
+  companyNameRef: PropTypes.any,
   errors: PropTypes.object.isRequired,
+  emailIdRef: PropTypes.any,
   formData: PropTypes.object.isRequired,
+  firmRegistrationRef: PropTypes.any,
   getErrorDetails: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
