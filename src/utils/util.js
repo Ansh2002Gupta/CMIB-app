@@ -37,9 +37,6 @@ export const scrollToRef = (ref) => {
       behaviour: "smooth",
     });
   } else {
-    console.log("INSIDE", ref);
-    if (ref.current) {
-      ref?.current?.focus();
-    }
+    ref?.current?.focus();
   }
 };
