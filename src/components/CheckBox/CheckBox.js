@@ -20,7 +20,7 @@ const CheckBox = ({ handleCheckbox, id, isSelected, title }) => {
             Icon={isSelected ? CheckIcon : UncheckIcon}
             style={styles.iconStyle}
             source={isSelected ? CheckIcon : UncheckIcon}
-            isSvg={true}
+            isSvg
           />
           <CommonText customTextStyle={styles.titleStyle}>{title}</CommonText>
         </CustomTouchableOpacity>
