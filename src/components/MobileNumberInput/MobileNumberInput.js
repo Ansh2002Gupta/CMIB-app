@@ -14,6 +14,7 @@ const MobileNumberInput = ({
   codeValue,
   customHandleBlur,
   countryNameField,
+  fieldRef,
   labelField,
   mobNumberError,
   mobNumberValue,
@@ -69,11 +70,11 @@ const MobileNumberInput = ({
               isDropdown
               isMandatory
               onChangeValue={(val) => onChangeCode(val)}
-              menuOptions={menuOptions}
               placeholder={intl.formatMessage({
                 id: "label.select",
               })}
               value={codeValue}
+              {...{ menuOptions }}
             />
           </View>
           <View style={styles.numberInputStyle}>
@@ -92,6 +93,7 @@ const MobileNumberInput = ({
               isNumeric
               onChangeText={(val) => onChangeMobNumber(val)}
               isMandatory
+              {...{ fieldRef }}
             />
           </View>
         </View>
@@ -106,22 +108,19 @@ const MobileNumberInput = ({
           customHeading={intl.formatMessage({
             id: "label.country_codes",
           })}
-          codeValue={codeValue}
           value={mobNumberValue}
           maxLength={MOBILE_NUMBER_MAX_LENGTH}
-          customHandleBlur={customHandleBlur}
           isNumeric
           onChangeText={(val) => onChangeMobNumber(val)}
           isMobileNumber
           errorMessage={mobNumberError}
           isError={!!mobNumberError}
           isMandatory
-          options={options}
           onChangeValue={(val) => onChangeCode(val)}
           labelField="dial_code"
           valueField="dial_code"
           inputKey="country_code"
-          menuOptions={menuOptions}
+          {...{ codeValue, customHandleBlur, fieldRef, menuOptions, options }}
         />
       )}
     </>
