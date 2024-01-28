@@ -1,9 +1,10 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
 import useFetch from "../../../hooks/useFetch";
+import useGetErrorRefs from "./controllers/useGetErrorRefs";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
@@ -53,19 +54,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }))
   );
 
-  const nameRef = useRef(null);
-  const designationRef = useRef(null);
-  const emailRef = useRef(null);
-  const mobilNoRef = useRef(null);
-
-  const contactDetailRef = useRef(
-    contactDetails.map(() => ({
-      nameRef,
-      designationRef,
-      emailRef,
-      mobilNoRef,
-    }))
-  );
+  const { getAppropriateRef } = useGetErrorRefs();
 
   useEffect(() => {
     setContactDetails(
@@ -103,58 +92,9 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     });
   };
 
-  const validateField = ({
-    name,
-    index,
-    enteredValue,
-    shouldScrollToError,
-  }) => {
+  const validateField = ({ name, index, enteredValue }) => {
     const value = enteredValue || contactDetails[index][name];
     let error = "";
-    let isValid = true;
-
-    if (shouldScrollToError) {
-      if (shouldScrollToError || name === "name") {
-        if (
-          value.trim().length < FIELD_MIN_LENGTH ||
-          value.trim().length > FIELD_MAX_LENGTH
-        ) {
-          scrollToRef(contactDetailRef.current?.[index]?.nameRef);
-          isValid = false;
-        }
-      }
-      if (shouldScrollToError || name === "designation") {
-        if (
-          value.trim().length < FIELD_MIN_LENGTH ||
-          value.trim().length > ADDRESS_MAX_LENGTH
-        ) {
-          if (isValid) {
-            scrollToRef(contactDetailRef.current?.[index].designationRef);
-          }
-          isValid = false;
-        }
-      }
-      if (shouldScrollToError || name === "mobileNo") {
-        if (
-          !numRegex.test(String(value)) ||
-          value.trim().length < NUMBER_MIN_LENGTH ||
-          value.trim().length > NUMBER_MAX_LENGTH
-        ) {
-          if (isValid) {
-            scrollToRef(contactDetailRef.current?.[index].mobilNoRef);
-          }
-          isValid = false;
-        }
-      }
-      if (shouldScrollToError || name === "emailId") {
-        if (validateEmail(value)) {
-          if (isValid) {
-            scrollToRef(contactDetailRef.current?.[index].emailRef);
-          }
-          isValid = false;
-        }
-      }
-    }
     switch (name) {
       case "name":
         if (
@@ -195,7 +135,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       default:
         error = "";
     }
-
     return error;
   };
 
@@ -228,21 +167,18 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const validateFields = () => {
     const newErrors = contactDetails.map((detail, index) => ({
-      name: validateField({ name: "name", index, shouldScrollToError: true }),
+      name: validateField({ name: "name", index }),
       designation: validateField({
         name: "designation",
         index,
-        shouldScrollToError: true,
       }),
       mobileNo: validateField({
         name: "mobileNo",
         index,
-        shouldScrollToError: true,
       }),
       emailId: validateField({
         name: "emailId",
         index,
-        shouldScrollToError: true,
       }),
     }));
 
@@ -281,6 +217,42 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         signUpDispatch(setSignUpDetails(newContactDetails));
         tabHandler("next");
       });
+    } else {
+      for (let i = 0; i < contactDetails.length; i++) {
+        if (validateField({ name: "name", index: i })) {
+          scrollToRef(getAppropriateRef(contactDetails[i].module, "name"));
+          return;
+        }
+        if (
+          validateField({
+            name: "designation",
+            index: i,
+          })
+        ) {
+          scrollToRef(
+            getAppropriateRef(contactDetails[i].module, "designation")
+          );
+          return;
+        }
+        if (
+          validateField({
+            name: "mobileNo",
+            index: i,
+          })
+        ) {
+          scrollToRef(getAppropriateRef(contactDetails[i].module, "mobileNo"));
+          return;
+        }
+        if (
+          validateField({
+            name: "emailId",
+            index: i,
+          })
+        ) {
+          scrollToRef(getAppropriateRef(contactDetails[i].module, "emailId"));
+          return;
+        }
+      }
     }
   };
 
@@ -309,9 +281,9 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       {...{
         allFieldsFilled,
         contactDetails,
-        contactDetailRef,
         countryCodeResult: data,
         errors,
+        getAppropriateRef,
         handleBlur,
         handleDismissToast,
         handleInputChange,

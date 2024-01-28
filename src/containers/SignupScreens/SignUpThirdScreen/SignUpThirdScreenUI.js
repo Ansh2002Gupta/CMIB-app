@@ -28,9 +28,9 @@ import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 const SignUpThirdScreenUI = ({
   allFieldsFilled,
   contactDetails,
-  contactDetailRef,
   countryCodeResult,
   errors,
+  getAppropriateRef,
   handleBlur,
   handleDismissToast,
   handleInputChange,
@@ -107,7 +107,7 @@ const SignUpThirdScreenUI = ({
                   isError={!!errors[index].name}
                   onChangeText={(val) => handleInputChange(val, "name", index)}
                   isMandatory
-                  fieldRef={contactDetailRef.current[index].nameRef}
+                  fieldRef={getAppropriateRef(detail.module, "name")}
                 />
               </View>
             </View>
@@ -126,7 +126,7 @@ const SignUpThirdScreenUI = ({
                 handleInputChange(val, "designation", index)
               }
               isMandatory
-              fieldRef={contactDetailRef.current[index].designationRef}
+              fieldRef={getAppropriateRef(detail.module, "designation")}
             />
             <MobileNumberInput
               codeError={errors[index].countryCode}
@@ -142,7 +142,7 @@ const SignUpThirdScreenUI = ({
               options={countryCodeResult}
               mobNumberValue={contactDetails[index].mobileNo}
               mobNumberError={errors[index].mobileNo}
-              fieldRef={contactDetailRef.current[index].mobileRef}
+              fieldRef={getAppropriateRef(detail.module, "mobileNo")}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -157,7 +157,7 @@ const SignUpThirdScreenUI = ({
               value={contactDetails[index].emailId}
               onChangeText={(val) => handleInputChange(val, "emailId", index)}
               isMandatory
-              fieldRef={contactDetailRef.current[index].emailRef}
+              fieldRef={getAppropriateRef(detail.module, "emailId")}
             />
             {index < contactDetails.length - 1 && contactDetails.length > 1 && (
               <View style={style.dividerStyle} />
