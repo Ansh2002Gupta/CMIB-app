@@ -322,6 +322,7 @@ const SignUpSecondScreenUI = ({
                   keyboardShouldPersistTaps="handled"
                   extraScrollHeight={-50}
                   showsVerticalScrollIndicator={false}
+                  style={style.contentContainerStyle}
                 >
                   {renderFormContent()}
                 </KeyboardAwareScrollView>
