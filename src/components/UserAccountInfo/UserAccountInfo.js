@@ -10,10 +10,12 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import SessionBar from "../SessionBar";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
+import ViewProfileModal from "../../containers/ViewProfileModal";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
+  setShowViewProfileModal,
 } from "../../globalContext/userProfile/userProfileActions";
 import styles from "./UserAccountInfo.style";
 
@@ -31,7 +33,8 @@ const UserAccountInfo = ({
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
 
-  const { showChangePasswordModal, showLogoutModal } = userProfileDetails;
+  const { showChangePasswordModal, showLogoutModal, showViewProfileModal } =
+    userProfileDetails;
 
   return (
     <>
@@ -60,6 +63,15 @@ const UserAccountInfo = ({
           <ChangePasswordModal
             onPressCancel={() =>
               userProfileDispatch(setShowChangePasswordModal(false))
+            }
+          />
+        </CustomModal>
+      ) : null}
+      {showViewProfileModal ? (
+        <CustomModal>
+          <ViewProfileModal
+            onPressCancel={() =>
+              userProfileDispatch(setShowViewProfileModal(false))
             }
           />
         </CustomModal>
