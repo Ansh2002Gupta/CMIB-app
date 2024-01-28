@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import {
   FlatList,
+  Keyboard,
   Platform,
   TouchableOpacity,
 } from "@unthinkable/react-core-components";
@@ -42,6 +43,7 @@ const DropDownModal = ({
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   const handleDropDown = () => {
+    Keyboard.dismiss();
     setIsDropDownOpen((prev) => !prev);
   };
 

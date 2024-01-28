@@ -1,3 +1,3 @@
-import KeyboardAvoidingScrollView from "./KeyboardAwareScrollView";
+import KeyboardAwareScrollView from "./KeyboardAwareScrollView";
 
-export default KeyboardAvoidingScrollView;
+export default KeyboardAwareScrollView;
