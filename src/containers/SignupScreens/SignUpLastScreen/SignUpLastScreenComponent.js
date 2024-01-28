@@ -294,8 +294,9 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         case "companyDetails":
           value = companyDetails;
           if (
-            value.length < FIELD_MIN_LENGTH ||
-            value.length > COMPANY_DETAIL_MAX_LENGTH
+            value &&
+            (value.length < FIELD_MIN_LENGTH ||
+              value.length > COMPANY_DETAIL_MAX_LENGTH)
           ) {
             error = intl.formatMessage({
               id: "label.company_details_validation",
@@ -304,7 +305,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           break;
         case "website":
           value = website;
-          if (!urlRegex.test(String(value))) {
+          if (value && !urlRegex.test(String(value))) {
             error = intl.formatMessage({
               id: "label.url_validation",
             });

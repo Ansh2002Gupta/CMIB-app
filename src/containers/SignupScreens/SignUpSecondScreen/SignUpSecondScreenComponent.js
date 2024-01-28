@@ -114,8 +114,9 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     if (!field || field === "companyName") {
       const enteredCompanyName = value || companyName;
       if (
-        enteredCompanyName.trim().length < FIELD_MIN_LENGTH ||
-        enteredCompanyName.trim().length > FIELD_MAX_LENGTH
+        enteredCompanyName &&
+        (enteredCompanyName.trim().length < FIELD_MIN_LENGTH ||
+          enteredCompanyName.trim().length > FIELD_MAX_LENGTH)
       ) {
         newErrors.companyName = intl.formatMessage({
           id: "label.company_name_validation",
@@ -130,8 +131,9 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     if (!field || field === "registrationNo") {
       const enteredRegistrationNo = value || registrationNo;
       if (
-        !numRegex.test(String(enteredRegistrationNo)) ||
-        enteredRegistrationNo.length !== REGISTRATION_NO_LENGTH
+        enteredRegistrationNo &&
+        (!numRegex.test(String(enteredRegistrationNo)) ||
+          enteredRegistrationNo.length !== REGISTRATION_NO_LENGTH)
       ) {
         newErrors.registrationNo = intl.formatMessage({
           id: "label.registration_no_validation",
@@ -145,7 +147,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
     if (!field || field === "noOfPartners") {
       const enteredNoOfPartners = value || noOfPartners;
-      if (!numRegex.test(String(enteredNoOfPartners))) {
+      if (enteredNoOfPartners && !numRegex.test(String(enteredNoOfPartners))) {
         newErrors.noOfPartners = intl.formatMessage({
           id: "label.no_of_partners_validation",
         });
@@ -159,8 +161,9 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     if (!field || field === "address") {
       const enteredaddress = value || address;
       if (
-        enteredaddress.trim().length < FIELD_MIN_LENGTH ||
-        enteredaddress.trim().length > ADDRESS_MAX_LENGTH
+        enteredaddress &&
+        (enteredaddress.trim().length < FIELD_MIN_LENGTH ||
+          enteredaddress.trim().length > ADDRESS_MAX_LENGTH)
       ) {
         newErrors.address = intl.formatMessage({
           id: "label.address_validation",
@@ -174,7 +177,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
     if (!field || field === "emailId") {
       const enteredEmailId = value || emailId;
-      if (validateEmail(enteredEmailId)) {
+      if (enteredEmailId && validateEmail(enteredEmailId)) {
         newErrors.emailId = intl.formatMessage({
           id: "label.email_id_validation",
         });
@@ -188,9 +191,10 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     if (!field || field === "code") {
       const enteredCode = value || code;
       if (
-        !numRegex.test(String(enteredCode)) ||
-        enteredCode.length < CODE_MIN_LENGTH ||
-        enteredCode.length > CODE_MAX_LENGTH
+        enteredCode &&
+        (!numRegex.test(String(enteredCode)) ||
+          enteredCode.length < CODE_MIN_LENGTH ||
+          enteredCode.length > CODE_MAX_LENGTH)
       ) {
         newErrors.code = intl.formatMessage({
           id: "label.country_code_validation",
@@ -205,9 +209,10 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     if (!field || field === "telephoneNo") {
       const enteredTelephoneNo = value || telephoneNo;
       if (
-        !numRegex.test(String(enteredTelephoneNo)) ||
-        enteredTelephoneNo.length > NUMBER_MAX_LENGTH ||
-        enteredTelephoneNo.length < NUMBER_MIN_LENGTH
+        enteredTelephoneNo &&
+        (!numRegex.test(String(enteredTelephoneNo)) ||
+          enteredTelephoneNo.length > NUMBER_MAX_LENGTH ||
+          enteredTelephoneNo.length < NUMBER_MIN_LENGTH)
       ) {
         newErrors.telephoneNo = intl.formatMessage({
           id: "label.telephone_no_validation",
