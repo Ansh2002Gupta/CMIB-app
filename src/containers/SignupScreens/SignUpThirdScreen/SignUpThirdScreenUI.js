@@ -32,6 +32,7 @@ const SignUpThirdScreenUI = ({
   contactDetails,
   countryCodeResult,
   errors,
+  getAppropriateRef,
   getErrorDetails,
   handleBlur,
   handleDismissToast,
@@ -111,6 +112,7 @@ const SignUpThirdScreenUI = ({
                   isError={!!errors[index].name}
                   onChangeText={(val) => handleInputChange(val, "name", index)}
                   isMandatory
+                  fieldRef={getAppropriateRef(detail.module, "name")}
                 />
               </View>
             </View>
@@ -129,6 +131,7 @@ const SignUpThirdScreenUI = ({
                 handleInputChange(val, "designation", index)
               }
               isMandatory
+              fieldRef={getAppropriateRef(detail.module, "designation")}
             />
             <MobileNumberInput
               codeError={errors[index].countryCode}
@@ -144,6 +147,7 @@ const SignUpThirdScreenUI = ({
               options={countryCodeResult}
               mobNumberValue={contactDetails[index].mobileNo}
               mobNumberError={errors[index].mobileNo}
+              fieldRef={getAppropriateRef(detail.module, "mobileNo")}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -158,6 +162,7 @@ const SignUpThirdScreenUI = ({
               value={contactDetails[index].emailId}
               onChangeText={(val) => handleInputChange(val, "emailId", index)}
               isMandatory
+              fieldRef={getAppropriateRef(detail.module, "emailId")}
             />
             {index < contactDetails.length - 1 && contactDetails.length > 1 && (
               <View style={style.dividerStyle} />
