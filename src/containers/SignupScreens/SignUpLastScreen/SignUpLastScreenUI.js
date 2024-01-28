@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CheckBox from "../../../components/CheckBox/CheckBox";
@@ -10,6 +10,7 @@ import CustomModal from "../../../components/CustomModal/CustomModal";
 import CustomTextInput from "../../../components/CustomTextInput";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import KeyboardAwareScrollView from "../../../components/KeyboardAwareScrollView";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../../components/UploadImage";
@@ -283,12 +284,14 @@ const SignUpLastScreenUI = ({
             {renderFooterContent()}
           </View>
         ) : (
-          <ScrollView
+          <KeyboardAwareScrollView
+            keyboardShouldPersistTaps="handled"
+            extraScrollHeight={-50}
             showsVerticalScrollIndicator={false}
             style={style.contentContainerStyle}
           >
             {renderFormContent()}
-          </ScrollView>
+          </KeyboardAwareScrollView>
         )}
         {!isWeb && renderFooterContent()}
         {!!errorMessage && (

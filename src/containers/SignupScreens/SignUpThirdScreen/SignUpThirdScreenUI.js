@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CommonText from "../../../components/CommonText";
@@ -9,6 +9,7 @@ import CustomTextInput from "../../../components/CustomTextInput";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import KeyboardAwareScrollView from "../../../components/KeyboardAwareScrollView";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
 import LoadingScreen from "../../../components/LoadingScreen";
 import MobileNumberInput from "../../../components/MobileNumberInput";
@@ -248,12 +249,14 @@ const SignUpThirdScreenUI = ({
                 </View>
               ) : (
                 <>
-                  <ScrollView
+                  <KeyboardAwareScrollView
+                    keyboardShouldPersistTaps="handled"
+                    extraScrollHeight={-50}
                     showsVerticalScrollIndicator={false}
                     style={style.contentContainerStyle}
                   >
                     {renderFormContent()}
-                  </ScrollView>
+                  </KeyboardAwareScrollView>
                   {renderFooterContent()}
                 </>
               )}
