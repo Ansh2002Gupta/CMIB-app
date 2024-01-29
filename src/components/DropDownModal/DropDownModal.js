@@ -14,6 +14,7 @@ import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SearchView from "../SearchView";
 import SvgUri from "../SvgUri";
+import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import images from "../../images";
 import styles from "./DropDownModal.style";
 
@@ -31,6 +32,7 @@ const DropDownModal = ({
 }) => {
   const intl = useIntl();
   const flatListRef = useRef();
+  const [modalStyle, setModalStyle] = useState({});
 
   const defaultOptions = options?.map((option) => ({
     value: String(option[valueField]),
@@ -39,8 +41,44 @@ const DropDownModal = ({
   }));
 
   const data = menuOptions?.length ? menuOptions : defaultOptions;
+  const isIosPlatform = Platform.OS.toLowerCase() === "ios";
   const [selectedOption, setSelectedOption] = useState(data);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
+  useEffect(() => {
+    const selectedIndex = data?.findIndex((item) => item.value === value);
+    if (
+      selectedIndex > -1 &&
+      selectedIndex < selectedOption.length &&
+      flatListRef.current
+    ) {
+      scrollAnimation(selectedIndex);
+    }
+  }, [selectedOption]);
+
+  const keyboardDidHideCallback = () => {
+    if (isIosPlatform) {
+      setModalStyle({ ...styles.modalInnerContainer });
+    }
+  };
+
+  const keyboardDidShowCallback = (e) => {
+    const keyboardHeight = e.endCoordinates.height;
+    if (isIosPlatform) {
+      setModalStyle(styles.largeModalContainer(keyboardHeight));
+    }
+  };
+
+  useKeyboardShowHideListener({
+    keyboardDidHideCallback,
+    keyboardDidShowCallback,
+  });
+
+  let selectedValue = data?.find((option) => option.value === String(value));
+
+  const onSearch = (filteredData) => {
+    setSelectedOption(filteredData);
+  };
 
   const handleDropDown = () => {
     Keyboard.dismiss();
@@ -58,23 +96,6 @@ const DropDownModal = ({
         animated: true,
       });
     }
-  };
-
-  useEffect(() => {
-    const selectedIndex = data?.findIndex((item) => item.value === value);
-    if (
-      selectedIndex > -1 &&
-      selectedIndex < selectedOption.length &&
-      flatListRef.current
-    ) {
-      scrollAnimation(selectedIndex);
-    }
-  }, [selectedOption]);
-
-  let selectedValue = data?.find((option) => option.value === String(value));
-
-  const onSearch = (filteredData) => {
-    setSelectedOption(filteredData);
   };
 
   const handleSearch = (formattedQuery) => {
@@ -158,7 +179,10 @@ const DropDownModal = ({
         <CustomModal
           headerText={customHeading || placeholder}
           headerTextStyle={styles.headerText}
-          customInnerContainerStyle={styles.modalInnerContainer}
+          customInnerContainerStyle={{
+            ...styles.modalInnerContainer,
+            ...modalStyle,
+          }}
           onBackdropPress={handleDropDown}
         >
           {/* If the list items greater than 20 then we have to implement search */}
