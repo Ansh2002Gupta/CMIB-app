@@ -31,6 +31,7 @@ const DropDownModal = ({
 }) => {
   const intl = useIntl();
   const flatListRef = useRef();
+  const [modalStyle, setModalStyle] = useState({});
 
   const defaultOptions = options?.map((option) => ({
     value: String(option[valueField]),
@@ -41,6 +42,39 @@ const DropDownModal = ({
   const data = menuOptions?.length ? menuOptions : defaultOptions;
   const [selectedOption, setSelectedOption] = useState(data);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
+  useEffect(() => {
+    const selectedIndex = data?.findIndex((item) => item.value === value);
+    if (
+      selectedIndex > -1 &&
+      selectedIndex < selectedOption.length &&
+      flatListRef.current
+    ) {
+      scrollAnimation(selectedIndex);
+    }
+  }, [selectedOption]);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      _keyboardDidShow
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      _keyboardDidHide
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  let selectedValue = data?.find((option) => option.value === String(value));
+
+  const onSearch = (filteredData) => {
+    setSelectedOption(filteredData);
+  };
 
   const handleDropDown = () => {
     Keyboard.dismiss();
@@ -60,23 +94,6 @@ const DropDownModal = ({
     }
   };
 
-  useEffect(() => {
-    const selectedIndex = data?.findIndex((item) => item.value === value);
-    if (
-      selectedIndex > -1 &&
-      selectedIndex < selectedOption.length &&
-      flatListRef.current
-    ) {
-      scrollAnimation(selectedIndex);
-    }
-  }, [selectedOption]);
-
-  let selectedValue = data?.find((option) => option.value === String(value));
-
-  const onSearch = (filteredData) => {
-    setSelectedOption(filteredData);
-  };
-
   const handleSearch = (formattedQuery) => {
     const filteredData = data?.filter((item) => {
       return item.label.toLowerCase().includes(formattedQuery.toLowerCase());
@@ -88,6 +105,15 @@ const DropDownModal = ({
     if (flatListRef.current && selectedOption.length > info.index) {
       scrollAnimation(info.index);
     }
+  };
+
+  const _keyboardDidShow = (e) => {
+    const keyboardHeight = e.endCoordinates.height;
+    setModalStyle(styles.largeModalContainer(keyboardHeight));
+  };
+
+  const _keyboardDidHide = () => {
+    setModalStyle({ ...styles.modalInnerContainer });
   };
 
   const renderOptions = ({ item, index }) => {
@@ -158,7 +184,10 @@ const DropDownModal = ({
         <CustomModal
           headerText={customHeading || placeholder}
           headerTextStyle={styles.headerText}
-          customInnerContainerStyle={styles.modalInnerContainer}
+          customInnerContainerStyle={{
+            ...styles.modalInnerContainer,
+            ...modalStyle,
+          }}
           onBackdropPress={handleDropDown}
         >
           {/* If the list items greater than 20 then we have to implement search */}

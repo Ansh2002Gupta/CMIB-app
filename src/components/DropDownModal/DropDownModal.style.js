@@ -1,6 +1,7 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
+const deviceHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
   optionsText: {
     fontSize: 14,
@@ -46,8 +47,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   modalInnerContainer: {
-    maxHeight: 588,
-    minHeight: 320,
+    maxHeight: deviceHeight / 1.5,
   },
   headerText: {
     marginBottom: 16,
@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
   searchView: {
     marginBottom: 8,
   },
+  largeModalContainer: (keyboardHeight) => ({
+    maxHeight: keyboardHeight * 2.2
+  })
 });
 
 export default styles;
