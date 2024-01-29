@@ -1,6 +1,5 @@
-import { Platform } from "@unthinkable/react-core-components";
 import { useEffect } from "react";
-import { Keyboard } from "react-native";
+import { Keyboard, Platform } from "@unthinkable/react-core-components";
 
 const useKeyboardShowHideListener = ({
   keyboardDidShowCallback,
