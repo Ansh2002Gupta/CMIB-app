@@ -14,6 +14,7 @@ import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SearchView from "../SearchView";
 import SvgUri from "../SvgUri";
+import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import images from "../../images";
 import styles from "./DropDownModal.style";
 
@@ -40,6 +41,7 @@ const DropDownModal = ({
   }));
 
   const data = menuOptions?.length ? menuOptions : defaultOptions;
+  const isIosPlatform = Platform.OS.toLowerCase() === "ios";
   const [selectedOption, setSelectedOption] = useState(data);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
@@ -54,21 +56,23 @@ const DropDownModal = ({
     }
   }, [selectedOption]);
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      _keyboardDidShow
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      _keyboardDidHide
-    );
+  const keyboardDidHideCallback = () => {
+    if (isIosPlatform) {
+      setModalStyle({ ...styles.modalInnerContainer });
+    }
+  };
 
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
+  const keyboardDidShowCallback = (e) => {
+    const keyboardHeight = e.endCoordinates.height;
+    if (isIosPlatform) {
+      setModalStyle(styles.largeModalContainer(keyboardHeight));
+    }
+  };
+
+  useKeyboardShowHideListener({
+    keyboardDidHideCallback,
+    keyboardDidShowCallback,
+  });
 
   let selectedValue = data?.find((option) => option.value === String(value));
 
@@ -104,19 +108,6 @@ const DropDownModal = ({
   const scrollToIndex = (info) => {
     if (flatListRef.current && selectedOption.length > info.index) {
       scrollAnimation(info.index);
-    }
-  };
-
-  const _keyboardDidShow = (e) => {
-    const keyboardHeight = e.endCoordinates.height;
-    if (Platform.OS.toLowerCase() === "ios") {
-      setModalStyle(styles.largeModalContainer(keyboardHeight));
-    }
-  };
-
-  const _keyboardDidHide = () => {
-    if (Platform.OS.toLowerCase() === "ios") {
-      setModalStyle({ ...styles.modalInnerContainer });
     }
   };
 
