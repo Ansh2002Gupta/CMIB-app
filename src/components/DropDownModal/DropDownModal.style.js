@@ -47,7 +47,14 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   modalInnerContainer: {
-    maxHeight: deviceHeight / 1.5,
+    ...Platform.select({
+      ios: {
+        maxHeight: deviceHeight / 1.5,
+      },
+      android: {
+        maxHeight: deviceHeight / 2,
+      },
+    }),
   },
   headerText: {
     marginBottom: 16,
@@ -73,8 +80,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   largeModalContainer: (keyboardHeight) => ({
-    maxHeight: keyboardHeight * 2.2
-  })
+    maxHeight: keyboardHeight * 2.2,
+  }),
 });
 
 export default styles;

@@ -109,11 +109,15 @@ const DropDownModal = ({
 
   const _keyboardDidShow = (e) => {
     const keyboardHeight = e.endCoordinates.height;
-    setModalStyle(styles.largeModalContainer(keyboardHeight));
+    if (Platform.OS.toLowerCase() === "ios") {
+      setModalStyle(styles.largeModalContainer(keyboardHeight));
+    }
   };
 
   const _keyboardDidHide = () => {
-    setModalStyle({ ...styles.modalInnerContainer });
+    if (Platform.OS.toLowerCase() === "ios") {
+      setModalStyle({ ...styles.modalInnerContainer });
+    }
   };
 
   const renderOptions = ({ item, index }) => {
