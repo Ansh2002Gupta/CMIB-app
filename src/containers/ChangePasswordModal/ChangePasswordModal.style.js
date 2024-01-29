@@ -24,7 +24,27 @@ const style = {
     paddingBottom: 24,
     justifyContent: "space-between",
   },
+  buttonWebStyle: {
+    width: "100%",
+    alignItems: "flex-end",
+  },
+  webContentContainerStyle: {
+    maxHeight: "60vh",
+  },
   fourthSectionStyle: { paddingBottom: 16 },
+  requirementsPoints: {
+    marginBottom: 0,
+  },
+  subContainerStyle: {
+    maxWidth: "50%",
+  },
+  webView: {
+    requirementsPoints: (currentBreakpoint) => ({
+      display: "grid",
+      gridTemplateColumns: currentBreakpoint === "sm" ? "1fr" : "1fr 1fr",
+      gridRowGap: 16,
+    }),
+  },
 };
 
 export default style;

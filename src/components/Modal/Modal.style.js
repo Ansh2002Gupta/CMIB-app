@@ -35,6 +35,9 @@ export const styles = StyleSheet.create({
   xlWidth: {
     maxWidth: 1536,
   },
+  defaultMaxWidth: {
+    maxWidth: 530,
+  },
 });
 
 export const setMaxWidth = ({ maxWidth }) => {
