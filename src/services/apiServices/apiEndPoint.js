@@ -18,3 +18,4 @@ export const USER_PROFILE = `${USER_TYPE_COMPANY}/user/profile`;
 export const CORE_INDUSTRY_TYPE = `${CORE}/industry-types`;
 export const CORE_STATE = `${CORE}/states`;
 export const CORE_USERS_PERMISSION = `${CORE}/users/permission`;
+export const COUNTRY_CODE = `${CORE}/countries`;

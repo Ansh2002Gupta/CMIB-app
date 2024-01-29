@@ -41,6 +41,7 @@ const style = {
     alignItems: "center",
     height: 64,
     width: 64,
+    backgroundColor: colors.black,
   },
   detailContainer: {
     marginLeft: 12,
@@ -82,6 +83,10 @@ const style = {
     width: "100%",
     height: 1,
     backgroundColor: colors.lightGrey,
+  },
+  initialTextStyle: {
+    fontSize: 20,
+    color: colors.white,
   },
 };
 

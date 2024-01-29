@@ -4,6 +4,7 @@ import colors from "../../assets/colors";
 
 const screenContainerWidth = {
   maxWidth: 600,
+  marginBottom: 30,
 };
 
 const style = StyleSheet.create({
@@ -11,6 +12,7 @@ const style = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     display: "flex",
+    justifyContent: "center",
   },
   container: {
     backgroundColor: colors.white,
@@ -33,12 +35,6 @@ const style = StyleSheet.create({
   },
   width900pxOrCustomSubHeading: {
     fontSize: 14,
-  },
-  buttonView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 40,
   },
   companyView: {
     backgroundColor: colors.backgroundColor,
@@ -74,7 +70,6 @@ const style = StyleSheet.create({
   },
   backToLoginContainer: {
     marginTop: 24,
-    marginBottom: 24,
     justifyContent: "center",
     flexDirection: "row",
   },
@@ -106,6 +101,7 @@ const style = StyleSheet.create({
     marginTop: 48,
     zIndex: 1,
     boxShadow: "0px 4px 32px 0px rgba(97, 108, 130, 0.04)",
+    maxHeight: 780,
   },
   webSubmitView: {
     backgroundColor: colors.white,
@@ -162,6 +158,28 @@ const style = StyleSheet.create({
   forgotPasswordStyle: {
     fontSize: 28,
     color: colors.black,
+  },
+  emailStyle: {
+    color: colors.darkGrey,
+    fontSize: 14,
+  },
+  containerStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 8,
+  },
+  changeStyle: {
+    color: colors.darkBlue,
+    fontSize: 14,
+  },
+  webContainerStyle: {
+    paddingTop: 16,
+  },
+  emailContainerStyle: {
+    width: "70%",
+  },
+  submitButton: {
+    marginTop: 50,
   },
 });
 

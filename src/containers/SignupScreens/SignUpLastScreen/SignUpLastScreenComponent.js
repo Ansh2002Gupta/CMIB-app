@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "../../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
@@ -9,6 +9,7 @@ import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpU
 import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { navigations } from "../../../constants/routeNames";
+import { scrollToRef } from "../../../utils/util";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
@@ -63,6 +64,14 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     website: "",
   });
 
+  const facebookRef = useRef(null);
+  const linkedInRef = useRef(null);
+  const twitterRef = useRef(null);
+  const youtubeRef = useRef(null);
+
+  const companyDetailsRef = useRef(null);
+  const websiteRef = useRef(null);
+
   const {
     handleSignUpValidation,
     isLoading,
@@ -110,12 +119,26 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     return (
       requiredFields.every((field) => String(field).trim() !== "") &&
-      isAtLeastOneInterestSelected &&
-      fileUploadResult
+      isAtLeastOneInterestSelected
     );
   };
 
-  const validateFields = () => {
+  const getSocialMediaRef = (key) => {
+    switch (key) {
+      case "facebook":
+        return facebookRef;
+      case "linkedin":
+        return linkedInRef;
+      case "youtube":
+        return youtubeRef;
+      case "twitter":
+        return twitterRef;
+      default:
+        return null;
+    }
+  };
+
+  const validateFields = ({ name, shouldSrollToError, value }) => {
     let isValid = true;
     let newErrors = {
       socialMediaLinks: {
@@ -136,28 +159,50 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         newErrors.socialMediaLinks[key] = intl.formatMessage({
           id: "label.url_validation",
         });
+        if (shouldSrollToError && isValid) {
+          scrollToRef(getSocialMediaRef(key));
+        }
         isValid = false;
       }
     });
 
-    if (
-      companyDetails.trim().length < FIELD_MIN_LENGTH ||
-      companyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH
-    ) {
-      newErrors.companyDetails = intl.formatMessage({
-        id: "label.company_details_validation",
-      });
-      isValid = false;
+    if (!name || name === "companyDetails") {
+      const enteredCompanyDetails = value || companyDetails;
+      if (
+        enteredCompanyDetails.trim().length < FIELD_MIN_LENGTH ||
+        enteredCompanyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH
+      ) {
+        newErrors.companyDetails = intl.formatMessage({
+          id: "label.company_details_validation",
+        });
+        if (shouldSrollToError && isValid) {
+          scrollToRef(companyDetailsRef);
+        }
+        isValid = false;
+      }
     }
 
-    if (!urlRegex.test(String(website))) {
-      newErrors.website = intl.formatMessage({
-        id: "label.url_validation",
-      });
-      isValid = false;
+    if (!name || name === "website") {
+      const enteredWebsite = value || website;
+      if (!urlRegex.test(String(enteredWebsite))) {
+        newErrors.website = intl.formatMessage({
+          id: "label.url_validation",
+        });
+        if (shouldSrollToError && isValid) {
+          scrollToRef(websiteRef);
+        }
+        isValid = false;
+      }
     }
 
-    setErrors(newErrors);
+    if (name && newErrors[name] !== undefined) {
+      setErrors({
+        ...errors,
+        [name]: newErrors[name],
+      });
+    } else {
+      setErrors(newErrors);
+    }
     return isValid;
   };
 
@@ -185,6 +230,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           break;
       }
     }
+    errors[name] && validateFields({ value, name });
   };
 
   const onSuccess = async (details) => {
@@ -195,7 +241,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
   const handleSuccessModal = (value) => {
     if (value) {
-      if (validateFields() && fileUploadResult) {
+      if (validateFields({ shouldSrollToError: true })) {
         const details = {
           social_media_link: socialMediaLinks,
           website: website,
@@ -248,8 +294,9 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
         case "companyDetails":
           value = companyDetails;
           if (
-            value.length < FIELD_MIN_LENGTH ||
-            value.length > COMPANY_DETAIL_MAX_LENGTH
+            value &&
+            (value.length < FIELD_MIN_LENGTH ||
+              value.length > COMPANY_DETAIL_MAX_LENGTH)
           ) {
             error = intl.formatMessage({
               id: "label.company_details_validation",
@@ -258,7 +305,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           break;
         case "website":
           value = website;
-          if (!urlRegex.test(String(value))) {
+          if (value && !urlRegex.test(String(value))) {
             error = intl.formatMessage({
               id: "label.url_validation",
             });
@@ -296,10 +343,12 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     <SignUpLastScreenUI
       allFieldsFilled={allFieldsFilled}
       companyDetails={companyDetails}
+      companyDetailsRef={companyDetailsRef}
       companyType={companyType}
       errors={errors}
       errorWhileDeletion={errorWhileDeletion}
       errorWhileUpload={errorWhileUpload}
+      getSocialMediaRef={getSocialMediaRef}
       handleBlur={handleBlur}
       handleDismissToast={handleDismissToast}
       handleInputChange={handleInputChange}
@@ -324,6 +373,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       }}
       validationError={validationError}
       website={website}
+      websiteRef={websiteRef}
     />
   );
 };

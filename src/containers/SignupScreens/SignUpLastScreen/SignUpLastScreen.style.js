@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../../assets/colors";
 
@@ -73,6 +73,18 @@ export const style = StyleSheet.create({
   },
   imageContainer: {
     marginBottom: 48,
+  },
+  labelBox: {
+    ...Platform.select({
+      web: {
+        display: "inline-block",
+      },
+    }),
+  },
+  labelStar: {
+    marginLeft: 4,
+    color: colors.red,
+    fontSize: 18,
   },
 });
 

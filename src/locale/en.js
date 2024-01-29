@@ -21,7 +21,7 @@ const locale = {
   "label.create_new_account": "Create new account",
   "label.follow_us": "Follow us",
   "label.enter_email_to_reset_password":
-    "Enter your email address to reset your password. Upon submission, if an account is associated with this email, we'll send the reset instructions.",
+    " Enter your email address to reset your password. Upon submission, if an account is associated with the email address entered below, we'll send the one time password.",
   "label.enter_id": "Enter ID",
   "label.back_to_login": "Back to Login",
   "label.submit": "Submit",
@@ -99,7 +99,7 @@ const locale = {
     "Enter your address for correspondance",
   "label.select_state": "Select state",
   "label.email_id_placeholder": "Enter your email ID",
-  "label.enter_firm_no": "Enter firm registration no.",
+  "label.enter_firm_no": "Enter FRN",
   "label.enter_telephone_no": "Enter phone no.",
   "label.enter_contact_person_designation": "Enter contact person designation",
   "label.enter_contact_person_email_id": "Enter contact person email ID",
@@ -167,14 +167,14 @@ const locale = {
     "Contact Person Name must be between 6 and 255 characters.",
   "label.designation_validation":
     "Designation must be between 6 and 500 characters.",
-  "label.mobile_number_validation": "Mobile number must be exactly 10 digits.",
+  "label.mobile_number_validation": "Please enter a valid mobile number.",
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
     "Company details must be between 6 and 1000 characters.",
   "label.yes": "Yes",
   "label.no": "No",
   "label.otp_text":
-    "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
+    "Please enter the one time password that you have received on your registered email address to continue to reset your password.",
   "label.text_otp": "OTP",
   "label.jobs": "Jobs",
   "label.welcome_to_cmib": "Welcome to CMI&B Company Sign-up",
@@ -197,8 +197,7 @@ const locale = {
   "label.left_brace": "left)",
   "label.times": "times!",
   "label.fileTooLargeError": "Uploaded file must be less than 5MB",
-  "label.allowedFileFormatsError":
-    "Only JPEG, PNG, SVG, EPS, PDF formats are allowed",
+  "label.allowedFileFormatsError": "Only JPEG, PNG, SVG formats are allowed",
   "label.nonUploadableImageError":
     "Failed to upload this file, please try uploading a different image",
   "label.description": "Description",
@@ -208,6 +207,7 @@ const locale = {
   "label.add": "Add",
   "label.edit": "Edit",
   "label.duplicate_email_validation": "Email addresses must be unique.",
+  "label.duplicate_mobileNo_validation": "Mobile Number must be unique",
   "label.logout_message": "Are you sure you want to logout of the portal?",
   "label.add_designation": "Add Designation",
   "label.designation": "Designation",
@@ -277,6 +277,10 @@ const locale = {
   "label.no_module_available": "No module available",
   "label.select_session": "Select Session",
   "label.logout_successfully": "You are logged out successfully.",
+  "label.country_code": "Country Code",
+  "label.email_address": "Email Address: ",
+  "label.change_email_address": "Change Email Address",
+  "label.country_codes": "Country Codes",
 };
 
 export default locale;
