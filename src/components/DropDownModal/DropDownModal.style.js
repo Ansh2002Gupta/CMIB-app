@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   modalInnerContainer: {
-    maxHeight: 588,
+    maxHeight: 500,
     minHeight: 320,
   },
   headerText: {

@@ -163,16 +163,21 @@ const DropDownModal = ({
         >
           {/* If the list items greater than 20 then we have to implement search */}
           {data?.length >= 20 && (
-            <SearchView
-              data={data}
-              onSearch={onSearch}
-              customSearchCriteria={handleSearch}
-              customParentStyle={styles.searchView}
-            />
+            <>
+              {Keyboard.dismiss()}
+              <SearchView
+                data={data}
+                onSearch={onSearch}
+                customSearchCriteria={handleSearch}
+                customParentStyle={styles.searchView}
+              />
+            </>
           )}
           <FlatList
             data={selectedOption}
             getItemLayout={getItemLayout}
+            initialNumToRender={10}
+            maxToRenderPerBatch={20}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={renderEmptyFooter()}
             ref={flatListRef}
