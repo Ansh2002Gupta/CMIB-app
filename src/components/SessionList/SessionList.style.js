@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
@@ -14,11 +14,10 @@ const styles = StyleSheet.create({
     paddingTop: 18,
     width: "100%",
   }),
-  text: (isSelected) => ({
-    color: isSelected ? colors.white : colors.lightGrey,
-    fontSize: 14,
-    fontWeight: isSelected ? "600" : "500",
-  }),
+  noResultContainer: {
+    marginHorizontal: 16,
+    marginVertical: 18,
+  },
   searchParent: {
     backgroundColor: colors.offWhite,
     borderColor: colors.black,
@@ -28,6 +27,17 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: colors.lightGrey,
   },
+  text: (isSelected) => ({
+    color: isSelected ? colors.white : colors.lightGrey,
+    fontSize: 14,
+    ...Platform.select({
+      web: {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      },
+    }),
+  }),
 });
 
 export default styles;

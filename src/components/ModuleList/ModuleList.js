@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { FlatList } from "@unthinkable/react-core-components";
+import { FlatList, Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -15,6 +15,13 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
     accessibleModules: Object.keys(
       userProfileState.userDetails?.menu_items || {}
     ),
+  });
+  const platformSpecificProps = Platform.select({
+    web: {},
+    default: {
+      numberOfLines: 1,
+      ellipsizeMode: "tail",
+    },
   });
 
   const renderItem = ({ item: module }) => (
@@ -32,8 +39,9 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
           }
         >
           <CommonText
+            customTextProps={platformSpecificProps}
             customTextStyle={[
-              styles.changeText,
+              styles.text,
               module.sectionHeading ? styles.disabled : {},
             ]}
           >

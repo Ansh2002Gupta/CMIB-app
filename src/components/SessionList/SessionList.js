@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { FlatList } from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
+import { FlatList, Platform } from "@unthinkable/react-core-components";
 
+import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import ResponsiveTextTruncate from "../ResponsiveTextTruncate/ResponsiveTextTruncate";
 import SearchView from "../SearchView";
 import styles from "./SessionList.style";
 
 const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
   const [searchList, setSearchList] = useState(sessionList);
+  const intl = useIntl();
+  const platformSpecificProps = Platform.select({
+    web: {},
+    default: {
+      numberOfLines: 1,
+      ellipsizeMode: "tail",
+    },
+  });
 
   const renderItem = ({ item: session }) => (
     <CustomTouchableOpacity
@@ -16,11 +25,13 @@ const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
       style={styles.listItem(selectedSession.id === session.id)}
       onPress={() => onSelectItem(session)}
     >
-      <ResponsiveTextTruncate
-        text={session.label}
-        maxLength={40}
-        style={styles.text(selectedSession.id === session.id)}
-      />
+      <CommonText
+        customTextProps={platformSpecificProps}
+        customTextStyle={styles.text(selectedSession.id === session.id)}
+        fontWeight={selectedSession.id === session.id ? "600" : "500"}
+      >
+        {session.label}
+      </CommonText>
     </CustomTouchableOpacity>
   );
 
@@ -43,11 +54,19 @@ const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
         customParentStyle={styles.searchParent}
         customSearchCriteria={handleSearching}
       />
-      <FlatList
-        data={searchList}
-        keyExtractor={(session) => session.id}
-        renderItem={renderItem}
-      />
+      {!!searchList.length ? (
+        <FlatList
+          data={searchList}
+          keyExtractor={(session) => session.id}
+          renderItem={renderItem}
+        />
+      ) : (
+        <CommonText 
+        customContainerStyle={styles.noResultContainer}
+        customTextStyle={styles.text(true)}>
+          {intl.formatMessage({ id: "label.no_results_found" })}
+        </CommonText>
+      )}
     </>
   );
 };

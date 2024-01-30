@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { Platform } from "@unthinkable/react-core-components";
 
 import { TwoColumn } from "../../core/layouts";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import ResponsiveTextTruncate from "../ResponsiveTextTruncate/ResponsiveTextTruncate";
 import styles from "./SideBarItemView.style";
 
 const SideBarItemView = ({
@@ -17,18 +17,28 @@ const SideBarItemView = ({
 }) => {
   const intl = useIntl();
 
+  const platformSpecificProps = Platform.select({
+    web: {},
+    default: {
+      numberOfLines: 1,
+      ellipsizeMode: "tail",
+    },
+  });
+
   return (
     <>
       <CommonText customTextStyle={styles.titleText}>{title}</CommonText>
       <TwoColumn
-        style={styles.contentText}
+        style={styles.contentTextContainer}
+        isLeftFillSpace={true}
+        leftSectionStyle={styles.leftSection}
         leftSection={
-          <ResponsiveTextTruncate
-            text={content}
-            maxLength={25}
-            style={styles.changeText}
-            widthPercentage={0.4}
-          />
+          <CommonText
+            customTextStyle={styles.contentText}
+            customTextProps={platformSpecificProps}
+          >
+            {content}
+          </CommonText>
         }
         rightSection={
           showChangeButton && (
