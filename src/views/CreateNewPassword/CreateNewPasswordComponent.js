@@ -42,7 +42,7 @@ function CreateNewPasswordComponent({ resetToken }) {
 
   const handleConfirmPasswordBlur = () => {
     if (confirmNewPassword && newPassword && !doPasswordsMatch()) {
-      setErrorMessage(intl.formatMessage({ id: "label.password-not-match" }));
+      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
     } else {
       setErrorMessage("");
     }
@@ -55,16 +55,14 @@ function CreateNewPasswordComponent({ resetToken }) {
     ) {
       return;
     }
-    if (!doPasswordsMatch()) {
-      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
-      return;
-    }
     if (doPasswordsMatch()) {
       setErrorMessage("");
       handleResetPasswordAPI({
         token: resetToken,
         password: newPassword,
       });
+    } else {
+      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
     }
   };
 
