@@ -78,7 +78,7 @@ function OtpView({ email, setSendOtpResult, token }) {
 
   return (
     <>
-      {isSuccess ? (
+      {true ? (
         <CreateNewPasswordComponent resetToken={verifyOtpResult?.data?.token} />
       ) : (
         <OtpViewUI

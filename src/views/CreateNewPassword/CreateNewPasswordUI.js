@@ -93,6 +93,13 @@ function CreateNewPasswordUI(props) {
     }
   };
 
+  const customStyle = isWebView
+    ? {
+        ...styles.webView.inputStyle,
+        ...(errorMessage && styles.webView.erroInputStyle),
+      }
+    : { ...styles.inputStyle, ...(errorMessage && styles.erroInputStyle) };
+
   return (
     <ScrollView
       style={styles.mainView}
@@ -175,15 +182,7 @@ function CreateNewPasswordUI(props) {
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
-              customStyle={
-                isWebView
-                  ? errorMessage
-                    ? styles.webView.erroInputStyle
-                    : {}
-                  : errorMessage
-                  ? styles.erroInputStyle
-                  : styles.inputStyle
-              }
+              customStyle={customStyle}
               errorMessage={errorMessage}
               isError={!!errorMessage}
               customErrorStyle={styles.ErrorStyle}

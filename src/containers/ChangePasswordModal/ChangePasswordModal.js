@@ -28,10 +28,10 @@ const ChangePasswordModal = ({ onPressCancel }) => {
 
   const {
     errorWhileChangePassword,
-    setErrorWhileChangePassword,
     handleUseChangePassword,
     isLoading,
     isSuccess,
+    setErrorWhileChangePassword,
   } = useChangePasswordApi();
 
   const isNextDisabled = () => {
@@ -86,6 +86,12 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     }
   };
 
+  const baseStyle = isWebView ? styles.containerStyle : styles.inputStyle;
+  const errorStyle = isWebView
+    ? styles.erroInputStyleWeb
+    : styles.erroInputStyle;
+  const customStyle = error ? errorStyle : baseStyle;
+
   return (
     <>
       <ScrollView
@@ -139,15 +145,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               customHandleBlur={() => {
                 handleConfirmPasswordBlur();
               }}
-              customStyle={
-                isWebView
-                  ? error
-                    ? styles.erroInputStyleWeb
-                    : styles.containerStyle
-                  : error
-                  ? styles.erroInputStyle
-                  : styles.inputStyle
-              }
+              customStyle={customStyle}
               isMandatory
               eyeImage
               isError={!!error}
@@ -187,18 +185,15 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           />
         </View>
       </View>
-      {!!errorWhileChangePassword && (
+      {(errorWhileChangePassword || isSuccess) && (
         <ToastComponent
-          toastMessage={errorWhileChangePassword}
+          toastMessage={
+            errorWhileChangePassword ||
+            intl.formatMessage({
+              id: "label.change_password_message",
+            })
+          }
           onDismiss={handleDismissToast}
-        />
-      )}
-      {isSuccess && (
-        <ToastComponent
-          toastMessage={intl.formatMessage({
-            id: "label.change_password_message",
-          })}
-          onDismiss={() => {}}
         />
       )}
     </>
