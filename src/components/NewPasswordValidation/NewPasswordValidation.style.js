@@ -3,10 +3,11 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const bulletIconStyle = {
-  width: 6,
-  height: 6,
+  width: 8,
+  height: 8,
   borderRadius: 5,
   margin: 5,
+  marginLeft: 0,
 };
 
 const styles = StyleSheet.create({
