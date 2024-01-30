@@ -187,15 +187,12 @@ const DropDownModal = ({
         >
           {/* If the list items greater than 20 then we have to implement search */}
           {data?.length >= 20 && (
-            <>
-              {Keyboard.dismiss()}
-              <SearchView
-                data={data}
-                onSearch={onSearch}
-                customSearchCriteria={handleSearch}
-                customParentStyle={styles.searchView}
-              />
-            </>
+            <SearchView
+              data={data}
+              onSearch={onSearch}
+              customSearchCriteria={handleSearch}
+              customParentStyle={styles.searchView}
+            />
           )}
           <FlatList
             data={selectedOption}
