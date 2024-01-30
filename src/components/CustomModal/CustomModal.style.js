@@ -48,6 +48,9 @@ const style = {
     height: 48,
     width: 48,
   },
+  mainContainerStyle: {
+    padding: 24,
+  },
 };
 
 export default style;

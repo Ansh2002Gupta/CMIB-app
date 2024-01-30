@@ -28,6 +28,26 @@ const style = {
   notMatchingError: {
     paddingTop: 24,
   },
+  buttonWebStyle: {
+    width: "100%",
+    alignItems: "flex-end",
+  },
+  webContentContainerStyle: {
+    maxHeight: "60vh",
+  },
+  requirementsPoints: {
+    marginBottom: 0,
+  },
+  subContainerStyle: {
+    maxWidth: "50%",
+  },
+  webView: {
+    requirementsPoints: (currentBreakpoint) => ({
+      display: "grid",
+      gridTemplateColumns: currentBreakpoint === "sm" ? "1fr" : "1fr 1fr",
+      gridRowGap: currentBreakpoint === "sm" ? 0 : 16,
+    }),
+  },
 };
 
 export default style;
