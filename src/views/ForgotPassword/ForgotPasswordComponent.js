@@ -58,8 +58,7 @@ function ForgotPasswordComponent() {
 
   return (
     <>
-      {true ? (
-        // !!sendOtpResult && !!Object.keys(sendOtpResult)?.length ? (
+      {!!sendOtpResult && !!Object.keys(sendOtpResult)?.length ? (
         <OtpView
           email={userEmail}
           token={sendOtpResult?.data?.token}
