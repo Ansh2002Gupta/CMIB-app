@@ -41,21 +41,6 @@ const style = {
     width: 166,
     height: 54,
   },
-  gloPac: {
-    width: 82,
-    height: 40,
-    alignSelf: "center",
-  },
-  iconG20: {
-    width: 70,
-    height: 40,
-    alignSelf: "center",
-  },
-  iconAzadiMahotsav: {
-    width: 67,
-    height: 40,
-    alignSelf: "center",
-  },
 };
 
 export default style;
