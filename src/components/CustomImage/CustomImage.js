@@ -48,6 +48,7 @@ CustomImage.defaultProps = {
 
 CustomImage.propTypes = {
   alt: PropTypes.string,
+  height: PropTypes.number,
   isSvg: PropTypes.bool,
   resizeMode: PropTypes.oneOf([
     "center",
@@ -64,7 +65,6 @@ CustomImage.propTypes = {
   ]).isRequired,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   width: PropTypes.number,
-  height: PropTypes.number,
 };
 
 export default CustomImage;

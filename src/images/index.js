@@ -54,7 +54,6 @@ const iconTelegram = appendAppBaseURl("/images/iconTelegram/iconTelegram.png");
 const iconTwitter = appendAppBaseURl("/images/iconTwitter/iconTwitter.png");
 const iconYoutube = appendAppBaseURl("/images/iconYoutube/iconYoutube.png");
 const iconEyeSlash = appendAppBaseURl("/images/iconEyeSlash.png");
-const iconCmibLogo = appendAppBaseURl("/images/iconCmibLogo/iconCmibLogo.png");
 const iconAddApplicationForm = appendAppBaseURl(
   "/images/iconAddApplicationForm/iconAddApplicationForm.png"
 );
@@ -221,7 +220,6 @@ const images = {
   iconTelegram,
   iconTwitter,
   iconYoutube,
-  iconCmibLogo,
   iconTick,
   iconDashboard,
   iconDashboardActive,
