@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
+import { Dimensions, Platform, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const deviceHeight = Dimensions.get("window").height;

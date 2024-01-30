@@ -43,7 +43,7 @@ const PublicHeader = () => {
               onPress={handleNavigate}
               parentStyle={styles.imagesContainer}
               resizeMode="contain"
-              source={images.iconCmibLogo}
+              source={images.iconCmibLight}
               style={styles.cmibLogo}
             />
             {!hideRightIcons && (
@@ -80,7 +80,13 @@ const PublicHeader = () => {
               ...styles.containerStyle,
             }}
           >
-            <CustomImage source={images.iconCmibLogo} style={styles.cmibLogo} />
+            <CustomImage
+              source={images.iconCmibLight}
+              isSvg
+              Icon={images.iconCmibLight}
+              height={40}
+              width={120}
+            />
           </View>
         </View>
       )}

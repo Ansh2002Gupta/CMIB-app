@@ -1,5 +1,6 @@
 import avatar from "../../public/images/Avatar.svg";
-import cmibIcon from "../../public/images/svg/cmibIcon.svg";
+import iconCmibDark from "../../public/images/svg/iconCmibDark.svg";
+import iconCmibLight from "../../public/images/svg/iconCmibLight.svg";
 import logo from "../../public/images/logo.png";
 import sun from "../../public/images/sun.png";
 import moon from "../../public/images/moon.png";
@@ -103,7 +104,8 @@ const images = {
   iconArrowDown2,
   avatar,
   logo,
-  cmibIcon,
+  iconCmibDark,
+  iconCmibLight,
   sun,
   moon,
   flagFr,

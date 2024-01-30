@@ -4,14 +4,35 @@ import { Image, Platform } from "@unthinkable/react-core-components";
 
 import styles from "./customImage.style";
 
-const CustomImage = ({ alt, Icon, isSvg, resizeMode, source, style }) => {
+const CustomImage = ({
+  alt,
+  height,
+  Icon,
+  isSvg,
+  resizeMode,
+  source,
+  style,
+  width,
+}) => {
+  const getDimensions = () => {
+    if (height && width) {
+      return { height, width };
+    }
+    if (height) {
+      return { height };
+    }
+    if (width) {
+      return { width };
+    }
+    return {};
+  };
   if (Platform.OS.toLowerCase() === "web") {
     return (
       <Image source={source} style={style} resizeMode={resizeMode} alt={alt} />
     );
   }
   if (isSvg) {
-    return <Icon style={style} />;
+    return <Icon {...getDimensions()} style={style} />;
   }
   return (
     <Image source={source} style={style} resizeMode={resizeMode} alt={alt} />
@@ -42,6 +63,8 @@ CustomImage.propTypes = {
     PropTypes.any,
   ]).isRequired,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  width: PropTypes.number,
+  height: PropTypes.number,
 };
 
 export default CustomImage;
