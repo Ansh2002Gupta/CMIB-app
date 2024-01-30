@@ -104,7 +104,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         />
       )}
       <View style={styles.imageView}>
-        <CustomImage source={images.cmibIcon} style={styles.cmiLogo} />
+        <CustomImage source={images.iconCmibDark} style={styles.cmiLogo} />
       </View>
       {sideBarContent === SideBarContentEnum.NONE && (
         <TwoRow

@@ -258,6 +258,7 @@ const SignUpLastScreenUI = ({
             })}
             onPress={onClickGoToLogin}
             isSuccess
+            maxWidth={"xs"}
           />
         )}
         {isWebView && (
