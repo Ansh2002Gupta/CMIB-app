@@ -7,7 +7,6 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 import FiveColumn from "../../core/layouts/FiveColumn";
 
 import ActionPairButton from "../../components/ActionPairButton/ActionPairButton";
-import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
@@ -44,6 +43,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
       !newPassword
     );
   };
+
   const handleDismissToast = () => {
     setErrorWhileChangePassword("");
   };
@@ -68,6 +68,20 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     if (confirmNewPassword && newPassword && !doPasswordsMatch) {
       setError(intl.formatMessage({ id: "label.password-not-match" }));
     } else {
+      setError("");
+    }
+  };
+
+  const handleConfirmPasswordChange = (val) => {
+    setConfirmNewPassword(val);
+    if (newPassword && val && newPassword === val) {
+      setError("");
+    }
+  };
+
+  const handleNewPasswordChange = (val) => {
+    setNewPassword(val);
+    if (confirmNewPassword && val && confirmNewPassword === val) {
       setError("");
     }
   };
@@ -105,7 +119,10 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               })}
               customStyle={styles.containerStyle}
               value={newPassword}
-              onChangeText={(val) => setNewPassword(val)}
+              onChangeText={handleNewPasswordChange}
+              customHandleBlur={() => {
+                handleConfirmPasswordBlur();
+              }}
               isMandatory
               eyeImage
               isPassword
@@ -118,7 +135,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
                 id: "label.confirm_your_new_password",
               })}
               value={confirmNewPassword}
-              onChangeText={(val) => setConfirmNewPassword(val)}
+              onChangeText={handleConfirmPasswordChange}
               customHandleBlur={() => {
                 handleConfirmPasswordBlur();
               }}

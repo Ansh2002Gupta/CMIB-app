@@ -6,5 +6,5 @@ export const NEW_PASSWORD_VALIDATIONS = {
   numeric: /\d/,
   uppercase: /[A-Z]/,
   lowercase: /[a-z]/,
-  specialChar: /[^A-Za-z0-9]/,
+  specialChar: /(?=.*[!?.@#$%^&+=])/,
 };

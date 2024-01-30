@@ -30,10 +30,16 @@ function CreateNewPasswordComponent({ resetToken }) {
 
   const onChangePasswordInput = (val) => {
     setNewPassword(val);
+    if (confirmNewPassword && val && confirmNewPassword === val) {
+      setErrorMessage("");
+    }
   };
 
   const onChangeConfirmPasswordInput = (val) => {
     setConfirmNewPassword(val);
+    if (newPassword && val && newPassword === val) {
+      setErrorMessage("");
+    }
   };
 
   const doPasswordsMatch = () =>
@@ -42,7 +48,7 @@ function CreateNewPasswordComponent({ resetToken }) {
 
   const handleConfirmPasswordBlur = () => {
     if (confirmNewPassword && newPassword && !doPasswordsMatch()) {
-      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
+      setErrorMessage(intl.formatMessage({ id: "label.password-not-match" }));
     } else {
       setErrorMessage("");
     }
@@ -62,7 +68,7 @@ function CreateNewPasswordComponent({ resetToken }) {
         password: newPassword,
       });
     } else {
-      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
+      setErrorMessage(intl.formatMessage({ id: "label.password-not-match" }));
     }
   };
 
