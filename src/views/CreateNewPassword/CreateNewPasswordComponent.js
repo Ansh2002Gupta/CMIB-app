@@ -55,14 +55,16 @@ function CreateNewPasswordComponent({ resetToken }) {
     ) {
       return;
     }
+    if (!doPasswordsMatch()) {
+      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
+      return;
+    }
     if (doPasswordsMatch()) {
       setErrorMessage("");
       handleResetPasswordAPI({
         token: resetToken,
         password: newPassword,
       });
-    } else {
-      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
     }
   };
 

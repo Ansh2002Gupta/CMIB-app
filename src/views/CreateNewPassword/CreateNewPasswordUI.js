@@ -38,6 +38,7 @@ function CreateNewPasswordUI(props) {
   const width900pxOrLess =
     currentBreakpoint === "md" || currentBreakpoint === "sm";
   const [toastMessage, setToastMessage] = useState("");
+  const isPasswordStrong = strongPasswordValidator(newPassword);
 
   const handleDismissToast = () => {
     setErrorWhileResetPassword("");
@@ -192,7 +193,12 @@ function CreateNewPasswordUI(props) {
           </View>
           <View style={styles.submitView}>
             <CustomButton
-              disabled={!newPassword || !confirmNewPassword}
+              disabled={
+                !newPassword ||
+                !confirmNewPassword ||
+                newPassword !== confirmNewPassword ||
+                !isPasswordStrong
+              }
               isLoading={isLoading}
               onPress={handleSubmitClick}
               withGreenBackground
