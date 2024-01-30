@@ -109,7 +109,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
             />
           }
           fourthSection={
-            <View style={styles.fourthSectionStyle}>
+            <View>
               {!!error && (
                 <CommonText customTextStyle={styles.passwordMatchStyle}>
                   {error}
@@ -137,7 +137,6 @@ const ChangePasswordModal = ({ onPressCancel }) => {
         ></FiveColumn>
       </ScrollView>
       <View style={isWebView ? styles.buttonWebStyle : {}}>
-        <View style={isWebView ? styles.subContainerStyle : {}}></View>
         <View style={isWebView ? styles.subContainerStyle : {}}>
           <ActionPairButton
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}

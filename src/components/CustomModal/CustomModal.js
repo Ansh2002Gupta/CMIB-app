@@ -101,7 +101,7 @@ CustomModal.defaultProps = {
   headerTextStyle: {},
   isIconCross: false,
   isSuccess: false,
-  maxWidth: "",
+  maxWidth: "sm",
   onPress: () => {},
   onPressIconCross: () => {},
   onBackdropPress: () => {},

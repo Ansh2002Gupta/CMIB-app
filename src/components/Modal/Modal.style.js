@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     maxWidth: 444,
   },
   smWidth: {
-    maxWidth: 600,
+    maxWidth: 530,
   },
   mdWidth: {
     maxWidth: 900,
@@ -34,9 +34,6 @@ export const styles = StyleSheet.create({
   },
   xlWidth: {
     maxWidth: 1536,
-  },
-  defaultMaxWidth: {
-    maxWidth: 530,
   },
 });
 

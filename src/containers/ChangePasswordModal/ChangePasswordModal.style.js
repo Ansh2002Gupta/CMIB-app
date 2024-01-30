@@ -31,7 +31,6 @@ const style = {
   webContentContainerStyle: {
     maxHeight: "60vh",
   },
-  fourthSectionStyle: { paddingBottom: 16 },
   requirementsPoints: {
     marginBottom: 0,
   },
@@ -42,7 +41,7 @@ const style = {
     requirementsPoints: (currentBreakpoint) => ({
       display: "grid",
       gridTemplateColumns: currentBreakpoint === "sm" ? "1fr" : "1fr 1fr",
-      gridRowGap: 16,
+      gridRowGap: currentBreakpoint === "sm" ? 0 : 16,
     }),
   },
 };
