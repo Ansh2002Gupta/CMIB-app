@@ -203,7 +203,7 @@ const locale = {
   "label.description": "Description",
   "label.heading": "H1",
   "label.password-not-match":
-    "New password and Confirm password do not match, Please enter again",
+    "New password and Confirm password do not match, Please enter again!",
   "label.update": "Update",
   "label.add": "Add",
   "label.edit": "Edit",

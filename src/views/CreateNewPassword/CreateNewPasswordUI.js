@@ -175,6 +175,15 @@ function CreateNewPasswordUI(props) {
               customTextInputContainer={
                 isWebView ? styles.webView.inputTextBox : {}
               }
+              customStyle={
+                isWebView
+                  ? errorMessage
+                    ? styles.webView.erroInputStyle
+                    : {}
+                  : errorMessage
+                  ? styles.erroInputStyle
+                  : styles.inputStyle
+              }
               errorMessage={errorMessage}
               isError={!!errorMessage}
               customErrorStyle={styles.ErrorStyle}

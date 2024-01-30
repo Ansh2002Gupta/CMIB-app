@@ -13,7 +13,7 @@ export const isStringContainsLowercase = (string) =>
   NEW_PASSWORD_VALIDATIONS.lowercase.test(string);
 export const isStringContainsSpecialChar = (string) =>
   NEW_PASSWORD_VALIDATIONS.specialChar.test(string);
-export const isStringLengthValid = (string) => string.length >= 8;
+export const isStringLengthValid = (string) => string.length >= 6;
 
 export const strongPasswordValidator = (password) => {
   return (

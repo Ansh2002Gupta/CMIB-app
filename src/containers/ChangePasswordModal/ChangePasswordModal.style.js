@@ -39,7 +39,7 @@ const style = {
     marginBottom: 0,
   },
   subContainerStyle: {
-    maxWidth: "50%",
+    width: "50%",
   },
   webView: {
     requirementsPoints: (currentBreakpoint) => ({
@@ -47,6 +47,15 @@ const style = {
       gridTemplateColumns: currentBreakpoint === "sm" ? "1fr" : "1fr 1fr",
       gridRowGap: currentBreakpoint === "sm" ? 0 : 16,
     }),
+  },
+  erroInputStyleWeb: {
+    paddingBottom: 6,
+  },
+  erroInputStyle: {
+    paddingBottom: 0,
+  },
+  inputStyle: {
+    paddingBottom: 36,
   },
 };
 

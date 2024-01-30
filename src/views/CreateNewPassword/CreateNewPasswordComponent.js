@@ -42,7 +42,7 @@ function CreateNewPasswordComponent({ resetToken }) {
 
   const handleConfirmPasswordBlur = () => {
     if (confirmNewPassword && newPassword && !doPasswordsMatch()) {
-      setErrorMessage(intl.formatMessage({ id: "label.error_password" }));
+      setErrorMessage(intl.formatMessage({ id: "label.password-not-match" }));
     } else {
       setErrorMessage("");
     }

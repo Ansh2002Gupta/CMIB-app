@@ -51,6 +51,7 @@ const useChangePasswordApi = () => {
     changePasswordResult,
     changePasswordStatus,
     errorWhileChangePassword,
+    setErrorWhileChangePassword,
     handleUseChangePassword,
     isError,
     isLoading,
