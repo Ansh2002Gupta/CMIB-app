@@ -52,7 +52,10 @@ const DropDownModal = ({
       selectedIndex < selectedOption.length &&
       flatListRef.current
     ) {
-      scrollAnimation(selectedIndex);
+      const timer = setTimeout(() => {
+        scrollAnimation(selectedIndex);
+      }, 200);
+      return () => clearTimeout(timer);
     }
   }, [selectedOption, isDropDownOpen]);
 
