@@ -202,7 +202,8 @@ const locale = {
     "Failed to upload this file, please try uploading a different image",
   "label.description": "Description",
   "label.heading": "H1",
-  "label.password-not-match": "The password and confirm password do not match.",
+  "label.password-not-match":
+    "New password and Confirm password do not match, Please enter again",
   "label.update": "Update",
   "label.add": "Add",
   "label.edit": "Edit",
@@ -279,6 +280,8 @@ const locale = {
   "label.email_address": "Email Address: ",
   "label.change_email_address": "Change Email Address",
   "label.country_codes": "Country Codes",
+  "label.change_password_message":
+    "Your password has been successfully changed. Please login using your new password. Thanks!",
 };
 
 export default locale;

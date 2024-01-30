@@ -9,6 +9,7 @@ import ActionPairButton from "../../components/ActionPairButton/ActionPairButton
 import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
 import { strongPasswordValidator } from "../../utils/validation";
 import styles from "./ChangePasswordModal.style";
@@ -22,16 +23,16 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   const isPasswordStrong = strongPasswordValidator(newPassword);
   const doPasswordsMatch = newPassword === confirmNewPassword;
 
-  const { errorWhileChangePassword, handleUseChangePassword, isLoading } =
-    useChangePasswordApi();
+  const {
+    errorWhileChangePassword,
+    handleUseChangePassword,
+    isLoading,
+    isSuccess,
+  } = useChangePasswordApi();
 
   const isNextDisabled = () => {
     return (
-      !confirmNewPassword ||
-      !doPasswordsMatch ||
-      !isPasswordStrong ||
-      !oldPassword ||
-      !newPassword
+      !confirmNewPassword || !isPasswordStrong || !oldPassword || !newPassword
     );
   };
 
@@ -103,12 +104,15 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           }
           fourthSection={
             <View style={styles.fourthSectionStyle}>
+              <NewPasswordValidation {...{ newPassword, confirmNewPassword }} />
               {!!error && (
-                <CommonText customTextStyle={styles.passwordMatchStyle}>
+                <CommonText
+                  customContainerStyle={styles.notMatchingError}
+                  customTextStyle={styles.errorText}
+                >
                   {error}
                 </CommonText>
               )}
-              <NewPasswordValidation {...{ newPassword, confirmNewPassword }} />
             </View>
           }
           fiveSection={
@@ -136,6 +140,14 @@ const ChangePasswordModal = ({ onPressCancel }) => {
         }}
         onPressButtonTwo={handleSave}
       />
+      {isSuccess && (
+        <ToastComponent
+          toastMessage={intl.formatMessage({
+            id: "label.change_password_message",
+          })}
+          onDismiss={() => {}}
+        />
+      )}
     </>
   );
 };

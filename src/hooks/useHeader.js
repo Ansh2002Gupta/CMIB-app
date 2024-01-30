@@ -12,7 +12,7 @@ import { resetUserDetails } from "../globalContext/userProfile/userProfileAction
 import { setLogoutToast } from "../globalContext/logout/logoutActions";
 import { navigations } from "../constants/routeNames";
 
-export const useHeader = () => {
+export const useHeader = (logoutToastData) => {
   const navigate = useNavigate();
   const [, authDispatch] = useContext(AuthContext);
   const [, userProfileDispatch] = useContext(UserProfileContext);
@@ -25,7 +25,7 @@ export const useHeader = () => {
     await CookieAndStorageService.remove({ key: "auth" });
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
-    setLogoutDispatch(setLogoutToast(true));
+    setLogoutDispatch(setLogoutToast(logoutToastData));
     navigate(navigations.LOGIN);
   };
   return {

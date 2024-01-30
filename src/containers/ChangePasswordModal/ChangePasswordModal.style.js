@@ -25,6 +25,9 @@ const style = {
     justifyContent: "space-between",
   },
   fourthSectionStyle: { paddingBottom: 16 },
+  notMatchingError: {
+    paddingTop: 24,
+  },
 };
 
 export default style;

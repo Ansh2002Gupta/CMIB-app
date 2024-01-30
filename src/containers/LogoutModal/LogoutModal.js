@@ -14,7 +14,11 @@ import styles from "./logoutModal.style";
 
 const LogoutModal = ({ onCancel }) => {
   const intl = useIntl();
-  const { isLoggingUserOut, onLogout } = useHeader();
+  const { isLoggingUserOut, onLogout } = useHeader({
+    message: intl.formatMessage({ id: "label.logout_successfully" }),
+    isLogoutToast: true,
+    isError: false,
+  });
   const WarningIcon = images.iconWarning;
 
   const logoutConfig = [
