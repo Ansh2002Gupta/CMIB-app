@@ -11,7 +11,7 @@
   background: linear-gradient(0deg, var(--greenOne) 0%, var(--greenOne) 100%),
     var(--white);
 }
-.module-box_outlin--darkBlue:hover {
+.module-box_outline--darkBlue:hover {
   border-color: var(--darkBlue) !important;
   background: linear-gradient(
       0deg,

@@ -89,18 +89,13 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
                     onPress={() =>
                       !module.sectionHeading ? onSelectItem(item) : () => {}
                     }
-                    // style={
-                    //   item?.key === selectedModule.key
-                    //     ? styles.activeTabStyle
-                    //     : styles.moduleTabStyle
-                    // }
                     style={{
                       ...styles.moduleTabStyle,
                       ...(item?.key === selectedModule.key
                         ? styles.activeTabStyle
                         : {}),
                     }}
-                    className={classes["module-box_outlin--darkBlue"]}
+                    className={classes["module-box_outline--darkBlue"]}
                   >
                     <CustomImage
                       source={item.image}
@@ -119,7 +114,6 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
                         {intl.formatMessage({ id: "label.experiencedMember" })}
                       </CommonText>
                     </View>
-
                     <View style={styles.textView}>
                       {item?.key === selectedModule.key && (
                         <CustomImage
