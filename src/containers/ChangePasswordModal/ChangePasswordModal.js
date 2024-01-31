@@ -7,12 +7,17 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 import FiveColumn from "../../core/layouts/FiveColumn";
 
 import ActionPairButton from "../../components/ActionPairButton/ActionPairButton";
-import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
 import useIsWebView from "../../hooks/useIsWebView";
-import { strongPasswordValidator } from "../../utils/validation";
+import {
+  handleNewPasswordChange,
+  handleConfirmPasswordChange,
+  onConfirmPasswordBlur,
+  strongPasswordValidator,
+} from "../../utils/validation";
 import styles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
@@ -26,8 +31,13 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   const isPasswordStrong = strongPasswordValidator(newPassword);
   const doPasswordsMatch = newPassword === confirmNewPassword;
 
-  const { errorWhileChangePassword, handleUseChangePassword, isLoading } =
-    useChangePasswordApi();
+  const {
+    errorWhileChangePassword,
+    handleUseChangePassword,
+    isLoading,
+    isSuccess,
+    setErrorWhileChangePassword,
+  } = useChangePasswordApi();
 
   const isNextDisabled = () => {
     return (
@@ -37,6 +47,10 @@ const ChangePasswordModal = ({ onPressCancel }) => {
       !oldPassword ||
       !newPassword
     );
+  };
+
+  const handleDismissToast = () => {
+    setErrorWhileChangePassword("");
   };
 
   const handleSave = () => {
@@ -54,6 +68,12 @@ const ChangePasswordModal = ({ onPressCancel }) => {
       });
     }
   };
+
+  const baseStyle = isWebView ? styles.containerStyle : styles.inputStyle;
+  const errorStyle = isWebView
+    ? styles.erroInputStyleWeb
+    : styles.erroInputStyle;
+  const customStyle = error ? errorStyle : baseStyle;
 
   return (
     <>
@@ -88,7 +108,24 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               })}
               customStyle={styles.containerStyle}
               value={newPassword}
-              onChangeText={(val) => setNewPassword(val)}
+              onChangeText={(val) => {
+                handleNewPasswordChange({
+                  confirmNewPassword,
+                  setNewPassword,
+                  setError,
+                  val,
+                });
+              }}
+              customHandleBlur={() => {
+                onConfirmPasswordBlur({
+                  confirmNewPassword,
+                  newPassword,
+                  setError,
+                  errorMessage: intl.formatMessage({
+                    id: "label.password-not-match",
+                  }),
+                });
+              }}
               isMandatory
               eyeImage
               isPassword
@@ -100,21 +137,35 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               placeholder={intl.formatMessage({
                 id: "label.confirm_your_new_password",
               })}
-              customStyle={styles.containerStyle}
               value={confirmNewPassword}
-              onChangeText={(val) => setConfirmNewPassword(val)}
+              onChangeText={(val) => {
+                handleConfirmPasswordChange({
+                  newPassword,
+                  setConfirmNewPassword,
+                  setError,
+                  val,
+                });
+              }}
+              customHandleBlur={() => {
+                onConfirmPasswordBlur({
+                  confirmNewPassword,
+                  newPassword,
+                  setError,
+                  errorMessage: intl.formatMessage({
+                    id: "label.password-not-match",
+                  }),
+                });
+              }}
+              customStyle={customStyle}
               isMandatory
               eyeImage
+              isError={!!error}
+              errorMessage={error}
               isPassword
             />
           }
           fourthSection={
-            <View>
-              {!!error && (
-                <CommonText customTextStyle={styles.passwordMatchStyle}>
-                  {error}
-                </CommonText>
-              )}
+            <View style={styles.fourthSectionStyle}>
               <NewPasswordValidation
                 {...{ newPassword, confirmNewPassword }}
                 customContainerStyles={
@@ -124,15 +175,6 @@ const ChangePasswordModal = ({ onPressCancel }) => {
                 }
               />
             </View>
-          }
-          fiveSection={
-            !!errorWhileChangePassword && (
-              <View style={styles.saveAndCancelButtonView}>
-                <CommonText customTextStyle={styles.errorText}>
-                  {errorWhileChangePassword}
-                </CommonText>
-              </View>
-            )
           }
         ></FiveColumn>
       </ScrollView>
@@ -145,7 +187,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               customContainerStyle: styles.customContainerStyle,
             }}
             displayLoader={isLoading}
-            isDisabled={isNextDisabled()}
+            isDisabled={isNextDisabled() || isSuccess}
             isButtonTwoGreen
             onPressButtonOne={() => {
               onPressCancel(false);
@@ -154,6 +196,17 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           />
         </View>
       </View>
+      {(errorWhileChangePassword || isSuccess) && (
+        <ToastComponent
+          toastMessage={
+            errorWhileChangePassword ||
+            intl.formatMessage({
+              id: "label.change_password_message",
+            })
+          }
+          onDismiss={handleDismissToast}
+        />
+      )}
     </>
   );
 };
