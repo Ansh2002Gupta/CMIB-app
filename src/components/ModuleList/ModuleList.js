@@ -91,7 +91,7 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
                         ? styles.activeTabStyle
                         : {}),
                     }}
-                    className={classes["module-box_outlin--darkBlue"]}
+                    className={classes["module-box_outline--darkBlue"]}
                   >
                     <CustomImage
                       source={item.image}
@@ -110,7 +110,6 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
                         {intl.formatMessage({ id: "label.experiencedMember" })}
                       </CommonText>
                     </View>
-
                     <View style={styles.textView}>
                       {item?.key === selectedModule.key && (
                         <CustomImage
