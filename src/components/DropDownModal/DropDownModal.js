@@ -54,7 +54,7 @@ const DropDownModal = ({
     ) {
       const timer = setTimeout(() => {
         scrollAnimation(selectedIndex);
-      }, 200);
+      }, 0);
       return () => clearTimeout(timer);
     }
   }, [selectedOption, isDropDownOpen]);

@@ -16,12 +16,10 @@ const SessionBar = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
-
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedValue, setSelectedValue] = useState(
-    selectedModule.session?.[0]?.label
+    selectedModule?.session?.[0]?.label
   );
-
   const sessionRef = useRef(null);
   useOutsideClick(sessionRef, () => setShowDropdown(false));
 
@@ -37,13 +35,13 @@ const SessionBar = () => {
   return (
     <CustomTouchableOpacity style={styles.container} onPress={handleDropdown}>
       <CommonText customTextStyle={styles.sessionBarText}>
-        {intl.formatMessage({ id: "label.sessions" })}&nbsp;&#58;
+        {intl.formatMessage({ id: "label.sessions" })}&nbsp;&#58;&nbsp;
       </CommonText>
       <CommonText
         customTextStyle={styles.sessionText(currentBreakpoint)}
         fontWeight="600"
       >
-        {selectedValue}
+        {selectedValue || intl.formatMessage({ id: "label.select_session" })}
       </CommonText>
       <CustomImage
         source={images.iconArrowDown}
@@ -56,6 +54,7 @@ const SessionBar = () => {
           options={selectedModule.session}
           onSelect={handleSelect}
           sessionRef={sessionRef}
+          selectedItem={selectedValue}
         />
       )}
     </CustomTouchableOpacity>

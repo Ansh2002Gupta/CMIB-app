@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import styles from "./SideBarModal.style";
 
@@ -10,11 +10,18 @@ const SidebarModal = ({
   animationIn,
   animationOut,
 }) => {
+  const platformSpecificProps = Platform.select({
+    web: {},
+    default: {
+      isVisible: isVisible,
+      animationIn: animationIn,
+      animationOut: animationOut,
+    },
+  });
+
   return (
     <View
-      isVisible={isVisible}
-      animationIn={animationIn}
-      animationOut={animationOut}
+      {...platformSpecificProps}
       style={{
         ...styles.mainViewStyle,
         ...style,

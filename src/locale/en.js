@@ -274,11 +274,14 @@ const locale = {
   "label.personal_interview": "Personal Interview",
   "label.enter": "Enter",
   "label.no_result_found": "No Result Found",
+  "label.no_module_available": "No module available",
+  "label.select_session": "Select Session",
   "label.logout_successfully": "You are logged out successfully.",
   "label.country_code": "Country Code",
   "label.email_address": "Email Address: ",
   "label.change_email_address": "Change Email Address",
   "label.country_codes": "Country Codes",
+  "label.no_results_found": "No Results Found...",
 };
 
 export default locale;

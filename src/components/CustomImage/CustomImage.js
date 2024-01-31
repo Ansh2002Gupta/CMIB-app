@@ -26,17 +26,26 @@ const CustomImage = ({
     }
     return {};
   };
-  if (Platform.OS.toLowerCase() === "web") {
+
+  const renderImage = () => {
     return (
-      <Image source={source} style={style} resizeMode={resizeMode} alt={alt} />
+      <Image
+        source={source}
+        style={style}
+        resizeMode={resizeMode}
+        alt={alt}
+        {...getDimensions()}
+      />
     );
+  };
+
+  if (Platform.OS.toLowerCase() === "web") {
+    return renderImage();
   }
   if (isSvg) {
     return <Icon {...getDimensions()} style={style} />;
   }
-  return (
-    <Image source={source} style={style} resizeMode={resizeMode} alt={alt} />
-  );
+  return renderImage();
 };
 
 CustomImage.defaultProps = {
