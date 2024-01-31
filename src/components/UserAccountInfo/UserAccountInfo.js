@@ -32,7 +32,6 @@ const UserAccountInfo = ({
   const intl = useIntl();
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
-
   const { showChangePasswordModal, showLogoutModal, showViewProfileModal } =
     userProfileDetails;
 

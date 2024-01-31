@@ -10,7 +10,7 @@ import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 import images from "../../images";
 import styles from "./ViewProfileModal.style";
 
-const ViewProfileModal = ({ onPressCross, setModalSelect }) => {
+const ViewProfileModal = ({ onPressCross }) => {
   const intl = useIntl();
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -33,14 +33,12 @@ const ViewProfileModal = ({ onPressCross, setModalSelect }) => {
           }
           bottomSection={
             <ProfileIcon
+              showEditIcon
               firstName={firstName}
               lastName={lastName}
               profileImage={profileImage}
               imageContainerStyle={styles.imageContainerStyle}
               initialContainerStyle={styles.initialContainerStyle}
-              onClick={() => {
-                setModalSelect(-1);
-              }}
             />
           }
         />
@@ -102,6 +100,5 @@ ViewProfileModal.defaultProps = {
 
 ViewProfileModal.propTypes = {
   onPressCross: PropTypes.func,
-  setModalSelect: PropTypes.func,
 };
 export default ViewProfileModal;
