@@ -7,6 +7,7 @@ import ChangePasswordModal from "../../containers/ChangePasswordModal";
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import EditProfilePic from "../../containers/EditProfilePic";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import SessionBar from "../SessionBar";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
@@ -68,15 +69,24 @@ const UserAccountInfo = ({
       ) : null}
       {showViewProfileDetails ? (
         <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
-          <ViewProfileDetails
-            onPressCross={() =>
-              userProfileDispatch(setShowViewProfileDetails(false))
-            }
-            onPressEditIcon={() => {
-              setIsUpdatePorfilePic(true);
-            }}
-            isUpdateProfilePic={isUpdateProfilePic}
-          />
+          {isUpdateProfilePic ? (
+            <EditProfilePic
+              firstName={firstName}
+              lastName={lastName}
+              profileImage={profileImage}
+              onPressIconCross={() => setIsUpdatePorfilePic(false)}
+            />
+          ) : (
+            <ViewProfileDetails
+              onPressCross={() =>
+                userProfileDispatch(setShowViewProfileDetails(false))
+              }
+              onPressEditIcon={() => {
+                setIsUpdatePorfilePic(true);
+              }}
+              isUpdateProfilePic={isUpdateProfilePic}
+            />
+          )}
         </CustomModal>
       ) : null}
       {showLogoutModal && (
