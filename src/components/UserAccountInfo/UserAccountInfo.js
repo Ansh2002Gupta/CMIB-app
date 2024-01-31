@@ -68,7 +68,7 @@ const UserAccountInfo = ({
         </CustomModal>
       ) : null}
       {showViewProfileModal ? (
-        <CustomModal>
+        <CustomModal containerStyle={styles.containerStyle}>
           <ViewProfileModal
             onPressCancel={() =>
               userProfileDispatch(setShowViewProfileModal(false))

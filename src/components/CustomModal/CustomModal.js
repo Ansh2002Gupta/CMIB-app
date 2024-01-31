@@ -18,6 +18,7 @@ import style from "./CustomModal.style";
 const CustomModal = ({
   buttonTitle,
   children,
+  containerStyle,
   customInnerContainerStyle,
   headerText,
   headerTextStyle,
@@ -34,7 +35,12 @@ const CustomModal = ({
 
   return (
     <>
-      <Modal isVisible style={style.containerStyle} {...webProps}>
+      <Modal
+        isVisible
+        style={style.containerStyle}
+        containerStyle={containerStyle}
+        {...webProps}
+      >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" && !isSuccess ? "padding" : "height"}
           style={[style.innerContainer, customInnerContainerStyle]}
@@ -93,6 +99,7 @@ const CustomModal = ({
 CustomModal.defaultProps = {
   buttonTitle: "",
   children: <></>,
+  containerStyle: {},
   customInnerContainerStyle: {},
   headerText: "",
   headerTextStyle: {},
@@ -108,6 +115,7 @@ CustomModal.defaultProps = {
 CustomModal.propTypes = {
   buttonTitle: PropTypes.string,
   children: PropTypes.node,
+  containerStyle: PropTypes.object,
   customInnerContainerStyle: PropTypes.object,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.object,

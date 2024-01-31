@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
     height: getModalHeight(),
     maxHeight: maxModalHeight,
   },
+  containerStyle: {
+    padding: 0,
+  },
 });
 
 export default styles;
