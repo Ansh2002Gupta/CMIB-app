@@ -4,12 +4,18 @@ import { useIntl } from "react-intl";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import CustomButton from "../CustomButton";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SearchView from "../SearchView";
+import images from "../../images";
 import styles from "./SessionList.style";
-import BackButton from "../BackButton";
 
-const SessionList = ({ onPressBack, onSelectItem, selectedSession, sessionList }) => {
+const SessionList = ({
+  onPressBack,
+  onSelectItem,
+  selectedSession,
+  sessionList,
+}) => {
   const [searchList, setSearchList] = useState(sessionList);
   const intl = useIntl();
   const platformSpecificProps = Platform.select({
@@ -49,7 +55,14 @@ const SessionList = ({ onPressBack, onSelectItem, selectedSession, sessionList }
   return (
     <>
       <View style={styles.row}>
-        <BackButton onPress={onPressBack} />
+        <CustomButton
+          iconLeft={{
+            leftIconSource: images.iconBackArrow,
+            leftIconAlt: "Left arrow",
+          }}
+          onPress={onPressBack}
+          style={styles.backBtnStyles}
+        />
         <SearchView
           data={sessionList}
           onSearch={onSearchSession}

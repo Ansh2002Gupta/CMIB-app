@@ -16,10 +16,12 @@ const styles = StyleSheet.create({
       web: {
         width:
           currentBreakpoint === "md"
-            ? "205%"
+            ? "150%"
             : currentBreakpoint === "sm"
-            ? "125%"
+            ? "120%"
             : "100%",
+        height: "40vh",
+        overflow: "auto",
       },
     }),
   }),

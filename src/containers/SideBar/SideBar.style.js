@@ -152,6 +152,25 @@ const styles = StyleSheet.create({
   cmiLogo: {
     height: 50,
   },
+  backBtnStyles: {
+    alignItems: "center",
+    alignSelf: "flex-start",
+    marginTop: 16,
+    marginBottom: 16,
+    marginLeft: 16,
+    marginRight: 8,
+    paddingLeft: 13,
+    paddingRight: 20,
+    paddingTop: 12,
+    paddingBottom: 12,
+    color: colors.white,
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    borderWidth: 0,
+  },
+  btnTextStyles: {
+    color: colors.backgroundColor,
+    fontSize: 14,
+  },
 });
 
 export default styles;

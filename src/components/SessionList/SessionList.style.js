@@ -43,6 +43,21 @@ const styles = StyleSheet.create({
       },
     }),
   }),
+  backBtnStyles: {
+    alignItems: "center",
+    alignSelf: "flex-start",
+    marginTop: 16,
+    marginBottom: 16,
+    marginLeft: 16,
+    marginRight: 8,
+    paddingLeft: 13,
+    paddingRight: 6,
+    paddingTop: 12,
+    paddingBottom: 12,
+    color: colors.white,
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    borderWidth: 0,
+  },
 });
 
 export default styles;
