@@ -88,17 +88,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
         onPressLeftIcon={onGoBack}
       />
       <View style={style.picParentContainer}>
-        <View style={style.picContainer}>
-          {renderProfileIcon()}
-          {/* <TouchableOpacity
-            style={style.iconEditStyle}
-            onPress={() => {
-              handleEditPopup(true);
-            }}
-          >
-            <Image source={images.iconEdit} style={style.editIcon} />
-          </TouchableOpacity> */}
-        </View>
+        <View style={style.picContainer}>{renderProfileIcon()}</View>
         <CardComponent customStyle={style.cardStyle}>
           <DetailComponent details={details} />
         </CardComponent>
