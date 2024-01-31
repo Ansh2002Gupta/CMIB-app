@@ -29,14 +29,16 @@ function CreateNewPasswordComponent({ resetToken }) {
   };
 
   const onChangePasswordInput = (val) => {
-    setNewPassword(val);
+    const trimmedPassword = val.trim();
+    setNewPassword(trimmedPassword);
     if (!!confirmNewPassword && !!val && confirmNewPassword === val) {
       setErrorMessage("");
     }
   };
 
   const onChangeConfirmPasswordInput = (val) => {
-    setConfirmNewPassword(val);
+    const trimmedPassword = val.trim();
+    setConfirmNewPassword(trimmedPassword);
     if (!!newPassword && !!val && newPassword === val) {
       setErrorMessage("");
     }

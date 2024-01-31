@@ -73,14 +73,16 @@ const ChangePasswordModal = ({ onPressCancel }) => {
   };
 
   const handleConfirmPasswordChange = (val) => {
-    setConfirmNewPassword(val);
+    const trimmedPassword = val.trim();
+    setConfirmNewPassword(trimmedPassword);
     if (newPassword && val && newPassword === val) {
       setError("");
     }
   };
 
   const handleNewPasswordChange = (val) => {
-    setNewPassword(val);
+    const trimmedPassword = val.trim();
+    setNewPassword(trimmedPassword);
     if (confirmNewPassword && val && confirmNewPassword === val) {
       setError("");
     }
