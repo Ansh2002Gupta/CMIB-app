@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.2,
     borderColor: colors.lightGrey,
     flexDirection: "row",
+    height: 52,
   },
   valueText: {
     fontSize: 14,

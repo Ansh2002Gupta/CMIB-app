@@ -52,9 +52,12 @@ const DropDownModal = ({
       selectedIndex < selectedOption.length &&
       flatListRef.current
     ) {
-      scrollAnimation(selectedIndex);
+      const timer = setTimeout(() => {
+        scrollAnimation(selectedIndex);
+      }, 0);
+      return () => clearTimeout(timer);
     }
-  }, [selectedOption]);
+  }, [selectedOption, isDropDownOpen]);
 
   const keyboardDidHideCallback = () => {
     if (isIosPlatform) {
@@ -134,8 +137,8 @@ const DropDownModal = ({
   };
 
   const getItemLayout = (data, index) => ({
-    length: 50,
-    offset: 50 * index,
+    length: 52,
+    offset: 52 * index,
     index,
   });
 
@@ -197,6 +200,7 @@ const DropDownModal = ({
           <FlatList
             data={selectedOption}
             getItemLayout={getItemLayout}
+            initialNumToRender={10}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={renderEmptyFooter()}
             ref={flatListRef}
