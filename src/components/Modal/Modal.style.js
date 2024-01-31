@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     maxWidth: 444,
   },
   smWidth: {
-    maxWidth: 600,
+    maxWidth: 530,
   },
   mdWidth: {
     maxWidth: 900,
