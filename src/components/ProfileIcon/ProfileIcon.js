@@ -32,14 +32,15 @@ const ProfileIcon = ({
             ]}
           />
         </View>
-        <CustomTouchableOpacity style={styles.editOuterContainer}
-        onPress={() => {}}
+        <CustomTouchableOpacity
+          style={styles.editOuterContainer}
+          onPress={() => {}}
         >
           <View style={styles.editInnerContainer}>
             <CustomImage
               source={images.iconEditSvg}
-              style={{ height: 14, width: 14 }}
-              isSvg={true}
+              style={styles.iconStyle}
+              isSvg
               Icon={images.iconEditSvg}
             />
           </View>

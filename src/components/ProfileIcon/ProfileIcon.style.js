@@ -16,7 +16,7 @@ const style = {
     alignItems: "center",
     padding: 6.5,
   },
-  editOuterContainer:{
+  editOuterContainer: {
     justifyContent: "center",
     backgroundColor: "white",
     borderRadius: 20,
@@ -26,7 +26,7 @@ const style = {
     bottom: 6.5,
     right: 6.5,
   },
-editInnerContainer:{
+  editInnerContainer: {
     justifyContent: "center",
     backgroundColor: "white",
     borderRadius: 12,
@@ -52,6 +52,10 @@ editInnerContainer:{
   initialsText: {
     fontSize: 36,
     color: colors.white,
+  },
+  iconStyle: {
+    height: 14,
+    width: 14,
   },
 };
 
