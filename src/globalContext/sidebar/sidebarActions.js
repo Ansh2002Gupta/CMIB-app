@@ -6,3 +6,10 @@ export const setSelectedModule = (value) => {
     payload: value,
   };
 };
+
+export const setSelectedSession = (value) => {
+  return {
+    type: types.SESSION_LIST,
+    payload: value,
+  };
+};

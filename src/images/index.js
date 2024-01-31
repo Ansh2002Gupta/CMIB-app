@@ -159,6 +159,7 @@ const iconCmibCALogo = appendAppBaseURl(
   "/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png"
 );
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
+const iconBackArrow = appendAppBaseURl("/images/svg/iconBackArrow.svg");
 
 const images = {
   iconArrowUp,
@@ -268,6 +269,7 @@ const images = {
   iconInstagramWeb,
   iconCmibCALogo,
   iconRetry,
+  iconBackArrow,
 };
 
 export default images;

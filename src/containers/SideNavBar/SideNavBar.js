@@ -30,7 +30,7 @@ const SideNavBar = ({
           ...(currentBreakpoint === "sm" ? styles.sideBarMd : styles.sideBar),
           ...(isWebView && windowDimensions.width >= 900
             ? styles.mainContainer
-            : {}),
+            : styles.container),
         }}
       >
         <SideBar onClose={onClose} showCloseIcon={showCloseIcon} />
