@@ -6,9 +6,9 @@ import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
-import BackButton from "../../components/BackButton";
 import CommonText from "../../components/CommonText";
 import Config from "../../components/ReactConfig/index";
+import CustomButton from "../../components/CustomButton";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ModuleList from "../../components/ModuleList/ModuleList";
@@ -64,7 +64,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
 
   const handleBackButton = () => {
     setSideBarSubMenu(SideBarContentEnum.NONE);
-  }
+  };
 
   const handleBottomViewNavigation = () => {
     const uri = Config.REACT_APP_CMS_URI;
@@ -149,10 +149,20 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       )}
       {sideBarContent === SideBarContentEnum.MODULE && (
         <>
-          <BackButton
-            title={intl.formatMessage({ id: "label.back" })}
+          <CustomButton
+            customStyle={{
+              customTextStyle: styles.btnTextStyles,
+            }}
+            iconLeft={{
+              leftIconSource: images.iconBackArrow,
+              leftIconAlt: "Left arrow",
+            }}
             onPress={handleBackButton}
-          />
+            style={styles.backBtnStyles}
+          >
+            {intl.formatMessage({ id: "label.back" })}
+          </CustomButton>
+
           <ModuleList
             modules={modules}
             onSelectItem={handleOnSelectModuleItem}
