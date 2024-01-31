@@ -149,7 +149,6 @@ export const modules = [
     key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
     visible: false,
     sectionHeading: true,
-    image: images.iconControl,
   },
   {
     label: "Career Ascent",

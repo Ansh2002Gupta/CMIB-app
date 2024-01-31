@@ -2,9 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import classes from "../../theme/styles/CssClassProvider/CssClassProvider";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -13,17 +11,15 @@ import images from "../../images";
 import useIsWebView from "../../hooks/useIsWebView";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getAccessibleModulesList } from "../../constants/sideBarHelpers";
-import { gridStyles } from "../../theme/styles/commonStyles";
+import classes from "../../theme/styles/CssClassProvider/CssClassProvider";
 import styles from "./ModuleList.style";
 
 const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
-  const columnCount = isWebView && gridStyles[currentBreakpoint];
 
   const containerStyle = isWebView
-    ? styles.containerGridStyle(columnCount)
+    ? styles.containerGridStyle
     : styles.containerStyle;
 
   const [userProfileState] = useContext(UserProfileContext);
@@ -89,11 +85,6 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
                     onPress={() =>
                       !module.sectionHeading ? onSelectItem(item) : () => {}
                     }
-                    // style={
-                    //   item?.key === selectedModule.key
-                    //     ? styles.activeTabStyle
-                    //     : styles.moduleTabStyle
-                    // }
                     style={{
                       ...styles.moduleTabStyle,
                       ...(item?.key === selectedModule.key
