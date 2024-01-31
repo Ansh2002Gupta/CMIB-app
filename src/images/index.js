@@ -165,6 +165,7 @@ const iconCmibCALogo = appendAppBaseURl(
 );
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
 const iconEditSvg = appendAppBaseURl("/images/svg/editIcon.svg");
+const iconCloseDark = appendAppBaseURl("/images/svg/iconCloseDark.svg");
 
 const images = {
   iconArrowUp,
@@ -277,7 +278,8 @@ const images = {
   iconInstagramWeb,
   iconCmibCALogo,
   iconRetry,
-  iconEditSvg
+  iconEditSvg,
+  iconCloseDark,
 };
 
 export default images;
