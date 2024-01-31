@@ -1,6 +1,8 @@
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
-const styles = {
+const styles = StyleSheet.create({
   mainContainerWeb: {
     flex: 1,
     position: "relative",
@@ -46,41 +48,28 @@ const styles = {
     width: 15,
   },
   closeButton: {
-    height: 20,
-    width: 20,
     marginTop: 16,
     marginLeft: 16,
+    ...Platform.select({
+      web: {
+        height: 15,
+        width: 15,
+      },
+      default: {
+        height: 24,
+        width: 24,
+      },
+    }),
   },
   menuIcons: {
     height: 20,
     width: 20,
     marginRight: 10,
   },
-  textView: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: colors.offWhite,
-    paddingTop: 16,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.slateGray,
-    opacity: 0.6,
-    flexWrap: "wrap",
-  },
   bottomSection: {
     flex: 1,
     zIndex: 1,
     paddingBottom: 60,
-  },
-  changeTextContainer: {
-    backgroundColor: colors.offWhite,
-    paddingTop: 6,
-    paddingBottom: 6,
-    paddingLeft: 12,
-    paddingRight: 12,
-    borderRadius: 12,
-    cursor: "pointer",
   },
   changeText: {
     color: colors.white,
@@ -90,14 +79,6 @@ const styles = {
     color: colors.black,
     fontSize: 14,
   },
-  sessionText: {
-    color: colors.darkGrey,
-    fontSize: 14,
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 8,
-    paddingTop: 16,
-  },
   bottomView: {
     position: "absolute",
     bottom: 0,
@@ -105,14 +86,15 @@ const styles = {
     zIndex: 2,
   },
   bottomButton: {
-    paddingTop: 20,
-    paddingBottom: 20,
+    padding: 24,
     backgroundColor: colors.offWhite,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingLeft: 16,
-    paddingRight: 16,
     cursor: "pointer",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    zIndex: 2,
   },
   imageTextView: {
     flexDirection: "row",
@@ -126,23 +108,18 @@ const styles = {
     margin: 20,
     height: 40,
     width: 53,
+    ...Platform.select({
+      web: {
+        marginBottom: 90,
+      },
+      default: {
+        marginBottom: 100,
+      },
+    }),
   },
   globalIcon: {
     width: 18,
     height: 18,
-  },
-  moduleList: {
-    fontSize: 14,
-    width: "100%",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    cursor: "pointer",
-  },
-  moduleListItem: {
-    padding: 16,
-    width: "100%",
-    cursor: "pointer",
   },
   moduleMenuItems: {
     marginLeft: 16,
@@ -154,6 +131,7 @@ const styles = {
     flexDirection: "row",
     cursor: "pointer",
     alignItems: "center",
+    justifyContent: "flex-start",
   },
   moduleActiveMenuItems: {
     marginLeft: 16,
@@ -166,14 +144,7 @@ const styles = {
     flexDirection: "row",
     cursor: "pointer",
     alignItems: "center",
-  },
-  disabled: {
-    color: colors.slateGray,
-  },
-  moduleSubMenuList: {
-    listStyle: "none",
-    width: "100%",
-    overflow: "hidden",
+    justifyContent: "flex-start",
   },
   mobContainer: {
     marginBottom: 16,
@@ -181,6 +152,25 @@ const styles = {
   cmiLogo: {
     height: 50,
   },
-};
+  backBtnStyles: {
+    alignItems: "center",
+    alignSelf: "flex-start",
+    marginTop: 16,
+    marginBottom: 16,
+    marginLeft: 16,
+    marginRight: 8,
+    paddingLeft: 13,
+    paddingRight: 20,
+    paddingTop: 12,
+    paddingBottom: 12,
+    color: colors.white,
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    borderWidth: 0,
+  },
+  btnTextStyles: {
+    color: colors.backgroundColor,
+    fontSize: 14,
+  },
+});
 
 export default styles;

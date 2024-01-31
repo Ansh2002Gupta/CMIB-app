@@ -11,6 +11,7 @@ import styles from "./CustomButton.style";
 
 const CustomButton = ({
   children,
+  customStyle,
   disabled,
   iconRight,
   iconLeft,
@@ -21,6 +22,7 @@ const CustomButton = ({
   withGreenBackground,
 }) => {
   const webProps = Platform.OS === "web" ? { size: "xs" } : {};
+  const { customTextStyle, textFontWeight } = customStyle;
 
   return (
     <Button
@@ -51,11 +53,12 @@ const CustomButton = ({
             />
           )}
           <CommonText
-            customTextStyle={[
-              withGreenBackground && styles.whiteText,
-              styles.btnText,
-            ]}
-            fontWeight={"600"}
+            customTextStyle={{
+              ...(withGreenBackground ? styles.whiteText : {}),
+              ...styles.btnText,
+              ...customTextStyle,
+            }}
+            fontWeight={textFontWeight || "600"}
           >
             {children}
           </CommonText>
@@ -76,6 +79,7 @@ const CustomButton = ({
 
 CustomButton.defaultProps = {
   children: <></>,
+  customStyle: { customTextStyle: {}, textFontWeight: "" },
   disabled: false,
   iconLeft: {
     isLeftIconNotSvg: false,
@@ -96,6 +100,7 @@ CustomButton.defaultProps = {
 
 CustomButton.propTypes = {
   children: PropTypes.node,
+  customStyle: PropTypes.object,
   disabled: PropTypes.bool,
   iconLeft: PropTypes.object,
   iconRight: PropTypes.object,

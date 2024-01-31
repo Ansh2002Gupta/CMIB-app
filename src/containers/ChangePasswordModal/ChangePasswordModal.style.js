@@ -25,6 +25,38 @@ const style = {
     justifyContent: "space-between",
   },
   fourthSectionStyle: { paddingBottom: 16 },
+  notMatchingError: {
+    paddingTop: 24,
+  },
+  buttonWebStyle: {
+    width: "100%",
+    alignItems: "flex-end",
+  },
+  webContentContainerStyle: {
+    maxHeight: "60vh",
+  },
+  requirementsPoints: {
+    marginBottom: 0,
+  },
+  subContainerStyle: {
+    width: "50%",
+  },
+  webView: {
+    requirementsPoints: (currentBreakpoint) => ({
+      display: "grid",
+      gridTemplateColumns: currentBreakpoint === "sm" ? "1fr" : "1fr 1fr",
+      gridRowGap: currentBreakpoint === "sm" ? 0 : 16,
+    }),
+  },
+  erroInputStyleWeb: {
+    paddingBottom: 6,
+  },
+  erroInputStyle: {
+    paddingBottom: 0,
+  },
+  inputStyle: {
+    paddingBottom: 36,
+  },
 };
 
 export default style;

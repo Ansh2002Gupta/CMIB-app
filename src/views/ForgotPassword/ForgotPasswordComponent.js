@@ -56,6 +56,15 @@ function ForgotPasswordComponent() {
     setValidationError("");
   };
 
+  const handleBlur = () => {
+    let error = validateEmail(userEmail);
+    if (!error) {
+      setErrorMessage("");
+    } else {
+      setErrorMessage(error);
+    }
+  };
+
   return (
     <>
       {!!sendOtpResult && !!Object.keys(sendOtpResult)?.length ? (
@@ -66,6 +75,7 @@ function ForgotPasswordComponent() {
         />
       ) : (
         <ForgotPasswordUI
+          handleBlur={handleBlur}
           successLogin={successLogin}
           userEmail={userEmail}
           onSendOtpClick={onSendOtpClick}

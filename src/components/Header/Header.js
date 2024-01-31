@@ -24,7 +24,12 @@ const Header = (props) => {
   );
 };
 
+Header.defaultProps = {
+  customHeaderTextStyle: {},
+};
+
 Header.propTypes = {
+  customHeaderTextStyle: PropTypes.object,
   headerText: PropTypes.string.isRequired,
 };
 

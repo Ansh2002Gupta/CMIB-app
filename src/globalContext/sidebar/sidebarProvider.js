@@ -1,7 +1,10 @@
 import React, { createContext, useReducer } from "react";
 import * as types from "./types";
 
-const initialState = { selectedModule: {} };
+const initialState = {
+  selectedModule: {},
+  selectedSession: {},
+};
 
 const sideBarReducer = (state, action) => {
   switch (action.type) {
@@ -9,6 +12,11 @@ const sideBarReducer = (state, action) => {
       return {
         ...state,
         selectedModule: { ...action.payload },
+      };
+    case types.SESSION_LIST:
+      return {
+        ...state,
+        selectedSession: { ...action.payload },
       };
     default:
       return state;
