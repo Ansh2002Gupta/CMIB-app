@@ -4,7 +4,7 @@ export const indianPhoneRegex = /^(?:(?:\+?91|0)?[ -]?)?[6-9]\d{9}$/;
 export const IMAGE_ACCEPTABLE_FORMAT_REGEX = /image\/(png|jpg|jpeg|svg)/i;
 export const NEW_PASSWORD_VALIDATIONS = {
   numeric: /\d/,
-  uppercase: /[A-Z]/,
-  lowercase: /[a-z]/,
-  specialChar: /[^A-Za-z0-9]/,
+  uppercase: /(?=.*?[A-Z])/,
+  lowercase: /(?=.*?[a-z])/,
+  specialChar: /(?=.*?[#?!@$%^&*-])/,
 };

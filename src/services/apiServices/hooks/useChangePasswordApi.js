@@ -26,7 +26,7 @@ const useChangePasswordApi = () => {
       ) {
         setChangePasswordStatus(API_STATUS.SUCCESS);
         setChangePasswordResult(res.data);
-        await onLogout();
+        setTimeout(async () => await onLogout(), 3000);
         return;
       }
       setChangePasswordStatus(API_STATUS.ERROR);
@@ -47,6 +47,7 @@ const useChangePasswordApi = () => {
     changePasswordResult,
     changePasswordStatus,
     errorWhileChangePassword,
+    setErrorWhileChangePassword,
     handleUseChangePassword,
     isError,
     isLoading,
