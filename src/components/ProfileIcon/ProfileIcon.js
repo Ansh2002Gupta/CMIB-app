@@ -8,6 +8,7 @@ import styles from "./ProfileIcon.style";
 const ProfileIcon = ({
   customContainerStyle,
   customImageStyle,
+  customTextStyle,
   firstName,
   iconType,
   lastName,
@@ -16,17 +17,7 @@ const ProfileIcon = ({
 }) => {
   if (profileImage) {
     return (
-      <View
-        style={
-          ([
-            styles.initialsContainer,
-            showEditModal &&
-              iconType === "modalIcon" &&
-              styles.editProfileContainer,
-          ],
-          customContainerStyle)
-        }
-      >
+      <View style={{ ...styles.initialsContainer, ...customContainerStyle }}>
         <Image
           source={{ uri: profileImage }}
           style={[
@@ -44,13 +35,13 @@ const ProfileIcon = ({
       <View
         style={[
           styles.initialsContainer,
-          showEditModal &&
-            iconType === "modalIcon" &&
-            styles.editProfileContainer,
+          styles.containerStyle,
           customContainerStyle,
         ]}
       >
-        <CommonText customTextStyle={styles.initialsText}>
+        <CommonText
+          customTextStyle={{ ...styles.initialsText, ...customTextStyle }}
+        >
           {initials}
         </CommonText>
       </View>
@@ -61,6 +52,7 @@ const ProfileIcon = ({
 ProfileIcon.propTypes = {
   customContainerStyle: PropTypes.object,
   customImageStyle: PropTypes.object,
+  customTextStyle: PropTypes.object,
   firstName: PropTypes.string,
   iconType: PropTypes.string,
   lastName: PropTypes.string,

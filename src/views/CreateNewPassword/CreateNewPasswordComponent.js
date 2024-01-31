@@ -58,7 +58,7 @@ function CreateNewPasswordComponent({ resetToken }) {
     if (doPasswordsMatch()) {
       setErrorMessage("");
       handleResetPasswordAPI({
-        reset_token: resetToken,
+        token: resetToken,
         password: newPassword,
       });
     } else {

@@ -1,14 +1,25 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
-const Styles = (currentBreakpoint) =>
+const baseLayoutStyle = {
+  ...Platform.select({
+    web: {
+      height: "100vh",
+      overflowY: "auto",
+    },
+  }),
+};
+
+const Styles = (currentBreakpoint, isAuthenticated) =>
   StyleSheet.create({
     rightSectionStyle: {
       minWidth: currentBreakpoint === "md" ? "70%" : "80%",
       flex: currentBreakpoint === "md" ? 7 : 8,
+      ...(isAuthenticated ? baseLayoutStyle : {}),
     },
     leftSectionStyle: {
       minWidth: currentBreakpoint === "md" ? "30%" : "20%",
       flex: currentBreakpoint === "md" ? 3 : 2,
+      ...(isAuthenticated ? baseLayoutStyle : {}),
     },
     topSectionStyle: {
       flex: 1,

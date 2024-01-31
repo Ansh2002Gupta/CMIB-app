@@ -1,14 +1,18 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import KeyboardAwareScrollView from "../../../components/KeyboardAwareScrollView";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
+import LoadingScreen from "../../../components/LoadingScreen";
+import MobileNumberInput from "../../../components/MobileNumberInput";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
@@ -27,10 +31,15 @@ import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
 const SignUpThirdScreenUI = ({
   allFieldsFilled,
   contactDetails,
+  countryCodeResult,
   errors,
+  getAppropriateRef,
+  getErrorDetails,
   handleBlur,
   handleDismissToast,
   handleInputChange,
+  isErrorCountryCodes,
+  isGettingCountryCodes,
   intl,
   isLoading,
   onClickGoToLogin,
@@ -70,24 +79,26 @@ const SignUpThirdScreenUI = ({
               {getHeaderText(detail.module, intl)}
             </CommonText>
             <View style={style.inputContainer}>
-              <CustomTextInput
-                label={intl.formatMessage({
-                  id: "label.salutation",
-                })}
-                dropdownStyle={style.dropdownStyle}
-                placeholder={intl.formatMessage({
-                  id: "label.select",
-                })}
-                errorMessage={errors[index].salutation}
-                isError={!!errors[index].salutation}
-                value={contactDetails[index].salutation}
-                options={SALUTATION_OPTIONS}
-                isMandatory
-                onChangeValue={(val) =>
-                  handleInputChange(val, "salutation", index)
-                }
-                isDropdown
-              />
+              <View style={style.firstInput}>
+                <CustomTextInput
+                  label={intl.formatMessage({
+                    id: "label.salutation",
+                  })}
+                  dropdownStyle={style.dropdownStyle}
+                  placeholder={intl.formatMessage({
+                    id: "label.select",
+                  })}
+                  errorMessage={errors[index].salutation}
+                  isError={!!errors[index].salutation}
+                  value={contactDetails[index].salutation}
+                  options={SALUTATION_OPTIONS}
+                  isMandatory
+                  onChangeValue={(val) =>
+                    handleInputChange(val, "salutation", index)
+                  }
+                  isDropdown
+                />
+              </View>
               <View style={style.secondInput}>
                 <CustomTextInput
                   label={intl.formatMessage({
@@ -102,6 +113,7 @@ const SignUpThirdScreenUI = ({
                   isError={!!errors[index].name}
                   onChangeText={(val) => handleInputChange(val, "name", index)}
                   isMandatory
+                  fieldRef={getAppropriateRef(detail.module, "name")}
                 />
               </View>
             </View>
@@ -120,26 +132,23 @@ const SignUpThirdScreenUI = ({
                 handleInputChange(val, "designation", index)
               }
               isMandatory
+              fieldRef={getAppropriateRef(detail.module, "designation")}
             />
-            <CustomTextInput
-              label={intl.formatMessage({
-                id: "label.mobile_number",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_contact_person_mobile_no",
-              })}
-              value={contactDetails[index].mobileNo}
-              maxLength={10}
+            <MobileNumberInput
+              codeError={errors[index].countryCode}
+              codeValue={contactDetails[index].countryCode}
               customHandleBlur={() => handleBlur("mobileNo", index)}
-              isNumeric
-              onChangeText={(val) =>
+              onChangeCode={(val) =>
+                handleInputChange(val, "countryCode", index)
+              }
+              onChangeMobNumber={(val) =>
                 numericValidator(val) &&
                 handleInputChange(val, "mobileNo", index)
               }
-              isMobileNumber
-              errorMessage={errors[index].mobileNo}
-              isError={!!errors[index].mobileNo}
-              isMandatory
+              options={countryCodeResult}
+              mobNumberValue={contactDetails[index].mobileNo}
+              mobNumberError={errors[index].mobileNo}
+              fieldRef={getAppropriateRef(detail.module, "mobileNo")}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -154,6 +163,7 @@ const SignUpThirdScreenUI = ({
               value={contactDetails[index].emailId}
               onChangeText={(val) => handleInputChange(val, "emailId", index)}
               isMandatory
+              fieldRef={getAppropriateRef(detail.module, "emailId")}
             />
             {index < contactDetails.length - 1 && contactDetails.length > 1 && (
               <View style={style.dividerStyle} />
@@ -201,50 +211,72 @@ const SignUpThirdScreenUI = ({
   };
 
   return (
-    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
-      <View
-        style={
-          isWebView
-            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-            : style.innerContainer
-        }
-      >
-        {isWebView && (
-          <View>
-            <HeaderTextWithLabelAndDescription
-              label={intl.formatMessage({ id: "label.step_three" })}
-              {...(showContentHeader && {
-                headerText: intl.formatMessage({
-                  id: "label.contact_person_details",
-                }),
-              })}
-            />
-          </View>
-        )}
-        {isWebView ? (
-          <View style={style.webContainerStyle}>
-            {renderFormContent()}
-            {renderFooterContent()}
-          </View>
-        ) : (
-          <>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              style={style.contentContainerStyle}
+    <>
+      {isGettingCountryCodes && <LoadingScreen />}
+      {!isGettingCountryCodes &&
+        !!countryCodeResult?.length &&
+        !isErrorCountryCodes && (
+          <FormWrapper
+            onSubmit={onClickNext}
+            customFormStyle={commonStyles.mainView}
+          >
+            <View
+              style={
+                isWebView
+                  ? getResponsiveStyles({
+                      str: "signupContainer",
+                      currentBreakpoint,
+                    })
+                  : style.innerContainer
+              }
             >
-              {renderFormContent()}
-            </ScrollView>
-            {renderFooterContent()}
-          </>
+              {isWebView && (
+                <View>
+                  <HeaderTextWithLabelAndDescription
+                    label={intl.formatMessage({ id: "label.step_three" })}
+                    {...(showContentHeader && {
+                      headerText: intl.formatMessage({
+                        id: "label.contact_person_details",
+                      }),
+                    })}
+                  />
+                </View>
+              )}
+              {isWebView ? (
+                <View style={style.webContainerStyle}>
+                  {renderFormContent()}
+                  {renderFooterContent()}
+                </View>
+              ) : (
+                <>
+                  <KeyboardAwareScrollView
+                    keyboardShouldPersistTaps="handled"
+                    extraScrollHeight={-50}
+                    showsVerticalScrollIndicator={false}
+                    style={style.contentContainerStyle}
+                  >
+                    {renderFormContent()}
+                  </KeyboardAwareScrollView>
+                  {renderFooterContent()}
+                </>
+              )}
+              {!!validationError && (
+                <ToastComponent
+                  toastMessage={validationError}
+                  onDismiss={handleDismissToast}
+                />
+              )}
+            </View>
+          </FormWrapper>
         )}
-        {!!validationError && (
-          <ToastComponent
-            toastMessage={validationError}
-            onDismiss={handleDismissToast}
-          />
-        )}
-      </View>
-    </FormWrapper>
+      {!isGettingCountryCodes && !!getErrorDetails().errorMessage && (
+        <ErrorComponent
+          errorMsg={getErrorDetails().errorMessage}
+          onRetry={getErrorDetails().onRetry}
+          disableRetryBtn={isGettingCountryCodes}
+        />
+      )}
+    </>
   );
 };
 
@@ -258,11 +290,15 @@ SignUpThirdScreenUI.defaultProps = {
 SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
   contactDetails: PropTypes.array.isRequired,
+  countryCodeResult: PropTypes.array,
   errors: PropTypes.array,
+  getErrorDetails: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
+  isErrorCountryCodes: PropTypes.bool.isRequired,
+  isGettingCountryCodes: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onClickGoToLogin: PropTypes.func,
   onClickNext: PropTypes.func.isRequired,

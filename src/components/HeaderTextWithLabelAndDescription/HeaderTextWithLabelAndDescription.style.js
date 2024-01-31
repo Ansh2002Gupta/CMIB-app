@@ -1,9 +1,6 @@
 import colors from "../../assets/colors";
 
 export const style = {
-  headerContainer: {
-    marginTop: 24,
-  },
   heading: {
     color: colors.black,
   },
@@ -12,6 +9,9 @@ export const style = {
     fontSize: 14,
     lineHeight: 20,
     marginTop: 8,
+  },
+  webDescriptionStyle: {
+    marginTop: 16,
   },
   smHeaderText: {
     fontSize: 18,
@@ -28,6 +28,7 @@ export const style = {
   labelText: {
     color: colors.subHeadingGray,
     fontSize: 16,
+    paddingBottom: 8,
   },
 };
 

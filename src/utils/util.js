@@ -1,3 +1,5 @@
+import { Platform } from "@unthinkable/react-core-components";
+
 export const getQueryParamsAsAnObject = (queryParamString) => {
   const queryParams = queryParamString.substring(1).split("&");
   return queryParams
@@ -20,4 +22,23 @@ export const getRenderText = (items, keys) => {
     return "";
   }
   return keys.map((key) => items[key]).join(" ");
+};
+
+export const removeFullStopsBetweenStrings = (string) => {
+  const formattedMessages = string
+    .map((message) => message.replace(/\.+$/, ""))
+    .join(", ");
+  return formattedMessages + ".";
+};
+
+export const scrollToRef = (ref) => {
+  if (ref?.current) {
+    if (Platform.OS.toLowerCase() === "web") {
+      ref.current?.scrollIntoViewIfNeeded({
+        behaviour: "smooth",
+      });
+    } else {
+      ref.current?.focus();
+    }
+  }
 };

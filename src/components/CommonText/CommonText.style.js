@@ -25,6 +25,13 @@ const getFontFamily = (fontWeight) => {
 };
 
 const style = {
+  container: {
+    ...Platform.select({
+      web: {
+        flexShrink: "unset",
+      },
+    }),
+  },
   textStyle: (fontWeight) => ({
     fontSize: 12,
     fontFamily:
@@ -34,11 +41,11 @@ const style = {
     color: colors.black,
     fontWeight: fontWeight,
   }),
-  horizontalLine:(color)=>({
-    borderTopWidth:1,
-    width:'100%',
+  horizontalLine: (color) => ({
+    borderTopWidth: 1,
+    width: "100%",
     color,
-  })
+  }),
 };
 
 export default style;

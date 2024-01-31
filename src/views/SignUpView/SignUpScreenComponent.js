@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
+import { Platform } from "@unthinkable/react-core-components";
 
 import SignUpScreenUI from "./SignUpScreenUI";
 import { navigations } from "../../constants/routeNames";
@@ -10,6 +11,7 @@ import { SignUpContext } from "../../globalContext/signUp/signUpProvider";
 const SignUpScreenComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
+  const isWebPlatform = Platform.OS.toLowerCase() === "web";
   const [activeTab, setActiveTab] = useState(0);
   const [, signUpDispatch] = useContext(SignUpContext);
 
@@ -29,6 +31,9 @@ const SignUpScreenComponent = () => {
       }
       return prevTab;
     });
+    if (isWebPlatform) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const onClickGoToLogin = () => {
@@ -38,10 +43,12 @@ const SignUpScreenComponent = () => {
 
   return (
     <SignUpScreenUI
-      intl={intl}
-      onClickGoToLogin={onClickGoToLogin}
-      onHandleTab={onHandleTab}
-      activeTab={activeTab}
+      {...{
+        activeTab,
+        intl,
+        onClickGoToLogin,
+        onHandleTab,
+      }}
     />
   );
 };

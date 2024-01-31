@@ -8,7 +8,6 @@ export const style = StyleSheet.create({
   },
   contentContainerStyle: {
     marginTop: 24,
-    marginBottom: 24,
     flex: 1,
   },
   webContentContainer: {
@@ -16,18 +15,18 @@ export const style = StyleSheet.create({
     flex: 1,
   },
   registrationInput: {
-    flex: 1,
+    flex: 2,
   },
   partnerInput: {
+    flex: 1,
     marginLeft: 24,
-    maxWidth: 100,
   },
   noInput: {
     marginLeft: 24,
-    flex: 1,
+    flex: 2,
   },
   codeInput: {
-    maxWidth: 100,
+    flex: 1,
   },
   innerContainer: {
     paddingLeft: 16,

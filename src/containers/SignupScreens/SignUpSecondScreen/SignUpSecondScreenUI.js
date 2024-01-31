@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CustomTextInput from "../../../components/CustomTextInput";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
+import KeyboardAwareScrollView from "../../../components/KeyboardAwareScrollView";
 import LabelWithLinkText from "../../../components/LabelWithLinkText";
+import LoadingScreen from "../../../components/LoadingScreen";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
@@ -17,19 +20,31 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
 const SignUpSecondScreenUI = ({
+  addressRef,
   allFieldsFilled,
+  codeRef,
+  companyNameRef,
   errors,
+  emailIdRef,
   formData,
+  firmRegistrationRef,
+  getErrorDetails,
   handleDismissToast,
   handleInputChange,
   handleBlur,
-  industryOptions,
   intl,
+  industryOptions,
+  isErrorGettingStates,
+  isErrorGettingIndustries,
+  isGettingIndustries,
   isLoading,
+  isGettingStates,
+  noOfPartnersRef,
   onClickNext,
   onClickGoToLogin,
   onGoBack,
   stateOptions,
+  telephoneNoRef,
   validationError,
 }) => {
   const {
@@ -54,170 +69,179 @@ const SignUpSecondScreenUI = ({
     return (
       <View style={style.formContainer}>
         <CustomTextInput
-          label={intl.formatMessage({ id: "label.company_name" })}
-          isMandatory
-          placeholder={intl.formatMessage({
-            id: "label.company_name_placeholder",
-          })}
           customHandleBlur={() => handleBlur("companyName")}
-          value={companyName}
           errorMessage={errors.companyName}
+          fieldRef={companyNameRef}
           isError={!!errors.companyName}
+          isMandatory
+          label={intl.formatMessage({ id: "label.company_name" })}
+          maxLength={255}
           onChangeText={(val) => {
             handleInputChange(val, "companyName");
           }}
+          placeholder={intl.formatMessage({
+            id: "label.company_name_placeholder",
+          })}
+          value={companyName}
         />
         <CustomTextInput
-          label={intl.formatMessage({ id: "label.entity" })}
+          errorMessage={errors.entity}
+          isDropdown
+          isError={!!errors.entity}
           isMandatory
+          label={intl.formatMessage({ id: "label.entity" })}
+          onChangeValue={(val) => handleInputChange(val, "entity")}
+          options={ENTITY_OPTIONS}
           placeholder={intl.formatMessage({
             id: "label.select_entity_placeholder",
           })}
-          isDropdown
           value={entity}
-          errorMessage={errors.entity}
-          isError={!!errors.entity}
-          onChangeValue={(val) => handleInputChange(val, "entity")}
-          options={ENTITY_OPTIONS}
         />
         <View style={style.inputContainer}>
           <View style={style.registrationInput}>
             <CustomTextInput
+              customHandleBlur={() => handleBlur("registrationNo")}
+              errorMessage={errors.registrationNo}
+              fieldRef={firmRegistrationRef}
+              isError={!!errors.registrationNo}
+              isMandatory
+              isNumeric
               label={intl.formatMessage({
                 id: "label.firm_registration_no",
               })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_firm_no",
-              })}
-              customHandleBlur={() => handleBlur("registrationNo")}
-              isMandatory
-              isNumeric
               maxLength={10}
-              errorMessage={errors.registrationNo}
-              isError={!!errors.registrationNo}
-              value={registrationNo}
               onChangeText={(val) =>
                 numericValidator(val) &&
                 handleInputChange(val, "registrationNo")
               }
+              placeholder={intl.formatMessage({
+                id: "label.enter_firm_no",
+              })}
+              value={registrationNo}
             />
           </View>
           <View style={style.partnerInput}>
             <CustomTextInput
+              customHandleBlur={() => handleBlur("noOfPartners")}
+              errorMessage={errors.noOfPartners}
+              fieldRef={noOfPartnersRef}
+              isError={!!errors.noOfPartners}
+              isMandatory
+              isNumeric
               label={intl.formatMessage({
                 id: "label.no_of_partners",
               })}
-              placeholder={intl.formatMessage({
-                id: "label.enter",
-              })}
-              isMandatory
-              customHandleBlur={() => handleBlur("noOfPartners")}
-              isNumeric
               maxLength={3}
-              value={noOfPartners}
-              errorMessage={errors.noOfPartners}
-              isError={!!errors.noOfPartners}
               onChangeText={(val) =>
                 numericValidator(val) && handleInputChange(val, "noOfPartners")
               }
+              placeholder={intl.formatMessage({
+                id: "label.enter",
+              })}
+              value={noOfPartners}
             />
           </View>
         </View>
         <CustomTextInput
-          label={intl.formatMessage({ id: "label.current_industry" })}
+          inputKey="id"
+          isDropdown
           isMandatory
+          label={intl.formatMessage({ id: "label.current_industry" })}
+          labelField="name"
+          onChangeValue={(val) => handleInputChange(val, "currentIndustry")}
+          options={industryOptions || []}
           placeholder={intl.formatMessage({
             id: "label.select_current_indusrty_placeholder",
           })}
-          isDropdown
-          labelField="name"
-          valueField="id"
-          inputKey="id"
           value={currentIndustry}
-          options={industryOptions || []}
-          onChangeValue={(val) => handleInputChange(val, "currentIndustry")}
+          valueField="id"
         />
         <CustomTextInput
+          customHandleBlur={() => handleBlur("address")}
+          errorMessage={errors.address}
+          fieldRef={addressRef}
+          height={84}
+          isError={!!errors.address}
+          isMandatory
+          isMultiline={!isWeb}
           label={intl.formatMessage({
             id: "label.address_for_correspondence",
           })}
-          isMandatory
-          isMultiline={!isWeb}
-          height={84}
-          value={address}
-          errorMessage={errors.address}
-          customHandleBlur={() => handleBlur("address")}
-          isError={!!errors.address}
+          maxLength={500}
           onChangeText={(val) => handleInputChange(val, "address")}
           placeholder={intl.formatMessage({
             id: "label.address_for_correspondance_placeholder",
           })}
+          value={address}
         />
         <CustomTextInput
-          label={intl.formatMessage({ id: "label.state" })}
+          inputKey="state_code"
+          isDropdown
           isMandatory
+          label={intl.formatMessage({ id: "label.state" })}
           labelField="name"
-          valueField="state_code"
+          onChangeValue={(val) => handleInputChange(val, "state")}
+          options={stateOptions || []}
           placeholder={intl.formatMessage({
             id: "label.select_state",
           })}
-          isDropdown
-          inputKey="state_code"
           value={state}
-          options={stateOptions || []}
-          onChangeValue={(val) => handleInputChange(val, "state")}
+          valueField="state_code"
         />
         <CustomTextInput
-          label={intl.formatMessage({ id: "label.email_id" })}
+          customHandleBlur={() => handleBlur("emailId")}
+          errorMessage={errors.emailId}
+          fieldRef={emailIdRef}
+          isError={!!errors.emailId}
           isMandatory
+          label={intl.formatMessage({ id: "label.email_id" })}
+          onChangeText={(val) => handleInputChange(val, "emailId")}
           placeholder={intl.formatMessage({
             id: "label.email_id_placeholder",
           })}
           value={emailId}
-          customHandleBlur={() => handleBlur("emailId")}
-          errorMessage={errors.emailId}
-          isError={!!errors.emailId}
-          onChangeText={(val) => handleInputChange(val, "emailId")}
         />
         <View style={style.inputContainer}>
           <View style={style.codeInput}>
             <CustomTextInput
+              customHandleBlur={() => handleBlur("code")}
+              errorMessage={errors.code}
+              fieldRef={codeRef}
+              isError={!!errors.code}
+              isMandatory
+              isNumeric
               label={intl.formatMessage({
                 id: "label.isd_std_code",
               })}
-              placeholder={intl.formatMessage({
-                id: "label.enter",
-              })}
-              customHandleBlur={() => handleBlur("code")}
-              isNumeric
-              value={code}
               maxLength={4}
-              errorMessage={errors.code}
-              isError={!!errors.code}
               onChangeText={(val) =>
                 numericValidator(val) && handleInputChange(val, "code")
               }
-              isMandatory
+              placeholder={intl.formatMessage({
+                id: "label.enter",
+              })}
+              value={code}
             />
           </View>
           <View style={style.noInput}>
             <CustomTextInput
-              label={intl.formatMessage({
-                id: "label.telephone_no",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_telephone_no",
-              })}
               customHandleBlur={() => handleBlur("telephoneNo")}
               errorMessage={errors.telephoneNo}
+              fieldRef={telephoneNoRef}
               isError={!!errors.telephoneNo}
               isMandatory
               isNumeric
+              label={intl.formatMessage({
+                id: "label.telephone_no",
+              })}
               maxLength={15}
-              value={telephoneNo}
               onChangeText={(val) =>
                 numericValidator(val) && handleInputChange(val, "telephoneNo")
               }
+              placeholder={intl.formatMessage({
+                id: "label.enter_telephone_no",
+              })}
+              value={telephoneNo}
             />
           </View>
         </View>
@@ -259,53 +283,79 @@ const SignUpSecondScreenUI = ({
     </View>
   );
 
+  const isLoadingAPIs = isGettingIndustries || isGettingStates;
+
   return (
-    <FormWrapper onSubmit={onClickNext} customFormStyle={commonStyles.mainView}>
-      <View
-        style={
-          isWebView
-            ? getResponsiveStyles({ str: "signupContainer", currentBreakpoint })
-            : style.innerContainer
-        }
-      >
-        {isWebView && (
-          <HeaderTextWithLabelAndDescription
-            label={intl.formatMessage({ id: "label.step_two" })}
-            {...(showContentHeader && {
-              headerText: intl.formatMessage({
-                id: "label.basic_details",
-              }),
-            })}
-          />
-        )}
-        {!isWeb ? (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={style.contentContainerStyle}
+    <>
+      {isLoadingAPIs && <LoadingScreen />}
+      {!isLoadingAPIs &&
+        !!industryOptions?.length &&
+        !!stateOptions?.length &&
+        !isErrorGettingStates &&
+        !isErrorGettingIndustries && (
+          <FormWrapper
+            onSubmit={onClickNext}
+            customFormStyle={commonStyles.mainView}
           >
-            {renderFormContent()}
-          </ScrollView>
-        ) : (
-          <View
-            style={
-              !isWebView
-                ? [style.contentContainerStyle, style.webContentContainer]
-                : style.webContentContainer
-            }
-          >
-            {renderFormContent()}
-            {renderFooter()}
-          </View>
+            <View
+              style={
+                isWebView
+                  ? getResponsiveStyles({
+                      str: "signupContainer",
+                      currentBreakpoint,
+                    })
+                  : style.innerContainer
+              }
+            >
+              {isWebView && (
+                <HeaderTextWithLabelAndDescription
+                  label={intl.formatMessage({ id: "label.step_two" })}
+                  {...(showContentHeader && {
+                    headerText: intl.formatMessage({
+                      id: "label.basic_details",
+                    }),
+                  })}
+                />
+              )}
+              {!isWeb ? (
+                <KeyboardAwareScrollView
+                  keyboardShouldPersistTaps="handled"
+                  extraScrollHeight={-50}
+                  showsVerticalScrollIndicator={false}
+                  style={style.contentContainerStyle}
+                >
+                  {renderFormContent()}
+                </KeyboardAwareScrollView>
+              ) : (
+                <View
+                  style={
+                    !isWebView
+                      ? [style.contentContainerStyle, style.webContentContainer]
+                      : style.webContentContainer
+                  }
+                >
+                  {renderFormContent()}
+                  {renderFooter()}
+                </View>
+              )}
+              {!isWeb && renderFooter()}
+              {!!validationError && (
+                <ToastComponent
+                  toastMessage={validationError}
+                  onDismiss={handleDismissToast}
+                />
+              )}
+            </View>
+          </FormWrapper>
         )}
-        {!isWeb && renderFooter()}
-        {!!validationError && (
-          <ToastComponent
-            toastMessage={validationError}
-            onDismiss={handleDismissToast}
-          />
-        )}
-      </View>
-    </FormWrapper>
+      {!isLoadingAPIs && !!getErrorDetails().errorMessage && (
+        <ErrorComponent
+          errorMsg={getErrorDetails().errorMessage}
+          onRetry={getErrorDetails().onRetry}
+          disableRetryBtn={isLoadingAPIs}
+        />
+      )}
+    </>
   );
 };
 
@@ -317,16 +367,27 @@ SignUpSecondScreenUI.defaultProps = {
 };
 
 SignUpSecondScreenUI.propTypes = {
+  addressRef: PropTypes.any,
   allFieldsFilled: PropTypes.func.isRequired,
+  codeRef: PropTypes.any,
+  companyNameRef: PropTypes.any,
   errors: PropTypes.object.isRequired,
+  emailIdRef: PropTypes.any,
   formData: PropTypes.object.isRequired,
+  firmRegistrationRef: PropTypes.any,
+  getErrorDetails: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   handleInputChange: PropTypes.func.isRequired,
   industryOptions: PropTypes.array,
   intl: PropTypes.object.isRequired,
+  isErrorGettingStates: PropTypes.bool.isRequired,
+  isErrorGettingIndustries: PropTypes.bool.isRequired,
+  isGettingIndustries: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  isGettingStates: PropTypes.bool.isRequired,
   onClickNext: PropTypes.func.isRequired,
+  onClickGoToLogin: PropTypes.func.isRequired,
   onGoBack: PropTypes.func.isRequired,
   stateOptions: PropTypes.array,
   validationError: PropTypes.string,

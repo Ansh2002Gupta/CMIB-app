@@ -4,6 +4,7 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import useIsWebView from "../../hooks/useIsWebView";
 import {
   getResponsiveStyles,
   style,
@@ -18,9 +19,10 @@ const HeaderTextWithLabelAndDescription = ({
   label,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const { isWebView } = useIsWebView();
 
   return (
-    <View style={{ ...style.headerContainer, ...customContainerStyles }}>
+    <View style={{ ...customContainerStyles }}>
       {!!label && (
         <CommonText customTextStyle={style.labelText}> {label}</CommonText>
       )}
@@ -38,7 +40,11 @@ const HeaderTextWithLabelAndDescription = ({
       )}
       {!!description && (
         <CommonText
-          customTextStyle={[style.secondHeading, customSecondHeadingStyles]}
+          customTextStyle={{
+            ...style.secondHeading,
+            ...(isWebView ? style.webDescriptionStyle : {}),
+            ...customSecondHeadingStyles,
+          }}
         >
           {description}
         </CommonText>

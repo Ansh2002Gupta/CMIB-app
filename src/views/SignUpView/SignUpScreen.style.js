@@ -6,7 +6,11 @@ export const style = StyleSheet.create({
   container: {
     flex: 1,
   },
-  webContainer: {
+  containerStyle: {
+    flexDirection: "row",
+    flex: 1,
+  },
+  webInnerContainer: {
     flexDirection: "row",
     flex: 1,
     justifyContent: "center",
@@ -16,7 +20,7 @@ export const style = StyleSheet.create({
     width: "100%",
   },
   webSubContainer: {
-    width: '65%',
+    width: "65%",
     alignItems: "flex-start",
     height: "100%",
   },
@@ -38,8 +42,8 @@ export const style = StyleSheet.create({
     display: "flex",
     width: "45%",
     alignSelf: "flex-start",
-    minHeight: "70vH",
-    marginBottom: 48
+    marginBottom: 48,
+    minHeight: 600, // TODO: This is just temporary change we will remove it when we implement loader on dropdownModal Click
   },
 });
 
