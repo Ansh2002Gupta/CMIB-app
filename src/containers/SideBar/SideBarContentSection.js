@@ -6,6 +6,7 @@ import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
+import BackButton from "../../components/BackButton";
 import CommonText from "../../components/CommonText";
 import Config from "../../components/ReactConfig/index";
 import CustomImage from "../../components/CustomImage";
@@ -60,6 +61,10 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     navigate(key);
     setActiveMenuItem(key);
   };
+
+  const handleBackButton = () => {
+    setSideBarSubMenu(SideBarContentEnum.NONE);
+  }
 
   const handleBottomViewNavigation = () => {
     const uri = Config.REACT_APP_CMS_URI;
@@ -143,11 +148,17 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         />
       )}
       {sideBarContent === SideBarContentEnum.MODULE && (
-        <ModuleList
-          modules={modules}
-          onSelectItem={handleOnSelectModuleItem}
-          selectedModule={selectedModule}
-        />
+        <>
+          <BackButton
+            title={intl.formatMessage({ id: "label.back" })}
+            onPress={handleBackButton}
+          />
+          <ModuleList
+            modules={modules}
+            onSelectItem={handleOnSelectModuleItem}
+            selectedModule={selectedModule}
+          />
+        </>
       )}
       {!isWebView &&
         !!selectedModule?.label &&
@@ -155,6 +166,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           <SessionList
             sessionList={selectedModule?.session}
             onSelectItem={handleOnSelectSessionItem}
+            onPressBack={handleBackButton}
             selectedSession={selectedSession}
           />
         )}

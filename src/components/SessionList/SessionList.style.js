@@ -18,10 +18,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 18,
   },
+  row:{
+    flexDirection: "row",
+  },
   searchParent: {
     backgroundColor: colors.offWhite,
     borderColor: colors.black,
-    margin: 16,
+    flex: 1,
+    marginRight: 16,
+    marginTop: 16,
   },
   searchInput: {
     backgroundColor: "transparent",

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { FlatList, Platform } from "@unthinkable/react-core-components";
+import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SearchView from "../SearchView";
 import styles from "./SessionList.style";
+import BackButton from "../BackButton";
 
-const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
+const SessionList = ({ onPressBack, onSelectItem, selectedSession, sessionList }) => {
   const [searchList, setSearchList] = useState(sessionList);
   const intl = useIntl();
   const platformSpecificProps = Platform.select({
@@ -47,13 +48,16 @@ const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
 
   return (
     <>
-      <SearchView
-        data={sessionList}
-        onSearch={onSearchSession}
-        customInputStyle={styles.searchInput}
-        customParentStyle={styles.searchParent}
-        customSearchCriteria={handleSearching}
-      />
+      <View style={styles.row}>
+        <BackButton onPress={onPressBack} />
+        <SearchView
+          data={sessionList}
+          onSearch={onSearchSession}
+          customInputStyle={styles.searchInput}
+          customParentStyle={styles.searchParent}
+          customSearchCriteria={handleSearching}
+        />
+      </View>
       {!!searchList.length ? (
         <FlatList
           data={searchList}
@@ -61,9 +65,10 @@ const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
           renderItem={renderItem}
         />
       ) : (
-        <CommonText 
-        customContainerStyle={styles.noResultContainer}
-        customTextStyle={styles.text(true)}>
+        <CommonText
+          customContainerStyle={styles.noResultContainer}
+          customTextStyle={styles.text(true)}
+        >
           {intl.formatMessage({ id: "label.no_results_found" })}
         </CommonText>
       )}
@@ -72,6 +77,7 @@ const SessionList = ({ onSelectItem, selectedSession, sessionList }) => {
 };
 
 SessionList.propTypes = {
+  onPressBack: PropTypes.func.isRequired,
   onSelectItem: PropTypes.func.isRequired,
   selectedSession: PropTypes.object.isRequired,
   sessionList: PropTypes.array.isRequired,
