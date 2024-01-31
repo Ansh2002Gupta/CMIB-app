@@ -10,7 +10,8 @@ const homeSolid = appendAppBaseURl("/images/home-solid.png");
 const homeOutline = appendAppBaseURl("/images/home-outline.png");
 const profileSolid = appendAppBaseURl("/images/profile-solid.png");
 const profileOutline = appendAppBaseURl("/images/profile-outline.png");
-const cmibIcon = appendAppBaseURl("/images/svg/cmibIcon.svg");
+const iconCmibDark = appendAppBaseURl("/images/svg/iconCmibDark.svg");
+const iconCmibLight = appendAppBaseURl("/images/svg/iconCmibLight.svg");
 const azadiMohatsav = appendAppBaseURl("/images/svg/azadiMohatsav.svg");
 const g20Icon = appendAppBaseURl("/images/svg/g20Icon.svg");
 const gloPac = appendAppBaseURl("/images/svg/gloPac.svg");
@@ -53,7 +54,6 @@ const iconTelegram = appendAppBaseURl("/images/iconTelegram/iconTelegram.png");
 const iconTwitter = appendAppBaseURl("/images/iconTwitter/iconTwitter.png");
 const iconYoutube = appendAppBaseURl("/images/iconYoutube/iconYoutube.png");
 const iconEyeSlash = appendAppBaseURl("/images/iconEyeSlash.png");
-const iconCmibLogo = appendAppBaseURl("/images/iconCmibLogo/iconCmibLogo.png");
 const iconAddApplicationForm = appendAppBaseURl(
   "/images/iconAddApplicationForm/iconAddApplicationForm.png"
 );
@@ -184,7 +184,8 @@ const images = {
   homeOutline,
   profileSolid,
   profileOutline,
-  cmibIcon,
+  iconCmibDark,
+  iconCmibLight,
   azadiMohatsav,
   g20Icon,
   gloPac,
@@ -221,7 +222,6 @@ const images = {
   iconTelegram,
   iconTwitter,
   iconYoutube,
-  iconCmibLogo,
   iconTick,
   iconDashboard,
   iconDashboardActive,

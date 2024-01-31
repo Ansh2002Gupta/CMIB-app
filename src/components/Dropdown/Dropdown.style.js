@@ -48,6 +48,7 @@ export const styles = StyleSheet.create({
     padding: 6,
     fontSize: 14,
     fontFamily,
+    transition: "none",
   }),
   valueStyle: {
     color: colors.black,

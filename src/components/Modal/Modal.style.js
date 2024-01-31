@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   },
   contentBox: {
     backgroundColor: colors.white,
-    padding: 16,
+    padding: 24,
     width: "90%",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.25)",
     borderRadius: "14px",
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     maxWidth: 444,
   },
   smWidth: {
-    maxWidth: 600,
+    maxWidth: 530,
   },
   mdWidth: {
     maxWidth: 900,

@@ -4,9 +4,11 @@ import { useIntl } from "react-intl";
 
 import SignUpThirdScreenUI from "./SignUpThirdScreenUI";
 import useFetch from "../../../hooks/useFetch";
+import useGetErrorRefs from "./controllers/useGetErrorRefs";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
+import { scrollToRef } from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 import {
   ADDRESS_MAX_LENGTH,
@@ -56,6 +58,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }))
   );
 
+  const { getAppropriateRef } = useGetErrorRefs();
+
   useEffect(() => {
     setContactDetails(
       signUpState?.signUpDetail?.contact_details.map((contact) => ({
@@ -92,15 +96,15 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     });
   };
 
-  const validateField = (name, index, enteredValue) => {
+  const validateField = ({ name, index, enteredValue }) => {
     const value = enteredValue || contactDetails[index][name];
     let error = "";
-
     switch (name) {
       case "name":
         if (
-          value.trim().length < FIELD_MIN_LENGTH ||
-          value.trim().length > FIELD_MAX_LENGTH
+          value &&
+          (value.trim().length < FIELD_MIN_LENGTH ||
+            value.trim().length > FIELD_MAX_LENGTH)
         ) {
           error = intl.formatMessage({
             id: "label.contact_person_validation",
@@ -109,8 +113,9 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         break;
       case "designation":
         if (
-          value.trim().length < FIELD_MIN_LENGTH ||
-          value.trim().length > ADDRESS_MAX_LENGTH
+          value &&
+          (value.trim().length < FIELD_MIN_LENGTH ||
+            value.trim().length > ADDRESS_MAX_LENGTH)
         ) {
           error = intl.formatMessage({
             id: "label.designation_validation",
@@ -119,9 +124,10 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         break;
       case "mobileNo":
         if (
-          !numRegex.test(String(value)) ||
-          value.trim().length < MOBILE_NUMBER_MIN_LENGTH ||
-          value.trim().length > MOBILE_NUMBER_MAX_LENGTH
+          value &&
+          (!numRegex.test(String(value)) ||
+            value.trim().length < MOBILE_NUMBER_MIN_LENGTH ||
+            value.trim().length > MOBILE_NUMBER_MAX_LENGTH)
         ) {
           error = intl.formatMessage({
             id: "label.mobile_number_validation",
@@ -129,19 +135,19 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         }
         break;
       case "emailId":
-        if (validateEmail(value)) {
+        if (value && validateEmail(value)) {
           error = intl.formatMessage({ id: "label.email_id_validation" });
         }
         break;
       default:
         error = "";
     }
-
     return error;
   };
 
   const handleBlur = (name, index) => {
-    const fieldError = validateField(name, index);
+    const fieldError = validateField({ name, index });
+
     let isDuplicate = false;
 
     if (name === "emailId" || name === "mobileNo") {
@@ -168,10 +174,19 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const validateFields = () => {
     const newErrors = contactDetails.map((detail, index) => ({
-      name: validateField("name", index),
-      designation: validateField("designation", index),
-      mobileNo: validateField("mobileNo", index),
-      emailId: validateField("emailId", index),
+      name: validateField({ name: "name", index }),
+      designation: validateField({
+        name: "designation",
+        index,
+      }),
+      mobileNo: validateField({
+        name: "mobileNo",
+        index,
+      }),
+      emailId: validateField({
+        name: "emailId",
+        index,
+      }),
     }));
 
     setErrors(newErrors);
@@ -209,6 +224,42 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         signUpDispatch(setSignUpDetails(newContactDetails));
         tabHandler("next");
       });
+    } else {
+      for (let i = 0; i < contactDetails.length; i++) {
+        if (validateField({ name: "name", index: i })) {
+          scrollToRef(getAppropriateRef(contactDetails[i].module, "name"));
+          return;
+        }
+        if (
+          validateField({
+            name: "designation",
+            index: i,
+          })
+        ) {
+          scrollToRef(
+            getAppropriateRef(contactDetails[i].module, "designation")
+          );
+          return;
+        }
+        if (
+          validateField({
+            name: "mobileNo",
+            index: i,
+          })
+        ) {
+          scrollToRef(getAppropriateRef(contactDetails[i].module, "mobileNo"));
+          return;
+        }
+        if (
+          validateField({
+            name: "emailId",
+            index: i,
+          })
+        ) {
+          scrollToRef(getAppropriateRef(contactDetails[i].module, "emailId"));
+          return;
+        }
+      }
     }
   };
 
@@ -219,7 +270,10 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       [name]: value,
     };
     setContactDetails(updatedDetails);
-    if (errors[index][name] && !validateField(name, index, value)) {
+    if (
+      errors[index][name] &&
+      !validateField({ name, index, enteredValue: value })
+    ) {
       const updatedErrors = [...errors];
       updatedErrors[index] = {
         ...updatedErrors[index],
@@ -248,6 +302,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         contactDetails,
         countryCodeResult: data,
         errors,
+        getAppropriateRef,
         getErrorDetails,
         handleBlur,
         handleDismissToast,

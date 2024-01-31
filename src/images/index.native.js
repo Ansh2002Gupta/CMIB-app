@@ -1,5 +1,6 @@
 import avatar from "../../public/images/Avatar.svg";
-import cmibIcon from "../../public/images/svg/cmibIcon.svg";
+import iconCmibDark from "../../public/images/svg/iconCmibDark.svg";
+import iconCmibLight from "../../public/images/svg/iconCmibLight.svg";
 import logo from "../../public/images/logo.png";
 import sun from "../../public/images/sun.png";
 import moon from "../../public/images/moon.png";
@@ -38,7 +39,6 @@ import iconTelegram from "../../public/images/iconTelegram/iconTelegram.png";
 import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
 import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
 import iconEyeSlash from "../../public/images/iconEyeSlash.png";
-import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
 import ticketIcon from "../../public/images/ticketIcon/ticketIcon.png";
 import iconSend from "../../public/images/iconSend/iconSend.png";
 import iconSetting from "../../public/images/iconSetting/iconSetting.png";
@@ -105,7 +105,8 @@ const images = {
   iconArrowDown2,
   avatar,
   logo,
-  cmibIcon,
+  iconCmibDark,
+  iconCmibLight,
   sun,
   moon,
   flagFr,
@@ -149,7 +150,6 @@ const images = {
   iconTwitter,
   iconTick,
   iconYoutube,
-  iconCmibLogo,
   ticketIcon,
   iconSend,
   iconSetting,
