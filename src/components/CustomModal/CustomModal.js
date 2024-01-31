@@ -69,12 +69,14 @@ const CustomModal = ({
           ) : (
             <>
               <View style={style.headerStyle}>
-                <CommonText
-                  customTextStyle={[style.headerText, headerTextStyle]}
-                  fontWeight={headerTextStyle?.fontWeight || "600"}
-                >
-                  {headerText}
-                </CommonText>
+                {!!headerText && (
+                  <CommonText
+                    customTextStyle={[style.headerText, headerTextStyle]}
+                    fontWeight={headerTextStyle?.fontWeight || "600"}
+                  >
+                    {headerText}
+                  </CommonText>
+                )}
                 <TouchableOpacity onPress={onPressIconCross}>
                   {isIconCross && <Image source={images.iconCross} />}
                 </TouchableOpacity>
