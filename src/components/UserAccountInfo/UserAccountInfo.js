@@ -70,7 +70,7 @@ const UserAccountInfo = ({
         <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
           <ViewProfileDetails
             onPressCross={() =>
-              userProfileDispatch(setShowViewProfileModal(false))
+              userProfileDispatch(setShowViewProfileDetails(false))
             }
             onPressEditIcon={() => {
               setIsUpdatePorfilePic(true);
