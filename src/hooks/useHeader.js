@@ -12,7 +12,7 @@ import { resetUserDetails } from "../globalContext/userProfile/userProfileAction
 import { setLogoutToast } from "../globalContext/logout/logoutActions";
 import { navigations } from "../constants/routeNames";
 
-export const useHeader = (logoutToastData) => {
+export const useHeader = () => {
   const navigate = useNavigate();
   const [, authDispatch] = useContext(AuthContext);
   const [, userProfileDispatch] = useContext(UserProfileContext);
@@ -20,7 +20,7 @@ export const useHeader = (logoutToastData) => {
 
   const { handleUserLogout, isLoggingUserOut } = useLogoutAPI();
 
-  const onLogout = async () => {
+  const onLogout = async (logoutToastData) => {
     await handleUserLogout({});
     await CookieAndStorageService.remove({ key: "auth" });
     authDispatch(clearAuthAndLogout());

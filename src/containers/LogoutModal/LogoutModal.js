@@ -14,11 +14,7 @@ import styles from "./logoutModal.style";
 
 const LogoutModal = ({ onCancel }) => {
   const intl = useIntl();
-  const { isLoggingUserOut, onLogout } = useHeader({
-    message: intl.formatMessage({ id: "label.logout_successfully" }),
-    isLogoutToast: true,
-    isError: false,
-  });
+  const { isLoggingUserOut, onLogout } = useHeader();
   const WarningIcon = images.iconWarning;
 
   const logoutConfig = [
@@ -56,7 +52,13 @@ const LogoutModal = ({ onCancel }) => {
           }}
           displayLoader={isLoggingUserOut}
           onPressButtonOne={() => onCancel(false)}
-          onPressButtonTwo={() => onLogout()}
+          onPressButtonTwo={() =>
+            onLogout({
+              message: intl.formatMessage({ id: "label.logout_successfully" }),
+              isLogoutToast: true,
+              isError: false,
+            })
+          }
         />
       ),
       style: styles.gapStyle,

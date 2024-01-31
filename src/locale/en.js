@@ -91,7 +91,7 @@ const locale = {
   "label.signup_success": "Thank You for Signing Up!",
   "label.signup_info":
     "Your application has been submitted for approval. You will receive a confirmation email once it is processed by CMI&B admin.",
-  "label.not_a_valid_email": "Not a valid email, please enter again",
+  "label.not_a_valid_email": "Not a valid email, Please enter again",
   "label.company_name_placeholder": "Enter your company name",
   "label.select_entity_placeholder": "Select entity",
   "label.select_current_indusrty_placeholder": "Select your current industry",

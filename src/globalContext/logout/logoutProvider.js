@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import * as types from "./types";
 
 const initialState = {
-  isLogoutDetails: {
+  logoutDetails: {
     messsage: "",
     isLogoutToast: false,
     isError: false,
@@ -14,7 +14,7 @@ const logoutReducer = (state, action) => {
     case types.SET_LOGOUT_TOAST:
       return {
         ...state,
-        isLogoutDetails: action.payload,
+        logoutDetails: action.payload,
       };
 
     default:

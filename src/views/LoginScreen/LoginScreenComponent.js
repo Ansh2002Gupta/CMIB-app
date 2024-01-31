@@ -12,7 +12,7 @@ import { setLogoutToast } from "../../globalContext/logout/logoutActions";
 
 function LoginScreenComponent() {
   const [logoutState, setLogoutDispatch] = useContext(LogoutContext);
-  const { isLogoutDetails } = logoutState;
+  const { logoutDetails } = logoutState;
   const navigate = useNavigate();
   const location = useLocation();
   const activeTab = location?.state?.activeTab;
@@ -92,7 +92,7 @@ function LoginScreenComponent() {
       icons={icons}
       intl={intl}
       isLoading={isLoading}
-      isLogoutDetails={isLogoutDetails}
+      logoutDetails={logoutDetails}
       onChangePassword={onChangePassword}
       onChangeUsername={onChangeUsername}
       onCreateNewPasswordClick={onCreateNewPasswordClick}
