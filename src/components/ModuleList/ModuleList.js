@@ -9,10 +9,10 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import Dialog from "../Dialog";
+import images from "../../images";
 import useIsWebView from "../../hooks/useIsWebView";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getAccessibleModulesList } from "../../constants/sideBarHelpers";
-import images from "../../images";
 import { gridStyles } from "../../theme/styles/commonStyles";
 import styles from "./ModuleList.style";
 
@@ -89,11 +89,17 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
                     onPress={() =>
                       !module.sectionHeading ? onSelectItem(item) : () => {}
                     }
-                    style={
-                      item?.key === selectedModule.key
+                    // style={
+                    //   item?.key === selectedModule.key
+                    //     ? styles.activeTabStyle
+                    //     : styles.moduleTabStyle
+                    // }
+                    style={{
+                      ...styles.moduleTabStyle,
+                      ...(item?.key === selectedModule.key
                         ? styles.activeTabStyle
-                        : styles.moduleTabStyle
-                    }
+                        : {}),
+                    }}
                     className={classes["module-box_outlin--darkBlue"]}
                   >
                     <CustomImage
@@ -114,11 +120,7 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
                       </CommonText>
                     </View>
 
-                    <View
-                      style={{
-                        justifyContent: "center",
-                      }}
-                    >
+                    <View style={styles.textView}>
                       {item?.key === selectedModule.key && (
                         <CustomImage
                           source={images.iconTickBlue}
