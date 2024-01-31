@@ -10,8 +10,7 @@ import styles from "./PublicHeader.style";
 
 const PublicHeader = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const hideRightIcons =
-    currentBreakpoint === "xs" || currentBreakpoint === "sm";
+  const isMobileView = currentBreakpoint === "xs" || currentBreakpoint === "sm";
   const isWebView = currentBreakpoint !== "xs";
   const navigate = useNavigate();
 
@@ -24,7 +23,7 @@ const PublicHeader = () => {
       return {
         ...styles.webResetMainView,
         ...styles.headerBorder,
-        ...(hideRightIcons ? styles.mainView : styles.webMainView),
+        ...(isMobileView ? styles.mainView : styles.webMainView),
       };
     }
     return {
@@ -37,9 +36,7 @@ const PublicHeader = () => {
     if (isWebView) {
       return {
         ...styles.webResetContainerStyle,
-        ...(hideRightIcons
-          ? styles.smContainerStyle
-          : styles.webContainerStyle),
+        ...(isMobileView ? styles.smContainerStyle : styles.webContainerStyle),
       };
     }
     return {
@@ -57,8 +54,8 @@ const PublicHeader = () => {
           resizeMode="contain"
           source={images.iconCmibLight}
           style={styles.cmibLogo}
-          height={40}
-          width={120}
+          height={isWebView ? 55 : 40}
+          width={isWebView ? 166 : 120}
         />
       </View>
     </View>
