@@ -1,14 +1,31 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { FlatList } from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
+import { FlatList, View } from "@unthinkable/react-core-components";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 
+import classes from "../../theme/styles/CssClassProvider/CssClassProvider";
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import Dialog from "../Dialog";
+import useIsWebView from "../../hooks/useIsWebView";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getAccessibleModulesList } from "../../constants/sideBarHelpers";
+import images from "../../images";
+import { gridStyles } from "../../theme/styles/commonStyles";
 import styles from "./ModuleList.style";
 
 const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const { isWebView } = useIsWebView();
+  const intl = useIntl();
+  const columnCount = isWebView && gridStyles[currentBreakpoint];
+
+  const containerStyle = isWebView
+    ? styles.containerGridStyle(columnCount)
+    : styles.containerStyle;
+
   const [userProfileState] = useContext(UserProfileContext);
   const renderrableModules = getAccessibleModulesList({
     allModules: modules,
@@ -45,11 +62,76 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
   );
 
   return (
-    <FlatList
-      data={renderrableModules}
-      keyExtractor={(module) => module.key}
-      renderItem={renderItem}
-    />
+    <>
+      {isWebView ? (
+        <Dialog
+          heading={intl.formatMessage({ id: "label.selectModule" })}
+          modalContainerStyle={styles.modalContainerStyle}
+          customHeadingStyle={styles.modalHeadingStyle}
+          onClose={() =>
+            !module.sectionHeading ? onSelectItem(selectedModule) : () => {}
+          }
+        >
+          <View style={styles.borderStyle}></View>
+          <View style={{ ...styles.mainViewStyle, ...containerStyle }}>
+            {renderrableModules.map((item) => {
+              if (item.label !== "Experienced Members" && item.visible) {
+                return (
+                  <CustomTouchableOpacity
+                    onPress={() =>
+                      !module.sectionHeading ? onSelectItem(item) : () => {}
+                    }
+                    style={
+                      item?.key === selectedModule.key
+                        ? styles.activeTabStyle
+                        : styles.moduleTabStyle
+                    }
+                    className={classes["module-box_outlin--darkBlue"]}
+                  >
+                    <CustomImage
+                      source={item.image}
+                      style={styles.moduleImageStyle}
+                    />
+                    <View style={styles.containerTextStyle}>
+                      <CommonText
+                        customTextStyle={styles.moduleTextStyle}
+                        fontWeight="600"
+                      >
+                        {item.label}
+                      </CommonText>
+                      <CommonText
+                        customTextStyle={styles.experienceMemberTextStyle}
+                      >
+                        {intl.formatMessage({ id: "label.experiencedMember" })}
+                      </CommonText>
+                    </View>
+
+                    <View
+                      style={{
+                        justifyContent: "center",
+                      }}
+                    >
+                      {item?.key === selectedModule.key && (
+                        <CustomImage
+                          source={images.iconTickBlue}
+                          style={styles.tickImageStyle}
+                        />
+                      )}
+                    </View>
+                  </CustomTouchableOpacity>
+                );
+              }
+            })}
+          </View>
+        </Dialog>
+      ) : (
+        <FlatList
+          data={renderrableModules}
+          keyExtractor={(module) => module.key}
+          renderItem={renderItem}
+        />
+      )}
+    </>
   );
 };
 

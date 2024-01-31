@@ -106,7 +106,8 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       <View style={styles.imageView}>
         <CustomImage source={images.cmibIcon} style={styles.cmiLogo} />
       </View>
-      {sideBarContent === SideBarContentEnum.NONE && (
+      {(sideBarContent === SideBarContentEnum.NONE ||
+        (isWebView && sideBarContent === SideBarContentEnum.MODULE)) && (
         <TwoRow
           isBottomFillSpace={isWebView}
           topSection={

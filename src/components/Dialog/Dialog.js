@@ -10,15 +10,20 @@ import styles from "./Dialog.style";
 
 const Dialog = ({
   children,
+  customHeadingStyle,
   heading,
   omitCloseBtn,
   maxWidth,
+  modalContainerStyle,
   onClose,
   preventCloseOnBackdropClick,
 }) => {
   return (
-    <Modal {...{ maxWidth, onClose, preventCloseOnBackdropClick }}>
-      <View style={styles.headingRow}>
+    <Modal
+      {...{ maxWidth, onClose, preventCloseOnBackdropClick }}
+      containerStyle={modalContainerStyle}
+    >
+      <View style={{ ...styles.headingRow, ...customHeadingStyle }}>
         <View>
           {heading ? (
             <CommonText customTextStyle={styles.heading} fontWeight="600">
@@ -48,18 +53,22 @@ const Dialog = ({
 
 Dialog.defaultProps = {
   children: <></>,
-  maxWidth: "",
+  customHeadingStyle: {},
   heading: "",
   omitCloseBtn: false,
   onClose: () => {},
+  maxWidth: "",
+  modalContainerStyle: {},
   preventCloseOnBackdropClick: false,
 };
 
 Dialog.propTypes = {
   children: PropTypes.node,
+  customHeadingStyle: PropTypes.object,
   heading: PropTypes.string,
   omitCloseBtn: PropTypes.bool,
   maxWidth: PropTypes.string,
+  modalContainerStyle: PropTypes.object,
   onClose: PropTypes.func,
   preventCloseOnBackdropClick: PropTypes.bool,
 };

@@ -132,6 +132,8 @@ export const modules = [
     children: newlyQualifiedPlacementsMenu,
     session: items,
     visible: false,
+    image: images.iconNewlyQualified,
+    isExperiencedMember: false,
   },
   {
     label: "CA Jobs",
@@ -139,12 +141,15 @@ export const modules = [
     children: caJobsMenu,
     session: items,
     visible: false,
+    image: images.iconCAJobs,
+    isExperiencedMember: false,
   },
   {
     label: "Experienced Members",
     key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
     visible: false,
     sectionHeading: true,
+    image: images.iconControl,
   },
   {
     label: "Career Ascent",
@@ -153,6 +158,8 @@ export const modules = [
     session: items,
     visible: false,
     isSubMenu: true,
+    image: images.iconCareerAscent,
+    isExperiencedMember: true,
   },
   {
     label: "Women PartTime",
@@ -161,6 +168,8 @@ export const modules = [
     session: items,
     visible: false,
     isSubMenu: true,
+    image: images.iconWomanPartTime,
+    isExperiencedMember: true,
   },
   {
     label: "Overseas Chapters",
@@ -169,6 +178,8 @@ export const modules = [
     session: items,
     visible: false,
     isSubMenu: true,
+    image: images.iconOverseasChapters,
+    isExperiencedMember: true,
   },
 ];
 
