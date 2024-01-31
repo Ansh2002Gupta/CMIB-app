@@ -7,9 +7,9 @@ const getMaxWidth = (currentBreakpoint) => {
     case "lg":
       return "200px";
     case "md":
-      return "10px";
+      return "85px";
     case "sm":
-      return "90px";
+      return "120px";
     case "xs":
       return "50px";
     default:
