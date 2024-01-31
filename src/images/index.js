@@ -63,11 +63,6 @@ const iconHiringProcess = appendAppBaseURl(
 const iconDownloadDetails = appendAppBaseURl(
   "/images/iconDownloadDetails/iconDownloadDetails.png"
 );
-const iconAzadiMahotsav = appendAppBaseURl(
-  "/images/iconAzadiMahotsav/iconAzadiMahotsav.png"
-);
-const iconGloPac = appendAppBaseURl("/images/iconGloPac/iconGloPac.png");
-const iconG20 = appendAppBaseURl("/images/iconG20/iconG20.png");
 const iconDrawer = appendAppBaseURl("/images/iconDrawer/iconDrawer.png");
 const iconNotification = appendAppBaseURl(
   "/images/iconNotification/iconNotification.png"
@@ -233,9 +228,6 @@ const images = {
   iconAddApplicationForm,
   iconHiringProcess,
   iconDownloadDetails,
-  iconAzadiMahotsav,
-  iconGloPac,
-  iconG20,
   ticketIcon,
   iconSend,
   iconSetting,
