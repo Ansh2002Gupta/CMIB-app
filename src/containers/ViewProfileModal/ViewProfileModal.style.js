@@ -43,7 +43,6 @@ const styles = {
   headingText: {
     color: colors.black,
     fontSize: 24,
-    fontWeight: "600",
   },
   subHeadingText: {
     color: colors.subHeadingGray,
@@ -70,7 +69,6 @@ const styles = {
   secondSectionStyle: {
     gap: 8,
     alignItems: "center",
-    // marginTop: 17.5,
   },
   thirdSectionStyle: {
     gap: 5,
@@ -84,6 +82,7 @@ const styles = {
     height: 24,
     width: 24,
     cursor: "pointer",
+    padding: 16,
   },
   crossStyle: {
     alignSelf: "flex-end",
@@ -104,13 +103,14 @@ const styles = {
     borderRadius: 152,
   },
   designationContainer: {
-    margintTop: 8,
+    paddingTop: 6,
+    paddingBottom: 40,
     justifyContent: "center",
     alignItems: "center",
   },
   designationText: {
     fontSize: 14,
     color: colors.black,
-  }
+  },
 };
 export default styles;

@@ -68,9 +68,9 @@ const UserAccountInfo = ({
         </CustomModal>
       ) : null}
       {showViewProfileModal ? (
-        <CustomModal containerStyle={styles.containerStyle}>
+        <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
           <ViewProfileModal
-            onPressCancel={() =>
+            onPressCross={() =>
               userProfileDispatch(setShowViewProfileModal(false))
             }
           />

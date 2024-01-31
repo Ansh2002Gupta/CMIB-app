@@ -1,23 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Image } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import CustomImage from "../../components/CustomImage";
 import MultiRow from "../../core/layouts/MultiRow";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 import images from "../../images";
 import styles from "./ViewProfileModal.style";
 
-const ViewProfileModal = ({ closeModal, setModalSelect }) => {
+const ViewProfileModal = ({ onPressCross, setModalSelect }) => {
   const intl = useIntl();
   const firstName = "Kashish";
   const lastName = "Bhatheja";
   const profileImage = "https://picsum.photos/id/10/200/300";
-  const email = "kashish.natheja@gmail.com";
+  const email = "kashish.bhatheja@gmail.com";
   const phone = "+91-1234567890";
-  const createdDate = "10/10/2023";
   const designation = "Senior Chartered Accountant";
   const section = [
     {
@@ -26,10 +25,10 @@ const ViewProfileModal = ({ closeModal, setModalSelect }) => {
           style={styles.secondSectionStyle}
           topSectionStyle={styles.crossStyle}
           topSection={
-            <Image
-              source={images.iconCross}
+            <CustomImage
+              source={images.iconCloseDark}
               style={styles.crossIconStyle}
-              onClick={closeModal}
+              onClick={onPressCross}
             />
           }
           bottomSection={
@@ -54,6 +53,7 @@ const ViewProfileModal = ({ closeModal, setModalSelect }) => {
           topSection={
             <CommonText
               customTextStyle={styles.headingText}
+              fontWeight={"600"}
             >{`${firstName} ${lastName}`}</CommonText>
           }
           middleSection={
@@ -71,25 +71,24 @@ const ViewProfileModal = ({ closeModal, setModalSelect }) => {
     },
     {
       content: (
-        <TwoColumn 
-        style={styles.designationContainer}
-        leftSection={
-          <CommonText
-          customTextStyle={styles.subHeadingText}
-        >
-          {`${intl.formatMessage({
-            id: "label.designation",
-          })}:`}&nbsp;
-        </CommonText>
-        }
-        rightSection={
-          <CommonText
-          customTextStyle={styles.designationText}
-          fontWeight={"600"}
-        >
-          {designation}
-        </CommonText>
-        }
+        <TwoColumn
+          style={styles.designationContainer}
+          leftSection={
+            <CommonText customTextStyle={styles.subHeadingText}>
+              {`${intl.formatMessage({
+                id: "label.designation",
+              })}:`}
+              &nbsp;
+            </CommonText>
+          }
+          rightSection={
+            <CommonText
+              customTextStyle={styles.designationText}
+              fontWeight={"600"}
+            >
+              {designation}
+            </CommonText>
+          }
         />
       ),
     },
@@ -97,8 +96,12 @@ const ViewProfileModal = ({ closeModal, setModalSelect }) => {
   return <MultiRow style={styles.profileMainContainer} rows={section} />;
 };
 
+ViewProfileModal.defaultProps = {
+  onPressCross: () => {},
+};
+
 ViewProfileModal.propTypes = {
-  closeModal: PropTypes.func,
+  onPressCross: PropTypes.func,
   setModalSelect: PropTypes.func,
 };
 export default ViewProfileModal;
