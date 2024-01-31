@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
     paddingBottom: 18,
     justifyContent: "flex-start",
   },
-  containerGridStyle: () => ({
+  containerGridStyle: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gap: 16,
-  }),
+  },
   moduleTabStyle: {
     borderWidth: 1,
     flexDirection: "row",
@@ -94,6 +94,10 @@ const styles = StyleSheet.create({
   },
   moduleTextStyle: {
     fontSize: 18,
+    color: colors.black,
+  },
+  activeModuleTextStyle: {
+    color: colors.darkBlue,
   },
   tickImageStyle: {
     height: 24,

@@ -161,7 +161,6 @@ const iconCmibCALogo = appendAppBaseURl(
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
 const iconCAJobs = appendAppBaseURl("/images/svg/iconCAJobs.svg");
 const iconCareerAscent = appendAppBaseURl("/images/svg/iconCareerAscent.svg");
-const iconControl = appendAppBaseURl("/images/svg/iconControl.svg");
 const iconNewlyQualified = appendAppBaseURl(
   "/images/svg/iconNewlyQualified.svg"
 );
@@ -169,7 +168,7 @@ const iconOverseasChapters = appendAppBaseURl(
   "/images/svg/iconOverseasChapters.svg"
 );
 const iconWomanPartTime = appendAppBaseURl("/images/svg/iconWomanPartTime.svg");
-const iconTickBlue = appendAppBaseURl("/images/svg/iconTickBlue.svg")
+const iconTickBlue = appendAppBaseURl("/images/svg/iconTickBlue.svg");
 const iconBackArrow = appendAppBaseURl("/images/svg/iconBackArrow.svg");
 
 const images = {
@@ -282,7 +281,6 @@ const images = {
   iconRetry,
   iconCAJobs,
   iconCareerAscent,
-  iconControl,
   iconNewlyQualified,
   iconOverseasChapters,
   iconWomanPartTime,

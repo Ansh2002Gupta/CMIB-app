@@ -2,9 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import classes from "../../theme/styles/CssClassProvider/CssClassProvider";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -13,17 +11,15 @@ import images from "../../images";
 import useIsWebView from "../../hooks/useIsWebView";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getAccessibleModulesList } from "../../constants/sideBarHelpers";
-import { gridStyles } from "../../theme/styles/commonStyles";
+import classes from "../../theme/styles/CssClassProvider/CssClassProvider";
 import styles from "./ModuleList.style";
 
 const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
-  const columnCount = isWebView && gridStyles[currentBreakpoint];
 
   const containerStyle = isWebView
-    ? styles.containerGridStyle(columnCount)
+    ? styles.containerGridStyle
     : styles.containerStyle;
 
   const [userProfileState] = useContext(UserProfileContext);
@@ -83,24 +79,19 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
           <View style={styles.borderStyle}></View>
           <View style={{ ...styles.mainViewStyle, ...containerStyle }}>
             {renderrableModules.map((item) => {
-              if (item.label !== "Experienced Members" && item.visible) {
+              if (!item.sectionHeading && item.visible) {
                 return (
                   <CustomTouchableOpacity
                     onPress={() =>
                       !module.sectionHeading ? onSelectItem(item) : () => {}
                     }
-                    // style={
-                    //   item?.key === selectedModule.key
-                    //     ? styles.activeTabStyle
-                    //     : styles.moduleTabStyle
-                    // }
                     style={{
                       ...styles.moduleTabStyle,
                       ...(item?.key === selectedModule.key
                         ? styles.activeTabStyle
                         : {}),
                     }}
-                    className={classes["module-box_outlin--darkBlue"]}
+                    className={classes["module-box_outline--darkBlue"]}
                   >
                     <CustomImage
                       source={item.image}
@@ -108,18 +99,26 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
                     />
                     <View style={styles.containerTextStyle}>
                       <CommonText
-                        customTextStyle={styles.moduleTextStyle}
+                        customTextStyle={{
+                          ...styles.moduleTextStyle,
+                          ...(item?.key === selectedModule.key
+                            ? styles.activeModuleTextStyle
+                            : {}),
+                        }}
                         fontWeight="600"
                       >
                         {item.label}
                       </CommonText>
-                      <CommonText
-                        customTextStyle={styles.experienceMemberTextStyle}
-                      >
-                        {intl.formatMessage({ id: "label.experiencedMember" })}
-                      </CommonText>
+                      {item?.isExperiencedMember && (
+                        <CommonText
+                          customTextStyle={styles.experienceMemberTextStyle}
+                        >
+                          {intl.formatMessage({
+                            id: "label.experiencedMember",
+                          })}
+                        </CommonText>
+                      )}
                     </View>
-
                     <View style={styles.textView}>
                       {item?.key === selectedModule.key && (
                         <CustomImage
