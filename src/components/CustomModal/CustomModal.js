@@ -34,7 +34,12 @@ const CustomModal = ({
 
   return (
     <>
-      <Modal isVisible style={style.containerStyle} {...webProps}>
+      <Modal
+        isVisible
+        style={style.containerStyle}
+        containerStyle={style.mainContainerStyle}
+        {...webProps}
+      >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" && !isSuccess ? "padding" : "height"}
           style={[style.innerContainer, customInnerContainerStyle]}
@@ -96,7 +101,7 @@ CustomModal.defaultProps = {
   headerTextStyle: {},
   isIconCross: false,
   isSuccess: false,
-  maxWidth: "xs",
+  maxWidth: "sm",
   onPress: () => {},
   onPressIconCross: () => {},
   onBackdropPress: () => {},

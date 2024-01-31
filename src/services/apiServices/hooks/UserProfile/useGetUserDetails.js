@@ -9,11 +9,14 @@ import {
   setIsGettingUserDetails,
   setUserDetails,
 } from "../../../../globalContext/userProfile/userProfileActions";
-import { setSelectedModule } from "../../../../globalContext/sidebar/sidebarActions";
+import {
+  setSelectedModule,
+  setSelectedSession,
+} from "../../../../globalContext/sidebar/sidebarActions";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import { modules } from "../../../../constants/sideBarHelpers";
 import { STATUS_CODES } from "../../../../constants/constants";
-import { USER_PROFILE } from "../../apiEndPoint";
+import { CORE_USERS_PERMISSION } from "../../apiEndPoint";
 
 const useGetUserDetails = () => {
   const [, sideBarDispatch] = useContext(SideBarContext);
@@ -24,7 +27,7 @@ const useGetUserDetails = () => {
     try {
       userProfileDispatch(setIsGettingUserDetails(true));
       userProfileDispatch(setErrorGetingUserDetails(""));
-      const res = await Http.get(USER_PROFILE);
+      const res = await Http.get(CORE_USERS_PERMISSION);
       userProfileDispatch(setIsGettingUserDetails(false));
       if (
         res.status === STATUS_CODES.SUCCESS_STATUS ||
@@ -41,6 +44,7 @@ const useGetUserDetails = () => {
             firstAccessibleModuleName?.toLowerCase()
         );
         sideBarDispatch(setSelectedModule(moduleDetails));
+        sideBarDispatch(setSelectedSession(moduleDetails?.session?.[0]));
         return;
       }
       userProfileDispatch(
