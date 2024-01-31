@@ -12,7 +12,12 @@ import NewPasswordValidation from "../../components/NewPasswordValidation";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
 import useIsWebView from "../../hooks/useIsWebView";
-import { strongPasswordValidator } from "../../utils/validation";
+import {
+  handleNewPasswordChange,
+  handleConfirmPasswordChange,
+  onConfirmPasswordBlur,
+  strongPasswordValidator,
+} from "../../utils/validation";
 import styles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
@@ -64,30 +69,6 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     }
   };
 
-  const handleConfirmPasswordBlur = () => {
-    if (confirmNewPassword && newPassword && !doPasswordsMatch) {
-      setError(intl.formatMessage({ id: "label.password-not-match" }));
-    } else {
-      setError("");
-    }
-  };
-
-  const handleConfirmPasswordChange = (val) => {
-    const trimmedPassword = val.trim();
-    setConfirmNewPassword(trimmedPassword);
-    if (newPassword && val && newPassword === val) {
-      setError("");
-    }
-  };
-
-  const handleNewPasswordChange = (val) => {
-    const trimmedPassword = val.trim();
-    setNewPassword(trimmedPassword);
-    if (confirmNewPassword && val && confirmNewPassword === val) {
-      setError("");
-    }
-  };
-
   const baseStyle = isWebView ? styles.containerStyle : styles.inputStyle;
   const errorStyle = isWebView
     ? styles.erroInputStyleWeb
@@ -127,9 +108,23 @@ const ChangePasswordModal = ({ onPressCancel }) => {
               })}
               customStyle={styles.containerStyle}
               value={newPassword}
-              onChangeText={handleNewPasswordChange}
+              onChangeText={(val) => {
+                handleNewPasswordChange({
+                  confirmNewPassword,
+                  setNewPassword,
+                  setError,
+                  val,
+                });
+              }}
               customHandleBlur={() => {
-                handleConfirmPasswordBlur();
+                onConfirmPasswordBlur({
+                  confirmNewPassword,
+                  newPassword,
+                  setError,
+                  errorMessage: intl.formatMessage({
+                    id: "label.password-not-match",
+                  }),
+                });
               }}
               isMandatory
               eyeImage
@@ -143,9 +138,23 @@ const ChangePasswordModal = ({ onPressCancel }) => {
                 id: "label.confirm_your_new_password",
               })}
               value={confirmNewPassword}
-              onChangeText={handleConfirmPasswordChange}
+              onChangeText={(val) => {
+                handleConfirmPasswordChange({
+                  newPassword,
+                  setConfirmNewPassword,
+                  setError,
+                  val,
+                });
+              }}
               customHandleBlur={() => {
-                handleConfirmPasswordBlur();
+                onConfirmPasswordBlur({
+                  confirmNewPassword,
+                  newPassword,
+                  setError,
+                  errorMessage: intl.formatMessage({
+                    id: "label.password-not-match",
+                  }),
+                });
               }}
               customStyle={customStyle}
               isMandatory

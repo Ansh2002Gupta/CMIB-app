@@ -5,6 +5,10 @@ import { useNavigate } from "../../routes";
 import CreateNewPasswordUI from "./CreateNewPasswordUI";
 import useResetPasswordAPI from "../../services/apiServices/hooks/useResetPasswordAPI";
 import { navigations } from "../../constants/routeNames";
+import {
+  handleNewPasswordChange,
+  handleConfirmPasswordChange,
+} from "../../utils/validation";
 
 function CreateNewPasswordComponent({ resetToken }) {
   const navigate = useNavigate();
@@ -12,7 +16,7 @@ function CreateNewPasswordComponent({ resetToken }) {
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setError] = useState("");
 
   const {
     isLoading,
@@ -29,32 +33,26 @@ function CreateNewPasswordComponent({ resetToken }) {
   };
 
   const onChangePasswordInput = (val) => {
-    const trimmedPassword = val.trim();
-    setNewPassword(trimmedPassword);
-    if (!!confirmNewPassword && !!val && confirmNewPassword === val) {
-      setErrorMessage("");
-    }
+    handleNewPasswordChange({
+      confirmNewPassword,
+      setNewPassword,
+      setError,
+      val,
+    });
   };
 
   const onChangeConfirmPasswordInput = (val) => {
-    const trimmedPassword = val.trim();
-    setConfirmNewPassword(trimmedPassword);
-    if (!!newPassword && !!val && newPassword === val) {
-      setErrorMessage("");
-    }
+    handleConfirmPasswordChange({
+      newPassword,
+      setConfirmNewPassword,
+      setError,
+      val,
+    });
   };
 
   const doPasswordsMatch = () =>
     newPassword.trim().toLowerCase() ===
     confirmNewPassword.trim().toLowerCase();
-
-  const handleConfirmPasswordBlur = () => {
-    if (!!confirmNewPassword && !!newPassword && !doPasswordsMatch()) {
-      setErrorMessage(intl.formatMessage({ id: "label.password-not-match" }));
-    } else {
-      setErrorMessage("");
-    }
-  };
 
   const handleSubmit = () => {
     if (
@@ -64,13 +62,13 @@ function CreateNewPasswordComponent({ resetToken }) {
       return;
     }
     if (doPasswordsMatch()) {
-      setErrorMessage("");
+      setError("");
       handleResetPasswordAPI({
         token: resetToken,
         password: newPassword,
       });
     } else {
-      setErrorMessage(intl.formatMessage({ id: "label.password-not-match" }));
+      setError(intl.formatMessage({ id: "label.password-not-match" }));
     }
   };
 
@@ -85,8 +83,8 @@ function CreateNewPasswordComponent({ resetToken }) {
       onChangeConfirmPasswordInput={onChangeConfirmPasswordInput}
       intl={intl}
       isLoading={isLoading}
-      handleConfirmPasswordBlur={handleConfirmPasswordBlur}
       successLogin={!!resetPasswordResult?.message}
+      setError={setError}
       validationError={errorWhileResetPassword}
       setErrorWhileResetPassword={setErrorWhileResetPassword}
     />

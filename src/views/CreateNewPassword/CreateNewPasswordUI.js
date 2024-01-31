@@ -12,7 +12,10 @@ import HeaderTextWithLabelAndDescription from "../../components/HeaderTextWithLa
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import WebViewLoginSignUpWrapper from "../../components/WebViewLoginSignUpWrapper/WebViewLoginSignUpWrapper";
-import { strongPasswordValidator } from "../../utils/validation";
+import {
+  onConfirmPasswordBlur,
+  strongPasswordValidator,
+} from "../../utils/validation";
 import styles from "./CreateNewPassword.style";
 
 function CreateNewPasswordUI(props) {
@@ -20,7 +23,6 @@ function CreateNewPasswordUI(props) {
     confirmNewPassword,
     errorMessage,
     handleSubmit,
-    handleConfirmPasswordBlur,
     intl,
     isLoading,
     newPassword,
@@ -29,6 +31,7 @@ function CreateNewPasswordUI(props) {
     onChangeConfirmPasswordInput,
     successLogin,
     setErrorWhileResetPassword,
+    setError,
     validationError,
   } = props;
 
@@ -156,7 +159,14 @@ function CreateNewPasswordUI(props) {
                 onChangePasswordInput(val);
               }}
               customHandleBlur={() => {
-                handleConfirmPasswordBlur();
+                onConfirmPasswordBlur({
+                  confirmNewPassword,
+                  newPassword,
+                  setError,
+                  errorMessage: intl.formatMessage({
+                    id: "label.password-not-match",
+                  }),
+                });
               }}
               eyeImage
               isPassword
@@ -174,7 +184,14 @@ function CreateNewPasswordUI(props) {
                 onChangeConfirmPasswordInput(val);
               }}
               customHandleBlur={() => {
-                handleConfirmPasswordBlur();
+                onConfirmPasswordBlur({
+                  confirmNewPassword,
+                  newPassword,
+                  setError,
+                  errorMessage: intl.formatMessage({
+                    id: "label.password-not-match",
+                  }),
+                });
               }}
               isMandatory
               eyeImage
@@ -261,7 +278,6 @@ CreateNewPasswordUI.propTypes = {
   confirmNewPassword: PropTypes.string.isRequired,
   errorMessage: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  handleConfirmPasswordBlur: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   intl: PropTypes.object.isRequired,
   newPassword: PropTypes.string.isRequired,
@@ -270,6 +286,7 @@ CreateNewPasswordUI.propTypes = {
   onChangeConfirmPasswordInput: PropTypes.func.isRequired,
   successLogin: PropTypes.bool,
   setErrorWhileResetPassword: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
   validationError: PropTypes.string,
 };
 

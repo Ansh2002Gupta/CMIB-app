@@ -25,7 +25,7 @@ export const useHeader = () => {
     await CookieAndStorageService.remove({ key: "auth" });
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
-    setLogoutDispatch(setLogoutToast(logoutToastData));
+    !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
     navigate(navigations.LOGIN);
   };
   return {
