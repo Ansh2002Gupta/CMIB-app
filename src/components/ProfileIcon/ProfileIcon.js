@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { Image, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import images from "../../images";
 import styles from "./ProfileIcon.style";
 
 const ProfileIcon = ({
@@ -17,16 +20,30 @@ const ProfileIcon = ({
 }) => {
   if (profileImage) {
     return (
-      <View style={{ ...styles.initialsContainer, ...customContainerStyle }}>
-        <Image
-          source={{ uri: profileImage }}
-          style={[
-            showEditModal && iconType === "modalIcon"
-              ? styles.modalProfileImage
-              : styles.profileImageStyle,
-            customImageStyle,
-          ]}
-        />
+      <View style={styles.outerContainer}>
+        <View style={{ ...styles.initialsContainer, ...customContainerStyle }}>
+          <Image
+            source={{ uri: profileImage }}
+            style={[
+              showEditModal && iconType === "modalIcon"
+                ? styles.modalProfileImage
+                : styles.profileImageStyle,
+              customImageStyle,
+            ]}
+          />
+        </View>
+        <CustomTouchableOpacity style={styles.editOuterContainer}
+        onPress={() => {}}
+        >
+          <View style={styles.editInnerContainer}>
+            <CustomImage
+              source={images.iconEditSvg}
+              style={{ height: 14, width: 14 }}
+              isSvg={true}
+              Icon={images.iconEditSvg}
+            />
+          </View>
+        </CustomTouchableOpacity>
       </View>
     );
   } else {

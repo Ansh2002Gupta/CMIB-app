@@ -2,12 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Image } from "@unthinkable/react-core-components";
-import { ThreeRow, TwoRow } from "../../core/layouts";
+
 import CommonText from "../../components/CommonText";
+import MultiRow from "../../core/layouts/MultiRow";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 import images from "../../images";
 import styles from "./ViewProfileModal.style";
-import MultiRow from "../../core/layouts/MultiRow";
+
 const ViewProfileModal = ({ closeModal, setModalSelect }) => {
   const intl = useIntl();
   const firstName = "Kashish";
@@ -40,7 +42,6 @@ const ViewProfileModal = ({ closeModal, setModalSelect }) => {
               onClick={() => {
                 setModalSelect(-1);
               }}
-              icon={images.iconEdit}
             />
           }
         />
@@ -70,11 +71,26 @@ const ViewProfileModal = ({ closeModal, setModalSelect }) => {
     },
     {
       content: (
-        <CommonText
+        <TwoColumn 
+        style={styles.designationContainer}
+        leftSection={
+          <CommonText
           customTextStyle={styles.subHeadingText}
-        >{`${intl.formatMessage({
-          id: "account.designation",
-        })}: ${designation}`}</CommonText>
+        >
+          {`${intl.formatMessage({
+            id: "label.designation",
+          })}:`}&nbsp;
+        </CommonText>
+        }
+        rightSection={
+          <CommonText
+          customTextStyle={styles.designationText}
+          fontWeight={"600"}
+        >
+          {designation}
+        </CommonText>
+        }
+        />
       ),
     },
   ];

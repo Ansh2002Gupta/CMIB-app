@@ -42,7 +42,7 @@ const styles = {
   },
   headingText: {
     color: colors.black,
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "600",
   },
   subHeadingText: {
@@ -68,8 +68,9 @@ const styles = {
     gap: 24,
   },
   secondSectionStyle: {
-    gap: 5,
+    gap: 8,
     alignItems: "center",
+    // marginTop: 17.5,
   },
   thirdSectionStyle: {
     gap: 5,
@@ -102,5 +103,14 @@ const styles = {
     width: 152,
     borderRadius: 152,
   },
+  designationContainer: {
+    margintTop: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  designationText: {
+    fontSize: 14,
+    color: colors.black,
+  }
 };
 export default styles;
