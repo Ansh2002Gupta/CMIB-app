@@ -7,7 +7,7 @@ const initialState = {
   errorGettingUserDetails: "",
   showChangePasswordModal: false,
   showLogoutModal: false,
-  showViewProfileModal: false,
+  showViewProfileDetails: false,
 };
 
 const userProfileReducer = (state, action) => {
@@ -41,10 +41,10 @@ const userProfileReducer = (state, action) => {
         ...state,
         showLogoutModal: action.payload,
       };
-    case types.SET_SHOW_VIEW_PROFILE_MODAL:
+    case types.SET_SHOW_VIEW_PROFILE_DETAILS:
       return {
         ...state,
-        showViewProfileModal: action.payload,
+        showViewProfileDetails: action.payload,
       };
     case types.RESET_USER_DETAILS:
       return initialState;

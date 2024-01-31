@@ -41,9 +41,9 @@ export const setShowLogoutModal = (payload) => {
   };
 };
 
-export const setShowViewProfileModal = (payload) => {
+export const setShowViewProfileDetails = (payload) => {
   return {
-    type: types.SET_SHOW_VIEW_PROFILE_MODAL,
+    type: types.SET_SHOW_VIEW_PROFILE_DETAILS,
     payload,
   };
 };

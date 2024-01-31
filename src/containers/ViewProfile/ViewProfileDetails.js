@@ -8,9 +8,9 @@ import MultiRow from "../../core/layouts/MultiRow";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 import images from "../../images";
-import styles from "./ViewProfileModal.style";
+import styles from "./ViewProfileDetails.style";
 
-const ViewProfileModal = ({ onPressCross }) => {
+const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
   const intl = useIntl();
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -39,6 +39,7 @@ const ViewProfileModal = ({ onPressCross }) => {
               profileImage={profileImage}
               imageContainerStyle={styles.imageContainerStyle}
               initialContainerStyle={styles.initialContainerStyle}
+              onPressEditIcon={onPressEditIcon}
             />
           }
         />
@@ -94,11 +95,14 @@ const ViewProfileModal = ({ onPressCross }) => {
   return <MultiRow style={styles.profileMainContainer} rows={section} />;
 };
 
-ViewProfileModal.defaultProps = {
+ViewProfileDetails.defaultProps = {
   onPressCross: () => {},
+  onPressEditIcon: () => {},
 };
 
-ViewProfileModal.propTypes = {
+ViewProfileDetails.propTypes = {
   onPressCross: PropTypes.func,
+  onPressEditIcon: PropTypes.func,
 };
-export default ViewProfileModal;
+
+export default ViewProfileDetails;

@@ -9,7 +9,7 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
-  setShowViewProfileModal,
+  setShowViewProfileDetails,
 } from "../../globalContext/userProfile/userProfileActions";
 import { options } from "./MyAccountConstant";
 
@@ -31,7 +31,7 @@ const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
 
     switch (option.id) {
       case 1:
-        userProfileDispatch(setShowViewProfileModal(true));
+        userProfileDispatch(setShowViewProfileDetails(true));
         break;
       case 6:
         userProfileDispatch(setShowChangePasswordModal(true));
