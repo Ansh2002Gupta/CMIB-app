@@ -49,23 +49,8 @@ const style = {
     width: 140,
     height: 54,
   },
-  gloPac: {
-    width: 82,
-    height: 40,
-    alignSelf: "center",
-  },
-  iconG20: {
-    width: 70,
-    height: 40,
-    alignSelf: "center",
-  },
   imagesContainer: {
     justifyContent: "flex-start",
-  },
-  iconAzadiMahotsav: {
-    width: 67,
-    height: 40,
-    alignSelf: "center",
   },
   byDefaultPhonePadding: {
     ...commomResetStyle,
