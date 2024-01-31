@@ -20,11 +20,11 @@ const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
       {badgeLabels.map((label) => (
         <CommonText
           customTextStyle={style.badgeStyle}
-          customContainerStyle={[
-            isWebView && style.webInnerContainer,
-            style.innerContainerStyle,
-            customTextStyle,
-          ]}
+          customContainerStyle={{
+            ...(isWebView && style.webInnerContainer),
+            ...style.innerContainerStyle,
+            ...customTextStyle,
+          }}
         >
           {label}
         </CommonText>

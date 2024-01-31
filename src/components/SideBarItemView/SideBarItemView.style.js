@@ -1,11 +1,11 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   changeText: {
     color: colors.white,
-    fontSize: 14,
+    fontSize: 12,
   },
   changeTextContainer: {
     backgroundColor: colors.offWhite,
@@ -15,14 +15,38 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
     paddingLeft: 12,
     paddingRight: 12,
+    marginLeft: 8,
+    width: 68,
   },
   contentText: {
+    color: colors.white,
+    fontSize: 14,
+    ...Platform.select({
+      web: {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      },
+    }),
+  },
+  contentTextContainer: {
     alignItems: "center",
     backgroundColor: colors.offWhite,
     borderBottomColor: colors.slateGray,
     borderBottomWidth: 1,
     justifyContent: "space-between",
     padding: 16,
+  },
+  leftSection: {
+    ...Platform.select({
+      web: {
+      maxWidth: "70%",
+      flex: 1,
+      },
+      default: {
+        flex: 1
+      }
+    }),
   },
   titleText: {
     color: colors.darkGrey,

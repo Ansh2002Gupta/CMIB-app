@@ -282,7 +282,8 @@ const locale = {
   "label.change_email_address": "Change Email Address",
   "label.country_codes": "Country Codes",
   "label.selectModule": "Select Module",
-  "label.experiencedMember":"(Experienced Members)"
+  "label.experiencedMember": "(Experienced Members)",
+  "label.no_results_found": "No Results Found...",
 };
 
 export default locale;

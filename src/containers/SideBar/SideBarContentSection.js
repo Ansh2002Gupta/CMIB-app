@@ -8,6 +8,7 @@ import { TwoRow } from "../../core/layouts";
 
 import CommonText from "../../components/CommonText";
 import Config from "../../components/ReactConfig/index";
+import CustomButton from "../../components/CustomButton";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ModuleList from "../../components/ModuleList/ModuleList";
@@ -61,6 +62,10 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     setActiveMenuItem(key);
   };
 
+  const handleBackButton = () => {
+    setSideBarSubMenu(SideBarContentEnum.NONE);
+  };
+
   const handleBottomViewNavigation = () => {
     const uri = Config.REACT_APP_CMS_URI;
     if (Platform.OS.toLowerCase() === "web") {
@@ -104,7 +109,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         />
       )}
       <View style={styles.imageView}>
-        <CustomImage source={images.cmibIcon} style={styles.cmiLogo} />
+        <CustomImage source={images.iconCmibDark} style={styles.cmiLogo} />
       </View>
       {(sideBarContent === SideBarContentEnum.NONE ||
         (isWebView && sideBarContent === SideBarContentEnum.MODULE)) && (
@@ -144,11 +149,27 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
         />
       )}
       {sideBarContent === SideBarContentEnum.MODULE && (
-        <ModuleList
-          modules={modules}
-          onSelectItem={handleOnSelectModuleItem}
-          selectedModule={selectedModule}
-        />
+        <>
+          <CustomButton
+            customStyle={{
+              customTextStyle: styles.btnTextStyles,
+            }}
+            iconLeft={{
+              leftIconSource: images.iconBackArrow,
+              leftIconAlt: "Left arrow",
+            }}
+            onPress={handleBackButton}
+            style={styles.backBtnStyles}
+          >
+            {intl.formatMessage({ id: "label.back" })}
+          </CustomButton>
+
+          <ModuleList
+            modules={modules}
+            onSelectItem={handleOnSelectModuleItem}
+            selectedModule={selectedModule}
+          />
+        </>
       )}
       {!isWebView &&
         !!selectedModule?.label &&
@@ -156,6 +177,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           <SessionList
             sessionList={selectedModule?.session}
             onSelectItem={handleOnSelectSessionItem}
+            onPressBack={handleBackButton}
             selectedSession={selectedSession}
           />
         )}

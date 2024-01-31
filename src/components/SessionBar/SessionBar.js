@@ -41,7 +41,7 @@ const SessionBar = () => {
         customTextStyle={styles.sessionText(currentBreakpoint)}
         fontWeight="600"
       >
-        {selectedValue ?? intl.formatMessage({ id: "label.select_session" })}
+        {selectedValue || intl.formatMessage({ id: "label.select_session" })}
       </CommonText>
       <CustomImage
         source={images.iconArrowDown}

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import FiveColumn from "../../core/layouts/FiveColumn";
@@ -10,11 +11,14 @@ import CommonText from "../../components/CommonText";
 import CustomTextInput from "../../components/CustomTextInput";
 import NewPasswordValidation from "../../components/NewPasswordValidation";
 import useChangePasswordApi from "../../services/apiServices/hooks/useChangePasswordApi";
+import useIsWebView from "../../hooks/useIsWebView";
 import { strongPasswordValidator } from "../../utils/validation";
 import styles from "./ChangePasswordModal.style";
 
 const ChangePasswordModal = ({ onPressCancel }) => {
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [error, setError] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -55,7 +59,10 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     <>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.contentContainerStyle}
+        contentContainerStyle={{
+          ...styles.contentContainerStyle,
+          ...(isWebView ? styles.webContentContainerStyle : {}),
+        }}
         keyboardShouldPersistTaps="handled"
       >
         <FiveColumn
@@ -102,13 +109,20 @@ const ChangePasswordModal = ({ onPressCancel }) => {
             />
           }
           fourthSection={
-            <View style={styles.fourthSectionStyle}>
+            <View>
               {!!error && (
                 <CommonText customTextStyle={styles.passwordMatchStyle}>
                   {error}
                 </CommonText>
               )}
-              <NewPasswordValidation {...{ newPassword, confirmNewPassword }} />
+              <NewPasswordValidation
+                {...{ newPassword, confirmNewPassword }}
+                customContainerStyles={
+                  isWebView
+                    ? styles.webView.requirementsPoints(currentBreakpoint)
+                    : styles.requirementsPoints
+                }
+              />
             </View>
           }
           fiveSection={
@@ -122,20 +136,24 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           }
         ></FiveColumn>
       </ScrollView>
-      <ActionPairButton
-        buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-        buttonTwoText={intl.formatMessage({ id: "label.save" })}
-        customStyles={{
-          customContainerStyle: styles.customContainerStyle,
-        }}
-        displayLoader={isLoading}
-        isDisabled={isNextDisabled()}
-        isButtonTwoGreen
-        onPressButtonOne={() => {
-          onPressCancel(false);
-        }}
-        onPressButtonTwo={handleSave}
-      />
+      <View style={isWebView ? styles.buttonWebStyle : {}}>
+        <View style={isWebView ? styles.subContainerStyle : {}}>
+          <ActionPairButton
+            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+            buttonTwoText={intl.formatMessage({ id: "label.save" })}
+            customStyles={{
+              customContainerStyle: styles.customContainerStyle,
+            }}
+            displayLoader={isLoading}
+            isDisabled={isNextDisabled()}
+            isButtonTwoGreen
+            onPressButtonOne={() => {
+              onPressCancel(false);
+            }}
+            onPressButtonTwo={handleSave}
+          />
+        </View>
+      </View>
     </>
   );
 };

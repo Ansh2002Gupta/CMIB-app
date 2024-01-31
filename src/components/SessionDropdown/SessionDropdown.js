@@ -18,7 +18,7 @@ const SessionDropdown = ({
 
   return (
     <>
-      {options.length > 0 && (
+      {!!options?.length && (
         <View style={styles.modalContent(currentBreakpoint)} ref={sessionRef}>
           {options.map((option, index) => (
             <CustomTouchableOpacity
