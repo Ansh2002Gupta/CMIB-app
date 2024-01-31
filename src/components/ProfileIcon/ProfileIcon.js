@@ -13,38 +13,37 @@ const ProfileIcon = ({
   customImageStyle,
   customTextStyle,
   firstName,
-  iconType,
   lastName,
   profileImage,
-  showEditModal,
+  onPressEditIcon,
+  showEditIcon,
 }) => {
+  const renderEditIcon = () => (
+    <CustomTouchableOpacity
+      style={styles.editOuterContainer}
+      onPress={onPressEditIcon}
+    >
+      <View style={styles.editInnerContainer}>
+        <CustomImage
+          source={images.iconEditSvg}
+          style={styles.iconStyle}
+          isSvg
+          Icon={images.iconEditSvg}
+        />
+      </View>
+    </CustomTouchableOpacity>
+  );
+
   if (profileImage) {
     return (
       <View style={styles.outerContainer}>
         <View style={{ ...styles.initialsContainer, ...customContainerStyle }}>
           <Image
             source={{ uri: profileImage }}
-            style={[
-              showEditModal && iconType === "modalIcon"
-                ? styles.modalProfileImage
-                : styles.profileImageStyle,
-              customImageStyle,
-            ]}
+            style={{ ...styles.profileImageStyle, ...customImageStyle }}
           />
         </View>
-        <CustomTouchableOpacity
-          style={styles.editOuterContainer}
-          onPress={() => {}}
-        >
-          <View style={styles.editInnerContainer}>
-            <CustomImage
-              source={images.iconEditSvg}
-              style={styles.iconStyle}
-              isSvg
-              Icon={images.iconEditSvg}
-            />
-          </View>
-        </CustomTouchableOpacity>
+        {showEditIcon && renderEditIcon()}
       </View>
     );
   } else {
@@ -62,9 +61,21 @@ const ProfileIcon = ({
         >
           {initials}
         </CommonText>
+        {showEditIcon && renderEditIcon()}
       </View>
     );
   }
+};
+
+ProfileIcon.defaultProps = {
+  customContainerStyle: {},
+  customImageStyle: {},
+  customTextStyle: {},
+  firstName: "",
+  lastName: "",
+  profileImage: "",
+  onPressEditIcon: () => {},
+  showEditIcon: false,
 };
 
 ProfileIcon.propTypes = {
@@ -72,10 +83,10 @@ ProfileIcon.propTypes = {
   customImageStyle: PropTypes.object,
   customTextStyle: PropTypes.object,
   firstName: PropTypes.string,
-  iconType: PropTypes.string,
   lastName: PropTypes.string,
   profileImage: PropTypes.string,
-  showEditModal: PropTypes.bool,
+  onPressEditIcon: PropTypes.func,
+  showEditIcon: PropTypes.bool,
 };
 
 export default ProfileIcon;

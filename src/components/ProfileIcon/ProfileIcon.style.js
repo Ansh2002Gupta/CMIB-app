@@ -4,7 +4,7 @@ const style = {
   initialsContainer: {
     justifyContent: "center",
     backgroundColor: "white",
-    borderRadius: 57,
+    borderRadius: 200,
     alignItems: "center",
     height: 104,
     width: 104,
@@ -43,11 +43,6 @@ const style = {
     width: 104,
     height: 104,
     borderRadius: 52,
-  },
-  modalProfileImage: {
-    width: 152,
-    height: 152,
-    borderRadius: 76,
   },
   initialsText: {
     fontSize: 36,

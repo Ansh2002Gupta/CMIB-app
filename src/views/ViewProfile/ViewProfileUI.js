@@ -43,17 +43,22 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
     setErrorMessage("");
   };
 
-  const renderProfileIcon = (iconType) => {
+  const renderProfileIcon = (useCustomContainerStyle = false) => {
     return (
       <ProfileIcon
-        showEditModal={showEditModal}
-        iconType={iconType}
+        showEditIcon={!useCustomContainerStyle}
         customContainerStyle={
-          iconType === "modalIcon" ? style.editProfileContainer : ""
+          useCustomContainerStyle ? style.editProfileContainer : {}
+        }
+        customImageStyle={
+          useCustomContainerStyle ? style.modalProfileImage : {}
         }
         firstName={firstName}
         lastName={lastName}
         profileImage={profileImage}
+        onPressEditIcon={() => {
+          handleEditPopup(true);
+        }}
       />
     );
   };
@@ -84,15 +89,15 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
       />
       <View style={style.picParentContainer}>
         <View style={style.picContainer}>
-          {renderProfileIcon("profileIcon")}
-          <TouchableOpacity
+          {renderProfileIcon()}
+          {/* <TouchableOpacity
             style={style.iconEditStyle}
             onPress={() => {
               handleEditPopup(true);
             }}
           >
             <Image source={images.iconEdit} style={style.editIcon} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <CardComponent customStyle={style.cardStyle}>
           <DetailComponent details={details} />
@@ -107,7 +112,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
               handleEditPopup(false);
             }}
           >
-            {renderProfileIcon("modalIcon")}
+            {renderProfileIcon(true)}
             <View style={style.editButtonContainer}>
               <View style={style.buttonStyle}>
                 <Image source={images.iconChange} />
