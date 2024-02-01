@@ -84,9 +84,6 @@ const styles = StyleSheet.create({
   searchView: {
     marginBottom: 8,
   },
-  largeModalContainer: (keyboardHeight) => ({
-    maxHeight: keyboardHeight * 2.2,
-  }),
 });
 
 export default styles;
