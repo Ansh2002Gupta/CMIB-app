@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     requirementsPoints: (currentBreakpoint) => ({
       display: "grid",
       gridTemplateColumns: currentBreakpoint === "sm" ? "1fr" : "1fr 1fr",
-      gridRowGap: 16,
+      gridRowGap: currentBreakpoint === "sm" ? 0 : 16,
     }),
   },
   ErrorStyle: {
