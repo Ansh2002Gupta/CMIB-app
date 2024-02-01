@@ -25,13 +25,16 @@ const useGetUserDetails = () => {
   const { onLogout } = useHeader();
   const location = useLocation();
 
-  const getSelectedModuleFromRoute = () => {
+  const getSelectedModule = ({ firstAccessibleModuleName }) => {
     const path = location.pathname.split("/");
     const moduleValues = Object.values(moduleKeys);
     if (path.length > 1 && moduleValues.includes(path[1])) {
       return modules.find((module) => module.key?.toLowerCase() === path[1]);
     }
-    return;
+    return modules.find(
+      (module) =>
+        module.key?.toLowerCase() === firstAccessibleModuleName?.toLowerCase()
+    );
   };
 
   const getUserDetails = async () => {
@@ -49,15 +52,7 @@ const useGetUserDetails = () => {
         // Setting the first accessible module
         const moduleKeys = Object.keys(res.data?.menu_items || {});
         const firstAccessibleModuleName = moduleKeys?.[0] || "";
-        let moduleDetails = modules.find(
-          (module) =>
-            module.key?.toLowerCase() ===
-            firstAccessibleModuleName?.toLowerCase()
-        );
-        let module = getSelectedModuleFromRoute();
-        if (!!module) {
-          moduleDetails = module;
-        }
+        const moduleDetails = getSelectedModule({ firstAccessibleModuleName });
         sideBarDispatch(setSelectedModule(moduleDetails));
         sideBarDispatch(setSelectedSession(moduleDetails?.session?.[0]));
         return;
