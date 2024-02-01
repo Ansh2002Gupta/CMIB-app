@@ -1,14 +1,28 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { FlatList, Platform } from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
+import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import Dialog from "../Dialog";
+import Divider from "../Divider";
+import images from "../../images";
+import useIsWebView from "../../hooks/useIsWebView";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { getAccessibleModulesList } from "../../constants/sideBarHelpers";
+import classes from "../../theme/styles/CssClassProvider/CssClassProvider";
 import styles from "./ModuleList.style";
 
 const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
+  const { isWebView } = useIsWebView();
+  const intl = useIntl();
+
+  const containerStyle = isWebView
+    ? styles.containerGridStyle
+    : styles.containerStyle;
+
   const [userProfileState] = useContext(UserProfileContext);
   const renderrableModules = getAccessibleModulesList({
     allModules: modules,
@@ -53,11 +67,82 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
   );
 
   return (
-    <FlatList
-      data={renderrableModules}
-      keyExtractor={(module) => module.key}
-      renderItem={renderItem}
-    />
+    <>
+      {isWebView ? (
+        <Dialog
+          heading={intl.formatMessage({ id: "label.selectModule" })}
+          modalContainerStyle={styles.modalContainerStyle}
+          customHeadingStyle={styles.modalHeadingStyle}
+          onClose={() =>
+            !module.sectionHeading ? onSelectItem(selectedModule) : () => {}
+          }
+        >
+          <Divider />
+          <View style={{ ...styles.mainViewStyle, ...containerStyle }}>
+            {renderrableModules.map((item, index) => {
+              if (!item.sectionHeading && item.visible) {
+                return (
+                  <CustomTouchableOpacity
+                    key={index}
+                    onPress={() =>
+                      !module.sectionHeading ? onSelectItem(item) : () => {}
+                    }
+                    style={{
+                      ...styles.moduleTabStyle,
+                      ...(item?.key === selectedModule.key
+                        ? styles.activeTabStyle
+                        : {}),
+                    }}
+                    className={classes["module-box_outline--darkBlue"]}
+                  >
+                    <CustomImage
+                      source={item.image}
+                      style={styles.moduleImageStyle}
+                    />
+                    <View style={styles.containerTextStyle}>
+                      <CommonText
+                        customTextStyle={{
+                          ...styles.moduleTextStyle,
+                          ...(item?.key === selectedModule.key
+                            ? styles.activeModuleTextStyle
+                            : {}),
+                        }}
+                        fontWeight="600"
+                      >
+                        {item.label}
+                      </CommonText>
+                      {item?.isExperiencedMember && (
+                        <CommonText
+                          customTextStyle={styles.experienceMemberTextStyle}
+                        >
+                          {intl.formatMessage({
+                            id: "label.experiencedMember",
+                          })}
+                        </CommonText>
+                      )}
+                    </View>
+                    <View style={styles.textView}>
+                      {item?.key === selectedModule.key && (
+                        <CustomImage
+                          source={images.iconTickBlue}
+                          style={styles.tickImageStyle}
+                        />
+                      )}
+                    </View>
+                  </CustomTouchableOpacity>
+                );
+              }
+            })}
+          </View>
+        </Dialog>
+      ) : (
+        <FlatList
+          data={renderrableModules}
+          keyExtractor={(module) => module.key}
+          renderItem={renderItem}
+        />
+      )}
+    </>
   );
 };
 

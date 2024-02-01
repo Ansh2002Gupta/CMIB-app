@@ -47,6 +47,9 @@ const commonStyles = {
     paddingTop: 16,
     paddingBottom: 16,
   }),
+  largeModalContainer: (keyboardHeight) => ({
+    maxHeight: keyboardHeight * 2.2,
+  }),
 };
 
 export const gridStyles = {
