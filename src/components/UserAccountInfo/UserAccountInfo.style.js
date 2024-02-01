@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         maxHeight: deviceHeight / 1.5,
       },
       android: {
-        maxHeight: deviceHeight * 0.7,
+        maxHeight: deviceHeight * 0.65,
       },
     }),
   },

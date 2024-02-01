@@ -80,6 +80,9 @@ const UserAccountInfo = ({
             ...modalStyle,
           }}
           headerTextStyle={styles.headerTextStyle}
+          onBackdropPress={() => {
+            userProfileDispatch(setShowChangePasswordModal(false));
+          }}
         >
           <ChangePasswordModal
             onPressCancel={() => {

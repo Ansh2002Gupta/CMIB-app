@@ -17,13 +17,14 @@ const style = {
     paddingTop: 24,
   },
   customContainerStyle: {
-    paddingBottom: Platform.OS === "android" ? 0 : 21,
+    paddingBottom: Platform.OS === "android" ? 0 : 22,
     maxHeight: Platform.OS === "web" ? 44 : "auto",
   },
   contentContainerStyle: {
     flexGrow: 1,
     paddingBottom: 24,
     justifyContent: "space-between",
+    paddingRight: 10,
   },
   fourthSectionStyle: { paddingBottom: 16 },
   notMatchingError: {

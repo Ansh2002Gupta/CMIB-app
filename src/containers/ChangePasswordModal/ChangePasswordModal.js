@@ -89,6 +89,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           ...(isWebView ? styles.webContentContainerStyle : {}),
         }}
         keyboardShouldPersistTaps="handled"
+        automaticallyAdjustKeyboardInsets={false}
       >
         <FiveColumn
           firstSection={
