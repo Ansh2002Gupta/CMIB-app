@@ -70,7 +70,11 @@ export const items = [
 ];
 
 const newlyQualifiedPlacementsMenu = [
-  { label: "Dashboard", key: navigations.DASHBOARD, icon: "iconDashboard" },
+  {
+    label: "Dashboard",
+    key: navigations.MODULE_LANDING_PAGE,
+    icon: "iconDashboard",
+  },
   {
     label: "Round 1 ",
     key: navigations.ROUND_ONE,
@@ -84,7 +88,11 @@ const newlyQualifiedPlacementsMenu = [
 ];
 
 const caJobsMenu = [
-  { label: "Dashboard", key: navigations.DASHBOARD, icon: "iconDashboard" },
+  {
+    label: "Dashboard",
+    key: navigations.MODULE_LANDING_PAGE,
+    icon: "iconDashboard",
+  },
   {
     label: "Posted Jobs",
     key: navigations.POSTED_JOBS,
@@ -108,7 +116,11 @@ const caJobsMenu = [
 ];
 
 const experiencedMembersMenu = [
-  { label: "Dashboard", key: navigations.DASHBOARD, icon: "iconDashboard" },
+  {
+    label: "Dashboard",
+    key: navigations.MODULE_LANDING_PAGE,
+    icon: "iconDashboard",
+  },
   {
     label: "Round 1 ",
     key: navigations.ROUND_ONE,

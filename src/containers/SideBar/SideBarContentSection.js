@@ -41,7 +41,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     getSelectedSubModuleFromRoute({
       pathName: location.pathname,
       selectedModule,
-    })()
+    })
   );
 
   useEffect(() => {
