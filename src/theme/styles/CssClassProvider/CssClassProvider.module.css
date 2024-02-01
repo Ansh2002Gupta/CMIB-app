@@ -2,10 +2,21 @@
   --green: #04af55;
   --greenOne: rgba(4, 175, 85, 0.04);
   --white: #fff;
+  --darkBlue: #00137e;
+  --secondaryGrey: #f2f4fc;
 }
 
 .card-box__outline--green:hover {
   border-color: var(--green) !important;
   background: linear-gradient(0deg, var(--greenOne) 0%, var(--greenOne) 100%),
+    var(--white);
+}
+.module-box_outline--darkBlue:hover {
+  border-color: var(--darkBlue) !important;
+  background: linear-gradient(
+      0deg,
+      var(--secondaryGrey) 0%,
+      var(--secondaryGrey) 100%
+    ),
     var(--white);
 }
