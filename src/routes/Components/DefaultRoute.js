@@ -4,12 +4,10 @@ import { Navigate } from "../../routes";
 import CookieAndStorageService from "../../services/cookie-and-storage-service";
 import { AuthContext } from "../../globalContext/auth/authProvider";
 import { navigations } from "../../constants/routeNames";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 
 const DefaultRoute = () => {
   const [authState] = useContext(AuthContext);
   const [navigationPath, setNavigationPath] = useState(null);
-  const [userProfileDetails] = useContext(UserProfileContext);
 
   useEffect(() => {
     async function checkAuthAndNavigate() {
