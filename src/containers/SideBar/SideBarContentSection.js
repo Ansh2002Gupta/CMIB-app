@@ -24,6 +24,7 @@ import {
 } from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages, modules } from "../../constants/sideBarHelpers";
+import { getSelectedSubModuleFromRoute } from "../../utils/util";
 import images from "../../images";
 import styles from "./SideBar.style";
 
@@ -36,22 +37,11 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const intl = useIntl();
   const [sideBarContent, setSideBarSubMenu] = useState(SideBarContentEnum.NONE);
   const [activeMenuItem, setActiveMenuItem] = useState(
-    getSelectedSubModuleFromRoute()
+    getSelectedSubModuleFromRoute({
+      pathName: location.pathname,
+      selectedModule,
+    })()
   );
-
-  function getSelectedSubModuleFromRoute(){
-    const path = location.pathname.split("/");
-    let selectedSubModule = selectedModule?.children?.[0]?.key;
-   if(!!path?.length){
-    let subModule = selectedModule?.children?.find(
-        (subModule) => {
-          return subModule.key?.toLowerCase().split("/").slice(-1)[0] === path.slice(-1)[0];
-        }
-      );
-      selectedSubModule = subModule?.key;
-    }
-     return selectedSubModule;
-  }
 
   useEffect(() => {
     if (isWebView && sideBarContent === SideBarContentEnum.SESSION) {

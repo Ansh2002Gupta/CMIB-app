@@ -25,17 +25,14 @@ const useGetUserDetails = () => {
   const { onLogout } = useHeader();
   const location = useLocation();
 
-  function getSlectedModuleFromRoute(){
+  function getSlectedModuleFromRoute() {
     const path = location.pathname.split("/");
     const moduleValues = Object.values(moduleKeys);
-    
-     if(path.length > 1 && moduleValues.includes(path[1])){
-      return modules.find(
-        (module) =>
-          module.key?.toLowerCase() === path[1]
-      );
-     }
-     return;
+
+    if (path.length > 1 && moduleValues.includes(path[1])) {
+      return modules.find((module) => module.key?.toLowerCase() === path[1]);
+    }
+    return;
   }
 
   const getUserDetails = async () => {
@@ -59,9 +56,9 @@ const useGetUserDetails = () => {
             firstAccessibleModuleName?.toLowerCase()
         );
         let module = getSlectedModuleFromRoute();
-        if(!!module){
+        if (!!module) {
           moduleDetails = module;
-        } 
+        }
         sideBarDispatch(setSelectedModule(moduleDetails));
         sideBarDispatch(setSelectedSession(moduleDetails?.session?.[0]));
         return;

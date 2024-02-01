@@ -56,7 +56,9 @@ function BottomBar() {
                 <TouchableOpacity
                   style={styles.sectionViewStyle}
                   onPress={() => {
-                    navigateTo(navigations.DASHBOARD);
+                    navigateTo(
+                      `/${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`
+                    );
                   }}
                 >
                   <Image source={homeIcon} style={styles.imageStyle} />
@@ -95,9 +97,12 @@ function BottomBar() {
     return {
       content: (
         <ImageAndTextTab
-          isActive={currentRoute === route || currentRoute.split("/").slice(-1)[0] === route}
+          isActive={
+            currentRoute === route ||
+            currentRoute.split("/").slice(-1)[0] === route
+          }
           onPress={() => {
-            if(route.includes("/")){
+            if (route.includes("/")) {
               navigateTo(route);
             } else {
               navigateTo(`/${selectedModule.key}/${route}`);
@@ -114,8 +119,6 @@ function BottomBar() {
     };
   }
 
- 
- 
   function preprocessMenu(menuItems) {
     const candidateKeys = new Set([
       navigations.JOB_APPLICANTS,
@@ -166,7 +169,7 @@ function BottomBar() {
     : [];
 
   const rowConfigs = [...dynamicConfigs, myAccountConfig];
-  
+
   return (
     <View>
       <View style={styles.borderStyle}></View>
