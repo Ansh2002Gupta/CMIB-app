@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useLocation } from "react-router";
 
 import Http from "../../../http-service";
 import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
@@ -14,7 +15,7 @@ import {
   setSelectedSession,
 } from "../../../../globalContext/sidebar/sidebarActions";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
-import { modules } from "../../../../constants/sideBarHelpers";
+import { moduleKeys, modules } from "../../../../constants/sideBarHelpers";
 import { STATUS_CODES } from "../../../../constants/constants";
 import { CORE_USERS_PERMISSION } from "../../apiEndPoint";
 
@@ -22,6 +23,20 @@ const useGetUserDetails = () => {
   const [, sideBarDispatch] = useContext(SideBarContext);
   const [, userProfileDispatch] = useContext(UserProfileContext);
   const { onLogout } = useHeader();
+  const location = useLocation();
+
+  function getSlectedModuleFromRoute(){
+    const path = location.pathname.split("/");
+    const moduleValues = Object.values(moduleKeys);
+    
+     if(path.length > 1 && moduleValues.includes(path[1])){
+      return modules.find(
+        (module) =>
+          module.key?.toLowerCase() === path[1]
+      );
+     }
+     return;
+  }
 
   const getUserDetails = async () => {
     try {
@@ -38,11 +53,15 @@ const useGetUserDetails = () => {
         // Setting the first accessible module
         const moduleKeys = Object.keys(res.data?.menu_items || {});
         const firstAccessibleModuleName = moduleKeys?.[0] || "";
-        const moduleDetails = modules.find(
+        let moduleDetails = modules.find(
           (module) =>
             module.key?.toLowerCase() ===
             firstAccessibleModuleName?.toLowerCase()
         );
+        let module = getSlectedModuleFromRoute();
+        if(!!module){
+          moduleDetails = module;
+        } 
         sideBarDispatch(setSelectedModule(moduleDetails));
         sideBarDispatch(setSelectedSession(moduleDetails?.session?.[0]));
         return;

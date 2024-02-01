@@ -150,77 +150,12 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.ROUND_ONE,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <RoundOne />,
-      },
-      {
-        viewPath: navigations.APPLICATION_FORM,
-        element: <RoundOneApplicationForm />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.ROUND_TWO,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <RoundTwo />,
-      },
-    ],
-  },
-
-  {
     pagePath: navigations.JOBS,
     element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
         element: <JobsView />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.POSTED_JOBS,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <PostedJobsView />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.JOB_SEEKERS,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <JobSeekersView />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.JOB_APPLICANTS,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <JobApplicantsView />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.SAVED_CANDIDATES,
-    element: <HomeWithPrivateAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <SavedCandidatesView />,
       },
     ],
   },
@@ -241,6 +176,96 @@ const config = [
       {
         viewPath: "",
         element: <WebViewScreen />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.NQCA,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: navigations.MODULE_LANDING_PAGE,
+        element: <DashboardView />,
+      },
+      {
+        viewPath: navigations.ROUND_ONE,
+        element: <RoundOne />,
+      },
+      {
+        viewPath: `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`,
+        element: <RoundOneApplicationForm />,
+      },
+      {
+        viewPath: navigations.ROUND_TWO,
+        element: <RoundTwo />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.CA_JOBS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: navigations.MODULE_LANDING_PAGE,
+        element: <DashboardView />,
+      },
+      {
+        viewPath: navigations.POSTED_JOBS,
+        element: <PostedJobsView />,
+      },
+      {
+        viewPath: navigations.JOB_APPLICANTS,
+        element: <JobApplicantsView />,
+      },
+      {
+        viewPath: navigations.JOB_SEEKERS,
+        element: <JobSeekersView />,
+      },
+      {
+        viewPath: navigations.SAVED_CANDIDATES,
+        element: <SavedCandidatesView />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.CAREER_ASCENT,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: navigations.MODULE_LANDING_PAGE,
+        element: <DashboardView />,
+      },
+      {
+        viewPath: navigations.ROUND_ONE,
+        element: <RoundOne />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.WOMEN_PARTTIME,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: navigations.MODULE_LANDING_PAGE,
+        element: <DashboardView />,
+      },
+      {
+        viewPath: navigations.ROUND_ONE,
+        element: <RoundOne />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.OVERSEES_CHAPTERS,
+    element: <HomeWithPrivateAccess />,
+    views: [
+      {
+        viewPath: navigations.MODULE_LANDING_PAGE,
+        element: <DashboardView />,
+      },
+      {
+        viewPath: navigations.ROUND_ONE,
+        element: <RoundOne />,
       },
     ],
   },

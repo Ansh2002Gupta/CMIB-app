@@ -73,12 +73,12 @@ const newlyQualifiedPlacementsMenu = [
   { label: "Dashboard", key: navigations.DASHBOARD, icon: "iconDashboard" },
   {
     label: "Round 1 ",
-    key: "/round-one",
+    key: navigations.ROUND_ONE,
     icon: "iconRound1",
   },
   {
     label: "Round 2 ",
-    key: "/round-two",
+    key: navigations.ROUND_TWO,
     icon: "iconRound2",
   },
 ];
@@ -116,7 +116,7 @@ const experiencedMembersMenu = [
   },
 ];
 
-const moduleKeys = {
+export const moduleKeys = {
   NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placements",
   CA_JOBS_KEY: "ca-jobs",
   EXPERIENCED_MEMBERS_KEY: "experienced-members",

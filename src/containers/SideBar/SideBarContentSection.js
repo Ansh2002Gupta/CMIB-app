@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "../../routes";
+import { useLocation, useNavigate } from "../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
@@ -31,12 +31,27 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const { selectedModule, selectedSession } = sideBarState;
   const navigate = useNavigate();
+  const location = useLocation();
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const [sideBarContent, setSideBarSubMenu] = useState(SideBarContentEnum.NONE);
   const [activeMenuItem, setActiveMenuItem] = useState(
-    selectedModule?.children?.[0]?.key
+    getSelectedSubModuleFromRoute()
   );
+
+  function getSelectedSubModuleFromRoute(){
+    const path = location.pathname.split("/");
+    let selectedSubModule = selectedModule?.children?.[0]?.key;
+   if(!!path?.length){
+    let subModule = selectedModule?.children?.find(
+        (subModule) => {
+          return subModule.key?.toLowerCase().split("/").slice(-1)[0] === path.slice(-1)[0];
+        }
+      );
+      selectedSubModule = subModule?.key;
+    }
+     return selectedSubModule;
+  }
 
   useEffect(() => {
     if (isWebView && sideBarContent === SideBarContentEnum.SESSION) {
@@ -45,6 +60,8 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   }, [isWebView, sideBarContent]);
 
   const handleOnSelectModuleItem = (item) => {
+    setActiveMenuItem(item?.children?.[0]?.key);
+    navigate(`/${item.key}/${item?.children?.[0]?.key}`);
     if (item.key !== selectedModule.key) {
       sideBarDispatch(setSelectedSession(item?.session?.[0]));
       sideBarDispatch(setSelectedModule(item));
@@ -58,7 +75,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   };
 
   const handleOnClickMenuItem = ({ key }) => {
-    navigate(key);
+    navigate(`/${selectedModule.key}/${key}`);
     setActiveMenuItem(key);
   };
 

@@ -95,9 +95,13 @@ function BottomBar() {
     return {
       content: (
         <ImageAndTextTab
-          isActive={currentRoute === route}
+          isActive={currentRoute === route || currentRoute.split("/").slice(-1)[0] === route}
           onPress={() => {
-            navigateTo(route);
+            if(route.includes("/")){
+              navigateTo(route);
+            } else {
+              navigateTo(`/${selectedModule.key}/${route}`);
+            }
           }}
           containerStyle={containerStyle}
           imageActive={imageActive}
@@ -111,7 +115,7 @@ function BottomBar() {
   }
 
  
-
+ 
   function preprocessMenu(menuItems) {
     const candidateKeys = new Set([
       navigations.JOB_APPLICANTS,
