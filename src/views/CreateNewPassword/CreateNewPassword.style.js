@@ -33,12 +33,11 @@ const styles = StyleSheet.create({
   submitView: {
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 24,
   },
   backToLoginText: {
     textAlign: "center",
-    marginTop: 24,
-    marginBottom: 24,
+    marginTop: 16,
+    marginBottom: 16,
     fontSize: 14,
     color: colors.darkBlue,
   },
@@ -76,11 +75,16 @@ const styles = StyleSheet.create({
   requirementsPoints: {
     marginBottom: 0,
   },
+  erroInputStyle: {
+    paddingBottom: 0,
+  },
+  inputStyle: {
+    paddingBottom: 40,
+  },
   // web view related styles
   webView: {
     mainView: {
       margin: 0,
-      backgroundColor: colors.white,
     },
     headerTextContainer: {
       marginTop: 0,
@@ -107,13 +111,13 @@ const styles = StyleSheet.create({
       backgroundColor: colors.white,
       marginTop: 0,
     },
+    erroInputStyle: {
+      paddingBottom: 10,
+    },
     passwordRequirements: {
       color: colors.gray,
       fontSize: 14,
       lineHeight: 22,
-    },
-    submitTextContainer: {
-      marginBottom: 8,
     },
     companyView: {
       backgroundColor: colors.white,

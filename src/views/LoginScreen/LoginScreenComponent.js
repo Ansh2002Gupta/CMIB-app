@@ -12,7 +12,7 @@ import { setLogoutToast } from "../../globalContext/logout/logoutActions";
 
 function LoginScreenComponent() {
   const [logoutState, setLogoutDispatch] = useContext(LogoutContext);
-  const { isUserSuccessfullyLoggedOut } = logoutState;
+  const { logoutDetails } = logoutState;
   const navigate = useNavigate();
   const location = useLocation();
   const activeTab = location?.state?.activeTab;
@@ -33,7 +33,13 @@ function LoginScreenComponent() {
 
   const handleDismissToast = () => {
     setErrorWhileLoggingIn("");
-    setLogoutDispatch(setLogoutToast(false));
+    setLogoutDispatch(
+      setLogoutToast({
+        message: "",
+        isLogoutToast: false,
+        isError: false,
+      })
+    );
   };
 
   const onForgotPasswordClick = async () => {
@@ -86,7 +92,7 @@ function LoginScreenComponent() {
       icons={icons}
       intl={intl}
       isLoading={isLoading}
-      isUserSuccessfullyLoggedOut={isUserSuccessfullyLoggedOut}
+      logoutDetails={logoutDetails}
       onChangePassword={onChangePassword}
       onChangeUsername={onChangeUsername}
       onCreateNewPasswordClick={onCreateNewPasswordClick}

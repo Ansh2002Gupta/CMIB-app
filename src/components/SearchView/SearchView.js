@@ -3,17 +3,17 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Platform, TextInput, View } from "@unthinkable/react-core-components";
 
-import { DEBOUNCE_TIME } from "../../constants/constants";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
+import { DEBOUNCE_TIME } from "../../constants/constants";
 import styles from "./searchView.style";
 
 const SearchView = ({
   customInputStyle,
   customParentStyle,
+  customSearchCriteria,
   data,
   onSearch,
-  customSearchCriteria,
 }) => {
   const SearchIcon = images.iconSearch;
   const ClearIcon = images.iconCross;
@@ -42,9 +42,7 @@ const SearchView = ({
             return item.toLowerCase().includes(formattedQuery);
           });
         }
-      } else {
-        filtered = data;
-      }
+      } 
       if (onSearch) {
         onSearch(filtered);
       }
@@ -55,7 +53,7 @@ const SearchView = ({
         clearTimeout(debounceTimeout.current);
       }
     };
-  }, [query]);
+  }, [query, data, onSearch, customSearchCriteria]);
 
   const handleSearch = (text) => {
     setQuery(text);
@@ -91,19 +89,19 @@ const SearchView = ({
 SearchView.defaultProps = {
   customInputStyle: {},
   customParentStyle: {},
-  onSearch: () => {},
   customSearchCriteria: () => {},
+  onSearch: () => {},
 };
 
 SearchView.propTypes = {
   customInputStyle: PropTypes.object,
   customParentStyle: PropTypes.object,
+  customSearchCriteria: PropTypes.func,
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.object),
   ]).isRequired,
   onSearch: PropTypes.func,
-  customSearchCriteria: PropTypes.func,
 };
 
 export default SearchView;

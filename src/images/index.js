@@ -63,11 +63,6 @@ const iconHiringProcess = appendAppBaseURl(
 const iconDownloadDetails = appendAppBaseURl(
   "/images/iconDownloadDetails/iconDownloadDetails.png"
 );
-const iconAzadiMahotsav = appendAppBaseURl(
-  "/images/iconAzadiMahotsav/iconAzadiMahotsav.png"
-);
-const iconGloPac = appendAppBaseURl("/images/iconGloPac/iconGloPac.png");
-const iconG20 = appendAppBaseURl("/images/iconG20/iconG20.png");
 const iconDrawer = appendAppBaseURl("/images/iconDrawer/iconDrawer.png");
 const iconNotification = appendAppBaseURl(
   "/images/iconNotification/iconNotification.png"
@@ -166,6 +161,7 @@ const iconCmibCALogo = appendAppBaseURl(
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
 const iconEditSvg = appendAppBaseURl("/images/svg/editIcon.svg");
 const iconCloseDark = appendAppBaseURl("/images/svg/iconCloseDark.svg");
+const iconBackArrow = appendAppBaseURl("/images/svg/iconBackArrow.svg");
 
 const images = {
   iconArrowUp,
@@ -234,9 +230,6 @@ const images = {
   iconAddApplicationForm,
   iconHiringProcess,
   iconDownloadDetails,
-  iconAzadiMahotsav,
-  iconGloPac,
-  iconG20,
   ticketIcon,
   iconSend,
   iconSetting,
@@ -280,6 +273,7 @@ const images = {
   iconRetry,
   iconEditSvg,
   iconCloseDark,
+  iconBackArrow,
 };
 
 export default images;

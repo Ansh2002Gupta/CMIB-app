@@ -20,12 +20,12 @@ export const useHeader = () => {
 
   const { handleUserLogout, isLoggingUserOut } = useLogoutAPI();
 
-  const onLogout = async () => {
+  const onLogout = async (logoutToastData) => {
     await handleUserLogout({});
     await CookieAndStorageService.remove({ key: "auth" });
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
-    setLogoutDispatch(setLogoutToast(true));
+    !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
     navigate(navigations.LOGIN);
   };
   return {

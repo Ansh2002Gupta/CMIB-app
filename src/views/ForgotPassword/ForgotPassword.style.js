@@ -122,6 +122,10 @@ const style = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
   },
+  contentContainerStyle: {
+    marginTop: 24,
+    flex: 1,
+  },
 });
 
 export default style;
