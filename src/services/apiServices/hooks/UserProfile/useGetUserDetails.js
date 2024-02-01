@@ -25,15 +25,14 @@ const useGetUserDetails = () => {
   const { onLogout } = useHeader();
   const location = useLocation();
 
-  function getSlectedModuleFromRoute() {
+  const getSelectedModuleFromRoute = () => {
     const path = location.pathname.split("/");
     const moduleValues = Object.values(moduleKeys);
-
     if (path.length > 1 && moduleValues.includes(path[1])) {
       return modules.find((module) => module.key?.toLowerCase() === path[1]);
     }
     return;
-  }
+  };
 
   const getUserDetails = async () => {
     try {
@@ -55,7 +54,7 @@ const useGetUserDetails = () => {
             module.key?.toLowerCase() ===
             firstAccessibleModuleName?.toLowerCase()
         );
-        let module = getSlectedModuleFromRoute();
+        let module = getSelectedModuleFromRoute();
         if (!!module) {
           moduleDetails = module;
         }
