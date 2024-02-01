@@ -25,9 +25,9 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   const firstName = "Kashish";
   const lastName = "Bhatheja";
   const details = [
-    { label: "Designation", value: "Senior Chartered Accountant" },
-    { label: "Mobile Number", value: "+91-1234 5678 21" },
-    { label: "Email ID", value: "pooja.dhar@j&k.co" },
+    { label: "label.designation", value: "Senior Chartered Accountant" },
+    { label: "label.mobile_number", value: "+91-1234 5678 21" },
+    { label: "label.email_id", value: "pooja.dhar@j&k.co" },
   ];
   const buttonTitle = profileImage
     ? intl.formatMessage({ id: "label.change" })
