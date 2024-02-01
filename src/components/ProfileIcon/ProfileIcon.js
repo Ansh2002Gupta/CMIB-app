@@ -14,8 +14,8 @@ const ProfileIcon = ({
   customTextStyle,
   firstName,
   lastName,
-  profileImage,
   onPressEditIcon,
+  profileImage,
   showEditIcon,
 }) => {
   const renderEditIcon = () => (
@@ -73,8 +73,8 @@ ProfileIcon.defaultProps = {
   customTextStyle: {},
   firstName: "",
   lastName: "",
-  profileImage: "",
   onPressEditIcon: () => {},
+  profileImage: "",
   showEditIcon: false,
 };
 
@@ -84,8 +84,8 @@ ProfileIcon.propTypes = {
   customTextStyle: PropTypes.object,
   firstName: PropTypes.string,
   lastName: PropTypes.string,
-  profileImage: PropTypes.string,
   onPressEditIcon: PropTypes.func,
+  profileImage: PropTypes.string,
   showEditIcon: PropTypes.bool,
 };
 
