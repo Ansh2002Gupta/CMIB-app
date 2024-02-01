@@ -14,9 +14,9 @@ import ImagePicker from "../../components/ImagePickerComponent/ImagePickerCompon
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import images from "../../images";
-import styles from "./EditProfilePic.style";
+import styles from "./EditProfileImage.style";
 
-const EditProfilePic = ({
+const EditProfileImage = ({
   firstName,
   lastName,
   onPressIconCross,
@@ -114,18 +114,18 @@ const EditProfilePic = ({
   );
 };
 
-EditProfilePic.defaultProps = {
+EditProfileImage.defaultProps = {
   firstName: "",
   lastName: "",
   onPressIconCross: () => {},
   profileImage: "",
 };
 
-EditProfilePic.propTypes = {
+EditProfileImage.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   onPressIconCross: PropTypes.func,
   profileImage: PropTypes.string,
 };
 
-export default EditProfilePic;
+export default EditProfileImage;

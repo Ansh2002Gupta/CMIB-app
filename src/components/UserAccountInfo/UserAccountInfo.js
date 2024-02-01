@@ -7,7 +7,7 @@ import ChangePasswordModal from "../../containers/ChangePasswordModal";
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import EditProfilePic from "../../containers/EditProfilePic";
+import EditProfileImage from "../../containers/EditProfileImage";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import SessionBar from "../SessionBar";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
@@ -70,7 +70,7 @@ const UserAccountInfo = ({
       {showViewProfileDetails ? (
         <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
           {isUpdateProfilePic ? (
-            <EditProfilePic
+            <EditProfileImage
               firstName={firstName}
               lastName={lastName}
               profileImage={profileImage}

@@ -4,7 +4,7 @@ import { View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
-import EditProfilePic from "../../containers/EditProfilePic";
+import EditProfileImage from "../../containers/EditProfileImage";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import style from "./ViewProfile.style";
@@ -48,7 +48,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
           <DetailComponent details={details} />
         </CardComponent>
         {showEditModal && (
-          <EditProfilePic
+          <EditProfileImage
             firstName={firstName}
             lastName={lastName}
             profileImage={profileImage}
