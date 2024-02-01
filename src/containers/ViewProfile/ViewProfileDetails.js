@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import CommonText from "../../components/CommonText";
-import CustomImage from "../../components/CustomImage";
 import MultiRow from "../../core/layouts/MultiRow";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import TouchableImage from "../../components/TouchableImage";
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 import images from "../../images";
 import styles from "./ViewProfileDetails.style";
@@ -25,10 +25,10 @@ const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
           style={styles.secondSectionStyle}
           topSectionStyle={styles.crossStyle}
           topSection={
-            <CustomImage
-              source={images.iconCloseDark}
+            <TouchableImage
               style={styles.crossIconStyle}
-              onClick={onPressCross}
+              source={images.iconCloseDark}
+              onPress={onPressCross}
             />
           }
           bottomSection={
