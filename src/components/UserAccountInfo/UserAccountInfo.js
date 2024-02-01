@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View, Platform, Keyboard } from "@unthinkable/react-core-components";
+import { Keyboard, Platform, View } from "@unthinkable/react-core-components";
 
 import ChangePasswordModal from "../../containers/ChangePasswordModal";
 import CustomImage from "../CustomImage";

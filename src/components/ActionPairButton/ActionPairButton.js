@@ -21,10 +21,10 @@ const ActionPairButton = ({
 }) => {
   const {
     buttonOneStyle,
-    buttonTwoStyle,
-    customContainerStyle,
     buttonOneLeftSectionStyle,
+    buttonTwoStyle,
     buttonTwoRightSectionStyle,
+    customContainerStyle,
   } = customStyles;
   const { buttonOneType, buttonTwoType } = buttonsType || {};
 
