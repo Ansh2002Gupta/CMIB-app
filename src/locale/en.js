@@ -91,7 +91,7 @@ const locale = {
   "label.signup_success": "Thank You for Signing Up!",
   "label.signup_info":
     "Your application has been submitted for approval. You will receive a confirmation email once it is processed by CMI&B admin.",
-  "label.not_a_valid_email": "Not a valid email, please enter again",
+  "label.not_a_valid_email": "Not a valid email, Please enter again",
   "label.company_name_placeholder": "Enter your company name",
   "label.select_entity_placeholder": "Select entity",
   "label.select_current_indusrty_placeholder": "Select your current industry",
@@ -202,7 +202,8 @@ const locale = {
     "Failed to upload this file, please try uploading a different image",
   "label.description": "Description",
   "label.heading": "H1",
-  "label.password-not-match": "The password and confirm password do not match.",
+  "label.password-not-match":
+    "New password and Confirm password do not match, Please enter again!",
   "label.update": "Update",
   "label.add": "Add",
   "label.edit": "Edit",
@@ -284,6 +285,8 @@ const locale = {
   "label.selectModule": "Select Module",
   "label.experiencedMember": "(Experienced Members)",
   "label.no_results_found": "No Results Found...",
+  "label.change_password_message":
+    "Your password has been successfully changed. Please login using your new password. Thanks!",
 };
 
 export default locale;
