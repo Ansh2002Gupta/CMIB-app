@@ -76,9 +76,14 @@ const ChangePasswordModal = ({ onPressCancel }) => {
       ? {
           buttonOneStyle: styles.buttonStyle,
           buttonTwoStyle: styles.buttonStyle,
-          buttonOneLeftSectionStyle: styles.leftButtonStyle,
-          buttonTwoRightSectionStyle: styles.rightButtonStyle,
+          buttonOneContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonStyle,
         }
+      : {};
+
+  const isMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { automaticallyAdjustKeyboardInsets: false }
       : {};
 
   return (
@@ -89,7 +94,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
           ...(isWebView ? styles.webContentContainerStyle : {}),
         }}
         keyboardShouldPersistTaps="handled"
-        automaticallyAdjustKeyboardInsets={false}
+        {...isMobileProps}
       >
         <FiveColumn
           firstSection={

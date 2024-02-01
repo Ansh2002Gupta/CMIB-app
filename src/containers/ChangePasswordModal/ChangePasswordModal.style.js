@@ -19,6 +19,7 @@ const style = {
   customContainerStyle: {
     paddingBottom: Platform.OS === "android" ? 0 : 22,
     maxHeight: Platform.OS === "web" ? 44 : "auto",
+    justifyContent: "flex-end",
   },
   contentContainerStyle: {
     flexGrow: 1,
@@ -34,13 +35,11 @@ const style = {
     width: "100%",
     alignItems: "flex-end",
   },
-  leftButtonStyle: { alignItems: "flex-end" },
-  rightButtonStyle: { maxHeight: 44, maxWidth: 80 },
   webContentContainerStyle: {
     maxHeight: "60vh",
     paddingRight: 10,
   },
-  buttonStyle: { height: 44, width: 80 },
+  buttonStyle: { maxHeight: 44, maxWidth: 80 },
   requirementsPoints: {
     marginBottom: 0,
   },

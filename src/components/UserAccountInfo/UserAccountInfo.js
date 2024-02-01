@@ -16,6 +16,7 @@ import {
   setShowChangePasswordModal,
   setShowLogoutModal,
 } from "../../globalContext/userProfile/userProfileActions";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./UserAccountInfo.style";
 
 const UserAccountInfo = ({
@@ -43,9 +44,9 @@ const UserAccountInfo = ({
   };
 
   const keyboardDidShowCallback = (e) => {
-    const keyboardHeight = e.endCoordinates.height;
+    const keyboardHeight = e?.endCoordinates?.height;
     if (isIosPlatform) {
-      setModalStyle(styles.largeModalContainer(keyboardHeight));
+      setModalStyle(commonStyles.largeModalContainer(keyboardHeight));
     }
   };
 

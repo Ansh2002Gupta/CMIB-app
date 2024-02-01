@@ -21,9 +21,9 @@ const ActionPairButton = ({
 }) => {
   const {
     buttonOneStyle,
-    buttonOneLeftSectionStyle,
+    buttonOneContainerStyle,
     buttonTwoStyle,
-    buttonTwoRightSectionStyle,
+    buttonTwoContainerStyle,
     customContainerStyle,
   } = customStyles;
   const { buttonOneType, buttonTwoType } = buttonsType || {};
@@ -55,11 +55,11 @@ const ActionPairButton = ({
           {buttonTwoText}
         </CustomButton>
       }
-      leftSectionStyle={{ ...styles.buttonStyle, ...buttonOneLeftSectionStyle }}
+      leftSectionStyle={{ ...styles.buttonStyle, ...buttonOneContainerStyle }}
       rightSectionStyle={{
         ...styles.secondButtonStyle,
         ...styles.buttonStyle,
-        ...buttonTwoRightSectionStyle,
+        ...buttonTwoContainerStyle,
       }}
     />
   );
@@ -72,9 +72,9 @@ ActionPairButton.defaultProps = {
   },
   customStyles: {
     buttonOneStyle: {},
+    buttonOneContainerStyle: {},
     buttonTwoStyle: {},
-    buttonOneLeftSectionStyle: {},
-    buttonTwoRightSectionStyle: {},
+    buttonTwoContainerStyle: {},
     customContainerStyle: {},
   },
   displayLoader: false,
