@@ -7,6 +7,7 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import Dialog from "../Dialog";
+import Divider from "../Divider";
 import images from "../../images";
 import useIsWebView from "../../hooks/useIsWebView";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -76,12 +77,13 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
             !module.sectionHeading ? onSelectItem(selectedModule) : () => {}
           }
         >
-          <View style={styles.borderStyle}></View>
+          <Divider />
           <View style={{ ...styles.mainViewStyle, ...containerStyle }}>
-            {renderrableModules.map((item) => {
+            {renderrableModules.map((item, index) => {
               if (!item.sectionHeading && item.visible) {
                 return (
                   <CustomTouchableOpacity
+                    key={index}
                     onPress={() =>
                       !module.sectionHeading ? onSelectItem(item) : () => {}
                     }
