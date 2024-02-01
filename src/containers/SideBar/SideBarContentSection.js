@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "../../routes";
+import { useLocation } from "../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
@@ -17,6 +17,7 @@ import SideBarContentEnum from "./sideBarContentEnum";
 import SideBarItemView from "../../components/SideBarItemView/SideBarItemView";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import {
   setSelectedModule,
@@ -31,7 +32,7 @@ import styles from "./SideBar.style";
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const { selectedModule, selectedSession } = sideBarState;
-  const navigate = useNavigate();
+  const { navigateScreen: navigate } = useNavigateScreen();
   const location = useLocation();
   const { isWebView } = useIsWebView();
   const intl = useIntl();
