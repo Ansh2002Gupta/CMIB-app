@@ -15,8 +15,10 @@ const styles = StyleSheet.create({
     width: "100%",
   }),
   noResultContainer: {
-    marginHorizontal: 16,
-    marginVertical: 18,
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 18,
+    marginBottom: 18,
   },
   row:{
     flexDirection: "row",

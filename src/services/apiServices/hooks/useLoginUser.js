@@ -52,7 +52,7 @@ const useLoginUser = () => {
           }
           return;
         }
-        navigateScreen(routeState?.loginRedirectRoute || navigations.DASHBOARD);
+        navigateScreen(routeState?.loginRedirectRoute || navigations.REDIRECT);
         return;
       }
       setPostStatus(API_STATUS.ERROR);

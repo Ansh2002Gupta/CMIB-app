@@ -282,6 +282,8 @@ const locale = {
   "label.email_address": "Email Address: ",
   "label.change_email_address": "Change Email Address",
   "label.country_codes": "Country Codes",
+  "label.selectModule": "Select Module",
+  "label.experiencedMember": "(Experienced Members)",
   "label.no_results_found": "No Results Found...",
   "label.change_password_message":
     "Your password has been successfully changed. Please login using your new password. Thanks!",

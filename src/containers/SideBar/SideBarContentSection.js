@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "../../routes";
+import { useLocation } from "../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
@@ -17,6 +17,7 @@ import SideBarContentEnum from "./sideBarContentEnum";
 import SideBarItemView from "../../components/SideBarItemView/SideBarItemView";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import {
   setSelectedModule,
@@ -24,18 +25,23 @@ import {
 } from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages, modules } from "../../constants/sideBarHelpers";
+import { getSelectedSubModuleFromRoute } from "../../utils/util";
 import images from "../../images";
 import styles from "./SideBar.style";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const { selectedModule, selectedSession } = sideBarState;
-  const navigate = useNavigate();
+  const { navigateScreen: navigate } = useNavigateScreen();
+  const location = useLocation();
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const [sideBarContent, setSideBarSubMenu] = useState(SideBarContentEnum.NONE);
   const [activeMenuItem, setActiveMenuItem] = useState(
-    selectedModule?.children?.[0]?.key
+    getSelectedSubModuleFromRoute({
+      pathName: location.pathname,
+      selectedModule,
+    })
   );
 
   useEffect(() => {
@@ -45,6 +51,8 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   }, [isWebView, sideBarContent]);
 
   const handleOnSelectModuleItem = (item) => {
+    setActiveMenuItem(item?.children?.[0]?.key);
+    navigate(`/${item.key}/${item?.children?.[0]?.key}`);
     if (item.key !== selectedModule.key) {
       sideBarDispatch(setSelectedSession(item?.session?.[0]));
       sideBarDispatch(setSelectedModule(item));
@@ -58,7 +66,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   };
 
   const handleOnClickMenuItem = ({ key }) => {
-    navigate(key);
+    navigate(`/${selectedModule.key}/${key}`);
     setActiveMenuItem(key);
   };
 
@@ -111,7 +119,8 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       <View style={styles.imageView}>
         <CustomImage source={images.iconCmibDark} style={styles.cmiLogo} />
       </View>
-      {sideBarContent === SideBarContentEnum.NONE && (
+      {(sideBarContent === SideBarContentEnum.NONE ||
+        (isWebView && sideBarContent === SideBarContentEnum.MODULE)) && (
         <TwoRow
           isBottomFillSpace={isWebView}
           topSection={
