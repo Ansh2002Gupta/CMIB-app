@@ -253,6 +253,7 @@ function CreateNewPasswordUI(props) {
               }}
               buttonTitle={intl.formatMessage({ id: "label.go_back_to_login" })}
               isSuccess
+              maxWidth={"xs"}
             />
           )}
         </View>

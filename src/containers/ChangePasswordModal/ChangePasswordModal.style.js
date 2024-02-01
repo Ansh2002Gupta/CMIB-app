@@ -17,12 +17,15 @@ const style = {
     paddingTop: 24,
   },
   customContainerStyle: {
-    paddingBottom: Platform.OS === "android" ? 0 : 21,
+    paddingBottom: Platform.OS === "android" ? 0 : 22,
+    maxHeight: Platform.OS === "web" ? 44 : "auto",
+    justifyContent: "flex-end",
   },
   contentContainerStyle: {
     flexGrow: 1,
     paddingBottom: 24,
     justifyContent: "space-between",
+    paddingRight: 10,
   },
   fourthSectionStyle: { paddingBottom: 16 },
   notMatchingError: {
@@ -34,7 +37,9 @@ const style = {
   },
   webContentContainerStyle: {
     maxHeight: "60vh",
+    paddingRight: 10,
   },
+  buttonStyle: { maxHeight: 44, maxWidth: 80 },
   requirementsPoints: {
     marginBottom: 0,
   },
