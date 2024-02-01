@@ -3,7 +3,7 @@ export const navigations = {
   CA_JOBS: "/ca-jobs",
   CAREER_ASCENT: "/career-ascents",
   COMPANY_PROFILE: "/company-profile",
-  DASHBOARD: "/dashboard",
+  REDIRECT: "/redirect",
   FEEDBACK: "/feedback",
   FORGOT_PASSWORD: "/forgot-password",
   JOBS: "/jobs",

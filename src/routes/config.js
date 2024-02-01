@@ -15,6 +15,7 @@ import JobApplicantsView from "../views/JobApplicantsView/index";
 import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
+import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
 import RoundOne from "../views/RoundOneView";
 import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import RoundTwo from "../views/RoundTwoView";
@@ -44,7 +45,7 @@ const config = [
         element: <LoginWithPublicAccess />,
       },
       {
-        viewPath: navigations.DASHBOARD,
+        viewPath: navigations.REDIRECT,
         element: <HomeWithPrivateAccess />,
       },
     ],
@@ -140,12 +141,12 @@ const config = [
     ],
   },
   {
-    pagePath: navigations.DASHBOARD,
+    pagePath: navigations.REDIRECT,
     element: <HomeWithPrivateAccess />,
     views: [
       {
         viewPath: "",
-        element: <DashboardView />,
+        element: <RedirectToAccessedModule />,
       },
     ],
   },
