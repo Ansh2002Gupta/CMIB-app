@@ -31,7 +31,7 @@ const PrivateHeader = ({
 
   const loggedInUserInfo = userProfileState.userDetails || {};
 
-  const profileImage = loggedInUserInfo?.profile_photo || "" ;
+  const profileImage = loggedInUserInfo?.profile_photo || "";
   const firstName = loggedInUserInfo?.name?.split(" ")?.[0] || "";
   const lastName = loggedInUserInfo?.name?.split(" ")?.[1] || "";
   const role = loggedInUserInfo?.user_type || "";
@@ -47,7 +47,7 @@ const PrivateHeader = ({
           leftIcon={leftIcon}
         />
         {/*TODO: Right Now It's a static data, we will replace it by dynamic data as we get API */}
-        {location.pathname === navigations.DASHBOARD && (
+        {location?.pathname === navigations?.DASHBOARD && (
           <>
             <CommonText
               customTextStyle={styles.nameText}
