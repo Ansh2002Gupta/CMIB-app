@@ -42,3 +42,17 @@ export const scrollToRef = (ref) => {
     }
   }
 };
+
+export const getSelectedSubModuleFromRoute = ({ pathName, selectedModule }) => {
+  const path = pathName.split("/");
+  let selectedSubModule = selectedModule?.children?.[0]?.key;
+  if (!!path?.length) {
+    let subModule = selectedModule?.children?.find(
+      (subModule) =>
+        subModule.key?.toLowerCase().split("/").slice(-1)[0] ===
+        path.slice(-1)[0]
+    );
+    selectedSubModule = subModule?.key;
+  }
+  return selectedSubModule;
+};

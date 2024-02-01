@@ -33,7 +33,7 @@ function withPublicAccess(Component) {
     useEffect(() => {
       CookieAndStorageService.get({ key: "auth" }).then((token) => {
         if (authState?.token || token) {
-          navigate(navigations.DASHBOARD);
+          navigate(navigations.REDIRECT);
         }
       });
     }, []);
