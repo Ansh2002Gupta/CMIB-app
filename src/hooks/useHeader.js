@@ -26,7 +26,7 @@ export const useHeader = () => {
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
     !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
-    navigate(navigations.LOGIN);
+    navigate(navigations.LOGIN, { state: { activeTab: true } });
   };
   return {
     isLoggingUserOut,
