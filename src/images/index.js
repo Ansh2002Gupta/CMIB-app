@@ -159,6 +159,16 @@ const iconCmibCALogo = appendAppBaseURl(
   "/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png"
 );
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
+const iconCAJobs = appendAppBaseURl("/images/svg/iconCAJobs.svg");
+const iconCareerAscent = appendAppBaseURl("/images/svg/iconCareerAscent.svg");
+const iconNewlyQualified = appendAppBaseURl(
+  "/images/svg/iconNewlyQualified.svg"
+);
+const iconOverseasChapters = appendAppBaseURl(
+  "/images/svg/iconOverseasChapters.svg"
+);
+const iconWomanPartTime = appendAppBaseURl("/images/svg/iconWomanPartTime.svg");
+const iconTickBlue = appendAppBaseURl("/images/svg/iconTickBlue.svg");
 const iconBackArrow = appendAppBaseURl("/images/svg/iconBackArrow.svg");
 
 const images = {
@@ -269,6 +279,12 @@ const images = {
   iconInstagramWeb,
   iconCmibCALogo,
   iconRetry,
+  iconCAJobs,
+  iconCareerAscent,
+  iconNewlyQualified,
+  iconOverseasChapters,
+  iconWomanPartTime,
+  iconTickBlue,
   iconBackArrow,
 };
 

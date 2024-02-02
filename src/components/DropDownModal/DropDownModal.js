@@ -16,6 +16,7 @@ import SearchView from "../SearchView";
 import SvgUri from "../SvgUri";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import images from "../../images";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./DropDownModal.style";
 
 const DropDownModal = ({
@@ -68,7 +69,7 @@ const DropDownModal = ({
   const keyboardDidShowCallback = (e) => {
     const keyboardHeight = e.endCoordinates.height;
     if (isIosPlatform) {
-      setModalStyle(styles.largeModalContainer(keyboardHeight));
+      setModalStyle(commonStyles.largeModalContainer(keyboardHeight));
     }
   };
 

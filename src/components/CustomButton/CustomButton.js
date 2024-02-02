@@ -22,7 +22,7 @@ const CustomButton = ({
   withGreenBackground,
 }) => {
   const webProps = Platform.OS === "web" ? { size: "xs" } : {};
-  const { customTextStyle, textFontWeight } = customStyle;
+  const { customTextStyle, textFontWeight } = customStyle || {};
 
   return (
     <Button

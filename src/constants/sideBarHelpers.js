@@ -70,21 +70,29 @@ export const items = [
 ];
 
 const newlyQualifiedPlacementsMenu = [
-  { label: "Dashboard", key: navigations.DASHBOARD, icon: "iconDashboard" },
+  {
+    label: "Dashboard",
+    key: navigations.MODULE_LANDING_PAGE,
+    icon: "iconDashboard",
+  },
   {
     label: "Round 1 ",
-    key: "/round-one",
+    key: navigations.ROUND_ONE,
     icon: "iconRound1",
   },
   {
     label: "Round 2 ",
-    key: "/round-two",
+    key: navigations.ROUND_TWO,
     icon: "iconRound2",
   },
 ];
 
 const caJobsMenu = [
-  { label: "Dashboard", key: navigations.DASHBOARD, icon: "iconDashboard" },
+  {
+    label: "Dashboard",
+    key: navigations.MODULE_LANDING_PAGE,
+    icon: "iconDashboard",
+  },
   {
     label: "Posted Jobs",
     key: navigations.POSTED_JOBS,
@@ -108,7 +116,11 @@ const caJobsMenu = [
 ];
 
 const experiencedMembersMenu = [
-  { label: "Dashboard", key: navigations.DASHBOARD, icon: "iconDashboard" },
+  {
+    label: "Dashboard",
+    key: navigations.MODULE_LANDING_PAGE,
+    icon: "iconDashboard",
+  },
   {
     label: "Round 1 ",
     key: navigations.ROUND_ONE,
@@ -116,7 +128,7 @@ const experiencedMembersMenu = [
   },
 ];
 
-const moduleKeys = {
+export const moduleKeys = {
   NEWLY_QUALIFIED_PLACEMENTS_KEY: "nqca-placements",
   CA_JOBS_KEY: "ca-jobs",
   EXPERIENCED_MEMBERS_KEY: "experienced-members",
@@ -132,6 +144,8 @@ export const modules = [
     children: newlyQualifiedPlacementsMenu,
     session: items,
     visible: false,
+    image: images.iconNewlyQualified,
+    isExperiencedMember: false,
   },
   {
     label: "CA Jobs",
@@ -139,6 +153,8 @@ export const modules = [
     children: caJobsMenu,
     session: items,
     visible: false,
+    image: images.iconCAJobs,
+    isExperiencedMember: false,
   },
   {
     label: "Experienced Members",
@@ -153,6 +169,8 @@ export const modules = [
     session: items,
     visible: false,
     isSubMenu: true,
+    image: images.iconCareerAscent,
+    isExperiencedMember: true,
   },
   {
     label: "Women PartTime",
@@ -161,6 +179,8 @@ export const modules = [
     session: items,
     visible: false,
     isSubMenu: true,
+    image: images.iconWomanPartTime,
+    isExperiencedMember: true,
   },
   {
     label: "Overseas Chapters",
@@ -169,6 +189,8 @@ export const modules = [
     session: items,
     visible: false,
     isSubMenu: true,
+    image: images.iconOverseasChapters,
+    isExperiencedMember: true,
   },
 ];
 
