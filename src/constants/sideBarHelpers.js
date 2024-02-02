@@ -194,6 +194,12 @@ export const modules = [
   },
 ];
 
+export const resetAllModules = () => {
+  modules.forEach((module) => {
+    module.visible = false;
+  });
+};
+
 export const getAccessibleModulesList = ({
   allModules = [],
   accessibleModules = [],

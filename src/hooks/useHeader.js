@@ -8,6 +8,7 @@ import { UserProfileContext } from "../globalContext/userProfile/userProfileProv
 
 import useLogoutAPI from "../services/apiServices/hooks/useLogoutAPI";
 import { clearAuthAndLogout } from "../globalContext/auth/authActions";
+import { resetAllModules } from "../constants/sideBarHelpers";
 import { resetUserDetails } from "../globalContext/userProfile/userProfileActions";
 import { setLogoutToast } from "../globalContext/logout/logoutActions";
 import { navigations } from "../constants/routeNames";
@@ -15,10 +16,11 @@ import { navigations } from "../constants/routeNames";
 export const useHeader = () => {
   const navigate = useNavigate();
   const [, authDispatch] = useContext(AuthContext);
-  const [, userProfileDispatch] = useContext(UserProfileContext);
+  const [userDetails, userProfileDispatch] = useContext(UserProfileContext);
   const [, setLogoutDispatch] = useContext(LogoutContext);
-
   const { handleUserLogout, isLoggingUserOut } = useLogoutAPI();
+
+  const userType = userDetails?.userDetails?.user_type;
 
   const onLogout = async (logoutToastData) => {
     await handleUserLogout({});
@@ -26,7 +28,10 @@ export const useHeader = () => {
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
     !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
-    navigate(navigations.LOGIN);
+    resetAllModules();
+    navigate(navigations.LOGIN, {
+      state: { activeTab: userType === "Company" },
+    });
   };
   return {
     isLoggingUserOut,
