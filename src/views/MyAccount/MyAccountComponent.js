@@ -14,7 +14,7 @@ import { options } from "./MyAccountConstant";
 const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [, userProfileDispatch] =
+  const [ userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
 
   const handleOptionClick = (option) => {
@@ -44,6 +44,11 @@ const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
       userProfileDetails={userProfileDetails?.userDetails}
     />
   );
+};
+
+MyAccountComponent.defaultProps = {
+  omitArrowIcon: false,
+  setShowAccountSection: () => {},
 };
 
 MyAccountComponent.propTypes = {

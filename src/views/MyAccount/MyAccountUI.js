@@ -100,6 +100,7 @@ const MyAccountUI = ({
 
 MyAccountUI.defaultProps = {
   omitArrowIcon: false,
+  userProfileDetails: {},
 };
 
 MyAccountUI.propTypes = {
@@ -107,6 +108,7 @@ MyAccountUI.propTypes = {
   intl: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
   omitArrowIcon: PropTypes.bool,
+  userProfileDetails: PropTypes.object,
 };
 
 export default MyAccountUI;

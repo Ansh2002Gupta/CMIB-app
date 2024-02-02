@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Image, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
+import { getInitialsFromName } from "../../utils/util";
 import styles from "./ProfileIcon.style";
 
 const ProfileIcon = ({
@@ -29,7 +30,6 @@ const ProfileIcon = ({
       </View>
     );
   } else {
-    let initials = name ? name.slice(0, 2).toUpperCase() : "N/A";
     return (
       <View
         style={[
@@ -41,11 +41,21 @@ const ProfileIcon = ({
         <CommonText
           customTextStyle={{ ...styles.initialsText, ...customTextStyle }}
         >
-          {initials}
+          {getInitialsFromName(name)}
         </CommonText>
       </View>
     );
   }
+};
+
+ProfileIcon.defaultProps = {
+  customContainerStyle: {},
+  customImageStyle: {},
+  customTextStyle: {},
+  iconType: "",
+  name: "",
+  profileImage: "",
+  showEditModal: false,
 };
 
 ProfileIcon.propTypes = {
