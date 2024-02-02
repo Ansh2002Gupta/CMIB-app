@@ -14,7 +14,7 @@ import { options } from "./MyAccountConstant";
 const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [ userProfileDetails, userProfileDispatch] =
+  const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
 
   const handleOptionClick = (option) => {
