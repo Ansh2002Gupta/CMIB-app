@@ -26,7 +26,6 @@ export const useHeader = () => {
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
     !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
-    //TODO: Need to persist the state in a more optimized way
     navigate(navigations.LOGIN, { state: { activeTab: true } });
   };
   return {
