@@ -5,12 +5,12 @@ const useKeyboardShowHideListener = ({
   keyboardDidShowCallback,
   keyboardDidHideCallback,
 }) => {
-  const isWebPlatform = Platform.OS.toLowerCase() !== "web";
+  const isPlatformNotWeb = Platform.OS.toLowerCase() !== "web";
   useEffect(() => {
     let keyboardDidShowListener;
     let keyboardDidHideListener;
 
-    if (isWebPlatform) {
+    if (isPlatformNotWeb) {
       keyboardDidShowListener = Keyboard.addListener(
         "keyboardDidShow",
         keyboardDidShowCallback
@@ -22,7 +22,7 @@ const useKeyboardShowHideListener = ({
     }
 
     return () => {
-      if (isWebPlatform) {
+      if (isPlatformNotWeb) {
         keyboardDidShowListener?.remove();
         keyboardDidHideListener?.remove();
       }

@@ -7,7 +7,6 @@ const bulletIconStyle = {
   height: 8,
   borderRadius: 5,
   margin: 5,
-  marginLeft: 0,
 };
 
 const styles = StyleSheet.create({

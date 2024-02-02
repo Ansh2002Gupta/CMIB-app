@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import FiveColumn from "../../core/layouts/FiveColumn";
 
@@ -41,11 +41,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
 
   const isNextDisabled = () => {
     return (
-      !confirmNewPassword ||
-      !doPasswordsMatch ||
-      !isPasswordStrong ||
-      !oldPassword ||
-      !newPassword
+      !confirmNewPassword || !isPasswordStrong || !oldPassword || !newPassword
     );
   };
 
@@ -75,15 +71,30 @@ const ChangePasswordModal = ({ onPressCancel }) => {
     : styles.erroInputStyle;
   const customStyle = error ? errorStyle : baseStyle;
 
+  const isWebProps =
+    Platform.OS.toLowerCase() === "web"
+      ? {
+          buttonOneStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonStyle,
+          buttonOneContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonStyle,
+        }
+      : {};
+
+  const isMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { automaticallyAdjustKeyboardInsets: false }
+      : {};
+
   return (
     <>
       <ScrollView
-        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           ...styles.contentContainerStyle,
           ...(isWebView ? styles.webContentContainerStyle : {}),
         }}
         keyboardShouldPersistTaps="handled"
+        {...isMobileProps}
       >
         <FiveColumn
           firstSection={
@@ -184,6 +195,7 @@ const ChangePasswordModal = ({ onPressCancel }) => {
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}
             buttonTwoText={intl.formatMessage({ id: "label.save" })}
             customStyles={{
+              ...isWebProps,
               customContainerStyle: styles.customContainerStyle,
             }}
             displayLoader={isLoading}

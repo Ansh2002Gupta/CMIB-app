@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { Keyboard, Platform, View } from "@unthinkable/react-core-components";
 
 import ChangePasswordModal from "../../containers/ChangePasswordModal";
 import CustomImage from "../CustomImage";
@@ -11,12 +11,14 @@ import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import SessionBar from "../SessionBar";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
 import ViewProfileDetails from "../../containers/ViewProfile";
+import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
   setShowViewProfileDetails,
 } from "../../globalContext/userProfile/userProfileActions";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./UserAccountInfo.style";
 
 const UserAccountInfo = ({
@@ -32,9 +34,31 @@ const UserAccountInfo = ({
   const intl = useIntl();
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
+
   const { showChangePasswordModal, showLogoutModal, showViewProfileDetails } =
     userProfileDetails;
   const [isUpdateProfilePic, setIsUpdatePorfilePic] = useState();
+  const [modalStyle, setModalStyle] = useState({});
+  const isIosPlatform = Platform.OS.toLowerCase() === "ios";
+
+  const keyboardDidHideCallback = () => {
+    if (isIosPlatform) {
+      setModalStyle({ ...styles.modalInnerContainer });
+    }
+  };
+
+  const keyboardDidShowCallback = (e) => {
+    const keyboardHeight = e?.endCoordinates?.height;
+    if (isIosPlatform) {
+      setModalStyle(commonStyles.largeModalContainer(keyboardHeight));
+    }
+  };
+
+  useKeyboardShowHideListener({
+    keyboardDidHideCallback,
+    keyboardDidShowCallback,
+  });
+
   return (
     <>
       <View style={styles.notficationIconView}>
@@ -56,13 +80,20 @@ const UserAccountInfo = ({
           headerText={intl.formatMessage({
             id: "label.change_password",
           })}
-          customInnerContainerStyle={styles.innerContainerStyle}
+          customInnerContainerStyle={{
+            ...styles.modalInnerContainer,
+            ...modalStyle,
+          }}
           headerTextStyle={styles.headerTextStyle}
+          onBackdropPress={() => {
+            userProfileDispatch(setShowChangePasswordModal(false));
+          }}
         >
           <ChangePasswordModal
-            onPressCancel={() =>
-              userProfileDispatch(setShowChangePasswordModal(false))
-            }
+            onPressCancel={() => {
+              Keyboard.dismiss();
+              userProfileDispatch(setShowChangePasswordModal(false));
+            }}
           />
         </CustomModal>
       ) : null}

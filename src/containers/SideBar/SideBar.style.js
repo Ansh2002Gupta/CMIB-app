@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
     }),
   },
   menuIcons: {
-    height: 20,
-    width: 20,
+    height: 18,
+    width: 18,
     marginRight: 10,
   },
   bottomSection: {
