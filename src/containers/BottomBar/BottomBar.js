@@ -97,7 +97,7 @@ function BottomBar() {
     return {
       content: (
         <ImageAndTextTab
-          isActive={currentRoute?.split("/")?.slice?.(-1)?.[0] === route}
+          isActive={currentRoute === route || currentRoute?.split("/")?.slice?.(-1)?.[0] === route}
           onPress={() => {
             if (route.includes("/")) {
               navigateTo(route);

@@ -8,6 +8,7 @@ import { UserProfileContext } from "../globalContext/userProfile/userProfileProv
 
 import useLogoutAPI from "../services/apiServices/hooks/useLogoutAPI";
 import { clearAuthAndLogout } from "../globalContext/auth/authActions";
+import { resetAllModules } from "../constants/sideBarHelpers";
 import { resetUserDetails } from "../globalContext/userProfile/userProfileActions";
 import { setLogoutToast } from "../globalContext/logout/logoutActions";
 import { navigations } from "../constants/routeNames";
@@ -26,6 +27,7 @@ export const useHeader = () => {
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
     !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
+    resetAllModules();
     navigate(navigations.LOGIN);
   };
   return {
