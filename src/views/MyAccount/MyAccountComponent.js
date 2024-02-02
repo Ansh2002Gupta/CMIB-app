@@ -14,7 +14,8 @@ import { options } from "./MyAccountConstant";
 const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [, userProfileDispatch] = useContext(UserProfileContext);
+  const [, userProfileDispatch] =
+    useContext(UserProfileContext);
 
   const handleOptionClick = (option) => {
     setShowAccountSection && setShowAccountSection(false);
@@ -40,6 +41,7 @@ const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
       intl={intl}
       options={options}
       omitArrowIcon={omitArrowIcon}
+      userProfileDetails={userProfileDetails?.userDetails}
     />
   );
 };

@@ -10,21 +10,25 @@ import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import images from "../../images";
 import style from "./MyAccount.style";
 
-const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
-  //TODO: Replace this dummy data with api data.
+const MyAccountUI = ({
+  handleOptionClick,
+  intl,
+  options,
+  omitArrowIcon,
+  userProfileDetails,
+}) => {
   //TODO: update image on save button (once api will come)
-  const profileImage = "";
-  const firstName = "Kashish";
-  const lastName = "Bhatheja";
-  const email = "kashishbhatheja@gmail.com";
+
+  const profileImage = userProfileDetails?.profile_photo;
+  const name = userProfileDetails?.name;
+  const email = userProfileDetails?.email;
 
   const renderProfileIcon = () => {
     return (
       <ProfileIcon
         customContainerStyle={style.initialsContainer}
         customTextStyle={style.initialTextStyle}
-        firstName={firstName}
-        lastName={lastName}
+        name={name}
         profileImage={profileImage}
       />
     );
@@ -54,10 +58,9 @@ const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
               !omitArrowIcon ? style.detailContainer : style.detailContainerWeb,
             ]}
           >
-            <CommonText
-              customTextStyle={style.fullNameStyle}
-              fontWeight="600"
-            >{`${firstName} ${lastName}`}</CommonText>
+            <CommonText customTextStyle={style.fullNameStyle} fontWeight="600">
+              {name}
+            </CommonText>
             <CommonText customTextStyle={style.emailStyle}>{email}</CommonText>
           </View>
         </View>

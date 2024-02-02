@@ -9,9 +9,8 @@ const ProfileIcon = ({
   customContainerStyle,
   customImageStyle,
   customTextStyle,
-  firstName,
   iconType,
-  lastName,
+  name,
   profileImage,
   showEditModal,
 }) => {
@@ -30,7 +29,7 @@ const ProfileIcon = ({
       </View>
     );
   } else {
-    const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
+    let initials = name ? name.slice(0, 2).toUpperCase() : "N/A";
     return (
       <View
         style={[
@@ -53,9 +52,8 @@ ProfileIcon.propTypes = {
   customContainerStyle: PropTypes.object,
   customImageStyle: PropTypes.object,
   customTextStyle: PropTypes.object,
-  firstName: PropTypes.string,
   iconType: PropTypes.string,
-  lastName: PropTypes.string,
+  name: PropTypes.string,
   profileImage: PropTypes.string,
   showEditModal: PropTypes.bool,
 };
