@@ -16,10 +16,11 @@ import { navigations } from "../constants/routeNames";
 export const useHeader = () => {
   const navigate = useNavigate();
   const [, authDispatch] = useContext(AuthContext);
-  const [, userProfileDispatch] = useContext(UserProfileContext);
+  const [userDetails, userProfileDispatch] = useContext(UserProfileContext);
   const [, setLogoutDispatch] = useContext(LogoutContext);
-
   const { handleUserLogout, isLoggingUserOut } = useLogoutAPI();
+
+  const userType = userDetails?.userDetails?.user_type;
 
   const onLogout = async (logoutToastData) => {
     await handleUserLogout({});
@@ -28,7 +29,9 @@ export const useHeader = () => {
     userProfileDispatch(resetUserDetails());
     !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
     resetAllModules();
-    navigate(navigations.LOGIN, { state: { activeTab: true } });
+    navigate(navigations.LOGIN, {
+      state: { activeTab: userType === "Company" },
+    });
   };
   return {
     isLoggingUserOut,
