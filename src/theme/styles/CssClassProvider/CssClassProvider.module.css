@@ -1,9 +1,18 @@
 :root {
+  /* Blues */
+  --darkBlue: #00137e;
+  --lightBlue: #2FA5CB;
+
+  /* Greens */
   --green: #04af55;
   --greenOne: rgba(4, 175, 85, 0.04);
-  --white: #fff;
-  --darkBlue: #00137e;
+
+  /* Greys */
   --secondaryGrey: #f2f4fc;
+  --darkGrey: #616C82;
+
+  /* Whites */
+  --white: #fff;
 }
 
 .card-box__outline--green:hover {
@@ -11,6 +20,7 @@
   background: linear-gradient(0deg, var(--greenOne) 0%, var(--greenOne) 100%),
     var(--white);
 }
+
 .module-box_outline--darkBlue:hover {
   border-color: var(--darkBlue) !important;
   background: linear-gradient(
@@ -19,4 +29,12 @@
       var(--secondaryGrey) 100%
     ),
     var(--white);
+}
+
+.text-area__base:hover, .text-area__base:focus {
+  border-color: var(--lightBlue) !important;
+}
+
+.text-area__base::placeholder {
+  color: var(--darkGrey)
 }
