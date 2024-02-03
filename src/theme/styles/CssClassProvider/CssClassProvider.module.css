@@ -37,6 +37,5 @@
 
 .text-area__base::placeholder {
   font-family: 'General Sans', sans-serif;
-  font-size: 28;
   color: var(--darkGrey)
 }
