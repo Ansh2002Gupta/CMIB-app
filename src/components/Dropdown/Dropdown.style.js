@@ -32,6 +32,8 @@ export const customStyles = (dropdownStyle, placeholderStyle) => ({
     ...base,
     backgroundColor: state.isSelected ? colors.lightGray : "inherit",
     color: colors.black,
+    fontFamily,
+    fontSize: 14,
     "&:hover": {
       backgroundColor: state.isSelected
         ? colors.lightGray
