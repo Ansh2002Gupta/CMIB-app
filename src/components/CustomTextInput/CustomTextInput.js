@@ -76,7 +76,7 @@ const CustomTextInput = (props) => {
   };
 
   const handleBlur = () => {
-    customHandleBlur();
+    customHandleBlur && customHandleBlur();
     setIsFocused(false);
   };
 
