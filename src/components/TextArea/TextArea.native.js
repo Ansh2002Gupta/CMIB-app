@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { TextInput } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
