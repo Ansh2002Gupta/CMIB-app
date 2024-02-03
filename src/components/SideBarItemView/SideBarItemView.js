@@ -27,33 +27,33 @@ const SideBarItemView = ({
 
   return (
     <>
-    <View style={styles.mainContainer}>
-      <CommonText customTextStyle={styles.titleText}>{title}</CommonText>
-      <TwoColumn
-        style={styles.contentTextContainer}
-        isLeftFillSpace
-        leftSectionStyle={styles.leftSection}
-        leftSection={
-          <CommonText
-            customTextStyle={styles.contentText}
-            customTextProps={platformSpecificProps}
-          >
-            {content}
-          </CommonText>
-        }
-        rightSection={
-          showChangeButton && (
-            <CustomTouchableOpacity
-              onPress={onPressChange}
-              style={styles.changeTextContainer}
+      <View style={styles.mainContainer}>
+        <CommonText customTextStyle={styles.titleText}>{title}</CommonText>
+        <TwoColumn
+          style={styles.contentTextContainer}
+          isLeftFillSpace
+          leftSectionStyle={styles.leftSection}
+          leftSection={
+            <CommonText
+              customTextStyle={styles.contentText}
+              customTextProps={platformSpecificProps}
             >
-              <CommonText customTextStyle={styles.changeText}>
-                {intl.formatMessage({ id: "label.change" })}
-              </CommonText>
-            </CustomTouchableOpacity>
-          )
-        }
-      />
+              {content}
+            </CommonText>
+          }
+          rightSection={
+            showChangeButton && (
+              <CustomTouchableOpacity
+                onPress={onPressChange}
+                style={styles.changeTextContainer}
+              >
+                <CommonText customTextStyle={styles.changeText}>
+                  {intl.formatMessage({ id: "label.change" })}
+                </CommonText>
+              </CustomTouchableOpacity>
+            )
+          }
+        />
       </View>
     </>
   );
