@@ -166,8 +166,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }
 
     if (!field || field === "address") {
-      const enteredaddress = value || address;
-      if (enteredaddress && enteredaddress.trim().length > ADDRESS_MAX_LENGTH) {
+      const enteredAddress = value || address;
+      if (enteredAddress && enteredAddress.trim().length > ADDRESS_MAX_LENGTH) {
         newErrors.address = intl.formatMessage({
           id: "label.address_validation",
         });
