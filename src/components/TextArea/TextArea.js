@@ -11,7 +11,7 @@ const TextArea = ({ customStyle, cols, onChangeText, rows, ...props }) => {
       style={styles.inputContainer}
       className={classes["text-area__base"]}
       onChange={(e) => {
-        onChangeText(e.target.value);
+        onChangeText && onChangeText(e.target.value);
       }}
       {...props}
     />
@@ -27,8 +27,8 @@ TextArea.defaultProps = {
 
 TextArea.propTypes = {
   customStyle: PropTypes.object,
-  rows: PropTypes.number,
   cols: PropTypes.number,
+  rows: PropTypes.number,
   onChangeText: PropTypes.func,
 };
 
