@@ -190,7 +190,10 @@ const CompanyProfileComponent = () => {
       });
       isValid = false;
     }
-    if (name.length < FIELD_MIN_LENGTH || name.length > FIELD_MAX_LENGTH) {
+    if (
+      name.length < FIELD_MIN_LENGTH ||
+      name.length > DEFAULT_INPUT_MAX_LENGTH
+    ) {
       newErrors.name = intl.formatMessage({
         id: "label.contact_person_validation",
       });
