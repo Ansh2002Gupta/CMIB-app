@@ -283,11 +283,25 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleInputChange = (value, name) => {
-    errors[name] && validateFields({ field: name, value });
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name === "entity" && value !== FIRM_OF_CHARTERED_ACCOUNTANTS) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+        registrationNo: "",
+        noOfPartners: "",
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        registrationNo: "",
+        noOfPartners: "",
+      }));
+    } else {
+      errors[name] && validateFields({ field: name, value });
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleBlur = (name) => {
