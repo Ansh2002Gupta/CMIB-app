@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
       }
     }),
   },
+  mainContainer: {
+    marginTop: 8,
+  },
   titleText: {
     color: colors.darkGrey,
     fontSize: 14,
