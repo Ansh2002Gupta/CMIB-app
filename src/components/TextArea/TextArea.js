@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import classes from "../../theme/styles/CssClassProvider";
 import styles from "./TextArea.style";
 
-const TextArea = ({ customStyle, cols, onChangeText, rows, ...props }) => {
+const TextArea = ({ cols, customStyle, onChangeText, rows, ...props }) => {
   return (
     <textarea
       rows={rows}
@@ -20,15 +20,15 @@ const TextArea = ({ customStyle, cols, onChangeText, rows, ...props }) => {
 };
 
 TextArea.defaultProps = {
-  customStyle: {},
   cols: 40,
+  customStyle: {},
   rows: 4,
   onChangeText: () => {},
 };
 
 TextArea.propTypes = {
-  customStyle: PropTypes.object,
   cols: PropTypes.number,
+  customStyle: PropTypes.object,
   rows: PropTypes.number,
   onChangeText: PropTypes.func,
 };
