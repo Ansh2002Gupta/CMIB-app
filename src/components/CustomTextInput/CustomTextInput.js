@@ -184,9 +184,11 @@ const CustomTextInput = (props) => {
         )}
         {isMultiline ? (
           <TextArea
-            placeholder={placeholder}
-            onChangeText={remainingProps.onChangeText}
-            value={value}
+            {...{
+              placeholder,
+              onChangeText: remainingProps.onChangeText,
+              value,
+            }}
           />
         ) : (
           <TextInput
