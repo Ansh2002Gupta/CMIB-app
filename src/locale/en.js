@@ -87,7 +87,7 @@ const locale = {
     "We wish to use your company logo in ICAI’s future Promotional materials stating that your company has participated in the Career Ascent programme of ICAI",
   "label.drag_drop_files": "Drag & drop files or",
   "label.browse": "Browse",
-  "label.supported_type": "Supported formats: JPEG, PNG, SVG, EPS, PDF",
+  "label.supported_type": "Supported formats: JPEG, PNG, SVG",
   "label.signup_success": "Thank You for Signing Up!",
   "label.signup_info":
     "Your application has been submitted for approval. You will receive a confirmation email once it is processed by CMI&B admin.",
