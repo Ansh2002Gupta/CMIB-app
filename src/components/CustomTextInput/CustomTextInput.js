@@ -185,8 +185,10 @@ const CustomTextInput = (props) => {
         {isMultiline ? (
           <TextArea
             {...{
-              placeholder,
+              onBlur: handleBlur,
               onChangeText: remainingProps.onChangeText,
+              onFocus: handleFocus,
+              placeholder,
               value,
             }}
           />
