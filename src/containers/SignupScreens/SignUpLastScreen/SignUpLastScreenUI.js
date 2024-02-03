@@ -112,8 +112,7 @@ const SignUpLastScreenUI = ({
           value={companyDetails}
           onChangeText={(value) => handleInputChange(value, "companyDetails")}
           isMandatory
-          isMultiline={!isWeb}
-          height={84}
+          isMultiline
           fieldRef={companyDetailsRef}
         />
         <CustomTextInput

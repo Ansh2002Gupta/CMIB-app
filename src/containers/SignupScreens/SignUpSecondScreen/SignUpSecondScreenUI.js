@@ -169,10 +169,9 @@ const SignUpSecondScreenUI = ({
           customHandleBlur={() => handleBlur("address")}
           errorMessage={errors.address}
           fieldRef={addressRef}
-          height={84}
           isError={!!errors.address}
           isMandatory
-          isMultiline={!isWeb}
+          isMultiline
           label={intl.formatMessage({
             id: "label.address_for_correspondence",
           })}
