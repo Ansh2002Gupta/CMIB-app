@@ -76,7 +76,7 @@ const CustomTextInput = (props) => {
   };
 
   const handleBlur = () => {
-    customHandleBlur();
+    customHandleBlur && customHandleBlur();
     setIsFocused(false);
   };
 
@@ -185,8 +185,11 @@ const CustomTextInput = (props) => {
         {isMultiline ? (
           <TextArea
             {...{
-              placeholder,
+              onBlur: handleBlur,
               onChangeText: remainingProps.onChangeText,
+              onFocus: handleFocus,
+              placeholder,
+              ref: fieldRef,
               value,
             }}
           />
