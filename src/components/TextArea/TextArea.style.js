@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from "@unthinkable/react-core-components";
-import { fontFamily } from "../../theme/styles/commonStyles";
 
+import { fontFamily } from "../../theme/styles/commonStyles";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({

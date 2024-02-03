@@ -3,11 +3,11 @@ import React from "react";
 import classes from "../../theme/styles/CssClassProvider";
 import styles from "./TextArea.style";
 
-const TextArea = ({ onChangeText, ...props }) => {
+const TextArea = ({ customStyle, cols, onChangeText, rows, ...props }) => {
   return (
     <textarea
-      rows={4}
-      cols={40}
+      rows={rows}
+      cols={cols}
       style={styles.inputContainer}
       className={classes["text-area__base"]}
       onChange={(e) => {
@@ -16,6 +16,20 @@ const TextArea = ({ onChangeText, ...props }) => {
       {...props}
     />
   );
+};
+
+TextArea.defaultProps = {
+  customStyle: {},
+  cols: 40,
+  rows: 4,
+  onChangeText: () => {},
+};
+
+TextArea.propTypes = {
+  customStyle: PropTypes.object,
+  rows: PropTypes.number,
+  cols: PropTypes.number,
+  onChangeText: PropTypes.func,
 };
 
 export default TextArea;
