@@ -18,6 +18,7 @@ import {
   ADDRESS_MAX_LENGTH,
   ENTITY_OPTIONS,
   FIELD_MAX_LENGTH,
+  FIRM_OF_CHARTERED_ACCOUNTANTS,
   REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
 import { numericValidator } from "../../../utils/validation";
@@ -102,51 +103,54 @@ const SignUpSecondScreenUI = ({
           })}
           value={entity}
         />
-        <View style={style.inputContainer}>
-          <View style={style.registrationInput}>
-            <CustomTextInput
-              customHandleBlur={() => handleBlur("registrationNo")}
-              errorMessage={errors.registrationNo}
-              fieldRef={firmRegistrationRef}
-              isError={!!errors.registrationNo}
-              isMandatory
-              isNumeric
-              label={intl.formatMessage({
-                id: "label.firm_registration_no",
-              })}
-              maxLength={REGISTRATION_NO_LENGTH}
-              onChangeText={(val) =>
-                numericValidator(val) &&
-                handleInputChange(val, "registrationNo")
-              }
-              placeholder={intl.formatMessage({
-                id: "label.enter_firm_no",
-              })}
-              value={registrationNo}
-            />
+        {entity === FIRM_OF_CHARTERED_ACCOUNTANTS && (
+          <View style={style.inputContainer}>
+            <View style={style.registrationInput}>
+              <CustomTextInput
+                customHandleBlur={() => handleBlur("registrationNo")}
+                errorMessage={errors.registrationNo}
+                fieldRef={firmRegistrationRef}
+                isError={!!errors.registrationNo}
+                isMandatory
+                isNumeric
+                label={intl.formatMessage({
+                  id: "label.firm_registration_no",
+                })}
+                maxLength={REGISTRATION_NO_LENGTH}
+                onChangeText={(val) =>
+                  numericValidator(val) &&
+                  handleInputChange(val, "registrationNo")
+                }
+                placeholder={intl.formatMessage({
+                  id: "label.enter_firm_no",
+                })}
+                value={registrationNo}
+              />
+            </View>
+            <View style={style.partnerInput}>
+              <CustomTextInput
+                customHandleBlur={() => handleBlur("noOfPartners")}
+                errorMessage={errors.noOfPartners}
+                fieldRef={noOfPartnersRef}
+                isError={!!errors.noOfPartners}
+                isMandatory
+                isNumeric
+                label={intl.formatMessage({
+                  id: "label.no_of_partners",
+                })}
+                maxLength={3}
+                onChangeText={(val) =>
+                  numericValidator(val) &&
+                  handleInputChange(val, "noOfPartners")
+                }
+                placeholder={intl.formatMessage({
+                  id: "label.no_placeholder",
+                })}
+                value={noOfPartners}
+              />
+            </View>
           </View>
-          <View style={style.partnerInput}>
-            <CustomTextInput
-              customHandleBlur={() => handleBlur("noOfPartners")}
-              errorMessage={errors.noOfPartners}
-              fieldRef={noOfPartnersRef}
-              isError={!!errors.noOfPartners}
-              isMandatory
-              isNumeric
-              label={intl.formatMessage({
-                id: "label.no_of_partners",
-              })}
-              maxLength={3}
-              onChangeText={(val) =>
-                numericValidator(val) && handleInputChange(val, "noOfPartners")
-              }
-              placeholder={intl.formatMessage({
-                id: "label.no_placeholder",
-              })}
-              value={noOfPartners}
-            />
-          </View>
-        </View>
+        )}
         <CustomTextInput
           inputKey="id"
           isDropdown

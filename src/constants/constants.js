@@ -25,6 +25,7 @@ export const NEWLY_QUALIFIED = "nqca-placements";
 export const OVERSEAS_PLACEMENTS = "overseas-chapters";
 export const CAREER_ASCENTS = "career-ascents";
 export const WOMENT_PLACEMENT = "women-placements";
+export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
