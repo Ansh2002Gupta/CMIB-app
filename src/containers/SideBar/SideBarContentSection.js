@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation } from "../../routes";
+import { useLocation, useNavigate } from "../../routes";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
@@ -32,7 +32,8 @@ import styles from "./SideBar.style";
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const { selectedModule, selectedSession } = sideBarState;
-  const { navigateScreen: navigate } = useNavigateScreen();
+  const { navigateScreen } = useNavigateScreen();
+  const navigate = useNavigate();
   const location = useLocation();
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -52,7 +53,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
 
   const handleOnSelectModuleItem = (item) => {
     setActiveMenuItem(item?.children?.[0]?.key);
-    navigate(`/${item.key}/${item?.children?.[0]?.key}`);
+    navigateScreen(`/${item.key}/${item?.children?.[0]?.key}`);
     if (item.key !== selectedModule.key) {
       sideBarDispatch(setSelectedSession(item?.session?.[0]));
       sideBarDispatch(setSelectedModule(item));
@@ -66,7 +67,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   };
 
   const handleOnClickMenuItem = ({ key }) => {
-    navigate(`/${selectedModule.key}/${key}`);
+    navigateScreen(`/${selectedModule.key}/${key}`);
     setActiveMenuItem(key);
   };
 
@@ -83,7 +84,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     }
   };
 
-  const renderMenuItems = ({ item, index }) => {
+  const renderMenuItems = ({ item }) => {
     const isActive = activeMenuItem === item.key;
     return (
       <CustomTouchableOpacity
@@ -137,10 +138,12 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           bottomSection={
             <>
               {isWebView ? (
-                <FlatList
-                  data={selectedModule?.children || []}
-                  renderItem={renderMenuItems}
-                />
+                <View style={styles.menuSubItems}>
+                  <FlatList
+                    data={selectedModule?.children || []}
+                    renderItem={renderMenuItems}
+                  />
+                </View>
               ) : (
                 !!selectedModule?.label && (
                   <SideBarItemView

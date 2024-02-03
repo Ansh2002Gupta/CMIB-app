@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingLeft: 70,
     paddingRight: 70,
-    paddingBottom: 24,
+    paddingBottom: 32,
   },
   imageViewStyles: {
     paddingTop: 24,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   menuIcons: {
     height: 18,
     width: 18,
-    marginRight: 10,
+    marginRight: 12,
   },
   bottomSection: {
     flex: 1,
@@ -124,8 +124,6 @@ const styles = StyleSheet.create({
   moduleMenuItems: {
     marginLeft: 16,
     marginRight: 16,
-    marginTop: 16,
-    marginBottom: 8,
     borderRadius: 12,
     padding: 16,
     flexDirection: "row",
@@ -136,8 +134,6 @@ const styles = StyleSheet.create({
   moduleActiveMenuItems: {
     marginLeft: 16,
     marginRight: 16,
-    marginTop: 16,
-    marginBottom: 8,
     borderRadius: 12,
     padding: 16,
     backgroundColor: colors.white,
@@ -170,6 +166,9 @@ const styles = StyleSheet.create({
   btnTextStyles: {
     color: colors.backgroundColor,
     fontSize: 14,
+  },
+  menuSubItems: {
+    marginTop: 24,
   },
 });
 
