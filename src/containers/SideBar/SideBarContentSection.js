@@ -139,10 +139,10 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
             <>
               {isWebView ? (
                 <View style={styles.menuSubItems}>
-                <FlatList
-                  data={selectedModule?.children || []}
-                  renderItem={renderMenuItems}
-                />
+                  <FlatList
+                    data={selectedModule?.children || []}
+                    renderItem={renderMenuItems}
+                  />
                 </View>
               ) : (
                 !!selectedModule?.label && (

@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   menuIcons: {
     height: 18,
     width: 18,
-    marginRight: 10,
+    marginRight: 12,
   },
   bottomSection: {
     flex: 1,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   menuSubItems: {
     marginTop: 24,
-  }
+  },
 });
 
 export default styles;
