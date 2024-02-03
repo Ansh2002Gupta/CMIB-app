@@ -141,7 +141,7 @@ const SignUpSecondScreenUI = ({
                 numericValidator(val) && handleInputChange(val, "noOfPartners")
               }
               placeholder={intl.formatMessage({
-                id: "label.enter",
+                id: "label.no_placeholder",
               })}
               value={noOfPartners}
             />
@@ -223,7 +223,7 @@ const SignUpSecondScreenUI = ({
                 numericValidator(val) && handleInputChange(val, "code")
               }
               placeholder={intl.formatMessage({
-                id: "label.enter",
+                id: "label.code_placeholder",
               })}
               value={code}
             />

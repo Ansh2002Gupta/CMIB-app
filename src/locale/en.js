@@ -287,6 +287,8 @@ const locale = {
   "label.no_results_found": "No Results Found...",
   "label.change_password_message":
     "Your password has been successfully changed. Please login using your new password. Thanks!",
+  "label.no_placeholder": "e.g 1",
+  "label.code_placeholder": "e.g 91",
 };
 
 export default locale;
