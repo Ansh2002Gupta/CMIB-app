@@ -13,10 +13,10 @@ import {
   CODE_MAX_LENGTH,
   CODE_MIN_LENGTH,
   DEFAULT_INPUT_MAX_LENGTH,
+  FIRM_OF_CHARTERED_ACCOUNTANTS,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   REGISTRATION_NO_LENGTH,
-  FIRM_OF_CHARTERED_ACCOUNTANTS,
 } from "../../../constants/constants";
 import { scrollToRef } from "../../../utils/util";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
@@ -262,12 +262,10 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         state,
       } = formData;
 
-      const details = {
+      let mandatoryDetails = {
         name: companyName,
         email: emailId,
         entity: entity,
-        frn_number: registrationNo,
-        number_of_partners: parseInt(noOfPartners, 10),
         telephone_number: telephoneNo,
         address: address,
         std_country_code: code,
@@ -275,8 +273,16 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         state_code: state,
       };
 
-      handleSignUpValidation(details, () => {
-        signUpDispatch(setSignUpDetails(details));
+      if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+        mandatoryDetails = {
+          ...mandatoryDetails,
+          frn_number: registrationNo,
+          number_of_partners: parseInt(noOfPartners, 10),
+        };
+      }
+
+      handleSignUpValidation(mandatoryDetails, () => {
+        signUpDispatch(setSignUpDetails(mandatoryDetails));
         tabHandler("next");
       });
     }
