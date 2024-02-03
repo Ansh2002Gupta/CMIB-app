@@ -4,6 +4,8 @@
   --white: #fff;
   --darkBlue: #00137e;
   --secondaryGrey: #f2f4fc;
+  --lightBlue: #2FA5CB;
+  --darkGrey: #616C82;
 }
 
 .card-box__outline--green:hover {
@@ -11,6 +13,7 @@
   background: linear-gradient(0deg, var(--greenOne) 0%, var(--greenOne) 100%),
     var(--white);
 }
+
 .module-box_outline--darkBlue:hover {
   border-color: var(--darkBlue) !important;
   background: linear-gradient(
@@ -19,4 +22,14 @@
       var(--secondaryGrey) 100%
     ),
     var(--white);
+}
+
+.text-area__base:hover, .text-area__base:focus {
+  border-color: var(--lightBlue) !important;
+}
+
+.text-area__base::placeholder {
+  font-family: 'General Sans';
+  font-size: 28;
+  color: var(--darkGrey)
 }
