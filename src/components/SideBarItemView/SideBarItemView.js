@@ -31,7 +31,7 @@ const SideBarItemView = ({
       <CommonText customTextStyle={styles.titleText}>{title}</CommonText>
       <TwoColumn
         style={styles.contentTextContainer}
-        isLeftFillSpace={true}
+        isLeftFillSpace
         leftSectionStyle={styles.leftSection}
         leftSection={
           <CommonText
