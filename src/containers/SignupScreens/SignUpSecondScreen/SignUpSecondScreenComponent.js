@@ -17,6 +17,7 @@ import {
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   REGISTRATION_NO_LENGTH,
+  FIRM_OF_CHARTERED_ACCOUNTANTS,
 } from "../../../constants/constants";
 import { scrollToRef } from "../../../utils/util";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
@@ -85,7 +86,14 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   }, []);
 
   const allFieldsFilled = () => {
-    const requiredFields = Object.values(formData);
+    const isFirm = formData.entity === FIRM_OF_CHARTERED_ACCOUNTANTS;
+
+    const requiredFields = Object.entries(formData)
+      .filter(
+        ([key, value]) =>
+          isFirm || (key !== "registrationNo" && key !== "noOfPartners")
+      )
+      .map(([, value]) => value);
     return requiredFields.every((field) => String(field).trim() !== "");
   };
 
