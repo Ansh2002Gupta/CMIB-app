@@ -164,9 +164,9 @@ const locale = {
   "label.no_of_partners_validation":
     "Number of partners must be a combination of numbers.",
   "label.contact_person_validation":
-    "Contact Person Name must be between 6 and 255 characters.",
+    "The contact person name must be within 100 characters.",
   "label.designation_validation":
-    "Designation must be between 6 and 500 characters.",
+    "The designation must be within 50 characters.",
   "label.mobile_number_validation": "Please enter a valid mobile number.",
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":

@@ -14,7 +14,12 @@ import LoadingScreen from "../../../components/LoadingScreen";
 import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
-import { ENTITY_OPTIONS } from "../../../constants/constants";
+import {
+  ADDRESS_MAX_LENGTH,
+  ENTITY_OPTIONS,
+  FIELD_MAX_LENGTH,
+  REGISTRATION_NO_LENGTH,
+} from "../../../constants/constants";
 import { numericValidator } from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
@@ -75,7 +80,7 @@ const SignUpSecondScreenUI = ({
           isError={!!errors.companyName}
           isMandatory
           label={intl.formatMessage({ id: "label.company_name" })}
-          maxLength={100}
+          maxLength={FIELD_MAX_LENGTH}
           onChangeText={(val) => {
             handleInputChange(val, "companyName");
           }}
@@ -109,7 +114,7 @@ const SignUpSecondScreenUI = ({
               label={intl.formatMessage({
                 id: "label.firm_registration_no",
               })}
-              maxLength={10}
+              maxLength={REGISTRATION_NO_LENGTH}
               onChangeText={(val) =>
                 numericValidator(val) &&
                 handleInputChange(val, "registrationNo")
@@ -167,7 +172,7 @@ const SignUpSecondScreenUI = ({
           label={intl.formatMessage({
             id: "label.address_for_correspondence",
           })}
-          maxLength={500}
+          maxLength={ADDRESS_MAX_LENGTH}
           onChangeText={(val) => handleInputChange(val, "address")}
           placeholder={intl.formatMessage({
             id: "label.address_for_correspondance_placeholder",

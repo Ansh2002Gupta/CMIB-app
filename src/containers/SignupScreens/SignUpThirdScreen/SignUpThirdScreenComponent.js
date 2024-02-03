@@ -101,22 +101,14 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     let error = "";
     switch (name) {
       case "name":
-        if (
-          value &&
-          (value.trim().length < FIELD_MIN_LENGTH ||
-            value.trim().length > FIELD_MAX_LENGTH)
-        ) {
+        if (value && value.trim().length > FIELD_MAX_LENGTH) {
           error = intl.formatMessage({
             id: "label.contact_person_validation",
           });
         }
         break;
       case "designation":
-        if (
-          value &&
-          (value.trim().length < FIELD_MIN_LENGTH ||
-            value.trim().length > ADDRESS_MAX_LENGTH)
-        ) {
+        if (value && value.trim().length > ADDRESS_MAX_LENGTH) {
           error = intl.formatMessage({
             id: "label.designation_validation",
           });
