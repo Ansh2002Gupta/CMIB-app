@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import { TwoColumn } from "../../core/layouts";
 
@@ -27,6 +27,7 @@ const SideBarItemView = ({
 
   return (
     <>
+    <View style={styles.mainContainer}>
       <CommonText customTextStyle={styles.titleText}>{title}</CommonText>
       <TwoColumn
         style={styles.contentTextContainer}
@@ -53,6 +54,7 @@ const SideBarItemView = ({
           )
         }
       />
+      </View>
     </>
   );
 };
