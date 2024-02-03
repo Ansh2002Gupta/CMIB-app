@@ -1,7 +1,8 @@
 import React from "react";
 import { TextInput } from "@unthinkable/react-core-components";
-import styles from "./TextArea.style";
+
 import colors from "../../assets/colors";
+import styles from "./TextArea.style";
 
 const TextArea = ({ ...props }) => {
   return (
