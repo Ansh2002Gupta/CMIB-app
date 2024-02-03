@@ -96,11 +96,6 @@ const style = {
     color: colors.errorRed,
     lineHeight: 18,
   },
-  textAlignStyle: {
-    paddingTop: 16,
-    paddingBottom: 16,
-    textAlignVertical: "top",
-  },
   eyeIconContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -136,7 +131,9 @@ const style = {
     fontWeight: "500",
     borderRadius: 4,
   },
-  valueStyle: { paddingRight: 12 },
+  valueStyle: {
+    paddingRight: 12,
+  },
 };
 
 export default style;
