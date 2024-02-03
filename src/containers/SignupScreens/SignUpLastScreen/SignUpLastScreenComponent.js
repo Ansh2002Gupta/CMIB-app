@@ -293,11 +293,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       switch (name) {
         case "companyDetails":
           value = companyDetails;
-          if (
-            value &&
-            (value.length < FIELD_MIN_LENGTH ||
-              value.length > COMPANY_DETAIL_MAX_LENGTH)
-          ) {
+          if (value && value.length > COMPANY_DETAIL_MAX_LENGTH) {
             error = intl.formatMessage({
               id: "label.company_details_validation",
             });

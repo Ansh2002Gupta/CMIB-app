@@ -12,11 +12,11 @@ import {
   ADDRESS_MAX_LENGTH,
   CODE_MAX_LENGTH,
   CODE_MIN_LENGTH,
-  FIELD_MAX_LENGTH,
-  FIELD_MIN_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   REGISTRATION_NO_LENGTH,
+  FIRM_OF_CHARTERED_ACCOUNTANTS,
 } from "../../../constants/constants";
 import { scrollToRef } from "../../../utils/util";
 import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
@@ -85,7 +85,14 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   }, []);
 
   const allFieldsFilled = () => {
-    const requiredFields = Object.values(formData);
+    const isFirm = formData.entity === FIRM_OF_CHARTERED_ACCOUNTANTS;
+
+    const requiredFields = Object.entries(formData)
+      .filter(
+        ([key, value]) =>
+          isFirm || (key !== "registrationNo" && key !== "noOfPartners")
+      )
+      .map(([, value]) => value);
     return requiredFields.every((field) => String(field).trim() !== "");
   };
 
@@ -115,8 +122,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       const enteredCompanyName = value || companyName;
       if (
         enteredCompanyName &&
-        (enteredCompanyName.trim().length < FIELD_MIN_LENGTH ||
-          enteredCompanyName.trim().length > FIELD_MAX_LENGTH)
+        enteredCompanyName.trim().length > DEFAULT_INPUT_MAX_LENGTH
       ) {
         newErrors.companyName = intl.formatMessage({
           id: "label.company_name_validation",
@@ -159,12 +165,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }
 
     if (!field || field === "address") {
-      const enteredaddress = value || address;
-      if (
-        enteredaddress &&
-        (enteredaddress.trim().length < FIELD_MIN_LENGTH ||
-          enteredaddress.trim().length > ADDRESS_MAX_LENGTH)
-      ) {
+      const enteredAddress = value || address;
+      if (enteredAddress && enteredAddress.trim().length > ADDRESS_MAX_LENGTH) {
         newErrors.address = intl.formatMessage({
           id: "label.address_validation",
         });
@@ -281,11 +283,25 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleInputChange = (value, name) => {
-    errors[name] && validateFields({ field: name, value });
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name === "entity" && value !== FIRM_OF_CHARTERED_ACCOUNTANTS) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+        registrationNo: "",
+        noOfPartners: "",
+      }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        registrationNo: "",
+        noOfPartners: "",
+      }));
+    } else {
+      errors[name] && validateFields({ field: name, value });
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleBlur = (name) => {
