@@ -75,7 +75,7 @@ const SignUpSecondScreenUI = ({
           isError={!!errors.companyName}
           isMandatory
           label={intl.formatMessage({ id: "label.company_name" })}
-          maxLength={255}
+          maxLength={100}
           onChangeText={(val) => {
             handleInputChange(val, "companyName");
           }}

@@ -152,7 +152,7 @@ const locale = {
   "label.download_details_description":
     "Access and download comprehensive roster details effortlessly.",
   "label.company_name_validation":
-    "Company name must be between 6 and 255 characters.",
+    "The company name must be within 100 characters.",
   "label.country_code_validation":
     "Country code must be a combination of numbers and between 2 and 8 digits.",
   "label.telephone_no_validation":
@@ -160,7 +160,7 @@ const locale = {
   "label.email_id_validation": "Please enter a valid email address",
   "label.registration_no_validation":
     "Registration number must be exactly 10 digits.",
-  "label.address_validation": "Address must be between 6 and 500 characters.",
+  "label.address_validation": "The address must be within 500 characters.",
   "label.no_of_partners_validation":
     "Number of partners must be a combination of numbers.",
   "label.contact_person_validation":

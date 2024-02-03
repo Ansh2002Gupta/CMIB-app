@@ -115,8 +115,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       const enteredCompanyName = value || companyName;
       if (
         enteredCompanyName &&
-        (enteredCompanyName.trim().length < FIELD_MIN_LENGTH ||
-          enteredCompanyName.trim().length > FIELD_MAX_LENGTH)
+        enteredCompanyName.trim().length > FIELD_MAX_LENGTH
       ) {
         newErrors.companyName = intl.formatMessage({
           id: "label.company_name_validation",
@@ -160,11 +159,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
     if (!field || field === "address") {
       const enteredaddress = value || address;
-      if (
-        enteredaddress &&
-        (enteredaddress.trim().length < FIELD_MIN_LENGTH ||
-          enteredaddress.trim().length > ADDRESS_MAX_LENGTH)
-      ) {
+      if (enteredaddress && enteredaddress.trim().length > ADDRESS_MAX_LENGTH) {
         newErrors.address = intl.formatMessage({
           id: "label.address_validation",
         });
