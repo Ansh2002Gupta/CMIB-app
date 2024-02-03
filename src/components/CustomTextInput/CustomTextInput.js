@@ -189,6 +189,7 @@ const CustomTextInput = (props) => {
               onChangeText: remainingProps.onChangeText,
               onFocus: handleFocus,
               placeholder,
+              ref: fieldRef,
               value,
             }}
           />
