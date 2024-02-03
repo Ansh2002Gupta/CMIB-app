@@ -104,6 +104,7 @@ const SignUpLastScreenUI = ({
           placeholder={intl.formatMessage({
             id: "label.enter_profile_of_company",
           })}
+          maxLength={2000}
           errorMessage={errors.companyDetails}
           isError={!!errors.companyDetails}
           customHandleBlur={() => handleBlur("companyDetails")}

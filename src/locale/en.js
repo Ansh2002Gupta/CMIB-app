@@ -154,15 +154,15 @@ const locale = {
   "label.company_name_validation":
     "The company name must be within 100 characters.",
   "label.country_code_validation":
-    "Country code must be a combination of numbers and between 2 and 8 digits.",
+    "The country code must be a combination of numbers between 2 and 8 digits.",
   "label.telephone_no_validation":
-    "Phone number must be a combination of numbers and between 7 and 15 digits.",
+    "The phone number must be a combination of numbers between 7 and 15 digits.",
   "label.email_id_validation": "Please enter a valid email address",
   "label.registration_no_validation":
-    "Registration number must be exactly 10 digits.",
+    "The registration number must be exactly 10 digits.",
   "label.address_validation": "The address must be within 500 characters.",
   "label.no_of_partners_validation":
-    "Number of partners must be a combination of numbers.",
+    "The number of partners must be a combination of numbers.",
   "label.contact_person_validation":
     "The contact person name must be within 100 characters.",
   "label.designation_validation":
@@ -170,7 +170,7 @@ const locale = {
   "label.mobile_number_validation": "Please enter a valid mobile number.",
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
-    "Company details must be between 6 and 1000 characters.",
+    "The company details mush be within 2000 characters.",
   "label.yes": "Yes",
   "label.no": "No",
   "label.otp_text":
