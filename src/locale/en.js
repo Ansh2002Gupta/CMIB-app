@@ -96,7 +96,7 @@ const locale = {
   "label.select_entity_placeholder": "Select entity",
   "label.select_current_indusrty_placeholder": "Select your current industry",
   "label.address_for_correspondance_placeholder":
-    "Enter your address for correspondance",
+    "Enter your address for correspondence",
   "label.select_state": "Select state",
   "label.email_id_placeholder": "Enter your email ID",
   "label.enter_firm_no": "Enter FRN",
