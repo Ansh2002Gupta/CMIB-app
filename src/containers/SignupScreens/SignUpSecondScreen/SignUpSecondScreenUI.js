@@ -17,7 +17,7 @@ import images from "../../../images";
 import {
   ADDRESS_MAX_LENGTH,
   ENTITY_OPTIONS,
-  FIELD_MAX_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
   REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
@@ -81,7 +81,7 @@ const SignUpSecondScreenUI = ({
           isError={!!errors.companyName}
           isMandatory
           label={intl.formatMessage({ id: "label.company_name" })}
-          maxLength={FIELD_MAX_LENGTH}
+          maxLength={DEFAULT_INPUT_MAX_LENGTH}
           onChangeText={(val) => {
             handleInputChange(val, "companyName");
           }}

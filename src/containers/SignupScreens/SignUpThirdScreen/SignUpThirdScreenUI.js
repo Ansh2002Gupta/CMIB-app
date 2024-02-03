@@ -19,7 +19,7 @@ import images from "../../../images";
 import {
   CAREER_ASCENTS,
   CA_JOBS,
-  FIELD_MAX_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   NEWLY_QUALIFIED,
   OVERSEAS_PLACEMENTS,
   SALUTATION_OPTIONS,
@@ -108,7 +108,7 @@ const SignUpThirdScreenUI = ({
                   placeholder={intl.formatMessage({
                     id: "label.enter_contact_person_name",
                   })}
-                  maxLength={FIELD_MAX_LENGTH}
+                  maxLength={DEFAULT_INPUT_MAX_LENGTH}
                   customHandleBlur={() => handleBlur("name", index)}
                   value={contactDetails[index].name}
                   errorMessage={errors[index].name}
@@ -133,7 +133,7 @@ const SignUpThirdScreenUI = ({
               onChangeText={(val) =>
                 handleInputChange(val, "designation", index)
               }
-              maxLength={FIELD_MAX_LENGTH}
+              maxLength={DEFAULT_INPUT_MAX_LENGTH}
               isMandatory
               fieldRef={getAppropriateRef(detail.module, "designation")}
             />

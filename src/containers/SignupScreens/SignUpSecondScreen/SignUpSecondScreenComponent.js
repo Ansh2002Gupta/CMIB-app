@@ -12,8 +12,7 @@ import {
   ADDRESS_MAX_LENGTH,
   CODE_MAX_LENGTH,
   CODE_MIN_LENGTH,
-  FIELD_MAX_LENGTH,
-  FIELD_MIN_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   REGISTRATION_NO_LENGTH,
@@ -123,7 +122,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       const enteredCompanyName = value || companyName;
       if (
         enteredCompanyName &&
-        enteredCompanyName.trim().length > FIELD_MAX_LENGTH
+        enteredCompanyName.trim().length > DEFAULT_INPUT_MAX_LENGTH
       ) {
         newErrors.companyName = intl.formatMessage({
           id: "label.company_name_validation",

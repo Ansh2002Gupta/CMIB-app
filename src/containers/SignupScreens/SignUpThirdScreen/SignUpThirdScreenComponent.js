@@ -12,8 +12,7 @@ import { scrollToRef } from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 import {
   ADDRESS_MAX_LENGTH,
-  FIELD_MAX_LENGTH,
-  FIELD_MIN_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   MOBILE_NUMBER_MIN_LENGTH,
   MOBILE_NUMBER_MAX_LENGTH,
   numRegex,
@@ -101,7 +100,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     let error = "";
     switch (name) {
       case "name":
-        if (value && value.trim().length > FIELD_MAX_LENGTH) {
+        if (value && value.trim().length > DEFAULT_INPUT_MAX_LENGTH) {
           error = intl.formatMessage({
             id: "label.contact_person_validation",
           });
