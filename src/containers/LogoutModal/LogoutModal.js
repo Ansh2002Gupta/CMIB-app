@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
 import { Platform } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../components/ActionPairButton";
@@ -8,22 +7,29 @@ import CommonText from "../../components/CommonText";
 import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
 import MultiRow from "../../core/layouts/MultiRow";
-import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
 import styles from "./logoutModal.style";
 
-const LogoutModal = ({ onCancel }) => {
-  const intl = useIntl();
-  const { isLoggingUserOut, onLogout } = useHeader();
-  const WarningIcon = images.iconWarning;
-
+const LogoutModal = ({
+  buttonOneText,
+  buttonOneTextStyle,
+  buttonTwoText,
+  buttonTwoStyle,
+  buttonTwoTextStyle,
+  headingText,
+  icon,
+  loader,
+  onPressButtonOne,
+  onPressButtonTwo,
+  subHeading,
+}) => {
   const logoutConfig = [
     {
       content: (
         <CustomImage
-          Icon={WarningIcon}
+          Icon={icon}
           style={styles.logo}
-          source={WarningIcon}
+          source={icon}
           isSvg={true}
         />
       ),
@@ -31,34 +37,30 @@ const LogoutModal = ({ onCancel }) => {
     {
       content: (
         <CommonText customTextStyle={styles.headerText} fontWeight="600">
-          {intl.formatMessage({ id: "label.logout" })}
+          {headingText}
         </CommonText>
       ),
     },
     {
       content: (
         <CommonText customTextStyle={styles.subHeaderText}>
-          {intl.formatMessage({ id: "label.logout_message" })}
+          {subHeading}
         </CommonText>
       ),
     },
     {
       content: (
         <ActionPairButton
-          buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-          buttonTwoText={intl.formatMessage({ id: "label.logout" })}
+          buttonOneText={buttonOneText}
+          buttonTwoText={buttonTwoText}
           customStyles={{
-            buttonTwoStyle: styles.logoutButtonStyle,
+            buttonTwoStyle: { ...styles.logoutButtonStyle, ...buttonTwoStyle },
+            buttonOneTextStyle: buttonOneTextStyle,
+            buttonTwoTextStyle: buttonTwoTextStyle,
           }}
-          displayLoader={isLoggingUserOut}
-          onPressButtonOne={() => onCancel(false)}
-          onPressButtonTwo={() =>
-            onLogout({
-              message: intl.formatMessage({ id: "label.logout_successfully" }),
-              isLogoutToast: true,
-              isError: false,
-            })
-          }
+          displayLoader={loader}
+          onPressButtonOne={onPressButtonOne}
+          onPressButtonTwo={onPressButtonTwo}
         />
       ),
       style: styles.gapStyle,
@@ -78,8 +80,32 @@ const LogoutModal = ({ onCancel }) => {
   );
 };
 
+LogoutModal.defaultProptypes = {
+  buttonOneText: "",
+  buttonOneTextStyle: {},
+  buttonTwoText: "",
+  buttonTwoStyle: {},
+  buttonTwoTextStyle: {},
+  headingText: "",
+  icon: images.iconWarning,
+  loader: false,
+  onPressButtonOne: () => {},
+  onPressButtonTwo: () => {},
+  subHeading: "",
+};
+
 LogoutModal.propTypes = {
-  onCancel: PropTypes.func.isRequired,
+  buttonOneText: PropTypes.string.isRequired,
+  buttonOneTextStyle: PropTypes.object,
+  buttonTwoText: PropTypes.string.isRequired,
+  buttonTwoStyle: PropTypes.object,
+  buttonTwoTextStyle: PropTypes.object,
+  headingText: PropTypes.string.isRequired,
+  icon: PropTypes.node,
+  loader: PropTypes.bool.isRequired,
+  onPressButtonOne: PropTypes.func.isRequired,
+  onPressButtonTwo: PropTypes.func.isRequired,
+  subHeading: PropTypes.string.isRequired,
 };
 
 export default LogoutModal;

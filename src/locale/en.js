@@ -287,6 +287,9 @@ const locale = {
   "label.no_results_found": "No Results Found...",
   "label.change_password_message":
     "Your password has been successfully changed. Please login using your new password. Thanks!",
+  "label.delete": "Delete",
+  "label.delete_account": "Delete Account",
+  "label.delete_message": "Are you sure you want to delete your account?",
 };
 
 export default locale;

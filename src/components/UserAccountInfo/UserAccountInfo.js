@@ -19,6 +19,8 @@ import {
   setShowViewProfileDetails,
 } from "../../globalContext/userProfile/userProfileActions";
 import commonStyles from "../../theme/styles/commonStyles";
+import { useHeader } from "../../hooks/useHeader";
+import images from "../../images";
 import styles from "./UserAccountInfo.style";
 
 const UserAccountInfo = ({
@@ -34,6 +36,8 @@ const UserAccountInfo = ({
   const intl = useIntl();
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
+
+  const { isLoggingUserOut, onLogout } = useHeader();
 
   const { showChangePasswordModal, showLogoutModal, showViewProfileDetails } =
     userProfileDetails;
@@ -112,7 +116,22 @@ const UserAccountInfo = ({
       ) : null}
       {showLogoutModal && (
         <LogoutModal
-          onCancel={() => userProfileDispatch(setShowLogoutModal(false))}
+          buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+          buttonTwoText={intl.formatMessage({ id: "label.logout" })}
+          headingText={intl.formatMessage({ id: "label.logout" })}
+          icon={images.iconWarning}
+          loader={isLoggingUserOut}
+          onPressButtonOne={() =>
+            userProfileDispatch(setShowLogoutModal(false))
+          }
+          onPressButtonTwo={() => {
+            onLogout({
+              message: intl.formatMessage({ id: "label.logout_successfully" }),
+              isLogoutToast: true,
+              isError: false,
+            });
+          }}
+          subHeading={intl.formatMessage({ id: "label.logout_message" })}
         />
       )}
     </>
