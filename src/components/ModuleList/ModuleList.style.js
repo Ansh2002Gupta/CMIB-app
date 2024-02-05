@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     width: "60%",
   },
   modalContainerMobileStyle: {
-    width: "80%",
+    width: "70%",
   },
   modalHeadingStyle: {
     paddingLeft: 24,
