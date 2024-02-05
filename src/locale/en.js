@@ -170,7 +170,7 @@ const locale = {
   "label.mobile_number_validation": "Please enter a valid mobile number.",
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
-    "The company profile must be within 2000 characters.",
+    "The company profile must be between 100 and 2000 characters.",
   "label.yes": "Yes",
   "label.no": "No",
   "label.otp_text":

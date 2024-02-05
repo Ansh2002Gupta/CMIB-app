@@ -18,6 +18,7 @@ import {
 import {
   urlRegex,
   COMPANY_DETAIL_MAX_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   INTEREST_OPTIONS,
 } from "../../../constants/constants";
 
@@ -167,7 +168,10 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     if (!name || name === "companyDetails") {
       const enteredCompanyDetails = value || companyDetails;
-      if (enteredCompanyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH) {
+      if (
+        enteredCompanyDetails.trim().length < DEFAULT_INPUT_MAX_LENGTH ||
+        enteredCompanyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH
+      ) {
         newErrors.companyDetails = intl.formatMessage({
           id: "label.company_details_validation",
         });
@@ -289,7 +293,11 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
       switch (name) {
         case "companyDetails":
           value = companyDetails;
-          if (value && value.length > COMPANY_DETAIL_MAX_LENGTH) {
+          if (
+            value &&
+            (value.length < DEFAULT_INPUT_MAX_LENGTH ||
+              value.length > COMPANY_DETAIL_MAX_LENGTH)
+          ) {
             error = intl.formatMessage({
               id: "label.company_details_validation",
             });
