@@ -42,7 +42,7 @@ const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
           intl={intl}
         />
       )}
-      <ScrollView style={style.profileParentContainer}>
+      <View style={style.profileParentContainer}>
         <View
           style={[
             !omitArrowIcon ? style.profileContainer : style.profileContainerWeb,
@@ -62,35 +62,37 @@ const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
           </View>
         </View>
         {omitArrowIcon && renderHorizontalLine()}
-        {options.map((option, index) => (
-          <CustomTouchableOpacity
-            style={[
-              style.optionCotainer,
-              omitArrowIcon
-                ? index === options.length - 2 && style.optionCotainerBorder
-                : index !== options.length - 1 &&
-                  style.optionCotainerBordeLight,
-            ]}
-            key={option.id}
-            onPress={() => handleOptionClick(option)}
-          >
-            <CustomImage source={option.iconLeft} style={style.leftIcon} />
-            <View style={style.titleParentStyle}>
-              <CommonText customTextStyle={style.titleStyle}>
-                {intl.formatMessage({ id: option.title })}
-              </CommonText>
-            </View>
-            {!omitArrowIcon && (
-              <View style={style.iconContainer}>
-                <CustomImage
-                  source={images.iconArrowRight}
-                  style={style.arrowIcon}
-                />
+        <ScrollView style={style.profileListContainer}>
+          {options.map((option, index) => (
+            <CustomTouchableOpacity
+              style={[
+                style.optionCotainer,
+                omitArrowIcon
+                  ? index === options.length - 2 && style.optionCotainerBorder
+                  : index !== options.length - 1 &&
+                    style.optionCotainerBordeLight,
+              ]}
+              key={option.id}
+              onPress={() => handleOptionClick(option)}
+            >
+              <CustomImage source={option.iconLeft} style={style.leftIcon} />
+              <View style={style.titleParentStyle}>
+                <CommonText customTextStyle={style.titleStyle}>
+                  {intl.formatMessage({ id: option.title })}
+                </CommonText>
               </View>
-            )}
-          </CustomTouchableOpacity>
-        ))}
-      </ScrollView>
+              {!omitArrowIcon && (
+                <View style={style.iconContainer}>
+                  <CustomImage
+                    source={images.iconArrowRight}
+                    style={style.arrowIcon}
+                  />
+                </View>
+              )}
+            </CustomTouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
     </>
   );
 };

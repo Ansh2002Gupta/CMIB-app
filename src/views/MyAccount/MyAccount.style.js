@@ -1,6 +1,9 @@
+import { StyleSheet, Dimensions } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const style = {
+const { height: HEIGHT } = Dimensions.get("window");
+
+const style = StyleSheet.create({
   optionCotainer: {
     flexDirection: "row",
     padding: 16,
@@ -17,6 +20,10 @@ const style = {
   profileParentContainer: {
     flex: 1,
     backgroundColor: colors.white,
+    maxHeight: HEIGHT * 0.8,
+  },
+  profileListContainer: {
+    flex: 1,
   },
   profileContainer: {
     marginTop: 16,
@@ -88,6 +95,6 @@ const style = {
     fontSize: 20,
     color: colors.white,
   },
-};
+});
 
 export default style;
