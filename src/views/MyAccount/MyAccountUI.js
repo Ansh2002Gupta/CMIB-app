@@ -59,7 +59,7 @@ const MyAccountUI = ({
             ]}
           >
             <CommonText customTextStyle={style.fullNameStyle} fontWeight="600">
-              {name}
+              {name || "-"}
             </CommonText>
             <CommonText customTextStyle={style.emailStyle}>{email}</CommonText>
           </View>
