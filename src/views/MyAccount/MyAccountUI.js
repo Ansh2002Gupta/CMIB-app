@@ -1,16 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, ScrollView } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
 import style from "./MyAccount.style";
 
 const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
+  const isWebPlatform = Platform.OS.toLowerCase() === "web";
   //TODO: Replace this dummy data with api data.
   //TODO: update image on save button (once api will come)
   const profileImage = "";
@@ -33,6 +35,10 @@ const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
   const renderHorizontalLine = () => {
     return <View style={style.horizontalLine} />;
   };
+
+  const accountComponentProp = isWebPlatform
+    ? { className: classes["account-dropdown__base"] }
+    : {};
 
   return (
     <>
@@ -74,6 +80,7 @@ const MyAccountUI = ({ handleOptionClick, intl, options, omitArrowIcon }) => {
               ]}
               key={option.id}
               onPress={() => handleOptionClick(option)}
+              {...accountComponentProp}
             >
               <CustomImage source={option.iconLeft} style={style.leftIcon} />
               <View style={style.titleParentStyle}>
