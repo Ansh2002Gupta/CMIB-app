@@ -70,6 +70,11 @@ const style = {
   cardStyle: {
     marginTop: 24,
   },
+  modalProfileImage: {
+    width: 152,
+    height: 152,
+    borderRadius: 76,
+  },
   customContainerStyle: {
     justifyContent: "center",
     alignItems: "center",

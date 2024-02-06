@@ -54,16 +54,21 @@ const ViewProfileUI = ({
     setErrorMessage("");
   };
 
-  const renderProfileIcon = (iconType) => {
+  const renderProfileIcon = (useCustomContainerStyle = false) => {
     return (
       <ProfileIcon
-        showEditModal={showEditModal}
-        iconType={iconType}
+        showEditIcon={!useCustomContainerStyle}
         customContainerStyle={
-          iconType === "modalIcon" ? style.editProfileContainer : {}
+          useCustomContainerStyle ? style.editProfileContainer : {}
+        }
+        customImageStyle={
+          useCustomContainerStyle ? style.modalProfileImage : {}
         }
         name={name}
         profileImage={profileImage}
+        onPressEditIcon={() => {
+          handleEditPopup(true);
+        }}
       />
     );
   };
@@ -94,7 +99,7 @@ const ViewProfileUI = ({
       />
       <View style={style.picParentContainer}>
         <View style={style.picContainer}>
-          {renderProfileIcon("profileIcon")}
+          {renderProfileIcon()}
           <TouchableOpacity
             style={style.iconEditStyle}
             onPress={() => {
@@ -126,7 +131,7 @@ const ViewProfileUI = ({
               handleEditPopup(false);
             }}
           >
-            {renderProfileIcon("modalIcon")}
+            {renderProfileIcon(true)}
             <View style={style.editButtonContainer}>
               <View style={style.buttonStyle}>
                 <Image source={images.iconChange} />

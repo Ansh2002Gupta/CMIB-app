@@ -159,6 +159,8 @@ const iconCmibCALogo = appendAppBaseURl(
   "/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png"
 );
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
+const iconEditSvg = appendAppBaseURl("/images/svg/editIcon.svg");
+const iconCloseDark = appendAppBaseURl("/images/svg/iconCloseDark.svg");
 const iconCAJobs = appendAppBaseURl("/images/svg/iconCAJobs.svg");
 const iconCareerAscent = appendAppBaseURl("/images/svg/iconCareerAscent.svg");
 const iconNewlyQualified = appendAppBaseURl(
@@ -279,6 +281,8 @@ const images = {
   iconInstagramWeb,
   iconCmibCALogo,
   iconRetry,
+  iconEditSvg,
+  iconCloseDark,
   iconCAJobs,
   iconCareerAscent,
   iconNewlyQualified,

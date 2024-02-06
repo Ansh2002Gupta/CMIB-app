@@ -6,6 +6,7 @@ export const options = [
     title: "label.view_profile",
     id: 1,
     iconLeft: images.iconProfile,
+    preventWebNavigation: true,
     navigateTo: navigations.VIEW_PROFILE,
   },
   {
