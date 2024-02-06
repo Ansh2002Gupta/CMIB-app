@@ -26,7 +26,8 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showDeletePopUp, setShowDeletePopUp] = useState(false);
   const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
-  const { handleDeleteUser } = useDeleteUserAPI();
+  const { errorWhileDeletion, handleDeleteUser, setErrorWhileDeletion } =
+    useDeleteUserAPI();
   const { onLogout } = useHeader();
 
   //TODO: Dummy data to be replaced by api data.
@@ -48,6 +49,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   }, [showEditModal]);
 
   const handleDismissToast = () => {
+    setErrorWhileDeletion("");
     setErrorMessage("");
   };
 
@@ -91,6 +93,11 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
     setShowDeletePopUp((prev) => !prev);
   };
 
+  const dismissDeletionPopUp = () => {
+    setShowDeleteAccountModal(false);
+    setShowDeletePopUp(false);
+  };
+
   return (
     <>
       <IconHeader
@@ -125,17 +132,20 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
           headingText={intl.formatMessage({ id: "label.delete_account" })}
           icon={images.iconAlert}
           loader={false}
-          onPressButtonOne={() => setShowDeleteAccountModal(false)}
+          onPressButtonOne={dismissDeletionPopUp}
           onPressButtonTwo={() => {
-            handleDeleteUser(() =>
-              onLogout({
-                message: intl.formatMessage({
-                  id: "label.account_deletion",
-                }),
-                isLogoutToast: true,
-                isError: false,
-              })
-            );
+            handleDeleteUser({
+              successCallback: () => {
+                onLogout({
+                  message: intl.formatMessage({
+                    id: "label.account_deletion",
+                  }),
+                  isLogoutToast: true,
+                  isError: false,
+                });
+              },
+              errorCallback: dismissDeletionPopUp,
+            });
           }}
           subHeading={intl.formatMessage({ id: "label.delete_message" })}
         />
@@ -200,9 +210,9 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
           </CustomModal>
         )}
       </View>
-      {!!errorMessage && (
+      {!!(errorMessage || errorWhileDeletion) && (
         <ToastComponent
-          toastMessage={errorMessage}
+          toastMessage={errorMessage || errorWhileDeletion}
           onDismiss={handleDismissToast}
         />
       )}

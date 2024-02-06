@@ -70,8 +70,8 @@ function DashboardView() {
       <CustomCell
         onPress={toggleSwitch}
         title={"AddDesignation"}
-        isLeft={true}
-        isSvg={true}
+        isLeft
+        isSvg
         leftSource={AddIcon}
         style={styles.customCellStyle}
         textStyle={styles.customCellTextStyle}

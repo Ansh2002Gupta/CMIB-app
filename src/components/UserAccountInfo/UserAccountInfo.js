@@ -125,15 +125,17 @@ const UserAccountInfo = ({
               loader={false}
               onPressButtonOne={() => setShowDeleteAccountModal(false)}
               onPressButtonTwo={() => {
-                handleDeleteUser(() =>
-                  onLogout({
-                    message: intl.formatMessage({
-                      id: "label.account_deletion",
-                    }),
-                    isLogoutToast: true,
-                    isError: false,
-                  })
-                );
+                handleDeleteUser({
+                  successCallback: () => {
+                    onLogout({
+                      message: intl.formatMessage({
+                        id: "label.account_deletion",
+                      }),
+                      isLogoutToast: true,
+                      isError: false,
+                    });
+                  },
+                });
               }}
               subHeading={intl.formatMessage({ id: "label.delete_message" })}
             />
