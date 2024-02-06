@@ -243,6 +243,19 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const onGoBack = () => {
+    let formDetails = {
+      name: formData.companyName,
+      email: formData.emailId,
+      entity: formData.entity,
+      telephone_number: formData.telephoneNo,
+      address: formData.address,
+      std_country_code: formData.code,
+      industry_type_id: parseInt(formData.currentIndustry),
+      state_code: formData.state,
+      frn_number: formData.registrationNo,
+      number_of_partners: parseInt(formData.noOfPartners, 10),
+    };
+    signUpDispatch(setSignUpDetails(formDetails));
     tabHandler("prev");
   };
 

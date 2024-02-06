@@ -9,14 +9,13 @@ import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpU
 import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { navigations } from "../../../constants/routeNames";
-import { scrollToRef } from "../../../utils/util";
+import { isValidUrl, scrollToRef } from "../../../utils/util";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
 import {
-  urlRegex,
   COMPANY_DETAIL_MAX_LENGTH,
   DEFAULT_INPUT_MAX_LENGTH,
   INTEREST_OPTIONS,
@@ -154,7 +153,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     Object.keys(socialMediaLinks).forEach((key) => {
       if (
         socialMediaLinks[key] &&
-        !urlRegex.test(String(socialMediaLinks[key]))
+        !isValidUrl(String(socialMediaLinks[key]))
       ) {
         newErrors.socialMediaLinks[key] = intl.formatMessage({
           id: "label.url_validation",
@@ -184,7 +183,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     if (!name || name === "website") {
       const enteredWebsite = value || website;
-      if (!urlRegex.test(String(enteredWebsite))) {
+      if (!isValidUrl(String(enteredWebsite))) {
         newErrors.website = intl.formatMessage({
           id: "label.url_validation",
         });
@@ -275,6 +274,18 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   };
 
   const onGoBack = () => {
+    const details = {
+      social_media_link: socialMediaLinks,
+      website: website,
+      nature_of_suppliers: natureOfSupplier,
+      type: companyType,
+      company_details: companyDetails,
+      company_logo: fileUploadResult?.data?.file_name,
+      source_of_information: options
+        .filter((item) => item.isSelected)
+        .map((item) => item.title),
+    };
+    signUpDispatch(setSignUpDetails(details));
     tabHandler("prev");
   };
 
@@ -284,7 +295,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     if (name in socialMediaLinks) {
       value = socialMediaLinks[name];
-      if (value && !urlRegex.test(String(value))) {
+      if (value && !isValidUrl(String(value))) {
         error = intl.formatMessage({
           id: "label.url_validation",
         });
@@ -305,7 +316,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           break;
         case "website":
           value = website;
-          if (value && !urlRegex.test(String(value))) {
+          if (value && !isValidUrl(String(value))) {
             error = intl.formatMessage({
               id: "label.url_validation",
             });
