@@ -23,7 +23,6 @@ const ViewProfileDetails = ({
   const designation = userProfileDetails?.designation;
   const profileImage = userProfileDetails?.profile_photo;
 
-  console.log("yser", userProfileDetails);
   const section = [
     {
       content: (
