@@ -29,8 +29,6 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
   const mobileView =
     windowDimensions.width >= 600 && windowDimensions.width < 768;
 
-  console.log(windowDimensions);
-
   const containerStyle = isWebView
     ? {
         ...styles.containerGridStyle,
