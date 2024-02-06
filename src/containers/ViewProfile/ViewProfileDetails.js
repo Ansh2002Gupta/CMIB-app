@@ -138,7 +138,7 @@ const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
           buttonTwoStyle={styles.buttonTwoStyle}
           buttonTwoTextStyle={styles.buttonTwotextStyle}
           headingText={intl.formatMessage({ id: "label.delete_account" })}
-          icon={images.iconWarning}
+          icon={images.iconAlert}
           loader={false}
           onPressButtonOne={() => setIsConfirmationModal(false)}
           onPressButtonTwo={() => {
