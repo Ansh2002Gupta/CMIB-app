@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
     gridTemplateColumns: "1fr 1fr",
     gap: 16,
   },
+  containerGridStyleForTabView: {
+    gridTemplateColumns: "1fr",
+  },
   moduleTabStyle: {
     borderWidth: 1,
     flexDirection: "row",
@@ -53,15 +56,22 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
+    justifyContent: "space-between",
   },
   activeTabStyle: {
     backgroundColor: colors.secondaryGrey,
     borderColor: colors.darkBlue,
   },
+  moduleImageAndTextBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
   containerTextStyle: {
     marginLeft: 16,
     justifyContent: "center",
-    width: "70%",
+    maxWidth: "70%",
+    flex: 1,
   },
   mainViewStyle: {
     backgroundColor: colors.secondaryGrey,
@@ -78,6 +88,12 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     borderRadius: 12,
     maxWidth: 700,
+  },
+  modalContainerTabStyle: {
+    width: "60%",
+  },
+  modalContainerMobileStyle: {
+    width: "70%",
   },
   modalHeadingStyle: {
     paddingLeft: 24,
