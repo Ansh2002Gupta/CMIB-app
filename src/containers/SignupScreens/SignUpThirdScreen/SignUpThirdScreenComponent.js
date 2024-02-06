@@ -141,7 +141,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     const updatedErrors = [...errors];
     updatedErrors[index] = {
       ...updatedErrors[index],
-      [name]: fieldError 
+      [name]: fieldError,
     };
     setErrors(updatedErrors);
   };
@@ -213,11 +213,9 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
           return {
             ...item,
             mobile_country_code: item.mobile_country_code?.split(" ")?.[0],
-          }
-        })
+          };
+        }),
       };
-      
-  console.log("payload: ", payloadData);
       handleSignUpValidation(payloadData, () => {
         signUpDispatch(setSignUpDetails(newContactDetails));
         tabHandler("next");

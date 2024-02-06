@@ -151,10 +151,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     };
 
     Object.keys(socialMediaLinks).forEach((key) => {
-      if (
-        socialMediaLinks[key] &&
-        !isValidUrl(String(socialMediaLinks[key]))
-      ) {
+      if (socialMediaLinks[key] && !isValidUrl(String(socialMediaLinks[key]))) {
         newErrors.socialMediaLinks[key] = intl.formatMessage({
           id: "label.url_validation",
         });
@@ -251,21 +248,24 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     handleSignUp(payloadData, () => setShowSuccessSignUp(true));
   };
 
+  const constructDetailsObject = () => {
+    return {
+      social_media_link: socialMediaLinks,
+      website: website,
+      nature_of_suppliers: natureOfSupplier,
+      type: companyType,
+      company_details: companyDetails,
+      company_logo: fileUploadResult?.data?.file_name,
+      source_of_information: options
+        .filter((item) => item.isSelected)
+        .map((item) => item.title),
+    };
+  };
+
   const handleSuccessModal = (value) => {
     if (value) {
       if (validateFields({ shouldSrollToError: true })) {
-        const details = {
-          social_media_link: socialMediaLinks,
-          website: website,
-          nature_of_suppliers: natureOfSupplier,
-          type: companyType,
-          company_details: companyDetails,
-          company_logo: fileUploadResult?.data?.file_name,
-          source_of_information: options
-            .filter((item) => item.isSelected)
-            .map((item) => item.title),
-        };
-
+        const details = constructDetailsObject();
         handleSignUpValidation(details, () => onSuccess(details));
       }
     } else {
@@ -287,17 +287,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   };
 
   const onGoBack = () => {
-    const details = {
-      social_media_link: socialMediaLinks,
-      website: website,
-      nature_of_suppliers: natureOfSupplier,
-      type: companyType,
-      company_details: companyDetails,
-      company_logo: fileUploadResult?.data?.file_name,
-      source_of_information: options
-        .filter((item) => item.isSelected)
-        .map((item) => item.title),
-    };
+    const details = constructDetailsObject();
     signUpDispatch(setSignUpDetails(details));
     tabHandler("prev");
   };

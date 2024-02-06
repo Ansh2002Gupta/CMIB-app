@@ -228,7 +228,7 @@ const CompanyProfileComponent = () => {
       });
       isValid = false;
     }
-    if (! isValidUrl(String(website))) {
+    if (!isValidUrl(String(website))) {
       newErrors.website = intl.formatMessage({
         id: "label.url_validation",
       });
