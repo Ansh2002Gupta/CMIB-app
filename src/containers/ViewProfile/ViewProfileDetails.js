@@ -7,7 +7,7 @@ import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CommonText from "../../components/CommonText";
-import LogoutModal from "../LogoutModal/LogoutModal";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import MultiRow from "../../core/layouts/MultiRow";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import TouchableImage from "../../components/TouchableImage";
@@ -132,7 +132,7 @@ const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
     <>
       <MultiRow style={styles.profileMainContainer} rows={section} />
       {isConfirmationModal && (
-        <LogoutModal
+        <ConfirmationModal
           buttonOneText={intl.formatMessage({ id: "label.cancel" })}
           buttonTwoText={intl.formatMessage({ id: "label.delete" })}
           buttonTwoStyle={styles.buttonTwoStyle}

@@ -8,9 +8,9 @@ import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
 import MultiRow from "../../core/layouts/MultiRow";
 import images from "../../images";
-import styles from "./logoutModal.style";
+import styles from "./ConfirmationModal.style";
 
-const LogoutModal = ({
+const ConfirmationModal = ({
   buttonOneText,
   buttonOneTextStyle,
   buttonTwoText,
@@ -23,7 +23,7 @@ const LogoutModal = ({
   onPressButtonTwo,
   subHeading,
 }) => {
-  const logoutConfig = [
+  const confirmationConfig = [
     {
       content: (
         <CustomImage
@@ -75,12 +75,12 @@ const LogoutModal = ({
 
   return (
     <Modal {...platformProps} isVisible style={styles.containerStyle}>
-      <MultiRow rows={logoutConfig} style={styles.parentStyle} />
+      <MultiRow rows={confirmationConfig} style={styles.parentStyle} />
     </Modal>
   );
 };
 
-LogoutModal.defaultProptypes = {
+ConfirmationModal.defaultProptypes = {
   buttonOneText: "",
   buttonOneTextStyle: {},
   buttonTwoText: "",
@@ -94,7 +94,7 @@ LogoutModal.defaultProptypes = {
   subHeading: "",
 };
 
-LogoutModal.propTypes = {
+ConfirmationModal.propTypes = {
   buttonOneText: PropTypes.string.isRequired,
   buttonOneTextStyle: PropTypes.object,
   buttonTwoText: PropTypes.string.isRequired,
@@ -108,4 +108,4 @@ LogoutModal.propTypes = {
   subHeading: PropTypes.string.isRequired,
 };
 
-export default LogoutModal;
+export default ConfirmationModal;

@@ -4,10 +4,10 @@ import { useIntl } from "react-intl";
 import { Keyboard, Platform, View } from "@unthinkable/react-core-components";
 
 import ChangePasswordModal from "../../containers/ChangePasswordModal";
+import ConfirmationModal from "../../containers/ConfirmationModal/ConfirmationModal";
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import SessionBar from "../SessionBar";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
 import ViewProfileDetails from "../../containers/ViewProfile";
@@ -115,7 +115,7 @@ const UserAccountInfo = ({
         </CustomModal>
       ) : null}
       {showLogoutModal && (
-        <LogoutModal
+        <ConfirmationModal
           buttonOneText={intl.formatMessage({ id: "label.cancel" })}
           buttonTwoText={intl.formatMessage({ id: "label.logout" })}
           headingText={intl.formatMessage({ id: "label.logout" })}
