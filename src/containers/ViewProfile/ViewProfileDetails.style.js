@@ -75,12 +75,6 @@ const styles = StyleSheet.create({
   deletetext: {
     fontSize: 14,
   },
-  buttonTwoStyle: {
-    backgroundColor: colors.red,
-  },
-  buttonTwotextStyle: {
-    color: colors.white,
-  },
 });
 
 export default styles;

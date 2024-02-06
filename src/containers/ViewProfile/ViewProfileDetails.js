@@ -7,7 +7,6 @@ import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CommonText from "../../components/CommonText";
-import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import MultiRow from "../../core/layouts/MultiRow";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import TouchableImage from "../../components/TouchableImage";
@@ -15,9 +14,12 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 import images from "../../images";
 import styles from "./ViewProfileDetails.style";
 
-const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
+const ViewProfileDetails = ({
+  onPressCross,
+  onPressEditIcon,
+  setShowDeleteAccountModal,
+}) => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [isConfirmationModal, setIsConfirmationModal] = useState(false);
   const intl = useIntl();
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -31,7 +33,7 @@ const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
   };
 
   const handleConfirmation = () => {
-    setIsConfirmationModal(true);
+    setShowDeleteAccountModal(true);
   };
 
   const deletePopUpRef = useRef(null);
@@ -58,7 +60,6 @@ const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
                   </CustomTouchableOpacity>
                 )}
               </View>
-
               <TouchableImage
                 style={styles.crossIconStyle}
                 source={images.iconCloseDark}
@@ -128,27 +129,7 @@ const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
     },
   ];
 
-  return (
-    <>
-      <MultiRow style={styles.profileMainContainer} rows={section} />
-      {isConfirmationModal && (
-        <ConfirmationModal
-          buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-          buttonTwoText={intl.formatMessage({ id: "label.delete" })}
-          buttonTwoStyle={styles.buttonTwoStyle}
-          buttonTwoTextStyle={styles.buttonTwotextStyle}
-          headingText={intl.formatMessage({ id: "label.delete_account" })}
-          icon={images.iconAlert}
-          loader={false}
-          onPressButtonOne={() => setIsConfirmationModal(false)}
-          onPressButtonTwo={() => {
-            //TODO: We'll integrate API for Delete account
-          }}
-          subHeading={intl.formatMessage({ id: "label.delete_message" })}
-        />
-      )}
-    </>
-  );
+  return <MultiRow style={styles.profileMainContainer} rows={section} />;
 };
 
 ViewProfileDetails.defaultProps = {

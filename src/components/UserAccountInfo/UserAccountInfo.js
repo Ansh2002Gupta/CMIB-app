@@ -41,7 +41,8 @@ const UserAccountInfo = ({
 
   const { showChangePasswordModal, showLogoutModal, showViewProfileDetails } =
     userProfileDetails;
-  const [isUpdateProfilePic, setIsUpdatePorfilePic] = useState();
+  const [isUpdateProfilePic, setIsUpdatePorfilePic] = useState(false);
+  const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
   const [modalStyle, setModalStyle] = useState({});
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
 
@@ -102,17 +103,37 @@ const UserAccountInfo = ({
         </CustomModal>
       ) : null}
       {showViewProfileDetails ? (
-        <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
-          <ViewProfileDetails
-            onPressCross={() =>
-              userProfileDispatch(setShowViewProfileDetails(false))
-            }
-            onPressEditIcon={() => {
-              setIsUpdatePorfilePic(true);
-            }}
-            isUpdateProfilePic={isUpdateProfilePic}
-          />
-        </CustomModal>
+        <>
+          {showDeleteAccountModal ? (
+            <ConfirmationModal
+              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+              buttonTwoText={intl.formatMessage({ id: "label.delete" })}
+              buttonTwoStyle={styles.buttonTwoStyle}
+              buttonTwoTextStyle={styles.buttonTwotextStyle}
+              headingText={intl.formatMessage({ id: "label.delete_account" })}
+              icon={images.iconAlert}
+              loader={false}
+              onPressButtonOne={() => setShowDeleteAccountModal(false)}
+              onPressButtonTwo={() => {
+                //TODO: We'll integrate API for Delete account
+              }}
+              subHeading={intl.formatMessage({ id: "label.delete_message" })}
+            />
+          ) : (
+            <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
+              <ViewProfileDetails
+                onPressCross={() =>
+                  userProfileDispatch(setShowViewProfileDetails(false))
+                }
+                onPressEditIcon={() => {
+                  setIsUpdatePorfilePic(true);
+                }}
+                isUpdateProfilePic={isUpdateProfilePic}
+                setShowDeleteAccountModal={setShowDeleteAccountModal}
+              />
+            </CustomModal>
+          )}
+        </>
       ) : null}
       {showLogoutModal && (
         <ConfirmationModal
