@@ -11,7 +11,8 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 const ViewProfieComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [, userProfileDispatch] = useContext(UserProfileContext);
+  const [userProfileDetails, userProfileDispatch] =
+    useContext(UserProfileContext);
   const [showEditModal, setShowEditModal] = useState(false);
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
@@ -37,6 +38,7 @@ const ViewProfieComponent = () => {
           intl={intl}
           onGoBack={onGoBack}
           showEditModal={showEditModal}
+          userProfileDetails={userProfileDetails?.userDetails}
         />
       )}
     </>
