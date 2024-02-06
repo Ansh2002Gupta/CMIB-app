@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
     height: getModalHeight(),
     maxHeight: maxModalHeight,
   },
+  containerStyle: {
+    padding: 0,
+  },
   largeModalContainer: (keyboardHeight) => ({
     maxHeight: keyboardHeight * 2.2,
   }),

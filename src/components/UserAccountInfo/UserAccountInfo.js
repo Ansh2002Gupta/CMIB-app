@@ -10,11 +10,16 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import SessionBar from "../SessionBar";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
+import ViewProfileDetails from "../../containers/ViewProfile";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { useLocation, useNavigate } from "react-router";
+import { navigations } from "../../constants/routeNames";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
+  setShowViewProfileDetails,
 } from "../../globalContext/userProfile/userProfileActions";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./UserAccountInfo.style";
@@ -30,10 +35,17 @@ const UserAccountInfo = ({
   role,
 }) => {
   const intl = useIntl();
+  const navigate = useNavigate();
+  const { pathname: currentRoute } = useLocation();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
+
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
 
-  const { showChangePasswordModal, showLogoutModal } = userProfileDetails;
+  const { showChangePasswordModal, showLogoutModal, showViewProfileDetails } =
+    userProfileDetails;
+  const [isUpdateProfilePic, setIsUpdatePorfilePic] = useState();
   const [modalStyle, setModalStyle] = useState({});
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
 
@@ -90,6 +102,25 @@ const UserAccountInfo = ({
               Keyboard.dismiss();
               userProfileDispatch(setShowChangePasswordModal(false));
             }}
+          />
+        </CustomModal>
+      ) : null}
+      {showViewProfileDetails ? (
+        <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
+          <ViewProfileDetails
+            onPressCross={() => {
+              if (currentRoute === navigations.VIEW_PROFILE) {
+                navigate(
+                  `${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`
+                );
+              }
+              userProfileDispatch(setShowViewProfileDetails(false));
+            }}
+            onPressEditIcon={() => {
+              setIsUpdatePorfilePic(true);
+            }}
+            isUpdateProfilePic={isUpdateProfilePic}
+            userProfileDetails={userProfileDetails?.userDetails}
           />
         </CustomModal>
       ) : null}
