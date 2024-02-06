@@ -18,7 +18,7 @@ import {
 import {
   urlRegex,
   COMPANY_DETAIL_MAX_LENGTH,
-  FIELD_MIN_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   INTEREST_OPTIONS,
 } from "../../../constants/constants";
 
@@ -169,7 +169,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     if (!name || name === "companyDetails") {
       const enteredCompanyDetails = value || companyDetails;
       if (
-        enteredCompanyDetails.trim().length < FIELD_MIN_LENGTH ||
+        enteredCompanyDetails.trim().length < DEFAULT_INPUT_MAX_LENGTH ||
         enteredCompanyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH
       ) {
         newErrors.companyDetails = intl.formatMessage({
@@ -295,7 +295,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           value = companyDetails;
           if (
             value &&
-            (value.length < FIELD_MIN_LENGTH ||
+            (value.length < DEFAULT_INPUT_MAX_LENGTH ||
               value.length > COMPANY_DETAIL_MAX_LENGTH)
           ) {
             error = intl.formatMessage({

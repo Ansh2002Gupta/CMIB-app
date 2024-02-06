@@ -87,7 +87,7 @@ const locale = {
     "We wish to use your company logo in ICAI’s future Promotional materials stating that your company has participated in the Career Ascent programme of ICAI",
   "label.drag_drop_files": "Drag & drop files or",
   "label.browse": "Browse",
-  "label.supported_type": "Supported formats: JPEG, PNG, SVG, EPS, PDF",
+  "label.supported_type": "Supported formats: JPEG, PNG, SVG",
   "label.signup_success": "Thank You for Signing Up!",
   "label.signup_info":
     "Your application has been submitted for approval. You will receive a confirmation email once it is processed by CMI&B admin.",
@@ -96,7 +96,7 @@ const locale = {
   "label.select_entity_placeholder": "Select entity",
   "label.select_current_indusrty_placeholder": "Select your current industry",
   "label.address_for_correspondance_placeholder":
-    "Enter your address for correspondance",
+    "Enter your address for correspondence",
   "label.select_state": "Select state",
   "label.email_id_placeholder": "Enter your email ID",
   "label.enter_firm_no": "Enter FRN",
@@ -152,25 +152,25 @@ const locale = {
   "label.download_details_description":
     "Access and download comprehensive roster details effortlessly.",
   "label.company_name_validation":
-    "Company name must be between 6 and 255 characters.",
+    "The company name must be within 100 characters.",
   "label.country_code_validation":
-    "Country code must be a combination of numbers and between 2 and 8 digits.",
+    "The country code must be a combination of numbers between 2 and 8 digits.",
   "label.telephone_no_validation":
-    "Phone number must be a combination of numbers and between 7 and 15 digits.",
+    "The phone number must be a combination of numbers between 7 and 15 digits.",
   "label.email_id_validation": "Please enter a valid email address",
   "label.registration_no_validation":
-    "Registration number must be exactly 10 digits.",
-  "label.address_validation": "Address must be between 6 and 500 characters.",
+    "The registration number must be exactly 10 digits.",
+  "label.address_validation": "The address must be within 500 characters.",
   "label.no_of_partners_validation":
-    "Number of partners must be a combination of numbers.",
+    "The number of partners must be a combination of numbers.",
   "label.contact_person_validation":
-    "Contact Person Name must be between 6 and 255 characters.",
+    "The contact person name must be within 100 characters.",
   "label.designation_validation":
-    "Designation must be between 6 and 500 characters.",
+    "The designation must be within 50 characters.",
   "label.mobile_number_validation": "Please enter a valid mobile number.",
   "label.url_validation": "Please enter a valid URL.",
   "label.company_details_validation":
-    "Company details must be between 6 and 1000 characters.",
+    "The company profile must be between 100 and 2000 characters.",
   "label.yes": "Yes",
   "label.no": "No",
   "label.otp_text":
@@ -287,6 +287,8 @@ const locale = {
   "label.no_results_found": "No Results Found...",
   "label.change_password_message":
     "Your password has been successfully changed. Please login using your new password. Thanks!",
+  "label.no_placeholder": "e.g 1",
+  "label.code_placeholder": "e.g 91",
 };
 
 export default locale;

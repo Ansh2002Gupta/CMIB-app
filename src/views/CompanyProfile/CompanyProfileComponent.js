@@ -10,7 +10,7 @@ import {
   CODE_MAX_LENGTH,
   CODE_MIN_LENGTH,
   COMPANY_DETAIL_MAX_LENGTH,
-  FIELD_MAX_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   FIELD_MIN_LENGTH,
   INTEREST_OPTIONS,
   NUMBER_MAX_LENGTH,
@@ -133,7 +133,7 @@ const CompanyProfileComponent = () => {
     const website = findValueByLabel("label.website");
     if (
       companyName.length < FIELD_MIN_LENGTH ||
-      companyName.length > FIELD_MAX_LENGTH
+      companyName.length > DEFAULT_INPUT_MAX_LENGTH
     ) {
       newErrors.companyName = intl.formatMessage({
         id: "label.company_name_validation",
@@ -190,7 +190,10 @@ const CompanyProfileComponent = () => {
       });
       isValid = false;
     }
-    if (name.length < FIELD_MIN_LENGTH || name.length > FIELD_MAX_LENGTH) {
+    if (
+      name.length < FIELD_MIN_LENGTH ||
+      name.length > DEFAULT_INPUT_MAX_LENGTH
+    ) {
       newErrors.name = intl.formatMessage({
         id: "label.contact_person_validation",
       });

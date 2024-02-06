@@ -17,6 +17,7 @@ import UploadImage from "../../../components/UploadImage";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import {
+  ADDRESS_MAX_LENGTH,
   NATURE_OF_SUPPLIER,
   COMPANY_TYPE_OPTIONS,
 } from "../../../constants/constants";
@@ -104,14 +105,14 @@ const SignUpLastScreenUI = ({
           placeholder={intl.formatMessage({
             id: "label.enter_profile_of_company",
           })}
+          maxLength={ADDRESS_MAX_LENGTH}
           errorMessage={errors.companyDetails}
           isError={!!errors.companyDetails}
           customHandleBlur={() => handleBlur("companyDetails")}
           value={companyDetails}
           onChangeText={(value) => handleInputChange(value, "companyDetails")}
           isMandatory
-          isMultiline={!isWeb}
-          height={84}
+          isMultiline
           fieldRef={companyDetailsRef}
         />
         <CustomTextInput

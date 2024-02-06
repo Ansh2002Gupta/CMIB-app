@@ -32,6 +32,8 @@ export const customStyles = (dropdownStyle, placeholderStyle) => ({
     ...base,
     backgroundColor: state.isSelected ? colors.lightGray : "inherit",
     color: colors.black,
+    fontFamily,
+    fontSize: 14,
     "&:hover": {
       backgroundColor: state.isSelected
         ? colors.lightGray
@@ -43,12 +45,17 @@ export const customStyles = (dropdownStyle, placeholderStyle) => ({
 export const styles = StyleSheet.create({
   control: (isFocused) => ({
     borderWidth: isFocused ? 0 : 1,
+    borderColor: colors.lightGrey,
     marginTop: 4,
     borderRadius: 12,
     padding: 6,
     fontSize: 14,
     fontFamily,
     transition: "none",
+    "&:hover": {
+      borderColor: colors.lightGrey,
+      cursor: "pointer",
+    },
   }),
   valueStyle: {
     color: colors.black,
