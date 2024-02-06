@@ -1,4 +1,8 @@
-import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
+import {
+  Dimensions,
+  StyleSheet,
+  Platform,
+} from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const { height: HEIGHT } = Dimensions.get("window");
@@ -6,8 +10,15 @@ const { height: HEIGHT } = Dimensions.get("window");
 const style = StyleSheet.create({
   optionCotainer: {
     flexDirection: "row",
-    padding: 16,
+    padding: 18,
     alignItems: "center",
+    ...Platform.select({
+      web: {
+        padding: 12,
+        paddingLeft: 16,
+        paddingRight: 16,
+      },
+    }),
   },
   optionCotainerBorder: {
     borderBottomWidth: 1,
@@ -20,7 +31,12 @@ const style = StyleSheet.create({
   profileParentContainer: {
     flex: 1,
     backgroundColor: colors.white,
-    maxHeight: HEIGHT * 0.8,
+    height: "100%",
+    ...Platform.select({
+      web: {
+        maxHeight: "80vh",
+      },
+    }),
   },
   profileListContainer: {
     flex: 1,
