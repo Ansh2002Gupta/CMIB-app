@@ -70,6 +70,14 @@ const style = {
   cardStyle: {
     marginTop: 24,
   },
+  customContainerStyle: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 24,
+  },
+  customTextStyle: {
+    fontSize: 18,
+  },
 };
 
 export default style;
