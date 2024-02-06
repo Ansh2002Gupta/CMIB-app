@@ -6,8 +6,7 @@ const baseMessageContainer = {
   borderWidth: 1,
   borderBottomLeftRadius: 16,
   borderBottomRightRadius: 16,
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 2,
+
   maxWidth: 680,
   marginTop: 4,
 };
@@ -16,11 +15,15 @@ const styles = StyleSheet.create({
   senderMessageStyle: {
     backgroundColor: colors.backgroundSecondGrey,
     borderColor: colors.lightGrey,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 2,
     ...baseMessageContainer,
   },
   recieverMessageStyle: {
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 16,
     ...baseMessageContainer,
   },
   senderContainer: {
