@@ -120,6 +120,7 @@ const UserAccountInfo = ({
               setIsUpdatePorfilePic(true);
             }}
             isUpdateProfilePic={isUpdateProfilePic}
+            userProfileDetails={userProfileDetails?.userDetails}
           />
         </CustomModal>
       ) : null}
