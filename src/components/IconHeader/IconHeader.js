@@ -9,6 +9,8 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./IconHeader.style";
+import Chip from "../Chip";
+import colors from "../../assets/colors";
 
 const IconHeader = ({
   actionButtonIcon,
@@ -21,12 +23,37 @@ const IconHeader = ({
   iconRight,
   onPressLeftIcon,
   onPressRightIcon,
+  subHeading,
 }) => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
 
   const onGoBack = () => {
     navigate(-1);
+  };
+
+  const colorConfig = {
+    pending: {
+      bg: "lightOrange",
+      text: "orange",
+    },
+    closed: {
+      bg: "lightGreen",
+      text: "darkGreen",
+    },
+    default: {
+      bg: "skyBlueLight",
+      text: "skyBlueDark",
+    },
+  };
+
+  const getStatusColors = (subHeadingText) => {
+    const subHeading = subHeadingText.toLowerCase();
+    const statusColors = colorConfig[subHeading] || colorConfig.default;
+    return {
+      bgColor: colors[statusColors.bg],
+      textColor: colors[statusColors.text],
+    };
   };
 
   return (
@@ -47,12 +74,28 @@ const IconHeader = ({
           </View>
         )}
         <View style={styles.titleContainer}>
-          <CommonText
-            customTextStyle={!isWebView ? styles.formHeaderStyle : {}}
-            fontWeight="600"
-          >
-            {headerText}
-          </CommonText>
+          <View style={styles.headingContainer}>
+            <CommonText
+              customTextStyle={
+                !isWebView ? styles.formHeaderStyle : styles.formHeaderStyleWeb
+              }
+              fontWeight="600"
+            >
+              {headerText}
+            </CommonText>
+            {!!subHeading && (
+              <Chip
+                customTextStyle={
+                  !isWebView
+                    ? styles.formHeaderStyle
+                    : styles.formHeaderStyleWeb
+                }
+                fontWeight="600"
+                label={subHeading}
+                {...getStatusColors(subHeading)}
+              />
+            )}
+          </View>
           {hasActionButton && isWebView && (
             <CardComponent customStyle={styles.cardContainer}>
               <CustomTouchableOpacity

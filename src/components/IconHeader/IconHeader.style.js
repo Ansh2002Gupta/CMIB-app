@@ -21,6 +21,15 @@ const style = {
   formHeaderStyle: {
     color: colors.black,
     fontSize: 20,
+    marginRight: 16,
+  },
+  formHeaderStyleWeb: {
+    fontSize: 32,
+    marginRight: 16,
+  },
+  headingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   borderStyle: {
     borderWidth: 1,

@@ -21,7 +21,8 @@ import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
 import RoundTwo from "../views/RoundTwoView";
 import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
-import TicketsView from "../views/TicketsView/index";
+import TicketListing from "../views/TicketsListing/index";
+import TicketDetails from "../views/TicketDetails";
 import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -116,10 +117,15 @@ const config = [
     views: [
       {
         viewPath: "",
-        element: <TicketsView />,
+        element: <TicketListing />,
+      },
+      {
+        viewPath: navigations.TICKETS_DETAILS,
+        element: <TicketDetails />,
       },
     ],
   },
+
   {
     pagePath: navigations.FEEDBACK,
     element: <HomeWithPrivateAccess doesExcludeHeader />,
