@@ -8,12 +8,15 @@ import {
 
 import CardComponent from "../../components/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
+import ConfirmationModal from "../../containers/ConfirmationModal/ConfirmationModal";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import ImagePicker from "../../components/ImagePickerComponent/ImagePickerComponent";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import useDeleteUserAPI from "../../services/apiServices/hooks/UserProfile/useDeleteUserAPI";
+import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
 import style from "./ViewProfile.style";
 
@@ -21,6 +24,11 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   const [photoEditFlag, setPhotoEditFlag] = useState(false);
   const [profileImage, setProfileImage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showDeletePopUp, setShowDeletePopUp] = useState(false);
+  const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
+  const { handleDeleteUser } = useDeleteUserAPI();
+  const { onLogout } = useHeader();
+
   //TODO: Dummy data to be replaced by api data.
   const firstName = "Kashish";
   const lastName = "Bhatheja";
@@ -79,6 +87,10 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
     }
   };
 
+  const handleDeletePopUp = () => {
+    setShowDeletePopUp((prev) => !prev);
+  };
+
   return (
     <>
       <IconHeader
@@ -86,7 +98,48 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
         headerText={intl.formatMessage({ id: "label.view_profile" })}
         intl={intl}
         onPressLeftIcon={onGoBack}
+        mobActionButton={images.iconMore}
+        handleButtonClick={() => {
+          handleDeletePopUp();
+        }}
+        iconStyle={showDeletePopUp ? style.iconStyle : style.inActiveIconStyle}
       />
+      {showDeletePopUp && (
+        <TouchableOpacity
+          style={style.deletetextContainer}
+          onPress={() => {
+            setShowDeleteAccountModal(true);
+          }}
+        >
+          <CommonText customTextStyle={style.deletetext}>
+            {intl.formatMessage({ id: "label.delete_account" })}
+          </CommonText>
+        </TouchableOpacity>
+      )}
+      {showDeleteAccountModal && (
+        <ConfirmationModal
+          buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+          buttonTwoText={intl.formatMessage({ id: "label.delete" })}
+          buttonTwoStyle={style.buttonTwoStyle}
+          buttonTwoTextStyle={style.buttonTwotextStyle}
+          headingText={intl.formatMessage({ id: "label.delete_account" })}
+          icon={images.iconAlert}
+          loader={false}
+          onPressButtonOne={() => setShowDeleteAccountModal(false)}
+          onPressButtonTwo={() => {
+            handleDeleteUser(() =>
+              onLogout({
+                message: intl.formatMessage({
+                  id: "label.account_deletion",
+                }),
+                isLogoutToast: true,
+                isError: false,
+              })
+            );
+          }}
+          subHeading={intl.formatMessage({ id: "label.delete_message" })}
+        />
+      )}
       <View style={style.picParentContainer}>
         <View style={style.picContainer}>{renderProfileIcon()}</View>
         <CardComponent customStyle={style.cardStyle}>

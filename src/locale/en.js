@@ -292,6 +292,7 @@ const locale = {
   "label.delete_message": "Are you sure you want to delete your account?",
   "label.no_placeholder": "e.g 1",
   "label.code_placeholder": "e.g 91",
+  "label.account_deletion": "Account deleted successfully.",
 };
 
 export default locale;
