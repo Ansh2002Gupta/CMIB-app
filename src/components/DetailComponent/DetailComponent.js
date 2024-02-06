@@ -16,6 +16,7 @@ const DetailComponent = ({
   details,
   headerText,
   isEditable,
+  isMandatory,
   handleChange,
 }) => {
   const intl = useIntl();
@@ -63,7 +64,7 @@ const DetailComponent = ({
                 isCounterInput={detail.isCounterInput}
                 isError={!!detail.error}
                 isMobileNumber={detail.isMobileNumber}
-                isMandatory
+                isMandatory={isMandatory}
                 options={detail.options || []}
                 placeholder={intl.formatMessage({ id: detail.placeholder })}
                 maxLength={detail.maxLength}
@@ -88,9 +89,11 @@ const DetailComponent = ({
                   <CommonText customTextStyle={styles.titleStyle}>
                     {intl.formatMessage({ id: detail.label })}
                   </CommonText>
-                  <CommonText customTextStyle={styles.starStyle}>
-                    {" *"}
-                  </CommonText>
+                  {isMandatory && (
+                    <CommonText customTextStyle={styles.starStyle}>
+                      {" *"}
+                    </CommonText>
+                  )}
                 </View>
                 <CommonText
                   customTextStyle={[
@@ -115,6 +118,7 @@ DetailComponent.defaultProps = {
   handleChange: () => {},
   headerText: "",
   isEditable: false,
+  isMandatory: false,
 };
 
 DetailComponent.propTypes = {
@@ -123,6 +127,7 @@ DetailComponent.propTypes = {
   handleChange: PropTypes.func,
   headerText: PropTypes.string,
   isEditable: PropTypes.bool,
+  isMandatory: PropTypes.bool,
 };
 
 export default DetailComponent;

@@ -1,7 +1,12 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { FlatList, Platform, View } from "@unthinkable/react-core-components";
+import {
+  FlatList,
+  Platform,
+  View,
+  useWindowDimensions,
+} from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
@@ -18,9 +23,17 @@ import styles from "./ModuleList.style";
 const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const windowDimensions = useWindowDimensions();
+
+  const tabView = windowDimensions.width >= 768 && windowDimensions.width < 900;
+  const mobileView =
+    windowDimensions.width >= 600 && windowDimensions.width < 768;
 
   const containerStyle = isWebView
-    ? styles.containerGridStyle
+    ? {
+        ...styles.containerGridStyle,
+        ...(tabView || mobileView ? styles.containerGridStyleForTabView : {}),
+      }
     : styles.containerStyle;
 
   const [userProfileState] = useContext(UserProfileContext);
@@ -71,7 +84,11 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
       {isWebView ? (
         <Dialog
           heading={intl.formatMessage({ id: "label.selectModule" })}
-          modalContainerStyle={styles.modalContainerStyle}
+          modalContainerStyle={{
+            ...styles.modalContainerStyle,
+            ...(tabView ? styles.modalContainerTabStyle : {}),
+            ...(mobileView ? styles.modalContainerMobileStyle : {}),
+          }}
           customHeadingStyle={styles.modalHeadingStyle}
           onClose={() =>
             !module.sectionHeading ? onSelectItem(selectedModule) : () => {}
@@ -95,31 +112,33 @@ const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
                     }}
                     className={classes["module-box_outline--darkBlue"]}
                   >
-                    <CustomImage
-                      source={item.image}
-                      style={styles.moduleImageStyle}
-                    />
-                    <View style={styles.containerTextStyle}>
-                      <CommonText
-                        customTextStyle={{
-                          ...styles.moduleTextStyle,
-                          ...(item?.key === selectedModule.key
-                            ? styles.activeModuleTextStyle
-                            : {}),
-                        }}
-                        fontWeight="600"
-                      >
-                        {item.label}
-                      </CommonText>
-                      {item?.isExperiencedMember && (
+                    <View style={styles.moduleImageAndTextBox}>
+                      <CustomImage
+                        source={item.image}
+                        style={styles.moduleImageStyle}
+                      />
+                      <View style={styles.containerTextStyle}>
                         <CommonText
-                          customTextStyle={styles.experienceMemberTextStyle}
+                          customTextStyle={{
+                            ...styles.moduleTextStyle,
+                            ...(item?.key === selectedModule.key
+                              ? styles.activeModuleTextStyle
+                              : {}),
+                          }}
+                          fontWeight="600"
                         >
-                          {intl.formatMessage({
-                            id: "label.experiencedMember",
-                          })}
+                          {item.label}
                         </CommonText>
-                      )}
+                        {item?.isExperiencedMember && (
+                          <CommonText
+                            customTextStyle={styles.experienceMemberTextStyle}
+                          >
+                            {intl.formatMessage({
+                              id: "label.experiencedMember",
+                            })}
+                          </CommonText>
+                        )}
+                      </View>
                     </View>
                     <View style={styles.textView}>
                       {item?.key === selectedModule.key && (
