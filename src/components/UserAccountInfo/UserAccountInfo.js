@@ -49,7 +49,7 @@ const UserAccountInfo = ({
 
   const { showChangePasswordModal, showLogoutModal, showViewProfileDetails } =
     userProfileDetails;
-  const [isUpdateProfilePic, setIsUpdatePorfilePic] = useState(false);
+  const [isUpdateProfilePic, setIsUpdateProfilePic] = useState(false);
   const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
   const [modalStyle, setModalStyle] = useState({});
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
@@ -139,7 +139,7 @@ const UserAccountInfo = ({
                   userProfileDispatch(setShowViewProfileDetails(false));
                 }}
                 onPressEditIcon={() => {
-                  setIsUpdatePorfilePic(true);
+                  setIsUpdateProfilePic(true);
                 }}
                 isUpdateProfilePic={isUpdateProfilePic}
                 setShowDeleteAccountModal={setShowDeleteAccountModal}
