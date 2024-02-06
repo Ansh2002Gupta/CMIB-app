@@ -1,81 +1,17 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useNavigate } from "../../routes";
 import { FlatList, View } from "@unthinkable/react-core-components";
 
-import styles from "./TicketDetails.style";
-import IconHeader from "../../components/IconHeader/IconHeader";
 import { TwoColumn, TwoRow } from "../../core/layouts";
+
 import CommonText from "../../components/CommonText";
-import { PREVIOUS_SCREEN } from "../../constants/constants";
 import CustomTextInput from "../../components/CustomTextInput";
+import IconHeader from "../../components/IconHeader/IconHeader";
 import MessageComponent from "../../components/MessageComponent";
 import useIsWebView from "../../hooks/useIsWebView";
-
-const ticket_replies = [
-  {
-    senderMessage:
-      "   Lorem ipsum dolor sit amet consectetur. Et rhoncus adipiscing utmolestie potenti sit magna in non. Duis id ornare suspendisse mattismaecenas a congue tincidunt.",
-    recieverMessage: "Ok",
-  },
-  {
-    senderMessage:
-      "   Lorem  dolor sit amet consectetur. Ependisse mattismaecenas a congue tincidunt.",
-    recieverMessage: "Ok",
-  },
-  {
-    senderMessage:
-      "   Lorem ipsum dolor sit amet copendisse mattismaecenas a congue tincidunt.",
-    recieverMessage:
-      "Onsectetur. Et rhoncus adipiscing utmolestie potenti sit magna in non. Duis id ornare susk",
-  },
-  {
-    senderMessage:
-      "   Lorem ipsum dolor sit amet consectetur. Et rhoncus adipiscing utmolestie potenti sit magna in non. Duis id ornare suspendisse mattismaecenas a congue tincidunt.",
-    recieverMessage: "Ok",
-  },
-  {
-    senderMessage:
-      "   Lorem ipsum dolor sit amet consectetur. Et rhoncus adipiscing utmolestie potenti sit magna in non. Duis id ornare suspendisse mattismaecenas a congue tincidunt.",
-    recieverMessage: "Ok",
-  },
-  {
-    senderMessage:
-      "   Lorem  dolor sit amet consectetur. Ependisse mattismaecenas a congue tincidunt.",
-    recieverMessage: "Ok",
-  },
-  {
-    senderMessage:
-      "   Lorem ipsum dolor sit amet copendisse mattismaecenas a congue tincidunt.",
-    recieverMessage:
-      "Onsectetur. Et rhoncus adipiscing utmolestie potenti sit magna in non. Duis id ornare susk",
-  },
-  {
-    senderMessage:
-      "   Lorem ipsum dolor sit amet consectetur. Et rhoncus adipiscing utmolestie potenti sit magna in non. Duis id ornare suspendisse mattismaecenas a congue tincidunt.",
-    recieverMessage: "Ok",
-  },
-  {
-    senderMessage:
-      "   Lorem ipsum dolor sit amet consectetur. Et rhoncus adipiscing utmolestie potenti sit magna in non. Duis id ornare suspendisse mattismaecenas a congue tincidunt.",
-    recieverMessage: "Ok",
-  },
-  {
-    senderMessage:
-      "   Lorem  dolor sit amet consectetur. Ependisse mattismaecenas a congue tincidunt.",
-    recieverMessage: "Ok",
-  },
-  {
-    senderMessage:
-      "   Lorem ipsum dolor sit amet copendisse mattismaecenas a congue tincidunt.",
-    recieverMessage:
-      "Onsectetur. Et rhoncus adipiscing utmolestie potenti sit magna in non. Duis id ornare susk",
-  },
-  {
-    senderMessage:
-      "   Lorem ipsum dolor sit amet consectetur. Et rhoncus adipiscing utmolestie potenti sit magna in non. Duis id ornare suspendisse mattismaecenas a congue tincidunt.",
-    recieverMessage: "Ok",
-  },
-];
+import { ticket_replies } from "./ticketsRepliesConstant";
+import { PREVIOUS_SCREEN } from "../../constants/constants";
+import styles from "./TicketDetails.style";
 
 const TicketDetails = () => {
   const navigate = useNavigate();
@@ -84,6 +20,7 @@ const TicketDetails = () => {
   const onGoBack = () => {
     navigate(PREVIOUS_SCREEN);
   };
+
   return (
     <TwoRow
       style={styles.mainContainer}
@@ -95,7 +32,6 @@ const TicketDetails = () => {
           hasIconBar
         />
       }
-      // isTopFillSpace
       isBottomFillSpace
       bottomSection={
         <TwoColumn

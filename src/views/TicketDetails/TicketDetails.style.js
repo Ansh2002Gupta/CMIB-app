@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "green",
   },
   ticketDetails: {
+    flex: 1,
     backgroundColor: colors.white,
   },
 });
