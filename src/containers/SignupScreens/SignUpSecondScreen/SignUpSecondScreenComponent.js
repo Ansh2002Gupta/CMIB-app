@@ -19,7 +19,10 @@ import {
   REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
 import { scrollToRef } from "../../../utils/util";
-import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
+import {
+  deleteSignUpDetailKey,
+  setSignUpDetails,
+} from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { validateEmail } from "../../../utils/validation";
 
@@ -243,19 +246,38 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const onGoBack = () => {
-    let formDetails = {
-      name: formData.companyName,
-      email: formData.emailId,
-      entity: formData.entity,
-      telephone_number: formData.telephoneNo,
-      address: formData.address,
-      std_country_code: formData.code,
-      industry_type_id: parseInt(formData.currentIndustry),
-      state_code: formData.state,
-      frn_number: formData.registrationNo,
-      number_of_partners: parseInt(formData.noOfPartners, 10),
+    const {
+      companyName,
+      emailId,
+      entity,
+      registrationNo,
+      noOfPartners,
+      telephoneNo,
+      address,
+      code,
+      currentIndustry,
+      state,
+    } = formData;
+
+    let mandatoryDetails = {
+      name: companyName,
+      email: emailId,
+      entity: entity,
+      telephone_number: telephoneNo,
+      address: address,
+      std_country_code: code,
+      industry_type_id: parseInt(currentIndustry),
+      state_code: state,
     };
-    signUpDispatch(setSignUpDetails(formDetails));
+
+    if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+      mandatoryDetails = {
+        ...mandatoryDetails,
+        frn_number: registrationNo,
+        number_of_partners: parseInt(noOfPartners, 10),
+      };
+    }
+    signUpDispatch(setSignUpDetails(mandatoryDetails));
     tabHandler("prev");
   };
 
@@ -309,6 +331,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         registrationNo: "",
         noOfPartners: "",
       }));
+      signUpDispatch(deleteSignUpDetailKey("frn_number"));
+      signUpDispatch(deleteSignUpDetailKey("number_of_partners"));
       setErrors((prevErrors) => ({
         ...prevErrors,
         registrationNo: "",
