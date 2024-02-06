@@ -17,8 +17,8 @@ import {
   NUMBER_MIN_LENGTH,
   numRegex,
   REGISTRATION_NO_LENGTH,
-  urlRegex,
 } from "../../constants/constants";
+import { isValidUrl } from "../../utils/util";
 import { mapApiDataToUI } from "./mappedData";
 import { PREVIOUS_SCREEN } from "../../constants/constants";
 import { validateEmail } from "../../utils/validation";
@@ -228,7 +228,7 @@ const CompanyProfileComponent = () => {
       });
       isValid = false;
     }
-    if (!urlRegex.test(String(website))) {
+    if (!isValidUrl(String(website))) {
       newErrors.website = intl.formatMessage({
         id: "label.url_validation",
       });

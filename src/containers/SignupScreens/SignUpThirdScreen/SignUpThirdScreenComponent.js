@@ -95,6 +95,18 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     });
   };
 
+  const constructUpdatedContactDetails = (contactDetails) => {
+    return contactDetails.map((detail) => ({
+      module: detail.module,
+      name: detail.name,
+      email: detail.emailId,
+      salutation: detail.salutation,
+      mobile_number: detail.mobileNo,
+      designation: detail.designation,
+      mobile_country_code: detail.countryCode,
+    }));
+  };
+
   const validateField = ({ name, index, enteredValue }) => {
     const value = enteredValue || contactDetails[index][name];
     let error = "";
@@ -138,27 +150,10 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const handleBlur = (name, index) => {
     const fieldError = validateField({ name, index });
-
-    let isDuplicate = false;
-
-    if (name === "emailId" || name === "mobileNo") {
-      isDuplicate = contactDetails.some((detail, i) => {
-        return i !== index && detail[name] === contactDetails[index][name];
-      });
-    }
     const updatedErrors = [...errors];
     updatedErrors[index] = {
       ...updatedErrors[index],
-      [name]:
-        fieldError ||
-        (isDuplicate
-          ? intl.formatMessage({
-              id:
-                name === "emailId"
-                  ? "label.duplicate_email_validation"
-                  : "label.duplicate_mobileNo_validation",
-            })
-          : ""),
+      [name]: fieldError,
     };
     setErrors(updatedErrors);
   };
@@ -187,6 +182,11 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const onGoBack = () => {
+    const updatedContactDetails =
+      constructUpdatedContactDetails(contactDetails);
+    signUpDispatch(
+      setSignUpDetails({ contact_details: updatedContactDetails })
+    );
     tabHandler("prev");
   };
 
@@ -197,21 +197,19 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const onClickNext = () => {
     const isValid = validateFields();
     if (isValid) {
-      const updatedContactDetails = contactDetails.map((detail) => ({
-        module: detail.module,
-        name: detail.name,
-        email: detail.emailId,
-        salutation: detail.salutation,
-        mobile_number: detail.mobileNo,
-        designation: detail.designation,
-        mobile_country_code: detail.countryCode,
-      }));
-
       const newContactDetails = {
-        contact_details: updatedContactDetails,
+        contact_details: constructUpdatedContactDetails(contactDetails),
       };
 
-      handleSignUpValidation(newContactDetails, () => {
+      const payloadData = {
+        contact_details: newContactDetails.contact_details.map((item) => {
+          return {
+            ...item,
+            mobile_country_code: item.mobile_country_code?.split(" ")?.[0],
+          };
+        }),
+      };
+      handleSignUpValidation(payloadData, () => {
         signUpDispatch(setSignUpDetails(newContactDetails));
         tabHandler("next");
       });
