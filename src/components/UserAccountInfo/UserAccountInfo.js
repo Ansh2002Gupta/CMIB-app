@@ -130,9 +130,14 @@ const UserAccountInfo = ({
           ) : (
             <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
               <ViewProfileDetails
-                onPressCross={() =>
-                  userProfileDispatch(setShowViewProfileDetails(false))
-                }
+                onPressCross={() => {
+                  if (currentRoute === navigations.VIEW_PROFILE) {
+                    navigate(
+                      `${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`
+                    );
+                  }
+                  userProfileDispatch(setShowViewProfileDetails(false));
+                }}
                 onPressEditIcon={() => {
                   setIsUpdatePorfilePic(true);
                 }}
