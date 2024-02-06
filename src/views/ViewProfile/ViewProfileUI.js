@@ -17,17 +17,28 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import images from "../../images";
 import style from "./ViewProfile.style";
 
-const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
+const ViewProfileUI = ({
+  handleEditPopup,
+  intl,
+  onGoBack,
+  showEditModal,
+  userProfileDetails,
+}) => {
   const [photoEditFlag, setPhotoEditFlag] = useState(false);
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState(
+    userProfileDetails?.profile_photo
+  );
   const [errorMessage, setErrorMessage] = useState("");
-  //TODO: Dummy data to be replaced by api data.
-  const firstName = "Kashish";
-  const lastName = "Bhatheja";
+
+  const name = userProfileDetails?.name;
+  const email = userProfileDetails?.email;
+  const mobileNumber = userProfileDetails?.mobile_number;
+  const designation = userProfileDetails?.designation;
+
   const details = [
-    { label: "Designation", value: "Senior Chartered Accountant" },
-    { label: "Mobile Number", value: "+91-1234 5678 21" },
-    { label: "Email ID", value: "pooja.dhar@j&k.co" },
+    { label: "label.designation", value: designation },
+    { label: "label.mobile_number", value: mobileNumber },
+    { label: "label.email_id", value: email },
   ];
   const buttonTitle = profileImage
     ? intl.formatMessage({ id: "label.change" })
@@ -49,10 +60,9 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
         showEditModal={showEditModal}
         iconType={iconType}
         customContainerStyle={
-          iconType === "modalIcon" ? style.editProfileContainer : ""
+          iconType === "modalIcon" ? style.editProfileContainer : {}
         }
-        firstName={firstName}
-        lastName={lastName}
+        name={name}
         profileImage={profileImage}
       />
     );
@@ -94,6 +104,15 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
             <Image source={images.iconEdit} style={style.editIcon} />
           </TouchableOpacity>
         </View>
+        {!!name && (
+          <CommonText
+            fontWeight="600"
+            customContainerStyle={style.customContainerStyle}
+            customTextStyle={style.customTextStyle}
+          >
+            {name}
+          </CommonText>
+        )}
         <CardComponent customStyle={style.cardStyle}>
           <DetailComponent details={details} />
         </CardComponent>
@@ -162,11 +181,16 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   );
 };
 
+ViewProfileUI.defaultProps = {
+  userProfileDetails: {},
+};
+
 ViewProfileUI.propTypes = {
   handleEditPopup: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   onGoBack: PropTypes.func.isRequired,
   showEditModal: PropTypes.bool.isRequired,
+  userProfileDetails: PropTypes.object,
 };
 
 export default ViewProfileUI;
