@@ -95,6 +95,18 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     });
   };
 
+  const constructUpdatedContactDetails = (contactDetails) => {
+    return contactDetails.map((detail) => ({
+      module: detail.module,
+      name: detail.name,
+      email: detail.emailId,
+      salutation: detail.salutation,
+      mobile_number: detail.mobileNo,
+      designation: detail.designation,
+      mobile_country_code: detail.countryCode,
+    }));
+  };
+
   const validateField = ({ name, index, enteredValue }) => {
     const value = enteredValue || contactDetails[index][name];
     let error = "";
@@ -170,20 +182,11 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const onGoBack = () => {
-    const updatedContactDetails = contactDetails.map((detail) => ({
-      module: detail.module,
-      name: detail.name,
-      email: detail.emailId,
-      salutation: detail.salutation,
-      mobile_number: detail.mobileNo,
-      designation: detail.designation,
-      mobile_country_code: detail.countryCode,
-    }));
-
-    const newContactDetails = {
-      contact_details: updatedContactDetails,
-    };
-    signUpDispatch(setSignUpDetails(newContactDetails));
+    const updatedContactDetails =
+      constructUpdatedContactDetails(contactDetails);
+    signUpDispatch(
+      setSignUpDetails({ contact_details: updatedContactDetails })
+    );
     tabHandler("prev");
   };
 
@@ -194,22 +197,12 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const onClickNext = () => {
     const isValid = validateFields();
     if (isValid) {
-      const updatedContactDetails = contactDetails.map((detail) => ({
-        module: detail.module,
-        name: detail.name,
-        email: detail.emailId,
-        salutation: detail.salutation,
-        mobile_number: detail.mobileNo,
-        designation: detail.designation,
-        mobile_country_code: detail.countryCode,
-      }));
-
       const newContactDetails = {
-        contact_details: updatedContactDetails,
+        contact_details: constructUpdatedContactDetails(contactDetails),
       };
 
       const payloadData = {
-        contact_details: updatedContactDetails.map((item) => {
+        contact_details: newContactDetails.contact_details.map((item) => {
           return {
             ...item,
             mobile_country_code: item.mobile_country_code?.split(" ")?.[0],
