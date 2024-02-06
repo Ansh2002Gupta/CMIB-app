@@ -20,3 +20,4 @@ export const CORE_STATE = `${CORE}/states`;
 export const CORE_USERS_PERMISSION = `${CORE}/users/permission`;
 export const MENU_PROFILE = `${CORE}/menu-profile/${USER_TYPE_COMPANY}`;
 export const COUNTRY_CODE = `${CORE}/countries`;
+export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/company/user`;
