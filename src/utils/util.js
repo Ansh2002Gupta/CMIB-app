@@ -1,5 +1,5 @@
 import { Platform } from "@unthinkable/react-core-components";
-import { NOT_APPLICABLE } from "../constants/constants";
+import { ANONYMOUS } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
   const queryParams = queryParamString.substring(1).split("&");
@@ -59,13 +59,13 @@ export const getSelectedSubModuleFromRoute = ({ pathName, selectedModule }) => {
 };
 
 export const getInitialsFromName = (name) => {
-  if(name){
-  let [firstName, lastName] = name.split(' ');
-   if(lastName?.length){
-    return `${firstName[0]}${lastName[0]}`.toUpperCase();
-   } else if(firstName?.length){
-    return `${firstName[0]}${firstName?.[1] || ""}`.toUpperCase();
-   }
+  if (name) {
+    let [firstName, lastName] = name.split(" ");
+    if (lastName?.length) {
+      return `${firstName[0]}${lastName[0]}`.toUpperCase();
+    } else if (firstName?.length) {
+      return `${firstName[0]}${firstName?.[1] || ""}`.toUpperCase();
+    }
   }
-  return NOT_APPLICABLE.toUpperCase();
-}
+  return ANONYMOUS.charAt(0).toUpperCase();
+};
