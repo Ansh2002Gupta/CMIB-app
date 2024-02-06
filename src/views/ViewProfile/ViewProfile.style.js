@@ -75,6 +75,14 @@ const style = {
     height: 152,
     borderRadius: 76,
   },
+  customContainerStyle: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 24,
+  },
+  customTextStyle: {
+    fontSize: 18,
+  },
 };
 
 export default style;

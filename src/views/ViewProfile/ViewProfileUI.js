@@ -17,17 +17,28 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import images from "../../images";
 import style from "./ViewProfile.style";
 
-const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
+const ViewProfileUI = ({
+  handleEditPopup,
+  intl,
+  onGoBack,
+  showEditModal,
+  userProfileDetails,
+}) => {
   const [photoEditFlag, setPhotoEditFlag] = useState(false);
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState(
+    userProfileDetails?.profile_photo
+  );
   const [errorMessage, setErrorMessage] = useState("");
-  //TODO: Dummy data to be replaced by api data.
-  const firstName = "Kashish";
-  const lastName = "Bhatheja";
+
+  const name = userProfileDetails?.name;
+  const email = userProfileDetails?.email;
+  const mobileNumber = userProfileDetails?.mobile_number;
+  const designation = userProfileDetails?.designation;
+
   const details = [
-    { label: "label.designation", value: "Senior Chartered Accountant" },
-    { label: "label.mobile_number", value: "+91-1234 5678 21" },
-    { label: "label.email_id", value: "pooja.dhar@j&k.co" },
+    { label: "label.designation", value: designation },
+    { label: "label.mobile_number", value: mobileNumber },
+    { label: "label.email_id", value: email },
   ];
   const buttonTitle = profileImage
     ? intl.formatMessage({ id: "label.change" })
@@ -53,8 +64,7 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
         customImageStyle={
           useCustomContainerStyle ? style.modalProfileImage : {}
         }
-        firstName={firstName}
-        lastName={lastName}
+        name={name}
         profileImage={profileImage}
         onPressEditIcon={() => {
           handleEditPopup(true);
@@ -88,7 +98,26 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
         onPressLeftIcon={onGoBack}
       />
       <View style={style.picParentContainer}>
-        <View style={style.picContainer}>{renderProfileIcon()}</View>
+        <View style={style.picContainer}>
+          {renderProfileIcon()}
+          <TouchableOpacity
+            style={style.iconEditStyle}
+            onPress={() => {
+              handleEditPopup(true);
+            }}
+          >
+            <Image source={images.iconEdit} style={style.editIcon} />
+          </TouchableOpacity>
+        </View>
+        {!!name && (
+          <CommonText
+            fontWeight="600"
+            customContainerStyle={style.customContainerStyle}
+            customTextStyle={style.customTextStyle}
+          >
+            {name}
+          </CommonText>
+        )}
         <CardComponent customStyle={style.cardStyle}>
           <DetailComponent details={details} />
         </CardComponent>
@@ -157,11 +186,16 @@ const ViewProfileUI = ({ handleEditPopup, intl, onGoBack, showEditModal }) => {
   );
 };
 
+ViewProfileUI.defaultProps = {
+  userProfileDetails: {},
+};
+
 ViewProfileUI.propTypes = {
   handleEditPopup: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   onGoBack: PropTypes.func.isRequired,
   showEditModal: PropTypes.bool.isRequired,
+  userProfileDetails: PropTypes.object,
 };
 
 export default ViewProfileUI;

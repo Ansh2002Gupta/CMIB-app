@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 
 import ViewProfileUI from "./ViewProfileUI";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { PREVIOUS_SCREEN } from "../../constants/constants";
 import { setShowViewProfileDetails } from "../../globalContext/userProfile/userProfileActions";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -11,7 +12,8 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 const ViewProfieComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [, userProfileDispatch] = useContext(UserProfileContext);
+  const [userProfileDetails, userProfileDispatch] =
+    useContext(UserProfileContext);
   const [showEditModal, setShowEditModal] = useState(false);
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
