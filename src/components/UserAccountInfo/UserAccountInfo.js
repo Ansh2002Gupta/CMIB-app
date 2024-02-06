@@ -13,6 +13,9 @@ import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
 import ViewProfileDetails from "../../containers/ViewProfile";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { useLocation, useNavigate } from "react-router";
+import { navigations } from "../../constants/routeNames";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
@@ -34,6 +37,11 @@ const UserAccountInfo = ({
   role,
 }) => {
   const intl = useIntl();
+  const navigate = useNavigate();
+  const { pathname: currentRoute } = useLocation();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
+
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
 
