@@ -232,18 +232,18 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const onSuccess = async (details) => {
     signUpDispatch(setSignUpDetails(details));
     const updatedDetails = { ...initialDetails, ...details };
-    const contactDetails = updatedDetails.contact_details;
+    const contactDetails = updatedDetails?.contact_details;
     const payloadContactDetails = {
-      contact_details: contactDetails.map((item) => {
+      contact_details: contactDetails?.map((item) => {
         return {
           ...item,
-          mobile_country_code: item.mobile_country_code?.split(" ")?.[0],
-        }
-      })
-    }
+          mobile_country_code: item?.mobile_country_code?.split(" ")?.[0],
+        };
+      }),
+    };
     const payloadData = {
       ...updatedDetails,
-      contact_details: payloadContactDetails.contact_details
+      contact_details: payloadContactDetails?.contact_details,
     };
     handleSignUp(payloadData, () => setShowSuccessSignUp(true));
   };
