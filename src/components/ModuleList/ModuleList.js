@@ -1,8 +1,12 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { FlatList, Platform, View } from "@unthinkable/react-core-components";
-import { MediaQueryContext } from "@unthinkable/react-theme";
+import {
+  FlatList,
+  Platform,
+  View,
+  useWindowDimensions,
+} from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
@@ -19,10 +23,11 @@ import styles from "./ModuleList.style";
 const ModuleList = ({ modules, onSelectItem, selectedModule }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const windowDimensions = useWindowDimensions();
 
-  const tabView = currentBreakpoint === "tab";
-  const mobileView = currentBreakpoint === "sm";
+  const tabView = windowDimensions.width >= 768 && windowDimensions.width < 900;
+  const mobileView =
+    windowDimensions.width >= 600 && windowDimensions.width < 768;
 
   const containerStyle = isWebView
     ? {
