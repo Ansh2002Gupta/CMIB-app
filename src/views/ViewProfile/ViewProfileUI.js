@@ -1,12 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View } from "@unthinkable/react-core-components";
-
+import {
+  Image,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 import CardComponent from "../../components/CardComponent/CardComponent";
+import CommonText from "../../components/CommonText";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import EditProfileImage from "../../containers/EditProfileImage";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import images from "../../images";
 import style from "./ViewProfile.style";
 
 const ViewProfileUI = ({
@@ -31,13 +36,7 @@ const ViewProfileUI = ({
   const renderProfileIcon = () => {
     return (
       <ProfileIcon
-        showEditIcon={!useCustomContainerStyle}
-        customContainerStyle={
-          useCustomContainerStyle ? style.editProfileContainer : {}
-        }
-        customImageStyle={
-          useCustomContainerStyle ? style.modalProfileImage : {}
-        }
+        showEditIcon
         name={name}
         profileImage={profileImage}
         onPressEditIcon={() => {
@@ -81,8 +80,7 @@ const ViewProfileUI = ({
         </CardComponent>
         {showEditModal && (
           <EditProfileImage
-            firstName={firstName}
-            lastName={lastName}
+            name={name}
             profileImage={profileImage}
             onPressIconCross={() => {
               handleEditPopup(false);

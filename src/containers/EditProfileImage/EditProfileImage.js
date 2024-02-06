@@ -16,12 +16,7 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import images from "../../images";
 import styles from "./EditProfileImage.style";
 
-const EditProfileImage = ({
-  firstName,
-  lastName,
-  onPressIconCross,
-  profileImage,
-}) => {
+const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   const intl = useIntl();
   const [profilePic, setProfilePic] = useState(profileImage);
   const [photoEditFlag, setPhotoEditFlag] = useState(false);
@@ -36,8 +31,7 @@ const EditProfileImage = ({
       <ProfileIcon
         customContainerStyle={styles.editProfileContainer}
         customImageStyle={styles.modalProfileImage}
-        firstName={firstName}
-        lastName={lastName}
+        name={name}
         profileImage={profilePic}
       />
     );
@@ -115,15 +109,13 @@ const EditProfileImage = ({
 };
 
 EditProfileImage.defaultProps = {
-  firstName: "",
-  lastName: "",
+  name: "",
   onPressIconCross: () => {},
   profileImage: "",
 };
 
 EditProfileImage.propTypes = {
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
+  name: PropTypes.string,
   onPressIconCross: PropTypes.func,
   profileImage: PropTypes.string,
 };
