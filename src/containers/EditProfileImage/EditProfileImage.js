@@ -80,7 +80,9 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
         </View>
         {!!profilePic &&
           (photoEditFlag ? (
-            <View style={[styles.saveButtonStyle, styles.secondButtonStyle]}>
+            <View
+              style={{ ...styles.saveButtonStyle, ...styles.secondButtonStyle }}
+            >
               <CustomImage source={images.iconTick} />
               <CommonText
                 customTextStyle={styles.saveTextStyle}
@@ -90,7 +92,9 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
               </CommonText>
             </View>
           ) : (
-            <View style={[styles.buttonStyle, styles.secondButtonStyle]}>
+            <View
+              style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
+            >
               <CustomImage source={images.iconDelete} />
               <CommonText customTextStyle={styles.textStyle} fontWeight="600">
                 {intl.formatMessage({ id: "label.remove" })}
