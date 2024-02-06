@@ -17,12 +17,19 @@ const style = {
     paddingTop: 24,
   },
   customContainerStyle: {
-    paddingBottom: Platform.OS === "android" ? 0 : 21,
+    paddingBottom: Platform.OS === "android" ? 0 : 22,
+    maxHeight: Platform.OS === "web" ? 44 : "auto",
+    justifyContent: "flex-end",
   },
   contentContainerStyle: {
     flexGrow: 1,
     paddingBottom: 24,
     justifyContent: "space-between",
+    paddingRight: 10,
+  },
+  fourthSectionStyle: { paddingBottom: 16 },
+  notMatchingError: {
+    paddingTop: 24,
   },
   buttonWebStyle: {
     width: "100%",
@@ -30,12 +37,14 @@ const style = {
   },
   webContentContainerStyle: {
     maxHeight: "60vh",
+    paddingRight: 10,
   },
+  buttonStyle: { maxHeight: 44, maxWidth: 80 },
   requirementsPoints: {
     marginBottom: 0,
   },
   subContainerStyle: {
-    maxWidth: "50%",
+    width: "50%",
   },
   webView: {
     requirementsPoints: (currentBreakpoint) => ({
@@ -43,6 +52,15 @@ const style = {
       gridTemplateColumns: currentBreakpoint === "sm" ? "1fr" : "1fr 1fr",
       gridRowGap: currentBreakpoint === "sm" ? 0 : 16,
     }),
+  },
+  erroInputStyleWeb: {
+    paddingBottom: 6,
+  },
+  erroInputStyle: {
+    paddingBottom: 0,
+  },
+  inputStyle: {
+    paddingBottom: 36,
   },
 };
 

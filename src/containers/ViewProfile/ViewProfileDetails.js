@@ -3,21 +3,26 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 
 import CommonText from "../../components/CommonText";
-import CustomImage from "../../components/CustomImage";
 import MultiRow from "../../core/layouts/MultiRow";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import TouchableImage from "../../components/TouchableImage";
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 import images from "../../images";
 import styles from "./ViewProfileDetails.style";
 
-const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
+const ViewProfileDetails = ({
+  onPressCross,
+  onPressEditIcon,
+  userProfileDetails,
+}) => {
   const intl = useIntl();
-  const firstName = "Kashish";
-  const lastName = "Bhatheja";
-  const profileImage = "https://picsum.photos/id/10/200/300";
-  const email = "kashish.bhatheja@gmail.com";
-  const phone = "+91-1234567890";
-  const designation = "Senior Chartered Accountant";
+
+  const name = userProfileDetails?.name;
+  const email = userProfileDetails?.email;
+  const phone = userProfileDetails?.mobile_number;
+  const designation = userProfileDetails?.designation;
+  const profileImage = userProfileDetails?.profile_photo;
+
   const section = [
     {
       content: (
@@ -25,17 +30,16 @@ const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
           style={styles.secondSectionStyle}
           topSectionStyle={styles.crossStyle}
           topSection={
-            <CustomImage
-              source={images.iconCloseDark}
+            <TouchableImage
               style={styles.crossIconStyle}
-              onClick={onPressCross}
+              source={images.iconCloseDark}
+              onPress={onPressCross}
             />
           }
           bottomSection={
             <ProfileIcon
               showEditIcon
-              firstName={firstName}
-              lastName={lastName}
+              name={name}
               profileImage={profileImage}
               imageContainerStyle={styles.imageContainerStyle}
               initialContainerStyle={styles.initialContainerStyle}
@@ -50,10 +54,9 @@ const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
         <ThreeRow
           style={styles.secondSectionStyle}
           topSection={
-            <CommonText
-              customTextStyle={styles.headingText}
-              fontWeight={"600"}
-            >{`${firstName} ${lastName}`}</CommonText>
+            <CommonText customTextStyle={styles.headingText} fontWeight={"600"}>
+              {name}
+            </CommonText>
           }
           middleSection={
             <CommonText customTextStyle={styles.subHeadingText}>
@@ -98,11 +101,13 @@ const ViewProfileDetails = ({ onPressCross, onPressEditIcon }) => {
 ViewProfileDetails.defaultProps = {
   onPressCross: () => {},
   onPressEditIcon: () => {},
+  userProfileDetails: {},
 };
 
 ViewProfileDetails.propTypes = {
   onPressCross: PropTypes.func,
   onPressEditIcon: PropTypes.func,
+  userProfileDetails: PropTypes.object,
 };
 
 export default ViewProfileDetails;

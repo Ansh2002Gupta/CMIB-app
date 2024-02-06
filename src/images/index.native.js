@@ -98,6 +98,7 @@ import iconCmibCALogo from "../../public/images/cmibCAIndiaLogo/cmibCAIndiaLogo.
 import iconRetry from "../../public/images/svg/iconRetry.svg";
 import iconEditSvg from "../../public/images/svg/editIcon.svg";
 import iconCloseDark from "../../public/images/svg/iconCloseDark.svg";
+import iconBackArrow from "../../public/images/svg/iconBackArrow.svg";
 
 const images = {
   iconArrowUp,
@@ -200,6 +201,7 @@ const images = {
   iconRetry,
   iconEditSvg,
   iconCloseDark,
+  iconBackArrow,
 };
 
 export default images;

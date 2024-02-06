@@ -1,4 +1,5 @@
 import { Platform } from "@unthinkable/react-core-components";
+import { ANONYMOUS } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
   const queryParams = queryParamString.substring(1).split("&");
@@ -41,4 +42,30 @@ export const scrollToRef = (ref) => {
       ref.current?.focus();
     }
   }
+};
+
+export const getSelectedSubModuleFromRoute = ({ pathName, selectedModule }) => {
+  const path = pathName.split("/");
+  let selectedSubModule = selectedModule?.children?.[0]?.key;
+  if (!!path?.length) {
+    let subModule = selectedModule?.children?.find(
+      (subModule) =>
+        subModule.key?.toLowerCase().split("/").slice(-1)[0] ===
+        path.slice(-1)[0]
+    );
+    selectedSubModule = subModule?.key;
+  }
+  return selectedSubModule;
+};
+
+export const getInitialsFromName = (name) => {
+  if (name) {
+    let [firstName, lastName] = name.split(" ");
+    if (lastName?.length) {
+      return `${firstName[0]}${lastName[0]}`.toUpperCase();
+    } else if (firstName?.length) {
+      return `${firstName[0]}${firstName?.[1] || ""}`.toUpperCase();
+    }
+  }
+  return ANONYMOUS.charAt(0).toUpperCase();
 };

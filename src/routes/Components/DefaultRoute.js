@@ -16,7 +16,7 @@ const DefaultRoute = () => {
         setNavigationPath(navigations.LOGIN);
         return;
       }
-      setNavigationPath(navigations.DASHBOARD);
+      setNavigationPath(navigations.REDIRECT);
     }
 
     checkAuthAndNavigate();

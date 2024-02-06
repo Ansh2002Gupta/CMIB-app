@@ -13,6 +13,7 @@ import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
+import TextArea from "../TextArea";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
@@ -75,7 +76,7 @@ const CustomTextInput = (props) => {
   };
 
   const handleBlur = () => {
-    customHandleBlur();
+    customHandleBlur && customHandleBlur();
     setIsFocused(false);
   };
 
@@ -92,7 +93,7 @@ const CustomTextInput = (props) => {
       : {};
 
   const inputStyle = {
-    ...style.inputContainer,
+    ...(isWebPlatform && isMultiline ? {} : style.inputContainer),
     ...(isFocused ? style.focusedStyle : {}),
     ...(isError ? style.invalidInput : {}),
   };
@@ -181,24 +182,36 @@ const CustomTextInput = (props) => {
             <CommonText customTextStyle={style.prefixStyle}>{"₹"}</CommonText>
           </View>
         )}
-        <TextInput
-          value={value}
-          style={[
-            style.textInputStyle,
-            isMultiline && style.textAlignStyle,
-            isWebView && style.webLabel,
-            customTextInputContainer,
-          ]}
-          multiline={isMultiline || undefined}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          placeholder={placeholder}
-          secureTextEntry={isPassword && !isTextVisible}
-          ref={fieldRef}
-          {...platformSpecificProps}
-          {...(isNumeric ? mobileProps : {})}
-          {...remainingProps}
-        />
+        {isMultiline ? (
+          <TextArea
+            {...{
+              onBlur: handleBlur,
+              onChangeText: remainingProps.onChangeText,
+              onFocus: handleFocus,
+              placeholder,
+              ref: fieldRef,
+              value,
+            }}
+          />
+        ) : (
+          <TextInput
+            value={value}
+            style={[
+              style.textInputStyle,
+              isMultiline && style.textAlignStyle,
+              isWebView && style.webLabel,
+              customTextInputContainer,
+            ]}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            placeholder={placeholder}
+            secureTextEntry={isPassword && !isTextVisible}
+            ref={fieldRef}
+            {...platformSpecificProps}
+            {...(isNumeric ? mobileProps : {})}
+            {...remainingProps}
+          />
+        )}
         {eyeImage && (
           <TouchableOpacity
             style={style.eyeIconContainer}

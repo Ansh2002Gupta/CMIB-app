@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { Keyboard, Platform, View } from "@unthinkable/react-core-components";
 
 import ChangePasswordModal from "../../containers/ChangePasswordModal";
 import CustomImage from "../CustomImage";
@@ -12,12 +12,17 @@ import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import SessionBar from "../SessionBar";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
 import ViewProfileDetails from "../../containers/ViewProfile";
+import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { useLocation, useNavigate } from "react-router";
+import { navigations } from "../../constants/routeNames";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import {
   setShowChangePasswordModal,
   setShowLogoutModal,
   setShowViewProfileDetails,
 } from "../../globalContext/userProfile/userProfileActions";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./UserAccountInfo.style";
 
 const UserAccountInfo = ({
@@ -31,11 +36,38 @@ const UserAccountInfo = ({
   role,
 }) => {
   const intl = useIntl();
+  const navigate = useNavigate();
+  const { pathname: currentRoute } = useLocation();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
+
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
+
   const { showChangePasswordModal, showLogoutModal, showViewProfileDetails } =
     userProfileDetails;
   const [isUpdateProfilePic, setIsUpdatePorfilePic] = useState();
+  const [modalStyle, setModalStyle] = useState({});
+  const isIosPlatform = Platform.OS.toLowerCase() === "ios";
+
+  const keyboardDidHideCallback = () => {
+    if (isIosPlatform) {
+      setModalStyle({ ...styles.modalInnerContainer });
+    }
+  };
+
+  const keyboardDidShowCallback = (e) => {
+    const keyboardHeight = e?.endCoordinates?.height;
+    if (isIosPlatform) {
+      setModalStyle(commonStyles.largeModalContainer(keyboardHeight));
+    }
+  };
+
+  useKeyboardShowHideListener({
+    keyboardDidHideCallback,
+    keyboardDidShowCallback,
+  });
+
   return (
     <>
       <View style={styles.notficationIconView}>
@@ -57,13 +89,20 @@ const UserAccountInfo = ({
           headerText={intl.formatMessage({
             id: "label.change_password",
           })}
-          customInnerContainerStyle={styles.innerContainerStyle}
+          customInnerContainerStyle={{
+            ...styles.modalInnerContainer,
+            ...modalStyle,
+          }}
           headerTextStyle={styles.headerTextStyle}
+          onBackdropPress={() => {
+            userProfileDispatch(setShowChangePasswordModal(false));
+          }}
         >
           <ChangePasswordModal
-            onPressCancel={() =>
-              userProfileDispatch(setShowChangePasswordModal(false))
-            }
+            onPressCancel={() => {
+              Keyboard.dismiss();
+              userProfileDispatch(setShowChangePasswordModal(false));
+            }}
           />
         </CustomModal>
       ) : null}
@@ -78,13 +117,19 @@ const UserAccountInfo = ({
             />
           ) : (
             <ViewProfileDetails
-              onPressCross={() =>
-                userProfileDispatch(setShowViewProfileDetails(false))
-              }
+              onPressCross={() => {
+                if (currentRoute === navigations.VIEW_PROFILE) {
+                  navigate(
+                    `${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`
+                  );
+                }
+                userProfileDispatch(setShowViewProfileDetails(false));
+              }}
               onPressEditIcon={() => {
                 setIsUpdatePorfilePic(true);
               }}
               isUpdateProfilePic={isUpdateProfilePic}
+              userProfileDetails={userProfileDetails?.userDetails}
             />
           )}
         </CustomModal>

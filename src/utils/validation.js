@@ -13,7 +13,7 @@ export const isStringContainsLowercase = (string) =>
   NEW_PASSWORD_VALIDATIONS.lowercase.test(string);
 export const isStringContainsSpecialChar = (string) =>
   NEW_PASSWORD_VALIDATIONS.specialChar.test(string);
-export const isStringLengthValid = (string) => string.length >= 8;
+export const isStringLengthValid = (string) => string.length >= 6;
 
 export const strongPasswordValidator = (password) => {
   return (
@@ -41,4 +41,44 @@ export const validateOtp = (username) => {
     return VALID_OTP;
   }
   return "";
+};
+
+export const onConfirmPasswordBlur = ({
+  confirmNewPassword,
+  newPassword,
+  setError,
+  errorMessage,
+}) => {
+  const doPasswordsMatch = newPassword === confirmNewPassword;
+  if (!!confirmNewPassword && !!newPassword && !doPasswordsMatch) {
+    setError(errorMessage);
+  } else {
+    setError("");
+  }
+};
+
+export const handleConfirmPasswordChange = ({
+  newPassword,
+  setConfirmNewPassword,
+  setError,
+  val,
+}) => {
+  const trimmedPassword = val.trim();
+  setConfirmNewPassword(trimmedPassword);
+  if (!!newPassword && !!val && newPassword === val) {
+    setError("");
+  }
+};
+
+export const handleNewPasswordChange = ({
+  confirmNewPassword,
+  setNewPassword,
+  setError,
+  val,
+}) => {
+  const trimmedPassword = val.trim();
+  setNewPassword(trimmedPassword);
+  if (!!confirmNewPassword && !!val && confirmNewPassword === val) {
+    setError("");
+  }
 };

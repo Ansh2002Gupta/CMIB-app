@@ -6,16 +6,16 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import images from "../../images";
+import { getInitialsFromName } from "../../utils/util";
 import styles from "./ProfileIcon.style";
 
 const ProfileIcon = ({
   customContainerStyle,
   customImageStyle,
   customTextStyle,
-  firstName,
-  lastName,
-  profileImage,
+  name,
   onPressEditIcon,
+  profileImage,
   showEditIcon,
 }) => {
   const renderEditIcon = () => (
@@ -47,7 +47,6 @@ const ProfileIcon = ({
       </View>
     );
   } else {
-    const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
     return (
       <View
         style={[
@@ -59,7 +58,7 @@ const ProfileIcon = ({
         <CommonText
           customTextStyle={{ ...styles.initialsText, ...customTextStyle }}
         >
-          {initials}
+          {getInitialsFromName(name)}
         </CommonText>
         {showEditIcon && renderEditIcon()}
       </View>
@@ -71,10 +70,9 @@ ProfileIcon.defaultProps = {
   customContainerStyle: {},
   customImageStyle: {},
   customTextStyle: {},
-  firstName: "",
-  lastName: "",
-  profileImage: "",
+  name: "",
   onPressEditIcon: () => {},
+  profileImage: "",
   showEditIcon: false,
 };
 
@@ -82,10 +80,9 @@ ProfileIcon.propTypes = {
   customContainerStyle: PropTypes.object,
   customImageStyle: PropTypes.object,
   customTextStyle: PropTypes.object,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  profileImage: PropTypes.string,
+  name: PropTypes.string,
   onPressEditIcon: PropTypes.func,
+  profileImage: PropTypes.string,
   showEditIcon: PropTypes.bool,
 };
 

@@ -1,5 +1,7 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-const styles = {
+
+const styles = StyleSheet.create({
   headingText: {
     color: colors.black,
     fontSize: 24,
@@ -50,5 +52,5 @@ const styles = {
     fontSize: 14,
     color: colors.black,
   },
-};
+});
 export default styles;
