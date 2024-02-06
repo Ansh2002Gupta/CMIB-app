@@ -51,7 +51,9 @@ const MobileNumberInput = ({
   };
 
   const menuOptions = options?.map((option) => ({
-    value: String(option[valueField]),
+    value: `${String(option[labelField])} (${String(
+      option[countryNameField]
+    )})`,
     label: getLabel(option),
     url: String(option[urlField]),
   }));
