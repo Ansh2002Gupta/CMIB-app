@@ -96,29 +96,6 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     return requiredFields.every((field) => String(field).trim() !== "");
   };
 
-  const constructFormDetailsObject = (formData, entity) => {
-    let formDetails = {
-      name: formData.companyName,
-      email: formData.emailId,
-      entity: formData.entity,
-      telephone_number: formData.telephoneNo,
-      address: formData.address,
-      std_country_code: formData.code,
-      industry_type_id: parseInt(formData.currentIndustry),
-      state_code: formData.state,
-    };
-
-    if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
-      formDetails = {
-        ...formDetails,
-        frn_number: formData.registrationNo,
-        number_of_partners: parseInt(formData.noOfPartners, 10),
-      };
-    }
-
-    return formDetails;
-  };
-
   const validateFields = ({ field, shouldSrollToError, value }) => {
     let isValid = true;
     let newErrors = {
@@ -266,7 +243,18 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const onGoBack = () => {
-    const formDetails = constructFormDetailsObject(formData, formData.entity);
+    let formDetails = {
+      name: formData.companyName,
+      email: formData.emailId,
+      entity: formData.entity,
+      telephone_number: formData.telephoneNo,
+      address: formData.address,
+      std_country_code: formData.code,
+      industry_type_id: parseInt(formData.currentIndustry),
+      state_code: formData.state,
+      frn_number: formData.registrationNo,
+      number_of_partners: parseInt(formData.noOfPartners, 10),
+    };
     signUpDispatch(setSignUpDetails(formDetails));
     tabHandler("prev");
   };
@@ -274,9 +262,40 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const onClickNext = (event) => {
     event?.preventDefault();
     if (validateFields({ shouldSrollToError: true })) {
-      const formDetails = constructFormDetailsObject(formData, formData.entity);
-      handleSignUpValidation(formDetails, () => {
-        signUpDispatch(setSignUpDetails(formDetails));
+      const {
+        companyName,
+        emailId,
+        entity,
+        registrationNo,
+        noOfPartners,
+        telephoneNo,
+        address,
+        code,
+        currentIndustry,
+        state,
+      } = formData;
+
+      let mandatoryDetails = {
+        name: companyName,
+        email: emailId,
+        entity: entity,
+        telephone_number: telephoneNo,
+        address: address,
+        std_country_code: code,
+        industry_type_id: parseInt(currentIndustry),
+        state_code: state,
+      };
+
+      if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+        mandatoryDetails = {
+          ...mandatoryDetails,
+          frn_number: registrationNo,
+          number_of_partners: parseInt(noOfPartners, 10),
+        };
+      }
+
+      handleSignUpValidation(mandatoryDetails, () => {
+        signUpDispatch(setSignUpDetails(mandatoryDetails));
         tabHandler("next");
       });
     }
