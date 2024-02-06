@@ -135,11 +135,13 @@ const ViewProfileDetails = ({
 ViewProfileDetails.defaultProps = {
   onPressCross: () => {},
   onPressEditIcon: () => {},
+  setShowDeleteAccountModal: () => {},
 };
 
 ViewProfileDetails.propTypes = {
   onPressCross: PropTypes.func,
   onPressEditIcon: PropTypes.func,
+  setShowDeleteAccountModal: PropTypes.func,
 };
 
 export default ViewProfileDetails;
