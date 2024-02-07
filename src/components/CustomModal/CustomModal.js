@@ -19,6 +19,7 @@ const CustomModal = ({
   buttonTitle,
   children,
   containerStyle,
+  customHeaderStyle,
   customInnerContainerStyle,
   headerText,
   headerTextStyle,
@@ -74,7 +75,7 @@ const CustomModal = ({
             </>
           ) : (
             <>
-              <View style={style.headerStyle}>
+              <View style={{ ...style.headerStyle, ...customHeaderStyle }}>
                 {!!headerText && (
                   <CommonText
                     customTextStyle={[style.headerText, headerTextStyle]}
@@ -100,6 +101,7 @@ CustomModal.defaultProps = {
   buttonTitle: "",
   children: <></>,
   containerStyle: {},
+  customHeaderStyle: {},
   customInnerContainerStyle: {},
   headerText: "",
   headerTextStyle: {},
@@ -116,6 +118,7 @@ CustomModal.propTypes = {
   buttonTitle: PropTypes.string,
   children: PropTypes.node,
   containerStyle: PropTypes.object,
+  customHeaderStyle: PropTypes.object,
   customInnerContainerStyle: PropTypes.object,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.object,

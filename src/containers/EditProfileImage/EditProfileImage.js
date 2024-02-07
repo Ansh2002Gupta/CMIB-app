@@ -72,13 +72,16 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   };
 
   const renderError = () => {
-    if (fileUploadError || errorWhileDeletion) {
-      return (
-        <CommonText customTextStyle={styles.errorTextStyle} fontWeight="600">
-          {fileUploadError || errorWhileDeletion}
-        </CommonText>
-      );
-    }
+    return (
+      <CommonText
+        customTextStyle={styles.errorTextStyle}
+        customContainerStyle={styles.errorContainerStyle}
+        fontWeight="600"
+      >
+        {fileUploadError || errorWhileDeletion}
+      </CommonText>
+    );
+
     return null;
   };
 
@@ -102,11 +105,18 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
 
   return (
     <CustomModal
-      headerText={intl.formatMessage({
-        id: "label.edit_profile_picture",
-      })}
+      headerText={
+        !!file && Platform.OS === "web"
+          ? intl.formatMessage({
+              id: "label.crop_profile_picture",
+            })
+          : intl.formatMessage({
+              id: "label.edit_profile_picture",
+            })
+      }
       isIconCross
       onPressIconCross={onPressIconCross}
+      customHeaderStyle={styles.customHeadingStyle}
     >
       {!!file && Platform.OS === "web" ? (
         <CropAndRotateImage
@@ -131,6 +141,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
             });
           }}
           setFile={setFile}
+          shouldOpenInModal={false}
         />
       ) : (
         <>

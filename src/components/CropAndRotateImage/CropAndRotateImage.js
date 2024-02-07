@@ -25,6 +25,7 @@ const CropAndRotateImage = ({
   photoURL,
   setFile,
   setOpenCropView,
+  shouldOpenInModal,
 }) => {
   const intl = useIntl();
 
@@ -89,48 +90,62 @@ const CropAndRotateImage = ({
     setIsErrorCroppingImage(false);
   };
 
+  const renderModalContent = () => {
+    return (
+      <View>
+        <View style={styles.cropperContainer}>
+          <Cropper
+            aspect={1}
+            crop={crop}
+            cropShape="round"
+            image={getImageSource(file)}
+            onCropChange={setCrop}
+            onCropComplete={(croppedArea, croppedAreaPixels) =>
+              setCroppedAreaPixels(croppedAreaPixels)
+            }
+            onRotationChange={setRotation}
+            onZoomChange={setZoom}
+            rotation={rotation}
+            zoom={zoom}
+          />
+        </View>
+        <ZoomSliderWithInfo {...{ setZoom, zoom, setRotation }} />
+        {!!errorWhileUpload && (
+          <CommonText
+            fontWeight="600"
+            customTextStyle={styles.customTextStyle}
+            customContainerStyle={styles.customContainerStyle}
+          >
+            {errorWhileUpload}
+          </CommonText>
+        )}
+        <View style={styles.actionBtnContainer}>
+          <CustomButton onPress={cancelCropHandler} style={styles.buttonStyle}>
+            {intl.formatMessage({ id: "label.cancel" })}
+          </CustomButton>
+          <CustomButton
+            isLoading={isCroppingImage || isLoading}
+            onPress={cropImage}
+            style={styles.buttonStyle}
+            withGreenBackground
+          >
+            <View>{intl.formatMessage({ id: "label.save" })}</View>
+          </CustomButton>
+        </View>
+      </View>
+    );
+  };
+
   return (
-    <Dialog onClose={cancelCropHandler} maxWidth="sm" {...{ heading }}>
-      <View style={styles.cropperContainer}>
-        <Cropper
-          aspect={1}
-          crop={crop}
-          cropShape="round"
-          image={getImageSource(file)}
-          onCropChange={setCrop}
-          onCropComplete={(croppedArea, croppedAreaPixels) =>
-            setCroppedAreaPixels(croppedAreaPixels)
-          }
-          onRotationChange={setRotation}
-          onZoomChange={setZoom}
-          rotation={rotation}
-          zoom={zoom}
-        />
-      </View>
-      <ZoomSliderWithInfo {...{ setZoom, zoom, setRotation }} />
-      {!!errorWhileUpload && (
-        <CommonText
-          fontWeight="600"
-          customTextStyle={styles.customTextStyle}
-          customContainerStyle={styles.customContainerStyle}
-        >
-          {errorWhileUpload}
-        </CommonText>
+    <>
+      {shouldOpenInModal ? (
+        <Dialog onClose={cancelCropHandler} maxWidth="sm" {...{ heading }}>
+          {renderModalContent()}
+        </Dialog>
+      ) : (
+        renderModalContent()
       )}
-      <View style={styles.actionBtnContainer}>
-        <CustomButton onPress={cancelCropHandler} style={styles.buttonStyle}>
-          {intl.formatMessage({ id: "label.cancel" })}
-        </CustomButton>
-        <CustomButton
-          isLoading={isCroppingImage || isLoading}
-          onPress={cropImage}
-          style={styles.buttonStyle}
-          withGreenBackground
-        >
-          <View>{intl.formatMessage({ id: "label.save" })}</View>
-        </CustomButton>
-      </View>
-    </Dialog>
+    </>
   );
 };
 
@@ -146,6 +161,7 @@ CropAndRotateImage.defaultProps = {
   photoURL: "",
   setFile: () => {},
   setOpenCropView: () => {},
+  shouldOpenInModal: true,
 };
 
 CropAndRotateImage.propTypes = {
@@ -161,6 +177,7 @@ CropAndRotateImage.propTypes = {
   setFile: PropTypes.func,
   setOpenCropView: PropTypes.func,
   setPhotoURL: PropTypes.func,
+  shouldOpenInModal: PropTypes.bool,
 };
 
 export default CropAndRotateImage;

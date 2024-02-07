@@ -15,14 +15,14 @@ const styles = {
     marginBottom: 32,
   },
   editButtonContainer: {
-    paddingTop: 24,
+    paddingTop: 4,
     flexDirection: "row",
     flex: 1,
     marginBottom: 16,
     ...Platform.select({
       web: {
         paddingBottom: 0,
-        paddingTop: 32,
+        paddingTop: 12,
       },
     }),
   },
@@ -53,6 +53,13 @@ const styles = {
   errorTextStyle: {
     fontSize: 14,
     color: colors.errorRed,
+  },
+  errorContainerStyle: {
+    minHeight: 20,
+    lineHeight: 20,
+  },
+  customHeadingStyle: {
+    paddingBottom: 16,
   },
 };
 export default styles;
