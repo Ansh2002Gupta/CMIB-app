@@ -7,9 +7,11 @@ import CommonText from "../../components/CommonText";
 import CropAndRotateImage from "../../components/CropAndRotateImage/CropAndRotateImage";
 import CustomImage from "../../components/CustomImage";
 import CustomModal from "../../components/CustomModal";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import TriggerFileUpload from "../../components/TriggerFileUpload";
+import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useUpdateLogo from "../../services/apiServices/hooks/CompanyLogo/useUpdateLogoAPI";
 import useUploadedFileValidations from "../../hooks/useUploadedFileValidations";
@@ -18,6 +20,7 @@ import { setUserDetails } from "../../globalContext/userProfile/userProfileActio
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import images from "../../images";
 import styles from "./EditProfileImage.style";
+import CustomButton from "../../components/CustomButton";
 
 const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   const intl = useIntl();
@@ -33,6 +36,12 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
     isLoading: isUploadingImageToServer,
     setErrorWhileUpload,
   } = useSaveLogo();
+
+  const {
+    errorWhileDeletion,
+    handleDeleteLogo,
+    isLoading: isDeletingFromServer,
+  } = useDeleteLogo();
 
   const {
     fileTooLargeError,
@@ -64,11 +73,11 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
     );
   };
 
-  const renderFileUploadError = () => {
-    if (fileUploadError) {
+  const renderError = () => {
+    if (fileUploadError || errorWhileDeletion) {
       return (
         <CommonText customTextStyle={styles.errorTextStyle} fontWeight="600">
-          {fileUploadError}
+          {fileUploadError || errorWhileDeletion}
         </CommonText>
       );
     }
@@ -114,7 +123,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
       ) : (
         <>
           {renderProfileIcon()}
-          {renderFileUploadError()}
+          {renderError()}
           <View style={styles.editButtonContainer}>
             <TriggerFileUpload
               buttonTitle={buttonTitle}
@@ -137,14 +146,21 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
                 </CommonText>
               </View>
             ) : (
-              <View
+              <CustomButton
+                onPress={() => {
+                  const fileName =
+                    userProfileDetails?.userDetails?.profile_photo.split("/");
+                  handleDeleteLogo(fileName[fileName.length - 1]);
+                }}
+                isLoading={isDeletingFromServer}
                 style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
+                iconLeft={{
+                  leftIconAlt: "delete",
+                  leftIconSource: images.iconDelete,
+                }}
               >
-                <CustomImage source={images.iconDelete} />
-                <CommonText customTextStyle={styles.textStyle} fontWeight="600">
-                  {intl.formatMessage({ id: "label.remove" })}
-                </CommonText>
-              </View>
+                {intl.formatMessage({ id: "label.remove" })}
+              </CustomButton>
             )}
           </View>
         </>

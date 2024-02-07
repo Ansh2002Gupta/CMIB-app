@@ -17,15 +17,6 @@ const styles = {
     flexDirection: "row",
     flex: 1,
   },
-  buttonStyle: {
-    flexDirection: "row",
-    justifyContent: "center",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
-    padding: 14,
-    flex: 1,
-  },
   textStyle: {
     fontSize: 14,
     color: colors.black,
@@ -43,6 +34,7 @@ const styles = {
   },
   secondButtonStyle: {
     marginLeft: 16,
+    flex: 1,
   },
   saveTextStyle: {
     fontSize: 14,
