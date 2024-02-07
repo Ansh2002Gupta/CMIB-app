@@ -104,6 +104,14 @@ const style = {
   inActiveIconStyle: {
     padding: 4,
   },
+  customContainerStyle: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 24,
+  },
+  customTextStyle: {
+    fontSize: 18,
+  },
 };
 
 export default style;

@@ -19,7 +19,10 @@ import {
   REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
 import { scrollToRef } from "../../../utils/util";
-import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
+import {
+  deleteSignUpDetailKey,
+  setSignUpDetails,
+} from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { validateEmail } from "../../../utils/validation";
 
@@ -243,6 +246,38 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const onGoBack = () => {
+    const {
+      companyName,
+      emailId,
+      entity,
+      registrationNo,
+      noOfPartners,
+      telephoneNo,
+      address,
+      code,
+      currentIndustry,
+      state,
+    } = formData;
+
+    let mandatoryDetails = {
+      name: companyName,
+      email: emailId,
+      entity: entity,
+      telephone_number: telephoneNo,
+      address: address,
+      std_country_code: code,
+      industry_type_id: parseInt(currentIndustry),
+      state_code: state,
+    };
+
+    if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+      mandatoryDetails = {
+        ...mandatoryDetails,
+        frn_number: registrationNo,
+        number_of_partners: parseInt(noOfPartners, 10),
+      };
+    }
+    signUpDispatch(setSignUpDetails(mandatoryDetails));
     tabHandler("prev");
   };
 
@@ -296,6 +331,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         registrationNo: "",
         noOfPartners: "",
       }));
+      signUpDispatch(deleteSignUpDetailKey("frn_number"));
+      signUpDispatch(deleteSignUpDetailKey("number_of_partners"));
       setErrors((prevErrors) => ({
         ...prevErrors,
         registrationNo: "",

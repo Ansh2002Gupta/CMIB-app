@@ -17,16 +17,17 @@ import styles from "./ViewProfileDetails.style";
 const ViewProfileDetails = ({
   onPressCross,
   onPressEditIcon,
+  userProfileDetails,
   setShowDeleteAccountModal,
 }) => {
-  const [showDeletePopup, setShowDeletePopup] = useState(false);
   const intl = useIntl();
-  const firstName = "Kashish";
-  const lastName = "Bhatheja";
-  const profileImage = "https://picsum.photos/id/10/200/300";
-  const email = "kashish.bhatheja@gmail.com";
-  const phone = "+91-1234567890";
-  const designation = "Senior Chartered Accountant";
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+
+  const name = userProfileDetails?.name;
+  const email = userProfileDetails?.email;
+  const phone = userProfileDetails?.mobile_number;
+  const designation = userProfileDetails?.designation;
+  const profileImage = userProfileDetails?.profile_photo;
 
   const handleMore = () => {
     setShowDeletePopup((prev) => !prev);
@@ -70,8 +71,7 @@ const ViewProfileDetails = ({
           bottomSection={
             <ProfileIcon
               showEditIcon
-              firstName={firstName}
-              lastName={lastName}
+              name={name}
               profileImage={profileImage}
               imageContainerStyle={styles.imageContainerStyle}
               initialContainerStyle={styles.initialContainerStyle}
@@ -86,10 +86,9 @@ const ViewProfileDetails = ({
         <ThreeRow
           style={styles.secondSectionStyle}
           topSection={
-            <CommonText
-              customTextStyle={styles.headingText}
-              fontWeight={"600"}
-            >{`${firstName} ${lastName}`}</CommonText>
+            <CommonText customTextStyle={styles.headingText} fontWeight={"600"}>
+              {name}
+            </CommonText>
           }
           middleSection={
             <CommonText customTextStyle={styles.subHeadingText}>
@@ -136,12 +135,14 @@ ViewProfileDetails.defaultProps = {
   onPressCross: () => {},
   onPressEditIcon: () => {},
   setShowDeleteAccountModal: () => {},
+  userProfileDetails: {},
 };
 
 ViewProfileDetails.propTypes = {
   onPressCross: PropTypes.func,
   onPressEditIcon: PropTypes.func,
   setShowDeleteAccountModal: PropTypes.func,
+  userProfileDetails: PropTypes.object,
 };
 
 export default ViewProfileDetails;

@@ -10,6 +10,13 @@ const localeReducer = (state, action) => {
         ...state,
         signUpDetail: { ...state.signUpDetail, ...action.payload },
       };
+    case types.DELETE_SIGN_UP_DETAIL_KEY:
+      const newSignUpDetail = { ...state.signUpDetail };
+      delete newSignUpDetail[action.payload];
+      return {
+        ...state,
+        signUpDetail: newSignUpDetail,
+      };
     case types.RESET_SIGN_UP_DETAIL:
       return initialState;
     default:
