@@ -8,8 +8,10 @@ import ConfirmationModal from "../../containers/ConfirmationModal/ConfirmationMo
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import EditProfileImage from "../../containers/EditProfileImage";
 import SessionBar from "../SessionBar";
 import useDeleteUserAPI from "../../services/apiServices/hooks/UserProfile/useDeleteUserAPI";
+import useIsWebView from "../../hooks/useIsWebView";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
 import ViewProfileDetails from "../../containers/ViewProfile";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
@@ -27,22 +29,14 @@ import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./UserAccountInfo.style";
 
-const UserAccountInfo = ({
-  firstName,
-  isMdOrGreater,
-  isWebView,
-  lastName,
-  onPressRightIcon,
-  profileImage,
-  rightIcon,
-  role,
-}) => {
+const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
   const intl = useIntl();
   const navigate = useNavigate();
   const { pathname: currentRoute } = useLocation();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const { handleDeleteUser } = useDeleteUserAPI();
+  const { isWebView } = useIsWebView();
 
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
@@ -55,6 +49,12 @@ const UserAccountInfo = ({
   const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
   const [modalStyle, setModalStyle] = useState({});
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
+
+  const userInfo = userProfileDetails?.userDetails;
+
+  const profileImage = userInfo?.profile_photo || "";
+  const name = userInfo?.name || "";
+  const role = userInfo?.user_type || "";
 
   const keyboardDidHideCallback = () => {
     if (isIosPlatform) {
@@ -82,12 +82,13 @@ const UserAccountInfo = ({
           <CustomImage source={rightIcon} style={styles.iconNotification} />
         </CustomTouchableOpacity>
         <UserProfileActionDropDown
-          firstName={firstName}
-          isMdOrGreater={isMdOrGreater}
-          isWebView={isWebView}
-          lastName={lastName}
-          profileImage={profileImage}
-          role={role}
+          {...{
+            name,
+            isMdOrGreater,
+            isWebView,
+            profileImage,
+            role,
+          }}
         />
       </View>
       {showChangePasswordModal ? (
@@ -139,6 +140,12 @@ const UserAccountInfo = ({
               }}
               subHeading={intl.formatMessage({ id: "label.delete_message" })}
             />
+          ) : isUpdateProfilePic ? (
+            <EditProfileImage
+              name={name}
+              profileImage={profileImage}
+              onPressIconCross={() => setIsUpdateProfilePic(false)}
+            />
           ) : (
             <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
               <ViewProfileDetails
@@ -154,6 +161,7 @@ const UserAccountInfo = ({
                   setIsUpdateProfilePic(true);
                 }}
                 isUpdateProfilePic={isUpdateProfilePic}
+                userProfileDetails={userProfileDetails?.userDetails}
                 setShowDeleteAccountModal={setShowDeleteAccountModal}
               />
             </CustomModal>
@@ -184,22 +192,10 @@ const UserAccountInfo = ({
   );
 };
 
-UserAccountInfo.defaultProps = {
-  isWebView: false,
-  lastName: "",
-  profileImage: "",
-  role: "",
-};
-
 UserAccountInfo.propTypes = {
-  firstName: PropTypes.string.isRequired,
   isMdOrGreater: PropTypes.bool.isRequired,
-  isWebView: PropTypes.bool,
-  lastName: PropTypes.string,
   onPressRightIcon: PropTypes.func.isRequired,
-  profileImage: PropTypes.string,
   rightIcon: PropTypes.string.isRequired,
-  role: PropTypes.string,
 };
 
 export default UserAccountInfo;

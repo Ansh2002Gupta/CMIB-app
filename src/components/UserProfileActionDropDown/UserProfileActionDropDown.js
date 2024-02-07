@@ -12,10 +12,9 @@ import images from "../../images";
 import styles from "./UserProfileActionDropDown.style";
 
 const UserProfileActionDropDown = ({
-  firstName,
   isMdOrGreater,
   isWebView,
-  lastName,
+  name,
   profileImage,
   role,
 }) => {
@@ -36,10 +35,7 @@ const UserProfileActionDropDown = ({
             style={styles.profileView}
             onPress={handleAccountSection}
           >
-            <CustomAvatar
-              image={profileImage}
-              text={`${firstName} ${lastName}`}
-            />
+            <CustomAvatar image={profileImage} text={name} />
             {isMdOrGreater && (
               <View style={styles.profileNameSection}>
                 <View>
@@ -47,7 +43,7 @@ const UserProfileActionDropDown = ({
                     customTextStyle={styles.fullNameStyle}
                     fontWeight={"600"}
                   >
-                    {`${firstName} ${lastName}`}
+                    {name}
                   </CommonText>
                   <CommonText customTextStyle={styles.roleStyle}>
                     {role}
@@ -80,20 +76,15 @@ const UserProfileActionDropDown = ({
 };
 
 UserProfileActionDropDown.defaultProps = {
-  firstName: "",
-  isMdOrGreater: false,
-  isWebView: false,
-  lastName: "",
+  name: "",
   profileImage: "",
-  role: "",
 };
 
 UserProfileActionDropDown.propTypes = {
-  firstName: PropTypes.string.isRequired,
   isMdOrGreater: PropTypes.bool.isRequired,
   isWebView: PropTypes.bool.isRequired,
-  lastName: PropTypes.string.isRequired,
-  profileImage: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  profileImage: PropTypes.string,
   role: PropTypes.string.isRequired,
 };
 
