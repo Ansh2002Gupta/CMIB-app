@@ -6,7 +6,12 @@ import ImagePicker from "../ImagePickerComponent/ImagePickerComponent";
 import images from "../../images";
 import styles from "./TriggerFileUpload.style";
 
-const TriggerFileUpload = ({ buttonTitle, setFile }) => {
+const TriggerFileUpload = ({
+  buttonTitle,
+  setFile,
+  onImageUpload,
+  isLoading,
+}) => {
   const openImagePicker = async () => {
     try {
       const image = await ImagePicker.openPicker({
@@ -15,6 +20,14 @@ const TriggerFileUpload = ({ buttonTitle, setFile }) => {
       });
       if (image) {
         setFile(image?.sourceURL || image?.path);
+        const formData = new FormData();
+        const file = {
+          uri: image?.sourceURL || image?.path,
+          name: image?.filename,
+          type: image.mime,
+        };
+        formData.append("file", file);
+        onImageUpload(formData);
       }
     } catch (error) {
       console.log(error);
@@ -28,6 +41,7 @@ const TriggerFileUpload = ({ buttonTitle, setFile }) => {
         isLeftIconNotSvg: true,
         leftIconSource: images.iconChange,
       }}
+      isLoading={isLoading}
     >
       {buttonTitle}
     </CustomButton>

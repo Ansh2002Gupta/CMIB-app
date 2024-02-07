@@ -13,9 +13,16 @@ const styles = {
     marginBottom: 32,
   },
   editButtonContainer: {
-    paddingTop: 32,
+    paddingTop: 24,
     flexDirection: "row",
     flex: 1,
+    marginBottom: 16,
+    ...Platform.select({
+      web: {
+        paddingBottom: 0,
+        paddingTop: 32,
+      },
+    }),
   },
   textStyle: {
     fontSize: 14,

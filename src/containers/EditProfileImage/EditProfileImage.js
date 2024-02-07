@@ -5,7 +5,6 @@ import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import CropAndRotateImage from "../../components/CropAndRotateImage/CropAndRotateImage";
-import CustomImage from "../../components/CustomImage";
 import CustomModal from "../../components/CustomModal";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
@@ -87,6 +86,22 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
     setErrorMessage("");
   };
 
+  const onImageUpload = (uploadedFile) => {
+    handleFileUpload({
+      file: uploadedFile,
+      successCallback: (file) => {
+        handleFileUpdate({
+          file: { profile_photo: file?.data?.file_name },
+          successCallback: () => {
+            userProfileDetails.userDetails.profile_photo = file?.data?.url;
+            userProfileDispatch(setUserDetails(userProfileDetails));
+            onPressIconCross();
+          },
+        });
+      },
+    });
+  };
+
   return (
     <CustomModal
       headerText={intl.formatMessage({
@@ -95,7 +110,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
       isIconCross
       onPressIconCross={onPressIconCross}
     >
-      {!!file ? (
+      {!!file && Platform.OS === "web" ? (
         <CropAndRotateImage
           isLoading={isUploadingImageToServer || isLoading}
           file={file}
@@ -128,43 +143,29 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
               buttonTitle={buttonTitle}
               initiateFileUpload={initiateFileUpload}
               setFile={setFile}
+              onImageUpload={onImageUpload}
+              isLoading={isUploadingImageToServer || isLoading}
             />
-            {!!file ? (
-              <View
-                style={{
-                  ...styles.saveButtonStyle,
-                  ...styles.secondButtonStyle,
-                }}
-              >
-                <CustomImage source={images.iconTick} />
-                <CommonText
-                  customTextStyle={styles.saveTextStyle}
-                  fontWeight="600"
-                >
-                  {intl.formatMessage({ id: "label.save" })}
-                </CommonText>
-              </View>
-            ) : (
-              <CustomButton
-                onPress={() => {
-                  const fileName =
-                    userProfileDetails?.userDetails?.profile_photo.split("/");
-                  handleDeleteLogo(fileName[fileName.length - 1], () => {
-                    userProfileDetails.userDetails.profile_photo = "";
-                    userProfileDispatch(setUserDetails(userProfileDetails));
-                    onPressIconCross();
-                  });
-                }}
-                isLoading={isDeletingFromServer}
-                style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
-                iconLeft={{
-                  leftIconAlt: "delete",
-                  leftIconSource: images.iconDelete,
-                }}
-              >
-                {intl.formatMessage({ id: "label.remove" })}
-              </CustomButton>
-            )}
+            <CustomButton
+              onPress={() => {
+                const fileName =
+                  userProfileDetails?.userDetails?.profile_photo.split("/");
+                handleDeleteLogo(fileName[fileName.length - 1], () => {
+                  userProfileDetails.userDetails.profile_photo = "";
+                  userProfileDispatch(setUserDetails(userProfileDetails));
+                  onPressIconCross();
+                });
+              }}
+              isLoading={isDeletingFromServer}
+              style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
+              iconLeft={{
+                leftIconAlt: "delete",
+                leftIconSource: images.iconDelete,
+                isLeftIconNotSvg: true,
+              }}
+            >
+              {intl.formatMessage({ id: "label.remove" })}
+            </CustomButton>
           </View>
         </>
       )}
