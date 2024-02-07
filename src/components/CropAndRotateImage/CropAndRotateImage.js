@@ -123,8 +123,8 @@ const CropAndRotateImage = ({
         </CustomButton>
         <CustomButton
           isLoading={isCroppingImage || isLoading}
-          style={styles.buttonStyle}
           onPress={cropImage}
+          style={styles.buttonStyle}
           withGreenBackground
         >
           <View>{intl.formatMessage({ id: "label.save" })}</View>

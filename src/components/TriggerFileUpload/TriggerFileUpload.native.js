@@ -33,6 +33,7 @@ const TriggerFileUpload = ({
       console.log(error);
     }
   };
+
   return (
     <CustomButton
       style={styles.buttonStyle}

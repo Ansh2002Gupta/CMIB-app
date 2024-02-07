@@ -82,9 +82,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
     return null;
   };
 
-  const handleDismissToast = () => {
-    setErrorMessage("");
-  };
+  const handleDismissToast = () => setErrorMessage("");
 
   const onImageUpload = (uploadedFile) => {
     handleFileUpload({
