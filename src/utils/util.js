@@ -26,10 +26,8 @@ export const getRenderText = (items, keys) => {
 };
 
 export const removeFullStopsBetweenStrings = (string) => {
-  const formattedMessages = string
-    .map((message) => message.replace(/\.+$/, ""))
-    .join(", ");
-  return formattedMessages + ".";
+  const formattedMessages = string.join("\n");
+  return formattedMessages;
 };
 
 export const scrollToRef = (ref) => {
