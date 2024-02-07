@@ -34,7 +34,12 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
     setErrorWhileUpload,
   } = useSaveLogo();
 
-  const { initiateFileUpload } = useUploadedFileValidations();
+  const {
+    fileTooLargeError,
+    invalidFormatError,
+    initiateFileUpload,
+    nonUploadableImageError,
+  } = useUploadedFileValidations();
 
   const { errorWhileUpdate, handleFileUpdate, isLoading, setErrorWhileUpdate } =
     useUpdateLogo();
@@ -43,6 +48,9 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
     ? intl.formatMessage({ id: "label.change" })
     : intl.formatMessage({ id: "label.add" });
 
+  const fileUploadError =
+    fileTooLargeError || invalidFormatError || nonUploadableImageError;
+
   const renderProfileIcon = () => {
     return (
       <ProfileIcon
@@ -50,12 +58,21 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
         customImageStyle={styles.modalProfileImage}
         name={name}
         profileImage={
-          Platform.OS === "web"
-            ? getImageSource(!!file ? file : profileImage)
-            : file || profileImage
+          Platform.OS === "web" ? getImageSource(profileImage) : profileImage
         }
       />
     );
+  };
+
+  const renderFileUploadError = () => {
+    if (fileUploadError) {
+      return (
+        <CommonText customTextStyle={styles.errorTextStyle} fontWeight="600">
+          {fileUploadError}
+        </CommonText>
+      );
+    }
+    return null;
   };
 
   const handleDismissToast = () => {
@@ -97,42 +114,38 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
       ) : (
         <>
           {renderProfileIcon()}
-          {/* <CommonText>{errorWhileUplaod}</CommonText> */}
+          {renderFileUploadError()}
           <View style={styles.editButtonContainer}>
             <TriggerFileUpload
               buttonTitle={buttonTitle}
+              initiateFileUpload={initiateFileUpload}
               setFile={setFile}
-              openCropViewAfterImageSelection
             />
-            {!!(file || profileImage) &&
-              (!!file ? (
-                <View
-                  style={{
-                    ...styles.saveButtonStyle,
-                    ...styles.secondButtonStyle,
-                  }}
+            {!!file ? (
+              <View
+                style={{
+                  ...styles.saveButtonStyle,
+                  ...styles.secondButtonStyle,
+                }}
+              >
+                <CustomImage source={images.iconTick} />
+                <CommonText
+                  customTextStyle={styles.saveTextStyle}
+                  fontWeight="600"
                 >
-                  <CustomImage source={images.iconTick} />
-                  <CommonText
-                    customTextStyle={styles.saveTextStyle}
-                    fontWeight="600"
-                  >
-                    {intl.formatMessage({ id: "label.save" })}
-                  </CommonText>
-                </View>
-              ) : (
-                <View
-                  style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
-                >
-                  <CustomImage source={images.iconDelete} />
-                  <CommonText
-                    customTextStyle={styles.textStyle}
-                    fontWeight="600"
-                  >
-                    {intl.formatMessage({ id: "label.remove" })}
-                  </CommonText>
-                </View>
-              ))}
+                  {intl.formatMessage({ id: "label.save" })}
+                </CommonText>
+              </View>
+            ) : (
+              <View
+                style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
+              >
+                <CustomImage source={images.iconDelete} />
+                <CommonText customTextStyle={styles.textStyle} fontWeight="600">
+                  {intl.formatMessage({ id: "label.remove" })}
+                </CommonText>
+              </View>
+            )}
           </View>
         </>
       )}

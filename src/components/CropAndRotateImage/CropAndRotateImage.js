@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
+import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
 import Dialog from "../Dialog";
 import ZoomSliderWithInfo from "../ZoomSliderWithInfo";
@@ -14,9 +15,13 @@ import styles from "./CropAndRotateImage.style";
 
 const CropAndRotateImage = ({
   file,
+  errorWhileUpload,
   handleFileUpload,
   heading,
+  isLoading,
   initiateFileUpload,
+  onClose,
+  onSuccess,
   photoURL,
   setFile,
   setOpenCropView,
@@ -102,7 +107,16 @@ const CropAndRotateImage = ({
           zoom={zoom}
         />
       </View>
-      <ZoomSliderWithInfo {...{ setZoom, zoom }} />
+      <ZoomSliderWithInfo {...{ setZoom, zoom, setRotation }} />
+      {!!errorWhileUpload && (
+        <CommonText
+          fontWeight="600"
+          customTextStyle={styles.customTextStyle}
+          customContainerStyle={styles.customContainerStyle}
+        >
+          {errorWhileUpload}
+        </CommonText>
+      )}
       <View style={styles.actionBtnContainer}>
         <CustomButton onPress={cancelCropHandler} style={styles.buttonStyle}>
           {intl.formatMessage({ id: "label.cancel" })}
@@ -122,9 +136,13 @@ const CropAndRotateImage = ({
 
 CropAndRotateImage.defaultProps = {
   file: null,
+  errorWhileUpload: "",
   handleFileUpload: () => {},
   heading: "Edit Picture",
+  isLoading: false,
   initiateFileUpload: () => {},
+  onClose: () => {},
+  onSuccess: () => {},
   photoURL: "",
   setFile: () => {},
   setOpenCropView: () => {},
@@ -132,9 +150,13 @@ CropAndRotateImage.defaultProps = {
 
 CropAndRotateImage.propTypes = {
   file: PropTypes.object,
+  errorWhileUpload: PropTypes.string,
   handleFileUpload: PropTypes.func,
   heading: PropTypes.string,
+  isLoading: PropTypes.bool,
   initiateFileUpload: PropTypes.func,
+  onClose: PropTypes.func,
+  onSuccess: PropTypes.func,
   photoURL: PropTypes.string,
   setFile: PropTypes.func,
   setOpenCropView: PropTypes.func,

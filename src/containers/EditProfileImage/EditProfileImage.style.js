@@ -13,9 +13,9 @@ const styles = {
     marginBottom: 32,
   },
   editButtonContainer: {
+    paddingTop: 32,
     flexDirection: "row",
     flex: 1,
-    paddingBottom: 16,
   },
   buttonStyle: {
     flexDirection: "row",
@@ -48,6 +48,10 @@ const styles = {
     fontSize: 14,
     color: colors.white,
     marginLeft: 8,
+  },
+  errorTextStyle: {
+    fontSize: 14,
+    color: colors.errorRed,
   },
 };
 export default styles;
