@@ -81,8 +81,6 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
         {fileUploadError || errorWhileDeletion}
       </CommonText>
     );
-
-    return null;
   };
 
   const handleDismissToast = () => setErrorMessage("");
