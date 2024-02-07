@@ -148,10 +148,14 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
               onPress={() => {
                 const fileName =
                   userProfileDetails?.userDetails?.profile_photo.split("/");
-                handleDeleteLogo(fileName[fileName.length - 1], () => {
-                  userProfileDetails.userDetails.profile_photo = "";
-                  userProfileDispatch(setUserDetails(userProfileDetails));
-                  onPressIconCross();
+                handleFileUpdate({
+                  file: { profile_photo: "" },
+                  successCallback: () => {
+                    userProfileDetails.userDetails.profile_photo = "";
+                    userProfileDispatch(setUserDetails(userProfileDetails));
+                    handleDeleteLogo(fileName[fileName.length - 1]);
+                    onPressIconCross();
+                  },
                 });
               }}
               isLoading={isDeletingFromServer}
