@@ -296,6 +296,7 @@ const locale = {
   "label.view_ticket_details": "View Ticket Details",
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
+  "label.type_message": "Type Message...",
 };
 
 export default locale;

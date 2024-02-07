@@ -100,6 +100,8 @@ import iconEditSvg from "../../public/images/svg/editIcon.svg";
 import iconCloseDark from "../../public/images/svg/iconCloseDark.svg";
 import iconBackArrow from "../../public/images/svg/iconBackArrow.svg";
 import iconAlert from "../../public/images/svg/iconAlert.svg";
+import iconSendGreen from "../../public/images/svg/iconSend.svg";
+import iconAttachement from "../../public/images/svg/iconAttachement.svg";
 
 const images = {
   iconArrowUp,
@@ -204,6 +206,8 @@ const images = {
   iconCloseDark,
   iconBackArrow,
   iconAlert,
+  iconSendGreen,
+  iconAttachement,
 };
 
 export default images;

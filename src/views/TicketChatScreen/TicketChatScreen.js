@@ -1,20 +1,19 @@
 import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate, useLocation } from "../../routes";
-import { FlatList, View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import ChatSection from "../../components/ChatSection/ChatSection";
 import IconHeader from "../../components/IconHeader/IconHeader";
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
+import TicketDetails from "../TicketDetails";
 import useIsWebView from "../../hooks/useIsWebView";
 import { ticket_replies } from "./ticketsRepliesConstant";
 import { PREVIOUS_SCREEN } from "../../constants/constants";
-import styles from "./TicketChatScreen.style";
-import TicketDetails from "../TicketDetails";
 import images from "../../images";
-import PopupMessage from "../../components/PopupMessage/PopupMessage";
-import ChatSection from "../../components/ChatSection/ChatSection";
+import styles from "./TicketChatScreen.style";
 
 const TicketChatScreen = () => {
   const navigate = useNavigate();
