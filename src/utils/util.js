@@ -25,7 +25,7 @@ export const getRenderText = (items, keys) => {
   return keys.map((key) => items[key]).join(" ");
 };
 
-export const removeFullStopsBetweenStrings = (string) => {
+export const appendStringsInNextLine = (string) => {
   const formattedMessages = string.join("\n");
   return formattedMessages;
 };
