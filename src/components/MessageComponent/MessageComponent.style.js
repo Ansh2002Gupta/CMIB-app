@@ -6,24 +6,42 @@ const baseMessageContainer = {
   borderWidth: 1,
   borderBottomLeftRadius: 16,
   borderBottomRightRadius: 16,
-
-  maxWidth: 680,
   marginTop: 4,
 };
 
+const baseSenderStyle = {
+  backgroundColor: colors.backgroundSecondGrey,
+  borderColor: colors.lightGrey,
+  borderTopLeftRadius: 16,
+  borderTopRightRadius: 2,
+};
+
+const baseRecieverStyle = {
+  backgroundColor: colors.white,
+  borderColor: colors.lightGrey,
+  borderTopLeftRadius: 2,
+  borderTopRightRadius: 16,
+};
+
 const styles = StyleSheet.create({
+  smSenderMessageStyle: {
+    maxWidth: 311,
+    ...baseSenderStyle,
+    ...baseMessageContainer,
+  },
   senderMessageStyle: {
-    backgroundColor: colors.backgroundSecondGrey,
-    borderColor: colors.lightGrey,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 2,
+    maxWidth: 680,
+    ...baseSenderStyle,
     ...baseMessageContainer,
   },
   recieverMessageStyle: {
-    backgroundColor: colors.white,
-    borderColor: colors.lightGrey,
-    borderTopLeftRadius: 2,
-    borderTopRightRadius: 16,
+    maxWidth: 680,
+    ...baseRecieverStyle,
+    ...baseMessageContainer,
+  },
+  smRecieverMessageStyle: {
+    maxWidth: 311,
+    ...baseRecieverStyle,
     ...baseMessageContainer,
   },
   senderContainer: {

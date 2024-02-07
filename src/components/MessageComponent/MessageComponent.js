@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "@unthinkable/react-core-components";
+import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
@@ -7,6 +8,8 @@ import images from "../../images";
 import styles from "./MessageComponent.style";
 
 const MessageComponent = ({ data }) => {
+  const windowDimensions = useWindowDimensions();
+  const width1400orLess = windowDimensions.width <= 1400;
   return (
     <>
       {!!data?.senderMessage && (
@@ -14,7 +17,11 @@ const MessageComponent = ({ data }) => {
           <View style={styles.senderMessageArea}>
             <CommonText>10:38 AM</CommonText>
             <CommonText
-              customContainerStyle={styles.senderMessageStyle}
+              customContainerStyle={
+                width1400orLess
+                  ? styles.smSenderMessageStyle
+                  : styles.senderMessageStyle
+              }
               customTextStyle={styles.textSize}
             >
               {data?.senderMessage}
@@ -29,7 +36,11 @@ const MessageComponent = ({ data }) => {
           <View style={styles.reciverMessageArea}>
             <CommonText>10:38 AM</CommonText>
             <CommonText
-              customContainerStyle={styles.recieverMessageStyle}
+              customContainerStyle={
+                width1400orLess
+                  ? styles.smRecieverMessageStyle
+                  : styles.recieverMessageStyle
+              }
               customTextStyle={styles.textSize}
             >
               {data?.recieverMessage}

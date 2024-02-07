@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "../../routes";
 import { FlatList, View } from "@unthinkable/react-core-components";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -16,6 +17,8 @@ import styles from "./TicketDetails.style";
 const TicketDetails = () => {
   const navigate = useNavigate();
   const { isWebView } = useIsWebView();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const midOrSmall = currentBreakpoint === "md" || currentBreakpoint === "sm";
 
   const onGoBack = () => {
     navigate(PREVIOUS_SCREEN);
@@ -34,42 +37,50 @@ const TicketDetails = () => {
       }
       isBottomFillSpace
       bottomSection={
-        <TwoColumn
-          leftSectionStyle={
-            isWebView ? styles.chatScreenSectionWeb : styles.chatScreenSection
-          }
-          rightSectionStyle={styles.ticketDetailsStyles}
-          leftSection={
-            <TwoRow
-              topSection={
-                <FlatList
-                  data={ticket_replies}
-                  style={{ flex: 1 }}
-                  inverted={true}
-                  renderItem={({ item }) => {
-                    return <MessageComponent data={item} />;
-                  }}
-                />
-              }
-              isTopFillSpace
-              topSectionStyle={styles.messageSection}
-              bottomSectionStyle={styles.inputSection}
-              bottomSection={
-                <CustomTextInput customStyle={{ paddingBottom: 24 }} />
-              }
-            />
-          }
-          rightSection={
-            isWebView && (
-              <View style={styles.ticketDetails}>
-                <CommonText>Ticket Details</CommonText>
-              </View>
-            )
-          }
-        />
+        isWebView ? (
+          <TwoColumn
+            leftSectionStyle={
+              isWebView
+                ? styles.chatScreenSectionWeb(midOrSmall)
+                : styles.chatScreenSection
+            }
+            rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
+            leftSection={<ChatSection data={ticket_replies} />}
+            rightSection={
+              isWebView && (
+                <View style={styles.ticketDetails}>
+                  <CommonText>Ticket Details</CommonText>
+                </View>
+              )
+            }
+          />
+        ) : (
+          <ChatSection data={ticket_replies} />
+        )
       }
     />
   );
 };
 
 export default TicketDetails;
+
+const ChatSection = ({ data }) => {
+  return (
+    <TwoRow
+      topSection={
+        <FlatList
+          data={data}
+          style={{ flex: 1 }}
+          inverted={true}
+          renderItem={({ item }) => {
+            return <MessageComponent data={item} />;
+          }}
+        />
+      }
+      isTopFillSpace
+      topSectionStyle={styles.messageSection}
+      bottomSectionStyle={styles.inputSection}
+      bottomSection={<CustomTextInput customStyle={{ paddingBottom: 24 }} />}
+    />
+  );
+};

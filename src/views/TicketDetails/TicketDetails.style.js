@@ -11,32 +11,27 @@ const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: colors.backgroundGrey,
   },
-  chatScreenSectionWeb: {
+  chatScreenSectionWeb: (midOrSmall) => ({
     position: "relative",
     paddingTop: 64,
-    paddingLeft: 80,
-    paddingRight: 80,
-    width: "80%",
-  },
+    paddingLeft: midOrSmall ? 20 : 80,
+    paddingRight: midOrSmall ? 20 : 80,
+    width: midOrSmall ? "70%" : "80%",
+  }),
   chatScreenSection: {
     position: "relative",
-    // paddingTop: 64,
-    // paddingLeft: 80,
-    // paddingRight: 80,
     width: "100%",
   },
-  ticketDetailsStyles: {
-    width: "20%",
-  },
+  ticketDetailsStyles: (midOrSmall) => ({
+    width: midOrSmall ? "30%" : "20%",
+  }),
   messageSection: {
     maxheight: 722,
     height: HEIGHT * 0.5,
     overflowY: "scroll",
-    // justifyContent: "flex-end",
   },
   inputSection: {
     paddingTop: 24,
-    // backgroundColor: "green",
   },
   ticketDetails: {
     flex: 1,
