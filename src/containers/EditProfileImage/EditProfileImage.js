@@ -7,7 +7,6 @@ import CommonText from "../../components/CommonText";
 import CropAndRotateImage from "../../components/CropAndRotateImage/CropAndRotateImage";
 import CustomImage from "../../components/CustomImage";
 import CustomModal from "../../components/CustomModal";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import TriggerFileUpload from "../../components/TriggerFileUpload";
@@ -150,7 +149,11 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
                 onPress={() => {
                   const fileName =
                     userProfileDetails?.userDetails?.profile_photo.split("/");
-                  handleDeleteLogo(fileName[fileName.length - 1]);
+                  handleDeleteLogo(fileName[fileName.length - 1], () => {
+                    userProfileDetails.userDetails.profile_photo = "";
+                    userProfileDispatch(setUserDetails(userProfileDetails));
+                    onPressIconCross();
+                  });
                 }}
                 isLoading={isDeletingFromServer}
                 style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
