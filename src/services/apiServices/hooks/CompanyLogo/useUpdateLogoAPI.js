@@ -3,7 +3,7 @@ import { useState } from "react";
 import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
-import { UPDATE_PROFILE } from "../../apiEndPoint";
+import { USER_PROFILE } from "../../apiEndPoint";
 
 const useSaveLogo = () => {
   const [updateStatus, setUpdateStatus] = useState(API_STATUS.IDLE);
@@ -27,7 +27,7 @@ const useSaveLogo = () => {
           }
         },
       };
-      const res = await Http.post(UPDATE_PROFILE, file, headers, otherOptions);
+      const res = await Http.post(USER_PROFILE, file, headers, otherOptions);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS
