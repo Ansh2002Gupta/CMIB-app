@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, ScrollView } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
 import style from "./MyAccount.style";
 
@@ -17,6 +18,7 @@ const MyAccountUI = ({
   omitArrowIcon,
   userProfileDetails,
 }) => {
+  const isWebPlatform = Platform.OS.toLowerCase() === "web";
   //TODO: update image on save button (once api will come)
 
   const profileImage = userProfileDetails?.profile_photo;
@@ -38,6 +40,10 @@ const MyAccountUI = ({
     return <View style={style.horizontalLine} />;
   };
 
+  const accountComponentProp = isWebPlatform
+    ? { className: classes["account-dropdown__base"] }
+    : {};
+
   return (
     <>
       {!omitArrowIcon && (
@@ -46,7 +52,7 @@ const MyAccountUI = ({
           intl={intl}
         />
       )}
-      <ScrollView style={style.profileParentContainer}>
+      <View style={style.profileParentContainer}>
         <View
           style={[
             !omitArrowIcon ? style.profileContainer : style.profileContainerWeb,
@@ -65,35 +71,38 @@ const MyAccountUI = ({
           </View>
         </View>
         {omitArrowIcon && renderHorizontalLine()}
-        {options.map((option, index) => (
-          <CustomTouchableOpacity
-            style={[
-              style.optionCotainer,
-              omitArrowIcon
-                ? index === options.length - 2 && style.optionCotainerBorder
-                : index !== options.length - 1 &&
-                  style.optionCotainerBordeLight,
-            ]}
-            key={option.id}
-            onPress={() => handleOptionClick(option)}
-          >
-            <CustomImage source={option.iconLeft} style={style.leftIcon} />
-            <View style={style.titleParentStyle}>
-              <CommonText customTextStyle={style.titleStyle}>
-                {intl.formatMessage({ id: option.title })}
-              </CommonText>
-            </View>
-            {!omitArrowIcon && (
-              <View style={style.iconContainer}>
-                <CustomImage
-                  source={images.iconArrowRight}
-                  style={style.arrowIcon}
-                />
+        <ScrollView style={style.profileListContainer}>
+          {options.map((option, index) => (
+            <CustomTouchableOpacity
+              style={[
+                style.optionCotainer,
+                omitArrowIcon
+                  ? index === options.length - 2 && style.optionCotainerBorder
+                  : index !== options.length - 1 &&
+                    style.optionCotainerBordeLight,
+              ]}
+              key={option.id}
+              onPress={() => handleOptionClick(option)}
+              {...accountComponentProp}
+            >
+              <CustomImage source={option.iconLeft} style={style.leftIcon} />
+              <View style={style.titleParentStyle}>
+                <CommonText customTextStyle={style.titleStyle}>
+                  {intl.formatMessage({ id: option.title })}
+                </CommonText>
               </View>
-            )}
-          </CustomTouchableOpacity>
-        ))}
-      </ScrollView>
+              {!omitArrowIcon && (
+                <View style={style.iconContainer}>
+                  <CustomImage
+                    source={images.iconArrowRight}
+                    style={style.arrowIcon}
+                  />
+                </View>
+              )}
+            </CustomTouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
     </>
   );
 };

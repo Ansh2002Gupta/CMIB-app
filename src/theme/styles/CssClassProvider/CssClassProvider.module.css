@@ -9,10 +9,15 @@
 
   /* Greys */
   --secondaryGrey: #f2f4fc;
+  --secondaryLightGrey:  #F2F4FC;
   --darkGrey: #616C82;
 
   /* Whites */
   --white: #fff;
+}
+
+.account-dropdown__base:hover {
+   background:  var(--secondaryLightGrey);
 }
 
 .card-box__outline--green:hover {

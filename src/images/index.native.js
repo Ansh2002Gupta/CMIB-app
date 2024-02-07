@@ -99,6 +99,7 @@ import iconRetry from "../../public/images/svg/iconRetry.svg";
 import iconEditSvg from "../../public/images/svg/editIcon.svg";
 import iconCloseDark from "../../public/images/svg/iconCloseDark.svg";
 import iconBackArrow from "../../public/images/svg/iconBackArrow.svg";
+import iconAlert from "../../public/images/svg/iconAlert.svg";
 
 const images = {
   iconArrowUp,
@@ -202,6 +203,7 @@ const images = {
   iconEditSvg,
   iconCloseDark,
   iconBackArrow,
+  iconAlert,
 };
 
 export default images;
