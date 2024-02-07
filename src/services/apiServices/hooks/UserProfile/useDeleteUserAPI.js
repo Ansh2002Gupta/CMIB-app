@@ -10,7 +10,7 @@ const useDeleteUserAPI = () => {
   const [userDeletionResult, setUserDeletionResult] = useState([]);
   const [errorWhileDeletion, setErrorWhileDeletion] = useState("");
 
-  const handleDeleteUser = async ({ successCallback, errorCallback }) => {
+  const handleDeleteUser = async ({ successCallback }) => {
     try {
       setDeletionStatus(API_STATUS.LOADING);
       errorWhileDeletion && setErrorWhileDeletion("");
@@ -32,7 +32,6 @@ const useDeleteUserAPI = () => {
       setErrorWhileDeletion(
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
       );
-      errorCallback && errorCallback();
     }
   };
 

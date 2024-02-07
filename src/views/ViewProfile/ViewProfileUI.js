@@ -124,7 +124,6 @@ const ViewProfileUI = ({
                   isError: false,
                 });
               },
-              errorCallback: dismissDeletionPopUp,
             });
           }}
           subHeading={
