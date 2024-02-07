@@ -2,7 +2,7 @@ import { useState } from "react";
 import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_VALIDATE_SIGN_UP } from "../../apiEndPoint";
-import { removeFullStopsBetweenStrings } from "../../../../utils/util";
+import { appendStringsInNextLine } from "../../../../utils/util";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useValidateSignUp = () => {
@@ -33,7 +33,7 @@ const useValidateSignUp = () => {
             errorMessages.push(errors[field][0]);
           }
         }
-        errorMessage = removeFullStopsBetweenStrings(errorMessages);
+        errorMessage = appendStringsInNextLine(errorMessages);
       } else {
         errorMessage =
           err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;

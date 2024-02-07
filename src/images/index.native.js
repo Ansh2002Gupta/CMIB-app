@@ -96,7 +96,10 @@ import iconSuccess from "../../public/images/svg/iconSuccess.svg";
 import iconClose from "../../public/images/svg/iconClose.svg";
 import iconCmibCALogo from "../../public/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png";
 import iconRetry from "../../public/images/svg/iconRetry.svg";
+import iconEditSvg from "../../public/images/svg/editIcon.svg";
+import iconCloseDark from "../../public/images/svg/iconCloseDark.svg";
 import iconBackArrow from "../../public/images/svg/iconBackArrow.svg";
+import iconAlert from "../../public/images/svg/iconAlert.svg";
 
 const images = {
   iconArrowUp,
@@ -197,7 +200,10 @@ const images = {
   iconArrowRight,
   iconCmibCALogo,
   iconRetry,
+  iconEditSvg,
+  iconCloseDark,
   iconBackArrow,
+  iconAlert,
 };
 
 export default images;

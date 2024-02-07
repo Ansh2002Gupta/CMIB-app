@@ -18,6 +18,7 @@ import style from "./CustomModal.style";
 const CustomModal = ({
   buttonTitle,
   children,
+  containerStyle,
   customInnerContainerStyle,
   headerText,
   headerTextStyle,
@@ -37,7 +38,7 @@ const CustomModal = ({
       <Modal
         isVisible
         style={style.containerStyle}
-        containerStyle={style.mainContainerStyle}
+        containerStyle={containerStyle}
         {...webProps}
       >
         <KeyboardAvoidingView
@@ -74,12 +75,14 @@ const CustomModal = ({
           ) : (
             <>
               <View style={style.headerStyle}>
-                <CommonText
-                  customTextStyle={[style.headerText, headerTextStyle]}
-                  fontWeight={headerTextStyle?.fontWeight || "600"}
-                >
-                  {headerText}
-                </CommonText>
+                {!!headerText && (
+                  <CommonText
+                    customTextStyle={[style.headerText, headerTextStyle]}
+                    fontWeight={headerTextStyle?.fontWeight || "600"}
+                  >
+                    {headerText}
+                  </CommonText>
+                )}
                 <TouchableOpacity onPress={onPressIconCross}>
                   {isIconCross && <Image source={images.iconCross} />}
                 </TouchableOpacity>
@@ -96,6 +99,7 @@ const CustomModal = ({
 CustomModal.defaultProps = {
   buttonTitle: "",
   children: <></>,
+  containerStyle: {},
   customInnerContainerStyle: {},
   headerText: "",
   headerTextStyle: {},
@@ -111,6 +115,7 @@ CustomModal.defaultProps = {
 CustomModal.propTypes = {
   buttonTitle: PropTypes.string,
   children: PropTypes.node,
+  containerStyle: PropTypes.object,
   customInnerContainerStyle: PropTypes.object,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.object,

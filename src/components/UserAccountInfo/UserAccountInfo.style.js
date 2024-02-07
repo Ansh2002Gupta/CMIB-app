@@ -3,6 +3,7 @@ import {
   Platform,
   Dimensions,
 } from "@unthinkable/react-core-components";
+import colors from "../../assets/colors";
 import getModalHeight, { maxModalHeight } from "../../utils/getModalHeight";
 
 const deviceHeight = Dimensions.get("window").height;
@@ -26,6 +27,9 @@ const styles = StyleSheet.create({
     height: getModalHeight(),
     maxHeight: maxModalHeight,
   },
+  containerStyle: {
+    padding: 0,
+  },
   largeModalContainer: (keyboardHeight) => ({
     maxHeight: keyboardHeight * 2.2,
   }),
@@ -38,6 +42,12 @@ const styles = StyleSheet.create({
         maxHeight: deviceHeight * 0.65,
       },
     }),
+  },
+  buttonTwoStyle: {
+    backgroundColor: colors.red,
+  },
+  buttonTwotextStyle: {
+    color: colors.white,
   },
 });
 

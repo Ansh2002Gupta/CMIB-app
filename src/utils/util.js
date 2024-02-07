@@ -1,4 +1,5 @@
 import { Platform } from "@unthinkable/react-core-components";
+import { ANONYMOUS } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
   const queryParams = queryParamString.substring(1).split("&");
@@ -24,11 +25,9 @@ export const getRenderText = (items, keys) => {
   return keys.map((key) => items[key]).join(" ");
 };
 
-export const removeFullStopsBetweenStrings = (string) => {
-  const formattedMessages = string
-    .map((message) => message.replace(/\.+$/, ""))
-    .join(", ");
-  return formattedMessages + ".";
+export const appendStringsInNextLine = (string) => {
+  const formattedMessages = string.join("\n");
+  return formattedMessages;
 };
 
 export const scrollToRef = (ref) => {
@@ -56,3 +55,28 @@ export const getSelectedSubModuleFromRoute = ({ pathName, selectedModule }) => {
   }
   return selectedSubModule;
 };
+
+export const getInitialsFromName = (name) => {
+  if (name) {
+    let [firstName, lastName] = name.split(" ");
+    if (lastName?.length) {
+      return `${firstName[0]}${lastName[0]}`.toUpperCase();
+    } else if (firstName?.length) {
+      return `${firstName[0]}${firstName?.[1] || ""}`.toUpperCase();
+    }
+  }
+  return ANONYMOUS.charAt(0).toUpperCase();
+};
+
+export function isValidUrl(str) {
+  const pattern = new RegExp(
+    '^([a-zA-Z]+:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR IP (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$', // fragment locator
+  'i'
+  );
+  return pattern.test(str);
+}

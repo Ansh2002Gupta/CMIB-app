@@ -18,7 +18,7 @@ const CustomAvatar = ({ image = null, text = "" }) => {
       <View style={styles.profileTextView}>
         <View style={styles.initialsContainer}>
           <CommonText customTextStyle={styles.initialsText}>
-            {initials}
+            {initials.toUpperCase()}
           </CommonText>
         </View>
       </View>

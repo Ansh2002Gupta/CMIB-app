@@ -11,7 +11,6 @@ import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimen
 
 import CommonText from "../../components/CommonText";
 import UserAccountInfo from "../../components/UserAccountInfo";
-import useIsWebView from "../../hooks/useIsWebView";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { navigations } from "../../constants/routeNames";
 
@@ -23,7 +22,6 @@ const PrivateHeader = ({
   leftIcon,
   rightIcon,
 }) => {
-  const { isWebView } = useIsWebView();
   const intl = useIntl();
   const location = useLocation();
   const windowDimensions = useWindowDimensions();
@@ -31,10 +29,7 @@ const PrivateHeader = ({
 
   const loggedInUserInfo = userProfileState.userDetails || {};
 
-  const profileImage = loggedInUserInfo?.profile_photo || "";
-  const firstName = loggedInUserInfo?.name?.split(" ")?.[0] || "";
-  const lastName = loggedInUserInfo?.name?.split(" ")?.[1] || "";
-  const role = loggedInUserInfo?.user_type || "";
+  const name = loggedInUserInfo?.name || "";
 
   const isMdOrGreater = windowDimensions.width >= 900;
 
@@ -53,7 +48,7 @@ const PrivateHeader = ({
               customTextStyle={styles.nameText}
             >{`${intl.formatMessage({
               id: "label.hey",
-            })} ${firstName} -`}</CommonText>
+            })} ${name} -`}</CommonText>
             <CommonText customTextStyle={styles.overView}>
               {"here’s your overview"}
             </CommonText>
@@ -63,11 +58,6 @@ const PrivateHeader = ({
       <UserAccountInfo
         onPressRightIcon={onPressRightIcon}
         rightIcon={rightIcon}
-        isWebView={isWebView}
-        profileImage={profileImage}
-        firstName={firstName}
-        lastName={lastName}
-        role={role}
         isMdOrGreater={isMdOrGreater}
       />
     </View>
