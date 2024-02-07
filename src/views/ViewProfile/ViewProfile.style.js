@@ -75,6 +75,35 @@ const style = {
     height: 152,
     borderRadius: 76,
   },
+  deletetextContainer: {
+    backgroundColor: colors.white,
+    position: "absolute",
+    right: 16,
+    top: 90,
+    zIndex: 10,
+    padding: 16,
+    width: 240,
+    height: 54,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    borderRadius: 8,
+  },
+  deletetext: {
+    fontSize: 14,
+  },
+  iconStyle: {
+    backgroundColor: colors.secondaryGrey,
+    padding: 4,
+  },
+  buttonTwoStyle: {
+    backgroundColor: colors.red,
+  },
+  buttonTwotextStyle: {
+    color: colors.white,
+  },
+  inActiveIconStyle: {
+    padding: 4,
+  },
 };
 
 export default style;

@@ -9,6 +9,7 @@ import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SessionBar from "../SessionBar";
+import useDeleteUserAPI from "../../services/apiServices/hooks/UserProfile/useDeleteUserAPI";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
 import ViewProfileDetails from "../../containers/ViewProfile";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
@@ -21,9 +22,9 @@ import {
   setShowLogoutModal,
   setShowViewProfileDetails,
 } from "../../globalContext/userProfile/userProfileActions";
-import commonStyles from "../../theme/styles/commonStyles";
 import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./UserAccountInfo.style";
 
 const UserAccountInfo = ({
@@ -41,6 +42,7 @@ const UserAccountInfo = ({
   const { pathname: currentRoute } = useLocation();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
+  const { handleDeleteUser } = useDeleteUserAPI();
 
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
@@ -49,7 +51,7 @@ const UserAccountInfo = ({
 
   const { showChangePasswordModal, showLogoutModal, showViewProfileDetails } =
     userProfileDetails;
-  const [isUpdateProfilePic, setIsUpdatePorfilePic] = useState(false);
+  const [isUpdateProfilePic, setIsUpdateProfilePic] = useState(false);
   const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
   const [modalStyle, setModalStyle] = useState({});
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
@@ -123,7 +125,17 @@ const UserAccountInfo = ({
               loader={false}
               onPressButtonOne={() => setShowDeleteAccountModal(false)}
               onPressButtonTwo={() => {
-                //TODO: We'll integrate API for Delete account
+                handleDeleteUser({
+                  successCallback: () => {
+                    onLogout({
+                      message: intl.formatMessage({
+                        id: "label.account_deletion",
+                      }),
+                      isLogoutToast: true,
+                      isError: false,
+                    });
+                  },
+                });
               }}
               subHeading={intl.formatMessage({ id: "label.delete_message" })}
             />
@@ -139,7 +151,7 @@ const UserAccountInfo = ({
                   userProfileDispatch(setShowViewProfileDetails(false));
                 }}
                 onPressEditIcon={() => {
-                  setIsUpdatePorfilePic(true);
+                  setIsUpdateProfilePic(true);
                 }}
                 isUpdateProfilePic={isUpdateProfilePic}
                 setShowDeleteAccountModal={setShowDeleteAccountModal}
