@@ -43,6 +43,7 @@ const CustomTable = ({
   indexOfFirstRecord,
   indexOfLastRecord,
   loadingMore,
+  onIconPress,
   rowsLimit,
   rowsPerPage,
   setCurrentRecords,
@@ -156,7 +157,10 @@ const CustomTable = ({
                                 label={getRenderText(item, statusText)}
                                 style={getStatusStyle(item.status)}
                               />
-                              <CustomImage
+                              <TouchableImage
+                                onPress={() => {
+                                  onIconPress(item);
+                                }}
                                 source={tableIcon}
                                 style={styles.iconTicket}
                               />
@@ -262,6 +266,7 @@ CustomTable.defaultProps = {
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,
   loadingMore: true,
+  onIconPress: () => {},
   rowsLimit: [],
   rowsPerPage: 10,
   setCurrentRecords: () => {},
@@ -290,6 +295,7 @@ CustomTable.propTypes = {
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   loadingMore: PropTypes.bool.isRequired,
+  onIconPress: PropTypes.func.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   setCurrentRecords: PropTypes.array.isRequired,

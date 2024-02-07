@@ -293,6 +293,7 @@ const locale = {
   "label.no_placeholder": "e.g 1",
   "label.code_placeholder": "e.g 91",
   "label.account_deletion": "Account deleted successfully.",
+  "label.view_ticket_details": "View Ticket Details",
 };
 
 export default locale;

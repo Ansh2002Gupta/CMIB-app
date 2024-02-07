@@ -10,6 +10,7 @@ import styles from "./MessageComponent.style";
 const MessageComponent = ({ data }) => {
   const windowDimensions = useWindowDimensions();
   const width1400orLess = windowDimensions.width <= 1400;
+
   return (
     <>
       {!!data?.senderMessage && (

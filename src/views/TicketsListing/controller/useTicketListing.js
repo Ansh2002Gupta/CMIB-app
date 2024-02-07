@@ -82,6 +82,10 @@ const useTicketListing = () => {
     //TODO: Implement searching
   };
 
+  const onIconPress = (item) => {
+    navigate(navigations.TICKETS_VIEW_EDIT, { state: item });
+  };
+
   let headingTexts = ["id"];
   let subHeadingText = ["query_type"];
   let statusText = ["status"];
@@ -97,7 +101,7 @@ const useTicketListing = () => {
           ...(!isWebView ? styles.pending : styles.pendingWeb),
           ...styles.cellTextStyle(12),
         };
-      case "close":
+      case "closed":
         return {
           ...(!isWebView ? styles.close : styles.closeWeb),
           ...styles.cellTextStyle(12),
@@ -172,7 +176,7 @@ const useTicketListing = () => {
         content: !isHeading && (
           <TouchableImage
             onPress={() => {
-              navigate(navigations.TICKETS_DETAILS);
+              onIconPress(item);
             }}
             source={images.iconTicket}
             imageStyle={styles.iconTicket}
@@ -204,6 +208,7 @@ const useTicketListing = () => {
     indexOfFirstRecord,
     indexOfLastRecord,
     loadingMore,
+    onIconPress,
     rowsPerPage,
     statusText,
     subHeadingText,

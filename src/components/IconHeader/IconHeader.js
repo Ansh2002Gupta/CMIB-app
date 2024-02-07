@@ -148,7 +148,7 @@ IconHeader.propTypes = {
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,
   iconStyle: PropTypes.object,
-  mobActionButton: PropTypes.string,
+  mobActionButton: PropTypes.node,
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,
 };

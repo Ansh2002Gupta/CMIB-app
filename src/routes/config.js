@@ -120,7 +120,7 @@ const config = [
         element: <TicketListing />,
       },
       {
-        viewPath: navigations.TICKETS_DETAILS,
+        viewPath: navigations.TICKETS_VIEW_EDIT,
         element: <TicketChatScreen />,
       },
     ],

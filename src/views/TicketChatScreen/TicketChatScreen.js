@@ -1,41 +1,75 @@
-import React, { useContext } from "react";
-import { useNavigate } from "../../routes";
+import React, { useContext, useState } from "react";
+import { useIntl } from "react-intl";
+import { useNavigate, useLocation } from "../../routes";
 import { FlatList, View } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import CommonText from "../../components/CommonText";
-import CustomTextInput from "../../components/CustomTextInput";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import MessageComponent from "../../components/MessageComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import { ticket_replies } from "./ticketsRepliesConstant";
 import { PREVIOUS_SCREEN } from "../../constants/constants";
 import styles from "./TicketChatScreen.style";
+import TicketDetails from "../TicketDetails";
+import images from "../../images";
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
+import ChatSection from "../../components/ChatSection/ChatSection";
 
 const TicketChatScreen = () => {
   const navigate = useNavigate();
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const [isDetailsScreen, setIsDetailScreen] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const location = useLocation();
+
+  const { id, status } = location.state;
+
   const midOrSmall = currentBreakpoint === "md" || currentBreakpoint === "sm";
 
   const onGoBack = () => {
-    navigate(PREVIOUS_SCREEN);
+    if (isDetailsScreen) {
+      setIsDetailScreen(false);
+    } else {
+      navigate(PREVIOUS_SCREEN);
+    }
+  };
+
+  const handlePopup = () => {
+    setShowPopup((prev) => !prev);
   };
 
   return (
     <TwoRow
       style={styles.mainContainer}
       topSection={
-        <IconHeader
-          headerText={"T0123456"}
-          subHeading={"Pending"}
-          onPressLeftIcon={onGoBack}
-          hasIconBar
-        />
+        <>
+          <IconHeader
+            headerText={isDetailsScreen ? "Tickets Details" : id}
+            subHeading={status}
+            onPressLeftIcon={onGoBack}
+            hasIconBar
+            mobActionButton={images.iconMore}
+            handleButtonClick={() => {
+              handlePopup();
+            }}
+          />
+          {showPopup && !isDetailsScreen && (
+            <PopupMessage
+              message={intl.formatMessage({ id: "label.view_ticket_details" })}
+              onPopupClick={() => {
+                setIsDetailScreen(true);
+                handlePopup();
+              }}
+            />
+          )}
+        </>
       }
       isBottomFillSpace
+      topSectionStyle={styles.topSectionStyle}
+      bottomSectionStyle={styles.bottomSectionStyle}
       bottomSection={
         isWebView ? (
           <TwoColumn
@@ -47,15 +81,17 @@ const TicketChatScreen = () => {
             rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
             leftSection={<ChatSection data={ticket_replies} />}
             rightSection={
-              isWebView && (
-                <View style={styles.ticketDetails}>
-                  <CommonText>Ticket Details</CommonText>
-                </View>
-              )
+              isWebView && <TicketDetails details={location.state} />
             }
           />
         ) : (
-          <ChatSection data={ticket_replies} />
+          <>
+            {isDetailsScreen ? (
+              <TicketDetails details={location.state} />
+            ) : (
+              <ChatSection data={ticket_replies} />
+            )}
+          </>
         )
       }
     />
@@ -63,24 +99,3 @@ const TicketChatScreen = () => {
 };
 
 export default TicketChatScreen;
-
-const ChatSection = ({ data }) => {
-  return (
-    <TwoRow
-      topSection={
-        <FlatList
-          data={data}
-          style={styles.chatSection}
-          inverted={true}
-          renderItem={({ item }) => {
-            return <MessageComponent data={item} />;
-          }}
-        />
-      }
-      isTopFillSpace
-      topSectionStyle={styles.messageSection}
-      bottomSectionStyle={styles.inputSection}
-      bottomSection={<CustomTextInput customStyle={styles.cutomTextInput} />}
-    />
-  );
-};
