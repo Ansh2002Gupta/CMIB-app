@@ -100,7 +100,7 @@ const IconHeader = ({
               />
             )}
           </View>
-          {!!mobActionButton && (
+          {!!mobActionButton && !isWebView && (
             <CustomTouchableOpacity
               style={{ ...styles.editContainer, ...iconStyle }}
               onPress={handleButtonClick}
