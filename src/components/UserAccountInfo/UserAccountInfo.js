@@ -7,6 +7,7 @@ import ChangePasswordModal from "../../containers/ChangePasswordModal";
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import EditProfileImage from "../../containers/EditProfileImage";
 import LogoutModal from "../../containers/LogoutModal/LogoutModal";
 import SessionBar from "../SessionBar";
 import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
@@ -107,21 +108,30 @@ const UserAccountInfo = ({
       ) : null}
       {showViewProfileDetails ? (
         <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
-          <ViewProfileDetails
-            onPressCross={() => {
-              if (currentRoute === navigations.VIEW_PROFILE) {
-                navigate(
-                  `${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`
-                );
-              }
-              userProfileDispatch(setShowViewProfileDetails(false));
-            }}
-            onPressEditIcon={() => {
-              setIsUpdatePorfilePic(true);
-            }}
-            isUpdateProfilePic={isUpdateProfilePic}
-            userProfileDetails={userProfileDetails?.userDetails}
-          />
+          {isUpdateProfilePic ? (
+            <EditProfileImage
+              firstName={firstName}
+              lastName={lastName}
+              profileImage={profileImage}
+              onPressIconCross={() => setIsUpdatePorfilePic(false)}
+            />
+          ) : (
+            <ViewProfileDetails
+              onPressCross={() => {
+                if (currentRoute === navigations.VIEW_PROFILE) {
+                  navigate(
+                    `${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`
+                  );
+                }
+                userProfileDispatch(setShowViewProfileDetails(false));
+              }}
+              onPressEditIcon={() => {
+                setIsUpdatePorfilePic(true);
+              }}
+              isUpdateProfilePic={isUpdateProfilePic}
+              userProfileDetails={userProfileDetails?.userDetails}
+            />
+          )}
         </CustomModal>
       ) : null}
       {showLogoutModal && (
