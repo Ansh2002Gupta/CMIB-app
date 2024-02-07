@@ -154,11 +154,13 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
           {renderError()}
           <View style={styles.editButtonContainer}>
             <TriggerFileUpload
-              buttonTitle={buttonTitle}
-              initiateFileUpload={initiateFileUpload}
-              setFile={setFile}
-              onImageUpload={handleImageUpload}
-              isLoading={isUploadingImageToServer || isLoading}
+              {...{
+                buttonTitle,
+                initiateFileUpload,
+                setFile,
+                onImageUpload: handleImageUpload,
+                isLoading: isUploadingImageToServer || isLoading,
+              }}
             />
             {!!profileImage && (
               <CustomButton
