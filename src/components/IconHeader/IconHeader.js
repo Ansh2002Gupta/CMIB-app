@@ -19,6 +19,8 @@ const IconHeader = ({
   headerText,
   iconLeft,
   iconRight,
+  iconStyle,
+  mobActionButton,
   onPressLeftIcon,
   onPressRightIcon,
 }) => {
@@ -53,12 +55,17 @@ const IconHeader = ({
           >
             {headerText}
           </CommonText>
+          {!!mobActionButton && (
+            <CustomTouchableOpacity
+              style={{ ...styles.editContainer, ...iconStyle }}
+              onPress={handleButtonClick}
+            >
+              <Image source={mobActionButton} />
+            </CustomTouchableOpacity>
+          )}
           {hasActionButton && isWebView && (
             <CardComponent customStyle={styles.cardContainer}>
-              <CustomTouchableOpacity
-                style={styles.editContainer}
-                onPress={handleButtonClick}
-              >
+              <CustomTouchableOpacity onPress={handleButtonClick}>
                 <Image source={actionButtonIcon} />
                 <CommonText customTextStyle={styles.textStyle}>
                   {buttonTitle}
@@ -82,6 +89,8 @@ IconHeader.defaultProps = {
   headerText: "",
   iconLeft: images.iconBack,
   iconRight: images.iconNotification,
+  iconStyle: {},
+  mobActionButton: "",
   onPressLeftIcon: () => {},
   onPressRightIcon: () => {},
 };
@@ -95,6 +104,8 @@ IconHeader.propTypes = {
   headerText: PropTypes.string,
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,
+  iconStyle: PropTypes.object,
+  mobActionButton: PropTypes.string,
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,
 };
