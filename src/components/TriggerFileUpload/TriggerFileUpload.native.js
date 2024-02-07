@@ -51,11 +51,15 @@ const TriggerFileUpload = ({
 
 TriggerFileUpload.defaultProps = {
   buttonTitle: "",
+  isLoading: false,
+  onImageUpload: () => {},
   setFile: () => {},
 };
 
 TriggerFileUpload.propTypes = {
   buttonTitle: PropTypes.string,
+  isLoading: PropTypes.bool,
+  onImageUpload: PropTypes.func,
   setFile: PropTypes.func,
 };
 

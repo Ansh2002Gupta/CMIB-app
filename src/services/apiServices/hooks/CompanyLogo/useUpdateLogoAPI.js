@@ -14,7 +14,6 @@ const useSaveLogo = () => {
     try {
       setUpdateStatus(API_STATUS.LOADING);
       errorWhileUpdate && setErrorWhileUpdate("");
-
       const res = await Http.patch(USER_PROFILE, file);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
