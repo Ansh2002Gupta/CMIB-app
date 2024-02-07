@@ -1,12 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FlatList } from "@unthinkable/react-core-components";
+import { FlatList, Platform } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
 import CustomTextInput from "../CustomTextInput";
 import MessageComponent from "../MessageComponent";
 import styles from "./ChatSection.style";
+
+const isMobileProps =
+  Platform.OS.toLowerCase() !== "web" ? { inverted: true } : {};
 
 const ChatSection = ({ data }) => {
   return (
@@ -15,7 +18,7 @@ const ChatSection = ({ data }) => {
         <FlatList
           data={data}
           style={styles.chatSection}
-          inverted={true}
+          {...isMobileProps}
           renderItem={({ item }) => {
             return <MessageComponent data={item} />;
           }}

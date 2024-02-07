@@ -294,6 +294,8 @@ const locale = {
   "label.code_placeholder": "e.g 91",
   "label.account_deletion": "Account deleted successfully.",
   "label.view_ticket_details": "View Ticket Details",
+  "label.unable_to_delete": "Unable to delete account",
+  "label.retry": "Retry",
 };
 
 export default locale;

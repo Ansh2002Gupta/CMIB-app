@@ -1,8 +1,4 @@
-import {
-  StyleSheet,
-  Dimensions,
-  Platform,
-} from "@unthinkable/react-core-components";
+import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -11,7 +7,7 @@ const styles = StyleSheet.create({
   },
   chatScreenSectionWeb: (midOrSmall) => ({
     position: "relative",
-    paddingTop: 64,
+    paddingTop: midOrSmall ? 30 : 64,
     paddingLeft: midOrSmall ? 20 : 80,
     paddingRight: midOrSmall ? 20 : 80,
     width: midOrSmall ? "70%" : "75%",
