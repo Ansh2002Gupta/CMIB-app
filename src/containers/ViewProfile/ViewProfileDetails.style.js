@@ -35,8 +35,7 @@ const styles = StyleSheet.create({
   crossIconStyle: {
     height: 24,
     width: 24,
-    cursor: "pointer",
-    padding: 16,
+    paddingLeft: 16,
   },
   crossStyle: {
     alignSelf: "flex-end",
@@ -52,5 +51,30 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.black,
   },
+  headerLeftIcons: {
+    flexDirection: "row",
+    paddingTop: 16,
+    paddingRight: 16,
+    alignItems: "center",
+    zIndex: 2,
+  },
+  iconMoreContainer: {
+    position: "relative",
+  },
+  deletetextContainer: {
+    backgroundColor: colors.white,
+    position: "absolute",
+    right: 12,
+    top: 24,
+    padding: 16,
+    minWidth: 176,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    borderRadius: 8,
+  },
+  deletetext: {
+    fontSize: 14,
+  },
 });
+
 export default styles;
