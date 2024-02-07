@@ -35,7 +35,7 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
   const { pathname: currentRoute } = useLocation();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
-  const { handleDeleteUser, isLoading, errorWhileDeletion } =
+  const { errorWhileDeletion, handleDeleteUser, isLoading } =
     useDeleteUserAPI();
   const { isWebView } = useIsWebView();
 
