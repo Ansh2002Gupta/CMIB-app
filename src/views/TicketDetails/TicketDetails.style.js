@@ -37,6 +37,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
+  chatSection: {
+    flex: 1,
+  },
+  cutomTextInput: { paddingBottom: 24 },
 });
 
 export default styles;

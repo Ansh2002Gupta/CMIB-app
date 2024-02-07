@@ -70,7 +70,7 @@ const ChatSection = ({ data }) => {
       topSection={
         <FlatList
           data={data}
-          style={{ flex: 1 }}
+          style={styles.chatSection}
           inverted={true}
           renderItem={({ item }) => {
             return <MessageComponent data={item} />;
@@ -80,7 +80,7 @@ const ChatSection = ({ data }) => {
       isTopFillSpace
       topSectionStyle={styles.messageSection}
       bottomSectionStyle={styles.inputSection}
-      bottomSection={<CustomTextInput customStyle={{ paddingBottom: 24 }} />}
+      bottomSection={<CustomTextInput customStyle={styles.cutomTextInput} />}
     />
   );
 };
