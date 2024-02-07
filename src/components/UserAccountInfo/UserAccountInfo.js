@@ -35,7 +35,8 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
   const { pathname: currentRoute } = useLocation();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
-  const { handleDeleteUser } = useDeleteUserAPI();
+  const { handleDeleteUser, isLoading, errorWhileDeletion } =
+    useDeleteUserAPI();
   const { isWebView } = useIsWebView();
 
   const [userProfileDetails, userProfileDispatch] =
@@ -118,12 +119,20 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
           {showDeleteAccountModal ? (
             <ConfirmationModal
               buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-              buttonTwoText={intl.formatMessage({ id: "label.delete" })}
+              buttonTwoText={
+                errorWhileDeletion
+                  ? intl.formatMessage({ id: "label.retry" })
+                  : intl.formatMessage({ id: "label.delete" })
+              }
               buttonTwoStyle={styles.buttonTwoStyle}
               buttonTwoTextStyle={styles.buttonTwotextStyle}
-              headingText={intl.formatMessage({ id: "label.delete_account" })}
+              headingText={
+                errorWhileDeletion
+                  ? intl.formatMessage({ id: "label.unable_to_delete" })
+                  : intl.formatMessage({ id: "label.delete_account" })
+              }
               icon={images.iconAlert}
-              loader={false}
+              loader={isLoading}
               onPressButtonOne={() => setShowDeleteAccountModal(false)}
               onPressButtonTwo={() => {
                 handleDeleteUser({
@@ -138,7 +147,11 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
                   },
                 });
               }}
-              subHeading={intl.formatMessage({ id: "label.delete_message" })}
+              subHeading={
+                errorWhileDeletion
+                  ? errorWhileDeletion
+                  : intl.formatMessage({ id: "label.delete_message" })
+              }
             />
           ) : isUpdateProfilePic ? (
             <EditProfileImage

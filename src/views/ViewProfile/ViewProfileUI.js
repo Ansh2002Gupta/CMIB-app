@@ -28,7 +28,7 @@ const ViewProfileUI = ({
   const [errorMessage, setErrorMessage] = useState("");
   const [showDeletePopUp, setShowDeletePopUp] = useState(false);
   const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
-  const { errorWhileDeletion, handleDeleteUser, setErrorWhileDeletion } =
+  const { errorWhileDeletion, handleDeleteUser, isLoading } =
     useDeleteUserAPI();
   const { onLogout } = useHeader();
 
@@ -45,7 +45,6 @@ const ViewProfileUI = ({
   ];
 
   const handleDismissToast = () => {
-    setErrorWhileDeletion("");
     setErrorMessage("");
   };
 
@@ -99,12 +98,20 @@ const ViewProfileUI = ({
       {showDeleteAccountModal && (
         <ConfirmationModal
           buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-          buttonTwoText={intl.formatMessage({ id: "label.delete" })}
+          buttonTwoText={
+            errorWhileDeletion
+              ? intl.formatMessage({ id: "label.retry" })
+              : intl.formatMessage({ id: "label.delete" })
+          }
           buttonTwoStyle={style.buttonTwoStyle}
           buttonTwoTextStyle={style.buttonTwotextStyle}
-          headingText={intl.formatMessage({ id: "label.delete_account" })}
+          headingText={
+            errorWhileDeletion
+              ? intl.formatMessage({ id: "label.unable_to_delete" })
+              : intl.formatMessage({ id: "label.delete_account" })
+          }
           icon={images.iconAlert}
-          loader={false}
+          loader={isLoading}
           onPressButtonOne={dismissDeletionPopUp}
           onPressButtonTwo={() => {
             handleDeleteUser({
@@ -120,7 +127,11 @@ const ViewProfileUI = ({
               errorCallback: dismissDeletionPopUp,
             });
           }}
-          subHeading={intl.formatMessage({ id: "label.delete_message" })}
+          subHeading={
+            errorWhileDeletion
+              ? errorWhileDeletion
+              : intl.formatMessage({ id: "label.delete_message" })
+          }
         />
       )}
       <View style={style.picParentContainer}>
@@ -147,9 +158,9 @@ const ViewProfileUI = ({
           />
         )}
       </View>
-      {!!(errorMessage || errorWhileDeletion) && (
+      {!!errorMessage && (
         <ToastComponent
-          toastMessage={errorMessage || errorWhileDeletion}
+          toastMessage={errorMessage}
           onDismiss={handleDismissToast}
         />
       )}
