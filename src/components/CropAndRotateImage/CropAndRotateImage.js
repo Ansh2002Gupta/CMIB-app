@@ -30,14 +30,20 @@ const CropAndRotateImage = ({
   const [isCroppingImage, setIsCroppingImage] = useState(false);
   const [isErrorCroppingImage, setIsErrorCroppingImage] = useState(false);
 
+  useEffect(() => {
+    return () => {
+      resetStates();
+    };
+  }, []);
+
   const uploadImageToServer = ({ uploadedFile }) => {
     setFile(uploadedFile);
     const formData = new FormData();
-    formData.append("company_logo", uploadedFile);
+    formData.append("file", uploadedFile);
     handleFileUpload({
       file: formData,
-      errorCallback: () => {
-        setFile(null);
+      successCallback: (file) => {
+        onSuccess(file);
       },
     });
   };
@@ -66,6 +72,7 @@ const CropAndRotateImage = ({
   const cancelCropHandler = () => {
     setOpenCropView(false);
     setFile(null);
+    onClose && onClose();
   };
 
   const resetStates = () => {
@@ -76,12 +83,6 @@ const CropAndRotateImage = ({
     setIsCroppingImage(false);
     setIsErrorCroppingImage(false);
   };
-
-  useEffect(() => {
-    return () => {
-      resetStates();
-    };
-  }, []);
 
   return (
     <Dialog onClose={cancelCropHandler} maxWidth="sm" {...{ heading }}>
@@ -103,13 +104,14 @@ const CropAndRotateImage = ({
       </View>
       <ZoomSliderWithInfo {...{ setZoom, zoom }} />
       <View style={styles.actionBtnContainer}>
-        <CustomButton onPress={cancelCropHandler}>
+        <CustomButton onPress={cancelCropHandler} style={styles.buttonStyle}>
           {intl.formatMessage({ id: "label.cancel" })}
         </CustomButton>
         <CustomButton
+          isLoading={isCroppingImage || isLoading}
+          style={styles.buttonStyle}
           onPress={cropImage}
           withGreenBackground
-          isLoading={isCroppingImage}
         >
           <View>{intl.formatMessage({ id: "label.save" })}</View>
         </CustomButton>

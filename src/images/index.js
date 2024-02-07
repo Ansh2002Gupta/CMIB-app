@@ -173,6 +173,7 @@ const iconWomanPartTime = appendAppBaseURl("/images/svg/iconWomanPartTime.svg");
 const iconTickBlue = appendAppBaseURl("/images/svg/iconTickBlue.svg");
 const iconBackArrow = appendAppBaseURl("/images/svg/iconBackArrow.svg");
 const iconAlert = appendAppBaseURl("/images/svg/iconAlert.svg");
+const iconRotate = appendAppBaseURl("/images/svg/iconRotate.svg");
 
 const images = {
   iconArrowUp,
@@ -292,6 +293,7 @@ const images = {
   iconTickBlue,
   iconBackArrow,
   iconAlert,
+  iconRotate,
 };
 
 export default images;

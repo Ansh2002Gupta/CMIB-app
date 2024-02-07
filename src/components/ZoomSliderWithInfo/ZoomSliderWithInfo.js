@@ -8,7 +8,7 @@ import images from "../../images";
 import { ZOOM_CONSTANT } from "../../constants/constants";
 import styles from "./ZoomSliderWithInfo.style";
 
-const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
+const ZoomSliderWithInfo = ({ zoom, setZoom, setRotation }) => {
   const zoomPercentage = Math.floor(
     ((zoom - ZOOM_CONSTANT.MIN_ZOOM) /
       (ZOOM_CONSTANT.MAX_ZOOM - ZOOM_CONSTANT.MIN_ZOOM)) *
@@ -37,8 +37,8 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
         <Image
           source={images.minusCirlce}
           alt="Zoom out"
-          width={24}
-          height={24}
+          width={20}
+          height={20}
           style={styles.zoomIcon}
           onClick={zoomOutHandler}
         />
@@ -54,8 +54,8 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
         <Image
           source={images.addCircle}
           alt="Zoom in"
-          width={24}
-          height={24}
+          width={20}
+          height={20}
           style={styles.zoomIcon}
           onClick={zoomInHandler}
         />
@@ -63,6 +63,16 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
       <CommonText
         customTextStyle={styles.percentageText}
       >{`${zoomPercentage}%`}</CommonText>
+      <Image
+        source={images.iconRotate}
+        alt="Rotate"
+        width={20}
+        height={20}
+        style={styles.zoomIcon}
+        onClick={() => {
+          setRotation((prev) => (prev + 90) % 360);
+        }}
+      />
     </View>
   );
 };

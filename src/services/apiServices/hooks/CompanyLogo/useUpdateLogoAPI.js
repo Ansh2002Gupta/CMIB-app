@@ -9,33 +9,17 @@ const useSaveLogo = () => {
   const [updateStatus, setUpdateStatus] = useState(API_STATUS.IDLE);
   const [fileUpdateResult, setFileUpdateResult] = useState(null);
   const [errorWhileUpdate, setErrorWhileUpdate] = useState("");
-  const [updatePercentage, setUpdatePercentage] = useState(0);
 
   const handleFileUpdate = async ({ file, successCallback, errorCallback }) => {
     try {
       setUpdateStatus(API_STATUS.LOADING);
       errorWhileUpdate && setErrorWhileUpdate("");
-      const headers = {
-        "Content-Type": "multipart/form-data",
-      };
-      const otherOptions = {
-        onUploadProgress: (progressEvent) => {
-          const { loaded, total } = progressEvent;
-          let percent = Math.floor((loaded * 100) / total);
-          if (percent < 100) {
-            setUpdatePercentage(percent);
-          }
-        },
-      };
-      const res = await Http.patch(USER_PROFILE, file, headers, otherOptions);
+
+      const res = await Http.patch(USER_PROFILE, file);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS
       ) {
-        setUpdatePercentage(100);
-        setTimeout(() => {
-          setUpdatePercentage(0);
-        }, 100);
         setUpdateStatus(API_STATUS.SUCCESS);
         setFileUpdateResult(res.data);
         successCallback && successCallback();
@@ -66,7 +50,6 @@ const useSaveLogo = () => {
     isSuccess,
     setErrorWhileUpdate,
     setFileUpdateResult,
-    updatePercentage,
     updateStatus,
   };
 };

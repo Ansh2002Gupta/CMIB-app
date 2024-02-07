@@ -49,11 +49,11 @@ const ProfileIcon = ({
   } else {
     return (
       <View
-        style={[
-          styles.initialsContainer,
-          styles.containerStyle,
-          customContainerStyle,
-        ]}
+        style={{
+          ...styles.initialsContainer,
+          ...styles.containerStyle,
+          ...customContainerStyle,
+        }}
       >
         <CommonText
           customTextStyle={{ ...styles.initialsText, ...customTextStyle }}

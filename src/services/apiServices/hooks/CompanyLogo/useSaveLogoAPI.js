@@ -38,7 +38,7 @@ const useSaveLogo = () => {
         }, 100);
         setUploadStatus(API_STATUS.SUCCESS);
         setFileUploadResult(res.data);
-        successCallback && successCallback();
+        successCallback && successCallback(res.data);
         return;
       }
       errorCallback && errorCallback();
