@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
@@ -50,6 +51,10 @@ const MessageComponent = ({ data }) => {
       )}
     </>
   );
+};
+
+MessageComponent.propTypes = {
+  data: PropTypes.object.isRequired,
 };
 
 export default MessageComponent;

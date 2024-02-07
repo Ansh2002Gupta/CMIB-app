@@ -1,16 +1,16 @@
 import React from "react";
-import { useNavigate } from "react-router";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router";
 import { Image, View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../CardComponent/CardComponent";
+import Chip from "../Chip";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
+import colors from "../../assets/colors";
 import images from "../../images";
 import styles from "./IconHeader.style";
-import Chip from "../Chip";
-import colors from "../../assets/colors";
 
 const IconHeader = ({
   actionButtonIcon,
@@ -75,7 +75,9 @@ const IconHeader = ({
             )}
           </View>
         )}
-        <View style={styles.titleContainer}>
+        <View
+          style={!isWebView ? styles.titleContainer : styles.titleContainerWeb}
+        >
           <View style={styles.headingContainer}>
             <CommonText
               customTextStyle={

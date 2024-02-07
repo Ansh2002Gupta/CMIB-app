@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "../../routes";
-import { FlatList, View } from "@unthinkable/react-core-components";
+import { FlatList, View, Platform } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -13,6 +13,9 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { ticket_replies } from "./ticketsRepliesConstant";
 import { PREVIOUS_SCREEN } from "../../constants/constants";
 import styles from "./TicketChatScreen.style";
+
+const isMobileProps =
+  Platform.OS.toLowerCase() !== "web" ? { inverted: true } : {};
 
 const TicketChatScreen = () => {
   const navigate = useNavigate();
@@ -71,10 +74,10 @@ const ChatSection = ({ data }) => {
         <FlatList
           data={data}
           style={styles.chatSection}
-          inverted={true}
           renderItem={({ item }) => {
             return <MessageComponent data={item} />;
           }}
+          {...isMobileProps}
         />
       }
       isTopFillSpace

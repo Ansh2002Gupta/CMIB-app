@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSearchParams, useNavigate } from "../../../routes";
+import { useNavigate, useSearchParams } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";

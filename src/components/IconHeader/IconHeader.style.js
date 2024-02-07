@@ -18,6 +18,18 @@ const style = {
     marginLeft: 16,
     marginRight: 16,
   },
+  titleContainerWeb: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignContent: "center",
+    padding: 24,
+    borderWidth: 1,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderColor: colors.lightGrey,
+  },
   formHeaderStyle: {
     color: colors.black,
     fontSize: 20,
