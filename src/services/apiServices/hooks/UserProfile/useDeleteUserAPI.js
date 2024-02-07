@@ -24,7 +24,6 @@ const useDeleteUserAPI = () => {
         successCallback && successCallback();
         return;
       }
-      errorCallback && errorCallback();
       setDeletionStatus(API_STATUS.ERROR);
       setErrorWhileDeletion(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
