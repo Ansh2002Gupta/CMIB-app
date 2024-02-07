@@ -1,3 +1,5 @@
+import { Platform } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
 const style = {
@@ -21,6 +23,11 @@ const style = {
     color: colors.white,
     fontSize: 14,
     textAlign: "center",
+    ...Platform.select({
+      web:{
+        whiteSpace: 'pre-line',
+      }
+    })
   },
 };
 
