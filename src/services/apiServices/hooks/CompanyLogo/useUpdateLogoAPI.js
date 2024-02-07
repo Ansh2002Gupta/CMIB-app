@@ -27,7 +27,7 @@ const useSaveLogo = () => {
           }
         },
       };
-      const res = await Http.post(USER_PROFILE, file, headers, otherOptions);
+      const res = await Http.patch(USER_PROFILE, file, headers, otherOptions);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS
