@@ -58,6 +58,38 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   const fileUploadError =
     fileTooLargeError || invalidFormatError || nonUploadableImageError;
 
+  const onImageUploadSuccess = (file) => {
+    const updatedProfilePhoto = file?.data?.url;
+    userProfileDetails.userDetails.profile_photo = updatedProfilePhoto;
+    userProfileDispatch(setUserDetails(userProfileDetails));
+    onPressIconCross();
+  };
+
+  const handleImageUpload = (uploadedFile) => {
+    handleFileUpload({
+      file: uploadedFile,
+      successCallback: (file) => {
+        handleFileUpdate({
+          file: { profile_photo: file?.data?.file_name },
+          successCallback: () => onImageUploadSuccess(file),
+        });
+      },
+    });
+  };
+
+  const handleRemoveImage = () => {
+    const fileName = userProfileDetails?.userDetails?.profile_photo.split("/");
+    handleFileUpdate({
+      file: { profile_photo: "" },
+      successCallback: () => {
+        userProfileDetails.userDetails.profile_photo = "";
+        userProfileDispatch(setUserDetails(userProfileDetails));
+        handleDeleteLogo(fileName[fileName.length - 1]);
+        onPressIconCross();
+      },
+    });
+  };
+
   const renderProfileIcon = () => {
     return (
       <ProfileIcon
@@ -84,22 +116,6 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   };
 
   const handleDismissToast = () => setErrorMessage("");
-
-  const onImageUpload = (uploadedFile) => {
-    handleFileUpload({
-      file: uploadedFile,
-      successCallback: (file) => {
-        handleFileUpdate({
-          file: { profile_photo: file?.data?.file_name },
-          successCallback: () => {
-            userProfileDetails.userDetails.profile_photo = file?.data?.url;
-            userProfileDispatch(setUserDetails(userProfileDetails));
-            onPressIconCross();
-          },
-        });
-      },
-    });
-  };
 
   return (
     <CustomModal
@@ -128,16 +144,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
             setErrorWhileUpdate("");
             setErrorWhileUpload("");
           }}
-          onSuccess={(file) => {
-            handleFileUpdate({
-              file: { profile_photo: file?.data?.file_name },
-              successCallback: () => {
-                userProfileDetails.userDetails.profile_photo = file?.data?.url;
-                userProfileDispatch(setUserDetails(userProfileDetails));
-                onPressIconCross();
-              },
-            });
-          }}
+          onSuccess={onImageUploadSuccess}
           setFile={setFile}
           shouldOpenInModal={false}
         />
@@ -150,33 +157,23 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
               buttonTitle={buttonTitle}
               initiateFileUpload={initiateFileUpload}
               setFile={setFile}
-              onImageUpload={onImageUpload}
+              onImageUpload={handleImageUpload}
               isLoading={isUploadingImageToServer || isLoading}
             />
-            <CustomButton
-              onPress={() => {
-                const fileName =
-                  userProfileDetails?.userDetails?.profile_photo.split("/");
-                handleFileUpdate({
-                  file: { profile_photo: "" },
-                  successCallback: () => {
-                    userProfileDetails.userDetails.profile_photo = "";
-                    userProfileDispatch(setUserDetails(userProfileDetails));
-                    handleDeleteLogo(fileName[fileName.length - 1]);
-                    onPressIconCross();
-                  },
-                });
-              }}
-              isLoading={isDeletingFromServer}
-              style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
-              iconLeft={{
-                leftIconAlt: "delete",
-                leftIconSource: images.iconDelete,
-                isLeftIconNotSvg: true,
-              }}
-            >
-              {intl.formatMessage({ id: "label.remove" })}
-            </CustomButton>
+            {!!profileImage && (
+              <CustomButton
+                onPress={handleRemoveImage}
+                isLoading={isDeletingFromServer}
+                style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
+                iconLeft={{
+                  leftIconAlt: "delete",
+                  leftIconSource: images.iconDelete,
+                  isLeftIconNotSvg: true,
+                }}
+              >
+                {intl.formatMessage({ id: "label.remove" })}
+              </CustomButton>
+            )}
           </View>
         </>
       )}
