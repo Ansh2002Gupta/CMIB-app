@@ -12,9 +12,9 @@ import MessageComponent from "../../components/MessageComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import { ticket_replies } from "./ticketsRepliesConstant";
 import { PREVIOUS_SCREEN } from "../../constants/constants";
-import styles from "./TicketDetails.style";
+import styles from "./TicketChatScreen.style";
 
-const TicketDetails = () => {
+const TicketChatScreen = () => {
   const navigate = useNavigate();
   const { isWebView } = useIsWebView();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -62,7 +62,7 @@ const TicketDetails = () => {
   );
 };
 
-export default TicketDetails;
+export default TicketChatScreen;
 
 const ChatSection = ({ data }) => {
   return (
