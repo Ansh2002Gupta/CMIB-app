@@ -13,6 +13,7 @@ const CustomButton = ({
   children,
   customStyle,
   disabled,
+  disabledStyle,
   iconRight,
   iconLeft,
   isLoading,
@@ -32,6 +33,7 @@ const CustomButton = ({
         ...style,
       }}
       disabled={isLoading || disabled}
+      disabledStyle={disabledStyle}
       onPress={onPress}
       type={type}
     >
@@ -81,6 +83,7 @@ CustomButton.defaultProps = {
   children: <></>,
   customStyle: { customTextStyle: {}, textFontWeight: "" },
   disabled: false,
+  disabledStyle: {},
   iconLeft: {
     isLeftIconNotSvg: false,
     leftIconAlt: "",
@@ -102,6 +105,7 @@ CustomButton.propTypes = {
   children: PropTypes.node,
   customStyle: PropTypes.object,
   disabled: PropTypes.bool,
+  disabledStyle: PropTypes.object,
   iconLeft: PropTypes.object,
   iconRight: PropTypes.object,
   isLeftIconNotSvg: PropTypes.bool,

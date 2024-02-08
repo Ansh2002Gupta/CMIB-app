@@ -56,7 +56,7 @@ const ChatSection = ({ data, details }) => {
         <FlatList
           ref={flatListRef}
           data={messages}
-          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           {...isMobileProps}
           style={styles.chatSection}
           keyExtractor={(item) => item.senderMessage.toString()}

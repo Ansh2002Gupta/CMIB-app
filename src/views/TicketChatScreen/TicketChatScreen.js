@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate, useLocation } from "../../routes";
 import { MediaQueryContext } from "@unthinkable/react-theme";
+import { View } from "@unthinkable/react-core-components";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 

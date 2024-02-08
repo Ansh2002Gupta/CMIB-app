@@ -11,6 +11,8 @@ const ChatSection = StyleSheet.create({
     maxheight: 722,
     height: HEIGHT * 0.5,
     overflowY: "scroll",
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   inputSection: {
     paddingTop: 24,
