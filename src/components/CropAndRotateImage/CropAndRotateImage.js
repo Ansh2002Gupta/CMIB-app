@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
+import CommonText from "../CommonText";
 import CustomButton from "../CustomButton";
 import Dialog from "../Dialog";
 import ZoomSliderWithInfo from "../ZoomSliderWithInfo";
@@ -14,12 +15,17 @@ import styles from "./CropAndRotateImage.style";
 
 const CropAndRotateImage = ({
   file,
+  errorWhileUpload,
   handleFileUpload,
   heading,
+  isLoading,
   initiateFileUpload,
+  onClose,
+  onSuccess,
   photoURL,
   setFile,
   setOpenCropView,
+  shouldOpenInModal,
 }) => {
   const intl = useIntl();
 
@@ -30,14 +36,20 @@ const CropAndRotateImage = ({
   const [isCroppingImage, setIsCroppingImage] = useState(false);
   const [isErrorCroppingImage, setIsErrorCroppingImage] = useState(false);
 
+  useEffect(() => {
+    return () => {
+      resetStates();
+    };
+  }, []);
+
   const uploadImageToServer = ({ uploadedFile }) => {
     setFile(uploadedFile);
     const formData = new FormData();
-    formData.append("company_logo", uploadedFile);
+    formData.append("file", uploadedFile);
     handleFileUpload({
       file: formData,
-      errorCallback: () => {
-        setFile(null);
+      successCallback: (file) => {
+        onSuccess(file);
       },
     });
   };
@@ -66,6 +78,7 @@ const CropAndRotateImage = ({
   const cancelCropHandler = () => {
     setOpenCropView(false);
     setFile(null);
+    onClose && onClose();
   };
 
   const resetStates = () => {
@@ -77,66 +90,105 @@ const CropAndRotateImage = ({
     setIsErrorCroppingImage(false);
   };
 
-  useEffect(() => {
-    return () => {
-      resetStates();
-    };
-  }, []);
+  const renderModalContent = () => {
+    return (
+      <View>
+        <View style={styles.cropperContainer}>
+          <Cropper
+            aspect={1}
+            crop={crop}
+            cropShape="round"
+            image={getImageSource(file)}
+            onCropChange={setCrop}
+            onCropComplete={(croppedArea, croppedAreaPixels) =>
+              setCroppedAreaPixels(croppedAreaPixels)
+            }
+            onRotationChange={setRotation}
+            onZoomChange={setZoom}
+            rotation={rotation}
+            zoom={zoom}
+            showGrid={false}
+            zoomSpeed={2}
+            style={{ cropAreaStyle: styles.cropAreaStyle }}
+          />
+        </View>
+        <ZoomSliderWithInfo {...{ setZoom, zoom, setRotation }} />
+        {!!errorWhileUpload && (
+          <CommonText
+            fontWeight="600"
+            customTextStyle={styles.customTextStyle}
+            customContainerStyle={styles.customContainerStyle}
+          >
+            {errorWhileUpload}
+          </CommonText>
+        )}
+        <View style={styles.actionBtnContainer}>
+          <CustomButton
+            onPress={
+              isCroppingImage || isLoading ? () => {} : cancelCropHandler
+            }
+            style={{
+              ...styles.buttonStyle,
+              ...(isCroppingImage || isLoading ? styles.additionalStyles : {}),
+            }}
+          >
+            {intl.formatMessage({ id: "label.cancel" })}
+          </CustomButton>
+          <CustomButton
+            isLoading={isCroppingImage || isLoading}
+            onPress={cropImage}
+            style={styles.buttonStyle}
+            withGreenBackground
+          >
+            <View>{intl.formatMessage({ id: "label.save" })}</View>
+          </CustomButton>
+        </View>
+      </View>
+    );
+  };
 
   return (
-    <Dialog onClose={cancelCropHandler} maxWidth="sm" {...{ heading }}>
-      <View style={styles.cropperContainer}>
-        <Cropper
-          aspect={1}
-          crop={crop}
-          cropShape="round"
-          image={getImageSource(file)}
-          onCropChange={setCrop}
-          onCropComplete={(croppedArea, croppedAreaPixels) =>
-            setCroppedAreaPixels(croppedAreaPixels)
-          }
-          onRotationChange={setRotation}
-          onZoomChange={setZoom}
-          rotation={rotation}
-          zoom={zoom}
-        />
-      </View>
-      <ZoomSliderWithInfo {...{ setZoom, zoom }} />
-      <View style={styles.actionBtnContainer}>
-        <CustomButton onPress={cancelCropHandler}>
-          {intl.formatMessage({ id: "label.cancel" })}
-        </CustomButton>
-        <CustomButton
-          onPress={cropImage}
-          withGreenBackground
-          isLoading={isCroppingImage}
-        >
-          <View>{intl.formatMessage({ id: "label.save" })}</View>
-        </CustomButton>
-      </View>
-    </Dialog>
+    <>
+      {shouldOpenInModal ? (
+        <Dialog onClose={cancelCropHandler} maxWidth="sm" {...{ heading }}>
+          {renderModalContent()}
+        </Dialog>
+      ) : (
+        renderModalContent()
+      )}
+    </>
   );
 };
 
 CropAndRotateImage.defaultProps = {
   file: null,
+  errorWhileUpload: "",
   handleFileUpload: () => {},
   heading: "Edit Picture",
+  isLoading: false,
   initiateFileUpload: () => {},
+  onClose: () => {},
+  onSuccess: () => {},
   photoURL: "",
   setFile: () => {},
   setOpenCropView: () => {},
+  shouldOpenInModal: true,
 };
 
 CropAndRotateImage.propTypes = {
   file: PropTypes.object,
+  errorWhileUpload: PropTypes.string,
   handleFileUpload: PropTypes.func,
   heading: PropTypes.string,
+  isLoading: PropTypes.bool,
   initiateFileUpload: PropTypes.func,
+  onClose: PropTypes.func,
+  onSuccess: PropTypes.func,
   photoURL: PropTypes.string,
   setFile: PropTypes.func,
   setOpenCropView: PropTypes.func,
   setPhotoURL: PropTypes.func,
+  shouldOpenInModal: PropTypes.bool,
 };
 
 export default CropAndRotateImage;
