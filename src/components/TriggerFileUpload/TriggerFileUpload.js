@@ -33,6 +33,7 @@ const TriggerFileUpload = ({ buttonTitle, initiateFileUpload, setFile }) => {
           isLeftIconNotSvg: true,
           leftIconSource: images.iconChange,
         }}
+        customStyle={{ customTextStyle: { fontSize: 14 } }}
       >
         {buttonTitle}
       </CustomButton>

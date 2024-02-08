@@ -5,7 +5,7 @@ import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import { USER_PROFILE } from "../../apiEndPoint";
 
-const useSaveLogo = () => {
+const useUpdateLogoAPI = () => {
   const [updateStatus, setUpdateStatus] = useState(API_STATUS.IDLE);
   const [fileUpdateResult, setFileUpdateResult] = useState(null);
   const [errorWhileUpdate, setErrorWhileUpdate] = useState("");
@@ -53,4 +53,4 @@ const useSaveLogo = () => {
   };
 };
 
-export default useSaveLogo;
+export default useUpdateLogoAPI;

@@ -58,20 +58,17 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   const fileUploadError =
     fileTooLargeError || invalidFormatError || nonUploadableImageError;
 
-  const onImageUploadSuccess = (file) => {
-    const updatedProfilePhoto = file?.data?.url;
-    userProfileDetails.userDetails.profile_photo = updatedProfilePhoto;
-    userProfileDispatch(setUserDetails(userProfileDetails));
-    onPressIconCross();
-  };
-
-  const handleImageUpload = (uploadedFile) => {
+  const onImageUpload = (uploadedFile) => {
     handleFileUpload({
       file: uploadedFile,
       successCallback: (file) => {
         handleFileUpdate({
           file: { profile_photo: file?.data?.file_name },
-          successCallback: () => onImageUploadSuccess(file),
+          successCallback: () => {
+            userProfileDetails.userDetails.profile_photo = file?.data?.url;
+            userProfileDispatch(setUserDetails(userProfileDetails));
+            onPressIconCross();
+          },
         });
       },
     });
@@ -144,7 +141,16 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
             setErrorWhileUpdate("");
             setErrorWhileUpload("");
           }}
-          onSuccess={onImageUploadSuccess}
+          onSuccess={(file) => {
+            handleFileUpdate({
+              file: { profile_photo: file?.data?.file_name },
+              successCallback: () => {
+                userProfileDetails.userDetails.profile_photo = file?.data?.url;
+                userProfileDispatch(setUserDetails(userProfileDetails));
+                onPressIconCross();
+              },
+            });
+          }}
           setFile={setFile}
           shouldOpenInModal={false}
         />
@@ -158,7 +164,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
                 buttonTitle,
                 initiateFileUpload,
                 setFile,
-                onImageUpload: handleImageUpload,
+                onImageUpload: onImageUpload,
                 isLoading: isUploadingImageToServer || isLoading,
               }}
             />
@@ -166,12 +172,13 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
               <CustomButton
                 onPress={handleRemoveImage}
                 isLoading={isDeletingFromServer}
-                style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
+                style={{ ...styles.secondButtonStyle }}
                 iconLeft={{
                   leftIconAlt: "delete",
                   leftIconSource: images.iconDelete,
                   isLeftIconNotSvg: true,
                 }}
+                customStyle={{ customTextStyle: { fontSize: 14 } }}
               >
                 {intl.formatMessage({ id: "label.remove" })}
               </CustomButton>
