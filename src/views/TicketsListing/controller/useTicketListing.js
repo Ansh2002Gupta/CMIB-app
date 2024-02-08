@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSearchParams } from "../../../routes";
+import { useNavigate, useSearchParams } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
@@ -13,11 +13,12 @@ import {
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import { ticketData } from "../constant";
+import { navigations } from "../../../constants/routeNames";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../TicketsView.style";
+import styles from "../TicketsListing.style";
 
-const useTicketView = () => {
+const useTicketListing = () => {
   const { isWebView } = useIsWebView();
   const [searchParams, setSearchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -33,6 +34,8 @@ const useTicketView = () => {
   const [currentRecords, setCurrentRecords] = useState(
     ticketData.slice(0, rowsPerPage)
   );
+
+  const navigate = useNavigate();
 
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
@@ -79,6 +82,10 @@ const useTicketView = () => {
     //TODO: Implement searching
   };
 
+  const onIconPress = (item) => {
+    navigate(navigations.TICKETS_VIEW_EDIT, { state: item });
+  };
+
   let headingTexts = ["id"];
   let subHeadingText = ["query_type"];
   let statusText = ["status"];
@@ -94,7 +101,7 @@ const useTicketView = () => {
           ...(!isWebView ? styles.pending : styles.pendingWeb),
           ...styles.cellTextStyle(12),
         };
-      case "close":
+      case "closed":
         return {
           ...(!isWebView ? styles.close : styles.closeWeb),
           ...styles.cellTextStyle(12),
@@ -168,6 +175,9 @@ const useTicketView = () => {
       {
         content: !isHeading && (
           <TouchableImage
+            onPress={() => {
+              onIconPress(item);
+            }}
             source={images.iconTicket}
             imageStyle={styles.iconTicket}
             isSvg={true}
@@ -198,6 +208,7 @@ const useTicketView = () => {
     indexOfFirstRecord,
     indexOfLastRecord,
     loadingMore,
+    onIconPress,
     rowsPerPage,
     statusText,
     subHeadingText,
@@ -207,4 +218,4 @@ const useTicketView = () => {
   };
 };
 
-export default useTicketView;
+export default useTicketListing;

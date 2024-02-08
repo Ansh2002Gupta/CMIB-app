@@ -1,12 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router";
 import { Image, View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../CardComponent/CardComponent";
+import Chip from "../Chip";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
+import colors from "../../assets/colors";
 import images from "../../images";
 import styles from "./IconHeader.style";
 
@@ -23,12 +25,37 @@ const IconHeader = ({
   mobActionButton,
   onPressLeftIcon,
   onPressRightIcon,
+  subHeading,
 }) => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
 
   const onGoBack = () => {
     navigate(-1);
+  };
+
+  const colorConfig = {
+    pending: {
+      bg: "lightOrange",
+      text: "orange",
+    },
+    closed: {
+      bg: "lightGreen",
+      text: "darkGreen",
+    },
+    default: {
+      bg: "skyBlueLight",
+      text: "skyBlueDark",
+    },
+  };
+
+  const getStatusColors = (subHeadingText) => {
+    const subHeading = subHeadingText.toLowerCase();
+    const statusColors = colorConfig[subHeading] || colorConfig.default;
+    return {
+      bgColor: colors[statusColors.bg],
+      textColor: colors[statusColors.text],
+    };
   };
 
   return (
@@ -48,14 +75,32 @@ const IconHeader = ({
             )}
           </View>
         )}
-        <View style={styles.titleContainer}>
-          <CommonText
-            customTextStyle={!isWebView ? styles.formHeaderStyle : {}}
-            fontWeight="600"
-          >
-            {headerText}
-          </CommonText>
-          {!!mobActionButton && (
+        <View
+          style={!isWebView ? styles.titleContainer : styles.titleContainerWeb}
+        >
+          <View style={styles.headingContainer}>
+            <CommonText
+              customTextStyle={
+                !isWebView ? styles.formHeaderStyle : styles.formHeaderStyleWeb
+              }
+              fontWeight="600"
+            >
+              {headerText}
+            </CommonText>
+            {!!subHeading && (
+              <Chip
+                customTextStyle={
+                  !isWebView
+                    ? styles.formHeaderStyle
+                    : styles.formHeaderStyleWeb
+                }
+                fontWeight="600"
+                label={subHeading}
+                {...getStatusColors(subHeading)}
+              />
+            )}
+          </View>
+          {!!mobActionButton && !isWebView && (
             <CustomTouchableOpacity
               style={{ ...styles.editContainer, ...iconStyle }}
               onPress={handleButtonClick}
@@ -105,7 +150,7 @@ IconHeader.propTypes = {
   iconLeft: PropTypes.string,
   iconRight: PropTypes.string,
   iconStyle: PropTypes.object,
-  mobActionButton: PropTypes.string,
+  mobActionButton: PropTypes.node,
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,
 };

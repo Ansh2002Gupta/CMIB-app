@@ -15,6 +15,7 @@ import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
+import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import colors from "../../assets/colors";
@@ -28,6 +29,7 @@ const CustomTextInput = (props) => {
     customLabelStyle,
     customStyle,
     customTextInputContainer,
+    customTextInputOuterContainer,
     countValue,
     codeValue,
     dropdownStyle,
@@ -46,11 +48,14 @@ const CustomTextInput = (props) => {
     isPaddingNotRequired,
     isPassword,
     isRupee,
+    isSendButton,
     label,
     maxCount,
     minCount,
     options,
     onChangeValue,
+    onClickAttachement,
+    onClickSend,
     placeholder,
     step,
     value,
@@ -93,7 +98,9 @@ const CustomTextInput = (props) => {
       : {};
 
   const inputStyle = {
-    ...(isWebPlatform && isMultiline ? {} : style.inputContainer),
+    ...(isWebPlatform && isMultiline
+      ? {}
+      : { ...style.inputContainer, ...customTextInputOuterContainer }),
     ...(isFocused ? style.focusedStyle : {}),
     ...(isError ? style.invalidInput : {}),
   };
@@ -193,6 +200,35 @@ const CustomTextInput = (props) => {
               value,
             }}
           />
+        ) : isSendButton ? (
+          <View style={style.sendButton}>
+            <TextInput
+              value={value}
+              style={[
+                style.textInputStyle,
+                isMultiline && style.textAlignStyle,
+                isWebView && style.webLabel,
+                customTextInputContainer,
+              ]}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              placeholder={placeholder}
+              secureTextEntry={isPassword && !isTextVisible}
+              ref={fieldRef}
+              {...platformSpecificProps}
+              {...(isNumeric ? mobileProps : {})}
+              {...remainingProps}
+            />
+            <TouchableImage
+              source={images.iconAttachement}
+              onPress={onClickAttachement}
+            />
+            <TouchableImage
+              source={images.iconSendGreen}
+              onPress={onClickSend}
+              disabled={!value}
+            />
+          </View>
         ) : (
           <TextInput
             value={value}
@@ -256,6 +292,7 @@ CustomTextInput.defaultProps = {
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
+  customTextInputOuterContainer: {},
   dropdownStyle: {},
   errorMessage: "",
   eyeImage: false,
@@ -270,12 +307,15 @@ CustomTextInput.defaultProps = {
   isNumeric: false,
   isPaddingNotRequired: false,
   isPassword: false,
+  isSendButton: false,
   label: "",
   labelField: "label",
   maxCount: 100,
   minCount: 0,
   options: [],
   onChangeValue: () => {},
+  onClickAttachement: () => {},
+  onClickSend: () => {},
   placeholder: "",
   step: 1,
   value: "",
@@ -292,6 +332,7 @@ CustomTextInput.propTypes = {
   customLabelStyle: PropTypes.object,
   customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customTextInputContainer: PropTypes.object,
+  customTextInputOuterContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
@@ -307,6 +348,7 @@ CustomTextInput.propTypes = {
   isNumeric: PropTypes.bool,
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
+  isSendButton: PropTypes.bool,
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
@@ -314,6 +356,8 @@ CustomTextInput.propTypes = {
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
+  onClickAttachement: PropTypes.func,
+  onClickSend: PropTypes.func,
   placeholder: PropTypes.string,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

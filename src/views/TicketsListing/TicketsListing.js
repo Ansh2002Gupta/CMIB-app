@@ -6,7 +6,7 @@ import { TwoRow } from "../../core/layouts";
 
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import useTicketView from "./controller/useTicketView";
+import useTicketListing from "./controller/useTicketListing";
 import { ticketData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
@@ -14,7 +14,7 @@ import {
   TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
 
-const TicketsView = () => {
+const TicketsListing = () => {
   const {
     allDataLoaded,
     currentRecords,
@@ -31,13 +31,14 @@ const TicketsView = () => {
     indexOfFirstRecord,
     indexOfLastRecord,
     loadingMore,
+    onIconPress,
     rowsPerPage,
     statusText,
     subHeadingText,
     tableIcon,
     setCurrentRecords,
     totalcards,
-  } = useTicketView();
+  } = useTicketListing();
 
   const intl = useIntl();
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ const TicketsView = () => {
             indexOfFirstRecord,
             indexOfLastRecord,
             loadingMore,
+            onIconPress,
             rowsLimit,
             rowsPerPage,
             setCurrentRecords,
@@ -90,4 +92,4 @@ const TicketsView = () => {
   );
 };
 
-export default TicketsView;
+export default TicketsListing;
