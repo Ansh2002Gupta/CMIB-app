@@ -134,6 +134,12 @@ const style = {
   valueStyle: {
     paddingRight: 12,
   },
+  sendButton: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 4,
+  },
 };
 
 export default style;

@@ -7,7 +7,7 @@ const styles = {
     flexDirection: "row",
   },
   clickable: {
-    ...(Platform.OS.toLowerCase() === 'web' ? { cursor: 'pointer' } : {}),
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   disabled: {
     opacity: 0.5,
