@@ -125,6 +125,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
               id: "label.edit_profile_picture",
             })
       }
+      maxWidth={!file && Platform.OS === "web" ? "xs" : ""}
       isIconCross
       onPressIconCross={onPressIconCross}
       customHeaderStyle={styles.customHeadingStyle}
