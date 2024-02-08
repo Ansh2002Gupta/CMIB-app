@@ -29,6 +29,7 @@ const TriggerFileUpload = ({ buttonTitle, initiateFileUpload, setFile }) => {
       <CustomButton
         style={styles.buttonStyle}
         onPress={handleUploadClick}
+        shouldShowHover
         iconLeft={{
           isLeftIconNotSvg: true,
           leftIconSource: images.iconChange,

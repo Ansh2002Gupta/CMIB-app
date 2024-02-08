@@ -178,6 +178,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
                   leftIconSource: images.iconDelete,
                   isLeftIconNotSvg: true,
                 }}
+                shouldShowHover
                 customStyle={{ customTextStyle: { fontSize: 14 } }}
               >
                 {intl.formatMessage({ id: "label.remove" })}
