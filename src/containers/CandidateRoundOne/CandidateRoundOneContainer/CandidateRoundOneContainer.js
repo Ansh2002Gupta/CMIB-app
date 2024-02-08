@@ -1,12 +1,16 @@
 import React from "react";
 import CandidateRoundOneContainerTemplate from "./CandidateRoundOneContainerTemplate";
-import useCandidateRoundOneCards from  "./controllers/useCandidateRoundOneCards";
+import useCandidateRoundOneCards from "./controllers/useCandidateRoundOneCards";
 
 const CandidateRoundOneContainer = () => {
+  let { roundOneCards, onPressCard } = useCandidateRoundOneCards();
 
-    let {roundOneCards} = useCandidateRoundOneCards();
-
-    return <CandidateRoundOneContainerTemplate roundOneCards={roundOneCards}/>
+  return (
+    <CandidateRoundOneContainerTemplate
+      roundOneCards={roundOneCards}
+      onPressCard={onPressCard}
+    />
+  );
 };
 
 export default CandidateRoundOneContainer;

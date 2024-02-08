@@ -246,13 +246,13 @@ export const CANDIDATE_ROUND_ONE_CARDS = [
   },
   {
     title: "label.consent_marking_management",
-    id: 3,
+    id: 4,
     image: "iconConsent",
     subTitle: "label.consent_marking_management_description",
   },
   {
     title: "label.campus_interview_management",
-    id: 3,
+    id: 5,
     image: "iconCampus",
     subTitle: "label.campus_interview_management_description",
   },

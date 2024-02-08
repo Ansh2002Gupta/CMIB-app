@@ -19,22 +19,22 @@ const useCandidateRoundOneCards = () => {
     subTitle: intl.formatMessage({ id: card.subTitle }),
   }));
 
-//   const onPressCard = (id) => {
-//     setSelectedTab(id);
-//     switch (id) {
-//       case 1:
-//         navigate(navigations.APPLICATION_FORM);
-//         break;
-//       case 2:
-//         break;
-//       case 3:
-//       default:
-//         break;
-//     }
-//   };
+  const onPressCard = (id) => {
+    setSelectedTab(id);
+    switch (id) {
+      case 1:
+        navigate(navigations.APPLICATION_FORM);
+        break;
+      case 2:
+        break;
+      case 3:
+      default:
+        break;
+    }
+  };
 
   return {
-    // onPressCard,
+    onPressCard,
     roundOneCards,
     // selectedTab,
   };

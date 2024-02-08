@@ -1,14 +1,15 @@
 import React from "react";
-import styles from "./CandidateRoundOneContainer.style";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
+
 import CardComponent from "../../../components/CardComponent";
 import CommonText from "../../../components/CommonText";
+import CustomImage from "../../../components/CustomImage";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import useIsWebView from "../../../hooks/useIsWebView";
 import classes from "../../../theme/styles/CssClassProvider";
-import CustomImage from "../../../components/CustomImage";
+import styles from "./CandidateRoundOneContainer.style";
 
-const CandidateRoundOneContainerTemplate = ({ roundOneCards }) => {
+const CandidateRoundOneContainerTemplate = ({ roundOneCards, onPressCard }) => {
   const { isWebView } = useIsWebView();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
@@ -27,10 +28,10 @@ const CandidateRoundOneContainerTemplate = ({ roundOneCards }) => {
       {roundOneCards.map((card, index) => (
         <CustomTouchableOpacity
           key={index}
-          //   onPress={() => {
-          //     onPressCard(card.id);
-          //   }}
-          style={styles.buttonStyle}
+          onPress={() => {
+            onPressCard(card.id);
+          }}
+          style={styles.mainStyle}
         >
           <CardComponent
             customStyle={{
@@ -42,21 +43,11 @@ const CandidateRoundOneContainerTemplate = ({ roundOneCards }) => {
             <View style={styles.imageContainer}>
               <CustomImage style={styles.imageStyle} source={card.image} />
             </View>
-            <View
-              style={{
-                ...styles.cardView,
-                ...(isWebView ? styles.webAddApplicationView : null),
-              }}
-            >
-              <CommonText
-                customTextStyle={styles.titleText}
-                fontWeight={"600"}
-              >
+            <View style={styles.textView}>
+              <CommonText customTextStyle={styles.titleText} fontWeight={"600"}>
                 {card.title}
               </CommonText>
-              <CommonText
-                customTextStyle={styles.descriptionText}
-              >
+              <CommonText customTextStyle={styles.descriptionText}>
                 {card.subTitle}
               </CommonText>
             </View>
