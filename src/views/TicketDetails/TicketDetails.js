@@ -4,14 +4,32 @@ import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../components/CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./TicketDetails.styles";
-import { FourColumn, TwoColumn, TwoRow } from "../../core/layouts";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import MultiRow from "../../core/layouts/MultiRow";
+import images from "../../images";
 
-const TicketDetails = ({ isDisabled = false, details }) => {
+const TicketDetails = ({ details }) => {
   const { assigned_to, created_at, id, query_type, status } = details;
   const { isWebView } = useIsWebView();
   const role = "Admin";
+
+  const getTopSectionData = (assignedTo) => {
+    const isAssigned = !!assignedTo;
+    const profileIconImage = isAssigned ? undefined : images.iconAvatar;
+    const textFontWeight = isAssigned ? "600" : "500";
+    const headingText = isAssigned ? assignedTo : "Admin Not Assigned";
+    const roleText = isAssigned ? role : "";
+
+    return {
+      profileIconImage,
+      textFontWeight,
+      headingText,
+      roleText,
+    };
+  };
+
+  const topSectionData = getTopSectionData(assigned_to);
 
   const renderDetails = ({ detailHeading, subDetailHeading }) => {
     return (
@@ -64,25 +82,37 @@ const TicketDetails = ({ isDisabled = false, details }) => {
   ];
 
   return (
-    <View style={isDisabled ? styles.disabled : styles.container}>
+    <View style={styles.container}>
       {isWebView ? (
         <TwoRow
           style={styles.webContainer}
+          topSectionStyle={!assigned_to ? styles.disabled : {}}
           topSection={
-            <View>
-              <ProfileIcon
-                name={assigned_to}
-                customContainerStyle={styles.profileIcon}
-              />
-              <CommonText
-                fontWeight={"600"}
-                customTextStyle={styles.headingText}
-              >
-                {assigned_to}
-              </CommonText>
-              <CommonText customTextStyle={styles.roleText}>{role}</CommonText>
-              <View style={styles.horizontalLine} />
-            </View>
+            <TwoRow
+              style={styles.webContainer}
+              topSectionStyle={!assigned_to ? styles.disabled : {}}
+              topSection={
+                <View>
+                  <ProfileIcon
+                    name={assigned_to}
+                    profileImage={topSectionData.profileIconImage}
+                    customContainerStyle={styles.profileIcon}
+                  />
+                  <CommonText
+                    fontWeight={topSectionData.textFontWeight}
+                    customTextStyle={styles.headingText}
+                  >
+                    {topSectionData.headingText}
+                  </CommonText>
+                  {assigned_to && (
+                    <CommonText customTextStyle={styles.roleText}>
+                      {topSectionData.roleText}
+                    </CommonText>
+                  )}
+                  <View style={styles.horizontalLine} />
+                </View>
+              }
+            />
           }
           bottomSection={
             <TwoRow

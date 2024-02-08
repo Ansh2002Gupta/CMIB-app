@@ -7,9 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   disabled: {
-    opacity: 0.5,
-    flex: 1,
-    backgroundColor: colors.white,
+    opacity: 0.8,
   },
   webContainer: {
     paddingTop: 40,

@@ -46,7 +46,11 @@ const TicketChatScreen = () => {
       topSection={
         <>
           <IconHeader
-            headerText={isDetailsScreen ? "Tickets Details" : id}
+            headerText={
+              isDetailsScreen
+                ? intl.formatMessage({ id: "label.view_ticket_details" })
+                : id
+            }
             subHeading={status}
             onPressLeftIcon={onGoBack}
             hasIconBar
@@ -78,7 +82,9 @@ const TicketChatScreen = () => {
                 : styles.chatScreenSection
             }
             rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
-            leftSection={<ChatSection data={ticket_replies} />}
+            leftSection={
+              <ChatSection data={ticket_replies} details={location.state} />
+            }
             rightSection={
               isWebView && <TicketDetails details={location.state} />
             }
@@ -88,7 +94,7 @@ const TicketChatScreen = () => {
             {isDetailsScreen ? (
               <TicketDetails details={location.state} />
             ) : (
-              <ChatSection data={ticket_replies} />
+              <ChatSection data={ticket_replies} details={location.state} />
             )}
           </>
         )

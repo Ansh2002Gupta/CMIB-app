@@ -102,6 +102,7 @@ import iconBackArrow from "../../public/images/svg/iconBackArrow.svg";
 import iconAlert from "../../public/images/svg/iconAlert.svg";
 import iconSendGreen from "../../public/images/svg/iconSend.svg";
 import iconAttachement from "../../public/images/svg/iconAttachement.svg";
+import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 
 const images = {
   iconArrowUp,
@@ -208,6 +209,7 @@ const images = {
   iconAlert,
   iconSendGreen,
   iconAttachement,
+  iconAvatar,
 };
 
 export default images;

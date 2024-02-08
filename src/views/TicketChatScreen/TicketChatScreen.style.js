@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     width: midOrSmall ? "30%" : "25%",
   }),
   topSectionStyle: {
-    zIndex: 10,
+    zIndex: 2,
   },
   bottomSectionStyle: {
     zIndex: 0,

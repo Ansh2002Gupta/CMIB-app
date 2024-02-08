@@ -3,7 +3,7 @@ export const ticketData = [
     id: "T0123456",
     query_type: "General Inquiry",
     status: "Pending",
-    assigned_to: "-",
+    assigned_to: "",
     created_at: "10/10/2010",
   },
   {
@@ -24,7 +24,7 @@ export const ticketData = [
     id: "T0123459",
     query_type: "Feedback",
     status: "Pending",
-    assigned_to: "-",
+    assigned_to: "",
     created_at: "03/07/2013",
   },
   {
@@ -332,7 +332,7 @@ export const ticketData = [
     id: "T0123462",
     query_type: "Urgent Matter",
     status: "Pending",
-    assigned_to: "-",
+    assigned_to: "",
     created_at: "09/05/2016",
   },
   {

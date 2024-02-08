@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     fontSize: 12,
     color: colors.subHeadingGray,
-    textTransform: 'capitalize'
+    textTransform: "capitalize",
   },
   iconArrow: {
     width: 16,

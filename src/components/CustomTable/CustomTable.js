@@ -8,7 +8,6 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
-import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import PaginationFooter from "../PaginationFooter";

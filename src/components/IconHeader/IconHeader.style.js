@@ -3,6 +3,7 @@ import colors from "../../assets/colors";
 const style = {
   container: {
     backgroundColor: colors.white,
+    zIndex: 0,
   },
   iconContainer: {
     flexDirection: "row",
@@ -29,6 +30,7 @@ const style = {
     borderLeftWidth: 0,
     borderRightWidth: 0,
     borderColor: colors.lightGrey,
+    zIndex: 0,
   },
   formHeaderStyle: {
     color: colors.black,
@@ -50,6 +52,7 @@ const style = {
   cardContainer: {
     paddingTop: 14,
     paddingBottom: 14,
+    zIndex: 0,
   },
   editContainer: {
     flexDirection: "row",

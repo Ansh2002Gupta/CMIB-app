@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const baseMessageContainer = {
@@ -7,6 +7,11 @@ const baseMessageContainer = {
   borderBottomLeftRadius: 16,
   borderBottomRightRadius: 16,
   marginTop: 4,
+  ...Platform.select({
+    web: {
+      overflowWrap: "break-word",
+    },
+  }),
 };
 
 const baseSenderStyle = {
@@ -47,7 +52,8 @@ const styles = StyleSheet.create({
   senderContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    margin: 10,
+    marginTop: 10,
+    flex: 1,
   },
   recieverContainer: {
     flexDirection: "row",
@@ -57,6 +63,11 @@ const styles = StyleSheet.create({
   senderMessageArea: {
     alignItems: "flex-end",
     marginRight: 8,
+    flexWrap: "wrap",
+  },
+  shouldShowAvatarSenderMessageArea: {
+    alignItems: "flex-end",
+    marginRight: 40,
   },
   reciverMessageArea: {
     alignItems: "flex-start",
@@ -69,6 +80,8 @@ const styles = StyleSheet.create({
   },
   textSize: {
     fontSize: 14,
+    flexWrap: "wrap",
+    // flex: 1,
   },
 });
 
