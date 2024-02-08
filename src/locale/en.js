@@ -293,6 +293,16 @@ const locale = {
   "label.no_placeholder": "e.g 1",
   "label.code_placeholder": "e.g 91",
   "label.account_deletion": "Account deleted successfully.",
+  "label.application": "Application",
+  "label.download_id": "Download Id",
+  "label.centre_wise_company_detail": "Centre wise Company Detail",
+  "label.consent_marking_management": "Consent Marking Management",
+  "label.campus_interview_management": "Campus Interview Management",
+  "label.application_description": "Seamless application process for aspiring Chartered Accountants.",
+  "label.download_id_description": "Obtain your CA ID as a PDF: candidate verification made easy.",
+  "label.centre_wise_company_detail_description": "Effortless access to comprehensive company details as per centre.",
+  "label.consent_marking_management_description": "Efficiently oversee and navigate consent markings with precision and compliance.",
+  "label.campus_interview_management_description": "Optimize job prospects through streamlined campus interview management for accountants.",
 };
 
 export default locale;

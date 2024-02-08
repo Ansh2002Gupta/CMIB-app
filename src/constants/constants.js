@@ -224,3 +224,36 @@ export const FEEDBACK_TABLE_HEADING = {
   status: "Status",
   created_at: "Created On",
 };
+
+export const CANDIDATE_ROUND_ONE_CARDS = [
+  {
+    title: "label.application",
+    id: 1,
+    image: "iconApplication",
+    subTitle: "label.application_description",
+  },
+  {
+    title: "label.download_id",
+    id: 2,
+    image: "iconDownload",
+    subTitle: "label.download_id_description",
+  },
+  {
+    title: "label.centre_wise_company_detail",
+    id: 3,
+    image: "iconDiscover",
+    subTitle: "label.centre_wise_company_detail_description",
+  },
+  {
+    title: "label.consent_marking_management",
+    id: 3,
+    image: "iconConsent",
+    subTitle: "label.consent_marking_management_description",
+  },
+  {
+    title: "label.campus_interview_management",
+    id: 3,
+    image: "iconCampus",
+    subTitle: "label.campus_interview_management_description",
+  },
+];
