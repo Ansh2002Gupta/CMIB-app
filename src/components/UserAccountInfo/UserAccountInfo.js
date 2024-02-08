@@ -110,6 +110,7 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
               ? intl.formatMessage({ id: "label.retry" })
               : intl.formatMessage({ id: "label.delete" })
           }
+          buttonOneStyle={isLoading ? styles.disableStyle : {}}
           buttonTwoStyle={styles.buttonTwoStyle}
           buttonTwoTextStyle={styles.buttonTwotextStyle}
           headingText={
@@ -119,7 +120,9 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
           }
           icon={images.iconAlert}
           loader={isLoading}
-          onPressButtonOne={() => setShowDeleteAccountModal(false)}
+          onPressButtonOne={
+            isLoading ? () => {} : () => setShowDeleteAccountModal(false)
+          }
           onPressButtonTwo={() => {
             handleDeleteUser({
               successCallback: () => {

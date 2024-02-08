@@ -49,6 +49,13 @@ const styles = StyleSheet.create({
   buttonTwotextStyle: {
     color: colors.white,
   },
+  disableStyle: {
+    ...Platform.select({
+      web: {
+        cursor: "not-allowed",
+      },
+    }),
+  },
 });
 
 export default styles;

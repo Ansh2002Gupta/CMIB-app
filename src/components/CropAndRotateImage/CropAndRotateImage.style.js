@@ -38,6 +38,13 @@ const styles = {
   buttonStyle: {
     width: 80,
   },
+  additionalStyles: {
+    ...Platform.select({
+      web: {
+        cursor: "not-allowed",
+      },
+    }),
+  },
   cropAreaStyle: {
     borderWidth: 2,
     borderColor: colors.white,

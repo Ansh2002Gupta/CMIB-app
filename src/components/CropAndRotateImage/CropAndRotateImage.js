@@ -122,7 +122,15 @@ const CropAndRotateImage = ({
           </CommonText>
         )}
         <View style={styles.actionBtnContainer}>
-          <CustomButton onPress={cancelCropHandler} style={styles.buttonStyle}>
+          <CustomButton
+            onPress={
+              isCroppingImage || isLoading ? () => {} : cancelCropHandler
+            }
+            style={{
+              ...styles.buttonStyle,
+              ...(isCroppingImage || isLoading ? styles.additionalStyles : {}),
+            }}
+          >
             {intl.formatMessage({ id: "label.cancel" })}
           </CustomButton>
           <CustomButton

@@ -56,7 +56,7 @@ const styles = {
   },
   errorContainerStyle: {
     minHeight: 20,
-    lineHeight: 20,
+    lineHeight: "20px",
   },
   customHeadingStyle: {
     paddingBottom: 16,
