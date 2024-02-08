@@ -108,6 +108,7 @@ const CropAndRotateImage = ({
             rotation={rotation}
             zoom={zoom}
             showGrid={false}
+            zoomSpeed={2}
             style={{ cropAreaStyle: styles.cropAreaStyle }}
           />
         </View>
