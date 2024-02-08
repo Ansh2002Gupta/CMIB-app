@@ -70,6 +70,8 @@ const ViewProfileDetails = ({
           }
           bottomSection={
             <ProfileIcon
+              customOuterContainer={styles.customOuterContainer}
+              customContainerStyle={styles.customOuterContainer}
               showEditIcon
               name={name}
               profileImage={profileImage}

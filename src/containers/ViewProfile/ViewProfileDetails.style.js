@@ -75,6 +75,10 @@ const styles = StyleSheet.create({
   deletetext: {
     fontSize: 14,
   },
+  customOuterContainer: {
+    borderWidth: 6.5,
+    borderColor: colors.white,
+  },
 });
 
 export default styles;

@@ -38,6 +38,10 @@ const styles = {
   buttonStyle: {
     width: 80,
   },
+  cropAreaStyle: {
+    borderWidth: 2,
+    borderColor: colors.white,
+  },
 };
 
 export default styles;

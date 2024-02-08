@@ -8,7 +8,7 @@ import images from "../../images";
 import { ZOOM_CONSTANT } from "../../constants/constants";
 import styles from "./ZoomSliderWithInfo.style";
 
-const ZoomSliderWithInfo = ({ zoom, setZoom, setRotation }) => {
+const ZoomSliderWithInfo = ({ setZoom, setRotation, zoom }) => {
   const zoomPercentage = Math.floor(
     ((zoom - ZOOM_CONSTANT.MIN_ZOOM) /
       (ZOOM_CONSTANT.MAX_ZOOM - ZOOM_CONSTANT.MIN_ZOOM)) *
@@ -78,11 +78,13 @@ const ZoomSliderWithInfo = ({ zoom, setZoom, setRotation }) => {
 };
 
 ZoomSliderWithInfo.defaultProps = {
+  setRotation: () => {},
   setZoom: () => {},
   zoom: 1,
 };
 
 ZoomSliderWithInfo.propTypes = {
+  setRotation: PropTypes.func,
   setZoom: PropTypes.func,
   zoom: PropTypes.number,
 };

@@ -12,6 +12,7 @@ import styles from "./ProfileIcon.style";
 const ProfileIcon = ({
   customContainerStyle,
   customImageStyle,
+  customOuterContainer,
   customTextStyle,
   name,
   onPressEditIcon,
@@ -36,7 +37,7 @@ const ProfileIcon = ({
 
   if (profileImage) {
     return (
-      <View style={styles.outerContainer}>
+      <View style={{ ...styles.outerContainer, ...customOuterContainer }}>
         <View style={{ ...styles.initialsContainer, ...customContainerStyle }}>
           <Image
             source={{ uri: profileImage }}
@@ -70,6 +71,7 @@ ProfileIcon.defaultProps = {
   customContainerStyle: {},
   customImageStyle: {},
   customTextStyle: {},
+  customOuterContainer: {},
   name: "",
   onPressEditIcon: () => {},
   profileImage: "",
@@ -80,6 +82,7 @@ ProfileIcon.propTypes = {
   customContainerStyle: PropTypes.object,
   customImageStyle: PropTypes.object,
   customTextStyle: PropTypes.object,
+  customOuterContainer: PropTypes.object,
   name: PropTypes.string,
   onPressEditIcon: PropTypes.func,
   profileImage: PropTypes.string,

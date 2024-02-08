@@ -107,6 +107,8 @@ const CropAndRotateImage = ({
             onZoomChange={setZoom}
             rotation={rotation}
             zoom={zoom}
+            showGrid={false}
+            style={{ cropAreaStyle: styles.cropAreaStyle }}
           />
         </View>
         <ZoomSliderWithInfo {...{ setZoom, zoom, setRotation }} />
