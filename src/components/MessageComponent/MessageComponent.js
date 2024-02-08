@@ -10,7 +10,7 @@ import { getTime } from "../../utils/util";
 
 const MessageComponent = ({ data, details, userDetails, index, messages }) => {
   const windowDimensions = useWindowDimensions();
-  const width1400orLess = windowDimensions.width <= 1400;
+  const width1400orLess = windowDimensions.width <= 1500;
 
   const shouldShowAvatar = (currentIndex) => {
     if (currentIndex === 0) return true;
