@@ -39,6 +39,8 @@ const OtpViewUI = ({
   setSeconds,
   handleDismissToast,
   validationError,
+  headerText,
+  description,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [afterAttempt, setAfterAttempt] = useState(false);
@@ -99,7 +101,7 @@ const OtpViewUI = ({
           ...styles.commonScreenContainers,
         };
       }
-
+      case "label.enter_otp":
       case "label.forgot_password": {
         if (currentBreakpoint === "sm") {
           return {
@@ -118,7 +120,7 @@ const OtpViewUI = ({
           ...styles.forgotHeaderText,
         };
       }
-
+      case "otp_text_forgot_password":
       case "label.otp_text": {
         if (currentBreakpoint === "sm") {
           return {
@@ -170,10 +172,18 @@ const OtpViewUI = ({
             }
           >
             <HeaderTextWithLabelAndDescription
-              description={intl.formatMessage({
-                id: "label.otp_text",
-              })}
-              headerText={intl.formatMessage({ id: "label.forgot_password" })}
+              description={
+                description
+                  ? description
+                  : intl.formatMessage({
+                      id: "label.otp_text",
+                    })
+              }
+              headerText={
+                headerText
+                  ? headerText
+                  : intl.formatMessage({ id: "label.enter_otp" })
+              }
               customTextStyle={
                 isWebView
                   ? getResponsiveStyles("label.forgot_password")

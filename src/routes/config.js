@@ -23,6 +23,7 @@ import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
 import TicketsView from "../views/TicketsView/index";
 import WebViewScreen from "../views/WebViewScreen/index";
+import OtpView from "../views/OtpView";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -67,6 +68,16 @@ const config = [
       {
         viewPath: "",
         element: <ForgotPassword />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.OTP,
+    element: <LoginWithPublicAccess />,
+    views: [
+      {
+        viewPath: "",
+        element: <OtpView />,
       },
     ],
   },

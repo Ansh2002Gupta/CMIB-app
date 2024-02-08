@@ -36,6 +36,10 @@ const LoginScreenUI = (props) => {
     password,
     toggleUser,
     userName,
+    srn,
+    onChangeSRNNumber,
+    loginDisabledForMembers,
+    onLoginForMembers,
   } = props;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
@@ -187,6 +191,7 @@ const LoginScreenUI = (props) => {
             >
               <View
                 style={{
+                  flexGrow: 1,
                   ...(isWebView && styles.webView.backGroundColor),
                 }}
               >
@@ -228,6 +233,7 @@ const LoginScreenUI = (props) => {
                     customTextInputContainer={
                       isWebView ? styles.webView.inputTextBox : {}
                     }
+                    isPaddingNotRequired={true}
                   />
                   <View style={styles.forgotButtonContainer}>
                     <TouchableOpacity
@@ -249,44 +255,52 @@ const LoginScreenUI = (props) => {
                       </CommonText>
                     </TouchableOpacity>
                   </View>
-                  <View style={styles.loginButtonView}>
-                    <CustomButton
-                      disabled={loginDisabled}
-                      isLoading={isLoading}
-                      onPress={onLogin}
-                      type={"submit"}
-                      withGreenBackground
-                    >
-                      {intl.formatMessage({ id: "label.login" })}
-                    </CustomButton>
-                  </View>
                 </View>
-                <View style={styles.accountView}>
-                  <CommonText
-                    customTextStyle={{
-                      ...styles.accountText,
-                      ...(isWebView ? styles.webView.dontHaveAccountText : {}),
-                    }}
+                <View
+                  style={
+                    isWebView
+                      ? styles.webView.buttonContainerStyle
+                      : styles.buttonContainerStyle
+                  }
+                >
+                  <CustomButton
+                    onPress={onLogin}
+                    disabled={loginDisabled}
+                    displayLoader={isLoading}
+                    customTitleStyle={isWebView && styles.webView.loginText}
+                    customButtonContainer={styles.loginButtonView}
                   >
-                    {intl.formatMessage({
-                      id: "label.dont_have_account",
-                    })}
-                  </CommonText>
-                  <TouchableOpacity onPress={onCreateNewPasswordClick}>
+                    {intl.formatMessage({ id: "label.login" })}
+                  </CustomButton>
+                  <View style={styles.accountView}>
                     <CommonText
                       customTextStyle={{
-                        ...styles.newAccountText,
+                        ...styles.accountText,
                         ...(isWebView
-                          ? styles.webView.createNewAccountText
+                          ? styles.webView.dontHaveAccountText
                           : {}),
                       }}
-                      fontWeight="600"
                     >
                       {intl.formatMessage({
-                        id: "label.create_new_account",
+                        id: "label.dont_have_account",
                       })}
                     </CommonText>
-                  </TouchableOpacity>
+                    <TouchableOpacity onPress={onCreateNewPasswordClick}>
+                      <CommonText
+                        customTextStyle={{
+                          ...styles.newAccountText,
+                          ...(isWebView
+                            ? styles.webView.createNewAccountText
+                            : {}),
+                        }}
+                        fontWeight="600"
+                      >
+                        {intl.formatMessage({
+                          id: "label.create_new_account",
+                        })}
+                      </CommonText>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
               {!isWebView && (
@@ -296,7 +310,65 @@ const LoginScreenUI = (props) => {
               )}
             </ScrollView>
           ) : (
-            <View style={styles.minHeight}></View>
+            <ScrollView
+              contentContainerStyle={{
+                ...styles.companyView,
+                ...(isWebView && styles.webView.backGroundColor),
+              }}
+            >
+              <View
+                style={{
+                  flexGrow: 1,
+                  ...(isWebView && styles.webView.backGroundColor),
+                }}
+              >
+                <View
+                  style={{
+                    ...(isWebView && styles.webView.backGroundColor),
+                  }}
+                >
+                  <CustomTextInput
+                    label={intl.formatMessage({ id: "label.srn" })}
+                    placeholder={intl.formatMessage({
+                      id: "label.srn_placeholder",
+                    })}
+                    value={srn}
+                    onChangeText={(val) => onChangeSRNNumber(val)}
+                    errorMessage={errorMessage}
+                    isError={!!errorMessage}
+                    isMandatory
+                    customLabelStyle={
+                      isWebView && styles.webView.inputLabelText
+                    }
+                    customTextInputContainer={
+                      isWebView && styles.webView.inputTextBox
+                    }
+                  />
+                </View>
+                <View
+                  style={
+                    isWebView
+                      ? styles.webView.buttonContainerStyle
+                      : styles.buttonContainerStyle
+                  }
+                >
+                  <CustomButton
+                    onPress={onLoginForMembers}
+                    disabled={loginDisabledForMembers}
+                    displayLoader={isLoading}
+                    customTitleStyle={isWebView && styles.webView.loginText}
+                    customButtonContainer={styles.loginButtonView}
+                  >
+                    {intl.formatMessage({ id: "label.login" })}
+                  </CustomButton>
+                  {!isWebView && (
+                    <View style={styles.followUsImageView}>
+                      <FollowUsIcons />
+                    </View>
+                  )}
+                </View>
+              </View>
+            </ScrollView>
           )}
         </View>
         {!!errorWhileLoggingIn && (
@@ -305,7 +377,7 @@ const LoginScreenUI = (props) => {
             onDismiss={handleDismissToast}
           />
         )}
-        {logoutDetails.isLogoutToast && (
+        {logoutDetails?.isLogoutToast && (
           <ToastComponent
             toastMessage={logoutDetails.message}
             onDismiss={handleDismissToast}
@@ -332,11 +404,13 @@ LoginScreenUI.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   logoutDetails: PropTypes.object.isRequired,
   loginDisabled: PropTypes.bool.isRequired,
+  loginDisabledForMembers: PropTypes.bool.isRequired,
   onChangePassword: PropTypes.func.isRequired,
   onChangeUsername: PropTypes.func.isRequired,
   onCreateNewPasswordClick: PropTypes.func.isRequired,
   onForgotPasswordClick: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
+  onLoginForMembers: PropTypes.func.isRequired,
   options: PropTypes.array,
   password: PropTypes.string.isRequired,
   toggleUser: PropTypes.func.isRequired,

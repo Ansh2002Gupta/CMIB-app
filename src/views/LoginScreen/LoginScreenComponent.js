@@ -9,6 +9,14 @@ import { navigations } from "../../constants/routeNames";
 import { validateEmail } from "../../utils/validation";
 import { LogoutContext } from "../../globalContext/logout/logoutProvider";
 import { setLogoutToast } from "../../globalContext/logout/logoutActions";
+import OtpViewComponent from "../OtpView";
+import { AuthContext } from "../../globalContext/auth/authProvider";
+import CookieAndStorageService from "../../services/cookie-and-storage-service";
+import { AuthService, StorageService } from "./../../services";
+import { setAuth } from "./../../globalContext/auth/authActions";
+import { MEMBER_SEND_OTP } from "../../services/apiServices/apiEndPoint";
+import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
+import { MEMBER_VERIFY_OTP } from "../../services/apiServices/apiEndPoint";
 
 function LoginScreenComponent() {
   const [logoutState, setLogoutDispatch] = useContext(LogoutContext);
@@ -21,15 +29,27 @@ function LoginScreenComponent() {
 
   const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
+  const [srn, setSrnNumber] = useState("");
   const [active, setActive] = useState(activeTab ? activeTab : false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
+  const [loginDisabledForMembers, setLoginDisabledForMembers] = useState(true);
   const {
     handleUserLogin,
     isLoading,
     errorWhileLoggingIn,
     setErrorWhileLoggingIn,
   } = useLoginUser();
+
+  const {
+    handleSendOtpAPI,
+    isOtpLoading,
+    isShowOtpView,
+    sendOtpResult,
+    resetOtpView,
+  } = useSendOtpAPI();
+  const [showOtpScreen, setShowOtpScreen] = useState(false);
+  const [, authDispatch] = useContext(AuthContext);
 
   const handleDismissToast = () => {
     setErrorWhileLoggingIn("");
@@ -74,6 +94,18 @@ function LoginScreenComponent() {
     setErrorMessage("");
   };
 
+  const onChangeSRNNumber = (val) => {
+    setSrnNumber(val);
+    setErrorMessage("");
+  };
+  const onLoginForMembers = () => {
+    handleSendOtpAPI({ srn: srn }, true, (error) => {}, MEMBER_SEND_OTP);
+  };
+
+  const onClickGoToLogin = () => {
+    setShowOtpScreen(false);
+    resetOtpView();
+  };
   useEffect(() => {
     if (userName !== "" && password !== "") {
       setLoginDisabled(false);
@@ -82,26 +114,60 @@ function LoginScreenComponent() {
     }
   }, [userName, password]);
 
+  useEffect(() => {
+    if (srn !== "") {
+      setLoginDisabledForMembers(false);
+    } else {
+      setLoginDisabledForMembers(true);
+    }
+  }, [srn]);
+
+  const confirmOtpFnc = async (result) => {
+    const authToken = result?.token?.access_token;
+    await CookieAndStorageService.set({ key: "auth", value: authToken });
+    navigate(navigations.DASHBOARD);
+  };
+
   return (
-    <LoginScreenUI
-      active={active}
-      errorMessage={errorMessage}
-      errorWhileLoggingIn={errorWhileLoggingIn}
-      handleDismissToast={handleDismissToast}
-      loginDisabled={loginDisabled}
-      icons={icons}
-      intl={intl}
-      isLoading={isLoading}
-      logoutDetails={logoutDetails}
-      onChangePassword={onChangePassword}
-      onChangeUsername={onChangeUsername}
-      onCreateNewPasswordClick={onCreateNewPasswordClick}
-      onForgotPasswordClick={onForgotPasswordClick}
-      onLogin={onLogin}
-      password={password}
-      toggleUser={toggleUser}
-      userName={userName}
-    />
+    <>
+      {isShowOtpView ? (
+        <OtpViewComponent
+          headerText={intl.formatMessage({ id: "label.enter_otp" })}
+          description={intl.formatMessage({
+            id: "label.otp_text",
+          })}
+          onClickGoToLogin={onClickGoToLogin}
+          sendOtpResult={sendOtpResult}
+          verifyOtpParams={{ token: sendOtpResult?.data?.token }}
+          otpVerifyEndPoint={MEMBER_VERIFY_OTP}
+          confirmOtpFnc={(result) => confirmOtpFnc(result)}
+        />
+      ) : (
+        <LoginScreenUI
+          active={active}
+          errorMessage={errorMessage}
+          errorWhileLoggingIn={errorWhileLoggingIn}
+          handleDismissToast={handleDismissToast}
+          loginDisabled={loginDisabled}
+          icons={icons}
+          intl={intl}
+          isLoading={isLoading}
+          onChangePassword={onChangePassword}
+          onChangeUsername={onChangeUsername}
+          onCreateNewPasswordClick={onCreateNewPasswordClick}
+          onForgotPasswordClick={onForgotPasswordClick}
+          onLogin={onLogin}
+          password={password}
+          toggleUser={toggleUser}
+          userName={userName}
+          srn={srn}
+          setSrnNumber={setSrnNumber}
+          onChangeSRNNumber={onChangeSRNNumber}
+          loginDisabledForMembers={loginDisabledForMembers}
+          onLoginForMembers={onLoginForMembers}
+        />
+      )}
+    </>
   );
 }
 
