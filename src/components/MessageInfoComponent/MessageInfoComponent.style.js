@@ -4,6 +4,7 @@ import colors from "../../assets/colors";
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    margin: 10,
   },
   subContainer: {
     flexDirection: "row",
