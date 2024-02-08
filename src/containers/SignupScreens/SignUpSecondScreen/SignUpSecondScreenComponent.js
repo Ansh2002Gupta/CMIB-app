@@ -16,7 +16,6 @@ import {
   FIRM_OF_CHARTERED_ACCOUNTANTS,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
-  REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
 import { scrollToRef } from "../../../utils/util";
 import {
@@ -132,23 +131,6 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         });
         if (shouldSrollToError) {
           scrollToRef(companyNameRef);
-        }
-        isValid = false;
-      }
-    }
-
-    if (!field || field === "registrationNo") {
-      const enteredRegistrationNo = value || registrationNo;
-      if (
-        enteredRegistrationNo &&
-        (!numRegex.test(String(enteredRegistrationNo)) ||
-          enteredRegistrationNo.length !== REGISTRATION_NO_LENGTH)
-      ) {
-        newErrors.registrationNo = intl.formatMessage({
-          id: "label.registration_no_validation",
-        });
-        if (isValid && shouldSrollToError) {
-          scrollToRef(firmRegistrationRef);
         }
         isValid = false;
       }
