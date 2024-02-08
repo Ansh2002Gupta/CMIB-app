@@ -31,7 +31,6 @@ import iconLogout from "../../public/images/iconLogout/iconLogout.png";
 import iconBuilding from "../../public/images/iconBuilding/iconBuilding.png";
 import iconLock from "../../public/images/iconLock/iconLock.png";
 import iconBack from "../../public/images/iconBack/iconBack.png";
-import iconEdit from "../../public/images/iconEdit/iconEdit.png";
 import iconDelete from "../../public/images/iconDelete/iconDelete.png";
 import iconChange from "../../public/images/iconChange/iconChange.png";
 import iconCross from "../../public/images/iconCross/iconCross.png";
@@ -144,7 +143,6 @@ const images = {
   iconBuilding,
   iconLock,
   iconBack,
-  iconEdit,
   iconChange,
   iconDelete,
   iconCross,

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  Image,
   Platform,
   TouchableOpacity,
   View,
@@ -12,6 +11,7 @@ import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomImage from "../CustomImage";
 import Modal from "../Modal";
+import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import style from "./CustomModal.style";
 
@@ -85,7 +85,7 @@ const CustomModal = ({
               )}
               <TouchableOpacity onPress={onPressIconCross}>
                 {isIconCross && (
-                  <Image
+                  <TouchableImage
                     source={
                       Platform.OS === "web"
                         ? images.iconCloseDark

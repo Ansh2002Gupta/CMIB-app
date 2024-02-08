@@ -25,6 +25,7 @@ const ViewProfileDetails = ({
 
   const name = userProfileDetails?.name;
   const email = userProfileDetails?.email;
+  const code = userProfileDetails?.mobile_country_code;
   const phone = userProfileDetails?.mobile_number;
   const designation = userProfileDetails?.designation;
   const profileImage = userProfileDetails?.profile_photo;
@@ -94,6 +95,8 @@ const ViewProfileDetails = ({
           }
           middleSection={
             <CommonText customTextStyle={styles.subHeadingText}>
+              {code}
+              {"-"}
               {phone}
             </CommonText>
           }
