@@ -125,14 +125,17 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
           }
           onPressButtonTwo={() => {
             handleDeleteUser({
-              successCallback: () => {
-                onLogout({
-                  message: intl.formatMessage({
-                    id: "label.account_deletion",
-                  }),
-                  isLogoutToast: true,
-                  isError: false,
-                });
+              successCallback: async () => {
+                onLogout(
+                  {
+                    message: intl.formatMessage({
+                      id: "label.account_deletion",
+                    }),
+                    isLogoutToast: true,
+                    isError: false,
+                  },
+                  true
+                );
               },
             });
           }}
