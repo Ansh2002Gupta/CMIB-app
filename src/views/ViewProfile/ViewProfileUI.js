@@ -35,12 +35,13 @@ const ViewProfileUI = ({
   const profileImage = userProfileDetails?.profile_photo;
   const name = userProfileDetails?.name;
   const email = userProfileDetails?.email;
+  const code = userProfileDetails?.mobile_country_code;
   const mobileNumber = userProfileDetails?.mobile_number;
   const designation = userProfileDetails?.designation;
 
   const details = [
     { label: "label.designation", value: designation },
-    { label: "label.mobile_number", value: mobileNumber },
+    { label: "label.mobile_number", value: code + "-" + mobileNumber },
     { label: "label.email_id", value: email },
   ];
 

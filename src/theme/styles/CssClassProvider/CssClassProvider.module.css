@@ -17,7 +17,7 @@
 }
 
 .account-dropdown__base:hover {
-   background:  var(--secondaryLightGrey);
+   background:  var(--secondaryLightGrey) !important;
 }
 
 .card-box__outline--green:hover {

@@ -15,14 +15,15 @@ const styles = StyleSheet.create({
   },
   zoomIcon: {
     cursor: "pointer",
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
   },
   zoomSlider: {
     flex: 1,
   },
   percentageText: {
     fontSize: 14,
+    minWidth: 36,
   },
 });
 

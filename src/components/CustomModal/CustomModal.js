@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  Image,
   Platform,
   TouchableOpacity,
   View,
@@ -12,6 +11,7 @@ import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomImage from "../CustomImage";
 import Modal from "../Modal";
+import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import style from "./CustomModal.style";
 
@@ -19,6 +19,7 @@ const CustomModal = ({
   buttonTitle,
   children,
   containerStyle,
+  customHeaderStyle,
   customInnerContainerStyle,
   headerText,
   headerTextStyle,
@@ -34,65 +35,72 @@ const CustomModal = ({
     Platform.OS.toLowerCase() === "web" ? { maxWidth } : { onBackdropPress };
 
   return (
-    <>
-      <Modal
-        isVisible
-        style={style.containerStyle}
-        containerStyle={containerStyle}
-        {...webProps}
+    <Modal
+      isVisible
+      style={style.containerStyle}
+      containerStyle={containerStyle}
+      {...webProps}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" && !isSuccess ? "padding" : "height"}
+        style={[style.innerContainer, customInnerContainerStyle]}
       >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" && !isSuccess ? "padding" : "height"}
-          style={[style.innerContainer, customInnerContainerStyle]}
-        >
-          {isSuccess ? (
-            <>
-              <CustomImage
-                alt={"Success Icon"}
-                source={images.iconSuccess}
-                Icon={images.iconSuccess}
-                isSvg
-                style={style.iconStyle}
-              />
-              <CommonText
-                customTextStyle={[
-                  !secondaryText && style.headerTextStyle,
-                  style.textStyle,
-                ]}
-                fontWeight="600"
-              >
-                {headerText}
+        {isSuccess ? (
+          <>
+            <CustomImage
+              alt={"Success Icon"}
+              source={images.iconSuccess}
+              Icon={images.iconSuccess}
+              isSvg
+              style={style.iconStyle}
+            />
+            <CommonText
+              customTextStyle={[
+                !secondaryText && style.headerTextStyle,
+                style.textStyle,
+              ]}
+              fontWeight="600"
+            >
+              {headerText}
+            </CommonText>
+            {!!secondaryText && (
+              <CommonText customTextStyle={style.infoText}>
+                {secondaryText}
               </CommonText>
-              {!!secondaryText && (
-                <CommonText customTextStyle={style.infoText}>
-                  {secondaryText}
+            )}
+            <CustomButton onPress={onPress} withGreenBackground>
+              {buttonTitle}
+            </CustomButton>
+          </>
+        ) : (
+          <>
+            <View style={{ ...style.headerStyle, ...customHeaderStyle }}>
+              {!!headerText && (
+                <CommonText
+                  customTextStyle={[style.headerText, headerTextStyle]}
+                  fontWeight={headerTextStyle?.fontWeight || "600"}
+                >
+                  {headerText}
                 </CommonText>
               )}
-              <CustomButton onPress={onPress} withGreenBackground>
-                {buttonTitle}
-              </CustomButton>
-            </>
-          ) : (
-            <>
-              <View style={style.headerStyle}>
-                {!!headerText && (
-                  <CommonText
-                    customTextStyle={[style.headerText, headerTextStyle]}
-                    fontWeight={headerTextStyle?.fontWeight || "600"}
-                  >
-                    {headerText}
-                  </CommonText>
+              <TouchableOpacity onPress={onPressIconCross}>
+                {isIconCross && (
+                  <TouchableImage
+                    source={
+                      Platform.OS === "web"
+                        ? images.iconCloseDark
+                        : images.iconCross
+                    }
+                    style={{ height: 24, width: 24 }}
+                  />
                 )}
-                <TouchableOpacity onPress={onPressIconCross}>
-                  {isIconCross && <Image source={images.iconCross} />}
-                </TouchableOpacity>
-              </View>
-              {children}
-            </>
-          )}
-        </KeyboardAvoidingView>
-      </Modal>
-    </>
+              </TouchableOpacity>
+            </View>
+            {children}
+          </>
+        )}
+      </KeyboardAvoidingView>
+    </Modal>
   );
 };
 
@@ -100,6 +108,7 @@ CustomModal.defaultProps = {
   buttonTitle: "",
   children: <></>,
   containerStyle: {},
+  customHeaderStyle: {},
   customInnerContainerStyle: {},
   headerText: "",
   headerTextStyle: {},
@@ -116,6 +125,7 @@ CustomModal.propTypes = {
   buttonTitle: PropTypes.string,
   children: PropTypes.node,
   containerStyle: PropTypes.object,
+  customHeaderStyle: PropTypes.object,
   customInnerContainerStyle: PropTypes.object,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.object,
