@@ -5,8 +5,6 @@ import {
 } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const { height: HEIGHT } = Dimensions.get("window");
-
 const style = StyleSheet.create({
   optionCotainer: {
     flexDirection: "row",
@@ -61,8 +59,8 @@ const style = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 200,
     alignItems: "center",
-    height: 64,
-    width: 64,
+    height: 48,
+    width: 48,
     backgroundColor: colors.black,
   },
   detailContainer: {
@@ -109,6 +107,13 @@ const style = StyleSheet.create({
   initialTextStyle: {
     fontSize: 20,
     color: colors.white,
+  },
+  omitIconStyle: {
+    width: 240,
+  },
+  customImageStyle: {
+    height: 48,
+    width: 48,
   },
 });
 

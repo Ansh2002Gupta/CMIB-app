@@ -46,7 +46,6 @@ const iconLogout = appendAppBaseURl("/images/iconLogout/iconLogout.png");
 const iconBuilding = appendAppBaseURl("/images/iconBuilding/iconBuilding.png");
 const iconLock = appendAppBaseURl("/images/iconLock/iconLock.png");
 const iconBack = appendAppBaseURl("/images/iconBack/iconBack.png");
-const iconEdit = appendAppBaseURl("/images/iconEdit/iconEdit.png");
 const iconDelete = appendAppBaseURl("/images/iconDelete/iconDelete.png");
 const iconChange = appendAppBaseURl("/images/iconChange/iconChange.png");
 const iconCross = appendAppBaseURl("/images/iconCross/iconCross.png");
@@ -173,6 +172,7 @@ const iconWomanPartTime = appendAppBaseURl("/images/svg/iconWomanPartTime.svg");
 const iconTickBlue = appendAppBaseURl("/images/svg/iconTickBlue.svg");
 const iconBackArrow = appendAppBaseURl("/images/svg/iconBackArrow.svg");
 const iconAlert = appendAppBaseURl("/images/svg/iconAlert.svg");
+const iconRotate = appendAppBaseURl("/images/svg/iconRotate.svg");
 
 const images = {
   iconArrowUp,
@@ -217,7 +217,6 @@ const images = {
   iconArrowRight,
   iconClose,
   iconBack,
-  iconEdit,
   iconChange,
   iconDelete,
   iconCross,
@@ -292,6 +291,7 @@ const images = {
   iconTickBlue,
   iconBackArrow,
   iconAlert,
+  iconRotate,
 };
 
 export default images;

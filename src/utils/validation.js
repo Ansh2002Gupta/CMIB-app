@@ -1,4 +1,4 @@
-import { numRegex, VALID_EMAIL, VALID_OTP } from "../constants/constants";
+import { alphaNumericRegex, numRegex, VALID_EMAIL, VALID_OTP } from "../constants/constants";
 import {
   mailformat,
   NEW_PASSWORD_VALIDATIONS,
@@ -28,6 +28,10 @@ export const strongPasswordValidator = (password) => {
 export const numericValidator = (val) => {
   return val === "" || numRegex.test(String(val));
 };
+
+export const alphaNumericValidator = (val) => {
+ return val === "" || alphaNumericRegex.test(String(val));
+}
 
 export const validateEmail = (userEmail) => {
   if (!userEmail.toLowerCase().match(mailformat)) {

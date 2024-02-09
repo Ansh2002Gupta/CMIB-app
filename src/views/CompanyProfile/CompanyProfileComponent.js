@@ -16,7 +16,7 @@ import {
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   numRegex,
-  REGISTRATION_NO_LENGTH,
+  FIRM_REGISTRATION_NO_LENGTH,
 } from "../../constants/constants";
 import { isValidUrl } from "../../utils/util";
 import { mapApiDataToUI } from "./mappedData";
@@ -168,7 +168,7 @@ const CompanyProfileComponent = () => {
     }
     if (
       !numRegex.test(String(registrationNo)) ||
-      registrationNo.length !== REGISTRATION_NO_LENGTH
+      registrationNo.length !== FIRM_REGISTRATION_NO_LENGTH
     ) {
       newErrors.registrationNo = intl.formatMessage({
         id: "label.registration_no_validation",
@@ -208,7 +208,7 @@ const CompanyProfileComponent = () => {
     }
     if (
       !numRegex.test(String(mobileNo)) ||
-      mobileNo.length !== REGISTRATION_NO_LENGTH
+      mobileNo.length !== FIRM_REGISTRATION_NO_LENGTH
     ) {
       newErrors.mobileNo = intl.formatMessage({
         id: "label.mobile_number_validation",
