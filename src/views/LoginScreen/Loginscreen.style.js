@@ -204,13 +204,6 @@ const style = {
     fontSize: 28,
     color: colors.black,
   },
-  // buttonContainerStyle: {
-  //   marginTop: 32,
-  //   position: "absolute",
-  //   left: 0,
-  //   right: 0,
-  //   bottom: 0,
-  // },
 };
 
 export default style;
