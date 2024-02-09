@@ -14,7 +14,6 @@ import JobsView from "../views/JobsView/JobsView";
 import JobApplicantsView from "../views/JobApplicantsView/index";
 import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
-import OtpView from "../views/OtpView";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
 import RoundOne from "../views/RoundOneView";
@@ -68,16 +67,6 @@ const config = [
       {
         viewPath: "",
         element: <ForgotPassword />,
-      },
-    ],
-  },
-  {
-    pagePath: navigations.OTP,
-    element: <LoginWithPublicAccess />,
-    views: [
-      {
-        viewPath: "",
-        element: <OtpView />,
       },
     ],
   },
