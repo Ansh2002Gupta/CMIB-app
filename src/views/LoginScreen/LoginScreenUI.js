@@ -42,6 +42,7 @@ const LoginScreenUI = (props) => {
     loginDisabledForMembers,
     onLoginForMembers,
   } = props;
+
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
   const width1800pxOrLess = currentBreakpoint !== "xxl";

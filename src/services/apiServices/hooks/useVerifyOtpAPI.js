@@ -9,12 +9,12 @@ const useVerifyOtpAPI = () => {
   const [verifyOtpResult, setVerifyOtpResult] = useState([]);
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
 
-  const handleVerifyOtpAPI = async ({
+  const handleVerifyOtpAPI = async (
     payload,
     endPoint,
     successCallback,
-    errorCallback,
-  }) => {
+    errorCallback
+  ) => {
     try {
       setApiStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
@@ -25,9 +25,11 @@ const useVerifyOtpAPI = () => {
       ) {
         setApiStatus(API_STATUS.SUCCESS);
         setVerifyOtpResult(res.data);
+        successCallback(res.data.data);
         return;
       }
       setApiStatus(API_STATUS.ERROR);
+      errorCallback(res);
       setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);

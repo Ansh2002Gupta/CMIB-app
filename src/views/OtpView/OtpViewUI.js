@@ -24,6 +24,7 @@ const OtpViewUI = ({
   handleOtpChange,
   intl,
   isCounter,
+  isMemberLogin,
   isLoading,
   submitDisabled,
   minutes,
@@ -203,7 +204,11 @@ const OtpViewUI = ({
                 customTextStyle={styles.emailStyle}
                 customContainerStyle={styles.emailContainerStyle}
               >
-                {`${intl.formatMessage({ id: "label.email_address" })}${email}`}
+                {!isMemberLogin
+                  ? `${intl.formatMessage({
+                      id: "label.email_address",
+                    })}${email}`
+                  : null}
               </CommonText>
               <CustomTouchableOpacity
                 onPress={() => {
@@ -214,12 +219,15 @@ const OtpViewUI = ({
                   customTextStyle={styles.changeStyle}
                   fontWeight="600"
                 >
-                  {intl.formatMessage({
-                    id:
-                      currentBreakpoint === "sm" || currentBreakpoint === "xs"
-                        ? "label.change"
-                        : "label.change_email_address",
-                  })}
+                  {!isMemberLogin
+                    ? intl.formatMessage({
+                        id:
+                          currentBreakpoint === "sm" ||
+                          currentBreakpoint === "xs"
+                            ? "label.change"
+                            : "label.change_email_address",
+                      })
+                    : null}
                 </CommonText>
               </CustomTouchableOpacity>
             </View>

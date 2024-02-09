@@ -42,12 +42,14 @@ function LoginScreenComponent() {
   const {
     errorWhileResetPassword: errorWhileSendOtp,
     handleSendOtpAPI,
-    isOtpLoading,
+    isLoading: isOtpLoading,
     isShowOtpView,
     sendOtpResult,
     setErrorWhileResetPassword: setErrorWhileSendOtp,
     resetOtpView,
   } = useSendOtpAPI();
+
+  console.log("isLoading", isLoading, isOtpLoading);
 
   const handleDismissToast = () => {
     setErrorWhileLoggingIn("");
@@ -123,7 +125,7 @@ function LoginScreenComponent() {
   const confirmOtpFnc = async (result) => {
     const authToken = result?.token?.access_token;
     await CookieAndStorageService.set({ key: "auth", value: authToken });
-    navigate(navigations.DASHBOARD);
+    navigate(navigations.REDIRECT);
   };
   return (
     <>
@@ -131,13 +133,14 @@ function LoginScreenComponent() {
         <OtpViewComponent
           headerText={intl.formatMessage({ id: "label.enter_otp" })}
           description={intl.formatMessage({
-            id: "label.otp_text",
+            id: "label.otp_text_member_login",
           })}
           onClickGoToLogin={onClickGoToLogin}
           sendOtpResult={sendOtpResult}
-          verifyOtpParams={{ token: sendOtpResult?.data?.token }}
+          verifyOtpParams={{ token: sendOtpResult?.data[0]?.token }}
           otpVerifyEndPoint={MEMBER_VERIFY_OTP}
           confirmOtpFnc={(result) => confirmOtpFnc(result)}
+          isMemberLogin={true}
         />
       ) : (
         <LoginScreenUI

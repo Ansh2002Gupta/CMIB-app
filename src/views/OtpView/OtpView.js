@@ -16,6 +16,7 @@ import { validateOtp } from "../../utils/validation";
 
 function OtpView({
   email,
+  isMemberLogin,
   setSendOtpResult,
   token,
   headerText,
@@ -26,6 +27,7 @@ function OtpView({
   otpVerifyEndPoint,
   confirmOtpFnc,
 }) {
+  console.log("confirmOtpFnc", confirmOtpFnc);
   const navigate = useNavigate();
   const intl = useIntl();
 
@@ -57,21 +59,24 @@ function OtpView({
   }, [otpValue]);
 
   const onVerifyOtpClick = () => {
+    console.log("60 onVerifyOtpClick");
     let error = validateOtp(otpValue);
     if (error) {
       setErrorMessage(error);
       return;
     } else {
       setErrorMessage("");
+      handleVerifyOtpAPI(
+        { ...verifyOtpParams, otp: otpValue },
+        otpVerifyEndPoint,
+        (result) => {
+          confirmOtpFnc(result);
+        },
+        (error) => {
+          setValidationError(error);
+        }
+      );
     }
-    handleVerifyOtpAPI(
-      { ...verifyOtpParams, otp: otpValue },
-      otpVerifyEndPoint,
-      (result) => confirmOtpFnc(result),
-      (error) => {
-        setValidationError(error);
-      }
-    );
   };
 
   const handleOtpChange = (otp) => {
@@ -106,6 +111,7 @@ function OtpView({
             headerText,
             intl,
             isCounter,
+            isMemberLogin,
             isLoading,
             minutes,
             onClickGoToLogin,

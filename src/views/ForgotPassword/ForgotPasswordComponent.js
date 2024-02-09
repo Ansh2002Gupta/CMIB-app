@@ -72,6 +72,7 @@ function ForgotPasswordComponent() {
   };
 
   const confirmOtpFnc = (result) => {
+    console.log("result 75", result);
     navigate(navigations.CREATE_NEW_PASSWORD, {
       state: { token: result.token },
     });
@@ -84,16 +85,17 @@ function ForgotPasswordComponent() {
       !!Object.keys(sendOtpResult)?.length ? (
         <OtpView
           email={userEmail}
-          token={sendOtpResult?.data?.token}
           setSendOtpResult={setSendOtpResult}
           headerText={intl.formatMessage({ id: "label.forgot_password" })}
           description={intl.formatMessage({
             id: "label.otp_text_forgot_password",
           })}
           onClickGoToLogin={onClickGoToLogin}
-          verifyOtpParams={{ email: userEmail }}
+          verifyOtpParams={{ token: sendOtpResult?.data?.token }}
           otpVerifyEndPoint={COMPANY_VERIFY_OTP}
-          confirmOtpFnc={(result) => confirmOtpFnc(result)}
+          confirmOtpFnc={(result) => {
+            confirmOtpFnc(result);
+          }}
         />
       ) : (
         <ForgotPasswordUI

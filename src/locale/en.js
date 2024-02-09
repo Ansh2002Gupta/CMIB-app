@@ -300,6 +300,8 @@ const locale = {
   "label.enter_otp": "Enter OTP",
   "label.otp_text_forgot_password":
     "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
+  "label.otp_text_member_login":
+    "Please enter the one time password that you have received on your registered mobile number",
 };
 
 export default locale;
