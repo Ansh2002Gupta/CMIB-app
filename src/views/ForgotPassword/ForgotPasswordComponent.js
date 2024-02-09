@@ -27,8 +27,6 @@ function ForgotPasswordComponent() {
     isShowOtpView,
   } = useSendOtpAPI();
 
-  console.log("isShowOtpView", isShowOtpView);
-
   useEffect(() => {
     if (userEmail !== "") {
       setLoginDisabled(false);

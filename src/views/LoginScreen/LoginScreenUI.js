@@ -23,6 +23,7 @@ const LoginScreenUI = (props) => {
     active,
     errorMessage,
     errorWhileLoggingIn,
+    errorMessageForMemberLogin,
     handleDismissToast,
     intl,
     isLoading,
@@ -80,7 +81,12 @@ const LoginScreenUI = (props) => {
   };
 
   return (
-    <FormWrapper onSubmit={onLogin} customFormStyle={commonStyles.mainView}>
+    <FormWrapper
+      onSubmit={() => {
+        !active ? onLoginForMembers() : onLogin();
+      }}
+      customFormStyle={commonStyles.mainView}
+    >
       <WebViewLoginSignUpWrapper
         shouldApplyStyles={isWebView}
         shouldShowFollowUs
@@ -266,9 +272,9 @@ const LoginScreenUI = (props) => {
                   <CustomButton
                     onPress={onLogin}
                     disabled={loginDisabled}
-                    displayLoader={isLoading}
-                    customTitleStyle={isWebView && styles.webView.loginText}
-                    customButtonContainer={styles.loginButtonView}
+                    isLoading={isLoading}
+                    type={"submit"}
+                    withGreenBackground
                   >
                     {intl.formatMessage({ id: "label.login" })}
                   </CustomButton>
@@ -334,8 +340,8 @@ const LoginScreenUI = (props) => {
                     })}
                     value={srn}
                     onChangeText={(val) => onChangeSRNNumber(val)}
-                    errorMessage={errorMessage}
-                    isError={!!errorMessage}
+                    errorMessage={errorMessageForMemberLogin}
+                    isError={!!errorMessageForMemberLogin}
                     isMandatory
                     customLabelStyle={
                       isWebView && styles.webView.inputLabelText
@@ -355,9 +361,9 @@ const LoginScreenUI = (props) => {
                   <CustomButton
                     onPress={onLoginForMembers}
                     disabled={loginDisabledForMembers}
-                    displayLoader={isLoading}
-                    customTitleStyle={isWebView && styles.webView.loginText}
-                    customButtonContainer={styles.loginButtonView}
+                    isLoading={isLoading}
+                    type={"submit"}
+                    withGreenBackground
                   >
                     {intl.formatMessage({ id: "label.login" })}
                   </CustomButton>

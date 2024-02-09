@@ -24,5 +24,5 @@ export const COUNTRY_CODE = `${CORE}/countries`;
 export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
 
 /* API Endpoints Members*/
-export const MEMBER_SEND_OTP = `${USER_TYPE_MEMBER}/send-otp`;
+export const MEMBER_SEND_OTP = `${USER_TYPE_MEMBER}/login`;
 export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/verify-otp`;

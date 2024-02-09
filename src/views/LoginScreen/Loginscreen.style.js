@@ -64,6 +64,7 @@ const style = {
   },
   loginButtonView: {
     ...webPointer,
+    backgroundColor: colors.disabledGrey,
   },
   accountView: {
     marginTop: 32,

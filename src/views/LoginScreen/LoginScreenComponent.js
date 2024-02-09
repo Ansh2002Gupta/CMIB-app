@@ -10,10 +10,7 @@ import { validateEmail } from "../../utils/validation";
 import { LogoutContext } from "../../globalContext/logout/logoutProvider";
 import { setLogoutToast } from "../../globalContext/logout/logoutActions";
 import OtpViewComponent from "../OtpView";
-import { AuthContext } from "../../globalContext/auth/authProvider";
 import CookieAndStorageService from "../../services/cookie-and-storage-service";
-import { AuthService, StorageService } from "./../../services";
-import { setAuth } from "./../../globalContext/auth/authActions";
 import { MEMBER_SEND_OTP } from "../../services/apiServices/apiEndPoint";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
 import { MEMBER_VERIFY_OTP } from "../../services/apiServices/apiEndPoint";
@@ -32,6 +29,8 @@ function LoginScreenComponent() {
   const [srn, setSrnNumber] = useState("");
   const [active, setActive] = useState(activeTab ? activeTab : false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageForMemberLogin, setErrorMessageForMemberLogin] =
+    useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
   const [loginDisabledForMembers, setLoginDisabledForMembers] = useState(true);
   const {
@@ -40,19 +39,19 @@ function LoginScreenComponent() {
     errorWhileLoggingIn,
     setErrorWhileLoggingIn,
   } = useLoginUser();
-
   const {
+    errorWhileResetPassword: errorWhileSendOtp,
     handleSendOtpAPI,
     isOtpLoading,
     isShowOtpView,
     sendOtpResult,
+    setErrorWhileResetPassword: setErrorWhileSendOtp,
     resetOtpView,
   } = useSendOtpAPI();
-  const [showOtpScreen, setShowOtpScreen] = useState(false);
-  const [, authDispatch] = useContext(AuthContext);
 
   const handleDismissToast = () => {
     setErrorWhileLoggingIn("");
+    setErrorWhileSendOtp("");
     setLogoutDispatch(
       setLogoutToast({
         message: "",
@@ -96,14 +95,13 @@ function LoginScreenComponent() {
 
   const onChangeSRNNumber = (val) => {
     setSrnNumber(val);
-    setErrorMessage("");
+    setErrorMessageForMemberLogin("");
   };
   const onLoginForMembers = () => {
     handleSendOtpAPI({ srn: srn }, true, (error) => {}, MEMBER_SEND_OTP);
   };
 
   const onClickGoToLogin = () => {
-    setShowOtpScreen(false);
     resetOtpView();
   };
   useEffect(() => {
@@ -127,7 +125,6 @@ function LoginScreenComponent() {
     await CookieAndStorageService.set({ key: "auth", value: authToken });
     navigate(navigations.DASHBOARD);
   };
-
   return (
     <>
       {isShowOtpView ? (
@@ -146,12 +143,14 @@ function LoginScreenComponent() {
         <LoginScreenUI
           active={active}
           errorMessage={errorMessage}
-          errorWhileLoggingIn={errorWhileLoggingIn}
+          errorMessageForMemberLogin={errorMessageForMemberLogin}
+          errorWhileLoggingIn={errorWhileLoggingIn || errorWhileSendOtp}
           handleDismissToast={handleDismissToast}
           loginDisabled={loginDisabled}
+          logoutDetails={logoutDetails}
           icons={icons}
           intl={intl}
-          isLoading={isLoading}
+          isLoading={isLoading || isOtpLoading}
           onChangePassword={onChangePassword}
           onChangeUsername={onChangeUsername}
           onCreateNewPasswordClick={onCreateNewPasswordClick}

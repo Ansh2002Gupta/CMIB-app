@@ -53,6 +53,7 @@ const useSendOtpAPI = () => {
     isError,
     isLoading,
     isSuccess,
+    setErrorWhileResetPassword,
     sendOtpResult,
     setSendOtpResult,
     resetOtpView,
