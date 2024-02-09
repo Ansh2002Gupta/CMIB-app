@@ -1,5 +1,6 @@
 /* User Types */
 export const USER_TYPE_COMPANY = "company";
+export const USER_TYPE_MEMBER = "member";
 export const CORE = "core";
 
 /* API Endpoints */
@@ -21,3 +22,7 @@ export const CORE_USERS_PERMISSION = `${CORE}/users/permission`;
 export const MENU_PROFILE = `${CORE}/menu-profile/${USER_TYPE_COMPANY}`;
 export const COUNTRY_CODE = `${CORE}/countries`;
 export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
+
+/* API Endpoints Members*/
+export const MEMBER_SEND_OTP = `${USER_TYPE_MEMBER}/login`;
+export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/verify-otp`;

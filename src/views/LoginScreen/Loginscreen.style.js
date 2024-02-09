@@ -44,9 +44,13 @@ const style = {
     paddingTop: 24,
     justifyContent: "space-between",
     flexGrow: 1,
+    minHeight: 400,
   },
   forgotPasswordView: {
     flexDirection: "row",
+    justifyContent: "flex-end",
+    marginTop: 16,
+    marginBottom: 32,
   },
   rememberMeText: {
     fontSize: 14,
@@ -59,11 +63,11 @@ const style = {
     ...webPointer,
   },
   loginButtonView: {
-    marginTop: 32,
     ...webPointer,
+    backgroundColor: colors.disabledGrey,
   },
   accountView: {
-    marginTop: 24,
+    marginTop: 32,
     justifyContent: "center",
     flexDirection: "row",
     gap: 4,
@@ -85,13 +89,16 @@ const style = {
   },
   followUsImageView: {
     paddingBottom: 16,
-    paddingTop: 32,
   },
   minHeight: {
     minHeight: 500,
   },
   gapForWebView: {
     gap: 24,
+  },
+  buttonContainerStyle: {
+    flexGrow: 1,
+    justifyContent: "space-between",
   },
   marginBottom: {
     marginBottom: 0,
@@ -197,6 +204,13 @@ const style = {
     fontSize: 28,
     color: colors.black,
   },
+  // buttonContainerStyle: {
+  //   marginTop: 32,
+  //   position: "absolute",
+  //   left: 0,
+  //   right: 0,
+  //   bottom: 0,
+  // },
 };
 
 export default style;

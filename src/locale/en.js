@@ -295,6 +295,13 @@ const locale = {
   "label.account_deletion": "Account deleted successfully.",
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
+  "label.srn": "SRN",
+  "label.srn_placeholder": "Enter your SRN number",
+  "label.enter_otp": "Enter OTP",
+  // "label.otp_text":
+  //   "Please enter the one time password that you have received on your registered mobile number.",
+  "label.otp_text_forgot_password":
+    "Please enter the one time password that you have received on your registered mobile number to continue to rest your password.",
 };
 
 export default locale;
