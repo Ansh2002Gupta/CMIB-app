@@ -19,7 +19,7 @@ const useSendOtpAPI = () => {
     try {
       setAPIStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const res = await Http.post(url ? url : COMPANY_SEND_OTP, payload);
+      const res = await Http.post(url || COMPANY_SEND_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setAPIStatus(API_STATUS.SUCCESS);
         setSendOtpResult(res.data);

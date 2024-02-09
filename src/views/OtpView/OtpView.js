@@ -15,19 +15,18 @@ import {
 import { validateOtp } from "../../utils/validation";
 
 function OtpView({
+  confirmOtpFnc,
+  description,
   email,
+  headerText,
   isMemberLogin,
+  onClickGoToLogin,
+  otpVerifyEndPoint,
+  sendOtpResult,
   setSendOtpResult,
   token,
-  headerText,
-  description,
-  onClickGoToLogin,
-  sendOtpResult,
   verifyOtpParams,
-  otpVerifyEndPoint,
-  confirmOtpFnc,
 }) {
-  console.log("confirmOtpFnc", confirmOtpFnc);
   const navigate = useNavigate();
   const intl = useIntl();
 
@@ -59,7 +58,6 @@ function OtpView({
   }, [otpValue]);
 
   const onVerifyOtpClick = () => {
-    console.log("60 onVerifyOtpClick");
     let error = validateOtp(otpValue);
     if (error) {
       setErrorMessage(error);
@@ -70,7 +68,7 @@ function OtpView({
         { ...verifyOtpParams, otp: otpValue },
         otpVerifyEndPoint,
         (result) => {
-          confirmOtpFnc(result);
+          confirmOtpFnc && confirmOtpFnc(result);
         },
         (error) => {
           setValidationError(error);

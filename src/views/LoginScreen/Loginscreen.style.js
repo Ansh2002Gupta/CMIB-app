@@ -107,6 +107,9 @@ const style = {
     justifyContent: "flex-end",
     flexDirection: "row",
   },
+  containerStyle: {
+    flexGrow: 1,
+  },
 
   // Web view related Styles
   webView: {

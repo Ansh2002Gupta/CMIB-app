@@ -19,29 +19,29 @@ import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./OtpView.style";
 
 const OtpViewUI = ({
+  description,
   email,
   errorMessage,
+  handleDismissToast,
   handleOtpChange,
+  headerText,
   intl,
   isCounter,
   isMemberLogin,
   isLoading,
-  submitDisabled,
   minutes,
-  otpLeft,
-  onVerifyOtpClick,
-  onClickGoToLogin,
   onResendOtpClick,
-  setIsCounter,
-  setSendOtpResult,
-  setMinutes,
+  onClickGoToLogin,
+  onVerifyOtpClick,
+  otpLeft,
   seconds,
+  setMinutes,
   setOtpLeft,
   setSeconds,
-  handleDismissToast,
+  setIsCounter,
+  setSendOtpResult,
+  submitDisabled,
   validationError,
-  headerText,
-  description,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const [afterAttempt, setAfterAttempt] = useState(false);
@@ -174,16 +174,13 @@ const OtpViewUI = ({
           >
             <HeaderTextWithLabelAndDescription
               description={
-                description
-                  ? description
-                  : intl.formatMessage({
-                      id: "label.otp_text",
-                    })
+                description ||
+                intl.formatMessage({
+                  id: "label.otp_text",
+                })
               }
               headerText={
-                headerText
-                  ? headerText
-                  : intl.formatMessage({ id: "label.enter_otp" })
+                headerText || intl.formatMessage({ id: "label.enter_otp" })
               }
               customTextStyle={
                 isWebView

@@ -22,25 +22,25 @@ const LoginScreenUI = (props) => {
   const {
     active,
     errorMessage,
-    errorWhileLoggingIn,
     errorMessageForMemberLogin,
+    errorWhileLoggingIn,
     handleDismissToast,
     intl,
     isLoading,
     loginDisabled,
+    loginDisabledForMembers,
+    logoutDetails,
     onChangePassword,
+    onChangeSRNNumber,
     onChangeUsername,
+    onCreateNewPasswordClick,
     onForgotPasswordClick,
     onLogin,
-    onCreateNewPasswordClick,
-    logoutDetails,
+    onLoginForMembers,
     password,
+    srn,
     toggleUser,
     userName,
-    srn,
-    onChangeSRNNumber,
-    loginDisabledForMembers,
-    onLoginForMembers,
   } = props;
 
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -192,19 +192,18 @@ const LoginScreenUI = (props) => {
           {active ? (
             <ScrollView
               contentContainerStyle={{
-                ...styles.companyView,
+                ...styles.containerStyle,
                 ...(isWebView && styles.webView.backGroundColor),
               }}
             >
               <View
                 style={{
-                  flexGrow: 1,
-                  ...(isWebView && styles.webView.backGroundColor),
+                  ...(isWebView ? styles.webView.backGroundColor : {}),
                 }}
               >
                 <View
                   style={{
-                    ...(isWebView && styles.webView.backGroundColor),
+                    ...(isWebView ? styles.webView.backGroundColor : {}),
                   }}
                 >
                   <CustomTextInput
@@ -240,7 +239,7 @@ const LoginScreenUI = (props) => {
                     customTextInputContainer={
                       isWebView ? styles.webView.inputTextBox : {}
                     }
-                    isPaddingNotRequired={true}
+                    isPaddingNotRequired
                   />
                   <View style={styles.forgotButtonContainer}>
                     <TouchableOpacity
@@ -345,10 +344,10 @@ const LoginScreenUI = (props) => {
                     isError={!!errorMessageForMemberLogin}
                     isMandatory
                     customLabelStyle={
-                      isWebView && styles.webView.inputLabelText
+                      isWebView ? styles.webView.inputLabelText : {}
                     }
                     customTextInputContainer={
-                      isWebView && styles.webView.inputTextBox
+                      isWebView ? styles.webView.inputTextBox : {}
                     }
                   />
                 </View>

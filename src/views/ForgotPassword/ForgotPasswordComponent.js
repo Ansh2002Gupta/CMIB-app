@@ -5,8 +5,8 @@ import { useNavigate } from "../../routes";
 import ForgotPasswordUI from "./ForgotPasswordUI";
 import OtpView from "../OtpView";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
-import { validateEmail } from "../../utils/validation";
 import { COMPANY_VERIFY_OTP } from "../../services/apiServices/apiEndPoint";
+import { validateEmail } from "../../utils/validation";
 import { navigations } from "../../constants/routeNames";
 
 function ForgotPasswordComponent() {
@@ -22,9 +22,9 @@ function ForgotPasswordComponent() {
   const {
     handleSendOtpAPI,
     isLoading,
+    isShowOtpView,
     sendOtpResult,
     setSendOtpResult,
-    isShowOtpView,
   } = useSendOtpAPI();
 
   useEffect(() => {
@@ -71,13 +71,6 @@ function ForgotPasswordComponent() {
     }
   };
 
-  const confirmOtpFnc = (result) => {
-    console.log("result 75", result);
-    navigate(navigations.CREATE_NEW_PASSWORD, {
-      state: { token: result.token },
-    });
-  };
-
   return (
     <>
       {!!sendOtpResult &&
@@ -93,9 +86,6 @@ function ForgotPasswordComponent() {
           onClickGoToLogin={onClickGoToLogin}
           verifyOtpParams={{ token: sendOtpResult?.data?.token }}
           otpVerifyEndPoint={COMPANY_VERIFY_OTP}
-          confirmOtpFnc={(result) => {
-            confirmOtpFnc(result);
-          }}
         />
       ) : (
         <ForgotPasswordUI

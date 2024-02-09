@@ -14,6 +14,7 @@ import JobsView from "../views/JobsView/JobsView";
 import JobApplicantsView from "../views/JobApplicantsView/index";
 import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
+import OtpView from "../views/OtpView";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
 import RoundOne from "../views/RoundOneView";
@@ -23,7 +24,6 @@ import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
 import TicketsView from "../views/TicketsView/index";
 import WebViewScreen from "../views/WebViewScreen/index";
-import OtpView from "../views/OtpView";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";

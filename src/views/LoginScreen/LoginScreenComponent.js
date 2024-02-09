@@ -49,7 +49,21 @@ function LoginScreenComponent() {
     resetOtpView,
   } = useSendOtpAPI();
 
-  console.log("isLoading", isLoading, isOtpLoading);
+  useEffect(() => {
+    if (userName !== "" && password !== "") {
+      setLoginDisabled(false);
+    } else {
+      setLoginDisabled(true);
+    }
+  }, [userName, password]);
+
+  useEffect(() => {
+    if (srn !== "") {
+      setLoginDisabledForMembers(false);
+    } else {
+      setLoginDisabledForMembers(true);
+    }
+  }, [srn]);
 
   const handleDismissToast = () => {
     setErrorWhileLoggingIn("");
@@ -106,27 +120,13 @@ function LoginScreenComponent() {
   const onClickGoToLogin = () => {
     resetOtpView();
   };
-  useEffect(() => {
-    if (userName !== "" && password !== "") {
-      setLoginDisabled(false);
-    } else {
-      setLoginDisabled(true);
-    }
-  }, [userName, password]);
-
-  useEffect(() => {
-    if (srn !== "") {
-      setLoginDisabledForMembers(false);
-    } else {
-      setLoginDisabledForMembers(true);
-    }
-  }, [srn]);
 
   const confirmOtpFnc = async (result) => {
     const authToken = result?.token?.access_token;
     await CookieAndStorageService.set({ key: "auth", value: authToken });
     navigate(navigations.REDIRECT);
   };
+
   return (
     <>
       {isShowOtpView ? (
@@ -144,29 +144,31 @@ function LoginScreenComponent() {
         />
       ) : (
         <LoginScreenUI
-          active={active}
-          errorMessage={errorMessage}
-          errorMessageForMemberLogin={errorMessageForMemberLogin}
-          errorWhileLoggingIn={errorWhileLoggingIn || errorWhileSendOtp}
-          handleDismissToast={handleDismissToast}
-          loginDisabled={loginDisabled}
-          logoutDetails={logoutDetails}
-          icons={icons}
-          intl={intl}
-          isLoading={isLoading || isOtpLoading}
-          onChangePassword={onChangePassword}
-          onChangeUsername={onChangeUsername}
-          onCreateNewPasswordClick={onCreateNewPasswordClick}
-          onForgotPasswordClick={onForgotPasswordClick}
-          onLogin={onLogin}
-          password={password}
-          toggleUser={toggleUser}
-          userName={userName}
-          srn={srn}
-          setSrnNumber={setSrnNumber}
-          onChangeSRNNumber={onChangeSRNNumber}
-          loginDisabledForMembers={loginDisabledForMembers}
-          onLoginForMembers={onLoginForMembers}
+          {...{
+            active,
+            errorMessage,
+            errorMessageForMemberLogin,
+            errorWhileLoggingIn: errorWhileLoggingIn || errorWhileSendOtp,
+            handleDismissToast,
+            icons,
+            intl,
+            isLoading: isLoading || isOtpLoading,
+            loginDisabled,
+            loginDisabledForMembers,
+            logoutDetails,
+            onChangePassword,
+            onChangeSRNNumber,
+            onChangeUsername,
+            onCreateNewPasswordClick,
+            onForgotPasswordClick,
+            onLogin,
+            onLoginForMembers,
+            password,
+            setSrnNumber,
+            srn,
+            toggleUser,
+            userName,
+          }}
         />
       )}
     </>
