@@ -113,6 +113,11 @@ const style = {
     flexGrow: 1,
     justifyContent: "space-between",
   },
+  mobViewContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+
   // Web view related Styles
   webView: {
     activeTab: {
