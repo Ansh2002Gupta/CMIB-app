@@ -43,9 +43,9 @@ function LoginScreenComponent() {
     handleSendOtpAPI,
     isLoading: isOtpLoading,
     isShowOtpView,
+    resetOtpView,
     sendOtpResult,
     setErrorWhileResetPassword: setErrorWhileSendOtp,
-    resetOtpView,
   } = useSendOtpAPI();
 
   useEffect(() => {
@@ -104,6 +104,7 @@ function LoginScreenComponent() {
     setSrnNumber(val);
     setErrorMessageForMemberLogin("");
   };
+
   const onLoginForMembers = () => {
     handleSendOtpAPI({
       payload: { srn: srn },
@@ -115,7 +116,7 @@ function LoginScreenComponent() {
     resetOtpView();
   };
 
-  const confirmOtpFnc = async (result) => {
+  const confirmOtpHanlder = async (result) => {
     const authToken = result?.token?.access_token;
     await CookieAndStorageService.set({ key: "auth", value: authToken });
     navigate(navigations.REDIRECT);
@@ -133,7 +134,7 @@ function LoginScreenComponent() {
           sendOtpResult={sendOtpResult}
           verifyOtpParams={{ token: sendOtpResult?.data[0]?.token }}
           otpVerifyEndPoint={MEMBER_VERIFY_OTP}
-          confirmOtpFnc={(result) => confirmOtpFnc(result)}
+          confirmOtpHanlder={(result) => confirmOtpHanlder(result)}
           isMemberLogin={true}
         />
       ) : (

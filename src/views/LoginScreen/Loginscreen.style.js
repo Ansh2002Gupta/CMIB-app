@@ -117,6 +117,7 @@ const style = {
   },
   memberContainerStyle: {
     flexGrow: 1,
+    justifyContent: "space-between",
   },
   // Web view related Styles
   webView: {

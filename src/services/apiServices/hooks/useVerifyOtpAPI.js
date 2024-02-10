@@ -24,8 +24,8 @@ const useVerifyOtpAPI = () => {
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         setApiStatus(API_STATUS.SUCCESS);
-        setVerifyOtpResult(res.data);
-        successCallback && successCallback(res.data.data);
+        setVerifyOtpResult(res?.data);
+        successCallback && successCallback(res?.data?.data);
         return;
       }
       setApiStatus(API_STATUS.ERROR);

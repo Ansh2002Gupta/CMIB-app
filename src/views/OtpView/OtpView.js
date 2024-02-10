@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "../../routes";
 import { useIntl } from "react-intl";
 
 import CreateNewPasswordComponent from "../CreateNewPassword";
 import OtpViewUI from "./OtpViewUI";
 import useVerifyOtpAPI from "../../services/apiServices/hooks/useVerifyOtpAPI";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
-import { navigations } from "../../constants/routeNames";
 import {
   OTP_TIMER_SECOND,
   OTP_TIMER_MIN_MINUTES,
@@ -15,7 +13,7 @@ import {
 import { validateOtp } from "../../utils/validation";
 
 function OtpView({
-  confirmOtpFnc,
+  confirmOtpHanlder,
   description,
   email,
   headerText,
@@ -24,7 +22,6 @@ function OtpView({
   otpVerifyEndPoint,
   sendOtpResult,
   setSendOtpResult,
-  token,
   verifyOtpParams,
 }) {
   const intl = useIntl();
@@ -67,7 +64,7 @@ function OtpView({
         payload: { ...verifyOtpParams, otp: otpValue },
         endPoint: otpVerifyEndPoint,
         successCallback: (result) => {
-          confirmOtpFnc && confirmOtpFnc(result);
+          confirmOtpHanlder && confirmOtpHanlder(result);
         },
         errorCallback: (error) => {
           setValidationError(error);
@@ -85,7 +82,7 @@ function OtpView({
       setMinutes(OTP_TIMER_MIN_MINUTES);
       setSeconds(OTP_TIMER_SECOND);
       setIsCounter(true);
-      handleSendOtpAPI({ payload: { email: email } });
+      handleSendOtpAPI({ payload: { email } });
     }
   };
 
