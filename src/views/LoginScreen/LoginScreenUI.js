@@ -324,7 +324,7 @@ const LoginScreenUI = (props) => {
             >
               <View
                 style={{
-                  flexGrow: 1,
+                  ...styles.containerStyle,
                   ...(isWebView && styles.webView.backGroundColor),
                 }}
               >

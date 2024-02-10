@@ -108,6 +108,11 @@ const style = {
     flexDirection: "row",
   },
   containerStyle: {
+    backgroundColor: colors.backgroundColor,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 24,
+    justifyContent: "space-between",
     flexGrow: 1,
   },
 
