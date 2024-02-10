@@ -32,10 +32,12 @@ const CustomModal = ({
   secondaryText,
   onBackdropPress,
 }) => {
-  const webProps =
-    Platform.OS.toLowerCase() === "web" ? { maxWidth } : { onBackdropPress };
+  const isWeb = Platform.OS.toLowerCase() === "web";
+  const webProps = isWeb ? { maxWidth } : { onBackdropPress };
 
-  useEscKeyListener(onPressIconCross);
+  if (isWeb) {
+    useEscKeyListener(onPressIconCross);
+  }
 
   return (
     <Modal
@@ -94,6 +96,7 @@ const CustomModal = ({
                         ? images.iconCloseDark
                         : images.iconCross
                     }
+                    isSvg={Platform.OS === "web"}
                     style={{ height: 24, width: 24 }}
                   />
                 )}
