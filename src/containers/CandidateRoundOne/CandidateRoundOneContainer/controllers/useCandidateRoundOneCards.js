@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../../routes";
 
@@ -10,7 +9,6 @@ import images from "../../../../images";
 const useCandidateRoundOneCards = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const [selectedTab, setSelectedTab] = useState(null);
 
   const roundOneCards = CANDIDATE_ROUND_ONE_CARDS.map((card) => ({
     title: intl.formatMessage({ id: card.title }),
@@ -20,7 +18,6 @@ const useCandidateRoundOneCards = () => {
   }));
 
   const onPressCard = (id) => {
-    setSelectedTab(id);
     switch (id) {
       case 1:
         navigate(navigations.APPLICATION_FORM);
@@ -36,7 +33,6 @@ const useCandidateRoundOneCards = () => {
   return {
     onPressCard,
     roundOneCards,
-    // selectedTab,
   };
 };
 

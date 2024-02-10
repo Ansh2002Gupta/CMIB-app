@@ -105,6 +105,7 @@ import iconCampus from "../../public/images/svg/campus.svg";
 import iconConsent from "../../public/images/svg/consent.svg";
 import iconDiscover from "../../public/images/svg/discover.svg";
 import iconApplication from "../../public/images/svg/application.svg";
+import iconCalendar from "../../public/images/calendar.png";
 
 const images = {
   iconArrowUp,
@@ -214,6 +215,7 @@ const images = {
   iconConsent,
   iconDiscover,
   iconApplication,
+  iconCalendar,
 };
 
 export default images;

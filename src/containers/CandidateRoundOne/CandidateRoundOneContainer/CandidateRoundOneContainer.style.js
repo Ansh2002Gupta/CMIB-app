@@ -4,9 +4,9 @@ import colors from "../../../assets/colors";
 
 const style = StyleSheet.create({
   componentStyle: {
-    marginTop: 24,
+    marginTop: 16,
     flexDirection: "row",
-    paddingBottom: 24,
+    padding: 24,
     width: "100%",
     ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
@@ -21,6 +21,18 @@ const style = StyleSheet.create({
     color: colors.subHeadingGray,
     marginTop: 8,
   },
+  headerContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 16,
+    borderBottomColor: colors.lightGrey,
+    borderBottomWidth: 1,
+    backgroundColor: colors.white,
+  },
+  headerText: (isWebView) => ({
+    fontSize: isWebView ? 32 : 20,
+    color: colors.black,
+  }),
   imageStyle: {
     height: 24,
     width: 24,
@@ -32,6 +44,7 @@ const style = StyleSheet.create({
     alignItems: "center",
     borderRadius: 8,
     backgroundColor: colors.secondaryGrey,
+    marginRight: 16,
   },
   mainStyle: {
     flex: 1,
@@ -40,10 +53,10 @@ const style = StyleSheet.create({
     flex: 1,
   },
   textView: {
-    paddingTop: 16,
+    flexShrink: 1,
   },
   titleText: {
-    fontSize: 18,
+    fontSize: 20,
     color: colors.black,
   },
   webComponentStyle: {
@@ -60,12 +73,22 @@ const style = StyleSheet.create({
   webContainerStyle: {
     flexDirection: "row",
     gap: 24,
-    width: "100%",
     backgroundColor: colors.backgroundColor,
     paddingLeft: 24,
     paddingRight: 24,
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
+  },
+  webHeaderContainer: {
+    padding: 24,
+    borderBottomColor: colors.lightGrey,
+    borderTopColor: colors.lightGrey,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    backgroundColor: colors.white,
+  },
+  webTextView: {
+    paddingTop: 16,
   },
 });
 

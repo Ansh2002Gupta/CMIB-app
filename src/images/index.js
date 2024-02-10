@@ -178,6 +178,7 @@ const iconCampus = appendAppBaseURl("/images/svg/campus.svg");
 const iconConsent = appendAppBaseURl("/images/svg/consent.svg");
 const iconDiscover = appendAppBaseURl("/images/svg/discover.svg");
 const iconApplication = appendAppBaseURl("/images/svg/application.svg");
+const iconCalendar = appendAppBaseURl("/images/calendar.png");
 
 const images = {
   iconArrowUp,
@@ -302,6 +303,7 @@ const images = {
   iconConsent,
   iconDiscover,
   iconApplication,
+  iconCalendar,
 };
 
 export default images;

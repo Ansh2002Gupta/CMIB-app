@@ -257,3 +257,137 @@ export const CANDIDATE_ROUND_ONE_CARDS = [
     subTitle: "label.campus_interview_management_description",
   },
 ];
+
+export const ADD_APPLICATION_STEPPER = [
+  {
+    id: 1,
+    title: "label.personal_details",
+  },
+  {
+    id: 2,
+    title: "label.educational_details",
+  },
+  {
+    id: 3,
+    title: "label.training_details",
+  },
+  {
+    id: 4,
+    title: "label.work_experience",
+  },
+  {
+    id: 5,
+    title: "label.hobbies_achievements",
+  },
+  {
+    id: 6,
+    title: "label.job_preference",
+  },
+  {
+    id: 7,
+    title: "label.payment",
+  },
+];
+
+export const EDUCATIONAL_DETAIL_TABS = [
+  {
+    id: 1,
+    title: "label.educational_details",
+  },
+  {
+    id: 2,
+    title: "label.exams",
+  },
+  {
+    id: 3,
+    title: "label.other_courses",
+  },
+];
+
+export const GENDER = [
+  {
+    label: "Male",
+    value: "MALE",
+  },
+  {
+    label: "Female",
+    value: "FEMALE",
+  },
+  {
+    label: "Others",
+    value: "OTHERS",
+  },
+];
+
+export const MARITAL_STATUS = [
+  {
+    label: "Married",
+    value: "Married",
+  },
+  {
+    label: "Single",
+    value: "Single",
+  },
+];
+
+export const MONTHS = [
+  {
+    label: "January",
+    value: "January",
+  },
+  {
+    label: "February",
+    value: "February",
+  },
+  {
+    label: "March",
+    value: "March",
+  },
+  {
+    label: "April",
+    value: "April",
+  },
+  {
+    label: "May",
+    value: "May",
+  },
+  {
+    label: "June",
+    value: "June",
+  },
+  {
+    label: "July",
+    value: "July",
+  },
+  {
+    label: "August",
+    value: "August",
+  },
+  {
+    label: "September",
+    value: "September",
+  },
+  {
+    label: "October",
+    value: "October",
+  },
+  {
+    label: "November",
+    value: "November",
+  },
+  {
+    label: "December",
+    value: "December",
+  },
+];
+
+export const ATTEMPTS = Array.from({ length: 30 }, (_, x) => ({
+  label: `${x + 1}`,
+  value: `${x + 1}`,
+}));
+
+export const YEARS = Array.from({ length: 30 }, (_, x) => ({
+    label: `${x + 1995}`,
+    value: `${x + 1995}`,
+  }));
+

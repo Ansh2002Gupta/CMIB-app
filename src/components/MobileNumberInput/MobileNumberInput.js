@@ -16,6 +16,7 @@ const MobileNumberInput = ({
   countryNameField,
   fieldRef,
   labelField,
+  mobileFieldLabel,
   mobNumberError,
   mobNumberValue,
   onChangeCode,
@@ -86,7 +87,7 @@ const MobileNumberInput = ({
               })}
               maxLength={MOBILE_NUMBER_MAX_LENGTH}
               placeholder={intl.formatMessage({
-                id: "label.enter_contact_person_mobile_no",
+                id: mobileFieldLabel || "label.enter_contact_person_mobile_no",
               })}
               customHandleBlur={customHandleBlur}
               value={mobNumberValue}
@@ -105,7 +106,7 @@ const MobileNumberInput = ({
             id: "label.mobile_number",
           })}
           placeholder={intl.formatMessage({
-            id: "label.enter_contact_person_mobile_no",
+            id: mobileFieldLabel || "label.enter_contact_person_mobile_no",
           })}
           customHeading={intl.formatMessage({
             id: "label.country_codes",
@@ -138,6 +139,7 @@ MobileNumberInput.defaultProps = {
   onChangeCode: () => {},
   onChangeMobNumber: () => {},
   options: [],
+  mobileFieldLabel: "",
   mobNumberError: "",
   mobNumberValue: "",
   urlField: "flag",
@@ -153,6 +155,7 @@ MobileNumberInput.propTypes = {
   onChangeCode: PropTypes.func,
   onChangeMobNumber: PropTypes.func,
   options: PropTypes.array,
+  mobileFieldLabel: PropTypes.string,
   mobNumberError: PropTypes.string,
   mobNumberValue: PropTypes.string,
   urlField: PropTypes.string,

@@ -51,6 +51,7 @@ const CustomTextInput = (props) => {
     minCount,
     options,
     onChangeValue,
+    onClickRightIcon,
     placeholder,
     step,
     value,
@@ -58,6 +59,8 @@ const CustomTextInput = (props) => {
     valueField,
     urlField,
     menuOptions,
+    noOfRows,
+    rightIcon,
     ...remainingProps
   } = props;
 
@@ -192,6 +195,7 @@ const CustomTextInput = (props) => {
               ref: fieldRef,
               value,
             }}
+            rows={noOfRows}
           />
         ) : (
           <TextInput
@@ -220,6 +224,14 @@ const CustomTextInput = (props) => {
             <Image
               source={isTextVisible ? images.iconEyeSlash : images.iconEye}
             />
+          </TouchableOpacity>
+        )}
+        {!!rightIcon && (
+          <TouchableOpacity
+            style={style.eyeIconContainer}
+            onPress={onClickRightIcon}
+          >
+            <Image source={rightIcon} style={style.rightIcon}/>
           </TouchableOpacity>
         )}
       </View>
@@ -274,9 +286,12 @@ CustomTextInput.defaultProps = {
   labelField: "label",
   maxCount: 100,
   minCount: 0,
+  noOfRows: 4,
   options: [],
   onChangeValue: () => {},
+  onClickRightIcon: () => {},
   placeholder: "",
+  rightIcon: "",
   step: 1,
   value: "",
   valueField: "value",
@@ -312,9 +327,12 @@ CustomTextInput.propTypes = {
   maxCount: PropTypes.number,
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
+  noOfRows: PropTypes.number,
   onChangeValue: PropTypes.func,
+  onClickRightIcon: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
+  rightIcon: PropTypes.string,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
