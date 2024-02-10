@@ -88,19 +88,14 @@ const CustomModal = ({
                   {headerText}
                 </CommonText>
               )}
-              <TouchableOpacity onPress={onPressIconCross}>
-                {isIconCross && (
-                  <TouchableImage
-                    source={
-                      Platform.OS === "web"
-                        ? images.iconCloseDark
-                        : images.iconCross
-                    }
-                    isSvg={Platform.OS === "web"}
-                    style={{ height: 24, width: 24 }}
-                  />
-                )}
-              </TouchableOpacity>
+              {isIconCross && (
+                <TouchableImage
+                  isSvg={isWeb}
+                  onPress={onPressIconCross}
+                  source={isWeb ? images.iconCloseDark : images.iconCross}
+                  style={{ height: 24, width: 24 }}
+                />
+              )}
             </View>
             {children}
           </>

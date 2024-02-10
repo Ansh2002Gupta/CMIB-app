@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal/ConfirmationModal";
