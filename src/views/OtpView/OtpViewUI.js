@@ -330,6 +330,7 @@ const OtpViewUI = ({
 
 OtpViewUI.defaultProps = {
   errorMessage: "",
+  email: "",
   handleDismissToast: () => {},
   isCounter: false,
   isLoading: false,
@@ -348,7 +349,7 @@ OtpViewUI.defaultProps = {
 
 OtpViewUI.propTypes = {
   errorMessage: PropTypes.string,
-  email: PropTypes.string.isRequired,
+  email: PropTypes.string,
   handleOtpChange: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   isCounter: PropTypes.bool,

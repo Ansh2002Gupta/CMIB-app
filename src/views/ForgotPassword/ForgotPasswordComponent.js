@@ -19,13 +19,8 @@ function ForgotPasswordComponent() {
   const [userEmail, setuserEmail] = useState("");
   const [validationError, setValidationError] = useState("");
 
-  const {
-    handleSendOtpAPI,
-    isLoading,
-    isShowOtpView,
-    sendOtpResult,
-    setSendOtpResult,
-  } = useSendOtpAPI();
+  const { handleSendOtpAPI, isLoading, sendOtpResult, setSendOtpResult } =
+    useSendOtpAPI();
 
   useEffect(() => {
     if (userEmail !== "") {
@@ -76,9 +71,7 @@ function ForgotPasswordComponent() {
 
   return (
     <>
-      {!!sendOtpResult &&
-      isShowOtpView &&
-      !!Object.keys(sendOtpResult)?.length ? (
+      {!!sendOtpResult && !!Object.keys(sendOtpResult)?.length ? (
         <OtpView
           email={userEmail}
           setSendOtpResult={setSendOtpResult}

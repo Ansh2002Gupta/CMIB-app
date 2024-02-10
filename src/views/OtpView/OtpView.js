@@ -33,7 +33,6 @@ function OtpView({
   const [otpLeft, setOtpLeft] = useState(OTP_TRY_COUNT);
   const [otpValue, setOtpValue] = useState("");
   const [seconds, setSeconds] = useState(OTP_TIMER_SECOND);
-  const [validationError, setValidationError] = useState("");
 
   const { handleSendOtpAPI } = useSendOtpAPI();
   const {
@@ -65,9 +64,6 @@ function OtpView({
         endPoint: otpVerifyEndPoint,
         successCallback: (result) => {
           confirmOtpHanlder && confirmOtpHanlder(result);
-        },
-        errorCallback: (error) => {
-          setValidationError(error);
         },
       });
     }

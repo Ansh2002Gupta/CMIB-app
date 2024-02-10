@@ -3,17 +3,17 @@ import { useIntl } from "react-intl";
 import { useLocation, useNavigate } from "../../routes";
 import { useTheme } from "@unthinkable/react-theme";
 
+import CookieAndStorageService from "../../services/cookie-and-storage-service";
 import LoginScreenUI from "./LoginScreenUI";
 import OtpViewComponent from "../OtpView";
 import useLoginUser from "../../services/apiServices/hooks/useLoginUser";
-import { navigations } from "../../constants/routeNames";
-import { validateEmail } from "../../utils/validation";
-import { LogoutContext } from "../../globalContext/logout/logoutProvider";
-import { setLogoutToast } from "../../globalContext/logout/logoutActions";
-import CookieAndStorageService from "../../services/cookie-and-storage-service";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
+import { LogoutContext } from "../../globalContext/logout/logoutProvider";
+import { navigations } from "../../constants/routeNames";
 import { MEMBER_LOGIN } from "../../services/apiServices/apiEndPoint";
 import { MEMBER_VERIFY_OTP } from "../../services/apiServices/apiEndPoint";
+import { LogoutContext } from "../../globalContext/logout/logoutProvider";
+import { validateEmail } from "../../utils/validation";
 
 function LoginScreenComponent() {
   const [logoutState, setLogoutDispatch] = useContext(LogoutContext);
@@ -42,10 +42,9 @@ function LoginScreenComponent() {
     errorWhileResetPassword: errorWhileSendOtp,
     handleSendOtpAPI,
     isLoading: isOtpLoading,
-    isShowOtpView,
-    resetOtpView,
     sendOtpResult,
     setErrorWhileResetPassword: setErrorWhileSendOtp,
+    setSendOtpResult,
   } = useSendOtpAPI();
 
   useEffect(() => {
@@ -113,7 +112,7 @@ function LoginScreenComponent() {
   };
 
   const onClickGoToLogin = () => {
-    resetOtpView();
+    setSendOtpResult([]);
   };
 
   const confirmOtpHanlder = async (result) => {
@@ -124,7 +123,7 @@ function LoginScreenComponent() {
 
   return (
     <>
-      {isShowOtpView ? (
+      {!!sendOtpResult?.data ? (
         <OtpViewComponent
           headerText={intl.formatMessage({ id: "label.enter_otp" })}
           description={intl.formatMessage({
@@ -135,7 +134,7 @@ function LoginScreenComponent() {
           verifyOtpParams={{ token: sendOtpResult?.data[0]?.token }}
           otpVerifyEndPoint={MEMBER_VERIFY_OTP}
           confirmOtpHanlder={(result) => confirmOtpHanlder(result)}
-          isMemberLogin={true}
+          isMemberLogin
         />
       ) : (
         <LoginScreenUI
