@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { Platform ,StyleSheet } from "@unthinkable/react-core-components";
 
 const styles = StyleSheet.create({
   zoomInfoContainer: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   zoomIcon: {
-    cursor: "pointer",
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
     width: 20,
     height: 20,
   },
