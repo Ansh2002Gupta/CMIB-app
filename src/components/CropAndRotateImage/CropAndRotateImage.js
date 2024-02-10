@@ -43,7 +43,6 @@ const CropAndRotateImage = ({
   }, []);
 
   const uploadImageToServer = ({ uploadedFile }) => {
-    // setFile(uploadedFile);
     const formData = new FormData();
     formData.append("file", uploadedFile);
     handleFileUpload({

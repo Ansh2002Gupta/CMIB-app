@@ -70,8 +70,7 @@ const ZoomSliderWithInfo = ({ setZoom, setRotation, zoom }) => {
         height={20}
         style={styles.zoomIcon}
         onClick={() => {
-          // setRotation((prev) => (prev + 90) % 360);
-          setRotation((prevRotation) => prevRotation - 90); 
+          setRotation((prevRotation) => (prevRotation - 90) % 360);
         }}
       />
     </View>
