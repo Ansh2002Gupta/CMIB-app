@@ -3,6 +3,7 @@ export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
 
 export const numRegex = /^\d+$/;
+export const alphaNumericRegex = /^[a-zA-Z0-9]+$/;
 export const urlRegex =
   /^(?:https?:\/\/)?www\.[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&=]*)/;
 
@@ -16,7 +17,7 @@ export const NUMBER_MIN_LENGTH = 7;
 export const NUMBER_MAX_LENGTH = 15;
 export const MOBILE_NUMBER_MIN_LENGTH = 4;
 export const MOBILE_NUMBER_MAX_LENGTH = 13;
-export const REGISTRATION_NO_LENGTH = 10;
+export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const IMAGE_MAX_SIZE = 5000000;

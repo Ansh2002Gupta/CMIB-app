@@ -1,7 +1,7 @@
 /* User Types */
 export const USER_TYPE_COMPANY = "company";
-export const CORE = "core";
 export const USER_TYPE_MEMBER = "member";
+export const CORE = "core";
 
 /* API Endpoints */
 export const COMPANY_RESET_PASSWORD_OTP = `${USER_TYPE_COMPANY}/reset-password/confirm`;
@@ -22,5 +22,9 @@ export const CORE_USERS_PERMISSION = `${CORE}/users/permission`;
 export const MENU_PROFILE = `${CORE}/menu-profile/${USER_TYPE_COMPANY}`;
 export const COUNTRY_CODE = `${CORE}/countries`;
 export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
+
+/* API Endpoints Members*/
+export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;
+export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/otp/verify`;
 export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
 export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;

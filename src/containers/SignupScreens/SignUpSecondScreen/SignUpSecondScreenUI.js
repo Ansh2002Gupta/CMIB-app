@@ -19,9 +19,9 @@ import {
   ENTITY_OPTIONS,
   DEFAULT_INPUT_MAX_LENGTH,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
-  REGISTRATION_NO_LENGTH,
+  FIRM_REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
-import { numericValidator } from "../../../utils/validation";
+import { alphaNumericValidator, numericValidator } from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
@@ -112,13 +112,12 @@ const SignUpSecondScreenUI = ({
                 fieldRef={firmRegistrationRef}
                 isError={!!errors.registrationNo}
                 isMandatory
-                isNumeric
                 label={intl.formatMessage({
                   id: "label.firm_registration_no",
                 })}
-                maxLength={REGISTRATION_NO_LENGTH}
+                maxLength={FIRM_REGISTRATION_NO_LENGTH}
                 onChangeText={(val) =>
-                  numericValidator(val) &&
+                  alphaNumericValidator(val) &&
                   handleInputChange(val, "registrationNo")
                 }
                 placeholder={intl.formatMessage({

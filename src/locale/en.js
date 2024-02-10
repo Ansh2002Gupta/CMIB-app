@@ -293,6 +293,15 @@ const locale = {
   "label.no_placeholder": "e.g 1",
   "label.code_placeholder": "e.g 91",
   "label.account_deletion": "Account deleted successfully.",
+  "label.unable_to_delete": "Unable to delete account",
+  "label.retry": "Retry",
+  "label.srn": "SRN",
+  "label.srn_placeholder": "Enter your SRN number",
+  "label.enter_otp": "Enter OTP",
+  "label.otp_text_forgot_password":
+    "Please enter the one time password that you have received on your registered mobile number to continue to reset your password.",
+  "label.otp_text_member_login":
+    "Please enter the one time password that you have received on your registered mobile number",
   "label.application": "Application",
   "label.download_id": "Download Id",
   "label.centre_wise_company_detail": "Centre wise Company Detail",
