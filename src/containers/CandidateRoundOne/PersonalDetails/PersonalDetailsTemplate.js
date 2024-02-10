@@ -80,6 +80,7 @@ const PersonalDetailsTemplate = ({
               placeholder={intl.formatMessage({ id: "label.gender" })}
               isMandatory
               isDropdown
+              isEditable={false}
               options={GENDER}
               value={gender}
               onChangeValue={onChangeGender}
@@ -102,6 +103,7 @@ const PersonalDetailsTemplate = ({
               placeholder={intl.formatMessage({ id: "label.date_of_birth" })}
               isMandatory
               value={dob}
+              isEditable={false}
               rightIcon={images.iconCalendar}
               onChangeText={onChangeDob}
             />
@@ -111,6 +113,7 @@ const PersonalDetailsTemplate = ({
               label={intl.formatMessage({ id: "label.email" })}
               placeholder={intl.formatMessage({ id: "label.email" })}
               isMandatory
+              isEditable={false}
               value={email}
               onChangeText={onChangeEmail}
             />
@@ -255,6 +258,7 @@ const PersonalDetailsTemplate = ({
                 onChangeMobNumber={(val) => {
                   numericValidator(val) && onChangeMobileNo(val);
                 }}
+                isEditable={false}
                 options={countryCodeData}
                 mobNumberValue={mobileNo}
               />

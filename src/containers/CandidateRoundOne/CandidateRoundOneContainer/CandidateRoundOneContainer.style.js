@@ -52,6 +52,11 @@ const style = StyleSheet.create({
   mobContainer: {
     flex: 1,
   },
+  secondRowContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 8,
+  },
   textView: {
     flexShrink: 1,
   },
@@ -70,14 +75,35 @@ const style = StyleSheet.create({
     paddingRight: 24,
     justifyContent: "flex-end",
   },
+  webComponentSecondRowStyle: {
+    flexDirection: "column",
+    flex: 1,
+    maxWidth: 370,
+    height: 236,
+    paddingTop: 24,
+    paddingBottom: 24,
+    paddingLeft: 24,
+    paddingRight: 24,
+    justifyContent: "flex-end",
+  },
   webContainerStyle: {
     flexDirection: "row",
     gap: 24,
     backgroundColor: colors.backgroundColor,
     paddingLeft: 24,
     paddingRight: 24,
+    marginTop: 8,
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
+  },
+  webContainerSecondRowStyle: {
+    flexDirection: "row",
+    gap: 24,
+    backgroundColor: colors.backgroundColor,
+    paddingLeft: 24,
+    paddingRight: 24,
+    justifyContent: "center",
+    alignItems: "center",
   },
   webHeaderContainer: {
     padding: 24,

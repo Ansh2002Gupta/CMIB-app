@@ -1,4 +1,6 @@
 import { useState } from "react";
+
+import { capitalize } from "../../../../../utils/util";
 import { MONTHS } from "../../../../../constants/constants";
 
 const useExam = () => {
@@ -81,7 +83,6 @@ const useExam = () => {
     setFinalYear(val);
   };
 
-
   const onChangeFoundationMark = (val) => {
     setFoundationMark(val);
   };
@@ -155,35 +156,42 @@ const useExam = () => {
   };
 
   const updateExamDetails = (examDetails) => {
-    setFinalGroup1Attempt(examDetails?.final_group1_attempt || "");
-    setFinalGroup1Month(examDetails?.final_group1_passing_month || "");
+    console.log(examDetails);
+    setFinalGroup1Attempt(examDetails?.final_group1_attempt || "0");
+    setFinalGroup1Month(capitalize(examDetails?.final_group1_passing_month?.toLowerCase() || ""));
     setFinalGroup1Year(examDetails?.final_group1_passing_year || "");
-    setFinalGroup2Attempt(examDetails?.final_group1_attempt || "");
-    setFinalGroup2Month(examDetails?.final_group1_passing_month || "");
-    setFinalGroup2Year(examDetails?.final_group1_passing_year || "");
+    setFinalGroup2Attempt(examDetails?.final_group2_attempt || 1);
+    setFinalGroup2Month(capitalize(examDetails?.final_group2_passing_month?.toLowerCase() || ""));
+    setFinalGroup2Year(examDetails?.final_group2_passing_year || "");
     setFinalMark(getFinalMarks(examDetails));
     setFinalYear(getFinalYear(examDetails));
     setFinalMonth(getFinalMonth(examDetails));
-  }
+  };
 
   function getFinalMarks(examDetails) {
     const group1Mark = examDetails?.final_group1_txt_percentage || "0";
     const group2Mark = examDetails?.final_group2_percentage || "0";
-    return (Number(group1Mark)+Number(group2Mark))/2;
+    return (Number(group1Mark) + Number(group2Mark)) / 2;
   }
 
   function getFinalYear(examDetails) {
     const group1Year = examDetails?.final_group1_passing_year || "0";
     const group2Year = examDetails?.final_group2_passing_year || "0";
-    return Math.max(Number(group1Year),Number(group2Year))
+    return Math.max(Number(group1Year), Number(group2Year));
   }
 
   function getFinalMonth(examDetails) {
     const group1Month = examDetails?.final_group1_passing_month || "";
     const group2Month = examDetails?.final_group2_passing_month || "";
-    const indexMonth1 = MONTHS.findIndex((ele) => ele.toLowerCase() === group1Month.toLowerCase());
-    const indexMonth2 = MONTHS.findIndex((ele) => ele.toLowerCase() === group2Month.toLowerCase());
-    return indexMonth1 > indexMonth2 ? group1Month : group2Month;
+    const indexMonth1 = MONTHS.findIndex(
+      (ele) => ele.label.toLowerCase() === group1Month.toLowerCase()
+    );
+    const indexMonth2 = MONTHS.findIndex(
+      (ele) => ele.label.toLowerCase() === group2Month.toLowerCase()
+    );
+    return indexMonth1 > indexMonth2
+      ? capitalize(group1Month.toLowerCase())
+      : capitalize(group2Month.toLowerCase());
   }
 
   return {

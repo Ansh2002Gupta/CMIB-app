@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
     marginLeft: 24,
     marginTop: 24,
   },
+  spinner:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   stepperContainer:{
     marginTop: 24,
   },

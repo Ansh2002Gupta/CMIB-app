@@ -36,6 +36,7 @@ export const DEBOUNCE_TIME = 300;
 export const PREVIOUS_SCREEN = -1;
 export const DOTS = "...";
 export const ANONYMOUS = "Anonymous";
+export const USER_TYPE_CANDIDATE = "candidate";
 
 export const API_STATUS = {
   IDLE: "idle",

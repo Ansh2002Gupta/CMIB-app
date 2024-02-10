@@ -5,11 +5,11 @@ import useExam from "./controller/useExam";
 import useExamDetailsAPI from "../../../../services/apiServices/hooks/CandidateRoundeOne/useExamDetailsAPI";
 
 const Exams = ({ intl, isWebView }) => {
-    const { examDetails, handleExamDetails} = useExamDetailsAPI();
+    const { handleExamDetails} = useExamDetailsAPI();
 
     useEffect(() => {
         handleExamDetails ({
-          successCallback: () => {
+          successCallback: (examDetails) => {
             updateExamDetails(examDetails);
           },
           errorCallback: () => {},

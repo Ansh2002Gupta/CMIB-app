@@ -100,12 +100,20 @@ const usePersonalDetails = () => {
    }
    
 
-   const updatePersonalDetails = (profileDetails) => {
-    setAddress1(profileDetails.full_address);
-    setDob(profileDetails.dob);
-    setEmail(profileDetails.email);
-    setGender(profileDetails.gender);
-    setMobileNo(profileDetails.mobile_number);
+   const updatePersonalDetails = (profileDetails, countryCodeData) => {
+    setAddress1(profileDetails?.full_address || "");
+    setDob(profileDetails?.dob || "");
+    setEmail(profileDetails?.email || "");
+    setGender(profileDetails?.gender || "");
+    setMobileNo(profileDetails?.mobile_number || "");
+    setCountryCode(getCountryCode(profileDetails?.mobile_country_code || "", countryCodeData));
+   }
+
+   function getCountryCode(code, countryCodeData){
+      let countryCode = countryCodeData?.find((country) => {
+         return code == country?.dial_code;
+      })
+      return `${countryCode?.dial_code} (${countryCode?.name})`;
    }
 
    return {

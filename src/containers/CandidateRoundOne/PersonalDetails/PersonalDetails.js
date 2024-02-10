@@ -5,16 +5,7 @@ import usePersonalDetailsAPI from "../../../services/apiServices/hooks/Candidate
 import usePersonalDetails from "./controller/usePersonalDetails";
 
 const PersonalDetails = ({ countryCodeData, intl, isWebView }) => {
-  const { handlePersonalDetails, personalDetails } = usePersonalDetailsAPI();
-
-  useEffect(() => {
-    handlePersonalDetails({
-      successCallback: () => {
-        updatePersonalDetails(personalDetails);
-      },
-      errorCallback: () => {},
-    });
-  }, []);
+  const { handlePersonalDetails } = usePersonalDetailsAPI();
 
   const {
     address1,
@@ -65,6 +56,15 @@ const PersonalDetails = ({ countryCodeData, intl, isWebView }) => {
     phoneNo,
     state,
   } = usePersonalDetails();
+
+  useEffect(() => {
+    handlePersonalDetails({
+      successCallback: (personalDetails) => {
+        updatePersonalDetails(personalDetails, countryCodeData);
+      },
+      errorCallback: () => {},
+    });
+  }, [countryCodeData]);
 
   return (
     <PersonalDetailsTemplate

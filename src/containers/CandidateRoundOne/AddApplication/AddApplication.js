@@ -1,10 +1,13 @@
 import React from "react";
 import useFetch from "../../../hooks/useFetch";
+import { View } from "@unthinkable/react-core-components";
 
 import AddApplicationTemplate from "./AddApplicationTemplate";
+import Spinner from "../../../components/Spinner";
 import useAddApplication from "./controller/useAddApplication";
 import useIsWebView from "../../../hooks/useIsWebView";
 import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
+import styles from "./AddApplication.style";
 
 const AddApplication = () => {
   const {
@@ -16,20 +19,27 @@ const AddApplication = () => {
     stepperData,
   } = useAddApplication();
 
-  const { data } = useFetch({ url: COUNTRY_CODE });
+  const { data, isLoading, isSuccess } = useFetch({ url: COUNTRY_CODE });
   const { isWebView } = useIsWebView();
 
   return (
-    <AddApplicationTemplate
-      countryCodeData={data}
-      intl={intl}
-      isWebView={isWebView}
-      onChangeStepper={onChangeStepper}
-      onClickCancel={onClickCancel}
-      onClickBack={onClickBack}
-      selectedStepper={selectedStepper}
-      stepperData={stepperData}
-    />
+    <>
+      {isLoading && <View style={styles.spinner}>
+        <Spinner />
+        </View>}
+      {isSuccess && (
+        <AddApplicationTemplate
+          countryCodeData={data}
+          intl={intl}
+          isWebView={isWebView}
+          onChangeStepper={onChangeStepper}
+          onClickCancel={onClickCancel}
+          onClickBack={onClickBack}
+          selectedStepper={selectedStepper}
+          stepperData={stepperData}
+        />
+      )}
+    </>
   );
 };
 

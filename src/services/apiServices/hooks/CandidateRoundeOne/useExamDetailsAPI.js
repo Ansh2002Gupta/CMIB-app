@@ -7,7 +7,7 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/erro
 
 const useExamDetailsAPI = () => {
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
-  const [examDetails, setExamDetails] = useState([]);
+  const [examDetails, setExamDetails] = useState({});
   const [apiError, setApiError] = useState("");
 
   const handleExamDetails = async ({ successCallback, errorCallback }) => {
@@ -21,7 +21,7 @@ const useExamDetailsAPI = () => {
       ) {
         setApiStatus(API_STATUS.SUCCESS);
         setExamDetails(res.data);
-        successCallback && successCallback();
+        successCallback && successCallback(res.data);
         return;
       }
       errorCallback && errorCallback();

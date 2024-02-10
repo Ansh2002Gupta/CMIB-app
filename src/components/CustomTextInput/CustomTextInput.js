@@ -38,6 +38,7 @@ const CustomTextInput = (props) => {
     inputKey,
     isCounterInput,
     isDropdown,
+    isEditable,
     isError,
     isMandatory,
     isMobileNumber,
@@ -99,6 +100,7 @@ const CustomTextInput = (props) => {
     ...(isWebPlatform && isMultiline ? {} : style.inputContainer),
     ...(isFocused ? style.focusedStyle : {}),
     ...(isError ? style.invalidInput : {}),
+    ...(isEditable ? {} : {backgroundColor: colors.disabledTextFieldColor}),
   };
 
   const renderTextInput = () => {
@@ -120,6 +122,7 @@ const CustomTextInput = (props) => {
             placeholderStyle={style.placeholderStyle}
             menuOptions={menuOptions}
             data={options}
+            isEditable={isEditable}
             maxHeight={200}
             labelField={labelField}
             valueField={valueField}
@@ -140,6 +143,7 @@ const CustomTextInput = (props) => {
       return (
         <DropDownModal
           {...{
+            isEditable,
             labelField,
             onChangeValue,
             options,
@@ -172,6 +176,7 @@ const CustomTextInput = (props) => {
               menuOptions,
               onChangeValue,
               options,
+              isEditable,
               isMobileNumber,
               placeholder,
               value: codeValue,
@@ -206,6 +211,7 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
+            editable={isEditable}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder}
@@ -274,6 +280,7 @@ CustomTextInput.defaultProps = {
   handleCountChange: () => {},
   isCounterInput: false,
   isDropdown: false,
+  isEditable: true,
   isError: false,
   inputKey: "value",
   isMandatory: false,
@@ -315,6 +322,7 @@ CustomTextInput.propTypes = {
   inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
+  isEditable: PropTypes.bool,
   isError: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
