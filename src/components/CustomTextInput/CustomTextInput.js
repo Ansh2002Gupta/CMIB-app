@@ -38,6 +38,7 @@ const CustomTextInput = (props) => {
     inputKey,
     isCounterInput,
     isDropdown,
+    isEditable,
     isError,
     isMandatory,
     isMobileNumber,
@@ -51,6 +52,7 @@ const CustomTextInput = (props) => {
     minCount,
     options,
     onChangeValue,
+    onClickRightIcon,
     placeholder,
     step,
     value,
@@ -58,6 +60,8 @@ const CustomTextInput = (props) => {
     valueField,
     urlField,
     menuOptions,
+    noOfRows,
+    rightIcon,
     ...remainingProps
   } = props;
 
@@ -96,6 +100,7 @@ const CustomTextInput = (props) => {
     ...(isWebPlatform && isMultiline ? {} : style.inputContainer),
     ...(isFocused ? style.focusedStyle : {}),
     ...(isError ? style.invalidInput : {}),
+    ...(isEditable ? {} : {backgroundColor: colors.disabledTextFieldColor}),
   };
 
   const renderTextInput = () => {
@@ -117,6 +122,7 @@ const CustomTextInput = (props) => {
             placeholderStyle={style.placeholderStyle}
             menuOptions={menuOptions}
             data={options}
+            isEditable={isEditable}
             maxHeight={200}
             labelField={labelField}
             valueField={valueField}
@@ -137,6 +143,7 @@ const CustomTextInput = (props) => {
       return (
         <DropDownModal
           {...{
+            isEditable,
             labelField,
             onChangeValue,
             options,
@@ -169,6 +176,7 @@ const CustomTextInput = (props) => {
               menuOptions,
               onChangeValue,
               options,
+              isEditable,
               isMobileNumber,
               placeholder,
               value: codeValue,
@@ -192,6 +200,7 @@ const CustomTextInput = (props) => {
               ref: fieldRef,
               value,
             }}
+            rows={noOfRows}
           />
         ) : (
           <TextInput
@@ -202,6 +211,7 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
+            editable={isEditable}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder}
@@ -220,6 +230,14 @@ const CustomTextInput = (props) => {
             <Image
               source={isTextVisible ? images.iconEyeSlash : images.iconEye}
             />
+          </TouchableOpacity>
+        )}
+        {!!rightIcon && (
+          <TouchableOpacity
+            style={style.eyeIconContainer}
+            onPress={onClickRightIcon}
+          >
+            <Image source={rightIcon} style={style.rightIcon}/>
           </TouchableOpacity>
         )}
       </View>
@@ -262,6 +280,7 @@ CustomTextInput.defaultProps = {
   handleCountChange: () => {},
   isCounterInput: false,
   isDropdown: false,
+  isEditable: true,
   isError: false,
   inputKey: "value",
   isMandatory: false,
@@ -274,9 +293,12 @@ CustomTextInput.defaultProps = {
   labelField: "label",
   maxCount: 100,
   minCount: 0,
+  noOfRows: 4,
   options: [],
   onChangeValue: () => {},
+  onClickRightIcon: () => {},
   placeholder: "",
+  rightIcon: "",
   step: 1,
   value: "",
   valueField: "value",
@@ -300,6 +322,7 @@ CustomTextInput.propTypes = {
   inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
+  isEditable: PropTypes.bool,
   isError: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
@@ -312,9 +335,12 @@ CustomTextInput.propTypes = {
   maxCount: PropTypes.number,
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
+  noOfRows: PropTypes.number,
   onChangeValue: PropTypes.func,
+  onClickRightIcon: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
+  rightIcon: PropTypes.string,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
