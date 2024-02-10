@@ -21,6 +21,7 @@ const TicketsListing = () => {
     currentPage,
     getColoumConfigs,
     getStatusStyle,
+    fetchTickets,
     filterCategory,
     headingTexts,
     handlePageChange,
@@ -45,6 +46,15 @@ const TicketsListing = () => {
 
   const onGoBack = () => {
     navigate(navigations.PROFILE);
+  };
+
+  const filterApplyHandler = ({ selectedStatus, selectedQueryType }) => {
+    const requestedParams = {
+      q: "T000001",
+      status: selectedStatus,
+      queryType: selectedQueryType,
+    }; // TODO: Manage what filters you want to pass
+    fetchTickets({ queryParamsObject: requestedParams });
   };
 
   return (
@@ -85,6 +95,7 @@ const TicketsListing = () => {
             tableHeading,
             tableIcon,
             totalcards,
+            filterApplyHandler,
           }}
         />
       }

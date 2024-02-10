@@ -45,13 +45,14 @@ const CustomTable = ({
   onIconPress,
   rowsLimit,
   rowsPerPage,
-  setCurrentRecords,
+  // setCurrentRecords, Todo: Can be removed
   showSearchBar,
   statusText,
   subHeadingText,
   tableHeading,
   tableIcon,
   totalcards,
+  filterApplyHandler,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -64,8 +65,9 @@ const CustomTable = ({
     setShowFilterOptions((prev) => !prev);
   };
 
-  const onApplyFilter = (filterData) => {
-    setCurrentRecords(filterData.slice(0, rowsPerPage));
+  const onApplyFilter = ({ selectedStatus, selectedQueryType }) => {
+    // setCurrentRecords(filterData.slice(0, rowsPerPage)); // TODO: Can be removed
+    filterApplyHandler({ selectedStatus, selectedQueryType });
     handleFilterModal();
   };
 

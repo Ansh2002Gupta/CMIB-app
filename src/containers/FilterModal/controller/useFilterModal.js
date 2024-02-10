@@ -54,14 +54,14 @@ const useFilterModal = (
   };
 
   const filterData = () => {
-    const filteredData = data.filter((item) => {
-      return (
-        (!selectedStatus.length || selectedStatus.includes(item.status)) &&
-        (!selectedQueryType.length ||
-          selectedQueryType.includes(item.query_type))
-      );
-    });
-    onApplyFilter(filteredData);
+    // const filteredData = data.filter((item) => {
+    //   return (
+    //     (!selectedStatus.length || selectedStatus.includes(item.status)) &&
+    //     (!selectedQueryType.length ||
+    //       selectedQueryType.includes(item.query_type))
+    //   );
+    // }); // TODO : Local code; can be removed
+    onApplyFilter({ selectedStatus, selectedQueryType });
   };
 
   const handleClearFilter = () => {

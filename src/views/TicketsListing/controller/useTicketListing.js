@@ -5,6 +5,7 @@ import { View } from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
+import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import usePagination from "../../../hooks/usePagination";
 import {
@@ -47,7 +48,7 @@ const useTicketListing = () => {
   });
 
   //TODO: We use this hook when we implementing API
-  // const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch();
+  const { fetchData: fetchTickets } = useFetch({ url: "company/tickets" });
 
   const handleLoadMore = () => {
     if (loadingMore || allDataLoaded) return;
@@ -198,6 +199,7 @@ const useTicketListing = () => {
     currentPage,
     getColoumConfigs,
     getStatusStyle,
+    fetchTickets,
     filterCategory,
     headingTexts,
     handlePageChange,
