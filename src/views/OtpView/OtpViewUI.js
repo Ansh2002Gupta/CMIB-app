@@ -19,25 +19,28 @@ import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./OtpView.style";
 
 const OtpViewUI = ({
+  description,
   email,
   errorMessage,
+  handleDismissToast,
   handleOtpChange,
+  headerText,
   intl,
   isCounter,
+  isMemberLogin,
   isLoading,
-  submitDisabled,
   minutes,
-  otpLeft,
-  onVerifyOtpClick,
-  onClickGoToLogin,
   onResendOtpClick,
-  setIsCounter,
-  setSendOtpResult,
-  setMinutes,
+  onClickGoToLogin,
+  onVerifyOtpClick,
+  otpLeft,
   seconds,
+  setMinutes,
   setOtpLeft,
   setSeconds,
-  handleDismissToast,
+  setIsCounter,
+  setSendOtpResult,
+  submitDisabled,
   validationError,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -99,7 +102,7 @@ const OtpViewUI = ({
           ...styles.commonScreenContainers,
         };
       }
-
+      case "label.enter_otp":
       case "label.forgot_password": {
         if (currentBreakpoint === "sm") {
           return {
@@ -118,7 +121,7 @@ const OtpViewUI = ({
           ...styles.forgotHeaderText,
         };
       }
-
+      case "otp_text_forgot_password":
       case "label.otp_text": {
         if (currentBreakpoint === "sm") {
           return {
@@ -170,10 +173,15 @@ const OtpViewUI = ({
             }
           >
             <HeaderTextWithLabelAndDescription
-              description={intl.formatMessage({
-                id: "label.otp_text",
-              })}
-              headerText={intl.formatMessage({ id: "label.forgot_password" })}
+              description={
+                description ||
+                intl.formatMessage({
+                  id: "label.otp_text",
+                })
+              }
+              headerText={
+                headerText || intl.formatMessage({ id: "label.enter_otp" })
+              }
               customTextStyle={
                 isWebView
                   ? getResponsiveStyles("label.forgot_password")
@@ -193,7 +201,11 @@ const OtpViewUI = ({
                 customTextStyle={styles.emailStyle}
                 customContainerStyle={styles.emailContainerStyle}
               >
-                {`${intl.formatMessage({ id: "label.email_address" })}${email}`}
+                {!isMemberLogin
+                  ? `${intl.formatMessage({
+                      id: "label.email_address",
+                    })}${email}`
+                  : null}
               </CommonText>
               <CustomTouchableOpacity
                 onPress={() => {
@@ -204,12 +216,15 @@ const OtpViewUI = ({
                   customTextStyle={styles.changeStyle}
                   fontWeight="600"
                 >
-                  {intl.formatMessage({
-                    id:
-                      currentBreakpoint === "sm" || currentBreakpoint === "xs"
-                        ? "label.change"
-                        : "label.change_email_address",
-                  })}
+                  {!isMemberLogin
+                    ? intl.formatMessage({
+                        id:
+                          currentBreakpoint === "sm" ||
+                          currentBreakpoint === "xs"
+                            ? "label.change"
+                            : "label.change_email_address",
+                      })
+                    : null}
                 </CommonText>
               </CustomTouchableOpacity>
             </View>
@@ -315,6 +330,7 @@ const OtpViewUI = ({
 
 OtpViewUI.defaultProps = {
   errorMessage: "",
+  email: "",
   handleDismissToast: () => {},
   isCounter: false,
   isLoading: false,
@@ -333,7 +349,7 @@ OtpViewUI.defaultProps = {
 
 OtpViewUI.propTypes = {
   errorMessage: PropTypes.string,
-  email: PropTypes.string.isRequired,
+  email: PropTypes.string,
   handleOtpChange: PropTypes.func.isRequired,
   handleDismissToast: PropTypes.func,
   isCounter: PropTypes.bool,
