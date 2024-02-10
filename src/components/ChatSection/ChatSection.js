@@ -5,27 +5,33 @@ import {
   FlatList,
   Keyboard,
   Platform,
+  View,
 } from "@unthinkable/react-core-components";
-
 import { TwoRow } from "../../core/layouts";
 
 import CustomTextInput from "../CustomTextInput";
 import FormWrapper from "../FormWrapper";
 import MessageComponent from "../MessageComponent";
 import MessageInfoComponent from "../MessageInfoComponent/MessageInfoComponent";
+import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
 import styles from "./ChatSection.style";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const isMobileProps = isMob ? { inverted: true } : {};
-
-const ChatSection = ({ data, details }) => {
+const ChatSection = ({ data, details, handleLoadMore, loadingMore }) => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [messageValue, setMessageValue] = useState("");
   const [messages, setMessages] = useState(data);
   const flatListRef = useRef(null);
+
+  const isMobileProps = isMob
+    ? { onContentSizeChange: () => flatListRef.current.scrollToEnd() }
+    : {};
+
+  useHandleInfiniteScroll(handleLoadMore, flatListRef);
 
   useEffect(() => {
     if (!isMob && flatListRef.current) {
@@ -50,16 +56,28 @@ const ChatSection = ({ data, details }) => {
     }
   };
 
+  const webProps = !isMob ? { size: "xs" } : {};
+
   return (
     <TwoRow
       topSection={
         <FlatList
+          ListHeaderComponent={() => {
+            if (loadingMore && !isMob) {
+              return (
+                <View style={styles.loadingStyle}>
+                  <Spinner thickness={2} {...webProps} />
+                </View>
+              );
+            }
+            return null;
+          }}
           ref={flatListRef}
-          data={messages}
-          showsVerticalScrollIndicator={false}
+          refreshing={loadingMore}
+          onRefresh={handleLoadMore}
           {...isMobileProps}
+          data={messages}
           style={styles.chatSection}
-          keyExtractor={(item) => item.senderMessage.toString()}
           renderItem={({ item, index }) => {
             return (
               <>
@@ -102,8 +120,15 @@ const ChatSection = ({ data, details }) => {
   );
 };
 
+ChatSection.defaultProps = {
+  details: {},
+};
+
 ChatSection.propTypes = {
   data: PropTypes.array.isRequired,
+  details: PropTypes.object,
+  handleLoadMore: PropTypes.func.isRequired,
+  loadingMore: PropTypes.bool.isRequired,
 };
 
 export default ChatSection;

@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from "@unthinkable/react-core-components";
+import colors from "../../assets/colors";
 
 const { height: HEIGHT } = Dimensions.get("window");
 
@@ -21,6 +22,11 @@ const ChatSection = StyleSheet.create({
     paddingBottom: 24,
     paddingLeft: 16,
     paddingRight: 16,
+  },
+  loadingStyle: {
+    padding: 12,
+    marginTop: 50,
+    alignItems: "center",
   },
 });
 

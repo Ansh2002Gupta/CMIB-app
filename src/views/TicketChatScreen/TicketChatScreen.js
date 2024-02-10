@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
-import { useNavigate, useLocation } from "../../routes";
+import { useLocation } from "../../routes";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View } from "@unthinkable/react-core-components";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -11,35 +10,31 @@ import IconHeader from "../../components/IconHeader/IconHeader";
 import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import TicketDetails from "../TicketDetails";
 import useIsWebView from "../../hooks/useIsWebView";
-import { ticket_replies } from "./ticketsRepliesConstant";
-import { PREVIOUS_SCREEN } from "../../constants/constants";
+import useTicketDetails from "./controllers/useTicketDetails";
 import images from "../../images";
 import styles from "./TicketChatScreen.style";
 
 const TicketChatScreen = () => {
-  const navigate = useNavigate();
+  const {
+    handleLoadMore,
+    handlePopup,
+    isDetailsScreen,
+    loadingMore,
+    onGoBack,
+    setIsDetailScreen,
+    showPopup,
+    ticketData,
+  } = useTicketDetails();
+
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  const [isDetailsScreen, setIsDetailScreen] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+
   const location = useLocation();
-
   const { id, status } = location.state;
-
   const midOrSmall = currentBreakpoint === "md" || currentBreakpoint === "sm";
 
-  const onGoBack = () => {
-    if (isDetailsScreen) {
-      setIsDetailScreen(false);
-    } else {
-      navigate(PREVIOUS_SCREEN);
-    }
-  };
-
-  const handlePopup = () => {
-    setShowPopup((prev) => !prev);
-  };
+  const reversedData = [...ticketData].reverse();
 
   return (
     <TwoRow
@@ -84,7 +79,12 @@ const TicketChatScreen = () => {
             }
             rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
             leftSection={
-              <ChatSection data={ticket_replies} details={location.state} />
+              <ChatSection
+                data={ticketData}
+                details={location.state}
+                handleLoadMore={handleLoadMore}
+                loadingMore={loadingMore}
+              />
             }
             rightSection={
               isWebView && <TicketDetails details={location.state} />
@@ -95,7 +95,12 @@ const TicketChatScreen = () => {
             {isDetailsScreen ? (
               <TicketDetails details={location.state} />
             ) : (
-              <ChatSection data={ticket_replies} details={location.state} />
+              <ChatSection
+                data={reversedData}
+                details={location.state}
+                handleLoadMore={handleLoadMore}
+                loadingMore={loadingMore}
+              />
             )}
           </>
         )
