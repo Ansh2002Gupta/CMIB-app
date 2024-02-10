@@ -297,6 +297,8 @@ const locale = {
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
   "label.type_message": "Type Here...",
+  "label.query_type": "Query Type",
+  "label.enterQuery": "Enter Query",
 };
 
 export default locale;

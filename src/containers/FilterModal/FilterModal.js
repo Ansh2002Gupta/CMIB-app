@@ -49,7 +49,7 @@ const FilterModal = ({
   const { statusCounts, queryTypeCounts } = useMemo(() => {
     const statusCounters = {};
     const queryTypeCounters = {};
-    data.forEach((item) => {
+    data?.records?.forEach((item) => {
       statusCounters[item.status] = (statusCounters[item.status] || 0) + 1;
       queryTypeCounters[item.query_type] =
         (queryTypeCounters[item.query_type] || 0) + 1;

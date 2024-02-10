@@ -17,6 +17,13 @@ import { navigations } from "../../../constants/routeNames";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsListing.style";
+import useFetch from "../../../hooks/useFetch";
+import {
+  COMPANY_TICKET_LISTING,
+  COMPANY_QUERY_TYPE_TICKET,
+  COMPANY_TICKET_STATUS,
+} from "../../../services/apiServices/apiEndPoint";
+import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 
 const useTicketListing = () => {
   const { isWebView } = useIsWebView();
@@ -31,9 +38,40 @@ const useTicketListing = () => {
     getValidCurrentPage(searchParams.get("page"))
   );
 
-  const [currentRecords, setCurrentRecords] = useState(
-    ticketData.slice(0, rowsPerPage)
-  );
+  const {
+    data: ticketListingData,
+    isLoading: isTicketListingLoading,
+    isError: isErrorTicketListing,
+    error: errorTicketListing,
+    fetchData: fetchDataTicketListing,
+  } = useFetch({ url: COMPANY_TICKET_LISTING });
+
+  const {
+    data: queryTypeData,
+    isLoading: isLoadingQueryType,
+    isError: isErrorQueryType,
+    error: errorQueryType,
+    fetchData: fetchDataQueryType,
+  } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
+
+  const {
+    data: statusData,
+    isLoading: isLoadingStatus,
+    isError: isErrorStatus,
+    error: errorStatus,
+    fetchData: fetchDataStatus,
+  } = useFetch({ url: COMPANY_TICKET_STATUS });
+
+  const {
+    handleAddTicket,
+    isError,
+    isLoading,
+    isSuccess,
+    setUpdationError,
+    updateAddTicketResult,
+    updationError,
+    updateAddTicketStatus,
+  } = useAddTicket();
 
   const navigate = useNavigate();
 
@@ -52,29 +90,20 @@ const useTicketListing = () => {
   const handleLoadMore = () => {
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
-    setTimeout(() => {
-      const startIndex = currentRecords.length;
-      const endIndex = startIndex + rowsPerPage;
-      const additionalRecords = ticketData.slice(startIndex, endIndex);
-      if (additionalRecords.length > 0) {
-        const newRecords = currentRecords.concat(additionalRecords);
-        setCurrentRecords(newRecords);
-      } else {
-        setAllDataLoaded(true);
-      }
-      setLoadingMore(false);
-    }, 1000);
+    fetchDataTicketListing();
   };
 
   const handlePageChange = (page) => {
+    console.log(page, "page@");
     //TODO : we fetch data on changing page
-    // fetchData()
+    fetchDataTicketListing(page);
     handlePagePerChange(page);
   };
 
   const handleRowPerPageChange = (option) => {
+    console.log(option, "page@");
     //TODO : we fetch data on row changing per page
-    // fetchData()
+    fetchDataTicketListing(option.value);
     handleRowsPerPageChange(option.value);
   };
 
@@ -86,7 +115,7 @@ const useTicketListing = () => {
     navigate(navigations.TICKETS_VIEW_EDIT, { state: item });
   };
 
-  let headingTexts = ["id"];
+  let headingTexts = ["readable_id"];
   let subHeadingText = ["query_type"];
   let statusText = ["status"];
   let tableIcon = images.iconTicket;
@@ -124,7 +153,7 @@ const useTicketListing = () => {
       {
         content: (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.id}
+            {item.readable_id}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -192,14 +221,20 @@ const useTicketListing = () => {
     ];
   };
 
+  console.log(
+    ticketListingData?.meta?.total,
+    " ticketListingData?.meta?.total"
+  );
   return {
+    ticketListingData,
     allDataLoaded,
-    currentRecords,
+    // currentRecords,
     currentPage,
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
     headingTexts,
+    handleAddTicket,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
@@ -209,12 +244,15 @@ const useTicketListing = () => {
     indexOfLastRecord,
     loadingMore,
     onIconPress,
+    queryTypeData,
+    statusData,
     rowsPerPage,
     statusText,
     subHeadingText,
     tableIcon,
-    setCurrentRecords,
-    totalcards: ticketData.length,
+    // setCurrentRecords,
+    totalcards: ticketListingData?.meta?.total,
+    queryTypeUrl: COMPANY_QUERY_TYPE_TICKET,
   };
 };
 

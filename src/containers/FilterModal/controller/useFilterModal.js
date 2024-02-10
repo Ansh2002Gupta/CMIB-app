@@ -54,13 +54,16 @@ const useFilterModal = (
   };
 
   const filterData = () => {
-    const filteredData = data.filter((item) => {
+    console.log(data, filterState, "data@@@");
+    const filteredData = data?.records?.filter((item) => {
+      console.log(item, "Item@@");
       return (
         (!selectedStatus.length || selectedStatus.includes(item.status)) &&
         (!selectedQueryType.length ||
           selectedQueryType.includes(item.query_type))
       );
     });
+
     onApplyFilter(filteredData);
   };
 

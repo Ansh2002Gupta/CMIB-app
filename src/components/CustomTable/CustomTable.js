@@ -8,6 +8,8 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
+import CustomModal from "../CustomModal";
+import CustomTextInput from "../CustomTextInput";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import PaginationFooter from "../PaginationFooter";
@@ -18,6 +20,9 @@ import { getRenderText } from "../../utils/util";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
+import ActionPairButton from "../ActionPairButton";
+import useFetch from "../../hooks/useFetch";
+import { COMPANY_QUERY_TYPE_TICKET } from "../../services/apiServices/apiEndPoint";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -26,6 +31,7 @@ const initialFilterState = {
 };
 
 const CustomTable = ({
+  ticketListingData,
   allDataLoaded,
   currentPage,
   currentRecords,
@@ -33,6 +39,7 @@ const CustomTable = ({
   filterCategory,
   getColoumConfigs,
   getStatusStyle,
+  handleAddTicket,
   handlePageChange,
   handleRowPerPageChange,
   handleSearchResults,
@@ -43,9 +50,11 @@ const CustomTable = ({
   indexOfLastRecord,
   loadingMore,
   onIconPress,
+  queryTypeData,
   rowsLimit,
   rowsPerPage,
   setCurrentRecords,
+  statusData,
   showSearchBar,
   statusText,
   subHeadingText,
@@ -59,16 +68,34 @@ const CustomTable = ({
 
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [filterState, setFilterState] = useState(initialFilterState);
+  const [addNewTicket, setAddNewTicket] = useState(false);
+  const [enterQuery, setEnterQuery] = useState("");
+  const [queryType, setQueryType] = useState();
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
   };
 
   const onApplyFilter = (filterData) => {
-    setCurrentRecords(filterData.slice(0, rowsPerPage));
+    console.log(filterData, "filteredData");
+    // setCurrentRecords(filterData.slice(0, rowsPerPage));
     handleFilterModal();
   };
 
+  const onChangeQuery = (val) => {
+    setEnterQuery(val);
+  };
+
+  const handleTicketModal = () => {
+    setAddNewTicket(true);
+  };
+
+  const handleSaveAddTicket = () => {
+    handleAddTicket({ query_type: queryType, query: enterQuery });
+    setAddNewTicket(false);
+    setEnterQuery("");
+    setQueryType();
+  };
   const flatlistProps = isWeb
     ? {}
     : {
@@ -84,29 +111,45 @@ const CustomTable = ({
         topSection={
           showSearchBar && (
             <TwoColumn
-              leftSection={
-                <SearchView data={data} onSearch={handleSearchResults} />
-              }
+              style={{ justifyContent: "space-between" }}
               isLeftFillSpace
-              isRightFillSpace={false}
+              leftSection={
+                <TwoColumn
+                  leftSection={
+                    <SearchView
+                      data={data?.records}
+                      onSearch={handleSearchResults}
+                    />
+                  }
+                  isLeftFillSpace
+                  rightSection={
+                    <CustomTouchableOpacity
+                      onPress={handleFilterModal}
+                      style={styles.imageParentStyle}
+                    >
+                      <TouchableImage
+                        source={images.iconFilter}
+                        parentStyle={styles.iconTicket}
+                        onPress={handleFilterModal}
+                      />
+                      {isWebView && (
+                        <CommonText customTextStyle={styles.filterText}>
+                          {intl.formatMessage({ id: "label.filters" })}
+                        </CommonText>
+                      )}
+                    </CustomTouchableOpacity>
+                  }
+                  style={styles.filterTopSection(isWebView)}
+                />
+              }
               rightSection={
                 <CustomTouchableOpacity
-                  onPress={handleFilterModal}
                   style={styles.imageParentStyle}
+                  onPress={handleTicketModal}
                 >
-                  <TouchableImage
-                    source={images.iconFilter}
-                    parentStyle={styles.iconTicket}
-                    onPress={handleFilterModal}
-                  />
-                  {isWebView && (
-                    <CommonText customTextStyle={styles.filterText}>
-                      {intl.formatMessage({ id: "label.filters" })}
-                    </CommonText>
-                  )}
+                  <CommonText>Add New Ticket</CommonText>
                 </CustomTouchableOpacity>
               }
-              style={styles.filterTopSection(isWebView)}
             />
           )
         }
@@ -125,7 +168,7 @@ const CustomTable = ({
                   />
                 )}
                 <FlatList
-                  data={currentRecords}
+                  data={ticketListingData?.records}
                   showsVerticalScrollIndicator={false}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item }) => {
@@ -243,6 +286,49 @@ const CustomTable = ({
             onApplyFilter,
           }}
         />
+      )}
+      {addNewTicket && (
+        <CustomModal headerText={"Add Ticket"}>
+          <View>
+            <CustomTextInput
+              isDropdown
+              label={intl.formatMessage({ id: "label.query_type" })}
+              placeholder={intl.formatMessage({
+                id: "label.select",
+              })}
+              options={queryTypeData}
+              valueField="id"
+              labelField="name"
+              value={queryType}
+              onChange={(val) => {
+                setQueryType(val);
+              }}
+            />
+            <CustomTextInput
+              label={intl.formatMessage({ id: "label.enterQuery" })}
+              placeholder={intl.formatMessage({
+                id: "label.enterQuery",
+              })}
+              value={enterQuery}
+              onChangeText={(val) => {
+                setEnterQuery(val);
+              }}
+              isMultiline
+            />
+            <ActionPairButton
+              onPressButtonTwo={() => {
+                handleSaveAddTicket();
+              }}
+              onPressButtonOne={() => {
+                setAddNewTicket(false);
+              }}
+              isButtonTwoGreen
+              isDisabled={!enterQuery || !queryType}
+              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+              buttonTwoText={intl.formatMessage({ id: "label.add" })}
+            ></ActionPairButton>
+          </View>
+        </CustomModal>
       )}
     </View>
   );

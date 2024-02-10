@@ -16,6 +16,7 @@ import {
 
 const TicketsListing = () => {
   const {
+    ticketListingData,
     allDataLoaded,
     currentRecords,
     currentPage,
@@ -23,6 +24,7 @@ const TicketsListing = () => {
     getStatusStyle,
     filterCategory,
     headingTexts,
+    handleAddTicket,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
@@ -32,6 +34,8 @@ const TicketsListing = () => {
     indexOfLastRecord,
     loadingMore,
     onIconPress,
+    queryTypeData,
+    statusData,
     rowsPerPage,
     statusText,
     subHeadingText,
@@ -60,13 +64,15 @@ const TicketsListing = () => {
       bottomSection={
         <CustomTable
           {...{
+            ticketListingData,
             allDataLoaded,
             currentPage,
             currentRecords,
-            data: ticketData,
+            data: ticketListingData,
             getStatusStyle,
             getColoumConfigs,
             filterCategory,
+            handleAddTicket,
             handleSearchResults,
             handleLoadMore,
             handleRowPerPageChange,
@@ -77,6 +83,8 @@ const TicketsListing = () => {
             indexOfLastRecord,
             loadingMore,
             onIconPress,
+            queryTypeData,
+            statusData,
             rowsLimit,
             rowsPerPage,
             setCurrentRecords,
