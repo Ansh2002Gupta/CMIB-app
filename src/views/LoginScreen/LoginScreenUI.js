@@ -28,7 +28,6 @@ const LoginScreenUI = (props) => {
     intl,
     isLoading,
     loginDisabled,
-    loginDisabledForMembers,
     logoutDetails,
     onChangePassword,
     onChangeSRNNumber,
@@ -362,7 +361,7 @@ const LoginScreenUI = (props) => {
                 >
                   <CustomButton
                     onPress={onLoginForMembers}
-                    disabled={loginDisabledForMembers}
+                    disabled={!srn.length}
                     isLoading={isLoading}
                     type={"submit"}
                     withGreenBackground
@@ -412,7 +411,6 @@ LoginScreenUI.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   logoutDetails: PropTypes.object.isRequired,
   loginDisabled: PropTypes.bool.isRequired,
-  loginDisabledForMembers: PropTypes.bool.isRequired,
   onChangePassword: PropTypes.func.isRequired,
   onChangeUsername: PropTypes.func.isRequired,
   onCreateNewPasswordClick: PropTypes.func.isRequired,

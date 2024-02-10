@@ -25,11 +25,11 @@ const useVerifyOtpAPI = () => {
       ) {
         setApiStatus(API_STATUS.SUCCESS);
         setVerifyOtpResult(res.data);
-        successCallback(res.data.data);
+        successCallback && successCallback(res.data.data);
         return;
       }
       setApiStatus(API_STATUS.ERROR);
-      errorCallback(res);
+      errorCallback && errorCallback(res);
       setErrorWhileResetPassword(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);

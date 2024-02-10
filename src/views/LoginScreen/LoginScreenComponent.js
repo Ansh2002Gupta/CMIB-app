@@ -11,8 +11,8 @@ import { validateEmail } from "../../utils/validation";
 import { LogoutContext } from "../../globalContext/logout/logoutProvider";
 import { setLogoutToast } from "../../globalContext/logout/logoutActions";
 import CookieAndStorageService from "../../services/cookie-and-storage-service";
-import { MEMBER_LOGIN } from "../../services/apiServices/apiEndPoint";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
+import { MEMBER_LOGIN } from "../../services/apiServices/apiEndPoint";
 import { MEMBER_VERIFY_OTP } from "../../services/apiServices/apiEndPoint";
 
 function LoginScreenComponent() {
@@ -32,7 +32,6 @@ function LoginScreenComponent() {
   const [errorMessageForMemberLogin, setErrorMessageForMemberLogin] =
     useState("");
   const [loginDisabled, setLoginDisabled] = useState(true);
-  const [loginDisabledForMembers, setLoginDisabledForMembers] = useState(true);
   const {
     handleUserLogin,
     isLoading,
@@ -56,14 +55,6 @@ function LoginScreenComponent() {
       setLoginDisabled(true);
     }
   }, [userName, password]);
-
-  useEffect(() => {
-    if (srn !== "") {
-      setLoginDisabledForMembers(false);
-    } else {
-      setLoginDisabledForMembers(true);
-    }
-  }, [srn]);
 
   const handleDismissToast = () => {
     setErrorWhileLoggingIn("");
@@ -157,7 +148,6 @@ function LoginScreenComponent() {
             intl,
             isLoading: isLoading || isOtpLoading,
             loginDisabled,
-            loginDisabledForMembers,
             logoutDetails,
             onChangePassword,
             onChangeSRNNumber,
