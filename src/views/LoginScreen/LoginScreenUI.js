@@ -128,6 +128,7 @@ const LoginScreenUI = (props) => {
               <TouchableOpacity
                 style={styles.topTabs}
                 onPress={() => toggleUser(false)}
+                disabled={isLoading}
               >
                 <CommonText
                   customTextStyle={{
@@ -155,6 +156,7 @@ const LoginScreenUI = (props) => {
               <TouchableOpacity
                 style={styles.topTabs}
                 onPress={() => toggleUser(true)}
+                disabled={isLoading}
               >
                 <View>
                   <CommonText
@@ -324,7 +326,7 @@ const LoginScreenUI = (props) => {
             >
               <View
                 style={{
-                  ...styles.containerStyle,
+                  ...styles.memberContainerStyle,
                   ...(isWebView && styles.webView.backGroundColor),
                 }}
               >

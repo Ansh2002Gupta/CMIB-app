@@ -15,7 +15,7 @@ const useSendOtpAPI = () => {
     setIsShowOtpView(false);
   };
 
-  const handleSendOtpAPI = async (payload, isNavigate, errorCallback, url) => {
+  const handleSendOtpAPI = async ({ payload, errorCallback, url }) => {
     try {
       setAPIStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
@@ -55,9 +55,9 @@ const useSendOtpAPI = () => {
     isSuccess,
     isShowOtpView,
     resetOtpView,
+    setErrorWhileResetPassword,
     sendOtpResult,
     setSendOtpResult,
-    setErrorWhileResetPassword,
   };
 };
 

@@ -9,12 +9,12 @@ const useVerifyOtpAPI = () => {
   const [verifyOtpResult, setVerifyOtpResult] = useState([]);
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
 
-  const handleVerifyOtpAPI = async (
-    payload,
+  const handleVerifyOtpAPI = async ({
     endPoint,
+    errorCallback,
+    payload,
     successCallback,
-    errorCallback
-  ) => {
+  }) => {
     try {
       setApiStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");

@@ -27,7 +27,6 @@ function OtpView({
   token,
   verifyOtpParams,
 }) {
-  const navigate = useNavigate();
   const intl = useIntl();
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -64,16 +63,16 @@ function OtpView({
       return;
     } else {
       setErrorMessage("");
-      handleVerifyOtpAPI(
-        { ...verifyOtpParams, otp: otpValue },
-        otpVerifyEndPoint,
-        (result) => {
+      handleVerifyOtpAPI({
+        payload: { ...verifyOtpParams, otp: otpValue },
+        endPoint: otpVerifyEndPoint,
+        successCallback: (result) => {
           confirmOtpFnc && confirmOtpFnc(result);
         },
-        (error) => {
+        errorCallback: (error) => {
           setValidationError(error);
-        }
-      );
+        },
+      });
     }
   };
 
@@ -86,7 +85,7 @@ function OtpView({
       setMinutes(OTP_TIMER_MIN_MINUTES);
       setSeconds(OTP_TIMER_SECOND);
       setIsCounter(true);
-      handleSendOtpAPI({ email });
+      handleSendOtpAPI({ payload: { email: email } });
     }
   };
 

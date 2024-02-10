@@ -48,8 +48,11 @@ function ForgotPasswordComponent() {
     } else {
       setErrorMessage("");
     }
-    handleSendOtpAPI({ email: userEmail }, (error) => {
-      setValidationError(error);
+    handleSendOtpAPI({
+      payload: { email: userEmail },
+      errorCallback: (error) => {
+        setValidationError(error);
+      },
     });
     setSuccessLogin(false);
   };

@@ -4,14 +4,14 @@ import { useLocation, useNavigate } from "../../routes";
 import { useTheme } from "@unthinkable/react-theme";
 
 import LoginScreenUI from "./LoginScreenUI";
+import OtpViewComponent from "../OtpView";
 import useLoginUser from "../../services/apiServices/hooks/useLoginUser";
 import { navigations } from "../../constants/routeNames";
 import { validateEmail } from "../../utils/validation";
 import { LogoutContext } from "../../globalContext/logout/logoutProvider";
 import { setLogoutToast } from "../../globalContext/logout/logoutActions";
-import OtpViewComponent from "../OtpView";
 import CookieAndStorageService from "../../services/cookie-and-storage-service";
-import { MEMBER_SEND_OTP } from "../../services/apiServices/apiEndPoint";
+import { MEMBER_LOGIN } from "../../services/apiServices/apiEndPoint";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
 import { MEMBER_VERIFY_OTP } from "../../services/apiServices/apiEndPoint";
 
@@ -114,7 +114,10 @@ function LoginScreenComponent() {
     setErrorMessageForMemberLogin("");
   };
   const onLoginForMembers = () => {
-    handleSendOtpAPI({ srn: srn }, true, (error) => {}, MEMBER_SEND_OTP);
+    handleSendOtpAPI({
+      payload: { srn: srn },
+      url: MEMBER_LOGIN,
+    });
   };
 
   const onClickGoToLogin = () => {

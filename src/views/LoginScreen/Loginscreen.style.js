@@ -115,7 +115,9 @@ const style = {
     justifyContent: "space-between",
     flexGrow: 1,
   },
-
+  memberContainerStyle: {
+    flexGrow: 1,
+  },
   // Web view related Styles
   webView: {
     activeTab: {
