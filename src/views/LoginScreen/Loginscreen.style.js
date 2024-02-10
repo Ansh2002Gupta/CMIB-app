@@ -7,8 +7,6 @@ const webPointer = isWeb ? { cursor: "pointer" } : {};
 const style = {
   container: {
     backgroundColor: colors.white,
-    paddingRight: 16,
-    paddingLeft: 16,
   },
   activeStyle: {
     paddingTop: 16,
@@ -39,8 +37,6 @@ const style = {
   },
   companyView: {
     backgroundColor: colors.backgroundColor,
-    paddingLeft: 16,
-    paddingRight: 16,
     paddingTop: 24,
     justifyContent: "space-between",
     flexGrow: 1,
@@ -109,8 +105,6 @@ const style = {
   },
   containerStyle: {
     backgroundColor: colors.backgroundColor,
-    paddingLeft: 16,
-    paddingRight: 16,
     paddingTop: 24,
     justifyContent: "space-between",
     flexGrow: 1,

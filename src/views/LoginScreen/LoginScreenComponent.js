@@ -12,7 +12,7 @@ import { LogoutContext } from "../../globalContext/logout/logoutProvider";
 import { navigations } from "../../constants/routeNames";
 import { MEMBER_LOGIN } from "../../services/apiServices/apiEndPoint";
 import { MEMBER_VERIFY_OTP } from "../../services/apiServices/apiEndPoint";
-import { LogoutContext } from "../../globalContext/logout/logoutProvider";
+import { setLogoutToast } from "../../globalContext/logout/logoutActions";
 import { validateEmail } from "../../utils/validation";
 
 function LoginScreenComponent() {
