@@ -12,6 +12,7 @@ import CustomButton from "../CustomButton/CustomButton";
 import CustomImage from "../CustomImage";
 import Modal from "../Modal";
 import TouchableImage from "../TouchableImage";
+import useEscKeyListener from "../../hooks/useEscKeyListener";
 import images from "../../images";
 import style from "./CustomModal.style";
 
@@ -33,6 +34,8 @@ const CustomModal = ({
 }) => {
   const webProps =
     Platform.OS.toLowerCase() === "web" ? { maxWidth } : { onBackdropPress };
+
+  useEscKeyListener(onPressIconCross);
 
   return (
     <Modal
