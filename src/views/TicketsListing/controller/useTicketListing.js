@@ -5,6 +5,7 @@ import { View } from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
+import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import usePagination from "../../../hooks/usePagination";
 import {
@@ -17,7 +18,6 @@ import { navigations } from "../../../constants/routeNames";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsListing.style";
-import useFetch from "../../../hooks/useFetch";
 import {
   COMPANY_TICKET_LISTING,
   COMPANY_QUERY_TYPE_TICKET,
@@ -85,7 +85,6 @@ const useTicketListing = () => {
   });
 
   //TODO: We use this hook when we implementing API
-  // const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch();
 
   const handleLoadMore = () => {
     if (loadingMore || allDataLoaded) return;
@@ -250,6 +249,7 @@ const useTicketListing = () => {
     statusText,
     subHeadingText,
     tableIcon,
+    fetchDataTicketListing,
     // setCurrentRecords,
     totalcards: ticketListingData?.meta?.total,
     queryTypeUrl: COMPANY_QUERY_TYPE_TICKET,

@@ -10,6 +10,7 @@ const useFilterModal = (
 ) => {
   const { selectedStatus, selectedQueryType, activeCategories } = filterState;
 
+  console.log(filterState, "filterState@");
   const prevFilterState = useRef(filterState);
 
   const onCancel = () => {
@@ -18,6 +19,7 @@ const useFilterModal = (
   };
 
   const handleCategoryChange = (category) => {
+    console.log(category, "category@@");
     setFilterState((prevState) => {
       const { activeCategories } = prevState;
       if (activeCategories.includes(category)) {
@@ -36,13 +38,14 @@ const useFilterModal = (
   const handleStatusChange = (status) => {
     setFilterState((prevState) => {
       const newSelectedStatus = prevState.selectedStatus.includes(status)
-        ? prevState.selectedStatus.filter((s) => s !== status)
+        ? prevState.selectedStatus.filter((s) => console.log(s, "ssssss"))
         : [...prevState.selectedStatus, status];
       return { ...prevState, selectedStatus: newSelectedStatus };
     });
   };
 
   const handleQueryTypeChange = (queryType) => {
+    console.log(queryType, "queryType@");
     setFilterState((prevState) => {
       const newSelectedQueryType = prevState.selectedQueryType.includes(
         queryType
@@ -54,17 +57,14 @@ const useFilterModal = (
   };
 
   const filterData = () => {
-    console.log(data, filterState, "data@@@");
-    const filteredData = data?.records?.filter((item) => {
-      console.log(item, "Item@@");
-      return (
-        (!selectedStatus.length || selectedStatus.includes(item.status)) &&
-        (!selectedQueryType.length ||
-          selectedQueryType.includes(item.query_type))
-      );
-    });
-
-    onApplyFilter(filteredData);
+    // const filteredData = data.filter((item) => {
+    //   return (
+    //     (!selectedStatus.length || selectedStatus.includes(item.status)) &&
+    //     (!selectedQueryType.length ||
+    //       selectedQueryType.includes(item.query_type))
+    //   );
+    // }); // TODO : Local code; can be removed
+    onApplyFilter({ selectedStatus, selectedQueryType });
   };
 
   const handleClearFilter = () => {

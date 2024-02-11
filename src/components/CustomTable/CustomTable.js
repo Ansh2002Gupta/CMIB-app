@@ -6,6 +6,7 @@ import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import ActionPairButton from "../ActionPairButton";
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../CustomModal";
@@ -20,9 +21,6 @@ import { getRenderText } from "../../utils/util";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
-import ActionPairButton from "../ActionPairButton";
-import useFetch from "../../hooks/useFetch";
-import { COMPANY_QUERY_TYPE_TICKET } from "../../services/apiServices/apiEndPoint";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -55,12 +53,15 @@ const CustomTable = ({
   rowsPerPage,
   setCurrentRecords,
   statusData,
+  // setCurrentRecords, Todo: Can be removed
   showSearchBar,
   statusText,
   subHeadingText,
   tableHeading,
   tableIcon,
   totalcards,
+  filterApplyHandler,
+  fetchDataTicketListing,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -76,9 +77,9 @@ const CustomTable = ({
     setShowFilterOptions((prev) => !prev);
   };
 
-  const onApplyFilter = (filterData) => {
-    console.log(filterData, "filteredData");
-    // setCurrentRecords(filterData.slice(0, rowsPerPage));
+  const onApplyFilter = ({ selectedStatus, selectedQueryType }) => {
+    // setCurrentRecords(filterData.slice(0, rowsPerPage)); // TODO: Can be removed
+    filterApplyHandler({ selectedStatus, selectedQueryType });
     handleFilterModal();
   };
 
@@ -92,6 +93,7 @@ const CustomTable = ({
 
   const handleSaveAddTicket = () => {
     handleAddTicket({ query_type: queryType, query: enterQuery });
+    fetchDataTicketListing();
     setAddNewTicket(false);
     setEnterQuery("");
     setQueryType();
@@ -284,11 +286,13 @@ const CustomTable = ({
             setFilterState,
             setShowFilterOptions,
             onApplyFilter,
+            statusData,
+            queryTypeData
           }}
         />
       )}
       {addNewTicket && (
-        <CustomModal headerText={"Add Ticket"}>
+        <CustomModal headerText={intl.formatMessage({ id: "label.addTicket" })}>
           <View>
             <CustomTextInput
               isDropdown

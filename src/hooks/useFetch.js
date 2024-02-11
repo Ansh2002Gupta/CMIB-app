@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import Http from "../services/http-service";
+import { objectToQueryString } from "../utils/queryParamsHelpers";
 import { API_STATUS, STATUS_CODES } from "../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../constants/errorMessages";
 
@@ -32,11 +33,15 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
 
   const { skipApiCallOnMount } = otherOptions || {};
 
-  const fetchData = async () => {
+  const fetchData = async ({ queryParamsObject } = {}) => {
     try {
+      let modifiedURL = url;
+      if (queryParamsObject && objectToQueryString(queryParamsObject)) {
+        modifiedURL = `${url}?${objectToQueryString(queryParamsObject)}`;
+      }
       setApiStatus(API_STATUS.LOADING);
       error && setError("");
-      const res = await Http.get(url, apiOptions);
+      const res = await Http.get(modifiedURL, apiOptions);
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS

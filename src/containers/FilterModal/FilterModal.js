@@ -23,6 +23,8 @@ const FilterModal = ({
   onApplyFilter,
   setFilterState,
   setShowFilterOptions,
+  statusData,
+  queryTypeData,
 }) => {
   const {
     activeCategories,
@@ -59,6 +61,7 @@ const FilterModal = ({
 
   const RenderCheckButton = ({ title, count, onChange, isSelected }) => {
     const displayTitle = count ? `${title} (${count})` : title;
+    console.log(title, "title@");
     return (
       <View style={styles.renderCheckButton}>
         <CheckBox
@@ -125,6 +128,7 @@ const FilterModal = ({
   const CANCEL_TEXT = intl.formatMessage({ id: "label.cancel" });
   const SHOW_RESULT_TEXT = intl.formatMessage({ id: "label.show_result" });
 
+  console.log(activeCategories, "activeCategories@");
   return (
     <CustomModal customInnerContainerStyle={styles.customerInnerContainerStyle}>
       <ThreeRow

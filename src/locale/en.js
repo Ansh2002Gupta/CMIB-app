@@ -299,6 +299,7 @@ const locale = {
   "label.type_message": "Type Here...",
   "label.query_type": "Query Type",
   "label.enterQuery": "Enter Query",
+  "label.addTicket": "Add Ticket",
 };
 
 export default locale;

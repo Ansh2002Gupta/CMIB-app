@@ -42,6 +42,7 @@ const TicketsListing = () => {
     tableIcon,
     setCurrentRecords,
     totalcards,
+    fetchDataTicketListing,
   } = useTicketListing();
 
   const intl = useIntl();
@@ -49,6 +50,14 @@ const TicketsListing = () => {
 
   const onGoBack = () => {
     navigate(navigations.PROFILE);
+  };
+
+  const filterApplyHandler = ({ selectedStatus, selectedQueryType }) => {
+    const requestedParams = {
+      status: selectedStatus,
+      queryType: selectedQueryType,
+    }; // TODO: Manage what filters you want to pass
+    fetchDataTicketListing({ queryParamsObject: requestedParams });
   };
 
   return (
@@ -93,6 +102,8 @@ const TicketsListing = () => {
             tableHeading,
             tableIcon,
             totalcards,
+            filterApplyHandler,
+            fetchDataTicketListing,
           }}
         />
       }
