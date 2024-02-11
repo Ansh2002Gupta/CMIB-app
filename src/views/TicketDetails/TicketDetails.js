@@ -12,7 +12,7 @@ import { formatCreatedAt } from "../../../src/utils/util";
 import images from "../../images";
 
 const TicketDetails = ({ details }) => {
-  const { assigned_to, created_at, id, query_type, status } = details;
+  const { assigned_to, created_at, id, query_type, status } = details || {};
   const { isWebView } = useIsWebView();
   const role = "Admin";
 

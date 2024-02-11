@@ -41,8 +41,6 @@ const useTicketListing = () => {
   const {
     data: ticketListingData,
     isLoading: isTicketListingLoading,
-    isError: isErrorTicketListing,
-    error: errorTicketListing,
     fetchData: fetchDataTicketListing,
   } = useFetch({
     url: COMPANY_TICKET_LISTING,
@@ -51,21 +49,9 @@ const useTicketListing = () => {
     },
   });
 
-  const {
-    data: queryTypeData,
-    isLoading: isLoadingQueryType,
-    isError: isErrorQueryType,
-    error: errorQueryType,
-    fetchData: fetchDataQueryType,
-  } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
+  const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
 
-  const {
-    data: statusData,
-    isLoading: isLoadingStatus,
-    isError: isErrorStatus,
-    error: errorStatus,
-    fetchData: fetchDataStatus,
-  } = useFetch({ url: COMPANY_TICKET_STATUS });
+  const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
 
   useEffect(() => {
     fetchDataTicketListing({
@@ -73,17 +59,7 @@ const useTicketListing = () => {
     });
   }, []);
 
-  console.log(rowsPerPage, "rowsPerPage@", currentPage);
-  const {
-    handleAddTicket,
-    isError,
-    isLoading,
-    isSuccess,
-    setUpdationError,
-    updateAddTicketResult,
-    updationError,
-    updateAddTicketStatus,
-  } = useAddTicket();
+  const { handleAddTicket } = useAddTicket();
 
   const navigate = useNavigate();
 
@@ -95,8 +71,6 @@ const useTicketListing = () => {
     setCurrentPage,
     setRowPerPage,
   });
-
-  //TODO: We use this hook when we implementing API
 
   const handleLoadMore = () => {
     if (loadingMore || allDataLoaded) return;
@@ -119,13 +93,12 @@ const useTicketListing = () => {
       page: currentPage,
     };
     fetchDataTicketListing({ queryParamsObject: requestedParams });
-    // handleRowsPerPageChange(option.value);
   };
 
   const handleSearchResults = (searchedData) => {
     const requestedParams = {
       q: searchedData,
-    }; // TODO: Manage what filters you want to pass
+    };
     fetchDataTicketListing({ queryParamsObject: requestedParams });
   };
 
@@ -244,35 +217,33 @@ const useTicketListing = () => {
     ];
   };
   return {
-    ticketListingData,
     allDataLoaded,
-    // currentRecords,
     currentPage,
+    fetchDataTicketListing,
+    filterCategory,
     getColoumConfigs,
     getStatusStyle,
-    filterCategory,
-    headingTexts,
     handleAddTicket,
+    handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
-    handleLoadMore,
-    isHeading,
+    headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
+    isHeading,
     isTicketListingLoading,
     loadingMore,
     onIconPress,
     queryTypeData,
-    statusData,
+    queryTypeUrl: COMPANY_QUERY_TYPE_TICKET,
     rowsPerPage,
+    statusData,
     statusText,
     subHeadingText,
     tableIcon,
-    fetchDataTicketListing,
-    // setCurrentRecords,
+    ticketListingData,
     totalcards: ticketListingData?.meta?.total,
-    queryTypeUrl: COMPANY_QUERY_TYPE_TICKET,
   };
 };
 

@@ -24,3 +24,4 @@ export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
 export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${USER_TYPE_COMPANY}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
+export const COMPANY_TICKET_VIEW = `${CORE}/tickets`

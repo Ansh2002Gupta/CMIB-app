@@ -7,7 +7,6 @@ import { TwoRow } from "../../core/layouts";
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useTicketListing from "./controller/useTicketListing";
-import { ticketData } from "./constant";
 import { navigations } from "../../constants/routeNames";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
@@ -16,34 +15,34 @@ import {
 
 const TicketsListing = () => {
   const {
-    ticketListingData,
     allDataLoaded,
     currentRecords,
     currentPage,
+    fetchDataTicketListing,
+    filterCategory,
     getColoumConfigs,
     getStatusStyle,
-    filterCategory,
-    headingTexts,
     handleAddTicket,
+    handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
-    handleLoadMore,
-    isHeading,
+    headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
+    isHeading,
     isTicketListingLoading,
     loadingMore,
     onIconPress,
     queryTypeData,
-    statusData,
     rowsPerPage,
+    setCurrentRecords,
+    statusData,
     statusText,
     subHeadingText,
     tableIcon,
-    setCurrentRecords,
+    ticketListingData,
     totalcards,
-    fetchDataTicketListing,
   } = useTicketListing();
 
   const intl = useIntl();
@@ -74,38 +73,38 @@ const TicketsListing = () => {
       bottomSection={
         <CustomTable
           {...{
-            ticketListingData,
             allDataLoaded,
             currentPage,
             currentRecords,
             data: ticketListingData,
-            getStatusStyle,
-            getColoumConfigs,
+            fetchDataTicketListing,
+            filterApplyHandler,
             filterCategory,
+            getColoumConfigs,
+            getStatusStyle,
             handleAddTicket,
-            handleSearchResults,
             handleLoadMore,
-            handleRowPerPageChange,
             handlePageChange,
+            handleRowPerPageChange,
+            handleSearchResults,
             headingTexts,
-            isHeading,
             indexOfFirstRecord,
             indexOfLastRecord,
+            isHeading,
             isTicketListingLoading,
             loadingMore,
             onIconPress,
             queryTypeData,
-            statusData,
             rowsLimit,
             rowsPerPage,
             setCurrentRecords,
+            statusData,
             statusText,
             subHeadingText,
             tableHeading,
             tableIcon,
+            ticketListingData,
             totalcards,
-            filterApplyHandler,
-            fetchDataTicketListing,
           }}
         />
       }

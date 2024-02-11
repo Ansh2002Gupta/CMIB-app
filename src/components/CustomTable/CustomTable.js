@@ -13,15 +13,15 @@ import CustomModal from "../CustomModal";
 import CustomTextInput from "../CustomTextInput";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
+import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
-import { getRenderText } from "../../utils/util";
 import useIsWebView from "../../hooks/useIsWebView";
+import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
-import LoadingScreen from "../LoadingScreen";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -30,40 +30,37 @@ const initialFilterState = {
 };
 
 const CustomTable = ({
-  ticketListingData,
   allDataLoaded,
   currentPage,
-  currentRecords,
   data,
+  fetchDataTicketListing,
+  filterApplyHandler,
   filterCategory,
   getColoumConfigs,
   getStatusStyle,
   handleAddTicket,
+  handleLoadMore,
   handlePageChange,
   handleRowPerPageChange,
   handleSearchResults,
-  handleLoadMore,
   headingTexts,
-  isHeading,
   indexOfFirstRecord,
   indexOfLastRecord,
+  isHeading,
   isTicketListingLoading,
   loadingMore,
   onIconPress,
   queryTypeData,
   rowsLimit,
   rowsPerPage,
-  setCurrentRecords,
-  statusData,
-  // setCurrentRecords, Todo: Can be removed
   showSearchBar,
+  statusData,
   statusText,
   subHeadingText,
   tableHeading,
   tableIcon,
+  ticketListingData,
   totalcards,
-  filterApplyHandler,
-  fetchDataTicketListing,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -107,7 +104,6 @@ const CustomTable = ({
 
   const webProps = isWeb ? { size: "xs" } : {};
 
-  console.log(queryType, "queryType@@");
   return (
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
@@ -349,7 +345,6 @@ const CustomTable = ({
 CustomTable.defaultProps = {
   allDataLoaded: false,
   currentPage: 1,
-  currentRecords: [],
   data: [{}],
   filterCategory: [],
   getColoumConfigs: () => {},
@@ -366,7 +361,6 @@ CustomTable.defaultProps = {
   onIconPress: () => {},
   rowsLimit: [],
   rowsPerPage: 10,
-  setCurrentRecords: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
@@ -378,7 +372,6 @@ CustomTable.defaultProps = {
 CustomTable.propTypes = {
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
-  currentRecords: PropTypes.array.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
@@ -395,7 +388,6 @@ CustomTable.propTypes = {
   onIconPress: PropTypes.func.isRequired,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  setCurrentRecords: PropTypes.array.isRequired,
   showSearchBar: PropTypes.bool,
   statusText: PropTypes.array,
   subHeadingText: PropTypes.array,
