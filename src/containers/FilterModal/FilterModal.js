@@ -164,7 +164,7 @@ const FilterModal = ({
             rightSectionStyle={styles.rightSection}
             rightSection={
               isWeb ? (
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView contentContainerStyle={{ height: 300 }}>
                   {renderOptionsByCategory()}
                 </ScrollView>
               ) : (

@@ -107,7 +107,6 @@ const CustomTable = ({
 
   const webProps = isWeb ? { size: "xs" } : {};
 
-  console.log(queryType, "queryType@@");
   return (
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
