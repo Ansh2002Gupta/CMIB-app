@@ -8,7 +8,6 @@ import TouchableImage from "../../../components/TouchableImage";
 import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
-import usePagination from "../../../hooks/usePagination";
 import {
   COMPANY_TICKET_LISTING,
   COMPANY_QUERY_TYPE_TICKET,
@@ -66,12 +65,6 @@ const useTicketListing = () => {
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
-  const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
-    shouldSetQueryParamsOnMount: true,
-    setCurrentPage,
-    setRowPerPage,
-  });
-
   const handleLoadMore = () => {
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
@@ -79,15 +72,16 @@ const useTicketListing = () => {
   };
 
   const handlePageChange = (page) => {
+    setCurrentPage(page);
     const requestedParams = {
       perPage: rowsPerPage,
       page: page,
     };
     fetchDataTicketListing({ queryParamsObject: requestedParams });
-    handlePagePerChange(page);
   };
 
   const handleRowPerPageChange = (option) => {
+    setRowPerPage(option.value);
     const requestedParams = {
       perPage: option.value,
       page: currentPage,

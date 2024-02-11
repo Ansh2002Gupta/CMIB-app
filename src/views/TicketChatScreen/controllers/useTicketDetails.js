@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-
 import useFetch from "../../../hooks/useFetch";
 import { useLocation } from "../../../routes";
 import { COMPANY_TICKET_VIEW } from "../../../services/apiServices/apiEndPoint";
