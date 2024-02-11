@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
   textSize: {
     fontSize: 14,
     flexWrap: "wrap",
-    // flex: 1,
   },
 });
 

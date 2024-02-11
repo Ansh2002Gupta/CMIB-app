@@ -21,7 +21,6 @@ const isMob = Platform.OS.toLowerCase() !== "web";
 const isMobileProps = isMob ? { inverted: true } : {};
 
 const ChatSection = ({ data, details }) => {
-  console.log(details, "details@");
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [messageValue, setMessageValue] = useState("");
@@ -86,10 +85,7 @@ const ChatSection = ({ data, details }) => {
         <FormWrapper onSubmit={handleSend}>
           <CustomTextInput
             customStyle={styles.cutomTextInput}
-            customTextInputOuterContainer={{
-              borderRadius: 12,
-              paddingRight: 0,
-            }}
+            customTextInputOuterContainer={styles.customTextInputOuterContainer}
             isSendButton
             onChangeText={(val) => handleInputChange(val)}
             onClickAttachement={() => {}}
