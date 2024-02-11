@@ -127,7 +127,6 @@ const FilterModal = ({
   const CANCEL_TEXT = intl.formatMessage({ id: "label.cancel" });
   const SHOW_RESULT_TEXT = intl.formatMessage({ id: "label.show_result" });
 
-  console.log(activeCategories, "activeCategories@");
   return (
     <CustomModal customInnerContainerStyle={styles.customerInnerContainerStyle}>
       <ThreeRow
@@ -165,7 +164,9 @@ const FilterModal = ({
             rightSectionStyle={styles.rightSection}
             rightSection={
               isWeb ? (
-                renderOptionsByCategory()
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {renderOptionsByCategory()}
+                </ScrollView>
               ) : (
                 <ScrollView showsVerticalScrollIndicator={false}>
                   {renderOptionsByCategory()}

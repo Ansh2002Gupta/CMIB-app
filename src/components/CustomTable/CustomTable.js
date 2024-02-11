@@ -21,6 +21,7 @@ import { getRenderText } from "../../utils/util";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import styles from "./CustomTable.style";
+import LoadingScreen from "../LoadingScreen";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -46,6 +47,7 @@ const CustomTable = ({
   isHeading,
   indexOfFirstRecord,
   indexOfLastRecord,
+  isTicketListingLoading,
   loadingMore,
   onIconPress,
   queryTypeData,
@@ -82,21 +84,20 @@ const CustomTable = ({
     handleFilterModal();
   };
 
-  const onChangeQuery = (val) => {
-    setEnterQuery(val);
-  };
-
   const handleTicketModal = () => {
     setAddNewTicket(true);
   };
 
   const handleSaveAddTicket = () => {
-    handleAddTicket({ query_type: queryType, query: enterQuery });
-    fetchDataTicketListing();
+    handleAddTicket({
+      payload: { query_type: queryType, query: enterQuery },
+      succesCallBack: fetchDataTicketListing,
+    });
     setAddNewTicket(false);
     setEnterQuery("");
     setQueryType();
   };
+
   const flatlistProps = isWeb
     ? {}
     : {
@@ -106,6 +107,7 @@ const CustomTable = ({
 
   const webProps = isWeb ? { size: "xs" } : {};
 
+  console.log(queryType, "queryType@@");
   return (
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
@@ -119,7 +121,6 @@ const CustomTable = ({
                   leftSection={
                     <SearchView
                       data={data?.records}
-                      // onSearch={handleSearchResults}
                       customSearchCriteria={handleSearchResults}
                     />
                   }
@@ -171,74 +172,79 @@ const CustomTable = ({
                     style={styles.columnHeaderStyle}
                   />
                 )}
-                <FlatList
-                  data={ticketListingData?.records}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => {
-                    return (
-                      <>
-                        {isWebView ? (
-                          <MultiColumn
-                            columns={getColoumConfigs(item)}
-                            style={styles.columnStyleBorder}
-                          />
-                        ) : (
-                          <View style={styles.mobileContainer}>
-                            <View>
-                              <CommonText
-                                fontWeight={"600"}
-                                customTextStyle={styles.cellTextStyle()}
-                              >
-                                {getRenderText(item, headingTexts)}
-                              </CommonText>
-                              <CommonText
-                                customTextStyle={styles.tableQueryText}
-                              >
-                                {getRenderText(item, subHeadingText)}
-                              </CommonText>
+                {isTicketListingLoading ? (
+                  <LoadingScreen />
+                ) : (
+                  <FlatList
+                    data={ticketListingData?.records}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item }) => {
+                      return (
+                        <>
+                          {isWebView ? (
+                            <MultiColumn
+                              columns={getColoumConfigs(item)}
+                              style={styles.columnStyleBorder}
+                            />
+                          ) : (
+                            <View style={styles.mobileContainer}>
+                              <View>
+                                <CommonText
+                                  fontWeight={"600"}
+                                  customTextStyle={styles.cellTextStyle()}
+                                >
+                                  {getRenderText(item, headingTexts)}
+                                </CommonText>
+                                <CommonText
+                                  customTextStyle={styles.tableQueryText}
+                                >
+                                  {getRenderText(item, subHeadingText)}
+                                </CommonText>
+                              </View>
+                              <View style={styles.rowsPerPageWeb}>
+                                <Chip
+                                  label={getRenderText(item, statusText)}
+                                  style={getStatusStyle(item.status)}
+                                />
+                                <TouchableImage
+                                  onPress={() => {
+                                    onIconPress(item);
+                                  }}
+                                  source={tableIcon}
+                                  style={styles.iconTicket}
+                                />
+                              </View>
                             </View>
-                            <View style={styles.rowsPerPageWeb}>
-                              <Chip
-                                label={getRenderText(item, statusText)}
-                                style={getStatusStyle(item.status)}
-                              />
-                              <TouchableImage
-                                onPress={() => {
-                                  onIconPress(item);
-                                }}
-                                source={tableIcon}
-                                style={styles.iconTicket}
-                              />
-                            </View>
+                          )}
+                        </>
+                      );
+                    }}
+                    {...flatlistProps}
+                    ListFooterComponent={() => {
+                      if (isWeb) return <></>;
+                      if (loadingMore) {
+                        return (
+                          <View style={styles.loadingStyle}>
+                            <Spinner thickness={2} {...webProps} />
                           </View>
-                        )}
-                      </>
-                    );
-                  }}
-                  {...flatlistProps}
-                  ListFooterComponent={() => {
-                    if (isWeb) return <></>;
-                    if (loadingMore) {
-                      return (
-                        <View style={styles.loadingStyle}>
-                          <Spinner thickness={2} {...webProps} />
-                        </View>
-                      );
-                    }
-                    if (allDataLoaded) {
-                      return (
-                        <CommonText
-                          customContainerStyle={styles.loadingStyle}
-                          customTextStyle={styles.noMoreData}
-                        >
-                          {intl.formatMessage({ id: "label.no_more_data" })}
-                        </CommonText>
-                      );
-                    }
-                    return null;
-                  }}
-                />
+                        );
+                      }
+                      if (allDataLoaded) {
+                        return (
+                          <CommonText
+                            customContainerStyle={styles.loadingStyle}
+                            customTextStyle={styles.noMoreData}
+                          >
+                            {intl.formatMessage({ id: "label.no_more_data" })}
+                          </CommonText>
+                        );
+                      }
+                      return null;
+                    }}
+                  />
+                )}
+
                 {isWebView && (
                   <PaginationFooter
                     {...{
@@ -306,7 +312,7 @@ const CustomTable = ({
               valueField="id"
               labelField="name"
               value={queryType}
-              onChange={(val) => {
+              onChangeValue={(val) => {
                 setQueryType(val);
               }}
             />

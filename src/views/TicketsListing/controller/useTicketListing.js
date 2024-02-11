@@ -5,26 +5,25 @@ import { View } from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
+import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import usePagination from "../../../hooks/usePagination";
-import {
-  getValidCurrentPage,
-  getValidRowPerPage,
-} from "../../../utils/queryParamsHelpers";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import { ticketData } from "../constant";
-import { navigations } from "../../../constants/routeNames";
-import images from "../../../images";
-import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../TicketsListing.style";
 import {
   COMPANY_TICKET_LISTING,
   COMPANY_QUERY_TYPE_TICKET,
   COMPANY_TICKET_STATUS,
 } from "../../../services/apiServices/apiEndPoint";
-import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import { formatCreatedAt } from "../../../utils/util";
+import {
+  getValidCurrentPage,
+  getValidRowPerPage,
+} from "../../../utils/queryParamsHelpers";
+import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import { navigations } from "../../../constants/routeNames";
+import images from "../../../images";
+import commonStyles from "../../../theme/styles/commonStyles";
+import styles from "../TicketsListing.style";
 
 const useTicketListing = () => {
   const { isWebView } = useIsWebView();
@@ -261,6 +260,7 @@ const useTicketListing = () => {
     isHeading,
     indexOfFirstRecord,
     indexOfLastRecord,
+    isTicketListingLoading,
     loadingMore,
     onIconPress,
     queryTypeData,

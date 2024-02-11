@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     borderColor: colors.lightGrey,
   },
-  middleSectionWeb:{
-    minHeight:278,
+  middleSectionWeb: {
+    minHeight: 278,
   },
   middleSectionStyle: {
-    height:278,
+    height: 278,
   },
   arrowRight: {
     height: 16,

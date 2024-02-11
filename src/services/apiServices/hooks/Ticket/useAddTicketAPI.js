@@ -12,7 +12,7 @@ const useAddTicket = () => {
   const [updateAddTicketResult, setUpdateAddTicketResult] = useState([]);
   const [updationError, setUpdationError] = useState("");
 
-  const handleAddTicket = async (payload) => {
+  const handleAddTicket = async ({ payload, succesCallBack }) => {
     setUpdateAddTicketStatus(API_STATUS.LOADING);
     setUpdationError("");
     try {
@@ -20,6 +20,7 @@ const useAddTicket = () => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setUpdateAddTicketStatus(API_STATUS.SUCCESS);
         setUpdateAddTicketResult(res.data);
+        succesCallBack && succesCallBack();
       } else {
         setUpdateAddTicketStatus(API_STATUS.ERROR);
         setUpdationError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
