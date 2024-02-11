@@ -21,6 +21,7 @@ const isMob = Platform.OS.toLowerCase() !== "web";
 const isMobileProps = isMob ? { inverted: true } : {};
 
 const ChatSection = ({ data, details }) => {
+  console.log(details, "details@");
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [messageValue, setMessageValue] = useState("");

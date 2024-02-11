@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate, useLocation } from "../../routes";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View } from "@unthinkable/react-core-components";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -11,10 +10,12 @@ import IconHeader from "../../components/IconHeader/IconHeader";
 import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import TicketDetails from "../TicketDetails";
 import useIsWebView from "../../hooks/useIsWebView";
+import useTicketDetails from "./controllers/useTicketDetails";
 import { ticket_replies } from "./ticketsRepliesConstant";
 import { PREVIOUS_SCREEN } from "../../constants/constants";
 import images from "../../images";
 import styles from "./TicketChatScreen.style";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const TicketChatScreen = () => {
   const navigate = useNavigate();
@@ -24,11 +25,9 @@ const TicketChatScreen = () => {
   const [isDetailsScreen, setIsDetailScreen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const location = useLocation();
-
-  const { id, status, readable_id } = location.state;
-
+  const { id } = location.state;
   const midOrSmall = currentBreakpoint === "md" || currentBreakpoint === "sm";
-
+  const { ticketViewData, isTicketViewData } = useTicketDetails(id);
   const onGoBack = () => {
     if (isDetailsScreen) {
       setIsDetailScreen(false);
@@ -41,6 +40,8 @@ const TicketChatScreen = () => {
     setShowPopup((prev) => !prev);
   };
 
+  console.log(JSON.stringify(ticketViewData), "ticketViewData@");
+  console.log(JSON.stringify(location.state), "location@");
   return (
     <TwoRow
       style={styles.mainContainer}
@@ -50,9 +51,9 @@ const TicketChatScreen = () => {
             headerText={
               isDetailsScreen
                 ? intl.formatMessage({ id: "label.view_ticket_details" })
-                : readable_id
+                : ticketViewData?.readable_id
             }
-            subHeading={status}
+            subHeading={ticketViewData?.status}
             onPressLeftIcon={onGoBack}
             hasIconBar
             mobActionButton={images.iconMore}
@@ -75,7 +76,9 @@ const TicketChatScreen = () => {
       topSectionStyle={styles.topSectionStyle}
       bottomSectionStyle={styles.bottomSectionStyle}
       bottomSection={
-        isWebView ? (
+        isTicketViewData ? (
+          <LoadingScreen />
+        ) : isWebView ? (
           <TwoColumn
             leftSectionStyle={
               isWebView
@@ -84,18 +87,18 @@ const TicketChatScreen = () => {
             }
             rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
             leftSection={
-              <ChatSection data={ticket_replies} details={location.state} />
+              <ChatSection data={ticket_replies} details={ticketViewData} />
             }
             rightSection={
-              isWebView && <TicketDetails details={location.state} />
+              isWebView && <TicketDetails details={ticketViewData} />
             }
           />
         ) : (
           <>
             {isDetailsScreen ? (
-              <TicketDetails details={location.state} />
+              <TicketDetails details={ticketViewData} />
             ) : (
-              <ChatSection data={ticket_replies} details={location.state} />
+              <ChatSection data={ticket_replies} details={ticketViewData} />
             )}
           </>
         )

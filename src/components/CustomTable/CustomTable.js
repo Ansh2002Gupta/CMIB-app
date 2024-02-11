@@ -13,15 +13,15 @@ import CustomModal from "../CustomModal";
 import CustomTextInput from "../CustomTextInput";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
+import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
-import { getRenderText } from "../../utils/util";
 import useIsWebView from "../../hooks/useIsWebView";
+import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
-import LoadingScreen from "../LoadingScreen";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -30,22 +30,23 @@ const initialFilterState = {
 };
 
 const CustomTable = ({
-  ticketListingData,
   allDataLoaded,
   currentPage,
   data,
+  fetchDataTicketListing,
+  filterApplyHandler,
   filterCategory,
   getColoumConfigs,
   getStatusStyle,
   handleAddTicket,
+  handleLoadMore,
   handlePageChange,
   handleRowPerPageChange,
   handleSearchResults,
-  handleLoadMore,
   headingTexts,
-  isHeading,
   indexOfFirstRecord,
   indexOfLastRecord,
+  isHeading,
   isTicketListingLoading,
   loadingMore,
   onIconPress,
@@ -55,13 +56,13 @@ const CustomTable = ({
   statusData,
   // setCurrentRecords, Todo: Can be removed
   showSearchBar,
+  statusData,
   statusText,
   subHeadingText,
   tableHeading,
   tableIcon,
+  ticketListingData,
   totalcards,
-  filterApplyHandler,
-  fetchDataTicketListing,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
