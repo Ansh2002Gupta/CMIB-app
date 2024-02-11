@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "../../routes";
 import { useIntl } from "react-intl";
 
 import CreateNewPasswordComponent from "../CreateNewPassword";
 import OtpViewUI from "./OtpViewUI";
 import useVerifyOtpAPI from "../../services/apiServices/hooks/useVerifyOtpAPI";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
-import { navigations } from "../../constants/routeNames";
 import {
   OTP_TIMER_SECOND,
   OTP_TIMER_MIN_MINUTES,
@@ -14,8 +12,18 @@ import {
 } from "../../constants/constants";
 import { validateOtp } from "../../utils/validation";
 
-function OtpView({ email, setSendOtpResult, token }) {
-  const navigate = useNavigate();
+function OtpView({
+  confirmOtpHanlder,
+  description,
+  email,
+  headerText,
+  isMemberLogin,
+  onClickGoToLogin,
+  otpVerifyEndPoint,
+  sendOtpResult,
+  setSendOtpResult,
+  verifyOtpParams,
+}) {
   const intl = useIntl();
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -44,10 +52,6 @@ function OtpView({ email, setSendOtpResult, token }) {
     }
   }, [otpValue]);
 
-  const onClickGoToLogin = () => {
-    navigate(navigations.LOGIN, { state: { activeTab: true } });
-  };
-
   const onVerifyOtpClick = () => {
     let error = validateOtp(otpValue);
     if (error) {
@@ -55,8 +59,14 @@ function OtpView({ email, setSendOtpResult, token }) {
       return;
     } else {
       setErrorMessage("");
+      handleVerifyOtpAPI({
+        payload: { ...verifyOtpParams, otp: otpValue },
+        endPoint: otpVerifyEndPoint,
+        successCallback: (result) => {
+          confirmOtpHanlder && confirmOtpHanlder(result);
+        },
+      });
     }
-    handleVerifyOtpAPI({ payload: { token, otp: otpValue } });
   };
 
   const handleOtpChange = (otp) => {
@@ -68,7 +78,7 @@ function OtpView({ email, setSendOtpResult, token }) {
       setMinutes(OTP_TIMER_MIN_MINUTES);
       setSeconds(OTP_TIMER_SECOND);
       setIsCounter(true);
-      handleSendOtpAPI({ email });
+      handleSendOtpAPI({ payload: { email } });
     }
   };
 
@@ -83,12 +93,15 @@ function OtpView({ email, setSendOtpResult, token }) {
       ) : (
         <OtpViewUI
           {...{
+            description,
             email,
             errorMessage,
             handleDismissToast,
             handleOtpChange,
+            headerText,
             intl,
             isCounter,
+            isMemberLogin,
             isLoading,
             minutes,
             onClickGoToLogin,
@@ -100,6 +113,7 @@ function OtpView({ email, setSendOtpResult, token }) {
             setIsCounter,
             setSendOtpResult,
             setMinutes,
+            sendOtpResult,
             setOtpLeft,
             setSeconds,
             submitDisabled,
