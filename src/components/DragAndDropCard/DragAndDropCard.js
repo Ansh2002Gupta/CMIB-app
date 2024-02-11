@@ -51,7 +51,7 @@ const DragAndDropCard = ({
       {isLoading ? (
         <View style={styles.contentContainerStyle}>
           <View style={styles.loaderBox}>
-            <Spinner />
+            <Spinner customStyle={styles.spinnerStyle} />
             {(uploadPercentage || uploadPercentage === 0) && (
               <View style={additionalStyle}>
                 <CommonText
