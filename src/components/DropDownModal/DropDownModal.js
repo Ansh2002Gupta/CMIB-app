@@ -151,7 +151,6 @@ const DropDownModal = ({
     );
   };
 
-  console.log(value, "value", valueField);
   return (
     <>
       {isMobileNumber ? (
