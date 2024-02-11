@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       web: {
         textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
+        redSpace: "nowrap",
         overflow: "hidden",
         maxWidth: "120px",
       },

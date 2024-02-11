@@ -161,100 +161,101 @@ const CustomTable = ({
             style={styles.tableTopSection}
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
-              <View style={styles.tableSection}>
-                {isWebView && (
-                  <MultiColumn
-                    columns={getColoumConfigs(tableHeading, isHeading)}
-                    style={styles.columnHeaderStyle}
-                  />
-                )}
+              <>
                 {isTicketListingLoading ? (
                   <LoadingScreen />
                 ) : (
-                  <FlatList
-                    data={ticketListingData?.records}
-                    showsVerticalScrollIndicator={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item }) => {
-                      return (
-                        <>
-                          {isWebView ? (
-                            <MultiColumn
-                              columns={getColoumConfigs(item)}
-                              style={styles.columnStyleBorder}
-                            />
-                          ) : (
-                            <View style={styles.mobileContainer}>
-                              <View>
-                                <CommonText
-                                  fontWeight={"600"}
-                                  customTextStyle={styles.cellTextStyle()}
-                                >
-                                  {getRenderText(item, headingTexts)}
-                                </CommonText>
-                                <CommonText
-                                  customTextStyle={styles.tableQueryText}
-                                >
-                                  {getRenderText(item, subHeadingText)}
-                                </CommonText>
+                  <View style={styles.tableSection}>
+                    {isWebView && (
+                      <MultiColumn
+                        columns={getColoumConfigs(tableHeading, isHeading)}
+                        style={styles.columnHeaderStyle}
+                      />
+                    )}
+                    <FlatList
+                      data={ticketListingData?.records}
+                      showsVerticalScrollIndicator={false}
+                      keyExtractor={(item, index) => index.toString()}
+                      renderItem={({ item }) => {
+                        return (
+                          <>
+                            {isWebView ? (
+                              <MultiColumn
+                                columns={getColoumConfigs(item)}
+                                style={styles.columnStyleBorder}
+                              />
+                            ) : (
+                              <View style={styles.mobileContainer}>
+                                <View>
+                                  <CommonText
+                                    fontWeight={"600"}
+                                    customTextStyle={styles.cellTextStyle()}
+                                  >
+                                    {getRenderText(item, headingTexts)}
+                                  </CommonText>
+                                  <CommonText
+                                    customTextStyle={styles.tableQueryText}
+                                  >
+                                    {getRenderText(item, subHeadingText)}
+                                  </CommonText>
+                                </View>
+                                <View style={styles.rowsPerPageWeb}>
+                                  <Chip
+                                    label={getRenderText(item, statusText)}
+                                    style={getStatusStyle(item.status)}
+                                  />
+                                  <TouchableImage
+                                    onPress={() => {
+                                      onIconPress(item);
+                                    }}
+                                    source={tableIcon}
+                                    style={styles.iconTicket}
+                                  />
+                                </View>
                               </View>
-                              <View style={styles.rowsPerPageWeb}>
-                                <Chip
-                                  label={getRenderText(item, statusText)}
-                                  style={getStatusStyle(item.status)}
-                                />
-                                <TouchableImage
-                                  onPress={() => {
-                                    onIconPress(item);
-                                  }}
-                                  source={tableIcon}
-                                  style={styles.iconTicket}
-                                />
-                              </View>
+                            )}
+                          </>
+                        );
+                      }}
+                      {...flatlistProps}
+                      ListFooterComponent={() => {
+                        if (isWeb) return <></>;
+                        if (loadingMore) {
+                          return (
+                            <View style={styles.loadingStyle}>
+                              <Spinner thickness={2} {...webProps} />
                             </View>
-                          )}
-                        </>
-                      );
-                    }}
-                    {...flatlistProps}
-                    ListFooterComponent={() => {
-                      if (isWeb) return <></>;
-                      if (loadingMore) {
-                        return (
-                          <View style={styles.loadingStyle}>
-                            <Spinner thickness={2} {...webProps} />
-                          </View>
-                        );
-                      }
-                      if (allDataLoaded) {
-                        return (
-                          <CommonText
-                            customContainerStyle={styles.loadingStyle}
-                            customTextStyle={styles.noMoreData}
-                          >
-                            {intl.formatMessage({ id: "label.no_more_data" })}
-                          </CommonText>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
+                          );
+                        }
+                        if (allDataLoaded) {
+                          return (
+                            <CommonText
+                              customContainerStyle={styles.loadingStyle}
+                              customTextStyle={styles.noMoreData}
+                            >
+                              {intl.formatMessage({ id: "label.no_more_data" })}
+                            </CommonText>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    {isWebView && (
+                      <PaginationFooter
+                        {...{
+                          currentPage,
+                          handlePageChange,
+                          handleRowPerPageChange,
+                          rowsLimit,
+                          rowsPerPage,
+                          siblingCount: 1,
+                          totalcards,
+                        }}
+                      />
+                    )}
+                  </View>
                 )}
-
-                {isWebView && (
-                  <PaginationFooter
-                    {...{
-                      currentPage,
-                      handlePageChange,
-                      handleRowPerPageChange,
-                      rowsLimit,
-                      rowsPerPage,
-                      siblingCount: 1,
-                      totalcards,
-                    }}
-                  />
-                )}
-              </View>
+              </>
             }
             isTopFillSpace
             isBottomFillSpace={false}
