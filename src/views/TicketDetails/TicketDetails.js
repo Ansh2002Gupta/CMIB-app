@@ -1,12 +1,14 @@
 import React from "react";
 import { View } from "@unthinkable/react-core-components";
 
+import MultiRow from "../../core/layouts/MultiRow";
+import { TwoColumn, TwoRow } from "../../core/layouts";
+
 import CommonText from "../../components/CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./TicketDetails.styles";
-import { TwoColumn, TwoRow } from "../../core/layouts";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
-import MultiRow from "../../core/layouts/MultiRow";
+import { formatCreatedAt } from "../../../src/utils/util";
 import images from "../../images";
 
 const TicketDetails = ({ details }) => {
@@ -70,7 +72,7 @@ const TicketDetails = ({ details }) => {
     {
       content: renderDetails({
         detailHeading: "Data Created On",
-        subDetailHeading: created_at,
+        subDetailHeading: formatCreatedAt(created_at),
       }),
     },
     {
@@ -122,7 +124,7 @@ const TicketDetails = ({ details }) => {
               })}
               bottomSection={renderDetails({
                 detailHeading: "Created On",
-                subDetailHeading: created_at,
+                subDetailHeading: formatCreatedAt(created_at),
               })}
             />
           }

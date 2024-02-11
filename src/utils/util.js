@@ -97,3 +97,13 @@ export const getTime = (isoString) => {
   const formattedTime = `${hours}:${formattedMinutes} ${amPm}`;
   return formattedTime;
 };
+
+export const formatCreatedAt = (originalDate) => {
+  const date = new Date(originalDate);
+
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${month}/${day}/${year}`;
+};

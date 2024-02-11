@@ -42,7 +42,7 @@ const SearchView = ({
             return item.toLowerCase().includes(formattedQuery);
           });
         }
-      } 
+      }
       if (onSearch) {
         onSearch(filtered);
       }
@@ -53,7 +53,7 @@ const SearchView = ({
         clearTimeout(debounceTimeout.current);
       }
     };
-  }, [query, data, onSearch, customSearchCriteria]);
+  }, [query, data]);
 
   const handleSearch = (text) => {
     setQuery(text);

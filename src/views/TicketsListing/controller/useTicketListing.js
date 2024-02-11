@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
@@ -24,6 +24,7 @@ import {
   COMPANY_TICKET_STATUS,
 } from "../../../services/apiServices/apiEndPoint";
 import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
+import { formatCreatedAt } from "../../../utils/util";
 
 const useTicketListing = () => {
   const { isWebView } = useIsWebView();
@@ -44,7 +45,12 @@ const useTicketListing = () => {
     isError: isErrorTicketListing,
     error: errorTicketListing,
     fetchData: fetchDataTicketListing,
-  } = useFetch({ url: COMPANY_TICKET_LISTING });
+  } = useFetch({
+    url: COMPANY_TICKET_LISTING,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
 
   const {
     data: queryTypeData,
@@ -62,6 +68,13 @@ const useTicketListing = () => {
     fetchData: fetchDataStatus,
   } = useFetch({ url: COMPANY_TICKET_STATUS });
 
+  useEffect(() => {
+    fetchDataTicketListing({
+      queryParamsObject: { perPage: rowsPerPage, page: currentPage },
+    });
+  }, []);
+
+  console.log(rowsPerPage, "rowsPerPage@", currentPage);
   const {
     handleAddTicket,
     isError,
@@ -93,21 +106,28 @@ const useTicketListing = () => {
   };
 
   const handlePageChange = (page) => {
-    console.log(page, "page@");
-    //TODO : we fetch data on changing page
-    fetchDataTicketListing(page);
+    const requestedParams = {
+      perPage: rowsPerPage,
+      page: page,
+    };
+    fetchDataTicketListing({ queryParamsObject: requestedParams });
     handlePagePerChange(page);
   };
 
   const handleRowPerPageChange = (option) => {
-    console.log(option, "page@");
-    //TODO : we fetch data on row changing per page
-    fetchDataTicketListing(option.value);
-    handleRowsPerPageChange(option.value);
+    const requestedParams = {
+      perPage: option.value,
+      page: currentPage,
+    };
+    fetchDataTicketListing({ queryParamsObject: requestedParams });
+    // handleRowsPerPageChange(option.value);
   };
 
   const handleSearchResults = (searchedData) => {
-    //TODO: Implement searching
+    const requestedParams = {
+      q: searchedData,
+    }; // TODO: Manage what filters you want to pass
+    fetchDataTicketListing({ queryParamsObject: requestedParams });
   };
 
   const onIconPress = (item) => {
@@ -192,11 +212,16 @@ const useTicketListing = () => {
         isFillSpace: true,
       },
       {
-        content: (
-          <CommonText customTextStyle={tableStyle}>
-            {item.created_at}
-          </CommonText>
-        ),
+        content:
+          item.created_at === "Created On" ? (
+            <CommonText customTextStyle={tableStyle}>
+              {item.created_at}
+            </CommonText>
+          ) : (
+            <CommonText customTextStyle={tableStyle}>
+              {formatCreatedAt(item.created_at)}
+            </CommonText>
+          ),
         style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
@@ -219,11 +244,6 @@ const useTicketListing = () => {
       },
     ];
   };
-
-  console.log(
-    ticketListingData?.meta?.total,
-    " ticketListingData?.meta?.total"
-  );
   return {
     ticketListingData,
     allDataLoaded,

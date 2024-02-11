@@ -300,6 +300,7 @@ const locale = {
   "label.query_type": "Query Type",
   "label.enterQuery": "Enter Query",
   "label.addTicket": "Add Ticket",
+  "label.add_new_ticket": "Add New Ticket",
 };
 
 export default locale;

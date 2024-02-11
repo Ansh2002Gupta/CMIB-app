@@ -25,7 +25,7 @@ const TicketChatScreen = () => {
   const [showPopup, setShowPopup] = useState(false);
   const location = useLocation();
 
-  const { id, status } = location.state;
+  const { id, status, readable_id } = location.state;
 
   const midOrSmall = currentBreakpoint === "md" || currentBreakpoint === "sm";
 
@@ -50,7 +50,7 @@ const TicketChatScreen = () => {
             headerText={
               isDetailsScreen
                 ? intl.formatMessage({ id: "label.view_ticket_details" })
-                : id
+                : readable_id
             }
             subHeading={status}
             onPressLeftIcon={onGoBack}

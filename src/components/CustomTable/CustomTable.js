@@ -119,7 +119,8 @@ const CustomTable = ({
                   leftSection={
                     <SearchView
                       data={data?.records}
-                      onSearch={handleSearchResults}
+                      // onSearch={handleSearchResults}
+                      customSearchCriteria={handleSearchResults}
                     />
                   }
                   isLeftFillSpace
@@ -145,10 +146,12 @@ const CustomTable = ({
               }
               rightSection={
                 <CustomTouchableOpacity
-                  style={styles.imageParentStyle}
+                  style={styles.addNewButton}
                   onPress={handleTicketModal}
                 >
-                  <CommonText>Add New Ticket</CommonText>
+                  <CommonText customTextStyle={styles.addNewText}>
+                    {intl.formatMessage({ id: "label.add_new_ticket" })}
+                  </CommonText>
                 </CustomTouchableOpacity>
               }
             />
