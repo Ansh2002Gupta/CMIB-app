@@ -59,15 +59,13 @@ const FilterModal = ({
     return { statusCounts: statusCounters, queryTypeCounts: queryTypeCounters };
   }, [data]);
 
-  const RenderCheckButton = ({ title, count, onChange, isSelected }) => {
-    const displayTitle = count ? `${title} (${count})` : title;
-    console.log(title, "title@");
+  const RenderCheckButton = ({ title, item, onChange, isSelected }) => {
     return (
       <View style={styles.renderCheckButton}>
         <CheckBox
-          title={displayTitle}
+          title={title}
           isSelected={isSelected}
-          handleCheckbox={() => onChange(title)}
+          handleCheckbox={() => onChange(item)}
           id={title}
         />
       </View>
@@ -78,26 +76,27 @@ const FilterModal = ({
     const options = [];
     if (activeCategories.includes("Status")) {
       options.push(
-        ...Object.keys(statusCounts).map((status) => (
+        statusData.map((status) => (
           <RenderCheckButton
-            key={status}
-            title={status}
-            count={statusCounts[status]}
-            onChange={handleStatusChange}
-            isSelected={selectedStatus.includes(status)}
+            key={status.id}
+            item={status}
+            title={status.name}
+            onChange={() => handleStatusChange(status)}
+            isSelected={selectedStatus.includes(status.id)}
           />
         ))
       );
     }
+
     if (activeCategories.includes("Query Type")) {
       options.push(
-        ...Object.keys(queryTypeCounts).map((queryType) => (
+        queryTypeData.map((queryType) => (
           <RenderCheckButton
-            key={queryType}
-            title={queryType}
-            count={queryTypeCounts[queryType]}
-            onChange={handleQueryTypeChange}
-            isSelected={selectedQueryType.includes(queryType)}
+            key={queryType.id}
+            title={queryType.name}
+            item={queryType}
+            onChange={() => handleQueryTypeChange(queryType)}
+            isSelected={selectedQueryType.includes(queryType.id)}
           />
         ))
       );

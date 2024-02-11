@@ -78,7 +78,6 @@ const CustomTable = ({
   };
 
   const onApplyFilter = ({ selectedStatus, selectedQueryType }) => {
-    // setCurrentRecords(filterData.slice(0, rowsPerPage)); // TODO: Can be removed
     filterApplyHandler({ selectedStatus, selectedQueryType });
     handleFilterModal();
   };
@@ -287,7 +286,7 @@ const CustomTable = ({
             setShowFilterOptions,
             onApplyFilter,
             statusData,
-            queryTypeData
+            queryTypeData,
           }}
         />
       )}

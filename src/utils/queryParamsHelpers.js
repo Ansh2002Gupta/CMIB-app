@@ -32,7 +32,14 @@ export const objectToQueryString = (requestedParams) => {
   );
   const keys = Object.keys(validParams);
   for (let key of keys) {
-    queryString += `${key}=${validParams[key]}&`;
+    const value = validParams[key];
+    if (Array.isArray(value)) {
+      queryString += `${encodeURIComponent(key)}=[${value
+        .map(encodeURIComponent)
+        .join(",")}]&`;
+    } else {
+      queryString += `${encodeURIComponent(key)}=${encodeURIComponent(value)}&`;
+    }
   }
-  return queryString.slice(0, queryString.length - 1);
+  return queryString.slice(0, -1);
 };

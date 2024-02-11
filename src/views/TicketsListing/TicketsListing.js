@@ -56,7 +56,7 @@ const TicketsListing = () => {
     const requestedParams = {
       status: selectedStatus,
       queryType: selectedQueryType,
-    }; // TODO: Manage what filters you want to pass
+    };
     fetchDataTicketListing({ queryParamsObject: requestedParams });
   };
 
