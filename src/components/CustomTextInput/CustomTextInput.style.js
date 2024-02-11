@@ -134,6 +134,10 @@ const style = {
   valueStyle: {
     paddingRight: 12,
   },
+  rightIcon: {
+    height: 18, 
+    width: 18,
+  }
 };
 
 export default style;

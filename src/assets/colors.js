@@ -39,6 +39,7 @@ const secondaryGrey = "#F2F4FC";
 const subHeadingGray = "#616C82";
 const silver = "#EBEBEB";
 const slateGray = "#616c82";
+const disabledTextFieldColor = "#F2F2F2";
 
 /* Reds */
 const errorBackground = "#ffeded"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
@@ -99,5 +100,6 @@ const colors = {
   darkSecondGreen,
   skyBlueDark,
   skyBlueLight,
+  disabledTextFieldColor,
 };
 export default colors;
