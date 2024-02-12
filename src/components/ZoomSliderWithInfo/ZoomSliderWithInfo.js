@@ -35,11 +35,13 @@ const ZoomSliderWithInfo = ({ setZoom, setRotation, zoom }) => {
     <View style={styles.zoomInfoContainer}>
       <View style={styles.sliderBox}>
         <Image
-          source={images.minusCirlce}
+         source={
+          zoomPercentage === 0 ? images.iconDisabledMinus : images.minusCirlce
+        }
           alt="Zoom out"
           width={20}
           height={20}
-          style={styles.zoomIcon}
+          style={zoomPercentage === 0 ? styles.disabledIcon : styles.zoomIcon}
           onClick={zoomOutHandler}
         />
         <View style={styles.zoomSlider}>
@@ -52,11 +54,13 @@ const ZoomSliderWithInfo = ({ setZoom, setRotation, zoom }) => {
           />
         </View>
         <Image
-          source={images.addCircle}
+          source={
+            zoomPercentage === 100 ? images.iconDisabledAdd : images.addCircle
+          }
           alt="Zoom in"
           width={20}
           height={20}
-          style={styles.zoomIcon}
+          style={zoomPercentage === 100 ? styles.disabledIcon : styles.zoomIcon}
           onClick={zoomInHandler}
         />
       </View>
