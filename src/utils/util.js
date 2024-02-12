@@ -1,6 +1,6 @@
 import { Platform } from "@unthinkable/react-core-components";
 
-import { format } from "date-fns";
+import dayjs from "dayjs";
 import { ANONYMOUS } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
@@ -93,7 +93,5 @@ export function capitalize(text) {
 }
 
 export function formatDate(date){
-  let newDate = new Date(date);
-  let formattedDate = format(newDate, "dd/MM/yyyy");
-  return formattedDate;
+  return dayjs(date).format("DD/MM/YYYY");
 }
