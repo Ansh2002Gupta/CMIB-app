@@ -19,7 +19,6 @@ const MyAccountUI = ({
   userProfileDetails,
 }) => {
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
-  //TODO: update image on save button (once api will come)
 
   const profileImage = userProfileDetails?.profile_photo;
   const name = userProfileDetails?.name;

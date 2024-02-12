@@ -23,7 +23,7 @@ const style = {
     padding: 3,
     position: "absolute",
     bottom: 0,
-    right: 8,
+    right: 0,
   },
   editInnerContainer: {
     justifyContent: "center",

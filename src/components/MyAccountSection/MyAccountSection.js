@@ -4,11 +4,11 @@ import { View } from "@unthinkable/react-core-components";
 import MyAccountComponent from "../../views/MyAccount";
 import styles from "./MyAccountSection.style";
 
-const MyAccountSection = ({ setShowAccountSection, accountRef }) => {
+const MyAccountSection = ({ setShowAccountSection }) => {
   return (
-    <View style={styles.container} ref={accountRef}>
+    <View style={styles.container}>
       <MyAccountComponent
-        omitArrowIcon={true}
+        omitArrowIcon
         setShowAccountSection={setShowAccountSection}
       />
     </View>
