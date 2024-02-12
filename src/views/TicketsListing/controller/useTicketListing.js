@@ -39,6 +39,8 @@ const useTicketListing = () => {
     getValidCurrentPage(searchParams.get("page"))
   );
 
+  const navigate = useNavigate();
+
   const {
     data: ticketListingData,
     isLoading: isTicketListingLoading,
@@ -77,8 +79,6 @@ const useTicketListing = () => {
 
     fetchData();
   }, []);
-
-  const navigate = useNavigate();
 
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
@@ -146,7 +146,7 @@ const useTicketListing = () => {
   };
 
   const onIconPress = (item) => {
-    navigate(navigations.TICKETS_VIEW_EDIT, { state: item });
+    //TODO : We will navigate to TICKET CHAT SCREEN
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
@@ -231,7 +231,7 @@ const useTicketListing = () => {
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item.assigned_to}
+            {item.assigned_to || "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("20%"),
@@ -270,6 +270,7 @@ const useTicketListing = () => {
       },
     ];
   };
+
   return {
     allDataLoaded,
     currentPage,

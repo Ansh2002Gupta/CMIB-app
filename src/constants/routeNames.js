@@ -28,5 +28,4 @@ export const navigations = {
   ROUND_ONE: "round-one",
   ROUND_TWO: "round-two",
   SAVED_CANDIDATES: "saved-candidates",
-  TICKETS_VIEW_EDIT: "ticket-view-edit",
 };
