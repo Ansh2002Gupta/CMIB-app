@@ -53,9 +53,9 @@ const MobileNumberInput = ({
   };
 
   const menuOptions = options?.map((option) => ({
-    value: `${String(option[labelField])} (${String(
-      option[countryNameField]
-    )})`,
+    value: isWeb
+      ? `${String(option[labelField])} (${String(option[countryNameField])})`
+      : `${String(option[labelField])}`,
     label: getLabel(option),
     url: String(option[urlField]),
   }));
@@ -142,7 +142,7 @@ MobileNumberInput.defaultProps = {
   labelField: "dial_code",
   onChangeCode: () => {},
   onChangeMobNumber: () => {},
-  isEditable: false,
+  isEditable: true,
   options: [],
   mobileFieldLabel: "",
   mobNumberError: "",
