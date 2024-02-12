@@ -35,9 +35,7 @@ const CustomModal = ({
   const isWeb = Platform.OS.toLowerCase() === "web";
   const webProps = isWeb ? { maxWidth } : { onBackdropPress };
 
-  if (isWeb) {
-    useEscKeyListener(onPressIconCross);
-  }
+  useEscKeyListener(onPressIconCross);
 
   return (
     <Modal
