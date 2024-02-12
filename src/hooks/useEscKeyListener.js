@@ -1,17 +1,22 @@
 import { useEffect } from "react";
+import { Platform } from "@unthinkable/react-core-components";
 
 const useEscKeyListener = (callback) => {
+  const isWeb = Platform.OS.toLowerCase() === "web";
+
   useEffect(() => {
     const handleKeyEsc = (event) => {
       if (event.key === "Escape") {
-        callback();
+        callback && callback();
       }
     };
-
-    document.addEventListener("keydown", handleKeyEsc);
-
+    if (isWeb) {
+      document.addEventListener("keydown", handleKeyEsc);
+    }
     return () => {
-      document.removeEventListener("keydown", handleKeyEsc);
+      if (isWeb) {
+        document.removeEventListener("keydown", handleKeyEsc);
+      }
     };
   }, [callback]);
 };
