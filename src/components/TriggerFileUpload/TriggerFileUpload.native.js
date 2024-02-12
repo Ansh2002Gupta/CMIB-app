@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import CustomButton from "../CustomButton";
 import ImagePicker from "../ImagePickerComponent/ImagePickerComponent";
+import { extractFilename } from "../../utils/util";
 import images from "../../images";
 import styles from "./TriggerFileUpload.style";
 
@@ -20,10 +21,11 @@ const TriggerFileUpload = ({
       });
       if (image) {
         setFile(image?.sourceURL || image?.path);
+        const uri = image?.sourceURL || image?.path;
         const formData = new FormData();
         const file = {
-          uri: image?.sourceURL || image?.path,
-          name: image?.filename,
+          uri: uri,
+          name: image?.filename || extractFilename(uri),
           type: image.mime,
         };
         formData.append("file", file);

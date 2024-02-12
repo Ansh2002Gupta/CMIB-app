@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { formatDate } from "../../../../utils/util";
 
 const usePersonalDetails = () => {
    const [email, setEmail] = useState("");
@@ -102,7 +103,7 @@ const usePersonalDetails = () => {
 
    const updatePersonalDetails = (profileDetails, countryCodeData) => {
     setAddress1(profileDetails?.full_address || "");
-    setDob(profileDetails?.dob || "");
+    setDob(formatDate(profileDetails?.dob || ""));
     setEmail(profileDetails?.email || "");
     setGender(profileDetails?.gender || "");
     setMobileNo(profileDetails?.mobile_number || "");

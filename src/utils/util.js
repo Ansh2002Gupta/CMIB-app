@@ -1,4 +1,6 @@
 import { Platform } from "@unthinkable/react-core-components";
+
+import dayjs from "dayjs";
 import { ANONYMOUS } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
@@ -68,7 +70,7 @@ export const getInitialsFromName = (name) => {
   return ANONYMOUS.charAt(0).toUpperCase();
 };
 
-export function isValidUrl(str) {
+export const isValidUrl = (str) => {
   const pattern = new RegExp(
     "^([a-zA-Z]+:\\/\\/)?" + // protocol
       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
@@ -79,14 +81,23 @@ export function isValidUrl(str) {
     "i"
   );
   return pattern.test(str);
-}
+};
 
-export function capitalize(text) {
+export const capitalize = (text) => {
   if (!text || typeof text !== "string") {
     return text;
   }
   let firstLetter = text.charAt(0).toUpperCase();
   let restLetter = text.substring(1);
   return firstLetter + restLetter;
-}
+};
 
+export const formatDate = (date) => {
+  return dayjs(date).format("DD/MM/YYYY");
+};
+
+export const extractFilename = (fileUri) => {
+  const parts = fileUri.split("/");
+  const filename = parts.pop() || "";
+  return filename;
+};

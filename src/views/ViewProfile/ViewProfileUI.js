@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {Modal, TouchableOpacity, TouchableWithoutFeedback,View } from "@unthinkable/react-core-components";
+import {
+  Modal,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "@unthinkable/react-core-components";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import CommonText from "../../components/CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal/ConfirmationModal";
@@ -58,8 +63,6 @@ const ViewProfileUI = ({
     );
   };
 
-
-  // Function to hide the modal
   const hideModal = () => {
     setShowDeletePopUp(false);
   };
@@ -87,33 +90,26 @@ const ViewProfileUI = ({
         iconStyle={showDeletePopUp ? style.iconStyle : style.inActiveIconStyle}
       />
       {showDeletePopUp && (
-        // <TouchableOpacity
-        //   style={style.deletetextContainer}
-        //   onPress={() => {
-        //     setShowDeleteAccountModal(true);
-        //   }}
-        // >
-        //   <CommonText customTextStyle={style.deletetext}>
-        //     {intl.formatMessage({ id: "label.delete_account" })}
-        //   </CommonText>
-        // </TouchableOpacity>
-
         <Modal
         animationType="slide"
-        transparent={true}
-        visible={showDeletePopUp}
         onRequestClose={hideModal}
+        transparent
+        visible={showDeletePopUp}
       >
          <TouchableWithoutFeedback onPress={hideModal}>
-          <View style={style.modalOverlay} />
-        </TouchableWithoutFeedback>
-        <TouchableOpacity style={style.deletetextContainer} onPress={()=>{setShowDeleteAccountModal(true)}}>
-        <CommonText customTextStyle={style.deletetext}>
-             {intl.formatMessage({ id: "label.delete_account" })}
-           </CommonText>
-        </TouchableOpacity>
-       
-      </Modal>
+            <View style={style.modalOverlay} />
+          </TouchableWithoutFeedback>
+          <TouchableOpacity
+            style={style.deletetextContainer}
+            onPress={() => {
+              setShowDeleteAccountModal(true);
+            }}
+          >
+            <CommonText customTextStyle={style.deletetext}>
+              {intl.formatMessage({ id: "label.delete_account" })}
+            </CommonText>
+          </TouchableOpacity>
+        </Modal>
       )}
       {showDeleteAccountModal && (
         <ConfirmationModal
