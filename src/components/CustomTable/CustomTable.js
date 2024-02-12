@@ -6,11 +6,8 @@ import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import ActionPairButton from "../ActionPairButton";
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
-import CustomModal from "../CustomModal";
-import CustomTextInput from "../CustomTextInput";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
@@ -33,12 +30,10 @@ const CustomTable = ({
   allDataLoaded,
   currentPage,
   data,
-  fetchDataTicketListing,
   filterApplyHandler,
   filterCategory,
   getColoumConfigs,
   getStatusStyle,
-  handleAddTicket,
   handleLoadMore,
   handlePageChange,
   handleRowPerPageChange,
@@ -48,13 +43,13 @@ const CustomTable = ({
   indexOfLastRecord,
   isHeading,
   isTicketListingLoading,
+  isFirstPageReceived,
   loadingMore,
   onIconPress,
   queryTypeData,
   rowsLimit,
   rowsPerPage,
   statusData,
-  // setCurrentRecords, Todo: Can be removed
   showSearchBar,
   statusText,
   subHeadingText,
@@ -68,9 +63,6 @@ const CustomTable = ({
 
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [filterState, setFilterState] = useState(initialFilterState);
-  const [addNewTicket, setAddNewTicket] = useState(false);
-  const [enterQuery, setEnterQuery] = useState("");
-  const [queryType, setQueryType] = useState();
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
@@ -79,20 +71,6 @@ const CustomTable = ({
   const onApplyFilter = ({ selectedStatus, selectedQueryType }) => {
     filterApplyHandler({ selectedStatus, selectedQueryType });
     handleFilterModal();
-  };
-
-  const handleTicketModal = () => {
-    setAddNewTicket(true);
-  };
-
-  const handleSaveAddTicket = () => {
-    handleAddTicket({
-      payload: { query_type: queryType, query: enterQuery },
-      succesCallBack: fetchDataTicketListing,
-    });
-    setAddNewTicket(false);
-    setEnterQuery("");
-    setQueryType();
   };
 
   const flatlistProps = isWeb
@@ -108,51 +86,51 @@ const CustomTable = ({
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
         topSection={
-          showSearchBar && (
-            <TwoColumn
-              style={{ justifyContent: "space-between" }}
-              isLeftFillSpace
-              leftSection={
-                <TwoColumn
-                  leftSection={
-                    <SearchView
-                      data={data?.records}
-                      customSearchCriteria={handleSearchResults}
-                    />
-                  }
-                  isLeftFillSpace
-                  rightSection={
-                    <CustomTouchableOpacity
+          <>
+            {showSearchBar && (
+              <TwoColumn
+                style={styles.filterTopSection(isWebView)}
+                isLeftFillSpace
+                leftSection={
+                  <SearchView
+                    data={data}
+                    customSearchCriteria={handleSearchResults}
+                  />
+                }
+                rightSection={
+                  <CustomTouchableOpacity
+                    onPress={handleFilterModal}
+                    style={styles.imageParentStyle}
+                  >
+                    <TouchableImage
+                      source={images.iconFilter}
+                      parentStyle={styles.iconTicket}
                       onPress={handleFilterModal}
-                      style={styles.imageParentStyle}
-                    >
-                      <TouchableImage
-                        source={images.iconFilter}
-                        parentStyle={styles.iconTicket}
-                        onPress={handleFilterModal}
-                      />
-                      {isWebView && (
-                        <CommonText customTextStyle={styles.filterText}>
-                          {intl.formatMessage({ id: "label.filters" })}
-                        </CommonText>
-                      )}
-                    </CustomTouchableOpacity>
-                  }
-                  style={styles.filterTopSection(isWebView)}
-                />
-              }
-              rightSection={
-                <CustomTouchableOpacity
-                  style={styles.addNewButton}
-                  onPress={handleTicketModal}
-                >
-                  <CommonText customTextStyle={styles.addNewText}>
-                    {intl.formatMessage({ id: "label.add_new_ticket" })}
-                  </CommonText>
-                </CustomTouchableOpacity>
-              }
-            />
-          )
+                    />
+                    {isWebView && (
+                      <CommonText customTextStyle={styles.filterText}>
+                        {intl.formatMessage({ id: "label.filters" })}
+                      </CommonText>
+                    )}
+                  </CustomTouchableOpacity>
+                }
+              />
+            )}
+            <View style={styles.ticketTotals}>
+              <CommonText
+                fontWeight={"500"}
+                customTextStyle={{
+                  ...styles.tableHeadingText,
+                  ...styles.textSize,
+                }}
+              >
+                {intl.formatMessage({ id: "label.tickets" })}&nbsp;&#58;&nbsp;
+              </CommonText>
+              <CommonText fontWeight={"600"} customTextStyle={styles.textSize}>
+                {totalcards}
+              </CommonText>
+            </View>
+          </>
         }
         isTopFillSpace={false}
         isBottomFillSpace
@@ -162,7 +140,7 @@ const CustomTable = ({
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
-                {isTicketListingLoading ? (
+                {isTicketListingLoading && isFirstPageReceived ? (
                   <LoadingScreen />
                 ) : (
                   <View style={styles.tableSection}>
@@ -173,7 +151,7 @@ const CustomTable = ({
                       />
                     )}
                     <FlatList
-                      data={data?.records}
+                      data={data}
                       showsVerticalScrollIndicator={false}
                       keyExtractor={(item, index) => index.toString()}
                       renderItem={({ item }) => {
@@ -219,8 +197,16 @@ const CustomTable = ({
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if (isWeb) return <></>;
-                        if (loadingMore) {
+                        if (isWeb && !data.length)
+                          return (
+                            <CommonText
+                              customContainerStyle={styles.loadingStyle}
+                              customTextStyle={styles.noMoreData}
+                            >
+                              {intl.formatMessage({ id: "label.no_more_data" })}
+                            </CommonText>
+                          );
+                        if (loadingMore && !isFirstPageReceived) {
                           return (
                             <View style={styles.loadingStyle}>
                               <Spinner thickness={2} {...webProps} />
@@ -296,49 +282,6 @@ const CustomTable = ({
           }}
         />
       )}
-      {addNewTicket && (
-        <CustomModal headerText={intl.formatMessage({ id: "label.addTicket" })}>
-          <View>
-            <CustomTextInput
-              isDropdown
-              label={intl.formatMessage({ id: "label.query_type" })}
-              placeholder={intl.formatMessage({
-                id: "label.select",
-              })}
-              options={queryTypeData}
-              valueField="id"
-              labelField="name"
-              value={queryType}
-              onChangeValue={(val) => {
-                setQueryType(val);
-              }}
-            />
-            <CustomTextInput
-              label={intl.formatMessage({ id: "label.enterQuery" })}
-              placeholder={intl.formatMessage({
-                id: "label.enterQuery",
-              })}
-              value={enterQuery}
-              onChangeText={(val) => {
-                setEnterQuery(val);
-              }}
-              isMultiline
-            />
-            <ActionPairButton
-              onPressButtonTwo={() => {
-                handleSaveAddTicket();
-              }}
-              onPressButtonOne={() => {
-                setAddNewTicket(false);
-              }}
-              isButtonTwoGreen
-              isDisabled={!enterQuery || !queryType}
-              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-              buttonTwoText={intl.formatMessage({ id: "label.add" })}
-            ></ActionPairButton>
-          </View>
-        </CustomModal>
-      )}
     </View>
   );
 };
@@ -359,8 +302,6 @@ CustomTable.propTypes = {
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func.isRequired,
   filterApplyHandler: PropTypes.func,
-  fetchDataTicketListing: PropTypes.func,
-  handleAddTicket: PropTypes.func,
   handlePageChange: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,

@@ -119,6 +119,13 @@ const styles = StyleSheet.create({
   addNewText: {
     color: colors.white,
   },
+  textSize: {
+    fontSize: 14,
+  },
+  ticketTotals: {
+    marginBottom: 16,
+    flexDirection: "row",
+  },
 });
 
 export default styles;

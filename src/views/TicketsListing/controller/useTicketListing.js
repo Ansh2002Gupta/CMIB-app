@@ -5,7 +5,6 @@ import { View } from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
-import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
@@ -20,6 +19,7 @@ import {
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import { navigations } from "../../../constants/routeNames";
+import usePagination from "../../../hooks/usePagination";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsListing.style";
@@ -29,6 +29,8 @@ const useTicketListing = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
+  const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
+  const [currentRecords, setCurrentRecords] = useState([]);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -52,52 +54,110 @@ const useTicketListing = () => {
 
   const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
 
-  useEffect(() => {
-    fetchDataTicketListing({
-      queryParamsObject: { perPage: rowsPerPage, page: currentPage },
-    });
-  }, []);
+  const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
+    shouldSetQueryParamsOnMount: true,
+    setCurrentPage,
+    setRowPerPage,
+  });
 
-  const { handleAddTicket } = useAddTicket();
+  useEffect(() => {
+    const fetchData = async () => {
+      const requestedParams = {
+        perPage: rowsPerPage,
+        page: currentPage,
+      };
+      const initialData = await fetchDataTicketListing({
+        queryParamsObject: requestedParams,
+      });
+      if (initialData && initialData.records.length > 0) {
+        setCurrentRecords(initialData.records);
+      }
+      setIsFirstPageReceived(false);
+    };
+
+    fetchData();
+  }, []);
 
   const navigate = useNavigate();
 
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
-  const handleLoadMore = () => {
+  const handleLoadMore = async () => {
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
-    fetchDataTicketListing();
+    const nextPage = currentPage + 1;
+
+    try {
+      const newData = await fetchDataTicketListing({
+        queryParamsObject: { perPage: rowsPerPage, page: nextPage },
+      });
+
+      if (newData && newData.records.length > 0) {
+        setCurrentRecords((prevRecords) => [
+          ...prevRecords,
+          ...newData.records,
+        ]);
+      }
+
+      setCurrentPage(nextPage);
+      if (newData.meta.currentPage === newData.meta.lastPage) {
+        setAllDataLoaded(true);
+      }
+    } catch (error) {
+      console.error("Error fetching tickets on load more:", error);
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const handlePageChange = async (page) => {
+    handlePagePerChange(page);
     const requestedParams = {
       perPage: rowsPerPage,
       page: page,
     };
-    fetchDataTicketListing({ queryParamsObject: requestedParams });
+    const newData = await fetchDataTicketListing({
+      queryParamsObject: requestedParams,
+    });
+    setCurrentRecords(newData?.records);
   };
 
-  const handleRowPerPageChange = (option) => {
-    setRowPerPage(option.value);
+  const handleRowPerPageChange = async (option) => {
+    handleRowsPerPageChange(option.value);
     const requestedParams = {
       perPage: option.value,
       page: currentPage,
     };
-    fetchDataTicketListing({ queryParamsObject: requestedParams });
+    const newData = await fetchDataTicketListing({
+      queryParamsObject: requestedParams,
+    });
+    setCurrentRecords(newData?.records);
   };
 
-  const handleSearchResults = (searchedData) => {
+  const handleSearchResults = async (searchedData) => {
     const requestedParams = {
       q: searchedData,
     };
-    fetchDataTicketListing({ queryParamsObject: requestedParams });
+    const newSearchedData = await fetchDataTicketListing({
+      queryParamsObject: requestedParams,
+    });
+    setCurrentRecords(newSearchedData?.records);
   };
 
   const onIconPress = (item) => {
     navigate(navigations.TICKETS_VIEW_EDIT, { state: item });
+  };
+
+  const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
+    const requestedParams = {
+      status: selectedStatus,
+      queryType: selectedQueryType,
+    };
+    const newData = await fetchDataTicketListing({
+      queryParamsObject: requestedParams,
+    });
+    setCurrentRecords(newData?.records);
   };
 
   let headingTexts = ["readable_id"];
@@ -214,10 +274,10 @@ const useTicketListing = () => {
     allDataLoaded,
     currentPage,
     fetchDataTicketListing,
+    filterApplyHandler,
     filterCategory,
     getColoumConfigs,
     getStatusStyle,
-    handleAddTicket,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
@@ -227,6 +287,7 @@ const useTicketListing = () => {
     indexOfLastRecord,
     isHeading,
     isTicketListingLoading,
+    isFirstPageReceived,
     loadingMore,
     onIconPress,
     queryTypeData,
@@ -236,7 +297,7 @@ const useTicketListing = () => {
     statusText,
     subHeadingText,
     tableIcon,
-    ticketListingData,
+    ticketListingData: currentRecords,
     totalcards: ticketListingData?.meta?.total,
   };
 };

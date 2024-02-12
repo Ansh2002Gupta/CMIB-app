@@ -18,11 +18,10 @@ const TicketsListing = () => {
     allDataLoaded,
     currentRecords,
     currentPage,
-    fetchDataTicketListing,
+    filterApplyHandler,
     filterCategory,
     getColoumConfigs,
     getStatusStyle,
-    handleAddTicket,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
@@ -32,6 +31,7 @@ const TicketsListing = () => {
     indexOfLastRecord,
     isHeading,
     isTicketListingLoading,
+    isFirstPageReceived,
     loadingMore,
     onIconPress,
     queryTypeData,
@@ -52,14 +52,6 @@ const TicketsListing = () => {
     navigate(navigations.PROFILE);
   };
 
-  const filterApplyHandler = ({ selectedStatus, selectedQueryType }) => {
-    const requestedParams = {
-      status: selectedStatus,
-      queryType: selectedQueryType,
-    };
-    fetchDataTicketListing({ queryParamsObject: requestedParams });
-  };
-
   return (
     <TwoRow
       topSection={
@@ -77,12 +69,10 @@ const TicketsListing = () => {
             currentPage,
             currentRecords,
             data: ticketListingData,
-            fetchDataTicketListing,
             filterApplyHandler,
             filterCategory,
             getColoumConfigs,
             getStatusStyle,
-            handleAddTicket,
             handleLoadMore,
             handlePageChange,
             handleRowPerPageChange,
@@ -92,6 +82,7 @@ const TicketsListing = () => {
             indexOfLastRecord,
             isHeading,
             isTicketListingLoading,
+            isFirstPageReceived,
             loadingMore,
             onIconPress,
             queryTypeData,
