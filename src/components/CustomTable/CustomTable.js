@@ -56,7 +56,6 @@ const CustomTable = ({
   statusData,
   // setCurrentRecords, Todo: Can be removed
   showSearchBar,
-  statusData,
   statusText,
   subHeadingText,
   tableHeading,
@@ -361,7 +360,7 @@ CustomTable.propTypes = {
   getStatusStyle: PropTypes.func.isRequired,
   filterApplyHandler: PropTypes.func,
   fetchDataTicketListing: PropTypes.func,
-  handleAddTicket: propTypes.func,
+  handleAddTicket: PropTypes.func,
   handlePageChange: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,
