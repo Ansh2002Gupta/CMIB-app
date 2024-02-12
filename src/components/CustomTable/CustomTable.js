@@ -60,7 +60,6 @@ const CustomTable = ({
   subHeadingText,
   tableHeading,
   tableIcon,
-  ticketListingData,
   totalcards,
 }) => {
   const { isWebView } = useIsWebView();
@@ -174,7 +173,7 @@ const CustomTable = ({
                       />
                     )}
                     <FlatList
-                      data={ticketListingData?.records}
+                      data={data?.records}
                       showsVerticalScrollIndicator={false}
                       keyExtractor={(item, index) => index.toString()}
                       renderItem={({ item }) => {
@@ -349,12 +348,13 @@ CustomTable.defaultProps = {
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
+  totalcards: 0,
 };
 
 CustomTable.propTypes = {
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.object,
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func.isRequired,
@@ -381,8 +381,7 @@ CustomTable.propTypes = {
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,
-  ticketListingData: PropTypes.array,
-  totalcards: PropTypes.number.isRequired,
+  totalcards: PropTypes.number,
 };
 
 export default CustomTable;

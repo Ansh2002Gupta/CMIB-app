@@ -103,7 +103,6 @@ const TicketsListing = () => {
             subHeadingText,
             tableHeading,
             tableIcon,
-            ticketListingData,
             totalcards,
           }}
         />

@@ -89,6 +89,7 @@ SearchView.defaultProps = {
   customParentStyle: {},
   customSearchCriteria: () => {},
   onSearch: () => {},
+  data: [],
 };
 
 SearchView.propTypes = {
@@ -98,7 +99,7 @@ SearchView.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.object),
-  ]).isRequired,
+  ]),
   onSearch: PropTypes.func,
 };
 
