@@ -158,40 +158,35 @@ const useExam = () => {
   const updateExamDetails = (examDetails) => {
     console.log(examDetails);
     setFinalGroup1Attempt(examDetails?.final_group1_attempt || "0");
-    setFinalGroup1Month(capitalize(examDetails?.final_group1_passing_month?.toLowerCase() || ""));
+    setFinalGroup1Month(
+      capitalize(examDetails?.final_group1_passing_month?.toLowerCase() || "")
+    );
     setFinalGroup1Year(examDetails?.final_group1_passing_year || "");
     setFinalGroup2Attempt(examDetails?.final_group2_attempt || 1);
-    setFinalGroup2Month(capitalize(examDetails?.final_group2_passing_month?.toLowerCase() || ""));
+    setFinalGroup2Month(
+      capitalize(examDetails?.final_group2_passing_month?.toLowerCase() || "")
+    );
     setFinalGroup2Year(examDetails?.final_group2_passing_year || "");
     setFinalMark(getFinalMarks(examDetails));
     setFinalYear(getFinalYear(examDetails));
-    setFinalMonth(getFinalMonth(examDetails));
   };
 
   function getFinalMarks(examDetails) {
     const group1Mark = examDetails?.final_group1_txt_percentage || "0";
     const group2Mark = examDetails?.final_group2_percentage || "0";
-    return (Number(group1Mark) + Number(group2Mark)) / 2;
+    return ((Number(group1Mark) + Number(group2Mark)) / 2).toFixed(2);
   }
 
   function getFinalYear(examDetails) {
     const group1Year = examDetails?.final_group1_passing_year || "0";
     const group2Year = examDetails?.final_group2_passing_year || "0";
-    return Math.max(Number(group1Year), Number(group2Year));
-  }
-
-  function getFinalMonth(examDetails) {
-    const group1Month = examDetails?.final_group1_passing_month || "";
-    const group2Month = examDetails?.final_group2_passing_month || "";
-    const indexMonth1 = MONTHS.findIndex(
-      (ele) => ele.label.toLowerCase() === group1Month.toLowerCase()
+    const year = Math.max(Number(group1Year), Number(group2Year));
+    setFinalMonth(
+      year === Number(group2Year)
+        ? capitalize(examDetails?.final_group2_passing_month?.toLowerCase())
+        : capitalize(examDetails?.final_group1_passing_month?.toLowerCase())
     );
-    const indexMonth2 = MONTHS.findIndex(
-      (ele) => ele.label.toLowerCase() === group2Month.toLowerCase()
-    );
-    return indexMonth1 > indexMonth2
-      ? capitalize(group1Month.toLowerCase())
-      : capitalize(group2Month.toLowerCase());
+    return year;
   }
 
   return {
