@@ -1,4 +1,6 @@
 import { Platform } from "@unthinkable/react-core-components";
+
+import dayjs from "dayjs";
 import { ANONYMOUS } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
@@ -68,7 +70,7 @@ export const getInitialsFromName = (name) => {
   return ANONYMOUS.charAt(0).toUpperCase();
 };
 
-export const isValidUrl = (str) =>{
+export const isValidUrl = (str) => {
   const pattern = new RegExp(
     "^([a-zA-Z]+:\\/\\/)?" + // protocol
       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
