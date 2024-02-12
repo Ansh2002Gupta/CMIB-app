@@ -14,7 +14,6 @@ const style = {
     backgroundColor: "white",
     borderRadius: 65,
     alignItems: "center",
-    padding: 6.5,
   },
   editOuterContainer: {
     justifyContent: "center",
@@ -23,8 +22,8 @@ const style = {
     alignItems: "center",
     padding: 3,
     position: "absolute",
-    bottom: 6.5,
-    right: 6.5,
+    bottom: 0,
+    right: 0,
   },
   editInnerContainer: {
     justifyContent: "center",

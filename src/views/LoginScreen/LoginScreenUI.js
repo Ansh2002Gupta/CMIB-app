@@ -47,6 +47,9 @@ const LoginScreenUI = (props) => {
   const width1800pxOrLess = currentBreakpoint !== "xxl";
   const width900pxOrLess =
     currentBreakpoint === "xs" || currentBreakpoint === "sm";
+  const containerStyle = isWebView
+    ? styles.webView.backGroundColor
+    : styles.mobViewContainer;
 
   const getResponsiveStyles = (str) => {
     switch (str) {
@@ -97,7 +100,12 @@ const LoginScreenUI = (props) => {
             ...(isWebView && styles.gapForWebView),
           }}
         >
-          <View style={styles.container}>
+          <View
+            style={{
+              ...styles.container,
+              ...(!isWebView && styles.mobViewContainer),
+            }}
+          >
             <HeaderTextWithLabelAndDescription
               headerText={intl.formatMessage({ id: "label.login_to_cmib" })}
               description={intl.formatMessage({
@@ -194,7 +202,7 @@ const LoginScreenUI = (props) => {
             <ScrollView
               contentContainerStyle={{
                 ...styles.containerStyle,
-                ...(isWebView && styles.webView.backGroundColor),
+                ...containerStyle,
               }}
             >
               <View
@@ -232,8 +240,8 @@ const LoginScreenUI = (props) => {
                     value={password}
                     onChangeText={(val) => onChangePassword(val)}
                     isMandatory
-                    eyeImage={true}
-                    isPassword={true}
+                    eyeImage
+                    isPassword
                     customLabelStyle={
                       isWebView ? styles.webView.inputLabelText : {}
                     }
@@ -326,7 +334,7 @@ const LoginScreenUI = (props) => {
               <View
                 style={{
                   ...styles.memberContainerStyle,
-                  ...(isWebView && styles.webView.backGroundColor),
+                  ...containerStyle,
                 }}
               >
                 <View

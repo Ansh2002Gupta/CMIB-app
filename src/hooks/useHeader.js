@@ -22,8 +22,8 @@ export const useHeader = () => {
 
   const userType = userDetails?.userDetails?.user_type;
 
-  const onLogout = async (logoutToastData) => {
-    await handleUserLogout({});
+  const onLogout = async (logoutToastData, omitApiCall) => {
+    !omitApiCall && (await handleUserLogout({}));
     await CookieAndStorageService.remove({ key: "auth" });
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
