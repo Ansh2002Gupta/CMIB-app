@@ -7,6 +7,7 @@ import { customTheme, customStyles } from "./Dropdown.style";
 const Dropdown = ({
   data,
   dropdownStyle,
+  isEditable,
   includeAllKeys,
   labelField,
   menuOptions,
@@ -44,6 +45,7 @@ const Dropdown = ({
         value={selectedOption}
         placeholder={placeholder}
         options={options}
+        isDisabled={!isEditable}
         styles={customStyles(dropdownStyle, placeholderStyle)}
         theme={customTheme}
         onChange={(selectedItem) => {
@@ -57,6 +59,7 @@ const Dropdown = ({
 Dropdown.defaultProps = {
   data: [],
   dropdownStyle: {},
+  isEditable: true,
   labelField: "",
   onChange: () => {},
   placeholder: "",
@@ -69,6 +72,7 @@ Dropdown.defaultProps = {
 Dropdown.propTypes = {
   data: PropTypes.array,
   dropdownStyle: PropTypes.object,
+  isEditable: PropTypes.bool,
   includeAllKeys: PropTypes.bool,
   labelField: PropTypes.string,
   onChange: PropTypes.func,

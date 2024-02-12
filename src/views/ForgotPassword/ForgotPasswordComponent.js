@@ -5,6 +5,7 @@ import { useNavigate } from "../../routes";
 import ForgotPasswordUI from "./ForgotPasswordUI";
 import OtpView from "../OtpView";
 import useSendOtpAPI from "../../services/apiServices/hooks/useSendOtpAPI";
+import { COMPANY_VERIFY_OTP } from "../../services/apiServices/apiEndPoint";
 import { validateEmail } from "../../utils/validation";
 import { navigations } from "../../constants/routeNames";
 
@@ -42,8 +43,11 @@ function ForgotPasswordComponent() {
     } else {
       setErrorMessage("");
     }
-    handleSendOtpAPI({ email: userEmail }, (error) => {
-      setValidationError(error);
+    handleSendOtpAPI({
+      payload: { email: userEmail },
+      errorCallback: (error) => {
+        setValidationError(error);
+      },
     });
     setSuccessLogin(false);
   };
@@ -70,8 +74,14 @@ function ForgotPasswordComponent() {
       {!!sendOtpResult && !!Object.keys(sendOtpResult)?.length ? (
         <OtpView
           email={userEmail}
-          token={sendOtpResult?.data?.token}
           setSendOtpResult={setSendOtpResult}
+          headerText={intl.formatMessage({ id: "label.forgot_password" })}
+          description={intl.formatMessage({
+            id: "label.otp_text_forgot_password",
+          })}
+          onClickGoToLogin={onClickGoToLogin}
+          verifyOtpParams={{ token: sendOtpResult?.data?.token }}
+          otpVerifyEndPoint={COMPANY_VERIFY_OTP}
         />
       ) : (
         <ForgotPasswordUI

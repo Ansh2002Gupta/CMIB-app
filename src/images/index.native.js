@@ -99,6 +99,12 @@ import iconEditSvg from "../../public/images/svg/editIcon.svg";
 import iconCloseDark from "../../public/images/svg/iconCloseDark.svg";
 import iconBackArrow from "../../public/images/svg/iconBackArrow.svg";
 import iconAlert from "../../public/images/svg/iconAlert.svg";
+import iconDownload from "../../public/images/svg/download.svg";
+import iconCampus from "../../public/images/svg/campus.svg";
+import iconConsent from "../../public/images/svg/consent.svg";
+import iconDiscover from "../../public/images/svg/discover.svg";
+import iconApplication from "../../public/images/svg/application.svg";
+import iconCalendar from "../../public/images/calendar.png";
 import iconRotate from "../../public/images/svg/iconRotate.svg";
 
 const images = {
@@ -203,6 +209,12 @@ const images = {
   iconCloseDark,
   iconBackArrow,
   iconAlert,
+  iconDownload,
+  iconCampus,
+  iconConsent,
+  iconDiscover,
+  iconApplication,
+  iconCalendar,
   iconRotate,
 };
 
