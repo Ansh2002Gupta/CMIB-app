@@ -125,14 +125,16 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
               id: "label.edit_profile_picture",
             })
       }
-      maxWidth={!file && Platform.OS === "web" ? "xs" : "sm"}
+      maxWidth={"xs"}
       isIconCross
       onPressIconCross={onPressIconCross}
       customHeaderStyle={styles.customHeadingStyle}
     >
       {!!file && Platform.OS === "web" ? (
         <CropAndRotateImage
-          isLoading={isUploadingImageToServer || isLoading}
+        isLoading={
+          !profileImage ? isUploadingImageToServer || isLoading : false
+        }
           file={file}
           photoURL={getImageSource(file)}
           errorWhileUpload={errorWhileUpload || errorWhileUpdate}

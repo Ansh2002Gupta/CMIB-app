@@ -11,7 +11,7 @@ const styles = {
     backgroundColor: colors.greyFour,
     ...Platform.select({
       web: {
-        height: "max(20vh, 400px)",
+        height: "35vh",
       },
     }),
     borderRadius: 16,
