@@ -5,6 +5,7 @@ import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import CropAndRotateImage from "../../components/CropAndRotateImage/CropAndRotateImage";
+import CustomButton from "../../components/CustomButton";
 import CustomModal from "../../components/CustomModal";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
@@ -18,7 +19,6 @@ import { setUserDetails } from "../../globalContext/userProfile/userProfileActio
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import images from "../../images";
 import styles from "./EditProfileImage.style";
-import CustomButton from "../../components/CustomButton";
 
 const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   const intl = useIntl();

@@ -3,7 +3,7 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   headingText: {
-    color: colors.black,
+    color: colors.neutralGrey,
     fontSize: 24,
   },
   subHeadingText: {
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   designationText: {
     fontSize: 14,
-    color: colors.black,
+    color: colors.neutralGrey,
   },
   headerLeftIcons: {
     flexDirection: "row",
