@@ -157,7 +157,7 @@ const useExam = () => {
 
   const updateExamDetails = (examDetails) => {
     console.log(examDetails);
-    setFinalGroup1Attempt(examDetails?.final_group1_attempt || "0");
+    setFinalGroup1Attempt(examDetails?.final_group1_attempt || 1);
     setFinalGroup1Month(
       capitalize(examDetails?.final_group1_passing_month?.toLowerCase() || "")
     );
