@@ -21,6 +21,7 @@ import styles from "./DropDownModal.style";
 
 const DropDownModal = ({
   customHeading,
+  isEditable,
   isMobileNumber,
   labelField,
   onChangeValue,
@@ -85,8 +86,10 @@ const DropDownModal = ({
   };
 
   const handleDropDown = () => {
-    Keyboard.dismiss();
-    setIsDropDownOpen((prev) => !prev);
+    if (isEditable) {
+      Keyboard.dismiss();
+      setIsDropDownOpen((prev) => !prev);
+    }
   };
 
   const scrollAnimation = (index) => {
@@ -170,7 +173,10 @@ const DropDownModal = ({
           <CustomImage source={images.iconDivider} style={styles.iconStyle} />
         </CustomTouchableOpacity>
       ) : (
-        <TouchableOpacity onPress={handleDropDown} style={styles.textButton}>
+        <TouchableOpacity
+          onPress={handleDropDown}
+          style={styles.textButton(isEditable)}
+        >
           <CommonText
             customTextStyle={value ? styles.valueText : styles.placeHolderText}
           >
@@ -216,6 +222,7 @@ const DropDownModal = ({
 
 DropDownModal.defaultProps = {
   customHeading: "",
+  isEditable: true,
   labelField: "label",
   isMobileNumber: false,
   onChangeValue: () => {},
@@ -229,6 +236,7 @@ DropDownModal.defaultProps = {
 
 DropDownModal.propTypes = {
   customHeading: PropTypes.string,
+  isEditable: PropTypes.bool,
   labelField: PropTypes.string,
   isMobileNumber: PropTypes.bool,
   onChangeValue: PropTypes.func,

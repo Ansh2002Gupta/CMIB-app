@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { Outlet } from "../routes";
+import { Outlet, useLocation } from "../routes";
 import { Platform, ScrollView } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 import { MediaQueryContext } from "@unthinkable/react-theme";
@@ -12,6 +12,7 @@ import Header from "../containers/Header";
 import SidebarModal from "../components/SideBarModal";
 import SideNavBar from "../containers/SideNavBar/SideNavBar";
 import useIsWebView from "../hooks/useIsWebView";
+import { navigations } from "../constants/routeNames";
 import { getAuthToken } from "../utils/getAuthToken";
 import images from "../images";
 import commonStyles from "../theme/styles/commonStyles";
@@ -20,6 +21,7 @@ import styles from "./HeaderWithContentLayout.style";
 function HeaderWithContentLayout({ doesExcludeHeader }) {
   const [isSideBarVisible, setSideBarVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const checkAuthToken = async () => {
@@ -85,7 +87,8 @@ function HeaderWithContentLayout({ doesExcludeHeader }) {
           )
         }
         bottomSection={
-          isAuthenticated &&
+          // TODO : check user type and route as application form
+          isAuthenticated && !location.pathname.includes(navigations.APPLICATION_FORM) &&
           (!isWebView && !doesExcludeHeader ? <BottomBar /> : null)
         }
         menu={isAuthenticated ? sidebarComponent : null}

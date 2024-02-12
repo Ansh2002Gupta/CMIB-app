@@ -172,6 +172,12 @@ const iconWomanPartTime = appendAppBaseURl("/images/svg/iconWomanPartTime.svg");
 const iconTickBlue = appendAppBaseURl("/images/svg/iconTickBlue.svg");
 const iconBackArrow = appendAppBaseURl("/images/svg/iconBackArrow.svg");
 const iconAlert = appendAppBaseURl("/images/svg/iconAlert.svg");
+const iconDownload = appendAppBaseURl("/images/svg/download.svg");
+const iconCampus = appendAppBaseURl("/images/svg/campus.svg");
+const iconConsent = appendAppBaseURl("/images/svg/consent.svg");
+const iconDiscover = appendAppBaseURl("/images/svg/discover.svg");
+const iconApplication = appendAppBaseURl("/images/svg/application.svg");
+const iconCalendar = appendAppBaseURl("/images/calendar.png");
 const iconRotate = appendAppBaseURl("/images/svg/iconRotate.svg");
 
 const images = {
@@ -291,6 +297,12 @@ const images = {
   iconTickBlue,
   iconBackArrow,
   iconAlert,
+  iconDownload,
+  iconCampus,
+  iconConsent,
+  iconDiscover,
+  iconApplication,
+  iconCalendar,
   iconRotate,
 };
 
