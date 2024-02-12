@@ -11,14 +11,14 @@ const darkBlue = "#00137E";
 const darkBlueShade = "#000833";
 const lightBlue = "#269AD4";
 const skyBlueDark = "#0099CA";
-const skyBlueLight = "#E8FCFF" ;
+const skyBlueLight = "#E8FCFF";
 
 /* Greens */
 const darkGreen = "#00873E";
 const green = "#04AF55";
 const greenOne = "#04af55";
 const lightGreen = "#DFFFDC";
-const darkSecondGreen = '#258B01';
+const darkSecondGreen = "#258B01";
 
 /* Greys */
 const backgroundGrey = "#F6F8F9";
@@ -39,6 +39,7 @@ const secondaryGrey = "#F2F4FC";
 const subHeadingGray = "#616C82";
 const silver = "#EBEBEB";
 const slateGray = "#616c82";
+const neutralGrey = "#0F172A";
 const disabledTextFieldColor = "#F2F2F2";
 
 /* Reds */
@@ -54,8 +55,8 @@ const offWhite = "#FFFFFF14";
 const yellow = "#FABB00";
 
 /* Oranges */
-const orange = '#D76200';
-const lightOrange = '#FFEFE5'
+const orange = "#D76200";
+const lightOrange = "#FFEFE5";
 
 const colors = {
   darkBlueShade,
@@ -101,5 +102,6 @@ const colors = {
   skyBlueDark,
   skyBlueLight,
   disabledTextFieldColor,
+  neutralGrey,
 };
 export default colors;

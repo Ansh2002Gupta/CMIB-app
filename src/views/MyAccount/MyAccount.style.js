@@ -53,7 +53,6 @@ const style = StyleSheet.create({
     paddingLeft: 16,
     marginRight: 16,
     alignItems: "flex-start",
-    minWidth: 240,
   },
   initialsContainer: {
     justifyContent: "center",

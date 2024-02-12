@@ -75,6 +75,13 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
     keyboardDidShowCallback,
   });
 
+  const onPressClose = () => {
+    if (currentRoute === navigations.VIEW_PROFILE) {
+      navigate(`${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`);
+    }
+    userProfileDispatch(setShowViewProfileDetails(false));
+  };
+
   const renderChangePasswordModal = () => {
     return (
       <CustomModal
@@ -159,16 +166,13 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
     }
 
     return (
-      <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
+      <CustomModal
+        containerStyle={styles.containerStyle}
+        maxWidth={"sm"}
+        onPressIconCross={onPressClose}
+      >
         <ViewProfileDetails
-          onPressCross={() => {
-            if (currentRoute === navigations.VIEW_PROFILE) {
-              navigate(
-                `${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`
-              );
-            }
-            userProfileDispatch(setShowViewProfileDetails(false));
-          }}
+          onPressCross={onPressClose}
           onPressEditIcon={() => {
             setIsUpdateProfilePic(true);
           }}

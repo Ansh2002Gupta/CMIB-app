@@ -12,6 +12,7 @@ import CustomButton from "../CustomButton/CustomButton";
 import CustomImage from "../CustomImage";
 import Modal from "../Modal";
 import TouchableImage from "../TouchableImage";
+import useEscKeyListener from "../../hooks/useEscKeyListener";
 import images from "../../images";
 import style from "./CustomModal.style";
 
@@ -31,8 +32,12 @@ const CustomModal = ({
   secondaryText,
   onBackdropPress,
 }) => {
-  const webProps =
-    Platform.OS.toLowerCase() === "web" ? { maxWidth } : { onBackdropPress };
+  const isWeb = Platform.OS.toLowerCase() === "web";
+  const webProps = isWeb ? { maxWidth } : { onBackdropPress };
+
+  if (isWeb) {
+    useEscKeyListener(onPressIconCross);
+  }
 
   return (
     <Modal
@@ -83,18 +88,14 @@ const CustomModal = ({
                   {headerText}
                 </CommonText>
               )}
-              <TouchableOpacity onPress={onPressIconCross}>
-                {isIconCross && (
-                  <TouchableImage
-                    source={
-                      Platform.OS === "web"
-                        ? images.iconCloseDark
-                        : images.iconCross
-                    }
-                    style={{ height: 24, width: 24 }}
-                  />
-                )}
-              </TouchableOpacity>
+              {isIconCross && (
+                <TouchableImage
+                  isSvg={isWeb}
+                  onPress={onPressIconCross}
+                  source={isWeb ? images.iconCloseDark : images.iconCross}
+                  style={{ height: 24, width: 24 }}
+                />
+              )}
             </View>
             {children}
           </>
