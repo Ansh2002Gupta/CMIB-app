@@ -3,12 +3,22 @@ import PropTypes from "prop-types";
 
 import styles from "./Button.style";
 
-const Button = ({ children, disabled, onPress, style, type }) => {
+const Button = ({
+  children,
+  disabled,
+  disabledStyle,
+  onPress,
+  style,
+  type,
+}) => {
   return (
     <button
       onClick={onPress}
       {...{ disabled, style, type }}
-      style={{ ...style, ...(disabled ? styles.disabledBtn : {}) }}
+      style={{
+        ...style,
+        ...(disabled ? { ...styles.disabledBtn, ...disabledStyle } : {}),
+      }}
     >
       {children}
     </button>
@@ -18,6 +28,7 @@ const Button = ({ children, disabled, onPress, style, type }) => {
 Button.defaultProps = {
   children: <></>,
   disabled: false,
+  disabledStyle: {},
   onPress: () => {},
   style: {},
   type: "",
@@ -26,6 +37,7 @@ Button.defaultProps = {
 Button.protoTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
+  disabledStyle: PropTypes.object,
   onPress: PropTypes.func,
   style: PropTypes.object,
   type: PropTypes.string,

@@ -6,44 +6,58 @@ import { TwoRow } from "../../core/layouts";
 
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import useTicketView from "./controller/useTicketView";
-import { ticketData } from "./constant";
+import useTicketListing from "./controller/useTicketListing";
 import { navigations } from "../../constants/routeNames";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
 
-const TicketsView = () => {
+const TicketsListing = () => {
   const {
     allDataLoaded,
     currentRecords,
     currentPage,
+    fetchDataTicketListing,
+    filterCategory,
     getColoumConfigs,
     getStatusStyle,
-    filterCategory,
-    headingTexts,
+    handleAddTicket,
+    handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
-    handleLoadMore,
-    isHeading,
+    headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
+    isHeading,
+    isTicketListingLoading,
     loadingMore,
+    onIconPress,
+    queryTypeData,
     rowsPerPage,
+    setCurrentRecords,
+    statusData,
     statusText,
     subHeadingText,
     tableIcon,
-    setCurrentRecords,
+    ticketListingData,
     totalcards,
-  } = useTicketView();
+  } = useTicketListing();
 
   const intl = useIntl();
   const navigate = useNavigate();
 
   const onGoBack = () => {
     navigate(navigations.PROFILE);
+  };
+
+  const filterApplyHandler = ({ selectedStatus, selectedQueryType }) => {
+    const requestedParams = {
+      status: selectedStatus,
+      queryType: selectedQueryType,
+    };
+    fetchDataTicketListing({ queryParamsObject: requestedParams });
   };
 
   return (
@@ -62,26 +76,34 @@ const TicketsView = () => {
             allDataLoaded,
             currentPage,
             currentRecords,
-            data: ticketData,
-            getStatusStyle,
-            getColoumConfigs,
+            data: ticketListingData,
+            fetchDataTicketListing,
+            filterApplyHandler,
             filterCategory,
-            handleSearchResults,
+            getColoumConfigs,
+            getStatusStyle,
+            handleAddTicket,
             handleLoadMore,
-            handleRowPerPageChange,
             handlePageChange,
+            handleRowPerPageChange,
+            handleSearchResults,
             headingTexts,
-            isHeading,
             indexOfFirstRecord,
             indexOfLastRecord,
+            isHeading,
+            isTicketListingLoading,
             loadingMore,
+            onIconPress,
+            queryTypeData,
             rowsLimit,
             rowsPerPage,
             setCurrentRecords,
+            statusData,
             statusText,
             subHeadingText,
             tableHeading,
             tableIcon,
+            ticketListingData,
             totalcards,
           }}
         />
@@ -90,4 +112,4 @@ const TicketsView = () => {
   );
 };
 
-export default TicketsView;
+export default TicketsListing;

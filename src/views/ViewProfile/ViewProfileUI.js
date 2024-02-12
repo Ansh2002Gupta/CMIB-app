@@ -17,6 +17,7 @@ import useDeleteUserAPI from "../../services/apiServices/hooks/UserProfile/useDe
 import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
 import style from "./ViewProfile.style";
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
 
 const ViewProfileUI = ({
   handleEditPopup,
@@ -84,16 +85,10 @@ const ViewProfileUI = ({
         iconStyle={showDeletePopUp ? style.iconStyle : style.inActiveIconStyle}
       />
       {showDeletePopUp && (
-        <TouchableOpacity
-          style={style.deletetextContainer}
-          onPress={() => {
-            setShowDeleteAccountModal(true);
-          }}
-        >
-          <CommonText customTextStyle={style.deletetext}>
-            {intl.formatMessage({ id: "label.delete_account" })}
-          </CommonText>
-        </TouchableOpacity>
+        <PopupMessage
+          message={intl.formatMessage({ id: "label.delete_account" })}
+          onPopupClick={() => setShowDeleteAccountModal(true)}
+        />
       )}
       {showDeleteAccountModal && (
         <ConfirmationModal

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 50,
     overflow: "hidden",
-    zIndex: 3,
+    zIndex: 10,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: colors.lightGrey,

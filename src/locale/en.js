@@ -293,8 +293,14 @@ const locale = {
   "label.no_placeholder": "e.g 1",
   "label.code_placeholder": "e.g 91",
   "label.account_deletion": "Account deleted successfully.",
+  "label.view_ticket_details": "View Ticket Details",
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
+  "label.type_message": "Type Here...",
+  "label.query_type": "Query Type",
+  "label.enterQuery": "Enter Query",
+  "label.addTicket": "Add Ticket",
+  "label.add_new_ticket": "Add New Ticket",
 };
 
 export default locale;

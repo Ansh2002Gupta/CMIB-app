@@ -33,16 +33,14 @@ const SearchView = ({
     }
     debounceTimeout.current = setTimeout(() => {
       let filtered = data;
-      if (query) {
-        const formattedQuery = query.toLowerCase();
-        if (customSearchCriteria) {
-          filtered = customSearchCriteria(formattedQuery);
-        } else {
-          filtered = data.filter((item) => {
-            return item.toLowerCase().includes(formattedQuery);
-          });
-        }
-      } 
+      const formattedQuery = query.toLowerCase();
+      if (customSearchCriteria) {
+        filtered = customSearchCriteria(formattedQuery);
+      } else {
+        filtered = data.filter((item) => {
+          return item.toLowerCase().includes(formattedQuery);
+        });
+      }
       if (onSearch) {
         onSearch(filtered);
       }
@@ -53,7 +51,7 @@ const SearchView = ({
         clearTimeout(debounceTimeout.current);
       }
     };
-  }, [query, data, onSearch, customSearchCriteria]);
+  }, [query]);
 
   const handleSearch = (text) => {
     setQuery(text);

@@ -1,23 +1,30 @@
-import React, { useState } from "react";
-import { useSearchParams } from "../../../routes";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
+import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
+import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
-import usePagination from "../../../hooks/usePagination";
+import {
+  COMPANY_TICKET_LISTING,
+  COMPANY_QUERY_TYPE_TICKET,
+  COMPANY_TICKET_STATUS,
+} from "../../../services/apiServices/apiEndPoint";
+import { formatCreatedAt } from "../../../utils/util";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import { ticketData } from "../constant";
+import { navigations } from "../../../constants/routeNames";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../TicketsView.style";
+import styles from "../TicketsListing.style";
 
-const useTicketView = () => {
+const useTicketListing = () => {
   const { isWebView } = useIsWebView();
   const [searchParams, setSearchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -30,56 +37,70 @@ const useTicketView = () => {
     getValidCurrentPage(searchParams.get("page"))
   );
 
-  const [currentRecords, setCurrentRecords] = useState(
-    ticketData.slice(0, rowsPerPage)
-  );
+  const {
+    data: ticketListingData,
+    isLoading: isTicketListingLoading,
+    fetchData: fetchDataTicketListing,
+  } = useFetch({
+    url: COMPANY_TICKET_LISTING,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
+
+  const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
+
+  useEffect(() => {
+    fetchDataTicketListing({
+      queryParamsObject: { perPage: rowsPerPage, page: currentPage },
+    });
+  }, []);
+
+  const { handleAddTicket } = useAddTicket();
+
+  const navigate = useNavigate();
 
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
-  const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
-    shouldSetQueryParamsOnMount: true,
-    setCurrentPage,
-    setRowPerPage,
-  });
-
-  //TODO: We use this hook when we implementing API
-  // const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch();
-
   const handleLoadMore = () => {
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
-    setTimeout(() => {
-      const startIndex = currentRecords.length;
-      const endIndex = startIndex + rowsPerPage;
-      const additionalRecords = ticketData.slice(startIndex, endIndex);
-      if (additionalRecords.length > 0) {
-        const newRecords = currentRecords.concat(additionalRecords);
-        setCurrentRecords(newRecords);
-      } else {
-        setAllDataLoaded(true);
-      }
-      setLoadingMore(false);
-    }, 1000);
+    fetchDataTicketListing();
   };
 
   const handlePageChange = (page) => {
-    //TODO : we fetch data on changing page
-    // fetchData()
-    handlePagePerChange(page);
+    setCurrentPage(page);
+    const requestedParams = {
+      perPage: rowsPerPage,
+      page: page,
+    };
+    fetchDataTicketListing({ queryParamsObject: requestedParams });
   };
 
   const handleRowPerPageChange = (option) => {
-    //TODO : we fetch data on row changing per page
-    // fetchData()
-    handleRowsPerPageChange(option.value);
+    setRowPerPage(option.value);
+    const requestedParams = {
+      perPage: option.value,
+      page: currentPage,
+    };
+    fetchDataTicketListing({ queryParamsObject: requestedParams });
   };
 
   const handleSearchResults = (searchedData) => {
-    //TODO: Implement searching
+    const requestedParams = {
+      q: searchedData,
+    };
+    fetchDataTicketListing({ queryParamsObject: requestedParams });
   };
 
-  let headingTexts = ["id"];
+  const onIconPress = (item) => {
+    navigate(navigations.TICKETS_VIEW_EDIT, { state: item });
+  };
+
+  let headingTexts = ["readable_id"];
   let subHeadingText = ["query_type"];
   let statusText = ["status"];
   let tableIcon = images.iconTicket;
@@ -94,7 +115,7 @@ const useTicketView = () => {
           ...(!isWebView ? styles.pending : styles.pendingWeb),
           ...styles.cellTextStyle(12),
         };
-      case "close":
+      case "closed":
         return {
           ...(!isWebView ? styles.close : styles.closeWeb),
           ...styles.cellTextStyle(12),
@@ -117,7 +138,7 @@ const useTicketView = () => {
       {
         content: (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.id}
+            {item.readable_id}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -157,17 +178,25 @@ const useTicketView = () => {
         isFillSpace: true,
       },
       {
-        content: (
-          <CommonText customTextStyle={tableStyle}>
-            {item.created_at}
-          </CommonText>
-        ),
+        content:
+          item.created_at === "Created On" ? (
+            <CommonText customTextStyle={tableStyle}>
+              {item.created_at}
+            </CommonText>
+          ) : (
+            <CommonText customTextStyle={tableStyle}>
+              {formatCreatedAt(item.created_at)}
+            </CommonText>
+          ),
         style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
         content: !isHeading && (
           <TouchableImage
+            onPress={() => {
+              onIconPress(item);
+            }}
             source={images.iconTicket}
             imageStyle={styles.iconTicket}
             isSvg={true}
@@ -181,30 +210,35 @@ const useTicketView = () => {
       },
     ];
   };
-
   return {
     allDataLoaded,
-    currentRecords,
     currentPage,
+    fetchDataTicketListing,
+    filterCategory,
     getColoumConfigs,
     getStatusStyle,
-    filterCategory,
-    headingTexts,
+    handleAddTicket,
+    handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
-    handleLoadMore,
-    isHeading,
+    headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
+    isHeading,
+    isTicketListingLoading,
     loadingMore,
+    onIconPress,
+    queryTypeData,
+    queryTypeUrl: COMPANY_QUERY_TYPE_TICKET,
     rowsPerPage,
+    statusData,
     statusText,
     subHeadingText,
     tableIcon,
-    setCurrentRecords,
-    totalcards: ticketData.length,
+    ticketListingData,
+    totalcards: ticketListingData?.meta?.total,
   };
 };
 
-export default useTicketView;
+export default useTicketListing;

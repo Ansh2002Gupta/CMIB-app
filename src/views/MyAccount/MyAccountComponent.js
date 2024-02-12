@@ -24,7 +24,7 @@ const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
     setShowAccountSection && setShowAccountSection(false);
     const shouldNavigate = isWebView
       ? !option?.preventWebNavigation
-      : !!option?.preventWebNavigation;
+      : !!option?.preventWebNavigation || true;
     if (option?.navigateTo && shouldNavigate) {
       navigate(option?.navigateTo);
       return;
