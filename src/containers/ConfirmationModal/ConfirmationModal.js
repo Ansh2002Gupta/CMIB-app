@@ -27,12 +27,7 @@ const ConfirmationModal = ({
   const confirmationConfig = [
     {
       content: (
-        <CustomImage
-          Icon={icon}
-          style={styles.logo}
-          source={icon}
-          isSvg={true}
-        />
+        <CustomImage Icon={icon} style={styles.logo} source={icon} isSvg />
       ),
     },
     {

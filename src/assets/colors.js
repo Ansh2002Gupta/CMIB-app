@@ -102,5 +102,6 @@ const colors = {
   skyBlueDark,
   skyBlueLight,
   disabledTextFieldColor,
+  neutralGrey,
 };
 export default colors;

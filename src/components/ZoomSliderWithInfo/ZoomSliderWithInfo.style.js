@@ -1,5 +1,10 @@
 import { Platform ,StyleSheet } from "@unthinkable/react-core-components";
 
+const iconStyle = {
+  height: 20,
+  width: 20,
+};
+
 const styles = StyleSheet.create({
   zoomInfoContainer: {
     marginTop: 32,
@@ -15,8 +20,11 @@ const styles = StyleSheet.create({
   },
   zoomIcon: {
     ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
-    width: 20,
-    height: 20,
+    ...iconStyle,
+  },
+  disabledIcon: {
+    ...iconStyle,
+    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "default" } : {}),
   },
   zoomSlider: {
     flex: 1,
