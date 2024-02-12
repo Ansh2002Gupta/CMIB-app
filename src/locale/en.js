@@ -289,7 +289,8 @@ const locale = {
     "Your password has been successfully changed. Please login using your new password. Thanks!",
   "label.delete": "Delete",
   "label.delete_account": "Delete Account",
-  "label.delete_message": "Are you sure you want to delete your account?",
+  "label.delete_message":
+    "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.",
   "label.no_placeholder": "e.g 1",
   "label.code_placeholder": "e.g 91",
   "label.account_deletion": "Account deleted successfully.",
