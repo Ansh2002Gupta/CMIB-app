@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       web: {
         textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
+        redSpace: "nowrap",
         overflow: "hidden",
         maxWidth: "120px",
       },
@@ -106,6 +106,25 @@ const styles = StyleSheet.create({
   noMoreData: {
     textAlign: "center",
     color: colors.lightGrey,
+  },
+  addNewButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 44,
+    backgroundColor: colors.green,
+    borderRadius: 8,
+    marginLeft: 16,
+    padding: 12,
+  },
+  addNewText: {
+    color: colors.white,
+  },
+  textSize: {
+    fontSize: 14,
+  },
+  ticketTotals: {
+    marginBottom: 16,
+    flexDirection: "row",
   },
 });
 

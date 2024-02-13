@@ -83,6 +83,33 @@ export const isValidUrl = (str) => {
   return pattern.test(str);
 };
 
+export const getTime = (isoString) => {
+  if (!isoString) {
+    return "12:00 AM";
+  }
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) {
+    return "12:00 AM";
+  }
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const amPm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+  const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+  const formattedTime = `${hours}:${formattedMinutes} ${amPm}`;
+  return formattedTime;
+};
+
+export const formatCreatedAt = (originalDate) => {
+  const date = new Date(originalDate);
+
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${month}/${day}/${year}`;
+};
+
 export const capitalize = (text) => {
   if (!text || typeof text !== "string") {
     return text;

@@ -294,6 +294,7 @@ const locale = {
   "label.no_placeholder": "e.g 1",
   "label.code_placeholder": "e.g 91",
   "label.account_deletion": "Account deleted successfully.",
+  "label.view_ticket_details": "View Ticket Details",
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
   "label.srn": "SRN",
@@ -308,11 +309,16 @@ const locale = {
   "label.centre_wise_company_detail": "Centre wise Company Detail",
   "label.consent_marking_management": "Consent Marking Management",
   "label.campus_interview_management": "Campus Interview Management",
-  "label.application_description": "Seamless application process for aspiring Chartered Accountants.",
-  "label.download_id_description": "Obtain your CA ID as a PDF: candidate verification made easy.",
-  "label.centre_wise_company_detail_description": "Effortless access to comprehensive company details as per centre.",
-  "label.consent_marking_management_description": "Efficiently oversee and navigate consent markings with precision and compliance.",
-  "label.campus_interview_management_description": "Optimize job prospects through streamlined campus interview management for accountants.",
+  "label.application_description":
+    "Seamless application process for aspiring Chartered Accountants.",
+  "label.download_id_description":
+    "Obtain your CA ID as a PDF: candidate verification made easy.",
+  "label.centre_wise_company_detail_description":
+    "Effortless access to comprehensive company details as per centre.",
+  "label.consent_marking_management_description":
+    "Efficiently oversee and navigate consent markings with precision and compliance.",
+  "label.campus_interview_management_description":
+    "Optimize job prospects through streamlined campus interview management for accountants.",
   "label.personal_details": "Personal Details",
   "label.educational_details": "Educational Details",
   "label.training_details": "Training Details",
@@ -349,6 +355,11 @@ const locale = {
   "label.ca_final_exam": "CA Final Exam",
   "label.exams": "Exams",
   "label.other_courses": "Other Courses",
+  "label.type_message": "Type Here...",
+  "label.query_type": "Query Type",
+  "label.enterQuery": "Enter Query",
+  "label.addTicket": "Add Ticket",
+  "label.add_new_ticket": "Add New Ticket",
 };
 
 export default locale;

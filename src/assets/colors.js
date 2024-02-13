@@ -22,6 +22,7 @@ const darkSecondGreen = "#258B01";
 
 /* Greys */
 const backgroundGrey = "#F6F8F9";
+const backgroundSecondGrey = "#E5E7F2";
 const darkGrey = "#616C82";
 const darkGreySecond = "#71717A";
 const disabledBtn = "#aaaaaa";
@@ -64,6 +65,7 @@ const colors = {
   backgroundColor,
   black,
   blackWithOneForthOpacity,
+  backgroundSecondGrey,
   darkBlack,
   darkBlackSecond,
   darkBlue,
