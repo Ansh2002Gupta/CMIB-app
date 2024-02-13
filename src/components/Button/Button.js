@@ -7,6 +7,7 @@ import styles from "./Button.style";
 const Button = ({
   children,
   disabled,
+  disabledStyle,
   onPress,
   shouldShowHover,
   style,
@@ -19,7 +20,10 @@ const Button = ({
     <button
       onClick={onPress}
       {...{ disabled, style, type }}
-      style={{ ...style, ...(disabled ? styles.disabledBtn : {}) }}
+      style={{
+        ...style,
+        ...(disabled ? { ...styles.disabledBtn, ...disabledStyle } : {}),
+      }}
       {...buttonComponentProp}
     >
       {children}
@@ -30,6 +34,7 @@ const Button = ({
 Button.defaultProps = {
   children: <></>,
   disabled: false,
+  disabledStyle: {},
   onPress: () => {},
   shouldShowHover: false,
   style: {},
@@ -39,6 +44,7 @@ Button.defaultProps = {
 Button.protoTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
+  disabledStyle: PropTypes.object,
   onPress: PropTypes.func,
   shouldShowHover: PropTypes.bool,
   style: PropTypes.object,

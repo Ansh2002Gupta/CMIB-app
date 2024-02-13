@@ -214,7 +214,7 @@ export const ROWS_PER_PAGE_ARRAY = [
 ];
 
 export const TICKET_TABLE_HEADING = {
-  id: "Ticket ID",
+  readable_id: "Ticket ID",
   query_type: "Query Type",
   status: "Status",
   assigned_to: "Assigned To",

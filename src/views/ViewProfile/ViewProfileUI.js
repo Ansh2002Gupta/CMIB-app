@@ -91,12 +91,12 @@ const ViewProfileUI = ({
       />
       {showDeletePopUp && (
         <Modal
-        animationType="slide"
-        onRequestClose={hideModal}
-        transparent
-        visible={showDeletePopUp}
-      >
-         <TouchableWithoutFeedback onPress={hideModal}>
+          animationType="slide"
+          onRequestClose={hideModal}
+          transparent
+          visible={showDeletePopUp}
+        >
+          <TouchableWithoutFeedback onPress={hideModal}>
             <View style={style.modalOverlay} />
           </TouchableWithoutFeedback>
           <TouchableOpacity
