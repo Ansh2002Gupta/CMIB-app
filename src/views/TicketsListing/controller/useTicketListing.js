@@ -130,7 +130,6 @@ const useTicketListing = () => {
     });
   };
 
-  // Function to handle rows per page changes
   const handleRowPerPageChange = async (option) => {
     handleRowsPerPageChange(option.value);
     await updateCurrentRecords({
@@ -139,7 +138,6 @@ const useTicketListing = () => {
     });
   };
 
-  // Function to handle search results
   const handleSearchResults = async (searchedData) => {
     await updateCurrentRecords({
       q: searchedData,
@@ -151,6 +149,7 @@ const useTicketListing = () => {
   const onIconPress = (item) => {
     //TODO : We will navigate to TICKET CHAT SCREEN
   };
+
   const handleSaveAddTicket = async (queryType, enterQuery) => {
     await handleAddTicket({ query_type: queryType, query: enterQuery });
     await updateCurrentRecords({
@@ -159,7 +158,6 @@ const useTicketListing = () => {
     });
   };
 
-  // Function to handle filter application
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
     await updateCurrentRecords({
       status: selectedStatus,

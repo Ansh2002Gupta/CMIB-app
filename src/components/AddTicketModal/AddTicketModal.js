@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
+import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CustomModal from "../CustomModal";
@@ -60,6 +61,12 @@ const AddTicketModal = ({
       </CustomModal>
     </>
   );
+};
+
+AddTicketModal.propTypes = {
+  queryTypeData: PropTypes.array.isRequired,
+  onPressButtonOne: PropTypes.func.isRequired,
+  onPressButtonTwo: PropTypes.func.isRequired,
 };
 
 export default AddTicketModal;

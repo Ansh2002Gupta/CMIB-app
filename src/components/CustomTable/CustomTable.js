@@ -6,6 +6,7 @@ import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import AddTicketModal from "../AddTicketModal/AddTicketModal";
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -19,10 +20,6 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
-import CustomModal from "../CustomModal";
-import CustomTextInput from "../CustomTextInput";
-import ActionPairButton from "../ActionPairButton";
-import AddTicketModal from "../AddTicketModal/AddTicketModal";
 
 const initialFilterState = {
   selectedStatus: [],
