@@ -116,20 +116,26 @@ const CustomTable = ({
                 }
               />
             )}
-            <View style={styles.ticketTotals}>
-              <CommonText
-                fontWeight={"500"}
-                customTextStyle={{
-                  ...styles.tableHeadingText,
-                  ...styles.textSize,
-                }}
-              >
-                {intl.formatMessage({ id: "label.tickets" })}&nbsp;&#58;&nbsp;
-              </CommonText>
-              <CommonText fontWeight={"600"} customTextStyle={styles.textSize}>
-                {totalcards}
-              </CommonText>
-            </View>
+            {!isWeb && (
+              <View style={styles.ticketTotals}>
+                <CommonText
+                  fontWeight={"500"}
+                  customTextStyle={{
+                    ...styles.tableHeadingText,
+                    ...styles.textSize,
+                  }}
+                >
+                  {intl.formatMessage({ id: "label.tickets" })}&nbsp;&#58;&nbsp;
+                </CommonText>
+
+                <CommonText
+                  fontWeight={"600"}
+                  customTextStyle={styles.textSize}
+                >
+                  {totalcards}
+                </CommonText>
+              </View>
+            )}
           </>
         }
         isTopFillSpace={false}

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View, ScrollView, Platform } from "@unthinkable/react-core-components";
@@ -12,11 +12,11 @@ import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import useFilterModal from "./controller/useFilterModal";
+import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
 import styles from "./FilterModal.style";
 
 const FilterModal = ({
-  data,
   filterCategory,
   filterState,
   initialFilterState,
@@ -37,7 +37,6 @@ const FilterModal = ({
     selectedQueryType,
     onCancel,
   } = useFilterModal(
-    data,
     filterState,
     initialFilterState,
     onApplyFilter,
@@ -48,20 +47,13 @@ const FilterModal = ({
   const isWeb = Platform.OS.toLowerCase() === "web";
   const intl = useIntl();
 
-  const { statusCounts, queryTypeCounts } = useMemo(() => {
-    const statusCounters = {};
-    const queryTypeCounters = {};
-    data?.records?.forEach((item) => {
-      statusCounters[item.status] = (statusCounters[item.status] || 0) + 1;
-      queryTypeCounters[item.query_type] =
-        (queryTypeCounters[item.query_type] || 0) + 1;
-    });
-    return { statusCounts: statusCounters, queryTypeCounts: queryTypeCounters };
-  }, [data]);
+  const webProps = isWeb
+    ? { className: classes["account-dropdown__base"] }
+    : {};
 
   const RenderCheckButton = ({ title, item, onChange, isSelected }) => {
     return (
-      <View style={styles.renderCheckButton}>
+      <View style={styles.renderCheckButton} {...webProps}>
         <CheckBox
           title={title}
           isSelected={isSelected}
@@ -107,19 +99,28 @@ const FilterModal = ({
   const RenderCategoryButton = ({ title, isLeftArrow = true, onClick }) => {
     const isActive = activeCategories.includes(title);
     return (
-      <View style={styles.renderCheckButton}>
-        <CheckBox
-          title={title}
-          isSelected={isActive}
-          handleCheckbox={() => onClick(title)}
-          id={title}
+      <View style={styles.renderCheckButton} {...webProps}>
+        <TwoColumn
+          leftSection={
+            <CheckBox
+              title={title}
+              isSelected={isActive}
+              handleCheckbox={() => onClick(title)}
+              id={title}
+            />
+          }
+          isLeftFillSpace
+          rightSection={
+            <>
+              {isLeftArrow && isActive && (
+                <CustomImage
+                  source={images.iconArrowRight}
+                  style={styles.arrowRight}
+                />
+              )}
+            </>
+          }
         />
-        {isLeftArrow && isActive && (
-          <CustomImage
-            source={images.iconArrowRight}
-            style={styles.arrowRight}
-          />
-        )}
       </View>
     );
   };
@@ -164,7 +165,7 @@ const FilterModal = ({
             rightSectionStyle={styles.rightSection}
             rightSection={
               isWeb ? (
-                <ScrollView contentContainerStyle={{ height: 300 }}>
+                <ScrollView contentContainerStyle={styles.renderOptionCatigory}>
                   {renderOptionsByCategory()}
                 </ScrollView>
               ) : (

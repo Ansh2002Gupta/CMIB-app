@@ -87,7 +87,6 @@ const useTicketListing = () => {
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
     const nextPage = currentPage + 1;
-
     try {
       const newData = await fetchDataTicketListing({
         queryParamsObject: { perPage: rowsPerPage, page: nextPage },
@@ -138,6 +137,8 @@ const useTicketListing = () => {
   const handleSearchResults = async (searchedData) => {
     const requestedParams = {
       q: searchedData,
+      perPage: rowsPerPage,
+      page: currentPage,
     };
     const newSearchedData = await fetchDataTicketListing({
       queryParamsObject: requestedParams,
@@ -153,6 +154,8 @@ const useTicketListing = () => {
     const requestedParams = {
       status: selectedStatus,
       queryType: selectedQueryType,
+      perPage: rowsPerPage,
+      page: currentPage,
     };
     const newData = await fetchDataTicketListing({
       queryParamsObject: requestedParams,

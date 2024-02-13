@@ -1,7 +1,6 @@
 import { useRef } from "react";
 
 const useFilterModal = (
-  data,
   filterState,
   initialFilterState,
   onApplyFilter,
@@ -40,7 +39,6 @@ const useFilterModal = (
         : [...prevState.selectedStatus, status.id];
       return { ...prevState, selectedStatus: newSelectedStatus };
     });
-    console.log("handleStatusChange", status.id);
   };
 
   const handleQueryTypeChange = (queryType) => {
@@ -60,6 +58,7 @@ const useFilterModal = (
 
   const handleClearFilter = () => {
     setFilterState(initialFilterState);
+    onApplyFilter({ initialFilterState });
   };
 
   return {

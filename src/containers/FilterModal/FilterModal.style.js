@@ -22,16 +22,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   leftSection: {
-    paddingLeft: 16,
-    paddingRight: 16,
     width: "50%",
     borderRightWidth: 1,
     borderColor: colors.lightGrey,
   },
   rightSection: {
     width: "50%",
-    paddingLeft: 16,
-    paddingRight: 16,
   },
   bottomSection: {
     width: "100%",
@@ -49,16 +45,15 @@ const styles = StyleSheet.create({
   arrowRight: {
     height: 16,
     width: 16,
-    position: "absolute",
-    right: 0,
   },
   renderCheckButton: {
     flexDirection: "row",
-    justifyContent: "flex-start",
-    position: "relative",
     paddingTop: 16,
-    alignItems: "center",
+    paddingLeft: 16,
+    paddingRight: 16,
+    justifyContent: "center",
   },
+  renderOptionCatigory: { height: 300 },
 });
 
 export default styles;

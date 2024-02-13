@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Platform, TextInput, View } from "@unthinkable/react-core-components";
@@ -27,13 +27,13 @@ const SearchView = ({
     },
   });
 
-  useEffect(() => {
+  const handleSearch = (text) => {
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
     debounceTimeout.current = setTimeout(() => {
       let filtered = data;
-      const formattedQuery = query.toLowerCase();
+      const formattedQuery = text.toLowerCase();
       if (customSearchCriteria) {
         filtered = customSearchCriteria(formattedQuery);
       } else {
@@ -45,21 +45,13 @@ const SearchView = ({
         onSearch(filtered);
       }
     }, DEBOUNCE_TIME);
-
-    return () => {
-      if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
-      }
-    };
-  }, [query]);
-
-  const handleSearch = (text) => {
     setQuery(text);
   };
 
   const clearSearch = () => {
     setQuery("");
     onSearch([]);
+    customSearchCriteria();
   };
 
   return (
