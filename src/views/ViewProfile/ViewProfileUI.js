@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
-  Image,
+  Modal,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "@unthinkable/react-core-components";
 import CardComponent from "../../components/CardComponent/CardComponent";
@@ -17,7 +18,6 @@ import useDeleteUserAPI from "../../services/apiServices/hooks/UserProfile/useDe
 import { useHeader } from "../../hooks/useHeader";
 import images from "../../images";
 import style from "./ViewProfile.style";
-import PopupMessage from "../../components/PopupMessage/PopupMessage";
 
 const ViewProfileUI = ({
   handleEditPopup,
@@ -62,6 +62,10 @@ const ViewProfileUI = ({
     );
   };
 
+  const hideModal = () => {
+    setShowDeletePopUp(false);
+  };
+
   const handleDeletePopUp = () => {
     setShowDeletePopUp((prev) => !prev);
   };
@@ -85,10 +89,26 @@ const ViewProfileUI = ({
         iconStyle={showDeletePopUp ? style.iconStyle : style.inActiveIconStyle}
       />
       {showDeletePopUp && (
-        <PopupMessage
-          message={intl.formatMessage({ id: "label.delete_account" })}
-          onPopupClick={() => setShowDeleteAccountModal(true)}
-        />
+        <Modal
+          animationType="slide"
+          onRequestClose={hideModal}
+          transparent
+          visible={showDeletePopUp}
+        >
+          <TouchableWithoutFeedback onPress={hideModal}>
+            <View style={style.modalOverlay} />
+          </TouchableWithoutFeedback>
+          <TouchableOpacity
+            style={style.deletetextContainer}
+            onPress={() => {
+              setShowDeleteAccountModal(true);
+            }}
+          >
+            <CommonText customTextStyle={style.deletetext}>
+              {intl.formatMessage({ id: "label.delete_account" })}
+            </CommonText>
+          </TouchableOpacity>
+        </Modal>
       )}
       {showDeleteAccountModal && (
         <ConfirmationModal
