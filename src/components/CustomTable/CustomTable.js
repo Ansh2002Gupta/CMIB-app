@@ -8,15 +8,15 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
-import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
+import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
-import { getRenderText } from "../../utils/util";
 import useIsWebView from "../../hooks/useIsWebView";
+import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
 
@@ -29,23 +29,27 @@ const initialFilterState = {
 const CustomTable = ({
   allDataLoaded,
   currentPage,
-  currentRecords,
   data,
+  filterApplyHandler,
   filterCategory,
   getColoumConfigs,
   getStatusStyle,
+  handleLoadMore,
   handlePageChange,
   handleRowPerPageChange,
   handleSearchResults,
-  handleLoadMore,
   headingTexts,
-  isHeading,
   indexOfFirstRecord,
   indexOfLastRecord,
+  isHeading,
+  isTicketListingLoading,
+  isFirstPageReceived,
   loadingMore,
+  onIconPress,
+  queryTypeData,
   rowsLimit,
   rowsPerPage,
-  setCurrentRecords,
+  statusData,
   showSearchBar,
   statusText,
   subHeadingText,
@@ -64,8 +68,8 @@ const CustomTable = ({
     setShowFilterOptions((prev) => !prev);
   };
 
-  const onApplyFilter = (filterData) => {
-    setCurrentRecords(filterData.slice(0, rowsPerPage));
+  const onApplyFilter = ({ selectedStatus, selectedQueryType }) => {
+    filterApplyHandler({ selectedStatus, selectedQueryType });
     handleFilterModal();
   };
 
@@ -82,33 +86,57 @@ const CustomTable = ({
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
       <TwoRow
         topSection={
-          showSearchBar && (
-            <TwoColumn
-              leftSection={
-                <SearchView data={data} onSearch={handleSearchResults} />
-              }
-              isLeftFillSpace
-              isRightFillSpace={false}
-              rightSection={
-                <CustomTouchableOpacity
-                  onPress={handleFilterModal}
-                  style={styles.imageParentStyle}
-                >
-                  <TouchableImage
-                    source={images.iconFilter}
-                    parentStyle={styles.iconTicket}
-                    onPress={handleFilterModal}
+          <>
+            {showSearchBar && (
+              <TwoColumn
+                style={styles.filterTopSection(isWebView)}
+                isLeftFillSpace
+                leftSection={
+                  <SearchView
+                    data={data}
+                    customSearchCriteria={handleSearchResults}
                   />
-                  {isWebView && (
-                    <CommonText customTextStyle={styles.filterText}>
-                      {intl.formatMessage({ id: "label.filters" })}
-                    </CommonText>
-                  )}
-                </CustomTouchableOpacity>
-              }
-              style={styles.filterTopSection(isWebView)}
-            />
-          )
+                }
+                rightSection={
+                  <CustomTouchableOpacity
+                    onPress={handleFilterModal}
+                    style={styles.imageParentStyle}
+                  >
+                    <TouchableImage
+                      source={images.iconFilter}
+                      parentStyle={styles.iconTicket}
+                      onPress={handleFilterModal}
+                    />
+                    {isWebView && (
+                      <CommonText customTextStyle={styles.filterText}>
+                        {intl.formatMessage({ id: "label.filters" })}
+                      </CommonText>
+                    )}
+                  </CustomTouchableOpacity>
+                }
+              />
+            )}
+            {!isWeb && (
+              <View style={styles.ticketTotals}>
+                <CommonText
+                  fontWeight={"500"}
+                  customTextStyle={{
+                    ...styles.tableHeadingText,
+                    ...styles.textSize,
+                  }}
+                >
+                  {intl.formatMessage({ id: "label.tickets" })}&nbsp;&#58;&nbsp;
+                </CommonText>
+
+                <CommonText
+                  fontWeight={"600"}
+                  customTextStyle={styles.textSize}
+                >
+                  {totalcards}
+                </CommonText>
+              </View>
+            )}
+          </>
         }
         isTopFillSpace={false}
         isBottomFillSpace
@@ -117,92 +145,109 @@ const CustomTable = ({
             style={styles.tableTopSection}
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
-              <View style={styles.tableSection}>
-                {isWebView && (
-                  <MultiColumn
-                    columns={getColoumConfigs(tableHeading, isHeading)}
-                    style={styles.columnHeaderStyle}
-                  />
-                )}
-                <FlatList
-                  data={currentRecords}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => {
-                    return (
-                      <>
-                        {isWebView ? (
-                          <MultiColumn
-                            columns={getColoumConfigs(item)}
-                            style={styles.columnStyleBorder}
-                          />
-                        ) : (
-                          <View style={styles.mobileContainer}>
-                            <View>
-                              <CommonText
-                                fontWeight={"600"}
-                                customTextStyle={styles.cellTextStyle()}
-                              >
-                                {getRenderText(item, headingTexts)}
-                              </CommonText>
-                              <CommonText
-                                customTextStyle={styles.tableQueryText}
-                              >
-                                {getRenderText(item, subHeadingText)}
-                              </CommonText>
-                            </View>
-                            <View style={styles.rowsPerPageWeb}>
-                              <Chip
-                                label={getRenderText(item, statusText)}
-                                style={getStatusStyle(item.status)}
+              <>
+                {isTicketListingLoading && isFirstPageReceived ? (
+                  <LoadingScreen />
+                ) : (
+                  <View style={styles.tableSection}>
+                    {isWebView && (
+                      <MultiColumn
+                        columns={getColoumConfigs(tableHeading, isHeading)}
+                        style={styles.columnHeaderStyle}
+                      />
+                    )}
+                    <FlatList
+                      data={data}
+                      showsVerticalScrollIndicator={false}
+                      keyExtractor={(item, index) => index.toString()}
+                      renderItem={({ item }) => {
+                        return (
+                          <>
+                            {isWebView ? (
+                              <MultiColumn
+                                columns={getColoumConfigs(item)}
+                                style={styles.columnStyleBorder}
                               />
-                              <CustomImage
-                                source={tableIcon}
-                                style={styles.iconTicket}
-                              />
+                            ) : (
+                              <View style={styles.mobileContainer}>
+                                <View>
+                                  <CommonText
+                                    fontWeight={"600"}
+                                    customTextStyle={styles.cellTextStyle()}
+                                  >
+                                    {getRenderText(item, headingTexts)}
+                                  </CommonText>
+                                  <CommonText
+                                    customTextStyle={styles.tableQueryText}
+                                  >
+                                    {getRenderText(item, subHeadingText)}
+                                  </CommonText>
+                                </View>
+                                <View style={styles.rowsPerPageWeb}>
+                                  <Chip
+                                    label={getRenderText(item, statusText)}
+                                    style={getStatusStyle(item.status)}
+                                  />
+                                  <TouchableImage
+                                    onPress={() => {
+                                      onIconPress(item);
+                                    }}
+                                    source={tableIcon}
+                                    style={styles.iconTicket}
+                                  />
+                                </View>
+                              </View>
+                            )}
+                          </>
+                        );
+                      }}
+                      {...flatlistProps}
+                      ListFooterComponent={() => {
+                        if (isWeb && !data.length)
+                          return (
+                            <CommonText
+                              customContainerStyle={styles.loadingStyle}
+                              customTextStyle={styles.noMoreData}
+                            >
+                              {intl.formatMessage({ id: "label.no_more_data" })}
+                            </CommonText>
+                          );
+                        if (loadingMore && !isFirstPageReceived) {
+                          return (
+                            <View style={styles.loadingStyle}>
+                              <Spinner thickness={2} {...webProps} />
                             </View>
-                          </View>
-                        )}
-                      </>
-                    );
-                  }}
-                  {...flatlistProps}
-                  ListFooterComponent={() => {
-                    if (isWeb) return <></>;
-                    if (loadingMore) {
-                      return (
-                        <View style={styles.loadingStyle}>
-                          <Spinner thickness={2} {...webProps} />
-                        </View>
-                      );
-                    }
-                    if (allDataLoaded) {
-                      return (
-                        <CommonText
-                          customContainerStyle={styles.loadingStyle}
-                          customTextStyle={styles.noMoreData}
-                        >
-                          {intl.formatMessage({ id: "label.no_more_data" })}
-                        </CommonText>
-                      );
-                    }
-                    return null;
-                  }}
-                />
-                {isWebView && (
-                  <PaginationFooter
-                    {...{
-                      currentPage,
-                      handlePageChange,
-                      handleRowPerPageChange,
-                      rowsLimit,
-                      rowsPerPage,
-                      siblingCount: 1,
-                      totalcards,
-                    }}
-                  />
+                          );
+                        }
+                        if (allDataLoaded) {
+                          return (
+                            <CommonText
+                              customContainerStyle={styles.loadingStyle}
+                              customTextStyle={styles.noMoreData}
+                            >
+                              {intl.formatMessage({ id: "label.no_more_data" })}
+                            </CommonText>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    {isWebView && (
+                      <PaginationFooter
+                        {...{
+                          currentPage,
+                          handlePageChange,
+                          handleRowPerPageChange,
+                          rowsLimit,
+                          rowsPerPage,
+                          siblingCount: 1,
+                          totalcards,
+                        }}
+                      />
+                    )}
+                  </View>
                 )}
-              </View>
+              </>
             }
             isTopFillSpace
             isBottomFillSpace={false}
@@ -238,6 +283,8 @@ const CustomTable = ({
             setFilterState,
             setShowFilterOptions,
             onApplyFilter,
+            statusData,
+            queryTypeData,
           }}
         />
       )}
@@ -246,59 +293,42 @@ const CustomTable = ({
 };
 
 CustomTable.defaultProps = {
-  allDataLoaded: false,
-  currentPage: 1,
-  currentRecords: [],
-  data: [{}],
-  filterCategory: [],
-  getColoumConfigs: () => {},
-  getStatusStyle: () => {},
-  handlePageChange: () => {},
-  handleRowPerPageChange: () => {},
-  handleSearchResults: () => {},
   headingTexts: [],
-  handleLoadMore: () => {},
-  isHeading: false,
-  indexOfFirstRecord: 0,
-  indexOfLastRecord: 0,
-  loadingMore: true,
-  rowsLimit: [],
-  rowsPerPage: 10,
-  setCurrentRecords: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
-  tableHeading: {},
-  tableIcon: images.ticketIcon,
   totalcards: 0,
 };
 
 CustomTable.propTypes = {
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
-  currentRecords: PropTypes.array.isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.object,
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func.isRequired,
+  filterApplyHandler: PropTypes.func,
   handlePageChange: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,
   handleLoadMore: PropTypes.func.isRequired,
   headingTexts: PropTypes.array,
   isHeading: PropTypes.bool.isRequired,
+  isTicketListingLoading: PropTypes.bool,
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   loadingMore: PropTypes.bool.isRequired,
+  onIconPress: PropTypes.func.isRequired,
+  queryTypeData: PropTypes.array,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  setCurrentRecords: PropTypes.array.isRequired,
   showSearchBar: PropTypes.bool,
+  statusData: PropTypes.array,
   statusText: PropTypes.array,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,
-  totalcards: PropTypes.number.isRequired,
+  totalcards: PropTypes.number,
 };
 
 export default CustomTable;

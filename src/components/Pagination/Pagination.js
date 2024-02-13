@@ -89,6 +89,7 @@ function Pagination(props) {
         style={prevNextBtnstyles}
         onPress={previousPageHandler}
         disabled={currentPage <= 1}
+        disabledStyle={styles.disabled}
         iconLeft={{
           isLeftIconNotSvg: false,
           leftIconSource: images.iconArrowLeft,
@@ -130,6 +131,7 @@ function Pagination(props) {
       <CustomButton
         style={prevNextBtnstyles}
         onPress={nextPageHandler}
+        disabledStyle={styles.disabled}
         disabled={currentPage === lastPage}
         iconRight={{
           isRightIconNotSvg: true,

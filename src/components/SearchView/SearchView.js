@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Platform, TextInput, View } from "@unthinkable/react-core-components";
@@ -27,41 +27,31 @@ const SearchView = ({
     },
   });
 
-  useEffect(() => {
+  const handleSearch = (text) => {
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
     debounceTimeout.current = setTimeout(() => {
       let filtered = data;
-      if (query) {
-        const formattedQuery = query.toLowerCase();
-        if (customSearchCriteria) {
-          filtered = customSearchCriteria(formattedQuery);
-        } else {
-          filtered = data.filter((item) => {
-            return item.toLowerCase().includes(formattedQuery);
-          });
-        }
-      } 
+      const formattedQuery = text.toLowerCase();
+      if (customSearchCriteria) {
+        filtered = customSearchCriteria(formattedQuery);
+      } else {
+        filtered = data.filter((item) => {
+          return item.toLowerCase().includes(formattedQuery);
+        });
+      }
       if (onSearch) {
         onSearch(filtered);
       }
     }, DEBOUNCE_TIME);
-
-    return () => {
-      if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
-      }
-    };
-  }, [query, data, onSearch, customSearchCriteria]);
-
-  const handleSearch = (text) => {
     setQuery(text);
   };
 
   const clearSearch = () => {
     setQuery("");
     onSearch([]);
+    customSearchCriteria();
   };
 
   return (
@@ -91,6 +81,7 @@ SearchView.defaultProps = {
   customParentStyle: {},
   customSearchCriteria: () => {},
   onSearch: () => {},
+  data: [],
 };
 
 SearchView.propTypes = {
@@ -100,7 +91,7 @@ SearchView.propTypes = {
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.object),
-  ]).isRequired,
+  ]),
   onSearch: PropTypes.func,
 };
 
