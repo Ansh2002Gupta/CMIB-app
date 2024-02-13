@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+
+import useFetch from "../../../hooks/useFetch";
 import { PREVIOUS_SCREEN } from "../../../constants/constants";
 import { ticket_replies } from "../ticketsRepliesConstant";
+import { CORE_TICKET_VIEW_DETAILS } from "../../../services/apiServices/apiEndPoint";
 
 const useTicketDetails = () => {
   const navigate = useNavigate();
@@ -10,6 +13,21 @@ const useTicketDetails = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [ticketData, setTicketData] = useState(ticket_replies.slice(0, 5));
   const [nextIndex, setNextIndex] = useState(5);
+
+  const location = useLocation();
+  // const { id, status } = location.state;
+
+  const id = "41";
+
+  const {
+    data: ticketViewDetails,
+    isLoading: isticketViewDetails,
+    fetchData: fetchTicketViewDetails,
+  } = useFetch({
+    url: `${CORE_TICKET_VIEW_DETAILS}/${id}`,
+  });
+
+  console.log("details", ticketViewDetails);
 
   const onGoBack = () => {
     if (isDetailsScreen) {
@@ -47,6 +65,7 @@ const useTicketDetails = () => {
     setIsDetailScreen,
     showPopup,
     ticketData,
+    ticketViewDetails,
   };
 };
 

@@ -6,16 +6,16 @@ import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./TicketDetails.styles";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import { formatDate } from "../../utils/util";
 import MultiRow from "../../core/layouts/MultiRow";
 import images from "../../images";
 
 const TicketDetails = ({ details }) => {
-  const { assigned_to, created_at, id, query_type, status } = details;
   const { isWebView } = useIsWebView();
   const role = "Admin";
 
   const getTopSectionData = (assignedTo) => {
-    const isAssigned = !!assignedTo;
+    const isAssigned = !!assignedTo || false;
     const profileIconImage = isAssigned ? undefined : images.iconAvatar;
     const textFontWeight = isAssigned ? "600" : "500";
     const headingText = isAssigned ? assignedTo : "Admin Not Assigned";
@@ -29,7 +29,7 @@ const TicketDetails = ({ details }) => {
     };
   };
 
-  const topSectionData = getTopSectionData(assigned_to);
+  const topSectionData = getTopSectionData(details?.assigned_to);
 
   const renderDetails = ({ detailHeading, subDetailHeading }) => {
     return (
@@ -50,13 +50,13 @@ const TicketDetails = ({ details }) => {
         <TwoColumn
           leftSection={renderDetails({
             detailHeading: "Ticket Number",
-            subDetailHeading: id,
+            subDetailHeading: details?.readable_id,
           })}
           isLeftFillSpace
           isRightFillSpace
           rightSection={renderDetails({
             detailHeading: "Status",
-            subDetailHeading: status,
+            subDetailHeading: details?.status,
           })}
         />
       ),
@@ -64,19 +64,19 @@ const TicketDetails = ({ details }) => {
     {
       content: renderDetails({
         detailHeading: "Query Type",
-        subDetailHeading: query_type,
+        subDetailHeading: details?.query_type,
       }),
     },
     {
       content: renderDetails({
         detailHeading: "Data Created On",
-        subDetailHeading: created_at,
+        subDetailHeading: formatDate(details?.created_at),
       }),
     },
     {
       content: renderDetails({
         detailHeading: "Assigned To",
-        subDetailHeading: assigned_to,
+        subDetailHeading: details?.assigned_to || "-",
       }),
     },
   ];
@@ -86,15 +86,15 @@ const TicketDetails = ({ details }) => {
       {isWebView ? (
         <TwoRow
           style={styles.webContainer}
-          topSectionStyle={!assigned_to ? styles.disabled : {}}
+          topSectionStyle={!details?.assigned_to ? styles.disabled : {}}
           topSection={
             <TwoRow
               style={styles.webContainer}
-              topSectionStyle={!assigned_to ? styles.disabled : {}}
+              topSectionStyle={!details?.assigned_to ? styles.disabled : {}}
               topSection={
                 <View>
                   <ProfileIcon
-                    name={assigned_to}
+                    name={details?.assigned_to}
                     profileImage={topSectionData.profileIconImage}
                     customContainerStyle={styles.profileIcon}
                   />
@@ -104,7 +104,7 @@ const TicketDetails = ({ details }) => {
                   >
                     {topSectionData.headingText}
                   </CommonText>
-                  {assigned_to && (
+                  {details?.assigned_to && (
                     <CommonText customTextStyle={styles.roleText}>
                       {topSectionData.roleText}
                     </CommonText>
@@ -118,11 +118,11 @@ const TicketDetails = ({ details }) => {
             <TwoRow
               topSection={renderDetails({
                 detailHeading: "Query Type",
-                subDetailHeading: query_type,
+                subDetailHeading: details?.query_type,
               })}
               bottomSection={renderDetails({
                 detailHeading: "Created On",
-                subDetailHeading: created_at,
+                subDetailHeading: formatDate(details?.created_at),
               })}
             />
           }

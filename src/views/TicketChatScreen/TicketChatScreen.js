@@ -24,6 +24,7 @@ const TicketChatScreen = () => {
     setIsDetailScreen,
     showPopup,
     ticketData,
+    ticketViewDetails,
   } = useTicketDetails();
 
   const { isWebView } = useIsWebView();
@@ -31,7 +32,7 @@ const TicketChatScreen = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   const location = useLocation();
-  const { id, status } = location.state;
+
   const midOrSmall = currentBreakpoint === "md" || currentBreakpoint === "sm";
 
   const reversedData = [...ticketData].reverse();
@@ -45,9 +46,9 @@ const TicketChatScreen = () => {
             headerText={
               isDetailsScreen
                 ? intl.formatMessage({ id: "label.view_ticket_details" })
-                : id
+                : ticketViewDetails?.readable_id
             }
-            subHeading={status}
+            subHeading={ticketViewDetails?.status}
             onPressLeftIcon={onGoBack}
             hasIconBar
             mobActionButton={images.iconMore}
@@ -87,17 +88,17 @@ const TicketChatScreen = () => {
               />
             }
             rightSection={
-              isWebView && <TicketDetails details={location.state} />
+              isWebView && <TicketDetails details={ticketViewDetails} />
             }
           />
         ) : (
           <>
             {isDetailsScreen ? (
-              <TicketDetails details={location.state} />
+              <TicketDetails details={ticketViewDetails} />
             ) : (
               <ChatSection
                 data={reversedData}
-                details={location.state}
+                details={ticketViewDetails}
                 handleLoadMore={handleLoadMore}
                 loadingMore={loadingMore}
               />
