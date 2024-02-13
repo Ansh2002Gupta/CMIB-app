@@ -19,6 +19,7 @@ const CustomButton = ({
   isLoading,
   onPress,
   style,
+  shouldShowHover,
   type,
   withGreenBackground,
 }) => {
@@ -36,6 +37,7 @@ const CustomButton = ({
       disabledStyle={disabledStyle}
       onPress={onPress}
       type={type}
+      shouldShowHover={shouldShowHover}
     >
       {isLoading ? (
         <Spinner

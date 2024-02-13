@@ -30,7 +30,7 @@ const UserProfileActionDropDown = ({
   return (
     <View>
       {isWebView && (
-        <View style={styles.profileContainer}>
+        <View style={styles.profileContainer} ref={accountRef}>
           <CustomTouchableOpacity
             style={styles.profileView}
             onPress={handleAccountSection}
@@ -64,10 +64,7 @@ const UserProfileActionDropDown = ({
             )}
           </CustomTouchableOpacity>
           {showAccountSection && (
-            <MyAccountSection
-              setShowAccountSection={setShowAccountSection}
-              accountRef={accountRef}
-            />
+            <MyAccountSection setShowAccountSection={setShowAccountSection} />
           )}
         </View>
       )}

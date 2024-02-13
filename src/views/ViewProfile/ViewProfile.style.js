@@ -1,4 +1,7 @@
+import { Dimensions, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const deviceHeight = Dimensions.get("window").height;
 
 const style = {
   profileContainer: {
@@ -25,11 +28,22 @@ const style = {
     height: 152,
     borderRadius: 76,
   },
+  modalOverlay: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "transparent",
+  },
   deletetextContainer: {
     backgroundColor: colors.white,
     position: "absolute",
-    right: 16,
-    top: 90,
+    right: 0,
+    top:
+    Platform.OS.toLowerCase() === "ios"
+      ? deviceHeight / 7.25
+      : deviceHeight / 11.5,
     zIndex: 10,
     padding: 16,
     width: 240,

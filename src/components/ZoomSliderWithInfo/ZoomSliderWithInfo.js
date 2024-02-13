@@ -8,7 +8,7 @@ import images from "../../images";
 import { ZOOM_CONSTANT } from "../../constants/constants";
 import styles from "./ZoomSliderWithInfo.style";
 
-const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
+const ZoomSliderWithInfo = ({ setZoom, setRotation, zoom }) => {
   const zoomPercentage = Math.floor(
     ((zoom - ZOOM_CONSTANT.MIN_ZOOM) /
       (ZOOM_CONSTANT.MAX_ZOOM - ZOOM_CONSTANT.MIN_ZOOM)) *
@@ -35,11 +35,13 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
     <View style={styles.zoomInfoContainer}>
       <View style={styles.sliderBox}>
         <Image
-          source={images.minusCirlce}
+         source={
+          zoomPercentage === 0 ? images.iconDisabledMinus : images.minusCirlce
+        }
           alt="Zoom out"
-          width={24}
-          height={24}
-          style={styles.zoomIcon}
+          width={20}
+          height={20}
+          style={zoomPercentage === 0 ? styles.disabledIcon : styles.zoomIcon}
           onClick={zoomOutHandler}
         />
         <View style={styles.zoomSlider}>
@@ -52,27 +54,41 @@ const ZoomSliderWithInfo = ({ zoom, setZoom }) => {
           />
         </View>
         <Image
-          source={images.addCircle}
+          source={
+            zoomPercentage === 100 ? images.iconDisabledAdd : images.addCircle
+          }
           alt="Zoom in"
-          width={24}
-          height={24}
-          style={styles.zoomIcon}
+          width={20}
+          height={20}
+          style={zoomPercentage === 100 ? styles.disabledIcon : styles.zoomIcon}
           onClick={zoomInHandler}
         />
       </View>
       <CommonText
         customTextStyle={styles.percentageText}
       >{`${zoomPercentage}%`}</CommonText>
+      <Image
+        source={images.iconRotate}
+        alt="Rotate"
+        width={20}
+        height={20}
+        style={styles.zoomIcon}
+        onClick={() => {
+          setRotation((prevRotation) => (prevRotation - 90) % 360);
+        }}
+      />
     </View>
   );
 };
 
 ZoomSliderWithInfo.defaultProps = {
+  setRotation: () => {},
   setZoom: () => {},
   zoom: 1,
 };
 
 ZoomSliderWithInfo.propTypes = {
+  setRotation: PropTypes.func,
   setZoom: PropTypes.func,
   zoom: PropTypes.number,
 };

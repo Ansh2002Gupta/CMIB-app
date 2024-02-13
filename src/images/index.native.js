@@ -31,7 +31,6 @@ import iconLogout from "../../public/images/iconLogout/iconLogout.png";
 import iconBuilding from "../../public/images/iconBuilding/iconBuilding.png";
 import iconLock from "../../public/images/iconLock/iconLock.png";
 import iconBack from "../../public/images/iconBack/iconBack.png";
-import iconEdit from "../../public/images/iconEdit/iconEdit.png";
 import iconDelete from "../../public/images/iconDelete/iconDelete.png";
 import iconChange from "../../public/images/iconChange/iconChange.png";
 import iconCross from "../../public/images/iconCross/iconCross.png";
@@ -100,6 +99,15 @@ import iconEditSvg from "../../public/images/svg/editIcon.svg";
 import iconCloseDark from "../../public/images/svg/iconCloseDark.svg";
 import iconBackArrow from "../../public/images/svg/iconBackArrow.svg";
 import iconAlert from "../../public/images/svg/iconAlert.svg";
+import iconDownload from "../../public/images/svg/download.svg";
+import iconCampus from "../../public/images/svg/campus.svg";
+import iconConsent from "../../public/images/svg/consent.svg";
+import iconDiscover from "../../public/images/svg/discover.svg";
+import iconApplication from "../../public/images/svg/application.svg";
+import iconCalendar from "../../public/images/calendar.png";
+import iconRotate from "../../public/images/svg/iconRotate.svg";
+import iconDisabledAdd from "../../public/images/svg/iconDisabledAdd.svg";
+import iconDisabledMinus from "../../public/images/svg/iconDisabledMinus.svg";
 
 const images = {
   iconArrowUp,
@@ -143,7 +151,6 @@ const images = {
   iconBuilding,
   iconLock,
   iconBack,
-  iconEdit,
   iconChange,
   iconDelete,
   iconCross,
@@ -204,6 +211,15 @@ const images = {
   iconCloseDark,
   iconBackArrow,
   iconAlert,
+  iconDownload,
+  iconCampus,
+  iconConsent,
+  iconDiscover,
+  iconApplication,
+  iconCalendar,
+  iconRotate,
+  iconDisabledAdd,
+  iconDisabledMinus,
 };
 
 export default images;

@@ -1,30 +1,91 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import {
-  Image,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
-import CustomImage from "../../components/CustomImage";
+import CropAndRotateImage from "../../components/CropAndRotateImage/CropAndRotateImage";
+import CustomButton from "../../components/CustomButton";
 import CustomModal from "../../components/CustomModal";
-import ImagePicker from "../../components/ImagePickerComponent/ImagePickerComponent";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import TriggerFileUpload from "../../components/TriggerFileUpload";
+import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
+import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
+import useUpdateLogo from "../../services/apiServices/hooks/CompanyLogo/useUpdateLogoAPI";
+import useUploadedFileValidations from "../../hooks/useUploadedFileValidations";
+import { getImageSource } from "../../utils/util";
+import { setUserDetails } from "../../globalContext/userProfile/userProfileActions";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import images from "../../images";
 import styles from "./EditProfileImage.style";
 
 const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   const intl = useIntl();
-  const [profilePic, setProfilePic] = useState(profileImage);
-  const [photoEditFlag, setPhotoEditFlag] = useState(false);
+  const [file, setFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const buttonTitle = profilePic
+  const [userProfileDetails, userProfileDispatch] =
+    useContext(UserProfileContext);
+
+  const {
+    errorWhileUpload,
+    handleFileUpload,
+    isLoading: isUploadingImageToServer,
+    setErrorWhileUpload,
+  } = useSaveLogo();
+
+  const {
+    errorWhileDeletion,
+    handleDeleteLogo,
+    isLoading: isDeletingFromServer,
+  } = useDeleteLogo();
+
+  const {
+    fileTooLargeError,
+    invalidFormatError,
+    initiateFileUpload,
+    nonUploadableImageError,
+  } = useUploadedFileValidations();
+
+  const { errorWhileUpdate, handleFileUpdate, isLoading, setErrorWhileUpdate } =
+    useUpdateLogo();
+
+  const buttonTitle = profileImage
     ? intl.formatMessage({ id: "label.change" })
     : intl.formatMessage({ id: "label.add" });
+
+  const fileUploadError =
+    fileTooLargeError || invalidFormatError || nonUploadableImageError;
+
+  const onImageUpload = (uploadedFile) => {
+    handleFileUpload({
+      file: uploadedFile,
+      successCallback: (file) => {
+        handleFileUpdate({
+          file: { profile_photo: file?.data?.file_name },
+          successCallback: () => {
+            userProfileDetails.userDetails.profile_photo = file?.data?.url;
+            userProfileDispatch(setUserDetails(userProfileDetails));
+            onPressIconCross();
+          },
+        });
+      },
+    });
+  };
+
+  const handleRemoveImage = () => {
+    const fileName = userProfileDetails?.userDetails?.profile_photo.split("/");
+    handleFileUpdate({
+      file: { profile_photo: "" },
+      successCallback: () => {
+        userProfileDetails.userDetails.profile_photo = "";
+        userProfileDispatch(setUserDetails(userProfileDetails));
+        handleDeleteLogo(fileName[fileName.length - 1]);
+        onPressIconCross();
+      },
+    });
+  };
 
   const renderProfileIcon = () => {
     return (
@@ -32,76 +93,103 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
         customContainerStyle={styles.editProfileContainer}
         customImageStyle={styles.modalProfileImage}
         name={name}
-        profileImage={profilePic}
+        profileImage={
+          Platform.OS === "web" ? getImageSource(profileImage) : profileImage
+        }
       />
     );
   };
 
-  const handleDismissToast = () => {
-    setErrorMessage("");
+  const renderError = () => {
+    return (
+      <CommonText
+        customTextStyle={styles.errorTextStyle}
+        customContainerStyle={styles.errorContainerStyle}
+        fontWeight="600"
+      >
+        {fileUploadError || errorWhileDeletion}
+      </CommonText>
+    );
   };
 
-  const openImagePicker = async () => {
-    try {
-      const image = await ImagePicker.openPicker({
-        cropping: true,
-        cropperCircleOverlay: true,
-      });
-      if (image) {
-        setProfilePic(image?.sourceURL || image?.path);
-        setPhotoEditFlag(true);
-      }
-    } catch (error) {
-      setErrorMessage(error);
-    }
-  };
+  const handleDismissToast = () => setErrorMessage("");
 
   return (
     <CustomModal
-      headerText={intl.formatMessage({
-        id: "label.edit_profile_picture",
-      })}
+      headerText={
+        !!file && Platform.OS === "web"
+          ? intl.formatMessage({
+              id: "label.crop_profile_picture",
+            })
+          : intl.formatMessage({
+              id: "label.edit_profile_picture",
+            })
+      }
+      maxWidth={"xs"}
       isIconCross
       onPressIconCross={onPressIconCross}
+      customHeaderStyle={styles.customHeadingStyle}
     >
-      {renderProfileIcon()}
-      <View style={styles.editButtonContainer}>
-        <View style={styles.buttonStyle}>
-          <Image source={images.iconChange} />
-          <TouchableOpacity
-            onPress={() => {
-              openImagePicker();
-            }}
-          >
-            <CommonText customTextStyle={styles.textStyle} fontWeight="600">
-              {buttonTitle}
-            </CommonText>
-          </TouchableOpacity>
-        </View>
-        {!!profilePic &&
-          (photoEditFlag ? (
-            <View
-              style={{ ...styles.saveButtonStyle, ...styles.secondButtonStyle }}
-            >
-              <CustomImage source={images.iconTick} />
-              <CommonText
-                customTextStyle={styles.saveTextStyle}
-                fontWeight="600"
+      {!!file && Platform.OS === "web" ? (
+        <CropAndRotateImage
+        isLoading={
+          !profileImage ? isUploadingImageToServer || isLoading : false
+        }
+          file={file}
+          photoURL={getImageSource(file)}
+          errorWhileUpload={errorWhileUpload || errorWhileUpdate}
+          handleFileUpload={handleFileUpload}
+          initiateFileUpload={initiateFileUpload}
+          onClose={() => {
+            setErrorWhileUpdate("");
+            setErrorWhileUpload("");
+          }}
+          onSuccess={(file) => {
+            handleFileUpdate({
+              file: { profile_photo: file?.data?.file_name },
+              successCallback: () => {
+                userProfileDetails.userDetails.profile_photo = file?.data?.url;
+                userProfileDispatch(setUserDetails(userProfileDetails));
+                onPressIconCross();
+              },
+            });
+          }}
+          setFile={setFile}
+          shouldOpenInModal={false}
+        />
+      ) : (
+        <>
+          {renderProfileIcon()}
+          {renderError()}
+          <View style={styles.editButtonContainer}>
+            <TriggerFileUpload
+              {...{
+                buttonTitle,
+                initiateFileUpload,
+                setFile,
+                onImageUpload: onImageUpload,
+                isLoading: isUploadingImageToServer || isLoading,
+              }}
+            />
+            {!!profileImage && (
+              <CustomButton
+                onPress={handleRemoveImage}
+                isLoading={isDeletingFromServer}
+                style={{ ...styles.secondButtonStyle }}
+                iconLeft={{
+                  leftIconAlt: "delete",
+                  leftIconSource: images.iconDelete,
+                  isLeftIconNotSvg: true,
+                }}
+                shouldShowHover
+                customStyle={{ customTextStyle: { fontSize: 14 } }}
               >
-                {intl.formatMessage({ id: "label.save" })}
-              </CommonText>
-            </View>
-          ) : (
-            <View
-              style={{ ...styles.buttonStyle, ...styles.secondButtonStyle }}
-            >
-              <CustomImage source={images.iconDelete} />
-              <CommonText customTextStyle={styles.textStyle} fontWeight="600">
                 {intl.formatMessage({ id: "label.remove" })}
-              </CommonText>
-            </View>
-          ))}
-      </View>
+              </CustomButton>
+            )}
+          </View>
+        </>
+      )}
       {!!errorMessage && (
         <ToastComponent
           toastMessage={errorMessage}
