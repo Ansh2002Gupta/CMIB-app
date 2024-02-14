@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
   recieverContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
-    margin: 10,
+    marginTop: 10,
+    flex: 1,
   },
   senderMessageArea: {
     alignItems: "flex-end",
@@ -81,7 +82,16 @@ const styles = StyleSheet.create({
   textSize: {
     fontSize: 14,
     flexWrap: "wrap",
-    // flex: 1,
+  },
+  shouldShowAvatarRecieverMessageArea: {
+    alignItems: "flex-start",
+    marginLeft: 40,
+  },
+  imagesSection: {
+    marginTop: 5,
+    maxHeight: 300,
+    maxWidth: 300,
+    borderRadius: 12,
   },
 });
 

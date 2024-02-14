@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_TICKET_LISTING } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
-const useTicketReplies = (id) => {
+const useTicketReplies = () => {
   const [errorWhileSendingMessage, setErrorWhileSendingMessage] = useState("");
   const [ticketReplies, setTicketReplies] = useState({});
   const [apiStatus, setAPIStatus] = useState(API_STATUS.IDLE);
 
-  const handleTicketReplies = async (payload, errorCallback) => {
+  const handleTicketReplies = async ({ id, payload, successCallback }) => {
     try {
       setAPIStatus(API_STATUS.LOADING);
       errorWhileSendingMessage && setErrorWhileSendingMessage("");
@@ -21,15 +21,14 @@ const useTicketReplies = (id) => {
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setAPIStatus(API_STATUS.SUCCESS);
         setTicketReplies(res.data);
+        successCallback && successCallback();
         return;
       } else {
         setAPIStatus(API_STATUS.ERROR);
-        errorCallback(res);
       }
     } catch (err) {
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      errorCallback(errorMessage);
       setAPIStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileSendingMessage(err.response?.data?.message);

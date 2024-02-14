@@ -13,6 +13,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import useTicketDetails from "./controllers/useTicketDetails";
 import images from "../../images";
 import styles from "./TicketChatScreen.style";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const TicketChatScreen = () => {
   const {
@@ -21,23 +22,28 @@ const TicketChatScreen = () => {
     handleSendButton,
     isDetailsScreen,
     loadingMore,
+    isticketViewDetails,
+    isChatLoading,
+    isFirstPageReceived,
     onGoBack,
     setIsDetailScreen,
     showPopup,
-    ticketData,
     ticketViewDetails,
     chatRecords,
+    userDetails,
   } = useTicketDetails();
 
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
-  const location = useLocation();
-
   const midOrSmall = currentBreakpoint === "md" || currentBreakpoint === "sm";
 
-  const reversedData = [...ticketData].reverse();
+  let reversedData = [];
+
+  if (chatRecords.length > 0) {
+    reversedData = [...chatRecords].reverse();
+  }
 
   return (
     <TwoRow
@@ -82,26 +88,42 @@ const TicketChatScreen = () => {
             }
             rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
             leftSection={
-              <ChatSection
-                handleSendButton={handleSendButton}
-                data={chatRecords?.records}
-                details={location.state}
-                handleLoadMore={handleLoadMore}
-                loadingMore={loadingMore}
-              />
+              isChatLoading && isFirstPageReceived ? (
+                <LoadingScreen />
+              ) : (
+                <ChatSection
+                  userDetails={userDetails}
+                  handleSendButton={handleSendButton}
+                  data={reversedData}
+                  details={ticketViewDetails}
+                  handleLoadMore={handleLoadMore}
+                  loadingMore={loadingMore}
+                />
+              )
             }
             rightSection={
-              isWebView && <TicketDetails details={ticketViewDetails} />
+              isticketViewDetails ? (
+                <LoadingScreen />
+              ) : (
+                <TicketDetails details={ticketViewDetails} />
+              )
             }
           />
         ) : (
           <>
             {isDetailsScreen ? (
-              <TicketDetails details={ticketViewDetails} />
+              isticketViewDetails ? (
+                <LoadingScreen />
+              ) : (
+                <TicketDetails details={ticketViewDetails} />
+              )
+            ) : isChatLoading && isFirstPageReceived ? (
+              <LoadingScreen />
             ) : (
               <ChatSection
+                userDetails={userDetails}
                 handleSendButton={handleSendButton}
-                data={chatRecords?.records}
+                data={chatRecords}
                 details={ticketViewDetails}
                 handleLoadMore={handleLoadMore}
                 loadingMore={loadingMore}

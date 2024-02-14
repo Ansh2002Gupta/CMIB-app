@@ -1,24 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import useFetch from "../../../hooks/useFetch";
 import { PREVIOUS_SCREEN } from "../../../constants/constants";
-import { ticket_replies } from "../ticketsRepliesConstant";
 import { COMPANY_TICKET_LISTING } from "../../../services/apiServices/apiEndPoint";
 import useTicketReplies from "../../../services/apiServices/hooks/TicketViewEditDetails/useTicketReplies";
+import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 
 const useTicketDetails = () => {
   const navigate = useNavigate();
   const [loadingMore, setLoadingMore] = useState(false);
   const [isDetailsScreen, setIsDetailScreen] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [ticketData, setTicketData] = useState(ticket_replies.slice(0, 5));
-  const [nextIndex, setNextIndex] = useState(5);
+  const [currentRecords, setCurrentRecords] = useState([]);
+  const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
+  const [allDataLoaded, setAllDataLoaded] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const location = useLocation();
-  // const { id, status } = location.state;
+  const [userProfileDetails] = useContext(UserProfileContext);
 
-  const id = "32";
+  //ToDO : we will get id by ticketlisting API
+  const id = "2";
 
   const {
     data: ticketViewDetails,
@@ -34,24 +36,42 @@ const useTicketDetails = () => {
     fetchData: fetchChatData,
   } = useFetch({
     url: `${COMPANY_TICKET_LISTING}/${id}/replies`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
-  console.log("chatRecords", chatRecords);
+  const { handleTicketReplies } = useTicketReplies();
 
-  const {
-    apiStatus,
-    errorWhileSendingMessage,
-    handleTicketReplies,
-    isError,
-    isLoading,
-    isSuccess,
-    ticketReplies,
-    setTicketReplies,
-  } = useTicketReplies(id);
+  useEffect(() => {
+    const fetchData = async () => {
+      const requestedParams = {
+        page: currentPage,
+      };
+      const initialData = await fetchChatData({
+        queryParamsObject: requestedParams,
+      });
+      if (initialData && initialData?.records.length > 0) {
+        setCurrentRecords(initialData?.records);
+      }
+      setIsFirstPageReceived(false);
+    };
+    fetchData();
+  }, []);
 
   const handleSendButton = async (messageValue) => {
-    await handleTicketReplies({ reply_text: messageValue });
-    fetchChatData();
+    const qureyParams = {
+      id: id,
+      payload: {
+        reply_text: messageValue,
+        file_name: "",
+      },
+      successCallback: async () => {
+        const new_data = await fetchChatData();
+        setCurrentRecords(new_data?.records);
+      },
+    };
+    await handleTicketReplies(qureyParams);
   };
 
   const onGoBack = () => {
@@ -66,19 +86,29 @@ const useTicketDetails = () => {
     setShowPopup((prev) => !prev);
   };
 
-  const handleLoadMore = () => {
-    if (loadingMore) return;
+  const handleLoadMore = async () => {
+    if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
-
-    setTimeout(() => {
-      const startIndex = nextIndex;
-      const endIndex = Math.min(startIndex + 3, ticket_replies.length);
-      const moreData = ticket_replies.slice(startIndex, endIndex);
-      setTicketData((prevData) => [...moreData, ...prevData]);
-
-      setNextIndex(endIndex);
+    const nextPage = currentPage + 1;
+    try {
+      const newData = await fetchChatData({
+        queryParamsObject: { page: nextPage },
+      });
+      if (newData && newData.records.length > 0) {
+        setCurrentRecords((prevRecords) => [
+          ...prevRecords,
+          ...newData.records,
+        ]);
+      }
+      setCurrentPage(nextPage);
+      if (newData.meta.currentPage === newData.meta.lastPage) {
+        setAllDataLoaded(true);
+      }
+    } catch (error) {
+      console.error("Error fetching tickets on load more:", error);
+    } finally {
       setLoadingMore(false);
-    }, 1000);
+    }
   };
 
   return {
@@ -87,12 +117,15 @@ const useTicketDetails = () => {
     handleSendButton,
     isDetailsScreen,
     loadingMore,
+    isticketViewDetails,
+    isFirstPageReceived,
+    isChatLoading,
     onGoBack,
     setIsDetailScreen,
     showPopup,
-    ticketData,
     ticketViewDetails,
-    chatRecords,
+    chatRecords: currentRecords,
+    userDetails: userProfileDetails?.userDetails,
   };
 };
 

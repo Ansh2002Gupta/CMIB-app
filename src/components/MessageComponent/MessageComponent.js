@@ -4,6 +4,7 @@ import { View } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
 import ProfileIcon from "../ProfileIcon/ProfileIcon";
 import styles from "./MessageComponent.style";
 import { getTime } from "../../utils/util";
@@ -14,80 +15,100 @@ const MessageComponent = ({
   userDetails,
   index,
   shouldShowAvatar,
+  isSender,
 }) => {
   const windowDimensions = useWindowDimensions();
   const width1400orLess = windowDimensions.width <= 1500;
 
-  console.log("data", data);
-
-  return (
-    <>
-      {data?.type === "1st-person" && (
-        <>
-          {shouldShowAvatar(index) ? (
-            <View style={styles.senderContainer}>
-              <View style={styles.senderMessageArea}>
-                <CommonText>{getTime(data?.created_at)}</CommonText>
-                <CommonText
-                  customContainerStyle={
-                    width1400orLess
-                      ? styles.smSenderMessageStyle
-                      : styles.senderMessageStyle
-                  }
-                  customTextStyle={styles.textSize}
-                >
-                  {data?.message}
-                </CommonText>
-              </View>
-
-              <ProfileIcon
+  if (isSender) {
+    return (
+      <>
+        {shouldShowAvatar(index) ? (
+          <View style={styles.senderContainer}>
+            <View style={styles.senderMessageArea}>
+              <CommonText>{getTime(data?.created_at)}</CommonText>
+              <CommonText
+                customContainerStyle={
+                  width1400orLess
+                    ? styles.smSenderMessageStyle
+                    : styles.senderMessageStyle
+                }
                 customTextStyle={styles.textSize}
-                customContainerStyle={styles.avatar}
-                name={userDetails?.profile_photo || userDetails?.name}
-              />
+              >
+                {data?.message}
+              </CommonText>
+              {!!data?.file && (
+                <CustomImage source={data?.file} style={styles.imagesSection} />
+              )}
             </View>
-          ) : (
-            <>
-              <View style={styles.shouldShowAvatarSenderMessageArea}>
-                <CommonText
-                  customContainerStyle={
-                    width1400orLess
-                      ? styles.smSenderMessageStyle
-                      : styles.senderMessageStyle
-                  }
-                  customTextStyle={styles.textSize}
-                >
-                  {data?.message}
-                </CommonText>
-              </View>
-            </>
-          )}
-        </>
-      )}
-      {data?.type === "2nd-person" && (
-        <View style={styles.recieverContainer}>
-          <ProfileIcon
-            customTextStyle={styles.textSize}
-            customContainerStyle={styles.avatar}
-            name={details?.assigned_to}
-          />
-          <View style={styles.reciverMessageArea}>
-            <CommonText>10:38 AM</CommonText>
-            <CommonText
-              customContainerStyle={
-                width1400orLess
-                  ? styles.smRecieverMessageStyle
-                  : styles.recieverMessageStyle
-              }
+
+            <ProfileIcon
               customTextStyle={styles.textSize}
-            >
-              {data?.recieverMessage}
-            </CommonText>
+              customContainerStyle={styles.avatar}
+              name={userDetails?.profile_photo || userDetails?.name}
+            />
           </View>
-        </View>
-      )}
-    </>
-  );
+        ) : (
+          <>
+            <View style={styles.shouldShowAvatarSenderMessageArea}>
+              <CommonText
+                customContainerStyle={
+                  width1400orLess
+                    ? styles.smSenderMessageStyle
+                    : styles.senderMessageStyle
+                }
+                customTextStyle={styles.textSize}
+              >
+                {data?.message}
+              </CommonText>
+            </View>
+          </>
+        )}
+      </>
+    );
+  } else {
+    return (
+      <>
+        {shouldShowAvatar(index) ? (
+          <View style={styles.recieverContainer}>
+            <ProfileIcon
+              customTextStyle={styles.textSize}
+              customContainerStyle={styles.avatar}
+              name={details?.assigned_to}
+            />
+            <View style={styles.reciverMessageArea}>
+              <CommonText>{getTime(data?.created_at)}</CommonText>
+              <CommonText
+                customContainerStyle={
+                  width1400orLess
+                    ? styles.smRecieverMessageStyle
+                    : styles.recieverMessageStyle
+                }
+                customTextStyle={styles.textSize}
+              >
+                {data?.message}
+              </CommonText>
+            </View>
+          </View>
+        ) : (
+          <>
+            <View style={styles.shouldShowAvatarRecieverMessageArea}>
+              <CommonText
+                customContainerStyle={
+                  width1400orLess
+                    ? styles.smRecieverMessageStyle
+                    : styles.recieverMessageStyle
+                }
+                customTextStyle={styles.textSize}
+              >
+                {data?.message}
+              </CommonText>
+            </View>
+          </>
+        )}
+      </>
+    );
+  }
 };
 
 MessageComponent.propTypes = {

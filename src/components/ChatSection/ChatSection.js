@@ -1,12 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import {
-  FlatList,
-  Keyboard,
-  Platform,
-  View,
-} from "@unthinkable/react-core-components";
+import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 import { TwoRow } from "../../core/layouts";
 
 import CustomTextInput from "../CustomTextInput";
@@ -16,8 +11,9 @@ import MessageInfoComponent from "../MessageInfoComponent/MessageInfoComponent";
 import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
-import styles from "./ChatSection.style";
 import { getTime } from "../../utils/util";
+import { MESSAGE_MAX_LENGTH } from "../../constants/constants";
+import styles from "./ChatSection.style";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -27,16 +23,19 @@ const ChatSection = ({
   details,
   handleLoadMore,
   loadingMore,
+  userDetails,
 }) => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [messageValue, setMessageValue] = useState("");
   const flatListRef = useRef(null);
 
-  console.log("messages", data);
-
   const isMobileProps = isMob
-    ? { onContentSizeChange: () => flatListRef.current.scrollToEnd() }
+    ? {
+        inverted: true,
+        onEndReached: handleLoadMore,
+        onEndReachedThreshold: 0.1,
+      }
     : {};
 
   useHandleInfiniteScroll(handleLoadMore, flatListRef);
@@ -66,6 +65,7 @@ const ChatSection = ({
 
     const currentTime = getTime(currentMessage?.created_at);
     const previousTime = getTime(previous?.created_at);
+
     if (currentTime !== previousTime) {
       return true;
     }
@@ -74,12 +74,41 @@ const ChatSection = ({
 
   const webProps = !isMob ? { size: "xs" } : {};
 
+  const getMessageInfo = (chatData, userDetails) => {
+    if (
+      chatData.type_id === userDetails?.id &&
+      chatData.user_type.toLowerCase() === userDetails?.user_type.toLowerCase()
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const renderMessagesSection = ({ item, index }) => {
+    const issender = getMessageInfo(item, userDetails);
+    return (
+      <>
+        {!!details?.system && (
+          <MessageInfoComponent assigneName={details?.system} />
+        )}
+        <MessageComponent
+          isSender={issender}
+          data={item}
+          userDetails={userProfileDetails?.userDetails}
+          details={details}
+          index={index}
+          shouldShowAvatar={shouldShowAvatar}
+        />
+      </>
+    );
+  };
+
   return (
     <TwoRow
       topSection={
         <FlatList
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={() => {
+          ListFooterComponent={() => {
             if (loadingMore && !isMob) {
               return (
                 <View style={styles.loadingStyle}>
@@ -90,48 +119,37 @@ const ChatSection = ({
             return null;
           }}
           ref={flatListRef}
-          refreshing={loadingMore}
-          onRefresh={handleLoadMore}
           {...isMobileProps}
           data={data}
           style={styles.chatSection}
-          renderItem={({ item, index }) => {
-            return (
-              <>
-                {index === 5 && !!details?.assigned_to && (
-                  <MessageInfoComponent assigneName={details?.assigned_to} />
-                )}
-                <MessageComponent
-                  data={item}
-                  userDetails={userProfileDetails?.userDetails}
-                  details={details}
-                  index={index}
-                  shouldShowAvatar={shouldShowAvatar}
-                />
-              </>
-            );
-          }}
+          renderItem={renderMessagesSection}
         />
       }
       isTopFillSpace
       topSectionStyle={styles.messageSection}
       bottomSectionStyle={styles.inputSection}
       bottomSection={
-        <FormWrapper onSubmit={handleSend}>
-          <CustomTextInput
-            customStyle={styles.cutomTextInput}
-            customTextInputOuterContainer={{
-              borderRadius: 12,
-              paddingRight: 0,
-            }}
-            isSendButton
-            onChangeText={(val) => handleInputChange(val)}
-            onClickAttachement={() => {}}
-            onClickSend={handleSend}
-            placeholder={intl.formatMessage({ id: "label.type_message" })}
-            value={messageValue}
-          />
-        </FormWrapper>
+        <>
+          {!!details?.assigned_to ||
+            (true && (
+              <FormWrapper onSubmit={handleSend}>
+                <CustomTextInput
+                  customStyle={styles.cutomTextInput}
+                  customTextInputOuterContainer={{
+                    borderRadius: 12,
+                    paddingRight: 0,
+                  }}
+                  isSendButton
+                  maxLength={MESSAGE_MAX_LENGTH}
+                  onChangeText={(val) => handleInputChange(val)}
+                  onClickAttachement={() => {}}
+                  onClickSend={handleSend}
+                  placeholder={intl.formatMessage({ id: "label.type_message" })}
+                  value={messageValue}
+                />
+              </FormWrapper>
+            ))}
+        </>
       }
     />
   );

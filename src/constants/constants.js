@@ -17,6 +17,7 @@ export const NUMBER_MIN_LENGTH = 7;
 export const NUMBER_MAX_LENGTH = 15;
 export const MOBILE_NUMBER_MIN_LENGTH = 4;
 export const MOBILE_NUMBER_MAX_LENGTH = 13;
+export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
