@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
-import { useLocation } from "../../routes";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -9,27 +8,27 @@ import ChatSection from "../../components/ChatSection/ChatSection";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import TicketDetails from "../TicketDetails";
+import LoadingScreen from "../../components/LoadingScreen";
 import useIsWebView from "../../hooks/useIsWebView";
 import useTicketDetails from "./controllers/useTicketDetails";
 import images from "../../images";
 import styles from "./TicketChatScreen.style";
-import LoadingScreen from "../../components/LoadingScreen";
 
 const TicketChatScreen = () => {
   const {
+    chatRecords,
     handleLoadMore,
     handlePopup,
     handleSendButton,
-    isDetailsScreen,
-    loadingMore,
-    isticketViewDetails,
     isChatLoading,
+    isDetailsScreen,
     isFirstPageReceived,
+    isticketViewDetails,
+    loadingMore,
     onGoBack,
     setIsDetailScreen,
     showPopup,
     ticketViewDetails,
-    chatRecords,
     userDetails,
   } = useTicketDetails();
 

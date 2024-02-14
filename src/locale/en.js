@@ -297,6 +297,7 @@ const locale = {
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
   "label.type_message": "Type Here...",
+  "label.admin_not_assigned": "Admin Not Assigned",
 };
 
 export default locale;

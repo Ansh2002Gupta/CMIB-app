@@ -12,10 +12,10 @@ import { getTime } from "../../utils/util";
 const MessageComponent = ({
   data,
   details,
-  userDetails,
   index,
-  shouldShowAvatar,
   isSender,
+  shouldShowAvatar,
+  userDetails,
 }) => {
   const windowDimensions = useWindowDimensions();
   const width1400orLess = windowDimensions.width <= 1500;

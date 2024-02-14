@@ -1,16 +1,19 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import CommonText from "../../components/CommonText";
-import useIsWebView from "../../hooks/useIsWebView";
-import styles from "./TicketDetails.styles";
-import { TwoColumn, TwoRow } from "../../core/layouts";
-import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
-import { formatDate } from "../../utils/util";
 import MultiRow from "../../core/layouts/MultiRow";
+import { TwoColumn, TwoRow } from "../../core/layouts";
+
+import CommonText from "../../components/CommonText";
+import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
+import useIsWebView from "../../hooks/useIsWebView";
+import { formatDate } from "../../utils/util";
 import images from "../../images";
+import styles from "./TicketDetails.styles";
 
 const TicketDetails = ({ details }) => {
+  const intl = useIntl();
   const { isWebView } = useIsWebView();
   const role = "Admin";
 
@@ -18,7 +21,9 @@ const TicketDetails = ({ details }) => {
     const isAssigned = !!assignedTo || false;
     const profileIconImage = isAssigned ? undefined : images.iconAvatar;
     const textFontWeight = isAssigned ? "600" : "500";
-    const headingText = isAssigned ? assignedTo : "Admin Not Assigned";
+    const headingText = isAssigned
+      ? assignedTo
+      : intl.formatMessage({ id: "label.admin_not_assigned" });
     const roleText = isAssigned ? role : "";
 
     return {

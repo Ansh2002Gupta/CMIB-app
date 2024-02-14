@@ -21,5 +21,7 @@ export const CORE_USERS_PERMISSION = `${CORE}/users/permission`;
 export const MENU_PROFILE = `${CORE}/menu-profile/${USER_TYPE_COMPANY}`;
 export const COUNTRY_CODE = `${CORE}/countries`;
 export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
-
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
+
+//sub routes
+export const TICKET_REPLIES_SUB_ROUTES = "replies";

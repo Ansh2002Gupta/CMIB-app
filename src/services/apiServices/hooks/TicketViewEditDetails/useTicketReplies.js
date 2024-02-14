@@ -15,7 +15,7 @@ const useTicketReplies = () => {
       setAPIStatus(API_STATUS.LOADING);
       errorWhileSendingMessage && setErrorWhileSendingMessage("");
       const res = await Http.post(
-        `${COMPANY_TICKET_LISTING}/${id}/replies`,
+        `${COMPANY_TICKET_LISTING}/${id}/${TICKET_REPLIES_SUB_ROUTES}`,
         payload
       );
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {

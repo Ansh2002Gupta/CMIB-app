@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
+
 import { TwoRow } from "../../core/layouts";
 
 import CustomTextInput from "../CustomTextInput";
@@ -18,9 +19,9 @@ import styles from "./ChatSection.style";
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const ChatSection = ({
-  handleSendButton,
   data,
   details,
+  handleSendButton,
   handleLoadMore,
   loadingMore,
   userDetails,
@@ -135,10 +136,9 @@ const ChatSection = ({
               <FormWrapper onSubmit={handleSend}>
                 <CustomTextInput
                   customStyle={styles.cutomTextInput}
-                  customTextInputOuterContainer={{
-                    borderRadius: 12,
-                    paddingRight: 0,
-                  }}
+                  customTextInputOuterContainer={
+                    styles.customTextInputOuterContainer
+                  }
                   isSendButton
                   maxLength={MESSAGE_MAX_LENGTH}
                   onChangeText={(val) => handleInputChange(val)}
@@ -164,6 +164,7 @@ ChatSection.propTypes = {
   details: PropTypes.object,
   handleLoadMore: PropTypes.func.isRequired,
   loadingMore: PropTypes.bool.isRequired,
+  userDetails: PropTypes.bool.isRequired,
 };
 
 export default ChatSection;

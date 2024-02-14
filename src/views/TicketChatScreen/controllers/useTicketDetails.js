@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 import useFetch from "../../../hooks/useFetch";
 import { PREVIOUS_SCREEN } from "../../../constants/constants";
-import { COMPANY_TICKET_LISTING } from "../../../services/apiServices/apiEndPoint";
+import {
+  COMPANY_TICKET_LISTING,
+  TICKET_REPLIES_SUB_ROUTES,
+} from "../../../services/apiServices/apiEndPoint";
 import useTicketReplies from "../../../services/apiServices/hooks/TicketViewEditDetails/useTicketReplies";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 
@@ -35,7 +38,7 @@ const useTicketDetails = () => {
     isLoading: isChatLoading,
     fetchData: fetchChatData,
   } = useFetch({
-    url: `${COMPANY_TICKET_LISTING}/${id}/replies`,
+    url: `${COMPANY_TICKET_LISTING}/${id}/${TICKET_REPLIES_SUB_ROUTES}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -112,19 +115,19 @@ const useTicketDetails = () => {
   };
 
   return {
+    chatRecords: currentRecords,
     handleLoadMore,
     handlePopup,
     handleSendButton,
-    isDetailsScreen,
-    loadingMore,
-    isticketViewDetails,
     isFirstPageReceived,
     isChatLoading,
+    isDetailsScreen,
+    isticketViewDetails,
+    loadingMore,
     onGoBack,
     setIsDetailScreen,
     showPopup,
     ticketViewDetails,
-    chatRecords: currentRecords,
     userDetails: userProfileDetails?.userDetails,
   };
 };

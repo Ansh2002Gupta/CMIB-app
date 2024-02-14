@@ -28,6 +28,10 @@ const ChatSection = StyleSheet.create({
     marginTop: 50,
     alignItems: "center",
   },
+  customTextInputOuterContainer: {
+    borderRadius: 12,
+    paddingRight: 0,
+  },
 });
 
 export default ChatSection;
