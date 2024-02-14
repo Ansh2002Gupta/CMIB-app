@@ -15,16 +15,17 @@ import styles from "./TicketDetails.styles";
 const TicketDetails = ({ details }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-  const role = "Admin";
 
   const getTopSectionData = (assignedTo) => {
     const isAssigned = !!assignedTo || false;
-    const profileIconImage = isAssigned ? undefined : images.iconAvatar;
+    const profileIconImage = isAssigned
+      ? assignedTo?.profile_photo
+      : images.iconAvatar;
     const textFontWeight = isAssigned ? "600" : "500";
     const headingText = isAssigned
-      ? assignedTo
+      ? assignedTo?.name
       : intl.formatMessage({ id: "label.admin_not_assigned" });
-    const roleText = isAssigned ? role : "";
+    const roleText = isAssigned ? assignedTo?.type : "";
 
     return {
       profileIconImage,
@@ -54,13 +55,13 @@ const TicketDetails = ({ details }) => {
       content: (
         <TwoColumn
           leftSection={renderDetails({
-            detailHeading: "Ticket Number",
+            detailHeading: intl.formatMessage({ id: "label.ticket_number" }),
             subDetailHeading: details?.readable_id,
           })}
           isLeftFillSpace
           isRightFillSpace
           rightSection={renderDetails({
-            detailHeading: "Status",
+            detailHeading: intl.formatMessage({ id: "label.status" }),
             subDetailHeading: details?.status,
           })}
         />
@@ -68,20 +69,20 @@ const TicketDetails = ({ details }) => {
     },
     {
       content: renderDetails({
-        detailHeading: "Query Type",
+        detailHeading: intl.formatMessage({ id: "label.query_type" }),
         subDetailHeading: details?.query_type,
       }),
     },
     {
       content: renderDetails({
-        detailHeading: "Data Created On",
+        detailHeading: intl.formatMessage({ id: "label.created_on" }),
         subDetailHeading: formatDate(details?.created_at),
       }),
     },
     {
       content: renderDetails({
-        detailHeading: "Assigned To",
-        subDetailHeading: details?.assigned_to || "-",
+        detailHeading: intl.formatMessage({ id: "label.assigned_to" }),
+        subDetailHeading: details?.assigned_to?.name || "-",
       }),
     },
   ];
@@ -122,11 +123,11 @@ const TicketDetails = ({ details }) => {
           bottomSection={
             <TwoRow
               topSection={renderDetails({
-                detailHeading: "Query Type",
+                detailHeading: intl.formatMessage({ id: "label.query_type" }),
                 subDetailHeading: details?.query_type,
               })}
               bottomSection={renderDetails({
-                detailHeading: "Created On",
+                detailHeading: intl.formatMessage({ id: "label.created_on" }),
                 subDetailHeading: formatDate(details?.created_at),
               })}
             />

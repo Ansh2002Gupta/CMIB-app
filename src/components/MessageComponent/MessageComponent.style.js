@@ -74,8 +74,14 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginLeft: 8,
   },
-  avatar: {
+  avatarContainer: {
     marginTop: 20,
+    height: 32,
+    width: 32,
+    padding: 0,
+    overflow: "hidden",
+  },
+  avatar: {
     height: 32,
     width: 32,
   },

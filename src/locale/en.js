@@ -298,6 +298,11 @@ const locale = {
   "label.retry": "Retry",
   "label.type_message": "Type Here...",
   "label.admin_not_assigned": "Admin Not Assigned",
+  "label.ticket_number": "Ticket Number",
+  "label.status": "Status",
+  "label.query_type": "Query Type",
+  "label.created_on": "Data Created On",
+  "label.assigned_to": "Assigned To",
 };
 
 export default locale;

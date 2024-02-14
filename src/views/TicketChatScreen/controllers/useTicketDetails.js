@@ -115,6 +115,7 @@ const useTicketDetails = () => {
   };
 
   return {
+    allDataLoaded,
     chatRecords: currentRecords,
     handleLoadMore,
     handlePopup,

@@ -32,6 +32,25 @@ const ChatSection = StyleSheet.create({
     borderRadius: 12,
     paddingRight: 0,
   },
+  messageFlag: {
+    fontSize: 14,
+    color: colors.black,
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  flagContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 20,
+    width: "100%",
+  },
+  horizontalLine: {
+    width: "40%",
+    height: 1,
+    backgroundColor: colors.lightGrey,
+  },
 });
 
 export default ChatSection;

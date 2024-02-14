@@ -2,7 +2,10 @@ import { useState } from "react";
 
 import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
-import { COMPANY_TICKET_LISTING } from "../../apiEndPoint";
+import {
+  COMPANY_TICKET_LISTING,
+  TICKET_REPLIES_SUB_ROUTES,
+} from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useTicketReplies = () => {
@@ -27,8 +30,6 @@ const useTicketReplies = () => {
         setAPIStatus(API_STATUS.ERROR);
       }
     } catch (err) {
-      const errorMessage =
-        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
       setAPIStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileSendingMessage(err.response?.data?.message);

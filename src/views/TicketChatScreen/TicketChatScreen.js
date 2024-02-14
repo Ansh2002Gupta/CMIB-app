@@ -16,6 +16,7 @@ import styles from "./TicketChatScreen.style";
 
 const TicketChatScreen = () => {
   const {
+    allDataLoaded,
     chatRecords,
     handleLoadMore,
     handlePopup,
@@ -91,6 +92,7 @@ const TicketChatScreen = () => {
                 <LoadingScreen />
               ) : (
                 <ChatSection
+                  allDataLoaded={allDataLoaded}
                   userDetails={userDetails}
                   handleSendButton={handleSendButton}
                   data={reversedData}
@@ -120,6 +122,7 @@ const TicketChatScreen = () => {
               <LoadingScreen />
             ) : (
               <ChatSection
+                allDataLoaded={allDataLoaded}
                 userDetails={userDetails}
                 handleSendButton={handleSendButton}
                 data={chatRecords}

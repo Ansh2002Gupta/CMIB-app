@@ -44,8 +44,11 @@ const MessageComponent = ({
 
             <ProfileIcon
               customTextStyle={styles.textSize}
-              customContainerStyle={styles.avatar}
-              name={userDetails?.profile_photo || userDetails?.name}
+              customOuterContainer={styles.avatarContainer}
+              customImageStyle={styles.avatar}
+              customContainerStyle={styles.avatarContainer}
+              profileImage={userDetails?.profile_photo}
+              name={details?.name}
             />
           </View>
         ) : (
@@ -73,8 +76,11 @@ const MessageComponent = ({
           <View style={styles.recieverContainer}>
             <ProfileIcon
               customTextStyle={styles.textSize}
-              customContainerStyle={styles.avatar}
-              name={details?.assigned_to}
+              customOuterContainer={styles.avatarContainer}
+              customImageStyle={styles.avatar}
+              customContainerStyle={styles.avatarContainer}
+              profileImage={details?.assigned_to?.profile_photo}
+              name={details?.assigned_to?.name}
             />
             <View style={styles.reciverMessageArea}>
               <CommonText>{getTime(data?.created_at)}</CommonText>

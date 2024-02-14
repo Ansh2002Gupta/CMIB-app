@@ -5,6 +5,7 @@ import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
+import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import FormWrapper from "../FormWrapper";
 import MessageComponent from "../MessageComponent";
@@ -12,13 +13,14 @@ import MessageInfoComponent from "../MessageInfoComponent/MessageInfoComponent";
 import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
-import { getTime } from "../../utils/util";
+import { getDateStatus, getTime } from "../../utils/util";
 import { MESSAGE_MAX_LENGTH } from "../../constants/constants";
 import styles from "./ChatSection.style";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const ChatSection = ({
+  allDataLoaded,
   data,
   details,
   handleSendButton,
@@ -58,19 +60,20 @@ const ChatSection = ({
   };
 
   const shouldShowAvatar = (currentIndex) => {
-    if (currentIndex === 0) {
+    const comparisonIndex = isMob ? currentIndex + 1 : currentIndex - 1;
+    if (isMob ? currentIndex === data.length - 1 : currentIndex === 0) {
       return true;
+    }
+    if (comparisonIndex < 0 || comparisonIndex >= data.length) {
+      return false;
     }
     const currentMessage = data[currentIndex];
-    const previous = data[currentIndex - 1];
+    const comparisonMessage = data[comparisonIndex];
 
     const currentTime = getTime(currentMessage?.created_at);
-    const previousTime = getTime(previous?.created_at);
+    const comparisonTime = getTime(comparisonMessage?.created_at);
 
-    if (currentTime !== previousTime) {
-      return true;
-    }
-    return false;
+    return currentTime !== comparisonTime;
   };
 
   const webProps = !isMob ? { size: "xs" } : {};
@@ -85,10 +88,25 @@ const ChatSection = ({
     return false;
   };
 
+  const renderHorizontalLine = () => {
+    return <View style={styles.horizontalLine} />;
+  };
+
   const renderMessagesSection = ({ item, index }) => {
     const issender = getMessageInfo(item, userDetails);
+    const messageFlag = getDateStatus(item?.created_at);
     return (
       <>
+        {!!messageFlag && (
+          <View style={styles.flagContainer}>
+            {renderHorizontalLine()}
+            <CommonText customTextStyle={styles.messageFlag}>
+              {messageFlag}
+            </CommonText>
+            {renderHorizontalLine()}
+          </View>
+        )}
+
         {!!details?.system && (
           <MessageInfoComponent assigneName={details?.system} />
         )}
@@ -109,13 +127,16 @@ const ChatSection = ({
       topSection={
         <FlatList
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={() => {
-            if (loadingMore && !isMob) {
+          ListHeaderComponent={() => {
+            if (loadingMore) {
               return (
                 <View style={styles.loadingStyle}>
                   <Spinner thickness={2} {...webProps} />
                 </View>
               );
+            }
+            if (allDataLoaded) {
+              return null;
             }
             return null;
           }}
@@ -131,24 +152,23 @@ const ChatSection = ({
       bottomSectionStyle={styles.inputSection}
       bottomSection={
         <>
-          {!!details?.assigned_to ||
-            (true && (
-              <FormWrapper onSubmit={handleSend}>
-                <CustomTextInput
-                  customStyle={styles.cutomTextInput}
-                  customTextInputOuterContainer={
-                    styles.customTextInputOuterContainer
-                  }
-                  isSendButton
-                  maxLength={MESSAGE_MAX_LENGTH}
-                  onChangeText={(val) => handleInputChange(val)}
-                  onClickAttachement={() => {}}
-                  onClickSend={handleSend}
-                  placeholder={intl.formatMessage({ id: "label.type_message" })}
-                  value={messageValue}
-                />
-              </FormWrapper>
-            ))}
+          {!!details?.assigned_to && (
+            <FormWrapper onSubmit={handleSend}>
+              <CustomTextInput
+                customStyle={styles.cutomTextInput}
+                customTextInputOuterContainer={
+                  styles.customTextInputOuterContainer
+                }
+                isSendButton
+                maxLength={MESSAGE_MAX_LENGTH}
+                onChangeText={(val) => handleInputChange(val)}
+                onClickAttachement={() => {}}
+                onClickSend={handleSend}
+                placeholder={intl.formatMessage({ id: "label.type_message" })}
+                value={messageValue}
+              />
+            </FormWrapper>
+          )}
         </>
       }
     />
@@ -164,7 +184,7 @@ ChatSection.propTypes = {
   details: PropTypes.object,
   handleLoadMore: PropTypes.func.isRequired,
   loadingMore: PropTypes.bool.isRequired,
-  userDetails: PropTypes.bool.isRequired,
+  userDetails: PropTypes.object.isRequired,
 };
 
 export default ChatSection;
