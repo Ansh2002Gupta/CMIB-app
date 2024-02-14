@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import useFetch from "../../../hooks/useFetch";
 import { PREVIOUS_SCREEN } from "../../../constants/constants";
 import { ticket_replies } from "../ticketsRepliesConstant";
-import { CORE_TICKET_VIEW_DETAILS } from "../../../services/apiServices/apiEndPoint";
+import { COMPANY_TICKET_LISTING } from "../../../services/apiServices/apiEndPoint";
+import useTicketReplies from "../../../services/apiServices/hooks/TicketViewEditDetails/useTicketReplies";
 
 const useTicketDetails = () => {
   const navigate = useNavigate();
@@ -17,17 +18,41 @@ const useTicketDetails = () => {
   const location = useLocation();
   // const { id, status } = location.state;
 
-  const id = "41";
+  const id = "32";
 
   const {
     data: ticketViewDetails,
     isLoading: isticketViewDetails,
     fetchData: fetchTicketViewDetails,
   } = useFetch({
-    url: `${CORE_TICKET_VIEW_DETAILS}/${id}`,
+    url: `${COMPANY_TICKET_LISTING}/${id}`,
   });
 
-  console.log("details", ticketViewDetails);
+  const {
+    data: chatRecords,
+    isLoading: isChatLoading,
+    fetchData: fetchChatData,
+  } = useFetch({
+    url: `${COMPANY_TICKET_LISTING}/${id}/replies`,
+  });
+
+  console.log("chatRecords", chatRecords);
+
+  const {
+    apiStatus,
+    errorWhileSendingMessage,
+    handleTicketReplies,
+    isError,
+    isLoading,
+    isSuccess,
+    ticketReplies,
+    setTicketReplies,
+  } = useTicketReplies(id);
+
+  const handleSendButton = async (messageValue) => {
+    await handleTicketReplies({ reply_text: messageValue });
+    fetchChatData();
+  };
 
   const onGoBack = () => {
     if (isDetailsScreen) {
@@ -59,6 +84,7 @@ const useTicketDetails = () => {
   return {
     handleLoadMore,
     handlePopup,
+    handleSendButton,
     isDetailsScreen,
     loadingMore,
     onGoBack,
@@ -66,6 +92,7 @@ const useTicketDetails = () => {
     showPopup,
     ticketData,
     ticketViewDetails,
+    chatRecords,
   };
 };
 

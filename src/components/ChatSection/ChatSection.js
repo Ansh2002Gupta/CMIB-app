@@ -17,15 +17,23 @@ import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
 import styles from "./ChatSection.style";
+import { getTime } from "../../utils/util";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const ChatSection = ({ data, details, handleLoadMore, loadingMore }) => {
+const ChatSection = ({
+  handleSendButton,
+  data,
+  details,
+  handleLoadMore,
+  loadingMore,
+}) => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [messageValue, setMessageValue] = useState("");
-  const [messages, setMessages] = useState(data);
   const flatListRef = useRef(null);
+
+  console.log("messages", data);
 
   const isMobileProps = isMob
     ? { onContentSizeChange: () => flatListRef.current.scrollToEnd() }
@@ -38,22 +46,30 @@ const ChatSection = ({ data, details, handleLoadMore, loadingMore }) => {
       const element = flatListRef.current;
       element.scrollTop = element.scrollHeight;
     }
-  }, [messages]);
+  }, [data]);
 
   const handleInputChange = (val) => {
     setMessageValue(val);
   };
 
-  const handleSend = () => {
-    Keyboard.dismiss();
-    if (messageValue.trim()) {
-      const newMessage = {
-        senderMessage: messageValue,
-        timestamp: new Date().toISOString(),
-      };
-      setMessages((previousMessages) => [...previousMessages, newMessage]);
-      setMessageValue("");
+  const handleSend = async () => {
+    await handleSendButton(messageValue);
+    setMessageValue("");
+  };
+
+  const shouldShowAvatar = (currentIndex) => {
+    if (currentIndex === 0) {
+      return true;
     }
+    const currentMessage = data[currentIndex];
+    const previous = data[currentIndex - 1];
+
+    const currentTime = getTime(currentMessage?.created_at);
+    const previousTime = getTime(previous?.created_at);
+    if (currentTime !== previousTime) {
+      return true;
+    }
+    return false;
   };
 
   const webProps = !isMob ? { size: "xs" } : {};
@@ -62,6 +78,7 @@ const ChatSection = ({ data, details, handleLoadMore, loadingMore }) => {
     <TwoRow
       topSection={
         <FlatList
+          showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => {
             if (loadingMore && !isMob) {
               return (
@@ -76,7 +93,7 @@ const ChatSection = ({ data, details, handleLoadMore, loadingMore }) => {
           refreshing={loadingMore}
           onRefresh={handleLoadMore}
           {...isMobileProps}
-          data={messages}
+          data={data}
           style={styles.chatSection}
           renderItem={({ item, index }) => {
             return (
@@ -89,7 +106,7 @@ const ChatSection = ({ data, details, handleLoadMore, loadingMore }) => {
                   userDetails={userProfileDetails?.userDetails}
                   details={details}
                   index={index}
-                  messages={messages}
+                  shouldShowAvatar={shouldShowAvatar}
                 />
               </>
             );

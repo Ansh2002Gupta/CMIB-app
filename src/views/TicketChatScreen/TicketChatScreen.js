@@ -18,6 +18,7 @@ const TicketChatScreen = () => {
   const {
     handleLoadMore,
     handlePopup,
+    handleSendButton,
     isDetailsScreen,
     loadingMore,
     onGoBack,
@@ -25,6 +26,7 @@ const TicketChatScreen = () => {
     showPopup,
     ticketData,
     ticketViewDetails,
+    chatRecords,
   } = useTicketDetails();
 
   const { isWebView } = useIsWebView();
@@ -81,7 +83,8 @@ const TicketChatScreen = () => {
             rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
             leftSection={
               <ChatSection
-                data={ticketData}
+                handleSendButton={handleSendButton}
+                data={chatRecords?.records}
                 details={location.state}
                 handleLoadMore={handleLoadMore}
                 loadingMore={loadingMore}
@@ -97,7 +100,8 @@ const TicketChatScreen = () => {
               <TicketDetails details={ticketViewDetails} />
             ) : (
               <ChatSection
-                data={reversedData}
+                handleSendButton={handleSendButton}
+                data={chatRecords?.records}
                 details={ticketViewDetails}
                 handleLoadMore={handleLoadMore}
                 loadingMore={loadingMore}

@@ -1,23 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
-import { CORE_TICKET_VIEW_DETAILS } from "../../apiEndPoint";
+import { COMPANY_TICKET_LISTING } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
-const useTicketReplies = () => {
+const useTicketReplies = (id) => {
   const [errorWhileSendingMessage, setErrorWhileSendingMessage] = useState("");
-  const [sendMessage, setSendMessage] = useState({});
+  const [ticketReplies, setTicketReplies] = useState({});
   const [apiStatus, setAPIStatus] = useState(API_STATUS.IDLE);
 
   const handleTicketReplies = async (payload, errorCallback) => {
     try {
       setAPIStatus(API_STATUS.LOADING);
       errorWhileSendingMessage && setErrorWhileSendingMessage("");
-      const res = await Http.post(CORE_TICKET_VIEW_DETAILS, payload);
+      const res = await Http.post(
+        `${COMPANY_TICKET_LISTING}/${id}/replies`,
+        payload
+      );
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setAPIStatus(API_STATUS.SUCCESS);
-        setSendMessage(res.data);
+        setTicketReplies(res.data);
         return;
       } else {
         setAPIStatus(API_STATUS.ERROR);
@@ -47,8 +50,8 @@ const useTicketReplies = () => {
     isError,
     isLoading,
     isSuccess,
-    sendMessage,
-    setSendMessage,
+    ticketReplies,
+    setTicketReplies,
   };
 };
 

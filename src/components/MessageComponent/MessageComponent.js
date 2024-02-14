@@ -8,34 +8,26 @@ import ProfileIcon from "../ProfileIcon/ProfileIcon";
 import styles from "./MessageComponent.style";
 import { getTime } from "../../utils/util";
 
-const MessageComponent = ({ data, details, userDetails, index, messages }) => {
+const MessageComponent = ({
+  data,
+  details,
+  userDetails,
+  index,
+  shouldShowAvatar,
+}) => {
   const windowDimensions = useWindowDimensions();
   const width1400orLess = windowDimensions.width <= 1500;
 
-  const shouldShowAvatar = (currentIndex) => {
-    if (currentIndex === 0) return true;
-    const currentMessage = messages[currentIndex];
-    const previousMessage = messages[currentIndex - 1];
-    const currentTime = new Date(currentMessage.timestamp);
-    const previousTime = new Date(previousMessage.timestamp);
-    if (isNaN(currentTime.getTime()) || isNaN(previousTime.getTime())) {
-      return true;
-    }
-    const isSameUser = currentMessage.senderId === previousMessage.senderId;
-    const isWithinOneMinute = currentTime - previousTime < 60 * 1000;
-    return !(isSameUser && isWithinOneMinute);
-  };
+  console.log("data", data);
 
   return (
     <>
-      {!!data?.senderMessage && (
+      {data?.type === "1st-person" && (
         <>
           {shouldShowAvatar(index) ? (
             <View style={styles.senderContainer}>
               <View style={styles.senderMessageArea}>
-                <CommonText>
-                  {getTime(data?.timestamp) || "10:48 AM"}
-                </CommonText>
+                <CommonText>{getTime(data?.created_at)}</CommonText>
                 <CommonText
                   customContainerStyle={
                     width1400orLess
@@ -44,7 +36,7 @@ const MessageComponent = ({ data, details, userDetails, index, messages }) => {
                   }
                   customTextStyle={styles.textSize}
                 >
-                  {data?.senderMessage}
+                  {data?.message}
                 </CommonText>
               </View>
 
@@ -65,14 +57,14 @@ const MessageComponent = ({ data, details, userDetails, index, messages }) => {
                   }
                   customTextStyle={styles.textSize}
                 >
-                  {data?.senderMessage}
+                  {data?.message}
                 </CommonText>
               </View>
             </>
           )}
         </>
       )}
-      {!!data?.recieverMessage && (
+      {data?.type === "2nd-person" && (
         <View style={styles.recieverContainer}>
           <ProfileIcon
             customTextStyle={styles.textSize}
