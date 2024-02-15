@@ -181,6 +181,12 @@ const iconCalendar = appendAppBaseURl("/images/calendar.png");
 const iconRotate = appendAppBaseURl("/images/svg/iconRotate.svg");
 const iconDisabledAdd = appendAppBaseURl("/images/svg/iconDisabledAdd.svg");
 const iconDisabledMinus = appendAppBaseURl("/images/svg/iconDisabledMinus.svg");
+const iconArrowDownSorting = appendAppBaseURl(
+  "/images/svg/iconArrowDownSorting.svg"
+);
+const iconArrowUpSorting = appendAppBaseURl(
+  "/images/svg/iconArrowUpSorting.svg"
+);
 
 const images = {
   iconArrowUp,
@@ -308,6 +314,8 @@ const images = {
   iconRotate,
   iconDisabledAdd,
   iconDisabledMinus,
+  iconArrowDownSorting,
+  iconArrowUpSorting,
 };
 
 export default images;

@@ -1,8 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
-
-import { TwoRow } from "../../core/layouts";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
@@ -12,6 +11,7 @@ import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
+import styles from "./TicketsListing.style";
 
 const TicketsListing = () => {
   const {
@@ -26,6 +26,7 @@ const TicketsListing = () => {
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    handleSaveAddTicket,
     headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
@@ -53,16 +54,13 @@ const TicketsListing = () => {
   };
 
   return (
-    <TwoRow
-      topSection={
-        <IconHeader
-          headerText={intl.formatMessage({ id: "label.tickets" })}
-          onPressLeftIcon={onGoBack}
-          hasIconBar
-        />
-      }
-      isBottomFillSpace
-      bottomSection={
+    <View style={styles.container}>
+      <IconHeader
+        headerText={intl.formatMessage({ id: "label.tickets" })}
+        onPressLeftIcon={onGoBack}
+        hasIconBar
+      />
+      <ScrollView style={styles.tableContent}>
         <CustomTable
           {...{
             allDataLoaded,
@@ -77,6 +75,7 @@ const TicketsListing = () => {
             handlePageChange,
             handleRowPerPageChange,
             handleSearchResults,
+            handleSaveAddTicket,
             headingTexts,
             indexOfFirstRecord,
             indexOfLastRecord,
@@ -97,8 +96,8 @@ const TicketsListing = () => {
             totalcards,
           }}
         />
-      }
-    />
+      </ScrollView>
+    </View>
   );
 };
 
