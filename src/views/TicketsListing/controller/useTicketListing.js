@@ -5,6 +5,8 @@ import { View } from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import CustomImage from "../../../components/CustomImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
@@ -12,14 +14,14 @@ import {
   COMPANY_QUERY_TYPE_TICKET,
   COMPANY_TICKET_STATUS,
 } from "../../../services/apiServices/apiEndPoint";
-import { formatCreatedAt } from "../../../utils/util";
+import { formatDate } from "../../../utils/util";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import { navigations } from "../../../constants/routeNames";
 import usePagination from "../../../hooks/usePagination";
+import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsListing.style";
@@ -31,6 +33,7 @@ const useTicketListing = () => {
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
+  const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -51,6 +54,8 @@ const useTicketListing = () => {
       skipApiCallOnMount: true,
     },
   });
+
+  const { handleAddTicket } = useAddTicket();
 
   const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
 
@@ -83,6 +88,13 @@ const useTicketListing = () => {
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
+  const updateCurrentRecords = async (params) => {
+    const newData = await fetchDataTicketListing({
+      queryParamsObject: params,
+    });
+    setCurrentRecords(newData?.records);
+  };
+
   const handleLoadMore = async () => {
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
@@ -112,55 +124,57 @@ const useTicketListing = () => {
 
   const handlePageChange = async (page) => {
     handlePagePerChange(page);
-    const requestedParams = {
+    await updateCurrentRecords({
       perPage: rowsPerPage,
       page: page,
-    };
-    const newData = await fetchDataTicketListing({
-      queryParamsObject: requestedParams,
     });
-    setCurrentRecords(newData?.records);
   };
 
   const handleRowPerPageChange = async (option) => {
     handleRowsPerPageChange(option.value);
-    const requestedParams = {
+    await updateCurrentRecords({
       perPage: option.value,
       page: currentPage,
-    };
-    const newData = await fetchDataTicketListing({
-      queryParamsObject: requestedParams,
     });
-    setCurrentRecords(newData?.records);
   };
 
   const handleSearchResults = async (searchedData) => {
-    const requestedParams = {
+    await updateCurrentRecords({
       q: searchedData,
       perPage: rowsPerPage,
       page: currentPage,
-    };
-    const newSearchedData = await fetchDataTicketListing({
-      queryParamsObject: requestedParams,
     });
-    setCurrentRecords(newSearchedData?.records);
   };
 
   const onIconPress = (item) => {
     navigate(navigations.TICKETS_VIEW_EDIT, { state: item });
   };
 
+  const handleSaveAddTicket = async (queryType, enterQuery) => {
+    await handleAddTicket({ query_type: queryType, query: enterQuery });
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+    });
+  };
+
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    const requestedParams = {
+    await updateCurrentRecords({
       status: selectedStatus,
       queryType: selectedQueryType,
       perPage: rowsPerPage,
       page: currentPage,
-    };
-    const newData = await fetchDataTicketListing({
-      queryParamsObject: requestedParams,
     });
-    setCurrentRecords(newData?.records);
+  };
+
+  const onDateSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortField: sortField,
+      sortDirection: isAscendingOrder ? "asc" : "desc",
+    });
   };
 
   let headingTexts = ["readable_id"];
@@ -241,16 +255,25 @@ const useTicketListing = () => {
         isFillSpace: true,
       },
       {
-        content:
-          item.created_at === "Created On" ? (
+        content: isHeading ? (
+          <CustomTouchableOpacity onPress={() => onDateSorting("created_at")}>
             <CommonText customTextStyle={tableStyle}>
               {item.created_at}
             </CommonText>
-          ) : (
-            <CommonText customTextStyle={tableStyle}>
-              {formatCreatedAt(item.created_at)}
-            </CommonText>
-          ),
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
+          <CommonText customTextStyle={tableStyle}>
+            {formatDate(item.created_at)}
+          </CommonText>
+        ),
         style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
@@ -286,6 +309,7 @@ const useTicketListing = () => {
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    handleSaveAddTicket,
     headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,

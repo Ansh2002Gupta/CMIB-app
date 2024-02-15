@@ -184,6 +184,12 @@ const iconDisabledMinus = appendAppBaseURl("/images/svg/iconDisabledMinus.svg");
 const iconSendGreen = appendAppBaseURl("/images/svg/iconSend.svg");
 const iconAttachement = appendAppBaseURl("/images/svg/iconAttachement.svg");
 const iconAvatar = appendAppBaseURl("/images/svg/iconAvatar.svg");
+const iconArrowDownSorting = appendAppBaseURl(
+  "/images/svg/iconArrowDownSorting.svg"
+);
+const iconArrowUpSorting = appendAppBaseURl(
+  "/images/svg/iconArrowUpSorting.svg"
+);
 
 const images = {
   iconArrowUp,
@@ -314,6 +320,8 @@ const images = {
   iconSendGreen,
   iconAttachement,
   iconAvatar,
+  iconArrowDownSorting,
+  iconArrowUpSorting,
 };
 
 export default images;

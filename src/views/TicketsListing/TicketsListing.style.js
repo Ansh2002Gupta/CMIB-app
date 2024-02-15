@@ -55,6 +55,20 @@ const styles = StyleSheet.create({
   iconTicketColoum: {
     alignItems: "center",
   },
+  sortingIcon: {
+    height: 16,
+    width: 16,
+  },
+  container: {
+    ...Platform.select({
+      web: {
+        height: "90vh",
+      },
+    }),
+  },
+  tableContent: {
+    height: "90%",
+  },
 });
 
 export default styles;

@@ -111,6 +111,8 @@ import iconDisabledMinus from "../../public/images/svg/iconDisabledMinus.svg";
 import iconSendGreen from "../../public/images/svg/iconSend.svg";
 import iconAttachement from "../../public/images/svg/iconAttachement.svg";
 import iconAvatar from "../../public/images/svg/iconAvatar.svg";
+import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
+import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 
 const images = {
   iconArrowUp,
@@ -226,6 +228,8 @@ const images = {
   iconSendGreen,
   iconAttachement,
   iconAvatar,
+  iconArrowDownSorting,
+  iconArrowUpSorting,
 };
 
 export default images;

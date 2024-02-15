@@ -6,6 +6,7 @@ import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
+import AddTicketModal from "../AddTicketModal/AddTicketModal";
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -39,6 +40,7 @@ const CustomTable = ({
   handleRowPerPageChange,
   handleSearchResults,
   headingTexts,
+  handleSaveAddTicket,
   indexOfFirstRecord,
   indexOfLastRecord,
   isHeading,
@@ -63,6 +65,11 @@ const CustomTable = ({
 
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [filterState, setFilterState] = useState(initialFilterState);
+  const [addNewTicket, setAddNewTicket] = useState(false);
+
+  const handleTicketModal = () => {
+    setAddNewTicket((prev) => !prev);
+  };
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
@@ -89,29 +96,45 @@ const CustomTable = ({
           <>
             {showSearchBar && (
               <TwoColumn
-                style={styles.filterTopSection(isWebView)}
+                style={styles.addTicketSection}
                 isLeftFillSpace
                 leftSection={
-                  <SearchView
-                    data={data}
-                    customSearchCriteria={handleSearchResults}
+                  <TwoColumn
+                    leftSection={
+                      <SearchView
+                        data={data?.records}
+                        customSearchCriteria={handleSearchResults}
+                      />
+                    }
+                    isLeftFillSpace
+                    rightSection={
+                      <CustomTouchableOpacity
+                        onPress={handleFilterModal}
+                        style={styles.imageParentStyle}
+                      >
+                        <TouchableImage
+                          source={images.iconFilter}
+                          parentStyle={styles.iconTicket}
+                          onPress={handleFilterModal}
+                        />
+                        {isWebView && (
+                          <CommonText customTextStyle={styles.filterText}>
+                            {intl.formatMessage({ id: "label.filters" })}
+                          </CommonText>
+                        )}
+                      </CustomTouchableOpacity>
+                    }
+                    style={styles.filterTopSection(isWebView)}
                   />
                 }
                 rightSection={
                   <CustomTouchableOpacity
-                    onPress={handleFilterModal}
-                    style={styles.imageParentStyle}
+                    style={styles.addNewButton}
+                    onPress={handleTicketModal}
                   >
-                    <TouchableImage
-                      source={images.iconFilter}
-                      parentStyle={styles.iconTicket}
-                      onPress={handleFilterModal}
-                    />
-                    {isWebView && (
-                      <CommonText customTextStyle={styles.filterText}>
-                        {intl.formatMessage({ id: "label.filters" })}
-                      </CommonText>
-                    )}
+                    <CommonText customTextStyle={styles.addNewText}>
+                      {intl.formatMessage({ id: "label.add_new_ticket" })}
+                    </CommonText>
                   </CustomTouchableOpacity>
                 }
               />
@@ -285,6 +308,16 @@ const CustomTable = ({
             onApplyFilter,
             statusData,
             queryTypeData,
+          }}
+        />
+      )}
+      {addNewTicket && (
+        <AddTicketModal
+          queryTypeData={queryTypeData}
+          onPressButtonOne={handleTicketModal}
+          onPressButtonTwo={(queryType, enterQuery) => {
+            handleSaveAddTicket(queryType, enterQuery);
+            handleTicketModal();
           }}
         />
       )}
