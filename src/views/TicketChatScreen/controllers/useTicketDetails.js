@@ -22,10 +22,7 @@ const useTicketDetails = (location) => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
   const [userProfileDetails] = useContext(UserProfileContext);
-
-  //ToDO : we will get id by ticketlisting API
 
   const {
     data: ticketViewDetails,
@@ -93,7 +90,7 @@ const useTicketDetails = (location) => {
     };
     const newData = await handleTicketReplies(queryParams);
     newRecords.push(newData?.data);
-    setCurrentRecords((prevRecords) => [...newRecords,...prevRecords ]);
+    setCurrentRecords((prevRecords) => [...newRecords, ...prevRecords]);
   };
 
   const onGoBack = () => {

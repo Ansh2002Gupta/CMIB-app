@@ -23,6 +23,7 @@ import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import images from "../../../images";
+import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsListing.style";
 
@@ -34,6 +35,7 @@ const useTicketListing = () => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+  const [queryMessage, setQueryMessage] = useState("");
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -147,10 +149,13 @@ const useTicketListing = () => {
   };
 
   const onIconPress = (item) => {
-    navigate(navigations.TICKETS_VIEW_EDIT, { state: item });
+    navigate(navigations.TICKETS_VIEW_EDIT, {
+      state: item,
+    });
   };
 
   const handleSaveAddTicket = async (queryType, enterQuery) => {
+    setQueryMessage(enterQuery);
     await handleAddTicket({ query_type: queryType, query: enterQuery });
     await updateCurrentRecords({
       perPage: rowsPerPage,
@@ -173,7 +178,7 @@ const useTicketListing = () => {
       perPage: rowsPerPage,
       page: currentPage,
       sortField: sortField,
-      sortDirection: isAscendingOrder ? "asc" : "desc",
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
     });
   };
 

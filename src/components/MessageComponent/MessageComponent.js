@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
 import CommonText from "../CommonText";
@@ -14,12 +14,69 @@ const MessageComponent = ({
   details,
   index,
   isSender,
+  isQueryMessage,
   shouldShowAvatar,
   userDetails,
 }) => {
   const windowDimensions = useWindowDimensions();
   const width1400orLess = windowDimensions.width <= 1500;
 
+  const MessageAreaComponent = ({ message, sender }) => {
+    const senderStyle = sender
+      ? width1400orLess
+        ? styles.smSenderMessageStyle
+        : styles.senderMessageStyle
+      : width1400orLess
+      ? styles.smRecieverMessageStyle
+      : styles.recieverMessageStyle;
+    return (
+      <CommonText
+        customContainerStyle={senderStyle}
+        customTextStyle={styles.textSize}
+      >
+        {message}
+      </CommonText>
+    );
+  };
+
+  const renderAvatarComponent = ({ profile_photo, name }) => (
+    <ProfileIcon
+      customTextStyle={styles.textSize}
+      customOuterContainer={styles.avatarOuterContainer}
+      customImageStyle={styles.avatar}
+      customContainerStyle={styles.avatarContainer}
+      profileImage={profile_photo}
+      name={name}
+    />
+  );
+
+  const renderImage = (url) => {
+    return (
+      <>
+        {!!url && (
+          <CustomImage source={{ uri: url }} style={styles.imagesSection} />
+        )}
+      </>
+    );
+  };
+
+  console.log("isQueryMessage", details?.query, isQueryMessage);
+  
+
+  if (isQueryMessage) {
+    return (
+      <View style={styles.senderContainer}>
+        <View style={styles.senderMessageArea}>
+          <CommonText>{getTime(details?.created_at)}</CommonText>
+          <MessageAreaComponent message={details?.query} sender={true} />
+        </View>
+        {renderAvatarComponent({
+          profile_photo: userDetails?.profile_photo,
+          name: userDetails?.name,
+        })}
+      </View>
+    );
+  }
   if (isSender) {
     return (
       <>
@@ -27,48 +84,19 @@ const MessageComponent = ({
           <View style={styles.senderContainer}>
             <View style={styles.senderMessageArea}>
               <CommonText>{getTime(data?.created_at)}</CommonText>
-              <CommonText
-                customContainerStyle={
-                  width1400orLess
-                    ? styles.smSenderMessageStyle
-                    : styles.senderMessageStyle
-                }
-                customTextStyle={styles.textSize}
-              >
-                {data?.message}
-              </CommonText>
-              {!!data?.file && (
-                <CustomImage
-                  source={{ uri: data?.file }}
-                  style={styles.imagesSection}
-                />
-              )}
+              <MessageAreaComponent message={data?.message} sender />
+              {renderImage(data?.file)}
             </View>
-            <ProfileIcon
-              customTextStyle={styles.textSize}
-              customOuterContainer={styles.avatarContainer}
-              customImageStyle={styles.avatar}
-              customContainerStyle={styles.avatarContainer}
-              profileImage={userDetails?.profile_photo}
-              name={userDetails?.name}
-            />
+            {renderAvatarComponent({
+              profile_photo: userDetails?.profile_photo,
+              name: userDetails?.name,
+            })}
           </View>
         ) : (
           <>
             <View style={styles.shouldShowAvatarSenderMessageArea}>
-              <CommonText
-                customContainerStyle={
-                  width1400orLess
-                    ? styles.smSenderMessageStyle
-                    : styles.senderMessageStyle
-                }
-                customTextStyle={styles.textSize}
-              >
-                {data?.message}
-              </CommonText>
-              {!!data?.file && (
-                <CustomImage source={data?.file} style={styles.imagesSection} />
-              )}
+              <MessageAreaComponent message={data?.message} sender />
+              {renderImage(data?.file)}
             </View>
           </>
         )}
@@ -79,47 +107,21 @@ const MessageComponent = ({
       <>
         {shouldShowAvatar(index) ? (
           <View style={styles.recieverContainer}>
-            <ProfileIcon
-              customTextStyle={styles.textSize}
-              customOuterContainer={styles.avatarContainer}
-              customImageStyle={styles.avatar}
-              customContainerStyle={styles.avatarContainer}
-              profileImage={details?.assigned_to?.profile_photo}
-              name={details?.assigned_to?.name}
-            />
+            {renderAvatarComponent({
+              // profile_photo: details?.assigned_to?.profile_photo,
+              name: details?.assigned_to?.name,
+            })}
             <View style={styles.reciverMessageArea}>
               <CommonText>{getTime(data?.created_at)}</CommonText>
-              <CommonText
-                customContainerStyle={
-                  width1400orLess
-                    ? styles.smRecieverMessageStyle
-                    : styles.recieverMessageStyle
-                }
-                customTextStyle={styles.textSize}
-              >
-                {data?.message}
-              </CommonText>
-              {!!data?.file && (
-                <CustomImage source={data?.file} style={styles.imagesSection} />
-              )}
+              <MessageAreaComponent message={data?.message} sender={false} />
+              {renderImage(data?.file)}
             </View>
           </View>
         ) : (
           <>
             <View style={styles.shouldShowAvatarRecieverMessageArea}>
-              <CommonText
-                customContainerStyle={
-                  width1400orLess
-                    ? styles.smRecieverMessageStyle
-                    : styles.recieverMessageStyle
-                }
-                customTextStyle={styles.textSize}
-              >
-                {data?.message}
-              </CommonText>
-              {!!data?.file && (
-                <CustomImage source={data?.file} style={styles.imagesSection} />
-              )}
+              <MessageAreaComponent message={data?.message} sender={false} />
+              {renderImage(data?.file)}
             </View>
           </>
         )}
@@ -129,7 +131,23 @@ const MessageComponent = ({
 };
 
 MessageComponent.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array,
+  details: PropTypes.object,
+  index: PropTypes.number,
+  isSender: PropTypes.bool,
+  isQueryMessage: PropTypes.bool,
+  shouldShowAvatar: PropTypes.func,
+  userDetails: PropTypes.object,
+};
+
+MessageComponent.defaultProps = {
+  data: {},
+  details: {},
+  index: 0,
+  isSender: false,
+  isQueryMessage: false,
+  userDetails: {},
+  shouldShowAvatar: () => {},
 };
 
 export default MessageComponent;

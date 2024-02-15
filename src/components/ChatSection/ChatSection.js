@@ -13,11 +13,9 @@ import MessageInfoComponent from "../MessageInfoComponent/MessageInfoComponent";
 import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
-import { getDateStatus, getImageSource, getTime } from "../../utils/util";
+import { getDateStatus, getTime } from "../../utils/util";
 import { MESSAGE_MAX_LENGTH } from "../../constants/constants";
 import styles from "./ChatSection.style";
-import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
-import useUploadedFileValidations from "../../hooks/useUploadedFileValidations";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -25,15 +23,15 @@ const ChatSection = ({
   allDataLoaded,
   data,
   details,
+  fileUploadResult,
+  fileUploadError,
+  handleFileUpload,
   handleSendButton,
   handleLoadMore,
   isFirstPageReceived,
-  loadingMore,
   initiateFileUpload,
-  handleFileUpload,
-  fileUploadResult,
+  loadingMore,
   userDetails,
-  fileUploadError,
 }) => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -41,21 +39,6 @@ const ChatSection = ({
   const [file, setFile] = useState(null);
   const flatListRef = useRef(null);
   const scrollToLatestMessageRef = useRef(null);
-
-  // const {
-  //   errorWhileUpload,
-  //   handleFileUpload,
-  //   fileUploadResult,
-  //   isLoading: isUploadingImageToServer,
-  //   setErrorWhileUpload,
-  // } = useSaveLogo();
-
-  // const {
-  //   fileTooLargeError,
-  //   invalidFormatError,
-  //   initiateFileUpload,
-  //   nonUploadableImageError,
-  // } = useUploadedFileValidations();
 
   const isMobileProps = isMob
     ? {
@@ -96,14 +79,11 @@ const ChatSection = ({
     }
     const currentMessage = data[currentIndex];
     const comparisonMessage = data[comparisonIndex];
-
     if (currentMessage?.user_type !== comparisonMessage?.user_type) {
       return true;
     }
-
     const currentTime = getTime(currentMessage?.created_at);
     const comparisonTime = getTime(comparisonMessage?.created_at);
-
     return currentTime !== comparisonTime;
   };
 
@@ -185,26 +165,57 @@ const ChatSection = ({
   return (
     <TwoRow
       topSection={
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={() => {
-            if (loadingMore && !isFirstPageReceived) {
-              return (
-                <View style={styles.loadingStyle}>
-                  <Spinner thickness={2} {...webProps} />
-                </View>
-              );
-            }
-            if (allDataLoaded) {
-              return null;
-            }
-            return null;
-          }}
-          ref={flatListRef}
-          {...isMobileProps}
-          data={data}
-          style={styles.chatSection}
-          renderItem={renderMessagesSection}
+        <TwoRow
+          topSection={
+            !isMob && (
+              <>
+                {!!details?.query && (
+                  <MessageComponent
+                    isQueryMessage={true}
+                    userDetails={userProfileDetails?.userDetails}
+                    details={details}
+                  />
+                )}
+              </>
+            )
+          }
+          isBottomFillSpace
+          bottomSection={
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              ListFooterComponent={
+                isMob && (
+                  <>
+                    {!!details?.query && (
+                      <MessageComponent
+                        isQueryMessage={true}
+                        userDetails={userProfileDetails?.userDetails}
+                        details={details}
+                      />
+                    )}
+                  </>
+                )
+              }
+              ListHeaderComponent={() => {
+                if (loadingMore && !isFirstPageReceived) {
+                  return (
+                    <View style={styles.loadingStyle}>
+                      <Spinner thickness={2} {...webProps} />
+                    </View>
+                  );
+                }
+                if (allDataLoaded) {
+                  return null;
+                }
+                return null;
+              }}
+              ref={flatListRef}
+              {...isMobileProps}
+              data={data}
+              style={styles.chatSection}
+              renderItem={renderMessagesSection}
+            />
+          }
         />
       }
       isTopFillSpace
@@ -240,15 +251,33 @@ const ChatSection = ({
 };
 
 ChatSection.defaultProps = {
+  allDataLoaded: false,
+  data: [],
   details: {},
+  fileUploadResult: {},
+  fileUploadError: "",
+  handleFileUpload: () => {},
+  handleSendButton: () => {},
+  handleLoadMore: () => {},
+  isFirstPageReceived: true,
+  initiateFileUpload: () => {},
+  loadingMore: false,
+  userDetails: {},
 };
 
 ChatSection.propTypes = {
+  allDataLoaded: PropTypes.bool.isRequired,
   data: PropTypes.array.isRequired,
   details: PropTypes.object,
+  fileUploadResult: PropTypes.object,
+  fileUploadError: PropTypes.string,
+  handleFileUpload: PropTypes.func.isRequired,
+  handleSendButton: PropTypes.func.isRequired,
   handleLoadMore: PropTypes.func.isRequired,
+  isFirstPageReceived: PropTypes.bool.isRequired,
+  initiateFileUpload: PropTypes.func.isRequired,
   loadingMore: PropTypes.bool.isRequired,
-  userDetails: PropTypes.object.isRequired,
+  userDetails: PropTypes.object,
 };
 
 export default ChatSection;

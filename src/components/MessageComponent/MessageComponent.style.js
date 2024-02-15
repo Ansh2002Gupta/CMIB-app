@@ -6,6 +6,8 @@ const baseMessageContainer = {
   borderWidth: 1,
   borderBottomLeftRadius: 16,
   borderBottomRightRadius: 16,
+  marginTop: 4,
+  marginBottom: 4,
   ...Platform.select({
     web: {
       overflowWrap: "break-word",
@@ -25,6 +27,11 @@ const baseRecieverStyle = {
   borderColor: colors.lightGrey,
   borderTopLeftRadius: 2,
   borderTopRightRadius: 16,
+};
+
+const baseAvatarSize = {
+  height: 32,
+  width: 32,
 };
 
 const styles = StyleSheet.create({
@@ -73,17 +80,19 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginLeft: 8,
   },
-  avatarContainer: {
+  avatarOuterContainer: {
     marginTop: 20,
-    height: 32,
-    width: 32,
-    padding: 0,
+    ...baseAvatarSize,
+  },
+  avatarContainer: {
+    paddingTop: 0,
     overflow: "hidden",
+    ...baseAvatarSize,
   },
   avatar: {
-    height: 32,
-    width: 32,
+    ...baseAvatarSize,
   },
+
   textSize: {
     fontSize: 14,
     flexWrap: "wrap",
@@ -93,7 +102,6 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   imagesSection: {
-    marginTop: 4,
     maxHeight: 300,
     maxWidth: 300,
     borderRadius: 12,

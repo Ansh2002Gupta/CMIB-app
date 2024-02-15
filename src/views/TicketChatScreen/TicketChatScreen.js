@@ -22,9 +22,13 @@ const TicketChatScreen = () => {
   const {
     allDataLoaded,
     chatRecords,
+    fileUploadError,
+    fileUploadResult,
+    handleFileUpload,
     handleLoadMore,
     handlePopup,
     handleSendButton,
+    initiateFileUpload,
     isChatLoading,
     isDetailsScreen,
     isFirstPageReceived,
@@ -35,10 +39,6 @@ const TicketChatScreen = () => {
     showPopup,
     ticketViewDetails,
     userDetails,
-      initiateFileUpload,
-      handleFileUpload,
-    fileUploadResult,
-    fileUploadError,
   } = useTicketDetails(location.state);
 
   const { isWebView } = useIsWebView();
