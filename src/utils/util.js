@@ -128,3 +128,32 @@ export const extractFilename = (fileUri) => {
   const filename = parts.pop() || "";
   return filename;
 };
+
+let lastFlagDate = null;
+
+export const getDateStatus = (record) => {
+  const createdAt = new Date(record);
+
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  if (createdAt.toDateString() === today.toDateString()) {
+    if (lastFlagDate !== today.toDateString()) {
+      lastFlagDate = today.toDateString();
+      return "Today";
+    } else {
+      return "";
+    }
+  } else if (createdAt.toDateString() === yesterday.toDateString()) {
+    if (lastFlagDate !== yesterday.toDateString()) {
+      lastFlagDate = yesterday.toDateString();
+      return "Yesterday";
+    } else {
+      return "";
+    }
+  } else {
+    lastFlagDate = null;
+    return formatDate(createdAt);
+  }
+};
