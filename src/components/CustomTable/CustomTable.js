@@ -96,7 +96,7 @@ const CustomTable = ({
           <>
             {showSearchBar && (
               <TwoColumn
-                style={{ justifyContent: "space-between" }}
+                style={styles.addTicketSection}
                 isLeftFillSpace
                 leftSection={
                   <TwoColumn

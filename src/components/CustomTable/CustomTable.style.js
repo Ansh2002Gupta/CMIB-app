@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     flexDirection: "row",
   },
+  addTicketSection: { justifyContent: "space-between" },
 });
 
 export default styles;

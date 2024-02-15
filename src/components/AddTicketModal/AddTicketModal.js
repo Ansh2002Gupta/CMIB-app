@@ -8,9 +8,9 @@ import CustomTextInput from "../CustomTextInput";
 import ActionPairButton from "../ActionPairButton";
 
 const AddTicketModal = ({
-  queryTypeData,
   onPressButtonOne,
   onPressButtonTwo,
+  queryTypeData,
 }) => {
   const intl = useIntl();
   const [enterQuery, setEnterQuery] = useState("");
@@ -64,9 +64,9 @@ const AddTicketModal = ({
 };
 
 AddTicketModal.propTypes = {
-  queryTypeData: PropTypes.array.isRequired,
   onPressButtonOne: PropTypes.func.isRequired,
   onPressButtonTwo: PropTypes.func.isRequired,
+  queryTypeData: PropTypes.array.isRequired,
 };
 
 export default AddTicketModal;
