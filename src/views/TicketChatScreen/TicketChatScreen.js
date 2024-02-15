@@ -100,24 +100,20 @@ const TicketChatScreen = () => {
               isChatLoading && isFirstPageReceived ? (
                 <LoadingScreen />
               ) : (
-                <>
-                  {!!chatRecords.length && (
-                    <ChatSection
-                      isFirstPageReceived={isFirstPageReceived}
-                      allDataLoaded={allDataLoaded}
-                      userDetails={userDetails}
-                      handleSendButton={handleSendButton}
-                      data={reversedData}
-                      details={ticketViewDetails}
-                      handleLoadMore={handleLoadMore}
-                      loadingMore={loadingMore}
-                      initiateFileUpload={initiateFileUpload}
-                      handleFileUpload={handleFileUpload}
-                      fileUploadResult={fileUploadResult}
-                      fileUploadError={fileUploadError}
-                    />
-                  )}
-                </>
+                <ChatSection
+                  isFirstPageReceived={isFirstPageReceived}
+                  allDataLoaded={allDataLoaded}
+                  userDetails={userDetails}
+                  handleSendButton={handleSendButton}
+                  data={reversedData}
+                  details={ticketViewDetails}
+                  handleLoadMore={handleLoadMore}
+                  loadingMore={loadingMore}
+                  initiateFileUpload={initiateFileUpload}
+                  handleFileUpload={handleFileUpload}
+                  fileUploadResult={fileUploadResult}
+                  fileUploadError={fileUploadError}
+                />
               )
             }
             rightSection={

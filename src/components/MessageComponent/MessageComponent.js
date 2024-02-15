@@ -60,9 +60,6 @@ const MessageComponent = ({
     );
   };
 
-  console.log("isQueryMessage", details?.query, isQueryMessage);
-  
-
   if (isQueryMessage) {
     return (
       <View style={styles.senderContainer}>
