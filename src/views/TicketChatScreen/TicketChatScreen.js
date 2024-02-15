@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
+import { Platform } from "@unthinkable/react-core-components";
 
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -34,6 +35,7 @@ const TicketChatScreen = () => {
   } = useTicketDetails();
 
   const { isWebView } = useIsWebView();
+  const isMob = Platform.OS.toLowerCase() === "web";
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
@@ -125,7 +127,7 @@ const TicketChatScreen = () => {
                 allDataLoaded={allDataLoaded}
                 userDetails={userDetails}
                 handleSendButton={handleSendButton}
-                data={chatRecords}
+                data={isMob ? chatRecords : reversedData}
                 details={ticketViewDetails}
                 handleLoadMore={handleLoadMore}
                 loadingMore={loadingMore}

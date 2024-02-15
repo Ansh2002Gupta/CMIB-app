@@ -6,7 +6,6 @@ const baseMessageContainer = {
   borderWidth: 1,
   borderBottomLeftRadius: 16,
   borderBottomRightRadius: 16,
-  marginTop: 4,
   ...Platform.select({
     web: {
       overflowWrap: "break-word",
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   imagesSection: {
-    marginTop: 5,
+    marginTop: 4,
     maxHeight: 300,
     maxWidth: 300,
     borderRadius: 12,

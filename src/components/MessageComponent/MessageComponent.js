@@ -64,6 +64,9 @@ const MessageComponent = ({
               >
                 {data?.message}
               </CommonText>
+              {!!data?.file && (
+                <CustomImage source={data?.file} style={styles.imagesSection} />
+              )}
             </View>
           </>
         )}
@@ -94,6 +97,9 @@ const MessageComponent = ({
               >
                 {data?.message}
               </CommonText>
+              {!!data?.file && (
+                <CustomImage source={data?.file} style={styles.imagesSection} />
+              )}
             </View>
           </View>
         ) : (
@@ -109,6 +115,9 @@ const MessageComponent = ({
               >
                 {data?.message}
               </CommonText>
+              {!!data?.file && (
+                <CustomImage source={data?.file} style={styles.imagesSection} />
+              )}
             </View>
           </>
         )}
