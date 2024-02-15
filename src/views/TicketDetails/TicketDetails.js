@@ -10,7 +10,7 @@ import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import useIsWebView from "../../hooks/useIsWebView";
 import { formatDate } from "../../utils/util";
 import images from "../../images";
-import styles from "./TicketDetails.styles";
+import styles from "./TicketDetails.style";
 
 const TicketDetails = ({ details }) => {
   const intl = useIntl();
@@ -100,7 +100,7 @@ const TicketDetails = ({ details }) => {
               topSection={
                 <View>
                   <ProfileIcon
-                    name={details?.assigned_to}
+                    // name={!!details?.assigned_to && details?.assigned_to?.name}
                     profileImage={topSectionData.profileIconImage}
                     customContainerStyle={styles.profileIcon}
                   />

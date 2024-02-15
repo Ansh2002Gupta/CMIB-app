@@ -147,7 +147,7 @@ const useTicketListing = () => {
   };
 
   const onIconPress = (item) => {
-    //TODO : We will navigate to TICKET CHAT SCREEN
+    navigate(navigations.TICKETS_VIEW_EDIT, { state: item });
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {

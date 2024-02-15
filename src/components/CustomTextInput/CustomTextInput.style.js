@@ -134,10 +134,20 @@ const style = {
   valueStyle: {
     paddingRight: 12,
   },
-  rightIcon: {
-    height: 18, 
-    width: 18,
-  }
+  sendButton: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 4,
+  },
+  iconAttachement: {
+    padding: 0,
+    borderWidth: 0,
+    marginRight: 0,
+    height: 48,
+    width: 48,
+  },
 };
 
 export default style;

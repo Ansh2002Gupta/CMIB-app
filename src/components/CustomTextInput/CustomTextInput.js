@@ -15,10 +15,15 @@ import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
+import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
+import TriggerFileUpload from "../TriggerFileUpload";
+import styles from "../MessageInfoComponent/MessageInfoComponent.style";
+import { getImageSource } from "../../utils/util";
+import CustomImage from "../CustomImage";
 
 const CustomTextInput = (props) => {
   const {
@@ -28,6 +33,7 @@ const CustomTextInput = (props) => {
     customLabelStyle,
     customStyle,
     customTextInputContainer,
+    customTextInputOuterContainer,
     countValue,
     codeValue,
     dropdownStyle,
@@ -38,7 +44,6 @@ const CustomTextInput = (props) => {
     inputKey,
     isCounterInput,
     isDropdown,
-    isEditable,
     isError,
     isMandatory,
     isMobileNumber,
@@ -47,21 +52,24 @@ const CustomTextInput = (props) => {
     isPaddingNotRequired,
     isPassword,
     isRupee,
+    isSendButton,
+    imageUrl,
+    initiateFileUpload,
     label,
     maxCount,
     minCount,
     options,
     onChangeValue,
-    onClickRightIcon,
+    onClickAttachement,
+    onClickSend,
     placeholder,
     step,
+    setFile,
     value,
     labelField,
     valueField,
     urlField,
     menuOptions,
-    noOfRows,
-    rightIcon,
     ...remainingProps
   } = props;
 
@@ -97,11 +105,27 @@ const CustomTextInput = (props) => {
       : {};
 
   const inputStyle = {
-    ...(isWebPlatform && isMultiline ? {} : style.inputContainer),
+    ...(isWebPlatform && isMultiline
+      ? {}
+      : { ...style.inputContainer, ...customTextInputOuterContainer }),
     ...(isFocused ? style.focusedStyle : {}),
     ...(isError ? style.invalidInput : {}),
-    ...(isEditable ? {} : {backgroundColor: colors.disabledTextFieldColor}),
   };
+
+  const getSendButtonStatus = () => {
+    if (!!imageUrl) {
+      return false;
+    }
+    if (!!value) {
+      return false;
+    }
+    if (!!imageUrl && !!value) {
+      return false;
+    }
+    return true;
+  };
+
+  const buttonStatus = getSendButtonStatus();
 
   const renderTextInput = () => {
     if (isDropdown) {
@@ -122,7 +146,6 @@ const CustomTextInput = (props) => {
             placeholderStyle={style.placeholderStyle}
             menuOptions={menuOptions}
             data={options}
-            isEditable={isEditable}
             maxHeight={200}
             labelField={labelField}
             valueField={valueField}
@@ -143,7 +166,6 @@ const CustomTextInput = (props) => {
       return (
         <DropDownModal
           {...{
-            isEditable,
             labelField,
             onChangeValue,
             options,
@@ -176,7 +198,6 @@ const CustomTextInput = (props) => {
               menuOptions,
               onChangeValue,
               options,
-              isEditable,
               isMobileNumber,
               placeholder,
               value: codeValue,
@@ -200,8 +221,49 @@ const CustomTextInput = (props) => {
               ref: fieldRef,
               value,
             }}
-            rows={noOfRows}
           />
+        ) : isSendButton ? (
+          <View style={style.sendButton}>
+            {!!imageUrl && (
+              <CustomImage
+                source={{ uri: imageUrl }}
+                height={100}
+                width={100}
+              />
+            )}
+            <TextInput
+              value={value}
+              style={[
+                style.textInputStyle,
+                isMultiline && style.textAlignStyle,
+                isWebView && style.webLabel,
+                customTextInputContainer,
+              ]}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              placeholder={placeholder}
+              secureTextEntry={isPassword && !isTextVisible}
+              ref={fieldRef}
+              {...platformSpecificProps}
+              {...(isNumeric ? mobileProps : {})}
+              {...remainingProps}
+            />
+            <TriggerFileUpload
+              onImageUpload={onClickAttachement}
+              initiateFileUpload={initiateFileUpload}
+              iconLeft={{
+                leftIconSource: images.iconAttachement,
+                isLeftIconNotSvg: false,
+              }}
+              customButtonStyle={style.iconAttachement}
+              setFile={setFile}
+            />
+            <TouchableImage
+              source={images.iconSendGreen}
+              onPress={onClickSend}
+              disabled={buttonStatus}
+            />
+          </View>
         ) : (
           <TextInput
             value={value}
@@ -211,7 +273,6 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
-            editable={isEditable}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder}
@@ -230,14 +291,6 @@ const CustomTextInput = (props) => {
             <Image
               source={isTextVisible ? images.iconEyeSlash : images.iconEye}
             />
-          </TouchableOpacity>
-        )}
-        {!!rightIcon && (
-          <TouchableOpacity
-            style={style.eyeIconContainer}
-            onPress={onClickRightIcon}
-          >
-            <Image source={rightIcon} style={style.rightIcon}/>
           </TouchableOpacity>
         )}
       </View>
@@ -274,13 +327,13 @@ CustomTextInput.defaultProps = {
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
+  customTextInputOuterContainer: {},
   dropdownStyle: {},
   errorMessage: "",
   eyeImage: false,
   handleCountChange: () => {},
   isCounterInput: false,
   isDropdown: false,
-  isEditable: true,
   isError: false,
   inputKey: "value",
   isMandatory: false,
@@ -289,16 +342,18 @@ CustomTextInput.defaultProps = {
   isNumeric: false,
   isPaddingNotRequired: false,
   isPassword: false,
+  isSendButton: false,
+  initiateFileUpload: () => {},
+  imageUrl: "",
   label: "",
   labelField: "label",
   maxCount: 100,
   minCount: 0,
-  noOfRows: 4,
   options: [],
   onChangeValue: () => {},
-  onClickRightIcon: () => {},
+  onClickAttachement: () => {},
+  onClickSend: () => {},
   placeholder: "",
-  rightIcon: "",
   step: 1,
   value: "",
   valueField: "value",
@@ -314,6 +369,7 @@ CustomTextInput.propTypes = {
   customLabelStyle: PropTypes.object,
   customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customTextInputContainer: PropTypes.object,
+  customTextInputOuterContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
@@ -322,7 +378,6 @@ CustomTextInput.propTypes = {
   inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
-  isEditable: PropTypes.bool,
   isError: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
@@ -330,17 +385,19 @@ CustomTextInput.propTypes = {
   isNumeric: PropTypes.bool,
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
+  isSendButton: PropTypes.bool,
+  initiateFileUpload: PropTypes.func,
+  imageUrl: PropTypes.string,
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
-  noOfRows: PropTypes.number,
   onChangeValue: PropTypes.func,
-  onClickRightIcon: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
+  onClickAttachement: PropTypes.func,
+  onClickSend: PropTypes.func,
   placeholder: PropTypes.string,
-  rightIcon: PropTypes.string,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,

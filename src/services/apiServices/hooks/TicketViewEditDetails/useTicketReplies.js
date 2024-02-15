@@ -25,7 +25,7 @@ const useTicketReplies = () => {
         setAPIStatus(API_STATUS.SUCCESS);
         setTicketReplies(res.data);
         successCallback && successCallback();
-        return;
+        return res.data;
       } else {
         setAPIStatus(API_STATUS.ERROR);
       }

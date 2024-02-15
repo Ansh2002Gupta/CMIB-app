@@ -108,6 +108,9 @@ import iconCalendar from "../../public/images/calendar.png";
 import iconRotate from "../../public/images/svg/iconRotate.svg";
 import iconDisabledAdd from "../../public/images/svg/iconDisabledAdd.svg";
 import iconDisabledMinus from "../../public/images/svg/iconDisabledMinus.svg";
+import iconSendGreen from "../../public/images/svg/iconSend.svg";
+import iconAttachement from "../../public/images/svg/iconAttachement.svg";
+import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 
 const images = {
   iconArrowUp,
@@ -220,6 +223,9 @@ const images = {
   iconRotate,
   iconDisabledAdd,
   iconDisabledMinus,
+  iconSendGreen,
+  iconAttachement,
+  iconAvatar,
 };
 
 export default images;

@@ -9,8 +9,11 @@ import {
 } from "../../../services/apiServices/apiEndPoint";
 import useTicketReplies from "../../../services/apiServices/hooks/TicketViewEditDetails/useTicketReplies";
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
+import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
+import useUploadedFileValidations from "../../../hooks/useUploadedFileValidations";
 
-const useTicketDetails = () => {
+const useTicketDetails = (location) => {
+  const { id } = location;
   const navigate = useNavigate();
   const [loadingMore, setLoadingMore] = useState(false);
   const [isDetailsScreen, setIsDetailScreen] = useState(false);
@@ -23,7 +26,6 @@ const useTicketDetails = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
 
   //ToDO : we will get id by ticketlisting API
-  const id = "2";
 
   const {
     data: ticketViewDetails,
@@ -44,6 +46,24 @@ const useTicketDetails = () => {
     },
   });
 
+  const {
+    errorWhileUpload,
+    handleFileUpload,
+    fileUploadResult,
+    isLoading: isUploadingImageToServer,
+    setErrorWhileUpload,
+  } = useSaveLogo();
+
+  const {
+    fileTooLargeError,
+    invalidFormatError,
+    initiateFileUpload,
+    nonUploadableImageError,
+  } = useUploadedFileValidations();
+
+  const fileUploadError =
+    fileTooLargeError || invalidFormatError || nonUploadableImageError;
+
   const { handleTicketReplies } = useTicketReplies();
 
   useEffect(() => {
@@ -62,19 +82,18 @@ const useTicketDetails = () => {
     fetchData();
   }, []);
 
-  const handleSendButton = async (messageValue) => {
-    const qureyParams = {
+  const handleSendButton = async ({ messageValue, file_name }) => {
+    let newRecords = [];
+    const queryParams = {
       id: id,
       payload: {
         reply_text: messageValue,
-        file_name: "",
-      },
-      successCallback: async () => {
-        const new_data = await fetchChatData();
-        setCurrentRecords(new_data?.records);
+        file_name: file_name,
       },
     };
-    await handleTicketReplies(qureyParams);
+    const newData = await handleTicketReplies(queryParams);
+    newRecords.push(newData?.data);
+    setCurrentRecords((prevRecords) => [...newRecords,...prevRecords ]);
   };
 
   const onGoBack = () => {
@@ -90,6 +109,10 @@ const useTicketDetails = () => {
   };
 
   const handleLoadMore = async () => {
+    if (chatRecords?.meta?.currentPage === chatRecords?.meta?.lastPage) {
+      setAllDataLoaded(true);
+      return;
+    }
     if (loadingMore || allDataLoaded) return;
     setLoadingMore(true);
     const nextPage = currentPage + 1;
@@ -104,9 +127,6 @@ const useTicketDetails = () => {
         ]);
       }
       setCurrentPage(nextPage);
-      if (newData.meta.currentPage === newData.meta.lastPage) {
-        setAllDataLoaded(true);
-      }
     } catch (error) {
       console.error("Error fetching tickets on load more:", error);
     } finally {
@@ -130,6 +150,10 @@ const useTicketDetails = () => {
     showPopup,
     ticketViewDetails,
     userDetails: userProfileDetails?.userDetails,
+    initiateFileUpload,
+    handleFileUpload,
+    fileUploadResult,
+    fileUploadError,
   };
 };
 

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
+import { useLocation } from "../../routes";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform } from "@unthinkable/react-core-components";
 
@@ -16,6 +17,8 @@ import images from "../../images";
 import styles from "./TicketChatScreen.style";
 
 const TicketChatScreen = () => {
+  const location = useLocation();
+
   const {
     allDataLoaded,
     chatRecords,
@@ -32,10 +35,14 @@ const TicketChatScreen = () => {
     showPopup,
     ticketViewDetails,
     userDetails,
-  } = useTicketDetails();
+      initiateFileUpload,
+      handleFileUpload,
+    fileUploadResult,
+    fileUploadError,
+  } = useTicketDetails(location.state);
 
   const { isWebView } = useIsWebView();
-  const isMob = Platform.OS.toLowerCase() === "web";
+  const isMob = Platform.OS.toLowerCase() !== "web";
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
@@ -93,15 +100,24 @@ const TicketChatScreen = () => {
               isChatLoading && isFirstPageReceived ? (
                 <LoadingScreen />
               ) : (
-                <ChatSection
-                  allDataLoaded={allDataLoaded}
-                  userDetails={userDetails}
-                  handleSendButton={handleSendButton}
-                  data={reversedData}
-                  details={ticketViewDetails}
-                  handleLoadMore={handleLoadMore}
-                  loadingMore={loadingMore}
-                />
+                <>
+                  {!!chatRecords.length && (
+                    <ChatSection
+                      isFirstPageReceived={isFirstPageReceived}
+                      allDataLoaded={allDataLoaded}
+                      userDetails={userDetails}
+                      handleSendButton={handleSendButton}
+                      data={reversedData}
+                      details={ticketViewDetails}
+                      handleLoadMore={handleLoadMore}
+                      loadingMore={loadingMore}
+                      initiateFileUpload={initiateFileUpload}
+                      handleFileUpload={handleFileUpload}
+                      fileUploadResult={fileUploadResult}
+                      fileUploadError={fileUploadError}
+                    />
+                  )}
+                </>
               )
             }
             rightSection={
@@ -131,6 +147,10 @@ const TicketChatScreen = () => {
                 details={ticketViewDetails}
                 handleLoadMore={handleLoadMore}
                 loadingMore={loadingMore}
+                initiateFileUpload={initiateFileUpload}
+                handleFileUpload={handleFileUpload}
+                fileUploadResult={fileUploadResult}
+                fileUploadError={fileUploadError}
               />
             )}
           </>

@@ -38,17 +38,19 @@ const MessageComponent = ({
                 {data?.message}
               </CommonText>
               {!!data?.file && (
-                <CustomImage source={data?.file} style={styles.imagesSection} />
+                <CustomImage
+                  source={{ uri: data?.file }}
+                  style={styles.imagesSection}
+                />
               )}
             </View>
-
             <ProfileIcon
               customTextStyle={styles.textSize}
               customOuterContainer={styles.avatarContainer}
               customImageStyle={styles.avatar}
               customContainerStyle={styles.avatarContainer}
               profileImage={userDetails?.profile_photo}
-              name={details?.name}
+              name={userDetails?.name}
             />
           </View>
         ) : (

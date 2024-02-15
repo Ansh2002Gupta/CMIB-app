@@ -8,14 +8,16 @@ import { TwoRow } from "../../core/layouts";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import FormWrapper from "../FormWrapper";
-import MessageComponent from "../MessageComponent";
+import MessageComponent from "../MessageComponent/MessageComponent";
 import MessageInfoComponent from "../MessageInfoComponent/MessageInfoComponent";
 import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
-import { getDateStatus, getTime } from "../../utils/util";
+import { getDateStatus, getImageSource, getTime } from "../../utils/util";
 import { MESSAGE_MAX_LENGTH } from "../../constants/constants";
 import styles from "./ChatSection.style";
+import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
+import useUploadedFileValidations from "../../hooks/useUploadedFileValidations";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -25,13 +27,35 @@ const ChatSection = ({
   details,
   handleSendButton,
   handleLoadMore,
+  isFirstPageReceived,
   loadingMore,
+  initiateFileUpload,
+  handleFileUpload,
+  fileUploadResult,
   userDetails,
+  fileUploadError,
 }) => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [messageValue, setMessageValue] = useState("");
+  const [file, setFile] = useState(null);
   const flatListRef = useRef(null);
+  const scrollToLatestMessageRef = useRef(null);
+
+  // const {
+  //   errorWhileUpload,
+  //   handleFileUpload,
+  //   fileUploadResult,
+  //   isLoading: isUploadingImageToServer,
+  //   setErrorWhileUpload,
+  // } = useSaveLogo();
+
+  // const {
+  //   fileTooLargeError,
+  //   invalidFormatError,
+  //   initiateFileUpload,
+  //   nonUploadableImageError,
+  // } = useUploadedFileValidations();
 
   const isMobileProps = isMob
     ? {
@@ -44,18 +68,21 @@ const ChatSection = ({
   useHandleInfiniteScroll(handleLoadMore, flatListRef);
 
   useEffect(() => {
-    if (!isMob && flatListRef.current) {
-      const element = flatListRef.current;
-      element.scrollTop = element.scrollHeight;
+    if (!isMob && scrollToLatestMessageRef.current) {
+      const element = scrollToLatestMessageRef.current;
+      element.scrollIntoView({ behaviour: "smooth" });
     }
-  }, [data]);
+  }, [messageValue]);
 
   const handleInputChange = (val) => {
     setMessageValue(val);
   };
 
   const handleSend = async () => {
-    await handleSendButton(messageValue);
+    await handleSendButton({
+      messageValue: messageValue,
+      file_name: fileUploadResult?.data?.file_name || "",
+    });
     setMessageValue("");
   };
 
@@ -69,6 +96,10 @@ const ChatSection = ({
     }
     const currentMessage = data[currentIndex];
     const comparisonMessage = data[comparisonIndex];
+
+    if (currentMessage?.user_type !== comparisonMessage?.user_type) {
+      return true;
+    }
 
     const currentTime = getTime(currentMessage?.created_at);
     const comparisonTime = getTime(comparisonMessage?.created_at);
@@ -92,32 +123,61 @@ const ChatSection = ({
     return <View style={styles.horizontalLine} />;
   };
 
+  const uploadImageToServer = ({ uploadedFile }) => {
+    const formData = new FormData();
+    formData.append("file", uploadedFile);
+    handleFileUpload({
+      file: formData,
+    });
+  };
+
+  const renderError = () => {
+    return (
+      <CommonText
+        customTextStyle={styles.errorTextStyle}
+        customContainerStyle={styles.errorContainerStyle}
+        fontWeight="600"
+      >
+        {fileUploadError}
+      </CommonText>
+    );
+  };
+
+  const handleUpload = (uploadedFile) => {
+    handleFileUpload({
+      file: uploadedFile,
+    });
+  };
+
   const renderMessagesSection = ({ item, index }) => {
     const issender = getMessageInfo(item, userDetails);
     const messageFlag = getDateStatus(item?.created_at);
     return (
       <>
-        {!!messageFlag && (
-          <View style={styles.flagContainer}>
-            {renderHorizontalLine()}
-            <CommonText customTextStyle={styles.messageFlag}>
-              {messageFlag}
-            </CommonText>
-            {renderHorizontalLine()}
-          </View>
-        )}
+        <>
+          {!!messageFlag && (
+            <View style={styles.flagContainer}>
+              {renderHorizontalLine()}
+              <CommonText customTextStyle={styles.messageFlag}>
+                {messageFlag}
+              </CommonText>
+              {renderHorizontalLine()}
+            </View>
+          )}
 
-        {!!details?.system && (
-          <MessageInfoComponent assigneName={details?.system} />
-        )}
-        <MessageComponent
-          isSender={issender}
-          data={item}
-          userDetails={userProfileDetails?.userDetails}
-          details={details}
-          index={index}
-          shouldShowAvatar={shouldShowAvatar}
-        />
+          {!!details?.system && (
+            <MessageInfoComponent assigneName={details?.system} />
+          )}
+          <MessageComponent
+            isSender={issender}
+            data={item}
+            userDetails={userProfileDetails?.userDetails}
+            details={details}
+            index={index}
+            shouldShowAvatar={shouldShowAvatar}
+          />
+        </>
+        <View ref={scrollToLatestMessageRef} />
       </>
     );
   };
@@ -128,7 +188,7 @@ const ChatSection = ({
         <FlatList
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={() => {
-            if (loadingMore) {
+            if (loadingMore && !isFirstPageReceived) {
               return (
                 <View style={styles.loadingStyle}>
                   <Spinner thickness={2} {...webProps} />
@@ -152,6 +212,7 @@ const ChatSection = ({
       bottomSectionStyle={styles.inputSection}
       bottomSection={
         <>
+          {renderError()}
           {!!details?.assigned_to && (
             <FormWrapper onSubmit={handleSend}>
               <CustomTextInput
@@ -160,12 +221,15 @@ const ChatSection = ({
                   styles.customTextInputOuterContainer
                 }
                 isSendButton
+                initiateFileUpload={initiateFileUpload}
+                imageUrl={fileUploadResult?.data?.url}
                 maxLength={MESSAGE_MAX_LENGTH}
                 onChangeText={(val) => handleInputChange(val)}
-                onClickAttachement={() => {}}
+                onClickAttachement={isMob ? handleUpload : uploadImageToServer}
                 onClickSend={handleSend}
                 placeholder={intl.formatMessage({ id: "label.type_message" })}
                 value={messageValue}
+                setFile={setFile}
               />
             </FormWrapper>
           )}
