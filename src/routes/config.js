@@ -22,6 +22,7 @@ import RoundTwo from "../views/RoundTwoView";
 import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
+import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
@@ -117,6 +118,10 @@ const config = [
       {
         viewPath: "",
         element: <TicketListing />,
+      },
+      {
+        viewPath: navigations.TICKETS_VIEW_EDIT,
+        element: <TicketChatScreen />,
       },
     ],
   },

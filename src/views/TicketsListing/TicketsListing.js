@@ -1,7 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { TwoRow } from "../../core/layouts";
 
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
@@ -11,7 +11,6 @@ import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
-import styles from "./TicketsListing.style";
 
 const TicketsListing = () => {
   const {
@@ -54,13 +53,16 @@ const TicketsListing = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <IconHeader
-        headerText={intl.formatMessage({ id: "label.tickets" })}
-        onPressLeftIcon={onGoBack}
-        hasIconBar
-      />
-      <ScrollView style={styles.tableContent}>
+    <TwoRow
+      topSection={
+        <IconHeader
+          headerText={intl.formatMessage({ id: "label.tickets" })}
+          onPressLeftIcon={onGoBack}
+          hasIconBar
+        />
+      }
+      isBottomFillSpace
+      bottomSection={
         <CustomTable
           {...{
             allDataLoaded,
@@ -96,8 +98,8 @@ const TicketsListing = () => {
             totalcards,
           }}
         />
-      </ScrollView>
-    </View>
+      }
+    />
   );
 };
 
