@@ -89,6 +89,12 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     ...baseAvatarSize,
   },
+  avatarContainerWithName: {
+    marginTop: 20,
+    paddingTop: 0,
+    overflow: "hidden",
+    ...baseAvatarSize,
+  },
   avatar: {
     ...baseAvatarSize,
   },

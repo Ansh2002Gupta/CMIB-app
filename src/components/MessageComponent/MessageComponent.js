@@ -44,7 +44,11 @@ const MessageComponent = ({
       customTextStyle={styles.textSize}
       customOuterContainer={styles.avatarOuterContainer}
       customImageStyle={styles.avatar}
-      customContainerStyle={styles.avatarContainer}
+      customContainerStyle={
+        !!profile_photo
+          ? styles.avatarContainer
+          : styles.avatarContainerWithName
+      }
       profileImage={profile_photo}
       name={name}
     />

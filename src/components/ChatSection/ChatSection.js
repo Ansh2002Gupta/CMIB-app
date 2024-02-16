@@ -13,7 +13,12 @@ import MessageInfoComponent from "../MessageInfoComponent/MessageInfoComponent";
 import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
-import { getDateStatus, getTime } from "../../utils/util";
+import {
+  formatDate,
+  getDateFlagMobile,
+  getDateStatus,
+  getTime,
+} from "../../utils/util";
 import { MESSAGE_MAX_LENGTH } from "../../constants/constants";
 import styles from "./ChatSection.style";
 
@@ -129,13 +134,35 @@ const ChatSection = ({
     });
   };
 
+  const preprocessMessages = (messages) => {
+    const dateFlags = {};
+    messages.forEach((msg) => {
+      const dateKey = formatDate(new Date(msg.created_at));
+      dateFlags[dateKey] = (dateFlags[dateKey] || 0) + 1;
+    });
+
+    messages.forEach((msg, index) => {
+      const dateKey = formatDate(new Date(msg.created_at));
+      dateFlags[dateKey]--;
+      if (dateFlags[dateKey] === 0) {
+        messages[index].dateFlag = getDateFlagMobile(msg.created_at);
+      }
+    });
+    return messages;
+  };
+
+  const processedMessages = preprocessMessages(data);
+
   const renderMessagesSection = ({ item, index }) => {
     const issender = getMessageInfo(item, userDetails);
-    const messageFlag = getDateStatus(item?.created_at);
+    let messageFlag;
+    if (!isMob) {
+      messageFlag = getDateStatus(item?.created_at);
+    }
     return (
       <>
         <>
-          {!!messageFlag && (
+          {!!messageFlag && !isMob && (
             <View style={styles.flagContainer}>
               {renderHorizontalLine()}
               <CommonText customTextStyle={styles.messageFlag}>
@@ -144,7 +171,6 @@ const ChatSection = ({
               {renderHorizontalLine()}
             </View>
           )}
-
           {!!details?.system && (
             <MessageInfoComponent assigneName={details?.system} />
           )}
@@ -156,6 +182,15 @@ const ChatSection = ({
             index={index}
             shouldShowAvatar={shouldShowAvatar}
           />
+          {!!item.dateFlag && isMob && (
+            <View style={styles.flagContainer}>
+              {renderHorizontalLine()}
+              <CommonText customTextStyle={styles.messageFlag}>
+                {item.dateFlag}
+              </CommonText>
+              {renderHorizontalLine()}
+            </View>
+          )}
         </>
         <View ref={scrollToLatestMessageRef} />
       </>
@@ -211,7 +246,7 @@ const ChatSection = ({
               }}
               ref={flatListRef}
               {...isMobileProps}
-              data={data}
+              data={isMob ? processedMessages : data}
               style={styles.chatSection}
               renderItem={renderMessagesSection}
             />
