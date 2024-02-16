@@ -55,7 +55,7 @@ const ChatSection = ({
       const element = scrollToLatestMessageRef.current;
       element.scrollIntoView({ behaviour: "smooth" });
     }
-  }, [messageValue]);
+  }, [data]);
 
   const handleInputChange = (val) => {
     setMessageValue(val);
