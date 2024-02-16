@@ -162,6 +162,7 @@ const ChatSection = ({
     if (!isMob) {
       messageFlag = getDateStatus(item?.created_at);
     }
+
     return (
       <>
         <>
@@ -175,10 +176,7 @@ const ChatSection = ({
             </View>
           )}
           {item?.author?.type.toLowerCase() === "system" && (
-            <MessageInfoComponent
-              assigneName={item?.author?.name}
-              message={item?.message}
-            />
+            <MessageInfoComponent message={item?.message} />
           )}
           <MessageComponent
             isSender={issender}
@@ -265,7 +263,7 @@ const ChatSection = ({
       bottomSection={
         <>
           {renderError()}
-          {!!details?.assigned_to && (
+          {!!details?.chat_partner_details?.name && (
             <FormWrapper onSubmit={handleSend}>
               <CustomTextInput
                 customStyle={styles.cutomTextInput}
