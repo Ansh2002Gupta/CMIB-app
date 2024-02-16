@@ -95,7 +95,7 @@ const ChatSection = ({
   const webProps = !isMob ? { size: "xs" } : {};
 
   const getMessageInfo = (chatData, userDetails) => {
-    if (chatData?.type.toLowerCase() === "system") {
+    if (chatData?.type.toLowerCase() === "system" || !chatData?.type) {
       return null;
     }
     if (

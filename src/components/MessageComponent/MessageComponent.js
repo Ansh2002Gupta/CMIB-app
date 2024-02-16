@@ -107,7 +107,6 @@ const MessageComponent = ({
       </>
     );
   } else {
-    console.log("datenENTERED,");
     return (
       <>
         {shouldShowAvatar(index) ? (
@@ -136,7 +135,7 @@ const MessageComponent = ({
 };
 
 MessageComponent.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   details: PropTypes.object,
   index: PropTypes.number,
   isSender: PropTypes.bool,
