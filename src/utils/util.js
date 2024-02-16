@@ -158,8 +158,6 @@ export const getDateFlagMobile = (createdAt) => {
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
-  console.log(createdAtDate.toDateString(), "===", today.toDateString());
-
   if (createdAtDate.toDateString() === today.toDateString()) {
     return "Today";
   } else if (createdAtDate.toDateString() === yesterday.toDateString()) {

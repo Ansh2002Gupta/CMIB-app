@@ -93,6 +93,13 @@ const useTicketDetails = (location) => {
     setCurrentRecords((prevRecords) => [...newRecords, ...prevRecords]);
   };
 
+  console.log(
+    "current records",
+    currentRecords,
+    "ticketViewDetails",
+    ticketViewDetails
+  );
+
   const onGoBack = () => {
     if (isDetailsScreen) {
       setIsDetailScreen(false);

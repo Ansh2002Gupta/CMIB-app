@@ -39,6 +39,8 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
       if (queryParamsObject && objectToQueryString(queryParamsObject)) {
         modifiedURL = `${url}?${objectToQueryString(queryParamsObject)}`;
       }
+      console.log("modifiedURL", modifiedURL);
+
       setApiStatus(API_STATUS.LOADING);
       error && setError("");
       const res = await Http.get(modifiedURL, apiOptions);

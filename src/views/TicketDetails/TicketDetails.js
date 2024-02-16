@@ -16,8 +16,8 @@ const TicketDetails = ({ details }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
 
+  const isAssigned = !!details?.chat_partner_details || false;
   const getTopSectionData = (assignedTo) => {
-    const isAssigned = !!assignedTo || false;
     const profileIconImage = isAssigned
       ? assignedTo?.profile_photo
       : images.iconAvatar;
@@ -35,7 +35,7 @@ const TicketDetails = ({ details }) => {
     };
   };
 
-  const topSectionData = getTopSectionData(details?.assigned_to);
+  const topSectionData = getTopSectionData(details?.chat_partner_details);
 
   const renderDetails = ({ detailHeading, subDetailHeading }) => {
     return (
@@ -82,7 +82,7 @@ const TicketDetails = ({ details }) => {
     {
       content: renderDetails({
         detailHeading: intl.formatMessage({ id: "label.assigned_to" }),
-        subDetailHeading: details?.assigned_to?.name || "-",
+        subDetailHeading: details?.chat_partner_details?.name || "-",
       }),
     },
   ];
@@ -92,15 +92,15 @@ const TicketDetails = ({ details }) => {
       {isWebView ? (
         <TwoRow
           style={styles.webContainer}
-          topSectionStyle={!details?.assigned_to ? styles.disabled : {}}
+          topSectionStyle={!isAssigned ? styles.disabled : {}}
           topSection={
             <TwoRow
               style={styles.webContainer}
-              topSectionStyle={!details?.assigned_to ? styles.disabled : {}}
+              topSectionStyle={!isAssigned ? styles.disabled : {}}
               topSection={
                 <View>
                   <ProfileIcon
-                    // name={!!details?.assigned_to && details?.assigned_to?.name}
+                    name={topSectionData.headingText}
                     profileImage={topSectionData.profileIconImage}
                     customContainerStyle={styles.profileIcon}
                   />
@@ -110,7 +110,7 @@ const TicketDetails = ({ details }) => {
                   >
                     {topSectionData.headingText}
                   </CommonText>
-                  {details?.assigned_to && (
+                  {isAssigned && (
                     <CommonText customTextStyle={styles.roleText}>
                       {topSectionData.roleText}
                     </CommonText>

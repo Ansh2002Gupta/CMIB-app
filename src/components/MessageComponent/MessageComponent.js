@@ -78,6 +78,9 @@ const MessageComponent = ({
       </View>
     );
   }
+  if (isSender === null) {
+    return <></>;
+  }
   if (isSender) {
     return (
       <>
@@ -104,13 +107,14 @@ const MessageComponent = ({
       </>
     );
   } else {
+    console.log("datenENTERED,");
     return (
       <>
         {shouldShowAvatar(index) ? (
           <View style={styles.recieverContainer}>
             {renderAvatarComponent({
-              // profile_photo: details?.assigned_to?.profile_photo,
-              name: details?.assigned_to?.name,
+              profile_photo: data?.author?.profile_photo,
+              name: data?.author?.name,
             })}
             <View style={styles.reciverMessageArea}>
               <CommonText>{getTime(data?.created_at)}</CommonText>

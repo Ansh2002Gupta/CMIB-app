@@ -84,7 +84,7 @@ const ChatSection = ({
     }
     const currentMessage = data[currentIndex];
     const comparisonMessage = data[comparisonIndex];
-    if (currentMessage?.user_type !== comparisonMessage?.user_type) {
+    if (currentMessage?.author?.type !== comparisonMessage?.author?.type) {
       return true;
     }
     const currentTime = getTime(currentMessage?.created_at);
@@ -95,9 +95,12 @@ const ChatSection = ({
   const webProps = !isMob ? { size: "xs" } : {};
 
   const getMessageInfo = (chatData, userDetails) => {
+    if (chatData?.type.toLowerCase() === "system") {
+      return null;
+    }
     if (
-      chatData.type_id === userDetails?.id &&
-      chatData.user_type.toLowerCase() === userDetails?.user_type.toLowerCase()
+      chatData?.id === userDetails?.id &&
+      chatData?.type.toLowerCase() === userDetails?.user_type.toLowerCase()
     ) {
       return true;
     }
@@ -154,7 +157,7 @@ const ChatSection = ({
   const processedMessages = preprocessMessages(data);
 
   const renderMessagesSection = ({ item, index }) => {
-    const issender = getMessageInfo(item, userDetails);
+    const issender = getMessageInfo(item?.author, userDetails);
     let messageFlag;
     if (!isMob) {
       messageFlag = getDateStatus(item?.created_at);
@@ -171,8 +174,11 @@ const ChatSection = ({
               {renderHorizontalLine()}
             </View>
           )}
-          {!!details?.system && (
-            <MessageInfoComponent assigneName={details?.system} />
+          {item?.author?.type.toLowerCase() === "system" && (
+            <MessageInfoComponent
+              assigneName={item?.author?.name}
+              message={item?.message}
+            />
           )}
           <MessageComponent
             isSender={issender}
