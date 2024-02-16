@@ -204,9 +204,10 @@ const ChatSection = ({
   return (
     <TwoRow
       topSection={
-        <TwoRow
-          topSection={
-            !isMob && (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={
+            isMob && (
               <>
                 {!!details?.query && (
                   <MessageComponent
@@ -218,43 +219,24 @@ const ChatSection = ({
               </>
             )
           }
-          isBottomFillSpace
-          bottomSection={
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              ListFooterComponent={
-                isMob && (
-                  <>
-                    {!!details?.query && (
-                      <MessageComponent
-                        isQueryMessage={true}
-                        userDetails={userProfileDetails?.userDetails}
-                        details={details}
-                      />
-                    )}
-                  </>
-                )
-              }
-              ListHeaderComponent={() => {
-                if (loadingMore && !isFirstPageReceived) {
-                  return (
-                    <View style={styles.loadingStyle}>
-                      <Spinner thickness={2} {...webProps} />
-                    </View>
-                  );
-                }
-                if (allDataLoaded) {
-                  return null;
-                }
-                return null;
-              }}
-              ref={flatListRef}
-              {...isMobileProps}
-              data={isMob ? processedMessages : data}
-              style={styles.chatSection}
-              renderItem={renderMessagesSection}
-            />
-          }
+          ListHeaderComponent={() => {
+            if (loadingMore && !isFirstPageReceived) {
+              return (
+                <View style={styles.loadingStyle}>
+                  <Spinner thickness={2} {...webProps} />
+                </View>
+              );
+            }
+            if (allDataLoaded) {
+              return null;
+            }
+            return null;
+          }}
+          ref={flatListRef}
+          {...isMobileProps}
+          data={isMob ? processedMessages : data}
+          style={styles.chatSection}
+          renderItem={renderMessagesSection}
         />
       }
       isTopFillSpace
