@@ -5,11 +5,20 @@ import CustomButton from "../CustomButton";
 import images from "../../images";
 import styles from "./TriggerFileUpload.style";
 
-const TriggerFileUpload = ({ buttonTitle, initiateFileUpload, setFile }) => {
+const TriggerFileUpload = ({
+  buttonTitle,
+  customButtonStyle,
+  iconLeft,
+  initiateFileUpload,
+  onImageUpload,
+  setFile,
+}) => {
+  const { isLeftIconNotSvg, leftIconSource } = iconLeft;
   const fileInputRef = useRef(null);
 
   const onValidImageUpload = ({ uploadedFile }) => {
     setFile(uploadedFile);
+    onImageUpload && onImageUpload({ uploadedFile });
   };
 
   const fileUploadHandler = (e) => {
@@ -27,12 +36,14 @@ const TriggerFileUpload = ({ buttonTitle, initiateFileUpload, setFile }) => {
   return (
     <>
       <CustomButton
-        style={styles.buttonStyle}
+        style={{
+          ...(!!customButtonStyle ? customButtonStyle : styles.buttonStyle),
+        }}
         onPress={handleUploadClick}
         shouldShowHover
         iconLeft={{
-          isLeftIconNotSvg: true,
-          leftIconSource: images.iconChange,
+          isLeftIconNotSvg,
+          leftIconSource,
         }}
         customStyle={{ customTextStyle: { fontSize: 14 } }}
       >
@@ -52,13 +63,22 @@ const TriggerFileUpload = ({ buttonTitle, initiateFileUpload, setFile }) => {
 
 TriggerFileUpload.defaultProps = {
   buttonTitle: "",
+  customButtonStyle: {},
   setFile: () => {},
+  iconLeft: {
+    isLeftIconNotSvg: true,
+    leftIconSource: images.iconChange,
+  },
+  onImageUpload: () => {},
 };
 
 TriggerFileUpload.propTypes = {
   buttonTitle: PropTypes.string,
+  customButtonStyle: PropTypes.object,
   initiateFileUpload: PropTypes.any,
   setFile: PropTypes.func,
+  iconLeft: PropTypes.object,
+  onImageUpload: PropTypes.func,
 };
 
 export default TriggerFileUpload;

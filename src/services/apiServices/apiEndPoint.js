@@ -22,12 +22,16 @@ export const CORE_USERS_PERMISSION = `${CORE}/users/permission`;
 export const MENU_PROFILE = `${CORE}/menu-profile/${USER_TYPE_COMPANY}`;
 export const COUNTRY_CODE = `${CORE}/countries`;
 export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
+export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
+export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
+export const COMPANY_TICKET_STATUS = `${CORE}/status`;
+export const COMPANY_TICKET_VIEW = `${CORE}/tickets`;
 
 /* API Endpoints Members*/
 export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;
 export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/otp/verify`;
 export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
 export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
-export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
-export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
-export const COMPANY_TICKET_STATUS = `${CORE}/status`;
+
+//sub routes
+export const TICKET_REPLIES_SUB_ROUTES = "replies";

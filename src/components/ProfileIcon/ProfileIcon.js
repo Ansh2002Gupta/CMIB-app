@@ -70,6 +70,7 @@ const ProfileIcon = ({
 ProfileIcon.defaultProps = {
   customContainerStyle: {},
   customImageStyle: {},
+  customOuterContainer: {},
   customTextStyle: {},
   customOuterContainer: {},
   name: "",
@@ -81,6 +82,7 @@ ProfileIcon.defaultProps = {
 ProfileIcon.propTypes = {
   customContainerStyle: PropTypes.object,
   customImageStyle: PropTypes.object,
+  customOuterContainer: PropTypes.object,
   customTextStyle: PropTypes.object,
   customOuterContainer: PropTypes.object,
   name: PropTypes.string,

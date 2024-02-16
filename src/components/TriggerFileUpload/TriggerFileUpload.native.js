@@ -12,7 +12,10 @@ const TriggerFileUpload = ({
   setFile,
   onImageUpload,
   isLoading,
+  customButtonStyle,
+  iconLeft,
 }) => {
+  const { isLeftIconNotSvg, leftIconSource } = iconLeft;
   const openImagePicker = async () => {
     try {
       const image = await ImagePicker.openPicker({
@@ -38,11 +41,13 @@ const TriggerFileUpload = ({
 
   return (
     <CustomButton
-      style={styles.buttonStyle}
+      style={{
+        ...(customButtonStyle ? customButtonStyle : styles.buttonStyle),
+      }}
       onPress={openImagePicker}
       iconLeft={{
-        isLeftIconNotSvg: true,
-        leftIconSource: images.iconChange,
+        isLeftIconNotSvg,
+        leftIconSource,
       }}
       isLoading={isLoading}
     >
@@ -54,6 +59,10 @@ const TriggerFileUpload = ({
 TriggerFileUpload.defaultProps = {
   buttonTitle: "",
   isLoading: false,
+  iconLeft: {
+    isLeftIconNotSvg: true,
+    leftIconSource: images.iconChange,
+  },
   onImageUpload: () => {},
   setFile: () => {},
 };
@@ -61,6 +70,7 @@ TriggerFileUpload.defaultProps = {
 TriggerFileUpload.propTypes = {
   buttonTitle: PropTypes.string,
   isLoading: PropTypes.bool,
+  iconLeft: PropTypes.object,
   onImageUpload: PropTypes.func,
   setFile: PropTypes.func,
 };
