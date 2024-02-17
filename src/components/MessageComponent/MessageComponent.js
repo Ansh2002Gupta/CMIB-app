@@ -44,7 +44,11 @@ const MessageComponent = ({
       customTextStyle={styles.textSize}
       customOuterContainer={styles.avatarOuterContainer}
       customImageStyle={styles.avatar}
-      customContainerStyle={styles.avatarContainer}
+      customContainerStyle={
+        !!profile_photo
+          ? styles.avatarContainer
+          : styles.avatarContainerWithName
+      }
       profileImage={profile_photo}
       name={name}
     />
@@ -73,6 +77,9 @@ const MessageComponent = ({
         })}
       </View>
     );
+  }
+  if (isSender === null) {
+    return <></>;
   }
   if (isSender) {
     return (
@@ -105,8 +112,8 @@ const MessageComponent = ({
         {shouldShowAvatar(index) ? (
           <View style={styles.recieverContainer}>
             {renderAvatarComponent({
-              // profile_photo: details?.assigned_to?.profile_photo,
-              name: details?.assigned_to?.name,
+              profile_photo: data?.author?.profile_photo,
+              name: data?.author?.name,
             })}
             <View style={styles.reciverMessageArea}>
               <CommonText>{getTime(data?.created_at)}</CommonText>
@@ -128,7 +135,7 @@ const MessageComponent = ({
 };
 
 MessageComponent.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   details: PropTypes.object,
   index: PropTypes.number,
   isSender: PropTypes.bool,

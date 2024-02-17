@@ -202,7 +202,7 @@ const useTicketListing = () => {
           ...(!isWebView ? styles.close : styles.closeWeb),
           ...styles.cellTextStyle(12),
         };
-      case "in progress":
+      case "in-progress":
         return {
           ...(!isWebView ? styles.inProgress : styles.inProgressWeb),
           ...styles.cellTextStyle(12),
