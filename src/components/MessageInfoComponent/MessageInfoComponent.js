@@ -1,27 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 
 import CommonText from "../CommonText";
 import styles from "./MessageInfoComponent.style";
 
-const MessageInfoComponent = ({ assigneName }) => {
+const MessageInfoComponent = ({ message }) => {
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
-        <CommonText fontWeight={"600"} customTextStyle={styles.textSize}>
-          {assigneName}&nbsp;
-        </CommonText>
-        <CommonText customTextStyle={styles.textSize}>
-          has been assigned to the ticket
+        <CommonText customTextStyle={styles.textSize(currentBreakpoint)}>
+          {message}
         </CommonText>
       </View>
     </View>
   );
 };
 
+MessageInfoComponent.defaultProps = {
+  assigneName: "",
+  message: "",
+};
+
 MessageInfoComponent.propTypes = {
-  assigneName: PropTypes.object.isRequired,
+  assigneName: PropTypes.string,
+  message: PropTypes.string,
 };
 
 export default MessageInfoComponent;

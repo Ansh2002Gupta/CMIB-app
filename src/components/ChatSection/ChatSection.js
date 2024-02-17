@@ -13,7 +13,12 @@ import MessageInfoComponent from "../MessageInfoComponent/MessageInfoComponent";
 import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
-import { getDateStatus, getTime } from "../../utils/util";
+import {
+  formatDate,
+  getDateFlagMobile,
+  getDateStatus,
+  getTime,
+} from "../../utils/util";
 import { MESSAGE_MAX_LENGTH } from "../../constants/constants";
 import styles from "./ChatSection.style";
 
@@ -79,7 +84,7 @@ const ChatSection = ({
     }
     const currentMessage = data[currentIndex];
     const comparisonMessage = data[comparisonIndex];
-    if (currentMessage?.user_type !== comparisonMessage?.user_type) {
+    if (currentMessage?.author?.type !== comparisonMessage?.author?.type) {
       return true;
     }
     const currentTime = getTime(currentMessage?.created_at);
@@ -90,9 +95,12 @@ const ChatSection = ({
   const webProps = !isMob ? { size: "xs" } : {};
 
   const getMessageInfo = (chatData, userDetails) => {
+    if (chatData?.type.toLowerCase() === "system" || !chatData?.type) {
+      return null;
+    }
     if (
-      chatData.type_id === userDetails?.id &&
-      chatData.user_type.toLowerCase() === userDetails?.user_type.toLowerCase()
+      chatData?.id === userDetails?.id &&
+      chatData?.type.toLowerCase() === userDetails?.user_type.toLowerCase()
     ) {
       return true;
     }
@@ -129,13 +137,36 @@ const ChatSection = ({
     });
   };
 
+  const preprocessMessages = (messages) => {
+    const dateFlags = {};
+    messages.forEach((msg) => {
+      const dateKey = formatDate(new Date(msg.created_at));
+      dateFlags[dateKey] = (dateFlags[dateKey] || 0) + 1;
+    });
+
+    messages.forEach((msg, index) => {
+      const dateKey = formatDate(new Date(msg.created_at));
+      dateFlags[dateKey]--;
+      if (!dateFlags[dateKey]) {
+        messages[index].dateFlag = getDateFlagMobile(msg.created_at);
+      }
+    });
+    return messages;
+  };
+
+  const processedMessages = preprocessMessages(data);
+
   const renderMessagesSection = ({ item, index }) => {
-    const issender = getMessageInfo(item, userDetails);
-    const messageFlag = getDateStatus(item?.created_at);
+    const issender = getMessageInfo(item?.author, userDetails);
+    let messageFlag;
+    if (!isMob) {
+      messageFlag = getDateStatus(item?.created_at);
+    }
+
     return (
       <>
         <>
-          {!!messageFlag && (
+          {!!messageFlag && !isMob && (
             <View style={styles.flagContainer}>
               {renderHorizontalLine()}
               <CommonText customTextStyle={styles.messageFlag}>
@@ -144,9 +175,8 @@ const ChatSection = ({
               {renderHorizontalLine()}
             </View>
           )}
-
-          {!!details?.system && (
-            <MessageInfoComponent assigneName={details?.system} />
+          {item?.author?.type.toLowerCase() === "system" && (
+            <MessageInfoComponent message={item?.message} />
           )}
           <MessageComponent
             isSender={issender}
@@ -156,6 +186,15 @@ const ChatSection = ({
             index={index}
             shouldShowAvatar={shouldShowAvatar}
           />
+          {!!item.dateFlag && isMob && (
+            <View style={styles.flagContainer}>
+              {renderHorizontalLine()}
+              <CommonText customTextStyle={styles.messageFlag}>
+                {item.dateFlag}
+              </CommonText>
+              {renderHorizontalLine()}
+            </View>
+          )}
         </>
         <View ref={scrollToLatestMessageRef} />
       </>
@@ -165,9 +204,10 @@ const ChatSection = ({
   return (
     <TwoRow
       topSection={
-        <TwoRow
-          topSection={
-            !isMob && (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={
+            isMob && (
               <>
                 {!!details?.query && (
                   <MessageComponent
@@ -179,43 +219,24 @@ const ChatSection = ({
               </>
             )
           }
-          isBottomFillSpace
-          bottomSection={
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              ListFooterComponent={
-                isMob && (
-                  <>
-                    {!!details?.query && (
-                      <MessageComponent
-                        isQueryMessage={true}
-                        userDetails={userProfileDetails?.userDetails}
-                        details={details}
-                      />
-                    )}
-                  </>
-                )
-              }
-              ListHeaderComponent={() => {
-                if (loadingMore && !isFirstPageReceived) {
-                  return (
-                    <View style={styles.loadingStyle}>
-                      <Spinner thickness={2} {...webProps} />
-                    </View>
-                  );
-                }
-                if (allDataLoaded) {
-                  return null;
-                }
-                return null;
-              }}
-              ref={flatListRef}
-              {...isMobileProps}
-              data={data}
-              style={styles.chatSection}
-              renderItem={renderMessagesSection}
-            />
-          }
+          ListHeaderComponent={() => {
+            if (loadingMore && !isFirstPageReceived) {
+              return (
+                <View style={styles.loadingStyle}>
+                  <Spinner thickness={2} {...webProps} />
+                </View>
+              );
+            }
+            if (allDataLoaded) {
+              return null;
+            }
+            return null;
+          }}
+          ref={flatListRef}
+          {...isMobileProps}
+          data={isMob ? processedMessages : data}
+          style={styles.chatSection}
+          renderItem={renderMessagesSection}
         />
       }
       isTopFillSpace
@@ -224,7 +245,7 @@ const ChatSection = ({
       bottomSection={
         <>
           {renderError()}
-          {!!details?.assigned_to && (
+          {!!details?.chat_partner_details?.name && (
             <FormWrapper onSubmit={handleSend}>
               <CustomTextInput
                 customStyle={styles.cutomTextInput}

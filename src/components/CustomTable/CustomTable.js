@@ -336,7 +336,7 @@ CustomTable.defaultProps = {
 CustomTable.propTypes = {
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
-  data: PropTypes.object,
+  data: PropTypes.array,
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func.isRequired,

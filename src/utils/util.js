@@ -132,18 +132,36 @@ export const getDateStatus = (record) => {
     if (lastFlagDate !== today.toDateString()) {
       lastFlagDate = today.toDateString();
       return "Today";
-    } else {
-      return "";
     }
-  } else if (createdAt.toDateString() === yesterday.toDateString()) {
+    return "";
+  }
+  if (createdAt.toDateString() === yesterday.toDateString()) {
     if (lastFlagDate !== yesterday.toDateString()) {
       lastFlagDate = yesterday.toDateString();
       return "Yesterday";
-    } else {
-      return "";
     }
-  } else {
-    lastFlagDate = null;
-    return formatDate(createdAt);
+    return "";
   }
+  if (createdAt.toDateString() < yesterday.toDateString()) {
+    if (lastFlagDate !== createdAt.toDateString()) {
+      lastFlagDate = createdAt.toDateString();
+      return formatDate(createdAt);
+    }
+    return "";
+  }
+};
+
+export const getDateFlagMobile = (createdAt) => {
+  const createdAtDate = new Date(createdAt);
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  if (createdAtDate.toDateString() === today.toDateString()) {
+    return "Today";
+  }
+  if (createdAtDate.toDateString() === yesterday.toDateString()) {
+    return "Yesterday";
+  }
+  return formatDate(createdAtDate);
 };
