@@ -147,7 +147,7 @@ const ChatSection = ({
     messages.forEach((msg, index) => {
       const dateKey = formatDate(new Date(msg.created_at));
       dateFlags[dateKey]--;
-      if (dateFlags[dateKey] === 0) {
+      if (!dateFlags[dateKey]) {
         messages[index].dateFlag = getDateFlagMobile(msg.created_at);
       }
     });
