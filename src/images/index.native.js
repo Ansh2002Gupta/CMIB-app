@@ -60,6 +60,7 @@ import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
 import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
 import iconAdd from "../../public/images/svg/iconAdd.svg";
 import iconAddWhite from "../../public/images/svg/iconAddWhite.svg";
+import iconAddBlack from "../../public/images/svg/iconAddBlack.svg";
 import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
 import iconArrowRightWhite from "../../public/images/svg/iconArrowRightWhite.svg";
 import iconArrowLeft from "../../public/images/svg/iconArrowLeft.svg";
@@ -232,6 +233,7 @@ const images = {
   iconArrowDownSorting,
   iconArrowUpSorting,
   iconAddWhite,
+  iconAddBlack,
 };
 
 export default images;
