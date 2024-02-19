@@ -119,7 +119,7 @@ const locale = {
   "label.overseas_placements": "Overseas Placements",
   "label.career_ascents": "Career Ascents",
   "label.women_placements": "Women Placements",
-  "label.email_from_cpaib": "Email from CPAIB",
+  "label.email_from_cmib": "Email from CMIB",
   "label.campus": "Campus",
   "label.programme_brouchers": "Programme brochures from ICAI",
   "label.based_on_prev_participation": "Based on previous participation",
