@@ -124,6 +124,9 @@ const styles = StyleSheet.create({
   addNewText: {
     color: colors.white,
   },
+  iconAdd: {
+    marginRight: 8,
+  },
   textSize: {
     fontSize: 14,
   },

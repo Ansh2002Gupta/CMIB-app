@@ -20,6 +20,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
+import CustomImage from "../CustomImage";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -76,6 +77,7 @@ const CustomTable = ({
         }}
         onPress={handleTicketModal}
       >
+        <CustomImage source={images.iconAddWhite} style={styles.iconAdd} />
         <CommonText customTextStyle={styles.addNewText}>
           {intl.formatMessage({ id: "label.add_new_ticket" })}
         </CommonText>
