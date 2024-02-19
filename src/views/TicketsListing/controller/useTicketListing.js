@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
-import { View, Platform } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
@@ -83,8 +83,8 @@ const useTicketListing = () => {
       const initialData = await fetchDataTicketListing({
         queryParamsObject: requestedParams,
       });
-      if (initialData && initialData.records.length > 0) {
-        setCurrentRecords(initialData.records);
+      if (initialData && initialData?.records?.length > 0) {
+        setCurrentRecords(initialData?.records);
       }
       setIsFirstPageReceived(false);
     };
@@ -111,7 +111,7 @@ const useTicketListing = () => {
         queryParamsObject: { perPage: rowsPerPage, page: nextPage },
       });
 
-      if (newData && newData.records.length > 0) {
+      if (newData && newData?.records?.length > 0) {
         setCurrentRecords((prevRecords) => [
           ...prevRecords,
           ...newData.records,
@@ -119,7 +119,7 @@ const useTicketListing = () => {
       }
 
       setCurrentPage(nextPage);
-      if (newData.meta.currentPage === newData.meta.lastPage) {
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
         setAllDataLoaded(true);
       }
     } catch (error) {
