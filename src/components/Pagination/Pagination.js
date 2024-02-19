@@ -27,7 +27,7 @@ function Pagination(props) {
   const windowDimensions = useWindowDimensions();
   const showbuttonText = windowDimensions.width >= 900;
 
-  const totalPages = totalcards ? Math.ceil(totalcards / cardsPerPage) : null;
+  const totalPages = totalcards ? Math.ceil(totalcards / cardsPerPage) : 1;
 
   const paginationRange = () => {
     const totalPageNumbers = siblingCount + 5;
@@ -122,6 +122,8 @@ function Pagination(props) {
               style={activeButton}
               key={idx}
               onPress={() => paginate(page)}
+              disabled={!totalcards}
+              disabledStyle={styles.disabled}
             >
               <CommonText customTextStyle={activeText}>{page}</CommonText>
             </CustomButton>

@@ -107,6 +107,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: colors.lightGrey,
   },
+  loadingStyleNoData: {
+    backgroundColor: colors.white,
+    alignItems: "center",
+    padding: 30,
+  },
   addNewButton: {
     flexDirection: "row",
     alignItems: "center",
@@ -127,6 +132,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   addTicketSection: { justifyContent: "space-between" },
+  addNewButtonMob: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+  },
+  activeTickets: {
+    backgroundColor: colors.green,
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    marginLeft: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  activeTicketsText: {
+    color: colors.white,
+  },
 });
 
 export default styles;

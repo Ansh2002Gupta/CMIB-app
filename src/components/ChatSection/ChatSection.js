@@ -245,7 +245,7 @@ const ChatSection = ({
       bottomSection={
         <>
           {renderError()}
-          {!!details?.chat_partner_details?.name && (
+          {details?.status.toLowerCase() === "in-progress" && (
             <FormWrapper onSubmit={handleSend}>
               <CustomTextInput
                 customStyle={styles.cutomTextInput}
