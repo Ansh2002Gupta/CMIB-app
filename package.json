@@ -41,6 +41,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal": "13.0.1",
     "react-native-pell-rich-editor": "1.9.0",
+    "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^14.1.0",
     "react-native-svg-transformer": "^1.2.0",
     "react-native-webview": "^13.6.3",
