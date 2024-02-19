@@ -10,6 +10,7 @@ import AddTicketModal from "../AddTicketModal/AddTicketModal";
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import CustomImage from "../CustomImage";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
@@ -20,7 +21,6 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
-import CustomImage from "../CustomImage";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -77,18 +77,23 @@ const CustomTable = ({
         }}
         onPress={handleTicketModal}
       >
-        <CustomImage source={images.iconAddWhite} style={styles.iconAdd} />
-        <CommonText customTextStyle={styles.addNewText}>
-          {intl.formatMessage({ id: "label.add_new_ticket" })}
-        </CommonText>
+        <CustomImage
+          source={isWebView ? images.iconAddWhite : images.iconAddBlack}
+          style={styles.iconAdd}
+        />
+        {isWebView && (
+          <CommonText customTextStyle={styles.addNewText}>
+            {intl.formatMessage({ id: "label.add_new_ticket" })}
+          </CommonText>
+        )}
       </CustomTouchableOpacity>
     );
   };
 
   const isFilterCount =
-    filterState?.activeCategories.length > 0 &&
-    (filterState?.selectedStatus.length > 0 ||
-      filterState?.selectedQueryType.length > 0);
+    !!filterState?.activeCategories.length &&
+    (!!filterState?.selectedStatus.length ||
+      !!filterState?.selectedQueryType.length);
 
   const handleTicketModal = () => {
     setAddNewTicket((prev) => !prev);
@@ -160,7 +165,7 @@ const CustomTable = ({
                     style={styles.filterTopSection(isWebView)}
                   />
                 }
-                rightSection={isWebView && renderAddTicket()}
+                rightSection={renderAddTicket()}
               />
             )}
             {!isWeb && (
@@ -250,7 +255,7 @@ const CustomTable = ({
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if (isWeb && !data.length)
+                        if (!data.length)
                           return (
                             <CommonText
                               customContainerStyle={styles.loadingStyleNoData}
@@ -294,7 +299,6 @@ const CustomTable = ({
                     )}
                   </View>
                 )}
-                {!isWebView && renderAddTicket()}
               </>
             }
             isTopFillSpace

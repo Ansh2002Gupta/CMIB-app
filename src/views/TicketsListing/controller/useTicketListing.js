@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
-import { View } from "@unthinkable/react-core-components";
+import { View, Platform } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
@@ -27,6 +27,8 @@ import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsListing.style";
 
+const isMob = Platform.OS.toLowerCase() !== "web";
+
 const useTicketListing = () => {
   const { isWebView } = useIsWebView();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,7 +37,10 @@ const useTicketListing = () => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
-  const [queryMessage, setQueryMessage] = useState("");
+  const [filterOptions, setFilterOptions] = useState({
+    status: "",
+    query_type: "",
+  });
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -145,6 +150,8 @@ const useTicketListing = () => {
       q: searchedData,
       perPage: rowsPerPage,
       page: currentPage,
+      status: filterOptions.status,
+      queryType: filterOptions.query_type,
     });
   };
 
@@ -155,15 +162,25 @@ const useTicketListing = () => {
   };
 
   const handleSaveAddTicket = async (queryType, enterQuery) => {
-    setQueryMessage(enterQuery);
     await handleAddTicket({ query_type: queryType, query: enterQuery });
-    await updateCurrentRecords({
-      perPage: rowsPerPage,
-      page: currentPage,
-    });
+    if (isMob) {
+      const newData = await fetchDataTicketListing();
+      if (newData && newData.records.length > 0) {
+        setCurrentRecords((prevRecords) => [
+          ...prevRecords,
+          ...newData.records,
+        ]);
+      }
+    } else {
+      await updateCurrentRecords({
+        perPage: rowsPerPage,
+        page: currentPage,
+      });
+    }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
+    setFilterOptions({ status: selectedStatus, query_type: selectedQueryType });
     await updateCurrentRecords({
       status: selectedStatus,
       queryType: selectedQueryType,
