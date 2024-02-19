@@ -206,19 +206,6 @@ const ChatSection = ({
       topSection={
         <FlatList
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={
-            isMob && (
-              <>
-                {!!details?.query && (
-                  <MessageComponent
-                    isQueryMessage={true}
-                    userDetails={userProfileDetails?.userDetails}
-                    details={details}
-                  />
-                )}
-              </>
-            )
-          }
           ListHeaderComponent={() => {
             if (loadingMore && !isFirstPageReceived) {
               return (
