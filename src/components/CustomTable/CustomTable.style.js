@@ -123,9 +123,7 @@ const styles = StyleSheet.create({
   },
   addNewText: {
     color: colors.white,
-  },
-  iconAdd: {
-    marginRight: 8,
+    marginLeft: 8,
   },
   textSize: {
     fontSize: 14,
@@ -136,9 +134,15 @@ const styles = StyleSheet.create({
   },
   addTicketSection: { justifyContent: "space-between" },
   addNewButtonMob: {
-    position: "absolute",
-    bottom: 20,
-    right: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 44,
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    borderRadius: 8,
+    marginLeft: 16,
+    padding: 12,
   },
   activeTickets: {
     backgroundColor: colors.green,
