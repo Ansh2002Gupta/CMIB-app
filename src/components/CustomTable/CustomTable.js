@@ -20,6 +20,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
+import CustomImage from "../CustomImage";
 
 const initialFilterState = {
   selectedStatus: [],
@@ -66,6 +67,28 @@ const CustomTable = ({
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [filterState, setFilterState] = useState(initialFilterState);
   const [addNewTicket, setAddNewTicket] = useState(false);
+
+  const renderAddTicket = () => {
+    return (
+      <CustomTouchableOpacity
+        style={{
+          ...styles.addNewButton,
+          ...(!isWebView ? styles.addNewButtonMob : {}),
+        }}
+        onPress={handleTicketModal}
+      >
+        <CustomImage source={images.iconAddWhite} style={styles.iconAdd} />
+        <CommonText customTextStyle={styles.addNewText}>
+          {intl.formatMessage({ id: "label.add_new_ticket" })}
+        </CommonText>
+      </CustomTouchableOpacity>
+    );
+  };
+
+  const isFilterCount =
+    filterState?.activeCategories.length > 0 &&
+    (filterState?.selectedStatus.length > 0 ||
+      filterState?.selectedQueryType.length > 0);
 
   const handleTicketModal = () => {
     setAddNewTicket((prev) => !prev);
@@ -122,21 +145,22 @@ const CustomTable = ({
                             {intl.formatMessage({ id: "label.filters" })}
                           </CommonText>
                         )}
+                        {isFilterCount && (
+                          <CommonText
+                            customContainerStyle={styles.activeTickets}
+                            customTextStyle={styles.activeTicketsText}
+                            fontWeight={"600"}
+                          >
+                            {filterState?.selectedStatus.length +
+                              filterState?.selectedQueryType.length}
+                          </CommonText>
+                        )}
                       </CustomTouchableOpacity>
                     }
                     style={styles.filterTopSection(isWebView)}
                   />
                 }
-                rightSection={
-                  <CustomTouchableOpacity
-                    style={styles.addNewButton}
-                    onPress={handleTicketModal}
-                  >
-                    <CommonText customTextStyle={styles.addNewText}>
-                      {intl.formatMessage({ id: "label.add_new_ticket" })}
-                    </CommonText>
-                  </CustomTouchableOpacity>
-                }
+                rightSection={isWebView && renderAddTicket()}
               />
             )}
             {!isWeb && (
@@ -169,7 +193,7 @@ const CustomTable = ({
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
-                {isTicketListingLoading && isFirstPageReceived ? (
+                {isTicketListingLoading && (isWeb || isFirstPageReceived) ? (
                   <LoadingScreen />
                 ) : (
                   <View style={styles.tableSection}>
@@ -229,10 +253,10 @@ const CustomTable = ({
                         if (isWeb && !data.length)
                           return (
                             <CommonText
-                              customContainerStyle={styles.loadingStyle}
+                              customContainerStyle={styles.loadingStyleNoData}
                               customTextStyle={styles.noMoreData}
                             >
-                              {intl.formatMessage({ id: "label.no_more_data" })}
+                              {intl.formatMessage({ id: "label.no_data" })}
                             </CommonText>
                           );
                         if (loadingMore && !isFirstPageReceived) {
@@ -270,6 +294,7 @@ const CustomTable = ({
                     )}
                   </View>
                 )}
+                {!isWebView && renderAddTicket()}
               </>
             }
             isTopFillSpace

@@ -256,6 +256,7 @@ const locale = {
   "label.search": "Search",
   "label.clear_all": "Clear All",
   "label.no_more_data": "No more data",
+  "label.no_data": "No data Found",
   "label.sessions": "Sessions",
   "label.basic": "Basic",
   "label.hra": "HRA",

@@ -253,7 +253,7 @@ const useTicketListing = () => {
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item.assigned_to || "-"}
+            {item?.assigned_to?.name || "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("20%"),

@@ -98,6 +98,7 @@ const iconFooter = appendAppBaseURl("/images/svg/iconFooter.svg");
 const iconArrowDown = appendAppBaseURl("/images/svg/iconArrowDown.svg");
 const iconArrowUp = appendAppBaseURl("/images/svg/iconArrowUp.svg");
 const iconAdd = appendAppBaseURl("/images/svg/iconAdd.svg");
+const iconAddWhite = appendAppBaseURl("/images/svg/iconAddWhite.svg");
 const iconStepperDone = appendAppBaseURl("/images/svg/iconStepperDone.svg");
 const iconArrowRightWhite = appendAppBaseURl(
   "/images/svg/iconArrowRightWhite.svg"
@@ -322,6 +323,7 @@ const images = {
   iconAvatar,
   iconArrowDownSorting,
   iconArrowUpSorting,
+  iconAddWhite,
 };
 
 export default images;
