@@ -3,7 +3,7 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   customerInnerContainerStyle: {
-    paddingTop: 0,
+    paddingTop: 16,
     paddingLeft: 0,
     paddingRight: 0,
   },
