@@ -206,19 +206,6 @@ const ChatSection = ({
       topSection={
         <FlatList
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={
-            isMob && (
-              <>
-                {!!details?.query && (
-                  <MessageComponent
-                    isQueryMessage={true}
-                    userDetails={userProfileDetails?.userDetails}
-                    details={details}
-                  />
-                )}
-              </>
-            )
-          }
           ListHeaderComponent={() => {
             if (loadingMore && !isFirstPageReceived) {
               return (
@@ -245,7 +232,7 @@ const ChatSection = ({
       bottomSection={
         <>
           {renderError()}
-          {!!details?.chat_partner_details?.name && (
+          {details?.status.toLowerCase() === "in-progress" && (
             <FormWrapper onSubmit={handleSend}>
               <CustomTextInput
                 customStyle={styles.cutomTextInput}

@@ -218,7 +218,10 @@ export const TICKET_TABLE_HEADING = {
   readable_id: "Ticket ID",
   query_type: "Query Type",
   status: "Status",
-  assigned_to: "Assigned To",
+  assigned_to: {
+    id: "",
+    name: "Assigned To",
+  },
   created_at: "Created On",
 };
 
@@ -390,7 +393,6 @@ export const ATTEMPTS = Array.from({ length: 30 }, (_, x) => ({
 }));
 
 export const YEARS = Array.from({ length: 30 }, (_, x) => ({
-    label: `${x + 1995}`,
-    value: `${x + 1995}`,
-  }));
-
+  label: `${x + 1995}`,
+  value: `${x + 1995}`,
+}));
