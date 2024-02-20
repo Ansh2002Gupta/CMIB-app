@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Router, Routes } from "./routes";
 import { IntlProvider } from "react-intl";
 import { MediaQueryProvider, ThemeProvider } from "@unthinkable/react-theme";
 import { Platform } from "@unthinkable/react-core-components";
+import SplashScreen from "react-native-splash-screen";
 
 import { LocaleContext } from "./globalContext/locale/localeProviders";
 import intl from "./locale";
@@ -14,6 +15,12 @@ function App() {
   const {
     base: { breakpoints },
   } = theme;
+
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      SplashScreen.hide();
+    }
+  }, []);
 
   // useEnsureBaseName(); // Please uncomment this if you want to redirect the user to the "/app" subdomain from a route that doesn't include word 'app' in it. Kept it commented as it will redirect the user to the /app subdomain even when the user wants to view the CMS or other sub domains
 
