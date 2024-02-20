@@ -37,7 +37,7 @@ const TriggerFileUpload = ({
     <>
       <CustomButton
         style={{
-          ...(!!customButtonStyle ? customButtonStyle : styles.buttonStyle),
+          ...(customButtonStyle || styles.buttonStyle),
         }}
         onPress={handleUploadClick}
         shouldShowHover
@@ -45,7 +45,7 @@ const TriggerFileUpload = ({
           isLeftIconNotSvg,
           leftIconSource,
         }}
-        customStyle={{ customTextStyle: { fontSize: 14 } }}
+        customStyle={{ customTextStyle: styles.customStyle }}
       >
         {buttonTitle}
       </CustomButton>

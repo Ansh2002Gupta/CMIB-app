@@ -61,5 +61,11 @@ const styles = {
   customHeadingStyle: {
     paddingBottom: 16,
   },
+  customTextStyle: {
+    fontSize: 14,
+  },
+  customButtonStyle: {
+    flex: 1,
+  },
 };
 export default styles;
