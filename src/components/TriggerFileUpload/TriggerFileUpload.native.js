@@ -25,14 +25,12 @@ const TriggerFileUpload = ({
       if (image) {
         setFile(image?.sourceURL || image?.path);
         const uri = image?.sourceURL || image?.path;
-        const formData = new FormData();
         const file = {
           uri: uri,
           name: image?.filename || extractFilename(uri),
           type: image.mime,
         };
-        formData.append("file", file);
-        onImageUpload(formData);
+        onImageUpload({ uploadedFile: file });
       }
     } catch (error) {
       console.log(error);
@@ -42,7 +40,7 @@ const TriggerFileUpload = ({
   return (
     <CustomButton
       style={{
-        ...(customButtonStyle ? customButtonStyle : styles.buttonStyle),
+        ...(customButtonStyle || styles.buttonStyle),
       }}
       onPress={openImagePicker}
       iconLeft={{
