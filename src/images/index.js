@@ -193,6 +193,7 @@ const iconArrowDownSorting = appendAppBaseURl(
 const iconArrowUpSorting = appendAppBaseURl(
   "/images/svg/iconArrowUpSorting.svg"
 );
+const iconPartial = appendAppBaseURl("/images/svg/iconPartial.svg");
 
 const images = {
   iconArrowUp,
@@ -327,6 +328,7 @@ const images = {
   iconArrowUpSorting,
   iconAddWhite,
   iconAddBlack,
+  iconPartial,
   iconSendDisabled,
 };
 

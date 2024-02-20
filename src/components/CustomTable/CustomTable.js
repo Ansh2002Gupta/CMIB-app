@@ -69,9 +69,8 @@ const CustomTable = ({
   const [filterState, setFilterState] = useState(initialFilterState);
 
   const isFilterCount =
-    !!filterState?.activeCategories.length &&
-    (!!filterState?.selectedStatus.length ||
-      !!filterState?.selectedQueryType.length);
+    !!filterState?.selectedStatus.length ||
+    !!filterState?.selectedQueryType.length;
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);

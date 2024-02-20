@@ -4,6 +4,7 @@ import colors from "../../assets/colors";
 const styles = StyleSheet.create({
   customerInnerContainerStyle: {
     paddingTop: 16,
+    paddingBottom: 16,
     paddingLeft: 0,
     paddingRight: 0,
   },
@@ -36,6 +37,15 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     borderColor: colors.lightGrey,
   },
+  buttonWebStyle: {
+    alignItems: "flex-end",
+  },
+  subContainerStyle: {
+    width: "50%",
+  },
+  buttonMobileStyle: {
+    marginBottom: 30,
+  },
   middleSectionWeb: {
     minHeight: 278,
   },
@@ -45,15 +55,17 @@ const styles = StyleSheet.create({
   arrowRight: {
     height: 16,
     width: 16,
+    marginRight: 16,
   },
   renderCheckButton: {
     flexDirection: "row",
     paddingTop: 16,
     paddingLeft: 16,
-    paddingRight: 16,
     justifyContent: "center",
   },
-  renderOptionCatigory: { height: 300 },
+  renderOptionCatigory: {
+    height: 300,
+  },
 });
 
 export default styles;
