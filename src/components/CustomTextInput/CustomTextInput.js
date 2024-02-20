@@ -21,8 +21,6 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
 import TriggerFileUpload from "../TriggerFileUpload";
-import styles from "../MessageInfoComponent/MessageInfoComponent.style";
-import { getImageSource } from "../../utils/util";
 import CustomImage from "../CustomImage";
 
 const CustomTextInput = (props) => {
@@ -39,6 +37,7 @@ const CustomTextInput = (props) => {
     dropdownStyle,
     errorMessage,
     eyeImage,
+    file,
     fieldRef,
     handleCountChange,
     inputKey,
@@ -224,11 +223,10 @@ const CustomTextInput = (props) => {
           />
         ) : isSendButton ? (
           <View style={style.sendButton}>
-            {!!imageUrl && (
+            {!!imageUrl && !!file && (
               <CustomImage
                 source={{ uri: imageUrl }}
-                height={100}
-                width={100}
+                style={style.imageUploadStyle}
               />
             )}
             <TextInput
@@ -255,6 +253,7 @@ const CustomTextInput = (props) => {
                 leftIconSource: images.iconAttachement,
                 isLeftIconNotSvg: false,
               }}
+              shouldShowHover={false}
               customButtonStyle={style.iconAttachement}
               setFile={setFile}
             />

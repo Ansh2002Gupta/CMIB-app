@@ -60,7 +60,7 @@ const ChatSection = ({
       const element = scrollToLatestMessageRef.current;
       element.scrollIntoView({ behaviour: "smooth" });
     }
-  }, [data]);
+  }, [file, messageValue]);
 
   const handleInputChange = (val) => {
     setMessageValue(val);
@@ -72,6 +72,7 @@ const ChatSection = ({
       file_name: fileUploadResult?.data?.file_name || "",
     });
     setMessageValue("");
+    setFile("");
   };
 
   const shouldShowAvatar = (currentIndex) => {
@@ -239,6 +240,7 @@ const ChatSection = ({
                 customTextInputOuterContainer={
                   styles.customTextInputOuterContainer
                 }
+                file={file}
                 isSendButton
                 initiateFileUpload={initiateFileUpload}
                 imageUrl={fileUploadResult?.data?.url}
