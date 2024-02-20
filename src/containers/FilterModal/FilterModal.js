@@ -13,7 +13,9 @@ import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import useFilterModal from "./controller/useFilterModal";
 import classes from "../../theme/styles/CssClassProvider";
+import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./FilterModal.style";
 
 const FilterModal = ({
@@ -27,7 +29,7 @@ const FilterModal = ({
   queryTypeData,
 }) => {
   const {
-    activeCategories,
+    currentCategory,
     filterData,
     handleCategoryChange,
     handleStatusChange,
@@ -46,10 +48,47 @@ const FilterModal = ({
 
   const isWeb = Platform.OS.toLowerCase() === "web";
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
 
   const webProps = isWeb
     ? { className: classes["account-dropdown__base"] }
     : {};
+
+  const isWebProps =
+    Platform.OS.toLowerCase() === "web"
+      ? {
+          buttonOneStyle: commonStyles.buttonStyle,
+          buttonTwoStyle: commonStyles.buttonStyle,
+          buttonOneContainerStyle: commonStyles.buttonStyle,
+          buttonTwoContainerStyle: commonStyles.buttonStyle,
+        }
+      : {};
+
+  const handleAllcategorySet = (item) => {
+    const status = item === "Status";
+    const query_type = item === "Query Type";
+
+    if (status) {
+      const getStatusDataId = statusData.map((item) => item.id);
+      setFilterState({
+        ...filterState,
+        selectedStatus:
+          selectedStatus.length !== getStatusDataId.length
+            ? getStatusDataId
+            : [],
+      });
+    }
+    if (query_type) {
+      const getQueryDataId = queryTypeData.map((item) => item.id);
+      setFilterState({
+        ...filterState,
+        selectedQueryType:
+          selectedQueryType.length !== getQueryDataId.length
+            ? getQueryDataId
+            : [],
+      });
+    }
+  };
 
   const RenderCheckButton = ({ title, item, onChange, isSelected }) => {
     return (
@@ -64,64 +103,60 @@ const FilterModal = ({
     );
   };
 
-  const renderOptionsByCategory = () => {
-    const options = [];
-    if (activeCategories.includes("Status")) {
-      options.push(
-        statusData.map((status) => (
-          <RenderCheckButton
-            key={status.id}
-            item={status}
-            title={status.name}
-            onChange={() => handleStatusChange(status)}
-            isSelected={selectedStatus.includes(status.id)}
-          />
-        ))
-      );
+  const renderOptionsByCategory = (category) => {
+    if (category === "Status") {
+      return statusData.map((status) => (
+        <RenderCheckButton
+          key={status.id}
+          item={status}
+          title={status.name}
+          onChange={() => handleStatusChange(status)}
+          isSelected={selectedStatus.includes(status.id)}
+        />
+      ));
+    } else if (category === "Query Type") {
+      return queryTypeData.map((queryType) => (
+        <RenderCheckButton
+          key={queryType.id}
+          title={queryType.name}
+          item={queryType}
+          onChange={() => handleQueryTypeChange(queryType)}
+          isSelected={selectedQueryType.includes(queryType.id)}
+        />
+      ));
     }
-
-    if (activeCategories.includes("Query Type")) {
-      options.push(
-        queryTypeData.map((queryType) => (
-          <RenderCheckButton
-            key={queryType.id}
-            title={queryType.name}
-            item={queryType}
-            onChange={() => handleQueryTypeChange(queryType)}
-            isSelected={selectedQueryType.includes(queryType.id)}
-          />
-        ))
-      );
-    }
-    return options.length > 0 ? options : null;
   };
 
-  const RenderCategoryButton = ({ title, isLeftArrow = true, onClick }) => {
-    const isActive = activeCategories.includes(title);
+  const getCheckBoxesStatus = (title) => {
+    const status = title === "Status";
+    const query_type = title === "Query Type";
+
+    if (status) {
+      if (!selectedStatus.length) return "empty";
+      if (selectedStatus.length !== statusData.length) return "partial";
+      return "full";
+    }
+
+    if (query_type) {
+      if (!selectedQueryType.length) return "empty";
+      if (selectedQueryType.length !== queryTypeData.length) return "partial";
+      return "full";
+    }
+    return;
+  };
+
+  const RenderCategoryButton = ({ title, onClick }) => {
+    const isActive = getCheckBoxesStatus(title) === "full" ? true : false;
+    const isPartial = getCheckBoxesStatus(title) === "partial" ? true : false;
+
     return (
-      <View style={styles.renderCheckButton} {...webProps}>
-        <TwoColumn
-          leftSection={
-            <CheckBox
-              title={title}
-              isSelected={isActive}
-              handleCheckbox={() => onClick(title)}
-              id={title}
-            />
-          }
-          isLeftFillSpace
-          rightSection={
-            <>
-              {isLeftArrow && isActive && (
-                <CustomImage
-                  source={images.iconArrowRight}
-                  style={styles.arrowRight}
-                />
-              )}
-            </>
-          }
-        />
-      </View>
+      <CheckBox
+        isPartial={isPartial}
+        title={title}
+        isSelected={isActive}
+        handleCheckbox={() => onClick(title)}
+        id={title}
+      />
     );
   };
 
@@ -129,7 +164,7 @@ const FilterModal = ({
   const SHOW_RESULT_TEXT = intl.formatMessage({ id: "label.show_result" });
 
   return (
-    <CustomModal customInnerContainerStyle={styles.customerInnerContainerStyle}>
+    <CustomModal containerStyle={styles.customerInnerContainerStyle}>
       <ThreeRow
         topSection={
           <View style={styles.headerSection}>
@@ -152,11 +187,30 @@ const FilterModal = ({
               <>
                 {filterCategory.map((item) => {
                   return (
-                    <RenderCategoryButton
-                      key={item}
-                      title={item}
-                      onClick={handleCategoryChange}
-                    />
+                    <View style={styles.renderCheckButton} {...webProps}>
+                      <TwoColumn
+                        leftSection={
+                          <CustomTouchableOpacity
+                            onPress={() => handleCategoryChange(item)}
+                          >
+                            <RenderCategoryButton
+                              key={item}
+                              title={item}
+                              onClick={handleAllcategorySet}
+                            />
+                          </CustomTouchableOpacity>
+                        }
+                        isLeftFillSpace
+                        rightSection={
+                          <>
+                            <CustomImage
+                              source={images.iconArrowRight}
+                              style={styles.arrowRight}
+                            />
+                          </>
+                        }
+                      />
+                    </View>
                   );
                 })}
               </>
@@ -164,28 +218,35 @@ const FilterModal = ({
             leftSectionStyle={styles.leftSection}
             rightSectionStyle={styles.rightSection}
             rightSection={
-              isWeb ? (
-                <ScrollView contentContainerStyle={styles.renderOptionCatigory}>
-                  {renderOptionsByCategory()}
-                </ScrollView>
-              ) : (
-                <ScrollView showsVerticalScrollIndicator={false}>
-                  {renderOptionsByCategory()}
-                </ScrollView>
-              )
+              <ScrollView
+                contentContainerStyle={isWeb ? styles.renderOptionCatigory : {}}
+              >
+                {renderOptionsByCategory(currentCategory)}
+              </ScrollView>
             }
           />
         }
         bottomSection={
-          <View style={styles.bottomSection}>
-            <ActionPairButton
-              buttonOneText={CANCEL_TEXT}
-              buttonTwoText={SHOW_RESULT_TEXT}
-              displayLoader={false}
-              isButtonTwoGreen
-              onPressButtonOne={onCancel}
-              onPressButtonTwo={filterData}
-            />
+          <View
+            style={{
+              ...styles.bottomSection,
+              ...(isWebView ? styles.buttonWebStyle : styles.buttonMobileStyle),
+            }}
+          >
+            <View style={isWebView ? styles.subContainerStyle : {}}>
+              <ActionPairButton
+                buttonOneText={CANCEL_TEXT}
+                buttonTwoText={SHOW_RESULT_TEXT}
+                customStyles={{
+                  ...isWebProps,
+                  customContainerStyle: styles.customContainerStyle,
+                }}
+                displayLoader={false}
+                isButtonTwoGreen
+                onPressButtonOne={onCancel}
+                onPressButtonTwo={filterData}
+              />
+            </View>
           </View>
         }
       />
