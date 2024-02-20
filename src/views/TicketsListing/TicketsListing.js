@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { TwoRow } from "../../core/layouts";
@@ -11,6 +11,8 @@ import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   TICKET_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
+import images from "../../images";
+import styles from "./TicketsListing.style";
 
 const TicketsListing = () => {
   const {
@@ -47,6 +49,11 @@ const TicketsListing = () => {
 
   const intl = useIntl();
   const navigate = useNavigate();
+  const [addNewTicket, setAddNewTicket] = useState(false);
+
+  const handleTicketModal = () => {
+    setAddNewTicket((prev) => !prev);
+  };
 
   const onGoBack = () => {
     navigate(navigations.PROFILE);
@@ -56,15 +63,22 @@ const TicketsListing = () => {
     <TwoRow
       topSection={
         <IconHeader
+          actionButtonIcon={images.iconAddWhite}
+          buttonTitle={intl.formatMessage({ id: "label.add_new_ticket" })}
+          customActionButtonStyle={styles.addNewButton}
+          customActionButtonText={styles.addNewText}
+          hasIconBar
+          hasActionButton
+          handleButtonClick={handleTicketModal}
           headerText={intl.formatMessage({ id: "label.tickets" })}
           onPressLeftIcon={onGoBack}
-          hasIconBar
         />
       }
       isBottomFillSpace
       bottomSection={
         <CustomTable
           {...{
+            addNewTicket,
             allDataLoaded,
             currentPage,
             currentRecords,
@@ -73,6 +87,7 @@ const TicketsListing = () => {
             filterCategory,
             getColoumConfigs,
             getStatusStyle,
+            handleTicketModal,
             handleLoadMore,
             handlePageChange,
             handleRowPerPageChange,

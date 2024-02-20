@@ -10,7 +10,6 @@ import AddTicketModal from "../AddTicketModal/AddTicketModal";
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import CustomImage from "../CustomImage";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
@@ -29,6 +28,7 @@ const initialFilterState = {
 };
 
 const CustomTable = ({
+  addNewTicket,
   allDataLoaded,
   currentPage,
   data,
@@ -38,6 +38,7 @@ const CustomTable = ({
   getStatusStyle,
   handleLoadMore,
   handlePageChange,
+  handleTicketModal,
   handleRowPerPageChange,
   handleSearchResults,
   headingTexts,
@@ -66,38 +67,11 @@ const CustomTable = ({
 
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [filterState, setFilterState] = useState(initialFilterState);
-  const [addNewTicket, setAddNewTicket] = useState(false);
-
-  const renderAddTicket = () => {
-    return (
-      <CustomTouchableOpacity
-        style={{
-          ...styles.addNewButton,
-          ...(!isWebView ? styles.addNewButtonMob : {}),
-        }}
-        onPress={handleTicketModal}
-      >
-        <CustomImage
-          source={isWebView ? images.iconAddWhite : images.iconAddBlack}
-          style={styles.iconAdd}
-        />
-        {isWebView && (
-          <CommonText customTextStyle={styles.addNewText}>
-            {intl.formatMessage({ id: "label.add_new_ticket" })}
-          </CommonText>
-        )}
-      </CustomTouchableOpacity>
-    );
-  };
 
   const isFilterCount =
     !!filterState?.activeCategories.length &&
     (!!filterState?.selectedStatus.length ||
       !!filterState?.selectedQueryType.length);
-
-  const handleTicketModal = () => {
-    setAddNewTicket((prev) => !prev);
-  };
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
@@ -124,48 +98,41 @@ const CustomTable = ({
           <>
             {showSearchBar && (
               <TwoColumn
-                style={styles.addTicketSection}
-                isLeftFillSpace
                 leftSection={
-                  <TwoColumn
-                    leftSection={
-                      <SearchView
-                        data={data?.records}
-                        customSearchCriteria={handleSearchResults}
-                      />
-                    }
-                    isLeftFillSpace
-                    rightSection={
-                      <CustomTouchableOpacity
-                        onPress={handleFilterModal}
-                        style={styles.imageParentStyle}
-                      >
-                        <TouchableImage
-                          source={images.iconFilter}
-                          parentStyle={styles.iconTicket}
-                          onPress={handleFilterModal}
-                        />
-                        {isWebView && (
-                          <CommonText customTextStyle={styles.filterText}>
-                            {intl.formatMessage({ id: "label.filters" })}
-                          </CommonText>
-                        )}
-                        {isFilterCount && (
-                          <CommonText
-                            customContainerStyle={styles.activeTickets}
-                            customTextStyle={styles.activeTicketsText}
-                            fontWeight={"600"}
-                          >
-                            {filterState?.selectedStatus.length +
-                              filterState?.selectedQueryType.length}
-                          </CommonText>
-                        )}
-                      </CustomTouchableOpacity>
-                    }
-                    style={styles.filterTopSection(isWebView)}
+                  <SearchView
+                    data={data?.records}
+                    customSearchCriteria={handleSearchResults}
                   />
                 }
-                rightSection={renderAddTicket()}
+                isLeftFillSpace
+                rightSection={
+                  <CustomTouchableOpacity
+                    onPress={handleFilterModal}
+                    style={styles.imageParentStyle}
+                  >
+                    <TouchableImage
+                      source={images.iconFilter}
+                      parentStyle={styles.iconTicket}
+                      onPress={handleFilterModal}
+                    />
+                    {isWebView && (
+                      <CommonText customTextStyle={styles.filterText}>
+                        {intl.formatMessage({ id: "label.filters" })}
+                      </CommonText>
+                    )}
+                    {isFilterCount && (
+                      <CommonText
+                        customContainerStyle={styles.activeTickets}
+                        customTextStyle={styles.activeTicketsText}
+                        fontWeight={"600"}
+                      >
+                        {filterState?.selectedStatus.length +
+                          filterState?.selectedQueryType.length}
+                      </CommonText>
+                    )}
+                  </CustomTouchableOpacity>
+                }
+                style={styles.filterTopSection(isWebView)}
               />
             )}
             {!isWeb && (
@@ -355,7 +322,9 @@ const CustomTable = ({
 };
 
 CustomTable.defaultProps = {
+  addNewTicket: false,
   headingTexts: [],
+  handleTicketModal: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
@@ -363,6 +332,7 @@ CustomTable.defaultProps = {
 };
 
 CustomTable.propTypes = {
+  addNewTicket: PropTypes.bool,
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   data: PropTypes.array,
@@ -374,6 +344,7 @@ CustomTable.propTypes = {
   handleRowPerPageChange: PropTypes.func.isRequired,
   handleSearchResults: PropTypes.func.isRequired,
   handleLoadMore: PropTypes.func.isRequired,
+  handleTicketModal: PropTypes.func,
   headingTexts: PropTypes.array,
   isHeading: PropTypes.bool.isRequired,
   isTicketListingLoading: PropTypes.bool,

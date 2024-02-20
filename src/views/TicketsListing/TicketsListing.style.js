@@ -69,6 +69,19 @@ const styles = StyleSheet.create({
   tableContent: {
     height: "90%",
   },
+  addNewButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.green,
+    borderRadius: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+  addNewText: {
+    color: colors.white,
+  },
 });
 
 export default styles;

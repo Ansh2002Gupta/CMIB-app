@@ -365,7 +365,7 @@ const locale = {
   "label.assigned_to": "Assigned To",
   "label.enterQuery": "Enter Query",
   "label.addTicket": "Add Ticket",
-  "label.add_new_ticket": "Add New Ticket",
+  "label.add_new_ticket": "Add Ticket",
 };
 
 export default locale;
