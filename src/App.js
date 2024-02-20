@@ -3,7 +3,7 @@ import { Router, Routes } from "./routes";
 import { IntlProvider } from "react-intl";
 import { MediaQueryProvider, ThemeProvider } from "@unthinkable/react-theme";
 import { Platform } from "@unthinkable/react-core-components";
-import SplashScreen from "react-native-splash-screen";
+import SplashScreen from "./components/SpashScreen";
 
 import { LocaleContext } from "./globalContext/locale/localeProviders";
 import intl from "./locale";
@@ -17,7 +17,7 @@ function App() {
   } = theme;
 
   useEffect(() => {
-    if (Platform.OS === "android") {
+    if (Platform.OS !== "web") {
       SplashScreen.hide();
     }
   }, []);
