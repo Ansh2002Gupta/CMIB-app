@@ -86,7 +86,7 @@ export const NATURE_OF_SUPPLIER = [
 ];
 
 export const INTEREST_OPTIONS = [
-  { messageId: "label.email_from_cpaib", isSelected: false, id: 1 },
+  { messageId: "label.email_from_cmib", isSelected: false, id: 1 },
   { messageId: "label.campus", isSelected: false, id: 2 },
   { messageId: "label.programme_brouchers", isSelected: false, id: 3 },
   { messageId: "label.based_on_prev_participation", isSelected: false, id: 4 },
