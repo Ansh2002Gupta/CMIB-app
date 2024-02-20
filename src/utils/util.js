@@ -128,27 +128,27 @@ export const getDateStatus = (record) => {
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
-  if (createdAt.toDateString() === today.toDateString()) {
-    if (lastFlagDate !== today.toDateString()) {
-      lastFlagDate = today.toDateString();
+  const createdAtDateString = createdAt.toDateString();
+  const todayDateString = today.toDateString();
+  const yesterdayDateString = yesterday.toDateString();
+
+  if (createdAtDateString === todayDateString) {
+    if (lastFlagDate !== todayDateString) {
+      lastFlagDate = todayDateString;
       return "Today";
     }
-    return "";
-  }
-  if (createdAt.toDateString() === yesterday.toDateString()) {
-    if (lastFlagDate !== yesterday.toDateString()) {
-      lastFlagDate = yesterday.toDateString();
+  } else if (createdAtDateString === yesterdayDateString) {
+    if (lastFlagDate !== yesterdayDateString) {
+      lastFlagDate = yesterdayDateString;
       return "Yesterday";
     }
-    return "";
-  }
-  if (createdAt.toDateString() < yesterday.toDateString()) {
-    if (lastFlagDate !== createdAt.toDateString()) {
-      lastFlagDate = createdAt.toDateString();
+  } else if (createdAtDateString < yesterdayDateString) {
+    if (lastFlagDate !== createdAtDateString) {
+      lastFlagDate = createdAtDateString;
       return formatDate(createdAt);
     }
-    return "";
   }
+  return "";
 };
 
 export const getDateFlagMobile = (createdAt) => {

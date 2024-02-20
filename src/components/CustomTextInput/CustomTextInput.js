@@ -258,7 +258,9 @@ const CustomTextInput = (props) => {
               setFile={setFile}
             />
             <TouchableImage
-              source={images.iconSendGreen}
+              source={
+                buttonStatus ? images.iconSendDisabled : images.iconSendGreen
+              }
               onPress={onClickSend}
               disabled={buttonStatus}
             />

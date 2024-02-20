@@ -36,22 +36,22 @@ const baseAvatarSize = {
 
 const styles = StyleSheet.create({
   smSenderMessageStyle: {
-    maxWidth: 311,
+    maxWidth: 300,
     ...baseSenderStyle,
     ...baseMessageContainer,
   },
   senderMessageStyle: {
-    maxWidth: 680,
+    maxWidth: "40vw",
     ...baseSenderStyle,
     ...baseMessageContainer,
   },
   recieverMessageStyle: {
-    maxWidth: 680,
+    maxWidth: "40vw",
     ...baseRecieverStyle,
     ...baseMessageContainer,
   },
   smRecieverMessageStyle: {
-    maxWidth: 311,
+    maxWidth: 300,
     ...baseRecieverStyle,
     ...baseMessageContainer,
   },
