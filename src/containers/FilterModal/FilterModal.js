@@ -191,12 +191,17 @@ const FilterModal = ({
                       <TwoColumn
                         leftSection={
                           <CustomTouchableOpacity
-                            onPress={() => handleCategoryChange(item)}
+                            onPress={() => {
+                              handleCategoryChange(item);
+                            }}
                           >
                             <RenderCategoryButton
                               key={item}
                               title={item}
-                              onClick={handleAllcategorySet}
+                              onClick={(item) => {
+                                handleAllcategorySet(item);
+                                handleCategoryChange(item);
+                              }}
                             />
                           </CustomTouchableOpacity>
                         }
