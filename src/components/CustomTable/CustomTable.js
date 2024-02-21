@@ -50,6 +50,7 @@ const CustomTable = ({
   isFirstPageReceived,
   loadingMore,
   onIconPress,
+  placeholder,
   queryTypeData,
   rowsLimit,
   rowsPerPage,
@@ -101,6 +102,7 @@ const CustomTable = ({
                   <SearchView
                     data={data?.records}
                     customSearchCriteria={handleSearchResults}
+                    placeholder={placeholder}
                   />
                 }
                 isLeftFillSpace
@@ -332,6 +334,7 @@ CustomTable.defaultProps = {
   statusText: "",
   subHeadingText: "",
   totalcards: 0,
+  placeholder: "Search",
 };
 
 CustomTable.propTypes = {
@@ -365,6 +368,7 @@ CustomTable.propTypes = {
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,
   totalcards: PropTypes.number,
+  placeholder: PropTypes.string,
 };
 
 export default CustomTable;

@@ -14,12 +14,12 @@ const SearchView = ({
   customSearchCriteria,
   data,
   onSearch,
+  placeholder,
 }) => {
   const SearchIcon = images.iconSearch;
   const ClearIcon = images.iconCross;
   const [query, setQuery] = useState("");
   const debounceTimeout = useRef(null);
-  const intl = useIntl();
   const platformSpecificProps = Platform.select({
     web: {},
     default: {
@@ -68,7 +68,7 @@ const SearchView = ({
         style={{ ...styles.searchInput, ...customInputStyle }}
         value={query}
         onChangeText={handleSearch}
-        placeholder={intl.formatMessage({ id: "label.search" })}
+        placeholder={placeholder}
         {...platformSpecificProps}
       />
       {query.length > 0 && (
@@ -89,6 +89,7 @@ SearchView.defaultProps = {
   customSearchCriteria: () => {},
   onSearch: () => {},
   data: [],
+  placeholder: "Search",
 };
 
 SearchView.propTypes = {
@@ -99,6 +100,7 @@ SearchView.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.object),
   ]),
+  placeholder: PropTypes.string,
   onSearch: PropTypes.func,
 };
 
