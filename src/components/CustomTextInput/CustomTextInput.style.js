@@ -150,7 +150,7 @@ const style = {
   sendButtonWithFiles: {
     flex: 1,
     padding: 2,
-    height: 210,
+    height: 180,
     justifyContent: "center",
   },
   iconAttachement: {

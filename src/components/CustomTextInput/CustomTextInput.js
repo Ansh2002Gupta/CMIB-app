@@ -17,7 +17,6 @@ import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import Spinner from "../Spinner";
 import TriggerFileUpload from "../TriggerFileUpload";
-import TouchableImage from "../TouchableImage";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -286,11 +285,12 @@ const CustomTextInput = (props) => {
                   source={{ uri: getImageSource(file) }}
                   style={style.imageUploadStyle}
                 />
-                <TouchableImage
-                  onPress={onIconClose}
-                  source={images.iconCross}
-                  style={style.iconCross}
-                />
+                <CustomTouchableOpacity onPress={onIconClose}>
+                  <CustomImage
+                    source={images.iconCross}
+                    style={style.iconCross}
+                  />
+                </CustomTouchableOpacity>
               </View>
             )}
           </View>
