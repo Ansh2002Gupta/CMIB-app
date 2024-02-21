@@ -28,7 +28,6 @@ const ChatSection = ({
   allDataLoaded,
   data,
   details,
-  fileUploadResult,
   fileUploadError,
   handleFileUpload,
   handleSendButton,
@@ -37,8 +36,7 @@ const ChatSection = ({
   initiateFileUpload,
   setFileUploadResult,
   loadingMore,
-  userDetails,
-  isMessageSending,
+  isSending,
   isErrorWhileSending,
   errorWhileSendingMessage,
   setErrorWhileSendingMessages,
@@ -248,7 +246,7 @@ const ChatSection = ({
                 }
                 file={file}
                 isSendButton
-                isLoading={isMessageSending}
+                isLoading={isSending}
                 initiateFileUpload={initiateFileUpload}
                 maxLength={MESSAGE_MAX_LENGTH}
                 onChangeText={(val) => handleInputChange(val)}
@@ -277,23 +275,19 @@ ChatSection.defaultProps = {
   allDataLoaded: false,
   data: [],
   details: {},
-  fileUploadResult: {},
   fileUploadError: "",
   handleFileUpload: () => {},
   handleSendButton: () => {},
   handleLoadMore: () => {},
   isFirstPageReceived: true,
   initiateFileUpload: () => {},
-
   loadingMore: false,
-  userDetails: {},
 };
 
 ChatSection.propTypes = {
   allDataLoaded: PropTypes.bool.isRequired,
   data: PropTypes.array.isRequired,
   details: PropTypes.object,
-  fileUploadResult: PropTypes.object,
   fileUploadError: PropTypes.string,
   handleFileUpload: PropTypes.func.isRequired,
   handleSendButton: PropTypes.func.isRequired,
@@ -301,7 +295,6 @@ ChatSection.propTypes = {
   isFirstPageReceived: PropTypes.bool.isRequired,
   initiateFileUpload: PropTypes.func.isRequired,
   loadingMore: PropTypes.bool.isRequired,
-  userDetails: PropTypes.object,
 };
 
 export default ChatSection;

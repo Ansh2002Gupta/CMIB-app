@@ -24,31 +24,29 @@ const TicketChatScreen = () => {
     allDataLoaded,
     chatRecords,
     fileUploadError,
-    fileUploadResult,
+    ErrorChatData,
     erroticketViewDetails,
-    isErrorticketViewDetails,
+    errorWhileSendingMessage,
     handleFileUpload,
     handleLoadMore,
     handlePopup,
     handleSendButton,
     initiateFileUpload,
     isChatLoading,
+    isErrorChatData,
+    isSending,
+    isErrorWhileSending,
+    isErrorticketViewDetails,
     isDetailsScreen,
     isFirstPageReceived,
     isticketViewDetails,
     loadingMore,
     onGoBack,
-    setIsDetailScreen,
-    showPopup,
     setFileUploadResult,
-    ticketViewDetails,
-    userDetails,
-    ErrorChatData,
-    isErrorChatData,
-    isMessageSending,
-    isErrorWhileSending,
-    errorWhileSendingMessage,
+    setIsDetailScreen,
     setErrorWhileSendingMessages,
+    showPopup,
+    ticketViewDetails,
   } = useTicketDetails(location.state);
 
   const { isWebView } = useIsWebView();
@@ -69,23 +67,21 @@ const TicketChatScreen = () => {
   const renderChatSection = () => {
     return (
       <ChatSection
-        allDataLoaded={allDataLoaded}
         data={isMob ? chatRecords : reversedData}
         details={ticketViewDetails}
-        handleSendButton={handleSendButton}
-        handleLoadMore={handleLoadMore}
-        handleFileUpload={handleFileUpload}
-        fileUploadResult={fileUploadResult}
-        fileUploadError={fileUploadError}
-        isFirstPageReceived={isFirstPageReceived}
-        initiateFileUpload={initiateFileUpload}
-        setFileUploadResult={setFileUploadResult}
-        loadingMore={loadingMore}
-        userDetails={userDetails}
         {...{
-          isMessageSending,
-          isErrorWhileSending,
+          allDataLoaded,
           errorWhileSendingMessage,
+          fileUploadError,
+          handleSendButton,
+          handleLoadMore,
+          handleFileUpload,
+          isSending,
+          initiateFileUpload,
+          isFirstPageReceived,
+          isErrorWhileSending,
+          loadingMore,
+          setFileUploadResult,
           setErrorWhileSendingMessages,
         }}
       />

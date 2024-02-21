@@ -1,17 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useNavigate } from "../../../routes";
 
+import useTicketReplies from "../../../services/apiServices/hooks/TicketViewEditDetails/useTicketReplies";
+import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
+import useUploadedFileValidations from "../../../hooks/useUploadedFileValidations";
 import useFetch from "../../../hooks/useFetch";
-import { PREVIOUS_SCREEN } from "../../../constants/constants";
 import {
   COMPANY_TICKET_LISTING,
   TICKET_REPLIES_SUB_ROUTES,
 } from "../../../services/apiServices/apiEndPoint";
-import useTicketReplies from "../../../services/apiServices/hooks/TicketViewEditDetails/useTicketReplies";
-import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
-import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
-import useUploadedFileValidations from "../../../hooks/useUploadedFileValidations";
-import useUpdateLogoAPI from "../../../services/apiServices/hooks/CompanyLogo/useUpdateLogoAPI";
+import { PREVIOUS_SCREEN } from "../../../constants/constants";
 
 const useTicketDetails = (location) => {
   const { id } = location;
@@ -23,7 +21,6 @@ const useTicketDetails = (location) => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [userProfileDetails] = useContext(UserProfileContext);
 
   const {
     data: ticketViewDetails,
@@ -51,15 +48,11 @@ const useTicketDetails = (location) => {
   const {
     errorWhileUpload,
     handleFileUpload,
-    fileUploadResult,
     isLoading: isUploadingImageToServer,
     isError: isErrorWhileUploading,
     setErrorWhileUpload,
     setFileUploadResult,
   } = useSaveLogo();
-
-  const { errorWhileUpdate, handleFileUpdate, isLoading, setErrorWhileUpdate } =
-    useUpdateLogoAPI();
 
   const {
     fileTooLargeError,
@@ -73,7 +66,7 @@ const useTicketDetails = (location) => {
 
   const {
     handleTicketReplies,
-    isLoading: isMessageSend,
+    isLoading: isMessageSending,
     errorWhileSendingMessage,
     isError: isErrorWhileSend,
     setErrorWhileSendingMessage,
@@ -96,7 +89,7 @@ const useTicketDetails = (location) => {
   }, []);
 
   const handleSendButton = async ({ messageValue, file_name }) => {
-    if (isMessageSend) {
+    if (isMessageSending) {
       return;
     }
     let newRecords = [];
@@ -172,12 +165,10 @@ const useTicketDetails = (location) => {
     showPopup,
     setFileUploadResult,
     ticketViewDetails,
-    userDetails: userProfileDetails?.userDetails,
     initiateFileUpload,
     handleFileUpload,
-    fileUploadResult,
     fileUploadError,
-    isMessageSending: isMessageSend || isUploadingImageToServer,
+    isSending: isMessageSending || isUploadingImageToServer,
     isErrorWhileSending: isErrorWhileSend || isErrorWhileUploading,
     errorWhileSendingMessage: errorWhileUpload || errorWhileSendingMessage,
     setErrorWhileSendingMessages: {
