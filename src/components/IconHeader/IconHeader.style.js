@@ -53,6 +53,7 @@ const style = {
     paddingTop: 14,
     paddingBottom: 14,
     zIndex: 0,
+    cursor: "pointer",
   },
   editContainer: {
     flexDirection: "row",

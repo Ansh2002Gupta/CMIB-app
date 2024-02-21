@@ -12,6 +12,7 @@ const TriggerFileUpload = ({
   initiateFileUpload,
   onImageUpload,
   setFile,
+  shouldShowHover,
 }) => {
   const { isLeftIconNotSvg, leftIconSource } = iconLeft;
   const fileInputRef = useRef(null);
@@ -40,7 +41,7 @@ const TriggerFileUpload = ({
           ...(!!customButtonStyle ? customButtonStyle : styles.buttonStyle),
         }}
         onPress={handleUploadClick}
-        shouldShowHover
+        shouldShowHover={shouldShowHover}
         iconLeft={{
           isLeftIconNotSvg,
           leftIconSource,
@@ -70,6 +71,7 @@ TriggerFileUpload.defaultProps = {
     leftIconSource: images.iconChange,
   },
   onImageUpload: () => {},
+  shouldShowHover: false,
 };
 
 TriggerFileUpload.propTypes = {
@@ -77,6 +79,7 @@ TriggerFileUpload.propTypes = {
   customButtonStyle: PropTypes.object,
   initiateFileUpload: PropTypes.any,
   setFile: PropTypes.func,
+  shouldShowHover: PropTypes.bool,
   iconLeft: PropTypes.object,
   onImageUpload: PropTypes.func,
 };

@@ -148,6 +148,11 @@ const style = {
     height: 48,
     width: 48,
   },
+  imageUploadStyle: {
+    height: 150,
+    width: 150,
+    marginRight: 10,
+  },
 };
 
 export default style;

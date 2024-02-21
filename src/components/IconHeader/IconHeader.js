@@ -15,6 +15,8 @@ import styles from "./IconHeader.style";
 const IconHeader = ({
   actionButtonIcon,
   buttonTitle,
+  customActionButtonStyle,
+  customActionButtonText,
   handleButtonClick,
   hasActionButton,
   hasIconBar,
@@ -26,6 +28,7 @@ const IconHeader = ({
   onPressLeftIcon,
   onPressRightIcon,
   subHeading,
+  showInWeb,
 }) => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
@@ -108,11 +111,21 @@ const IconHeader = ({
               <Image source={mobActionButton} />
             </CustomTouchableOpacity>
           )}
-          {hasActionButton && isWebView && (
-            <CardComponent customStyle={styles.cardContainer}>
+          {hasActionButton && showInWeb && (
+            <CardComponent
+              customStyle={{
+                ...styles.cardContainer,
+                ...customActionButtonStyle,
+              }}
+            >
               <CustomTouchableOpacity onPress={handleButtonClick}>
                 <Image source={actionButtonIcon} />
-                <CommonText customTextStyle={styles.textStyle}>
+                <CommonText
+                  customTextStyle={{
+                    ...styles.textStyle,
+                    ...customActionButtonText,
+                  }}
+                >
                   {buttonTitle}
                 </CommonText>
               </CustomTouchableOpacity>
@@ -128,6 +141,8 @@ const IconHeader = ({
 IconHeader.defaultProps = {
   actionButtonIcon: "",
   buttonTitle: "",
+  customActionButtonStyle: {},
+  customActionButtonText: {},
   handleButtonClick: () => {},
   hasActionButton: false,
   hasIconBar: false,
@@ -138,11 +153,14 @@ IconHeader.defaultProps = {
   mobActionButton: "",
   onPressLeftIcon: () => {},
   onPressRightIcon: () => {},
+  showInWeb: true,
 };
 
 IconHeader.propTypes = {
   actionButtonIcon: PropTypes.string,
   buttonTitle: PropTypes.string,
+  customActionButtonStyle: PropTypes.object,
+  customActionButtonText: PropTypes.object,
   handleButtonClick: PropTypes.func,
   hasActionButton: PropTypes.bool,
   hasIconBar: PropTypes.bool,
@@ -153,6 +171,7 @@ IconHeader.propTypes = {
   mobActionButton: PropTypes.node,
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,
+  showInWeb: PropTypes.bool,
 };
 
 export default IconHeader;
