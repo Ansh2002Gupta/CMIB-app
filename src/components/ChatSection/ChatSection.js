@@ -35,8 +35,12 @@ const ChatSection = ({
   handleLoadMore,
   isFirstPageReceived,
   initiateFileUpload,
+  setFileUploadResult,
   loadingMore,
   userDetails,
+  isMessageSending,
+  isErrorWhileSending,
+  errorWhileSendingMessage,
 }) => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -44,6 +48,8 @@ const ChatSection = ({
   const [file, setFile] = useState(null);
   const flatListRef = useRef(null);
   const scrollToLatestMessageRef = useRef(null);
+
+  console.log("file", file);
 
   const isMobileProps = isMob
     ? {
@@ -67,10 +73,25 @@ const ChatSection = ({
   };
 
   const handleSend = async () => {
-    await handleSendButton({
-      messageValue: messageValue,
-      file_name: fileUploadResult?.data?.file_name || "",
-    });
+    if (!!file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      await handleFileUpload({
+        file: formData,
+        successCallback: async (fileUploadData) => {
+          await handleSendButton({
+            messageValue: messageValue,
+            file_name: fileUploadData?.data?.file_name || "",
+          });
+        },
+      });
+    } else {
+      await handleSendButton({
+        messageValue: messageValue,
+        file_name: "",
+      });
+    }
+    setFileUploadResult("");
     setMessageValue("");
     setFile("");
   };
@@ -112,14 +133,6 @@ const ChatSection = ({
     return <View style={styles.horizontalLine} />;
   };
 
-  const uploadImageToServer = ({ uploadedFile }) => {
-    const formData = new FormData();
-    formData.append("file", uploadedFile);
-    handleFileUpload({
-      file: formData,
-    });
-  };
-
   const renderError = () => {
     return (
       <CommonText
@@ -130,12 +143,6 @@ const ChatSection = ({
         {fileUploadError}
       </CommonText>
     );
-  };
-
-  const handleUpload = (uploadedFile) => {
-    handleFileUpload({
-      file: uploadedFile,
-    });
   };
 
   const preprocessMessages = (messages) => {
@@ -242,11 +249,12 @@ const ChatSection = ({
                 }
                 file={file}
                 isSendButton
+                isLoading={isMessageSending}
                 initiateFileUpload={initiateFileUpload}
                 imageUrl={fileUploadResult?.data?.url}
                 maxLength={MESSAGE_MAX_LENGTH}
                 onChangeText={(val) => handleInputChange(val)}
-                onClickAttachement={isMob ? handleUpload : uploadImageToServer}
+                onClickAttachement={() => {}}
                 onClickSend={handleSend}
                 placeholder={intl.formatMessage({ id: "label.type_message" })}
                 value={messageValue}
@@ -271,6 +279,7 @@ ChatSection.defaultProps = {
   handleLoadMore: () => {},
   isFirstPageReceived: true,
   initiateFileUpload: () => {},
+
   loadingMore: false,
   userDetails: {},
 };

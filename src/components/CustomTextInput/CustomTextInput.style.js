@@ -141,6 +141,9 @@ const style = {
     justifyContent: "space-between",
     padding: 4,
   },
+  sendButtonContainer: {
+    flex: 1,
+  },
   iconAttachement: {
     padding: 0,
     borderWidth: 0,
@@ -151,7 +154,10 @@ const style = {
   imageUploadStyle: {
     height: 150,
     width: 150,
-    marginRight: 10,
+    marginBottom: 10,
+  },
+  uploadRightSection: {
+    flexDirection: "row",
   },
 };
 

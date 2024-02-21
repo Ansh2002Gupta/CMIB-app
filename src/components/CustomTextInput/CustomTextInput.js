@@ -11,17 +11,18 @@ import {
 import CustomLabelView from "../CustomLabelView";
 import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
+import TriggerFileUpload from "../TriggerFileUpload";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
 import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import { getImageSource } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
-import TriggerFileUpload from "../TriggerFileUpload";
-import CustomImage from "../CustomImage";
 
 const CustomTextInput = (props) => {
   const {
@@ -52,6 +53,7 @@ const CustomTextInput = (props) => {
     isPassword,
     isRupee,
     isSendButton,
+    isLoading,
     imageUrl,
     initiateFileUpload,
     label,
@@ -112,13 +114,13 @@ const CustomTextInput = (props) => {
   };
 
   const getSendButtonStatus = () => {
-    if (!!imageUrl) {
+    if (!!file) {
       return false;
     }
     if (!!value) {
       return false;
     }
-    if (!!imageUrl && !!value) {
+    if (!!file && !!value) {
       return false;
     }
     return true;
@@ -222,48 +224,50 @@ const CustomTextInput = (props) => {
             }}
           />
         ) : isSendButton ? (
-          <View style={style.sendButton}>
-            {!!imageUrl && !!file && (
+          <View style={style.sendButtonContainer}>
+            <View style={style.sendButton}>
+              <TextInput
+                value={value}
+                style={[
+                  style.textInputStyle,
+                  isMultiline && style.textAlignStyle,
+                  isWebView && style.webLabel,
+                  customTextInputContainer,
+                ]}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                placeholder={placeholder}
+                secureTextEntry={isPassword && !isTextVisible}
+                ref={fieldRef}
+                {...platformSpecificProps}
+                {...(isNumeric ? mobileProps : {})}
+                {...remainingProps}
+              />
+              <TriggerFileUpload
+                onImageUpload={onClickAttachement}
+                initiateFileUpload={initiateFileUpload}
+                iconLeft={{
+                  leftIconSource: images.iconAttachement,
+                  isLeftIconNotSvg: false,
+                }}
+                shouldShowHover={false}
+                customButtonStyle={style.iconAttachement}
+                setFile={setFile}
+              />
+              <TouchableImage
+                source={
+                  buttonStatus ? images.iconSendDisabled : images.iconSendGreen
+                }
+                onPress={onClickSend}
+                disabled={isLoading || buttonStatus}
+              />
+            </View>
+            {!!file && (
               <CustomImage
-                source={{ uri: imageUrl }}
+                source={{ uri: getImageSource(file) }}
                 style={style.imageUploadStyle}
               />
             )}
-            <TextInput
-              value={value}
-              style={[
-                style.textInputStyle,
-                isMultiline && style.textAlignStyle,
-                isWebView && style.webLabel,
-                customTextInputContainer,
-              ]}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              placeholder={placeholder}
-              secureTextEntry={isPassword && !isTextVisible}
-              ref={fieldRef}
-              {...platformSpecificProps}
-              {...(isNumeric ? mobileProps : {})}
-              {...remainingProps}
-            />
-            <TriggerFileUpload
-              onImageUpload={onClickAttachement}
-              initiateFileUpload={initiateFileUpload}
-              iconLeft={{
-                leftIconSource: images.iconAttachement,
-                isLeftIconNotSvg: false,
-              }}
-              shouldShowHover={false}
-              customButtonStyle={style.iconAttachement}
-              setFile={setFile}
-            />
-            <TouchableImage
-              source={
-                buttonStatus ? images.iconSendDisabled : images.iconSendGreen
-              }
-              onPress={onClickSend}
-              disabled={buttonStatus}
-            />
           </View>
         ) : (
           <TextInput

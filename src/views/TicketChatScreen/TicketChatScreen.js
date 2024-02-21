@@ -40,10 +40,14 @@ const TicketChatScreen = () => {
     onGoBack,
     setIsDetailScreen,
     showPopup,
+    setFileUploadResult,
     ticketViewDetails,
     userDetails,
     ErrorChatData,
     isErrorChatData,
+    isMessageSending,
+    isErrorWhileSending,
+    errorWhileSendingMessage,
   } = useTicketDetails(location.state);
 
   const { isWebView } = useIsWebView();
@@ -74,8 +78,14 @@ const TicketChatScreen = () => {
         fileUploadError={fileUploadError}
         isFirstPageReceived={isFirstPageReceived}
         initiateFileUpload={initiateFileUpload}
+        setFileUploadResult={setFileUploadResult}
         loadingMore={loadingMore}
         userDetails={userDetails}
+        {...{
+          isMessageSending,
+          isErrorWhileSending,
+          errorWhileSendingMessage,
+        }}
       />
     );
   };
