@@ -14,7 +14,6 @@ import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
 import {
-  extractFilename,
   formatDate,
   getDateFlagMobile,
   getDateStatus,
@@ -48,14 +47,12 @@ const ChatSection = ({
   const [userProfileDetails] = useContext(UserProfileContext);
   const [messageValue, setMessageValue] = useState("");
   const [file, setFile] = useState(null);
-  const [mobileFormData, setMobileFormData] = useState();
   const flatListRef = useRef(null);
   const scrollToLatestMessageRef = useRef(null);
+  const useFormData = useRef(new FormData());
 
   const { setErrorWhileSendingMessage, setErrorWhileUpload } =
     setErrorWhileSendingMessages;
-
-  console.log("errorWhileSendingMessage", errorWhileSendingMessage);
 
   const isMobileProps = isMob
     ? {
@@ -78,14 +75,14 @@ const ChatSection = ({
     setMessageValue(val);
   };
 
-  const formData = new FormData();
   const handleSend = async () => {
+    const trimmedValue = messageValue.trim();
+    if (!trimmedValue && !file) {
+      return;
+    }
     if (!!file) {
-      // if (!isMob) {
-      //   formData.append("file", file);
-      // }
       await handleFileUpload({
-        file: mobileFormData,
+        file: useFormData.current,
         successCallback: async (fileUploadData) => {
           await handleSendButton({
             messageValue: messageValue,
@@ -95,7 +92,7 @@ const ChatSection = ({
       });
     } else {
       await handleSendButton({
-        messageValue: messageValue,
+        messageValue: trimmedValue,
         file_name: "",
       });
     }
@@ -105,23 +102,7 @@ const ChatSection = ({
   };
 
   const uploadImageToServer = ({ uploadedFile }) => {
-    const formData = new FormData();
-    formData.append("file", uploadedFile);
-    // handleFileUpload({
-    //   file: formData,
-    // });
-    setMobileFormData(formData);
-    console.log("uploadImageToServer", uploadedFile);
-  };
-
-  const handleUpload = ({ uploadedFile }) => {
-    const formData = new FormData();
-    formData.append("file", uploadedFile);
-    setMobileFormData(formData);
-    // handleFileUpload({
-    //   file: val,
-    // });
-    console.log("handleUpload", formData, "uploadedFile", uploadedFile);
+    useFormData.current.append("file", uploadedFile);
   };
 
   const shouldShowAvatar = (currentIndex) => {
@@ -176,21 +157,21 @@ const ChatSection = ({
   const preprocessMessages = (messages) => {
     const dateFlags = {};
     messages.forEach((msg) => {
-      const dateKey = formatDate(new Date(msg.created_at));
+      const dateKey = formatDate(new Date(msg?.created_at));
       dateFlags[dateKey] = (dateFlags[dateKey] || 0) + 1;
     });
 
     messages.forEach((msg, index) => {
-      const dateKey = formatDate(new Date(msg.created_at));
+      const dateKey = formatDate(new Date(msg?.created_at));
       dateFlags[dateKey]--;
-      if (!dateFlags[dateKey]) {
-        messages[index].dateFlag = getDateFlagMobile(msg.created_at);
+      if (!dateFlags[dateKey] && messages[index]) {
+        messages[index].dateFlag = getDateFlagMobile(msg?.created_at);
       }
     });
     return messages;
   };
 
-  const processedMessages = preprocessMessages(data);
+  const processedMessages = isMob ? preprocessMessages(data) : [];
 
   const renderMessagesSection = ({ item, index }) => {
     const issender = getMessageInfo(item?.author, userDetails);
@@ -222,11 +203,11 @@ const ChatSection = ({
             index={index}
             shouldShowAvatar={shouldShowAvatar}
           />
-          {!!item.dateFlag && isMob && (
+          {!!item?.dateFlag && isMob && (
             <View style={styles.flagContainer}>
               {renderHorizontalLine()}
               <CommonText customTextStyle={styles.messageFlag}>
-                {item.dateFlag}
+                {item?.dateFlag}
               </CommonText>
               {renderHorizontalLine()}
             </View>
@@ -281,13 +262,12 @@ const ChatSection = ({
                 initiateFileUpload={initiateFileUpload}
                 maxLength={MESSAGE_MAX_LENGTH}
                 onChangeText={(val) => handleInputChange(val)}
-                onClickAttachement={isMob ? handleUpload : uploadImageToServer}
+                onClickAttachement={uploadImageToServer}
                 onClickSend={handleSend}
                 placeholder={intl.formatMessage({ id: "label.type_message" })}
                 value={messageValue}
                 setFile={setFile}
                 customHandleBlur={() => {
-                  console.log("errorWhileSendingMessage");
                   setErrorWhileSendingMessage("");
                   setErrorWhileUpload("");
                 }}

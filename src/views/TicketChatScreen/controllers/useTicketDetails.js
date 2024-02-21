@@ -96,6 +96,9 @@ const useTicketDetails = (location) => {
   }, []);
 
   const handleSendButton = async ({ messageValue, file_name }) => {
+    if (isMessageSend) {
+      return;
+    }
     let newRecords = [];
     const queryParams = {
       id: id,
@@ -148,13 +151,6 @@ const useTicketDetails = (location) => {
       setLoadingMore(false);
     }
   };
-
-  console.log(
-    "errorWhileUpload",
-    errorWhileUpload,
-    "errorWhileSendingMessage",
-    errorWhileSendingMessage
-  );
 
   return {
     allDataLoaded,
