@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Platform, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
 import CommonText from "../CommonText";
@@ -19,14 +19,14 @@ const MessageComponent = ({
   userDetails,
 }) => {
   const windowDimensions = useWindowDimensions();
-  const width1400orLess = windowDimensions.width <= 1500;
+  const width1200orLess = windowDimensions.width <= 1200;
 
   const MessageAreaComponent = ({ message, sender }) => {
     const senderStyle = sender
-      ? width1400orLess
+      ? width1200orLess
         ? styles.smSenderMessageStyle
         : styles.senderMessageStyle
-      : width1400orLess
+      : width1200orLess
       ? styles.smRecieverMessageStyle
       : styles.recieverMessageStyle;
     return (
