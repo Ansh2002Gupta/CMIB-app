@@ -28,6 +28,10 @@ const SearchView = ({
   });
 
   const handleSearch = (text) => {
+    if (text.length < 3) {
+      setQuery(text);
+      return;
+    }
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
