@@ -25,14 +25,14 @@ const TriggerFileUpload = ({
       if (image) {
         setFile(image?.sourceURL || image?.path);
         const uri = image?.sourceURL || image?.path;
-        const formData = new FormData();
+        // const formData = new FormData();
         const file = {
           uri: uri,
           name: image?.filename || extractFilename(uri),
           type: image.mime,
         };
-        formData.append("file", file);
-        onImageUpload(formData);
+        // formData.append("file", file);
+        onImageUpload({ uploadedFile: file });
       }
     } catch (error) {
       console.log(error);

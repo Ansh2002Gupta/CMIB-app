@@ -14,6 +14,7 @@ import Spinner from "../Spinner";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useHandleInfiniteScroll from "../../hooks/useHandleInfiniteScroll";
 import {
+  extractFilename,
   formatDate,
   getDateFlagMobile,
   getDateStatus,
@@ -41,15 +42,20 @@ const ChatSection = ({
   isMessageSending,
   isErrorWhileSending,
   errorWhileSendingMessage,
+  setErrorWhileSendingMessages,
 }) => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const [messageValue, setMessageValue] = useState("");
   const [file, setFile] = useState(null);
+  const [mobileFormData, setMobileFormData] = useState();
   const flatListRef = useRef(null);
   const scrollToLatestMessageRef = useRef(null);
 
-  console.log("file", file);
+  const { setErrorWhileSendingMessage, setErrorWhileUpload } =
+    setErrorWhileSendingMessages;
+
+  console.log("errorWhileSendingMessage", errorWhileSendingMessage);
 
   const isMobileProps = isMob
     ? {
@@ -72,12 +78,14 @@ const ChatSection = ({
     setMessageValue(val);
   };
 
+  const formData = new FormData();
   const handleSend = async () => {
     if (!!file) {
-      const formData = new FormData();
-      formData.append("file", file);
+      // if (!isMob) {
+      //   formData.append("file", file);
+      // }
       await handleFileUpload({
-        file: formData,
+        file: mobileFormData,
         successCallback: async (fileUploadData) => {
           await handleSendButton({
             messageValue: messageValue,
@@ -94,6 +102,26 @@ const ChatSection = ({
     setFileUploadResult("");
     setMessageValue("");
     setFile("");
+  };
+
+  const uploadImageToServer = ({ uploadedFile }) => {
+    const formData = new FormData();
+    formData.append("file", uploadedFile);
+    // handleFileUpload({
+    //   file: formData,
+    // });
+    setMobileFormData(formData);
+    console.log("uploadImageToServer", uploadedFile);
+  };
+
+  const handleUpload = ({ uploadedFile }) => {
+    const formData = new FormData();
+    formData.append("file", uploadedFile);
+    setMobileFormData(formData);
+    // handleFileUpload({
+    //   file: val,
+    // });
+    console.log("handleUpload", formData, "uploadedFile", uploadedFile);
   };
 
   const shouldShowAvatar = (currentIndex) => {
@@ -251,14 +279,20 @@ const ChatSection = ({
                 isSendButton
                 isLoading={isMessageSending}
                 initiateFileUpload={initiateFileUpload}
-                imageUrl={fileUploadResult?.data?.url}
                 maxLength={MESSAGE_MAX_LENGTH}
                 onChangeText={(val) => handleInputChange(val)}
-                onClickAttachement={() => {}}
+                onClickAttachement={isMob ? handleUpload : uploadImageToServer}
                 onClickSend={handleSend}
                 placeholder={intl.formatMessage({ id: "label.type_message" })}
                 value={messageValue}
                 setFile={setFile}
+                customHandleBlur={() => {
+                  console.log("errorWhileSendingMessage");
+                  setErrorWhileSendingMessage("");
+                  setErrorWhileUpload("");
+                }}
+                isError={isErrorWhileSending}
+                errorMessage={errorWhileSendingMessage}
               />
             </FormWrapper>
           )}

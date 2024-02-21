@@ -12,17 +12,18 @@ import CustomLabelView from "../CustomLabelView";
 import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import TriggerFileUpload from "../TriggerFileUpload";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
-import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import { getImageSource } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
+import Spinner from "../Spinner";
 
 const CustomTextInput = (props) => {
   const {
@@ -54,7 +55,6 @@ const CustomTextInput = (props) => {
     isRupee,
     isSendButton,
     isLoading,
-    imageUrl,
     initiateFileUpload,
     label,
     maxCount,
@@ -113,7 +113,14 @@ const CustomTextInput = (props) => {
     ...(isError ? style.invalidInput : {}),
   };
 
+  const webProps = isWebPlatform
+    ? { size: "xs", thickness: 3, color: colors.white }
+    : {};
+
   const getSendButtonStatus = () => {
+    if (isLoading) {
+      return true;
+    }
     if (!!file) {
       return false;
     }
@@ -224,7 +231,9 @@ const CustomTextInput = (props) => {
             }}
           />
         ) : isSendButton ? (
-          <View style={style.sendButtonContainer}>
+          <View
+            style={file ? style.sendButtonWithFiles : style.sendButtonContainer}
+          >
             <View style={style.sendButton}>
               <TextInput
                 value={value}
@@ -254,13 +263,20 @@ const CustomTextInput = (props) => {
                 customButtonStyle={style.iconAttachement}
                 setFile={setFile}
               />
-              <TouchableImage
-                source={
-                  buttonStatus ? images.iconSendDisabled : images.iconSendGreen
-                }
+              <CustomTouchableOpacity
+                style={!buttonStatus ? style.sendEnabled : style.sendDisabled}
                 onPress={onClickSend}
-                disabled={isLoading || buttonStatus}
-              />
+                disabled={buttonStatus}
+              >
+                {isLoading ? (
+                  <Spinner {...webProps} color={"white"} />
+                ) : (
+                  <CustomImage
+                    source={images.iconSendGreen}
+                    style={style.iconAttachement}
+                  />
+                )}
+              </CustomTouchableOpacity>
             </View>
             {!!file && (
               <CustomImage
@@ -349,7 +365,6 @@ CustomTextInput.defaultProps = {
   isPassword: false,
   isSendButton: false,
   initiateFileUpload: () => {},
-  imageUrl: "",
   label: "",
   labelField: "label",
   maxCount: 100,
@@ -392,7 +407,6 @@ CustomTextInput.propTypes = {
   isPassword: PropTypes.bool,
   isSendButton: PropTypes.bool,
   initiateFileUpload: PropTypes.func,
-  imageUrl: PropTypes.string,
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,

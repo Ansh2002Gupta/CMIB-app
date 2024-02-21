@@ -52,6 +52,7 @@ const useTicketReplies = () => {
     isSuccess,
     ticketReplies,
     setTicketReplies,
+    setErrorWhileSendingMessage,
   };
 };
 

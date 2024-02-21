@@ -11,7 +11,6 @@ import useTicketReplies from "../../../services/apiServices/hooks/TicketViewEdit
 import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useUploadedFileValidations from "../../../hooks/useUploadedFileValidations";
-import useDeleteLogo from "../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useUpdateLogoAPI from "../../../services/apiServices/hooks/CompanyLogo/useUpdateLogoAPI";
 
 const useTicketDetails = (location) => {
@@ -54,31 +53,13 @@ const useTicketDetails = (location) => {
     handleFileUpload,
     fileUploadResult,
     isLoading: isUploadingImageToServer,
+    isError: isErrorWhileUploading,
     setErrorWhileUpload,
     setFileUploadResult,
   } = useSaveLogo();
 
-  const {
-    errorWhileDeletion,
-    handleDeleteLogo,
-    isLoading: isDeletingFromServer,
-  } = useDeleteLogo();
-
   const { errorWhileUpdate, handleFileUpdate, isLoading, setErrorWhileUpdate } =
     useUpdateLogoAPI();
-
-  console.log(fileUploadResult, "fileUploadResult");
-
-  // const handleRemoveImage = () => {
-  //   const fileName = fileUploadResult?.data?.name
-  //   handleFileUpdate({
-  //     file: { profile_photo: "" },
-  //     successCallback: () => {
-  //       handleDeleteLogo(fileName[fileName.length - 1]);
-  //       onPressIconCross();
-  //     },
-  //   });
-  // };
 
   const {
     fileTooLargeError,
@@ -92,9 +73,10 @@ const useTicketDetails = (location) => {
 
   const {
     handleTicketReplies,
-    isLoading: isMessageSending,
+    isLoading: isMessageSend,
     errorWhileSendingMessage,
-    isError: isErrorWhileSending,
+    isError: isErrorWhileSend,
+    setErrorWhileSendingMessage,
   } = useTicketReplies();
 
   useEffect(() => {
@@ -125,6 +107,8 @@ const useTicketDetails = (location) => {
     const newData = await handleTicketReplies(queryParams);
     newRecords.push(newData?.data);
     setCurrentRecords((prevRecords) => [...newRecords, ...prevRecords]);
+    setErrorWhileUpload("");
+    setErrorWhileSendingMessage("");
   };
 
   const onGoBack = () => {
@@ -165,6 +149,13 @@ const useTicketDetails = (location) => {
     }
   };
 
+  console.log(
+    "errorWhileUpload",
+    errorWhileUpload,
+    "errorWhileSendingMessage",
+    errorWhileSendingMessage
+  );
+
   return {
     allDataLoaded,
     chatRecords: currentRecords,
@@ -190,9 +181,13 @@ const useTicketDetails = (location) => {
     handleFileUpload,
     fileUploadResult,
     fileUploadError,
-    isMessageSending,
-    isErrorWhileSending,
-    errorWhileSendingMessage,
+    isMessageSending: isMessageSend || isUploadingImageToServer,
+    isErrorWhileSending: isErrorWhileSend || isErrorWhileUploading,
+    errorWhileSendingMessage: errorWhileUpload || errorWhileSendingMessage,
+    setErrorWhileSendingMessages: {
+      setErrorWhileSendingMessage,
+      setErrorWhileUpload,
+    },
   };
 };
 

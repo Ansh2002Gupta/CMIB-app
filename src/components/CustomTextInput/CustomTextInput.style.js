@@ -143,13 +143,20 @@ const style = {
   },
   sendButtonContainer: {
     flex: 1,
+    padding: 2,
+    height: 48,
+    justifyContent: "center",
+  },
+  sendButtonWithFiles: {
+    flex: 1,
+    padding: 2,
+    height: 210,
+    justifyContent: "center",
   },
   iconAttachement: {
     padding: 0,
     borderWidth: 0,
     marginRight: 0,
-    height: 48,
-    width: 48,
   },
   imageUploadStyle: {
     height: 150,
@@ -158,6 +165,24 @@ const style = {
   },
   uploadRightSection: {
     flexDirection: "row",
+  },
+  sendEnabled: {
+    borderRadius: 8,
+    backgroundColor: colors.green,
+    padding: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    width: 40,
+  },
+  sendDisabled: {
+    borderRadius: 8,
+    backgroundColor: colors.disabledGrey,
+    padding: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    width: 40,
   },
 };
 

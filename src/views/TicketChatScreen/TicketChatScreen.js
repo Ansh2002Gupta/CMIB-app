@@ -48,6 +48,7 @@ const TicketChatScreen = () => {
     isMessageSending,
     isErrorWhileSending,
     errorWhileSendingMessage,
+    setErrorWhileSendingMessages,
   } = useTicketDetails(location.state);
 
   const { isWebView } = useIsWebView();
@@ -85,6 +86,7 @@ const TicketChatScreen = () => {
           isMessageSending,
           isErrorWhileSending,
           errorWhileSendingMessage,
+          setErrorWhileSendingMessages,
         }}
       />
     );
