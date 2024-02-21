@@ -159,7 +159,7 @@ const style = {
     marginRight: 0,
   },
   imageUploadStyle: {
-    height: 150,
+    height: 100,
     width: 150,
     marginBottom: 10,
   },
@@ -183,6 +183,18 @@ const style = {
     alignItems: "center",
     height: 40,
     width: 40,
+  },
+  imageUploadStyleContainer: {
+    position: "relative",
+    flexDirection: "row",
+    alignItems: "flex-start",
+  },
+  iconCross: {
+    height: 20,
+    width: 20,
+    backgroundColor: colors.secondaryGrey,
+    borderRadius: 10,
+    marginLeft: 5,
   },
 };
 

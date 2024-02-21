@@ -15,7 +15,9 @@ import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
+import Spinner from "../Spinner";
 import TriggerFileUpload from "../TriggerFileUpload";
+import TouchableImage from "../TouchableImage";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -23,7 +25,6 @@ import { getImageSource } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
-import Spinner from "../Spinner";
 
 const CustomTextInput = (props) => {
   const {
@@ -63,6 +64,7 @@ const CustomTextInput = (props) => {
     onChangeValue,
     onClickAttachement,
     onClickSend,
+    onIconClose,
     placeholder,
     step,
     setFile,
@@ -279,10 +281,17 @@ const CustomTextInput = (props) => {
               </CustomTouchableOpacity>
             </View>
             {!!file && (
-              <CustomImage
-                source={{ uri: getImageSource(file) }}
-                style={style.imageUploadStyle}
-              />
+              <View style={style.imageUploadStyleContainer}>
+                <CustomImage
+                  source={{ uri: getImageSource(file) }}
+                  style={style.imageUploadStyle}
+                />
+                <TouchableImage
+                  onPress={onIconClose}
+                  source={images.iconCross}
+                  style={style.iconCross}
+                />
+              </View>
             )}
           </View>
         ) : (
@@ -373,6 +382,7 @@ CustomTextInput.defaultProps = {
   onChangeValue: () => {},
   onClickAttachement: () => {},
   onClickSend: () => {},
+  onIconClose: () => {},
   placeholder: "",
   step: 1,
   value: "",
@@ -416,6 +426,7 @@ CustomTextInput.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object),
   onClickAttachement: PropTypes.func,
   onClickSend: PropTypes.func,
+  onIconClose: PropTypes.func,
   placeholder: PropTypes.string,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

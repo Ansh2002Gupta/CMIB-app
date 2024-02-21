@@ -257,6 +257,7 @@ const ChatSection = ({
                 placeholder={intl.formatMessage({ id: "label.type_message" })}
                 value={messageValue}
                 setFile={setFile}
+                onIconClose={() => setFile("")}
                 customHandleBlur={() => {
                   setErrorWhileSendingMessage("");
                   setErrorWhileUpload("");
