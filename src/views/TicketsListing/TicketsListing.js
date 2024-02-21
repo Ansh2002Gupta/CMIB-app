@@ -111,6 +111,9 @@ const TicketsListing = () => {
             tableHeading,
             tableIcon,
             totalcards,
+            placeholder: intl.formatMessage({
+              id: "label.search_by_ticket",
+            }),
           }}
         />
       }
