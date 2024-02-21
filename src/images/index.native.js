@@ -115,6 +115,7 @@ import iconAttachement from "../../public/images/svg/iconAttachement.svg";
 import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
 import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
+import iconPartial from "../../public/images/svg/iconPartial.svg";
 
 const images = {
   iconArrowUp,
@@ -234,6 +235,7 @@ const images = {
   iconArrowUpSorting,
   iconAddWhite,
   iconAddBlack,
+  iconPartial,
 };
 
 export default images;

@@ -108,8 +108,9 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   imagesSection: {
-    maxHeight: 300,
-    maxWidth: 300,
+    height: 160,
+    width: 200,
+    objectFit: "cover",
     borderRadius: 12,
   },
 });

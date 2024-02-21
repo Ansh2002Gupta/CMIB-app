@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   },
   chatScreenSectionWeb: (midOrSmall) => ({
     position: "relative",
-    paddingTop: midOrSmall ? 30 : 64,
+    paddingTop: 30,
     paddingLeft: midOrSmall ? 20 : 80,
     paddingRight: midOrSmall ? 20 : 80,
     width: midOrSmall ? "70%" : "75%",

@@ -112,19 +112,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 30,
   },
-  addNewButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 44,
-    backgroundColor: colors.green,
-    borderRadius: 8,
-    marginLeft: 16,
-    padding: 12,
-  },
-  addNewText: {
-    color: colors.white,
-    marginLeft: 8,
-  },
   textSize: {
     fontSize: 14,
   },
@@ -133,17 +120,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   addTicketSection: { justifyContent: "space-between" },
-  addNewButtonMob: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 44,
-    backgroundColor: colors.white,
-    borderWidth: 1,
-    borderColor: colors.lightGrey,
-    borderRadius: 8,
-    marginLeft: 16,
-    padding: 12,
-  },
   activeTickets: {
     backgroundColor: colors.green,
     height: 20,

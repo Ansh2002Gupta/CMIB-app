@@ -53,7 +53,7 @@ const AddTicketModal = ({
             }}
             onPressButtonOne={onPressButtonOne}
             isButtonTwoGreen
-            isDisabled={!enterQuery || !queryType}
+            isDisabled={!queryType || !enterQuery}
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}
             buttonTwoText={intl.formatMessage({ id: "label.add" })}
           ></ActionPairButton>
