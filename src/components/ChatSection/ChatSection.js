@@ -64,12 +64,16 @@ const ChatSection = ({
 
   useHandleInfiniteScroll(handleLoadMore, flatListRef);
 
-  useEffect(() => {
+  const handleScroll = () => {
     if (!isMob && scrollToLatestMessageRef.current) {
       const element = scrollToLatestMessageRef.current;
       element.scrollIntoView({ behaviour: "smooth" });
     }
-  }, [file, messageValue]);
+  };
+
+  useEffect(() => {
+    handleScroll();
+  }, []);
 
   const handleInputChange = (val) => {
     setMessageValue(val);
@@ -88,6 +92,7 @@ const ChatSection = ({
             messageValue: messageValue,
             file_name: fileUploadData?.data?.file_name || "",
           });
+          handleScroll();
         },
       });
     } else {
@@ -95,6 +100,7 @@ const ChatSection = ({
         messageValue: trimmedValue,
         file_name: "",
       });
+      handleScroll();
     }
     setFileUploadResult("");
     setMessageValue("");
@@ -124,19 +130,6 @@ const ChatSection = ({
   };
 
   const webProps = !isMob ? { size: "xs" } : {};
-
-  const getMessageInfo = (chatData, userDetails) => {
-    if (chatData?.type.toLowerCase() === "system" || !chatData?.type) {
-      return null;
-    }
-    if (
-      chatData?.id === userDetails?.id &&
-      chatData?.type.toLowerCase() === userDetails?.user_type.toLowerCase()
-    ) {
-      return true;
-    }
-    return false;
-  };
 
   const renderHorizontalLine = () => {
     return <View style={styles.horizontalLine} />;
@@ -174,7 +167,6 @@ const ChatSection = ({
   const processedMessages = isMob ? preprocessMessages(data) : [];
 
   const renderMessagesSection = ({ item, index }) => {
-    const issender = getMessageInfo(item?.author, userDetails);
     let messageFlag;
     if (!isMob) {
       messageFlag = getDateStatus(item?.created_at);
@@ -196,10 +188,8 @@ const ChatSection = ({
             <MessageInfoComponent message={item?.message} />
           )}
           <MessageComponent
-            isSender={issender}
             data={item}
             userDetails={userProfileDetails?.userDetails}
-            details={details}
             index={index}
             shouldShowAvatar={shouldShowAvatar}
           />
