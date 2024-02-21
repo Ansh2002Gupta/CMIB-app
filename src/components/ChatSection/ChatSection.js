@@ -62,7 +62,7 @@ const ChatSection = ({
 
   useHandleInfiniteScroll(handleLoadMore, flatListRef);
 
-  const handleScroll = () => {
+  const handleScrollToLastMessage = () => {
     if (!isMob && scrollToLatestMessageRef.current) {
       const element = scrollToLatestMessageRef.current;
       element.scrollIntoView({ behaviour: "smooth" });
@@ -70,7 +70,7 @@ const ChatSection = ({
   };
 
   useEffect(() => {
-    handleScroll();
+    handleScrollToLastMessage();
   }, []);
 
   const handleInputChange = (val) => {
@@ -90,7 +90,7 @@ const ChatSection = ({
             messageValue: messageValue,
             file_name: fileUploadData?.data?.file_name || "",
           });
-          handleScroll();
+          handleScrollToLastMessage();
         },
       });
     } else {
@@ -98,7 +98,7 @@ const ChatSection = ({
         messageValue: trimmedValue,
         file_name: "",
       });
-      handleScroll();
+      handleScrollToLastMessage();
     }
     setFileUploadResult("");
     setMessageValue("");
