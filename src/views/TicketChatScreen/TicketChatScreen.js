@@ -7,6 +7,7 @@ import { Platform } from "@unthinkable/react-core-components";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import ChatSection from "../../components/ChatSection/ChatSection";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import TicketDetails from "../TicketDetails";
@@ -24,6 +25,8 @@ const TicketChatScreen = () => {
     chatRecords,
     fileUploadError,
     fileUploadResult,
+    erroticketViewDetails,
+    isErrorticketViewDetails,
     handleFileUpload,
     handleLoadMore,
     handlePopup,
@@ -39,6 +42,8 @@ const TicketChatScreen = () => {
     showPopup,
     ticketViewDetails,
     userDetails,
+    ErrorChatData,
+    isErrorChatData,
   } = useTicketDetails(location.state);
 
   const { isWebView } = useIsWebView();
@@ -54,107 +59,105 @@ const TicketChatScreen = () => {
     reversedData = [...chatRecords].reverse();
   }
 
+  const isLoading = isChatLoading && isFirstPageReceived && isticketViewDetails;
+
+  const renderChatSection = () => {
+    return (
+      <ChatSection
+        allDataLoaded={allDataLoaded}
+        data={isMob ? chatRecords : reversedData}
+        details={ticketViewDetails}
+        handleSendButton={handleSendButton}
+        handleLoadMore={handleLoadMore}
+        handleFileUpload={handleFileUpload}
+        fileUploadResult={fileUploadResult}
+        fileUploadError={fileUploadError}
+        isFirstPageReceived={isFirstPageReceived}
+        initiateFileUpload={initiateFileUpload}
+        loadingMore={loadingMore}
+        userDetails={userDetails}
+      />
+    );
+  };
+
   return (
-    <TwoRow
-      style={styles.mainContainer}
-      topSection={
-        <>
-          <IconHeader
-            headerText={
-              isDetailsScreen
-                ? intl.formatMessage({ id: "label.view_ticket_details" })
-                : ticketViewDetails?.readable_id
-            }
-            subHeading={ticketViewDetails?.status}
-            onPressLeftIcon={onGoBack}
-            hasIconBar
-            mobActionButton={images.iconMore}
-            handleButtonClick={() => {
-              handlePopup();
-            }}
-          />
-          {showPopup && !isDetailsScreen && (
-            <PopupMessage
-              message={intl.formatMessage({ id: "label.view_ticket_details" })}
-              onPopupClick={() => {
-                setIsDetailScreen(true);
-                handlePopup();
-              }}
-            />
-          )}
-        </>
-      }
-      isBottomFillSpace
-      topSectionStyle={styles.topSectionStyle}
-      bottomSectionStyle={styles.bottomSectionStyle}
-      bottomSection={
-        isWebView ? (
-          <TwoColumn
-            leftSectionStyle={
-              isWebView
-                ? styles.chatScreenSectionWeb(midOrSmall)
-                : styles.chatScreenSection
-            }
-            rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
-            leftSection={
-              isChatLoading && isFirstPageReceived ? (
-                <LoadingScreen />
-              ) : (
-                chatRecords.length && (
-                  <ChatSection
-                    isFirstPageReceived={isFirstPageReceived}
-                    allDataLoaded={allDataLoaded}
-                    userDetails={userDetails}
-                    handleSendButton={handleSendButton}
-                    data={reversedData}
-                    details={ticketViewDetails}
-                    handleLoadMore={handleLoadMore}
-                    loadingMore={loadingMore}
-                    initiateFileUpload={initiateFileUpload}
-                    handleFileUpload={handleFileUpload}
-                    fileUploadResult={fileUploadResult}
-                    fileUploadError={fileUploadError}
-                  />
-                )
-              )
-            }
-            rightSection={
-              isticketViewDetails ? (
-                <LoadingScreen />
-              ) : (
-                <TicketDetails details={ticketViewDetails} />
-              )
-            }
-          />
-        ) : (
-          <>
-            {isDetailsScreen ? (
-              isticketViewDetails ? (
-                <LoadingScreen />
-              ) : (
-                <TicketDetails details={ticketViewDetails} />
-              )
-            ) : isChatLoading && isFirstPageReceived ? (
-              <LoadingScreen />
-            ) : (
-              <ChatSection
-                allDataLoaded={allDataLoaded}
-                userDetails={userDetails}
-                handleSendButton={handleSendButton}
-                data={isMob ? chatRecords : reversedData}
-                details={ticketViewDetails}
-                handleLoadMore={handleLoadMore}
-                loadingMore={loadingMore}
-                initiateFileUpload={initiateFileUpload}
-                handleFileUpload={handleFileUpload}
-                fileUploadResult={fileUploadResult}
-                fileUploadError={fileUploadError}
+    <>
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <TwoRow
+          style={styles.mainContainer}
+          topSection={
+            <>
+              <IconHeader
+                headerText={
+                  isDetailsScreen
+                    ? intl.formatMessage({ id: "label.view_ticket_details" })
+                    : ticketViewDetails?.readable_id
+                }
+                subHeading={ticketViewDetails?.status}
+                onPressLeftIcon={onGoBack}
+                hasIconBar
+                mobActionButton={images.iconMore}
+                handleButtonClick={() => {
+                  handlePopup();
+                }}
               />
-            )}
-          </>
-        )
-      }
-    />
+              {showPopup && !isDetailsScreen && (
+                <PopupMessage
+                  message={intl.formatMessage({
+                    id: "label.view_ticket_details",
+                  })}
+                  onPopupClick={() => {
+                    setIsDetailScreen(true);
+                    handlePopup();
+                  }}
+                />
+              )}
+            </>
+          }
+          isBottomFillSpace
+          topSectionStyle={styles.topSectionStyle}
+          bottomSectionStyle={styles.bottomSectionStyle}
+          bottomSection={
+            isWebView ? (
+              <TwoColumn
+                leftSectionStyle={
+                  isWebView
+                    ? styles.chatScreenSectionWeb(midOrSmall)
+                    : styles.chatScreenSection
+                }
+                rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
+                leftSection={!!chatRecords.length && renderChatSection()}
+                rightSection={
+                  <>
+                    {!isErrorticketViewDetails && (
+                      <TicketDetails details={ticketViewDetails} />
+                    )}
+                    {isErrorticketViewDetails && (
+                      <ErrorComponent
+                        errorMsg={erroticketViewDetails?.data?.message}
+                      />
+                    )}
+                  </>
+                }
+              />
+            ) : (
+              <>
+                {isDetailsScreen ? (
+                  <TicketDetails details={ticketViewDetails} />
+                ) : (
+                  !!chatRecords.length && renderChatSection()
+                )}
+              </>
+            )
+          }
+        />
+      )}
+      {isErrorChatData && (
+        <ErrorComponent errorMsg={ErrorChatData?.data?.message} />
+      )}
+    </>
   );
 };
 

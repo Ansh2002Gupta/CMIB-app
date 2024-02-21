@@ -28,6 +28,8 @@ const useTicketDetails = (location) => {
     data: ticketViewDetails,
     isLoading: isticketViewDetails,
     fetchData: fetchTicketViewDetails,
+    error: erroticketViewDetails,
+    isError: isErrorticketViewDetails,
   } = useFetch({
     url: `${COMPANY_TICKET_LISTING}/${id}`,
   });
@@ -36,6 +38,8 @@ const useTicketDetails = (location) => {
     data: chatRecords,
     isLoading: isChatLoading,
     fetchData: fetchChatData,
+    error: ErrorChatData,
+    isError: isErrorChatData,
   } = useFetch({
     url: `${COMPANY_TICKET_LISTING}/${id}/${TICKET_REPLIES_SUB_ROUTES}`,
     otherOptions: {
@@ -137,6 +141,10 @@ const useTicketDetails = (location) => {
     handleLoadMore,
     handlePopup,
     handleSendButton,
+    ErrorChatData,
+    isErrorChatData,
+    erroticketViewDetails,
+    isErrorticketViewDetails,
     isFirstPageReceived,
     isChatLoading,
     isDetailsScreen,

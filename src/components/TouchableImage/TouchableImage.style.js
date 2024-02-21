@@ -10,7 +10,7 @@ const styles = {
     ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   disabled: {
-    opacity: 0.5,
+    cursor: "not-allowed",
   },
   selected: {
     borderColor: colors.black,
