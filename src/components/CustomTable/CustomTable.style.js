@@ -53,6 +53,14 @@ const styles = StyleSheet.create({
   columnHeaderStyle: {
     backgroundColor: colors.white,
   },
+  columnHeaderStyleWithBorder: {
+    backgroundColor: colors.white,
+    borderWidth: 0.5,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderColor: colors.lightGrey,
+  },
   tableSection: {
     borderWidth: 0.5,
     borderColor: colors.lightGrey,
