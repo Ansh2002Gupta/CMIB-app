@@ -134,9 +134,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
     >
       {!!file && Platform.OS === "web" ? (
         <CropAndRotateImage
-          isLoading={
-            !profileImage ? isUploadingImageToServer || isLoading : false
-          }
+          isLoading={isUploadingImageToServer || isLoading}
           file={file}
           photoURL={getImageSource(file)}
           errorWhileUpload={errorWhileUpload || errorWhileUpdate}
@@ -166,18 +164,19 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
           <View style={styles.editButtonContainer}>
             <TriggerFileUpload
               {...{
-                customButtonStyle: styles.customButtonStyle,
                 buttonTitle,
+                customButtonStyle: styles.customButtonStyle,
                 initiateFileUpload,
-                setFile,
-                onImageUpload: onImageUpload,
                 isLoading: isUploadingImageToServer || isLoading,
+                onImageUpload: onImageUpload,
+                openCropViewAfterImageSelection: true,
+                setFile,
               }}
             />
             {!!profileImage && (
               <CustomButton
                 onPress={handleRemoveImage}
-                isLoading={isDeletingFromServer}
+                isLoading={isLoading || isDeletingFromServer}
                 style={{ ...styles.secondButtonStyle }}
                 iconLeft={{
                   leftIconAlt: "delete",
