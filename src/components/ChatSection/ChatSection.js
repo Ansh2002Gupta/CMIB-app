@@ -47,6 +47,7 @@ const ChatSection = ({
   const [file, setFile] = useState(null);
   const flatListRef = useRef(null);
   const scrollToLatestMessageRef = useRef(null);
+  const inputAttachmentRef = useRef();
 
   const { setErrorWhileSendingMessage, setErrorWhileUpload } =
     setErrorWhileSendingMessages;
@@ -61,15 +62,15 @@ const ChatSection = ({
 
   useHandleInfiniteScroll(handleLoadMore, flatListRef);
 
-  const handleScrollToLastMessage = () => {
-    if (!isMob && scrollToLatestMessageRef.current) {
-      const element = scrollToLatestMessageRef.current;
+  const handleScrollToLastMessage = (scrollRef) => {
+    if (!isMob && scrollRef.current) {
+      const element = scrollRef.current;
       element.scrollIntoView({ behaviour: "smooth" });
     }
   };
 
   useEffect(() => {
-    handleScrollToLastMessage();
+    handleScrollToLastMessage(scrollToLatestMessageRef);
   }, []);
 
   const handleInputChange = (val) => {
@@ -91,15 +92,15 @@ const ChatSection = ({
             messageValue: messageValue,
             file_name: fileUploadData?.data?.file_name || "",
           });
-          handleScrollToLastMessage();
+          handleScrollToLastMessage(scrollToLatestMessageRef);
         },
       });
     } else {
       await handleSendButton({
-        messageValue: trimmedValue,
+        messageValue: messageValue,
         file_name: "",
       });
-      handleScrollToLastMessage();
+      handleScrollToLastMessage(scrollToLatestMessageRef);
     }
     setFileUploadResult("");
     setMessageValue("");
@@ -108,6 +109,7 @@ const ChatSection = ({
 
   const uploadImageToServer = ({ uploadedFile }) => {
     setFile(uploadedFile);
+    handleScrollToLastMessage(inputAttachmentRef);
   };
 
   const shouldShowAvatar = (currentIndex) => {
@@ -263,6 +265,7 @@ const ChatSection = ({
                 }}
                 isError={isErrorWhileSending}
                 errorMessage={errorWhileSendingMessage}
+                attachementRef={inputAttachmentRef}
               />
             </FormWrapper>
           )}

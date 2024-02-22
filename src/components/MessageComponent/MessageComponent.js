@@ -1,37 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
-import { useWindowDimensions } from "@unthinkable/react-theme/src/useWindowDimensions";
 
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
+import MessageAreaComponent from "../MessageAreaComponent/MessageAreaComponent";
 import ProfileIcon from "../ProfileIcon/ProfileIcon";
 import styles from "./MessageComponent.style";
 import { getMessageInfo, getTime } from "../../utils/util";
 
 const MessageComponent = ({ data, index, shouldShowAvatar, userDetails }) => {
-  const windowDimensions = useWindowDimensions();
-  const width1200orLess = windowDimensions.width <= 1200;
-
   const isSender = getMessageInfo(data, userDetails);
-
-  const MessageAreaComponent = ({ message, sender }) => {
-    const senderStyle = sender
-      ? width1200orLess
-        ? styles.smSenderMessageStyle
-        : styles.senderMessageStyle
-      : width1200orLess
-      ? styles.smRecieverMessageStyle
-      : styles.recieverMessageStyle;
-    return (
-      <CommonText
-        customContainerStyle={senderStyle}
-        customTextStyle={styles.textSize}
-      >
-        {message}
-      </CommonText>
-    );
-  };
 
   const renderAvatarComponent = ({ profile_photo, name }) => (
     <ProfileIcon

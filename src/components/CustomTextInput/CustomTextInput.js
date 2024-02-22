@@ -27,6 +27,7 @@ import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
+    attachementRef,
     customErrorStyle,
     customHandleBlur,
     customHeading,
@@ -280,14 +281,20 @@ const CustomTextInput = (props) => {
               </CustomTouchableOpacity>
             </View>
             {!!file && (
-              <View style={style.imageUploadStyleContainer}>
+              <View
+                style={style.imageUploadStyleContainer}
+                ref={attachementRef}
+              >
                 <CustomImage
                   source={{
                     uri: isWebPlatform ? getImageSource(file) : file?.uri,
                   }}
                   style={style.imageUploadStyle}
                 />
-                <CustomTouchableOpacity onPress={onIconClose}>
+                <CustomTouchableOpacity
+                  onPress={onIconClose}
+                  style={style.iconCrossContainer}
+                >
                   <CustomImage
                     source={images.iconCross}
                     style={style.iconCross}
