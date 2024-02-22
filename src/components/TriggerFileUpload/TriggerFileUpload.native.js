@@ -40,7 +40,7 @@ const TriggerFileUpload = ({
   return (
     <CustomButton
       style={{
-        ...(customButtonStyle ? customButtonStyle : styles.buttonStyle),
+        ...(customButtonStyle || styles.buttonStyle),
       }}
       onPress={openImagePicker}
       iconLeft={{

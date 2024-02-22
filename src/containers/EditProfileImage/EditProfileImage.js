@@ -58,9 +58,11 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   const fileUploadError =
     fileTooLargeError || invalidFormatError || nonUploadableImageError;
 
-  const onImageUpload = (uploadedFile) => {
+  const onImageUpload = ({ uploadedFile }) => {
+    const formData = new FormData();
+    formData.append("file", uploadedFile);
     handleFileUpload({
-      file: uploadedFile,
+      file: formData,
       successCallback: (file) => {
         handleFileUpdate({
           file: { profile_photo: file?.data?.file_name },
@@ -132,9 +134,9 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
     >
       {!!file && Platform.OS === "web" ? (
         <CropAndRotateImage
-        isLoading={
-          !profileImage ? isUploadingImageToServer || isLoading : false
-        }
+          isLoading={
+            !profileImage ? isUploadingImageToServer || isLoading : false
+          }
           file={file}
           photoURL={getImageSource(file)}
           errorWhileUpload={errorWhileUpload || errorWhileUpdate}
@@ -164,6 +166,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
           <View style={styles.editButtonContainer}>
             <TriggerFileUpload
               {...{
+                customButtonStyle: styles.customButtonStyle,
                 buttonTitle,
                 initiateFileUpload,
                 setFile,
@@ -182,7 +185,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
                   isLeftIconNotSvg: true,
                 }}
                 shouldShowHover
-                customStyle={{ customTextStyle: { fontSize: 14 } }}
+                customStyle={{ customTextStyle: styles.customTextStyle }}
               >
                 {intl.formatMessage({ id: "label.remove" })}
               </CustomButton>

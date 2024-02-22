@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
   hideRawInputField: {
     display: "none",
   },
+  customStyle: {
+    fontSize: 14,
+  },
 });
 
 export default styles;
