@@ -261,7 +261,7 @@ const CustomTextInput = (props) => {
                   isLeftIconNotSvg: false,
                 }}
                 shouldShowHover={false}
-                customButtonStyle={style.iconAttachement}
+                customButtonStyle={style.iconAttachment}
                 setFile={setFile}
               />
               <CustomTouchableOpacity
@@ -274,7 +274,7 @@ const CustomTextInput = (props) => {
                 ) : (
                   <CustomImage
                     source={images.iconSendGreen}
-                    style={style.iconAttachement}
+                    style={style.iconAttachment}
                   />
                 )}
               </CustomTouchableOpacity>
@@ -282,7 +282,9 @@ const CustomTextInput = (props) => {
             {!!file && (
               <View style={style.imageUploadStyleContainer}>
                 <CustomImage
-                  source={{ uri: getImageSource(file) }}
+                  source={{
+                    uri: isWebPlatform ? getImageSource(file) : file?.uri,
+                  }}
                   style={style.imageUploadStyle}
                 />
                 <CustomTouchableOpacity onPress={onIconClose}>

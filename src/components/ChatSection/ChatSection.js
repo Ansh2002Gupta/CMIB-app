@@ -47,7 +47,6 @@ const ChatSection = ({
   const [file, setFile] = useState(null);
   const flatListRef = useRef(null);
   const scrollToLatestMessageRef = useRef(null);
-  const useFormData = useRef(new FormData());
 
   const { setErrorWhileSendingMessage, setErrorWhileUpload } =
     setErrorWhileSendingMessages;
@@ -83,8 +82,10 @@ const ChatSection = ({
       return;
     }
     if (!!file) {
+      const formData = new FormData();
+      formData.append("file", file);
       await handleFileUpload({
-        file: useFormData.current,
+        file: formData,
         successCallback: async (fileUploadData) => {
           await handleSendButton({
             messageValue: messageValue,
@@ -106,7 +107,7 @@ const ChatSection = ({
   };
 
   const uploadImageToServer = ({ uploadedFile }) => {
-    useFormData.current.append("file", uploadedFile);
+    setFile(uploadedFile);
   };
 
   const shouldShowAvatar = (currentIndex) => {

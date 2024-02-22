@@ -153,7 +153,7 @@ const style = {
     height: 180,
     justifyContent: "center",
   },
-  iconAttachement: {
+  iconAttachment: {
     padding: 0,
     borderWidth: 0,
     marginRight: 0,
