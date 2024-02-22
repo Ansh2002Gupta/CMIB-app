@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     width: midOrSmall ? "30%" : "25%",
   }),
   topSectionStyle: {
-    zIndex: 2,
+    zIndex: 1,
   },
   bottomSectionStyle: {
     zIndex: 0,
