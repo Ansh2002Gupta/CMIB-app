@@ -1,16 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useNavigate } from "../../../routes";
 
+import useTicketReplies from "../../../services/apiServices/hooks/TicketViewEditDetails/useTicketReplies";
+import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
+import useUploadedFileValidations from "../../../hooks/useUploadedFileValidations";
 import useFetch from "../../../hooks/useFetch";
-import { PREVIOUS_SCREEN } from "../../../constants/constants";
 import {
   COMPANY_TICKET_LISTING,
   TICKET_REPLIES_SUB_ROUTES,
 } from "../../../services/apiServices/apiEndPoint";
-import useTicketReplies from "../../../services/apiServices/hooks/TicketViewEditDetails/useTicketReplies";
-import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
-import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
-import useUploadedFileValidations from "../../../hooks/useUploadedFileValidations";
+import { PREVIOUS_SCREEN } from "../../../constants/constants";
 
 const useTicketDetails = (location) => {
   const { id } = location;
@@ -22,7 +21,6 @@ const useTicketDetails = (location) => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [userProfileDetails] = useContext(UserProfileContext);
 
   const {
     data: ticketViewDetails,
@@ -50,9 +48,10 @@ const useTicketDetails = (location) => {
   const {
     errorWhileUpload,
     handleFileUpload,
-    fileUploadResult,
     isLoading: isUploadingImageToServer,
+    isError: isErrorWhileUploading,
     setErrorWhileUpload,
+    setFileUploadResult,
   } = useSaveLogo();
 
   const {
@@ -65,7 +64,13 @@ const useTicketDetails = (location) => {
   const fileUploadError =
     fileTooLargeError || invalidFormatError || nonUploadableImageError;
 
-  const { handleTicketReplies } = useTicketReplies();
+  const {
+    handleTicketReplies,
+    isLoading: isMessageSending,
+    errorWhileSendingMessage,
+    isError: isErrorWhileSend,
+    setErrorWhileSendingMessage,
+  } = useTicketReplies();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,6 +89,9 @@ const useTicketDetails = (location) => {
   }, []);
 
   const handleSendButton = async ({ messageValue, file_name }) => {
+    if (isMessageSending) {
+      return;
+    }
     let newRecords = [];
     const queryParams = {
       id: id,
@@ -95,6 +103,8 @@ const useTicketDetails = (location) => {
     const newData = await handleTicketReplies(queryParams);
     newRecords.push(newData?.data);
     setCurrentRecords((prevRecords) => [...newRecords, ...prevRecords]);
+    setErrorWhileUpload("");
+    setErrorWhileSendingMessage("");
   };
 
   const onGoBack = () => {
@@ -153,12 +163,18 @@ const useTicketDetails = (location) => {
     onGoBack,
     setIsDetailScreen,
     showPopup,
+    setFileUploadResult,
     ticketViewDetails,
-    userDetails: userProfileDetails?.userDetails,
     initiateFileUpload,
     handleFileUpload,
-    fileUploadResult,
     fileUploadError,
+    isSending: isMessageSending || isUploadingImageToServer,
+    isErrorWhileSending: isErrorWhileSend || isErrorWhileUploading,
+    errorWhileSendingMessage: errorWhileUpload || errorWhileSendingMessage,
+    setErrorWhileSendingMessages: {
+      setErrorWhileSendingMessage,
+      setErrorWhileUpload,
+    },
   };
 };
 

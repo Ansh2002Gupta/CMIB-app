@@ -7,19 +7,13 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import ProfileIcon from "../ProfileIcon/ProfileIcon";
 import styles from "./MessageComponent.style";
-import { getTime } from "../../utils/util";
+import { getMessageInfo, getTime } from "../../utils/util";
 
-const MessageComponent = ({
-  data,
-  details,
-  index,
-  isSender,
-  isQueryMessage,
-  shouldShowAvatar,
-  userDetails,
-}) => {
+const MessageComponent = ({ data, index, shouldShowAvatar, userDetails }) => {
   const windowDimensions = useWindowDimensions();
   const width1200orLess = windowDimensions.width <= 1200;
+
+  const isSender = getMessageInfo(data, userDetails);
 
   const MessageAreaComponent = ({ message, sender }) => {
     const senderStyle = sender
@@ -64,92 +58,72 @@ const MessageComponent = ({
     );
   };
 
-  if (isQueryMessage) {
-    return (
-      <View style={styles.senderContainer}>
-        <View style={styles.senderMessageArea}>
-          <CommonText>{getTime(details?.created_at)}</CommonText>
-          <MessageAreaComponent message={details?.query} sender={true} />
-        </View>
-        {renderAvatarComponent({
-          profile_photo: userDetails?.profile_photo,
-          name: userDetails?.name,
-        })}
-      </View>
-    );
-  }
-  if (isSender === null) {
-    return <></>;
-  }
-  if (isSender) {
-    return (
-      <>
-        {shouldShowAvatar(index) ? (
-          <View style={styles.senderContainer}>
-            <View style={styles.senderMessageArea}>
-              <CommonText>{getTime(data?.created_at)}</CommonText>
-              <MessageAreaComponent message={data?.message} sender />
-              {renderImage(data?.file)}
+  switch (isSender) {
+    case "sender":
+      return (
+        <>
+          {shouldShowAvatar(index) ? (
+            <View style={styles.senderContainer}>
+              <View style={styles.senderMessageArea}>
+                <CommonText>{getTime(data?.created_at)}</CommonText>
+                <MessageAreaComponent message={data?.message} sender />
+                {renderImage(data?.file)}
+              </View>
+              {renderAvatarComponent({
+                profile_photo: userDetails?.profile_photo,
+                name: userDetails?.name,
+              })}
             </View>
-            {renderAvatarComponent({
-              profile_photo: userDetails?.profile_photo,
-              name: userDetails?.name,
-            })}
-          </View>
-        ) : (
-          <>
-            <View style={styles.shouldShowAvatarSenderMessageArea}>
-              <MessageAreaComponent message={data?.message} sender />
-              {renderImage(data?.file)}
+          ) : (
+            <>
+              <View style={styles.shouldShowAvatarSenderMessageArea}>
+                <MessageAreaComponent message={data?.message} sender />
+                {renderImage(data?.file)}
+              </View>
+            </>
+          )}
+        </>
+      );
+    case "receiver":
+      return (
+        <>
+          {shouldShowAvatar(index) ? (
+            <View style={styles.recieverContainer}>
+              {renderAvatarComponent({
+                profile_photo: data?.author?.profile_photo,
+                name: data?.author?.name,
+              })}
+              <View style={styles.reciverMessageArea}>
+                <CommonText>{getTime(data?.created_at)}</CommonText>
+                <MessageAreaComponent message={data?.message} sender={false} />
+                {renderImage(data?.file)}
+              </View>
             </View>
-          </>
-        )}
-      </>
-    );
-  } else {
-    return (
-      <>
-        {shouldShowAvatar(index) ? (
-          <View style={styles.recieverContainer}>
-            {renderAvatarComponent({
-              profile_photo: data?.author?.profile_photo,
-              name: data?.author?.name,
-            })}
-            <View style={styles.reciverMessageArea}>
-              <CommonText>{getTime(data?.created_at)}</CommonText>
-              <MessageAreaComponent message={data?.message} sender={false} />
-              {renderImage(data?.file)}
-            </View>
-          </View>
-        ) : (
-          <>
-            <View style={styles.shouldShowAvatarRecieverMessageArea}>
-              <MessageAreaComponent message={data?.message} sender={false} />
-              {renderImage(data?.file)}
-            </View>
-          </>
-        )}
-      </>
-    );
+          ) : (
+            <>
+              <View style={styles.shouldShowAvatarRecieverMessageArea}>
+                <MessageAreaComponent message={data?.message} sender={false} />
+                {renderImage(data?.file)}
+              </View>
+            </>
+          )}
+        </>
+      );
+    default:
+      return <></>;
   }
 };
 
 MessageComponent.propTypes = {
   data: PropTypes.object,
-  details: PropTypes.object,
   index: PropTypes.number,
-  isSender: PropTypes.bool,
-  isQueryMessage: PropTypes.bool,
   shouldShowAvatar: PropTypes.func,
   userDetails: PropTypes.object,
 };
 
 MessageComponent.defaultProps = {
   data: {},
-  details: {},
   index: 0,
-  isSender: false,
-  isQueryMessage: false,
   userDetails: {},
   shouldShowAvatar: () => {},
 };

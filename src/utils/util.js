@@ -165,3 +165,20 @@ export const getDateFlagMobile = (createdAt) => {
   }
   return formatDate(createdAtDate);
 };
+
+export const getMessageInfo = (chatData, userDetails) => {
+  if (
+    chatData?.author?.type.toLowerCase() === "system" ||
+    !chatData?.author?.type
+  ) {
+    return "system";
+  }
+  if (
+    chatData?.author?.id === userDetails?.id &&
+    chatData?.author?.type.toLowerCase() ===
+      userDetails?.user_type.toLowerCase()
+  ) {
+    return "sender";
+  }
+  return "receiver";
+};
