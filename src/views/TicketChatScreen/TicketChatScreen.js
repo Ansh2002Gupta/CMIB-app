@@ -24,26 +24,29 @@ const TicketChatScreen = () => {
     allDataLoaded,
     chatRecords,
     fileUploadError,
-    fileUploadResult,
+    ErrorChatData,
     erroticketViewDetails,
-    isErrorticketViewDetails,
+    errorWhileSendingMessage,
     handleFileUpload,
     handleLoadMore,
     handlePopup,
     handleSendButton,
     initiateFileUpload,
     isChatLoading,
+    isErrorChatData,
+    isSending,
+    isErrorWhileSending,
+    isErrorticketViewDetails,
     isDetailsScreen,
     isFirstPageReceived,
     isticketViewDetails,
     loadingMore,
     onGoBack,
+    setFileUploadResult,
     setIsDetailScreen,
+    setErrorWhileSendingMessages,
     showPopup,
     ticketViewDetails,
-    userDetails,
-    ErrorChatData,
-    isErrorChatData,
   } = useTicketDetails(location.state);
 
   const { isWebView } = useIsWebView();
@@ -64,18 +67,23 @@ const TicketChatScreen = () => {
   const renderChatSection = () => {
     return (
       <ChatSection
-        allDataLoaded={allDataLoaded}
         data={isMob ? chatRecords : reversedData}
         details={ticketViewDetails}
-        handleSendButton={handleSendButton}
-        handleLoadMore={handleLoadMore}
-        handleFileUpload={handleFileUpload}
-        fileUploadResult={fileUploadResult}
-        fileUploadError={fileUploadError}
-        isFirstPageReceived={isFirstPageReceived}
-        initiateFileUpload={initiateFileUpload}
-        loadingMore={loadingMore}
-        userDetails={userDetails}
+        {...{
+          allDataLoaded,
+          errorWhileSendingMessage,
+          fileUploadError,
+          handleSendButton,
+          handleLoadMore,
+          handleFileUpload,
+          isSending,
+          initiateFileUpload,
+          isFirstPageReceived,
+          isErrorWhileSending,
+          loadingMore,
+          setFileUploadResult,
+          setErrorWhileSendingMessages,
+        }}
       />
     );
   };

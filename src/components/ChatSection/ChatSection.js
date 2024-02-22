@@ -28,15 +28,18 @@ const ChatSection = ({
   allDataLoaded,
   data,
   details,
-  fileUploadResult,
   fileUploadError,
   handleFileUpload,
   handleSendButton,
   handleLoadMore,
   isFirstPageReceived,
   initiateFileUpload,
+  setFileUploadResult,
   loadingMore,
-  userDetails,
+  isSending,
+  isErrorWhileSending,
+  errorWhileSendingMessage,
+  setErrorWhileSendingMessages,
 }) => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
@@ -44,6 +47,9 @@ const ChatSection = ({
   const [file, setFile] = useState(null);
   const flatListRef = useRef(null);
   const scrollToLatestMessageRef = useRef(null);
+
+  const { setErrorWhileSendingMessage, setErrorWhileUpload } =
+    setErrorWhileSendingMessages;
 
   const isMobileProps = isMob
     ? {
@@ -55,24 +61,53 @@ const ChatSection = ({
 
   useHandleInfiniteScroll(handleLoadMore, flatListRef);
 
-  useEffect(() => {
+  const handleScrollToLastMessage = () => {
     if (!isMob && scrollToLatestMessageRef.current) {
       const element = scrollToLatestMessageRef.current;
       element.scrollIntoView({ behaviour: "smooth" });
     }
-  }, [file, messageValue]);
+  };
+
+  useEffect(() => {
+    handleScrollToLastMessage();
+  }, []);
 
   const handleInputChange = (val) => {
     setMessageValue(val);
   };
 
   const handleSend = async () => {
-    await handleSendButton({
-      messageValue: messageValue,
-      file_name: fileUploadResult?.data?.file_name || "",
-    });
+    const trimmedValue = messageValue.trim();
+    if (!trimmedValue && !file) {
+      return;
+    }
+    if (!!file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      await handleFileUpload({
+        file: formData,
+        successCallback: async (fileUploadData) => {
+          await handleSendButton({
+            messageValue: messageValue,
+            file_name: fileUploadData?.data?.file_name || "",
+          });
+          handleScrollToLastMessage();
+        },
+      });
+    } else {
+      await handleSendButton({
+        messageValue: trimmedValue,
+        file_name: "",
+      });
+      handleScrollToLastMessage();
+    }
+    setFileUploadResult("");
     setMessageValue("");
     setFile("");
+  };
+
+  const uploadImageToServer = ({ uploadedFile }) => {
+    setFile(uploadedFile);
   };
 
   const shouldShowAvatar = (currentIndex) => {
@@ -95,29 +130,8 @@ const ChatSection = ({
 
   const webProps = !isMob ? { size: "xs" } : {};
 
-  const getMessageInfo = (chatData, userDetails) => {
-    if (chatData?.type.toLowerCase() === "system" || !chatData?.type) {
-      return null;
-    }
-    if (
-      chatData?.id === userDetails?.id &&
-      chatData?.type.toLowerCase() === userDetails?.user_type.toLowerCase()
-    ) {
-      return true;
-    }
-    return false;
-  };
-
   const renderHorizontalLine = () => {
     return <View style={styles.horizontalLine} />;
-  };
-
-  const uploadImageToServer = ({ uploadedFile }) => {
-    const formData = new FormData();
-    formData.append("file", uploadedFile);
-    handleFileUpload({
-      file: formData,
-    });
   };
 
   const renderError = () => {
@@ -132,33 +146,26 @@ const ChatSection = ({
     );
   };
 
-  const handleUpload = (uploadedFile) => {
-    handleFileUpload({
-      file: uploadedFile,
-    });
-  };
-
   const preprocessMessages = (messages) => {
     const dateFlags = {};
     messages.forEach((msg) => {
-      const dateKey = formatDate(new Date(msg.created_at));
+      const dateKey = formatDate(new Date(msg?.created_at));
       dateFlags[dateKey] = (dateFlags[dateKey] || 0) + 1;
     });
 
     messages.forEach((msg, index) => {
-      const dateKey = formatDate(new Date(msg.created_at));
+      const dateKey = formatDate(new Date(msg?.created_at));
       dateFlags[dateKey]--;
-      if (!dateFlags[dateKey]) {
-        messages[index].dateFlag = getDateFlagMobile(msg.created_at);
+      if (!dateFlags[dateKey] && messages[index]) {
+        messages[index].dateFlag = getDateFlagMobile(msg?.created_at);
       }
     });
     return messages;
   };
 
-  const processedMessages = preprocessMessages(data);
+  const processedMessages = isMob ? preprocessMessages(data) : [];
 
   const renderMessagesSection = ({ item, index }) => {
-    const issender = getMessageInfo(item?.author, userDetails);
     let messageFlag;
     if (!isMob) {
       messageFlag = getDateStatus(item?.created_at);
@@ -180,18 +187,16 @@ const ChatSection = ({
             <MessageInfoComponent message={item?.message} />
           )}
           <MessageComponent
-            isSender={issender}
             data={item}
             userDetails={userProfileDetails?.userDetails}
-            details={details}
             index={index}
             shouldShowAvatar={shouldShowAvatar}
           />
-          {!!item.dateFlag && isMob && (
+          {!!item?.dateFlag && isMob && (
             <View style={styles.flagContainer}>
               {renderHorizontalLine()}
               <CommonText customTextStyle={styles.messageFlag}>
-                {item.dateFlag}
+                {item?.dateFlag}
               </CommonText>
               {renderHorizontalLine()}
             </View>
@@ -242,15 +247,22 @@ const ChatSection = ({
                 }
                 file={file}
                 isSendButton
+                isLoading={isSending}
                 initiateFileUpload={initiateFileUpload}
-                imageUrl={fileUploadResult?.data?.url}
                 maxLength={MESSAGE_MAX_LENGTH}
                 onChangeText={(val) => handleInputChange(val)}
-                onClickAttachement={isMob ? handleUpload : uploadImageToServer}
+                onClickAttachement={uploadImageToServer}
                 onClickSend={handleSend}
                 placeholder={intl.formatMessage({ id: "label.type_message" })}
                 value={messageValue}
                 setFile={setFile}
+                onIconClose={() => setFile("")}
+                customHandleBlur={() => {
+                  setErrorWhileSendingMessage("");
+                  setErrorWhileUpload("");
+                }}
+                isError={isErrorWhileSending}
+                errorMessage={errorWhileSendingMessage}
               />
             </FormWrapper>
           )}
@@ -264,7 +276,6 @@ ChatSection.defaultProps = {
   allDataLoaded: false,
   data: [],
   details: {},
-  fileUploadResult: {},
   fileUploadError: "",
   handleFileUpload: () => {},
   handleSendButton: () => {},
@@ -272,14 +283,12 @@ ChatSection.defaultProps = {
   isFirstPageReceived: true,
   initiateFileUpload: () => {},
   loadingMore: false,
-  userDetails: {},
 };
 
 ChatSection.propTypes = {
   allDataLoaded: PropTypes.bool.isRequired,
   data: PropTypes.array.isRequired,
   details: PropTypes.object,
-  fileUploadResult: PropTypes.object,
   fileUploadError: PropTypes.string,
   handleFileUpload: PropTypes.func.isRequired,
   handleSendButton: PropTypes.func.isRequired,
@@ -287,7 +296,6 @@ ChatSection.propTypes = {
   isFirstPageReceived: PropTypes.bool.isRequired,
   initiateFileUpload: PropTypes.func.isRequired,
   loadingMore: PropTypes.bool.isRequired,
-  userDetails: PropTypes.object,
 };
 
 export default ChatSection;
