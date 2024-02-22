@@ -1,33 +1,5 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
+import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-
-const baseMessageContainer = {
-  padding: 16,
-  borderWidth: 1,
-  borderBottomLeftRadius: 16,
-  borderBottomRightRadius: 16,
-  marginTop: 4,
-  marginBottom: 4,
-  ...Platform.select({
-    web: {
-      overflowWrap: "break-word",
-    },
-  }),
-};
-
-const baseSenderStyle = {
-  backgroundColor: colors.backgroundSecondGrey,
-  borderColor: colors.lightGrey,
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 2,
-};
-
-const baseRecieverStyle = {
-  backgroundColor: colors.white,
-  borderColor: colors.lightGrey,
-  borderTopLeftRadius: 2,
-  borderTopRightRadius: 16,
-};
 
 const baseAvatarSize = {
   height: 32,
@@ -35,26 +7,6 @@ const baseAvatarSize = {
 };
 
 const styles = StyleSheet.create({
-  smSenderMessageStyle: {
-    maxWidth: 300,
-    ...baseSenderStyle,
-    ...baseMessageContainer,
-  },
-  senderMessageStyle: {
-    maxWidth: "40vw",
-    ...baseSenderStyle,
-    ...baseMessageContainer,
-  },
-  recieverMessageStyle: {
-    maxWidth: "40vw",
-    ...baseRecieverStyle,
-    ...baseMessageContainer,
-  },
-  smRecieverMessageStyle: {
-    maxWidth: 300,
-    ...baseRecieverStyle,
-    ...baseMessageContainer,
-  },
   senderContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -98,7 +50,6 @@ const styles = StyleSheet.create({
   avatar: {
     ...baseAvatarSize,
   },
-
   textSize: {
     fontSize: 14,
     flexWrap: "wrap",
@@ -110,7 +61,10 @@ const styles = StyleSheet.create({
   imagesSection: {
     height: 160,
     width: 200,
-    objectFit: "cover",
+    objectFit: "contain",
+    borderColor: colors.lightGrey,
+    borderWidth: 1,
+    borderStyle: "solid",
     borderRadius: 12,
   },
 });
