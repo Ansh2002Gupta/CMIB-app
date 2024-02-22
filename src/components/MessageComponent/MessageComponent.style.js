@@ -1,4 +1,5 @@
 import { StyleSheet } from "@unthinkable/react-core-components";
+import colors from "../../assets/colors";
 
 const baseAvatarSize = {
   height: 32,
@@ -60,7 +61,10 @@ const styles = StyleSheet.create({
   imagesSection: {
     height: 160,
     width: 200,
-    objectFit: "cover",
+    objectFit: "contain",
+    borderColor: colors.lightGrey,
+    borderWidth: 1,
+    borderStyle: "solid",
     borderRadius: 12,
   },
 });

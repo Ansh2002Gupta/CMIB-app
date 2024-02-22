@@ -161,7 +161,10 @@ const style = {
   imageUploadStyle: {
     height: 100,
     width: 150,
-    marginBottom: 10,
+    borderColor: colors.lightGrey,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderRadius: 12,
   },
   uploadRightSection: {
     flexDirection: "row",
@@ -188,6 +191,14 @@ const style = {
     position: "relative",
     flexDirection: "row",
     alignItems: "flex-start",
+    height: 100,
+    width: 150,
+    marginBottom: 10,
+  },
+  iconCrossContainer: {
+    position: "absolute",
+    top: -8,
+    right: -8,
   },
   iconCross: {
     height: 20,

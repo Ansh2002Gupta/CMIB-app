@@ -291,7 +291,10 @@ const CustomTextInput = (props) => {
                   }}
                   style={style.imageUploadStyle}
                 />
-                <CustomTouchableOpacity onPress={onIconClose}>
+                <CustomTouchableOpacity
+                  onPress={onIconClose}
+                  style={style.iconCrossContainer}
+                >
                   <CustomImage
                     source={images.iconCross}
                     style={style.iconCross}
