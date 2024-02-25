@@ -11,6 +11,7 @@ const TriggerFileUpload = ({
   iconLeft,
   initiateFileUpload,
   onImageUpload,
+  openCropViewAfterImageSelection,
   setFile,
   shouldShowHover,
 }) => {
@@ -19,7 +20,9 @@ const TriggerFileUpload = ({
 
   const onValidImageUpload = ({ uploadedFile }) => {
     setFile(uploadedFile);
-    onImageUpload && onImageUpload({ uploadedFile });
+    !openCropViewAfterImageSelection &&
+      onImageUpload &&
+      onImageUpload({ uploadedFile });
   };
 
   const fileUploadHandler = (e) => {
@@ -77,11 +80,12 @@ TriggerFileUpload.defaultProps = {
 TriggerFileUpload.propTypes = {
   buttonTitle: PropTypes.string,
   customButtonStyle: PropTypes.object,
+  iconLeft: PropTypes.object,
   initiateFileUpload: PropTypes.any,
+  onImageUpload: PropTypes.func,
+  openCropViewAfterImageSelection: PropTypes.bool,
   setFile: PropTypes.func,
   shouldShowHover: PropTypes.bool,
-  iconLeft: PropTypes.object,
-  onImageUpload: PropTypes.func,
 };
 
 export default TriggerFileUpload;

@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   designationText: {
     fontSize: 14,
     color: colors.neutralGrey,
+    textTransform: "capitalize",
   },
   headerLeftIcons: {
     flexDirection: "row",
