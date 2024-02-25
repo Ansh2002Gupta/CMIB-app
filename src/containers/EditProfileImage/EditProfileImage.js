@@ -24,6 +24,7 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
   const intl = useIntl();
   const [file, setFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isDeleteImageRequested, setIsDeleteImageRequested] = useState(false);
 
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
@@ -78,13 +79,18 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
 
   const handleRemoveImage = () => {
     const fileName = userProfileDetails?.userDetails?.profile_photo.split("/");
+    setIsDeleteImageRequested(true);
     handleFileUpdate({
       file: { profile_photo: "" },
       successCallback: () => {
+        setIsDeleteImageRequested(false);
         userProfileDetails.userDetails.profile_photo = "";
         userProfileDispatch(setUserDetails(userProfileDetails));
         handleDeleteLogo(fileName[fileName.length - 1]);
         onPressIconCross();
+      },
+      errorCallback: () => {
+        setIsDeleteImageRequested(false);
       },
     });
   };
@@ -167,7 +173,9 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
                 buttonTitle,
                 customButtonStyle: styles.customButtonStyle,
                 initiateFileUpload,
-                isLoading: isUploadingImageToServer || isLoading,
+                isLoading:
+                  isUploadingImageToServer ||
+                  (!isDeleteImageRequested && isLoading),
                 onImageUpload: onImageUpload,
                 openCropViewAfterImageSelection: true,
                 setFile,
@@ -176,7 +184,9 @@ const EditProfileImage = ({ name, onPressIconCross, profileImage }) => {
             {!!profileImage && (
               <CustomButton
                 onPress={handleRemoveImage}
-                isLoading={isLoading || isDeletingFromServer}
+                isLoading={
+                  (isDeleteImageRequested && isLoading) || isDeletingFromServer
+                }
                 style={{ ...styles.secondButtonStyle }}
                 iconLeft={{
                   leftIconAlt: "delete",
