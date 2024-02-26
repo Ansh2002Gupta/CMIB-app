@@ -11,28 +11,36 @@ import {
 import CustomLabelView from "../CustomLabelView";
 import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
+import Spinner from "../Spinner";
+import TriggerFileUpload from "../TriggerFileUpload";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
+import { getImageSource } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
   const {
+    attachementRef,
     customErrorStyle,
     customHandleBlur,
     customHeading,
     customLabelStyle,
     customStyle,
     customTextInputContainer,
+    customTextInputOuterContainer,
     countValue,
     codeValue,
     dropdownStyle,
     errorMessage,
     eyeImage,
+    file,
     fieldRef,
     handleCountChange,
     inputKey,
@@ -46,13 +54,20 @@ const CustomTextInput = (props) => {
     isPaddingNotRequired,
     isPassword,
     isRupee,
+    isSendButton,
+    isLoading,
+    initiateFileUpload,
     label,
     maxCount,
     minCount,
     options,
     onChangeValue,
+    onClickAttachement,
+    onClickSend,
+    onIconClose,
     placeholder,
     step,
+    setFile,
     value,
     labelField,
     valueField,
@@ -93,10 +108,34 @@ const CustomTextInput = (props) => {
       : {};
 
   const inputStyle = {
-    ...(isWebPlatform && isMultiline ? {} : style.inputContainer),
+    ...(isWebPlatform && isMultiline
+      ? {}
+      : { ...style.inputContainer, ...customTextInputOuterContainer }),
     ...(isFocused ? style.focusedStyle : {}),
     ...(isError ? style.invalidInput : {}),
   };
+
+  const webProps = isWebPlatform
+    ? { size: "xs", thickness: 3, color: colors.white }
+    : {};
+
+  const getSendButtonStatus = () => {
+    if (isLoading) {
+      return true;
+    }
+    if (!!file) {
+      return false;
+    }
+    if (!!value) {
+      return false;
+    }
+    if (!!file && !!value) {
+      return false;
+    }
+    return true;
+  };
+
+  const buttonStatus = getSendButtonStatus();
 
   const renderTextInput = () => {
     if (isDropdown) {
@@ -193,6 +232,77 @@ const CustomTextInput = (props) => {
               value,
             }}
           />
+        ) : isSendButton ? (
+          <View
+            style={file ? style.sendButtonWithFiles : style.sendButtonContainer}
+          >
+            <View style={style.sendButton}>
+              <TextInput
+                value={value}
+                style={[
+                  style.textInputStyle,
+                  isMultiline && style.textAlignStyle,
+                  isWebView && style.webLabel,
+                  customTextInputContainer,
+                ]}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                placeholder={placeholder}
+                secureTextEntry={isPassword && !isTextVisible}
+                ref={fieldRef}
+                {...platformSpecificProps}
+                {...(isNumeric ? mobileProps : {})}
+                {...remainingProps}
+              />
+              <TriggerFileUpload
+                onImageUpload={onClickAttachement}
+                initiateFileUpload={initiateFileUpload}
+                iconLeft={{
+                  leftIconSource: images.iconAttachement,
+                  isLeftIconNotSvg: false,
+                }}
+                shouldShowHover={false}
+                customButtonStyle={style.iconAttachment}
+                setFile={setFile}
+              />
+              <CustomTouchableOpacity
+                style={!buttonStatus ? style.sendEnabled : style.sendDisabled}
+                onPress={onClickSend}
+                disabled={buttonStatus}
+              >
+                {isLoading ? (
+                  <Spinner {...webProps} color={"white"} />
+                ) : (
+                  <CustomImage
+                    source={images.iconSendGreen}
+                    style={style.iconAttachment}
+                  />
+                )}
+              </CustomTouchableOpacity>
+            </View>
+            {!!file && (
+              <View
+                style={style.imageUploadStyleContainer}
+                ref={attachementRef}
+              >
+                <CustomImage
+                  source={{
+                    uri: isWebPlatform ? getImageSource(file) : file?.uri,
+                  }}
+                  style={style.imageUploadStyle}
+                />
+                <CustomTouchableOpacity
+                  onPress={onIconClose}
+                  style={style.iconCrossContainer}
+                >
+                  <CustomImage
+                    source={images.iconCross}
+                    style={style.iconCross}
+                  />
+                </CustomTouchableOpacity>
+              </View>
+            )}
+          </View>
         ) : (
           <TextInput
             value={value}
@@ -256,6 +366,7 @@ CustomTextInput.defaultProps = {
   customLabelStyle: {},
   customStyle: {},
   customTextInputContainer: {},
+  customTextInputOuterContainer: {},
   dropdownStyle: {},
   errorMessage: "",
   eyeImage: false,
@@ -270,12 +381,17 @@ CustomTextInput.defaultProps = {
   isNumeric: false,
   isPaddingNotRequired: false,
   isPassword: false,
+  isSendButton: false,
+  initiateFileUpload: () => {},
   label: "",
   labelField: "label",
   maxCount: 100,
   minCount: 0,
   options: [],
   onChangeValue: () => {},
+  onClickAttachement: () => {},
+  onClickSend: () => {},
+  onIconClose: () => {},
   placeholder: "",
   step: 1,
   value: "",
@@ -292,6 +408,7 @@ CustomTextInput.propTypes = {
   customLabelStyle: PropTypes.object,
   customStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   customTextInputContainer: PropTypes.object,
+  customTextInputOuterContainer: PropTypes.object,
   dropdownStyle: PropTypes.object,
   errorMessage: PropTypes.string,
   eyeImage: PropTypes.bool,
@@ -307,6 +424,8 @@ CustomTextInput.propTypes = {
   isNumeric: PropTypes.bool,
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
+  isSendButton: PropTypes.bool,
+  initiateFileUpload: PropTypes.func,
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
@@ -314,6 +433,9 @@ CustomTextInput.propTypes = {
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
+  onClickAttachement: PropTypes.func,
+  onClickSend: PropTypes.func,
+  onIconClose: PropTypes.func,
   placeholder: PropTypes.string,
   step: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

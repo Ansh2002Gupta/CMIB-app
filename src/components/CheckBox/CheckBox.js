@@ -8,18 +8,23 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
 import styles from "./CheckBox.style";
 
-const CheckBox = ({ handleCheckbox, id, isSelected, title }) => {
+const CheckBox = ({ handleCheckbox, id, isPartial, isSelected, title }) => {
   const CheckIcon = Images.iconCheckbox;
   const UncheckIcon = Images.iconUnCheckbox;
+  const PartilalIcon = Images.iconPartial;
 
   const rowCheckBox = [
     {
       content: (
         <CustomTouchableOpacity onPress={() => handleCheckbox(id)}>
           <CustomImage
-            Icon={isSelected ? CheckIcon : UncheckIcon}
+            Icon={
+              isPartial ? PartilalIcon : isSelected ? CheckIcon : UncheckIcon
+            }
             style={styles.iconStyle}
-            source={isSelected ? CheckIcon : UncheckIcon}
+            source={
+              isPartial ? PartilalIcon : isSelected ? CheckIcon : UncheckIcon
+            }
             isSvg
           />
           <CommonText customTextStyle={styles.titleStyle}>{title}</CommonText>
@@ -33,12 +38,14 @@ const CheckBox = ({ handleCheckbox, id, isSelected, title }) => {
 
 CheckBox.defaultProps = {
   isSelected: false,
+  isPartial: false,
 };
 
 CheckBox.propTypes = {
   handleCheckbox: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isSelected: PropTypes.bool,
+  isPartial: PropTypes.bool,
   title: PropTypes.string.isRequired,
 };
 

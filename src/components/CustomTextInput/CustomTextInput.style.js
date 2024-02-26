@@ -134,6 +134,79 @@ const style = {
   valueStyle: {
     paddingRight: 12,
   },
+  sendButton: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 4,
+  },
+  sendButtonContainer: {
+    flex: 1,
+    padding: 2,
+    height: 48,
+    justifyContent: "center",
+  },
+  sendButtonWithFiles: {
+    flex: 1,
+    padding: 2,
+    height: 180,
+    justifyContent: "center",
+  },
+  iconAttachment: {
+    padding: 0,
+    borderWidth: 0,
+    marginRight: 0,
+  },
+  imageUploadStyle: {
+    height: 100,
+    width: 150,
+    borderColor: colors.lightGrey,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderRadius: 12,
+  },
+  uploadRightSection: {
+    flexDirection: "row",
+  },
+  sendEnabled: {
+    borderRadius: 8,
+    backgroundColor: colors.green,
+    padding: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    width: 40,
+  },
+  sendDisabled: {
+    borderRadius: 8,
+    backgroundColor: colors.disabledGrey,
+    padding: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    width: 40,
+  },
+  imageUploadStyleContainer: {
+    position: "relative",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    height: 100,
+    width: 150,
+    marginBottom: 10,
+  },
+  iconCrossContainer: {
+    position: "absolute",
+    top: -8,
+    right: -8,
+  },
+  iconCross: {
+    height: 20,
+    width: 20,
+    backgroundColor: colors.secondaryGrey,
+    borderRadius: 10,
+    marginLeft: 5,
+  },
 };
 
 export default style;

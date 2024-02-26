@@ -1,36 +1,33 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Platform } from "@unthinkable/react-core-components";
-
-import useIsWebView from "./useIsWebView";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
-const useHandleInfiniteScroll = (scrollHandler) => {
-  const { isWebView } = useIsWebView();
-  const handleInfinteScroll = () => {
-    try {
-      if (
-        window.innerHeight + document.documentElement.scrollTop + 1 >=
-          document.documentElement.scrollHeight &&
-        !isWebView
-      ) {
-        scrollHandler();
-      }
-    } catch (error) {
-      console.log(error);
+const useHandleInfiniteScroll = (handleLoadMore, flatListRef) => {
+  const handleInfiniteScroll = () => {
+    if (!flatListRef.current) return;
+
+    const { scrollTop } = flatListRef.current;
+    const threshold = 0.1;
+    if (scrollTop <= threshold) {
+      handleLoadMore();
     }
   };
 
   useEffect(() => {
-    if (isWeb) {
-      window.addEventListener("scroll", handleInfinteScroll);
+    const element = flatListRef.current;
+
+    if (element && isWeb) {
+      element.addEventListener("scroll", handleInfiniteScroll, {
+        passive: true,
+      });
     }
     return () => {
-      if (isWeb) {
-        window.removeEventListener("scroll", handleInfinteScroll);
+      if (element && isWeb) {
+        element.removeEventListener("scroll", handleInfiniteScroll);
       }
     };
-  }, []);
+  }, [handleLoadMore, flatListRef]);
 };
 
 export default useHandleInfiniteScroll;

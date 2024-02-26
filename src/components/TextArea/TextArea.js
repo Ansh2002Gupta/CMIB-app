@@ -20,7 +20,7 @@ const TextArea = ({ cols, customStyle, onChangeText, rows, ...props }) => {
 };
 
 TextArea.defaultProps = {
-  cols: 40,
+  cols: 0,
   customStyle: {},
   rows: 4,
   onChangeText: () => {},
