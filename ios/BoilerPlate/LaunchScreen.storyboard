@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
@@ -14,18 +14,20 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchImage" translatesAutoresizingMaskIntoConstraints="NO" id="DKC-oC-X1W">
-                                <rect key="frame" x="-27.5" y="-122" width="375" height="812"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchImage" translatesAutoresizingMaskIntoConstraints="NO" id="DKC-oC-X1W">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="DKC-oC-X1W" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="LXW-f0-Py5"/>
-                            <constraint firstItem="DKC-oC-X1W" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="yG4-ac-QJ2"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="DKC-oC-X1W" secondAttribute="trailing" id="9Dr-vb-Uih"/>
+                            <constraint firstItem="DKC-oC-X1W" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Cmt-rG-ynp"/>
+                            <constraint firstItem="DKC-oC-X1W" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="Qtg-OG-0Lr"/>
+                            <constraint firstAttribute="bottom" secondItem="DKC-oC-X1W" secondAttribute="bottom" id="cER-KX-6gu"/>
                         </constraints>
                     </view>
                 </viewController>
