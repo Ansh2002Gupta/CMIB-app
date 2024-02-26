@@ -1,7 +1,9 @@
 import React, { createContext, useReducer } from "react";
 import * as types from "./types";
 
-const initialState = { signUpDetail: {} };
+const initialState = { signUpDetail: {
+  contact_details: [{}]
+} };
 
 const localeReducer = (state, action) => {
   switch (action.type) {

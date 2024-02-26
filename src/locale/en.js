@@ -295,6 +295,7 @@ const locale = {
   "label.account_deletion": "Account deleted successfully.",
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
+  "label.addContactPerson": "Add Contact Person",
 };
 
 export default locale;

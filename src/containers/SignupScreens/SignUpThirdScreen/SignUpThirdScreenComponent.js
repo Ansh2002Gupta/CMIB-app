@@ -37,19 +37,19 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   } = useValidateSignUp();
 
   const [contactDetails, setContactDetails] = useState(
-    signUpState?.signUpDetail?.contact_details.map((contact) => ({
-      countryCode: contact.mobile_country_code || "",
-      designation: contact.designation || "",
-      emailId: contact.email || "",
-      mobileNo: contact.mobile_number || "",
-      module: contact.module,
-      name: contact.name || "",
-      salutation: contact.salutation || "",
+    signUpState?.signUpDetail?.contact_details?.map((contact) => ({
+      countryCode: contact?.mobile_country_code || "",
+      designation: contact?.designation || "",
+      emailId: contact?.email || "",
+      mobileNo: contact?.mobile_number || "",
+      modules: contact?.modules,
+      name: contact?.name || "",
+      salutation: contact?.salutation || "",
     }))
   );
 
   const [errors, setErrors] = useState(
-    contactDetails.map(() => ({
+    contactDetails?.map(() => ({
       designation: "",
       emailId: "",
       mobileNo: "",
@@ -61,18 +61,18 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   useEffect(() => {
     setContactDetails(
-      signUpState?.signUpDetail?.contact_details.map((contact) => ({
-        countryCode: contact.mobile_country_code || "",
-        designation: contact.designation || "",
-        emailId: contact.email || "",
-        mobileNo: contact.mobile_number || "",
-        module: contact.module || "",
-        name: contact.name || "",
-        salutation: contact.salutation || "",
+      signUpState?.signUpDetail?.contact_details?.map((contact) => ({
+        countryCode: contact?.mobile_country_code || "",
+        designation: contact?.designation || "",
+        emailId: contact?.email || "",
+        mobileNo: contact?.mobile_number || "",
+        modules: contact?.modules || [],
+        name: contact?.name || "",
+        salutation: contact?.salutation || "",
       }))
     );
     setErrors(
-      signUpState?.signUpDetail?.contact_details.map(() => ({
+      signUpState?.signUpDetail?.contact_details?.map(() => ({
         designation: "",
         emailId: "",
         mobileNo: "",
@@ -82,7 +82,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   }, [signUpState?.signUpDetail?.contact_details]);
 
   const allFieldsFilled = () => {
-    return contactDetails.every((detail) => {
+    return contactDetails?.every((detail) => {
       const requiredFields = [
         detail.countryCode,
         detail.salutation,
@@ -96,7 +96,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const constructUpdatedContactDetails = (contactDetails) => {
-    return contactDetails.map((detail) => ({
+    return contactDetails?.map((detail) => ({
       module: detail.module,
       name: detail.name,
       email: detail.emailId,
@@ -109,6 +109,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const validateField = ({ name, index, enteredValue }) => {
     const value = enteredValue || contactDetails[index][name];
+    console.log("value", value);
     let error = "";
     switch (name) {
       case "name":
@@ -159,7 +160,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const validateFields = () => {
-    const newErrors = contactDetails.map((detail, index) => ({
+    console.log(contactDetails);
+    const newErrors = contactDetails?.map((detail, index) => ({
       name: validateField({ name: "name", index }),
       designation: validateField({
         name: "designation",
@@ -284,6 +286,17 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     };
   };
 
+  const handleAddContactPerson = () => {
+    if (validateFields()) {
+      setContactDetails([...contactDetails, {}]);
+    }
+  };
+
+  const handleRemoveContactPerson = (index) => {
+    contactDetails?.splice(index, 1);
+    setContactDetails(contactDetails?.length || [{}]);
+  };
+
   return (
     <SignUpThirdScreenUI
       {...{
@@ -293,9 +306,11 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         errors,
         getAppropriateRef,
         getErrorDetails,
+        handleAddContactPerson,
         handleBlur,
         handleDismissToast,
         handleInputChange,
+        handleRemoveContactPerson,
         intl,
         isErrorCountryCodes,
         isGettingCountryCodes,

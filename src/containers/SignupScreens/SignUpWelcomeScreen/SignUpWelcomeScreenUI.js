@@ -14,14 +14,14 @@ import { getResponsiveStyles, style } from "./SignUpWelcomeScreen.style";
 import images from "../../../images";
 
 const SignUpWelcomeScreenUI = ({
-  contactDetails,
   handleDismissToast,
   isLoading,
   intl,
+  moduleList,
   onClickNext,
   onClickGoToLogin,
   options,
-  setContactDetails,
+  setModuleList,
   setOptions,
   validationError,
 }) => {
@@ -40,9 +40,9 @@ const SignUpWelcomeScreenUI = ({
     setOptions(updatedItems);
     const toggledItem = updatedItems.find((item) => item.id === id);
     if (toggledItem.isSelected) {
-      setContactDetails([...contactDetails, { module: toggledItem.id }]);
+      setModuleList([...moduleList, toggledItem.id ]);
     } else {
-      setContactDetails(contactDetails.filter((item) => item.module !== id));
+      setModuleList(moduleList.filter((item) => item.module !== id));
     }
   };
 
@@ -96,7 +96,7 @@ const SignUpWelcomeScreenUI = ({
         <CustomButton
           onPress={onClickNext}
           isLoading={isLoading}
-          disabled={contactDetails.length <= 0}
+          disabled={moduleList.length <= 0}
           withGreenBackground
           style={!isWebView ? style.customButtonContainer : {}}
           iconRight={{
@@ -125,20 +125,20 @@ const SignUpWelcomeScreenUI = ({
 };
 
 SignUpWelcomeScreenUI.defaultProps = {
-  contactDetails: [],
+  moduleList: [],
   handleDismissToast: () => {},
   validationError: "",
 };
 
 SignUpWelcomeScreenUI.propTypes = {
-  contactDetails: PropTypes.array.isRequired,
+  moduleList: PropTypes.array.isRequired,
   handleDismissToast: PropTypes.func,
   intl: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   options: PropTypes.array.isRequired,
   onClickNext: PropTypes.func.isRequired,
   onClickGoToLogin: PropTypes.func.isRequired,
-  setContactDetails: PropTypes.func.isRequired,
+  setModuleList: PropTypes.func.isRequired,
   setOptions: PropTypes.func.isRequired,
   validationError: PropTypes.string,
 };

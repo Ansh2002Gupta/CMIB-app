@@ -4,7 +4,6 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
-import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
@@ -17,17 +16,14 @@ import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import {
-  CAREER_ASCENTS,
-  CA_JOBS,
   DEFAULT_INPUT_MAX_LENGTH,
-  NEWLY_QUALIFIED,
-  OVERSEAS_PLACEMENTS,
   SALUTATION_OPTIONS,
-  WOMENT_PLACEMENT,
 } from "../../../constants/constants";
 import { numericValidator } from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
+import CardComponent from "../../../components/CardComponent";
+import CustomButton from "../../../components/CustomButton";
 
 const SignUpThirdScreenUI = ({
   allFieldsFilled,
@@ -36,9 +32,11 @@ const SignUpThirdScreenUI = ({
   errors,
   getAppropriateRef,
   getErrorDetails,
+  handleAddContactPerson,
   handleBlur,
   handleDismissToast,
   handleInputChange,
+  handleRemoveContactPerson,
   isErrorCountryCodes,
   isGettingCountryCodes,
   intl,
@@ -53,126 +51,132 @@ const SignUpThirdScreenUI = ({
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const showContentHeader =
     currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
-
-  const getHeaderText = (module, intl) => {
-    switch (module) {
-      case CA_JOBS:
-        return intl.formatMessage({ id: "label.for_ca_jobs" });
-      case NEWLY_QUALIFIED:
-        return intl.formatMessage({ id: "label.for_new_ca_placement" });
-      case OVERSEAS_PLACEMENTS:
-        return intl.formatMessage({ id: "label.for_overseas_placements" });
-      case CAREER_ASCENTS:
-        return intl.formatMessage({ id: "label.for_career_ascents" });
-      case WOMENT_PLACEMENT:
-        return intl.formatMessage({ id: "label.for_women_placements" });
-      default:
-        return intl.formatMessage({ id: "label.for_ca_jobs" });
-    }
-  };
-
+    
   const renderFormContent = () => {
     return (
       <View style={style.formContainer}>
-        {contactDetails.map((detail, index) => (
-          <View key={String(index)}>
-            <CommonText fontWeight="600" customTextStyle={style.headerText}>
-              {getHeaderText(detail.module, intl)}
-            </CommonText>
-            <View style={style.inputContainer}>
-              <View style={style.firstInput}>
+        <>
+          {contactDetails?.map((detail, index) => (
+            <CardComponent 
+            key={String(index)}
+            customStyle={style.contactPersonContainer}>
+              <View>
+                <View style={style.inputContainer}>
+                  <View style={style.firstInput}>
+                    <CustomTextInput
+                      label={intl.formatMessage({
+                        id: "label.salutation",
+                      })}
+                      dropdownStyle={style.dropdownStyle}
+                      placeholder={intl.formatMessage({
+                        id: "label.select",
+                      })}
+                      errorMessage={errors[index]?.salutation}
+                      isError={!!errors[index]?.salutation}
+                      value={contactDetails[index]?.salutation}
+                      options={SALUTATION_OPTIONS}
+                      isMandatory
+                      onChangeValue={(val) =>
+                        handleInputChange(val, "salutation", index)
+                      }
+                      isDropdown
+                    />
+                  </View>
+                  <View style={style.secondInput}>
+                    <CustomTextInput
+                      label={intl.formatMessage({
+                        id: "label.contact_person_name",
+                      })}
+                      placeholder={intl.formatMessage({
+                        id: "label.enter_contact_person_name",
+                      })}
+                      maxLength={DEFAULT_INPUT_MAX_LENGTH}
+                      customHandleBlur={() => handleBlur("name", index)}
+                      value={contactDetails[index]?.name}
+                      errorMessage={errors[index]?.name}
+                      isError={!!errors[index]?.name}
+                      onChangeText={(val) =>
+                        handleInputChange(val, "name", index)
+                      }
+                      isMandatory
+                      fieldRef={getAppropriateRef(detail.modules?.[index], "name")}
+                    />
+                  </View>
+                </View>
                 <CustomTextInput
                   label={intl.formatMessage({
-                    id: "label.salutation",
+                    id: "label.contact_personal_designation",
                   })}
-                  dropdownStyle={style.dropdownStyle}
                   placeholder={intl.formatMessage({
-                    id: "label.select",
+                    id: "label.enter_contact_person_designation",
                   })}
-                  errorMessage={errors[index].salutation}
-                  isError={!!errors[index].salutation}
-                  value={contactDetails[index].salutation}
-                  options={SALUTATION_OPTIONS}
-                  isMandatory
-                  onChangeValue={(val) =>
-                    handleInputChange(val, "salutation", index)
+                  customHandleBlur={() => handleBlur("designation", index)}
+                  errorMessage={errors[index]?.designation}
+                  isError={!!errors[index]?.designation}
+                  value={contactDetails[index]?.designation}
+                  onChangeText={(val) =>
+                    handleInputChange(val, "designation", index)
                   }
-                  isDropdown
+                  maxLength={DEFAULT_INPUT_MAX_LENGTH}
+                  isMandatory
+                  fieldRef={getAppropriateRef(detail.modules?.[index], "designation")}
                 />
-              </View>
-              <View style={style.secondInput}>
+                <MobileNumberInput
+                  codeError={errors[index]?.countryCode}
+                  codeValue={contactDetails[index]?.countryCode}
+                  customHandleBlur={() => handleBlur("mobileNo", index)}
+                  onChangeCode={(val) =>
+                    handleInputChange(val, "countryCode", index)
+                  }
+                  onChangeMobNumber={(val) =>
+                    numericValidator(val) &&
+                    handleInputChange(val, "mobileNo", index)
+                  }
+                  options={countryCodeResult}
+                  mobNumberValue={contactDetails[index]?.mobileNo}
+                  mobNumberError={errors[index]?.mobileNo}
+                  fieldRef={getAppropriateRef(detail.modules?.[index], "mobileNo")}
+                />
                 <CustomTextInput
                   label={intl.formatMessage({
-                    id: "label.contact_person_name",
+                    id: "label.email_id",
                   })}
                   placeholder={intl.formatMessage({
-                    id: "label.enter_contact_person_name",
+                    id: "label.enter_contact_person_email_id",
                   })}
-                  maxLength={DEFAULT_INPUT_MAX_LENGTH}
-                  customHandleBlur={() => handleBlur("name", index)}
-                  value={contactDetails[index].name}
-                  errorMessage={errors[index].name}
-                  isError={!!errors[index].name}
-                  onChangeText={(val) => handleInputChange(val, "name", index)}
+                  customHandleBlur={() => handleBlur("emailId", index)}
+                  errorMessage={errors[index]?.emailId}
+                  isError={!!errors[index]?.emailId}
+                  value={contactDetails[index]?.emailId}
+                  onChangeText={(val) =>
+                    handleInputChange(val, "emailId", index)
+                  }
                   isMandatory
-                  fieldRef={getAppropriateRef(detail.module, "name")}
+                  fieldRef={getAppropriateRef(detail.modules?.[index], "emailId")}
                 />
+                <CustomButton
+                  style={style.removeButton}
+                  iconLeft={{
+                    isLeftIconNotSvg: false,
+                    leftIconSource: images.iconDeleteRed,
+                  }}
+                  onPress={handleRemoveContactPerson}
+                >
+                  {intl.formatMessage({ id: "label.remove" })}
+                </CustomButton>
               </View>
-            </View>
-            <CustomTextInput
-              label={intl.formatMessage({
-                id: "label.contact_personal_designation",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_contact_person_designation",
-              })}
-              customHandleBlur={() => handleBlur("designation", index)}
-              errorMessage={errors[index].designation}
-              isError={!!errors[index].designation}
-              value={contactDetails[index].designation}
-              onChangeText={(val) =>
-                handleInputChange(val, "designation", index)
-              }
-              maxLength={DEFAULT_INPUT_MAX_LENGTH}
-              isMandatory
-              fieldRef={getAppropriateRef(detail.module, "designation")}
-            />
-            <MobileNumberInput
-              codeError={errors[index].countryCode}
-              codeValue={contactDetails[index].countryCode}
-              customHandleBlur={() => handleBlur("mobileNo", index)}
-              onChangeCode={(val) =>
-                handleInputChange(val, "countryCode", index)
-              }
-              onChangeMobNumber={(val) =>
-                numericValidator(val) &&
-                handleInputChange(val, "mobileNo", index)
-              }
-              options={countryCodeResult}
-              mobNumberValue={contactDetails[index].mobileNo}
-              mobNumberError={errors[index].mobileNo}
-              fieldRef={getAppropriateRef(detail.module, "mobileNo")}
-            />
-            <CustomTextInput
-              label={intl.formatMessage({
-                id: "label.email_id",
-              })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_contact_person_email_id",
-              })}
-              customHandleBlur={() => handleBlur("emailId", index)}
-              errorMessage={errors[index].emailId}
-              isError={!!errors[index].emailId}
-              value={contactDetails[index].emailId}
-              onChangeText={(val) => handleInputChange(val, "emailId", index)}
-              isMandatory
-              fieldRef={getAppropriateRef(detail.module, "emailId")}
-            />
-            {index < contactDetails.length - 1 && contactDetails.length > 1 && (
-              <View style={style.dividerStyle} />
-            )}
-          </View>
-        ))}
+            </CardComponent>
+          ))}
+          <CustomButton
+            iconLeft={{
+              isLeftIconNotSvg: false,
+              leftIconSource: images.iconAdd,
+            }}
+            onPress={handleAddContactPerson}
+          >
+            {intl.formatMessage({ id: "label.addContactPerson" })}
+          </CustomButton>
+        </>
       </View>
     );
   };
@@ -284,6 +288,7 @@ const SignUpThirdScreenUI = ({
 };
 
 SignUpThirdScreenUI.defaultProps = {
+  contactDetails: [],
   errors: {},
   handleDismissToast: () => {},
   onClickGoToLogin: () => {},
@@ -292,7 +297,7 @@ SignUpThirdScreenUI.defaultProps = {
 
 SignUpThirdScreenUI.propTypes = {
   allFieldsFilled: PropTypes.func.isRequired,
-  contactDetails: PropTypes.array.isRequired,
+  contactDetails: PropTypes.array,
   countryCodeResult: PropTypes.array,
   errors: PropTypes.array,
   getAppropriateRef: PropTypes.func.isRequired,

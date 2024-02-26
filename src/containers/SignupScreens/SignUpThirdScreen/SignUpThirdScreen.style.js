@@ -63,6 +63,12 @@ export const style = StyleSheet.create({
   firstInput: {
     flex: 1,
   },
+  removeButton: {
+    marginBottom: 24,
+  },
+  contactPersonContainer: {
+    marginBottom: 16,
+  }
 });
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
