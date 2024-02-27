@@ -124,7 +124,9 @@ const CompanyProfileUI = (props) => {
         >
           <View style={style.innerContainerStyle}>
             <DetailCard
-              headerId="label.company_details"
+              headerId={intl.formatMessage({
+                id: "label.company_details",
+              })}
               details={profileResult?.companyDetail}
               handleChange={handleCompanyDetailChange}
               isEditProfile={isEditProfile}
