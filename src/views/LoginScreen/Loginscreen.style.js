@@ -7,8 +7,6 @@ const webPointer = isWeb ? { cursor: "pointer" } : {};
 const style = {
   container: {
     backgroundColor: colors.white,
-    paddingRight: 16,
-    paddingLeft: 16,
   },
   activeStyle: {
     paddingTop: 16,
@@ -39,14 +37,16 @@ const style = {
   },
   companyView: {
     backgroundColor: colors.backgroundColor,
-    paddingLeft: 16,
-    paddingRight: 16,
     paddingTop: 24,
     justifyContent: "space-between",
     flexGrow: 1,
+    minHeight: 400,
   },
   forgotPasswordView: {
     flexDirection: "row",
+    justifyContent: "flex-end",
+    marginTop: 16,
+    marginBottom: 32,
   },
   rememberMeText: {
     fontSize: 14,
@@ -59,11 +59,11 @@ const style = {
     ...webPointer,
   },
   loginButtonView: {
-    marginTop: 32,
     ...webPointer,
+    backgroundColor: colors.disabledGrey,
   },
   accountView: {
-    marginTop: 24,
+    marginTop: 32,
     justifyContent: "center",
     flexDirection: "row",
     gap: 4,
@@ -85,7 +85,6 @@ const style = {
   },
   followUsImageView: {
     paddingBottom: 16,
-    paddingTop: 32,
   },
   minHeight: {
     minHeight: 500,
@@ -93,12 +92,30 @@ const style = {
   gapForWebView: {
     gap: 24,
   },
+  buttonContainerStyle: {
+    flexGrow: 1,
+    justifyContent: "space-between",
+  },
   marginBottom: {
     marginBottom: 0,
   },
   forgotButtonContainer: {
     justifyContent: "flex-end",
     flexDirection: "row",
+  },
+  containerStyle: {
+    backgroundColor: colors.backgroundColor,
+    paddingTop: 24,
+    justifyContent: "space-between",
+    flexGrow: 1,
+  },
+  memberContainerStyle: {
+    flexGrow: 1,
+    justifyContent: "space-between",
+  },
+  mobViewContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
   },
 
   // Web view related Styles

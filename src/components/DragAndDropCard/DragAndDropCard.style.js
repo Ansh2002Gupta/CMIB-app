@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     color: colors.green,
     textDecorationLine: "underline",
     ...Platform.select({
-      web: { cursor: "pointer" }
-    })
+      web: { cursor: "pointer" },
+    }),
   },
   infoStyle: {
     textAlign: "center",
@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
   error: {
     marginTop: 10,
     textAlign: "center",
+  },
+  spinnerStyle: {
+    margin: 8,
   },
 });
 

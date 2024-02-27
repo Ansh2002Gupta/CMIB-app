@@ -22,26 +22,34 @@ const LoginScreenUI = (props) => {
   const {
     active,
     errorMessage,
+    errorMessageForMemberLogin,
     errorWhileLoggingIn,
     handleDismissToast,
     intl,
     isLoading,
     loginDisabled,
+    logoutDetails,
     onChangePassword,
+    onChangeSRNNumber,
     onChangeUsername,
+    onCreateNewPasswordClick,
     onForgotPasswordClick,
     onLogin,
-    onCreateNewPasswordClick,
-    logoutDetails,
+    onLoginForMembers,
     password,
+    srn,
     toggleUser,
     userName,
   } = props;
+
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebView = currentBreakpoint !== "xs";
   const width1800pxOrLess = currentBreakpoint !== "xxl";
   const width900pxOrLess =
     currentBreakpoint === "xs" || currentBreakpoint === "sm";
+  const containerStyle = isWebView
+    ? styles.webView.backGroundColor
+    : styles.mobViewContainer;
 
   const getResponsiveStyles = (str) => {
     switch (str) {
@@ -76,7 +84,12 @@ const LoginScreenUI = (props) => {
   };
 
   return (
-    <FormWrapper onSubmit={onLogin} customFormStyle={commonStyles.mainView}>
+    <FormWrapper
+      onSubmit={() => {
+        !active ? onLoginForMembers() : onLogin();
+      }}
+      customFormStyle={commonStyles.mainView}
+    >
       <WebViewLoginSignUpWrapper
         shouldApplyStyles={isWebView}
         shouldShowFollowUs
@@ -87,7 +100,12 @@ const LoginScreenUI = (props) => {
             ...(isWebView && styles.gapForWebView),
           }}
         >
-          <View style={styles.container}>
+          <View
+            style={{
+              ...styles.container,
+              ...(!isWebView && styles.mobViewContainer),
+            }}
+          >
             <HeaderTextWithLabelAndDescription
               headerText={intl.formatMessage({ id: "label.login_to_cmib" })}
               description={intl.formatMessage({
@@ -117,6 +135,7 @@ const LoginScreenUI = (props) => {
               <TouchableOpacity
                 style={styles.topTabs}
                 onPress={() => toggleUser(false)}
+                disabled={isLoading}
               >
                 <CommonText
                   customTextStyle={{
@@ -144,6 +163,7 @@ const LoginScreenUI = (props) => {
               <TouchableOpacity
                 style={styles.topTabs}
                 onPress={() => toggleUser(true)}
+                disabled={isLoading}
               >
                 <View>
                   <CommonText
@@ -181,18 +201,18 @@ const LoginScreenUI = (props) => {
           {active ? (
             <ScrollView
               contentContainerStyle={{
-                ...styles.companyView,
-                ...(isWebView && styles.webView.backGroundColor),
+                ...styles.containerStyle,
+                ...containerStyle,
               }}
             >
               <View
                 style={{
-                  ...(isWebView && styles.webView.backGroundColor),
+                  ...(isWebView ? styles.webView.backGroundColor : {}),
                 }}
               >
                 <View
                   style={{
-                    ...(isWebView && styles.webView.backGroundColor),
+                    ...(isWebView ? styles.webView.backGroundColor : {}),
                   }}
                 >
                   <CustomTextInput
@@ -220,14 +240,15 @@ const LoginScreenUI = (props) => {
                     value={password}
                     onChangeText={(val) => onChangePassword(val)}
                     isMandatory
-                    eyeImage={true}
-                    isPassword={true}
+                    eyeImage
+                    isPassword
                     customLabelStyle={
                       isWebView ? styles.webView.inputLabelText : {}
                     }
                     customTextInputContainer={
                       isWebView ? styles.webView.inputTextBox : {}
                     }
+                    isPaddingNotRequired
                   />
                   <View style={styles.forgotButtonContainer}>
                     <TouchableOpacity
@@ -249,44 +270,52 @@ const LoginScreenUI = (props) => {
                       </CommonText>
                     </TouchableOpacity>
                   </View>
-                  <View style={styles.loginButtonView}>
-                    <CustomButton
-                      disabled={loginDisabled}
-                      isLoading={isLoading}
-                      onPress={onLogin}
-                      type={"submit"}
-                      withGreenBackground
-                    >
-                      {intl.formatMessage({ id: "label.login" })}
-                    </CustomButton>
-                  </View>
                 </View>
-                <View style={styles.accountView}>
-                  <CommonText
-                    customTextStyle={{
-                      ...styles.accountText,
-                      ...(isWebView ? styles.webView.dontHaveAccountText : {}),
-                    }}
+                <View
+                  style={
+                    isWebView
+                      ? styles.webView.buttonContainerStyle
+                      : styles.buttonContainerStyle
+                  }
+                >
+                  <CustomButton
+                    onPress={onLogin}
+                    disabled={loginDisabled}
+                    isLoading={isLoading}
+                    type={"submit"}
+                    withGreenBackground
                   >
-                    {intl.formatMessage({
-                      id: "label.dont_have_account",
-                    })}
-                  </CommonText>
-                  <TouchableOpacity onPress={onCreateNewPasswordClick}>
+                    {intl.formatMessage({ id: "label.login" })}
+                  </CustomButton>
+                  <View style={styles.accountView}>
                     <CommonText
                       customTextStyle={{
-                        ...styles.newAccountText,
+                        ...styles.accountText,
                         ...(isWebView
-                          ? styles.webView.createNewAccountText
+                          ? styles.webView.dontHaveAccountText
                           : {}),
                       }}
-                      fontWeight="600"
                     >
                       {intl.formatMessage({
-                        id: "label.create_new_account",
+                        id: "label.dont_have_account",
                       })}
                     </CommonText>
-                  </TouchableOpacity>
+                    <TouchableOpacity onPress={onCreateNewPasswordClick}>
+                      <CommonText
+                        customTextStyle={{
+                          ...styles.newAccountText,
+                          ...(isWebView
+                            ? styles.webView.createNewAccountText
+                            : {}),
+                        }}
+                        fontWeight="600"
+                      >
+                        {intl.formatMessage({
+                          id: "label.create_new_account",
+                        })}
+                      </CommonText>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
               {!isWebView && (
@@ -296,7 +325,65 @@ const LoginScreenUI = (props) => {
               )}
             </ScrollView>
           ) : (
-            <View style={styles.minHeight}></View>
+            <ScrollView
+              contentContainerStyle={{
+                ...styles.companyView,
+                ...(isWebView && styles.webView.backGroundColor),
+              }}
+            >
+              <View
+                style={{
+                  ...styles.memberContainerStyle,
+                  ...containerStyle,
+                }}
+              >
+                <View
+                  style={{
+                    ...(isWebView && styles.webView.backGroundColor),
+                  }}
+                >
+                  <CustomTextInput
+                    label={intl.formatMessage({ id: "label.srn" })}
+                    placeholder={intl.formatMessage({
+                      id: "label.srn_placeholder",
+                    })}
+                    value={srn}
+                    onChangeText={(val) => onChangeSRNNumber(val)}
+                    errorMessage={errorMessageForMemberLogin}
+                    isError={!!errorMessageForMemberLogin}
+                    isMandatory
+                    customLabelStyle={
+                      isWebView ? styles.webView.inputLabelText : {}
+                    }
+                    customTextInputContainer={
+                      isWebView ? styles.webView.inputTextBox : {}
+                    }
+                  />
+                </View>
+                <View
+                  style={
+                    isWebView
+                      ? styles.webView.buttonContainerStyle
+                      : styles.buttonContainerStyle
+                  }
+                >
+                  <CustomButton
+                    onPress={onLoginForMembers}
+                    disabled={!srn.length}
+                    isLoading={isLoading}
+                    type={"submit"}
+                    withGreenBackground
+                  >
+                    {intl.formatMessage({ id: "label.login" })}
+                  </CustomButton>
+                  {!isWebView && (
+                    <View style={styles.followUsImageView}>
+                      <FollowUsIcons />
+                    </View>
+                  )}
+                </View>
+              </View>
+            </ScrollView>
           )}
         </View>
         {!!errorWhileLoggingIn && (
@@ -305,7 +392,7 @@ const LoginScreenUI = (props) => {
             onDismiss={handleDismissToast}
           />
         )}
-        {logoutDetails.isLogoutToast && (
+        {logoutDetails?.isLogoutToast && (
           <ToastComponent
             toastMessage={logoutDetails.message}
             onDismiss={handleDismissToast}
@@ -337,6 +424,7 @@ LoginScreenUI.propTypes = {
   onCreateNewPasswordClick: PropTypes.func.isRequired,
   onForgotPasswordClick: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
+  onLoginForMembers: PropTypes.func.isRequired,
   options: PropTypes.array,
   password: PropTypes.string.isRequired,
   toggleUser: PropTypes.func.isRequired,

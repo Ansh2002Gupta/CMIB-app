@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -49,6 +49,11 @@ const styles = StyleSheet.create({
   },
   dotsStyles: {
     marginHorizontal: 5,
+  },
+  disabled: {
+    opacity: 0.5,
+    backgroundColor: colors.white,
+    cursor: Platform.OS.toLowerCase() === "web" ? "not-allowed" : "",
   },
 });
 

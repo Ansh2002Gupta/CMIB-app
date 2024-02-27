@@ -19,6 +19,7 @@ const MyAccountUI = ({
   userProfileDetails,
 }) => {
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
+
   const profileImage = userProfileDetails?.profile_photo;
   const name = userProfileDetails?.name;
   const email = userProfileDetails?.email;
@@ -27,6 +28,7 @@ const MyAccountUI = ({
     return (
       <ProfileIcon
         customContainerStyle={style.initialsContainer}
+        customImageStyle={style.customImageStyle}
         customTextStyle={style.initialTextStyle}
         name={name}
         profileImage={profileImage}
@@ -50,7 +52,12 @@ const MyAccountUI = ({
           intl={intl}
         />
       )}
-      <View style={style.profileParentContainer}>
+      <ScrollView
+        style={{
+          ...style.profileParentContainer,
+          ...(omitArrowIcon ? style.omitIconStyle : {}),
+        }}
+      >
         <View
           style={[
             !omitArrowIcon ? style.profileContainer : style.profileContainerWeb,
@@ -100,7 +107,7 @@ const MyAccountUI = ({
             </CustomTouchableOpacity>
           ))}
         </ScrollView>
-      </View>
+      </ScrollView>
     </>
   );
 };

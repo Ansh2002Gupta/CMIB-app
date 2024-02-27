@@ -3,6 +3,7 @@ import colors from "../../assets/colors";
 const style = {
   container: {
     backgroundColor: colors.white,
+    zIndex: 0,
   },
   iconContainer: {
     flexDirection: "row",
@@ -18,9 +19,31 @@ const style = {
     marginLeft: 16,
     marginRight: 16,
   },
+  titleContainerWeb: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignContent: "center",
+    padding: 24,
+    borderWidth: 1,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderColor: colors.lightGrey,
+    zIndex: 0,
+  },
   formHeaderStyle: {
     color: colors.black,
     fontSize: 20,
+    marginRight: 16,
+  },
+  formHeaderStyleWeb: {
+    fontSize: 32,
+    marginRight: 16,
+  },
+  headingContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   borderStyle: {
     borderWidth: 1,
@@ -29,6 +52,8 @@ const style = {
   cardContainer: {
     paddingTop: 14,
     paddingBottom: 14,
+    zIndex: 0,
+    cursor: "pointer",
   },
   editContainer: {
     flexDirection: "row",

@@ -63,7 +63,13 @@ function withPrivateAccess(Component) {
     if (userProfileDetails.isGettingUserDetails) {
       return <LoadingScreen />;
     }
-    return <Component {...props} />;
+    if (
+      userProfileDetails &&
+      Object.keys(userProfileDetails.userDetails)?.length
+    ) {
+      return <Component {...props} />;
+    }
+    return null;
   };
 }
 
