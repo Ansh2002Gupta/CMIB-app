@@ -45,7 +45,7 @@ const DetailComponent = ({
     <View>
       {!!headerText && (
         <CommonText customTextStyle={styles.headerText} fontWeight="600">
-          {headerText}
+          {intl.formatMessage({ id: headerText })}
         </CommonText>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>

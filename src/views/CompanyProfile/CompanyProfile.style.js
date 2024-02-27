@@ -61,6 +61,16 @@ const style = {
   badgeContainer: {
     marginBottom: 8,
   },
+  headerText: {
+    fontSize: 16,
+  },
+  customCardStyle: {
+    marginTop: 16,
+    marginBottom: 24,
+    marginRight: 0,
+    marginLeft: 0,
+    padding: 0,
+  },
 };
 
 export default style;

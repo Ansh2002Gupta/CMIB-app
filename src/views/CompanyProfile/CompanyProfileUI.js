@@ -129,12 +129,27 @@ const CompanyProfileUI = (props) => {
               handleChange={handleCompanyDetailChange}
               isEditProfile={isEditProfile}
             />
-            <DetailCard
-              headerId="label.contact_person_info"
-              details={profileResult?.contactPersonInfo}
-              handleChange={handleContactPersonInfo}
-              isEditProfile={isEditProfile}
-            />
+            <CardComponent customStyle={style.cardStyle}>
+              <DetailComponent
+                headerText={intl.formatMessage({
+                  id: "label.module_access",
+                })}
+              />
+              {renderSourceOfInfo()}
+            </CardComponent>
+            <CardComponent customStyle={style.cardStyle}>
+              <CommonText customTextStyle={style.headerText} fontWeight="600">
+                {intl.formatMessage({
+                  id: "label.contact_person_info",
+                })}
+              </CommonText>
+              <DetailCard
+                customCardStyle={style.customCardStyle}
+                details={profileResult?.contactPersonInfo}
+                handleChange={handleContactPersonInfo}
+                isEditProfile={isEditProfile}
+              />
+            </CardComponent>
             <DetailCard
               headerId="label.other_details"
               isRow

@@ -16,14 +16,12 @@ const DetailCard = ({
   isRow,
   otherDetails,
 }) => {
-  const intl = useIntl();
-
   return (
     <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
       <DetailComponent
         customContainerStyle={isRow ? style.customStyle : {}}
         details={details}
-        headerText={intl.formatMessage({ id: headerId })}
+        headerText={headerId}
         isEditable={isEditProfile}
         handleChange={handleChange}
       />
