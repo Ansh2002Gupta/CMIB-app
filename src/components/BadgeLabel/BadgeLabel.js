@@ -17,7 +17,7 @@ const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
         customContainerStyle,
       ]}
     >
-      {badgeLabels.map((label, index) => (
+      {badgeLabels?.map((label, index) => (
         <CommonText
           key={index}
           customTextStyle={style.badgeStyle}

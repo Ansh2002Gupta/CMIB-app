@@ -19,7 +19,6 @@ import ActionPairButton from "../../components/ActionPairButton";
 import Spinner from "../../components/Spinner";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
-import { sourceOfInfo } from "./mappedData";
 import images from "../../images";
 import style from "./CompanyProfile.style";
 
@@ -42,6 +41,29 @@ const CompanyProfileUI = (props) => {
   } = props;
   const { isWebView } = useIsWebView();
 
+  const renderContactPersonDetails = () => {
+    return (
+      <CardComponent customStyle={style.cardStyle}>
+        <CommonText customTextStyle={style.headerText} fontWeight="600">
+          {intl.formatMessage({
+            id: "label.contact_person_info",
+          })}
+        </CommonText>
+        {profileResult?.contactPersonInfo?.map((contactDetailArray, index) => (
+          <DetailCard
+            key={index}
+            customCardStyle={style.customCardStyle}
+            details={contactDetailArray}
+            handleChange={(detailKey, value) =>
+              handleContactPersonInfo(index, detailKey, value)
+            }
+            isEditProfile={isEditProfile}
+          />
+        ))}
+      </CardComponent>
+    );
+  };
+
   const renderSourceOfInfo = () => {
     return isEditProfile ? (
       <View style={style.contentStyle}>
@@ -58,7 +80,7 @@ const CompanyProfileUI = (props) => {
       </View>
     ) : (
       <BadgeLabel
-        badgeLabels={sourceOfInfo}
+        badgeLabels={profileResult?.sourceOfInfo}
         customTextStyle={style.badgeContainer}
       />
     );
@@ -139,21 +161,11 @@ const CompanyProfileUI = (props) => {
               />
               {renderSourceOfInfo()}
             </CardComponent>
-            <CardComponent customStyle={style.cardStyle}>
-              <CommonText customTextStyle={style.headerText} fontWeight="600">
-                {intl.formatMessage({
-                  id: "label.contact_person_info",
-                })}
-              </CommonText>
-              <DetailCard
-                customCardStyle={style.customCardStyle}
-                details={profileResult?.contactPersonInfo}
-                handleChange={handleContactPersonInfo}
-                isEditProfile={isEditProfile}
-              />
-            </CardComponent>
+            {renderContactPersonDetails()}
             <DetailCard
-              headerId="label.other_details"
+              headerId={intl.formatMessage({
+                id: "label.other_details",
+              })}
               isRow
               details={profileResult?.companyProfile}
               otherDetails={profileResult?.otherDetails}
@@ -240,7 +252,9 @@ CompanyProfileUI.propTypes = {
   handleContactPersonInfo: PropTypes.func,
   handleCompanyProfile: PropTypes.func,
   handleEdit: PropTypes.func.isRequired,
+  handleToggle: PropTypes.func,
   intl: PropTypes.object.isRequired,
+  isEditProfile: PropTypes.bool,
   isLoading: PropTypes.bool.isRequired,
   onGoBack: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,

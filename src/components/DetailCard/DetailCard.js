@@ -37,6 +37,7 @@ const DetailCard = ({
 };
 
 DetailCard.defaultProps = {
+  customCardStyle: {},
   details: [],
   handleChange: () => {},
   headerId: "",
@@ -46,6 +47,7 @@ DetailCard.defaultProps = {
 };
 
 DetailCard.propTypes = {
+  customCardStyle: PropTypes.object,
   details: PropTypes.array,
   handleChange: PropTypes.func,
   headerId: PropTypes.string,

@@ -14,25 +14,20 @@ export const mapApiDataToUI = (
     name,
     entity,
     frn_number,
-    number_of_partner,
+    number_of_partners,
     credit_amount,
-    industry,
+    industry_type,
     std_country_code,
     telephone_number,
     address,
     email,
     type,
-    contact_person_salutation,
-    contact_person_name,
-    contact_person_designation,
-    contact_person_mobile_country_code,
-    contact_person_mobile_number,
-    contact_person_email,
     company_details,
     website,
     nature_of_supplier,
     source_of_information,
     company_logo,
+    contact_details,
   } = apiData;
 
   const checkValue = (value, showPlaceholder = true) => {
@@ -51,10 +46,54 @@ export const mapApiDataToUI = (
     return (code + "-" + number).replace(/--/g, "-");
   };
 
-  const combinedMobileNumber = formatMobileNumber(
-    contact_person_mobile_country_code,
-    contact_person_mobile_number
-  );
+  const mapContactDetails = (contactDetails) => {
+    return contactDetails?.map((contact) => {
+      const combinedMobileNumber = formatMobileNumber(
+        contact?.mobile_country_code,
+        contact?.mobile_number
+      );
+      return [
+        {
+          label: "label.salutation",
+          value: checkValue(contact?.salutation),
+          isMinor: true,
+          isDropdown: true,
+          options: SALUTATION_OPTIONS,
+          placeholder: "label.select",
+        },
+        {
+          key: "name",
+          label: "label.contact_person_name",
+          value: checkValue(contact?.name),
+          isMajor: true,
+          maxLength: 255,
+          placeholder: "label.enter_contact_person_name",
+        },
+        {
+          key: "designation",
+          label: "label.contact_personal_designation",
+          value: checkValue(contact?.designation),
+          maxLength: 500,
+          placeholder: "label.enter_contact_person_designation",
+        },
+        {
+          key: "mobileNo",
+          label: "label.mobile_number",
+          isMobileNumber: true,
+          value: isEditMode ? contact?.mobile_number : combinedMobileNumber,
+          isNumeric: true,
+          maxLength: 10,
+          placeholder: "label.enter_contact_person_mobile_no",
+        },
+        {
+          key: "contactEmailId",
+          label: "label.email_id",
+          value: checkValue(contact?.email),
+          placeholder: "label.enter_contact_person_email_id",
+        },
+      ];
+    });
+  };
 
   return {
     companyDetail: [
@@ -85,14 +124,14 @@ export const mapApiDataToUI = (
       {
         key: "noOfPartners",
         label: "label.no_of_partners",
-        value: checkValue(number_of_partner),
+        value: checkValue(number_of_partners),
         isMinor: true,
         isNumeric: true,
         placeholder: "label.enter_no",
       },
       {
         label: "label.current_industry",
-        value: checkValue(industry?.name),
+        value: checkValue(industry_type?.name),
         isDropdown: true,
         options: industryOptions,
         labelField: "name",
@@ -133,46 +172,7 @@ export const mapApiDataToUI = (
         placeholder: "Enter Telephone Number",
       },
     ],
-    contactPersonInfo: [
-      {
-        label: "label.salutation",
-        value: checkValue(contact_person_salutation),
-        isMinor: true,
-        isDropdown: true,
-        options: SALUTATION_OPTIONS,
-        placeholder: "label.select",
-      },
-      {
-        key: "name",
-        label: "label.contact_person_name",
-        value: checkValue(contact_person_name),
-        isMajor: true,
-        maxLength: 255,
-        placeholder: "label.enter_contact_person_name",
-      },
-      {
-        key: "designation",
-        label: "label.contact_personal_designation",
-        value: checkValue(contact_person_designation),
-        maxLength: 500,
-        placeholder: "label.enter_contact_person_designation",
-      },
-      {
-        key: "mobileNo",
-        label: "label.mobile_number",
-        isMobileNumber: true,
-        value: isEditMode ? contact_person_mobile_number : combinedMobileNumber,
-        isNumeric: true,
-        maxLength: 10,
-        placeholder: "label.enter_contact_person_mobile_no",
-      },
-      {
-        key: "contactEmailId",
-        label: "label.email_id",
-        value: checkValue(contact_person_email),
-        placeholder: "label.enter_contact_person_email_id",
-      },
-    ],
+    contactPersonInfo: mapContactDetails(contact_details),
     companyProfile: [
       {
         key: "companyDetail",
@@ -211,9 +211,3 @@ export const mapApiDataToUI = (
     balanceCredit: credit_amount,
   };
 };
-
-export const sourceOfInfo = [
-  "Campus",
-  "Based on Previous Participation",
-  "Telephonic Call",
-];
