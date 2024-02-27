@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {
   Image,
   ScrollView,
-  Text,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";

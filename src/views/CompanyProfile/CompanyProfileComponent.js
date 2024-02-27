@@ -12,15 +12,15 @@ import {
   COMPANY_DETAIL_MAX_LENGTH,
   DEFAULT_INPUT_MAX_LENGTH,
   FIELD_MIN_LENGTH,
+  FIRM_REGISTRATION_NO_LENGTH,
   INTEREST_OPTIONS,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   numRegex,
-  FIRM_REGISTRATION_NO_LENGTH,
+  PREVIOUS_SCREEN,
 } from "../../constants/constants";
 import { isValidUrl } from "../../utils/util";
 import { mapApiDataToUI } from "./mappedData";
-import { PREVIOUS_SCREEN } from "../../constants/constants";
 import { validateEmail } from "../../utils/validation";
 
 const CompanyProfileComponent = () => {
@@ -28,25 +28,9 @@ const CompanyProfileComponent = () => {
   const navigate = useNavigate();
   const { errorWhileGettingResult, onGetProfile, profileResult, isLoading } =
     useGetCompanyProfileAPI();
-  const [isEditProfile, showIsEditProfile] = useState(false);
+  const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
-
-  const [inputErrors, setInputErrors] = useState({
-    companyName: "",
-    registrationNo: "",
-    noOfPartners: "",
-    address: "",
-    emailId: "",
-    telephoneNo: "",
-    code: "",
-    designation: "",
-    contactEmailId: "",
-    mobileNo: "",
-    name: "",
-    companyDetail: "",
-    website: "",
-  });
 
   const [options, setOptions] = useState(
     INTEREST_OPTIONS.map((option) => ({
@@ -324,7 +308,7 @@ const CompanyProfileComponent = () => {
     if (value) {
       getIndustryTypes();
     }
-    showIsEditProfile(value);
+    setIsEditProfile(value);
   };
 
   return (
