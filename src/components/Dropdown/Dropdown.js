@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { View, Text } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
-import { customTheme, customStyles, styles } from "./Dropdown.style";
-import CommonText from "../CommonText";
-import TouchableImage from "../TouchableImage";
-import images from "../../images";
+import { customTheme, customStyles } from "./Dropdown.style";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
 
 const Dropdown = ({
