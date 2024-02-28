@@ -16,6 +16,7 @@ import {
   MOBILE_NUMBER_MIN_LENGTH,
   MOBILE_NUMBER_MAX_LENGTH,
   numRegex,
+  MODULE_OPTIONS,
 } from "../../../constants/constants";
 import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
 
@@ -57,6 +58,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }))
   );
 
+  const [moduleList, setModuleList] = useState();
+
   const { getAppropriateRef } = useGetErrorRefs();
 
   useEffect(() => {
@@ -79,7 +82,31 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         name: "",
       }))
     );
+
+    setModuleList(
+      moduleListArrayToArrayOfObject(signUpState?.signUpDetail?.module_list)
+    );
   }, [signUpState?.signUpDetail?.contact_details]);
+
+  const moduleListArrayToArrayOfObject = (arr) => {
+    const newList = arr
+      .map((moduleID) => {
+        const moduleOption = MODULE_OPTIONS.find(
+          (option) => option.id === moduleID
+        );
+        if (moduleOption) {
+          return {
+            name: intl.formatMessage({ id: moduleOption.messageId }),
+            value: moduleOption.id,
+          };
+        } else {
+          return null;
+        }
+      })
+      .filter(Boolean);
+
+    return newList;
+  };
 
   const allFieldsFilled = () => {
     return contactDetails?.every((detail) => {
@@ -109,7 +136,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const validateField = ({ name, index, enteredValue }) => {
     const value = enteredValue || contactDetails[index][name];
-    console.log("value", value);
     let error = "";
     switch (name) {
       case "name":
@@ -160,7 +186,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const validateFields = () => {
-    console.log(contactDetails);
     const newErrors = contactDetails?.map((detail, index) => ({
       name: validateField({ name: "name", index }),
       designation: validateField({
@@ -261,17 +286,21 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       [name]: value,
     };
     setContactDetails(updatedDetails);
-    if (
-      errors[index][name] &&
-      !validateField({ name, index, enteredValue: value })
-    ) {
-      const updatedErrors = [...errors];
-      updatedErrors[index] = {
-        ...updatedErrors[index],
-        [name]: "",
-      };
-      setErrors(updatedErrors);
-    }
+    const newList = moduleList.filter((item) => !value.includes(item.value));
+    setModuleList(newList);
+  };
+
+  const onDeleteSelectedItem = (list, index) => {
+    const updatedDetails = [...contactDetails];
+    updatedDetails[index] = {
+      ...updatedDetails[index],
+      modules: list,
+    };
+    setContactDetails(updatedDetails);
+    const newdata = signUpState?.signUpDetail?.module_list.filter(
+      (item) => !list.includes(item)
+    );
+    setModuleList(moduleListArrayToArrayOfObject(newdata));
   };
 
   const getErrorDetails = () => {
@@ -287,14 +316,12 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleAddContactPerson = () => {
-    if (validateFields()) {
-      setContactDetails([...contactDetails, {}]);
-    }
+    setContactDetails([...contactDetails, {}]);
   };
 
   const handleRemoveContactPerson = (index) => {
-    contactDetails?.splice(index, 1);
-    setContactDetails(contactDetails?.length || [{}]);
+    const updatedContactDetails = contactDetails.filter((_, i) => i !== index);
+    setContactDetails(updatedContactDetails);
   };
 
   return (
@@ -318,6 +345,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         onClickGoToLogin,
         onClickNext,
         onGoBack,
+        onDeleteSelectedItem,
+        moduleList,
         validationError,
       }}
     />

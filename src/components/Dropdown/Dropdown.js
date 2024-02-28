@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
+import { View, Text } from "@unthinkable/react-core-components";
 
-import { customTheme, customStyles } from "./Dropdown.style";
+import { customTheme, customStyles, styles } from "./Dropdown.style";
+import CommonText from "../CommonText";
+import TouchableImage from "../TouchableImage";
+import images from "../../images";
+import CustomChipCard from "../CustomChipCard/CustomChipCard";
 
 const Dropdown = ({
   data,
   dropdownStyle,
   includeAllKeys,
+  isMultiSelect,
   labelField,
   menuOptions,
   onChange,
+  onDeleteSelectedItem,
   placeholder,
   placeholderStyle,
   value,
@@ -34,14 +41,59 @@ const Dropdown = ({
 
   const options = menuOptions || defaultOptions;
 
-  const selectedOption = options?.find(
-    (option) => option.value === String(value)
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const selectedOptions = options.filter((option) =>
+    value.includes(option.value)
   );
 
+  const handleValueChange = (selectedOption) => {
+    const selectedItemsList = [...selectedItems, selectedOption[0]];
+    if (!selectedItems.find((item) => item.value === selectedOption[0].value)) {
+      setSelectedItems((prev) => [...prev, ...selectedOption]);
+      onChange(selectedItemsList.map((item) => item.value));
+    }
+  };
+
+  const handleRemoveItems = (itemToRemove) => {
+    setSelectedItems((prevItems) =>
+      prevItems.filter((item) => item.value !== itemToRemove.value)
+    );
+    const updatedValues = selectedItems.filter(
+      (item) => item.value !== itemToRemove.value
+    );
+    onDeleteSelectedItem(updatedValues.map((item) => item.value));
+  };
+
+  if (isMultiSelect) {
+    return (
+      <div>
+        <Select
+          value={""}
+          placeholder={placeholder}
+          options={options}
+          styles={customStyles(dropdownStyle, placeholderStyle)}
+          theme={customTheme}
+          onChange={handleValueChange}
+          isMulti
+        />
+        {!!selectedItems.length && (
+          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+            {selectedItems.map((item, index) => (
+              <CustomChipCard
+                message={item?.label}
+                onPress={() => handleRemoveItems(item)}
+              />
+            ))}
+          </View>
+        )}
+      </div>
+    );
+  }
   return (
     <div>
       <Select
-        value={selectedOption}
+        value={selectedOptions[0]}
         placeholder={placeholder}
         options={options}
         styles={customStyles(dropdownStyle, placeholderStyle)}
@@ -59,19 +111,23 @@ Dropdown.defaultProps = {
   dropdownStyle: {},
   labelField: "",
   onChange: () => {},
+  onDeleteSelectedItem: () => {},
   placeholder: "",
   placeholderStyle: {},
   value: "",
   valueField: "",
   urlField: "",
+  isMultiSelect: false,
 };
 
 Dropdown.propTypes = {
   data: PropTypes.array,
   dropdownStyle: PropTypes.object,
   includeAllKeys: PropTypes.bool,
+  isMultiSelect: PropTypes.bool,
   labelField: PropTypes.string,
   onChange: PropTypes.func,
+  onDeleteSelectedItem: PropTypes.func,
   placeholder: PropTypes.string,
   placeholderStyle: PropTypes.object,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

@@ -44,6 +44,8 @@ const SignUpThirdScreenUI = ({
   onClickGoToLogin,
   onClickNext,
   onGoBack,
+  onDeleteSelectedItem,
+  moduleList,
   validationError,
 }) => {
   const isWeb = Platform.OS === "web";
@@ -51,15 +53,35 @@ const SignUpThirdScreenUI = ({
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const showContentHeader =
     currentBreakpoint !== "xs" && currentBreakpoint !== "sm";
-    
+
   const renderFormContent = () => {
     return (
       <View style={style.formContainer}>
         <>
           {contactDetails?.map((detail, index) => (
-            <CardComponent 
-            key={String(index)}
-            customStyle={style.contactPersonContainer}>
+            <CardComponent
+              key={String(index)}
+              customStyle={style.contactPersonContainer}
+            >
+              <CustomTextInput
+                label={"Modules"}
+                dropdownStyle={style.dropdownStyle}
+                placeholder={"Select Modules"}
+                errorMessage={errors[index]?.salutation}
+                isError={!!errors[index]?.salutation}
+                value={contactDetails[index]?.modules}
+                options={moduleList}
+                isMandatory
+                onChangeValue={(val) =>
+                  handleInputChange(val, "modules", index)
+                }
+                onDeleteSelectedItem={(list) =>
+                  onDeleteSelectedItem(list, index)
+                }
+                labelField="name"
+                isDropdown
+                isMultiSelect
+              />
               <View>
                 <View style={style.inputContainer}>
                   <View style={style.firstInput}>
@@ -99,7 +121,10 @@ const SignUpThirdScreenUI = ({
                         handleInputChange(val, "name", index)
                       }
                       isMandatory
-                      fieldRef={getAppropriateRef(detail.modules?.[index], "name")}
+                      fieldRef={getAppropriateRef(
+                        detail.modules?.[index],
+                        "name"
+                      )}
                     />
                   </View>
                 </View>
@@ -119,7 +144,10 @@ const SignUpThirdScreenUI = ({
                   }
                   maxLength={DEFAULT_INPUT_MAX_LENGTH}
                   isMandatory
-                  fieldRef={getAppropriateRef(detail.modules?.[index], "designation")}
+                  fieldRef={getAppropriateRef(
+                    detail.modules?.[index],
+                    "designation"
+                  )}
                 />
                 <MobileNumberInput
                   codeError={errors[index]?.countryCode}
@@ -135,7 +163,10 @@ const SignUpThirdScreenUI = ({
                   options={countryCodeResult}
                   mobNumberValue={contactDetails[index]?.mobileNo}
                   mobNumberError={errors[index]?.mobileNo}
-                  fieldRef={getAppropriateRef(detail.modules?.[index], "mobileNo")}
+                  fieldRef={getAppropriateRef(
+                    detail.modules?.[index],
+                    "mobileNo"
+                  )}
                 />
                 <CustomTextInput
                   label={intl.formatMessage({
@@ -152,7 +183,10 @@ const SignUpThirdScreenUI = ({
                     handleInputChange(val, "emailId", index)
                   }
                   isMandatory
-                  fieldRef={getAppropriateRef(detail.modules?.[index], "emailId")}
+                  fieldRef={getAppropriateRef(
+                    detail.modules?.[index],
+                    "emailId"
+                  )}
                 />
                 <CustomButton
                   style={style.removeButton}
@@ -160,22 +194,24 @@ const SignUpThirdScreenUI = ({
                     isLeftIconNotSvg: false,
                     leftIconSource: images.iconDeleteRed,
                   }}
-                  onPress={handleRemoveContactPerson}
+                  onPress={() => handleRemoveContactPerson(index)}
                 >
                   {intl.formatMessage({ id: "label.remove" })}
                 </CustomButton>
               </View>
             </CardComponent>
           ))}
-          <CustomButton
-            iconLeft={{
-              isLeftIconNotSvg: false,
-              leftIconSource: images.iconAdd,
-            }}
-            onPress={handleAddContactPerson}
-          >
-            {intl.formatMessage({ id: "label.addContactPerson" })}
-          </CustomButton>
+          {contactDetails.length <= moduleList.length && (
+            <CustomButton
+              iconLeft={{
+                isLeftIconNotSvg: false,
+                leftIconSource: images.iconAdd,
+              }}
+              onPress={handleAddContactPerson}
+            >
+              {intl.formatMessage({ id: "label.addContactPerson" })}
+            </CustomButton>
+          )}
         </>
       </View>
     );

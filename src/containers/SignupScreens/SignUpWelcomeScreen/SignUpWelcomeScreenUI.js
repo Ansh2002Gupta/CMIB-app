@@ -40,9 +40,11 @@ const SignUpWelcomeScreenUI = ({
     setOptions(updatedItems);
     const toggledItem = updatedItems.find((item) => item.id === id);
     if (toggledItem.isSelected) {
-      setModuleList([...moduleList, toggledItem.id ]);
+      if (!moduleList.includes(toggledItem.id)) {
+        setModuleList([...moduleList, toggledItem.id]);
+      }
     } else {
-      setModuleList(moduleList.filter((item) => item.module !== id));
+      setModuleList(moduleList.filter((item) => item !== id));
     }
   };
 

@@ -42,6 +42,7 @@ const CustomTextInput = (props) => {
     isMandatory,
     isMobileNumber,
     isMultiline,
+    isMultiSelect,
     isNumeric,
     isPaddingNotRequired,
     isPassword,
@@ -51,6 +52,7 @@ const CustomTextInput = (props) => {
     minCount,
     options,
     onChangeValue,
+    onDeleteSelectedItem,
     placeholder,
     step,
     value,
@@ -122,6 +124,7 @@ const CustomTextInput = (props) => {
             valueField={valueField}
             placeholder={placeholder || ""}
             value={value}
+            isMultiSelect={isMultiSelect}
             onFocus={handleFocus}
             onBlur={handleBlur}
             urlField={urlField}
@@ -131,6 +134,7 @@ const CustomTextInput = (props) => {
                 : onChangeValue(item[inputKey]);
               setIsFocused(false);
             }}
+            onDeleteSelectedItem={onDeleteSelectedItem}
             {...remainingProps}
           />
         );
@@ -276,6 +280,7 @@ CustomTextInput.defaultProps = {
   minCount: 0,
   options: [],
   onChangeValue: () => {},
+  onDeleteSelectedItem: () => {},
   placeholder: "",
   step: 1,
   value: "",
@@ -313,6 +318,7 @@ CustomTextInput.propTypes = {
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
+  onDeleteSelectedItem: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
   step: PropTypes.number,
