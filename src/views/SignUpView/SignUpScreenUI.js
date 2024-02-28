@@ -6,6 +6,7 @@ import { View } from "@unthinkable/react-core-components";
 import SignUpHeader from "../../containers/SignUpHeader/index";
 import SignUpWelcomeScreen from "../../containers/SignupScreens/SignUpWelcomeScreen/index";
 import SignUpThirdScreen from "../../containers/SignupScreens/SignUpThirdScreen/index";
+import SignUpSecondScreen from "../../containers/SignupScreens/SignUpSecondScreen/index";
 import SignUpLastScreen from "../../containers/SignupScreens/SignUpLastScreen/index";
 import useIsWebView from "../../hooks/useIsWebView";
 import { getResponsiveStyles, style } from "./SignUpScreen.style";
@@ -20,9 +21,9 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
     {
       component: SignUpWelcomeScreen,
     },
-    // {
-    //   component: SignUpSecondScreen,
-    // },
+    {
+      component: SignUpSecondScreen,
+    },
     {
       component: SignUpThirdScreen,
     },
