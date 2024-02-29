@@ -238,6 +238,7 @@ export const mapApiDataToUI = (
         isDropdown: true,
         options: COMPANY_TYPE_OPTIONS,
         isMandatory: true,
+        valueField: "value",
         placeholder: "label.select_company_type",
       },
     ],
