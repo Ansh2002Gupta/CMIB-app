@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
   divideInputStyle: {
     width: "48%",
   },
+  badgeContainer: {
+    marginBottom: 8,
+  },
   containerGridStyle: (columnCount) => ({
     display: "grid",
     gridTemplateColumns: columnCount || "1fr 1fr 1fr",

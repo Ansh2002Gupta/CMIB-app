@@ -28,6 +28,7 @@ export const mapApiDataToUI = (
     source_of_information,
     company_logo,
     contact_details,
+    company_module_access,
   } = apiData;
 
   const checkValue = (value, showPlaceholder = true) => {
@@ -56,22 +57,22 @@ export const mapApiDataToUI = (
         {
           label: "label.module",
           value: contact?.modules,
-          isRow: true,
           showBadgeLabel: true,
+          isMandatory: true,
         },
         {
           label: "label.salutation",
           value: checkValue(contact?.salutation),
-          isMinor: true,
           isDropdown: true,
           options: SALUTATION_OPTIONS,
           placeholder: "label.select",
+          isMandatory: true,
         },
         {
           key: "name",
           label: "label.contact_person_name",
           value: checkValue(contact?.name),
-          isMajor: true,
+          isMandatory: true,
           maxLength: 255,
           placeholder: "label.enter_contact_person_name",
         },
@@ -80,6 +81,7 @@ export const mapApiDataToUI = (
           label: "label.contact_personal_designation",
           value: checkValue(contact?.designation),
           maxLength: 500,
+          isMandatory: true,
           placeholder: "label.enter_contact_person_designation",
         },
         {
@@ -89,12 +91,14 @@ export const mapApiDataToUI = (
           value: isEditMode ? contact?.mobile_number : combinedMobileNumber,
           isNumeric: true,
           maxLength: 10,
+          isMandatory: true,
           placeholder: "label.enter_contact_person_mobile_no",
         },
         {
           key: "contactEmailId",
           label: "label.email_id",
           value: checkValue(contact?.email),
+          isMandatory: true,
           placeholder: "label.enter_contact_person_email_id",
         },
       ];
@@ -109,6 +113,7 @@ export const mapApiDataToUI = (
         value: checkValue(name),
         maxLength: 255,
         placeholder: "label.company_name_placeholder",
+        isMandatory: true,
       },
       {
         label: "label.entity",
@@ -116,7 +121,9 @@ export const mapApiDataToUI = (
         isDropdown: true,
         options: ENTITY_OPTIONS,
         inputKey: "label",
+        valueField: "value",
         placeholder: "label.select_entity_placeholder",
+        isMandatory: true,
       },
       {
         key: "registrationNo",
@@ -126,6 +133,7 @@ export const mapApiDataToUI = (
         maxLength: 10,
         isMajor: true,
         placeholder: "label.enter_firm_no",
+        isMandatory: true,
       },
       {
         key: "noOfPartners",
@@ -133,7 +141,8 @@ export const mapApiDataToUI = (
         value: checkValue(number_of_partners),
         isMinor: true,
         isNumeric: true,
-        placeholder: "label.enter_no",
+        placeholder: "label.no_placeholder",
+        isMandatory: true,
       },
       {
         label: "label.current_industry",
@@ -144,6 +153,7 @@ export const mapApiDataToUI = (
         valueField: "name",
         inputKey: "name",
         placeholder: "label.select_current_indusrty_placeholder",
+        isMandatory: true,
       },
       {
         key: "address",
@@ -152,12 +162,14 @@ export const mapApiDataToUI = (
         isMultiline: true,
         maxLength: 500,
         placeholder: "label.address_for_correspondance_placeholder",
+        isMandatory: true,
       },
       {
         key: "emailId",
         label: "label.email_id",
         value: checkValue(email),
         placeholder: "label.email_id_placeholder",
+        isMandatory: true,
       },
       {
         key: "code",
@@ -166,7 +178,8 @@ export const mapApiDataToUI = (
         value: checkValue(std_country_code),
         isMinor: true,
         maxLength: 8,
-        placeholder: "label.enter_code",
+        placeholder: "label.isd_std_code",
+        isMandatory: true,
       },
       {
         key: "telephoneNo",
@@ -175,12 +188,14 @@ export const mapApiDataToUI = (
         value: checkValue(telephone_number),
         isMajor: true,
         maxLength: 15,
-        placeholder: "Enter Telephone Number",
+        placeholder: "label.enter_telephone_no",
+        isMandatory: true,
       },
     ],
     contactPersonInfo: mapContactDetails(contact_details),
     companyProfile: [
       {
+        isMandatory: true,
         key: "companyDetail",
         label: "label.short_profile_of_the_company",
         value: checkValue(company_details),
@@ -194,14 +209,16 @@ export const mapApiDataToUI = (
         key: "website",
         label: "label.website",
         value: checkValue(website),
-        isLink: website && true,
+        isLink: !!website,
         placeholder: "label.enter_your_website",
+        isMandatory: true,
       },
       {
         label: "label.nature_of_supplier",
         value: checkValue(nature_of_supplier),
         isDropdown: true,
         options: NATURE_OF_SUPPLIER,
+        isMandatory: true,
         placeholder: "label.select_nature_of_supplier",
       },
       {
@@ -209,11 +226,13 @@ export const mapApiDataToUI = (
         value: checkValue(type),
         isDropdown: true,
         options: COMPANY_TYPE_OPTIONS,
+        isMandatory: true,
         placeholder: "label.select_company_type",
       },
     ],
     sourceOfInfo: source_of_information,
     companyLogo: company_logo,
     balanceCredit: credit_amount,
+    companyModuleAccess: company_module_access,
   };
 };

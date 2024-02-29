@@ -14,6 +14,7 @@ import {
   FIELD_MIN_LENGTH,
   FIRM_REGISTRATION_NO_LENGTH,
   INTEREST_OPTIONS,
+  MODULE_OPTIONS,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   numRegex,
@@ -40,6 +41,14 @@ const CompanyProfileComponent = () => {
     }))
   );
 
+  const [moduleOptions, setModuleOptions] = useState(
+    MODULE_OPTIONS.map((option) => ({
+      ...option,
+      title: intl.formatMessage({ id: option.messageId }),
+      isSelected: false,
+    }))
+  );
+
   useEffect(() => {
     onGetProfile();
   }, []);
@@ -49,6 +58,20 @@ const CompanyProfileComponent = () => {
       setProfileData(
         mapApiDataToUI(profileResult, industryTypeResult, isEditProfile)
       );
+      const updatedModuleOptions = MODULE_OPTIONS.map((option) => ({
+        ...option,
+        title: intl.formatMessage({ id: option.messageId }),
+        isSelected: profileResult?.company_module_access?.includes(option.id),
+      }));
+      const updatedInfoOptions = INTEREST_OPTIONS.map((option) => ({
+        ...option,
+        title: intl.formatMessage({ id: option.messageId }),
+        isSelected: profileResult.source_of_information?.includes(
+          intl.formatMessage({ id: option.messageId })
+        ),
+      }));
+      setModuleOptions(updatedModuleOptions);
+      setOptions(updatedInfoOptions);
     }
   }, [profileResult, industryTypeResult, isEditProfile]);
 
@@ -262,6 +285,16 @@ const CompanyProfileComponent = () => {
     setOptions(updatedItems);
   };
 
+  const handleModuleToggle = (id) => {
+    const updatedItems = moduleOptions.map((item) => {
+      if (item.id === id) {
+        return { ...item, isSelected: !item.isSelected };
+      }
+      return item;
+    });
+    setModuleOptions(updatedItems);
+  };
+
   const onGoBack = () => {
     if (isEditProfile) {
       handleEdit(false);
@@ -320,10 +353,12 @@ const CompanyProfileComponent = () => {
       handleContactPersonInfo={handleContactPersonInfo}
       handleCompanyProfile={handleCompanyProfile}
       handleEdit={handleEdit}
+      handleModuleToggle={handleModuleToggle}
       handleToggle={handleToggle}
       intl={intl}
       isLoading={isLoading}
       isEditProfile={isEditProfile}
+      moduleOptions={moduleOptions}
       options={options}
       onGoBack={onGoBack}
       onSaveClick={onSaveClick}

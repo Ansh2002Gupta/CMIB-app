@@ -29,11 +29,13 @@ const CompanyProfileUI = (props) => {
     handleCompanyDetailChange,
     handleContactPersonInfo,
     handleCompanyProfile,
+    handleModuleToggle,
     handleEdit,
     handleToggle,
     intl,
     isEditProfile,
     isLoading,
+    moduleOptions,
     options,
     onGoBack,
     onSaveClick,
@@ -61,6 +63,28 @@ const CompanyProfileUI = (props) => {
           />
         ))}
       </CardComponent>
+    );
+  };
+
+  const renderModuleAccess = () => {
+    return isEditProfile ? (
+      <View style={style.contentStyle}>
+        {moduleOptions?.map((item, index) => (
+          <CheckBox
+            key={item.id}
+            id={item.id}
+            index={index}
+            title={item.title}
+            isSelected={item.isSelected}
+            handleCheckbox={handleModuleToggle}
+          />
+        ))}
+      </View>
+    ) : (
+      <BadgeLabel
+        badgeLabels={profileResult?.companyModuleAccess}
+        customTextStyle={style.badgeContainer}
+      />
     );
   };
 
@@ -159,7 +183,7 @@ const CompanyProfileUI = (props) => {
                   id: "label.module_access",
                 })}
               />
-              {renderSourceOfInfo()}
+              {renderModuleAccess()}
             </CardComponent>
             {renderContactPersonDetails()}
             <DetailCard
@@ -252,10 +276,12 @@ CompanyProfileUI.propTypes = {
   handleContactPersonInfo: PropTypes.func,
   handleCompanyProfile: PropTypes.func,
   handleEdit: PropTypes.func.isRequired,
+  handleModuleToggle: PropTypes.func.isRequired,
   handleToggle: PropTypes.func,
   intl: PropTypes.object.isRequired,
   isEditProfile: PropTypes.bool,
   isLoading: PropTypes.bool.isRequired,
+  moduleOptions: PropTypes.array.isRequired,
   onGoBack: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   onSaveClick: PropTypes.func,
