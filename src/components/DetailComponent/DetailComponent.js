@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { Platform, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../BadgeLabel/BadgeLabel";
 import CommonText from "../CommonText";
@@ -17,7 +17,6 @@ const DetailComponent = ({
   details,
   headerText,
   isEditable,
-  isMandatory,
   handleChange,
 }) => {
   const intl = useIntl();
@@ -29,18 +28,6 @@ const DetailComponent = ({
   const containerStyle = isWebView
     ? styles.containerGridStyle(columnCount)
     : styles.containerStyle;
-
-  const isPlatformWeb = Platform.OS.toLowerCase() === "web";
-
-  const getMobileProps = (detail) => {
-    if (!isPlatformWeb && detail.isMultiline) {
-      return {
-        isMultiline: true,
-        height: 84,
-      };
-    }
-    return {};
-  };
 
   return (
     <View>
@@ -67,6 +54,7 @@ const DetailComponent = ({
                 isMobileNumber={detail.isMobileNumber}
                 isMandatory={detail.isMandatory}
                 options={detail.options || []}
+                isMultiline={detail?.isMultiline}
                 placeholder={intl.formatMessage({ id: detail.placeholder })}
                 maxLength={detail.maxLength}
                 isNumeric={detail.isNumeric}
@@ -82,7 +70,6 @@ const DetailComponent = ({
                   }
                 }}
                 isRupee={detail?.isRupee}
-                {...getMobileProps(detail)}
               />
             ) : (
               <>
@@ -126,7 +113,6 @@ DetailComponent.defaultProps = {
   handleChange: () => {},
   headerText: "",
   isEditable: false,
-  isMandatory: false,
 };
 
 DetailComponent.propTypes = {
@@ -135,7 +121,6 @@ DetailComponent.propTypes = {
   handleChange: PropTypes.func,
   headerText: PropTypes.string,
   isEditable: PropTypes.bool,
-  isMandatory: PropTypes.bool,
 };
 
 export default DetailComponent;
