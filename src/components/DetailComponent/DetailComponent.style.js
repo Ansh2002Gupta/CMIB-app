@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   valueStyle: {
+    wordBreak: "break-word",
     fontSize: 14,
     color: colors.black,
     marginBottom: 24,
