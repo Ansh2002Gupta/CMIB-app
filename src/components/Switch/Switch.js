@@ -9,7 +9,7 @@ const Switch = ({ disabled, isToggled, onChange }) => {
     if (disabled) {
       return;
     }
-    onChange && onChange();
+    onChange();
   };
 
   return (
@@ -30,6 +30,11 @@ const Switch = ({ disabled, isToggled, onChange }) => {
       </View>
     </View>
   );
+};
+
+Switch.defaultProps = {
+  isToggled: false,
+  onChange: () => {},
 };
 
 Switch.propTypes = {
