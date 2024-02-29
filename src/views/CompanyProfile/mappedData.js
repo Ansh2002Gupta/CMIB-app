@@ -1,6 +1,7 @@
 import {
   COMPANY_TYPE_OPTIONS,
   ENTITY_OPTIONS,
+  FIRM_OF_CHARTERED_ACCOUNTANTS,
   NATURE_OF_SUPPLIER,
   SALUTATION_OPTIONS,
 } from "../../constants/constants";
@@ -125,25 +126,29 @@ export const mapApiDataToUI = (
         placeholder: "label.select_entity_placeholder",
         isMandatory: true,
       },
-      {
-        key: "registrationNo",
-        label: "label.firm_registration_no",
-        value: checkValue(frn_number),
-        isNumeric: true,
-        maxLength: 10,
-        isMajor: true,
-        placeholder: "label.enter_firm_no",
-        isMandatory: true,
-      },
-      {
-        key: "noOfPartners",
-        label: "label.no_of_partners",
-        value: checkValue(number_of_partners),
-        isMinor: true,
-        isNumeric: true,
-        placeholder: "label.no_placeholder",
-        isMandatory: true,
-      },
+      ...(entity === FIRM_OF_CHARTERED_ACCOUNTANTS
+        ? [
+            {
+              key: "registrationNo",
+              label: "label.firm_registration_no",
+              value: checkValue(frn_number),
+              isNumeric: true,
+              maxLength: 10,
+              isMajor: true,
+              placeholder: "label.enter_firm_no",
+              isMandatory: true,
+            },
+            {
+              key: "noOfPartners",
+              label: "label.no_of_partners",
+              value: checkValue(number_of_partners),
+              isMinor: true,
+              isNumeric: true,
+              placeholder: "label.no_placeholder",
+              isMandatory: true,
+            },
+          ]
+        : []),
       {
         label: "label.current_industry",
         value: checkValue(industry_type?.name),
