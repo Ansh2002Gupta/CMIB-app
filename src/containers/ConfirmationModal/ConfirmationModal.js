@@ -11,6 +11,7 @@ import images from "../../images";
 import styles from "./ConfirmationModal.style";
 
 const ConfirmationModal = ({
+  buttonOneStyle,
   buttonOneText,
   buttonOneTextStyle,
   buttonTwoText,
@@ -26,12 +27,7 @@ const ConfirmationModal = ({
   const confirmationConfig = [
     {
       content: (
-        <CustomImage
-          Icon={icon}
-          style={styles.logo}
-          source={icon}
-          isSvg={true}
-        />
+        <CustomImage Icon={icon} style={styles.logo} source={icon} isSvg />
       ),
     },
     {
@@ -54,6 +50,7 @@ const ConfirmationModal = ({
           buttonOneText={buttonOneText}
           buttonTwoText={buttonTwoText}
           customStyles={{
+            buttonOneStyle: buttonOneStyle,
             buttonTwoStyle: { ...styles.logoutButtonStyle, ...buttonTwoStyle },
             buttonOneTextStyle: buttonOneTextStyle,
             buttonTwoTextStyle: buttonTwoTextStyle,
@@ -81,6 +78,7 @@ const ConfirmationModal = ({
 };
 
 ConfirmationModal.defaultProptypes = {
+  buttonOneStyle: {},
   buttonOneText: "",
   buttonOneTextStyle: {},
   buttonTwoText: "",
@@ -95,6 +93,7 @@ ConfirmationModal.defaultProptypes = {
 };
 
 ConfirmationModal.propTypes = {
+  buttonOneStyle: PropTypes.object,
   buttonOneText: PropTypes.string.isRequired,
   buttonOneTextStyle: PropTypes.object,
   buttonTwoText: PropTypes.string.isRequired,

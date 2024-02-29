@@ -50,6 +50,7 @@ const commonStyles = {
   largeModalContainer: (keyboardHeight) => ({
     maxHeight: keyboardHeight * 2.2,
   }),
+  buttonStyle: { maxHeight: 44 },
 };
 
 export const gridStyles = {

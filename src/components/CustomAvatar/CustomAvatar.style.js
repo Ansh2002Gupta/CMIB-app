@@ -1,9 +1,6 @@
 import colors from "../../assets/colors";
 
 const styles = {
-  profileTextView: {
-    paddingRight: 8,
-  },
   initialsContainer: {
     justifyContent: "center",
     backgroundColor: colors.secondaryGrey,
@@ -11,6 +8,7 @@ const styles = {
     alignItems: "center",
     height: 40,
     width: 40,
+    marginRight: 8,
   },
   initialsText: {
     fontSize: 14,

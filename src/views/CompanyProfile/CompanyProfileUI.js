@@ -191,6 +191,7 @@ const CompanyProfileUI = (props) => {
         buttonTitle={intl.formatMessage({ id: "label.edit" })}
         handleButtonClick={() => handleEdit(!isEditProfile)}
         hasActionButton={isWebView && !isEditProfile}
+        showInWeb={isWebView}
         hasIconBar
         headerText={
           isEditProfile

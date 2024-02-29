@@ -19,7 +19,6 @@ const MyAccountUI = ({
   userProfileDetails,
 }) => {
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
-  //TODO: update image on save button (once api will come)
 
   const profileImage = userProfileDetails?.profile_photo;
   const name = userProfileDetails?.name;
@@ -29,6 +28,7 @@ const MyAccountUI = ({
     return (
       <ProfileIcon
         customContainerStyle={style.initialsContainer}
+        customImageStyle={style.customImageStyle}
         customTextStyle={style.initialTextStyle}
         name={name}
         profileImage={profileImage}
@@ -52,7 +52,12 @@ const MyAccountUI = ({
           intl={intl}
         />
       )}
-      <View style={style.profileParentContainer}>
+      <ScrollView
+        style={{
+          ...style.profileParentContainer,
+          ...(omitArrowIcon ? style.omitIconStyle : {}),
+        }}
+      >
         <View
           style={[
             !omitArrowIcon ? style.profileContainer : style.profileContainerWeb,
@@ -102,7 +107,7 @@ const MyAccountUI = ({
             </CustomTouchableOpacity>
           ))}
         </ScrollView>
-      </View>
+      </ScrollView>
     </>
   );
 };

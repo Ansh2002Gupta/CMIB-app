@@ -27,7 +27,7 @@ function Pagination(props) {
   const windowDimensions = useWindowDimensions();
   const showbuttonText = windowDimensions.width >= 900;
 
-  const totalPages = totalcards ? Math.ceil(totalcards / cardsPerPage) : null;
+  const totalPages = totalcards ? Math.ceil(totalcards / cardsPerPage) : 1;
 
   const paginationRange = () => {
     const totalPageNumbers = siblingCount + 5;
@@ -89,6 +89,7 @@ function Pagination(props) {
         style={prevNextBtnstyles}
         onPress={previousPageHandler}
         disabled={currentPage <= 1}
+        disabledStyle={styles.disabled}
         iconLeft={{
           isLeftIconNotSvg: false,
           leftIconSource: images.iconArrowLeft,
@@ -121,6 +122,8 @@ function Pagination(props) {
               style={activeButton}
               key={idx}
               onPress={() => paginate(page)}
+              disabled={!totalcards}
+              disabledStyle={styles.disabled}
             >
               <CommonText customTextStyle={activeText}>{page}</CommonText>
             </CustomButton>
@@ -130,6 +133,7 @@ function Pagination(props) {
       <CustomButton
         style={prevNextBtnstyles}
         onPress={nextPageHandler}
+        disabledStyle={styles.disabled}
         disabled={currentPage === lastPage}
         iconRight={{
           isRightIconNotSvg: true,

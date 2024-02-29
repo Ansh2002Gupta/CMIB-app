@@ -7,7 +7,7 @@ import styles from "./CustomAvatar.style";
 
 const CustomAvatar = ({ image = null, text = "" }) => {
   if (image) {
-    return <Image source={{ uri: image }} />;
+    return <Image source={{ uri: image }} style={styles.initialsContainer} />;
   }
   if (text) {
     const initials = text
@@ -15,12 +15,10 @@ const CustomAvatar = ({ image = null, text = "" }) => {
       .map((word) => word.charAt(0))
       .join("");
     return (
-      <View style={styles.profileTextView}>
-        <View style={styles.initialsContainer}>
-          <CommonText customTextStyle={styles.initialsText}>
-            {initials.toUpperCase()}
-          </CommonText>
-        </View>
+      <View style={styles.initialsContainer}>
+        <CommonText customTextStyle={styles.initialsText}>
+          {initials.toUpperCase()}
+        </CommonText>
       </View>
     );
   }

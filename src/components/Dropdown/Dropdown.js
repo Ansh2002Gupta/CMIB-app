@@ -9,6 +9,7 @@ import CustomChipCard from "../CustomChipCard/CustomChipCard";
 const Dropdown = ({
   data,
   dropdownStyle,
+  isEditable,
   includeAllKeys,
   isMultiSelect,
   labelField,
@@ -93,6 +94,7 @@ const Dropdown = ({
         value={selectedOptions[0]}
         placeholder={placeholder}
         options={options}
+        isDisabled={!isEditable}
         styles={customStyles(dropdownStyle, placeholderStyle)}
         theme={customTheme}
         onChange={(selectedItem) => {
@@ -106,6 +108,7 @@ const Dropdown = ({
 Dropdown.defaultProps = {
   data: [],
   dropdownStyle: {},
+  isEditable: true,
   labelField: "",
   onChange: () => {},
   onDeleteSelectedItem: () => {},
@@ -120,6 +123,7 @@ Dropdown.defaultProps = {
 Dropdown.propTypes = {
   data: PropTypes.array,
   dropdownStyle: PropTypes.object,
+  isEditable: PropTypes.bool,
   includeAllKeys: PropTypes.bool,
   isMultiSelect: PropTypes.bool,
   labelField: PropTypes.string,

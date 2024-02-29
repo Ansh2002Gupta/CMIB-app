@@ -1,4 +1,6 @@
 import { Platform } from "@unthinkable/react-core-components";
+
+import dayjs from "dayjs";
 import { ANONYMOUS } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
@@ -62,21 +64,121 @@ export const getInitialsFromName = (name) => {
     if (lastName?.length) {
       return `${firstName[0]}${lastName[0]}`.toUpperCase();
     } else if (firstName?.length) {
-      return `${firstName[0]}${firstName?.[1] || ""}`.toUpperCase();
+      return `${firstName[0]}`.toUpperCase();
     }
   }
   return ANONYMOUS.charAt(0).toUpperCase();
 };
 
-export function isValidUrl(str) {
+export const isValidUrl = (str) => {
   const pattern = new RegExp(
-    '^([a-zA-Z]+:\\/\\/)?' + // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR IP (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-    '(\\#[-a-z\\d_]*)?$', // fragment locator
-  'i'
+    "^([a-zA-Z]+:\\/\\/)?" + // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR IP (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$", // fragment locator
+    "i"
   );
   return pattern.test(str);
-}
+};
+
+export const getTime = (isoString) => {
+  if (!isoString) {
+    return "12:00 AM";
+  }
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) {
+    return "12:00 AM";
+  }
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const amPm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+  const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+  const formattedTime = `${hours}:${formattedMinutes} ${amPm}`;
+  return formattedTime;
+};
+
+export const capitalize = (text) => {
+  if (!text || typeof text !== "string") {
+    return text;
+  }
+  let firstLetter = text.charAt(0).toUpperCase();
+  let restLetter = text.substring(1);
+  return firstLetter + restLetter;
+};
+
+export const formatDate = (date) => {
+  return dayjs(date).format("DD/MM/YYYY");
+};
+
+export const extractFilename = (fileUri) => {
+  const parts = fileUri.split("/");
+  const filename = parts.pop() || "";
+  return filename;
+};
+
+let lastFlagDate = null;
+
+export const getDateStatus = (record) => {
+  const createdAt = new Date(record);
+
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  const createdAtDateString = createdAt.toDateString();
+  const todayDateString = today.toDateString();
+  const yesterdayDateString = yesterday.toDateString();
+
+  if (createdAtDateString === todayDateString) {
+    if (lastFlagDate !== todayDateString) {
+      lastFlagDate = todayDateString;
+      return "Today";
+    }
+  } else if (createdAtDateString === yesterdayDateString) {
+    if (lastFlagDate !== yesterdayDateString) {
+      lastFlagDate = yesterdayDateString;
+      return "Yesterday";
+    }
+  } else if (createdAtDateString < yesterdayDateString) {
+    if (lastFlagDate !== createdAtDateString) {
+      lastFlagDate = createdAtDateString;
+      return formatDate(createdAt);
+    }
+  }
+  return "";
+};
+
+export const getDateFlagMobile = (createdAt) => {
+  const createdAtDate = new Date(createdAt);
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  if (createdAtDate.toDateString() === today.toDateString()) {
+    return "Today";
+  }
+  if (createdAtDate.toDateString() === yesterday.toDateString()) {
+    return "Yesterday";
+  }
+  return formatDate(createdAtDate);
+};
+
+export const getMessageInfo = (chatData, userDetails) => {
+  if (
+    chatData?.author?.type.toLowerCase() === "system" ||
+    !chatData?.author?.type
+  ) {
+    return "system";
+  }
+  if (
+    chatData?.author?.id === userDetails?.id &&
+    chatData?.author?.type.toLowerCase() ===
+      userDetails?.user_type.toLowerCase()
+  ) {
+    return "sender";
+  }
+  return "receiver";
+};

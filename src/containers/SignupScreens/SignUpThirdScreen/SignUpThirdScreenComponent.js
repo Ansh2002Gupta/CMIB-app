@@ -307,7 +307,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     if (isErrorCountryCodes)
       return {
         errorMessage: errorCountryCodes,
-        onRetry: fetchData,
+        onRetry: () => fetchData({}),
       };
     return {
       errorMessage: "",
