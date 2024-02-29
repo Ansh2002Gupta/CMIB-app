@@ -7,6 +7,7 @@ import CommonText from "../../components/CommonText";
 import CustomCell from "../../components/CustomCell/";
 import SearchView from "../../components/SearchView";
 import MultiColumn from "../../core/layouts/MultiColumn";
+import Switch from "../../components/Switch";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
 import styles from "./dashboard.style";
@@ -15,6 +16,7 @@ import styles from "./dashboard.style";
 function DashboardView() {
   const intl = useIntl();
   const [isEnabled, setIsEnabled] = useState(false);
+  const [isToggled, setIsToggled] = useState(false);
 
   const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
   const FilterIcon = images.iconFilter;
@@ -66,6 +68,12 @@ function DashboardView() {
       <CommonText customTextStyle={styles.header}>
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
+      {/* TODO: Please remove Switch after testing */}
+      <View style={{ marginBottom: 16 }}>
+        <Switch
+          {...{ isToggled, onChange: () => setIsToggled((prev) => !prev) }}
+        />
+      </View>
       <MultiColumn columns={searchData} />
       <CustomCell
         onPress={toggleSwitch}
