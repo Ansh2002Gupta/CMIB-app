@@ -54,13 +54,15 @@ export const mapApiDataToUI = (
         contact?.mobile_country_code,
         contact?.mobile_number
       );
-      return [
+      const contactModules = [
         {
           label: "label.module",
-          value: contact?.modules,
+          value: checkValue(contact?.modules),
           showBadgeLabel: true,
           isMandatory: true,
         },
+      ];
+      const contactInfo = [
         {
           label: "label.salutation",
           value: checkValue(contact?.salutation),
@@ -103,6 +105,10 @@ export const mapApiDataToUI = (
           placeholder: "label.enter_contact_person_email_id",
         },
       ];
+      return {
+        contactModules: contactModules,
+        contactInfo: contactInfo,
+      };
     });
   };
 
