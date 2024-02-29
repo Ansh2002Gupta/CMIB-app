@@ -113,6 +113,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       const requiredFields = [
         detail.countryCode,
         detail.salutation,
+        detail.modules,
         detail.designation,
         detail.emailId,
         detail.mobileNo,
@@ -128,6 +129,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       name: detail.name,
       email: detail.emailId,
       salutation: detail.salutation,
+      modules: detail?.modules,
       mobile_number: detail.mobileNo,
       designation: detail.designation,
       mobile_country_code: detail.countryCode,

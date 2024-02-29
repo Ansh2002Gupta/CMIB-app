@@ -67,8 +67,8 @@ const SignUpThirdScreenUI = ({
                 label={"Modules"}
                 dropdownStyle={style.dropdownStyle}
                 placeholder={"Select Modules"}
-                errorMessage={errors[index]?.salutation}
-                isError={!!errors[index]?.salutation}
+                errorMessage={errors[index]?.modules}
+                isError={!!errors[index]?.modules}
                 value={contactDetails[index]?.modules}
                 options={moduleList}
                 isMandatory
