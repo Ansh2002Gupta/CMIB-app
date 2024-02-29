@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import CustomImage from "../CustomImage";
+import ImagePreview from "../ImagePreview/index";
 import MessageAreaComponent from "../MessageAreaComponent/MessageAreaComponent";
 import ProfileIcon from "../ProfileIcon/ProfileIcon";
 import styles from "./MessageComponent.style";
 import { getMessageInfo, getTime } from "../../utils/util";
+
+const isWeb = Platform.OS.toLowerCase() === "web";
 
 const MessageComponent = ({ data, index, shouldShowAvatar, userDetails }) => {
   const isSender = getMessageInfo(data, userDetails);
@@ -31,7 +33,7 @@ const MessageComponent = ({ data, index, shouldShowAvatar, userDetails }) => {
     return (
       <>
         {!!url && (
-          <CustomImage source={{ uri: url }} style={styles.imagesSection} />
+          <ImagePreview imageUrls={url} imageStyle={styles.imagesSection} />
         )}
       </>
     );
