@@ -202,7 +202,7 @@ const SignUpThirdScreenUI = ({
               </View>
             </CardComponent>
           ))}
-          {contactDetails.length <= moduleList.length && (
+          {contactDetails.length < moduleList.length && (
             <CustomButton
               iconLeft={{
                 isLeftIconNotSvg: false,
