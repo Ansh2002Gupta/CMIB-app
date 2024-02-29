@@ -1,13 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { View } from "@unthinkable/react-core-components";
 
+import images from "../../images";
 import './ConfigurableList.css';
-import TextInput from "../TextInput/TextInput.js";
-import plus from '../../assets/images/plus.png';
-import trash from '../../assets/images/trash.png';
-import search from '../../assets/images/search.png';
-
 
 const ConfigurableList = ({title, items}) => {
     const mainListPrevState = useRef([]);
@@ -54,11 +49,11 @@ const ConfigurableList = ({title, items}) => {
             <div className="componentContainer">
                 <div className="header">
                     <div className="titleStyles">{title}</div>
-                    <button className="buttonStyles"><img src={plus} alt="add icon here" className="addIcon"/></button>
+                    <button className="buttonStyles"><img src={images.iconAdd} alt="add icon here" className="addIcon"/></button>
                 </div>
                     <div className="searchContainer">
                         <input value={searchQuery} className="searchInput" placeholder="Search" onChange={(event)=>setSearchQuery(event.target.value)}/>
-                        <img className="searchIcon" src={search} alt="search icon here" />
+                        <img className="searchIcon" src={images.iconSearch} alt="search icon here" />
                     </div>
                 <div className="section">
                     <div className="itemOuterContainer">
@@ -67,7 +62,7 @@ const ConfigurableList = ({title, items}) => {
                                 <div key={item.id} className="itemContainer">
                                 <div className="item">{item.name}</div>
                                 <button className="buttonStyles" onClick={()=>handleDelete(item.id)}>
-                                    <img src={trash} className="trashIcon"/>
+                                    <img src={images.iconTrash} className="trashIcon"/>
                                 </button>
                                 </div>
                             ))

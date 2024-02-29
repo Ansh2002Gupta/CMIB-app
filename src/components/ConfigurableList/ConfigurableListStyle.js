@@ -1,5 +1,7 @@
 import { StyleSheet } from "@unthinkable/react-core-components";
 
+import colors from "../../assets/colors";
+
 const styles = StyleSheet.create({
   outerContainer: {
     color: 'black',
@@ -13,7 +15,7 @@ const styles = StyleSheet.create({
   componentContainer: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#CCD0E5',
+    backgroundColor: lightGrey,
     padding: '2px',
     margin: 10,
     borderWidth: 2,
@@ -34,14 +36,13 @@ const styles = StyleSheet.create({
     borderTopRightRadius: '10px',
     borderBottom: '1px solid black',
     padding: '16px',
-    backgroundColor: 'pink',
     gap: '210px',
   },
   buttonStyles: {
     borderWidth: '0px',
     marginRight: '5px',
     borderColor: 'white',
-    backgroundColor: 'white',
+    backgroundColor: white,
     fontWeight: 100,
     fontSize: '28px',
   },
@@ -56,13 +57,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     alignItems: 'center',
     padding: '0px 20px',
-    backgroundColor: '#F6F8F9',
+    backgroundColor: backgroundGrey,
   },
   searchInput: {
     backgroundColor: 'black',
     width: '100%',
     padding: '12px 16px',
-    backgroundColor: '#F6F8F9',
+    backgroundColor: backgroundGrey,
     outline: 'none',
     border: 'none',
   },
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     left: '14px',
     width: '20px',
     height: '20px',
-    color: '#616C82',
+    color: darkGrey,
   },
   itemContainer: {
     display: 'flex',
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     padding: '16px 12px',
     fontSize: '14px',
     fontWeight: 500,
-    fontColor: '#616C82',
+    fontColor: darkGrey,
   },
   trashIcon: {
     marginRight: '20px', 
