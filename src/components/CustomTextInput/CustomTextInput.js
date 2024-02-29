@@ -184,6 +184,8 @@ const CustomTextInput = (props) => {
             onChangeValue,
             options,
             placeholder,
+            isMultiSelect,
+            onDeleteSelectedItem,
             value,
             valueField,
           }}

@@ -60,4 +60,8 @@ export const styles = StyleSheet.create({
   valueStyle: {
     color: colors.black,
   },
+  multiSelectOptions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
 });

@@ -84,6 +84,10 @@ const styles = StyleSheet.create({
   searchView: {
     marginBottom: 8,
   },
+  multiSelectOptions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
 });
 
 export default styles;

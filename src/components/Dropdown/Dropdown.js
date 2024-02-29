@@ -76,7 +76,7 @@ const Dropdown = ({
           isMulti
         />
         {!!selectedItems.length && (
-          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+          <View style={customStyles.multiSelectOptions}>
             {selectedItems.map((item, index) => (
               <CustomChipCard
                 message={item?.label}
