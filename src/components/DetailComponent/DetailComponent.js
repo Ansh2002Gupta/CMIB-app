@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 import { Platform, View } from "@unthinkable/react-core-components";
 
+import BadgeLabel from "../BadgeLabel/BadgeLabel";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -95,14 +96,18 @@ const DetailComponent = ({
                     </CommonText>
                   )}
                 </View>
-                <CommonText
-                  customTextStyle={[
-                    styles.valueStyle,
-                    detail.isLink && styles.linkStyle,
-                  ]}
-                >
-                  {detail.value}
-                </CommonText>
+                {detail.showBadgeLabel ? (
+                  <BadgeLabel badgeLabels={detail?.value} />
+                ) : (
+                  <CommonText
+                    customTextStyle={[
+                      styles.valueStyle,
+                      detail.isLink && styles.linkStyle,
+                    ]}
+                  >
+                    {detail.value}
+                  </CommonText>
+                )}
               </>
             )}
           </View>

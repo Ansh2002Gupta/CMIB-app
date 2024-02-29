@@ -54,6 +54,12 @@ export const mapApiDataToUI = (
       );
       return [
         {
+          label: "label.module",
+          value: contact?.modules,
+          isRow: true,
+          showBadgeLabel: true,
+        },
+        {
           label: "label.salutation",
           value: checkValue(contact?.salutation),
           isMinor: true,
