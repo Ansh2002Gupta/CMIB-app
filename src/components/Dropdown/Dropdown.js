@@ -41,8 +41,8 @@ const Dropdown = ({
 
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const selectedOptions = options.filter((option) =>
-    value.includes(option.value)
+  const selectedOption = options?.find(
+    (option) => option.value === String(value)
   );
 
   const handleValueChange = (selectedOption) => {
@@ -91,7 +91,7 @@ const Dropdown = ({
   return (
     <div>
       <Select
-        value={selectedOptions[0]}
+        value={selectedOption}
         placeholder={placeholder}
         options={options}
         isDisabled={!isEditable}

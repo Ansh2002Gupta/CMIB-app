@@ -41,11 +41,12 @@ const SignUpThirdScreenUI = ({
   isGettingCountryCodes,
   intl,
   isLoading,
+  moduleList,
   onClickGoToLogin,
   onClickNext,
   onGoBack,
   onDeleteSelectedItem,
-  moduleList,
+  signUpModuleList,
   validationError,
 }) => {
   const isWeb = Platform.OS === "web";
@@ -71,7 +72,6 @@ const SignUpThirdScreenUI = ({
                 isError={!!errors[index]?.modules}
                 value={contactDetails[index]?.modules}
                 options={moduleList}
-                isMandatory
                 onChangeValue={(val) =>
                   handleInputChange(val, "modules", index)
                 }
@@ -202,7 +202,7 @@ const SignUpThirdScreenUI = ({
               </View>
             </CardComponent>
           ))}
-          {contactDetails.length < moduleList.length && (
+          {contactDetails.length < signUpModuleList.length && (
             <CustomButton
               iconLeft={{
                 isLeftIconNotSvg: false,

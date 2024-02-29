@@ -113,7 +113,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       const requiredFields = [
         detail.countryCode,
         detail.salutation,
-        detail.modules,
         detail.designation,
         detail.emailId,
         detail.mobileNo,
@@ -213,9 +212,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const onGoBack = () => {
     const updatedContactDetails =
       constructUpdatedContactDetails(contactDetails);
-    signUpDispatch(
-      setSignUpDetails({ contact_details: updatedContactDetails })
-    );
+    signUpDispatch(setSignUpDetails(updatedContactDetails));
     tabHandler("prev");
   };
 
@@ -324,6 +321,11 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const handleRemoveContactPerson = (index) => {
     const updatedContactDetails = contactDetails.filter((_, i) => i !== index);
     setContactDetails(updatedContactDetails);
+    if (!!contactDetails.length) {
+      setModuleList(
+        moduleListArrayToArrayOfObject(signUpState?.signUpDetail?.module_list)
+      );
+    }
   };
 
   return (
@@ -347,6 +349,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         onClickGoToLogin,
         onClickNext,
         onGoBack,
+        signUpModuleList: signUpState?.signUpDetail?.module_list,
         onDeleteSelectedItem,
         moduleList,
         validationError,
