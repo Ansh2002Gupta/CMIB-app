@@ -312,6 +312,13 @@ const CompanyProfileComponent = () => {
     });
   };
 
+  const handleBalanceCreditChange = (value) => {
+    setProfileData({
+      ...profileData,
+      balanceCredit: value,
+    });
+  };
+
   const handleContactPersonInfo = (fieldName, value) => {
     setProfileData({
       ...profileData,
@@ -349,6 +356,7 @@ const CompanyProfileComponent = () => {
       handleBlur={handleBlur}
       allFieldsFilled={allFieldsFilled}
       error={errorWhileGettingResult}
+      handleBalanceCreditChange={handleBalanceCreditChange}
       handleCompanyDetailChange={handleCompanyDetailChange}
       handleContactPersonInfo={handleContactPersonInfo}
       handleCompanyProfile={handleCompanyProfile}

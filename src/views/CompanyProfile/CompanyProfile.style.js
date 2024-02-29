@@ -71,6 +71,9 @@ const style = {
     marginLeft: 0,
     padding: 0,
   },
+  balanceInputStyle: {
+    width: "30%",
+  },
 };
 
 export default style;

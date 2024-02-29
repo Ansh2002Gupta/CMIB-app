@@ -219,15 +219,30 @@ const CompanyProfileUI = (props) => {
               </View>
             </CardComponent>
             <CardComponent customStyle={style.cardStyle}>
-              <View style={style.textContainer}>
-                <CommonText customTextStyle={style.headingText}>
-                  {intl.formatMessage({ id: "label.balance_credit" })}:
-                </CommonText>
-                <CommonText
-                  customTextStyle={style.valueStyle}
-                  fontWeight="600"
-                >{`${profileResult?.balanceCredit || "00"} INR`}</CommonText>
-              </View>
+              {isEditProfile ? (
+                <View style={isWebView ? style.balanceInputStyle : {}}>
+                  <CustomTextInput
+                    value={profileResult?.balanceCredit || 123}
+                    label={intl.formatMessage({ id: "label.balance_credit" })}
+                    isMandatory
+                    placeholder={intl.formatMessage({
+                      id: "label.balance_credit",
+                    })}
+                    onChangeText={(val) => handleBalanceCreditChange(val)}
+                    isRupee
+                  />
+                </View>
+              ) : (
+                <View style={style.textContainer}>
+                  <CommonText customTextStyle={style.headingText}>
+                    {intl.formatMessage({ id: "label.balance_credit" })}:
+                  </CommonText>
+                  <CommonText
+                    customTextStyle={style.valueStyle}
+                    fontWeight="600"
+                  >{`${profileResult?.balanceCredit || "00"} INR`}</CommonText>
+                </View>
+              )}
             </CardComponent>
           </View>
         </ScrollView>
