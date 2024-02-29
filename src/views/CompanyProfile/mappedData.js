@@ -25,7 +25,7 @@ export const mapApiDataToUI = (
     type,
     company_details,
     website,
-    nature_of_supplier,
+    nature_of_suppliers,
     source_of_information,
     company_logo,
     contact_details,
@@ -226,7 +226,7 @@ export const mapApiDataToUI = (
       },
       {
         label: "label.nature_of_supplier",
-        value: checkValue(nature_of_supplier),
+        value: checkValue(nature_of_suppliers),
         isDropdown: true,
         options: NATURE_OF_SUPPLIER,
         isMandatory: true,
