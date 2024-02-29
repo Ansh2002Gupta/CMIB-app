@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import { View } from "@unthinkable/react-core-components";
 
-import { customTheme, customStyles } from "./Dropdown.style";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
+import { customTheme, customStyles, styles } from "./Dropdown.style";
 
 const Dropdown = ({
   data,
@@ -76,7 +76,7 @@ const Dropdown = ({
           isMulti
         />
         {!!selectedItems.length && (
-          <View style={customStyles.multiSelectOptions}>
+          <View style={styles.multiSelectOptions}>
             {selectedItems.map((item, index) => (
               <CustomChipCard
                 message={item?.label}

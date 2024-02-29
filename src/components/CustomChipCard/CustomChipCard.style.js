@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconCloseDark: {
-    height: 5,
-    width: 5,
+    height: 15,
+    width: 15,
     marginLeft: 4,
   },
 });
