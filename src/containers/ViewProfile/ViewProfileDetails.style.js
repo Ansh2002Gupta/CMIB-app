@@ -3,7 +3,7 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   headingText: {
-    color: colors.black,
+    color: colors.neutralGrey,
     fontSize: 24,
   },
   subHeadingText: {
@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
   },
   designationText: {
     fontSize: 14,
-    color: colors.black,
+    color: colors.neutralGrey,
+    textTransform: "capitalize",
   },
   headerLeftIcons: {
     flexDirection: "row",
@@ -74,6 +75,10 @@ const styles = StyleSheet.create({
   },
   deletetext: {
     fontSize: 14,
+  },
+  customOuterContainer: {
+    borderWidth: 6.5,
+    borderColor: colors.white,
   },
 });
 

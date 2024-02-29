@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       web: {
         textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
+        redSpace: "nowrap",
         overflow: "hidden",
         maxWidth: "120px",
       },
@@ -52,6 +52,14 @@ const styles = StyleSheet.create({
   },
   columnHeaderStyle: {
     backgroundColor: colors.white,
+  },
+  columnHeaderStyleWithBorder: {
+    backgroundColor: colors.white,
+    borderWidth: 0.5,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderColor: colors.lightGrey,
   },
   tableSection: {
     borderWidth: 0.5,
@@ -106,6 +114,31 @@ const styles = StyleSheet.create({
   noMoreData: {
     textAlign: "center",
     color: colors.lightGrey,
+  },
+  loadingStyleNoData: {
+    backgroundColor: colors.white,
+    alignItems: "center",
+    padding: 30,
+  },
+  textSize: {
+    fontSize: 14,
+  },
+  ticketTotals: {
+    marginBottom: 16,
+    flexDirection: "row",
+  },
+  addTicketSection: { justifyContent: "space-between" },
+  activeTickets: {
+    backgroundColor: colors.green,
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    marginLeft: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  activeTicketsText: {
+    color: colors.white,
   },
 });
 

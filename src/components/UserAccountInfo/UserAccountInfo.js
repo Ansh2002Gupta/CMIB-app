@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Keyboard, Platform, View } from "@unthinkable/react-core-components";
+import { useLocation, useNavigate } from "react-router";
 
 import ChangePasswordModal from "../../containers/ChangePasswordModal";
 import ConfirmationModal from "../../containers/ConfirmationModal/ConfirmationModal";
@@ -16,7 +17,6 @@ import UserProfileActionDropDown from "../UserProfileActionDropDown/index";
 import ViewProfileDetails from "../../containers/ViewProfile";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { useLocation, useNavigate } from "react-router";
 import { navigations } from "../../constants/routeNames";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import {
@@ -75,6 +75,115 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
     keyboardDidShowCallback,
   });
 
+  const onPressClose = () => {
+    if (currentRoute === navigations.VIEW_PROFILE) {
+      navigate(`${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`);
+    }
+    userProfileDispatch(setShowViewProfileDetails(false));
+  };
+
+  const renderChangePasswordModal = () => {
+    return (
+      <CustomModal
+        headerText={intl.formatMessage({
+          id: "label.change_password",
+        })}
+        customInnerContainerStyle={{
+          ...styles.modalInnerContainer,
+          ...modalStyle,
+        }}
+        headerTextStyle={styles.headerTextStyle}
+        onBackdropPress={() => {
+          userProfileDispatch(setShowChangePasswordModal(false));
+        }}
+      >
+        <ChangePasswordModal
+          onPressCancel={() => {
+            Keyboard.dismiss();
+            userProfileDispatch(setShowChangePasswordModal(false));
+          }}
+        />
+      </CustomModal>
+    );
+  };
+
+  const renderViewProfileDetails = () => {
+    if (showDeleteAccountModal) {
+      return (
+        <ConfirmationModal
+          buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+          buttonTwoText={
+            errorWhileDeletion
+              ? intl.formatMessage({ id: "label.retry" })
+              : intl.formatMessage({ id: "label.delete" })
+          }
+          buttonOneStyle={isLoading ? styles.disableStyle : {}}
+          buttonTwoStyle={styles.buttonTwoStyle}
+          buttonTwoTextStyle={styles.buttonTwotextStyle}
+          headingText={
+            errorWhileDeletion
+              ? intl.formatMessage({ id: "label.unable_to_delete" })
+              : intl.formatMessage({ id: "label.delete_account" })
+          }
+          icon={images.iconAlert}
+          loader={isLoading}
+          onPressButtonOne={
+            isLoading ? () => {} : () => setShowDeleteAccountModal(false)
+          }
+          onPressButtonTwo={() => {
+            handleDeleteUser({
+              successCallback: async () => {
+                onLogout(
+                  {
+                    message: intl.formatMessage({
+                      id: "label.account_deletion",
+                    }),
+                    isLogoutToast: true,
+                    isError: false,
+                  },
+                  true
+                );
+              },
+            });
+          }}
+          subHeading={
+            errorWhileDeletion
+              ? errorWhileDeletion
+              : intl.formatMessage({ id: "label.delete_message" })
+          }
+        />
+      );
+    }
+
+    if (isUpdateProfilePic) {
+      return (
+        <EditProfileImage
+          name={name}
+          profileImage={profileImage}
+          onPressIconCross={() => setIsUpdateProfilePic(false)}
+        />
+      );
+    }
+
+    return (
+      <CustomModal
+        containerStyle={styles.containerStyle}
+        maxWidth={"sm"}
+        onPressIconCross={onPressClose}
+      >
+        <ViewProfileDetails
+          onPressCross={onPressClose}
+          onPressEditIcon={() => {
+            setIsUpdateProfilePic(true);
+          }}
+          isUpdateProfilePic={isUpdateProfilePic}
+          userProfileDetails={userProfileDetails?.userDetails}
+          setShowDeleteAccountModal={setShowDeleteAccountModal}
+        />
+      </CustomModal>
+    );
+  };
+
   return (
     <>
       <View style={styles.notficationIconView}>
@@ -92,95 +201,8 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
           }}
         />
       </View>
-      {showChangePasswordModal ? (
-        <CustomModal
-          headerText={intl.formatMessage({
-            id: "label.change_password",
-          })}
-          customInnerContainerStyle={{
-            ...styles.modalInnerContainer,
-            ...modalStyle,
-          }}
-          headerTextStyle={styles.headerTextStyle}
-          onBackdropPress={() => {
-            userProfileDispatch(setShowChangePasswordModal(false));
-          }}
-        >
-          <ChangePasswordModal
-            onPressCancel={() => {
-              Keyboard.dismiss();
-              userProfileDispatch(setShowChangePasswordModal(false));
-            }}
-          />
-        </CustomModal>
-      ) : null}
-      {showViewProfileDetails ? (
-        <>
-          {showDeleteAccountModal ? (
-            <ConfirmationModal
-              buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-              buttonTwoText={
-                errorWhileDeletion
-                  ? intl.formatMessage({ id: "label.retry" })
-                  : intl.formatMessage({ id: "label.delete" })
-              }
-              buttonTwoStyle={styles.buttonTwoStyle}
-              buttonTwoTextStyle={styles.buttonTwotextStyle}
-              headingText={
-                errorWhileDeletion
-                  ? intl.formatMessage({ id: "label.unable_to_delete" })
-                  : intl.formatMessage({ id: "label.delete_account" })
-              }
-              icon={images.iconAlert}
-              loader={isLoading}
-              onPressButtonOne={() => setShowDeleteAccountModal(false)}
-              onPressButtonTwo={() => {
-                handleDeleteUser({
-                  successCallback: () => {
-                    onLogout({
-                      message: intl.formatMessage({
-                        id: "label.account_deletion",
-                      }),
-                      isLogoutToast: true,
-                      isError: false,
-                    });
-                  },
-                });
-              }}
-              subHeading={
-                errorWhileDeletion
-                  ? errorWhileDeletion
-                  : intl.formatMessage({ id: "label.delete_message" })
-              }
-            />
-          ) : isUpdateProfilePic ? (
-            <EditProfileImage
-              name={name}
-              profileImage={profileImage}
-              onPressIconCross={() => setIsUpdateProfilePic(false)}
-            />
-          ) : (
-            <CustomModal containerStyle={styles.containerStyle} maxWidth={"sm"}>
-              <ViewProfileDetails
-                onPressCross={() => {
-                  if (currentRoute === navigations.VIEW_PROFILE) {
-                    navigate(
-                      `${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`
-                    );
-                  }
-                  userProfileDispatch(setShowViewProfileDetails(false));
-                }}
-                onPressEditIcon={() => {
-                  setIsUpdateProfilePic(true);
-                }}
-                isUpdateProfilePic={isUpdateProfilePic}
-                userProfileDetails={userProfileDetails?.userDetails}
-                setShowDeleteAccountModal={setShowDeleteAccountModal}
-              />
-            </CustomModal>
-          )}
-        </>
-      ) : null}
+      {showChangePasswordModal && renderChangePasswordModal()}
+      {showViewProfileDetails && renderViewProfileDetails()}
       {showLogoutModal && (
         <ConfirmationModal
           buttonOneText={intl.formatMessage({ id: "label.cancel" })}

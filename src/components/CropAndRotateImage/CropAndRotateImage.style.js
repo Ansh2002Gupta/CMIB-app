@@ -11,7 +11,7 @@ const styles = {
     backgroundColor: colors.greyFour,
     ...Platform.select({
       web: {
-        height: "max(20vh, 400px)",
+        height: "35vh",
       },
     }),
     borderRadius: 16,
@@ -20,8 +20,34 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
-    gap: 16,
+    gap: 8,
     marginTop: 32,
+  },
+  customContainerStyle: {
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+        paddingTop: 8,
+      },
+    }),
+  },
+  customTextStyle: {
+    fontSize: 14,
+    color: colors.errorRed,
+  },
+  buttonStyle: {
+    width: 80,
+  },
+  additionalStyles: {
+    ...Platform.select({
+      web: {
+        cursor: "not-allowed",
+      },
+    }),
+  },
+  cropAreaStyle: {
+    borderWidth: 2,
+    borderColor: colors.white,
   },
 };
 
