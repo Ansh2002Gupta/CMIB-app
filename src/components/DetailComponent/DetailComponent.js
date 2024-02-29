@@ -65,7 +65,7 @@ const DetailComponent = ({
                 isCounterInput={detail.isCounterInput}
                 isError={!!detail.error}
                 isMobileNumber={detail.isMobileNumber}
-                isMandatory={isMandatory}
+                isMandatory={detail.isMandatory}
                 options={detail.options || []}
                 placeholder={intl.formatMessage({ id: detail.placeholder })}
                 maxLength={detail.maxLength}
@@ -90,7 +90,7 @@ const DetailComponent = ({
                   <CommonText customTextStyle={styles.titleStyle}>
                     {intl.formatMessage({ id: detail.label })}
                   </CommonText>
-                  {isMandatory && (
+                  {detail?.isMandatory && (
                     <CommonText customTextStyle={styles.starStyle}>
                       {" *"}
                     </CommonText>

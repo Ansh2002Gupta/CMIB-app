@@ -59,5 +59,6 @@ export const styles = StyleSheet.create({
   }),
   valueStyle: {
     color: colors.black,
+    fontWeight: 500,
   },
 });

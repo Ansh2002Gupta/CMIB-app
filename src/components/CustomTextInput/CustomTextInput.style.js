@@ -85,6 +85,7 @@ const style = {
     flexDirection: "row",
   },
   textInputStyle: {
+    fontWeight: "500",
     flex: 1,
     fontFamily,
     fontSize: 14,
