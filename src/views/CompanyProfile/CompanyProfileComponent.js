@@ -319,13 +319,25 @@ const CompanyProfileComponent = () => {
     });
   };
 
-  const handleContactPersonInfo = (fieldName, value) => {
-    setProfileData({
-      ...profileData,
-      contactPersonInfo: profileData.contactPersonInfo.map((detail) =>
-        detail.label === fieldName ? { ...detail, value: value } : detail
-      ),
-    });
+  const handleContactPersonInfo = (index, fieldName, value) => {
+    const updatedProfileData = { ...profileData };
+
+    if (
+      updatedProfileData.contactPersonInfo &&
+      index >= 0 &&
+      index < updatedProfileData.contactPersonInfo.length
+    ) {
+      const contactDetail = updatedProfileData.contactPersonInfo[index];
+
+      const infoIndex = contactDetail.contactInfo.findIndex(
+        (detail) => detail.label === fieldName
+      );
+      if (infoIndex !== -1) {
+        contactDetail.contactInfo[infoIndex].value = value;
+      }
+
+      setProfileData(updatedProfileData);
+    }
   };
 
   const handleCompanyProfile = (fieldName, value) => {
