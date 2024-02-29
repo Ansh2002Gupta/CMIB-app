@@ -42,6 +42,14 @@ const dummyDataItems1 = [
         id: 6,
         name: 'testing7',
     },
+    {
+        id: 7,
+        name: 'testing8',
+    },
+    {
+        id: 8,
+        name: 'testing9',
+    },
 ]
 
 const dummyDataItems2 = [

@@ -6,6 +6,7 @@
   /* Greens */
   --green: #04af55;
   --greenOne: rgba(4, 175, 85, 0.04);
+  --greenTwo: #CDEFDD;
 
   /* Greys */
   --secondaryGrey: #f2f4fc;
@@ -42,4 +43,8 @@
 
 .text-area__base::placeholder {
   color: var(--darkGrey)
+}
+
+.configrableList__item:hover {
+  background: var(--greenTwo)  !important;
 }

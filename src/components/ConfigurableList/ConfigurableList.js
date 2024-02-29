@@ -1,10 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
+import {TextInput, View, Image} from '@unthinkable/react-core-components';
 import PropTypes from "prop-types";
 
+import classes from "../../theme/styles/CssClassProvider";
+import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
+import CustomTextInput from "../CustomTextInput";
 import images from "../../images";
-import './ConfigurableList.css';
+import styles from "./ConfigurableListStyle";
+import TouchableImage from "../TouchableImage";
 
 const ConfigurableList = ({title, items}) => {
+    const {iconAdd, iconSearch, iconTrash} = images;
     const mainListPrevState = useRef([]);
     const [mainList, setMainList] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -38,6 +45,13 @@ const ConfigurableList = ({title, items}) => {
         const queryList = fetchData(query);
         setMainList(queryList);
     }
+    
+    const handleTextChange = (newText) => {
+        const regex = /^[A-Za-z ]*$/;
+        if (regex.test(newText)) {
+            setSearchQuery(newText);
+        }
+    }
 
     const fetchData = (query) => {
         const list = mainListPrevState.current.filter((item)=>item.name.toLowerCase().includes(query.toLowerCase()));
@@ -45,48 +59,58 @@ const ConfigurableList = ({title, items}) => {
     }
 
     return (
-        <div className="outerContainer">
-            <div className="componentContainer">
-                <div className="header">
-                    <div className="titleStyles">{title}</div>
-                    <button className="buttonStyles"><img src={images.iconAdd} alt="add icon here" className="addIcon"/></button>
-                </div>
-                    <div className="searchContainer">
-                        <input value={searchQuery} className="searchInput" placeholder="Search" onChange={(event)=>setSearchQuery(event.target.value)}/>
-                        <img className="searchIcon" src={images.iconSearch} alt="search icon here" />
-                    </div>
-                <div className="section">
-                    <div className="itemOuterContainer">
+        <View style={styles.outerContainer}>
+            <View style={styles.componentContainer}>
+                <View style={styles.header}>
+                    <View style={styles.titleStyles}>{title}</View>
+                    <TouchableImage
+                        source={iconAdd}
+                        parentStyle={styles.addIcon}
+                        onPress={null}
+                    />
+                </View>
+                    <View style={styles.outerSearchWrapper}>
+                        <CustomTextInput style={styles.searchInput}
+                        placeholder="Search" value={searchQuery} onChangeText={(newText)=>handleTextChange(newText)} />
+                        <CustomImage style={styles.iconSearch} source={iconSearch} />
+                    </View>
+
+                <View style={styles.section}>
+                    <View style={styles.itemsWrapper}>
                         {
                             mainList?.length > 0 && mainList.map((item)=>(
-                                <div key={item.id} className="itemContainer">
-                                <div className="item">{item.name}</div>
-                                <button className="buttonStyles" onClick={()=>handleDelete(item.id)}>
-                                    <img src={images.iconTrash} className="trashIcon"/>
-                                </button>
-                                </div>
+                                <View key={item.id} className={classes["configrableList__item"]} style={styles.itemContainer}>
+                                <View style={styles.item}>{item.name}</View>
+                                <TouchableImage 
+                                    source={iconTrash} style={styles.trashIcon} onPress={()=>handleDelete(item.id)}
+                                />
+                                </View>
                             ))
                         }
                         {
                             mainList.length === 0 && (
-                                <div className="messageContainer">
-                                    <h2 className="message">
+                                <View style={styles.messageContainer}>
+                                    <CommonText customTextStyle={styles.message}>
                                         No {title} has been selected. Click '+' to add {title}.
-                                    </h2>
-                                </div>
+                                    </CommonText>
+                                </View>
                             )
                         }
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </View>
+                </View>
+            </View>
+        </View>
     );
 }
 
 ConfigurableList.defaultProps = {
+    title: 'DefaultTitle',
+    items: [],
 };
 
 ConfigurableList.protoTypes = {
+    title: PropTypes.string,
+    items: PropTypes.array,
 };
 
 export default ConfigurableList;

@@ -2,10 +2,12 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
+const {white, black, lightGray, darkGrey} = colors;
+
 const styles = StyleSheet.create({
   outerContainer: {
-    color: 'black',
-    backgroundColor: 'white',
+    color: black,
+    backgroundColor: white,
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -15,16 +17,16 @@ const styles = StyleSheet.create({
   componentContainer: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: lightGrey,
-    padding: '2px',
+    padding: 2,
     margin: 10,
-    borderWidth: 2,
-    borderColor: 'black',
     borderRadius: 7,
+    borderColor: lightGray,
+    borderWidth: 2,
+    width: 300,
   },
   titleStyles: {
     fontWeight: 600,
-    fontSize: '16px',
+    fontSize: 16,
     fontFamily: 'General Sans',
   },
   header: {
@@ -32,72 +34,87 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    borderTopLeftRadius: '10px',
-    borderTopRightRadius: '10px',
-    borderBottom: '1px solid black',
-    padding: '16px',
-    gap: '210px',
+    backgroundColor: white,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomColor: lightGray,
+    borderBottomWidth: 2, 
+    padding: 16,
+    gap: 30,
   },
   buttonStyles: {
-    borderWidth: '0px',
-    marginRight: '5px',
-    borderColor: 'white',
+    borderWidth: 0,
+    marginRight: 5,
+    borderColor: white,
     backgroundColor: white,
     fontWeight: 100,
-    fontSize: '28px',
+    fontSize: 28,
   },
+  
   section: {
     display: 'flex',
     flexDirection: 'column',
   },
-  searchContainer: {
+
+  itemsWrapper: {
+    backgroundColor: white,
+    maxHeight: 250,
+    overflow: 'scroll',
+  },
+
+  outerSearchWrapper: {
     position: 'relative',
-    backgroundColor: 'blue',
     display: 'flex',
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     alignItems: 'center',
-    padding: '0px 20px',
-    backgroundColor: backgroundGrey,
   },
+
   searchInput: {
-    backgroundColor: 'black',
     width: '100%',
-    padding: '12px 16px',
-    backgroundColor: backgroundGrey,
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 56,
+    paddingRight: 56,
+    borderRadius: 0,
     outline: 'none',
-    border: 'none',
   },
-  searchIcon: {
+
+  iconSearch: {
     position: 'absolute',
-    top: '9px',
-    left: '14px',
-    width: '20px',
-    height: '20px',
-    color: darkGrey,
+    top: 15,
+    left: 30,
   },
+
   itemContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'white',
-    padding: '0px 5px',
+    backgroundColor: white,
+    padding: 8,
+    gap: 15,
   },
   item: {
-    padding: '16px 12px',
-    fontSize: '14px',
+    paddingLeft: 12,
+    paddingRight: 12,
+    fontSize: 14,
     fontWeight: 500,
     fontColor: darkGrey,
   },
   trashIcon: {
-    marginRight: '20px', 
-    width: '20px', 
-    height: '20px'
+    marginRight: 10, 
+    width: 20, 
+    height: 20,
   },
   addIcon: { 
-    width: '20px', 
-    height: '20px'
+    width: 20, 
+    height: 20,
   },
+  message: {
+    textAlign: 'center',
+    fontWeight: 500,
+    color: darkGrey,
+  }
 });
 
 export default styles;
