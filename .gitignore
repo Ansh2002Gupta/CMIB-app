@@ -4,7 +4,6 @@ package-lock.json
 
 # CocoaPods
 /ios/Pods/
-/ios/Podfile.lock
 
 # Android/IntelliJ
 #
