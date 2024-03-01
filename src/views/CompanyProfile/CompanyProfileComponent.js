@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 import CompanyProfileUI from "./CompanyProfileUI";
 import useGetCompanyProfileAPI from "../../services/apiServices/hooks/CompanyProfile/useGetCompanyProfileAPI";
+import useFetch from "../../hooks/useFetch";
 import useIndustryTypes from "../../services/apiServices/hooks/useIndustryTypes";
 import {
   ADDRESS_MAX_LENGTH,
@@ -20,6 +21,7 @@ import {
   numRegex,
   PREVIOUS_SCREEN,
 } from "../../constants/constants";
+import { COUNTRY_CODE } from "../../services/apiServices/apiEndPoint";
 import { isValidUrl } from "../../utils/util";
 import { mapApiDataToUI } from "./mappedData";
 import { validateEmail } from "../../utils/validation";
@@ -32,6 +34,7 @@ const CompanyProfileComponent = () => {
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
+  const { data: countryCodes } = useFetch({ url: COUNTRY_CODE });
 
   const [options, setOptions] = useState(
     INTEREST_OPTIONS.map((option) => ({
@@ -56,7 +59,12 @@ const CompanyProfileComponent = () => {
   useEffect(() => {
     if (profileResult) {
       setProfileData(
-        mapApiDataToUI(profileResult, industryTypeResult, isEditProfile)
+        mapApiDataToUI({
+          apiData: profileResult,
+          industryTypeResult,
+          countryCodes,
+          isEditMode: isEditProfile,
+        })
       );
       const updatedModuleOptions = MODULE_OPTIONS.map((option) => ({
         ...option,

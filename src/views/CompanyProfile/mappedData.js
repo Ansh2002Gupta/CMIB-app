@@ -6,11 +6,12 @@ import {
   SALUTATION_OPTIONS,
 } from "../../constants/constants";
 
-export const mapApiDataToUI = (
+export const mapApiDataToUI = ({
   apiData,
   industryOptions,
-  isEditMode = false
-) => {
+  countryCodes,
+  isEditMode = false,
+}) => {
   const {
     name,
     entity,
@@ -62,6 +63,7 @@ export const mapApiDataToUI = (
           isMandatory: true,
         },
       ];
+      const isActive = !!contact?.status;
       const contactInfo = [
         {
           label: "label.salutation",
@@ -92,8 +94,9 @@ export const mapApiDataToUI = (
           label: "label.mobile_number",
           isMobileNumber: true,
           value: isEditMode ? contact?.mobile_number : combinedMobileNumber,
+          codeValue: contact?.mobile_country_code,
+          options: countryCodes,
           isNumeric: true,
-          maxLength: 10,
           isMandatory: true,
           placeholder: "label.enter_contact_person_mobile_no",
         },
@@ -108,6 +111,7 @@ export const mapApiDataToUI = (
       return {
         contactModules: contactModules,
         contactInfo: contactInfo,
+        isContactActive: isActive,
       };
     });
   };
