@@ -60,8 +60,8 @@ const CompanyProfileUI = (props) => {
             customCardStyle={style.customCardStyle}
             customContainerStyle={style.customContainerStyle}
             details={contactDetailArray?.contactModules}
-            handleChange={(detailKey, value) =>
-              handleContactPersonInfo(index, detailKey, value)
+            handleChange={(detailKey, value, isCode) =>
+              handleContactPersonInfo(index, detailKey, value, isCode)
             }
             handleSwitchChange={handleSwitchChange}
             index={index}

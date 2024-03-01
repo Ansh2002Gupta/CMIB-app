@@ -7,6 +7,7 @@ import { View } from "@unthinkable/react-core-components";
 import BadgeLabel from "../BadgeLabel/BadgeLabel";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
+import MobileNumberInput from "../MobileNumberInput";
 import Switch from "../Switch";
 import useIsWebView from "../../hooks/useIsWebView";
 import { gridStyles } from "../../theme/styles/commonStyles";
@@ -63,34 +64,45 @@ const DetailComponent = ({
             style={isWebView ? styles.webContainer : getRowStyle(detail)}
           >
             {isEditable ? (
-              <CustomTextInput
-                errorMessage={detail.error}
-                value={detail.value}
-                customStyle={styles.inputStyle}
-                label={intl.formatMessage({ id: detail.label })}
-                isDropdown={detail.isDropdown}
-                isCounterInput={detail.isCounterInput}
-                isError={!!detail.error}
-                isMobileNumber={detail.isMobileNumber}
-                isMandatory={detail.isMandatory}
-                options={detail.options || []}
-                isMultiline={detail?.isMultiline}
-                placeholder={intl.formatMessage({ id: detail.placeholder })}
-                maxLength={detail.maxLength}
-                isNumeric={detail.isNumeric}
-                valueField={detail.valueField || "label"}
-                labelField={detail.labelField || "label"}
-                inputKey={detail.inputKey || "value"}
-                onChangeValue={(val) => handleChange(detail.label, val)}
-                onChangeText={(val) => {
-                  if (detail?.isNumeric) {
-                    if (numericValidator(val)) handleChange(detail.label, val);
-                  } else {
-                    handleChange(detail.label, val);
-                  }
-                }}
-                isRupee={detail?.isRupee}
-              />
+              detail.isMobileNumber ? (
+                <MobileNumberInput
+                  mobNumberValue={detail.value}
+                  options={detail.options}
+                  codeValue={detail.codeValue}
+                  onChangeMobNumber={(val) => handleChange(detail.label, val)}
+                  onChangeCode={(val) => handleChange(detail.label, val, true)}
+                  mobNumberError={detail.error}
+                />
+              ) : (
+                <CustomTextInput
+                  errorMessage={detail.error}
+                  value={detail.value}
+                  customStyle={styles.inputStyle}
+                  label={intl.formatMessage({ id: detail.label })}
+                  isDropdown={detail.isDropdown}
+                  isCounterInput={detail.isCounterInput}
+                  isError={!!detail.error}
+                  isMandatory={detail.isMandatory}
+                  options={detail.options || []}
+                  isMultiline={detail?.isMultiline}
+                  placeholder={intl.formatMessage({ id: detail.placeholder })}
+                  maxLength={detail.maxLength}
+                  isNumeric={detail.isNumeric}
+                  valueField={detail.valueField || "label"}
+                  labelField={detail.labelField || "label"}
+                  inputKey={detail.inputKey || "value"}
+                  onChangeValue={(val) => handleChange(detail.label, val)}
+                  onChangeText={(val) => {
+                    if (detail?.isNumeric) {
+                      if (numericValidator(val))
+                        handleChange(detail.label, val);
+                    } else {
+                      handleChange(detail.label, val);
+                    }
+                  }}
+                  isRupee={detail?.isRupee}
+                />
+              )
             ) : (
               <>
                 <View style={styles.titleContainer}>

@@ -327,7 +327,7 @@ const CompanyProfileComponent = () => {
     });
   };
 
-  const handleContactPersonInfo = (index, fieldName, value) => {
+  const handleContactPersonInfo = (index, fieldName, value, isCode) => {
     const updatedProfileData = { ...profileData };
     if (
       updatedProfileData.contactPersonInfo &&
@@ -338,6 +338,9 @@ const CompanyProfileComponent = () => {
       const infoIndex = contactDetail.contactInfo.findIndex(
         (detail) => detail.label === fieldName
       );
+      if (isCode && infoIndex !== -1) {
+        contactDetail.contactInfo[infoIndex].codeValue = value;
+      }
       if (infoIndex !== -1) {
         contactDetail.contactInfo[infoIndex].value = value;
       }

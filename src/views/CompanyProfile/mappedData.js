@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import {
   COMPANY_TYPE_OPTIONS,
   ENTITY_OPTIONS,
@@ -55,6 +56,19 @@ export const mapApiDataToUI = ({
         contact?.mobile_country_code,
         contact?.mobile_number
       );
+      const formatCountryCode = (code) => {
+        if (!code) return code;
+        const countryOption = countryCodes.find(
+          (country) => country["dial_code"] === code
+        );
+        return countryOption ? `${code} (${countryOption["name"]})` : code;
+      };
+
+      const formattedCode =
+        isEditMode && Platform.OS === "web"
+          ? formatCountryCode(contact?.mobile_country_code)
+          : contact?.mobile_country_code;
+
       const contactModules = [
         {
           label: "label.module",
@@ -94,7 +108,7 @@ export const mapApiDataToUI = ({
           label: "label.mobile_number",
           isMobileNumber: true,
           value: isEditMode ? contact?.mobile_number : combinedMobileNumber,
-          codeValue: contact?.mobile_country_code,
+          codeValue: formattedCode,
           options: countryCodes,
           isNumeric: true,
           isMandatory: true,
