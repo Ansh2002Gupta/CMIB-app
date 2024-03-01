@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
     left: 2,
     bottom: 2,
     backgroundColor: colors.white,
-    borderRadius: "50%",
+    borderRadius: 8,
     ...Platform.select({
       web: {
         transition: "0.4s",
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
         transform: "translateX(16px)",
       },
       default: {
-        transform: [{ translateX: 26 }],
+        transform: [{ translateX: 16 }],
       },
     }),
   },
