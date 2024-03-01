@@ -6,83 +6,81 @@ import AddDesignation from "../../containers/AddDesignation/AddDesignation";
 import CommonText from "../../components/CommonText";
 import ConfirgurableList from "../../components/ConfigurableList";
 import CustomCell from "../../components/CustomCell/";
-import SearchView from "../../components/SearchView";
-import MultiColumn from "../../core/layouts/MultiColumn";
-import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
+import MultiColumn from "../../core/layouts/MultiColumn";
+import SearchView from "../../components/SearchView";
 import styles from "./dashboard.style";
-
+import TouchableImage from "../../components/TouchableImage";
 
 const dummyDataItems1 = [
-    {
-        id: 0,
-        name: 'Assistant Operation Manager',
-    },
-    {
-        id: 1,
-        name: 'Assistant Finance Manager',
-    },
-    {
-        id: 2,
-        name: 'Finance Manager',
-    },
-    {
-        id: 3,
-        name: 'Operation Manager',
-    },
-    {
-        id: 4,
-        name: 'Senior Accountant',
-    },
-    {
-        id: 5,
-        name: 'testing6',
-    },
-    {
-        id: 6,
-        name: 'testing7',
-    },
-    {
-        id: 7,
-        name: 'testing8',
-    },
-    {
-        id: 8,
-        name: 'testing9',
-    },
-]
+  {
+    id: 0,
+    name: "Assistant Operation Manager",
+  },
+  {
+    id: 1,
+    name: "Assistant Finance Manager",
+  },
+  {
+    id: 2,
+    name: "Finance Manager",
+  },
+  {
+    id: 3,
+    name: "Operation Manager",
+  },
+  {
+    id: 4,
+    name: "Senior Accountant",
+  },
+  {
+    id: 5,
+    name: "testing6",
+  },
+  {
+    id: 6,
+    name: "testing7",
+  },
+  {
+    id: 7,
+    name: "testing8",
+  },
+  {
+    id: 8,
+    name: "testing9",
+  },
+];
 
 const dummyDataItems2 = [
-    {
-        id: 0,
-        name: 'Allahabad',
-    },
-    {
-        id: 1,
-        name: 'Bombay',
-    },
-    {
-        id: 2,
-        name: 'Chennai',
-    },
-    {
-        id: 3,
-        name: 'Delhi',
-    },
-    {
-        id: 4,
-        name: 'Etawah',
-    },
-    {
-        id: 5,
-        name: 'Gandhinagar',
-    },
-    {
-        id: 6,
-        name: 'Kanpur',
-    },
-]
-
+  {
+    id: 0,
+    name: "Allahabad",
+  },
+  {
+    id: 1,
+    name: "Bombay",
+  },
+  {
+    id: 2,
+    name: "Chennai",
+  },
+  {
+    id: 3,
+    name: "Delhi",
+  },
+  {
+    id: 4,
+    name: "Etawah",
+  },
+  {
+    id: 5,
+    name: "Gandhinagar",
+  },
+  {
+    id: 6,
+    name: "Kanpur",
+  },
+];
 
 // Just ignore this file as just to test custom component
 function DashboardView() {
@@ -140,7 +138,7 @@ function DashboardView() {
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
       <MultiColumn columns={searchData} />
-      <ConfirgurableList title="Designation" items={dummyDataItems1}/>
+      <ConfirgurableList title="Designation" items={dummyDataItems1} />
       <CustomCell
         onPress={toggleSwitch}
         title={"AddDesignation"}
