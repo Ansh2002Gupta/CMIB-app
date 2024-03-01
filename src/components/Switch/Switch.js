@@ -33,11 +33,13 @@ const Switch = ({ disabled, isToggled, onChange }) => {
 };
 
 Switch.defaultProps = {
+  disabled: false,
   isToggled: false,
   onChange: () => {},
 };
 
 Switch.propTypes = {
+  disabled: PropTypes.bool,
   isToggled: PropTypes.bool,
   onChange: PropTypes.func,
 };
