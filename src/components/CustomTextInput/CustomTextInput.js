@@ -57,6 +57,8 @@ const CustomTextInput = (props) => {
     isRupee,
     isSendButton,
     isLoading,
+    indexField,
+    indexNumber,
     initiateFileUpload,
     label,
     maxCount,
@@ -167,6 +169,8 @@ const CustomTextInput = (props) => {
             onFocus={handleFocus}
             onBlur={handleBlur}
             urlField={urlField}
+            indexNumber={indexNumber}
+            indexField={indexField}
             onChange={(item) => {
               isWebPlatform
                 ? onChangeValue(item)

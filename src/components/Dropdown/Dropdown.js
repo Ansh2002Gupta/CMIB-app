@@ -5,6 +5,7 @@ import { View } from "@unthinkable/react-core-components";
 
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
 import { customTheme, customStyles, styles } from "./Dropdown.style";
+import CheckBox from "../CheckBox";
 
 const Dropdown = ({
   data,
@@ -12,6 +13,7 @@ const Dropdown = ({
   isEditable,
   includeAllKeys,
   isMultiSelect,
+  indexNumber,
   labelField,
   menuOptions,
   onChange,
@@ -20,6 +22,7 @@ const Dropdown = ({
   placeholderStyle,
   value,
   valueField,
+  indexField,
 }) => {
   const getAllKeys = (option) => {
     let finalObj = {};
@@ -34,6 +37,7 @@ const Dropdown = ({
   const defaultOptions = data?.map((option) => ({
     value: String(option[valueField]),
     label: String(option[labelField]),
+    index: option[indexField],
     ...(includeAllKeys ? { ...getAllKeys(option) } : {}),
   }));
 
@@ -46,11 +50,25 @@ const Dropdown = ({
   );
 
   const handleValueChange = (selectedOption) => {
-    const selectedItemsList = [...selectedItems, selectedOption[0]];
-    if (!selectedItems.find((item) => item.value === selectedOption[0].value)) {
-      setSelectedItems((prev) => [...prev, ...selectedOption]);
-      onChange(selectedItemsList.map((item) => item.value));
+    console.log("selectedOption", selectedOption);
+
+    const itemIndex = selectedItems.findIndex(
+      (item) => item.value === selectedOption[0].value
+    );
+
+    let updatedSelectedItems;
+    if (itemIndex !== -1) {
+      updatedSelectedItems = [
+        ...selectedItems.slice(0, itemIndex),
+        ...selectedItems.slice(itemIndex + 1),
+      ];
+      onDeleteSelectedItem(selectedOption.map((item) => item.value));
+    } else {
+      updatedSelectedItems = [...selectedItems, selectedOption[0]];
+      console.log("else");
     }
+    setSelectedItems(updatedSelectedItems);
+    onChange(updatedSelectedItems.map((item) => item.value));
   };
 
   const handleRemoveItems = (itemToRemove) => {
@@ -61,6 +79,23 @@ const Dropdown = ({
       (item) => item.value !== itemToRemove.value
     );
     onDeleteSelectedItem(updatedValues.map((item) => item.value));
+  };
+
+  const CheckboxOption = ({ data }) => {
+    return (
+      <View style={styles.multiSelectOptionStyle}>
+        <CheckBox
+          handleCheckbox={() => handleValueChange([data])}
+          id={data.value}
+          isSelected={
+            selectedItems?.find((ele) => ele.value === data.value) ||
+            data.index !== null
+          }
+          title={data?.label}
+          isDisabled={data.index !== null && indexNumber !== data.index}
+        />
+      </View>
+    );
   };
 
   if (isMultiSelect) {
@@ -74,6 +109,7 @@ const Dropdown = ({
           theme={customTheme}
           onChange={handleValueChange}
           isMulti
+          components={{ Option: CheckboxOption }}
         />
         {!!selectedItems.length && (
           <View style={styles.multiSelectOptions}>

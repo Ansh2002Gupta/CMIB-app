@@ -64,4 +64,8 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
   },
+  multiSelectOptionStyle: {
+    paddingLeft: 5,
+    paddingTop: 5,
+  },
 });

@@ -98,6 +98,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
           return {
             name: intl.formatMessage({ id: moduleOption.messageId }),
             value: moduleOption.id,
+            selectedIndex: null,
           };
         } else {
           return null;
@@ -226,7 +227,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       const newContactDetails = {
         contact_details: constructUpdatedContactDetails(contactDetails),
       };
-
       const payloadData = {
         contact_details: newContactDetails.contact_details.map((item) => {
           return {
@@ -278,28 +278,46 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }
   };
 
+  console.log("contactDetails", contactDetails);
+
   const handleInputChange = (value, name, index) => {
+    console.log("value", value);
+
     const updatedDetails = [...contactDetails];
     updatedDetails[index] = {
       ...updatedDetails[index],
       [name]: value,
     };
     setContactDetails(updatedDetails);
-    const newList = moduleList.filter((item) => !value.includes(item.value));
+    const newList = moduleList.map((item) => {
+      if (value.includes(item.value)) {
+        if (item.selectedIndex === null) {
+          item.selectedIndex = index;
+        } else {
+          item.selectedIndex = null;
+        }
+      }
+      return item;
+    });
     setModuleList(newList);
   };
 
+  console.log("moduleListArrayToArrayOfObject(newdata)", moduleList);
+
   const onDeleteSelectedItem = (list, index) => {
+    console.log("list", list, "index", index);
+
     const updatedDetails = [...contactDetails];
     updatedDetails[index] = {
       ...updatedDetails[index],
       modules: list,
     };
     setContactDetails(updatedDetails);
-    const newdata = signUpState?.signUpDetail?.module_list.filter(
-      (item) => !list.includes(item)
-    );
-    setModuleList(moduleListArrayToArrayOfObject(newdata));
+    const newList = moduleList.map((item) => {
+      item.selectedIndex = null;
+      return item;
+    });
+    setModuleList(newList);
   };
 
   const getErrorDetails = () => {
@@ -321,11 +339,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const handleRemoveContactPerson = (index) => {
     const updatedContactDetails = contactDetails.filter((_, i) => i !== index);
     setContactDetails(updatedContactDetails);
-    if (!!contactDetails.length) {
-      setModuleList(
-        moduleListArrayToArrayOfObject(signUpState?.signUpDetail?.module_list)
-      );
-    }
   };
 
   return (

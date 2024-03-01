@@ -78,8 +78,10 @@ const SignUpThirdScreenUI = ({
                 onDeleteSelectedItem={(list) =>
                   onDeleteSelectedItem(list, index)
                 }
+                indexNumber={index}
                 labelField="name"
                 valueField="value"
+                indexField="selectedIndex"
                 isDropdown
                 isMultiSelect
               />
