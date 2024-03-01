@@ -8,6 +8,7 @@ import style from "./DetailCard.style";
 
 const DetailCard = ({
   customCardStyle,
+  customContainerStyle,
   details,
   handleChange,
   headerId,
@@ -19,7 +20,11 @@ const DetailCard = ({
   return (
     <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
       <DetailComponent
-        customContainerStyle={isRow ? style.customStyle : {}}
+        customContainerStyle={
+          isRow
+            ? { ...style.customStyle, ...customContainerStyle }
+            : { ...customContainerStyle }
+        }
         details={details}
         handleChange={handleChange}
         headerText={headerId}
@@ -39,6 +44,7 @@ const DetailCard = ({
 
 DetailCard.defaultProps = {
   customCardStyle: {},
+  customContainerStyle: {},
   details: [],
   handleChange: () => {},
   headerId: "",
@@ -50,6 +56,7 @@ DetailCard.defaultProps = {
 
 DetailCard.propTypes = {
   customCardStyle: PropTypes.object,
+  customContainerStyle: PropTypes.object,
   details: PropTypes.array,
   handleChange: PropTypes.func,
   headerId: PropTypes.string,

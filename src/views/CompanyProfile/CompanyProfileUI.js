@@ -62,6 +62,7 @@ const CompanyProfileUI = (props) => {
             handleChange={(detailKey, value) =>
               handleContactPersonInfo(index, detailKey, value)
             }
+            customContainerStyle={style.customContainerStyle}
             isShowSwitch
             isEditProfile={isEditProfile}
           />

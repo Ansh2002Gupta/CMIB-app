@@ -74,6 +74,9 @@ const style = {
   balanceInputStyle: {
     width: "30%",
   },
+  customContainerStyle: {
+    gridTemplateColumns: "1fr 1fr",
+  },
 };
 
 export default style;
