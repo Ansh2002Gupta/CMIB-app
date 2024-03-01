@@ -2,7 +2,7 @@ import { useState } from "react";
 import Http from "../../../http-service";
 
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
-import { COMPANY_UPDATE_PROFILE } from "../../apiEndPoint";
+import { COMPANY_PROFILE } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
 const useUpdateCompanyProfile = () => {
@@ -12,14 +12,11 @@ const useUpdateCompanyProfile = () => {
   const [updateProfileResult, setUpdateProfileResult] = useState([]);
   const [updationError, setUpdationError] = useState("");
 
-  const handleUpdateProfile = async (companyId, payload) => {
+  const handleUpdateProfile = async (payload) => {
     setUpdateProfileStatus(API_STATUS.LOADING);
     setUpdationError("");
     try {
-      const res = await Http.post(
-        `${COMPANY_UPDATE_PROFILE}/${companyId}`,
-        payload
-      );
+      const res = await Http.post(COMPANY_PROFILE, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setUpdateProfileStatus(API_STATUS.SUCCESS);
         setUpdateProfileResult(res.data);
