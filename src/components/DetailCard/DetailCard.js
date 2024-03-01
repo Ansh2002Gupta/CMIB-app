@@ -11,7 +11,10 @@ const DetailCard = ({
   customContainerStyle,
   details,
   handleChange,
+  handleSwitchChange,
   headerId,
+  index,
+  isActive,
   isEditProfile,
   isRow,
   isShowSwitch,
@@ -27,7 +30,10 @@ const DetailCard = ({
         }
         details={details}
         handleChange={handleChange}
+        handleSwitchChange={handleSwitchChange}
         headerText={headerId}
+        index={index}
+        isActive={isActive}
         isEditable={isEditProfile}
         isShowSwitch={isShowSwitch}
       />
@@ -47,7 +53,9 @@ DetailCard.defaultProps = {
   customContainerStyle: {},
   details: [],
   handleChange: () => {},
+  handleSwitchChange: () => {},
   headerId: "",
+  isActive: false,
   isEditProfile: false,
   isRow: false,
   isShowSwitch: false,
@@ -59,7 +67,10 @@ DetailCard.propTypes = {
   customContainerStyle: PropTypes.object,
   details: PropTypes.array,
   handleChange: PropTypes.func,
+  handleSwitchChange: PropTypes.func,
   headerId: PropTypes.string,
+  index: PropTypes.number,
+  isActive: PropTypes.bool,
   isEditProfile: PropTypes.bool,
   isRow: PropTypes.bool,
   isShowSwitch: PropTypes.bool,

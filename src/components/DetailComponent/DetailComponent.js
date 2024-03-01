@@ -16,10 +16,13 @@ import styles, { getRowStyle } from "./DetailComponent.style";
 const DetailComponent = ({
   customContainerStyle,
   details,
+  handleChange,
+  handleSwitchChange,
   headerText,
+  index,
+  isActive,
   isEditable,
   isShowSwitch,
-  handleChange,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -33,7 +36,12 @@ const DetailComponent = ({
 
   const renderSwitch = () => (
     <View style={styles.switchContainer}>
-      <Switch />
+      <Switch
+        isToggled={isActive}
+        onChange={() => {
+          handleSwitchChange(index);
+        }}
+      />
       <CommonText customTextStyle={styles.labelStyle}>
         {intl.formatMessage({ id: "label.mark_as_active" })}
       </CommonText>
@@ -124,7 +132,9 @@ DetailComponent.defaultProps = {
   customContainerStyle: {},
   details: [],
   handleChange: () => {},
+  handleSwitchChange: () => {},
   headerText: "",
+  isActive: false,
   isEditable: false,
   isShowSwitch: false,
 };
@@ -133,7 +143,10 @@ DetailComponent.propTypes = {
   customContainerStyle: PropTypes.object,
   details: PropTypes.array,
   handleChange: PropTypes.func,
+  handleSwitchChange: PropTypes.func,
   headerText: PropTypes.string,
+  index: PropTypes.number,
+  isActive: PropTypes.bool,
   isEditable: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
 };

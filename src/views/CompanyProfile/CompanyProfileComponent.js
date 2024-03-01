@@ -321,23 +321,36 @@ const CompanyProfileComponent = () => {
 
   const handleContactPersonInfo = (index, fieldName, value) => {
     const updatedProfileData = { ...profileData };
-
     if (
       updatedProfileData.contactPersonInfo &&
       index >= 0 &&
       index < updatedProfileData.contactPersonInfo.length
     ) {
       const contactDetail = updatedProfileData.contactPersonInfo[index];
-
       const infoIndex = contactDetail.contactInfo.findIndex(
         (detail) => detail.label === fieldName
       );
       if (infoIndex !== -1) {
         contactDetail.contactInfo[infoIndex].value = value;
       }
-
       setProfileData(updatedProfileData);
     }
+  };
+
+  const handleSwitchChange = (index) => {
+    const updatedContactPersonInfo = profileData.contactPersonInfo.map(
+      (contact, idx) => {
+        if (idx === index) {
+          return { ...contact, isContactActive: !contact.isContactActive };
+        }
+        return contact;
+      }
+    );
+
+    setProfileData({
+      ...profileData,
+      contactPersonInfo: updatedContactPersonInfo,
+    });
   };
 
   const handleCompanyProfile = (fieldName, value) => {
@@ -374,6 +387,7 @@ const CompanyProfileComponent = () => {
       handleCompanyProfile={handleCompanyProfile}
       handleEdit={handleEdit}
       handleModuleToggle={handleModuleToggle}
+      handleSwitchChange={handleSwitchChange}
       handleToggle={handleToggle}
       intl={intl}
       isLoading={isLoading}

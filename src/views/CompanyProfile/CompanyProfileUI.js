@@ -33,6 +33,7 @@ const CompanyProfileUI = (props) => {
     handleCompanyProfile,
     handleModuleToggle,
     handleEdit,
+    handleSwitchChange,
     handleToggle,
     intl,
     isEditProfile,
@@ -57,14 +58,17 @@ const CompanyProfileUI = (props) => {
           <DetailCard
             key={index}
             customCardStyle={style.customCardStyle}
-            otherDetails={contactDetailArray?.contactInfo}
+            customContainerStyle={style.customContainerStyle}
             details={contactDetailArray?.contactModules}
             handleChange={(detailKey, value) =>
               handleContactPersonInfo(index, detailKey, value)
             }
-            customContainerStyle={style.customContainerStyle}
+            handleSwitchChange={handleSwitchChange}
+            index={index}
             isShowSwitch
+            isActive={contactDetailArray?.isContactActive}
             isEditProfile={isEditProfile}
+            otherDetails={contactDetailArray?.contactInfo}
           />
         ))}
       </CardComponent>
@@ -285,6 +289,7 @@ CompanyProfileUI.defaultProps = {
   handleCompanyDetailChange: () => {},
   handleContactPersonInfo: () => {},
   handleCompanyProfile: () => {},
+  handleSwitchChange: () => {},
   profileResult: {},
   onSaveClick: () => {},
 };
@@ -298,6 +303,7 @@ CompanyProfileUI.propTypes = {
   handleCompanyProfile: PropTypes.func,
   handleEdit: PropTypes.func.isRequired,
   handleModuleToggle: PropTypes.func.isRequired,
+  handleSwitchChange: PropTypes.func,
   handleToggle: PropTypes.func,
   intl: PropTypes.object.isRequired,
   isEditProfile: PropTypes.bool,
