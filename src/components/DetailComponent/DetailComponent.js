@@ -7,6 +7,7 @@ import { View } from "@unthinkable/react-core-components";
 import BadgeLabel from "../BadgeLabel/BadgeLabel";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
+import Switch from "../Switch";
 import useIsWebView from "../../hooks/useIsWebView";
 import { gridStyles } from "../../theme/styles/commonStyles";
 import { numericValidator } from "../../utils/validation";
@@ -17,6 +18,7 @@ const DetailComponent = ({
   details,
   headerText,
   isEditable,
+  isShowSwitch,
   handleChange,
 }) => {
   const intl = useIntl();
@@ -29,6 +31,15 @@ const DetailComponent = ({
     ? styles.containerGridStyle(columnCount)
     : styles.containerStyle;
 
+  const renderSwitch = () => (
+    <View style={styles.switchContainer}>
+      <Switch />
+      <CommonText customTextStyle={styles.labelStyle}>
+        {intl.formatMessage({ id: "label.mark_as_active" })}
+      </CommonText>
+    </View>
+  );
+
   return (
     <View>
       {!!headerText && (
@@ -37,6 +48,7 @@ const DetailComponent = ({
         </CommonText>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
+        {isShowSwitch && isEditable && (!isWebView ? renderSwitch() : null)}
         {details?.map((detail, index) => (
           <View
             key={index}
@@ -102,6 +114,7 @@ const DetailComponent = ({
             )}
           </View>
         ))}
+        {isShowSwitch && isWebView && isEditable ? renderSwitch() : null}
       </View>
     </View>
   );
@@ -113,6 +126,7 @@ DetailComponent.defaultProps = {
   handleChange: () => {},
   headerText: "",
   isEditable: false,
+  isShowSwitch: false,
 };
 
 DetailComponent.propTypes = {
@@ -121,6 +135,7 @@ DetailComponent.propTypes = {
   handleChange: PropTypes.func,
   headerText: PropTypes.string,
   isEditable: PropTypes.bool,
+  isShowSwitch: PropTypes.bool,
 };
 
 export default DetailComponent;

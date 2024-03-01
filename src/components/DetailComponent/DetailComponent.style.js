@@ -61,6 +61,16 @@ const styles = StyleSheet.create({
     display: "grid",
     gridTemplateColumns: columnCount || "1fr 1fr 1fr",
   }),
+  labelStyle: {
+    fontSize: 14,
+    marginLeft: 8,
+    marginBottom: 24,
+  },
+  switchContainer: {
+    flexDirection: "row",
+    gap: 8,
+    justifyContent: "flex-end",
+  },
 });
 
 export const getRowStyle = (detail) => {

@@ -13,6 +13,7 @@ const DetailCard = ({
   headerId,
   isEditProfile,
   isRow,
+  isShowSwitch,
   otherDetails,
 }) => {
   return (
@@ -20,9 +21,10 @@ const DetailCard = ({
       <DetailComponent
         customContainerStyle={isRow ? style.customStyle : {}}
         details={details}
+        handleChange={handleChange}
         headerText={headerId}
         isEditable={isEditProfile}
-        handleChange={handleChange}
+        isShowSwitch={isShowSwitch}
       />
       {!!otherDetails && (
         <DetailComponent
@@ -42,6 +44,7 @@ DetailCard.defaultProps = {
   headerId: "",
   isEditProfile: false,
   isRow: false,
+  isShowSwitch: false,
   otherDetails: [],
 };
 
@@ -52,6 +55,7 @@ DetailCard.propTypes = {
   headerId: PropTypes.string,
   isEditProfile: PropTypes.bool,
   isRow: PropTypes.bool,
+  isShowSwitch: PropTypes.bool,
   otherDetails: PropTypes.array,
 };
 

@@ -62,6 +62,7 @@ const CompanyProfileUI = (props) => {
             handleChange={(detailKey, value) =>
               handleContactPersonInfo(index, detailKey, value)
             }
+            isShowSwitch
             isEditProfile={isEditProfile}
           />
         ))}
