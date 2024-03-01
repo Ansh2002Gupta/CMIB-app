@@ -369,6 +369,7 @@ const locale = {
   "label.add_new_ticket": "Add Ticket",
   "label.path.editDetails": "Edit User Details",
   "label.search_by_ticket": "Search by Ticket ID",
+  "label.mark_as_active": "Mark as Active",
 };
 
 export default locale;
