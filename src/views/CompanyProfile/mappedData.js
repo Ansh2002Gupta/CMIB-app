@@ -261,7 +261,7 @@ export const mapApiDataToUI = ({
       },
     ],
     sourceOfInfo: source_of_information,
-    companyLogo: company_logo,
+    companyLogo: company_logo ? company_logo : null,
     balanceCredit: credit_amount,
     companyModuleAccess: company_module_access,
   };

@@ -13,6 +13,7 @@ import {
   COMPANY_DETAIL_MAX_LENGTH,
   DEFAULT_INPUT_MAX_LENGTH,
   FIELD_MIN_LENGTH,
+  FIRM_OF_CHARTERED_ACCOUNTANTS,
   FIRM_REGISTRATION_NO_LENGTH,
   INTEREST_OPTIONS,
   MODULE_OPTIONS,
@@ -101,6 +102,64 @@ const CompanyProfileComponent = () => {
     );
   };
 
+  const validateContactPersonDetails = (newErrors, isValid) => {
+    profileData.contactPersonInfo.forEach((contact, index) => {
+      let contactErrors = {};
+
+      const contactName = contact.contactInfo.find(
+        (info) => info.label === "label.contact_person_name"
+      )?.value;
+      if (
+        contactName.length < FIELD_MIN_LENGTH ||
+        contactName.length > DEFAULT_INPUT_MAX_LENGTH
+      ) {
+        contactErrors.name = intl.formatMessage({
+          id: "label.contact_person_validation",
+        });
+        isValid = false;
+      }
+
+      const contactDesignation = contact.contactInfo.find(
+        (info) => info.label === "label.contact_personal_designation"
+      )?.value;
+      if (
+        contactDesignation.length < FIELD_MIN_LENGTH ||
+        contactDesignation.length > ADDRESS_MAX_LENGTH
+      ) {
+        contactErrors.designation = intl.formatMessage({
+          id: "label.designation_validation",
+        });
+        isValid = false;
+      }
+
+      const contactMobileNo = contact.contactInfo.find(
+        (info) => info.label === "label.mobile_number"
+      )?.value;
+
+      if (!numRegex.test(String(contactMobileNo))) {
+        contactErrors.mobileNo = intl.formatMessage({
+          id: "label.mobile_number_validation",
+        });
+        isValid = false;
+      }
+
+      const contactEmailId = contact.contactInfo.find(
+        (info) => info.label === "label.email_id"
+      )?.value;
+
+      if (validateEmail(contactEmailId)) {
+        contactErrors.contactEmailId = intl.formatMessage({
+          id: "label.email_id_validation",
+        });
+        isValid = false;
+      }
+
+      if (Object.keys(contactErrors).length > 0) {
+        newErrors.contactDetails[index] = contactErrors;
+      }
+    });
+  };
+
   const validateFields = () => {
     //TODO: Need to be optimize
     let isValid = true;
@@ -112,12 +171,10 @@ const CompanyProfileComponent = () => {
       emailId: "",
       telephoneNo: "",
       code: "",
-      designation: "",
-      contactEmailId: "",
-      mobileNo: "",
-      name: "",
       companyDetail: "",
       website: "",
+      balanceCredit: "",
+      contactDetails: [],
     };
     const findValueByLabel = (label) => {
       const combinedDetails = [
@@ -136,12 +193,6 @@ const CompanyProfileComponent = () => {
     const emailId = findValueByLabel("label.email_id");
     const telephoneNo = findValueByLabel("label.telephone_no");
     const code = findValueByLabel("label.isd_std_code");
-    const name = findValueByLabel("label.contact_person_name");
-    const designation = findValueByLabel("label.contact_personal_designation");
-    const contactEmailId = findValueByLabel(
-      "label.enter_contact_person_email_id"
-    );
-    const mobileNo = findValueByLabel("label.mobile_number");
     const companyDetail = findValueByLabel(
       "label.short_profile_of_the_company"
     );
@@ -206,35 +257,6 @@ const CompanyProfileComponent = () => {
       isValid = false;
     }
     if (
-      name.length < FIELD_MIN_LENGTH ||
-      name.length > DEFAULT_INPUT_MAX_LENGTH
-    ) {
-      newErrors.name = intl.formatMessage({
-        id: "label.contact_person_validation",
-      });
-    }
-    if (
-      designation.length < FIELD_MIN_LENGTH ||
-      designation.length > ADDRESS_MAX_LENGTH
-    ) {
-      newErrors.designation = intl.formatMessage({
-        id: "label.designation_validation",
-      });
-    }
-    if (
-      !numRegex.test(String(mobileNo)) ||
-      mobileNo.length !== FIRM_REGISTRATION_NO_LENGTH
-    ) {
-      newErrors.mobileNo = intl.formatMessage({
-        id: "label.mobile_number_validation",
-      });
-    }
-    if (validateEmail(contactEmailId)) {
-      newErrors.contactEmailId = intl.formatMessage({
-        id: "label.email_id_validation",
-      });
-    }
-    if (
       companyDetail.length < FIELD_MIN_LENGTH ||
       companyDetail.length > COMPANY_DETAIL_MAX_LENGTH
     ) {
@@ -249,16 +271,26 @@ const CompanyProfileComponent = () => {
       });
       isValid = false;
     }
+    validateContactPersonDetails(newErrors, isValid);
     const profileDataWithErrors = {
       ...profileData,
       companyDetail: profileData.companyDetail.map((detail) => ({
         ...detail,
         error: newErrors[detail?.key] || "",
       })),
-      contactPersonInfo: profileData.contactPersonInfo.map((detail) => ({
-        ...detail,
-        error: newErrors[detail?.key] || "",
-      })),
+      contactPersonInfo: profileData.contactPersonInfo.map(
+        (contact, index) => ({
+          ...contact,
+          contactInfo: contact.contactInfo.map((info) => ({
+            ...info,
+            error:
+              newErrors.contactDetails[index] &&
+              newErrors.contactDetails[index][info.key]
+                ? newErrors.contactDetails[index][info.key]
+                : "",
+          })),
+        })
+      ),
       companyProfile: profileData.companyProfile.map((detail) => ({
         ...detail,
         error: newErrors[detail?.key] || "",
@@ -312,12 +344,67 @@ const CompanyProfileComponent = () => {
   };
 
   const handleCompanyDetailChange = (fieldName, value) => {
-    setProfileData({
-      ...profileData,
-      companyDetail: profileData.companyDetail.map((detail) =>
-        detail.label === fieldName ? { ...detail, value: value } : detail
-      ),
-    });
+    if (fieldName === "label.entity") {
+      let updatedCompanyDetail = [...profileData.companyDetail];
+      const entityIndex = updatedCompanyDetail.findIndex(
+        (detail) => detail.label === "label.entity"
+      );
+      const registrationNoIndex = updatedCompanyDetail.findIndex(
+        (detail) => detail.key === "registrationNo"
+      );
+      const noOfPartnersIndex = updatedCompanyDetail.findIndex(
+        (detail) => detail.key === "noOfPartners"
+      );
+
+      if (value === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+        if (registrationNoIndex === -1) {
+          updatedCompanyDetail.splice(entityIndex + 1, 0, {
+            key: "registrationNo",
+            label: "label.firm_registration_no",
+            value: "",
+            isNumeric: true,
+            maxLength: 10,
+            isMajor: true,
+            placeholder: "label.enter_firm_no",
+            isMandatory: true,
+          });
+        }
+        if (noOfPartnersIndex === -1) {
+          updatedCompanyDetail.splice(entityIndex + 2, 0, {
+            key: "noOfPartners",
+            label: "label.no_of_partners",
+            value: "",
+            isMinor: true,
+            isNumeric: true,
+            placeholder: "label.no_placeholder",
+            isMandatory: true,
+          });
+        }
+      } else {
+        if (registrationNoIndex !== -1) {
+          updatedCompanyDetail.splice(registrationNoIndex, 1);
+        }
+        if (noOfPartnersIndex !== -1) {
+          const newNoOfPartnersIndex = updatedCompanyDetail.findIndex(
+            (detail) => detail.key === "noOfPartners"
+          );
+          updatedCompanyDetail.splice(newNoOfPartnersIndex, 1);
+        }
+      }
+      setProfileData({
+        ...profileData,
+        companyDetail: updatedCompanyDetail.map((detail) =>
+          detail.label === fieldName ? { ...detail, value: value } : detail
+        ),
+      });
+    } else {
+      setProfileData({
+        ...profileData,
+        companyDetail: profileData.companyDetail.map((detail) =>
+          detail.label === fieldName ? { ...detail, value: value } : detail
+        ),
+      });
+    }
   };
 
   const handleBalanceCreditChange = (value) => {

@@ -20,6 +20,7 @@ import ActionPairButton from "../../components/ActionPairButton";
 import Spinner from "../../components/Spinner";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import { numericValidator } from "../../utils/validation";
 import images from "../../images";
 import style from "./CompanyProfile.style";
 
@@ -213,19 +214,21 @@ const CompanyProfileUI = (props) => {
               />
               {renderSourceOfInfo()}
             </CardComponent>
-            <CardComponent customStyle={style.cardStyle}>
-              <DetailComponent
-                headerText={intl.formatMessage({ id: "label.company_logo" })}
-              />
-              <View style={style.imageContainer}>
-                <UploadImage
-                  imageUrl={profileResult?.companyLogo}
-                  imageName={"CompanyLogo.png"}
-                  intl={intl}
-                  isEditable={isEditProfile}
+            {(profileResult?.companyLogo || isEditProfile) && (
+              <CardComponent customStyle={style.cardStyle}>
+                <DetailComponent
+                  headerText={intl.formatMessage({ id: "label.company_logo" })}
                 />
-              </View>
-            </CardComponent>
+                <View style={style.imageContainer}>
+                  <UploadImage
+                    imageUrl={profileResult?.companyLogo}
+                    imageName={"CompanyLogo.png"}
+                    intl={intl}
+                    isEditable={isEditProfile}
+                  />
+                </View>
+              </CardComponent>
+            )}
             <CardComponent customStyle={style.cardStyle}>
               {isEditProfile ? (
                 <View style={isWebView ? style.balanceInputStyle : {}}>
@@ -236,7 +239,9 @@ const CompanyProfileUI = (props) => {
                     placeholder={intl.formatMessage({
                       id: "label.balance_credit",
                     })}
-                    onChangeText={(val) => handleBalanceCreditChange(val)}
+                    onChangeText={(val) =>
+                      numericValidator(val) && handleBalanceCreditChange(val)
+                    }
                     isRupee
                   />
                 </View>
