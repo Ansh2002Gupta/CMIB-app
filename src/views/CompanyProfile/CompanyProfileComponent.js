@@ -6,6 +6,7 @@ import CompanyProfileUI from "./CompanyProfileUI";
 import useGetCompanyProfileAPI from "../../services/apiServices/hooks/CompanyProfile/useGetCompanyProfileAPI";
 import useFetch from "../../hooks/useFetch";
 import useIndustryTypes from "../../services/apiServices/hooks/useIndustryTypes";
+import useUpdateCompanyProfile from "../../services/apiServices/hooks/CompanyProfile/useUpdateCompanyProfileAPI";
 import {
   ADDRESS_MAX_LENGTH,
   CODE_MAX_LENGTH,
@@ -35,6 +36,12 @@ const CompanyProfileComponent = () => {
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
+  const {
+    handleUpdateProfile,
+    isLoading: isUpdatingCompanyProfile,
+    isSuccess: isUpdatedCompanyProfile,
+    updationError,
+  } = useUpdateCompanyProfile();
   const { data: countryCodes } = useFetch({ url: COUNTRY_CODE });
 
   const [options, setOptions] = useState(
@@ -314,10 +321,78 @@ const CompanyProfileComponent = () => {
     return isValid;
   };
 
+  const createPayloadFromProfileData = (profileData) => {
+    const companyDetails = profileData.companyDetail.reduce((acc, detail) => {
+      switch (detail.key) {
+        case "companyName":
+          acc.name = detail.value;
+          break;
+        case "entity":
+          acc.entity = detail.value;
+          break;
+        case "address":
+          acc.address = detail.value;
+          break;
+        case "emailId":
+          acc.email = detail.value;
+          break;
+        case "code":
+          acc.std_country_code = "+" + detail.value;
+          break;
+        case "telephoneNo":
+          acc.telephone_number = detail.value;
+          break;
+      }
+      return acc;
+    }, {});
+
+    companyDetails.company_details = profileData.companyProfile[0].value;
+    companyDetails.website = profileData.otherDetails.find(
+      (detail) => detail.key === "website"
+    ).value;
+    companyDetails.nature_of_suppliers = profileData.otherDetails.find(
+      (detail) => detail.label === "label.nature_of_supplier"
+    ).value;
+    companyDetails.type = profileData.otherDetails.find(
+      (detail) => detail.label === "label.company_type"
+    ).value;
+    companyDetails.source_of_information = profileData.sourceOfInfo;
+    companyDetails.credit_amount = profileData.balanceCredit;
+    companyDetails.company_logo = profileData.companyLogo;
+
+    const contactDetails = profileData.contactPersonInfo.map((contact) => ({
+      id: contact.contactInfo.find((info) => info.key === "name").id,
+      modules: contact.contactModules,
+      salutation: contact.contactInfo.find(
+        (info) => info.label === "label.salutation"
+      ).value,
+      name: contact.contactInfo.find((info) => info.key === "name").value,
+      email: contact.contactInfo.find((info) => info.key === "contactEmailId")
+        .value,
+      designation: contact.contactInfo.find(
+        (info) => info.key === "designation"
+      ).value,
+      mobile_country_code: contact.contactInfo
+        .find((info) => info.key === "mobileNo")
+        .codeValue.replace(/\D/g, ""),
+      mobile_number: contact.contactInfo.find((info) => info.key === "mobileNo")
+        .value,
+      status: contact.isContactActive ? 1 : 0,
+    }));
+
+    const payload = {
+      ...companyDetails,
+      contact_details: contactDetails,
+    };
+
+    return payload;
+  };
+
   const onSaveClick = () => {
     if (validateFields()) {
       //TODO: CALL UPDATE API
-      console.log("Form is valid. Proceed with the save operation.");
+      const payload = createPayloadFromProfileData(profileData);
+      handleUpdateProfile(payload);
     }
   };
 

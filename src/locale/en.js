@@ -370,6 +370,7 @@ const locale = {
   "label.path.editDetails": "Edit User Details",
   "label.search_by_ticket": "Search by Ticket ID",
   "label.mark_as_active": "Mark as Active",
+  "label.enter_balance_credit": "Enter Balance Credit",
 };
 
 export default locale;

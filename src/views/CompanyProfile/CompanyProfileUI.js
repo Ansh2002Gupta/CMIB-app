@@ -233,11 +233,11 @@ const CompanyProfileUI = (props) => {
               {isEditProfile ? (
                 <View style={isWebView ? style.balanceInputStyle : {}}>
                   <CustomTextInput
-                    value={profileResult?.balanceCredit || 123}
+                    value={profileResult?.balanceCredit}
                     label={intl.formatMessage({ id: "label.balance_credit" })}
                     isMandatory
                     placeholder={intl.formatMessage({
-                      id: "label.balance_credit",
+                      id: "label.enter_balance_credit",
                     })}
                     onChangeText={(val) =>
                       numericValidator(val) && handleBalanceCreditChange(val)
