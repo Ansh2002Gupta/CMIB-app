@@ -371,6 +371,7 @@ const locale = {
   "label.search_by_ticket": "Search by Ticket ID",
   "label.mark_as_active": "Mark as Active",
   "label.enter_balance_credit": "Enter Balance Credit",
+  "label.select_module": "Select Module",
 };
 
 export default locale;
