@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { View } from "@unthinkable/react-core-components";
 import Select from "react-select";
 
-import { customTheme, customStyles } from "./Dropdown.style";
+import CheckBox from "../CheckBox";
+import CustomChipCard from "../CustomChipCard/CustomChipCard";
+import { customTheme, customStyles, styles } from "./Dropdown.style";
 
 const Dropdown = ({
   data,
+  defaultValues,
   dropdownStyle,
   isEditable,
   includeAllKeys,
+  isMultiSelect,
   labelField,
   menuOptions,
   onChange,
@@ -17,6 +22,7 @@ const Dropdown = ({
   value,
   valueField,
 }) => {
+  const [selectedItems, setSelectedItems] = useState(defaultValues);
   const getAllKeys = (option) => {
     let finalObj = {};
     Object.keys(option).forEach((key) => {
@@ -30,36 +36,101 @@ const Dropdown = ({
   const defaultOptions = data?.map((option) => ({
     value: String(option[valueField]),
     label: String(option[labelField]),
+    disabled: option?.isDisabled,
     ...(includeAllKeys ? { ...getAllKeys(option) } : {}),
   }));
 
   const options = menuOptions || defaultOptions;
-
   const selectedOption = options?.find(
     (option) => option.value === String(value)
   );
 
+  const handleValueChange = (selectedOption) => {
+    const itemIndex = selectedItems.findIndex(
+      (item) => item.value === selectedOption[0].value
+    );
+
+    let updatedSelectedItems;
+    if (itemIndex !== -1) {
+      updatedSelectedItems = [
+        ...selectedItems.slice(0, itemIndex),
+        ...selectedItems.slice(itemIndex + 1),
+      ];
+    } else {
+      updatedSelectedItems = [...selectedItems, selectedOption[0]];
+    }
+    setSelectedItems(updatedSelectedItems);
+    onChange(updatedSelectedItems.map((item) => item.value));
+  };
+
+  const handleRemoveItems = (itemToRemove) => {
+    setSelectedItems((prevItems) =>
+      prevItems.filter((item) => item.value !== itemToRemove.value)
+    );
+  };
+
+  const CheckboxOption = ({ data }) => {
+    return (
+      <View style={styles.multiSelectOptionStyle}>
+        <CheckBox
+          handleCheckbox={() => handleValueChange([data])}
+          id={data.value}
+          isDisabled={data.disabled}
+          isSelected={selectedItems?.find((ele) => ele.value == data.value)}
+          title={data?.label}
+        />
+      </View>
+    );
+  };
+
+  if (isMultiSelect) {
+    return (
+      <div>
+        <Select
+          value={""}
+          placeholder={placeholder}
+          options={options}
+          styles={customStyles(dropdownStyle, placeholderStyle)}
+          theme={customTheme}
+          onChange={handleValueChange}
+          isMulti
+          components={{ Option: CheckboxOption }}
+        />
+        {!!selectedItems.length && (
+          <View style={styles.multiSelectOptions}>
+            {selectedItems.map((item, index) => (
+              <CustomChipCard
+                key={index}
+                message={item?.label}
+                onPress={() => handleRemoveItems(item)}
+              />
+            ))}
+          </View>
+        )}
+      </div>
+    );
+  }
   return (
-    <div>
-      <Select
-        value={selectedOption}
-        placeholder={placeholder}
-        options={options}
-        isDisabled={!isEditable}
-        styles={customStyles(dropdownStyle, placeholderStyle)}
-        theme={customTheme}
-        onChange={(selectedItem) => {
-          onChange(selectedItem.value);
-        }}
-      />
-    </div>
+    <Select
+      value={selectedOption}
+      placeholder={placeholder}
+      options={options}
+      isDisabled={!isEditable}
+      styles={customStyles(dropdownStyle, placeholderStyle)}
+      theme={customTheme}
+      onChange={(selectedItem) => {
+        onChange(selectedItem.value);
+      }}
+    />
   );
 };
 
 Dropdown.defaultProps = {
   data: [],
+  defaultValues: [],
   dropdownStyle: {},
   isEditable: true,
+  isMultiSelect: false,
   labelField: "",
   onChange: () => {},
   placeholder: "",
@@ -71,9 +142,11 @@ Dropdown.defaultProps = {
 
 Dropdown.propTypes = {
   data: PropTypes.array,
+  defaultValues: PropTypes.array,
   dropdownStyle: PropTypes.object,
   isEditable: PropTypes.bool,
   includeAllKeys: PropTypes.bool,
+  isMultiSelect: PropTypes.bool,
   labelField: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,

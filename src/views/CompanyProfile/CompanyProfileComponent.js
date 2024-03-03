@@ -390,7 +390,6 @@ const CompanyProfileComponent = () => {
 
   const onSaveClick = () => {
     if (validateFields()) {
-      //TODO: CALL UPDATE API
       const payload = createPayloadFromProfileData(profileData);
       handleUpdateProfile(payload);
     }
@@ -410,14 +409,53 @@ const CompanyProfileComponent = () => {
     setOptions(updatedItems);
   };
 
-  const handleModuleToggle = (id) => {
-    const updatedItems = moduleOptions.map((item) => {
-      if (item.id === id) {
+  const handleModuleToggle = (moduleId) => {
+    const updatedModuleOptions = moduleOptions.map((item) => {
+      if (item.id === moduleId) {
         return { ...item, isSelected: !item.isSelected };
       }
       return item;
     });
-    setModuleOptions(updatedItems);
+
+    setModuleOptions(updatedModuleOptions);
+
+    const updatedProfileData = {
+      ...profileData,
+      contactPersonInfo: profileData.contactPersonInfo.map((contact) => {
+        const moduleIndex = contact?.contactModules[0]?.options?.findIndex(
+          (module) => module.value === moduleId
+        );
+        const moduleSelected = moduleIndex !== -1;
+
+        const newDefaultValues = moduleSelected
+          ? contact.contactModules[0]?.defaultValues?.filter(
+              (module) => module.value !== moduleId
+            )
+          : [...contact.contactModules[0]?.defaultValues];
+
+        const newOptions = moduleSelected
+          ? contact.contactModules[0].options.map((option) =>
+              option.value === moduleId
+                ? { ...option, isSelected: !option.isSelected }
+                : option
+            )
+          : [
+              ...contact.contactModules[0].options,
+              { value: moduleId, label: moduleId, isDisabled: false }, // Add a new option
+            ];
+
+        return {
+          ...contact,
+          contactModules: contact.contactModules.map((module) => ({
+            ...module,
+            defaultValues: newDefaultValues,
+            options: newOptions,
+          })),
+        };
+      }),
+    };
+
+    setProfileData(updatedProfileData);
   };
 
   const onGoBack = () => {
@@ -513,7 +551,7 @@ const CompanyProfileComponent = () => {
       if (isCode && infoIndex !== -1) {
         contactDetail.contactInfo[infoIndex].codeValue = value;
       }
-      if (infoIndex !== -1) {
+      if (infoIndex !== -1 && !isCode) {
         contactDetail.contactInfo[infoIndex].value = value;
       }
       setProfileData(updatedProfileData);

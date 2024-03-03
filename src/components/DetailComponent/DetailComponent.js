@@ -83,6 +83,7 @@ const DetailComponent = ({
                   isCounterInput={detail.isCounterInput}
                   isError={!!detail.error}
                   isMandatory={detail.isMandatory}
+                  defaultValues={detail.defaultValues}
                   options={detail.options || []}
                   isMultiline={detail?.isMultiline}
                   placeholder={intl.formatMessage({ id: detail.placeholder })}
@@ -92,6 +93,7 @@ const DetailComponent = ({
                   labelField={detail.labelField || "label"}
                   inputKey={detail.inputKey || "value"}
                   onChangeValue={(val) => handleChange(detail.label, val)}
+                  isMultiSelect={detail.isMultiSelect}
                   onChangeText={(val) => {
                     if (detail?.isNumeric) {
                       if (numericValidator(val))

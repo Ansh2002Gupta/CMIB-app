@@ -6,11 +6,14 @@ import {
   Keyboard,
   Platform,
   TouchableOpacity,
+  View,
 } from "@unthinkable/react-core-components";
 
+import CheckBox from "../CheckBox";
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CommonText from "../CommonText";
+import CustomChipCard from "../CustomChipCard/CustomChipCard";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import SearchView from "../SearchView";
 import SvgUri from "../SvgUri";
@@ -21,8 +24,10 @@ import styles from "./DropDownModal.style";
 
 const DropDownModal = ({
   customHeading,
+  defaultValues,
   isEditable,
   isMobileNumber,
+  isMultiSelect,
   labelField,
   onChangeValue,
   menuOptions,
@@ -39,6 +44,7 @@ const DropDownModal = ({
   const defaultOptions = options?.map((option) => ({
     value: String(option[valueField]),
     label: String(option[labelField]),
+    disabled: option?.isDisabled,
     url: String(option[urlField]),
   }));
 
@@ -46,6 +52,7 @@ const DropDownModal = ({
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
   const [selectedOption, setSelectedOption] = useState(data);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const [selectedItems, setSelectedItems] = useState(defaultValues);
 
   useEffect(() => {
     const selectedIndex = data?.findIndex((item) => item.value === value);
@@ -60,6 +67,20 @@ const DropDownModal = ({
       return () => clearTimeout(timer);
     }
   }, [selectedOption, isDropDownOpen]);
+
+  const handleValueChange = (selectedOption) => {
+    const selectedItemsList = [...selectedItems, selectedOption[0]];
+    if (!selectedItems.find((item) => item.value === selectedOption[0].value)) {
+      setSelectedItems((prev) => [...prev, ...selectedOption]);
+      onChangeValue(selectedItemsList.map((item) => item.value));
+    }
+  };
+
+  const handleRemoveItems = (itemToRemove) => {
+    setSelectedItems((prevItems) =>
+      prevItems.filter((item) => item.value !== itemToRemove.value)
+    );
+  };
 
   const keyboardDidHideCallback = () => {
     if (isIosPlatform) {
@@ -119,7 +140,20 @@ const DropDownModal = ({
   };
 
   const renderOptions = ({ item, index }) => {
-    return (
+    const isSelected = selectedItems.some(
+      (selected) => selected.value === item.value
+    );
+    return isMultiSelect ? (
+      <CheckBox
+        id={item}
+        title={item.label}
+        handleCheckbox={(item) => {
+          isSelected ? handleRemoveItems(item) : handleValueChange([item]);
+        }}
+        isDisabled={item.disabled}
+        isSelected={isSelected}
+      />
+    ) : (
       <TouchableOpacity
         key={index}
         onPress={() => {
@@ -153,6 +187,60 @@ const DropDownModal = ({
       </CommonText>
     );
   };
+
+  const renderFlatList = () => {
+    return (
+      <FlatList
+        data={data}
+        getItemLayout={getItemLayout}
+        initialNumToRender={10}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={renderEmptyFooter()}
+        ref={flatListRef}
+        renderItem={renderOptions}
+        onScrollToIndexFailed={scrollToIndex}
+      />
+    );
+  };
+
+  if (isMultiSelect) {
+    return (
+      <>
+        <TouchableOpacity
+          onPress={handleDropDown}
+          style={styles.textButton(isEditable)}
+        >
+          <CommonText customTextStyle={styles.placeHolderText}>
+            {placeholder}
+          </CommonText>
+          <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
+        </TouchableOpacity>
+        {!!selectedItems.length && (
+          <View style={styles.multiSelectOptions}>
+            {selectedItems.map((item) => (
+              <CustomChipCard
+                message={item?.label}
+                onPress={() => handleRemoveItems(item)}
+              />
+            ))}
+          </View>
+        )}
+        {isDropDownOpen && (
+          <CustomModal
+            headerText={customHeading || placeholder}
+            headerTextStyle={styles.headerText}
+            customInnerContainerStyle={{
+              ...styles.modalInnerContainer,
+              ...modalStyle,
+            }}
+            onBackdropPress={handleDropDown}
+          >
+            {renderFlatList()}
+          </CustomModal>
+        )}
+      </>
+    );
+  }
 
   return (
     <>
@@ -204,16 +292,7 @@ const DropDownModal = ({
               customParentStyle={styles.searchView}
             />
           )}
-          <FlatList
-            data={selectedOption}
-            getItemLayout={getItemLayout}
-            initialNumToRender={10}
-            keyExtractor={(item, index) => index.toString()}
-            ListEmptyComponent={renderEmptyFooter()}
-            ref={flatListRef}
-            renderItem={renderOptions}
-            onScrollToIndexFailed={scrollToIndex}
-          />
+          {renderFlatList()}
         </CustomModal>
       )}
     </>
@@ -222,6 +301,7 @@ const DropDownModal = ({
 
 DropDownModal.defaultProps = {
   customHeading: "",
+  defaultValues: [],
   isEditable: true,
   labelField: "label",
   isMobileNumber: false,
@@ -236,6 +316,7 @@ DropDownModal.defaultProps = {
 
 DropDownModal.propTypes = {
   customHeading: PropTypes.string,
+  defaultValues: PropTypes.array,
   isEditable: PropTypes.bool,
   labelField: PropTypes.string,
   isMobileNumber: PropTypes.bool,

@@ -37,6 +37,7 @@ const CustomTextInput = (props) => {
     customTextInputOuterContainer,
     countValue,
     codeValue,
+    defaultValues,
     dropdownStyle,
     errorMessage,
     eyeImage,
@@ -50,6 +51,7 @@ const CustomTextInput = (props) => {
     isMandatory,
     isMobileNumber,
     isMultiline,
+    isMultiSelect,
     isNumeric,
     isPaddingNotRequired,
     isPassword,
@@ -155,6 +157,7 @@ const CustomTextInput = (props) => {
             renderRightIcon={() => <Image source={images.iconDownArrow} />}
             placeholderStyle={style.placeholderStyle}
             menuOptions={menuOptions}
+            defaultValues={defaultValues}
             data={options}
             maxHeight={200}
             labelField={labelField}
@@ -164,6 +167,7 @@ const CustomTextInput = (props) => {
             onFocus={handleFocus}
             onBlur={handleBlur}
             urlField={urlField}
+            isMultiSelect={isMultiSelect}
             onChange={(item) => {
               isWebPlatform
                 ? onChangeValue(item)
@@ -177,6 +181,8 @@ const CustomTextInput = (props) => {
         <DropDownModal
           {...{
             labelField,
+            isMultiSelect,
+            defaultValues,
             onChangeValue,
             options,
             placeholder,
@@ -378,6 +384,7 @@ CustomTextInput.defaultProps = {
   isMandatory: false,
   isMobileNumber: false,
   isMultiline: false,
+  isMultiSelect: false,
   isNumeric: false,
   isPaddingNotRequired: false,
   isPassword: false,
@@ -421,6 +428,7 @@ CustomTextInput.propTypes = {
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isMultiline: PropTypes.bool,
+  isMultiSelect: PropTypes.bool,
   isNumeric: PropTypes.bool,
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,

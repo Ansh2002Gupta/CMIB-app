@@ -51,6 +51,14 @@ export const mapApiDataToUI = ({
   };
 
   const mapContactDetails = (contactDetails) => {
+    const selectedModules = new Set();
+
+    contactDetails?.forEach((contact) => {
+      contact?.modules?.forEach((module) => {
+        selectedModules.add(module);
+      });
+    });
+
     return contactDetails?.map((contact) => {
       const combinedMobileNumber = formatMobileNumber(
         contact?.mobile_country_code,
@@ -75,6 +83,19 @@ export const mapApiDataToUI = ({
           value: checkValue(contact?.modules),
           showBadgeLabel: true,
           isMandatory: true,
+          isMultiSelect: true,
+          isDropdown: true,
+          placeholder: "label.select_module",
+          defaultValues: contact?.modules.map((item) => ({
+            value: item,
+            label: item,
+          })),
+          options: company_module_access.map((item) => ({
+            value: item,
+            label: item,
+            isDisabled:
+              selectedModules.has(item) && !contact?.modules.includes(item),
+          })),
         },
       ];
       const isActive = !!contact?.status;
@@ -88,6 +109,7 @@ export const mapApiDataToUI = ({
           isMandatory: true,
         },
         {
+          id: contact?.id,
           key: "name",
           label: "label.contact_person_name",
           value: checkValue(contact?.name),
@@ -261,7 +283,7 @@ export const mapApiDataToUI = ({
       },
     ],
     sourceOfInfo: source_of_information,
-    companyLogo: company_logo ? company_logo : null,
+    companyLogo: company_logo || null,
     balanceCredit: credit_amount,
     companyModuleAccess: company_module_access,
   };

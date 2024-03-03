@@ -46,7 +46,6 @@ export const styles = StyleSheet.create({
   control: (isFocused) => ({
     borderWidth: isFocused ? 0 : 1,
     borderColor: colors.lightGrey,
-    marginTop: 4,
     borderRadius: 12,
     padding: 6,
     fontSize: 14,
@@ -59,6 +58,14 @@ export const styles = StyleSheet.create({
   }),
   valueStyle: {
     color: colors.black,
-    fontWeight: 500,
+    fontWeight: "500",
+  },
+  multiSelectOptions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  multiSelectOptionStyle: {
+    paddingLeft: 16,
+    paddingTop: 14,
   },
 });
