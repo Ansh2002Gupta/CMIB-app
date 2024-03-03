@@ -117,6 +117,7 @@ import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
 import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
+import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
 
 const images = {
   iconArrowUp,
@@ -238,6 +239,7 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
+  iconDisabledCheck,
 };
 
 export default images;

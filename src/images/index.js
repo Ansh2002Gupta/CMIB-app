@@ -194,6 +194,7 @@ const iconArrowUpSorting = appendAppBaseURl(
   "/images/svg/iconArrowUpSorting.svg"
 );
 const iconPartial = appendAppBaseURl("/images/svg/iconPartial.svg");
+const iconDisabledCheck = appendAppBaseURl("/images/svg/iconDisabledCheck.svg");
 
 const images = {
   iconArrowUp,
@@ -330,6 +331,7 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
+  iconDisabledCheck,
 };
 
 export default images;
