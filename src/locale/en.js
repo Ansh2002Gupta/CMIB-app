@@ -372,6 +372,10 @@ const locale = {
   "label.mark_as_active": "Mark as Active",
   "label.enter_balance_credit": "Enter Balance Credit",
   "label.select_module": "Select Module",
+  "label.module_removal_warning":
+    "You cannot remove this module access from here as it is assigned to a active contact person, kindly remove it from there first.",
+  "label.warning": "Warning",
+  "label.okay": "Okay",
 };
 
 export default locale;

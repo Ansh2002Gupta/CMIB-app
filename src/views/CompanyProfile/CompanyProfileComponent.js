@@ -36,6 +36,7 @@ const CompanyProfileComponent = () => {
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
+  const [moduleUpdateWarning, setModuleUpdateWarning] = useState(false);
   const {
     handleUpdateProfile,
     isLoading: isUpdatingCompanyProfile,
@@ -410,52 +411,54 @@ const CompanyProfileComponent = () => {
   };
 
   const handleModuleToggle = (moduleId) => {
-    const updatedModuleOptions = moduleOptions.map((item) => {
-      if (item.id === moduleId) {
-        return { ...item, isSelected: !item.isSelected };
-      }
-      return item;
-    });
+    const anyDefaultValueSelected = profileData.contactPersonInfo.some(
+      (contact) =>
+        contact.contactModules[0]?.defaultValues?.some(
+          (defaultValue) => defaultValue.value === moduleId
+        )
+    );
 
-    setModuleOptions(updatedModuleOptions);
+    if (!anyDefaultValueSelected) {
+      const updatedModuleOptions = moduleOptions.map((item) => {
+        if (item.id === moduleId) {
+          return { ...item, isSelected: !item.isSelected };
+        }
+        return item;
+      });
 
-    const updatedProfileData = {
-      ...profileData,
-      contactPersonInfo: profileData.contactPersonInfo.map((contact) => {
-        const moduleIndex = contact?.contactModules[0]?.options?.findIndex(
-          (module) => module.value === moduleId
-        );
-        const moduleSelected = moduleIndex !== -1;
+      setModuleOptions(updatedModuleOptions);
 
-        const newDefaultValues = moduleSelected
-          ? contact.contactModules[0]?.defaultValues?.filter(
-              (module) => module.value !== moduleId
-            )
-          : [...contact.contactModules[0]?.defaultValues];
+      const updatedProfileData = {
+        ...profileData,
+        contactPersonInfo: profileData.contactPersonInfo.map((contact) => {
+          const moduleIndex = contact?.contactModules[0]?.options?.findIndex(
+            (module) => module.value === moduleId
+          );
+          const moduleSelected = moduleIndex !== -1;
 
-        const newOptions = moduleSelected
-          ? contact.contactModules[0].options.map((option) =>
-              option.value === moduleId
-                ? { ...option, isSelected: !option.isSelected }
-                : option
-            )
-          : [
-              ...contact.contactModules[0].options,
-              { value: moduleId, label: moduleId, isDisabled: false }, // Add a new option
-            ];
+          const newOptions = moduleSelected
+            ? contact.contactModules[0]?.options?.filter(
+                (module) => module.value !== moduleId
+              )
+            : [
+                ...contact.contactModules[0].options,
+                { value: moduleId, label: moduleId, isDisabled: false },
+              ];
 
-        return {
-          ...contact,
-          contactModules: contact.contactModules.map((module) => ({
-            ...module,
-            defaultValues: newDefaultValues,
-            options: newOptions,
-          })),
-        };
-      }),
-    };
+          return {
+            ...contact,
+            contactModules: contact.contactModules.map((module) => ({
+              ...module,
+              options: newOptions,
+            })),
+          };
+        }),
+      };
 
-    setProfileData(updatedProfileData);
+      setProfileData(updatedProfileData);
+    } else {
+      setModuleUpdateWarning(true);
+    }
   };
 
   const onGoBack = () => {
@@ -597,6 +600,47 @@ const CompanyProfileComponent = () => {
     setIsEditProfile(value);
   };
 
+  const handleModuleWarning = () => {
+    setModuleUpdateWarning((prev) => !prev);
+  };
+
+  const handleModuleAccess = (index, updatedSelectedItems) => {
+    const updatedContactPersonInfo = profileData.contactPersonInfo.map(
+      (contact, idx) => {
+        const updatedContact = { ...contact };
+        updatedContact.contactModules = contact.contactModules.map((module) => {
+          const updatedModule = { ...module };
+          updatedModule.options = module.options.map((option) => {
+            const updatedOption = { ...option };
+            if (idx !== index) {
+              if (
+                updatedSelectedItems.some((item) => item.value === option.value)
+              ) {
+                updatedOption.isDisabled = true;
+              } else {
+                updatedOption.isDisabled = false;
+              }
+            }
+            return updatedOption;
+          });
+          if (idx === index) {
+            updatedModule.defaultValues = updatedSelectedItems.map((item) => ({
+              value: item.value,
+              label: item.label,
+            }));
+          }
+          return updatedModule;
+        });
+        return updatedContact;
+      }
+    );
+
+    setProfileData({
+      ...profileData,
+      contactPersonInfo: updatedContactPersonInfo,
+    });
+  };
+
   return (
     <CompanyProfileUI
       handleBlur={handleBlur}
@@ -606,6 +650,9 @@ const CompanyProfileComponent = () => {
       handleCompanyDetailChange={handleCompanyDetailChange}
       handleContactPersonInfo={handleContactPersonInfo}
       handleCompanyProfile={handleCompanyProfile}
+      handleModuleAccess={handleModuleAccess}
+      handleModuleWarning={handleModuleWarning}
+      moduleUpdateWarning={moduleUpdateWarning}
       handleEdit={handleEdit}
       handleModuleToggle={handleModuleToggle}
       handleSwitchChange={handleSwitchChange}

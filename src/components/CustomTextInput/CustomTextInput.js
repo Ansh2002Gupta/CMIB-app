@@ -49,6 +49,7 @@ const CustomTextInput = (props) => {
     isDropdown,
     isError,
     isMandatory,
+    handleMultiSelect,
     isMobileNumber,
     isMultiline,
     isMultiSelect,
@@ -160,6 +161,7 @@ const CustomTextInput = (props) => {
             defaultValues={defaultValues}
             data={options}
             maxHeight={200}
+            handleMultiSelect={handleMultiSelect}
             labelField={labelField}
             valueField={valueField}
             placeholder={placeholder || ""}
@@ -184,6 +186,7 @@ const CustomTextInput = (props) => {
             isMultiSelect,
             defaultValues,
             onChangeValue,
+            handleMultiSelect,
             options,
             placeholder,
             value,

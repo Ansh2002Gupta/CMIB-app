@@ -14,6 +14,7 @@ const Dropdown = ({
   isEditable,
   includeAllKeys,
   isMultiSelect,
+  handleMultiSelect,
   labelField,
   menuOptions,
   onChange,
@@ -60,13 +61,15 @@ const Dropdown = ({
       updatedSelectedItems = [...selectedItems, selectedOption[0]];
     }
     setSelectedItems(updatedSelectedItems);
-    onChange(updatedSelectedItems.map((item) => item.value));
+    handleMultiSelect && handleMultiSelect(updatedSelectedItems);
   };
 
   const handleRemoveItems = (itemToRemove) => {
-    setSelectedItems((prevItems) =>
-      prevItems.filter((item) => item.value !== itemToRemove.value)
+    const newSelectedItems = selectedItems.filter(
+      (item) => item.value !== itemToRemove.value
     );
+    setSelectedItems(newSelectedItems);
+    handleMultiSelect && handleMultiSelect(newSelectedItems);
   };
 
   const CheckboxOption = ({ data }) => {

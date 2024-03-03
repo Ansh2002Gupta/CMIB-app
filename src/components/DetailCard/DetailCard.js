@@ -12,6 +12,7 @@ const DetailCard = ({
   details,
   handleChange,
   handleSwitchChange,
+  handleMultiSelect,
   headerId,
   index,
   isActive,
@@ -36,6 +37,7 @@ const DetailCard = ({
         isActive={isActive}
         isEditable={isEditProfile}
         isShowSwitch={isShowSwitch}
+        handleMultiSelect={handleMultiSelect}
       />
       {!!otherDetails && (
         <DetailComponent

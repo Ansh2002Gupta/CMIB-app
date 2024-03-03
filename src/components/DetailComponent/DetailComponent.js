@@ -19,6 +19,7 @@ const DetailComponent = ({
   details,
   handleChange,
   handleSwitchChange,
+  handleMultiSelect,
   headerText,
   index,
   isActive,
@@ -80,6 +81,7 @@ const DetailComponent = ({
                   customStyle={styles.inputStyle}
                   label={intl.formatMessage({ id: detail.label })}
                   isDropdown={detail.isDropdown}
+                  handleMultiSelect={handleMultiSelect}
                   isCounterInput={detail.isCounterInput}
                   isError={!!detail.error}
                   isMandatory={detail.isMandatory}

@@ -18,6 +18,7 @@ import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import ActionPairButton from "../../components/ActionPairButton";
 import Spinner from "../../components/Spinner";
+import ConfirmationModal from "../../containers/ConfirmationModal";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import { numericValidator } from "../../utils/validation";
@@ -32,6 +33,9 @@ const CompanyProfileUI = (props) => {
     handleCompanyDetailChange,
     handleContactPersonInfo,
     handleCompanyProfile,
+    handleModuleWarning,
+    handleModuleAccess,
+    moduleUpdateWarning,
     handleModuleToggle,
     handleEdit,
     handleSwitchChange,
@@ -63,6 +67,9 @@ const CompanyProfileUI = (props) => {
             details={contactDetailArray?.contactModules}
             handleChange={(detailKey, value, isCode) =>
               handleContactPersonInfo(index, detailKey, value, isCode)
+            }
+            handleMultiSelect={(updatedSelectedItems) =>
+              handleModuleAccess(index, updatedSelectedItems)
             }
             handleSwitchChange={handleSwitchChange}
             index={index}
@@ -158,7 +165,7 @@ const CompanyProfileUI = (props) => {
     }
     return null;
   };
-
+  console.log("moduleUpdateWarning", moduleUpdateWarning);
   const renderContent = () => {
     if (isLoading) {
       return (
@@ -174,6 +181,18 @@ const CompanyProfileUI = (props) => {
 
     return (
       <>
+        {moduleUpdateWarning && (
+          <ConfirmationModal
+            buttonOneText={intl.formatMessage({ id: "label.okay" })}
+            headingText={intl.formatMessage({ id: "label.warning" })}
+            hasSingleButton
+            icon={images.iconWarning}
+            onPressButtonOne={handleModuleWarning}
+            subHeading={intl.formatMessage({
+              id: "label.module_removal_warning",
+            })}
+          />
+        )}
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={style.contentContainerStyle}
@@ -217,7 +236,9 @@ const CompanyProfileUI = (props) => {
             {(profileResult?.companyLogo || isEditProfile) && (
               <CardComponent customStyle={style.cardStyle}>
                 <DetailComponent
-                  headerText={intl.formatMessage({ id: "label.company_logo" })}
+                  headerText={intl.formatMessage({
+                    id: "label.company_logo",
+                  })}
                 />
                 <View style={style.imageContainer}>
                   <UploadImage
@@ -294,6 +315,7 @@ CompanyProfileUI.defaultProps = {
   handleCompanyDetailChange: () => {},
   handleContactPersonInfo: () => {},
   handleCompanyProfile: () => {},
+  handleModuleAccess: () => {},
   handleSwitchChange: () => {},
   profileResult: {},
   onSaveClick: () => {},
@@ -307,6 +329,7 @@ CompanyProfileUI.propTypes = {
   handleContactPersonInfo: PropTypes.func,
   handleCompanyProfile: PropTypes.func,
   handleEdit: PropTypes.func.isRequired,
+  handleModuleAccess: PropTypes.func,
   handleModuleToggle: PropTypes.func.isRequired,
   handleSwitchChange: PropTypes.func,
   handleToggle: PropTypes.func,

@@ -5,12 +5,14 @@ import { Platform } from "@unthinkable/react-core-components";
 import ActionPairButton from "../../components/ActionPairButton";
 import CommonText from "../../components/CommonText";
 import CustomImage from "../../components/CustomImage";
+import CustomButton from "../../components/CustomButton";
 import Modal from "../../components/Modal";
 import MultiRow from "../../core/layouts/MultiRow";
 import images from "../../images";
 import styles from "./ConfirmationModal.style";
 
 const ConfirmationModal = ({
+  hasSingleButton,
   buttonOneStyle,
   buttonOneText,
   buttonOneTextStyle,
@@ -45,7 +47,14 @@ const ConfirmationModal = ({
       ),
     },
     {
-      content: (
+      content: hasSingleButton ? (
+        <CustomButton
+          onPress={onPressButtonOne}
+          style={{ ...styles.logoutButtonStyle, ...buttonOneStyle }}
+        >
+          {buttonOneText}
+        </CustomButton>
+      ) : (
         <ActionPairButton
           buttonOneText={buttonOneText}
           buttonTwoText={buttonTwoText}
@@ -78,6 +87,7 @@ const ConfirmationModal = ({
 };
 
 ConfirmationModal.defaultProptypes = {
+  hasSingleButton: false,
   buttonOneStyle: {},
   buttonOneText: "",
   buttonOneTextStyle: {},
@@ -93,6 +103,7 @@ ConfirmationModal.defaultProptypes = {
 };
 
 ConfirmationModal.propTypes = {
+  hasSingleButton: PropTypes.bool,
   buttonOneStyle: PropTypes.object,
   buttonOneText: PropTypes.string.isRequired,
   buttonOneTextStyle: PropTypes.object,
