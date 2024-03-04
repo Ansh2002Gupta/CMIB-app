@@ -96,10 +96,16 @@ const CompanyProfileComponent = () => {
     const companyDetailsFilled = profileData.companyDetail.every(
       (detail) => String(detail.value).trim() !== ""
     );
-
     const contactPersonInfoFilled = profileData.contactPersonInfo.every(
-      (contact) =>
-        contact.contactInfo.every((info) => String(info.value).trim() !== "")
+      (contact) => {
+        const modulesFilled = contact?.contactModules?.every(
+          (module) => module?.defaultValues?.length > 0
+        );
+        const infosFilled = contact.contactInfo.every(
+          (info) => String(info.value).trim() !== ""
+        );
+        return modulesFilled && infosFilled;
+      }
     );
     const companyProfileFilled = profileData.companyProfile.every(
       (detail) => String(detail.value).trim() !== ""
