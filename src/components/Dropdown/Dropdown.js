@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import { View } from "@unthinkable/react-core-components";
 
+import CheckBox from "../CheckBox";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
 import { customTheme, customStyles, styles } from "./Dropdown.style";
-import CheckBox from "../CheckBox";
 
 const Dropdown = ({
   data,
