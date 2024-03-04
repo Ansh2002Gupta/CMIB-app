@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import CustomImage from "../CustomImage";
 import MessageAreaComponent from "../MessageAreaComponent/MessageAreaComponent";
+import Image from "../ImagePreview";
 import ProfileIcon from "../ProfileIcon/ProfileIcon";
 import styles from "./MessageComponent.style";
 import { getMessageInfo, getTime } from "../../utils/util";
@@ -30,9 +30,7 @@ const MessageComponent = ({ data, index, shouldShowAvatar, userDetails }) => {
   const renderImage = (url) => {
     return (
       <>
-        {!!url && (
-          <CustomImage source={{ uri: url }} style={styles.imagesSection} />
-        )}
+        {!!url && <Image source={url} style={styles.imagesSection} preview />}
       </>
     );
   };
