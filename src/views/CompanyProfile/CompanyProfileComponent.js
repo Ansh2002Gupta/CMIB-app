@@ -543,13 +543,6 @@ const CompanyProfileComponent = () => {
     }
   };
 
-  const handleBalanceCreditChange = (value) => {
-    setProfileData({
-      ...profileData,
-      balanceCredit: value,
-    });
-  };
-
   const handleContactPersonInfo = (index, fieldName, value, isCode) => {
     const updatedProfileData = { ...profileData };
     if (
@@ -661,7 +654,6 @@ const CompanyProfileComponent = () => {
       handleBlur={handleBlur}
       allFieldsFilled={allFieldsFilled}
       error={errorWhileGettingResult}
-      handleBalanceCreditChange={handleBalanceCreditChange}
       handleCompanyDetailChange={handleCompanyDetailChange}
       handleContactPersonInfo={handleContactPersonInfo}
       handleCompanyProfile={handleCompanyProfile}

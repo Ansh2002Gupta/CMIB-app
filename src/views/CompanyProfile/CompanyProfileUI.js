@@ -12,7 +12,6 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
 import CustomImage from "../../components/CustomImage";
-import CustomTextInput from "../../components/CustomTextInput";
 import DetailCard from "../../components/DetailCard/DetailCard";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
@@ -30,7 +29,6 @@ const CompanyProfileUI = (props) => {
   const {
     allFieldsFilled,
     error,
-    handleBalanceCreditChange,
     handleCompanyDetailChange,
     handleContactPersonInfo,
     handleCompanyProfile,
@@ -329,7 +327,6 @@ CompanyProfileUI.defaultProps = {
 CompanyProfileUI.propTypes = {
   allFieldsFilled: PropTypes.func,
   error: PropTypes.string,
-  handleBalanceCreditChange: PropTypes.func,
   handleCompanyDetailChange: PropTypes.func,
   handleContactPersonInfo: PropTypes.func,
   handleCompanyProfile: PropTypes.func,
