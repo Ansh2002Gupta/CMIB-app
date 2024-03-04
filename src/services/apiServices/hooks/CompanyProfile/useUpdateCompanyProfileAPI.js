@@ -17,7 +17,10 @@ const useUpdateCompanyProfile = () => {
     setUpdationError("");
     try {
       const res = await Http.put(COMPANY_PROFILE, payload);
-      if (res.status === STATUS_CODES.SUCCESS_STATUS) {
+      if (
+        res.status === STATUS_CODES.SUCCESS_STATUS ||
+        res.code === STATUS_CODES.SUCCESS_STATUS
+      ) {
         setUpdateProfileStatus(API_STATUS.SUCCESS);
         setUpdateProfileResult(res.data);
       } else {

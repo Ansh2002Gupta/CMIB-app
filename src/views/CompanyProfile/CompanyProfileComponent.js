@@ -332,25 +332,26 @@ const CompanyProfileComponent = () => {
 
   const createPayloadFromProfileData = (profileData) => {
     const companyDetails = profileData.companyDetail.reduce((acc, detail) => {
-      switch (detail.key) {
-        case "companyName":
-          acc.name = detail.value;
-          break;
-        case "entity":
-          acc.entity = detail.value;
-          break;
-        case "address":
-          acc.address = detail.value;
-          break;
-        case "emailId":
-          acc.email = detail.value;
-          break;
-        case "code":
-          acc.std_country_code = "+" + detail.value;
-          break;
-        case "telephoneNo":
-          acc.telephone_number = detail.value;
-          break;
+      if (detail.key) {
+        switch (detail.key) {
+          case "companyName":
+            acc.name = detail.value;
+            break;
+          case "entity":
+            acc.entity = detail.value;
+          case "address":
+            acc.address = detail.value;
+            break;
+          case "emailId":
+            acc.email = detail.value;
+            break;
+          case "code":
+            acc.std_country_code = "+" + detail.value;
+            break;
+          case "telephoneNo":
+            acc.telephone_number = detail.value;
+            break;
+        }
       }
       return acc;
     }, {});
@@ -367,11 +368,13 @@ const CompanyProfileComponent = () => {
     ).value;
     companyDetails.source_of_information = profileData.sourceOfInfo;
     companyDetails.credit_amount = profileData.balanceCredit;
-    companyDetails.company_logo = profileData.companyLogo;
+    if (profileData.companyLogo) {
+      companyDetails.company_logo = profileData.companyLogo;
+    }
 
     const contactDetails = profileData.contactPersonInfo.map((contact) => ({
       id: contact.contactInfo.find((info) => info.key === "name").id,
-      modules: contact.contactModules,
+      modules: contact.contactModules[0].value,
       salutation: contact.contactInfo.find(
         (info) => info.label === "label.salutation"
       ).value,
@@ -381,9 +384,11 @@ const CompanyProfileComponent = () => {
       designation: contact.contactInfo.find(
         (info) => info.key === "designation"
       ).value,
-      mobile_country_code: contact.contactInfo
-        .find((info) => info.key === "mobileNo")
-        .codeValue.replace(/\D/g, ""),
+      mobile_country_code:
+        "+" +
+        contact.contactInfo
+          .find((info) => info.key === "mobileNo")
+          .codeValue.replace(/\D/g, ""),
       mobile_number: contact.contactInfo.find((info) => info.key === "mobileNo")
         .value,
       status: contact.isContactActive ? 1 : 0,
