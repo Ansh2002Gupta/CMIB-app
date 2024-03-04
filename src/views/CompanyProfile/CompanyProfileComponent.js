@@ -526,14 +526,18 @@ const CompanyProfileComponent = () => {
       setProfileData({
         ...profileData,
         companyDetail: updatedCompanyDetail.map((detail) =>
-          detail.label === fieldName ? { ...detail, value: value } : detail
+          detail.label === fieldName
+            ? { ...detail, value: value, error: "" }
+            : detail
         ),
       });
     } else {
       setProfileData({
         ...profileData,
         companyDetail: profileData.companyDetail.map((detail) =>
-          detail.label === fieldName ? { ...detail, value: value } : detail
+          detail.label === fieldName
+            ? { ...detail, value: value, error: "" }
+            : detail
         ),
       });
     }
@@ -562,6 +566,7 @@ const CompanyProfileComponent = () => {
       }
       if (infoIndex !== -1 && !isCode) {
         contactDetail.contactInfo[infoIndex].value = value;
+        contactDetail.contactInfo[infoIndex].error = "";
       }
       setProfileData(updatedProfileData);
     }
@@ -585,11 +590,15 @@ const CompanyProfileComponent = () => {
 
   const handleCompanyProfile = (fieldName, value) => {
     const updatedCompanyProfile = profileData.companyProfile.map((detail) =>
-      detail.label === fieldName ? { ...detail, value: value } : detail
+      detail.label === fieldName
+        ? { ...detail, value: value, error: "" }
+        : detail
     );
 
     const updatedOtherDetails = profileData.otherDetails.map((detail) =>
-      detail.label === fieldName ? { ...detail, value: value } : detail
+      detail.label === fieldName
+        ? { ...detail, value: value, error: "" }
+        : detail
     );
 
     setProfileData({
