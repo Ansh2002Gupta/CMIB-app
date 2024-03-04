@@ -11,6 +11,7 @@ import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
+import CustomImage from "../../components/CustomImage";
 import CustomTextInput from "../../components/CustomTextInput";
 import DetailCard from "../../components/DetailCard/DetailCard";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
@@ -79,6 +80,21 @@ const CompanyProfileUI = (props) => {
             otherDetails={contactDetailArray?.contactInfo}
           />
         ))}
+        {isEditProfile && (
+          <TouchableOpacity style={style.buttonStyle}>
+            <CustomImage
+              Icon={images.iconAddBlack}
+              isSvg
+              source={images.iconAddBlack}
+              alt={"Add Contact Person"}
+            />
+            <CommonText customTextStyle={style.buttonTextStyle}>
+              {intl.formatMessage({
+                id: "label.add_contact_person",
+              })}
+            </CommonText>
+          </TouchableOpacity>
+        )}
       </CardComponent>
     );
   };
@@ -165,7 +181,7 @@ const CompanyProfileUI = (props) => {
     }
     return null;
   };
-  console.log("moduleUpdateWarning", moduleUpdateWarning);
+
   const renderContent = () => {
     if (isLoading) {
       return (

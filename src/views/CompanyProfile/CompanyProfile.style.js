@@ -77,6 +77,21 @@ const style = {
   customContainerStyle: {
     gridTemplateColumns: "1fr 1fr",
   },
+  buttonStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: colors.lightGray,
+    borderRadius: 8,
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingRight: 16,
+    paddingLeft: 16,
+    marginBottom: 24,
+  },
+  buttonTextStyle: {
+    fontSize: 14,
+  },
 };
 
 export default style;

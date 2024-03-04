@@ -376,6 +376,7 @@ const locale = {
     "You cannot remove this module access from here as it is assigned to a active contact person, kindly remove it from there first.",
   "label.warning": "Warning",
   "label.okay": "Okay",
+  "label.add_contact_person": "Add Contact Person",
 };
 
 export default locale;
