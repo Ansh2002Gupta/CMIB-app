@@ -227,7 +227,9 @@ const CustomTextInput = (props) => {
         )}
         {isRupee && !!value && (
           <View style={style.prefixContainer}>
-            <CommonText customTextStyle={style.prefixStyle}>{"₹"}</CommonText>
+            <CommonText customTextStyle={style.prefixStyle}>
+              {intl.formatMessage({ id: "label.rupee" })}
+            </CommonText>
           </View>
         )}
         {isMultiline ? (
