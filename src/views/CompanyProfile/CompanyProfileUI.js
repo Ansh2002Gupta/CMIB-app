@@ -38,6 +38,7 @@ const CompanyProfileUI = (props) => {
     handleModuleAccess,
     handleModuleWarning,
     handleModuleToggle,
+    handleRemoveContactPerson,
     handleSwitchChange,
     handleToggle,
     isEditProfile,
@@ -77,7 +78,9 @@ const CompanyProfileUI = (props) => {
             }
             handleSwitchChange={handleSwitchChange}
             index={index}
-            isShowSwitch
+            onPressActionButton={handleRemoveContactPerson}
+            hasActionButton={contactDetailArray.isNewContactPerson}
+            isShowSwitch={!contactDetailArray.isNewContactPerson}
             isActive={contactDetailArray?.isContactActive}
             isEditProfile={isEditProfile}
             otherDetails={contactDetailArray?.contactInfo}

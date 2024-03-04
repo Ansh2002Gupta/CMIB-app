@@ -71,6 +71,21 @@ const styles = StyleSheet.create({
     gap: 8,
     justifyContent: "flex-end",
   },
+  iconStyle: {
+    alignItems: "start",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: colors.lightGray,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 14,
+    paddingBottom: 14,
+    marginBottom: 24,
+  },
 });
 
 export const getRowStyle = (detail) => {

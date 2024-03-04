@@ -22,6 +22,7 @@ import {
   NUMBER_MIN_LENGTH,
   numRegex,
   PREVIOUS_SCREEN,
+  SALUTATION_OPTIONS,
 } from "../../constants/constants";
 import { COUNTRY_CODE } from "../../services/apiServices/apiEndPoint";
 import { isValidUrl } from "../../utils/util";
@@ -650,7 +651,99 @@ const CompanyProfileComponent = () => {
     });
   };
 
-  const onAddContactPerson = () => {};
+  const handleRemoveContactPerson = (indexToRemove) => {
+    const updatedContactPersonInfo = profileData.contactPersonInfo.filter(
+      (_, index) => index !== indexToRemove
+    );
+
+    setProfileData({
+      ...profileData,
+      contactPersonInfo: updatedContactPersonInfo,
+    });
+  };
+
+  const onAddContactPerson = () => {
+    const selectedModules = new Set();
+    profileData.contactPersonInfo.forEach((contact) => {
+      contact.contactModules[0].defaultValues.forEach((module) => {
+        selectedModules.add(module.value);
+      });
+    });
+
+    const newContactModuleOptions = profileData.companyModuleAccess.map(
+      (module) => ({
+        value: module,
+        label: module,
+        isDisabled: selectedModules.has(module),
+      })
+    );
+
+    const newContactPerson = {
+      contactModules: [
+        {
+          label: "label.module",
+          value: [],
+          showBadgeLabel: true,
+          isMandatory: true,
+          isMultiSelect: true,
+          isDropdown: true,
+          placeholder: "label.select_module",
+          defaultValues: [],
+          options: newContactModuleOptions,
+        },
+      ],
+      contactInfo: [
+        {
+          label: "label.salutation",
+          value: "",
+          isDropdown: true,
+          options: SALUTATION_OPTIONS,
+          placeholder: "label.select",
+          isMandatory: true,
+        },
+        {
+          key: "name",
+          label: "label.contact_person_name",
+          value: "",
+          isMandatory: true,
+          maxLength: 255,
+          placeholder: "label.enter_contact_person_name",
+        },
+        {
+          key: "designation",
+          label: "label.contact_personal_designation",
+          value: "",
+          maxLength: 500,
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_designation",
+        },
+        {
+          key: "mobileNo",
+          label: "label.mobile_number",
+          isMobileNumber: true,
+          value: "",
+          codeValue: "",
+          options: countryCodes,
+          isNumeric: true,
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_mobile_no",
+        },
+        {
+          key: "contactEmailId",
+          label: "label.email_id",
+          value: "",
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_email_id",
+        },
+      ],
+      isNewContactPerson: true,
+    };
+
+    setProfileData({
+      ...profileData,
+      contactPersonInfo: [...profileData.contactPersonInfo, newContactPerson],
+    });
+  };
 
   return (
     <CompanyProfileUI
@@ -665,6 +758,7 @@ const CompanyProfileComponent = () => {
         handleModuleAccess,
         handleModuleWarning,
         handleModuleToggle,
+        handleRemoveContactPerson,
         handleSwitchChange,
         handleToggle,
         isEditProfile,

@@ -7,11 +7,14 @@ import { View } from "@unthinkable/react-core-components";
 import BadgeLabel from "../BadgeLabel/BadgeLabel";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import MobileNumberInput from "../MobileNumberInput";
 import Switch from "../Switch";
+import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import { gridStyles } from "../../theme/styles/commonStyles";
 import { numericValidator } from "../../utils/validation";
+import images from "../../images";
 import styles, { getRowStyle } from "./DetailComponent.style";
 
 const DetailComponent = ({
@@ -20,11 +23,13 @@ const DetailComponent = ({
   handleChange,
   handleSwitchChange,
   handleMultiSelect,
+  hasActionButton,
   headerText,
   index,
   isActive,
   isEditable,
   isShowSwitch,
+  onPressActionButton,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -50,6 +55,29 @@ const DetailComponent = ({
     </View>
   );
 
+  const renderWebActionButton = () => (
+    <View style={styles.switchContainer}>
+      <TouchableImage
+        onPress={() => onPressActionButton(index)}
+        resizeMode="contain"
+        source={images.iconTrash}
+        parentStyle={styles.iconStyle}
+      />
+    </View>
+  );
+
+  const renderMobActionButton = () => (
+    <CustomTouchableOpacity style={styles.buttonContainer}>
+      <TouchableImage
+        onPress={() => onPressActionButton(index)}
+        resizeMode="contain"
+        source={images.iconTrash}
+        parentStyle={styles.iconStyle}
+      />
+      <CommonText>{intl.formatMessage({ id: "label.remove" })}</CommonText>
+    </CustomTouchableOpacity>
+  );
+
   return (
     <View>
       {!!headerText && (
@@ -58,7 +86,7 @@ const DetailComponent = ({
         </CommonText>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
-        {isShowSwitch && isEditable && (!isWebView ? renderSwitch() : null)}
+        {isShowSwitch && isEditable && !isWebView && renderSwitch()}
         {details?.map((detail, index) => (
           <View
             key={index}
@@ -138,7 +166,9 @@ const DetailComponent = ({
             )}
           </View>
         ))}
-        {isShowSwitch && isWebView && isEditable ? renderSwitch() : null}
+        {isShowSwitch && isWebView && isEditable && renderSwitch()}
+        {hasActionButton && isEditable && isWebView && renderWebActionButton()}
+        {hasActionButton && isEditable && !isWebView && renderMobActionButton()}
       </View>
     </View>
   );
@@ -160,11 +190,13 @@ DetailComponent.propTypes = {
   details: PropTypes.array,
   handleChange: PropTypes.func,
   handleSwitchChange: PropTypes.func,
+  hasActionButton: PropTypes.bool,
   headerText: PropTypes.string,
   index: PropTypes.number,
   isActive: PropTypes.bool,
   isEditable: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
+  onPressActionButton: PropTypes.func,
 };
 
 export default DetailComponent;
