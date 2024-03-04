@@ -1,33 +1,35 @@
 import React, { useState } from "react";
-import {
-  Dimensions,
-  Image,
-  Modal,
-  View,
-} from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
 import ImageZoom from "react-native-image-pan-zoom";
+import { Dimensions, Modal, View } from "@unthinkable/react-core-components";
 
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import CustomImage from "../CustomImage";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import styles from "./ImagePreview.style";
 
 const { height: HEIGHT, width: WIDTH } = Dimensions.get("window");
 
-const ImagePreview = ({ imageUrls, imageStyle, isPreview }) => {
+const ImagePreview = ({ alt, source, style, preview }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const handleModalClose = () => {
     setModalVisible(false);
   };
 
+  const imagePreviewHandler = () => {
+    if (preview) {
+      setModalVisible(true);
+    }
+  };
+
   return (
     <View>
-      <CustomTouchableOpacity onPress={() => setModalVisible(true)}>
-        <Image source={{ uri: imageUrls }} style={imageStyle} />
+      <CustomTouchableOpacity onPress={imagePreviewHandler}>
+        <CustomImage source={{ uri: source }} style={{ ...style }} alt={alt} />
       </CustomTouchableOpacity>
       <Modal
-        visible={modalVisible && isPreview}
+        visible={modalVisible && preview}
         useNativeDriver
         transparent={false}
         onRequestClose={handleModalClose}
@@ -47,7 +49,11 @@ const ImagePreview = ({ imageUrls, imageStyle, isPreview }) => {
           onSwipeDown={handleModalClose}
           enableSwipeDown
         >
-          <Image source={{ uri: imageUrls }} style={styles.fullImage} />
+          <CustomImage
+            source={{ uri: source }}
+            style={styles.fullImage}
+            alt={alt}
+          />
         </ImageZoom>
       </Modal>
     </View>
@@ -55,15 +61,17 @@ const ImagePreview = ({ imageUrls, imageStyle, isPreview }) => {
 };
 
 ImagePreview.defaultProps = {
-  imageUrls: "",
-  imageStyle: {},
-  isPreview: false,
+  alt: "Preview",
+  source: "",
+  style: {},
+  preview: false,
 };
 
 ImagePreview.propTypes = {
-  imageUrls: PropTypes.string,
-  imageStyle: PropTypes.object,
-  isPreview: PropTypes.bool,
+  alt: PropTypes.string,
+  source: PropTypes.string,
+  style: PropTypes.object,
+  preview: PropTypes.bool,
 };
 
 export default ImagePreview;

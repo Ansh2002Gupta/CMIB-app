@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -57,8 +57,12 @@ const styles = StyleSheet.create({
     right: 10,
   },
   previewImage: {
-    maxHeight: "60vh",
-    maxWidth: "80vw",
+    ...Platform.select({
+      web: {
+        maxHeight: "60vh",
+        maxWidth: "80vw",
+      },
+    }),
   },
   modalStyle: {
     alignItems: "center",

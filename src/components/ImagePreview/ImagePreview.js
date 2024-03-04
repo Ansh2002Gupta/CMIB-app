@@ -1,23 +1,29 @@
-import { Image, View } from "@unthinkable/react-core-components";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { View } from "@unthinkable/react-core-components";
 
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import CustomImage from "../CustomImage";
 import Modal from "../Modal";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import styles from "./ImagePreview.style";
 
-const ImagePreview = ({ imageUrls, imageStyle, isPreview }) => {
+const ImagePreview = ({ alt, source, style, preview }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const isModalVisible = isPreview && modalVisible;
+  const isModalVisible = preview && modalVisible;
+  const imagePreviewHandler = () => {
+    if (preview) {
+      setModalVisible(true);
+    }
+  };
 
   return (
     <View>
-      <CustomTouchableOpacity onPress={() => setModalVisible(true)}>
-        <Image source={{ uri: imageUrls }} style={{ ...imageStyle }} />
+      <CustomTouchableOpacity onPress={imagePreviewHandler}>
+        <CustomImage source={source} style={{ ...style }} alt={alt} />
       </CustomTouchableOpacity>
       {isModalVisible && (
         <Modal containerStyle={styles.transformerImageWrapper} maxWidth="sm">
@@ -39,9 +45,9 @@ const ImagePreview = ({ imageUrls, imageStyle, isPreview }) => {
                   />
                 </div>
                 <TransformComponent>
-                  <img
-                    src={imageUrls}
-                    alt="image preview"
+                  <CustomImage
+                    source={source}
+                    alt={alt}
                     style={styles.previewImage}
                   />
                 </TransformComponent>
@@ -69,15 +75,17 @@ const ImagePreview = ({ imageUrls, imageStyle, isPreview }) => {
 };
 
 ImagePreview.defaultProps = {
-  imageUrls: "",
-  imageStyle: {},
-  isPreview: false,
+  alt: "Preview",
+  source: "",
+  style: {},
+  preview: false,
 };
 
 ImagePreview.propTypes = {
-  imageUrls: PropTypes.string,
-  imageStyle: PropTypes.object,
-  isPreview: PropTypes.bool,
+  alt: PropTypes.string,
+  source: PropTypes.string,
+  style: PropTypes.object,
+  preview: PropTypes.bool,
 };
 
 export default ImagePreview;
