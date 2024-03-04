@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import { View } from "@unthinkable/react-core-components";
@@ -13,13 +13,14 @@ const Dropdown = ({
   isEditable,
   includeAllKeys,
   isMultiSelect,
+  isSelected,
   indexNumber,
   labelField,
   menuOptions,
   onChange,
-  onDeleteSelectedItem,
   placeholder,
   placeholderStyle,
+  selectedItems,
   value,
   valueField,
   indexField,
@@ -38,61 +39,36 @@ const Dropdown = ({
     value: String(option[valueField]),
     label: String(option[labelField]),
     index: option[indexField],
+    isSelected: option[isSelected],
     ...(includeAllKeys ? { ...getAllKeys(option) } : {}),
   }));
 
   const options = menuOptions || defaultOptions;
-
-  const [selectedItems, setSelectedItems] = useState([]);
 
   const selectedOption = options?.find(
     (option) => option.value === String(value)
   );
 
   const handleValueChange = (selectedOption) => {
-    console.log("selectedOption", selectedOption);
-
-    const itemIndex = selectedItems.findIndex(
-      (item) => item.value === selectedOption[0].value
-    );
-
-    let updatedSelectedItems;
-    if (itemIndex !== -1) {
-      updatedSelectedItems = [
-        ...selectedItems.slice(0, itemIndex),
-        ...selectedItems.slice(itemIndex + 1),
-      ];
-      onDeleteSelectedItem(selectedOption.map((item) => item.value));
-    } else {
-      updatedSelectedItems = [...selectedItems, selectedOption[0]];
-      console.log("else");
-    }
-    setSelectedItems(updatedSelectedItems);
-    onChange(updatedSelectedItems.map((item) => item.value));
-  };
-
-  const handleRemoveItems = (itemToRemove) => {
-    setSelectedItems((prevItems) =>
-      prevItems.filter((item) => item.value !== itemToRemove.value)
-    );
-    const updatedValues = selectedItems.filter(
-      (item) => item.value !== itemToRemove.value
-    );
-    onDeleteSelectedItem(updatedValues.map((item) => item.value));
+    onChange(selectedOption.value);
   };
 
   const CheckboxOption = ({ data }) => {
+    const isDisabled = data.index !== null && indexNumber !== data.index;
     return (
-      <View style={styles.multiSelectOptionStyle}>
+      <View
+        style={{
+          ...styles.multiSelectOptionStyle,
+          ...(isDisabled && styles.multiSelectOptionStyleDisabled),
+        }}
+      >
         <CheckBox
-          handleCheckbox={() => handleValueChange([data])}
+          customTextStyle={styles.checkBoxTextStyle}
+          handleCheckbox={() => handleValueChange(data)}
           id={data.value}
-          isSelected={
-            selectedItems?.find((ele) => ele.value === data.value) ||
-            data.index !== null
-          }
+          isSelected={data?.isSelected || data.index !== null}
           title={data?.label}
-          isDisabled={data.index !== null && indexNumber !== data.index}
+          isDisabled={isDisabled}
         />
       </View>
     );
@@ -114,10 +90,12 @@ const Dropdown = ({
         {!!selectedItems.length && (
           <View style={styles.multiSelectOptions}>
             {selectedItems.map((item, index) => (
-              <CustomChipCard
-                message={item?.label}
-                onPress={() => handleRemoveItems(item)}
-              />
+              <>
+                <CustomChipCard
+                  message={item?.name}
+                  onPress={() => handleValueChange(item)}
+                />
+              </>
             ))}
           </View>
         )}

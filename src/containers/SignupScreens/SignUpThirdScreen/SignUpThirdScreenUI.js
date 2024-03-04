@@ -5,6 +5,9 @@ import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../components/ActionPairButton";
 import CustomTextInput from "../../../components/CustomTextInput";
+import CardComponent from "../../../components/CardComponent";
+import CustomButton from "../../../components/CustomButton";
+import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
@@ -22,8 +25,6 @@ import {
 import { numericValidator } from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpThirdScreen.style";
-import CardComponent from "../../../components/CardComponent";
-import CustomButton from "../../../components/CustomButton";
 
 const SignUpThirdScreenUI = ({
   allFieldsFilled,
@@ -32,11 +33,14 @@ const SignUpThirdScreenUI = ({
   errors,
   getAppropriateRef,
   getErrorDetails,
+  getDisabledState,
+  unselectedModules,
   handleAddContactPerson,
   handleBlur,
   handleDismissToast,
   handleInputChange,
   handleRemoveContactPerson,
+  handleClickNext,
   isErrorCountryCodes,
   isGettingCountryCodes,
   intl,
@@ -45,8 +49,8 @@ const SignUpThirdScreenUI = ({
   onClickGoToLogin,
   onClickNext,
   onGoBack,
-  onDeleteSelectedItem,
-  signUpModuleList,
+  showConfirmationModal,
+  setShowConfirmationModal,
   validationError,
 }) => {
   const isWeb = Platform.OS === "web";
@@ -72,16 +76,18 @@ const SignUpThirdScreenUI = ({
                 isError={!!errors[index]?.modules}
                 value={contactDetails[index]?.modules}
                 options={moduleList}
+                selectedItems={moduleList.filter(
+                  (item) => item.selectedIndex === index
+                )}
                 onChangeValue={(val) =>
                   handleInputChange(val, "modules", index)
                 }
-                onDeleteSelectedItem={(list) =>
-                  onDeleteSelectedItem(list, index)
-                }
+                isMandatory
                 indexNumber={index}
                 labelField="name"
                 valueField="value"
                 indexField="selectedIndex"
+                isSelected="isSelected"
                 isDropdown
                 isMultiSelect
               />
@@ -204,17 +210,18 @@ const SignUpThirdScreenUI = ({
               </View>
             </CardComponent>
           ))}
-          {contactDetails.length < signUpModuleList.length && (
-            <CustomButton
-              iconLeft={{
-                isLeftIconNotSvg: false,
-                leftIconSource: images.iconAdd,
-              }}
-              onPress={handleAddContactPerson}
-            >
-              {intl.formatMessage({ id: "label.addContactPerson" })}
-            </CustomButton>
-          )}
+
+          <CustomButton
+            disabled={getDisabledState()}
+            disabledStyle={style.disabledBtnstyle}
+            iconLeft={{
+              isLeftIconNotSvg: false,
+              leftIconSource: images.iconAdd,
+            }}
+            onPress={handleAddContactPerson}
+          >
+            {intl.formatMessage({ id: "label.addContactPerson" })}
+          </CustomButton>
         </>
       </View>
     );
@@ -310,6 +317,34 @@ const SignUpThirdScreenUI = ({
                 <ToastComponent
                   toastMessage={validationError}
                   onDismiss={handleDismissToast}
+                />
+              )}
+
+              {!!unselectedModules.length && showConfirmationModal && (
+                <ConfirmationModal
+                  subHeading={
+                    intl.formatMessage({
+                      id: "label.you_have_not_provided",
+                    }) +
+                    unselectedModules.map((module) => module).join(", ") +
+                    " " +
+                    intl.formatMessage({
+                      id: "label.to_any_contact_person",
+                    })
+                  }
+                  buttonTwoText={intl.formatMessage({
+                    id: "label.yes",
+                  })}
+                  buttonOneText={intl.formatMessage({
+                    id: "label.no",
+                  })}
+                  icon={images.iconWarning}
+                  loader={isLoading}
+                  onPressButtonOne={() => setShowConfirmationModal(false)}
+                  onPressButtonTwo={() => {
+                    handleClickNext();
+                    setShowConfirmationModal(false);
+                  }}
                 />
               )}
             </View>

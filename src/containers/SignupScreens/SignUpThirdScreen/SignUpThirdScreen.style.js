@@ -68,7 +68,12 @@ export const style = StyleSheet.create({
   },
   contactPersonContainer: {
     marginBottom: 16,
-  }
+  },
+  disabledBtnstyle: {
+    backgroundColor: colors.white,
+    opacity: 0.5,
+    cursor: "not-allowed",
+  },
 });
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {

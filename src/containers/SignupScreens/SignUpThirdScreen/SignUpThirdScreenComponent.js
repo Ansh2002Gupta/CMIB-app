@@ -43,7 +43,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       designation: contact?.designation || "",
       emailId: contact?.email || "",
       mobileNo: contact?.mobile_number || "",
-      modules: contact?.modules,
+      modules: contact?.modules || [],
       name: contact?.name || "",
       salutation: contact?.salutation || "",
     }))
@@ -58,7 +58,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }))
   );
 
-  const [moduleList, setModuleList] = useState();
+  const [moduleList, setModuleList] = useState([]);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const { getAppropriateRef } = useGetErrorRefs();
 
@@ -99,6 +100,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
             name: intl.formatMessage({ id: moduleOption.messageId }),
             value: moduleOption.id,
             selectedIndex: null,
+            isSelected: false,
           };
         } else {
           return null;
@@ -116,6 +118,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         detail.salutation,
         detail.designation,
         detail.emailId,
+        detail.modules,
         detail.mobileNo,
         detail.name,
       ];
@@ -221,7 +224,16 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     setValidationError("");
   };
 
-  const onClickNext = () => {
+  const getUnselectedModules = (moduleList) => {
+    const unSelectedModules = moduleList
+      .filter((module) => !module.isSelected)
+      .map((module) => module.name);
+    return unSelectedModules;
+  };
+
+  const unselectedModules = getUnselectedModules(moduleList);
+
+  const handleClickNext = () => {
     const isValid = validateFields();
     if (isValid) {
       const newContactDetails = {
@@ -278,46 +290,53 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }
   };
 
-  console.log("contactDetails", contactDetails);
-
-  const handleInputChange = (value, name, index) => {
-    console.log("value", value);
-
-    const updatedDetails = [...contactDetails];
-    updatedDetails[index] = {
-      ...updatedDetails[index],
-      [name]: value,
-    };
-    setContactDetails(updatedDetails);
-    const newList = moduleList.map((item) => {
-      if (value.includes(item.value)) {
-        if (item.selectedIndex === null) {
-          item.selectedIndex = index;
-        } else {
-          item.selectedIndex = null;
-        }
-      }
-      return item;
-    });
-    setModuleList(newList);
+  const onClickNext = () => {
+    if (!!unselectedModules.length) {
+      setShowConfirmationModal(true);
+    } else {
+      handleClickNext();
+    }
   };
 
-  console.log("moduleListArrayToArrayOfObject(newdata)", moduleList);
-
-  const onDeleteSelectedItem = (list, index) => {
-    console.log("list", list, "index", index);
-
+  const handleInputChange = (value, name, index) => {
     const updatedDetails = [...contactDetails];
-    updatedDetails[index] = {
-      ...updatedDetails[index],
-      modules: list,
-    };
-    setContactDetails(updatedDetails);
-    const newList = moduleList.map((item) => {
-      item.selectedIndex = null;
-      return item;
-    });
-    setModuleList(newList);
+    if (name === "modules") {
+      const existingModules = updatedDetails[index][name] || [];
+
+      if (existingModules.includes(value)) {
+        // Remove the value if it already exists
+        updatedDetails[index] = {
+          ...updatedDetails[index],
+          [name]: existingModules.filter((item) => item !== value),
+        };
+      } else {
+        // Append the value if it does not exist
+        updatedDetails[index] = {
+          ...updatedDetails[index],
+          [name]: [...existingModules, value],
+        };
+      }
+      setContactDetails(updatedDetails);
+      const newList = moduleList.map((item) => {
+        if (value.includes(item.value)) {
+          if (item.selectedIndex === null) {
+            item.selectedIndex = index;
+            item.isSelected = true;
+          } else {
+            item.selectedIndex = null;
+            item.isSelected = false;
+          }
+        }
+        return item;
+      });
+      setModuleList(newList);
+    } else {
+      updatedDetails[index] = {
+        ...updatedDetails[index],
+        [name]: value,
+      };
+      setContactDetails(updatedDetails);
+    }
   };
 
   const getErrorDetails = () => {
@@ -333,12 +352,51 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleAddContactPerson = () => {
-    setContactDetails([...contactDetails, {}]);
+    setContactDetails([
+      ...contactDetails,
+      {
+        countryCode: "",
+        designation: "",
+        emailId: "",
+        mobileNo: "",
+        modules: [],
+        name: "",
+        salutation: "",
+      },
+    ]);
   };
 
   const handleRemoveContactPerson = (index) => {
-    const updatedContactDetails = contactDetails.filter((_, i) => i !== index);
-    setContactDetails(updatedContactDetails);
+    if (!!index) {
+      const updatedContactDetails = contactDetails.filter(
+        (_, i) => i !== index
+      );
+      setContactDetails(updatedContactDetails);
+    } else {
+      setContactDetails([
+        {
+          countryCode: "",
+          designation: "",
+          emailId: "",
+          mobileNo: "",
+          modules: [],
+          name: "",
+          salutation: "",
+        },
+      ]);
+      setModuleList(
+        moduleListArrayToArrayOfObject(signUpState?.signUpDetail?.module_list)
+      );
+    }
+  };
+
+  const getDisabledState = () => {
+    if (allFieldsFilled()) {
+      if (contactDetails.length < moduleList.length) {
+        return false;
+      }
+    }
+    return true;
   };
 
   return (
@@ -350,11 +408,14 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         errors,
         getAppropriateRef,
         getErrorDetails,
+        getDisabledState,
+        unselectedModules,
         handleAddContactPerson,
         handleBlur,
         handleDismissToast,
         handleInputChange,
         handleRemoveContactPerson,
+        handleClickNext,
         intl,
         isErrorCountryCodes,
         isGettingCountryCodes,
@@ -362,8 +423,8 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         onClickGoToLogin,
         onClickNext,
         onGoBack,
-        signUpModuleList: signUpState?.signUpDetail?.module_list,
-        onDeleteSelectedItem,
+        showConfirmationModal,
+        setShowConfirmationModal,
         moduleList,
         validationError,
       }}

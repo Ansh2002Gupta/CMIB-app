@@ -57,6 +57,7 @@ const CustomTextInput = (props) => {
     isRupee,
     isSendButton,
     isLoading,
+    isSelected,
     indexField,
     indexNumber,
     initiateFileUpload,
@@ -68,9 +69,9 @@ const CustomTextInput = (props) => {
     onClickAttachement,
     onClickSend,
     onIconClose,
-    onDeleteSelectedItem,
     placeholder,
     step,
+    selectedItems,
     setFile,
     value,
     labelField,
@@ -166,8 +167,10 @@ const CustomTextInput = (props) => {
             placeholder={placeholder || ""}
             value={value}
             isMultiSelect={isMultiSelect}
+            isSelected={isSelected}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            selectedItems={selectedItems}
             urlField={urlField}
             indexNumber={indexNumber}
             indexField={indexField}
@@ -177,19 +180,22 @@ const CustomTextInput = (props) => {
                 : onChangeValue(item[inputKey]);
               setIsFocused(false);
             }}
-            onDeleteSelectedItem={onDeleteSelectedItem}
             {...remainingProps}
           />
         );
       return (
         <DropDownModal
           {...{
+            isMultiSelect,
+            isSelected,
+            indexNumber,
+            indexField,
             labelField,
             onChangeValue,
             options,
             placeholder,
-            isMultiSelect,
-            onDeleteSelectedItem,
+            selectedItems,
+            urlField,
             value,
             valueField,
           }}
@@ -402,7 +408,6 @@ CustomTextInput.defaultProps = {
   onClickAttachement: () => {},
   onClickSend: () => {},
   onIconClose: () => {},
-  onDeleteSelectedItem: () => {},
   placeholder: "",
   step: 1,
   value: "",
@@ -443,7 +448,6 @@ CustomTextInput.propTypes = {
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
-  onDeleteSelectedItem: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
   onClickAttachement: PropTypes.func,
   onClickSend: PropTypes.func,

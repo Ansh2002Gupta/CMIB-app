@@ -9,6 +9,7 @@ import Images from "../../images";
 import styles from "./CheckBox.style";
 
 const CheckBox = ({
+  customTextStyle,
   handleCheckbox,
   id,
   isPartial,
@@ -37,7 +38,11 @@ const CheckBox = ({
             }
             isSvg
           />
-          <CommonText customTextStyle={styles.titleStyle}>{title}</CommonText>
+          <CommonText
+            customTextStyle={{ ...styles.titleStyle, ...customTextStyle }}
+          >
+            {title}
+          </CommonText>
         </CustomTouchableOpacity>
       ),
     },
@@ -47,12 +52,14 @@ const CheckBox = ({
 };
 
 CheckBox.defaultProps = {
+  customTextStyle: {},
   isSelected: false,
   isPartial: false,
   isDisabled: false,
 };
 
 CheckBox.propTypes = {
+  customTextStyle: PropTypes.object,
   handleCheckbox: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isSelected: PropTypes.bool,

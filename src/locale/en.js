@@ -369,6 +369,9 @@ const locale = {
   "label.path.editDetails": "Edit User Details",
   "label.search_by_ticket": "Search by Ticket ID",
   "label.addContactPerson": "Add Contact Person",
+  "label.you_have_not_provided": "You have not provided ",
+  "label.to_any_contact_person":
+    "to any contact person, Are you sure that you want to save the details?",
 };
 
 export default locale;

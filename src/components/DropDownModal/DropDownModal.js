@@ -13,25 +13,29 @@ import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import CustomChipCard from "../CustomChipCard/CustomChipCard";
+import CheckBox from "../CheckBox";
 import SearchView from "../SearchView";
 import SvgUri from "../SvgUri";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./DropDownModal.style";
-import CustomChipCard from "../CustomChipCard/CustomChipCard";
 
 const DropDownModal = ({
   customHeading,
   isEditable,
   isMobileNumber,
   isMultiSelect,
+  isSelected,
+  indexNumber,
+  indexField,
   labelField,
-  onDeleteSelectedItem,
   onChangeValue,
   menuOptions,
   options,
   placeholder,
+  selectedItems,
   value,
   valueField,
   urlField,
@@ -44,13 +48,14 @@ const DropDownModal = ({
     value: String(option[valueField]),
     label: String(option[labelField]),
     url: String(option[urlField]),
+    index: option[indexField],
+    isSelected: option[isSelected],
   }));
 
   const data = menuOptions?.length ? menuOptions : defaultOptions;
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
   const [selectedOption, setSelectedOption] = useState(data);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
     const selectedIndex = data?.findIndex((item) => item.value === value);
@@ -66,26 +71,8 @@ const DropDownModal = ({
     }
   }, [selectedOption, isDropDownOpen]);
 
-  const selectedOptions = options.filter((option) =>
-    value.includes(option.value)
-  );
-
   const handleValueChange = (selectedOption) => {
-    const selectedItemsList = [...selectedItems, selectedOption[0]];
-    if (!selectedItems.find((item) => item.value === selectedOption[0].value)) {
-      setSelectedItems((prev) => [...prev, ...selectedOption]);
-      onChangeValue(selectedItemsList.map((item) => item.value));
-    }
-  };
-
-  const handleRemoveItems = (itemToRemove) => {
-    setSelectedItems((prevItems) =>
-      prevItems.filter((item) => item.value !== itemToRemove.value)
-    );
-    const updatedValues = selectedItems.filter(
-      (item) => item.value !== itemToRemove.value
-    );
-    onDeleteSelectedItem(updatedValues.map((item) => item.value));
+    onChangeValue(selectedOption.value);
   };
 
   const keyboardDidHideCallback = () => {
@@ -150,11 +137,7 @@ const DropDownModal = ({
       <TouchableOpacity
         key={index}
         onPress={() => {
-          if (isMultiSelect) {
-            handleValueChange([item]);
-          } else {
-            onChangeValue(item.value);
-          }
+          onChangeValue(item.value);
           handleDropDown();
         }}
         style={styles.optionContainer}
@@ -217,10 +200,12 @@ const DropDownModal = ({
         {!!selectedItems.length && (
           <View style={styles.multiSelectOptions}>
             {selectedItems.map((item, index) => (
-              <CustomChipCard
-                message={item?.label}
-                onPress={() => handleRemoveItems(item)}
-              />
+              <>
+                <CustomChipCard
+                  message={item?.name}
+                  onPress={() => handleValueChange(item)}
+                />
+              </>
             ))}
           </View>
         )}
@@ -234,7 +219,36 @@ const DropDownModal = ({
             }}
             onBackdropPress={handleDropDown}
           >
-            {renderFlatList()}
+            <FlatList
+              data={data}
+              getItemLayout={getItemLayout}
+              initialNumToRender={10}
+              keyExtractor={(item, index) => index.toString()}
+              ListEmptyComponent={renderEmptyFooter()}
+              ref={flatListRef}
+              renderItem={({ item, index }) => {
+                const isDisabled =
+                  item.index !== null && indexNumber !== item.index;
+                return (
+                  <View
+                    style={{
+                      ...styles.multiSelectOptionStyle,
+                      ...(isDisabled && styles.multiSelectOptionStyleDisabled),
+                    }}
+                  >
+                    <CheckBox
+                      customTextStyle={styles.checkBoxTextStyle}
+                      handleCheckbox={() => handleValueChange(item)}
+                      id={item.value}
+                      isSelected={item?.isSelected || item.index !== null}
+                      title={item?.label}
+                      isDisabled={isDisabled}
+                    />
+                  </View>
+                );
+              }}
+              onScrollToIndexFailed={scrollToIndex}
+            />
           </CustomModal>
         )}
       </>

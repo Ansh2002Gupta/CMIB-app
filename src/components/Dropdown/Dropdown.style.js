@@ -64,8 +64,14 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
   },
+  checkBoxTextStyle: {
+    marginBottom: 10,
+  },
   multiSelectOptionStyle: {
-    paddingLeft: 5,
-    paddingTop: 5,
+    paddingLeft: 10,
+    paddingTop: 10,
+  },
+  multiSelectOptionStyleDisabled: {
+    opacity: 0.5,
   },
 });
