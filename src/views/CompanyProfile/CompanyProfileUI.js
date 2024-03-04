@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
 import {
   Image,
   ScrollView,
@@ -7,21 +8,21 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
+import ActionPairButton from "../../components/ActionPairButton";
 import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
+import ConfirmationModal from "../../containers/ConfirmationModal";
 import CustomImage from "../../components/CustomImage";
 import DetailCard from "../../components/DetailCard/DetailCard";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import ActionPairButton from "../../components/ActionPairButton";
 import Spinner from "../../components/Spinner";
-import ConfirmationModal from "../../containers/ConfirmationModal";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
-import { numericValidator } from "../../utils/validation";
 import images from "../../images";
 import style from "./CompanyProfile.style";
 
@@ -32,23 +33,27 @@ const CompanyProfileUI = (props) => {
     handleCompanyDetailChange,
     handleContactPersonInfo,
     handleCompanyProfile,
-    handleModuleWarning,
-    handleModuleAccess,
-    moduleUpdateWarning,
-    handleModuleToggle,
+    handleDismissToast,
     handleEdit,
+    handleModuleAccess,
+    handleModuleWarning,
+    handleModuleToggle,
     handleSwitchChange,
     handleToggle,
-    intl,
     isEditProfile,
     isLoading,
+    isUpdatingCompanyProfile,
     moduleOptions,
+    moduleUpdateWarning,
     options,
+    onAddContactPerson,
     onGoBack,
     onSaveClick,
     profileResult,
+    updationError,
   } = props;
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
 
   const renderContactPersonDetails = () => {
     return (
@@ -79,7 +84,10 @@ const CompanyProfileUI = (props) => {
           />
         ))}
         {isEditProfile && (
-          <TouchableOpacity style={style.buttonStyle}>
+          <TouchableOpacity
+            style={style.buttonStyle}
+            onPress={onAddContactPerson}
+          >
             <CustomImage
               Icon={images.iconAddBlack}
               isSvg
@@ -169,6 +177,7 @@ const CompanyProfileUI = (props) => {
           <ActionPairButton
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}
             buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
+            displayLoader={isUpdatingCompanyProfile}
             isButtonTwoGreen
             isDisabled={!allFieldsFilled()}
             onPressButtonOne={onGoBack}
@@ -308,6 +317,12 @@ const CompanyProfileUI = (props) => {
         onPressLeftIcon={onGoBack}
       />
       {renderContent()}
+      {!!updationError && (
+        <ToastComponent
+          toastMessage={updationError}
+          onDismiss={handleDismissToast}
+        />
+      )}
     </>
   );
 };
@@ -318,6 +333,7 @@ CompanyProfileUI.defaultProps = {
   handleCompanyDetailChange: () => {},
   handleContactPersonInfo: () => {},
   handleCompanyProfile: () => {},
+  handleDismissToast: () => {},
   handleModuleAccess: () => {},
   handleSwitchChange: () => {},
   profileResult: {},
@@ -330,19 +346,24 @@ CompanyProfileUI.propTypes = {
   handleCompanyDetailChange: PropTypes.func,
   handleContactPersonInfo: PropTypes.func,
   handleCompanyProfile: PropTypes.func,
+  handleDismissToast: PropTypes.func,
   handleEdit: PropTypes.func.isRequired,
   handleModuleAccess: PropTypes.func,
+  handleModuleWarning: PropTypes.func,
   handleModuleToggle: PropTypes.func.isRequired,
   handleSwitchChange: PropTypes.func,
   handleToggle: PropTypes.func,
-  intl: PropTypes.object.isRequired,
   isEditProfile: PropTypes.bool,
   isLoading: PropTypes.bool.isRequired,
+  isUpdatingCompanyProfile: PropTypes.bool,
   moduleOptions: PropTypes.array.isRequired,
+  moduleUpdateWarning: PropTypes.bool,
   onGoBack: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
+  onAddContactPerson: PropTypes.func,
   onSaveClick: PropTypes.func,
   profileResult: PropTypes.object,
+  updationError: PropTypes.string,
 };
 
 export default CompanyProfileUI;

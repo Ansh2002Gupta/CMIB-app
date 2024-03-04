@@ -41,6 +41,7 @@ const CompanyProfileComponent = () => {
     handleUpdateProfile,
     isLoading: isUpdatingCompanyProfile,
     isSuccess: isUpdatedCompanyProfile,
+    setUpdationError,
     updationError,
   } = useUpdateCompanyProfile();
   const { data: countryCodes } = useFetch({ url: COUNTRY_CODE });
@@ -402,8 +403,8 @@ const CompanyProfileComponent = () => {
     }
   };
 
-  const handleBlur = (fieldName) => {
-    validateFields(fieldName);
+  const handleDismissToast = () => {
+    setUpdationError("");
   };
 
   const handleToggle = (id) => {
@@ -649,29 +650,35 @@ const CompanyProfileComponent = () => {
     });
   };
 
+  const onAddContactPerson = () => {};
+
   return (
     <CompanyProfileUI
-      handleBlur={handleBlur}
-      allFieldsFilled={allFieldsFilled}
-      error={errorWhileGettingResult}
-      handleCompanyDetailChange={handleCompanyDetailChange}
-      handleContactPersonInfo={handleContactPersonInfo}
-      handleCompanyProfile={handleCompanyProfile}
-      handleModuleAccess={handleModuleAccess}
-      handleModuleWarning={handleModuleWarning}
-      moduleUpdateWarning={moduleUpdateWarning}
-      handleEdit={handleEdit}
-      handleModuleToggle={handleModuleToggle}
-      handleSwitchChange={handleSwitchChange}
-      handleToggle={handleToggle}
-      intl={intl}
-      isLoading={isLoading}
-      isEditProfile={isEditProfile}
-      moduleOptions={moduleOptions}
-      options={options}
-      onGoBack={onGoBack}
-      onSaveClick={onSaveClick}
-      profileResult={profileData}
+      {...{
+        allFieldsFilled,
+        error: errorWhileGettingResult,
+        handleCompanyDetailChange,
+        handleContactPersonInfo,
+        handleCompanyProfile,
+        handleDismissToast,
+        handleEdit,
+        handleModuleAccess,
+        handleModuleWarning,
+        handleModuleToggle,
+        handleSwitchChange,
+        handleToggle,
+        isEditProfile,
+        isLoading,
+        isUpdatingCompanyProfile,
+        moduleOptions,
+        moduleUpdateWarning,
+        options,
+        onAddContactPerson,
+        onGoBack,
+        onSaveClick,
+        profileResult: profileData,
+        updationError,
+      }}
     />
   );
 };
