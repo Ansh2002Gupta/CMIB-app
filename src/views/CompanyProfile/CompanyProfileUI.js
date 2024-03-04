@@ -41,6 +41,7 @@ const CompanyProfileUI = (props) => {
     handleRemoveContactPerson,
     handleSwitchChange,
     handleToggle,
+    handleunoccupiedModules,
     isEditProfile,
     isLoading,
     isUpdatingCompanyProfile,
@@ -51,7 +52,9 @@ const CompanyProfileUI = (props) => {
     onGoBack,
     onSaveClick,
     profileResult,
+    unoccupiedModules,
     updationError,
+    sureSaveProfile,
   } = props;
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -207,16 +210,34 @@ const CompanyProfileUI = (props) => {
 
     return (
       <>
-        {moduleUpdateWarning && (
+        {(moduleUpdateWarning || unoccupiedModules.length) && (
           <ConfirmationModal
-            buttonOneText={intl.formatMessage({ id: "label.okay" })}
+            buttonOneText={
+              moduleUpdateWarning
+                ? intl.formatMessage({ id: "label.okay" })
+                : intl.formatMessage({ id: "label.no" })
+            }
             headingText={intl.formatMessage({ id: "label.warning" })}
-            hasSingleButton
+            buttonTwoText={intl.formatMessage({ id: "label.yes" })}
+            hasSingleButton={moduleUpdateWarning}
             icon={images.iconWarning}
-            onPressButtonOne={handleModuleWarning}
-            subHeading={intl.formatMessage({
-              id: "label.module_removal_warning",
-            })}
+            onPressButtonTwo={sureSaveProfile}
+            onPressButtonOne={
+              moduleUpdateWarning
+                ? handleModuleWarning
+                : handleunoccupiedModules
+            }
+            subHeading={
+              moduleUpdateWarning
+                ? intl.formatMessage({
+                    id: "label.module_removal_warning",
+                  })
+                : `${intl.formatMessage({
+                    id: "label.you_are_not_provided",
+                  })} ${unoccupiedModules.join(", ")} ${intl.formatMessage({
+                    id: "label.module_occupancy_warning",
+                  })}`
+            }
           />
         )}
         <ScrollView
@@ -354,6 +375,7 @@ CompanyProfileUI.propTypes = {
   handleModuleAccess: PropTypes.func,
   handleModuleWarning: PropTypes.func,
   handleModuleToggle: PropTypes.func.isRequired,
+  handleunoccupiedModules: PropTypes.func,
   handleSwitchChange: PropTypes.func,
   handleToggle: PropTypes.func,
   isEditProfile: PropTypes.bool,
@@ -366,7 +388,9 @@ CompanyProfileUI.propTypes = {
   onAddContactPerson: PropTypes.func,
   onSaveClick: PropTypes.func,
   profileResult: PropTypes.object,
+  unoccupiedModules: PropTypes.array,
   updationError: PropTypes.string,
+  sureSaveProfile: PropTypes.func,
 };
 
 export default CompanyProfileUI;

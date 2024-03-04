@@ -378,6 +378,9 @@ const locale = {
   "label.okay": "Okay",
   "label.add_contact_person": "Add Contact Person",
   "label.rupee": "₹",
+  "label.you_are_not_provided": "You have not provided",
+  "label.module_occupancy_warning":
+    "to any contact person, Are you sure that you want to save the details?",
 };
 
 export default locale;

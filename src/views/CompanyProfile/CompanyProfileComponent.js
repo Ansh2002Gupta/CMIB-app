@@ -38,10 +38,10 @@ const CompanyProfileComponent = () => {
   const [profileData, setProfileData] = useState(null);
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
   const [moduleUpdateWarning, setModuleUpdateWarning] = useState(false);
+  const [unoccupiedModules, setUnoccupiedModules] = useState([]);
   const {
     handleUpdateProfile,
     isLoading: isUpdatingCompanyProfile,
-    isSuccess: isUpdatedCompanyProfile,
     setUpdationError,
     updationError,
   } = useUpdateCompanyProfile();
@@ -124,8 +124,7 @@ const CompanyProfileComponent = () => {
     );
   };
 
-  const validateContactPersonDetails = (newErrors) => {
-    let isValid = true;
+  const validateContactPersonDetails = (newErrors, isValid) => {
     profileData.contactPersonInfo.forEach((contact, index) => {
       let contactErrors = {};
       const contactName = contact.contactInfo.find(
@@ -297,7 +296,7 @@ const CompanyProfileComponent = () => {
       });
       isValid = false;
     }
-    isValid = validateContactPersonDetails(newErrors);
+    isValid = validateContactPersonDetails(newErrors, isValid);
     const profileDataWithErrors = {
       ...profileData,
       companyDetail: profileData.companyDetail.map((detail) => ({
@@ -404,9 +403,28 @@ const CompanyProfileComponent = () => {
 
   const onSaveClick = () => {
     if (validateFields()) {
+      const unoccupied = profileData.companyModuleAccess.filter(
+        (moduleId) =>
+          !profileData.contactPersonInfo.some((contact) =>
+            contact.contactModules[0].defaultValues.some(
+              (defaultValue) => defaultValue.value === moduleId
+            )
+          )
+      );
+
+      if (unoccupied.length > 0) {
+        setUnoccupiedModules(unoccupied);
+        return;
+      }
       const payload = createPayloadFromProfileData(profileData);
       handleUpdateProfile(payload);
     }
+  };
+
+  const sureSaveProfile = () => {
+    const payload = createPayloadFromProfileData(profileData);
+    setUnoccupiedModules([]);
+    handleUpdateProfile(payload);
   };
 
   const handleDismissToast = () => {
@@ -443,6 +461,9 @@ const CompanyProfileComponent = () => {
 
       const updatedProfileData = {
         ...profileData,
+        companyModuleAccess: profileData.companyModuleAccess.includes(moduleId)
+          ? profileData.companyModuleAccess.filter((id) => id !== moduleId)
+          : [...profileData.companyModuleAccess, moduleId],
         contactPersonInfo: profileData.contactPersonInfo.map((contact) => {
           const moduleIndex = contact?.contactModules[0]?.options?.findIndex(
             (module) => module.value === moduleId
@@ -750,6 +771,10 @@ const CompanyProfileComponent = () => {
     });
   };
 
+  const handleunoccupiedModules = () => {
+    setUnoccupiedModules([]);
+  };
+
   return (
     <CompanyProfileUI
       {...{
@@ -765,6 +790,7 @@ const CompanyProfileComponent = () => {
         handleModuleToggle,
         handleRemoveContactPerson,
         handleSwitchChange,
+        handleunoccupiedModules,
         handleToggle,
         isEditProfile,
         isLoading,
@@ -776,7 +802,9 @@ const CompanyProfileComponent = () => {
         onGoBack,
         onSaveClick,
         profileResult: profileData,
+        unoccupiedModules,
         updationError,
+        sureSaveProfile,
       }}
     />
   );
