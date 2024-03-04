@@ -5,6 +5,7 @@ import {
   Modal,
   View,
 } from "@unthinkable/react-core-components";
+import PropTypes from "prop-types";
 import ImageZoom from "react-native-image-pan-zoom";
 
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -14,7 +15,7 @@ import styles from "./ImagePreview.style";
 
 const { height: HEIGHT, width: WIDTH } = Dimensions.get("window");
 
-const ImagePreview = ({ imageUrls, imageStyle }) => {
+const ImagePreview = ({ imageUrls, imageStyle, isPreview }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const handleModalClose = () => {
     setModalVisible(false);
@@ -26,7 +27,7 @@ const ImagePreview = ({ imageUrls, imageStyle }) => {
         <Image source={{ uri: imageUrls }} style={imageStyle} />
       </CustomTouchableOpacity>
       <Modal
-        visible={modalVisible}
+        visible={modalVisible && isPreview}
         useNativeDriver
         transparent={false}
         onRequestClose={handleModalClose}
@@ -51,6 +52,18 @@ const ImagePreview = ({ imageUrls, imageStyle }) => {
       </Modal>
     </View>
   );
+};
+
+ImagePreview.defaultProps = {
+  imageUrls: "",
+  imageStyle: {},
+  isPreview: false,
+};
+
+ImagePreview.propTypes = {
+  imageUrls: PropTypes.string,
+  imageStyle: PropTypes.object,
+  isPreview: PropTypes.bool,
 };
 
 export default ImagePreview;

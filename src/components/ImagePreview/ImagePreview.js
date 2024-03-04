@@ -1,5 +1,6 @@
 import { Image, View } from "@unthinkable/react-core-components";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -8,14 +9,17 @@ import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import styles from "./ImagePreview.style";
 
-const ImagePreview = ({ imageUrls, imageStyle }) => {
+const ImagePreview = ({ imageUrls, imageStyle, isPreview }) => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const isModalVisible = isPreview && modalVisible;
+
   return (
     <View>
       <CustomTouchableOpacity onPress={() => setModalVisible(true)}>
         <Image source={{ uri: imageUrls }} style={{ ...imageStyle }} />
       </CustomTouchableOpacity>
-      {modalVisible && (
+      {isModalVisible && (
         <Modal containerStyle={styles.transformerImageWrapper} maxWidth="sm">
           <TransformWrapper
             initialScale={1}
@@ -62,6 +66,18 @@ const ImagePreview = ({ imageUrls, imageStyle }) => {
       )}
     </View>
   );
+};
+
+ImagePreview.defaultProps = {
+  imageUrls: "",
+  imageStyle: {},
+  isPreview: false,
+};
+
+ImagePreview.propTypes = {
+  imageUrls: PropTypes.string,
+  imageStyle: PropTypes.object,
+  isPreview: PropTypes.bool,
 };
 
 export default ImagePreview;
