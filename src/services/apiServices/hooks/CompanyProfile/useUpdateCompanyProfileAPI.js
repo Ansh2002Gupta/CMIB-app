@@ -12,7 +12,7 @@ const useUpdateCompanyProfile = () => {
   const [updateProfileResult, setUpdateProfileResult] = useState([]);
   const [updationError, setUpdationError] = useState("");
 
-  const handleUpdateProfile = async (payload) => {
+  const handleUpdateProfile = async (payload, successCallback) => {
     setUpdateProfileStatus(API_STATUS.LOADING);
     setUpdationError("");
     try {
@@ -23,6 +23,7 @@ const useUpdateCompanyProfile = () => {
       ) {
         setUpdateProfileStatus(API_STATUS.SUCCESS);
         setUpdateProfileResult(res.data);
+        successCallback && successCallback();
       } else {
         setUpdateProfileStatus(API_STATUS.ERROR);
         setUpdationError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);

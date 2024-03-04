@@ -401,6 +401,11 @@ const CompanyProfileComponent = () => {
     return payload;
   };
 
+  const onProfileUpdate = () => {
+    setIsEditProfile(false);
+    onGetProfile();
+  };
+
   const onSaveClick = () => {
     if (validateFields()) {
       const unoccupied = profileData.companyModuleAccess.filter(
@@ -417,14 +422,14 @@ const CompanyProfileComponent = () => {
         return;
       }
       const payload = createPayloadFromProfileData(profileData);
-      handleUpdateProfile(payload);
+      handleUpdateProfile(payload, onProfileUpdate);
     }
   };
 
   const sureSaveProfile = () => {
     const payload = createPayloadFromProfileData(profileData);
     setUnoccupiedModules([]);
-    handleUpdateProfile(payload);
+    handleUpdateProfile(payload, onProfileUpdate);
   };
 
   const handleDismissToast = () => {
