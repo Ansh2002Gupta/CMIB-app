@@ -372,6 +372,8 @@ const locale = {
   "label.you_have_not_provided": "You have not provided ",
   "label.to_any_contact_person":
     "to any contact person, Are you sure that you want to save the details?",
+  "label.particular_person_get_particlular_module":
+    "* Note - A particular module can be assigned to a single contact person only.",
 };
 
 export default locale;

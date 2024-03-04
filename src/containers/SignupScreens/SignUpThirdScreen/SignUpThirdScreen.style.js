@@ -74,6 +74,11 @@ export const style = StyleSheet.create({
     opacity: 0.5,
     cursor: "not-allowed",
   },
+  note: {
+    marginTop: 16,
+    color: colors.darkGrey,
+    fontStyle: "italic",
+  },
 });
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {

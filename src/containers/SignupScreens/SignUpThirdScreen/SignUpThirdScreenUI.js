@@ -8,6 +8,7 @@ import CustomTextInput from "../../../components/CustomTextInput";
 import CardComponent from "../../../components/CardComponent";
 import CustomButton from "../../../components/CustomButton";
 import ConfirmationModal from "../../ConfirmationModal/ConfirmationModal";
+import CommonText from "../../../components/CommonText";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import FormWrapper from "../../../components/FormWrapper";
 import HeaderTextWithLabelAndDescription from "../../../components/HeaderTextWithLabelAndDescription";
@@ -293,6 +294,11 @@ const SignUpThirdScreenUI = ({
                       }),
                     })}
                   />
+                  <CommonText customTextStyle={style.note}>
+                    {intl.formatMessage({
+                      id: "label.particular_person_get_particlular_module",
+                    })}
+                  </CommonText>
                 </View>
               )}
               {isWebView ? (
