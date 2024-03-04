@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import './index.css';
-import App from './App';
-import GlobalProvider from './globalContext';
-import reportWebVitals from './reportWebVitals';
+import "./index.css";
+import App from "./App";
+import GlobalProvider from "./globalContext";
+import reportWebVitals from "./reportWebVitals";
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,7 +14,7 @@ ReactDOM.render(
       <App />
     </GlobalProvider>
   </React.StrictMode>,
-  rootElement,
+  rootElement
 );
 
 // If you want to start measuring performance in your app, pass a function
