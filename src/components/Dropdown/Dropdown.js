@@ -1,4 +1,5 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import { View } from "@unthinkable/react-core-components";
@@ -25,6 +26,7 @@ const Dropdown = ({
   valueField,
   indexField,
 }) => {
+  const intl = useIntl();
   const getAllKeys = (option) => {
     let finalObj = {};
     Object.keys(option).forEach((key) => {
@@ -105,7 +107,7 @@ const Dropdown = ({
   return (
     <div>
       <Select
-        value={selectedOption}
+        value={selectedOption || ""}
         placeholder={placeholder}
         options={options}
         isDisabled={!isEditable}

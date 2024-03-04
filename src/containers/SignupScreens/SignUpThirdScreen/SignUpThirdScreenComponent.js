@@ -7,7 +7,10 @@ import useFetch from "../../../hooks/useFetch";
 import useGetErrorRefs from "./controllers/useGetErrorRefs";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
-import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
+import {
+  setSignUpDetails,
+  setModulesList,
+} from "../../../globalContext/signUp/signUpActions";
 import { scrollToRef } from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 import {
@@ -58,7 +61,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }))
   );
 
-  const [moduleList, setModuleList] = useState([]);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const { getAppropriateRef } = useGetErrorRefs();
@@ -84,9 +86,19 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       }))
     );
 
-    setModuleList(
-      moduleListArrayToArrayOfObject(signUpState?.signUpDetail?.module_list)
-    );
+    const currentModulesList = signUpState?.modulesList;
+    const newModulesListArray = signUpState?.signUpDetail?.module_list;
+
+    if (
+      !currentModulesList ||
+      currentModulesList.length !== newModulesListArray?.length
+    ) {
+      signUpDispatch(
+        setModulesList(
+          moduleListArrayToArrayOfObject(signUpState?.signUpDetail?.module_list)
+        )
+      );
+    }
   }, [signUpState?.signUpDetail?.contact_details]);
 
   const moduleListArrayToArrayOfObject = (arr) => {
@@ -190,6 +202,56 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     setErrors(updatedErrors);
   };
 
+  const isEmailUnique = (email, index) => {
+    return contactDetails.every((detail, i) => {
+      if (i === index) return true;
+      return detail.emailId !== email;
+    });
+  };
+
+  const isMobileNoUnique = (mobileNo, index) => {
+    return contactDetails.every((detail, i) => {
+      if (i === index) return true;
+      return detail.mobileNo !== mobileNo;
+    });
+  };
+
+  const validateUniqueFields = () => {
+    const uniqueEmails = new Set();
+    const uniqueMobileNumbers = new Set();
+
+    const emailErrors = [];
+    const mobileNoErrors = [];
+
+    contactDetails.forEach((detail, index) => {
+      if (!isEmailUnique(detail.emailId, index)) {
+        emailErrors.push(index);
+      } else {
+        uniqueEmails.add(detail.emailId);
+      }
+
+      if (!isMobileNoUnique(detail.mobileNo, index)) {
+        mobileNoErrors.push(index);
+      } else {
+        uniqueMobileNumbers.add(detail.mobileNo);
+      }
+    });
+
+    const newErrors = errors.map((error, index) => ({
+      ...error,
+      emailId: emailErrors.includes(index)
+        ? intl.formatMessage({ id: "label.duplicate_email_validation" })
+        : "",
+      mobileNo: mobileNoErrors.includes(index)
+        ? intl.formatMessage({ id: "label.duplicate_mobileNo_validation" })
+        : "",
+    }));
+
+    setErrors(newErrors);
+
+    return emailErrors.length === 0 && mobileNoErrors.length === 0;
+  };
+
   const validateFields = () => {
     const newErrors = contactDetails?.map((detail, index) => ({
       name: validateField({ name: "name", index }),
@@ -224,17 +286,17 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     setValidationError("");
   };
 
-  const getUnselectedModules = (moduleList) => {
-    const unSelectedModules = moduleList
+  const getUnselectedModules = (list) => {
+    const unSelectedModules = list
       .filter((module) => !module.isSelected)
       .map((module) => module.name);
     return unSelectedModules;
   };
 
-  const unselectedModules = getUnselectedModules(moduleList);
+  const unselectedModules = getUnselectedModules(signUpState?.modulesList);
 
   const handleClickNext = () => {
-    const isValid = validateFields();
+    const isValid = validateFields() && validateUniqueFields();
     if (isValid) {
       const newContactDetails = {
         contact_details: constructUpdatedContactDetails(contactDetails),
@@ -299,6 +361,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleInputChange = (value, name, index) => {
+    validateUniqueFields();
     const updatedDetails = [...contactDetails];
     if (name === "modules") {
       const existingModules = updatedDetails[index][name] || [];
@@ -317,7 +380,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         };
       }
       setContactDetails(updatedDetails);
-      const newList = moduleList.map((item) => {
+      const newList = signUpState?.modulesList.map((item) => {
         if (value.includes(item.value)) {
           if (item.selectedIndex === null) {
             item.selectedIndex = index;
@@ -329,7 +392,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         }
         return item;
       });
-      setModuleList(newList);
+      signUpDispatch(setModulesList(newList));
     } else {
       updatedDetails[index] = {
         ...updatedDetails[index],
@@ -384,17 +447,20 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
           salutation: "",
         },
       ]);
-      setModuleList(
-        moduleListArrayToArrayOfObject(signUpState?.signUpDetail?.module_list)
+      signUpDispatch(
+        setModulesList(
+          moduleListArrayToArrayOfObject(signUpState?.signUpDetail?.module_list)
+        )
       );
     }
   };
 
   const getDisabledState = () => {
     if (allFieldsFilled()) {
-      if (contactDetails.length < moduleList.length) {
-        return false;
-      }
+      const allModulesSelected = signUpState?.modulesList.every(
+        (module) => module.isSelected
+      );
+      return allModulesSelected;
     }
     return true;
   };
@@ -425,7 +491,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         onGoBack,
         showConfirmationModal,
         setShowConfirmationModal,
-        moduleList,
+        moduleList: signUpState?.modulesList,
         validationError,
       }}
     />

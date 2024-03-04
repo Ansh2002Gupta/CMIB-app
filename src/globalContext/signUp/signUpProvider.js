@@ -15,6 +15,7 @@ const initialState = {
       },
     ],
   },
+  modulesList: [],
 };
 
 const localeReducer = (state, action) => {
@@ -23,6 +24,11 @@ const localeReducer = (state, action) => {
       return {
         ...state,
         signUpDetail: { ...state.signUpDetail, ...action.payload },
+      };
+    case types.SET_MODULES_LIST:
+      return {
+        ...state,
+        modulesList: [...action.payload],
       };
     case types.DELETE_SIGN_UP_DETAIL_KEY:
       const newSignUpDetail = { ...state.signUpDetail };
