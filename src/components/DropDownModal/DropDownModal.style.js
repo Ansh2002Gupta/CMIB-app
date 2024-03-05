@@ -98,6 +98,9 @@ const styles = StyleSheet.create({
   multiSelectOptionStyleDisabled: {
     opacity: 0.5,
   },
+  modalContainer: {
+    marginBottom: 30,
+  },
 });
 
 export default styles;

@@ -223,6 +223,7 @@ const DropDownModal = ({
           >
             <FlatList
               data={data}
+              style={styles.modalContainer}
               getItemLayout={getItemLayout}
               initialNumToRender={10}
               keyExtractor={(item, index) => index.toString()}
