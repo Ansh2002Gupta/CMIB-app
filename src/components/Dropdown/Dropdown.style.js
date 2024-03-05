@@ -17,6 +17,7 @@ export const customStyles = (dropdownStyle, placeholderStyle) => ({
   control: (base, state) => ({
     ...base,
     ...(styles.control ? styles.control(state.isFocused) : {}),
+    marginTop: "4px",
     ...dropdownStyle,
   }),
   placeholder: (base) => ({
