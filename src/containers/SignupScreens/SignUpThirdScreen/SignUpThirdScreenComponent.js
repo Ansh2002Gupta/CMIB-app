@@ -193,63 +193,34 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleBlur = (name, index) => {
-    const fieldError = validateField({ name, index });
+    const duplicateIndices = checkForDuplicates(name);
     const updatedErrors = [...errors];
-    updatedErrors[index] = {
-      ...updatedErrors[index],
-      [name]: fieldError,
-    };
+    contactDetails.forEach((_, idx) => {
+      updatedErrors[idx] = {
+        ...updatedErrors[idx],
+        [name]: duplicateIndices[idx]
+          ? intl.formatMessage({
+              id:
+                name === "emailId"
+                  ? "label.duplicate_email_validation"
+                  : "label.duplicate_mobileNo_validation",
+            })
+          : validateField({ name, index: idx }) || "",
+      };
+    });
+
     setErrors(updatedErrors);
   };
 
-  const isEmailUnique = (email, index) => {
-    return contactDetails.every((detail, i) => {
-      if (i === index) return true;
-      return detail.emailId !== email;
-    });
-  };
+  const checkForDuplicates = (name) => {
+    if (name !== "emailId" && name !== "mobileNo") {
+      return [];
+    }
 
-  const isMobileNoUnique = (mobileNo, index) => {
-    return contactDetails.every((detail, i) => {
-      if (i === index) return true;
-      return detail.mobileNo !== mobileNo;
-    });
-  };
-
-  const validateUniqueFields = () => {
-    const uniqueEmails = new Set();
-    const uniqueMobileNumbers = new Set();
-
-    const emailErrors = [];
-    const mobileNoErrors = [];
-
-    contactDetails.forEach((detail, index) => {
-      if (!isEmailUnique(detail.emailId, index)) {
-        emailErrors.push(index);
-      } else {
-        uniqueEmails.add(detail.emailId);
-      }
-
-      if (!isMobileNoUnique(detail.mobileNo, index)) {
-        mobileNoErrors.push(index);
-      } else {
-        uniqueMobileNumbers.add(detail.mobileNo);
-      }
-    });
-
-    const newErrors = errors.map((error, index) => ({
-      ...error,
-      emailId: emailErrors.includes(index)
-        ? intl.formatMessage({ id: "label.duplicate_email_validation" })
-        : "",
-      mobileNo: mobileNoErrors.includes(index)
-        ? intl.formatMessage({ id: "label.duplicate_mobileNo_validation" })
-        : "",
-    }));
-
-    setErrors(newErrors);
-
-    return emailErrors.length === 0 && mobileNoErrors.length === 0;
+    const values = contactDetails.map((detail) => detail[name]);
+    return values.map(
+      (value, index) => values.indexOf(value) !== index && value.trim() !== ""
+    );
   };
 
   const validateFields = () => {
@@ -276,9 +247,10 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const onGoBack = () => {
-    const updatedContactDetails =
-      constructUpdatedContactDetails(contactDetails);
-    signUpDispatch(setSignUpDetails(updatedContactDetails));
+    const newContactDetails = {
+      contact_details: constructUpdatedContactDetails(contactDetails),
+    };
+    signUpDispatch(setSignUpDetails(newContactDetails));
     tabHandler("prev");
   };
 
@@ -296,7 +268,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   const unselectedModules = getUnselectedModules(signUpState?.modulesList);
 
   const handleClickNext = () => {
-    const isValid = validateFields() && validateUniqueFields();
+    const isValid = validateFields();
     if (isValid) {
       const newContactDetails = {
         contact_details: constructUpdatedContactDetails(contactDetails),
@@ -361,7 +333,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const handleInputChange = (value, name, index) => {
-    validateUniqueFields();
     const updatedDetails = [...contactDetails];
     if (name === "modules") {
       const existingModules = updatedDetails?.[index]?.[name] || [];
@@ -434,6 +405,18 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       const updatedContactDetails = contactDetails.filter(
         (_, i) => i !== index
       );
+
+      const updatedModulesList = signUpState.modulesList.map((module) => {
+        if (module.selectedIndex === index) {
+          return { ...module, isSelected: false, selectedIndex: null };
+        } else if (module.selectedIndex > index) {
+          return { ...module, selectedIndex: module.selectedIndex - 1 };
+        }
+        return module;
+      });
+      signUpDispatch(setModulesList(updatedModulesList));
+      const updatedErrors = errors.filter((_, i) => i !== index);
+      setErrors(updatedErrors);
       setContactDetails(updatedContactDetails);
     } else {
       setContactDetails([
@@ -445,6 +428,14 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
           modules: [],
           name: "",
           salutation: "",
+        },
+      ]);
+      setErrors([
+        {
+          designation: "",
+          emailId: "",
+          mobileNo: "",
+          name: "",
         },
       ]);
       signUpDispatch(
