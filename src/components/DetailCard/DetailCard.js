@@ -42,15 +42,17 @@ const DetailCard = ({
         index={index}
         isActive={isActive}
         isEditable={isEditProfile}
+        isInputDisable={isShowSwitch && !isActive}
         isShowSwitch={isShowSwitch}
         onPressActionButton={onPressActionButton}
       />
       {!!otherDetails && (
         <DetailComponent
           details={otherDetails}
-          isEditable={isEditProfile}
           handleChange={handleChange}
           hasActionButton={!isWebView && hasActionButton}
+          isEditable={isEditProfile}
+          isInputDisable={isShowSwitch && !isActive}
           onPressActionButton={onPressActionButton}
         />
       )}

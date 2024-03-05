@@ -208,6 +208,9 @@ const style = {
     borderRadius: 10,
     marginLeft: 5,
   },
+  disabledStyle: {
+    backgroundColor: colors.disabledTextFieldColor,
+  },
 };
 
 export default style;

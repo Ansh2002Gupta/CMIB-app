@@ -48,6 +48,7 @@ const CustomTextInput = (props) => {
     inputKey,
     isCounterInput,
     isDropdown,
+    isEditable,
     isError,
     isMandatory,
     handleMultiSelect,
@@ -117,6 +118,7 @@ const CustomTextInput = (props) => {
       : { ...style.inputContainer, ...customTextInputOuterContainer }),
     ...(isFocused ? style.focusedStyle : {}),
     ...(isError ? style.invalidInput : {}),
+    ...(!isEditable ? style.disabledStyle : {}),
   };
 
   const webProps = isWebPlatform
@@ -181,6 +183,7 @@ const CustomTextInput = (props) => {
                 : onChangeValue(item[inputKey]);
               setIsFocused(false);
             }}
+            isEditable={isEditable}
             {...remainingProps}
           />
         );
@@ -196,6 +199,7 @@ const CustomTextInput = (props) => {
             placeholder,
             value,
             valueField,
+            isEditable,
           }}
         />
       );
@@ -227,6 +231,7 @@ const CustomTextInput = (props) => {
               value: codeValue,
               valueField,
               urlField,
+              isEditable,
             }}
           />
         )}
@@ -259,8 +264,10 @@ const CustomTextInput = (props) => {
                   style.textInputStyle,
                   isMultiline && style.textAlignStyle,
                   isWebView && style.webLabel,
+                  !isEditable && style.disabledStyle,
                   customTextInputContainer,
                 ]}
+                editable={isEditable}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 placeholder={placeholder}
@@ -329,6 +336,7 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
+            editable={isEditable}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder}
@@ -436,6 +444,7 @@ CustomTextInput.propTypes = {
   inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
+  isEditable: PropTypes.bool,
   isError: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,

@@ -13,10 +13,10 @@ export const customTheme = (theme) => ({
   },
 });
 
-export const customStyles = (dropdownStyle, placeholderStyle) => ({
+export const customStyles = (dropdownStyle, placeholderStyle, isDisabled) => ({
   control: (base, state) => ({
     ...base,
-    ...(styles.control ? styles.control(state.isFocused) : {}),
+    ...(styles.control ? styles.control(state.isFocused, isDisabled) : {}),
     marginTop: "4px",
     ...dropdownStyle,
   }),
@@ -45,7 +45,7 @@ export const customStyles = (dropdownStyle, placeholderStyle) => ({
 });
 
 export const styles = StyleSheet.create({
-  control: (isFocused) => ({
+  control: (isFocused, isDisabled) => ({
     borderWidth: isFocused ? 0 : 1,
     borderColor: colors.lightGrey,
     borderRadius: 12,
@@ -55,8 +55,14 @@ export const styles = StyleSheet.create({
     transition: "none",
     "&:hover": {
       borderColor: colors.lightGrey,
-      cursor: "pointer",
+      cursor: isDisabled ? "not-allowed" : "pointer",
     },
+    ...(isDisabled
+      ? {
+          backgroundColor: colors.disabledTextFieldColor,
+          cursor: isDisabled ? "not-allowed" : "pointer",
+        }
+      : {}),
   }),
   valueStyle: {
     color: colors.black,

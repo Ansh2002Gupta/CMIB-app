@@ -28,6 +28,7 @@ const DetailComponent = ({
   index,
   isActive,
   isEditable,
+  isInputDisable,
   isShowSwitch,
   onPressActionButton,
 }) => {
@@ -101,6 +102,7 @@ const DetailComponent = ({
                   onChangeMobNumber={(val) => handleChange(detail.label, val)}
                   onChangeCode={(val) => handleChange(detail.label, val, true)}
                   mobNumberError={detail.error}
+                  isEditable={isInputDisable ? !isInputDisable : true}
                 />
               ) : (
                 <CustomTextInput
@@ -109,6 +111,7 @@ const DetailComponent = ({
                   customStyle={styles.inputStyle}
                   label={intl.formatMessage({ id: detail.label })}
                   isDropdown={detail.isDropdown}
+                  isEditable={isInputDisable ? !isInputDisable : true}
                   handleMultiSelect={handleMultiSelect}
                   isCounterInput={detail.isCounterInput}
                   isError={!!detail.error}
@@ -182,6 +185,7 @@ DetailComponent.defaultProps = {
   headerText: "",
   isActive: false,
   isEditable: false,
+  isInputDisable: false,
   isShowSwitch: false,
 };
 
@@ -195,6 +199,7 @@ DetailComponent.propTypes = {
   index: PropTypes.number,
   isActive: PropTypes.bool,
   isEditable: PropTypes.bool,
+  isInputDisable: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
   onPressActionButton: PropTypes.func,
 };

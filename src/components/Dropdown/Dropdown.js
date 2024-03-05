@@ -93,7 +93,8 @@ const Dropdown = ({
           value={""}
           placeholder={placeholder}
           options={options}
-          styles={customStyles(dropdownStyle, placeholderStyle)}
+          isDisabled={!isEditable}
+          styles={customStyles(dropdownStyle, placeholderStyle, !isEditable)}
           theme={customTheme}
           onChange={handleValueChange}
           isMulti
