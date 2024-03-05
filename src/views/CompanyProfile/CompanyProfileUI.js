@@ -210,7 +210,7 @@ const CompanyProfileUI = (props) => {
 
     return (
       <>
-        {(moduleUpdateWarning || unoccupiedModules.length) && (
+        {moduleUpdateWarning || unoccupiedModules.length ? (
           <ConfirmationModal
             buttonOneText={
               moduleUpdateWarning
@@ -239,6 +239,8 @@ const CompanyProfileUI = (props) => {
                   })}`
             }
           />
+        ) : (
+          <></>
         )}
         <ScrollView
           showsVerticalScrollIndicator={false}
