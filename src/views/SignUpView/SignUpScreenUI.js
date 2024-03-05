@@ -21,9 +21,9 @@ const SignUpScreenUI = ({ activeTab, intl, onClickGoToLogin, onHandleTab }) => {
     {
       component: SignUpWelcomeScreen,
     },
-    // {
-    //   component: SignUpSecondScreen,
-    // },
+    {
+      component: SignUpSecondScreen,
+    },
     {
       component: SignUpThirdScreen,
     },
