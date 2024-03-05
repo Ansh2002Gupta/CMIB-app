@@ -212,40 +212,6 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     setErrors(updatedErrors);
   };
 
-  const checkForDuplicates = (name) => {
-    if (name !== "emailId" && name !== "mobileNo") {
-      return [];
-    }
-
-    const values = contactDetails.map((detail) => detail[name]);
-    return values.map(
-      (value, index) => values.indexOf(value) !== index && value.trim() !== ""
-    );
-  };
-
-  const validateFields = () => {
-    const newErrors = contactDetails?.map((detail, index) => ({
-      name: validateField({ name: "name", index }),
-      designation: validateField({
-        name: "designation",
-        index,
-      }),
-      mobileNo: validateField({
-        name: "mobileNo",
-        index,
-      }),
-      emailId: validateField({
-        name: "emailId",
-        index,
-      }),
-    }));
-
-    setErrors(newErrors);
-    return newErrors.every((error) =>
-      Object.values(error).every((fieldError) => fieldError === "")
-    );
-  };
-
   const onGoBack = () => {
     const newContactDetails = {
       contact_details: constructUpdatedContactDetails(contactDetails),
@@ -267,8 +233,45 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   const unselectedModules = getUnselectedModules(signUpState?.modulesList);
 
+  const checkForDuplicates = (name) => {
+    const values = contactDetails.map((detail) => detail[name]);
+    return values.map(
+      (value, index) =>
+        (values.indexOf(value) !== index && value.trim() !== "") ||
+        (values.lastIndexOf(value) !== index && value.trim() !== "")
+    );
+  };
+
   const handleClickNext = () => {
-    const isValid = validateFields();
+    const newErrors = contactDetails.map((detail, index) => ({
+      name: validateField({ name: "name", index }),
+      designation: validateField({ name: "designation", index }),
+      mobileNo: validateField({ name: "mobileNo", index }),
+      emailId: validateField({ name: "emailId", index }),
+    }));
+
+    const emailDuplicates = checkForDuplicates("emailId");
+    emailDuplicates.forEach((isDuplicate, index) => {
+      if (isDuplicate) {
+        newErrors[index].emailId = intl.formatMessage({
+          id: "label.duplicate_email_validation",
+        });
+      }
+    });
+
+    const mobileDuplicates = checkForDuplicates("mobileNo");
+    mobileDuplicates.forEach((isDuplicate, index) => {
+      if (isDuplicate) {
+        newErrors[index].mobileNo = intl.formatMessage({
+          id: "label.duplicate_mobileNo_validation",
+        });
+      }
+    });
+
+    setErrors(newErrors);
+    const isValid = newErrors.every((error) =>
+      Object.values(error).every((fieldError) => fieldError === "")
+    );
     if (isValid) {
       const newContactDetails = {
         contact_details: constructUpdatedContactDetails(contactDetails),
