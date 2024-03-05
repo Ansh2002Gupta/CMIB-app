@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 
@@ -27,6 +27,7 @@ import {
 import { COUNTRY_CODE } from "../../services/apiServices/apiEndPoint";
 import { isValidUrl } from "../../utils/util";
 import { mapApiDataToUI } from "./mappedData";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { validateEmail } from "../../utils/validation";
 
 const CompanyProfileComponent = () => {
@@ -46,6 +47,7 @@ const CompanyProfileComponent = () => {
     updationError,
   } = useUpdateCompanyProfile();
   const { data: countryCodes } = useFetch({ url: COUNTRY_CODE });
+  const [userProfileState] = useContext(UserProfileContext);
 
   const [options, setOptions] = useState(
     INTEREST_OPTIONS.map((option) => ({
@@ -784,6 +786,7 @@ const CompanyProfileComponent = () => {
     <CompanyProfileUI
       {...{
         allFieldsFilled,
+        currentUser: userProfileState?.userDetails?.email,
         error: errorWhileGettingResult,
         handleCompanyDetailChange,
         handleContactPersonInfo,

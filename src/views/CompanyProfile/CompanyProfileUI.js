@@ -29,6 +29,7 @@ import style from "./CompanyProfile.style";
 const CompanyProfileUI = (props) => {
   const {
     allFieldsFilled,
+    currentUser,
     error,
     handleCompanyDetailChange,
     handleContactPersonInfo,
@@ -91,7 +92,12 @@ const CompanyProfileUI = (props) => {
             index={index}
             onPressActionButton={handleRemoveContactPerson}
             hasActionButton={contactDetailArray.isNewContactPerson}
-            isShowSwitch={!contactDetailArray.isNewContactPerson}
+            isShowSwitch={
+              currentUser !==
+                contactDetailArray?.contactInfo?.find(
+                  (info) => info.key === "contactEmailId"
+                )?.value && !contactDetailArray.isNewContactPerson
+            }
             isActive={contactDetailArray?.isContactActive}
             isEditProfile={isEditProfile}
             otherDetails={contactDetailArray?.contactInfo}
@@ -384,6 +390,7 @@ CompanyProfileUI.defaultProps = {
 
 CompanyProfileUI.propTypes = {
   allFieldsFilled: PropTypes.func,
+  currentUser: PropTypes.string,
   error: PropTypes.string,
   handleCompanyDetailChange: PropTypes.func,
   handleContactPersonInfo: PropTypes.func,
