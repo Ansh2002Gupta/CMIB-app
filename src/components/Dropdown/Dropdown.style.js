@@ -60,4 +60,18 @@ export const styles = StyleSheet.create({
   valueStyle: {
     color: colors.black,
   },
+  multiSelectOptions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  checkBoxTextStyle: {
+    marginBottom: 10,
+  },
+  multiSelectOptionStyle: {
+    paddingLeft: 10,
+    paddingTop: 10,
+  },
+  multiSelectOptionStyleDisabled: {
+    opacity: 0.5,
+  },
 });
