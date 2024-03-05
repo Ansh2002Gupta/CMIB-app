@@ -31,7 +31,7 @@ const useGetUserDetails = () => {
   const getSelectedModule = ({ firstAccessibleModuleName, moduleKeys }) => {
     const path = location.pathname.split("/");
     const moduleValues = Object.values(moduleKeys);
-    if (path.length > 1 && moduleValues.includes(path[1])) {
+    if (!moduleValues?.includes(path?.[1])) {
       return modules.find((module) => module.key?.toLowerCase() === path[1]);
     }
     return modules.find(
@@ -52,7 +52,7 @@ const useGetUserDetails = () => {
     if (selectedModuleDetails) {
       sideBarDispatch(setSelectedModule(selectedModuleDetails));
       sideBarDispatch(setSelectedSession(selectedModuleDetails?.session?.[0]));
-      if (!moduleValues.includes(path[1]))
+      if (!moduleValues?.includes(path?.[1]))
         navigate(
           `/${firstAccessibleModuleName}/${navigations.MODULE_LANDING_PAGE}`
         );
