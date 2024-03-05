@@ -22,6 +22,7 @@ export const customStyles = (dropdownStyle, placeholderStyle) => ({
   placeholder: (base) => ({
     ...base,
     ...placeholderStyle,
+    fontWeight: "500",
   }),
   singleValue: (base) => ({
     ...base,
