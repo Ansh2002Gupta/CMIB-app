@@ -82,14 +82,19 @@ const CompanyProfileUI = (props) => {
     uploadPercentage,
   } = uploadImageToServerUtils;
 
-  const updatedFileUploadResult = profileResult?.companyLogo
-    ? fileUploadResult || {
+  const hasCompanyLogo = profileResult?.companyLogo;
+  const defaultUploadResult = hasCompanyLogo
+    ? {
         data: {
           file_name: "CompanyLogo.png",
           url: profileResult.companyLogo,
         },
       }
-    : fileUploadResult;
+    : null;
+
+  const updatedFileUploadResult = isEditProfile
+    ? fileUploadResult || defaultUploadResult
+    : defaultUploadResult;
 
   const renderContactPersonDetails = () => {
     return (
@@ -335,20 +340,18 @@ const CompanyProfileUI = (props) => {
                   })}
                 />
                 <View style={style.imageContainer}>
-                  {(profileResult?.companyLogo || isEditProfile) && (
-                    <UploadImage
-                      {...{
-                        onDeleteImage,
-                        errorWhileUpload,
-                        fileUploadResult: updatedFileUploadResult,
-                        handleFileUpload,
-                        isUploadingImageToServer,
-                        setFileUploadResult,
-                        uploadPercentage,
-                        hideIconDelete: !isEditProfile,
-                      }}
-                    />
-                  )}
+                  <UploadImage
+                    {...{
+                      onDeleteImage,
+                      errorWhileUpload,
+                      fileUploadResult: updatedFileUploadResult,
+                      handleFileUpload,
+                      isUploadingImageToServer,
+                      setFileUploadResult,
+                      uploadPercentage,
+                      hideIconDelete: !isEditProfile,
+                    }}
+                  />
                 </View>
               </CardComponent>
             )}

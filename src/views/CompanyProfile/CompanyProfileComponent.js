@@ -382,8 +382,9 @@ const CompanyProfileComponent = () => {
     companyDetails.source_of_information = profileData.sourceOfInfo;
     companyDetails.credit_amount = profileData.balanceCredit;
     if (fileUploadResult?.data?.file_name || profileData.companyLogo) {
+      const logoFileName = profileData?.companyLogo?.split("/")?.pop();
       companyDetails.company_logo =
-        fileUploadResult?.data?.file_name || profileData.companyLogo;
+        fileUploadResult?.data?.file_name || logoFileName;
     }
 
     const contactDetails = profileData.contactPersonInfo.map((contact) => ({
