@@ -12,9 +12,9 @@ const CheckBox = ({
   customTextStyle,
   handleCheckbox,
   id,
+  isDisabled,
   isPartial,
   isSelected,
-  isDisabled,
   title,
 }) => {
   const CheckIcon = Images.iconCheckbox;
@@ -53,18 +53,18 @@ const CheckBox = ({
 
 CheckBox.defaultProps = {
   customTextStyle: {},
-  isSelected: false,
-  isPartial: false,
   isDisabled: false,
+  isPartial: false,
+  isSelected: false,
 };
 
 CheckBox.propTypes = {
   customTextStyle: PropTypes.object,
   handleCheckbox: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  isSelected: PropTypes.bool,
-  isPartial: PropTypes.bool,
   isDisabled: PropTypes.bool,
+  isPartial: PropTypes.bool,
+  isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,
 };
 

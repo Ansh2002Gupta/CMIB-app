@@ -21,6 +21,8 @@ import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./DropDownModal.style";
+import Chip from "../Chip";
+import colors from "../../assets/colors";
 
 const DropDownModal = ({
   customHeading,

@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import TouchableImage from "../TouchableImage";
-import styles from "./CustomChipCard.style";
 import images from "../../images";
+import styles from "./CustomChipCard.style";
 
 const CustomChipCard = ({ message, onPress }) => {
   return (
@@ -19,6 +20,16 @@ const CustomChipCard = ({ message, onPress }) => {
       />
     </View>
   );
+};
+
+CustomChipCard.defaultProps = {
+  message: "",
+  onPress: () => {},
+};
+
+CustomChipCard.propTypes = {
+  message: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default CustomChipCard;

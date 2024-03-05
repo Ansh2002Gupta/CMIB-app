@@ -85,6 +85,7 @@ const SignUpThirdScreenUI = ({
                 }
                 isMandatory
                 indexNumber={index}
+                includeAllKeys
                 labelField="name"
                 valueField="value"
                 indexField="selectedIndex"

@@ -18,8 +18,8 @@ import {
   DEFAULT_INPUT_MAX_LENGTH,
   MOBILE_NUMBER_MIN_LENGTH,
   MOBILE_NUMBER_MAX_LENGTH,
-  numRegex,
   MODULE_OPTIONS,
+  numRegex,
 } from "../../../constants/constants";
 import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
 
@@ -364,7 +364,7 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     validateUniqueFields();
     const updatedDetails = [...contactDetails];
     if (name === "modules") {
-      const existingModules = updatedDetails[index][name] || [];
+      const existingModules = updatedDetails?.[index]?.[name] || [];
 
       if (existingModules.includes(value)) {
         // Remove the value if it already exists
