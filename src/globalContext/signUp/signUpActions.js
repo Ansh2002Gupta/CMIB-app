@@ -7,6 +7,13 @@ export const setSignUpDetails = (value) => {
   };
 };
 
+export const setModulesList = (value) => {
+  return {
+    type: types.SET_MODULES_LIST,
+    payload: value,
+  };
+};
+
 export const deleteSignUpDetailKey = (value) => {
   return {
     type: types.DELETE_SIGN_UP_DETAIL_KEY,
