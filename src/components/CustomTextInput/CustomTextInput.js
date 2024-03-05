@@ -400,6 +400,7 @@ CustomTextInput.defaultProps = {
   isCounterInput: false,
   isDropdown: false,
   isError: false,
+  isEditable: true,
   inputKey: "value",
   isMandatory: false,
   isMobileNumber: false,

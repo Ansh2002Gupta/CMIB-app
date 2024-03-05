@@ -31,6 +31,8 @@ const CompanyProfileUI = (props) => {
     allFieldsFilled,
     currentUser,
     error,
+    errorWhileDeletion,
+    errorWhileUpload,
     handleCompanyDetailChange,
     handleContactPersonInfo,
     handleCompanyProfile,
@@ -50,11 +52,13 @@ const CompanyProfileUI = (props) => {
     moduleUpdateWarning,
     options,
     onAddContactPerson,
+    onDeleteImage,
     onGoBack,
     onSaveClick,
     profileResult,
     unoccupiedModules,
     updationError,
+    uploadImageToServerUtils,
     sureSaveProfile,
   } = props;
   const { isWebView } = useIsWebView();
@@ -67,6 +71,25 @@ const CompanyProfileUI = (props) => {
         buttonTwoContainerStyle: style.customButtonStyle,
       }
     : {};
+
+  const errorMessage = errorWhileDeletion || errorWhileUpload || updationError;
+
+  const {
+    fileUploadResult,
+    handleFileUpload,
+    isUploadingImageToServer,
+    setFileUploadResult,
+    uploadPercentage,
+  } = uploadImageToServerUtils;
+
+  const updatedFileUploadResult = profileResult?.companyLogo
+    ? fileUploadResult || {
+        data: {
+          file_name: "CompanyLogo.png",
+          url: profileResult.companyLogo,
+        },
+      }
+    : fileUploadResult;
 
   const renderContactPersonDetails = () => {
     return (
@@ -312,12 +335,20 @@ const CompanyProfileUI = (props) => {
                   })}
                 />
                 <View style={style.imageContainer}>
-                  <UploadImage
-                    imageUrl={profileResult?.companyLogo}
-                    imageName={"CompanyLogo.png"}
-                    intl={intl}
-                    isEditable={isEditProfile}
-                  />
+                  {(profileResult?.companyLogo || isEditProfile) && (
+                    <UploadImage
+                      {...{
+                        onDeleteImage,
+                        errorWhileUpload,
+                        fileUploadResult: updatedFileUploadResult,
+                        handleFileUpload,
+                        isUploadingImageToServer,
+                        setFileUploadResult,
+                        uploadPercentage,
+                        hideIconDelete: !isEditProfile,
+                      }}
+                    />
+                  )}
                 </View>
               </CardComponent>
             )}
@@ -365,9 +396,9 @@ const CompanyProfileUI = (props) => {
         onPressLeftIcon={onGoBack}
       />
       {renderContent()}
-      {!!updationError && (
+      {!!errorMessage && (
         <ToastComponent
-          toastMessage={updationError}
+          toastMessage={errorMessage}
           onDismiss={handleDismissToast}
         />
       )}

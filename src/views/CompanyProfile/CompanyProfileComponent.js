@@ -6,6 +6,8 @@ import CompanyProfileUI from "./CompanyProfileUI";
 import useGetCompanyProfileAPI from "../../services/apiServices/hooks/CompanyProfile/useGetCompanyProfileAPI";
 import useFetch from "../../hooks/useFetch";
 import useIndustryTypes from "../../services/apiServices/hooks/useIndustryTypes";
+import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
+import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useUpdateCompanyProfile from "../../services/apiServices/hooks/CompanyProfile/useUpdateCompanyProfileAPI";
 import {
   ADDRESS_MAX_LENGTH,
@@ -38,6 +40,17 @@ const CompanyProfileComponent = () => {
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    isLoading: isUploadingImageToServer,
+    setErrorWhileUpload,
+    setFileUploadResult,
+    uploadPercentage,
+  } = useSaveLogo();
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
   const [moduleUpdateWarning, setModuleUpdateWarning] = useState(false);
   const [unoccupiedModules, setUnoccupiedModules] = useState([]);
   const {
@@ -95,6 +108,19 @@ const CompanyProfileComponent = () => {
       setOptions(updatedInfoOptions);
     }
   }, [profileResult, industryTypeResult, isEditProfile]);
+
+  const handleImageDeletion = () => {
+    if (profileData?.companyLogo) {
+      setProfileData((prevProfileData) => ({
+        ...prevProfileData,
+        companyLogo: "",
+      }));
+    }
+    if (fileUploadResult?.data?.file_name) {
+      const fileName = fileUploadResult?.data?.file_name.split("/");
+      handleDeleteLogo(fileName[fileName.length - 1]);
+    }
+  };
 
   const allFieldsFilled = () => {
     const companyDetailsFilled = profileData.companyDetail.every(
@@ -369,8 +395,9 @@ const CompanyProfileComponent = () => {
     ).value;
     companyDetails.source_of_information = profileData.sourceOfInfo;
     companyDetails.credit_amount = profileData.balanceCredit;
-    if (profileData.companyLogo) {
-      companyDetails.company_logo = profileData.companyLogo;
+    if (fileUploadResult?.data?.file_name || profileData.companyLogo) {
+      companyDetails.company_logo =
+        fileUploadResult?.data?.file_name || profileData.companyLogo;
     }
 
     const contactDetails = profileData.contactPersonInfo.map((contact) => ({
@@ -405,6 +432,7 @@ const CompanyProfileComponent = () => {
 
   const onProfileUpdate = () => {
     setIsEditProfile(false);
+    fileUploadResult && setFileUploadResult("");
     onGetProfile();
   };
 
@@ -436,6 +464,8 @@ const CompanyProfileComponent = () => {
 
   const handleDismissToast = () => {
     setUpdationError("");
+    setErrorWhileDeletion("");
+    setErrorWhileUpload("");
   };
 
   const handleToggle = (id) => {
@@ -505,6 +535,7 @@ const CompanyProfileComponent = () => {
   const onGoBack = () => {
     if (isEditProfile) {
       handleEdit(false);
+      fileUploadResult && setFileUploadResult("");
     } else {
       navigate(PREVIOUS_SCREEN);
     }
@@ -788,6 +819,8 @@ const CompanyProfileComponent = () => {
         allFieldsFilled,
         currentUser: userProfileState?.userDetails?.email,
         error: errorWhileGettingResult,
+        errorWhileDeletion,
+        errorWhileUpload,
         handleCompanyDetailChange,
         handleContactPersonInfo,
         handleCompanyProfile,
@@ -807,11 +840,19 @@ const CompanyProfileComponent = () => {
         moduleUpdateWarning,
         options,
         onAddContactPerson,
+        onDeleteImage: handleImageDeletion,
         onGoBack,
         onSaveClick,
         profileResult: profileData,
         unoccupiedModules,
         updationError,
+        uploadImageToServerUtils: {
+          fileUploadResult,
+          handleFileUpload,
+          isUploadingImageToServer,
+          setFileUploadResult,
+          uploadPercentage,
+        },
         sureSaveProfile,
       }}
     />
