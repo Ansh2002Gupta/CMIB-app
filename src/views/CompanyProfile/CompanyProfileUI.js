@@ -58,6 +58,14 @@ const CompanyProfileUI = (props) => {
   } = props;
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const isWebProps = isWebView
+    ? {
+        buttonOneStyle: style.customButtonStyle,
+        buttonTwoStyle: style.customButtonStyle,
+        buttonOneContainerStyle: style.customButtonStyle,
+        buttonTwoContainerStyle: style.customButtonStyle,
+      }
+    : {};
 
   const renderContactPersonDetails = () => {
     return (
@@ -179,7 +187,12 @@ const CompanyProfileUI = (props) => {
   const renderSaveCancelButton = () => {
     if (isEditProfile) {
       return (
-        <View style={style.buttonContainer}>
+        <View
+          style={{
+            ...(isWebView ? style.webButtonContainer : {}),
+            ...style.buttonContainer,
+          }}
+        >
           <ActionPairButton
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}
             buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
@@ -188,6 +201,9 @@ const CompanyProfileUI = (props) => {
             isDisabled={!allFieldsFilled()}
             onPressButtonOne={onGoBack}
             onPressButtonTwo={onSaveClick}
+            customStyles={{
+              ...isWebProps,
+            }}
           />
         </View>
       );

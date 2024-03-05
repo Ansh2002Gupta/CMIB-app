@@ -92,6 +92,14 @@ const style = {
   buttonTextStyle: {
     fontSize: 14,
   },
+  customButtonStyle: {
+    height: 44,
+    width: 135,
+  },
+  webButtonContainer: {
+    width: "100%",
+    alignItems: "flex-end",
+  },
 };
 
 export default style;
