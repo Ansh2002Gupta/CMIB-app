@@ -237,7 +237,6 @@ const CompanyProfileComponent = () => {
       return detail ? detail.value : "";
     };
     const companyName = findValueByLabel("label.company_name");
-    const registrationNo = findValueByLabel("label.registration_no");
     const noOfPartners = findValueByLabel("label.no_of_partners");
     const address = findValueByLabel("label.address_for_correspondence");
     const emailId = findValueByLabel("label.email_id");
@@ -248,19 +247,17 @@ const CompanyProfileComponent = () => {
     );
     const website = findValueByLabel("label.website");
     const entity = findValueByLabel("label.entity");
-    if (
-      companyName.length < FIELD_MIN_LENGTH ||
-      companyName.length > DEFAULT_INPUT_MAX_LENGTH
-    ) {
+    if (companyName && companyName.trim().length > DEFAULT_INPUT_MAX_LENGTH) {
       newErrors.companyName = intl.formatMessage({
         id: "label.company_name_validation",
       });
       isValid = false;
     }
     if (
-      !numRegex.test(String(code)) ||
-      code.length < CODE_MIN_LENGTH ||
-      code.length > CODE_MAX_LENGTH
+      code &&
+      (!numRegex.test(String(code)) ||
+        code.length < CODE_MIN_LENGTH ||
+        code.length > CODE_MAX_LENGTH)
     ) {
       newErrors.code = intl.formatMessage({
         id: "label.country_code_validation",
@@ -268,50 +265,39 @@ const CompanyProfileComponent = () => {
       isValid = false;
     }
     if (
-      !numRegex.test(String(telephoneNo)) ||
-      telephoneNo.length > NUMBER_MAX_LENGTH ||
-      telephoneNo.length < NUMBER_MIN_LENGTH
+      telephoneNo &&
+      (!numRegex.test(String(telephoneNo)) ||
+        telephoneNo.length > NUMBER_MAX_LENGTH ||
+        telephoneNo.length < NUMBER_MIN_LENGTH)
     ) {
       newErrors.telephoneNo = intl.formatMessage({
         id: "label.telephone_no_validation",
       });
       isValid = false;
     }
-    if (validateEmail(emailId)) {
+    if (emailId && validateEmail(emailId)) {
       newErrors.emailId = intl.formatMessage({
         id: "label.email_id_validation",
       });
       isValid = false;
     }
     if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
-      if (
-        !numRegex.test(String(registrationNo)) ||
-        registrationNo.length !== FIRM_REGISTRATION_NO_LENGTH
-      ) {
-        newErrors.registrationNo = intl.formatMessage({
-          id: "label.registration_no_validation",
-        });
-        isValid = false;
-      }
-      if (!numRegex.test(String(noOfPartners))) {
+      if (noOfPartners && !numRegex.test(String(noOfPartners))) {
         newErrors.noOfPartners = intl.formatMessage({
           id: "label.no_of_partners_validation",
         });
         isValid = false;
       }
     }
-    if (
-      address.length < FIELD_MIN_LENGTH ||
-      address.length > ADDRESS_MAX_LENGTH
-    ) {
+    if (address && address.trim().length > ADDRESS_MAX_LENGTH) {
       newErrors.address = intl.formatMessage({
         id: "label.address_validation",
       });
       isValid = false;
     }
     if (
-      companyDetail.length < FIELD_MIN_LENGTH ||
-      companyDetail.length > COMPANY_DETAIL_MAX_LENGTH
+      companyDetail.trim().length < DEFAULT_INPUT_MAX_LENGTH ||
+      companyDetail.trim().length > COMPANY_DETAIL_MAX_LENGTH
     ) {
       newErrors.companyDetail = intl.formatMessage({
         id: "label.company_details_validation",
