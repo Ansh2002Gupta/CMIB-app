@@ -1,97 +1,107 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
-
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
-
-const {white, black, lightGray, darkGrey} = colors;
 
 const styles = StyleSheet.create({
   outerContainer: {
-    color: black,
-    backgroundColor: white,
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    color: colors.black,
+    backgroundColor: colors.white,
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 20,
   },
   componentContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: 2,
+    display: "flex",
+    flexDirection: "column",
     margin: 10,
-    borderRadius: 7,
-    borderColor: lightGray,
+    paddingBottom: 10,
+    borderRadius: 16,
+    borderColor: colors.lightGray,
     borderWidth: 2,
-    width: 300,
+    overflow: "hidden",
+    minWidth: 300,
+    minHeight: 360,
   },
   titleStyles: {
     fontWeight: 600,
     fontSize: 16,
-    fontFamily: 'General Sans',
   },
   header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: white,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: colors.white,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    borderBottomColor: lightGray,
-    borderBottomWidth: 2, 
+    borderBottomColor: colors.lightGray,
+    borderBottomWidth: 2,
     padding: 16,
+    marginTop: 2,
     gap: 30,
   },
   buttonStyles: {
     borderWidth: 0,
     marginRight: 5,
-    borderColor: white,
-    backgroundColor: white,
+    borderColor: colors.white,
+    backgroundColor: colors.white,
     fontWeight: 100,
     fontSize: 28,
   },
-  
+
   section: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
 
   itemsWrapper: {
-    backgroundColor: white,
+    backgroundColor: colors.white,
     maxHeight: 250,
-    overflow: 'scroll',
+    overflowX: "hidden",
   },
 
   outerSearchWrapper: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    position: "relative",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 25,
+    backgroundColor: "#F6F8F9",
+  },
+
+  outerSearchInputBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 0,
+    borderRadius: 0,
+    padding: 0,
+    marginTop: 0,
+    backgroundColor: "#F6F8F9",
   },
 
   searchInput: {
-    width: '100%',
-    paddingTop: 12,
-    paddingBottom: 12,
-    paddingLeft: 56,
-    paddingRight: 56,
-    borderRadius: 0,
-    outline: 'none',
+    width: "100%",
+    marginTop: 0,
+    height: 48,
+    outline: "none",
   },
 
   iconSearch: {
-    position: 'absolute',
-    top: 15,
-    left: 30,
+    height: 18,
+    width: 18,
   },
 
   itemContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: white,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexShrink: 1,
     padding: 8,
+    maxWidth: 300,
     gap: 15,
   },
   item: {
@@ -99,22 +109,31 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     fontSize: 14,
     fontWeight: 500,
-    fontColor: darkGrey,
+    color: colors.darkGrey,
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: 200,
+      },
+    }),
   },
-  trashIcon: {
-    marginRight: 10, 
-    width: 20, 
+  iconTrash: {
+    marginRight: 10,
+    width: 20,
     height: 20,
   },
-  addIcon: { 
-    width: 20, 
+  iconAdd: {
+    width: 20,
     height: 20,
   },
   message: {
-    textAlign: 'center',
+    textAlign: "center",
     fontWeight: 500,
-    color: darkGrey,
-  }
+    color: colors.darkGrey,
+    marginTop: 20,
+  },
 });
 
 export default styles;

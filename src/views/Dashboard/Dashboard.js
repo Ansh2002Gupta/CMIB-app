@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
-
 import AddDesignation from "../../containers/AddDesignation/AddDesignation";
 import CommonText from "../../components/CommonText";
 import ConfirgurableList from "../../components/ConfigurableList";
 import CustomCell from "../../components/CustomCell/";
-import images from "../../images";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import SearchView from "../../components/SearchView";
-import styles from "./dashboard.style";
 import TouchableImage from "../../components/TouchableImage";
+import images from "../../images";
+import styles from "./dashboard.style";
 
 const dummyDataItems1 = [
   {
@@ -80,12 +79,33 @@ const dummyDataItems2 = [
     id: 6,
     name: "Kanpur",
   },
+  {
+    id: 7,
+    name: "Allahabad-2",
+  },
+  {
+    id: 8,
+    name: "Allahabad-3",
+  },
+  {
+    id: 9,
+    name: "Allahabad-4",
+  },
+  {
+    id: 10,
+    name: "Abcdefghjijk;kdkfjsldkfjlksdjflksdjflkasddjkjdlskfjldskjflksdjflksjdlkfjsldkjflskdjlfk12",
+  },
 ];
 
 // Just ignore this file as just to test custom component
 function DashboardView() {
   const intl = useIntl();
+  let isMultiSelect = true;
+  const menuOptionsPrevState = useRef([]);
   const [isEnabled, setIsEnabled] = useState(false);
+  const [menuOptions, setMenuOptions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
   const FilterIcon = images.iconFilter;
@@ -101,6 +121,29 @@ function DashboardView() {
   };
 
   const handleSearchResults = (filteredData) => {};
+
+  const handleDelete = (itemToBeDeletedId) => {
+    menuOptionsPrevState.current = menuOptionsPrevState.current.filter(
+      (item) => item.id !== itemToBeDeletedId
+    );
+    setSelectedOptions((prev) => [
+      ...prev.filter((itemID) => itemID !== itemToBeDeletedId),
+    ]);
+    if (searchQuery.length > 0) {
+      const queryList = menuOptions.filter(
+        (item) => item.id !== itemToBeDeletedId
+      );
+      setMenuOptions([...queryList]);
+    } else {
+      setMenuOptions([...menuOptionsPrevState.current]);
+    }
+  };
+
+  const handlePress = (selectedItemID) => {
+    isMultiSelect
+      ? setSelectedOptions((prev) => [...prev, selectedItemID])
+      : setSelectedOptions([selectedItemID]);
+  };
 
   const searchData = [
     {
@@ -138,7 +181,19 @@ function DashboardView() {
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
       <MultiColumn columns={searchData} />
-      <ConfirgurableList title="Designation" items={dummyDataItems1} />
+      <ConfirgurableList
+        onDelete={handleDelete}
+        onPress={handlePress}
+        items={dummyDataItems2}
+        toogleMultiSelect={isMultiSelect}
+        menuOptions={menuOptions}
+        menuOptionsPrevState={menuOptionsPrevState}
+        searchQuery={searchQuery}
+        selectedOptions={selectedOptions}
+        setMenuOptions={setMenuOptions}
+        setSearchQuery={setSearchQuery}
+        title="Centres"
+      />
       <CustomCell
         onPress={toggleSwitch}
         title={"AddDesignation"}
