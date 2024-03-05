@@ -23,6 +23,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { getImageSource } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
+import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
@@ -120,6 +121,10 @@ const CustomTextInput = (props) => {
 
   const webProps = isWebPlatform
     ? { size: "xs", thickness: 3, color: colors.white }
+    : {};
+
+  const textInputWebProps = isWebPlatform
+    ? { className: classes["input_placeholder"] }
     : {};
 
   const getSendButtonStatus = () => {
@@ -264,6 +269,7 @@ const CustomTextInput = (props) => {
                 {...platformSpecificProps}
                 {...(isNumeric ? mobileProps : {})}
                 {...remainingProps}
+                {...textInputWebProps}
               />
               <TriggerFileUpload
                 onImageUpload={onClickAttachement}
@@ -331,6 +337,7 @@ const CustomTextInput = (props) => {
             {...platformSpecificProps}
             {...(isNumeric ? mobileProps : {})}
             {...remainingProps}
+            {...textInputWebProps}
           />
         )}
         {eyeImage && (

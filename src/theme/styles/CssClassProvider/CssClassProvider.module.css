@@ -47,3 +47,7 @@
 .text-area__base::placeholder {
   color: var(--darkGrey)
 }
+
+.input_placeholder::placeholder {
+  color: var(--darkGrey)
+} 
