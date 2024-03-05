@@ -17,7 +17,6 @@ import {
   DEFAULT_INPUT_MAX_LENGTH,
   FIELD_MIN_LENGTH,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
-  FIRM_REGISTRATION_NO_LENGTH,
   INTEREST_OPTIONS,
   MODULE_OPTIONS,
   NUMBER_MAX_LENGTH,
@@ -143,11 +142,12 @@ const CompanyProfileComponent = () => {
     const otherDetailsFilled = profileData.otherDetails.every(
       (detail) => String(detail.value).trim() !== ""
     );
-
+    const sourceOfInfoFilled = profileData.sourceOfInfo.length > 0;
     return (
       companyDetailsFilled &&
       contactPersonInfoFilled &&
       companyProfileFilled &&
+      sourceOfInfoFilled &&
       otherDetailsFilled
     );
   };
@@ -456,15 +456,31 @@ const CompanyProfileComponent = () => {
   };
 
   const handleToggle = (id) => {
+    // Update the options with the new isSelected value
     const updatedItems = options.map((item) => {
       if (item.id === id) {
         return { ...item, isSelected: !item.isSelected };
       }
       return item;
     });
+
+    const toggledItem = updatedItems.find((item) => item.id === id);
+
+    let updatedSourceOfInfo;
+    if (toggledItem.isSelected) {
+      updatedSourceOfInfo = [...profileData.sourceOfInfo, toggledItem.title];
+    } else {
+      updatedSourceOfInfo = profileData.sourceOfInfo.filter(
+        (title) => title !== toggledItem.title
+      );
+    }
+    setProfileData({
+      ...profileData,
+      sourceOfInfo: updatedSourceOfInfo,
+    });
+
     setOptions(updatedItems);
   };
-
   const handleModuleToggle = (moduleId) => {
     const anyDefaultValueSelected = profileData.contactPersonInfo.some(
       (contact) =>
