@@ -43,14 +43,19 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  logoutButtonStyle: {
+  warningButtonStyle: {
     backgroundColor: colors.yellow,
     borderWidth: 0,
   },
-  rightTextStyle: {
+  errorButtonStyle: {
+    backgroundColor: colors.errorRed,
+    borderWidth: 0,
+  },
+  warningTextStyle: {
     color: colors.black,
-    fontSize: 14,
-    lineHeight: 20,
+  },
+  customTextStyle: {
+    color: colors.white,
   },
   leftTextStyle: {
     fontSize: 14,

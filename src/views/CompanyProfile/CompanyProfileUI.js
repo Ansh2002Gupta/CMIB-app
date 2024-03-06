@@ -267,16 +267,20 @@ const CompanyProfileUI = (props) => {
                 ? intl.formatMessage({ id: "label.okay" })
                 : intl.formatMessage({ id: "label.no" })
             }
-            headingText={intl.formatMessage({ id: "label.warning" })}
             buttonTwoText={intl.formatMessage({ id: "label.yes" })}
             hasSingleButton={moduleUpdateWarning}
-            icon={images.iconWarning}
+            headingText={
+              moduleUpdateWarning
+                ? intl.formatMessage({ id: "label.error" })
+                : intl.formatMessage({ id: "label.warning" })
+            }
             onPressButtonTwo={sureSaveProfile}
             onPressButtonOne={
               moduleUpdateWarning
                 ? handleModuleWarning
                 : handleunoccupiedModules
             }
+            severity={moduleUpdateWarning ? "error" : "warning"}
             subHeading={
               moduleUpdateWarning
                 ? intl.formatMessage({

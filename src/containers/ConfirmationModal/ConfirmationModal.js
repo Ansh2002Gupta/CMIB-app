@@ -24,12 +24,57 @@ const ConfirmationModal = ({
   loader,
   onPressButtonOne,
   onPressButtonTwo,
+  severity,
   subHeading,
 }) => {
+  const getIcon = () => {
+    switch (severity) {
+      case "error":
+        return images.iconAlert;
+      case "warning":
+        return images.iconWarning;
+      case "success":
+        return images.iconSuccess;
+      default: {
+        return icon;
+      }
+    }
+  };
+
+  const getTextStyle = () => {
+    switch (severity) {
+      case "warning":
+        return styles.warningTextStyle;
+      case "error":
+      case "success":
+        return styles.customTextStyle;
+      default:
+        return {};
+    }
+  };
+
+  const getButtonStyle = () => {
+    switch (severity) {
+      case "error":
+        return styles.errorButtonStyle;
+      case "warning":
+        return styles.warningButtonStyle;
+      case "success":
+        return styles.successButtonStyle;
+      default:
+        return {};
+    }
+  };
+
   const confirmationConfig = [
     {
       content: (
-        <CustomImage Icon={icon} style={styles.logo} source={icon} isSvg />
+        <CustomImage
+          Icon={getIcon()}
+          style={styles.logo}
+          source={getIcon()}
+          isSvg
+        />
       ),
     },
     {
@@ -50,7 +95,10 @@ const ConfirmationModal = ({
       content: hasSingleButton ? (
         <CustomButton
           onPress={onPressButtonOne}
-          style={{ ...styles.logoutButtonStyle, ...buttonOneStyle }}
+          style={{ ...getButtonStyle() }}
+          customStyle={{
+            customTextStyle: { ...getTextStyle(), ...buttonOneStyle },
+          }}
         >
           {buttonOneText}
         </CustomButton>
@@ -60,9 +108,9 @@ const ConfirmationModal = ({
           buttonTwoText={buttonTwoText}
           customStyles={{
             buttonOneStyle: buttonOneStyle,
-            buttonTwoStyle: { ...styles.logoutButtonStyle, ...buttonTwoStyle },
+            buttonTwoStyle: { ...getButtonStyle(), ...buttonTwoStyle },
             buttonOneTextStyle: buttonOneTextStyle,
-            buttonTwoTextStyle: buttonTwoTextStyle,
+            buttonTwoTextStyle: { ...getTextStyle(), ...buttonTwoTextStyle },
           }}
           displayLoader={loader}
           onPressButtonOne={onPressButtonOne}
@@ -115,6 +163,7 @@ ConfirmationModal.propTypes = {
   loader: PropTypes.bool.isRequired,
   onPressButtonOne: PropTypes.func.isRequired,
   onPressButtonTwo: PropTypes.func.isRequired,
+  severity: PropTypes.string,
   subHeading: PropTypes.string.isRequired,
 };
 
