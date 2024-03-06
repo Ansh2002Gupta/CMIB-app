@@ -197,6 +197,7 @@ const iconPartial = appendAppBaseURl("/images/svg/iconPartial.svg");
 const iconZoomIn = appendAppBaseURl("/images/svg/iconZoomIn.svg");
 const iconZoomOut = appendAppBaseURl("/images/svg/iconZoomOut.svg");
 const iconDeleteRed = appendAppBaseURl("/images/svg/iconDeleteRed.svg");
+const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 
 const images = {
   iconArrowUp,
@@ -336,6 +337,7 @@ const images = {
   iconZoomIn,
   iconZoomOut,
   iconDeleteRed,
+  iconLoading,
 };
 
 export default images;

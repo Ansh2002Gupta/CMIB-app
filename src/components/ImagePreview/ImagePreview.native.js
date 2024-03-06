@@ -11,7 +11,7 @@ import styles from "./ImagePreview.style";
 
 const { height: HEIGHT, width: WIDTH } = Dimensions.get("window");
 
-const ImagePreview = ({ alt, source, style, preview }) => {
+const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const handleModalClose = () => {
     setModalVisible(false);
@@ -26,7 +26,12 @@ const ImagePreview = ({ alt, source, style, preview }) => {
   return (
     <View>
       <CustomTouchableOpacity onPress={imagePreviewHandler}>
-        <CustomImage source={{ uri: source }} style={{ ...style }} alt={alt} />
+        <CustomImage
+          source={{ uri: source }}
+          resizeMode={resizeMode}
+          style={{ ...style }}
+          alt={alt}
+        />
       </CustomTouchableOpacity>
       <Modal
         visible={modalVisible && preview}
@@ -43,8 +48,8 @@ const ImagePreview = ({ alt, source, style, preview }) => {
         <ImageZoom
           cropWidth={WIDTH}
           cropHeight={HEIGHT}
-          imageWidth={WIDTH}
-          imageHeight={HEIGHT}
+          imageWidth={WIDTH * 0.9}
+          imageHeight={HEIGHT * 0.75}
           enableDoubleClickZoom
           onSwipeDown={handleModalClose}
           enableSwipeDown
@@ -52,6 +57,7 @@ const ImagePreview = ({ alt, source, style, preview }) => {
           <CustomImage
             source={{ uri: source }}
             style={styles.fullImage}
+            defaultSource={images.iconLoading}
             alt={alt}
           />
         </ImageZoom>

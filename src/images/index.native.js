@@ -120,6 +120,7 @@ import iconPartial from "../../public/images/svg/iconPartial.svg";
 import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
 import iconZoomIn from "../../public/images/svg/iconZoomIn.svg";
 import iconZoomOut from "../../public/images/svg/iconZoomOut.svg";
+import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 
 const images = {
   iconArrowUp,
@@ -244,6 +245,7 @@ const images = {
   iconDeleteRed,
   iconZoomIn,
   iconZoomOut,
+  iconLoading,
 };
 
 export default images;
