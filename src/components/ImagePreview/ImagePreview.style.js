@@ -1,8 +1,9 @@
 import {
   Dimensions,
-  StyleSheet,
   Platform,
+  StyleSheet,
 } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 
 const { height: HEIGHT } = Dimensions.get("window");
