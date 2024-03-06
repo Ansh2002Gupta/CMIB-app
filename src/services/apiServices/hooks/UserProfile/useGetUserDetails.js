@@ -15,7 +15,7 @@ import {
   setSelectedSession,
 } from "../../../../globalContext/sidebar/sidebarActions";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
-import { modules } from "../../../../constants/sideBarHelpers";
+import { moduleKeys, modules } from "../../../../constants/sideBarHelpers";
 import { CORE_USERS_PERMISSION } from "../../apiEndPoint";
 import { navigations } from "../../../../constants/routeNames";
 import { STATUS_CODES } from "../../../../constants/constants";
@@ -27,9 +27,12 @@ const useGetUserDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const getSelectedModule = ({ firstAccessibleModuleName, moduleKeys }) => {
+  const getSelectedModule = ({
+    firstAccessibleModuleName,
+    accessibleModuleKeys,
+  }) => {
     const path = location.pathname.split("/");
-    const moduleValues = Object.values(moduleKeys);
+    const moduleValues = Object.values(accessibleModuleKeys);
     let isTriedToAccessProtectedModule = false;
     if (path.length > 1 && moduleValues.includes(path[1])) {
       return {
@@ -62,16 +65,20 @@ const useGetUserDetails = () => {
         userProfileDispatch(setUserDetails(res.data));
 
         // Setting the first accessible module
-        const moduleKeys = Object.keys(res.data?.menu_items || {});
-        const firstAccessibleModuleName = moduleKeys?.[0] || "";
+        const accessibleModuleKeys = Object.keys(res.data?.menu_items || {});
+        const firstAccessibleModuleName = accessibleModuleKeys?.[0] || "";
         const { isTriedToAccessProtectedModule, moduleDetails } =
           getSelectedModule({
             firstAccessibleModuleName,
-            moduleKeys,
+            accessibleModuleKeys,
           });
         sideBarDispatch(setSelectedModule(moduleDetails));
         sideBarDispatch(setSelectedSession(moduleDetails?.session?.[0]));
-        if (isTriedToAccessProtectedModule) {
+        const activeModuleInPath = location.pathname?.split("/")?.[1];
+        if (
+          isTriedToAccessProtectedModule &&
+          Object.values(moduleKeys)?.includes(activeModuleInPath)
+        ) {
           navigate(
             `/${firstAccessibleModuleName}/${navigations.MODULE_LANDING_PAGE}`
           );
