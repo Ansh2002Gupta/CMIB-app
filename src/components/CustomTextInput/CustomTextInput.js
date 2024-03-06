@@ -61,6 +61,9 @@ const CustomTextInput = (props) => {
     isRupee,
     isSendButton,
     isLoading,
+    isSelected,
+    indexField,
+    indexNumber,
     initiateFileUpload,
     label,
     maxCount,
@@ -72,6 +75,7 @@ const CustomTextInput = (props) => {
     onIconClose,
     placeholder,
     step,
+    selectedItems,
     setFile,
     value,
     labelField,
@@ -173,10 +177,14 @@ const CustomTextInput = (props) => {
             valueField={valueField}
             placeholder={placeholder || ""}
             value={value}
+            isMultiSelect={isMultiSelect}
+            isSelected={isSelected}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            selectedItems={selectedItems}
             urlField={urlField}
-            isMultiSelect={isMultiSelect}
+            indexNumber={indexNumber}
+            indexField={indexField}
             onChange={(item) => {
               isWebPlatform
                 ? onChangeValue(item)
@@ -190,6 +198,10 @@ const CustomTextInput = (props) => {
       return (
         <DropDownModal
           {...{
+            isMultiSelect,
+            isSelected,
+            indexNumber,
+            indexField,
             labelField,
             isMultiSelect,
             defaultValues,
@@ -197,6 +209,8 @@ const CustomTextInput = (props) => {
             handleMultiSelect,
             options,
             placeholder,
+            selectedItems,
+            urlField,
             value,
             valueField,
             isEditable,

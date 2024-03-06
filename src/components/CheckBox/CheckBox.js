@@ -9,6 +9,7 @@ import Images from "../../images";
 import styles from "./CheckBox.style";
 
 const CheckBox = ({
+  customTextStyle,
   handleCheckbox,
   id,
   isDisabled,
@@ -35,8 +36,8 @@ const CheckBox = ({
     {
       content: (
         <CustomTouchableOpacity
-          onPress={() => handleCheckbox(id)}
           disabled={isDisabled}
+          onPress={() => handleCheckbox(id)}
         >
           <CustomImage
             Icon={getIcon()}
@@ -48,6 +49,7 @@ const CheckBox = ({
             customTextStyle={{
               ...styles.titleStyle,
               ...(isDisabled ? styles.disabledText : {}),
+              ...customTextStyle,
             }}
           >
             {title}
@@ -61,17 +63,19 @@ const CheckBox = ({
 };
 
 CheckBox.defaultProps = {
+  customTextStyle: {},
   isDisabled: false,
-  isSelected: false,
   isPartial: false,
+  isSelected: false,
 };
 
 CheckBox.propTypes = {
+  customTextStyle: PropTypes.object,
   handleCheckbox: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isDisabled: PropTypes.bool,
-  isSelected: PropTypes.bool,
   isPartial: PropTypes.bool,
+  isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,
 };
 

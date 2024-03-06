@@ -22,14 +22,9 @@ const CustomChipCard = ({ message, onPress }) => {
   );
 };
 
-CustomChipCard.defaultProps = {
-  message: "",
-  onPress: () => {},
-};
-
 CustomChipCard.propTypes = {
-  message: PropTypes.string,
-  onPress: PropTypes.func,
+  message: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default CustomChipCard;

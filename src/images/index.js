@@ -195,6 +195,9 @@ const iconArrowUpSorting = appendAppBaseURl(
 );
 const iconPartial = appendAppBaseURl("/images/svg/iconPartial.svg");
 const iconDisabledCheck = appendAppBaseURl("/images/svg/iconDisabledCheck.svg");
+const iconZoomIn = appendAppBaseURl("/images/svg/iconZoomIn.svg");
+const iconZoomOut = appendAppBaseURl("/images/svg/iconZoomOut.svg");
+const iconDeleteRed = appendAppBaseURl("/images/svg/iconDeleteRed.svg");
 
 const images = {
   iconArrowUp,
@@ -332,6 +335,9 @@ const images = {
   iconPartial,
   iconSendDisabled,
   iconDisabledCheck,
+  iconZoomIn,
+  iconZoomOut,
+  iconDeleteRed,
 };
 
 export default images;

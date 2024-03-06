@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { View } from "@unthinkable/react-core-components";
 import Select from "react-select";
+import { View } from "@unthinkable/react-core-components";
 
 import CheckBox from "../CheckBox";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
@@ -9,21 +10,23 @@ import { customTheme, customStyles, styles } from "./Dropdown.style";
 
 const Dropdown = ({
   data,
-  defaultValues,
   dropdownStyle,
   isEditable,
   includeAllKeys,
   isMultiSelect,
-  handleMultiSelect,
+  isSelected,
+  indexNumber,
   labelField,
   menuOptions,
   onChange,
   placeholder,
   placeholderStyle,
+  selectedItems,
   value,
   valueField,
+  indexField,
 }) => {
-  const [selectedItems, setSelectedItems] = useState(defaultValues);
+  const intl = useIntl();
   const getAllKeys = (option) => {
     let finalObj = {};
     Object.keys(option).forEach((key) => {
@@ -37,50 +40,37 @@ const Dropdown = ({
   const defaultOptions = data?.map((option) => ({
     value: String(option[valueField]),
     label: String(option[labelField]),
-    disabled: option?.isDisabled,
+    index: option[indexField],
+    isSelected: option[isSelected],
     ...(includeAllKeys ? { ...getAllKeys(option) } : {}),
   }));
 
   const options = menuOptions || defaultOptions;
+
   const selectedOption = options?.find(
     (option) => option.value === String(value)
   );
 
   const handleValueChange = (selectedOption) => {
-    const itemIndex = selectedItems.findIndex(
-      (item) => item.value === selectedOption[0].value
-    );
-
-    let updatedSelectedItems;
-    if (itemIndex !== -1) {
-      updatedSelectedItems = [
-        ...selectedItems.slice(0, itemIndex),
-        ...selectedItems.slice(itemIndex + 1),
-      ];
-    } else {
-      updatedSelectedItems = [...selectedItems, selectedOption[0]];
-    }
-    setSelectedItems(updatedSelectedItems);
-    handleMultiSelect && handleMultiSelect(updatedSelectedItems);
-  };
-
-  const handleRemoveItems = (itemToRemove) => {
-    const newSelectedItems = selectedItems.filter(
-      (item) => item.value !== itemToRemove.value
-    );
-    setSelectedItems(newSelectedItems);
-    handleMultiSelect && handleMultiSelect(newSelectedItems);
+    onChange(selectedOption.value);
   };
 
   const CheckboxOption = ({ data }) => {
+    const isDisabled = data.index !== null && indexNumber !== data.index;
     return (
-      <View style={styles.multiSelectOptionStyle}>
+      <View
+        style={{
+          ...styles.multiSelectOptionStyle,
+          ...(isDisabled && styles.multiSelectOptionStyleDisabled),
+        }}
+      >
         <CheckBox
-          handleCheckbox={() => handleValueChange([data])}
+          customTextStyle={styles.checkBoxTextStyle}
+          handleCheckbox={() => handleValueChange(data)}
           id={data.value}
-          isDisabled={data.disabled}
-          isSelected={selectedItems?.find((ele) => ele.value == data.value)}
+          isSelected={data?.isSelected || data.index !== null}
           title={data?.label}
+          isDisabled={isDisabled}
         />
       </View>
     );
@@ -93,8 +83,7 @@ const Dropdown = ({
           value={""}
           placeholder={placeholder}
           options={options}
-          isDisabled={!isEditable}
-          styles={customStyles(dropdownStyle, placeholderStyle, !isEditable)}
+          styles={customStyles(dropdownStyle, placeholderStyle)}
           theme={customTheme}
           onChange={handleValueChange}
           isMulti
@@ -103,11 +92,12 @@ const Dropdown = ({
         {!!selectedItems.length && (
           <View style={styles.multiSelectOptions}>
             {selectedItems.map((item, index) => (
-              <CustomChipCard
-                key={index}
-                message={item?.label}
-                onPress={() => handleRemoveItems(item)}
-              />
+              <>
+                <CustomChipCard
+                  message={item?.name}
+                  onPress={() => handleValueChange(item)}
+                />
+              </>
             ))}
           </View>
         )}
@@ -115,44 +105,46 @@ const Dropdown = ({
     );
   }
   return (
-    <Select
-      value={selectedOption}
-      placeholder={placeholder}
-      options={options}
-      isDisabled={!isEditable}
-      styles={customStyles(dropdownStyle, placeholderStyle)}
-      theme={customTheme}
-      onChange={(selectedItem) => {
-        onChange(selectedItem.value);
-      }}
-    />
+    <div>
+      <Select
+        value={selectedOption || ""}
+        placeholder={placeholder}
+        options={options}
+        isDisabled={!isEditable}
+        styles={customStyles(dropdownStyle, placeholderStyle)}
+        theme={customTheme}
+        onChange={(selectedItem) => {
+          onChange(selectedItem.value);
+        }}
+      />
+    </div>
   );
 };
 
 Dropdown.defaultProps = {
   data: [],
-  defaultValues: [],
   dropdownStyle: {},
   isEditable: true,
-  isMultiSelect: false,
   labelField: "",
   onChange: () => {},
+  onDeleteSelectedItem: () => {},
   placeholder: "",
   placeholderStyle: {},
   value: "",
   valueField: "",
   urlField: "",
+  isMultiSelect: false,
 };
 
 Dropdown.propTypes = {
   data: PropTypes.array,
-  defaultValues: PropTypes.array,
   dropdownStyle: PropTypes.object,
   isEditable: PropTypes.bool,
   includeAllKeys: PropTypes.bool,
   isMultiSelect: PropTypes.bool,
   labelField: PropTypes.string,
   onChange: PropTypes.func,
+  onDeleteSelectedItem: PropTypes.func,
   placeholder: PropTypes.string,
   placeholderStyle: PropTypes.object,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

@@ -9,30 +9,35 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CheckBox from "../CheckBox";
 import CustomImage from "../CustomImage";
 import CustomModal from "../CustomModal";
 import CommonText from "../CommonText";
-import CustomChipCard from "../CustomChipCard/CustomChipCard";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import CustomChipCard from "../CustomChipCard/CustomChipCard";
+import CheckBox from "../CheckBox";
 import SearchView from "../SearchView";
 import SvgUri from "../SvgUri";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./DropDownModal.style";
+import Chip from "../Chip";
+import colors from "../../assets/colors";
 
 const DropDownModal = ({
   customHeading,
-  defaultValues,
   isEditable,
   isMobileNumber,
   isMultiSelect,
+  isSelected,
+  indexNumber,
+  indexField,
   labelField,
   onChangeValue,
   menuOptions,
   options,
   placeholder,
+  selectedItems,
   value,
   valueField,
   urlField,
@@ -44,15 +49,15 @@ const DropDownModal = ({
   const defaultOptions = options?.map((option) => ({
     value: String(option[valueField]),
     label: String(option[labelField]),
-    disabled: option?.isDisabled,
     url: String(option[urlField]),
+    index: option[indexField],
+    isSelected: option[isSelected],
   }));
 
   const data = menuOptions?.length ? menuOptions : defaultOptions;
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
   const [selectedOption, setSelectedOption] = useState(data);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState(defaultValues);
 
   useEffect(() => {
     const selectedIndex = data?.findIndex((item) => item.value === value);
@@ -69,17 +74,7 @@ const DropDownModal = ({
   }, [selectedOption, isDropDownOpen]);
 
   const handleValueChange = (selectedOption) => {
-    const selectedItemsList = [...selectedItems, selectedOption[0]];
-    if (!selectedItems.find((item) => item.value === selectedOption[0].value)) {
-      setSelectedItems((prev) => [...prev, ...selectedOption]);
-      onChangeValue(selectedItemsList.map((item) => item.value));
-    }
-  };
-
-  const handleRemoveItems = (itemToRemove) => {
-    setSelectedItems((prevItems) =>
-      prevItems.filter((item) => item.value !== itemToRemove.value)
-    );
+    onChangeValue(selectedOption.value);
   };
 
   const keyboardDidHideCallback = () => {
@@ -140,20 +135,7 @@ const DropDownModal = ({
   };
 
   const renderOptions = ({ item, index }) => {
-    const isSelected = selectedItems.some(
-      (selected) => selected.value === item.value
-    );
-    return isMultiSelect ? (
-      <CheckBox
-        id={item}
-        title={item.label}
-        handleCheckbox={(item) => {
-          isSelected ? handleRemoveItems(item) : handleValueChange([item]);
-        }}
-        isDisabled={item.disabled}
-        isSelected={isSelected}
-      />
-    ) : (
+    return (
       <TouchableOpacity
         key={index}
         onPress={() => {
@@ -191,7 +173,7 @@ const DropDownModal = ({
   const renderFlatList = () => {
     return (
       <FlatList
-        data={data}
+        data={selectedOption}
         getItemLayout={getItemLayout}
         initialNumToRender={10}
         keyExtractor={(item, index) => index.toString()}
@@ -210,18 +192,22 @@ const DropDownModal = ({
           onPress={handleDropDown}
           style={styles.textButton(isEditable)}
         >
-          <CommonText customTextStyle={styles.placeHolderText}>
+          <CommonText
+            customTextStyle={value ? styles.valueText : styles.placeHolderText}
+          >
             {placeholder}
           </CommonText>
           <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
         </TouchableOpacity>
         {!!selectedItems.length && (
           <View style={styles.multiSelectOptions}>
-            {selectedItems.map((item) => (
-              <CustomChipCard
-                message={item?.label}
-                onPress={() => handleRemoveItems(item)}
-              />
+            {selectedItems.map((item, index) => (
+              <>
+                <CustomChipCard
+                  message={item?.name}
+                  onPress={() => handleValueChange(item)}
+                />
+              </>
             ))}
           </View>
         )}
@@ -235,7 +221,37 @@ const DropDownModal = ({
             }}
             onBackdropPress={handleDropDown}
           >
-            {renderFlatList()}
+            <FlatList
+              data={data}
+              style={styles.modalContainer}
+              getItemLayout={getItemLayout}
+              initialNumToRender={10}
+              keyExtractor={(item, index) => index.toString()}
+              ListEmptyComponent={renderEmptyFooter()}
+              ref={flatListRef}
+              renderItem={({ item, index }) => {
+                const isDisabled =
+                  item.index !== null && indexNumber !== item.index;
+                return (
+                  <View
+                    style={{
+                      ...styles.multiSelectOptionStyle,
+                      ...(isDisabled && styles.multiSelectOptionStyleDisabled),
+                    }}
+                  >
+                    <CheckBox
+                      customTextStyle={styles.checkBoxTextStyle}
+                      handleCheckbox={() => handleValueChange(item)}
+                      id={item.value}
+                      isSelected={item?.isSelected || item.index !== null}
+                      title={item?.label}
+                      isDisabled={isDisabled}
+                    />
+                  </View>
+                );
+              }}
+              onScrollToIndexFailed={scrollToIndex}
+            />
           </CustomModal>
         )}
       </>
@@ -301,7 +317,6 @@ const DropDownModal = ({
 
 DropDownModal.defaultProps = {
   customHeading: "",
-  defaultValues: [],
   isEditable: true,
   labelField: "label",
   isMobileNumber: false,
@@ -316,7 +331,6 @@ DropDownModal.defaultProps = {
 
 DropDownModal.propTypes = {
   customHeading: PropTypes.string,
-  defaultValues: PropTypes.array,
   isEditable: PropTypes.bool,
   labelField: PropTypes.string,
   isMobileNumber: PropTypes.bool,
