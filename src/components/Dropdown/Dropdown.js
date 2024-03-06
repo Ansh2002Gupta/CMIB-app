@@ -92,6 +92,7 @@ const Dropdown = ({
           <View style={styles.multiSelectOptions}>
             {selectedItems.map((item, index) => (
               <CustomChipCard
+                key={index}
                 message={item?.name}
                 onPress={() => handleValueChange(item)}
               />
@@ -142,7 +143,11 @@ Dropdown.propTypes = {
   onDeleteSelectedItem: PropTypes.func,
   placeholder: PropTypes.string,
   placeholderStyle: PropTypes.object,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
 };

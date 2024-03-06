@@ -201,7 +201,6 @@ const CustomTextInput = (props) => {
             indexNumber,
             indexField,
             labelField,
-            isMultiSelect,
             onChangeValue,
             handleMultiSelect,
             options,
@@ -479,7 +478,11 @@ CustomTextInput.propTypes = {
   onIconClose: PropTypes.func,
   placeholder: PropTypes.string,
   step: PropTypes.number,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
 };

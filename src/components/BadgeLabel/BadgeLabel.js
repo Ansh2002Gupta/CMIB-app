@@ -40,7 +40,7 @@ BadgeLabel.defaultProps = {
 };
 
 BadgeLabel.propTypes = {
-  badgeLabels: PropTypes.array.isRequired,
+  badgeLabels: PropTypes.array,
   customContainerStyle: PropTypes.object,
   customTextStyle: PropTypes.object,
 };

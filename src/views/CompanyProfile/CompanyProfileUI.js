@@ -314,6 +314,7 @@ const CompanyProfileUI = (props) => {
                 headerText={intl.formatMessage({
                   id: "label.module_access",
                 })}
+                isMandatory
               />
               {renderModuleAccess()}
             </CardComponent>

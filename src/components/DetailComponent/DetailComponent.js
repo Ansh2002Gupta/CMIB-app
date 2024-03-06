@@ -29,6 +29,7 @@ const DetailComponent = ({
   isActive,
   isEditable,
   isInputDisable,
+  isMandatory,
   isShowSwitch,
   onPressActionButton,
 }) => {
@@ -82,9 +83,14 @@ const DetailComponent = ({
   return (
     <View>
       {!!headerText && (
-        <CommonText customTextStyle={styles.headerText} fontWeight="600">
-          {headerText}
-        </CommonText>
+        <View style={styles.titleContainer}>
+          <CommonText customTextStyle={styles.headerText} fontWeight="600">
+            {headerText}
+          </CommonText>
+          {isMandatory && (
+            <CommonText customTextStyle={styles.starStyle}>{" *"}</CommonText>
+          )}
+        </View>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
@@ -206,6 +212,7 @@ DetailComponent.propTypes = {
   isActive: PropTypes.bool,
   isEditable: PropTypes.bool,
   isInputDisable: PropTypes.bool,
+  isMandatory: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
   onPressActionButton: PropTypes.func,
 };
