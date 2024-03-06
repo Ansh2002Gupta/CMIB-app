@@ -283,7 +283,7 @@ const CompanyProfileUI = (props) => {
                     id: "label.module_removal_warning",
                   })
                 : `${intl.formatMessage({
-                    id: "label.you_are_not_provided",
+                    id: "label.you_have_not_provided",
                   })} ${unoccupiedModules.join(", ")} ${intl.formatMessage({
                     id: "label.module_occupancy_warning",
                   })}`
