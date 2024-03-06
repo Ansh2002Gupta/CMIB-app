@@ -10,7 +10,7 @@ import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import styles from "./ImagePreview.style";
 
-const ImagePreview = ({ alt, source, style, preview }) => {
+const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const isModalVisible = preview && modalVisible;
@@ -23,7 +23,12 @@ const ImagePreview = ({ alt, source, style, preview }) => {
   return (
     <View>
       <CustomTouchableOpacity onPress={imagePreviewHandler}>
-        <CustomImage source={source} style={{ ...style }} alt={alt} />
+        <CustomImage
+          alt={alt}
+          resizeMode={resizeMode}
+          source={source}
+          style={{ ...style }}
+        />
       </CustomTouchableOpacity>
       {isModalVisible && (
         <Modal containerStyle={styles.transformerImageWrapper} maxWidth="sm">
@@ -46,8 +51,9 @@ const ImagePreview = ({ alt, source, style, preview }) => {
                 </div>
                 <TransformComponent>
                   <CustomImage
-                    source={source}
                     alt={alt}
+                    defaultSource={images.iconLoading}
+                    source={source}
                     style={styles.previewImage}
                   />
                 </TransformComponent>

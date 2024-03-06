@@ -6,6 +6,7 @@ import styles from "./customImage.style";
 
 const CustomImage = ({
   alt,
+  defaultSource,
   height,
   Icon,
   isSvg,
@@ -30,6 +31,7 @@ const CustomImage = ({
   const renderImage = () => {
     return (
       <Image
+        defaultSource={defaultSource}
         source={source}
         style={style}
         resizeMode={resizeMode}

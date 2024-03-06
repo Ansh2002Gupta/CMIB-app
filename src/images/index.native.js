@@ -119,6 +119,7 @@ import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
 import iconZoomIn from "../../public/images/svg/iconZoomIn.svg";
 import iconZoomOut from "../../public/images/svg/iconZoomOut.svg";
+import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 
 const images = {
   iconArrowUp,
@@ -242,6 +243,7 @@ const images = {
   iconSendDisabled,
   iconZoomIn,
   iconZoomOut,
+  iconLoading,
 };
 
 export default images;
