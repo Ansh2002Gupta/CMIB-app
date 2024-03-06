@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
 import colors from "../../../assets/colors";
 
@@ -62,6 +62,26 @@ export const style = StyleSheet.create({
   },
   firstInput: {
     flex: 1,
+  },
+  removeButton: {
+    marginBottom: 24,
+  },
+  contactPersonContainer: {
+    marginBottom: 16,
+  },
+  disabledBtnstyle: {
+    backgroundColor: colors.white,
+    opacity: 0.5,
+    ...Platform.select({
+      web: {
+        cursor: "not-allowed",
+      },
+    }),
+  },
+  note: {
+    marginTop: 16,
+    color: colors.darkGrey,
+    fontStyle: "italic",
   },
 });
 

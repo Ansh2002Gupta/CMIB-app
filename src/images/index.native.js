@@ -117,6 +117,7 @@ import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
 import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
+import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
 import iconZoomIn from "../../public/images/svg/iconZoomIn.svg";
 import iconZoomOut from "../../public/images/svg/iconZoomOut.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
@@ -241,6 +242,7 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
+  iconDeleteRed,
   iconZoomIn,
   iconZoomOut,
   iconLoading,
