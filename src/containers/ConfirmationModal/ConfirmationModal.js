@@ -153,18 +153,18 @@ ConfirmationModal.defaultProptypes = {
 ConfirmationModal.propTypes = {
   hasSingleButton: PropTypes.bool,
   buttonOneStyle: PropTypes.object,
-  buttonOneText: PropTypes.string.isRequired,
+  buttonOneText: PropTypes.string,
   buttonOneTextStyle: PropTypes.object,
-  buttonTwoText: PropTypes.string.isRequired,
+  buttonTwoText: PropTypes.string,
   buttonTwoStyle: PropTypes.object,
   buttonTwoTextStyle: PropTypes.object,
-  headingText: PropTypes.string.isRequired,
+  headingText: PropTypes.string,
   icon: PropTypes.node,
-  loader: PropTypes.bool.isRequired,
-  onPressButtonOne: PropTypes.func.isRequired,
-  onPressButtonTwo: PropTypes.func.isRequired,
+  loader: PropTypes.bool,
+  onPressButtonOne: PropTypes.func,
+  onPressButtonTwo: PropTypes.func,
   severity: PropTypes.string,
-  subHeading: PropTypes.string.isRequired,
+  subHeading: PropTypes.string,
 };
 
 export default ConfirmationModal;
