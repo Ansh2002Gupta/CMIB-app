@@ -12,6 +12,7 @@ import styles from "./ImagePreview.style";
 
 const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [scale, setScale] = useState(1);
 
   const isModalVisible = preview && modalVisible;
   const imagePreviewHandler = () => {
@@ -33,9 +34,14 @@ const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
       {isModalVisible && (
         <Modal containerStyle={styles.transformerImageWrapper} maxWidth="md">
           <TransformWrapper
-            initialScale={1}
+            initialScale={scale}
             initialPositionX={0}
             initialPositionY={0}
+            maxScale={3}
+            minScale={1}
+            onTransformed={(zoomState) => {
+              setScale(zoomState?.state?.scale);
+            }}
           >
             {({ zoomIn, zoomOut, resetTransform }) => (
               <React.Fragment>
@@ -63,12 +69,14 @@ const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
                     imageStyle={styles.iconZoomBtn}
                     onPress={() => zoomIn()}
                     source={images.iconZoomIn}
+                    disabled={scale === 3}
                   />
                   <TouchableImage
                     parentStyle={styles.iconZoomBtnParent}
                     imageStyle={styles.iconZoomBtn}
                     onPress={() => zoomOut()}
                     source={images.iconZoomOut}
+                    disabled={scale === 1}
                   />
                 </View>
               </React.Fragment>
