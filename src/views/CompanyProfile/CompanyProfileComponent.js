@@ -456,7 +456,6 @@ const CompanyProfileComponent = () => {
   };
 
   const handleToggle = (id) => {
-    // Update the options with the new isSelected value
     const updatedItems = options.map((item) => {
       if (item.id === id) {
         return { ...item, isSelected: !item.isSelected };
@@ -516,7 +515,12 @@ const CompanyProfileComponent = () => {
               )
             : [
                 ...contact.contactModules[0].options,
-                { value: moduleId, label: moduleId, isDisabled: false },
+                {
+                  value: moduleId,
+                  label: moduleId,
+                  selectedIndex: null,
+                  isSelected: false,
+                },
               ];
 
           return {
@@ -638,9 +642,42 @@ const CompanyProfileComponent = () => {
     const updatedContactPersonInfo = profileData.contactPersonInfo.map(
       (contact, idx) => {
         if (idx === index) {
-          return { ...contact, isContactActive: !contact.isContactActive };
+          const isContactActive = !contact.isContactActive;
+          const updatedContactModules = isContactActive
+            ? contact.contactModules
+            : contact.contactModules.map((module) => ({
+                ...module,
+                defaultValues: [],
+                values: [],
+                options: module.options.map((option) => ({
+                  ...option,
+                  isSelected: false,
+                  selectedIndex: null,
+                })),
+              }));
+
+          return {
+            ...contact,
+            isContactActive: isContactActive,
+            contactModules: updatedContactModules,
+          };
         }
-        return contact;
+        const updatedContactModules = contact.contactModules.map((module) => ({
+          ...module,
+          options: module.options.map((option) =>
+            option.selectedIndex === index
+              ? {
+                  ...option,
+                  isSelected: false,
+                  selectedIndex: null,
+                }
+              : option
+          ),
+        }));
+        return {
+          ...contact,
+          contactModules: updatedContactModules,
+        };
       }
     );
 
@@ -689,22 +726,53 @@ const CompanyProfileComponent = () => {
           const updatedModule = { ...module };
           updatedModule.options = module.options.map((option) => {
             const updatedOption = { ...option };
-            if (idx !== index) {
-              if (
-                updatedSelectedItems.some((item) => item.value === option.value)
-              ) {
-                updatedOption.isDisabled = true;
-              } else {
-                updatedOption.isDisabled = false;
-              }
+            if (
+              option.value === updatedSelectedItems &&
+              (option.isSelected || option.selectedIndex === index)
+            ) {
+              updatedOption.isSelected = false;
+              updatedOption.selectedIndex = null;
+            }
+            if (
+              option.value === updatedSelectedItems &&
+              option.selectedIndex === null &&
+              idx === index
+            ) {
+              updatedOption.isSelected = true;
+              updatedOption.selectedIndex = idx;
+            }
+            if (
+              option.value === updatedSelectedItems &&
+              option.selectedIndex === null &&
+              idx !== index
+            ) {
+              updatedOption.isSelected = false;
+              updatedOption.selectedIndex = index;
             }
             return updatedOption;
           });
           if (idx === index) {
-            updatedModule.defaultValues = updatedSelectedItems.map((item) => ({
-              value: item.value,
-              label: item.label,
-            }));
+            const itemIndex = updatedModule.defaultValues.findIndex(
+              (item) => item.value === updatedSelectedItems
+            );
+            if (itemIndex > -1) {
+              updatedModule.defaultValues.splice(itemIndex, 1);
+            } else {
+              updatedModule.defaultValues.push({
+                value: updatedSelectedItems,
+                label: updatedSelectedItems,
+                name: updatedSelectedItems,
+              });
+            }
+            const valueIndex = updatedModule.values?.findIndex(
+              (value) => value === updatedSelectedItems
+            );
+            if (valueIndex > -1) {
+              updatedModule.values.splice(valueIndex, 1);
+            } else {
+              updatedModule.values = updatedModule.values || []; // Ensure values array exists
+              updatedModule.values.push(updatedSelectedItems);
+            }
           }
           return updatedModule;
         });
@@ -741,7 +809,6 @@ const CompanyProfileComponent = () => {
       (module) => ({
         value: module,
         label: module,
-        isDisabled: selectedModules.has(module),
       })
     );
 

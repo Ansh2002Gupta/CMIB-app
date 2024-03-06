@@ -38,7 +38,6 @@ const CustomTextInput = (props) => {
     customTextInputOuterContainer,
     countValue,
     codeValue,
-    defaultValues,
     dropdownStyle,
     errorMessage,
     eyeImage,
@@ -169,7 +168,6 @@ const CustomTextInput = (props) => {
             renderRightIcon={() => <Image source={images.iconDownArrow} />}
             placeholderStyle={style.placeholderStyle}
             menuOptions={menuOptions}
-            defaultValues={defaultValues}
             data={options}
             maxHeight={200}
             handleMultiSelect={handleMultiSelect}
@@ -204,7 +202,6 @@ const CustomTextInput = (props) => {
             indexField,
             labelField,
             isMultiSelect,
-            defaultValues,
             onChangeValue,
             handleMultiSelect,
             options,

@@ -88,9 +88,9 @@ const DetailComponent = ({
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
-        {details?.map((detail, index) => (
+        {details?.map((detail, idx) => (
           <View
-            key={index}
+            key={idx}
             style={isWebView ? styles.webContainer : getRowStyle(detail)}
           >
             {isEditable ? (
@@ -112,11 +112,13 @@ const DetailComponent = ({
                   label={intl.formatMessage({ id: detail.label })}
                   isDropdown={detail.isDropdown}
                   isEditable={isInputDisable ? !isInputDisable : true}
-                  handleMultiSelect={handleMultiSelect}
                   isCounterInput={detail.isCounterInput}
                   isError={!!detail.error}
                   isMandatory={detail.isMandatory}
-                  defaultValues={detail.defaultValues}
+                  selectedItems={detail.defaultValues}
+                  indexNumber={index}
+                  isSelected="isSelected"
+                  indexField="selectedIndex"
                   options={detail.options || []}
                   isMultiline={detail?.isMultiline}
                   placeholder={intl.formatMessage({ id: detail.placeholder })}
@@ -125,7 +127,11 @@ const DetailComponent = ({
                   valueField={detail.valueField || "label"}
                   labelField={detail.labelField || "label"}
                   inputKey={detail.inputKey || "value"}
-                  onChangeValue={(val) => handleChange(detail.label, val)}
+                  onChangeValue={(val) =>
+                    detail.isMultiSelect
+                      ? handleMultiSelect(val)
+                      : handleChange(detail.label, val)
+                  }
                   isMultiSelect={detail.isMultiSelect}
                   onChangeText={(val) => {
                     if (detail?.isNumeric) {

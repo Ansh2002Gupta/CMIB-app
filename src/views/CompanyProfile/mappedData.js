@@ -89,12 +89,16 @@ export const mapApiDataToUI = ({
           defaultValues: contact?.modules.map((item) => ({
             value: item,
             label: item,
+            name: item,
           })),
           options: company_module_access.map((item) => ({
             value: item,
             label: item,
-            isDisabled:
-              selectedModules.has(item) && !contact?.modules.includes(item),
+            name: item,
+            isSelected: contact?.modules.includes(item),
+            selectedIndex: contactDetails.findIndex(
+              (c) => c.modules && c.modules.includes(item)
+            ),
           })),
         },
       ];
