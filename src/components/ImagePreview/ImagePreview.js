@@ -9,6 +9,7 @@ import Modal from "../Modal";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import styles from "./ImagePreview.style";
+import { MIN_ZOOM_SCALE, MAX_ZOOM_SCALE } from "../../constants/constants";
 
 const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,19 +38,19 @@ const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
             initialScale={scale}
             initialPositionX={0}
             initialPositionY={0}
-            maxScale={3}
-            minScale={1}
+            maxScale={MAX_ZOOM_SCALE}
+            minScale={MIN_ZOOM_SCALE}
             onTransformed={(zoomState) => {
               setScale(zoomState?.state?.scale);
             }}
           >
-            {({ zoomIn, zoomOut, resetTransform }) => (
+            {({ zoomIn, zoomOut }) => (
               <React.Fragment>
                 <View style={styles.crossIconContainer}>
                   <TouchableImage
                     style={styles.iconCloseDarkBtn}
                     onPress={() => {
-                      resetTransform();
+                      setScale(1);
                       setModalVisible(false);
                     }}
                     source={images.iconCloseDark}
@@ -69,14 +70,14 @@ const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
                     imageStyle={styles.iconZoomBtn}
                     onPress={() => zoomIn()}
                     source={images.iconZoomIn}
-                    disabled={scale === 3}
+                    disabled={scale === MAX_ZOOM_SCALE}
                   />
                   <TouchableImage
                     parentStyle={styles.iconZoomBtnParent}
                     imageStyle={styles.iconZoomBtn}
                     onPress={() => zoomOut()}
                     source={images.iconZoomOut}
-                    disabled={scale === 1}
+                    disabled={scale === MIN_ZOOM_SCALE}
                   />
                 </View>
               </React.Fragment>
