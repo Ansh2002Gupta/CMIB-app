@@ -80,16 +80,29 @@ const style = {
   buttonStyle: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     borderWidth: 1,
     borderColor: colors.lightGray,
     borderRadius: 8,
     paddingTop: 12,
     paddingBottom: 12,
-    paddingRight: 16,
-    paddingLeft: 16,
+    marginBottom: 24,
+    width: 192,
+  },
+  mobButtonStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.secondaryGrey,
+    paddingLeft: 14,
+    paddingTop: 14,
+    paddingBottom: 14,
     marginBottom: 24,
   },
   buttonTextStyle: {
+    fontSize: 14,
+  },
+  mobTextStyle: {
+    color: colors.darkBlue,
     fontSize: 14,
   },
   customButtonStyle: {

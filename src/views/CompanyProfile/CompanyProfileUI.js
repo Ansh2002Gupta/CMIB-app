@@ -133,16 +133,21 @@ const CompanyProfileUI = (props) => {
         ))}
         {isEditProfile && (
           <TouchableOpacity
-            style={style.buttonStyle}
+            style={isWebView ? style.buttonStyle : style.mobButtonStyle}
             onPress={onAddContactPerson}
           >
             <CustomImage
-              Icon={images.iconAddBlack}
+              Icon={isWebView ? images.iconAddBlack : images.iconAddBlue}
               isSvg
-              source={images.iconAddBlack}
+              source={isWebView ? images.iconAddBlack : images.iconAddBlue}
               alt={"Add Contact Person"}
             />
-            <CommonText customTextStyle={style.buttonTextStyle}>
+            <CommonText
+              customTextStyle={
+                isWebView ? style.buttonTextStyle : style.mobTextStyle
+              }
+              fontWeight={isWebView ? "500" : "600"}
+            >
               {intl.formatMessage({
                 id: "label.add_contact_person",
               })}
