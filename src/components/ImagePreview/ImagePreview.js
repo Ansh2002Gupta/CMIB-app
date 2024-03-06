@@ -7,11 +7,13 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CustomImage from "../CustomImage";
 import Modal from "../Modal";
 import TouchableImage from "../TouchableImage";
+import { MIN_ZOOM_SCALE, MAX_ZOOM_SCALE } from "../../constants/constants";
 import images from "../../images";
 import styles from "./ImagePreview.style";
 
-const ImagePreview = ({ alt, source, style, preview }) => {
+const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [scale, setScale] = useState(1);
 
   const isModalVisible = preview && modalVisible;
   const imagePreviewHandler = () => {
@@ -23,31 +25,42 @@ const ImagePreview = ({ alt, source, style, preview }) => {
   return (
     <View>
       <CustomTouchableOpacity onPress={imagePreviewHandler}>
-        <CustomImage source={source} style={{ ...style }} alt={alt} />
+        <CustomImage
+          alt={alt}
+          resizeMode={resizeMode}
+          source={source}
+          style={{ ...style }}
+        />
       </CustomTouchableOpacity>
       {isModalVisible && (
-        <Modal containerStyle={styles.transformerImageWrapper} maxWidth="sm">
+        <Modal containerStyle={styles.transformerImageWrapper} maxWidth="md">
           <TransformWrapper
-            initialScale={1}
+            initialScale={scale}
             initialPositionX={0}
             initialPositionY={0}
+            maxScale={MAX_ZOOM_SCALE}
+            minScale={MIN_ZOOM_SCALE}
+            onTransformed={(zoomState) => {
+              setScale(zoomState?.state?.scale);
+            }}
           >
-            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+            {({ zoomIn, zoomOut }) => (
               <React.Fragment>
-                <div className="tools">
+                <View style={styles.crossIconContainer}>
                   <TouchableImage
                     style={styles.iconCloseDarkBtn}
                     onPress={() => {
-                      resetTransform();
+                      setScale(1);
                       setModalVisible(false);
                     }}
                     source={images.iconCloseDark}
                   />
-                </div>
+                </View>
                 <TransformComponent>
                   <CustomImage
-                    source={source}
                     alt={alt}
+                    defaultSource={images.iconLoading}
+                    source={source}
                     style={styles.previewImage}
                   />
                 </TransformComponent>
@@ -57,12 +70,14 @@ const ImagePreview = ({ alt, source, style, preview }) => {
                     imageStyle={styles.iconZoomBtn}
                     onPress={() => zoomIn()}
                     source={images.iconZoomIn}
+                    disabled={scale === MAX_ZOOM_SCALE}
                   />
                   <TouchableImage
                     parentStyle={styles.iconZoomBtnParent}
                     imageStyle={styles.iconZoomBtn}
                     onPress={() => zoomOut()}
                     source={images.iconZoomOut}
+                    disabled={scale === MIN_ZOOM_SCALE}
                   />
                 </View>
               </React.Fragment>

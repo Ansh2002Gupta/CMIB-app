@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   imagesSection: {
     height: 160,
     width: 200,
-    objectFit: "contain",
+    objectFit: "cover",
     borderColor: colors.lightGrey,
     borderWidth: 1,
     borderStyle: "solid",
