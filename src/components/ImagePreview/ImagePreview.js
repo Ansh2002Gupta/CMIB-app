@@ -31,15 +31,15 @@ const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
         />
       </CustomTouchableOpacity>
       {isModalVisible && (
-        <Modal containerStyle={styles.transformerImageWrapper} maxWidth="sm">
+        <Modal containerStyle={styles.transformerImageWrapper} maxWidth="md">
           <TransformWrapper
             initialScale={1}
             initialPositionX={0}
             initialPositionY={0}
           >
-            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+            {({ zoomIn, zoomOut, resetTransform }) => (
               <React.Fragment>
-                <div className="tools">
+                <View style={styles.crossIconContainer}>
                   <TouchableImage
                     style={styles.iconCloseDarkBtn}
                     onPress={() => {
@@ -48,7 +48,7 @@ const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
                     }}
                     source={images.iconCloseDark}
                   />
-                </div>
+                </View>
                 <TransformComponent>
                   <CustomImage
                     alt={alt}

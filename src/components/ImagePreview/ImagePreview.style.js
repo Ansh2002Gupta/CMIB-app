@@ -1,5 +1,11 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
+import {
+  Dimensions,
+  StyleSheet,
+  Platform,
+} from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const { height: HEIGHT } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   fullImage: {
@@ -14,16 +20,14 @@ const styles = StyleSheet.create({
     padding: 10,
     zIndex: 1,
   },
-  closeText: {
-    color: "white",
-    fontSize: 18,
-  },
   transformerImageWrapper: {
     backgroundColor: "transparent",
     padding: 0,
     borderWidth: 0,
     borderRadius: 0,
     alignItems: "center",
+    position: "relative",
+    boxShadow: "none",
   },
   iconCloseDarkBtn: {
     marginBottom: 30,
@@ -53,16 +57,23 @@ const styles = StyleSheet.create({
   closeIconImage: {
     position: "absolute",
     zIndex: 2,
-    top: 50,
+    top: 40,
     right: 10,
   },
   previewImage: {
     ...Platform.select({
       web: {
-        maxHeight: "60vh",
-        maxWidth: "80vw",
+        height: HEIGHT * 0.5,
+        width: "100%",
       },
     }),
+  },
+  crossIconContainer: {
+    position: "absolute",
+    alignItems: "flex-end",
+    top: -50,
+    right: 0,
+    zIndex: 10,
   },
   modalStyle: {
     alignItems: "center",
