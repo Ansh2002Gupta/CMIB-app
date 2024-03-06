@@ -28,10 +28,17 @@ const CustomImage = ({
     return {};
   };
 
+  const isMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? {
+          defaultSource: { defaultSource },
+        }
+      : {};
+
   const renderImage = () => {
     return (
       <Image
-        defaultSource={defaultSource}
+        {...isMobileProps}
         source={source}
         style={style}
         resizeMode={resizeMode}
