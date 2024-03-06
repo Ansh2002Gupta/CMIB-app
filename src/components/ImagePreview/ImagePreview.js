@@ -7,9 +7,9 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import CustomImage from "../CustomImage";
 import Modal from "../Modal";
 import TouchableImage from "../TouchableImage";
+import { MIN_ZOOM_SCALE, MAX_ZOOM_SCALE } from "../../constants/constants";
 import images from "../../images";
 import styles from "./ImagePreview.style";
-import { MIN_ZOOM_SCALE, MAX_ZOOM_SCALE } from "../../constants/constants";
 
 const ImagePreview = ({ alt, resizeMode, source, style, preview }) => {
   const [modalVisible, setModalVisible] = useState(false);
