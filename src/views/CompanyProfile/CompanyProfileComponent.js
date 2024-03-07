@@ -140,7 +140,7 @@ const CompanyProfileComponent = () => {
       return acc;
     }, {});
 
-    companyDetails.company_details = profileData?.companyProfile[0]?.value;
+    companyDetails.company_details = profileData?.companyProfile?.[0]?.value;
     companyDetails.website = profileData?.otherDetails?.find(
       (detail) => detail.key === "website"
     ).value;
@@ -162,7 +162,7 @@ const CompanyProfileComponent = () => {
 
     const contactDetails = profileData?.contactPersonInfo?.map((contact) => ({
       id: contact?.contactInfo?.find((info) => info.key === "name").id,
-      modules: contact?.contactModules[0].value,
+      modules: contact?.contactModules?.[0].value,
       salutation: contact?.contactInfo?.find(
         (info) => info.label === "label.salutation"
       ).value,
@@ -202,7 +202,7 @@ const CompanyProfileComponent = () => {
       const unoccupied = profileData.companyModuleAccess.filter(
         (moduleId) =>
           !profileData.contactPersonInfo.some((contact) =>
-            contact.contactModules[0].defaultValues.some(
+            contact.contactModules?.[0].defaultValues.some(
               (defaultValue) => defaultValue.value === moduleId
             )
           )
@@ -257,7 +257,7 @@ const CompanyProfileComponent = () => {
   const handleModuleToggle = (moduleId) => {
     const anyDefaultValueSelected = profileData.contactPersonInfo.some(
       (contact) =>
-        contact.contactModules[0]?.defaultValues?.some(
+        contact.contactModules?.[0]?.defaultValues?.some(
           (defaultValue) => defaultValue.value === moduleId
         )
     );
@@ -278,17 +278,17 @@ const CompanyProfileComponent = () => {
           ? profileData.companyModuleAccess.filter((id) => id !== moduleId)
           : [...profileData.companyModuleAccess, moduleId],
         contactPersonInfo: profileData?.contactPersonInfo?.map((contact) => {
-          const moduleIndex = contact?.contactModules[0]?.options?.findIndex(
+          const moduleIndex = contact?.contactModules?.[0]?.options?.findIndex(
             (module) => module.value === moduleId
           );
           const moduleSelected = moduleIndex !== -1;
 
           const newOptions = moduleSelected
-            ? contact.contactModules[0]?.options?.filter(
+            ? contact.contactModules?.[0]?.options?.filter(
                 (module) => module.value !== moduleId
               )
             : [
-                ...contact.contactModules[0].options,
+                ...contact.contactModules?.[0].options,
                 {
                   value: moduleId,
                   label: moduleId,
@@ -578,7 +578,7 @@ const CompanyProfileComponent = () => {
   const onAddContactPerson = () => {
     const selectedModules = new Set();
     profileData.contactPersonInfo.forEach((contact) => {
-      contact.contactModules[0].defaultValues.forEach((module) => {
+      contact.contactModules?.[0].defaultValues.forEach((module) => {
         selectedModules.add(module.value);
       });
     });
