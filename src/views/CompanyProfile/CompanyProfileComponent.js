@@ -140,18 +140,18 @@ const CompanyProfileComponent = () => {
       return acc;
     }, {});
 
-    companyDetails.company_details = profileData.companyProfile[0].value;
-    companyDetails.website = profileData.otherDetails.find(
+    companyDetails.company_details = profileData?.companyProfile[0]?.value;
+    companyDetails.website = profileData?.otherDetails?.find(
       (detail) => detail.key === "website"
     ).value;
-    companyDetails.nature_of_suppliers = profileData.otherDetails.find(
+    companyDetails.nature_of_suppliers = profileData?.otherDetails?.find(
       (detail) => detail.label === "label.nature_of_supplier"
     ).value;
-    companyDetails.type = profileData.otherDetails.find(
+    companyDetails.type = profileData?.otherDetails?.find(
       (detail) => detail.label === "label.company_type"
     ).value;
-    companyDetails.source_of_information = profileData.sourceOfInfo;
-    companyDetails.credit_amount = profileData.balanceCredit;
+    companyDetails.source_of_information = profileData?.sourceOfInfo;
+    companyDetails.credit_amount = profileData?.balanceCredit;
     if (fileUploadResult?.data?.file_name || profileData?.companyLogo) {
       const logoFileName = profileData?.companyLogo?.split("/")?.pop();
       companyDetails.company_logo =
@@ -160,26 +160,27 @@ const CompanyProfileComponent = () => {
       companyDetails.company_logo = null;
     }
 
-    const contactDetails = profileData.contactPersonInfo.map((contact) => ({
-      id: contact.contactInfo.find((info) => info.key === "name").id,
-      modules: contact.contactModules[0].value,
-      salutation: contact.contactInfo.find(
+    const contactDetails = profileData?.contactPersonInfo?.map((contact) => ({
+      id: contact?.contactInfo?.find((info) => info.key === "name").id,
+      modules: contact?.contactModules[0].value,
+      salutation: contact?.contactInfo?.find(
         (info) => info.label === "label.salutation"
       ).value,
-      name: contact.contactInfo.find((info) => info.key === "name").value,
-      email: contact.contactInfo.find((info) => info.key === "contactEmailId")
+      name: contact?.contactInfo?.find((info) => info.key === "name").value,
+      email: contact?.contactInfo?.find((info) => info.key === "contactEmailId")
         .value,
-      designation: contact.contactInfo.find(
+      designation: contact?.contactInfo?.find(
         (info) => info.key === "designation"
       ).value,
       mobile_country_code:
         "+" +
-        contact.contactInfo
-          .find((info) => info.key === "mobileNo")
+        contact?.contactInfo
+          ?.find((info) => info.key === "mobileNo")
           .codeValue.replace(/\D/g, ""),
-      mobile_number: contact.contactInfo.find((info) => info.key === "mobileNo")
-        .value,
-      status: contact.isContactActive ? 1 : 0,
+      mobile_number: contact?.contactInfo?.find(
+        (info) => info.key === "mobileNo"
+      ).value,
+      status: contact?.isContactActive ? 1 : 0,
     }));
 
     const payload = {
@@ -276,7 +277,7 @@ const CompanyProfileComponent = () => {
         companyModuleAccess: profileData.companyModuleAccess.includes(moduleId)
           ? profileData.companyModuleAccess.filter((id) => id !== moduleId)
           : [...profileData.companyModuleAccess, moduleId],
-        contactPersonInfo: profileData.contactPersonInfo.map((contact) => {
+        contactPersonInfo: profileData?.contactPersonInfo?.map((contact) => {
           const moduleIndex = contact?.contactModules[0]?.options?.findIndex(
             (module) => module.value === moduleId
           );
@@ -412,7 +413,7 @@ const CompanyProfileComponent = () => {
   };
 
   const handleSwitchChange = (index) => {
-    const updatedContactPersonInfo = profileData.contactPersonInfo.map(
+    const updatedContactPersonInfo = profileData?.contactPersonInfo?.map(
       (contact, idx) => {
         if (idx === index) {
           const isContactActive = !contact.isContactActive;
@@ -496,7 +497,7 @@ const CompanyProfileComponent = () => {
   };
 
   const handleModuleAccess = (index, updatedSelectedItems) => {
-    const updatedContactPersonInfo = profileData.contactPersonInfo.map(
+    const updatedContactPersonInfo = profileData?.contactPersonInfo?.map(
       (contact, idx) => {
         const updatedContact = { ...contact };
         updatedContact.contactModules = contact.contactModules.map((module) => {
