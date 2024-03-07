@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent";
 import useIsWebView from "../../hooks/useIsWebView";
-
 import style from "./DetailCard.style";
 
 const DetailCard = ({
@@ -28,11 +27,10 @@ const DetailCard = ({
   return (
     <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
       <DetailComponent
-        customContainerStyle={
-          isRow
-            ? { ...style.customStyle, ...customContainerStyle }
-            : { ...customContainerStyle }
-        }
+        customContainerStyle={{
+          ...(isRow ? style.customStyle : {}),
+          ...customContainerStyle,
+        }}
         details={details}
         handleChange={handleChange}
         handleMultiSelect={handleMultiSelect}
