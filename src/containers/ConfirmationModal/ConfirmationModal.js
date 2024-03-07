@@ -4,21 +4,21 @@ import { Platform } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../components/ActionPairButton";
 import CommonText from "../../components/CommonText";
-import CustomImage from "../../components/CustomImage";
 import CustomButton from "../../components/CustomButton";
+import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
 import MultiRow from "../../core/layouts/MultiRow";
 import images from "../../images";
 import styles from "./ConfirmationModal.style";
 
 const ConfirmationModal = ({
-  hasSingleButton,
   buttonOneStyle,
   buttonOneText,
   buttonOneTextStyle,
   buttonTwoText,
   buttonTwoStyle,
   buttonTwoTextStyle,
+  hasSingleButton,
   headingText,
   icon,
   loader,
@@ -135,13 +135,13 @@ const ConfirmationModal = ({
 };
 
 ConfirmationModal.defaultProptypes = {
-  hasSingleButton: false,
   buttonOneStyle: {},
   buttonOneText: "",
   buttonOneTextStyle: {},
   buttonTwoText: "",
   buttonTwoStyle: {},
   buttonTwoTextStyle: {},
+  hasSingleButton: false,
   headingText: "",
   icon: images.iconWarning,
   loader: false,
@@ -151,13 +151,13 @@ ConfirmationModal.defaultProptypes = {
 };
 
 ConfirmationModal.propTypes = {
-  hasSingleButton: PropTypes.bool,
   buttonOneStyle: PropTypes.object,
   buttonOneText: PropTypes.string,
   buttonOneTextStyle: PropTypes.object,
   buttonTwoText: PropTypes.string,
   buttonTwoStyle: PropTypes.object,
   buttonTwoTextStyle: PropTypes.object,
+  hasSingleButton: PropTypes.bool,
   headingText: PropTypes.string,
   icon: PropTypes.node,
   loader: PropTypes.bool,
