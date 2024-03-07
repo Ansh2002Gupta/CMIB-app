@@ -1,5 +1,5 @@
 import React from "react";
-import { useWindowDimensions, View } from "@unthinkable/react-core-components";
+import { View, useWindowDimensions } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
