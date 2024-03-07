@@ -23,12 +23,12 @@ import Spinner from "../../components/Spinner";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import { allFieldsFilled } from "./CompanyProfileUtils";
 import images from "../../images";
 import style from "./CompanyProfile.style";
 
 const CompanyProfileUI = (props) => {
   const {
-    allFieldsFilled,
     currentUser,
     error,
     errorWhileDeletion,
@@ -237,7 +237,7 @@ const CompanyProfileUI = (props) => {
             buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
             displayLoader={isUpdatingCompanyProfile}
             isButtonTwoGreen
-            isDisabled={!allFieldsFilled()}
+            isDisabled={!allFieldsFilled(profileResult)}
             onPressButtonOne={onGoBack}
             onPressButtonTwo={onSaveClick}
             customStyles={{
@@ -420,7 +420,6 @@ const CompanyProfileUI = (props) => {
 };
 
 CompanyProfileUI.defaultProps = {
-  allFieldsFilled: () => {},
   error: "",
   handleCompanyDetailChange: () => {},
   handleContactPersonInfo: () => {},
@@ -433,7 +432,6 @@ CompanyProfileUI.defaultProps = {
 };
 
 CompanyProfileUI.propTypes = {
-  allFieldsFilled: PropTypes.func,
   currentUser: PropTypes.string,
   error: PropTypes.string,
   handleCompanyDetailChange: PropTypes.func,
