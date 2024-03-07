@@ -3,12 +3,9 @@ import { View, useWindowDimensions } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import getBreadCrumbDetails from "../../constants/breadCrumbHelpers";
 import { navigations } from "../../constants/routeNames";
 import { useNavigate, useLocation } from "../../routes";
-import {
-  company_profile_breadcrumbs,
-  ticket_listing_breadcrumbs,
-} from "../../constants/constants";
 import styles from "./Breadcrumbs.style";
 
 const Breadcrumbs = () => {
@@ -31,17 +28,7 @@ const Breadcrumbs = () => {
     return styles.enabled;
   };
 
-  let breadcrumbs;
-  switch (location.pathname) {
-    case `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}`:
-      breadcrumbs = ticket_listing_breadcrumbs;
-      break;
-    case navigations.COMPANY_PROFILE:
-      breadcrumbs = company_profile_breadcrumbs;
-      break;
-    default:
-      breadcrumbs = [];
-  }
+  const breadcrumbs = getBreadCrumbDetails({ path: location.pathname });
 
   const isBreadcrumbLocation = (pathname) => {
     return (

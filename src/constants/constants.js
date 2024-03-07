@@ -400,13 +400,3 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   label: `${x + 1995}`,
   value: `${x + 1995}`,
 }));
-
-export const ticket_listing_breadcrumbs = [
-  { path: navigations.TICKETS, label: "Tickets" },
-  { path: navigations.TICKETS_VIEW_EDIT, label: "Ticket Details" },
-];
-
-export const company_profile_breadcrumbs = [
-  { path: navigations.MODULE_LANDING_PAGE, label: "Dashboard" },
-  { path: navigations.COMPANY_PROFILE, label: "Company Profile" },
-];
