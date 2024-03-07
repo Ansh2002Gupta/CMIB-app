@@ -56,14 +56,6 @@ export const mapApiDataToUI = ({
   };
 
   const mapContactDetails = (contactDetails) => {
-    const selectedModules = new Set();
-
-    contactDetails?.forEach((contact) => {
-      contact?.modules?.forEach((module) => {
-        selectedModules.add(module);
-      });
-    });
-
     return contactDetails?.map((contact) => {
       const combinedMobileNumber = formatMobileNumber(
         contact?.mobile_country_code,
@@ -123,14 +115,14 @@ export const mapApiDataToUI = ({
           label: "label.contact_person_name",
           value: checkValue(contact?.name),
           isMandatory: true,
-          maxLength: 255,
+          maxLength: DEFAULT_INPUT_MAX_LENGTH,
           placeholder: "label.enter_contact_person_name",
         },
         {
           key: "designation",
           label: "label.contact_personal_designation",
           value: checkValue(contact?.designation),
-          maxLength: 500,
+          maxLength: DEFAULT_INPUT_MAX_LENGTH,
           isMandatory: true,
           placeholder: "label.enter_contact_person_designation",
         },
