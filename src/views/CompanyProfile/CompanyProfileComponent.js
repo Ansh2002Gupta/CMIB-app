@@ -111,6 +111,11 @@ const CompanyProfileComponent = () => {
     }
   };
 
+  const getDetailByKey = ({ data, dataKeyName, keyName }) => {
+    const detail = data.find((info) => info[dataKeyName] === keyName);
+    return detail ? detail.value : null;
+  };
+
   const createPayloadFromProfileData = (profileData) => {
     const companyDetails = profileData.companyDetail.reduce((acc, detail) => {
       if (detail.key) {
@@ -161,25 +166,32 @@ const CompanyProfileComponent = () => {
     }
 
     const contactDetails = profileData?.contactPersonInfo?.map((contact) => ({
-      id: contact?.contactInfo?.find((info) => info.key === "name").id,
+      id: getDetailByKey({ data: contact?.contactInfo, keyName: "name" }),
       modules: contact?.contactModules?.[0].value,
-      salutation: contact?.contactInfo?.find(
-        (info) => info.label === "label.salutation"
-      ).value,
-      name: contact?.contactInfo?.find((info) => info.key === "name").value,
-      email: contact?.contactInfo?.find((info) => info.key === "contactEmailId")
-        .value,
-      designation: contact?.contactInfo?.find(
-        (info) => info.key === "designation"
-      ).value,
+      salutation: getDetailByKey({
+        data: contact?.contactInfo,
+        keyName: "salutation",
+        dataKeyName: "label",
+      }),
+      name: getDetailByKey({ data: contact?.contactInfo, keyName: "name" }),
+      email: getDetailByKey({
+        data: contact?.contactInfo,
+        keyName: "contactEmailId",
+      }),
+      designation: getDetailByKey({
+        data: contact?.contactInfo,
+        keyName: "designation",
+      }),
       mobile_country_code:
         "+" +
-        contact?.contactInfo
-          ?.find((info) => info.key === "mobileNo")
-          .codeValue.replace(/\D/g, ""),
-      mobile_number: contact?.contactInfo?.find(
-        (info) => info.key === "mobileNo"
-      ).value,
+        getDetailByKey({
+          data: contact?.contactInfo,
+          keyName: "mobileNo",
+        })?.codeValue.replace(/\D/g, ""),
+      mobile_number: getDetailByKey({
+        data: contact?.contactInfo,
+        keyName: "mobileNo",
+      }),
       status: contact?.isContactActive ? 1 : 0,
     }));
 
