@@ -359,7 +359,7 @@ const CompanyProfileComponent = () => {
             acc.email = detail.value;
             break;
           case "code":
-            acc.std_country_code = "+" + detail.value;
+            acc.std_country_code = detail.value;
             break;
           case "telephoneNo":
             acc.telephone_number = detail.value;
@@ -651,8 +651,12 @@ const CompanyProfileComponent = () => {
                 values: [],
                 options: module.options.map((option) => ({
                   ...option,
-                  isSelected: false,
-                  selectedIndex: null,
+                  isSelected:
+                    index === option.selectedIndex ? false : option.isSelected,
+                  selectedIndex:
+                    index === option.selectedIndex
+                      ? null
+                      : option.selectedIndex,
                 })),
               }));
 
