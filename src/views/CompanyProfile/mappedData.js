@@ -6,6 +6,7 @@ import {
   DEFAULT_INPUT_MAX_LENGTH,
   ENTITY_OPTIONS,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
+  MODULE_OPTIONS,
   NATURE_OF_SUPPLIER,
   NUMBER_OF_PARTNERS_LENGTH,
   NUMBER_MAX_LENGTH,
@@ -15,6 +16,7 @@ import {
 export const mapApiDataToUI = ({
   apiData,
   industryOptions,
+  intl,
   countryCodes,
   isEditMode = false,
 }) => {
@@ -77,26 +79,57 @@ export const mapApiDataToUI = ({
       const contactModules = [
         {
           label: "label.module",
-          value: checkValue(contact?.modules),
+          value: checkValue(
+            contact?.modules.map((moduleId) => {
+              const moduleOption = MODULE_OPTIONS.find(
+                (option) => option.id === moduleId
+              );
+              return moduleOption
+                ? intl.formatMessage({
+                    id: moduleOption.messageId,
+                  })
+                : "";
+            })
+          ),
           showBadgeLabel: true,
           isMandatory: true,
           isMultiSelect: true,
           isDropdown: true,
           placeholder: "label.select_module",
-          defaultValues: contact?.modules.map((item) => ({
-            value: item,
-            label: item,
-            name: item,
-          })),
-          options: company_module_access.map((item) => ({
-            value: item,
-            label: item,
-            name: item,
-            isSelected: contact?.modules.includes(item),
-            selectedIndex: contactDetails.findIndex(
-              (c) => c.modules && c.modules.includes(item)
-            ),
-          })),
+          defaultValues: contact?.modules.map((moduleId) => {
+            const moduleOption = MODULE_OPTIONS.find(
+              (option) => option.id === moduleId
+            );
+            const label = moduleOption
+              ? intl.formatMessage({
+                  id: moduleOption.messageId,
+                })
+              : "";
+            return {
+              value: label,
+              label: label,
+              name: label,
+            };
+          }),
+          options: company_module_access.map((moduleId) => {
+            const moduleOption = MODULE_OPTIONS.find(
+              (option) => option.id === moduleId
+            );
+            const label = moduleOption
+              ? intl.formatMessage({
+                  id: moduleOption.messageId,
+                })
+              : "";
+            return {
+              value: moduleId,
+              label: label,
+              name: moduleId,
+              isSelected: contact?.modules.includes(moduleId),
+              selectedIndex: contactDetails.findIndex(
+                (c) => c.modules && c.modules.includes(moduleId)
+              ),
+            };
+          }),
         },
       ];
       const isActive = !!contact?.status;

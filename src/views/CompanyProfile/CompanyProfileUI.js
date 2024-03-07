@@ -25,6 +25,7 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import { allFieldsFilled } from "./CompanyProfileUtils";
+import { MODULE_OPTIONS } from "../../constants/constants";
 import images from "../../images";
 import style from "./CompanyProfile.style";
 
@@ -159,6 +160,17 @@ const CompanyProfileUI = (props) => {
     );
   };
 
+  const mapModuleAccessToMessageIds = (accessList, options) => {
+    return accessList?.map((accessId) => {
+      const option = options?.find((option) => option?.id === accessId);
+      return option
+        ? intl.formatMessage({
+            id: option?.messageId,
+          })
+        : "";
+    });
+  };
+
   const renderModuleAccess = () => {
     return isEditProfile ? (
       <View style={style.contentStyle}>
@@ -175,7 +187,10 @@ const CompanyProfileUI = (props) => {
       </View>
     ) : (
       <BadgeLabel
-        badgeLabels={profileResult?.companyModuleAccess}
+        badgeLabels={mapModuleAccessToMessageIds(
+          profileResult?.companyModuleAccess,
+          MODULE_OPTIONS
+        )}
         customTextStyle={style.badgeContainer}
       />
     );

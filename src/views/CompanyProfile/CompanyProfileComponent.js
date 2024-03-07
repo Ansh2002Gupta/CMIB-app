@@ -77,6 +77,7 @@ const CompanyProfileComponent = () => {
         mapApiDataToUI({
           apiData: profileResult,
           industryOptions: industryTypeResult,
+          intl,
           countryCodes,
           isEditMode: isEditProfile,
         })
