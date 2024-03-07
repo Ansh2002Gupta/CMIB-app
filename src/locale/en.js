@@ -369,6 +369,12 @@ const locale = {
   "label.path.editDetails": "Edit User Details",
   "label.search_by_ticket": "Search by Ticket ID",
   "label.noResultFound": "No results found",
+  "label.addContactPerson": "Add Contact Person",
+  "label.you_have_not_provided": "You have not provided ",
+  "label.to_any_contact_person":
+    "to any contact person, Are you sure that you want to save the details?",
+  "label.particular_person_get_particlular_module":
+    "* Note - A particular module can be assigned to a single contact person only.",
 };
 
 export default locale;
