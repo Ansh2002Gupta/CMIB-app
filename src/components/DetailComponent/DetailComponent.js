@@ -199,6 +199,7 @@ DetailComponent.defaultProps = {
   isEditable: false,
   isInputDisable: false,
   isShowSwitch: false,
+  onPressActionButton: () => {},
 };
 
 DetailComponent.propTypes = {
