@@ -381,10 +381,12 @@ const CompanyProfileComponent = () => {
     ).value;
     companyDetails.source_of_information = profileData.sourceOfInfo;
     companyDetails.credit_amount = profileData.balanceCredit;
-    if (fileUploadResult?.data?.file_name || profileData.companyLogo) {
+    if (fileUploadResult?.data?.file_name || profileData?.companyLogo) {
       const logoFileName = profileData?.companyLogo?.split("/")?.pop();
       companyDetails.company_logo =
         fileUploadResult?.data?.file_name || logoFileName;
+    } else {
+      companyDetails.company_logo = null;
     }
 
     const contactDetails = profileData.contactPersonInfo.map((contact) => ({
