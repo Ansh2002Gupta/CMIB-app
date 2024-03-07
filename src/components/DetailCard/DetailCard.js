@@ -70,6 +70,7 @@ DetailCard.defaultProps = {
   isEditProfile: false,
   isRow: false,
   isShowSwitch: false,
+  onPressActionButton: () => {},
   otherDetails: [],
 };
 
