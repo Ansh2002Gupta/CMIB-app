@@ -15,6 +15,7 @@ import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
 import CustomImage from "../../components/CustomImage";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import DetailCard from "../../components/DetailCard/DetailCard";
 import DetailComponent from "../../components/DetailComponent/DetailComponent";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
@@ -132,7 +133,7 @@ const CompanyProfileUI = (props) => {
           />
         ))}
         {isEditProfile && (
-          <TouchableOpacity
+          <CustomTouchableOpacity
             style={isWebView ? style.buttonStyle : style.mobButtonStyle}
             onPress={onAddContactPerson}
           >
@@ -152,7 +153,7 @@ const CompanyProfileUI = (props) => {
                 id: "label.add_contact_person",
               })}
             </CommonText>
-          </TouchableOpacity>
+          </CustomTouchableOpacity>
         )}
       </CardComponent>
     );
