@@ -22,14 +22,17 @@ const CheckBox = ({
   const PartialIcon = Images.iconPartial;
   const DisabledCheckBoxIcon = Images.iconDisabledCheck;
 
-  const getIcon = () => {
+  const getCheckBoxIcon = () => {
     if (isDisabled) {
       return DisabledCheckBoxIcon;
-    } else if (isPartial) {
-      return PartialIcon;
-    } else {
-      return isSelected ? CheckIcon : UncheckIcon;
     }
+    if (isPartial) {
+      return PartialIcon;
+    }
+    if (isSelected) {
+      return CheckIcon;
+    }
+    return UncheckIcon;
   };
 
   const rowCheckBox = [
@@ -40,9 +43,9 @@ const CheckBox = ({
           onPress={() => handleCheckbox(id)}
         >
           <CustomImage
-            Icon={getIcon()}
+            Icon={getCheckBoxIcon()}
             style={styles.iconStyle}
-            source={getIcon()}
+            source={getCheckBoxIcon()}
             isSvg
           />
           <CommonText
