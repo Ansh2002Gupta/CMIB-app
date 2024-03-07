@@ -92,4 +92,29 @@ const styles = StyleSheet.create({
   },
 });
 
+export const getTextStyle = (severity) => {
+  switch (severity) {
+    case "warning":
+      return styles.warningTextStyle;
+    case "error":
+    case "success":
+      return styles.customTextStyle;
+    default:
+      return {};
+  }
+};
+
+export const getButtonStyle = (severity) => {
+  switch (severity) {
+    case "error":
+      return styles.errorButtonStyle;
+    case "warning":
+      return styles.warningButtonStyle;
+    case "success":
+      return styles.successButtonStyle;
+    default:
+      return {};
+  }
+};
+
 export default styles;

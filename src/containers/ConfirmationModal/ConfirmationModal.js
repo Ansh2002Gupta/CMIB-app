@@ -9,7 +9,10 @@ import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
 import MultiRow from "../../core/layouts/MultiRow";
 import images from "../../images";
-import styles from "./ConfirmationModal.style";
+import styles, {
+  getButtonStyle,
+  getTextStyle,
+} from "./ConfirmationModal.style";
 
 const ConfirmationModal = ({
   buttonOneStyle,
@@ -38,31 +41,6 @@ const ConfirmationModal = ({
       default: {
         return icon;
       }
-    }
-  };
-
-  const getTextStyle = () => {
-    switch (severity) {
-      case "warning":
-        return styles.warningTextStyle;
-      case "error":
-      case "success":
-        return styles.customTextStyle;
-      default:
-        return {};
-    }
-  };
-
-  const getButtonStyle = () => {
-    switch (severity) {
-      case "error":
-        return styles.errorButtonStyle;
-      case "warning":
-        return styles.warningButtonStyle;
-      case "success":
-        return styles.successButtonStyle;
-      default:
-        return {};
     }
   };
 
