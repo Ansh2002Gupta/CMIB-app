@@ -3,10 +3,11 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 
 import CompanyProfileUI from "./CompanyProfileUI";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useGetCompanyProfileAPI from "../../services/apiServices/hooks/CompanyProfile/useGetCompanyProfileAPI";
+import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useFetch from "../../hooks/useFetch";
 import useIndustryTypes from "../../services/apiServices/hooks/useIndustryTypes";
-import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useUpdateCompanyProfile from "../../services/apiServices/hooks/CompanyProfile/useUpdateCompanyProfileAPI";
 import {
@@ -18,16 +19,37 @@ import {
 } from "../../constants/constants";
 import { COUNTRY_CODE } from "../../services/apiServices/apiEndPoint";
 import { mapApiDataToUI } from "./mappedData";
-import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { validateFields } from "./CompanyProfileUtils";
 
 const CompanyProfileComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { errorWhileGettingResult, onGetProfile, profileResult, isLoading } =
-    useGetCompanyProfileAPI();
+  const [userProfileState] = useContext(UserProfileContext);
+
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
+  const [moduleUpdateWarning, setModuleUpdateWarning] = useState(false);
+  const [unoccupiedModules, setUnoccupiedModules] = useState([]);
+  const [options, setOptions] = useState(
+    INTEREST_OPTIONS.map((option) => ({
+      ...option,
+      title: intl.formatMessage({ id: option.messageId }),
+      isSelected: false,
+    }))
+  );
+  const [moduleOptions, setModuleOptions] = useState(
+    MODULE_OPTIONS.map((option) => ({
+      ...option,
+      title: intl.formatMessage({ id: option.messageId }),
+      isSelected: false,
+    }))
+  );
+
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
+  const { data: countryCodes } = useFetch({ url: COUNTRY_CODE });
+  const { errorWhileGettingResult, onGetProfile, profileResult, isLoading } =
+    useGetCompanyProfileAPI();
   const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
   const {
     errorWhileUpload,
@@ -38,34 +60,12 @@ const CompanyProfileComponent = () => {
     setFileUploadResult,
     uploadPercentage,
   } = useSaveLogo();
-  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
-    useDeleteLogo();
-  const [moduleUpdateWarning, setModuleUpdateWarning] = useState(false);
-  const [unoccupiedModules, setUnoccupiedModules] = useState([]);
   const {
     handleUpdateProfile,
     isLoading: isUpdatingCompanyProfile,
     setUpdationError,
     updationError,
   } = useUpdateCompanyProfile();
-  const { data: countryCodes } = useFetch({ url: COUNTRY_CODE });
-  const [userProfileState] = useContext(UserProfileContext);
-
-  const [options, setOptions] = useState(
-    INTEREST_OPTIONS.map((option) => ({
-      ...option,
-      title: intl.formatMessage({ id: option.messageId }),
-      isSelected: false,
-    }))
-  );
-
-  const [moduleOptions, setModuleOptions] = useState(
-    MODULE_OPTIONS.map((option) => ({
-      ...option,
-      title: intl.formatMessage({ id: option.messageId }),
-      isSelected: false,
-    }))
-  );
 
   useEffect(() => {
     onGetProfile();
@@ -120,6 +120,7 @@ const CompanyProfileComponent = () => {
             break;
           case "entity":
             acc.entity = detail.value;
+            break;
           case "address":
             acc.address = detail.value;
             break;
@@ -131,6 +132,8 @@ const CompanyProfileComponent = () => {
             break;
           case "telephoneNo":
             acc.telephone_number = detail.value;
+            break;
+          default:
             break;
         }
       }
