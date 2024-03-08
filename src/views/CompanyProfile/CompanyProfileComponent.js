@@ -216,7 +216,7 @@ const CompanyProfileComponent = () => {
   };
 
   const handleBlur = (name, index) => {
-    validateFields({ index, intl, profileData, setProfileData, field: name });
+    validateFields({ field: name, index, intl, profileData, setProfileData });
   };
 
   const onSaveClick = () => {
