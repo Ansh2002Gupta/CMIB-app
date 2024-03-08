@@ -164,7 +164,7 @@ const DetailComponent = ({
                 </View>
                 {detail.showBadgeLabel ? (
                   <BadgeLabel
-                    badgeLabels={detail?.customValue}
+                    badgeLabels={detail?.customValue || detail?.value}
                     customTextStyle={styles.badgeContainer}
                   />
                 ) : (
