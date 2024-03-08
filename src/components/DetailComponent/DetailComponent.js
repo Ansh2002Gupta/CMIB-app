@@ -81,6 +81,42 @@ const DetailComponent = ({
     </CustomTouchableOpacity>
   );
 
+  const renderDetailContent = (detail) => {
+    if (detail.showBadgeLabel) {
+      return (
+        <BadgeLabel
+          badgeLabels={detail?.customValue || detail?.value}
+          customTextStyle={styles.badgeContainer}
+        />
+      );
+    }
+
+    if (detail.isLink) {
+      return (
+        <CustomTouchableOpacity
+          onPress={() => {
+            Linking.openURL(getValidUrl(detail.value), "_blank");
+          }}
+        >
+          <CommonText
+            customTextStyle={[
+              styles.valueStyle,
+              detail.isLink && styles.linkStyle,
+            ]}
+          >
+            {detail.value}
+          </CommonText>
+        </CustomTouchableOpacity>
+      );
+    }
+
+    return (
+      <CommonText customTextStyle={styles.valueStyle}>
+        {detail.value}
+      </CommonText>
+    );
+  };
+
   return (
     <View>
       {!!headerText && (
@@ -163,27 +199,7 @@ const DetailComponent = ({
                     </CommonText>
                   )}
                 </View>
-                {detail.showBadgeLabel ? (
-                  <BadgeLabel
-                    badgeLabels={detail?.customValue || detail?.value}
-                    customTextStyle={styles.badgeContainer}
-                  />
-                ) : (
-                  <CustomTouchableOpacity
-                    onPress={() => {
-                      Linking.openURL(getValidUrl(detail.value), "_blank");
-                    }}
-                  >
-                    <CommonText
-                      customTextStyle={[
-                        styles.valueStyle,
-                        detail.isLink && styles.linkStyle,
-                      ]}
-                    >
-                      {detail.value}
-                    </CommonText>
-                  </CustomTouchableOpacity>
-                )}
+                {renderDetailContent(detail)}
               </>
             )}
           </View>

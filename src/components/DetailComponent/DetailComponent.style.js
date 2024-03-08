@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
@@ -40,9 +40,11 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   valueStyle: {
-    web: {
-      wordBreak: "break-word",
-    },
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+      },
+    }),
     fontSize: 14,
     color: colors.black,
     marginBottom: 24,
