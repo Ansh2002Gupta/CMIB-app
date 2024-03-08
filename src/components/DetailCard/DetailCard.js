@@ -10,6 +10,7 @@ const DetailCard = ({
   customCardStyle,
   customContainerStyle,
   details,
+  handleBlur,
   handleChange,
   handleSwitchChange,
   handleMultiSelect,
@@ -32,6 +33,7 @@ const DetailCard = ({
           ...customContainerStyle,
         }}
         details={details}
+        handleBlur={handleBlur}
         handleChange={handleChange}
         handleMultiSelect={handleMultiSelect}
         handleSwitchChange={handleSwitchChange}
@@ -47,8 +49,10 @@ const DetailCard = ({
       {!!otherDetails && (
         <DetailComponent
           details={otherDetails}
+          handleBlur={handleBlur}
           handleChange={handleChange}
           hasActionButton={!isWebView && hasActionButton}
+          index={index}
           isEditable={isEditProfile}
           isInputDisable={isShowSwitch && !isActive}
           onPressActionButton={onPressActionButton}
@@ -62,6 +66,7 @@ DetailCard.defaultProps = {
   customCardStyle: {},
   customContainerStyle: {},
   details: [],
+  handleBlur: () => {},
   handleChange: () => {},
   handleSwitchChange: () => {},
   hasActionButton: false,
@@ -78,6 +83,7 @@ DetailCard.propTypes = {
   customCardStyle: PropTypes.object,
   customContainerStyle: PropTypes.object,
   details: PropTypes.array,
+  handleBlur: PropTypes.func,
   handleChange: PropTypes.func,
   handleSwitchChange: PropTypes.func,
   hasActionButton: PropTypes.bool,
