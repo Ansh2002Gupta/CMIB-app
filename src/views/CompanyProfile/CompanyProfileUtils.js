@@ -19,13 +19,16 @@ export const allFieldsFilled = (profileData) => {
   );
   const contactPersonInfoFilled = profileData.contactPersonInfo.every(
     (contact) => {
-      const modulesFilled = contact?.contactModules?.every(
-        (module) => module?.defaultValues?.length > 0
-      );
-      const infosFilled = contact.contactInfo.every(
-        (info) => String(info.value).trim() !== ""
-      );
-      return modulesFilled && infosFilled;
+      if (contact?.isContactActive) {
+        const modulesFilled = contact?.contactModules?.every(
+          (module) => module?.defaultValues?.length > 0
+        );
+        const infosFilled = contact.contactInfo.every(
+          (info) => String(info.value).trim() !== ""
+        );
+        return modulesFilled && infosFilled;
+      }
+      return true;
     }
   );
   const companyProfileFilled = profileData.companyProfile.every(
