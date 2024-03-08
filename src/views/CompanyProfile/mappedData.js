@@ -79,18 +79,7 @@ export const mapApiDataToUI = ({
       const contactModules = [
         {
           label: "label.module",
-          value: checkValue(
-            contact?.modules.map((moduleId) => {
-              const moduleOption = MODULE_OPTIONS.find(
-                (option) => option.id === moduleId
-              );
-              return moduleOption
-                ? intl.formatMessage({
-                    id: moduleOption.messageId,
-                  })
-                : "";
-            })
-          ),
+          value: checkValue(contact?.modules),
           showBadgeLabel: true,
           isMandatory: true,
           isMultiSelect: true,

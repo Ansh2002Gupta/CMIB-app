@@ -256,6 +256,16 @@ const CompanyProfileComponent = () => {
     setOptions(updatedItems);
   };
   const handleModuleToggle = (moduleId) => {
+    const moduleOption = MODULE_OPTIONS.find(
+      (option) => option.id === moduleId
+    );
+
+    const label = moduleOption
+      ? intl.formatMessage({
+          id: moduleOption.messageId,
+        })
+      : "";
+
     const anyDefaultValueSelected = profileData.contactPersonInfo.some(
       (contact) =>
         contact.contactModules?.[0]?.defaultValues?.some(
@@ -275,24 +285,25 @@ const CompanyProfileComponent = () => {
 
       const updatedProfileData = {
         ...profileData,
-        companyModuleAccess: profileData.companyModuleAccess.includes(moduleId)
-          ? profileData.companyModuleAccess.filter((id) => id !== moduleId)
-          : [...profileData.companyModuleAccess, moduleId],
+        companyModuleAccess: profileData.companyModuleAccess.includes(label)
+          ? profileData.companyModuleAccess.filter((id) => id !== label)
+          : [...profileData.companyModuleAccess, label],
         contactPersonInfo: profileData?.contactPersonInfo?.map((contact) => {
           const moduleIndex = contact?.contactModules?.[0]?.options?.findIndex(
-            (module) => module.value === moduleId
+            (module) => module.name === moduleId
           );
           const moduleSelected = moduleIndex !== -1;
 
           const newOptions = moduleSelected
             ? contact.contactModules?.[0]?.options?.filter(
-                (module) => module.value !== moduleId
+                (module) => module.name !== moduleId
               )
             : [
                 ...contact.contactModules?.[0].options,
                 {
-                  value: moduleId,
-                  label: moduleId,
+                  name: moduleId,
+                  value: label,
+                  label: label,
                   selectedIndex: null,
                   isSelected: false,
                 },
@@ -423,7 +434,7 @@ const CompanyProfileComponent = () => {
             : contact.contactModules.map((module) => ({
                 ...module,
                 defaultValues: [],
-                values: [],
+                value: [],
                 options: module.options.map((option) => ({
                   ...option,
                   isSelected:
@@ -498,6 +509,14 @@ const CompanyProfileComponent = () => {
   };
 
   const handleModuleAccess = (index, updatedSelectedItems) => {
+    const moduleOption = MODULE_OPTIONS.find(
+      (option) =>
+        intl.formatMessage({
+          id: option.messageId,
+        }) === updatedSelectedItems
+    );
+    const moduleId = moduleOption ? moduleOption.id : "";
+
     const updatedContactPersonInfo = profileData?.contactPersonInfo?.map(
       (contact, idx) => {
         const updatedContact = { ...contact };
@@ -539,18 +558,18 @@ const CompanyProfileComponent = () => {
             } else {
               updatedModule.defaultValues.push({
                 value: updatedSelectedItems,
-                label: updatedSelectedItems,
+                label: moduleId,
                 name: updatedSelectedItems,
               });
             }
-            const valueIndex = updatedModule.values?.findIndex(
-              (value) => value === updatedSelectedItems
+            const valueIndex = updatedModule.value?.findIndex(
+              (value) => value === moduleId
             );
             if (valueIndex > -1) {
-              updatedModule.values.splice(valueIndex, 1);
+              updatedModule.value.splice(valueIndex, 1);
             } else {
-              updatedModule.values = updatedModule.values || []; // Ensure values array exists
-              updatedModule.values.push(updatedSelectedItems);
+              updatedModule.value = updatedModule.value || [];
+              updatedModule.value.push(moduleId);
             }
           }
           return updatedModule;

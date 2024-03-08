@@ -25,7 +25,6 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import { allFieldsFilled } from "./CompanyProfileUtils";
-import { MODULE_OPTIONS } from "../../constants/constants";
 import images from "../../images";
 import style from "./CompanyProfile.style";
 
