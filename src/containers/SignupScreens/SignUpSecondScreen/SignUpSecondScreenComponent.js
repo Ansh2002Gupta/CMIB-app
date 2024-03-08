@@ -110,7 +110,7 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       code: "",
     };
 
-    const { companyName, noOfPartners, address, emailId, telephoneNo, code } =
+    const { address, code, companyName, emailId, noOfPartners, telephoneNo } =
       formData;
 
     if (!field || field === "companyName") {
