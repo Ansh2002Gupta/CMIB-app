@@ -21,6 +21,7 @@ import { getValidUrl } from "../../utils/util";
 const DetailComponent = ({
   customContainerStyle,
   details,
+  handleBlur,
   handleChange,
   handleSwitchChange,
   handleMultiSelect,
@@ -124,10 +125,11 @@ const DetailComponent = ({
           mobNumberValue={detail.value}
           options={detail.options}
           codeValue={detail.codeValue}
-          onChangeMobNumber={(val) => handleChange(detail.label, val)}
-          onChangeCode={(val) => handleChange(detail.label, val, true)}
-          mobNumberError={detail.error}
+          customHandleBlur={() => handleBlur(detail.key, index)}
           isEditable={isInputDisable ? !isInputDisable : true}
+          onChangeCode={(val) => handleChange(detail.label, val, true)}
+          onChangeMobNumber={(val) => handleChange(detail.label, val)}
+          mobNumberError={detail.error}
         />
       );
     }
@@ -135,6 +137,7 @@ const DetailComponent = ({
       <CustomTextInput
         errorMessage={detail.error}
         value={detail.value}
+        customHandleBlur={() => handleBlur(detail.key, index)}
         customStyle={styles.inputStyle}
         label={intl.formatMessage({ id: detail.label })}
         isDropdown={detail.isDropdown}
@@ -221,6 +224,7 @@ const DetailComponent = ({
 DetailComponent.defaultProps = {
   customContainerStyle: {},
   details: [],
+  handleBlur: () => {},
   handleChange: () => {},
   handleSwitchChange: () => {},
   headerText: "",
@@ -234,6 +238,7 @@ DetailComponent.defaultProps = {
 DetailComponent.propTypes = {
   customContainerStyle: PropTypes.object,
   details: PropTypes.array,
+  handleBlur: PropTypes.func,
   handleChange: PropTypes.func,
   handleSwitchChange: PropTypes.func,
   hasActionButton: PropTypes.bool,

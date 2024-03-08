@@ -48,6 +48,8 @@ export const allFieldsFilled = (profileData) => {
 };
 
 const validateContactPersonDetails = ({
+  field,
+  index: idx,
   intl,
   profileData,
   newErrors,
@@ -58,49 +60,52 @@ const validateContactPersonDetails = ({
     const contactName = contact.contactInfo.find(
       (info) => info.label === "label.contact_person_name"
     )?.value;
-    if (
-      contactName.length < FIELD_MIN_LENGTH ||
-      contactName.length > DEFAULT_INPUT_MAX_LENGTH
-    ) {
-      contactErrors.name = intl.formatMessage({
-        id: "label.contact_person_validation",
-      });
-      isValid = false;
+    if (!field || (field === "name" && index === idx)) {
+      if (
+        contactName.length < FIELD_MIN_LENGTH ||
+        contactName.length > DEFAULT_INPUT_MAX_LENGTH
+      ) {
+        contactErrors.name = intl.formatMessage({
+          id: "label.contact_person_validation",
+        });
+        isValid = false;
+      }
     }
-
     const contactDesignation = contact.contactInfo.find(
       (info) => info.label === "label.contact_personal_designation"
     )?.value;
-    if (
-      contactDesignation.length < FIELD_MIN_LENGTH ||
-      contactDesignation.length > ADDRESS_MAX_LENGTH
-    ) {
-      contactErrors.designation = intl.formatMessage({
-        id: "label.designation_validation",
-      });
-      isValid = false;
+    if (!field || (field === "designation" && index === idx)) {
+      if (
+        contactDesignation.length < FIELD_MIN_LENGTH ||
+        contactDesignation.length > ADDRESS_MAX_LENGTH
+      ) {
+        contactErrors.designation = intl.formatMessage({
+          id: "label.designation_validation",
+        });
+        isValid = false;
+      }
     }
-
     const contactMobileNo = contact.contactInfo.find(
       (info) => info.label === "label.mobile_number"
     )?.value;
-
-    if (!numRegex.test(String(contactMobileNo))) {
-      contactErrors.mobileNo = intl.formatMessage({
-        id: "label.mobile_number_validation",
-      });
-      isValid = false;
+    if (!field || (field === "mobileNo" && index === idx)) {
+      if (!numRegex.test(String(contactMobileNo))) {
+        contactErrors.mobileNo = intl.formatMessage({
+          id: "label.mobile_number_validation",
+        });
+        isValid = false;
+      }
     }
-
     const contactEmailId = contact.contactInfo.find(
       (info) => info.label === "label.email_id"
     )?.value;
-
-    if (validateEmail(contactEmailId)) {
-      contactErrors.contactEmailId = intl.formatMessage({
-        id: "label.email_id_validation",
-      });
-      isValid = false;
+    if (!field || (field === "contactEmailId" && index === idx)) {
+      if (validateEmail(contactEmailId)) {
+        contactErrors.contactEmailId = intl.formatMessage({
+          id: "label.email_id_validation",
+        });
+        isValid = false;
+      }
     }
 
     if (Object.keys(contactErrors).length > 0) {
@@ -110,7 +115,13 @@ const validateContactPersonDetails = ({
   return isValid;
 };
 
-export const validateFields = ({ intl, profileData, setProfileData }) => {
+export const validateFields = ({
+  field,
+  index,
+  intl,
+  profileData,
+  setProfileData,
+}) => {
   //TODO: Need to be optimize
   let isValid = true;
   let newErrors = {
@@ -145,74 +156,93 @@ export const validateFields = ({ intl, profileData, setProfileData }) => {
   const companyDetail = findValueByLabel("label.short_profile_of_the_company");
   const website = findValueByLabel("label.website");
   const entity = findValueByLabel("label.entity");
-  if (companyName && companyName.trim().length > DEFAULT_INPUT_MAX_LENGTH) {
-    newErrors.companyName = intl.formatMessage({
-      id: "label.company_name_validation",
-    });
-    isValid = false;
-  }
-  if (
-    code &&
-    (!numRegex.test(String(code)) ||
-      code.length < CODE_MIN_LENGTH ||
-      code.length > CODE_MAX_LENGTH)
-  ) {
-    newErrors.code = intl.formatMessage({
-      id: "label.country_code_validation",
-    });
-    isValid = false;
-  }
-  if (
-    telephoneNo &&
-    (!numRegex.test(String(telephoneNo)) ||
-      telephoneNo.length > NUMBER_MAX_LENGTH ||
-      telephoneNo.length < NUMBER_MIN_LENGTH)
-  ) {
-    newErrors.telephoneNo = intl.formatMessage({
-      id: "label.telephone_no_validation",
-    });
-    isValid = false;
-  }
-  if (emailId && validateEmail(emailId)) {
-    newErrors.emailId = intl.formatMessage({
-      id: "label.email_id_validation",
-    });
-    isValid = false;
-  }
-  if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
-    if (noOfPartners && !numRegex.test(String(noOfPartners))) {
-      newErrors.noOfPartners = intl.formatMessage({
-        id: "label.no_of_partners_validation",
+  if (!field || field === "companyName") {
+    if (companyName && companyName.trim().length > DEFAULT_INPUT_MAX_LENGTH) {
+      newErrors.companyName = intl.formatMessage({
+        id: "label.company_name_validation",
       });
       isValid = false;
     }
   }
-  if (address && address.trim().length > ADDRESS_MAX_LENGTH) {
-    newErrors.address = intl.formatMessage({
-      id: "label.address_validation",
-    });
-    isValid = false;
+  if (!field || field === "code") {
+    if (
+      code &&
+      (!numRegex.test(String(code)) ||
+        code.length < CODE_MIN_LENGTH ||
+        code.length > CODE_MAX_LENGTH)
+    ) {
+      newErrors.code = intl.formatMessage({
+        id: "label.country_code_validation",
+      });
+      isValid = false;
+    }
   }
-  if (
-    companyDetail.trim().length < DEFAULT_INPUT_MAX_LENGTH ||
-    companyDetail.trim().length > COMPANY_DETAIL_MAX_LENGTH
-  ) {
-    newErrors.companyDetail = intl.formatMessage({
-      id: "label.company_details_validation",
-    });
-    isValid = false;
+  if (!field || field === "telephoneNo") {
+    if (
+      telephoneNo &&
+      (!numRegex.test(String(telephoneNo)) ||
+        telephoneNo.length > NUMBER_MAX_LENGTH ||
+        telephoneNo.length < NUMBER_MIN_LENGTH)
+    ) {
+      newErrors.telephoneNo = intl.formatMessage({
+        id: "label.telephone_no_validation",
+      });
+      isValid = false;
+    }
   }
-  if (!isValidUrl(String(website))) {
-    newErrors.website = intl.formatMessage({
-      id: "label.url_validation",
-    });
-    isValid = false;
+  if (!field || field === "emailId") {
+    if (emailId && validateEmail(emailId)) {
+      newErrors.emailId = intl.formatMessage({
+        id: "label.email_id_validation",
+      });
+      isValid = false;
+    }
   }
+  if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+    if (!field || field === "noOfPartners") {
+      if (noOfPartners && !numRegex.test(String(noOfPartners))) {
+        newErrors.noOfPartners = intl.formatMessage({
+          id: "label.no_of_partners_validation",
+        });
+        isValid = false;
+      }
+    }
+  }
+  if (!field || field === "address") {
+    if (address && address.trim().length > ADDRESS_MAX_LENGTH) {
+      newErrors.address = intl.formatMessage({
+        id: "label.address_validation",
+      });
+      isValid = false;
+    }
+  }
+  if (!field || field === "companyDetail") {
+    if (
+      companyDetail.trim().length < DEFAULT_INPUT_MAX_LENGTH ||
+      companyDetail.trim().length > COMPANY_DETAIL_MAX_LENGTH
+    ) {
+      newErrors.companyDetail = intl.formatMessage({
+        id: "label.company_details_validation",
+      });
+      isValid = false;
+    }
+  }
+  if (!field || field === "website") {
+    if (!isValidUrl(String(website))) {
+      newErrors.website = intl.formatMessage({
+        id: "label.url_validation",
+      });
+      isValid = false;
+    }
+  }
+
   isValid = validateContactPersonDetails({
+    field,
+    index,
     intl,
-    profileData,
-    newErrors,
     isValid,
+    newErrors,
+    profileData,
   });
   const profileDataWithErrors = {
     ...profileData,
