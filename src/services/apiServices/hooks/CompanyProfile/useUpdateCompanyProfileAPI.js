@@ -4,6 +4,7 @@ import Http from "../../../http-service";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_PROFILE } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
+import { appendStringsInNextLine } from "../../../../utils/util";
 
 const useUpdateCompanyProfile = () => {
   const [updateProfileStaus, setUpdateProfileStatus] = useState(
@@ -29,10 +30,22 @@ const useUpdateCompanyProfile = () => {
         setUpdationError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
       }
     } catch (err) {
-      const errorMessage =
-        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      setUpdationError(errorMessage);
+      let errorMessage;
+      const errors = err.response?.data?.data?.errors;
+      if (errors) {
+        const errorMessages = [];
+        for (const field in errors) {
+          if (errors.hasOwnProperty(field)) {
+            errorMessages.push(errors[field][0]);
+          }
+        }
+        errorMessage = appendStringsInNextLine(errorMessages);
+      } else {
+        errorMessage =
+          err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      }
       setUpdateProfileStatus(API_STATUS.ERROR);
+      setUpdationError(errorMessage);
     }
   };
 
