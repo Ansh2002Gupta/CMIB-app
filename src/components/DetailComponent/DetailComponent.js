@@ -16,6 +16,7 @@ import { gridStyles } from "../../theme/styles/commonStyles";
 import { numericValidator } from "../../utils/validation";
 import images from "../../images";
 import styles, { getRowStyle } from "./DetailComponent.style";
+import { getValidUrl } from "../../utils/util";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -169,7 +170,9 @@ const DetailComponent = ({
                   />
                 ) : (
                   <CustomTouchableOpacity
-                    onPress={() => Linking.openURL(detail.value, "_blank")}
+                    onPress={() => {
+                      Linking.openURL(getValidUrl(detail.value), "_blank");
+                    }}
                   >
                     <CommonText
                       customTextStyle={[
