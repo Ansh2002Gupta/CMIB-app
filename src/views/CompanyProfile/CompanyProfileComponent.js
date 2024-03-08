@@ -271,7 +271,7 @@ const CompanyProfileComponent = () => {
     const anyDefaultValueSelected = profileData.contactPersonInfo.some(
       (contact) =>
         contact.contactModules?.[0]?.defaultValues?.some(
-          (defaultValue) => defaultValue.value === moduleId
+          (defaultValue) => defaultValue.label === moduleId
         )
     );
 

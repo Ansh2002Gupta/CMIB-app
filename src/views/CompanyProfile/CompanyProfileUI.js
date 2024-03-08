@@ -160,17 +160,6 @@ const CompanyProfileUI = (props) => {
     );
   };
 
-  const mapModuleAccessToMessageIds = (accessList, options) => {
-    return accessList?.map((accessId) => {
-      const option = options?.find((option) => option?.id === accessId);
-      return option
-        ? intl.formatMessage({
-            id: option?.messageId,
-          })
-        : "";
-    });
-  };
-
   const renderModuleAccess = () => {
     return isEditProfile ? (
       <View style={style.contentStyle}>
@@ -187,10 +176,7 @@ const CompanyProfileUI = (props) => {
       </View>
     ) : (
       <BadgeLabel
-        badgeLabels={mapModuleAccessToMessageIds(
-          profileResult?.companyModuleAccess,
-          MODULE_OPTIONS
-        )}
+        badgeLabels={profileResult?.companyModuleAccess}
         customTextStyle={style.badgeContainer}
       />
     );

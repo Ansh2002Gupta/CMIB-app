@@ -107,7 +107,7 @@ export const mapApiDataToUI = ({
               : "";
             return {
               value: label,
-              label: label,
+              label: moduleId,
               name: label,
             };
           }),
@@ -121,7 +121,7 @@ export const mapApiDataToUI = ({
                 })
               : "";
             return {
-              value: moduleId,
+              value: label,
               label: label,
               name: moduleId,
               isSelected: contact?.modules.includes(moduleId),
@@ -319,6 +319,13 @@ export const mapApiDataToUI = ({
     sourceOfInfo: source_of_information,
     companyLogo: company_logo || null,
     balanceCredit: credit_amount,
-    companyModuleAccess: company_module_access,
+    companyModuleAccess: company_module_access?.map((accessId) => {
+      const option = MODULE_OPTIONS?.find((option) => option?.id === accessId);
+      return option
+        ? intl.formatMessage({
+            id: option?.messageId,
+          })
+        : "";
+    }),
   };
 };
