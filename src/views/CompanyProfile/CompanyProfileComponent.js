@@ -112,6 +112,10 @@ const CompanyProfileComponent = () => {
     }
   };
 
+  const getContactPersonDetails = ({ data, dataKeyName = "key", keyName }) => {
+    return data.find((info) => info[dataKeyName] === keyName);
+  };
+
   const createPayloadFromProfileData = (profileData) => {
     const companyDetails = profileData.companyDetail.reduce((acc, detail) => {
       if (detail.key) {
@@ -162,25 +166,38 @@ const CompanyProfileComponent = () => {
     }
 
     const contactDetails = profileData?.contactPersonInfo?.map((contact) => ({
-      id: contact?.contactInfo?.find((info) => info.key === "name").id,
+      id: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "name",
+      })?.id,
       modules: contact?.contactModules?.[0].value,
-      salutation: contact?.contactInfo?.find(
-        (info) => info.label === "label.salutation"
-      ).value,
-      name: contact?.contactInfo?.find((info) => info.key === "name").value,
-      email: contact?.contactInfo?.find((info) => info.key === "contactEmailId")
-        .value,
-      designation: contact?.contactInfo?.find(
-        (info) => info.key === "designation"
-      ).value,
+      salutation: getContactPersonDetails({
+        data: contact?.contactInfo,
+        dataKeyName: "label",
+        keyName: "label.salutation",
+      })?.value,
+      name: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "name",
+      })?.value,
+      email: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "contactEmailId",
+      })?.value,
+      designation: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "designation",
+      })?.value,
       mobile_country_code:
         "+" +
-        contact?.contactInfo
-          ?.find((info) => info.key === "mobileNo")
-          .codeValue.replace(/\D/g, ""),
-      mobile_number: contact?.contactInfo?.find(
-        (info) => info.key === "mobileNo"
-      ).value,
+        getContactPersonDetails({
+          data: contact?.contactInfo,
+          keyName: "mobileNo",
+        })?.codeValue.replace(/\D/g, ""),
+      mobile_number: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "mobileNo",
+      })?.value,
       status: contact?.isContactActive ? 1 : 0,
     }));
 
