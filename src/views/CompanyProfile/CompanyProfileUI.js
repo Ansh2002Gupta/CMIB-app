@@ -67,7 +67,9 @@ const CompanyProfileUI = (props) => {
   const isWebProps = isWebView
     ? {
         buttonOneStyle: style.customButtonStyle,
+        buttonOneTextStyle: style.buttonTextStyle,
         buttonTwoStyle: style.customButtonStyle,
+        buttonTwoTextStyle: style.buttonTextStyle,
         buttonOneContainerStyle: style.customButtonStyle,
         buttonTwoContainerStyle: style.customButtonStyle,
       }
