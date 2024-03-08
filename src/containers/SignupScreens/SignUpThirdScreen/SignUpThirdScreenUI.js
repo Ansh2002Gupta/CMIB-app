@@ -336,7 +336,7 @@ const SignUpThirdScreenUI = ({
                     unselectedModules.map((module) => module).join(", ") +
                     " " +
                     intl.formatMessage({
-                      id: "label.to_any_contact_person",
+                      id: "label.module_occupancy_warning",
                     })
                   }
                   buttonTwoText={intl.formatMessage({

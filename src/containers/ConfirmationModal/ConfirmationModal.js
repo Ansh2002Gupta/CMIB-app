@@ -4,11 +4,15 @@ import { Platform } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../components/ActionPairButton";
 import CommonText from "../../components/CommonText";
+import CustomButton from "../../components/CustomButton";
 import CustomImage from "../../components/CustomImage";
 import Modal from "../../components/Modal";
 import MultiRow from "../../core/layouts/MultiRow";
 import images from "../../images";
-import styles from "./ConfirmationModal.style";
+import styles, {
+  getButtonStyle,
+  getTextStyle,
+} from "./ConfirmationModal.style";
 
 const ConfirmationModal = ({
   buttonOneStyle,
@@ -17,17 +21,38 @@ const ConfirmationModal = ({
   buttonTwoText,
   buttonTwoStyle,
   buttonTwoTextStyle,
+  hasSingleButton,
   headingText,
   icon,
   loader,
   onPressButtonOne,
   onPressButtonTwo,
+  severity,
   subHeading,
 }) => {
+  const getIcon = () => {
+    switch (severity) {
+      case "error":
+        return images.iconAlert;
+      case "warning":
+        return images.iconWarning;
+      case "success":
+        return images.iconSuccess;
+      default: {
+        return icon;
+      }
+    }
+  };
+
   const confirmationConfig = [
     {
       content: (
-        <CustomImage Icon={icon} style={styles.logo} source={icon} isSvg />
+        <CustomImage
+          Icon={getIcon()}
+          style={styles.logo}
+          source={getIcon()}
+          isSvg
+        />
       ),
     },
     {
@@ -45,15 +70,28 @@ const ConfirmationModal = ({
       ),
     },
     {
-      content: (
+      content: hasSingleButton ? (
+        <CustomButton
+          onPress={onPressButtonOne}
+          style={{ ...getButtonStyle(severity) }}
+          customStyle={{
+            customTextStyle: { ...getTextStyle(severity), ...buttonOneStyle },
+          }}
+        >
+          {buttonOneText}
+        </CustomButton>
+      ) : (
         <ActionPairButton
           buttonOneText={buttonOneText}
           buttonTwoText={buttonTwoText}
           customStyles={{
             buttonOneStyle: buttonOneStyle,
-            buttonTwoStyle: { ...styles.logoutButtonStyle, ...buttonTwoStyle },
+            buttonTwoStyle: { ...getButtonStyle(severity), ...buttonTwoStyle },
             buttonOneTextStyle: buttonOneTextStyle,
-            buttonTwoTextStyle: buttonTwoTextStyle,
+            buttonTwoTextStyle: {
+              ...getTextStyle(severity),
+              ...buttonTwoTextStyle,
+            },
           }}
           displayLoader={loader}
           onPressButtonOne={onPressButtonOne}
@@ -84,6 +122,7 @@ ConfirmationModal.defaultProptypes = {
   buttonTwoText: "",
   buttonTwoStyle: {},
   buttonTwoTextStyle: {},
+  hasSingleButton: false,
   headingText: "",
   icon: images.iconWarning,
   loader: false,
@@ -94,17 +133,19 @@ ConfirmationModal.defaultProptypes = {
 
 ConfirmationModal.propTypes = {
   buttonOneStyle: PropTypes.object,
-  buttonOneText: PropTypes.string.isRequired,
+  buttonOneText: PropTypes.string,
   buttonOneTextStyle: PropTypes.object,
-  buttonTwoText: PropTypes.string.isRequired,
+  buttonTwoText: PropTypes.string,
   buttonTwoStyle: PropTypes.object,
   buttonTwoTextStyle: PropTypes.object,
-  headingText: PropTypes.string.isRequired,
+  hasSingleButton: PropTypes.bool,
+  headingText: PropTypes.string,
   icon: PropTypes.node,
-  loader: PropTypes.bool.isRequired,
-  onPressButtonOne: PropTypes.func.isRequired,
-  onPressButtonTwo: PropTypes.func.isRequired,
-  subHeading: PropTypes.string.isRequired,
+  loader: PropTypes.bool,
+  onPressButtonOne: PropTypes.func,
+  onPressButtonTwo: PropTypes.func,
+  severity: PropTypes.string,
+  subHeading: PropTypes.string,
 };
 
 export default ConfirmationModal;

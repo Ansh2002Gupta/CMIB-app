@@ -10,7 +10,13 @@ import CommonText from "../CommonText";
 import images from "../../images";
 import styles from "./PreviewImage.style";
 
-const PreviewImage = ({ fileName, isEditable, onRemoveImage, source }) => {
+const PreviewImage = ({
+  fileName,
+  hideIconDelete,
+  isEditable,
+  onRemoveImage,
+  source,
+}) => {
   return (
     <View
       style={[
@@ -28,9 +34,11 @@ const PreviewImage = ({ fileName, isEditable, onRemoveImage, source }) => {
         >
           {fileName}
         </CommonText>
-        <TouchableOpacity onPress={onRemoveImage}>
-          <Image source={images.iconTrash} style={styles.deleteIcon} />
-        </TouchableOpacity>
+        {!hideIconDelete && (
+          <TouchableOpacity onPress={onRemoveImage}>
+            <Image source={images.iconTrash} style={styles.deleteIcon} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -38,6 +46,7 @@ const PreviewImage = ({ fileName, isEditable, onRemoveImage, source }) => {
 
 PreviewImage.defaultProps = {
   fileName: "",
+  hideIconDelete: false,
   isEditable: false,
   onRemoveImage: () => {},
   source: "",
@@ -45,6 +54,7 @@ PreviewImage.defaultProps = {
 
 PreviewImage.propTypes = {
   fileName: PropTypes.string,
+  hideIconDelete: PropTypes.bool,
   isEditable: PropTypes.bool,
   onRemoveImage: PropTypes.func,
   source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

@@ -17,8 +17,9 @@ const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
         customContainerStyle,
       ]}
     >
-      {badgeLabels.map((label) => (
+      {badgeLabels?.map((label, index) => (
         <CommonText
+          key={index}
           customTextStyle={style.badgeStyle}
           customContainerStyle={{
             ...(isWebView && style.webInnerContainer),
@@ -39,7 +40,7 @@ BadgeLabel.defaultProps = {
 };
 
 BadgeLabel.propTypes = {
-  badgeLabels: PropTypes.array.isRequired,
+  badgeLabels: PropTypes.array,
   customContainerStyle: PropTypes.object,
   customTextStyle: PropTypes.object,
 };

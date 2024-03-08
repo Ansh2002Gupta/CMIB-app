@@ -182,3 +182,11 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   return "receiver";
 };
+
+export const getValidUrl = (url) => {
+  let link = url.toLowerCase();
+  if (!/^https?:\/\//.test(link) && !/^http?:\/\//.test(link)) {
+    link = `https://${link}`;
+  }
+  return link;
+};
