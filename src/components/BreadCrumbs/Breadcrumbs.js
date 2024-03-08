@@ -1,15 +1,18 @@
 import React from "react";
-import { View } from "@unthinkable/react-core-components";
+import { View, useWindowDimensions } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import getBreadCrumbDetails from "../../constants/breadCrumbHelpers";
 import { navigations } from "../../constants/routeNames";
 import { useNavigate, useLocation } from "../../routes";
 import styles from "./Breadcrumbs.style";
 
-const Breadcrumbs = ({ breadcrumbs }) => {
+const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const windowDimensions = useWindowDimensions();
+  const isMdOrGreater = windowDimensions.width >= 900;
 
   const handleNavigation = (val) => {
     navigate(val);
@@ -25,15 +28,24 @@ const Breadcrumbs = ({ breadcrumbs }) => {
     return styles.enabled;
   };
 
+  const breadcrumbs = getBreadCrumbDetails({ path: location.pathname });
+
+  const isBreadcrumbLocation = (pathname) => {
+    return (
+      pathname === `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}` ||
+      (pathname === navigations.COMPANY_PROFILE && isMdOrGreater)
+    );
+  };
+
   return (
     <>
-      {location.pathname ===
-        `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}` && (
+      {isBreadcrumbLocation(location.pathname) && (
         <View style={styles.container}>
           {breadcrumbs.map((crumb, index) => {
             const buttonStyles = getStyles(index);
             return (
               <CustomTouchableOpacity
+                key={crumb.label}
                 disabled={isLastElement}
                 style={styles.container}
                 onPress={() => handleNavigation(crumb.path)}

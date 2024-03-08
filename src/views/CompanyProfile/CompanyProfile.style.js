@@ -61,6 +61,58 @@ const style = {
   badgeContainer: {
     marginBottom: 8,
   },
+  headerText: {
+    fontSize: 16,
+  },
+  customCardStyle: {
+    marginTop: 16,
+    marginBottom: 24,
+    marginRight: 0,
+    marginLeft: 0,
+    padding: 0,
+  },
+  balanceInputStyle: {
+    width: "30%",
+  },
+  customContainerStyle: {
+    gridTemplateColumns: "1fr 1fr",
+  },
+  buttonStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: colors.lightGray,
+    borderRadius: 8,
+    paddingTop: 12,
+    paddingBottom: 12,
+    marginBottom: 24,
+    width: 192,
+  },
+  mobButtonStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.secondaryGrey,
+    paddingLeft: 14,
+    paddingTop: 14,
+    paddingBottom: 14,
+    marginBottom: 24,
+  },
+  buttonTextStyle: {
+    fontSize: 14,
+  },
+  mobTextStyle: {
+    color: colors.darkBlue,
+    fontSize: 14,
+  },
+  customButtonStyle: {
+    height: 44,
+    width: 135,
+  },
+  webButtonContainer: {
+    width: "100%",
+    alignItems: "flex-end",
+  },
 };
 
 export default style;

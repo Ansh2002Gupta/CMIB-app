@@ -11,6 +11,7 @@ const UploadImage = ({
   errorWhileUpload,
   fileUploadResult,
   handleFileUpload,
+  hideIconDelete,
   isUploadingImageToServer,
   onDeleteImage,
   openCropViewAfterImageSelection,
@@ -97,6 +98,7 @@ const UploadImage = ({
           <PreviewImage
             {...{
               fileName: imageUploadedToServer?.["file_name"] || "",
+              hideIconDelete,
               onRemoveImage: handleDeleteImage,
               source: imageUploadedToServer?.url || "",
             }}
@@ -139,6 +141,7 @@ UploadImage.propTypes = {
   errorWhileUpload: PropTypes.string,
   fileUploadResult: PropTypes.object,
   handleFileUpload: PropTypes.func,
+  hideIconDelete: PropTypes.bool,
   isUploadingImageToServer: PropTypes.bool,
   onDeleteImage: PropTypes.func,
   openCropViewAfterImageSelection: PropTypes.bool,

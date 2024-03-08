@@ -298,6 +298,7 @@ const locale = {
   "label.view_ticket_details": "View Ticket Details",
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
+  "label.module_access": "Module Access",
   "label.srn": "SRN",
   "label.srn_placeholder": "Enter your SRN number",
   "label.enter_otp": "Enter OTP",
@@ -368,12 +369,22 @@ const locale = {
   "label.add_new_ticket": "Add Ticket",
   "label.path.editDetails": "Edit User Details",
   "label.search_by_ticket": "Search by Ticket ID",
+  "label.mark_as_active": "Mark as Active",
+  "label.enter_balance_credit": "Enter Balance Credit",
+  "label.select_module": "Select Module",
+  "label.module_removal_warning":
+    "You cannot remove this module access from here as it is assigned to a active contact person, kindly remove it from there first.",
+  "label.warning": "Warning",
+  "label.okay": "Okay",
+  "label.add_contact_person": "Add Contact Person",
+  "label.rupee": "₹",
+  "label.module_occupancy_warning":
+    "to any contact person, Are you sure that you want to save the details?",
   "label.addContactPerson": "Add Contact Person",
   "label.you_have_not_provided": "You have not provided ",
-  "label.to_any_contact_person":
-    "to any contact person, Are you sure that you want to save the details?",
   "label.particular_person_get_particlular_module":
     "* Note - A particular module can be assigned to a single contact person only.",
+  "label.error": "Error",
 };
 
 export default locale;
