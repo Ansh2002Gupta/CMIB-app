@@ -73,9 +73,9 @@ const ConfirmationModal = ({
       content: hasSingleButton ? (
         <CustomButton
           onPress={onPressButtonOne}
-          style={{ ...getButtonStyle() }}
+          style={{ ...getButtonStyle(severity) }}
           customStyle={{
-            customTextStyle: { ...getTextStyle(), ...buttonOneStyle },
+            customTextStyle: { ...getTextStyle(severity), ...buttonOneStyle },
           }}
         >
           {buttonOneText}
@@ -86,9 +86,12 @@ const ConfirmationModal = ({
           buttonTwoText={buttonTwoText}
           customStyles={{
             buttonOneStyle: buttonOneStyle,
-            buttonTwoStyle: { ...getButtonStyle(), ...buttonTwoStyle },
+            buttonTwoStyle: { ...getButtonStyle(severity), ...buttonTwoStyle },
             buttonOneTextStyle: buttonOneTextStyle,
-            buttonTwoTextStyle: { ...getTextStyle(), ...buttonTwoTextStyle },
+            buttonTwoTextStyle: {
+              ...getTextStyle(severity),
+              ...buttonTwoTextStyle,
+            },
           }}
           displayLoader={loader}
           onPressButtonOne={onPressButtonOne}
