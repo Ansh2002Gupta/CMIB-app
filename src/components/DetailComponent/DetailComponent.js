@@ -117,6 +117,61 @@ const DetailComponent = ({
     );
   };
 
+  const renderEditableContent = (detail) => {
+    if (detail.isMobileNumber) {
+      return (
+        <MobileNumberInput
+          mobNumberValue={detail.value}
+          options={detail.options}
+          codeValue={detail.codeValue}
+          onChangeMobNumber={(val) => handleChange(detail.label, val)}
+          onChangeCode={(val) => handleChange(detail.label, val, true)}
+          mobNumberError={detail.error}
+          isEditable={isInputDisable ? !isInputDisable : true}
+        />
+      );
+    }
+    return (
+      <CustomTextInput
+        errorMessage={detail.error}
+        value={detail.value}
+        customStyle={styles.inputStyle}
+        label={intl.formatMessage({ id: detail.label })}
+        isDropdown={detail.isDropdown}
+        isEditable={isInputDisable ? !isInputDisable : true}
+        isCounterInput={detail.isCounterInput}
+        isError={!!detail.error}
+        isMandatory={detail.isMandatory}
+        selectedItems={detail.defaultValues}
+        indexNumber={index}
+        isSelected="isSelected"
+        indexField="selectedIndex"
+        options={detail.options || []}
+        isMultiline={detail?.isMultiline}
+        placeholder={intl.formatMessage({ id: detail.placeholder })}
+        maxLength={detail.maxLength}
+        isNumeric={detail.isNumeric}
+        valueField={detail.valueField || "label"}
+        labelField={detail.labelField || "label"}
+        inputKey={detail.inputKey || "value"}
+        onChangeValue={(val) =>
+          detail.isMultiSelect
+            ? handleMultiSelect(val)
+            : handleChange(detail.label, val)
+        }
+        isMultiSelect={detail.isMultiSelect}
+        onChangeText={(val) => {
+          if (detail?.isNumeric) {
+            if (numericValidator(val)) handleChange(detail.label, val);
+          } else {
+            handleChange(detail.label, val);
+          }
+        }}
+        isRupee={detail?.isRupee}
+      />
+    );
+  };
+
   return (
     <View>
       {!!headerText && (
@@ -137,56 +192,7 @@ const DetailComponent = ({
             style={isWebView ? styles.webContainer : getRowStyle(detail)}
           >
             {isEditable ? (
-              detail.isMobileNumber ? (
-                <MobileNumberInput
-                  mobNumberValue={detail.value}
-                  options={detail.options}
-                  codeValue={detail.codeValue}
-                  onChangeMobNumber={(val) => handleChange(detail.label, val)}
-                  onChangeCode={(val) => handleChange(detail.label, val, true)}
-                  mobNumberError={detail.error}
-                  isEditable={isInputDisable ? !isInputDisable : true}
-                />
-              ) : (
-                <CustomTextInput
-                  errorMessage={detail.error}
-                  value={detail.value}
-                  customStyle={styles.inputStyle}
-                  label={intl.formatMessage({ id: detail.label })}
-                  isDropdown={detail.isDropdown}
-                  isEditable={isInputDisable ? !isInputDisable : true}
-                  isCounterInput={detail.isCounterInput}
-                  isError={!!detail.error}
-                  isMandatory={detail.isMandatory}
-                  selectedItems={detail.defaultValues}
-                  indexNumber={index}
-                  isSelected="isSelected"
-                  indexField="selectedIndex"
-                  options={detail.options || []}
-                  isMultiline={detail?.isMultiline}
-                  placeholder={intl.formatMessage({ id: detail.placeholder })}
-                  maxLength={detail.maxLength}
-                  isNumeric={detail.isNumeric}
-                  valueField={detail.valueField || "label"}
-                  labelField={detail.labelField || "label"}
-                  inputKey={detail.inputKey || "value"}
-                  onChangeValue={(val) =>
-                    detail.isMultiSelect
-                      ? handleMultiSelect(val)
-                      : handleChange(detail.label, val)
-                  }
-                  isMultiSelect={detail.isMultiSelect}
-                  onChangeText={(val) => {
-                    if (detail?.isNumeric) {
-                      if (numericValidator(val))
-                        handleChange(detail.label, val);
-                    } else {
-                      handleChange(detail.label, val);
-                    }
-                  }}
-                  isRupee={detail?.isRupee}
-                />
-              )
+              renderEditableContent(detail)
             ) : (
               <>
                 <View style={styles.titleContainer}>
