@@ -1,38 +1,44 @@
+import { Platform } from "@unthinkable/react-core-components";
 import {
+  ADDRESS_MAX_LENGTH,
+  CODE_MAX_LENGTH,
   COMPANY_TYPE_OPTIONS,
+  DEFAULT_INPUT_MAX_LENGTH,
   ENTITY_OPTIONS,
+  FIRM_OF_CHARTERED_ACCOUNTANTS,
+  MODULE_OPTIONS,
   NATURE_OF_SUPPLIER,
+  NUMBER_OF_PARTNERS_LENGTH,
+  NUMBER_MAX_LENGTH,
   SALUTATION_OPTIONS,
 } from "../../constants/constants";
 
-export const mapApiDataToUI = (
+export const mapApiDataToUI = ({
   apiData,
   industryOptions,
-  isEditMode = false
-) => {
+  intl,
+  countryCodes,
+  isEditMode = false,
+}) => {
   const {
     name,
     entity,
     frn_number,
-    number_of_partner,
+    number_of_partners,
     credit_amount,
-    industry,
+    industry_type,
     std_country_code,
     telephone_number,
     address,
     email,
     type,
-    contact_person_salutation,
-    contact_person_name,
-    contact_person_designation,
-    contact_person_mobile_country_code,
-    contact_person_mobile_number,
-    contact_person_email,
     company_details,
     website,
-    nature_of_supplier,
+    nature_of_suppliers,
     source_of_information,
     company_logo,
+    contact_details,
+    company_module_access,
   } = apiData;
 
   const checkValue = (value, showPlaceholder = true) => {
@@ -51,10 +57,123 @@ export const mapApiDataToUI = (
     return (code + "-" + number).replace(/--/g, "-");
   };
 
-  const combinedMobileNumber = formatMobileNumber(
-    contact_person_mobile_country_code,
-    contact_person_mobile_number
-  );
+  const formatModuleOptions = (moduleId, intl) => {
+    const moduleOption = MODULE_OPTIONS.find(
+      (option) => option.id === moduleId
+    );
+    return moduleOption
+      ? intl.formatMessage({ id: moduleOption.messageId })
+      : "";
+  };
+
+  const createModuleValue = (moduleId, intl) => ({
+    value: formatModuleOptions(moduleId, intl),
+    label: moduleId,
+    name: formatModuleOptions(moduleId, intl),
+  });
+
+  const createModuleOptions = (moduleId, contact, intl, contactDetails) => ({
+    value: formatModuleOptions(moduleId, intl),
+    label: formatModuleOptions(moduleId, intl),
+    name: moduleId,
+    isSelected: contact?.modules.includes(moduleId),
+    selectedIndex: contactDetails.findIndex(
+      (c) => c.modules && c.modules.includes(moduleId)
+    ),
+  });
+
+  const mapContactDetails = (contactDetails) => {
+    return contactDetails?.map((contact) => {
+      const combinedMobileNumber = formatMobileNumber(
+        contact?.mobile_country_code,
+        contact?.mobile_number
+      );
+      const formatCountryCode = (code) => {
+        if (!code) return code;
+        const countryOption = countryCodes.find(
+          (country) => country["dial_code"] === code
+        );
+        return countryOption ? `${code} (${countryOption["name"]})` : code;
+      };
+
+      const formattedCode =
+        isEditMode && Platform.OS === "web"
+          ? formatCountryCode(contact?.mobile_country_code)
+          : contact?.mobile_country_code;
+
+      const contactModules = [
+        {
+          label: "label.module",
+          value: checkValue(contact?.modules),
+          customValue: contact?.modules.map((moduleId) =>
+            formatModuleOptions(moduleId, intl)
+          ),
+          showBadgeLabel: true,
+          isMandatory: true,
+          isMultiSelect: true,
+          isDropdown: true,
+          placeholder: "label.select_module",
+          defaultValues: contact?.modules.map((moduleId) =>
+            createModuleValue(moduleId, intl)
+          ),
+          options: company_module_access.map((moduleId) =>
+            createModuleOptions(moduleId, contact, intl, contactDetails)
+          ),
+        },
+      ];
+      const isActive = !!contact?.status;
+      const contactInfo = [
+        {
+          label: "label.salutation",
+          value: checkValue(contact?.salutation),
+          isDropdown: true,
+          options: SALUTATION_OPTIONS,
+          placeholder: "label.select",
+          isMandatory: true,
+        },
+        {
+          id: contact?.id,
+          key: "name",
+          label: "label.contact_person_name",
+          value: checkValue(contact?.name),
+          isMandatory: true,
+          maxLength: DEFAULT_INPUT_MAX_LENGTH,
+          placeholder: "label.enter_contact_person_name",
+        },
+        {
+          key: "designation",
+          label: "label.contact_personal_designation",
+          value: checkValue(contact?.designation),
+          maxLength: DEFAULT_INPUT_MAX_LENGTH,
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_designation",
+        },
+        {
+          key: "mobileNo",
+          label: "label.mobile_number",
+          isMobileNumber: true,
+          value: isEditMode ? contact?.mobile_number : combinedMobileNumber,
+          codeValue: formattedCode,
+          options: countryCodes,
+          isNumeric: true,
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_mobile_no",
+        },
+        {
+          key: "contactEmailId",
+          label: "label.email_id",
+          value: checkValue(contact?.email),
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_email_id",
+        },
+      ];
+      return {
+        contactModules: contactModules,
+        contactInfo: contactInfo,
+        isContactActive: isActive,
+      };
+    });
+  };
 
   return {
     companyDetail: [
@@ -62,8 +181,9 @@ export const mapApiDataToUI = (
         key: "companyName",
         label: "label.company_name",
         value: checkValue(name),
-        maxLength: 255,
+        maxLength: DEFAULT_INPUT_MAX_LENGTH,
         placeholder: "label.company_name_placeholder",
+        isMandatory: true,
       },
       {
         label: "label.entity",
@@ -71,48 +191,59 @@ export const mapApiDataToUI = (
         isDropdown: true,
         options: ENTITY_OPTIONS,
         inputKey: "label",
+        valueField: "value",
         placeholder: "label.select_entity_placeholder",
+        isMandatory: true,
       },
-      {
-        key: "registrationNo",
-        label: "label.firm_registration_no",
-        value: checkValue(frn_number),
-        isNumeric: true,
-        maxLength: 10,
-        isMajor: true,
-        placeholder: "label.enter_firm_no",
-      },
-      {
-        key: "noOfPartners",
-        label: "label.no_of_partners",
-        value: checkValue(number_of_partner),
-        isMinor: true,
-        isNumeric: true,
-        placeholder: "label.enter_no",
-      },
+      ...(entity === FIRM_OF_CHARTERED_ACCOUNTANTS
+        ? [
+            {
+              key: "registrationNo",
+              label: "label.firm_registration_no",
+              value: checkValue(frn_number),
+              isNumeric: true,
+              isMajor: true,
+              placeholder: "label.enter_firm_no",
+              isMandatory: true,
+            },
+            {
+              key: "noOfPartners",
+              label: "label.no_of_partners",
+              value: checkValue(number_of_partners),
+              isMinor: true,
+              isNumeric: true,
+              placeholder: "label.no_placeholder",
+              isMandatory: true,
+              maxLength: NUMBER_OF_PARTNERS_LENGTH,
+            },
+          ]
+        : []),
       {
         label: "label.current_industry",
-        value: checkValue(industry?.name),
+        value: checkValue(industry_type?.name),
         isDropdown: true,
         options: industryOptions,
         labelField: "name",
         valueField: "name",
         inputKey: "name",
         placeholder: "label.select_current_indusrty_placeholder",
+        isMandatory: true,
       },
       {
         key: "address",
         label: "label.address_for_correspondence",
         value: checkValue(address),
         isMultiline: true,
-        maxLength: 500,
+        maxLength: ADDRESS_MAX_LENGTH,
         placeholder: "label.address_for_correspondance_placeholder",
+        isMandatory: true,
       },
       {
         key: "emailId",
         label: "label.email_id",
         value: checkValue(email),
         placeholder: "label.email_id_placeholder",
+        isMandatory: true,
       },
       {
         key: "code",
@@ -120,8 +251,9 @@ export const mapApiDataToUI = (
         isNumeric: true,
         value: checkValue(std_country_code),
         isMinor: true,
-        maxLength: 8,
-        placeholder: "label.enter_code",
+        maxLength: CODE_MAX_LENGTH,
+        placeholder: "label.isd_std_code",
+        isMandatory: true,
       },
       {
         key: "telephoneNo",
@@ -129,57 +261,20 @@ export const mapApiDataToUI = (
         isNumeric: true,
         value: checkValue(telephone_number),
         isMajor: true,
-        maxLength: 15,
-        placeholder: "Enter Telephone Number",
+        maxLength: NUMBER_MAX_LENGTH,
+        placeholder: "label.enter_telephone_no",
+        isMandatory: true,
       },
     ],
-    contactPersonInfo: [
-      {
-        label: "label.salutation",
-        value: checkValue(contact_person_salutation),
-        isMinor: true,
-        isDropdown: true,
-        options: SALUTATION_OPTIONS,
-        placeholder: "label.select",
-      },
-      {
-        key: "name",
-        label: "label.contact_person_name",
-        value: checkValue(contact_person_name),
-        isMajor: true,
-        maxLength: 255,
-        placeholder: "label.enter_contact_person_name",
-      },
-      {
-        key: "designation",
-        label: "label.contact_personal_designation",
-        value: checkValue(contact_person_designation),
-        maxLength: 500,
-        placeholder: "label.enter_contact_person_designation",
-      },
-      {
-        key: "mobileNo",
-        label: "label.mobile_number",
-        isMobileNumber: true,
-        value: isEditMode ? contact_person_mobile_number : combinedMobileNumber,
-        isNumeric: true,
-        maxLength: 10,
-        placeholder: "label.enter_contact_person_mobile_no",
-      },
-      {
-        key: "contactEmailId",
-        label: "label.email_id",
-        value: checkValue(contact_person_email),
-        placeholder: "label.enter_contact_person_email_id",
-      },
-    ],
+    contactPersonInfo: mapContactDetails(contact_details),
     companyProfile: [
       {
+        isMandatory: true,
         key: "companyDetail",
         label: "label.short_profile_of_the_company",
         value: checkValue(company_details),
         isMultiline: true,
-        maxLength: 100,
+        maxLength: ADDRESS_MAX_LENGTH,
         placeholder: "label.enter_profile_of_company",
       },
     ],
@@ -188,14 +283,16 @@ export const mapApiDataToUI = (
         key: "website",
         label: "label.website",
         value: checkValue(website),
-        isLink: website && true,
+        isLink: !!website,
         placeholder: "label.enter_your_website",
+        isMandatory: true,
       },
       {
         label: "label.nature_of_supplier",
-        value: checkValue(nature_of_supplier),
+        value: checkValue(nature_of_suppliers),
         isDropdown: true,
         options: NATURE_OF_SUPPLIER,
+        isMandatory: true,
         placeholder: "label.select_nature_of_supplier",
       },
       {
@@ -203,17 +300,21 @@ export const mapApiDataToUI = (
         value: checkValue(type),
         isDropdown: true,
         options: COMPANY_TYPE_OPTIONS,
+        isMandatory: true,
+        valueField: "value",
         placeholder: "label.select_company_type",
       },
     ],
     sourceOfInfo: source_of_information,
-    companyLogo: company_logo,
+    companyLogo: company_logo || null,
     balanceCredit: credit_amount,
+    companyModuleAccess: company_module_access?.map((accessId) => {
+      const option = MODULE_OPTIONS?.find((option) => option?.id === accessId);
+      return option
+        ? intl.formatMessage({
+            id: option?.messageId,
+          })
+        : "";
+    }),
   };
 };
-
-export const sourceOfInfo = [
-  "Campus",
-  "Based on Previous Participation",
-  "Telephonic Call",
-];

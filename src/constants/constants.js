@@ -17,6 +17,7 @@ export const CODE_MIN_LENGTH = 2;
 export const CODE_MAX_LENGTH = 8;
 export const NUMBER_MIN_LENGTH = 7;
 export const NUMBER_MAX_LENGTH = 15;
+export const NUMBER_OF_PARTNERS_LENGTH = 3;
 export const MOBILE_NUMBER_MIN_LENGTH = 4;
 export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
@@ -399,8 +400,3 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   label: `${x + 1995}`,
   value: `${x + 1995}`,
 }));
-
-export const breadcrumbs = [
-  { path: navigations.TICKETS, label: "Tickets" },
-  { path: navigations.TICKETS_VIEW_EDIT, label: "Ticket Details" },
-];

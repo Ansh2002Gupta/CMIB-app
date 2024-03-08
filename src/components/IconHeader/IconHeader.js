@@ -112,24 +112,26 @@ const IconHeader = ({
             </CustomTouchableOpacity>
           )}
           {hasActionButton && showInWeb && (
-            <CardComponent
-              customStyle={{
-                ...styles.cardContainer,
-                ...customActionButtonStyle,
-              }}
-            >
-              <CustomTouchableOpacity onPress={handleButtonClick}>
-                <Image source={actionButtonIcon} />
-                <CommonText
-                  customTextStyle={{
-                    ...styles.textStyle,
-                    ...customActionButtonText,
-                  }}
-                >
-                  {buttonTitle}
-                </CommonText>
-              </CustomTouchableOpacity>
-            </CardComponent>
+            <CustomTouchableOpacity onPress={handleButtonClick}>
+              <CardComponent
+                customStyle={{
+                  ...styles.cardContainer,
+                  ...customActionButtonStyle,
+                }}
+              >
+                <View style={styles.editContainer}>
+                  <Image source={actionButtonIcon} />
+                  <CommonText
+                    customTextStyle={{
+                      ...styles.textStyle,
+                      ...customActionButtonText,
+                    }}
+                  >
+                    {buttonTitle}
+                  </CommonText>
+                </View>
+              </CardComponent>
+            </CustomTouchableOpacity>
           )}
         </View>
       </>

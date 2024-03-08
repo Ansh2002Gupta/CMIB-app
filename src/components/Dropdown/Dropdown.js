@@ -1,5 +1,4 @@
 import React from "react";
-import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import { View } from "@unthinkable/react-core-components";
@@ -26,7 +25,6 @@ const Dropdown = ({
   valueField,
   indexField,
 }) => {
-  const intl = useIntl();
   const getAllKeys = (option) => {
     let finalObj = {};
     Object.keys(option).forEach((key) => {
@@ -83,7 +81,8 @@ const Dropdown = ({
           value={""}
           placeholder={placeholder}
           options={options}
-          styles={customStyles(dropdownStyle, placeholderStyle)}
+          isDisabled={!isEditable}
+          styles={customStyles(dropdownStyle, placeholderStyle, !isEditable)}
           theme={customTheme}
           onChange={handleValueChange}
           isMulti
@@ -92,12 +91,11 @@ const Dropdown = ({
         {!!selectedItems.length && (
           <View style={styles.multiSelectOptions}>
             {selectedItems.map((item, index) => (
-              <>
-                <CustomChipCard
-                  message={item?.name}
-                  onPress={() => handleValueChange(item)}
-                />
-              </>
+              <CustomChipCard
+                key={index}
+                message={item?.name}
+                onPress={() => handleValueChange(item)}
+              />
             ))}
           </View>
         )}
@@ -105,19 +103,17 @@ const Dropdown = ({
     );
   }
   return (
-    <div>
-      <Select
-        value={selectedOption || ""}
-        placeholder={placeholder}
-        options={options}
-        isDisabled={!isEditable}
-        styles={customStyles(dropdownStyle, placeholderStyle)}
-        theme={customTheme}
-        onChange={(selectedItem) => {
-          onChange(selectedItem.value);
-        }}
-      />
-    </div>
+    <Select
+      value={selectedOption || ""}
+      placeholder={placeholder}
+      options={options}
+      isDisabled={!isEditable}
+      styles={customStyles(dropdownStyle, placeholderStyle, !isEditable)}
+      theme={customTheme}
+      onChange={(selectedItem) => {
+        onChange(selectedItem.value);
+      }}
+    />
   );
 };
 
@@ -147,7 +143,11 @@ Dropdown.propTypes = {
   onDeleteSelectedItem: PropTypes.func,
   placeholder: PropTypes.string,
   placeholderStyle: PropTypes.object,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
 };
