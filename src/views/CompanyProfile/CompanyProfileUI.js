@@ -34,6 +34,7 @@ const CompanyProfileUI = (props) => {
     error,
     errorWhileDeletion,
     errorWhileUpload,
+    handleBlur,
     handleCompanyDetailChange,
     handleContactPersonInfo,
     handleCompanyProfile,
@@ -116,6 +117,7 @@ const CompanyProfileUI = (props) => {
             handleChange={(detailKey, value, isCode) =>
               handleContactPersonInfo(index, detailKey, value, isCode)
             }
+            handleBlur={handleBlur}
             handleMultiSelect={(updatedSelectedItems) =>
               handleModuleAccess(index, updatedSelectedItems)
             }
@@ -310,15 +312,17 @@ const CompanyProfileUI = (props) => {
         >
           <View style={style.innerContainerStyle}>
             <DetailCard
+              details={profileResult?.companyDetail}
+              handleBlur={handleBlur}
+              handleChange={handleCompanyDetailChange}
               headerId={intl.formatMessage({
                 id: "label.company_details",
               })}
-              details={profileResult?.companyDetail}
-              handleChange={handleCompanyDetailChange}
               isEditProfile={isEditProfile}
             />
             <CardComponent customStyle={style.cardStyle}>
               <DetailComponent
+                handleBlur={handleBlur}
                 headerText={intl.formatMessage({
                   id: "label.module_access",
                 })}
@@ -328,13 +332,14 @@ const CompanyProfileUI = (props) => {
             </CardComponent>
             {renderContactPersonDetails()}
             <DetailCard
+              handleBlur={handleBlur}
+              handleChange={handleCompanyProfile}
               headerId={intl.formatMessage({
                 id: "label.other_details",
               })}
               isRow
               details={profileResult?.companyProfile}
               otherDetails={profileResult?.otherDetails}
-              handleChange={handleCompanyProfile}
               isEditProfile={isEditProfile}
             />
             <CardComponent customStyle={style.cardStyle}>
@@ -424,6 +429,7 @@ const CompanyProfileUI = (props) => {
 
 CompanyProfileUI.defaultProps = {
   error: "",
+  handleBlur: () => {},
   handleCompanyDetailChange: () => {},
   handleContactPersonInfo: () => {},
   handleCompanyProfile: () => {},
@@ -437,6 +443,7 @@ CompanyProfileUI.defaultProps = {
 CompanyProfileUI.propTypes = {
   currentUser: PropTypes.string,
   error: PropTypes.string,
+  handleBlur: PropTypes.func,
   handleCompanyDetailChange: PropTypes.func,
   handleContactPersonInfo: PropTypes.func,
   handleCompanyProfile: PropTypes.func,

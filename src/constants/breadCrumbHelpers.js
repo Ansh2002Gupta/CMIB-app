@@ -11,7 +11,7 @@ const getBreadCrumbDetails = ({ path }) => {
     case navigations.COMPANY_PROFILE: {
       return [
         { path: navigations.MODULE_LANDING_PAGE, label: "Dashboard" },
-        { path: navigations.COMPANY_PROFILE, label: "Company Profile" },
+        { path: navigations.COMPANY_PROFILE, label: "View Company Profile" },
       ];
     }
     default:
