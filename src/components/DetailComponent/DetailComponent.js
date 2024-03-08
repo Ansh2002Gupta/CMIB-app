@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { View } from "@unthinkable/react-core-components";
+import { Linking, View } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../BadgeLabel/BadgeLabel";
 import CommonText from "../CommonText";
@@ -168,14 +168,18 @@ const DetailComponent = ({
                     customTextStyle={styles.badgeContainer}
                   />
                 ) : (
-                  <CommonText
-                    customTextStyle={[
-                      styles.valueStyle,
-                      detail.isLink && styles.linkStyle,
-                    ]}
+                  <CustomTouchableOpacity
+                    onPress={() => Linking.openURL(detail.value, "_blank")}
                   >
-                    {detail.value}
-                  </CommonText>
+                    <CommonText
+                      customTextStyle={[
+                        styles.valueStyle,
+                        detail.isLink && styles.linkStyle,
+                      ]}
+                    >
+                      {detail.value}
+                    </CommonText>
+                  </CustomTouchableOpacity>
                 )}
               </>
             )}
