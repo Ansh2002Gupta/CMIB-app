@@ -215,6 +215,10 @@ const CompanyProfileComponent = () => {
     onGetProfile();
   };
 
+  const handleBlur = (name, index) => {
+    validateFields({ index, intl, profileData, setProfileData, field: name });
+  };
+
   const onSaveClick = () => {
     if (validateFields({ intl, profileData, setProfileData })) {
       const unoccupied = profileData.companyModuleAccess.filter(
@@ -705,6 +709,7 @@ const CompanyProfileComponent = () => {
         error: errorWhileGettingResult,
         errorWhileDeletion,
         errorWhileUpload,
+        handleBlur,
         handleCompanyDetailChange,
         handleContactPersonInfo,
         handleCompanyProfile,
