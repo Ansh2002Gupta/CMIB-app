@@ -57,6 +57,31 @@ export const mapApiDataToUI = ({
     return (code + "-" + number).replace(/--/g, "-");
   };
 
+  const formatModuleOptions = (moduleId, intl) => {
+    const moduleOption = MODULE_OPTIONS.find(
+      (option) => option.id === moduleId
+    );
+    return moduleOption
+      ? intl.formatMessage({ id: moduleOption.messageId })
+      : "";
+  };
+
+  const createModuleValue = (moduleId, intl) => ({
+    value: formatModuleOptions(moduleId, intl),
+    label: moduleId,
+    name: formatModuleOptions(moduleId, intl),
+  });
+
+  const createModuleOptions = (moduleId, contact, intl, contactDetails) => ({
+    value: formatModuleOptions(moduleId, intl),
+    label: formatModuleOptions(moduleId, intl),
+    name: moduleId,
+    isSelected: contact?.modules.includes(moduleId),
+    selectedIndex: contactDetails.findIndex(
+      (c) => c.modules && c.modules.includes(moduleId)
+    ),
+  });
+
   const mapContactDetails = (contactDetails) => {
     return contactDetails?.map((contact) => {
       const combinedMobileNumber = formatMobileNumber(
@@ -80,45 +105,20 @@ export const mapApiDataToUI = ({
         {
           label: "label.module",
           value: checkValue(contact?.modules),
+          customValue: contact?.modules.map((moduleId) =>
+            formatModuleOptions(moduleId, intl)
+          ),
           showBadgeLabel: true,
           isMandatory: true,
           isMultiSelect: true,
           isDropdown: true,
           placeholder: "label.select_module",
-          defaultValues: contact?.modules.map((moduleId) => {
-            const moduleOption = MODULE_OPTIONS.find(
-              (option) => option.id === moduleId
-            );
-            const label = moduleOption
-              ? intl.formatMessage({
-                  id: moduleOption.messageId,
-                })
-              : "";
-            return {
-              value: label,
-              label: moduleId,
-              name: label,
-            };
-          }),
-          options: company_module_access.map((moduleId) => {
-            const moduleOption = MODULE_OPTIONS.find(
-              (option) => option.id === moduleId
-            );
-            const label = moduleOption
-              ? intl.formatMessage({
-                  id: moduleOption.messageId,
-                })
-              : "";
-            return {
-              value: label,
-              label: label,
-              name: moduleId,
-              isSelected: contact?.modules.includes(moduleId),
-              selectedIndex: contactDetails.findIndex(
-                (c) => c.modules && c.modules.includes(moduleId)
-              ),
-            };
-          }),
+          defaultValues: contact?.modules.map((moduleId) =>
+            createModuleValue(moduleId, intl)
+          ),
+          options: company_module_access.map((moduleId) =>
+            createModuleOptions(moduleId, contact, intl, contactDetails)
+          ),
         },
       ];
       const isActive = !!contact?.status;
