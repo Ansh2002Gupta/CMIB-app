@@ -326,9 +326,9 @@ const SignUpThirdScreenUI = ({
                   onDismiss={handleDismissToast}
                 />
               )}
-
               {!!unselectedModules.length && showConfirmationModal && (
                 <ConfirmationModal
+                  severity={"warning"}
                   subHeading={
                     intl.formatMessage({
                       id: "label.you_have_not_provided",
