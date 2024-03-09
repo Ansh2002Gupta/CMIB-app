@@ -90,7 +90,6 @@ const CompanyProfileUI = (props) => {
   const defaultUploadResult = hasCompanyLogo
     ? {
         data: {
-          file_name: "CompanyLogo.png",
           url: profileResult.companyLogo,
         },
       }

@@ -16,6 +16,7 @@ const UploadImage = ({
   errorWhileUpload: errorWhileUploading,
   fileUploadResult,
   handleFileUpload,
+  hideIconDelete,
   isUploadingImageToServer,
   onDeleteImage,
   setFileUploadResult,
@@ -76,6 +77,7 @@ const UploadImage = ({
           {...{
             fileName: imageUploadedToServer?.["file_name"] || imageName || "",
             isEditable: !!imageUrl,
+            hideIconDelete,
             onRemoveImage: onClickDeleteImage,
             source: { uri: imageUploadedToServer?.url || imageUrl || "" },
           }}
@@ -98,15 +100,23 @@ const UploadImage = ({
 UploadImage.defaultProps = {
   imageName: "",
   imageUrl: "",
+  handleFileUpload: () => {},
+  hideIconDelete: false,
   onDeleteImage: () => {},
-  onImageUpload: () => {},
+  setFileUploadResult: () => {},
 };
 
 UploadImage.propTypes = {
   imageName: PropTypes.string,
   imageUrl: PropTypes.string,
+  errorWhileUpload: PropTypes.string,
+  fileUploadResult: PropTypes.object,
+  handleFileUpload: PropTypes.func,
+  hideIconDelete: PropTypes.bool,
+  isUploadingImageToServer: PropTypes.bool,
   onDeleteImage: PropTypes.func,
-  onImageUpload: PropTypes.func,
+  setFileUploadResult: PropTypes.func,
+  uploadPercentage: PropTypes.string,
 };
 
 export default UploadImage;
