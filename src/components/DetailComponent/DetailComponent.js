@@ -190,7 +190,7 @@ const DetailComponent = ({
       <View style={{ ...containerStyle, ...customContainerStyle }}>
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
         {details?.map((detail, idx) => {
-          if (isEditable && detail.viewOnly) {
+          if (isEditable && detail.viewOnlyField) {
             return null;
           }
 
