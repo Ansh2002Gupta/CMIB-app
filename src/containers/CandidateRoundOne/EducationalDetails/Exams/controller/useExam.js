@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { capitalize } from "../../../../../utils/util";
-import { MONTHS } from "../../../../../constants/constants";
 
 const useExam = () => {
   const [foundationMark, setFoundationMark] = useState("");

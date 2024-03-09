@@ -113,6 +113,13 @@ const style = {
     width: "100%",
     alignItems: "flex-end",
   },
+  infoStyle: {
+    marginTop: -16,
+    marginBottom: 24,
+    color: colors.darkGrey,
+    fontSize: 14,
+    lineHeight: 24,
+  },
 };
 
 export default style;

@@ -65,6 +65,10 @@ const style = {
     paddingLeft: 8,
     fontSize: 14,
   },
+  iconStyle: {
+    height: 20,
+    width: 20,
+  },
 };
 
 export default style;

@@ -216,7 +216,14 @@ const CompanyProfileUI = (props) => {
               style={style.editContainer}
               onPress={() => handleEdit(true)}
             >
-              <Image source={images.iconSquareEdit} />
+              <CustomImage
+                source={images.iconEdit}
+                Icon={images.iconEdit}
+                isSvg
+                alt={"edit icon"}
+                height={20}
+                width={20}
+              />
               <CommonText customTextStyle={style.textStyle} fontWeight="600">
                 {intl.formatMessage({ id: "label.edit" })}
               </CommonText>
@@ -357,6 +364,11 @@ const CompanyProfileUI = (props) => {
                     id: "label.company_logo",
                   })}
                 />
+                <CommonText customTextStyle={style.infoStyle}>
+                  {intl.formatMessage({
+                    id: "label.logo_info",
+                  })}
+                </CommonText>
                 <View style={style.imageContainer}>
                   <UploadImage
                     {...{
@@ -401,7 +413,7 @@ const CompanyProfileUI = (props) => {
   return (
     <>
       <IconHeader
-        actionButtonIcon={images.iconSquareEdit}
+        actionButtonIcon={images.iconEdit}
         buttonTitle={intl.formatMessage({ id: "label.edit" })}
         handleButtonClick={() => handleEdit(!isEditProfile)}
         hasActionButton={isWebView && !isEditProfile}

@@ -189,30 +189,36 @@ const DetailComponent = ({
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
-        {details?.map((detail, idx) => (
-          <View
-            key={idx}
-            style={isWebView ? styles.webContainer : getRowStyle(detail)}
-          >
-            {isEditable ? (
-              renderEditableContent(detail)
-            ) : (
-              <>
-                <View style={styles.titleContainer}>
-                  <CommonText customTextStyle={styles.titleStyle}>
-                    {intl.formatMessage({ id: detail.label })}
-                  </CommonText>
-                  {detail?.isMandatory && (
-                    <CommonText customTextStyle={styles.starStyle}>
-                      {" *"}
+        {details?.map((detail, idx) => {
+          if (isEditable && detail.viewOnly) {
+            return null;
+          }
+
+          return (
+            <View
+              key={idx}
+              style={isWebView ? styles.webContainer : getRowStyle(detail)}
+            >
+              {isEditable ? (
+                renderEditableContent(detail)
+              ) : (
+                <>
+                  <View style={styles.titleContainer}>
+                    <CommonText customTextStyle={styles.titleStyle}>
+                      {intl.formatMessage({ id: detail.label })}
                     </CommonText>
-                  )}
-                </View>
-                {renderDetailContent(detail)}
-              </>
-            )}
-          </View>
-        ))}
+                    {detail?.isMandatory && (
+                      <CommonText customTextStyle={styles.starStyle}>
+                        {" *"}
+                      </CommonText>
+                    )}
+                  </View>
+                  {renderDetailContent(detail)}
+                </>
+              )}
+            </View>
+          );
+        })}
         {isShowSwitch && isWebView && isEditable && renderSwitch()}
         {hasActionButton && isEditable && isWebView && renderWebActionButton()}
         {hasActionButton && isEditable && !isWebView && renderMobActionButton()}

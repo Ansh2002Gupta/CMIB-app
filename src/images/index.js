@@ -82,9 +82,6 @@ const iconArrowDown2 = appendAppBaseURl(
 const iconLeftArrow = appendAppBaseURl(
   "/images/iconLeftArrow/iconLeftArrow.png"
 );
-const iconSquareEdit = appendAppBaseURl(
-  "/images/iconSquareEdit/iconSquareEdit.png"
-);
 const iconProfile = appendAppBaseURl("/images/iconProfile/iconProfile.png");
 const iconWarning = appendAppBaseURl("/images/svg/iconWarning.svg");
 const iconTick = appendAppBaseURl("/images/iconTick/iconTick.png");
@@ -199,6 +196,7 @@ const iconZoomIn = appendAppBaseURl("/images/svg/iconZoomIn.svg");
 const iconZoomOut = appendAppBaseURl("/images/svg/iconZoomOut.svg");
 const iconDeleteRed = appendAppBaseURl("/images/svg/iconDeleteRed.svg");
 const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
+const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 
 const images = {
   iconArrowUp,
@@ -206,7 +204,6 @@ const images = {
   iconArrowDown2,
   avatar,
   logo,
-  iconSquareEdit,
   iconWarning,
   sun,
   iconLeftArrow,
@@ -340,6 +337,7 @@ const images = {
   iconZoomOut,
   iconDeleteRed,
   iconAddBlue,
+  iconEdit,
 };
 
 export default images;

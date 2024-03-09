@@ -6,6 +6,7 @@ import { Image, View } from "@unthinkable/react-core-components";
 import CardComponent from "../CardComponent/CardComponent";
 import Chip from "../Chip";
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
@@ -120,7 +121,13 @@ const IconHeader = ({
                 }}
               >
                 <View style={styles.editContainer}>
-                  <Image source={actionButtonIcon} />
+                  <CustomImage
+                    style={styles.iconStyle}
+                    source={actionButtonIcon}
+                    Icon={actionButtonIcon}
+                    isSvg
+                    alt={"edit icon"}
+                  />
                   <CommonText
                     customTextStyle={{
                       ...styles.textStyle,
