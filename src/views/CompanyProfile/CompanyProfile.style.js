@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
@@ -48,6 +49,11 @@ const style = {
   },
   imageContainer: {
     marginBottom: 24,
+    ...Platform.select({
+      web: {
+        width: 374,
+      },
+    }),
   },
   headingText: {
     fontSize: 16,
