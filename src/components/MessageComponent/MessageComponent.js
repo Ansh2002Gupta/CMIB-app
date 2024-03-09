@@ -30,7 +30,14 @@ const MessageComponent = ({ data, index, shouldShowAvatar, userDetails }) => {
   const renderImage = (url) => {
     return (
       <>
-        {!!url && <Image source={url} style={styles.imagesSection} preview />}
+        {!!url && (
+          <Image
+            source={url}
+            resizeMode={"cover"}
+            style={styles.imagesSection}
+            preview
+          />
+        )}
       </>
     );
   };
