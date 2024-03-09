@@ -146,7 +146,7 @@ export const mapApiDataToUI = ({
           value: !!contact?.status ? "Active" : "Inactive",
           isMandatory: true,
           placeholder: "label.enter_contact_person_name",
-          viewOnly: true,
+          viewOnlyField: true,
         },
         {
           key: "designation",
