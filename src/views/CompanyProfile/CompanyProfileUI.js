@@ -354,6 +354,7 @@ const CompanyProfileUI = (props) => {
                 headerText={intl.formatMessage({
                   id: "label.source_of_info",
                 })}
+                isMandatory
               />
               {renderSourceOfInfo()}
             </CardComponent>
