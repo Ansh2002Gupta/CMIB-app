@@ -157,7 +157,7 @@ export const validateFields = ({
   const website = findValueByLabel("label.website");
   const entity = findValueByLabel("label.entity");
   if (!field || field === "companyName") {
-    if (companyName && companyName.trim().length > DEFAULT_INPUT_MAX_LENGTH) {
+    if (companyName.trim().length > DEFAULT_INPUT_MAX_LENGTH) {
       newErrors.companyName = intl.formatMessage({
         id: "label.company_name_validation",
       });
@@ -166,10 +166,9 @@ export const validateFields = ({
   }
   if (!field || field === "code") {
     if (
-      code &&
-      (!numRegex.test(String(code)) ||
-        code.length < CODE_MIN_LENGTH ||
-        code.length > CODE_MAX_LENGTH)
+      !numRegex.test(String(code)) ||
+      code.length < CODE_MIN_LENGTH ||
+      code.length > CODE_MAX_LENGTH
     ) {
       newErrors.code = intl.formatMessage({
         id: "label.country_code_validation",
@@ -179,10 +178,9 @@ export const validateFields = ({
   }
   if (!field || field === "telephoneNo") {
     if (
-      telephoneNo &&
-      (!numRegex.test(String(telephoneNo)) ||
-        telephoneNo.length > NUMBER_MAX_LENGTH ||
-        telephoneNo.length < NUMBER_MIN_LENGTH)
+      !numRegex.test(String(telephoneNo)) ||
+      telephoneNo.length > NUMBER_MAX_LENGTH ||
+      telephoneNo.length < NUMBER_MIN_LENGTH
     ) {
       newErrors.telephoneNo = intl.formatMessage({
         id: "label.telephone_no_validation",
@@ -191,7 +189,7 @@ export const validateFields = ({
     }
   }
   if (!field || field === "emailId") {
-    if (emailId && validateEmail(emailId)) {
+    if (validateEmail(emailId)) {
       newErrors.emailId = intl.formatMessage({
         id: "label.email_id_validation",
       });
@@ -200,7 +198,7 @@ export const validateFields = ({
   }
   if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
     if (!field || field === "noOfPartners") {
-      if (noOfPartners && !numRegex.test(String(noOfPartners))) {
+      if (!numRegex.test(String(noOfPartners))) {
         newErrors.noOfPartners = intl.formatMessage({
           id: "label.no_of_partners_validation",
         });
@@ -209,7 +207,7 @@ export const validateFields = ({
     }
   }
   if (!field || field === "address") {
-    if (address && address.trim().length > ADDRESS_MAX_LENGTH) {
+    if (!address.trim().length || address.trim().length > ADDRESS_MAX_LENGTH) {
       newErrors.address = intl.formatMessage({
         id: "label.address_validation",
       });
