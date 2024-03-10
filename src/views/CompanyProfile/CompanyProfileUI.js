@@ -363,6 +363,7 @@ const CompanyProfileUI = (props) => {
                   headerText={intl.formatMessage({
                     id: "label.company_logo",
                   })}
+                  headerTextCustomStyles={style.headerTextStyle}
                 />
                 <CommonText customTextStyle={style.infoStyle}>
                   {intl.formatMessage({

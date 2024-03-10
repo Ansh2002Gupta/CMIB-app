@@ -119,8 +119,10 @@ const style = {
     width: "100%",
     alignItems: "flex-end",
   },
+  headerTextStyle: {
+    paddingBottom: 8,
+  },
   infoStyle: {
-    marginTop: -16,
     marginBottom: 24,
     color: colors.darkGrey,
     fontSize: 14,

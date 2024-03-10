@@ -27,6 +27,7 @@ const DetailComponent = ({
   handleMultiSelect,
   hasActionButton,
   headerText,
+  headerTextCustomStyles,
   index,
   isActive,
   isEditable,
@@ -179,7 +180,13 @@ const DetailComponent = ({
     <View>
       {!!headerText && (
         <View style={styles.titleContainer}>
-          <CommonText customTextStyle={styles.headerText} fontWeight="600">
+          <CommonText
+            customTextStyle={{
+              ...styles.headerText,
+              ...headerTextCustomStyles,
+            }}
+            fontWeight="600"
+          >
             {headerText}
           </CommonText>
           {isMandatory && (
@@ -234,6 +241,7 @@ DetailComponent.defaultProps = {
   handleChange: () => {},
   handleSwitchChange: () => {},
   headerText: "",
+  headerTextCustomStyles: {},
   isActive: false,
   isEditable: false,
   isInputDisable: false,
@@ -249,6 +257,7 @@ DetailComponent.propTypes = {
   handleSwitchChange: PropTypes.func,
   hasActionButton: PropTypes.bool,
   headerText: PropTypes.string,
+  headerTextCustomStyles: PropTypes.object,
   index: PropTypes.number,
   isActive: PropTypes.bool,
   isEditable: PropTypes.bool,
