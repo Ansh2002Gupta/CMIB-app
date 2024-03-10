@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { launchImageLibrary } from "react-native-image-picker";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
@@ -6,7 +7,6 @@ import { View } from "@unthinkable/react-core-components";
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 import PreviewImage from "../PreviewImage/PreviewImage";
 import { IMAGE_MAX_SIZE } from "../../constants/constants";
-import { launchImageLibrary } from "react-native-image-picker";
 
 import styles from "./UploadImage.style";
 

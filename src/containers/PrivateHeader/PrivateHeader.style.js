@@ -54,11 +54,6 @@ const styles = {
     flexDirection: "row",
     alignItems: "center",
   },
-  profileView: {
-    flexDirection: "row",
-    marginLeft: 10,
-    cursor: "pointer",
-  },
   profileNameSection: {
     flexDirection: "row",
   },
