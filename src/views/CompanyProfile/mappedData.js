@@ -90,7 +90,7 @@ export const mapApiDataToUI = ({
       );
       const formatCountryCode = (code) => {
         if (!code) return code;
-        const countryOption = countryCodes.find(
+        const countryOption = countryCodes?.find(
           (country) => country["dial_code"] === code
         );
         return countryOption ? `${code} (${countryOption["name"]})` : code;

@@ -14,16 +14,16 @@ import { isValidUrl } from "../../utils/util";
 import { validateEmail } from "../../utils/validation";
 
 export const allFieldsFilled = (profileData) => {
-  const companyDetailsFilled = profileData.companyDetail.every(
+  const companyDetailsFilled = profileData?.companyDetail?.every(
     (detail) => String(detail.value).trim() !== ""
   );
-  const contactPersonInfoFilled = profileData.contactPersonInfo.every(
+  const contactPersonInfoFilled = profileData?.contactPersonInfo?.every(
     (contact) => {
       if (contact?.isContactActive) {
         const modulesFilled = contact?.contactModules?.every(
           (module) => module?.defaultValues?.length > 0
         );
-        const infosFilled = contact.contactInfo.every(
+        const infosFilled = contact?.contactInfo?.every(
           (info) => String(info.value).trim() !== ""
         );
         return modulesFilled && infosFilled;
@@ -31,13 +31,13 @@ export const allFieldsFilled = (profileData) => {
       return true;
     }
   );
-  const companyProfileFilled = profileData.companyProfile.every(
+  const companyProfileFilled = profileData?.companyProfile?.every(
     (detail) => String(detail.value).trim() !== ""
   );
-  const otherDetailsFilled = profileData.otherDetails.every(
+  const otherDetailsFilled = profileData?.otherDetails?.every(
     (detail) => String(detail.value).trim() !== ""
   );
-  const sourceOfInfoFilled = profileData.sourceOfInfo.length > 0;
+  const sourceOfInfoFilled = profileData?.sourceOfInfo?.length > 0;
   return (
     companyDetailsFilled &&
     contactPersonInfoFilled &&
@@ -57,7 +57,7 @@ const validateContactPersonDetails = ({
 }) => {
   profileData.contactPersonInfo.forEach((contact, index) => {
     let contactErrors = {};
-    const contactName = contact.contactInfo.find(
+    const contactName = contact.contactInfo?.find(
       (info) => info.label === "label.contact_person_name"
     )?.value;
     if (!field || (field === "name" && index === idx)) {
@@ -71,7 +71,7 @@ const validateContactPersonDetails = ({
         isValid = false;
       }
     }
-    const contactDesignation = contact.contactInfo.find(
+    const contactDesignation = contact.contactInfo?.find(
       (info) => info.label === "label.contact_personal_designation"
     )?.value;
     if (!field || (field === "designation" && index === idx)) {
@@ -85,7 +85,7 @@ const validateContactPersonDetails = ({
         isValid = false;
       }
     }
-    const contactMobileNo = contact.contactInfo.find(
+    const contactMobileNo = contact?.contactInfo?.find(
       (info) => info.label === "label.mobile_number"
     )?.value;
     if (!field || (field === "mobileNo" && index === idx)) {
@@ -96,7 +96,7 @@ const validateContactPersonDetails = ({
         isValid = false;
       }
     }
-    const contactEmailId = contact.contactInfo.find(
+    const contactEmailId = contact?.contactInfo?.find(
       (info) => info.label === "label.email_id"
     )?.value;
     if (!field || (field === "contactEmailId" && index === idx)) {
