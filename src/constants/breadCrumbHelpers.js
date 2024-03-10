@@ -1,6 +1,7 @@
 import { navigations } from "./routeNames";
+import { EDIT } from "./constants";
 
-const getBreadCrumbDetails = ({ path }) => {
+const getBreadCrumbDetails = ({ path, searchParams }) => {
   switch (path) {
     case `${navigations.TICKETS}/${navigations.TICKETS_VIEW_EDIT}`: {
       return [
@@ -11,7 +12,13 @@ const getBreadCrumbDetails = ({ path }) => {
     case navigations.COMPANY_PROFILE: {
       return [
         { path: navigations.MODULE_LANDING_PAGE, label: "Dashboard" },
-        { path: navigations.COMPANY_PROFILE, label: "View Company Profile" },
+        {
+          path: navigations.COMPANY_PROFILE,
+          label:
+            searchParams === EDIT
+              ? "Edit Company Profile"
+              : "View Company Profile",
+        },
       ];
     }
     default:
