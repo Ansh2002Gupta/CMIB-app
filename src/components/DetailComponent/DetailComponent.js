@@ -12,11 +12,11 @@ import MobileNumberInput from "../MobileNumberInput";
 import Switch from "../Switch";
 import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
-import { gridStyles } from "../../theme/styles/commonStyles";
+import { getValidUrl } from "../../utils/util";
 import { numericValidator } from "../../utils/validation";
 import images from "../../images";
+import { gridStyles } from "../../theme/styles/commonStyles";
 import styles, { getRowStyle } from "./DetailComponent.style";
-import { getValidUrl } from "../../utils/util";
 
 const DetailComponent = ({
   customContainerStyle,
