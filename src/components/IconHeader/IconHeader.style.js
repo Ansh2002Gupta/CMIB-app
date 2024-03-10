@@ -31,6 +31,7 @@ const style = {
     borderRightWidth: 0,
     borderColor: colors.lightGrey,
     zIndex: 0,
+    height: 92,
   },
   formHeaderStyle: {
     color: colors.black,
