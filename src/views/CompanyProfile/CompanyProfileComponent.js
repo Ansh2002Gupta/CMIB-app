@@ -624,12 +624,14 @@ const CompanyProfileComponent = () => {
       });
     });
 
-    const newContactModuleOptions = profileData.companyModuleAccess.map(
-      (module) => ({
-        value: module,
-        label: module,
-      })
+    const activeContact = profileData.contactPersonInfo.find(
+      (contact) => contact.isContactActive
     );
+
+    let newContactModuleOptions;
+    if (activeContact) {
+      newContactModuleOptions = activeContact.contactModules[0].options;
+    }
 
     const newContactPerson = {
       contactModules: [
