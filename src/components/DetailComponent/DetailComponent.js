@@ -12,11 +12,11 @@ import MobileNumberInput from "../MobileNumberInput";
 import Switch from "../Switch";
 import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
-import { gridStyles } from "../../theme/styles/commonStyles";
+import { getValidUrl } from "../../utils/util";
 import { numericValidator } from "../../utils/validation";
 import images from "../../images";
+import { gridStyles } from "../../theme/styles/commonStyles";
 import styles, { getRowStyle } from "./DetailComponent.style";
-import { getValidUrl } from "../../utils/util";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -27,6 +27,7 @@ const DetailComponent = ({
   handleMultiSelect,
   hasActionButton,
   headerText,
+  headerTextCustomStyles,
   index,
   isActive,
   isEditable,
@@ -179,7 +180,13 @@ const DetailComponent = ({
     <View>
       {!!headerText && (
         <View style={styles.titleContainer}>
-          <CommonText customTextStyle={styles.headerText} fontWeight="600">
+          <CommonText
+            customTextStyle={{
+              ...styles.headerText,
+              ...headerTextCustomStyles,
+            }}
+            fontWeight="600"
+          >
             {headerText}
           </CommonText>
           {isMandatory && (
@@ -189,30 +196,36 @@ const DetailComponent = ({
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
-        {details?.map((detail, idx) => (
-          <View
-            key={idx}
-            style={isWebView ? styles.webContainer : getRowStyle(detail)}
-          >
-            {isEditable ? (
-              renderEditableContent(detail)
-            ) : (
-              <>
-                <View style={styles.titleContainer}>
-                  <CommonText customTextStyle={styles.titleStyle}>
-                    {intl.formatMessage({ id: detail.label })}
-                  </CommonText>
-                  {detail?.isMandatory && (
-                    <CommonText customTextStyle={styles.starStyle}>
-                      {" *"}
+        {details?.map((detail, idx) => {
+          if (isEditable && detail.viewOnlyField) {
+            return null;
+          }
+
+          return (
+            <View
+              key={idx}
+              style={isWebView ? styles.webContainer : getRowStyle(detail)}
+            >
+              {isEditable ? (
+                renderEditableContent(detail)
+              ) : (
+                <>
+                  <View style={styles.titleContainer}>
+                    <CommonText customTextStyle={styles.titleStyle}>
+                      {intl.formatMessage({ id: detail.label })}
                     </CommonText>
-                  )}
-                </View>
-                {renderDetailContent(detail)}
-              </>
-            )}
-          </View>
-        ))}
+                    {detail?.isMandatory && (
+                      <CommonText customTextStyle={styles.starStyle}>
+                        {" *"}
+                      </CommonText>
+                    )}
+                  </View>
+                  {renderDetailContent(detail)}
+                </>
+              )}
+            </View>
+          );
+        })}
         {isShowSwitch && isWebView && isEditable && renderSwitch()}
         {hasActionButton && isEditable && isWebView && renderWebActionButton()}
         {hasActionButton && isEditable && !isWebView && renderMobActionButton()}
@@ -228,6 +241,7 @@ DetailComponent.defaultProps = {
   handleChange: () => {},
   handleSwitchChange: () => {},
   headerText: "",
+  headerTextCustomStyles: {},
   isActive: false,
   isEditable: false,
   isInputDisable: false,
@@ -243,6 +257,7 @@ DetailComponent.propTypes = {
   handleSwitchChange: PropTypes.func,
   hasActionButton: PropTypes.bool,
   headerText: PropTypes.string,
+  headerTextCustomStyles: PropTypes.object,
   index: PropTypes.number,
   isActive: PropTypes.bool,
   isEditable: PropTypes.bool,

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useSearchParams } from "../../routes";
 
 import CompanyProfileUI from "./CompanyProfileUI";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -11,20 +12,22 @@ import useIndustryTypes from "../../services/apiServices/hooks/useIndustryTypes"
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useUpdateCompanyProfile from "../../services/apiServices/hooks/CompanyProfile/useUpdateCompanyProfileAPI";
 import {
+  EDIT,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
   INTEREST_OPTIONS,
   MODULE_OPTIONS,
-  PREVIOUS_SCREEN,
   SALUTATION_OPTIONS,
 } from "../../constants/constants";
 import { COUNTRY_CODE } from "../../services/apiServices/apiEndPoint";
 import { mapApiDataToUI } from "./mappedData";
+import { navigations } from "../../constants/routeNames";
 import { validateFields } from "./CompanyProfileUtils";
 
 const CompanyProfileComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [userProfileState] = useContext(UserProfileContext);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
@@ -72,6 +75,16 @@ const CompanyProfileComponent = () => {
   }, []);
 
   useEffect(() => {
+    if (isEditProfile) {
+      setSearchParams((prev) => {
+        prev.set("mode", EDIT);
+        return prev;
+      });
+    }
+    if (searchParams.get("mode") === EDIT) {
+      setIsEditProfile(true);
+      getIndustryTypes();
+    }
     if (profileResult) {
       setProfileData(
         mapApiDataToUI({
@@ -347,12 +360,9 @@ const CompanyProfileComponent = () => {
   };
 
   const onGoBack = () => {
-    if (isEditProfile) {
-      handleEdit(false);
-      fileUploadResult && setFileUploadResult("");
-    } else {
-      navigate(PREVIOUS_SCREEN);
-    }
+    handleEdit(false);
+    fileUploadResult && setFileUploadResult("");
+    navigate(navigations.COMPANY_PROFILE);
   };
 
   const handleCompanyDetailChange = (fieldName, value) => {
@@ -624,12 +634,14 @@ const CompanyProfileComponent = () => {
       });
     });
 
-    const newContactModuleOptions = profileData.companyModuleAccess.map(
-      (module) => ({
-        value: module,
-        label: module,
-      })
+    const activeContact = profileData.contactPersonInfo.find(
+      (contact) => contact.isContactActive
     );
+
+    let newContactModuleOptions;
+    if (activeContact) {
+      newContactModuleOptions = activeContact.contactModules[0].options;
+    }
 
     const newContactPerson = {
       contactModules: [
