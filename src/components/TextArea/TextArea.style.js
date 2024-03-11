@@ -17,6 +17,9 @@ const styles = StyleSheet.create({
     fontFamily,
     fontSize: 14,
   },
+  invalidInput: {
+    borderColor: colors.errorRed,
+  },
   inputStyle: {
     width: "100%",
     textAlignVertical: "top",

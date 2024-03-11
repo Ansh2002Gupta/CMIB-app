@@ -246,6 +246,7 @@ export const mapApiDataToUI = ({
         maxLength: ADDRESS_MAX_LENGTH,
         placeholder: "label.address_for_correspondance_placeholder",
         isMandatory: true,
+        isCapitalize: true,
       },
       {
         key: "emailId",
@@ -312,6 +313,7 @@ export const mapApiDataToUI = ({
         isMandatory: true,
         valueField: "value",
         placeholder: "label.select_company_type",
+        isCapitalize: true,
       },
     ],
     sourceOfInfo: source_of_information,

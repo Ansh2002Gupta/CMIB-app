@@ -33,6 +33,7 @@ export const WOMENT_PLACEMENT = "women-placements";
 export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
 export const MIN_ZOOM_SCALE = 1;
 export const MAX_ZOOM_SCALE = 3;
+export const DEFAULT_BALANCE_CREDIT = 0;
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
@@ -81,7 +82,7 @@ export const COMPANY_TYPE_OPTIONS = [
   { label: "Export", value: "export" },
   { label: "SEZ", value: "sez" },
   { label: "Deemed Export", value: "deemed export" },
-  { label: "Taxable", value: "taxan;e" },
+  { label: "Taxable", value: "taxable" },
 ];
 
 export const NATURE_OF_SUPPLIER = [
