@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "../../routes";
+import { Platform } from "@unthinkable/react-core-components";
 
 import CompanyProfileUI from "./CompanyProfileUI";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -28,6 +29,7 @@ const CompanyProfileComponent = () => {
   const navigate = useNavigate();
   const [userProfileState] = useContext(UserProfileContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
@@ -533,6 +535,9 @@ const CompanyProfileComponent = () => {
 
   const handleEdit = (value) => {
     if (value) {
+      if (isWebPlatform) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
       getIndustryTypes();
     }
     setIsEditProfile(value);
