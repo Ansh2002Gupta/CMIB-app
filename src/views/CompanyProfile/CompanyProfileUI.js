@@ -24,9 +24,9 @@ import Spinner from "../../components/Spinner";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import images from "../../images";
 import { allFieldsFilled } from "./CompanyProfileUtils";
 import { DEFAULT_BALANCE_CREDIT } from "../../constants/constants";
-import images from "../../images";
 import { gridStyles } from "../../theme/styles/commonStyles";
 import style from "./CompanyProfile.style";
 

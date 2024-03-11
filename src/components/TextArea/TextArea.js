@@ -16,7 +16,10 @@ const TextArea = ({
     <textarea
       rows={rows}
       cols={cols}
-      style={{ ...styles.inputContainer, ...(isError && styles.invalidInput) }}
+      style={{
+        ...styles.inputContainer,
+        ...(isError ? styles.invalidInput : {}),
+      }}
       className={classes["text-area__base"]}
       onChange={(e) => {
         onChangeText && onChangeText(e.target.value);
