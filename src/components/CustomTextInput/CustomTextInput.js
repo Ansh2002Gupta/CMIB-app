@@ -256,6 +256,7 @@ const CustomTextInput = (props) => {
         {isMultiline ? (
           <TextArea
             {...{
+              isError,
               maxLength,
               onBlur: handleBlur,
               onChangeText: remainingProps.onChangeText,
