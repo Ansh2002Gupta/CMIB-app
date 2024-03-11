@@ -6,6 +6,8 @@ import {
   DEFAULT_INPUT_MAX_LENGTH,
   FIELD_MIN_LENGTH,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
+  MOBILE_NUMBER_MAX_LENGTH,
+  MOBILE_NUMBER_MIN_LENGTH,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   numRegex,
@@ -99,13 +101,17 @@ const validateContactPersonDetails = ({
       (info) => info.label === "label.mobile_number"
     )?.value;
     if (!field || (field === "mobileNo" && index === idx)) {
-      if (!numRegex.test(String(contactMobileNo))) {
+      if (
+        !numRegex.test(String(contactMobileNo)) ||
+        contactMobileNo.trim().length < MOBILE_NUMBER_MIN_LENGTH ||
+        contactMobileNo.trim().length > MOBILE_NUMBER_MAX_LENGTH
+      ) {
         contactErrors.mobileNo = intl.formatMessage({
           id: "label.mobile_number_validation",
         });
         isValid = false;
       }
-      if (checkForDuplicates(field, profileData)) {
+      if (checkForDuplicates("mobileNo", profileData)) {
         contactErrors.mobileNo = intl.formatMessage({
           id: "label.duplicate_mobileNo_validation",
         });
@@ -122,7 +128,7 @@ const validateContactPersonDetails = ({
         });
         isValid = false;
       }
-      if (checkForDuplicates(field, profileData)) {
+      if (checkForDuplicates("contactEmailId", profileData)) {
         contactErrors.contactEmailId = intl.formatMessage({
           id: "label.duplicate_email_validation",
         });
@@ -273,6 +279,7 @@ export const validateFields = ({
     newErrors,
     profileData,
   });
+
   const profileDataWithErrors = {
     ...profileData,
     companyDetail: profileData.companyDetail.map((detail) => ({
