@@ -1,16 +1,18 @@
 import React from "react";
-import { View, useWindowDimensions } from "@unthinkable/react-core-components";
+import { useLocation, useNavigate, useSearchParams } from "../../routes";
 
+import { View, useWindowDimensions } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import getBreadCrumbDetails from "../../constants/breadCrumbHelpers";
+import { EDIT } from "../../constants/constants";
 import { navigations } from "../../constants/routeNames";
-import { useNavigate, useLocation } from "../../routes";
 import styles from "./Breadcrumbs.style";
 
 const Breadcrumbs = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const windowDimensions = useWindowDimensions();
   const isMdOrGreater = windowDimensions.width >= 900;
 
@@ -28,7 +30,10 @@ const Breadcrumbs = () => {
     return styles.enabled;
   };
 
-  const breadcrumbs = getBreadCrumbDetails({ path: location.pathname });
+  const breadcrumbs = getBreadCrumbDetails({
+    path: location.pathname,
+    isEditMode: searchParams.get("mode") === EDIT,
+  });
 
   const isBreadcrumbLocation = (pathname) => {
     return (

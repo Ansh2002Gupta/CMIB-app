@@ -31,7 +31,7 @@ const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useTicketListing = () => {
   const { isWebView } = useIsWebView();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);

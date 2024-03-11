@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         wordBreak: "break-word",
       },
     }),
+    textTransform: "capitalize",
     fontSize: 14,
     color: colors.black,
     marginBottom: 24,
