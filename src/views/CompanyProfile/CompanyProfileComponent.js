@@ -71,6 +71,10 @@ const CompanyProfileComponent = () => {
   } = useUpdateCompanyProfile();
 
   useEffect(() => {
+    if (searchParams.get("mode") === EDIT) {
+      setIsEditProfile(true);
+      !industryTypeResult && getIndustryTypes();
+    }
     onGetProfile();
   }, []);
 
@@ -80,10 +84,6 @@ const CompanyProfileComponent = () => {
         prev.set("mode", EDIT);
         return prev;
       });
-    }
-    if (searchParams.get("mode") === EDIT) {
-      setIsEditProfile(true);
-      !industryTypeResult && getIndustryTypes();
     }
     if (profileResult) {
       setProfileData(
@@ -226,6 +226,7 @@ const CompanyProfileComponent = () => {
     setIsEditProfile(false);
     fileUploadResult && setFileUploadResult("");
     onGetProfile();
+    navigate(navigations.COMPANY_PROFILE);
   };
 
   const handleBlur = (name, index) => {
@@ -717,7 +718,7 @@ const CompanyProfileComponent = () => {
   return (
     <CompanyProfileUI
       {...{
-        currentUser: userProfileState?.userDetails?.email,
+        currentUser: userProfileState?.userDetails?.id,
         error: errorWhileGettingResult,
         errorWhileDeletion,
         errorWhileUpload,

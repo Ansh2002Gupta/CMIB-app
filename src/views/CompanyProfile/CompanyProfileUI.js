@@ -135,8 +135,8 @@ const CompanyProfileUI = (props) => {
             isShowSwitch={
               currentUser !==
                 contactDetailArray?.contactInfo?.find(
-                  (info) => info.key === "contactEmailId"
-                )?.value && !contactDetailArray.isNewContactPerson
+                  (info) => info.key === "name"
+                )?.id && !contactDetailArray.isNewContactPerson
             }
             isActive={contactDetailArray?.isContactActive}
             isEditProfile={isEditProfile}

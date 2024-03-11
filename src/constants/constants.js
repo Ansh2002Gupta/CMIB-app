@@ -81,7 +81,7 @@ export const COMPANY_TYPE_OPTIONS = [
   { label: "Export", value: "export" },
   { label: "SEZ", value: "sez" },
   { label: "Deemed Export", value: "deemed export" },
-  { label: "Taxable", value: "taxan;e" },
+  { label: "Taxable", value: "taxable" },
 ];
 
 export const NATURE_OF_SUPPLIER = [
