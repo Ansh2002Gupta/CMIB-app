@@ -83,7 +83,7 @@ const CompanyProfileComponent = () => {
     }
     if (searchParams.get("mode") === EDIT) {
       setIsEditProfile(true);
-      getIndustryTypes();
+      !industryTypeResult && getIndustryTypes();
     }
     if (profileResult) {
       setProfileData(
