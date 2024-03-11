@@ -14,16 +14,16 @@ import { isValidUrl } from "../../utils/util";
 import { validateEmail } from "../../utils/validation";
 
 export const allFieldsFilled = (profileData) => {
-  const companyDetailsFilled = profileData.companyDetail.every(
+  const companyDetailsFilled = profileData?.companyDetail?.every(
     (detail) => String(detail.value).trim() !== ""
   );
-  const contactPersonInfoFilled = profileData.contactPersonInfo.every(
+  const contactPersonInfoFilled = profileData?.contactPersonInfo?.every(
     (contact) => {
       if (contact?.isContactActive) {
         const modulesFilled = contact?.contactModules?.every(
           (module) => module?.defaultValues?.length > 0
         );
-        const infosFilled = contact.contactInfo.every(
+        const infosFilled = contact?.contactInfo?.every(
           (info) => String(info.value).trim() !== ""
         );
         return modulesFilled && infosFilled;
@@ -31,13 +31,13 @@ export const allFieldsFilled = (profileData) => {
       return true;
     }
   );
-  const companyProfileFilled = profileData.companyProfile.every(
+  const companyProfileFilled = profileData?.companyProfile?.every(
     (detail) => String(detail.value).trim() !== ""
   );
-  const otherDetailsFilled = profileData.otherDetails.every(
+  const otherDetailsFilled = profileData?.otherDetails?.every(
     (detail) => String(detail.value).trim() !== ""
   );
-  const sourceOfInfoFilled = profileData.sourceOfInfo.length > 0;
+  const sourceOfInfoFilled = profileData?.sourceOfInfo?.length > 0;
   return (
     companyDetailsFilled &&
     contactPersonInfoFilled &&
@@ -57,7 +57,7 @@ const validateContactPersonDetails = ({
 }) => {
   profileData.contactPersonInfo.forEach((contact, index) => {
     let contactErrors = {};
-    const contactName = contact.contactInfo.find(
+    const contactName = contact.contactInfo?.find(
       (info) => info.label === "label.contact_person_name"
     )?.value;
     if (!field || (field === "name" && index === idx)) {
@@ -71,7 +71,7 @@ const validateContactPersonDetails = ({
         isValid = false;
       }
     }
-    const contactDesignation = contact.contactInfo.find(
+    const contactDesignation = contact.contactInfo?.find(
       (info) => info.label === "label.contact_personal_designation"
     )?.value;
     if (!field || (field === "designation" && index === idx)) {
@@ -85,7 +85,7 @@ const validateContactPersonDetails = ({
         isValid = false;
       }
     }
-    const contactMobileNo = contact.contactInfo.find(
+    const contactMobileNo = contact?.contactInfo?.find(
       (info) => info.label === "label.mobile_number"
     )?.value;
     if (!field || (field === "mobileNo" && index === idx)) {
@@ -96,7 +96,7 @@ const validateContactPersonDetails = ({
         isValid = false;
       }
     }
-    const contactEmailId = contact.contactInfo.find(
+    const contactEmailId = contact?.contactInfo?.find(
       (info) => info.label === "label.email_id"
     )?.value;
     if (!field || (field === "contactEmailId" && index === idx)) {
@@ -157,7 +157,7 @@ export const validateFields = ({
   const website = findValueByLabel("label.website");
   const entity = findValueByLabel("label.entity");
   if (!field || field === "companyName") {
-    if (companyName && companyName.trim().length > DEFAULT_INPUT_MAX_LENGTH) {
+    if (companyName.trim().length > DEFAULT_INPUT_MAX_LENGTH) {
       newErrors.companyName = intl.formatMessage({
         id: "label.company_name_validation",
       });
@@ -166,10 +166,9 @@ export const validateFields = ({
   }
   if (!field || field === "code") {
     if (
-      code &&
-      (!numRegex.test(String(code)) ||
-        code.length < CODE_MIN_LENGTH ||
-        code.length > CODE_MAX_LENGTH)
+      !numRegex.test(String(code)) ||
+      code.length < CODE_MIN_LENGTH ||
+      code.length > CODE_MAX_LENGTH
     ) {
       newErrors.code = intl.formatMessage({
         id: "label.country_code_validation",
@@ -179,10 +178,9 @@ export const validateFields = ({
   }
   if (!field || field === "telephoneNo") {
     if (
-      telephoneNo &&
-      (!numRegex.test(String(telephoneNo)) ||
-        telephoneNo.length > NUMBER_MAX_LENGTH ||
-        telephoneNo.length < NUMBER_MIN_LENGTH)
+      !numRegex.test(String(telephoneNo)) ||
+      telephoneNo.length > NUMBER_MAX_LENGTH ||
+      telephoneNo.length < NUMBER_MIN_LENGTH
     ) {
       newErrors.telephoneNo = intl.formatMessage({
         id: "label.telephone_no_validation",
@@ -191,7 +189,7 @@ export const validateFields = ({
     }
   }
   if (!field || field === "emailId") {
-    if (emailId && validateEmail(emailId)) {
+    if (validateEmail(emailId)) {
       newErrors.emailId = intl.formatMessage({
         id: "label.email_id_validation",
       });
@@ -200,7 +198,7 @@ export const validateFields = ({
   }
   if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
     if (!field || field === "noOfPartners") {
-      if (noOfPartners && !numRegex.test(String(noOfPartners))) {
+      if (!numRegex.test(String(noOfPartners))) {
         newErrors.noOfPartners = intl.formatMessage({
           id: "label.no_of_partners_validation",
         });
@@ -209,7 +207,7 @@ export const validateFields = ({
     }
   }
   if (!field || field === "address") {
-    if (address && address.trim().length > ADDRESS_MAX_LENGTH) {
+    if (!address.trim().length || address.trim().length > ADDRESS_MAX_LENGTH) {
       newErrors.address = intl.formatMessage({
         id: "label.address_validation",
       });

@@ -90,7 +90,7 @@ export const mapApiDataToUI = ({
       );
       const formatCountryCode = (code) => {
         if (!code) return code;
-        const countryOption = countryCodes.find(
+        const countryOption = countryCodes?.find(
           (country) => country["dial_code"] === code
         );
         return countryOption ? `${code} (${countryOption["name"]})` : code;
@@ -139,6 +139,14 @@ export const mapApiDataToUI = ({
           isMandatory: true,
           maxLength: DEFAULT_INPUT_MAX_LENGTH,
           placeholder: "label.enter_contact_person_name",
+        },
+        {
+          key: "name",
+          label: "label.status",
+          value: !!contact?.status ? "Active" : "Inactive",
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_name",
+          viewOnlyField: true,
         },
         {
           key: "designation",

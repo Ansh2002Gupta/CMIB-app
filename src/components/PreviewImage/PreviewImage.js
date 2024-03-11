@@ -6,12 +6,10 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CommonText from "../CommonText";
 import images from "../../images";
 import styles from "./PreviewImage.style";
 
 const PreviewImage = ({
-  fileName,
   hideIconDelete,
   isEditable,
   onRemoveImage,
@@ -27,25 +25,18 @@ const PreviewImage = ({
       <View style={styles.imageContainer}>
         <Image source={source} style={styles.selectedImageStyle} />
       </View>
-      <View style={styles.innerContainer}>
-        <CommonText
-          customContainerStyle={styles.textContainerBox}
-          customTextStyle={styles.nameStyle}
-        >
-          {fileName}
-        </CommonText>
-        {!hideIconDelete && (
+      {!hideIconDelete && (
+        <View style={styles.innerContainer}>
           <TouchableOpacity onPress={onRemoveImage}>
             <Image source={images.iconTrash} style={styles.deleteIcon} />
           </TouchableOpacity>
-        )}
-      </View>
+        </View>
+      )}
     </View>
   );
 };
 
 PreviewImage.defaultProps = {
-  fileName: "",
   hideIconDelete: false,
   isEditable: false,
   onRemoveImage: () => {},
@@ -53,7 +44,6 @@ PreviewImage.defaultProps = {
 };
 
 PreviewImage.propTypes = {
-  fileName: PropTypes.string,
   hideIconDelete: PropTypes.bool,
   isEditable: PropTypes.bool,
   onRemoveImage: PropTypes.func,
