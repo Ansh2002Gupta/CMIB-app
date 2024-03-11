@@ -617,7 +617,30 @@ const CompanyProfileComponent = () => {
   };
 
   const handleRemoveContactPerson = (indexToRemove) => {
-    const updatedContactPersonInfo = profileData.contactPersonInfo.filter(
+    let updatedContactPersonInfo;
+
+    updatedContactPersonInfo = profileData?.contactPersonInfo?.map(
+      (contact) => {
+        const updatedContactModules = contact.contactModules.map((module) => ({
+          ...module,
+          options: module.options.map((option) => {
+            return option.selectedIndex === indexToRemove
+              ? {
+                  ...option,
+                  isSelected: false,
+                  selectedIndex: null,
+                }
+              : option;
+          }),
+        }));
+        return {
+          ...contact,
+          contactModules: updatedContactModules,
+        };
+      }
+    );
+
+    updatedContactPersonInfo = updatedContactPersonInfo.filter(
       (_, index) => index !== indexToRemove
     );
 
