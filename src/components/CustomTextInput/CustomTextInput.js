@@ -66,6 +66,7 @@ const CustomTextInput = (props) => {
     initiateFileUpload,
     label,
     maxCount,
+    maxLength,
     minCount,
     options,
     onChangeValue,
@@ -255,6 +256,7 @@ const CustomTextInput = (props) => {
         {isMultiline ? (
           <TextArea
             {...{
+              maxLength,
               onBlur: handleBlur,
               onChangeText: remainingProps.onChangeText,
               onFocus: handleFocus,
@@ -278,6 +280,7 @@ const CustomTextInput = (props) => {
                   customTextInputContainer,
                 ]}
                 editable={isEditable}
+                maxLength={maxLength}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 placeholder={placeholder}
@@ -347,6 +350,7 @@ const CustomTextInput = (props) => {
               customTextInputContainer,
             ]}
             editable={isEditable}
+            maxLength={maxLength}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder}
@@ -388,6 +392,11 @@ const CustomTextInput = (props) => {
         >
           {errorMessage}
         </CommonText>
+      )}
+      {isMultiline && (
+        <CommonText
+          customTextStyle={style.limitStyle}
+        >{`${value.length}/${maxLength}`}</CommonText>
       )}
     </View>
   );
@@ -469,6 +478,7 @@ CustomTextInput.propTypes = {
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
+  maxLength: PropTypes.number,
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,

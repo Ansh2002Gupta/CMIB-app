@@ -211,6 +211,11 @@ const style = {
   disabledStyle: {
     backgroundColor: colors.disabledTextFieldColor,
   },
+  limitStyle: {
+    color: colors.darkGrey,
+    alignSelf: "flex-end",
+    paddingTop: 2,
+  },
 };
 
 export default style;
