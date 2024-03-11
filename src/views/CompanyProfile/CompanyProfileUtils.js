@@ -179,7 +179,10 @@ export const validateFields = ({
   const website = findValueByLabel("label.website");
   const entity = findValueByLabel("label.entity");
   if (!field || field === "companyName") {
-    if (companyName.trim().length > DEFAULT_INPUT_MAX_LENGTH) {
+    if (
+      !companyName.trim().length ||
+      companyName.trim().length > DEFAULT_INPUT_MAX_LENGTH
+    ) {
       newErrors.companyName = intl.formatMessage({
         id: "label.company_name_validation",
       });
