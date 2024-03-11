@@ -94,6 +94,11 @@ const style = {
     textAlign: "auto",
   },
   errorMsg: {
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+      },
+    }),
     color: colors.errorRed,
     lineHeight: 18,
   },
@@ -213,8 +218,14 @@ const style = {
   },
   limitStyle: {
     color: colors.darkGrey,
-    alignSelf: "flex-end",
     paddingTop: 2,
+  },
+  errorContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  countStyle: {
+    justifyContent: "flex-end",
   },
 };
 

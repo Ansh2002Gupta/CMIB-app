@@ -385,18 +385,27 @@ const CustomTextInput = (props) => {
     >
       {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {renderTextInput()}
-      {isError && (
-        <CommonText
-          customTextStyle={[style.errorMsg, customErrorStyle]}
-          fontWeight={customErrorStyle?.fontWeight || "600"}
+      {(isError || isMultiline) && (
+        <View
+          style={{
+            ...style.errorContainer,
+            ...(!isError && isMultiline ? style.countStyle : {}),
+          }}
         >
-          {errorMessage}
-        </CommonText>
-      )}
-      {isMultiline && (
-        <CommonText
-          customTextStyle={style.limitStyle}
-        >{`${value.length}/${maxLength}`}</CommonText>
+          {isError && (
+            <CommonText
+              customTextStyle={[style.errorMsg, customErrorStyle]}
+              fontWeight={customErrorStyle?.fontWeight || "600"}
+            >
+              {errorMessage}
+            </CommonText>
+          )}
+          {isMultiline && (
+            <CommonText
+              customTextStyle={style.limitStyle}
+            >{`${value.length}/${maxLength}`}</CommonText>
+          )}
+        </View>
       )}
     </View>
   );
