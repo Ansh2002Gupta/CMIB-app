@@ -223,10 +223,12 @@ const CompanyProfileComponent = () => {
   };
 
   const onProfileUpdate = () => {
-    setIsEditProfile(false);
     fileUploadResult && setFileUploadResult("");
     onGetProfile();
-    navigate(navigations.COMPANY_PROFILE);
+    setIsEditProfile(false);
+    setSearchParams((params) => {
+      params.delete("mode");
+    });
   };
 
   const handleBlur = (name, index) => {
