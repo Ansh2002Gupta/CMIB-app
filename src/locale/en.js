@@ -158,8 +158,7 @@ const locale = {
   "label.telephone_no_validation":
     "The phone number must be a combination of numbers between 7 and 15 digits.",
   "label.email_id_validation": "Please enter a valid email address",
-  "label.registration_no_validation":
-    "The registration number must be exactly 10 digits.",
+  "label.registration_no_validation": "The firm registration number is required.",
   "label.address_validation": "The address must be within 500 characters.",
   "label.no_of_partners_validation":
     "The number of partners must be a combination of numbers.",

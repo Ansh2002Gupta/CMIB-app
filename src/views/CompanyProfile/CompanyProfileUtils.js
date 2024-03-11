@@ -219,6 +219,12 @@ export const validateFields = ({
     }
   }
   if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+    if (!field || field === "registrationNo") {
+      newErrors.registrationNo = intl.formatMessage({
+        id: "label.registration_no_validation",
+      });
+      isValid = false;
+    }
     if (!field || field === "noOfPartners") {
       if (!numRegex.test(String(noOfPartners))) {
         newErrors.noOfPartners = intl.formatMessage({
