@@ -47,6 +47,16 @@ export const allFieldsFilled = (profileData) => {
   );
 };
 
+const checkForDuplicates = (field, profileData) => {
+  const values = profileData?.contactPersonInfo?.flatMap((contact) =>
+    contact.contactInfo
+      .filter((info) => info.key === field)
+      .map((info) => info.value.toLowerCase())
+  );
+  const uniqueValues = new Set(values);
+  return uniqueValues.size !== values.length;
+};
+
 const validateContactPersonDetails = ({
   field,
   index: idx,
@@ -95,6 +105,12 @@ const validateContactPersonDetails = ({
         });
         isValid = false;
       }
+      if (checkForDuplicates(field, profileData)) {
+        contactErrors.mobileNo = intl.formatMessage({
+          id: "label.duplicate_mobileNo_validation",
+        });
+        isValid = false;
+      }
     }
     const contactEmailId = contact?.contactInfo?.find(
       (info) => info.label === "label.email_id"
@@ -103,6 +119,12 @@ const validateContactPersonDetails = ({
       if (validateEmail(contactEmailId)) {
         contactErrors.contactEmailId = intl.formatMessage({
           id: "label.email_id_validation",
+        });
+        isValid = false;
+      }
+      if (checkForDuplicates(field, profileData)) {
+        contactErrors.contactEmailId = intl.formatMessage({
+          id: "label.duplicate_email_validation",
         });
         isValid = false;
       }

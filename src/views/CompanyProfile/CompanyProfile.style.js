@@ -128,6 +128,11 @@ const style = {
     fontSize: 14,
     lineHeight: 24,
   },
+  containerGridStyle: (columnCount) => ({
+    display: "grid",
+    gridTemplateColumns: columnCount || "1fr 1fr 1fr",
+    paddingBottom: 8,
+  }),
 };
 
 export default style;

@@ -66,6 +66,7 @@ const CustomTextInput = (props) => {
     initiateFileUpload,
     label,
     maxCount,
+    maxLength,
     minCount,
     options,
     onChangeValue,
@@ -255,6 +256,7 @@ const CustomTextInput = (props) => {
         {isMultiline ? (
           <TextArea
             {...{
+              maxLength,
               onBlur: handleBlur,
               onChangeText: remainingProps.onChangeText,
               onFocus: handleFocus,
@@ -278,6 +280,7 @@ const CustomTextInput = (props) => {
                   customTextInputContainer,
                 ]}
                 editable={isEditable}
+                maxLength={maxLength}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 placeholder={placeholder}
@@ -347,6 +350,7 @@ const CustomTextInput = (props) => {
               customTextInputContainer,
             ]}
             editable={isEditable}
+            maxLength={maxLength}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder}
@@ -381,13 +385,27 @@ const CustomTextInput = (props) => {
     >
       {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {renderTextInput()}
-      {isError && (
-        <CommonText
-          customTextStyle={[style.errorMsg, customErrorStyle]}
-          fontWeight={customErrorStyle?.fontWeight || "600"}
+      {(isError || isMultiline) && (
+        <View
+          style={{
+            ...style.errorAndCountLimitBox,
+            ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
+          }}
         >
-          {errorMessage}
-        </CommonText>
+          {isError && (
+            <CommonText
+              customTextStyle={[style.errorMsg, customErrorStyle]}
+              fontWeight={customErrorStyle?.fontWeight || "600"}
+            >
+              {errorMessage}
+            </CommonText>
+          )}
+          {isMultiline && (
+            <CommonText
+              customTextStyle={style.limitStyle}
+            >{`${value.length}/${maxLength}`}</CommonText>
+          )}
+        </View>
       )}
     </View>
   );
@@ -469,6 +487,7 @@ CustomTextInput.propTypes = {
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
+  maxLength: PropTypes.number,
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,

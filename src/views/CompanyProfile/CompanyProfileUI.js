@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 import {
-  Image,
   ScrollView,
   TouchableOpacity,
   View,
@@ -26,6 +26,7 @@ import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import { allFieldsFilled } from "./CompanyProfileUtils";
 import images from "../../images";
+import { gridStyles } from "../../theme/styles/commonStyles";
 import style from "./CompanyProfile.style";
 
 const CompanyProfileUI = (props) => {
@@ -65,6 +66,7 @@ const CompanyProfileUI = (props) => {
   } = props;
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const isWebProps = isWebView
     ? {
         buttonOneStyle: style.customButtonStyle,
@@ -98,6 +100,12 @@ const CompanyProfileUI = (props) => {
   const updatedFileUploadResult = isEditProfile
     ? fileUploadResult || defaultUploadResult
     : defaultUploadResult;
+
+  const columnCount = isWebView && gridStyles[currentBreakpoint];
+
+  const containerStyle = isWebView
+    ? style.containerGridStyle(columnCount)
+    : style.contentStyle;
 
   const renderContactPersonDetails = () => {
     return (
@@ -164,7 +172,7 @@ const CompanyProfileUI = (props) => {
 
   const renderModuleAccess = () => {
     return isEditProfile ? (
-      <View style={style.contentStyle}>
+      <View style={containerStyle}>
         {moduleOptions?.map((item, index) => (
           <CheckBox
             key={item.id}
@@ -186,7 +194,7 @@ const CompanyProfileUI = (props) => {
 
   const renderSourceOfInfo = () => {
     return isEditProfile ? (
-      <View style={style.contentStyle}>
+      <View style={containerStyle}>
         {options.map((item, index) => (
           <CheckBox
             key={item.id}
