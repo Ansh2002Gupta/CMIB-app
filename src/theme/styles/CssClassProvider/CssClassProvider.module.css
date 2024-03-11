@@ -49,9 +49,6 @@
   /* transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
   appearance: none;
 }
-.react-datepicker-popper {
-  -index: 100 !important;
-}
 
 .text-area__base:hover,
 .text-area__base:focus {

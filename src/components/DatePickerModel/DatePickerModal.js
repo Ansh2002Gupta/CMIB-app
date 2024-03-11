@@ -9,7 +9,6 @@ import { useIntl } from "react-intl";
 import classes from "../../theme/styles/CssClassProvider";
 import CommonText from "../CommonText";
 const accountComponentProp = classes["react_datepicker__input_container"];
-const dateModalStyle = classes["react-datepicker-popper"];
 function DatePickerModal({
   value,
   onChangeValue,
@@ -70,7 +69,6 @@ function DatePickerModal({
             selected={value}
             minDate={new Date()}
             portalId="my-popper"
-            popperClassName={dateModalStyle}
             className={accountComponentProp}
             onChange={(date) => {
               let datetoBeFormatted = new Date(date);

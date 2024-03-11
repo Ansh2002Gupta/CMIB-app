@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   datePickerContainerStyle: {
     position: "absolute",
     bottom: 48,
-    zindex: 2,
+    zIndex: 2,
   },
   mobileTouchableStyle: {
     flexDirection: "row",

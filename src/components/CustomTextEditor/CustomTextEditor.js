@@ -14,6 +14,7 @@ import {
   size,
   textFormats,
 } from "../../constants/constants";
+import "./styles.css";
 
 const CustomTextEditor = (props) => {
   const { label, isMandatory, customLabelStyle, onChangeText } = props;

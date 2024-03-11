@@ -3,11 +3,7 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   quillContainer: {
-    borderRadius: 12,
-    overflow: "hidden",
-    borderWidth: 0.6,
-    backgroundColor: colors.white,
-    borderColor: colors.lightGray,
+    marginBottom: 48,
   },
   quillStyling: {
     height: "508px",
