@@ -11,33 +11,43 @@ const CustomToggleComponent = ({
   customLabelStyle,
   customToggleStyle,
   isMandatory,
+  containerStyle,
   label,
+  toggleTitle1,
+  toggleTitle2,
+  value,
+  onValueChange,
 }) => {
-  const [selectedToggleOption, setSelectedToggleOption] = useState(-1);
+  const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
   const intl = useIntl();
   const handleOptionSelect = (option) => {
+    if (onValueChange) {
+      onValueChange(option);
+    }
     setSelectedToggleOption(option);
   };
   const { isWebView } = useIsWebView();
 
   return (
-    <View>
-      {label && <View style={styles.labelContainer}>
-        <CommonText
-          customTextStyle={[
-            styles.label,
-            isWebView && styles.webLabel,
-            customLabelStyle,
-          ]}
-        >
-          {label}
-        </CommonText>
-        {isMandatory && (
-          <CommonText customTextStyle={[styles.label, styles.starStyle]}>
-            {"*"}
+    <View style={containerStyle}>
+      {label && (
+        <View style={styles.labelContainer}>
+          <CommonText
+            customTextStyle={[
+              styles.label,
+              isWebView && styles.webLabel,
+              customLabelStyle,
+            ]}
+          >
+            {label}
           </CommonText>
-        )}
-      </View>}
+          {isMandatory && (
+            <CommonText customTextStyle={[styles.label, styles.starStyle]}>
+              {"*"}
+            </CommonText>
+          )}
+        </View>
+      )}
       <View style={[styles.mainView, customToggleStyle]}>
         <TouchableOpacity
           style={{
@@ -56,7 +66,9 @@ const CustomToggleComponent = ({
           />
         </TouchableOpacity>
         <CommonText customTextStyle={styles.textStyle}>
-          {intl.formatMessage({ id: "label.yes" })}
+          {intl.formatMessage({
+            id: `${toggleTitle1 ? toggleTitle1 : "label.yes"}`,
+          })}
         </CommonText>
         <TouchableOpacity
           style={{
@@ -75,7 +87,9 @@ const CustomToggleComponent = ({
           />
         </TouchableOpacity>
         <CommonText customTextStyle={styles.textStyle}>
-          {intl.formatMessage({ id: "label.no" })}
+          {intl.formatMessage({
+            id: `${toggleTitle2 ? toggleTitle2 : "label.no"}`,
+          })}
         </CommonText>
       </View>
     </View>

@@ -29,7 +29,7 @@ const CounterInput = ({
     if (onCountChange) {
       onCountChange(count);
     }
-  }, [count, onCountChange]);
+  }, [count]); //removed onCountChange as it was causing rerendering
 
   const incrementCount = () => {
     setCount((prev) => Math.min(prev + step, maxCount));

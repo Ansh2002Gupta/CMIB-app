@@ -35,7 +35,6 @@ const DropDownModal = ({
   const intl = useIntl();
   const flatListRef = useRef();
   const [modalStyle, setModalStyle] = useState({});
-
   const defaultOptions = options?.map((option) => ({
     value: String(option[valueField]),
     label: String(option[labelField]),
@@ -46,6 +45,11 @@ const DropDownModal = ({
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
   const [selectedOption, setSelectedOption] = useState(data);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  useEffect(() => {
+    if (data && options) {
+      setSelectedOption(data);
+    }
+  }, [options]);
 
   useEffect(() => {
     const selectedIndex = data?.findIndex((item) => item.value === value);

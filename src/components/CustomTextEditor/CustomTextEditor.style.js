@@ -1,18 +1,32 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
+  quillContainer: {
+    borderRadius: 12,
+    overflow: "hidden",
+    borderWidth: 0.6,
+    backgroundColor: colors.white,
+    borderColor: colors.lightGray,
+  },
+  quillStyling: {
+    height: "508px",
+    backgroundColor: colors.white,
+    borderRadius: 15,
+  },
   toolbarStyle: {
     backgroundColor: colors.lightGray,
   },
   labelContainer: {
     flexDirection: "row",
+    marginBottom: 8,
   },
   label: {
     color: colors.darkGrey,
   },
   starStyle: {
     color: colors.errorRed,
+    marginLeft: 8,
   },
   mainView: {
     borderWidth: 1,

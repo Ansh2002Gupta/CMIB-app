@@ -9,6 +9,9 @@ target 'BoilerPlate' do
 
   # Flags change depending on the env values.
   flags = get_default_flags()
+  pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
+
+
 
   use_react_native!(
     :path => config[:reactNativePath],

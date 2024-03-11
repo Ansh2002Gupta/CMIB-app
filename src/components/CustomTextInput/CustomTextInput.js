@@ -24,6 +24,7 @@ import { getImageSource } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
 import style from "./CustomTextInput.style";
+import DatePickerModal from "../DatePickerModel";
 
 const CustomTextInput = (props) => {
   const {
@@ -46,6 +47,7 @@ const CustomTextInput = (props) => {
     inputKey,
     isCounterInput,
     isDropdown,
+    isCalendar,
     isError,
     isMandatory,
     isMobileNumber,
@@ -182,9 +184,13 @@ const CustomTextInput = (props) => {
             placeholder,
             value,
             valueField,
+            urlField,
           }}
         />
       );
+    }
+    if (isCalendar) {
+      return <DatePickerModal value={value} onChangeValue={onChangeValue} />;
     }
     if (isCounterInput) {
       return (
@@ -398,6 +404,15 @@ CustomTextInput.defaultProps = {
   valueField: "value",
   urlField: "url",
 };
+// Custom validator for Date objects
+const datePropType = (props, propName, componentName) => {
+  if (props[propName] && !(props[propName] instanceof Date)) {
+    return new Error(
+      `Invalid prop \`${propName}\` supplied to` +
+        ` \`${componentName}\`. Validation failed. It needs to be a Date object.`
+    );
+  }
+};
 
 CustomTextInput.propTypes = {
   countValue: PropTypes.number,
@@ -438,7 +453,11 @@ CustomTextInput.propTypes = {
   onIconClose: PropTypes.func,
   placeholder: PropTypes.string,
   step: PropTypes.number,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    datePropType,
+  ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
 };

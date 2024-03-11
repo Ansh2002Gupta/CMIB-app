@@ -11,7 +11,12 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import styles from "./CustomTextEditor.style";
 
-const CustomTextEditor = ({ customLabelStyle, isMandatory, label }) => {
+const CustomTextEditor = ({
+  customLabelStyle,
+  isMandatory,
+  label,
+  onChangeText,
+}) => {
   const richText = useRef(null);
   const intl = useIntl();
 
@@ -56,7 +61,9 @@ const CustomTextEditor = ({ customLabelStyle, isMandatory, label }) => {
           <ScrollView>
             <RichEditor
               ref={richText}
-              onChange={() => {}}
+              onChange={(val) => {
+                onChangeText(val);
+              }}
               placeholder={intl.formatMessage({ id: "label.description" })}
             />
           </ScrollView>
