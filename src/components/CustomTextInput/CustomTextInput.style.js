@@ -94,6 +94,11 @@ const style = {
     textAlign: "auto",
   },
   errorMsg: {
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+      },
+    }),
     color: colors.errorRed,
     lineHeight: 18,
   },
@@ -210,6 +215,17 @@ const style = {
   },
   disabledStyle: {
     backgroundColor: colors.disabledTextFieldColor,
+  },
+  limitStyle: {
+    color: colors.darkGrey,
+    paddingTop: 2,
+  },
+  errorAndCountLimitBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  onlyCountLimitBox: {
+    justifyContent: "flex-end",
   },
 };
 

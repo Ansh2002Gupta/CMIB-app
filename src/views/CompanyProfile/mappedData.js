@@ -2,6 +2,7 @@ import { Platform } from "@unthinkable/react-core-components";
 import {
   ADDRESS_MAX_LENGTH,
   CODE_MAX_LENGTH,
+  COMPANY_DETAIL_MAX_LENGTH,
   COMPANY_TYPE_OPTIONS,
   DEFAULT_INPUT_MAX_LENGTH,
   ENTITY_OPTIONS,
@@ -141,7 +142,7 @@ export const mapApiDataToUI = ({
           placeholder: "label.enter_contact_person_name",
         },
         {
-          key: "name",
+          key: "status",
           label: "label.status",
           value: !!contact?.status ? "Active" : "Inactive",
           isMandatory: true,
@@ -282,7 +283,7 @@ export const mapApiDataToUI = ({
         label: "label.short_profile_of_the_company",
         value: checkValue(company_details),
         isMultiline: true,
-        maxLength: ADDRESS_MAX_LENGTH,
+        maxLength: COMPANY_DETAIL_MAX_LENGTH,
         placeholder: "label.enter_profile_of_company",
       },
     ],
