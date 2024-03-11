@@ -220,11 +220,11 @@ const style = {
     color: colors.darkGrey,
     paddingTop: 2,
   },
-  errorContainer: {
+  errorAndCountLimitBox: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  countStyle: {
+  onlyCountLimitBox: {
     justifyContent: "flex-end",
   },
 };

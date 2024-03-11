@@ -388,8 +388,8 @@ const CustomTextInput = (props) => {
       {(isError || isMultiline) && (
         <View
           style={{
-            ...style.errorContainer,
-            ...(!isError && isMultiline ? style.countStyle : {}),
+            ...style.errorAndCountLimitBox,
+            ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
           }}
         >
           {isError && (
