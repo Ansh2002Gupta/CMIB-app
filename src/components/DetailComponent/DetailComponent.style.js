@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   iconStyle: {
-    alignItems: "start",
+    alignItems: "flex-start",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -91,6 +91,9 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 14,
     marginBottom: 24,
+  },
+  removeTextStyle: {
+    marginLeft: 4,
   },
 });
 
