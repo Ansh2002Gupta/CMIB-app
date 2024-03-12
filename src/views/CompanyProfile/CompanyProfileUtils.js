@@ -4,7 +4,6 @@ import {
   CODE_MIN_LENGTH,
   COMPANY_DETAIL_MAX_LENGTH,
   DEFAULT_INPUT_MAX_LENGTH,
-  FIELD_MIN_LENGTH,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
   MOBILE_NUMBER_MAX_LENGTH,
   MOBILE_NUMBER_MIN_LENGTH,
@@ -21,7 +20,7 @@ export const allFieldsFilled = (profileData) => {
   );
   const contactPersonInfoFilled = profileData?.contactPersonInfo?.every(
     (contact) => {
-      if (contact?.isContactActive) {
+      if (contact?.isContactActive || contact?.isNewContactPerson) {
         const modulesFilled = contact?.contactModules?.every(
           (module) => module?.defaultValues?.length > 0
         );
@@ -73,7 +72,10 @@ const validateContactPersonDetails = ({
       (info) => info.label === "label.contact_person_name"
     )?.value;
     if (!field || (field === "name" && index === idx)) {
-      if (contactName.length > DEFAULT_INPUT_MAX_LENGTH) {
+      if (
+        !contactName.length ||
+        contactName.length > DEFAULT_INPUT_MAX_LENGTH
+      ) {
         contactErrors.name = intl.formatMessage({
           id: "label.contact_person_validation",
         });
@@ -84,7 +86,10 @@ const validateContactPersonDetails = ({
       (info) => info.label === "label.contact_personal_designation"
     )?.value;
     if (!field || (field === "designation" && index === idx)) {
-      if (contactDesignation.length > ADDRESS_MAX_LENGTH) {
+      if (
+        !contactDesignation.length ||
+        contactDesignation.length > ADDRESS_MAX_LENGTH
+      ) {
         contactErrors.designation = intl.formatMessage({
           id: "label.designation_validation",
         });
@@ -131,7 +136,10 @@ const validateContactPersonDetails = ({
     }
 
     if (Object.keys(contactErrors).length > 0) {
-      newErrors.contactDetails[index] = contactErrors;
+      newErrors.contactDetails[index] = {
+        ...newErrors.contactDetails[index],
+        ...contactErrors,
+      };
     }
   });
   return isValid;
@@ -146,19 +154,28 @@ export const validateFields = ({
 }) => {
   //TODO: Need to be optimize
   let isValid = true;
-  let newErrors = {
-    companyName: "",
-    registrationNo: "",
-    noOfPartners: "",
-    address: "",
-    emailId: "",
-    telephoneNo: "",
-    code: "",
-    companyDetail: "",
-    website: "",
-    balanceCredit: "",
-    contactDetails: [],
-  };
+  let newErrors = {};
+
+  profileData?.companyDetail?.forEach((detail) => {
+    newErrors[detail?.key] = detail.error || "";
+  });
+
+  profileData?.companyProfile?.forEach((detail) => {
+    newErrors[detail?.key] = detail.error || "";
+  });
+
+  profileData?.otherDetails?.forEach((detail) => {
+    newErrors[detail?.key] = detail.error || "";
+  });
+
+  newErrors.contactDetails = [];
+  profileData.contactPersonInfo.forEach((contact, idx) => {
+    newErrors.contactDetails[idx] = {};
+    contact.contactInfo.forEach((info) => {
+      newErrors.contactDetails[idx][info.key] = info.error || "";
+    });
+  });
+
   const findValueByLabel = (label) => {
     const combinedDetails = [
       ...profileData.companyDetail,
@@ -228,8 +245,8 @@ export const validateFields = ({
         newErrors.registrationNo = intl.formatMessage({
           id: "label.registration_no_validation",
         });
+        isValid = false;
       }
-      isValid = false;
     }
     if (!field || field === "noOfPartners") {
       if (!numRegex.test(String(noOfPartners))) {
