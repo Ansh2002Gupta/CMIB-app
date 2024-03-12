@@ -78,8 +78,11 @@ const DetailComponent = ({
         resizeMode="contain"
         source={images.iconTrash}
         parentStyle={styles.iconStyle}
+        isSvg={false}
       />
-      <CommonText>{intl.formatMessage({ id: "label.remove" })}</CommonText>
+      <CommonText customTextStyle={styles.removeTextStyle}>
+        {intl.formatMessage({ id: "label.remove" })}
+      </CommonText>
     </CustomTouchableOpacity>
   );
 
@@ -119,7 +122,7 @@ const DetailComponent = ({
           ...(detail.isCapitalize && styles.capitalizeValue),
         }}
       >
-        {detail.value}
+        {detail?.defaultValue || detail?.value}
       </CommonText>
     );
   };
