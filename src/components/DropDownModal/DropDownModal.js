@@ -121,7 +121,9 @@ const DropDownModal = ({
 
   const handleSearch = (formattedQuery) => {
     const filteredData = data?.filter((item) => {
-      return item.label.toLowerCase().includes(formattedQuery.toLowerCase());
+      return item?.label
+        ?.toLowerCase()
+        ?.includes(formattedQuery?.toLowerCase());
     });
     return filteredData;
   };
