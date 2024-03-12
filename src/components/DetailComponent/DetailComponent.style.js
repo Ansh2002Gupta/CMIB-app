@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
   },
   removeTextStyle: {
     marginLeft: 4,
+    fontSize: 16,
   },
 });
 
