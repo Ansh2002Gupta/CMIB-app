@@ -121,7 +121,7 @@ const locale = {
   "label.women_placements": "Women Placements",
   "label.email_from_cmib": "Email from CMIB",
   "label.campus": "Campus",
-  "label.programme_brouchers": "Programme brochures from ICAI",
+  "label.programme_brouchers": "Programme brochure from ICAI",
   "label.based_on_prev_participation": "Based on previous participation",
   "label.telephonic_call_from_icai": "Telephonic Call from ICAI Officials",
   "label.advertisement_in_ca_journal":
@@ -158,7 +158,8 @@ const locale = {
   "label.telephone_no_validation":
     "The phone number must be a combination of numbers between 7 and 15 digits.",
   "label.email_id_validation": "Please enter a valid email address",
-  "label.registration_no_validation": "The firm registration number is required.",
+  "label.registration_no_validation":
+    "The firm registration number is required.",
   "label.address_validation": "The address must be within 500 characters.",
   "label.no_of_partners_validation":
     "The number of partners must be a combination of numbers.",
