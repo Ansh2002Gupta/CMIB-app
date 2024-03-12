@@ -8,16 +8,5 @@ const styles = StyleSheet.create({
     padding: 24,
     flex: 1,
   },
-  get extendedViewStyle() {
-    return (isExpanded) => ({
-      height: isExpanded ? undefined : 70,
-      paddingLeft: 20,
-      paddingRight: 20,
-    });
-  },
-  mainViewStyle: {
-    paddingLeft: 4,
-    paddingRight: 4,
-  },
 });
 export default styles;

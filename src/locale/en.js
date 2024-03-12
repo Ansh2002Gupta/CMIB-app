@@ -406,6 +406,13 @@ const locale = {
   "label.desired_qualification_placeholder": "Enter Desired Qualification",
   "label.add_new_jobs": "Add New Jobs",
   "label.posted_jobs": "Posted Jobs",
+  "label.questionnaire": "Questionnaire (optional)",
+  "label.questionaire_subHeading":
+    "Identify the best candidates by creating a customized questionnaire.",
+  "label.add_question": "+ Add Question",
+  "label.do_not_send_email":
+    "Do not send me notifying E-mails of applicants applying for this job.",
+  "label.post": "Post",
 };
 
 export default locale;
