@@ -700,6 +700,7 @@ const CompanyProfileComponent = () => {
           isMandatory: true,
         },
         {
+          id: 0,
           key: "name",
           label: "label.contact_person_name",
           value: "",
