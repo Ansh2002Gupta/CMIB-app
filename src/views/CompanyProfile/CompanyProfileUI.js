@@ -257,7 +257,9 @@ const CompanyProfileUI = (props) => {
             buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
             displayLoader={isUpdatingCompanyProfile}
             isButtonTwoGreen
-            isDisabled={!allFieldsFilled(profileResult)}
+            isDisabled={
+              !allFieldsFilled(profileResult) || isUploadingImageToServer
+            }
             onPressButtonOne={onGoBack}
             onPressButtonTwo={onSaveClick}
             customStyles={{
