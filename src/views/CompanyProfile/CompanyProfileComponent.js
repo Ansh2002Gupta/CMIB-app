@@ -365,6 +365,7 @@ const CompanyProfileComponent = () => {
     if (isEditProfile) {
       handleEdit(false);
       fileUploadResult && setFileUploadResult("");
+      onGetProfile();
       navigate(navigations.COMPANY_PROFILE);
     } else {
       navigate(navigations.PROFILE);
