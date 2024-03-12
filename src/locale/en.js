@@ -385,6 +385,8 @@ const locale = {
   "label.particular_person_get_particlular_module":
     "* Note - A particular module can be assigned to a single contact person only.",
   "label.error": "Error",
+  "label.login_with_new_email":
+    "Please login using your updated email and password that you have received on your updated email.",
 };
 
 export default locale;

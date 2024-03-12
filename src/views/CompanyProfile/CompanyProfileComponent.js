@@ -107,7 +107,7 @@ const CompanyProfileComponent = () => {
       setModuleOptions(updatedModuleOptions);
       setOptions(updatedInfoOptions);
     }
-  }, [profileResult, isEditProfile]);
+  }, [profileResult, industryOptions, countryCodes, isEditProfile]);
 
   const handleImageDeletion = () => {
     if (profileData?.companyLogo) {
@@ -150,6 +150,10 @@ const CompanyProfileComponent = () => {
           case "telephoneNo":
             acc.telephone_number = detail.value;
             break;
+          case "registrationNo":
+            acc.frn_number = detail.value;
+          case "noOfPartners":
+            acc.number_of_partners = detail.value;
           default:
             break;
         }
