@@ -16,6 +16,7 @@ import {
   FIRM_OF_CHARTERED_ACCOUNTANTS,
   INTEREST_OPTIONS,
   MODULE_OPTIONS,
+  NUMBER_OF_PARTNERS_LENGTH,
   SALUTATION_OPTIONS,
 } from "../../constants/constants";
 import {
@@ -395,8 +396,6 @@ const CompanyProfileComponent = () => {
             key: "registrationNo",
             label: "label.firm_registration_no",
             value: "",
-            isNumeric: true,
-            maxLength: 10,
             isMajor: true,
             placeholder: "label.enter_firm_no",
             isMandatory: true,
@@ -411,6 +410,7 @@ const CompanyProfileComponent = () => {
             isNumeric: true,
             placeholder: "label.no_placeholder",
             isMandatory: true,
+            maxLength: NUMBER_OF_PARTNERS_LENGTH,
           });
         }
       } else {

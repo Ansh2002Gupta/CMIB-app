@@ -212,7 +212,6 @@ export const mapApiDataToUI = ({
               key: "registrationNo",
               label: "label.firm_registration_no",
               value: checkValue(frn_number),
-              isNumeric: true,
               isMajor: true,
               placeholder: "label.enter_firm_no",
               isMandatory: true,
