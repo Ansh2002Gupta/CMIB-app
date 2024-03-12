@@ -125,6 +125,7 @@ export const mapApiDataToUI = ({
       const isActive = !!contact?.status;
       const contactInfo = [
         {
+          key: "salutation",
           label: "label.salutation",
           value: checkValue(contact?.salutation),
           isDropdown: true,
@@ -301,6 +302,7 @@ export const mapApiDataToUI = ({
         isMandatory: true,
       },
       {
+        key: "natureOfSupplier",
         label: "label.nature_of_supplier",
         value: checkValue(nature_of_suppliers),
         isDropdown: true,
@@ -309,6 +311,7 @@ export const mapApiDataToUI = ({
         placeholder: "label.select_nature_of_supplier",
       },
       {
+        key: "companyType",
         label: "label.company_type",
         value: checkValue(type),
         isDropdown: true,

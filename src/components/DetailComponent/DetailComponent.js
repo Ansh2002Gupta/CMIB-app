@@ -80,7 +80,7 @@ const DetailComponent = ({
         parentStyle={styles.iconStyle}
         isSvg={false}
       />
-      <CommonText customTextStyle={styles.removeTextStyle}>
+      <CommonText customTextStyle={styles.removeTextStyle} fontWeight="600">
         {intl.formatMessage({ id: "label.remove" })}
       </CommonText>
     </CustomTouchableOpacity>
