@@ -9,7 +9,6 @@ import { UserProfileContext } from "../../globalContext/userProfile/userProfileP
 import useGetCompanyProfileAPI from "../../services/apiServices/hooks/CompanyProfile/useGetCompanyProfileAPI";
 import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import useFetch from "../../hooks/useFetch";
-import useIndustryTypes from "../../services/apiServices/hooks/useIndustryTypes";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useUpdateCompanyProfile from "../../services/apiServices/hooks/CompanyProfile/useUpdateCompanyProfileAPI";
 import {
@@ -19,7 +18,10 @@ import {
   MODULE_OPTIONS,
   SALUTATION_OPTIONS,
 } from "../../constants/constants";
-import { COUNTRY_CODE } from "../../services/apiServices/apiEndPoint";
+import {
+  CORE_INDUSTRY_TYPE,
+  COUNTRY_CODE,
+} from "../../services/apiServices/apiEndPoint";
 import { mapApiDataToUI } from "./mappedData";
 import { navigations } from "../../constants/routeNames";
 import { validateFields } from "./CompanyProfileUtils";
@@ -55,7 +57,7 @@ const CompanyProfileComponent = () => {
   const { data: countryCodes } = useFetch({ url: COUNTRY_CODE });
   const { errorWhileGettingResult, onGetProfile, profileResult, isLoading } =
     useGetCompanyProfileAPI();
-  const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
+  const { data: industryOptions } = useFetch({ url: CORE_INDUSTRY_TYPE });
   const {
     errorWhileUpload,
     fileUploadResult,
@@ -75,7 +77,6 @@ const CompanyProfileComponent = () => {
   useEffect(() => {
     if (searchParams.get("mode") === EDIT) {
       setIsEditProfile(true);
-      !industryTypeResult && getIndustryTypes();
     }
     onGetProfile();
   }, []);
@@ -85,7 +86,7 @@ const CompanyProfileComponent = () => {
       setProfileData(
         mapApiDataToUI({
           apiData: profileResult,
-          industryOptions: industryTypeResult,
+          industryOptions: industryOptions,
           intl,
           countryCodes,
           isEditMode: isEditProfile,
@@ -106,7 +107,7 @@ const CompanyProfileComponent = () => {
       setModuleOptions(updatedModuleOptions);
       setOptions(updatedInfoOptions);
     }
-  }, [profileResult, industryTypeResult, isEditProfile]);
+  }, [profileResult, isEditProfile]);
 
   const handleImageDeletion = () => {
     if (profileData?.companyLogo) {
@@ -542,7 +543,6 @@ const CompanyProfileComponent = () => {
           return prev;
         });
       }
-      getIndustryTypes();
     }
     setIsEditProfile(value);
   };
