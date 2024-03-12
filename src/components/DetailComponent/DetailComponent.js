@@ -119,7 +119,7 @@ const DetailComponent = ({
           ...(detail.isCapitalize && styles.capitalizeValue),
         }}
       >
-        {detail.value}
+        {detail?.defaultValue || detail?.value}
       </CommonText>
     );
   };

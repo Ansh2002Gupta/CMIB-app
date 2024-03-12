@@ -106,7 +106,7 @@ const CompanyProfileComponent = () => {
       setModuleOptions(updatedModuleOptions);
       setOptions(updatedInfoOptions);
     }
-  }, [profileResult, isEditProfile]);
+  }, [profileResult, industryTypeResult, isEditProfile]);
 
   const handleImageDeletion = () => {
     if (profileData?.companyLogo) {
@@ -141,6 +141,8 @@ const CompanyProfileComponent = () => {
           case "emailId":
             acc.email = detail.value;
             break;
+          case "currentIndustry":
+            acc.industry_type_id = detail.value;
           case "code":
             acc.std_country_code = detail.value;
             break;

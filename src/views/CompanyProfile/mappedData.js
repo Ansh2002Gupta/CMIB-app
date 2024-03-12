@@ -195,6 +195,7 @@ export const mapApiDataToUI = ({
         isMandatory: true,
       },
       {
+        key: "entity",
         label: "label.entity",
         value: checkValue(entity),
         isDropdown: true,
@@ -228,12 +229,14 @@ export const mapApiDataToUI = ({
           ]
         : []),
       {
+        key: "currentIndustry",
         label: "label.current_industry",
-        value: checkValue(industry_type?.name),
+        value: checkValue(industry_type?.id),
+        defaultValue: checkValue(industry_type?.name),
         isDropdown: true,
         options: industryOptions,
         labelField: "name",
-        valueField: "name",
+        valueField: "id",
         inputKey: "name",
         placeholder: "label.select_current_indusrty_placeholder",
         isMandatory: true,

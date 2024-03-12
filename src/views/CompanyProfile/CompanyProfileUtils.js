@@ -73,10 +73,7 @@ const validateContactPersonDetails = ({
       (info) => info.label === "label.contact_person_name"
     )?.value;
     if (!field || (field === "name" && index === idx)) {
-      if (
-        contactName.length < FIELD_MIN_LENGTH ||
-        contactName.length > DEFAULT_INPUT_MAX_LENGTH
-      ) {
+      if (contactName.length > DEFAULT_INPUT_MAX_LENGTH) {
         contactErrors.name = intl.formatMessage({
           id: "label.contact_person_validation",
         });
@@ -87,10 +84,7 @@ const validateContactPersonDetails = ({
       (info) => info.label === "label.contact_personal_designation"
     )?.value;
     if (!field || (field === "designation" && index === idx)) {
-      if (
-        contactDesignation.length < FIELD_MIN_LENGTH ||
-        contactDesignation.length > ADDRESS_MAX_LENGTH
-      ) {
+      if (contactDesignation.length > ADDRESS_MAX_LENGTH) {
         contactErrors.designation = intl.formatMessage({
           id: "label.designation_validation",
         });
@@ -176,6 +170,7 @@ export const validateFields = ({
     return detail ? detail.value : "";
   };
   const companyName = findValueByLabel("label.company_name");
+  const registrationNo = findValueByLabel("label.firm_registration_no");
   const noOfPartners = findValueByLabel("label.no_of_partners");
   const address = findValueByLabel("label.address_for_correspondence");
   const emailId = findValueByLabel("label.email_id");
@@ -229,9 +224,11 @@ export const validateFields = ({
   }
   if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
     if (!field || field === "registrationNo") {
-      newErrors.registrationNo = intl.formatMessage({
-        id: "label.registration_no_validation",
-      });
+      if (!registrationNo) {
+        newErrors.registrationNo = intl.formatMessage({
+          id: "label.registration_no_validation",
+        });
+      }
       isValid = false;
     }
     if (!field || field === "noOfPartners") {
