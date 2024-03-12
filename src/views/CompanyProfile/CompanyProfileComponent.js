@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "../../routes";
+import { Platform } from "@unthinkable/react-core-components";
 
 import CompanyProfileUI from "./CompanyProfileUI";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
@@ -28,6 +29,7 @@ const CompanyProfileComponent = () => {
   const navigate = useNavigate();
   const [userProfileState] = useContext(UserProfileContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const isWebPlatform = Platform.OS.toLowerCase() === "web";
 
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
@@ -71,20 +73,14 @@ const CompanyProfileComponent = () => {
   } = useUpdateCompanyProfile();
 
   useEffect(() => {
-    onGetProfile();
-  }, []);
-
-  useEffect(() => {
-    if (isEditProfile) {
-      setSearchParams((prev) => {
-        prev.set("mode", EDIT);
-        return prev;
-      });
-    }
     if (searchParams.get("mode") === EDIT) {
       setIsEditProfile(true);
       !industryTypeResult && getIndustryTypes();
     }
+    onGetProfile();
+  }, []);
+
+  useEffect(() => {
     if (profileResult) {
       setProfileData(
         mapApiDataToUI({
@@ -110,7 +106,7 @@ const CompanyProfileComponent = () => {
       setModuleOptions(updatedModuleOptions);
       setOptions(updatedInfoOptions);
     }
-  }, [profileResult, industryTypeResult, isEditProfile]);
+  }, [profileResult, isEditProfile]);
 
   const handleImageDeletion = () => {
     if (profileData?.companyLogo) {
@@ -223,9 +219,12 @@ const CompanyProfileComponent = () => {
   };
 
   const onProfileUpdate = () => {
-    setIsEditProfile(false);
     fileUploadResult && setFileUploadResult("");
     onGetProfile();
+    setIsEditProfile(false);
+    setSearchParams((params) => {
+      params.delete("mode");
+    });
   };
 
   const handleBlur = (name, index) => {
@@ -333,7 +332,7 @@ const CompanyProfileComponent = () => {
                 (module) => module.name !== moduleId
               )
             : [
-                ...contact.contactModules?.[0].options,
+                ...contact?.contactModules?.[0]?.options,
                 {
                   name: moduleId,
                   value: label,
@@ -360,9 +359,13 @@ const CompanyProfileComponent = () => {
   };
 
   const onGoBack = () => {
-    handleEdit(false);
-    fileUploadResult && setFileUploadResult("");
-    navigate(navigations.COMPANY_PROFILE);
+    if (isEditProfile) {
+      handleEdit(false);
+      fileUploadResult && setFileUploadResult("");
+      navigate(navigations.COMPANY_PROFILE);
+    } else {
+      navigate(navigations.PROFILE);
+    }
   };
 
   const handleCompanyDetailChange = (fieldName, value) => {
@@ -530,6 +533,13 @@ const CompanyProfileComponent = () => {
 
   const handleEdit = (value) => {
     if (value) {
+      if (isWebPlatform) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setSearchParams((prev) => {
+          prev.set("mode", EDIT);
+          return prev;
+        });
+      }
       getIndustryTypes();
     }
     setIsEditProfile(value);
@@ -616,7 +626,30 @@ const CompanyProfileComponent = () => {
   };
 
   const handleRemoveContactPerson = (indexToRemove) => {
-    const updatedContactPersonInfo = profileData.contactPersonInfo.filter(
+    let updatedContactPersonInfo;
+
+    updatedContactPersonInfo = profileData?.contactPersonInfo?.map(
+      (contact) => {
+        const updatedContactModules = contact.contactModules.map((module) => ({
+          ...module,
+          options: module.options.map((option) => {
+            return option.selectedIndex === indexToRemove
+              ? {
+                  ...option,
+                  isSelected: false,
+                  selectedIndex: null,
+                }
+              : option;
+          }),
+        }));
+        return {
+          ...contact,
+          contactModules: updatedContactModules,
+        };
+      }
+    );
+
+    updatedContactPersonInfo = updatedContactPersonInfo.filter(
       (_, index) => index !== indexToRemove
     );
 
@@ -717,7 +750,7 @@ const CompanyProfileComponent = () => {
   return (
     <CompanyProfileUI
       {...{
-        currentUser: userProfileState?.userDetails?.email,
+        currentUser: userProfileState?.userDetails?.id,
         error: errorWhileGettingResult,
         errorWhileDeletion,
         errorWhileUpload,

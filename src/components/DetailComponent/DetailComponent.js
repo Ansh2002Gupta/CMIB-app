@@ -101,10 +101,10 @@ const DetailComponent = ({
           }}
         >
           <CommonText
-            customTextStyle={[
-              styles.valueStyle,
-              detail.isLink && styles.linkStyle,
-            ]}
+            customTextStyle={{
+              ...styles.valueStyle,
+              ...(detail.isLink && styles.linkStyle),
+            }}
           >
             {detail.value}
           </CommonText>
@@ -113,7 +113,12 @@ const DetailComponent = ({
     }
 
     return (
-      <CommonText customTextStyle={styles.valueStyle}>
+      <CommonText
+        customTextStyle={{
+          ...styles.valueStyle,
+          ...(detail.isCapitalize && styles.capitalizeValue),
+        }}
+      >
         {detail.value}
       </CommonText>
     );

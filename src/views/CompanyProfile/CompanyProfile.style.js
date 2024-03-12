@@ -51,7 +51,7 @@ const style = {
     marginBottom: 24,
     ...Platform.select({
       web: {
-        width: 374,
+        maxWidth: 374,
       },
     }),
   },

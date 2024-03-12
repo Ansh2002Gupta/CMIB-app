@@ -45,15 +45,16 @@ const styles = StyleSheet.create({
         wordBreak: "break-word",
       },
     }),
-    textTransform: "capitalize",
     fontSize: 14,
     color: colors.black,
     marginBottom: 24,
   },
+  capitalizeValue: {
+    textTransform: "capitalize",
+  },
   containerStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
-    overflow: "hidden",
     flexWrap: "wrap",
   },
   divideInputStyle: {

@@ -24,8 +24,9 @@ import Spinner from "../../components/Spinner";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
-import { allFieldsFilled } from "./CompanyProfileUtils";
 import images from "../../images";
+import { allFieldsFilled } from "./CompanyProfileUtils";
+import { DEFAULT_BALANCE_CREDIT } from "../../constants/constants";
 import { gridStyles } from "../../theme/styles/commonStyles";
 import style from "./CompanyProfile.style";
 
@@ -135,8 +136,8 @@ const CompanyProfileUI = (props) => {
             isShowSwitch={
               currentUser !==
                 contactDetailArray?.contactInfo?.find(
-                  (info) => info.key === "contactEmailId"
-                )?.value && !contactDetailArray.isNewContactPerson
+                  (info) => info.key === "name"
+                )?.id && !contactDetailArray.isNewContactPerson
             }
             isActive={contactDetailArray?.isContactActive}
             isEditProfile={isEditProfile}
@@ -402,12 +403,10 @@ const CompanyProfileUI = (props) => {
                 <CommonText
                   customTextStyle={style.valueStyle}
                   fontWeight="600"
-                >{`${profileResult?.balanceCredit || "-"}  ${
-                  profileResult?.balanceCredit
-                    ? intl.formatMessage({
-                        id: "label.rupee",
-                      })
-                    : ""
+                >{`${intl.formatMessage({
+                  id: "label.rupee",
+                })} ${
+                  profileResult?.balanceCredit || DEFAULT_BALANCE_CREDIT
                 }`}</CommonText>
               </View>
             </CardComponent>
