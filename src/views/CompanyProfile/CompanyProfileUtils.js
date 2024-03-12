@@ -4,7 +4,6 @@ import {
   CODE_MIN_LENGTH,
   COMPANY_DETAIL_MAX_LENGTH,
   DEFAULT_INPUT_MAX_LENGTH,
-  FIELD_MIN_LENGTH,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
   MOBILE_NUMBER_MAX_LENGTH,
   MOBILE_NUMBER_MIN_LENGTH,
@@ -246,8 +245,8 @@ export const validateFields = ({
         newErrors.registrationNo = intl.formatMessage({
           id: "label.registration_no_validation",
         });
+        isValid = false;
       }
-      isValid = false;
     }
     if (!field || field === "noOfPartners") {
       if (!numRegex.test(String(noOfPartners))) {

@@ -107,7 +107,7 @@ const CompanyProfileComponent = () => {
       setModuleOptions(updatedModuleOptions);
       setOptions(updatedInfoOptions);
     }
-  }, [profileResult, isEditProfile]);
+  }, [profileResult, industryOptions, countryCodes, isEditProfile]);
 
   const handleImageDeletion = () => {
     if (profileData?.companyLogo) {
