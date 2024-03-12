@@ -81,12 +81,6 @@ const CompanyProfileComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (isEditProfile) {
-      setSearchParams((prev) => {
-        prev.set("mode", EDIT);
-        return prev;
-      });
-    }
     if (profileResult) {
       setProfileData(
         mapApiDataToUI({
@@ -112,7 +106,7 @@ const CompanyProfileComponent = () => {
       setModuleOptions(updatedModuleOptions);
       setOptions(updatedInfoOptions);
     }
-  }, [profileResult, industryTypeResult, isEditProfile]);
+  }, [profileResult, isEditProfile]);
 
   const handleImageDeletion = () => {
     if (profileData?.companyLogo) {
@@ -338,7 +332,7 @@ const CompanyProfileComponent = () => {
                 (module) => module.name !== moduleId
               )
             : [
-                ...contact.contactModules?.[0].options,
+                ...contact?.contactModules?.[0]?.options,
                 {
                   name: moduleId,
                   value: label,
@@ -365,9 +359,13 @@ const CompanyProfileComponent = () => {
   };
 
   const onGoBack = () => {
-    handleEdit(false);
-    fileUploadResult && setFileUploadResult("");
-    navigate(navigations.COMPANY_PROFILE);
+    if (isEditProfile) {
+      handleEdit(false);
+      fileUploadResult && setFileUploadResult("");
+      navigate(navigations.COMPANY_PROFILE);
+    } else {
+      navigate(navigations.PROFILE);
+    }
   };
 
   const handleCompanyDetailChange = (fieldName, value) => {
@@ -537,6 +535,10 @@ const CompanyProfileComponent = () => {
     if (value) {
       if (isWebPlatform) {
         window.scrollTo({ top: 0, behavior: "smooth" });
+        setSearchParams((prev) => {
+          prev.set("mode", EDIT);
+          return prev;
+        });
       }
       getIndustryTypes();
     }

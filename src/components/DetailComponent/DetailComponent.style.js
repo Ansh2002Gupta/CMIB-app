@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
   containerStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
-    overflow: "hidden",
     flexWrap: "wrap",
   },
   divideInputStyle: {
