@@ -107,7 +107,7 @@ const CompanyProfileComponent = () => {
       setModuleOptions(updatedModuleOptions);
       setOptions(updatedInfoOptions);
     }
-  }, [profileResult, isEditProfile]);
+  }, [profileResult, industryOptions, countryCodes, isEditProfile]);
 
   const handleImageDeletion = () => {
     if (profileData?.companyLogo) {
@@ -210,7 +210,7 @@ const CompanyProfileComponent = () => {
         data: contact?.contactInfo,
         keyName: "mobileNo",
       })?.value,
-      status: contact?.isContactActive ? 1 : 0,
+      status: contact?.isContactActive || contact?.isNewContactPerson ? 1 : 0,
     }));
 
     const payload = {
