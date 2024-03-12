@@ -20,7 +20,7 @@ export const allFieldsFilled = (profileData) => {
   );
   const contactPersonInfoFilled = profileData?.contactPersonInfo?.every(
     (contact) => {
-      if (contact?.isContactActive || contact?.isNewContactPerson) {
+      if (contact?.isContactActive) {
         const modulesFilled = contact?.contactModules?.every(
           (module) => module?.defaultValues?.length > 0
         );
@@ -72,10 +72,7 @@ const validateContactPersonDetails = ({
       (info) => info.label === "label.contact_person_name"
     )?.value;
     if (!field || (field === "name" && index === idx)) {
-      if (
-        !contactName.length ||
-        contactName.length > DEFAULT_INPUT_MAX_LENGTH
-      ) {
+      if (contactName.length > DEFAULT_INPUT_MAX_LENGTH) {
         contactErrors.name = intl.formatMessage({
           id: "label.contact_person_validation",
         });
@@ -86,10 +83,7 @@ const validateContactPersonDetails = ({
       (info) => info.label === "label.contact_personal_designation"
     )?.value;
     if (!field || (field === "designation" && index === idx)) {
-      if (
-        !contactDesignation.length ||
-        contactDesignation.length > ADDRESS_MAX_LENGTH
-      ) {
+      if (contactDesignation.length > ADDRESS_MAX_LENGTH) {
         contactErrors.designation = intl.formatMessage({
           id: "label.designation_validation",
         });
@@ -136,10 +130,7 @@ const validateContactPersonDetails = ({
     }
 
     if (Object.keys(contactErrors).length > 0) {
-      newErrors.contactDetails[index] = {
-        ...newErrors.contactDetails[index],
-        ...contactErrors,
-      };
+      newErrors.contactDetails[index] = contactErrors;
     }
   });
   return isValid;
@@ -154,28 +145,19 @@ export const validateFields = ({
 }) => {
   //TODO: Need to be optimize
   let isValid = true;
-  let newErrors = {};
-
-  profileData?.companyDetail?.forEach((detail) => {
-    newErrors[detail?.key] = detail.error || "";
-  });
-
-  profileData?.companyProfile?.forEach((detail) => {
-    newErrors[detail?.key] = detail.error || "";
-  });
-
-  profileData?.otherDetails?.forEach((detail) => {
-    newErrors[detail?.key] = detail.error || "";
-  });
-
-  newErrors.contactDetails = [];
-  profileData.contactPersonInfo.forEach((contact, idx) => {
-    newErrors.contactDetails[idx] = {};
-    contact.contactInfo.forEach((info) => {
-      newErrors.contactDetails[idx][info.key] = info.error || "";
-    });
-  });
-
+  let newErrors = {
+    companyName: "",
+    registrationNo: "",
+    noOfPartners: "",
+    address: "",
+    emailId: "",
+    telephoneNo: "",
+    code: "",
+    companyDetail: "",
+    website: "",
+    balanceCredit: "",
+    contactDetails: [],
+  };
   const findValueByLabel = (label) => {
     const combinedDetails = [
       ...profileData.companyDetail,
