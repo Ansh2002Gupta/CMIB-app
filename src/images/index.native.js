@@ -123,6 +123,7 @@ import iconZoomOut from "../../public/images/svg/iconZoomOut.svg";
 import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
+import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 
 const images = {
   iconArrowUp,
@@ -250,6 +251,7 @@ const images = {
   iconAddBlue,
   iconEdit,
   iconLoading,
+  iconGreyCross,
 };
 
 export default images;
