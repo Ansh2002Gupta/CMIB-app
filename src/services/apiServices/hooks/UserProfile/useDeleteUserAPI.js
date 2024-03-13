@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_DELETE_USER } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
@@ -9,6 +9,8 @@ const useDeleteUserAPI = () => {
   const [deletionStatus, setDeletionStatus] = useState(API_STATUS.IDLE);
   const [userDeletionResult, setUserDeletionResult] = useState([]);
   const [errorWhileDeletion, setErrorWhileDeletion] = useState("");
+
+  const { Http } = useHttpService();
 
   const handleDeleteUser = async ({ successCallback }) => {
     try {

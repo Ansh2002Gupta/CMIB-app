@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { MEMBER_EXAM_DETAILS } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
@@ -9,6 +9,8 @@ const useExamDetailsAPI = () => {
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
   const [examDetails, setExamDetails] = useState({});
   const [apiError, setApiError] = useState("");
+
+  const { Http } = useHttpService();
 
   const handleExamDetails = async ({ successCallback, errorCallback }) => {
     try {

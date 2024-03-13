@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { MEMBER_PERSONAL_DETAILS } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
@@ -10,9 +10,11 @@ const usePersonalDetailsAPI = () => {
   const [personalDetails, setPersonalDetails] = useState({});
   const [apiError, setApiError] = useState("");
 
+  const { Http } = useHttpService();
+
   const handlePersonalDetails = async ({ successCallback, errorCallback }) => {
     try {
-        setApiStatus(API_STATUS.LOADING);
+      setApiStatus(API_STATUS.LOADING);
       apiError && setApiError("");
       const res = await Http.get(MEMBER_PERSONAL_DETAILS);
       if (
@@ -28,8 +30,8 @@ const usePersonalDetailsAPI = () => {
       setApiStatus(API_STATUS.ERROR);
       setApiError(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
     } catch (err) {
-        setApiStatus(API_STATUS.ERROR);
-        setApiError(
+      setApiStatus(API_STATUS.ERROR);
+      setApiError(
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
       );
       errorCallback && errorCallback();

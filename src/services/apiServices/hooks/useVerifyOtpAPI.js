@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../http-service";
+import useHttpService from "../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
@@ -8,6 +8,8 @@ const useVerifyOtpAPI = () => {
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
   const [verifyOtpResult, setVerifyOtpResult] = useState([]);
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
+
+  const { Http } = useHttpService();
 
   const handleVerifyOtpAPI = async ({
     endPoint,
