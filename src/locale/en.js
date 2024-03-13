@@ -413,6 +413,14 @@ const locale = {
   "label.do_not_send_email":
     "Do not send me notifying E-mails of applicants applying for this job.",
   "label.post": "Post",
+  "label.text_question": "Text Question",
+  "label.single_select": "Single-select",
+  "label.multiple_select": "Multi-select",
+  "label.enter_question": "Enter Question",
+  "label.enter_text": "Enter Text",
+  "label.enter_option": "Enter Option",
+  "label.add_options": "+ Add options",
+  "label.mandatory": "Mandatory",
 };
 
 export default locale;

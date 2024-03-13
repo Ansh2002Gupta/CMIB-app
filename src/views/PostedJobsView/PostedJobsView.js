@@ -7,6 +7,7 @@ import LoadingScreen from "../../components/LoadingScreen";
 const PostedJobView = () => {
   const { isLoading, isError, isSuccess, countryData, functionalData } =
     useGetPostedJobsData();
+  const [questionnairelist, setIsQuestionaireList] = useState([]);
   const [jobData, setJobData] = useState({
     jobSummary: "",
     jobDetails: "",
@@ -60,6 +61,8 @@ const PostedJobView = () => {
           countryData={countryData}
           functionalData={functionalData}
           handleJobDetailsChange={handleJobDetailsChange}
+          setIsQuestionaireList={setIsQuestionaireList}
+          questionnairelist={questionnairelist}
         />
       )}
     </>

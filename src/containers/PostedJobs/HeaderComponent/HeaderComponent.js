@@ -15,6 +15,7 @@ const HeaderComponent = ({
   subText,
   isWebView,
   progressText,
+  onPress,
 }) => {
   const ArrowUp = images.iconArrowUp;
   const ArrowDown = images.iconArrowDown;
@@ -33,18 +34,19 @@ const HeaderComponent = ({
               <CustomButton
                 style={styles.webAddButtonStyle}
                 withGreenBackground
+                onPress={onPress}
               >
                 {intl.formatMessage({ id: "label.add_question" })}
               </CustomButton>
             </View>
           )}
-          {!isExpanded && progressText && (
+          {!isExpanded && progressText && progressText > 0 ? (
             <View style={styles.progressViewStyle}>
               <CommonText customTextStyle={styles.progressTextStyle}>
                 {progressText}
               </CommonText>
             </View>
-          )}
+          ) : null}
 
           <TouchableImage
             source={isExpanded ? ArrowUp : ArrowDown}

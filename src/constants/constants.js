@@ -479,6 +479,20 @@ export const listOptions = [
   { indent: "+1" },
   { align: [] },
 ];
+export const questionaireType = [
+  {
+    value: "label.text_question",
+    label: "label.text_question",
+  },
+  {
+    value: "label.single_select",
+    label: "label.single_select",
+  },
+  {
+    value: "label.multiple_select",
+    label: "label.multiple_select",
+  },
+];
 // export const JOB_TYPE=[
 //   {
 

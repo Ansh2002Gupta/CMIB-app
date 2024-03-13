@@ -1,0 +1,40 @@
+import React from "react";
+import styles from "../../RenderQuestion.styles";
+import { View } from "@unthinkable/react-core-components";
+import CommonText from "../../../../../components/CommonText";
+import CustomTextInput from "../../../../../components/CustomTextInput";
+import { useIntl } from "react-intl";
+const QuestionHeader = (props) => {
+  const { item, handleChange, index, questionaireTypeFormatted } = props;
+  const intl = useIntl();
+  return (
+    <View style={styles.innerContainerStyle}>
+      <View style={styles.questionNumberViewStyle}>
+        <CommonText customTextStyle={styles.questionNumberTextStyle}>{`Q${
+          index + 1
+        }`}</CommonText>
+      </View>
+      <CustomTextInput
+        isPaddingNotRequired={true}
+        value={item.question}
+        placeholder={intl.formatMessage({ id: "label.enter_question" })}
+        onChangeText={(value) => {
+          handleChange(false, "question", value, item.id);
+        }}
+        customStyle={styles.questionInputStyle}
+      />
+      <CustomTextInput
+        isPaddingNotRequired={true}
+        isDropdown
+        value={item.typeofQuestion}
+        placeholder={intl.formatMessage({ id: "label.enter_text" })}
+        onChangeValue={(value) => {
+          handleChange(false, "typeofQuestion", value, item.id);
+        }}
+        options={questionaireTypeFormatted}
+        customStyle={styles.questionTypeStyle}
+      />
+    </View>
+  );
+};
+export default QuestionHeader;

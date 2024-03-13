@@ -85,6 +85,7 @@ const iconLeftArrow = appendAppBaseURl(
 const iconSquareEdit = appendAppBaseURl(
   "/images/iconSquareEdit/iconSquareEdit.png"
 );
+
 const iconProfile = appendAppBaseURl("/images/iconProfile/iconProfile.png");
 const iconWarning = appendAppBaseURl("/images/svg/iconWarning.svg");
 const iconTick = appendAppBaseURl("/images/iconTick/iconTick.png");
@@ -194,6 +195,10 @@ const iconArrowUpSorting = appendAppBaseURl(
   "/images/svg/iconArrowUpSorting.svg"
 );
 const iconPartial = appendAppBaseURl("/images/svg/iconPartial.svg");
+const iconDeleteRed = appendAppBaseURl("/images/svg/iconDeleteRed.svg");
+const questionIcon = appendAppBaseURl("/images/question/question.png");
+const copyIcon = appendAppBaseURl("/images/copyIcon/copy.png");
+const redCrossIcon = appendAppBaseURl("/images/redCross/redClose.png");
 
 const images = {
   iconArrowUp,
@@ -330,6 +335,10 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
+  iconDeleteRed,
+  questionIcon,
+  copyIcon,
+  redCrossIcon,
 };
 
 export default images;

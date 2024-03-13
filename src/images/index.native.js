@@ -117,6 +117,10 @@ import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
 import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
+import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
+import questionIcon from "../../public/images/question/question.png";
+import copyIcon from "../../public/images/copyIcon/copy.png";
+import redCrossIcon from "../../public/images/redCross/redClose.png";
 
 const images = {
   iconArrowUp,
@@ -238,6 +242,10 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
+  iconDeleteRed,
+  questionIcon,
+  copyIcon,
+  redCrossIcon,
 };
 
 export default images;

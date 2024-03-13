@@ -5,6 +5,7 @@ import styles from "./PostedJobsView.style";
 import { useIntl } from "react-intl";
 import AddJobComponent from "../../containers/PostedJobs/AddJobComponent";
 import FooterComponent from "../../containers/PostedJobs/FooterComponent";
+import AddQuestionaireComponent from "../../containers/PostedJobs/AddQuestionaireComponent/AddQuestionaireComponent";
 
 const PostedJobsViewUI = ({
   isWebView,
@@ -12,8 +13,11 @@ const PostedJobsViewUI = ({
   handleJobDetailsChange,
   countryData,
   functionalData,
+  setIsQuestionaireList,
+  questionnairelist,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
+  const [isQuestionaire, setIsQuestionaire] = useState(true);
   const intl = useIntl();
   return (
     <View style={styles.container}>
@@ -34,6 +38,13 @@ const PostedJobsViewUI = ({
             isWebView={isWebView}
             countryData={countryData}
             functionalData={functionalData}
+          />
+          <AddQuestionaireComponent
+            isQuestionaire={isQuestionaire}
+            setIsQuestionaire={setIsQuestionaire}
+            isWebView={isWebView}
+            setIsQuestionaireList={setIsQuestionaireList}
+            questionnairelist={questionnairelist}
           />
           <FooterComponent isWebView={isWebView} />
         </View>
