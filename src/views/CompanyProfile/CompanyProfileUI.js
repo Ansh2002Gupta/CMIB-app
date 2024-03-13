@@ -435,7 +435,7 @@ const CompanyProfileUI = (props) => {
             : intl.formatMessage({ id: "label.company_profile" })
         }
         intl={intl}
-        iconLeft={isEditProfile ? images.iconCross : images.iconBack}
+        iconLeft={isEditProfile ? images.iconGreyCross : images.iconBack}
         onPressLeftIcon={onGoBack}
       />
       {renderContent()}
