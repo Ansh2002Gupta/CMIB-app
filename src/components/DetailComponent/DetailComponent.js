@@ -65,20 +65,21 @@ const DetailComponent = ({
       <TouchableImage
         onPress={() => onPressActionButton(index)}
         resizeMode="contain"
-        source={images.iconTrash}
+        source={images.iconDeleteRed}
         parentStyle={styles.iconStyle}
       />
     </View>
   );
 
   const renderMobActionButton = () => (
-    <CustomTouchableOpacity style={styles.buttonContainer}>
+    <CustomTouchableOpacity
+      style={styles.buttonContainer}
+      onPress={() => onPressActionButton(index)}
+    >
       <TouchableImage
-        onPress={() => onPressActionButton(index)}
         resizeMode="contain"
-        source={images.iconTrash}
+        source={images.iconDeleteRed}
         parentStyle={styles.iconStyle}
-        isSvg={false}
       />
       <CommonText customTextStyle={styles.removeTextStyle} fontWeight="600">
         {intl.formatMessage({ id: "label.remove" })}
