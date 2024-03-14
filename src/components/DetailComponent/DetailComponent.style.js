@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { Platform, StyleSheet } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
@@ -40,23 +40,62 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   valueStyle: {
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+      },
+    }),
     fontSize: 14,
     color: colors.black,
     marginBottom: 24,
   },
+  capitalizeValue: {
+    textTransform: "capitalize",
+  },
   containerStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
-    overflow: "hidden",
     flexWrap: "wrap",
   },
   divideInputStyle: {
     width: "48%",
   },
+  badgeContainer: {
+    marginBottom: 8,
+  },
   containerGridStyle: (columnCount) => ({
     display: "grid",
     gridTemplateColumns: columnCount || "1fr 1fr 1fr",
   }),
+  labelStyle: {
+    fontSize: 14,
+    marginLeft: 8,
+    marginBottom: 24,
+  },
+  switchContainer: {
+    flexDirection: "row",
+    gap: 8,
+    justifyContent: "flex-end",
+  },
+  iconStyle: {
+    alignItems: "flex-start",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: colors.lightGray,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 14,
+    paddingBottom: 14,
+    marginBottom: 24,
+  },
+  removeTextStyle: {
+    marginLeft: 4,
+    fontSize: 16,
+  },
 });
 
 export const getRowStyle = (detail) => {

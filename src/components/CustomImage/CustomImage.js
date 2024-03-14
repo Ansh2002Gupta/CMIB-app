@@ -6,6 +6,7 @@ import styles from "./customImage.style";
 
 const CustomImage = ({
   alt,
+  defaultSource,
   height,
   Icon,
   isSvg,
@@ -27,9 +28,17 @@ const CustomImage = ({
     return {};
   };
 
+  const isMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? {
+          defaultSource: { defaultSource },
+        }
+      : {};
+
   const renderImage = () => {
     return (
       <Image
+        {...isMobileProps}
         source={source}
         style={style}
         resizeMode={resizeMode}

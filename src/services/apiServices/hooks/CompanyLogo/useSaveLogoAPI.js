@@ -29,7 +29,14 @@ const useSaveLogo = () => {
           }
         },
       };
-      const res = await Http.post(COMPANY_LOGO, file, headers, otherOptions);
+      const res = await Http.post(
+        COMPANY_LOGO,
+        file,
+        headers,
+        otherOptions,
+        () => {},
+        true
+      );
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS

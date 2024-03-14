@@ -23,6 +23,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { getImageSource } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
+import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
 
 const CustomTextInput = (props) => {
@@ -46,19 +47,26 @@ const CustomTextInput = (props) => {
     inputKey,
     isCounterInput,
     isDropdown,
+    isEditable,
     isError,
     isMandatory,
+    handleMultiSelect,
     isMobileNumber,
     isMultiline,
+    isMultiSelect,
     isNumeric,
     isPaddingNotRequired,
     isPassword,
     isRupee,
     isSendButton,
     isLoading,
+    isSelected,
+    indexField,
+    indexNumber,
     initiateFileUpload,
     label,
     maxCount,
+    maxLength,
     minCount,
     options,
     onChangeValue,
@@ -67,6 +75,7 @@ const CustomTextInput = (props) => {
     onIconClose,
     placeholder,
     step,
+    selectedItems,
     setFile,
     value,
     labelField,
@@ -113,10 +122,15 @@ const CustomTextInput = (props) => {
       : { ...style.inputContainer, ...customTextInputOuterContainer }),
     ...(isFocused ? style.focusedStyle : {}),
     ...(isError ? style.invalidInput : {}),
+    ...(!isEditable ? style.disabledStyle : {}),
   };
 
   const webProps = isWebPlatform
     ? { size: "xs", thickness: 3, color: colors.white }
+    : {};
+
+  const textInputWebProps = isWebPlatform
+    ? { className: classes["input_placeholder"] }
     : {};
 
   const getSendButtonStatus = () => {
@@ -157,31 +171,46 @@ const CustomTextInput = (props) => {
             menuOptions={menuOptions}
             data={options}
             maxHeight={200}
+            handleMultiSelect={handleMultiSelect}
             labelField={labelField}
             valueField={valueField}
             placeholder={placeholder || ""}
             value={value}
+            isMultiSelect={isMultiSelect}
+            isSelected={isSelected}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            selectedItems={selectedItems}
             urlField={urlField}
+            indexNumber={indexNumber}
+            indexField={indexField}
             onChange={(item) => {
               isWebPlatform
                 ? onChangeValue(item)
                 : onChangeValue(item[inputKey]);
               setIsFocused(false);
             }}
+            isEditable={isEditable}
             {...remainingProps}
           />
         );
       return (
         <DropDownModal
           {...{
+            isMultiSelect,
+            isSelected,
+            indexNumber,
+            indexField,
             labelField,
             onChangeValue,
+            handleMultiSelect,
             options,
             placeholder,
+            selectedItems,
+            urlField,
             value,
             valueField,
+            isEditable,
           }}
         />
       );
@@ -213,17 +242,22 @@ const CustomTextInput = (props) => {
               value: codeValue,
               valueField,
               urlField,
+              isEditable,
             }}
           />
         )}
         {isRupee && !!value && (
           <View style={style.prefixContainer}>
-            <CommonText customTextStyle={style.prefixStyle}>{"₹"}</CommonText>
+            <CommonText customTextStyle={style.prefixStyle}>
+              {intl.formatMessage({ id: "label.rupee" })}
+            </CommonText>
           </View>
         )}
         {isMultiline ? (
           <TextArea
             {...{
+              isError,
+              maxLength,
               onBlur: handleBlur,
               onChangeText: remainingProps.onChangeText,
               onFocus: handleFocus,
@@ -243,8 +277,11 @@ const CustomTextInput = (props) => {
                   style.textInputStyle,
                   isMultiline && style.textAlignStyle,
                   isWebView && style.webLabel,
+                  !isEditable && style.disabledStyle,
                   customTextInputContainer,
                 ]}
+                editable={isEditable}
+                maxLength={maxLength}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 placeholder={placeholder}
@@ -253,6 +290,7 @@ const CustomTextInput = (props) => {
                 {...platformSpecificProps}
                 {...(isNumeric ? mobileProps : {})}
                 {...remainingProps}
+                {...textInputWebProps}
               />
               <TriggerFileUpload
                 onImageUpload={onClickAttachement}
@@ -312,6 +350,8 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
+            editable={isEditable}
+            maxLength={maxLength}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder}
@@ -320,6 +360,7 @@ const CustomTextInput = (props) => {
             {...platformSpecificProps}
             {...(isNumeric ? mobileProps : {})}
             {...remainingProps}
+            {...textInputWebProps}
           />
         )}
         {eyeImage && (
@@ -345,13 +386,27 @@ const CustomTextInput = (props) => {
     >
       {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {renderTextInput()}
-      {isError && (
-        <CommonText
-          customTextStyle={[style.errorMsg, customErrorStyle]}
-          fontWeight={customErrorStyle?.fontWeight || "600"}
+      {(isError || isMultiline) && (
+        <View
+          style={{
+            ...style.errorAndCountLimitBox,
+            ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
+          }}
         >
-          {errorMessage}
-        </CommonText>
+          {isError && (
+            <CommonText
+              customTextStyle={[style.errorMsg, customErrorStyle]}
+              fontWeight={customErrorStyle?.fontWeight || "600"}
+            >
+              {errorMessage}
+            </CommonText>
+          )}
+          {isMultiline && (
+            <CommonText
+              customTextStyle={style.limitStyle}
+            >{`${value.length}/${maxLength}`}</CommonText>
+          )}
+        </View>
       )}
     </View>
   );
@@ -374,10 +429,12 @@ CustomTextInput.defaultProps = {
   isCounterInput: false,
   isDropdown: false,
   isError: false,
+  isEditable: true,
   inputKey: "value",
   isMandatory: false,
   isMobileNumber: false,
   isMultiline: false,
+  isMultiSelect: false,
   isNumeric: false,
   isPaddingNotRequired: false,
   isPassword: false,
@@ -417,10 +474,12 @@ CustomTextInput.propTypes = {
   inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
+  isEditable: PropTypes.bool,
   isError: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isMultiline: PropTypes.bool,
+  isMultiSelect: PropTypes.bool,
   isNumeric: PropTypes.bool,
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
@@ -429,6 +488,7 @@ CustomTextInput.propTypes = {
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
+  maxLength: PropTypes.number,
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
@@ -438,7 +498,11 @@ CustomTextInput.propTypes = {
   onIconClose: PropTypes.func,
   placeholder: PropTypes.string,
   step: PropTypes.number,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+  ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
 };

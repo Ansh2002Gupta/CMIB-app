@@ -13,15 +13,17 @@ export const customTheme = (theme) => ({
   },
 });
 
-export const customStyles = (dropdownStyle, placeholderStyle) => ({
+export const customStyles = (dropdownStyle, placeholderStyle, isDisabled) => ({
   control: (base, state) => ({
     ...base,
-    ...(styles.control ? styles.control(state.isFocused) : {}),
+    ...(styles.control ? styles.control(state.isFocused, isDisabled) : {}),
+    marginTop: "4px",
     ...dropdownStyle,
   }),
   placeholder: (base) => ({
     ...base,
     ...placeholderStyle,
+    fontWeight: "500",
   }),
   singleValue: (base) => ({
     ...base,
@@ -43,10 +45,9 @@ export const customStyles = (dropdownStyle, placeholderStyle) => ({
 });
 
 export const styles = StyleSheet.create({
-  control: (isFocused) => ({
+  control: (isFocused, isDisabled) => ({
     borderWidth: isFocused ? 0 : 1,
     borderColor: colors.lightGrey,
-    marginTop: 4,
     borderRadius: 12,
     padding: 6,
     fontSize: 14,
@@ -54,10 +55,39 @@ export const styles = StyleSheet.create({
     transition: "none",
     "&:hover": {
       borderColor: colors.lightGrey,
-      cursor: "pointer",
+      cursor: isDisabled ? "not-allowed" : "pointer",
     },
+    ...(isDisabled
+      ? {
+          backgroundColor: colors.disabledTextFieldColor,
+          cursor: isDisabled ? "not-allowed" : "pointer",
+        }
+      : {}),
   }),
   valueStyle: {
     color: colors.black,
+    fontWeight: "500",
+  },
+  multiSelectOptions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  multiSelectOptionStyle: {
+    paddingLeft: 16,
+    paddingTop: 14,
+  },
+  multiSelectOptions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  checkBoxTextStyle: {
+    marginBottom: 10,
+  },
+  multiSelectOptionStyle: {
+    paddingLeft: 10,
+    paddingTop: 10,
+  },
+  multiSelectOptionStyleDisabled: {
+    opacity: 0.5,
   },
 });

@@ -19,7 +19,7 @@ import styles from "../FeedbackView.style";
 
 const useFeedbackView = () => {
   const { isWebView } = useIsWebView();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [rowsPerPage, setRowPerPage] = useState(

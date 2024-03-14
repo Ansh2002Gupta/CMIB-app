@@ -8,26 +8,55 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
 import styles from "./CheckBox.style";
 
-const CheckBox = ({ handleCheckbox, id, isPartial, isSelected, title }) => {
+const CheckBox = ({
+  customTextStyle,
+  handleCheckbox,
+  id,
+  isDisabled,
+  isPartial,
+  isSelected,
+  title,
+}) => {
   const CheckIcon = Images.iconCheckbox;
   const UncheckIcon = Images.iconUnCheckbox;
-  const PartilalIcon = Images.iconPartial;
+  const PartialIcon = Images.iconPartial;
+  const DisabledCheckBoxIcon = Images.iconDisabledCheck;
+
+  const getCheckBoxIcon = () => {
+    if (isDisabled) {
+      return DisabledCheckBoxIcon;
+    }
+    if (isPartial) {
+      return PartialIcon;
+    }
+    if (isSelected) {
+      return CheckIcon;
+    }
+    return UncheckIcon;
+  };
 
   const rowCheckBox = [
     {
       content: (
-        <CustomTouchableOpacity onPress={() => handleCheckbox(id)}>
+        <CustomTouchableOpacity
+          disabled={isDisabled}
+          onPress={() => handleCheckbox(id)}
+        >
           <CustomImage
-            Icon={
-              isPartial ? PartilalIcon : isSelected ? CheckIcon : UncheckIcon
-            }
+            Icon={getCheckBoxIcon()}
             style={styles.iconStyle}
-            source={
-              isPartial ? PartilalIcon : isSelected ? CheckIcon : UncheckIcon
-            }
+            source={getCheckBoxIcon()}
             isSvg
           />
-          <CommonText customTextStyle={styles.titleStyle}>{title}</CommonText>
+          <CommonText
+            customTextStyle={{
+              ...styles.titleStyle,
+              ...(isDisabled ? styles.disabledText : {}),
+              ...customTextStyle,
+            }}
+          >
+            {title}
+          </CommonText>
         </CustomTouchableOpacity>
       ),
     },
@@ -37,15 +66,19 @@ const CheckBox = ({ handleCheckbox, id, isPartial, isSelected, title }) => {
 };
 
 CheckBox.defaultProps = {
-  isSelected: false,
+  customTextStyle: {},
+  isDisabled: false,
   isPartial: false,
+  isSelected: false,
 };
 
 CheckBox.propTypes = {
+  customTextStyle: PropTypes.object,
   handleCheckbox: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  isSelected: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   isPartial: PropTypes.bool,
+  isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,
 };
 

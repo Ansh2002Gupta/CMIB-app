@@ -14,7 +14,6 @@ import CommonText from "../../components/CommonText";
 import UserAccountInfo from "../../components/UserAccountInfo";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { navigations } from "../../constants/routeNames";
-import { breadcrumbs } from "../../constants/constants";
 import styles from "./PrivateHeader.style";
 
 const PrivateHeader = ({
@@ -55,7 +54,7 @@ const PrivateHeader = ({
             </CommonText>
           </>
         )}
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
+        <Breadcrumbs />
       </View>
       <UserAccountInfo
         onPressRightIcon={onPressRightIcon}
