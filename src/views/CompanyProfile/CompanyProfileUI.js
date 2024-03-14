@@ -463,7 +463,7 @@ CompanyProfileUI.defaultProps = {
 };
 
 CompanyProfileUI.propTypes = {
-  currentUser: PropTypes.string,
+  currentUser: PropTypes.number,
   error: PropTypes.string,
   handleBlur: PropTypes.func,
   handleCompanyDetailChange: PropTypes.func,
