@@ -106,7 +106,7 @@ export const mapApiDataToUI = ({
         {
           label: "label.module",
           value: checkValue(contact?.modules),
-          customValue: contact?.modules.map((moduleId) =>
+          customValue: contact?.modules?.map((moduleId) =>
             formatModuleOptions(moduleId, intl)
           ),
           showBadgeLabel: true,
@@ -114,10 +114,10 @@ export const mapApiDataToUI = ({
           isMultiSelect: true,
           isDropdown: true,
           placeholder: "label.select_module",
-          defaultValues: contact?.modules.map((moduleId) =>
+          defaultValues: contact?.modules?.map((moduleId) =>
             createModuleValue(moduleId, intl)
           ),
-          options: company_module_access.map((moduleId) =>
+          options: company_module_access?.map((moduleId) =>
             createModuleOptions(moduleId, contact, intl, contactDetails)
           ),
         },
