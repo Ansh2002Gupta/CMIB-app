@@ -387,6 +387,7 @@ const locale = {
   "label.error": "Error",
   "label.login_with_new_email":
     "Please login using your updated email and password that you have received on your updated email.",
+  "label.session_has_expired": "Your session has been expired",
 };
 
 export default locale;
