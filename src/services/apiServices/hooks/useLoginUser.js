@@ -3,7 +3,7 @@ import { useSearchParams, useLocation, useNavigate } from "../../../routes";
 import { Platform } from "@unthinkable/react-core-components";
 
 import CookieAndStorageService from "../../cookie-and-storage-service";
-import useHttpService from "../../hooks/useHttpService";
+import Http from "../../http-service";
 import useNavigateScreen from "../../hooks/useNavigateScreen";
 import { AuthContext } from "../../../globalContext/auth/authProvider";
 import { RouteContext } from "../../../globalContext/route/routeProvider";
@@ -28,8 +28,6 @@ const useLoginUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
   const [loginUserResult, setLoginUserResult] = useState([]);
   const [errorWhileLoggingIn, setErrorWhileLoggingIn] = useState("");
-
-  const { Http } = useHttpService();
 
   const handleUserLogin = async (payload) => {
     try {
