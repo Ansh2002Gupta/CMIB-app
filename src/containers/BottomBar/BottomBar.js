@@ -56,7 +56,9 @@ function BottomBar() {
                 <TouchableOpacity
                   style={styles.sectionViewStyle}
                   onPress={() => {
-                    navigateTo(navigations.DASHBOARD);
+                    navigateTo(
+                      `/${selectedModule.key}/${navigations.MODULE_LANDING_PAGE}`
+                    );
                   }}
                 >
                   <Image source={homeIcon} style={styles.imageStyle} />
@@ -95,9 +97,16 @@ function BottomBar() {
     return {
       content: (
         <ImageAndTextTab
-          isActive={currentRoute === route}
+          isActive={
+            currentRoute === route ||
+            currentRoute?.split("/")?.slice?.(-1)?.[0] === route
+          }
           onPress={() => {
-            navigateTo(route);
+            if (route.includes("/")) {
+              navigateTo(route);
+            } else {
+              navigateTo(`/${selectedModule.key}/${route}`);
+            }
           }}
           containerStyle={containerStyle}
           imageActive={imageActive}
@@ -109,8 +118,6 @@ function BottomBar() {
       isFillSpace: true,
     };
   }
-
- 
 
   function preprocessMenu(menuItems) {
     const candidateKeys = new Set([
@@ -162,7 +169,7 @@ function BottomBar() {
     : [];
 
   const rowConfigs = [...dynamicConfigs, myAccountConfig];
-  
+
   return (
     <View>
       <View style={styles.borderStyle}></View>

@@ -9,16 +9,15 @@ import useSignUpUser from "../../../services/apiServices/hooks/SignUp/useSignUpU
 import useSaveLogo from "../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useValidateSignUp from "../../../services/apiServices/hooks/SignUp/useValidateSignUp";
 import { navigations } from "../../../constants/routeNames";
-import { scrollToRef } from "../../../utils/util";
+import { isValidUrl, scrollToRef } from "../../../utils/util";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import {
   setSignUpDetails,
   resetSignUpDetails,
 } from "../../../globalContext/signUp/signUpActions";
 import {
-  urlRegex,
   COMPANY_DETAIL_MAX_LENGTH,
-  FIELD_MIN_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   INTEREST_OPTIONS,
 } from "../../../constants/constants";
 
@@ -152,10 +151,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     };
 
     Object.keys(socialMediaLinks).forEach((key) => {
-      if (
-        socialMediaLinks[key] &&
-        !urlRegex.test(String(socialMediaLinks[key]))
-      ) {
+      if (socialMediaLinks[key] && !isValidUrl(String(socialMediaLinks[key]))) {
         newErrors.socialMediaLinks[key] = intl.formatMessage({
           id: "label.url_validation",
         });
@@ -169,7 +165,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
     if (!name || name === "companyDetails") {
       const enteredCompanyDetails = value || companyDetails;
       if (
-        enteredCompanyDetails.trim().length < FIELD_MIN_LENGTH ||
+        enteredCompanyDetails.trim().length < DEFAULT_INPUT_MAX_LENGTH ||
         enteredCompanyDetails.trim().length > COMPANY_DETAIL_MAX_LENGTH
       ) {
         newErrors.companyDetails = intl.formatMessage({
@@ -184,7 +180,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     if (!name || name === "website") {
       const enteredWebsite = value || website;
-      if (!urlRegex.test(String(enteredWebsite))) {
+      if (!isValidUrl(String(enteredWebsite))) {
         newErrors.website = intl.formatMessage({
           id: "label.url_validation",
         });
@@ -236,24 +232,40 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   const onSuccess = async (details) => {
     signUpDispatch(setSignUpDetails(details));
     const updatedDetails = { ...initialDetails, ...details };
-    handleSignUp(updatedDetails, () => setShowSuccessSignUp(true));
+    const contactDetails = updatedDetails?.contact_details;
+    const payloadContactDetails = {
+      contact_details: contactDetails?.map((item) => {
+        return {
+          ...item,
+          mobile_country_code: item?.mobile_country_code?.split(" ")?.[0],
+        };
+      }),
+    };
+    const payloadData = {
+      ...updatedDetails,
+      contact_details: payloadContactDetails?.contact_details,
+    };
+    handleSignUp(payloadData, () => setShowSuccessSignUp(true));
+  };
+
+  const constructDetailsObject = () => {
+    return {
+      social_media_link: socialMediaLinks,
+      website: website,
+      nature_of_suppliers: natureOfSupplier,
+      type: companyType,
+      company_details: companyDetails,
+      company_logo: fileUploadResult?.data?.file_name,
+      source_of_information: options
+        .filter((item) => item.isSelected)
+        .map((item) => item.title),
+    };
   };
 
   const handleSuccessModal = (value) => {
     if (value) {
       if (validateFields({ shouldSrollToError: true })) {
-        const details = {
-          social_media_link: socialMediaLinks,
-          website: website,
-          nature_of_suppliers: natureOfSupplier,
-          type: companyType,
-          company_details: companyDetails,
-          company_logo: fileUploadResult?.data?.file_name,
-          source_of_information: options
-            .filter((item) => item.isSelected)
-            .map((item) => item.title),
-        };
-
+        const details = constructDetailsObject();
         handleSignUpValidation(details, () => onSuccess(details));
       }
     } else {
@@ -275,6 +287,8 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
   };
 
   const onGoBack = () => {
+    const details = constructDetailsObject();
+    signUpDispatch(setSignUpDetails(details));
     tabHandler("prev");
   };
 
@@ -284,7 +298,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
 
     if (name in socialMediaLinks) {
       value = socialMediaLinks[name];
-      if (value && !urlRegex.test(String(value))) {
+      if (value && !isValidUrl(String(value))) {
         error = intl.formatMessage({
           id: "label.url_validation",
         });
@@ -295,7 +309,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           value = companyDetails;
           if (
             value &&
-            (value.length < FIELD_MIN_LENGTH ||
+            (value.length < DEFAULT_INPUT_MAX_LENGTH ||
               value.length > COMPANY_DETAIL_MAX_LENGTH)
           ) {
             error = intl.formatMessage({
@@ -305,7 +319,7 @@ const SignUpLastScreenComponent = ({ tabHandler }) => {
           break;
         case "website":
           value = website;
-          if (value && !urlRegex.test(String(value))) {
+          if (value && !isValidUrl(String(value))) {
             error = intl.formatMessage({
               id: "label.url_validation",
             });

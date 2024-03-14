@@ -12,14 +12,16 @@ import {
   ADDRESS_MAX_LENGTH,
   CODE_MAX_LENGTH,
   CODE_MIN_LENGTH,
-  FIELD_MAX_LENGTH,
-  FIELD_MIN_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
+  FIRM_OF_CHARTERED_ACCOUNTANTS,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
-  REGISTRATION_NO_LENGTH,
 } from "../../../constants/constants";
 import { scrollToRef } from "../../../utils/util";
-import { setSignUpDetails } from "../../../globalContext/signUp/signUpActions";
+import {
+  deleteSignUpDetailKey,
+  setSignUpDetails,
+} from "../../../globalContext/signUp/signUpActions";
 import { SignUpContext } from "../../../globalContext/signUp/signUpProvider";
 import { validateEmail } from "../../../utils/validation";
 
@@ -85,7 +87,14 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   }, []);
 
   const allFieldsFilled = () => {
-    const requiredFields = Object.values(formData);
+    const isFirm = formData.entity === FIRM_OF_CHARTERED_ACCOUNTANTS;
+
+    const requiredFields = Object.entries(formData)
+      .filter(
+        ([key, value]) =>
+          isFirm || (key !== "registrationNo" && key !== "noOfPartners")
+      )
+      .map(([, value]) => value);
     return requiredFields.every((field) => String(field).trim() !== "");
   };
 
@@ -115,31 +124,13 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       const enteredCompanyName = value || companyName;
       if (
         enteredCompanyName &&
-        (enteredCompanyName.trim().length < FIELD_MIN_LENGTH ||
-          enteredCompanyName.trim().length > FIELD_MAX_LENGTH)
+        enteredCompanyName.trim().length > DEFAULT_INPUT_MAX_LENGTH
       ) {
         newErrors.companyName = intl.formatMessage({
           id: "label.company_name_validation",
         });
         if (shouldSrollToError) {
           scrollToRef(companyNameRef);
-        }
-        isValid = false;
-      }
-    }
-
-    if (!field || field === "registrationNo") {
-      const enteredRegistrationNo = value || registrationNo;
-      if (
-        enteredRegistrationNo &&
-        (!numRegex.test(String(enteredRegistrationNo)) ||
-          enteredRegistrationNo.length !== REGISTRATION_NO_LENGTH)
-      ) {
-        newErrors.registrationNo = intl.formatMessage({
-          id: "label.registration_no_validation",
-        });
-        if (isValid && shouldSrollToError) {
-          scrollToRef(firmRegistrationRef);
         }
         isValid = false;
       }
@@ -159,12 +150,8 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
     }
 
     if (!field || field === "address") {
-      const enteredaddress = value || address;
-      if (
-        enteredaddress &&
-        (enteredaddress.trim().length < FIELD_MIN_LENGTH ||
-          enteredaddress.trim().length > ADDRESS_MAX_LENGTH)
-      ) {
+      const enteredAddress = value || address;
+      if (enteredAddress && enteredAddress.trim().length > ADDRESS_MAX_LENGTH) {
         newErrors.address = intl.formatMessage({
           id: "label.address_validation",
         });
@@ -241,6 +228,38 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
   };
 
   const onGoBack = () => {
+    const {
+      companyName,
+      emailId,
+      entity,
+      registrationNo,
+      noOfPartners,
+      telephoneNo,
+      address,
+      code,
+      currentIndustry,
+      state,
+    } = formData;
+
+    let mandatoryDetails = {
+      name: companyName,
+      email: emailId,
+      entity: entity,
+      telephone_number: telephoneNo,
+      address: address,
+      std_country_code: code,
+      industry_type_id: parseInt(currentIndustry),
+      state_code: state,
+    };
+
+    if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+      mandatoryDetails = {
+        ...mandatoryDetails,
+        frn_number: registrationNo,
+        number_of_partners: parseInt(noOfPartners, 10),
+      };
+    }
+    signUpDispatch(setSignUpDetails(mandatoryDetails));
     tabHandler("prev");
   };
 
@@ -260,12 +279,10 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         state,
       } = formData;
 
-      const details = {
+      let mandatoryDetails = {
         name: companyName,
         email: emailId,
         entity: entity,
-        frn_number: registrationNo,
-        number_of_partners: parseInt(noOfPartners, 10),
         telephone_number: telephoneNo,
         address: address,
         std_country_code: code,
@@ -273,19 +290,43 @@ const SignUpSecondScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
         state_code: state,
       };
 
-      handleSignUpValidation(details, () => {
-        signUpDispatch(setSignUpDetails(details));
+      if (entity === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+        mandatoryDetails = {
+          ...mandatoryDetails,
+          frn_number: registrationNo,
+          number_of_partners: parseInt(noOfPartners, 10),
+        };
+      }
+
+      handleSignUpValidation(mandatoryDetails, () => {
+        signUpDispatch(setSignUpDetails(mandatoryDetails));
         tabHandler("next");
       });
     }
   };
 
   const handleInputChange = (value, name) => {
-    errors[name] && validateFields({ field: name, value });
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name === "entity" && value !== FIRM_OF_CHARTERED_ACCOUNTANTS) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+        registrationNo: "",
+        noOfPartners: "",
+      }));
+      signUpDispatch(deleteSignUpDetailKey("frn_number"));
+      signUpDispatch(deleteSignUpDetailKey("number_of_partners"));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        registrationNo: "",
+        noOfPartners: "",
+      }));
+    } else {
+      errors[name] && validateFields({ field: name, value });
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleBlur = (name) => {

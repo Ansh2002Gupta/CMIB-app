@@ -43,7 +43,11 @@ const NewPasswordValidation = ({
         {VALIDATION_TYPE.map((validation) => (
           <View key={validation.key} style={styles.validationView}>
             <View
-              style={bulletStyle(currentValidations[validation.key])}
+              style={
+                newPassword.length
+                  ? bulletStyle(currentValidations[validation.key])
+                  : styles.handleBulletColor
+              }
             ></View>
             <CommonText customTextStyle={styles.bulletText}>
               {intl.formatMessage({ id: validation.id })}

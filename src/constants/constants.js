@@ -1,30 +1,35 @@
+import { navigations } from "./routeNames";
+
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
-export const VALID_EMAIL = "Not a valid email, please enter again";
+export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
 
 export const numRegex = /^\d+$/;
+export const alphaNumericRegex = /^[a-zA-Z0-9]+$/;
 export const urlRegex =
   /^(?:https?:\/\/)?www\.[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&=]*)/;
 
 export const TOAST_TIMEOUT = 5000;
 export const API_VERSION_NUMBER = "v1";
 export const FIELD_MIN_LENGTH = 6;
-export const FIELD_MAX_LENGTH = 255;
+export const DEFAULT_INPUT_MAX_LENGTH = 100;
 export const CODE_MIN_LENGTH = 2;
 export const CODE_MAX_LENGTH = 8;
 export const NUMBER_MIN_LENGTH = 7;
 export const NUMBER_MAX_LENGTH = 15;
 export const MOBILE_NUMBER_MIN_LENGTH = 4;
 export const MOBILE_NUMBER_MAX_LENGTH = 13;
-export const REGISTRATION_NO_LENGTH = 10;
+export const MESSAGE_MAX_LENGTH = 5000;
+export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
-export const COMPANY_DETAIL_MAX_LENGTH = 100;
+export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const IMAGE_MAX_SIZE = 5000000;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "nqca-placements";
 export const OVERSEAS_PLACEMENTS = "overseas-chapters";
 export const CAREER_ASCENTS = "career-ascents";
 export const WOMENT_PLACEMENT = "women-placements";
+export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
@@ -33,6 +38,8 @@ export const OTP_TIMER_MAX_MINUTES = 15;
 export const DEBOUNCE_TIME = 300;
 export const PREVIOUS_SCREEN = -1;
 export const DOTS = "...";
+export const ANONYMOUS = "Anonymous";
+export const USER_TYPE_CANDIDATE = "candidate";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -81,7 +88,7 @@ export const NATURE_OF_SUPPLIER = [
 ];
 
 export const INTEREST_OPTIONS = [
-  { messageId: "label.email_from_cpaib", isSelected: false, id: 1 },
+  { messageId: "label.email_from_cmib", isSelected: false, id: 1 },
   { messageId: "label.campus", isSelected: false, id: 2 },
   { messageId: "label.programme_brouchers", isSelected: false, id: 3 },
   { messageId: "label.based_on_prev_participation", isSelected: false, id: 4 },
@@ -205,15 +212,19 @@ export const APPLICATION_FORM_STEPPER_OPTIONS = [
 
 export const ROWS_PER_PAGE_ARRAY = [
   { value: 10, label: "10" },
-  { value: 15, label: "15" },
   { value: 20, label: "20" },
+  { value: 30, label: "30" },
+  { value: 40, label: "40" },
 ];
 
 export const TICKET_TABLE_HEADING = {
-  id: "Ticket ID",
+  readable_id: "Ticket ID",
   query_type: "Query Type",
   status: "Status",
-  assigned_to: "Assigned To",
+  assigned_to: {
+    id: "",
+    name: "Assigned To",
+  },
   created_at: "Created On",
 };
 
@@ -222,3 +233,174 @@ export const FEEDBACK_TABLE_HEADING = {
   status: "Status",
   created_at: "Created On",
 };
+
+export const CANDIDATE_ROUND_ONE_CARDS = [
+  {
+    title: "label.application",
+    id: 1,
+    image: "iconApplication",
+    subTitle: "label.application_description",
+  },
+  {
+    title: "label.download_id",
+    id: 2,
+    image: "iconDownload",
+    subTitle: "label.download_id_description",
+  },
+  {
+    title: "label.centre_wise_company_detail",
+    id: 3,
+    image: "iconDiscover",
+    subTitle: "label.centre_wise_company_detail_description",
+  },
+  {
+    title: "label.consent_marking_management",
+    id: 4,
+    image: "iconConsent",
+    subTitle: "label.consent_marking_management_description",
+  },
+  {
+    title: "label.campus_interview_management",
+    id: 5,
+    image: "iconCampus",
+    subTitle: "label.campus_interview_management_description",
+  },
+];
+
+export const ADD_APPLICATION_STEPPER = [
+  {
+    id: 1,
+    title: "label.personal_details",
+  },
+  {
+    id: 2,
+    title: "label.educational_details",
+  },
+  {
+    id: 3,
+    title: "label.training_details",
+  },
+  {
+    id: 4,
+    title: "label.work_experience",
+  },
+  {
+    id: 5,
+    title: "label.hobbies_achievements",
+  },
+  {
+    id: 6,
+    title: "label.job_preference",
+  },
+  {
+    id: 7,
+    title: "label.payment",
+  },
+];
+
+export const EDUCATIONAL_DETAIL_TABS = [
+  {
+    id: 1,
+    title: "label.educational_details",
+  },
+  {
+    id: 2,
+    title: "label.exams",
+  },
+  {
+    id: 3,
+    title: "label.other_courses",
+  },
+];
+
+export const GENDER = [
+  {
+    label: "Male",
+    value: "MALE",
+  },
+  {
+    label: "Female",
+    value: "FEMALE",
+  },
+  {
+    label: "Others",
+    value: "OTHERS",
+  },
+];
+
+export const MARITAL_STATUS = [
+  {
+    label: "Married",
+    value: "Married",
+  },
+  {
+    label: "Single",
+    value: "Single",
+  },
+];
+
+export const MONTHS = [
+  {
+    label: "January",
+    value: "January",
+  },
+  {
+    label: "February",
+    value: "February",
+  },
+  {
+    label: "March",
+    value: "March",
+  },
+  {
+    label: "April",
+    value: "April",
+  },
+  {
+    label: "May",
+    value: "May",
+  },
+  {
+    label: "June",
+    value: "June",
+  },
+  {
+    label: "July",
+    value: "July",
+  },
+  {
+    label: "August",
+    value: "August",
+  },
+  {
+    label: "September",
+    value: "September",
+  },
+  {
+    label: "October",
+    value: "October",
+  },
+  {
+    label: "November",
+    value: "November",
+  },
+  {
+    label: "December",
+    value: "December",
+  },
+];
+
+export const ATTEMPTS = Array.from({ length: 30 }, (_, x) => ({
+  label: `${x + 1}`,
+  value: `${x + 1}`,
+}));
+
+export const YEARS = Array.from({ length: 30 }, (_, x) => ({
+  label: `${x + 1995}`,
+  value: `${x + 1995}`,
+}));
+
+export const breadcrumbs = [
+  { path: navigations.TICKETS, label: "Tickets" },
+  { path: navigations.TICKETS_VIEW_EDIT, label: "Ticket Details" },
+];

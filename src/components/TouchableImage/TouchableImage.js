@@ -8,6 +8,7 @@ import styles from "./TouchableImage.style";
 
 const TouchableImage = ({
   disabled = true,
+  height,
   isSelector,
   imageStyle,
   isSvg,
@@ -15,6 +16,7 @@ const TouchableImage = ({
   parentStyle,
   source,
   style,
+  width,
 }) => {
   const [isSelected, setIsSelected] = useState(false);
 
@@ -30,16 +32,18 @@ const TouchableImage = ({
 
   return (
     <CustomTouchableOpacity
-      style={containerStyle}
+      style={disabled ? styles.disabled : containerStyle}
       onPress={isSelector ? handlePress : onPress}
       disabled={disabled}
     >
       <View>
         <CustomImage
+          height={height}
           Icon={source}
+          isSvg={isSvg}
           style={{ ...imageStyle, ...style }}
           source={source}
-          isSvg={isSvg}
+          width={width}
         />
       </View>
     </CustomTouchableOpacity>
@@ -56,6 +60,7 @@ TouchableImage.defaultProps = {
 
 TouchableImage.propTypes = {
   disabled: PropTypes.bool,
+  height: PropTypes.number,
   isSelector: PropTypes.bool,
   imageStyle: PropTypes.object,
   isSvg: PropTypes.bool,
@@ -65,6 +70,7 @@ TouchableImage.propTypes = {
     PropTypes.object,
     PropTypes.func,
   ]).isRequired,
+  width: PropTypes.number,
 };
 
 export default TouchableImage;

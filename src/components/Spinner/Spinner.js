@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import styles from "./Spinner.module.css";
 
-const Spinner = ({ color, size, thickness }) => {
+const Spinner = ({ color, customStyle, size, thickness }) => {
   const getLoaderSize = () => {
     switch (size) {
       case "xs":
@@ -31,7 +31,7 @@ const Spinner = ({ color, size, thickness }) => {
     if (thickness) {
       stylesObj = { ...stylesObj, ...{ borderWidth: thickness } };
     }
-    return stylesObj;
+    return { ...stylesObj, ...customStyle };
   };
 
   return (
@@ -46,11 +46,13 @@ const Spinner = ({ color, size, thickness }) => {
 
 Spinner.defaultProps = {
   color: "",
+  customStyle: {},
   thickness: 6,
 };
 
 Spinner.propTypes = {
   color: PropTypes.string,
+  customStyle: PropTypes.object,
   thickness: PropTypes.number,
 };
 

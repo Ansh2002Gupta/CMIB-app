@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
-import styles from "./SideBar.style";
 import SideBarContentSection from "./SideBarContentSection";
+import styles from "./SideBar.style";
 
 const SideBar = ({ onClose, showCloseIcon }) => {
   return (

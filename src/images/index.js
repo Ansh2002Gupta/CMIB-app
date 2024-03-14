@@ -10,7 +10,8 @@ const homeSolid = appendAppBaseURl("/images/home-solid.png");
 const homeOutline = appendAppBaseURl("/images/home-outline.png");
 const profileSolid = appendAppBaseURl("/images/profile-solid.png");
 const profileOutline = appendAppBaseURl("/images/profile-outline.png");
-const cmibIcon = appendAppBaseURl("/images/svg/cmibIcon.svg");
+const iconCmibDark = appendAppBaseURl("/images/svg/iconCmibDark.svg");
+const iconCmibLight = appendAppBaseURl("/images/svg/iconCmibLight.svg");
 const azadiMohatsav = appendAppBaseURl("/images/svg/azadiMohatsav.svg");
 const g20Icon = appendAppBaseURl("/images/svg/g20Icon.svg");
 const gloPac = appendAppBaseURl("/images/svg/gloPac.svg");
@@ -45,7 +46,6 @@ const iconLogout = appendAppBaseURl("/images/iconLogout/iconLogout.png");
 const iconBuilding = appendAppBaseURl("/images/iconBuilding/iconBuilding.png");
 const iconLock = appendAppBaseURl("/images/iconLock/iconLock.png");
 const iconBack = appendAppBaseURl("/images/iconBack/iconBack.png");
-const iconEdit = appendAppBaseURl("/images/iconEdit/iconEdit.png");
 const iconDelete = appendAppBaseURl("/images/iconDelete/iconDelete.png");
 const iconChange = appendAppBaseURl("/images/iconChange/iconChange.png");
 const iconCross = appendAppBaseURl("/images/iconCross/iconCross.png");
@@ -53,7 +53,6 @@ const iconTelegram = appendAppBaseURl("/images/iconTelegram/iconTelegram.png");
 const iconTwitter = appendAppBaseURl("/images/iconTwitter/iconTwitter.png");
 const iconYoutube = appendAppBaseURl("/images/iconYoutube/iconYoutube.png");
 const iconEyeSlash = appendAppBaseURl("/images/iconEyeSlash.png");
-const iconCmibLogo = appendAppBaseURl("/images/iconCmibLogo/iconCmibLogo.png");
 const iconAddApplicationForm = appendAppBaseURl(
   "/images/iconAddApplicationForm/iconAddApplicationForm.png"
 );
@@ -63,11 +62,6 @@ const iconHiringProcess = appendAppBaseURl(
 const iconDownloadDetails = appendAppBaseURl(
   "/images/iconDownloadDetails/iconDownloadDetails.png"
 );
-const iconAzadiMahotsav = appendAppBaseURl(
-  "/images/iconAzadiMahotsav/iconAzadiMahotsav.png"
-);
-const iconGloPac = appendAppBaseURl("/images/iconGloPac/iconGloPac.png");
-const iconG20 = appendAppBaseURl("/images/iconG20/iconG20.png");
 const iconDrawer = appendAppBaseURl("/images/iconDrawer/iconDrawer.png");
 const iconNotification = appendAppBaseURl(
   "/images/iconNotification/iconNotification.png"
@@ -104,6 +98,8 @@ const iconFooter = appendAppBaseURl("/images/svg/iconFooter.svg");
 const iconArrowDown = appendAppBaseURl("/images/svg/iconArrowDown.svg");
 const iconArrowUp = appendAppBaseURl("/images/svg/iconArrowUp.svg");
 const iconAdd = appendAppBaseURl("/images/svg/iconAdd.svg");
+const iconAddWhite = appendAppBaseURl("/images/svg/iconAddWhite.svg");
+const iconAddBlack = appendAppBaseURl("/images/svg/iconAddBlack.svg");
 const iconStepperDone = appendAppBaseURl("/images/svg/iconStepperDone.svg");
 const iconArrowRightWhite = appendAppBaseURl(
   "/images/svg/iconArrowRightWhite.svg"
@@ -164,6 +160,40 @@ const iconCmibCALogo = appendAppBaseURl(
   "/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png"
 );
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
+const iconEditSvg = appendAppBaseURl("/images/svg/editIcon.svg");
+const iconCloseDark = appendAppBaseURl("/images/svg/iconCloseDark.svg");
+const iconCAJobs = appendAppBaseURl("/images/svg/iconCAJobs.svg");
+const iconCareerAscent = appendAppBaseURl("/images/svg/iconCareerAscent.svg");
+const iconNewlyQualified = appendAppBaseURl(
+  "/images/svg/iconNewlyQualified.svg"
+);
+const iconOverseasChapters = appendAppBaseURl(
+  "/images/svg/iconOverseasChapters.svg"
+);
+const iconWomanPartTime = appendAppBaseURl("/images/svg/iconWomanPartTime.svg");
+const iconTickBlue = appendAppBaseURl("/images/svg/iconTickBlue.svg");
+const iconBackArrow = appendAppBaseURl("/images/svg/iconBackArrow.svg");
+const iconAlert = appendAppBaseURl("/images/svg/iconAlert.svg");
+const iconDownload = appendAppBaseURl("/images/svg/download.svg");
+const iconCampus = appendAppBaseURl("/images/svg/campus.svg");
+const iconConsent = appendAppBaseURl("/images/svg/consent.svg");
+const iconDiscover = appendAppBaseURl("/images/svg/discover.svg");
+const iconApplication = appendAppBaseURl("/images/svg/application.svg");
+const iconCalendar = appendAppBaseURl("/images/calendar.png");
+const iconRotate = appendAppBaseURl("/images/svg/iconRotate.svg");
+const iconDisabledAdd = appendAppBaseURl("/images/svg/iconDisabledAdd.svg");
+const iconDisabledMinus = appendAppBaseURl("/images/svg/iconDisabledMinus.svg");
+const iconSendGreen = appendAppBaseURl("/images/svg/iconSend.svg");
+const iconSendDisabled = appendAppBaseURl("/images/svg/iconSendDisabled.svg");
+const iconAttachement = appendAppBaseURl("/images/svg/iconAttachement.svg");
+const iconAvatar = appendAppBaseURl("/images/svg/iconAvatar.svg");
+const iconArrowDownSorting = appendAppBaseURl(
+  "/images/svg/iconArrowDownSorting.svg"
+);
+const iconArrowUpSorting = appendAppBaseURl(
+  "/images/svg/iconArrowUpSorting.svg"
+);
+const iconPartial = appendAppBaseURl("/images/svg/iconPartial.svg");
 
 const images = {
   iconArrowUp,
@@ -182,7 +212,8 @@ const images = {
   homeOutline,
   profileSolid,
   profileOutline,
-  cmibIcon,
+  iconCmibDark,
+  iconCmibLight,
   azadiMohatsav,
   g20Icon,
   gloPac,
@@ -207,7 +238,6 @@ const images = {
   iconArrowRight,
   iconClose,
   iconBack,
-  iconEdit,
   iconChange,
   iconDelete,
   iconCross,
@@ -219,7 +249,6 @@ const images = {
   iconTelegram,
   iconTwitter,
   iconYoutube,
-  iconCmibLogo,
   iconTick,
   iconDashboard,
   iconDashboardActive,
@@ -232,9 +261,6 @@ const images = {
   iconAddApplicationForm,
   iconHiringProcess,
   iconDownloadDetails,
-  iconAzadiMahotsav,
-  iconGloPac,
-  iconG20,
   ticketIcon,
   iconSend,
   iconSetting,
@@ -276,6 +302,34 @@ const images = {
   iconInstagramWeb,
   iconCmibCALogo,
   iconRetry,
+  iconEditSvg,
+  iconCloseDark,
+  iconCAJobs,
+  iconCareerAscent,
+  iconNewlyQualified,
+  iconOverseasChapters,
+  iconWomanPartTime,
+  iconTickBlue,
+  iconBackArrow,
+  iconAlert,
+  iconDownload,
+  iconCampus,
+  iconConsent,
+  iconDiscover,
+  iconApplication,
+  iconCalendar,
+  iconRotate,
+  iconDisabledAdd,
+  iconDisabledMinus,
+  iconSendGreen,
+  iconAttachement,
+  iconAvatar,
+  iconArrowDownSorting,
+  iconArrowUpSorting,
+  iconAddWhite,
+  iconAddBlack,
+  iconPartial,
+  iconSendDisabled,
 };
 
 export default images;

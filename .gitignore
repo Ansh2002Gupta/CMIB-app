@@ -15,7 +15,8 @@ local.properties
 android/.DS_Store
 android/.gradle
 
-
+# Environment File
+.env
 
 # Xcode
 #

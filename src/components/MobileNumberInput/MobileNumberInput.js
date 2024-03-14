@@ -15,7 +15,9 @@ const MobileNumberInput = ({
   customHandleBlur,
   countryNameField,
   fieldRef,
+  isEditable,
   labelField,
+  mobileFieldLabel,
   mobNumberError,
   mobNumberValue,
   onChangeCode,
@@ -51,7 +53,9 @@ const MobileNumberInput = ({
   };
 
   const menuOptions = options?.map((option) => ({
-    value: String(option[valueField]),
+    value: isWeb
+      ? `${String(option[labelField])} (${String(option[countryNameField])})`
+      : `${String(option[labelField])}`,
     label: getLabel(option),
     url: String(option[urlField]),
   }));
@@ -69,6 +73,7 @@ const MobileNumberInput = ({
               })}
               isDropdown
               isMandatory
+              isEditable={isEditable}
               onChangeValue={(val) => onChangeCode(val)}
               placeholder={intl.formatMessage({
                 id: "label.select",
@@ -84,12 +89,13 @@ const MobileNumberInput = ({
               })}
               maxLength={MOBILE_NUMBER_MAX_LENGTH}
               placeholder={intl.formatMessage({
-                id: "label.enter_contact_person_mobile_no",
+                id: mobileFieldLabel || "label.enter_contact_person_mobile_no",
               })}
               customHandleBlur={customHandleBlur}
               value={mobNumberValue}
               errorMessage={mobNumberError}
               isError={!!mobNumberError}
+              isEditable={isEditable}
               isNumeric
               onChangeText={(val) => onChangeMobNumber(val)}
               isMandatory
@@ -103,7 +109,7 @@ const MobileNumberInput = ({
             id: "label.mobile_number",
           })}
           placeholder={intl.formatMessage({
-            id: "label.enter_contact_person_mobile_no",
+            id: mobileFieldLabel || "label.enter_contact_person_mobile_no",
           })}
           customHeading={intl.formatMessage({
             id: "label.country_codes",
@@ -113,6 +119,7 @@ const MobileNumberInput = ({
           isNumeric
           onChangeText={(val) => onChangeMobNumber(val)}
           isMobileNumber
+          isEditable={isEditable}
           errorMessage={mobNumberError}
           isError={!!mobNumberError}
           isMandatory
@@ -135,7 +142,9 @@ MobileNumberInput.defaultProps = {
   labelField: "dial_code",
   onChangeCode: () => {},
   onChangeMobNumber: () => {},
+  isEditable: true,
   options: [],
+  mobileFieldLabel: "",
   mobNumberError: "",
   mobNumberValue: "",
   urlField: "flag",
@@ -147,10 +156,12 @@ MobileNumberInput.propTypes = {
   codeValue: PropTypes.string,
   customHandleBlur: PropTypes.func,
   countryNameField: PropTypes.string,
+  isEditable: PropTypes.bool,
   labelField: PropTypes.string,
   onChangeCode: PropTypes.func,
   onChangeMobNumber: PropTypes.func,
   options: PropTypes.array,
+  mobileFieldLabel: PropTypes.string,
   mobNumberError: PropTypes.string,
   mobNumberValue: PropTypes.string,
   urlField: PropTypes.string,

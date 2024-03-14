@@ -10,15 +10,15 @@ import {
   CODE_MAX_LENGTH,
   CODE_MIN_LENGTH,
   COMPANY_DETAIL_MAX_LENGTH,
-  FIELD_MAX_LENGTH,
+  DEFAULT_INPUT_MAX_LENGTH,
   FIELD_MIN_LENGTH,
   INTEREST_OPTIONS,
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   numRegex,
-  REGISTRATION_NO_LENGTH,
-  urlRegex,
+  FIRM_REGISTRATION_NO_LENGTH,
 } from "../../constants/constants";
+import { isValidUrl } from "../../utils/util";
 import { mapApiDataToUI } from "./mappedData";
 import { PREVIOUS_SCREEN } from "../../constants/constants";
 import { validateEmail } from "../../utils/validation";
@@ -133,7 +133,7 @@ const CompanyProfileComponent = () => {
     const website = findValueByLabel("label.website");
     if (
       companyName.length < FIELD_MIN_LENGTH ||
-      companyName.length > FIELD_MAX_LENGTH
+      companyName.length > DEFAULT_INPUT_MAX_LENGTH
     ) {
       newErrors.companyName = intl.formatMessage({
         id: "label.company_name_validation",
@@ -168,7 +168,7 @@ const CompanyProfileComponent = () => {
     }
     if (
       !numRegex.test(String(registrationNo)) ||
-      registrationNo.length !== REGISTRATION_NO_LENGTH
+      registrationNo.length !== FIRM_REGISTRATION_NO_LENGTH
     ) {
       newErrors.registrationNo = intl.formatMessage({
         id: "label.registration_no_validation",
@@ -190,7 +190,10 @@ const CompanyProfileComponent = () => {
       });
       isValid = false;
     }
-    if (name.length < FIELD_MIN_LENGTH || name.length > FIELD_MAX_LENGTH) {
+    if (
+      name.length < FIELD_MIN_LENGTH ||
+      name.length > DEFAULT_INPUT_MAX_LENGTH
+    ) {
       newErrors.name = intl.formatMessage({
         id: "label.contact_person_validation",
       });
@@ -205,7 +208,7 @@ const CompanyProfileComponent = () => {
     }
     if (
       !numRegex.test(String(mobileNo)) ||
-      mobileNo.length !== REGISTRATION_NO_LENGTH
+      mobileNo.length !== FIRM_REGISTRATION_NO_LENGTH
     ) {
       newErrors.mobileNo = intl.formatMessage({
         id: "label.mobile_number_validation",
@@ -225,7 +228,7 @@ const CompanyProfileComponent = () => {
       });
       isValid = false;
     }
-    if (!urlRegex.test(String(website))) {
+    if (!isValidUrl(String(website))) {
       newErrors.website = intl.formatMessage({
         id: "label.url_validation",
       });

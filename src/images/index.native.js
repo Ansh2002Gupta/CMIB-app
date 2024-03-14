@@ -1,5 +1,6 @@
 import avatar from "../../public/images/Avatar.svg";
-import cmibIcon from "../../public/images/svg/cmibIcon.svg";
+import iconCmibDark from "../../public/images/svg/iconCmibDark.svg";
+import iconCmibLight from "../../public/images/svg/iconCmibLight.svg";
 import logo from "../../public/images/logo.png";
 import sun from "../../public/images/sun.png";
 import moon from "../../public/images/moon.png";
@@ -30,7 +31,6 @@ import iconLogout from "../../public/images/iconLogout/iconLogout.png";
 import iconBuilding from "../../public/images/iconBuilding/iconBuilding.png";
 import iconLock from "../../public/images/iconLock/iconLock.png";
 import iconBack from "../../public/images/iconBack/iconBack.png";
-import iconEdit from "../../public/images/iconEdit/iconEdit.png";
 import iconDelete from "../../public/images/iconDelete/iconDelete.png";
 import iconChange from "../../public/images/iconChange/iconChange.png";
 import iconCross from "../../public/images/iconCross/iconCross.png";
@@ -38,7 +38,6 @@ import iconTelegram from "../../public/images/iconTelegram/iconTelegram.png";
 import iconTwitter from "../../public/images/iconTwitter/iconTwitter.png";
 import iconYoutube from "../../public/images/iconYoutube/iconYoutube.png";
 import iconEyeSlash from "../../public/images/iconEyeSlash.png";
-import iconCmibLogo from "../../public/images/iconCmibLogo/iconCmibLogo.png";
 import ticketIcon from "../../public/images/ticketIcon/ticketIcon.png";
 import iconSend from "../../public/images/iconSend/iconSend.png";
 import iconSetting from "../../public/images/iconSetting/iconSetting.png";
@@ -60,6 +59,8 @@ import iconFooter from "../../public/images/svg/iconFooter.svg";
 import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
 import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
 import iconAdd from "../../public/images/svg/iconAdd.svg";
+import iconAddWhite from "../../public/images/svg/iconAddWhite.svg";
+import iconAddBlack from "../../public/images/svg/iconAddBlack.svg";
 import iconStepperDone from "../../public/images/svg/iconStepperDone.svg";
 import iconArrowRightWhite from "../../public/images/svg/iconArrowRightWhite.svg";
 import iconArrowLeft from "../../public/images/svg/iconArrowLeft.svg";
@@ -96,6 +97,26 @@ import iconSuccess from "../../public/images/svg/iconSuccess.svg";
 import iconClose from "../../public/images/svg/iconClose.svg";
 import iconCmibCALogo from "../../public/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png";
 import iconRetry from "../../public/images/svg/iconRetry.svg";
+import iconEditSvg from "../../public/images/svg/editIcon.svg";
+import iconCloseDark from "../../public/images/svg/iconCloseDark.svg";
+import iconBackArrow from "../../public/images/svg/iconBackArrow.svg";
+import iconAlert from "../../public/images/svg/iconAlert.svg";
+import iconDownload from "../../public/images/svg/download.svg";
+import iconCampus from "../../public/images/svg/campus.svg";
+import iconConsent from "../../public/images/svg/consent.svg";
+import iconDiscover from "../../public/images/svg/discover.svg";
+import iconApplication from "../../public/images/svg/application.svg";
+import iconCalendar from "../../public/images/calendar.png";
+import iconRotate from "../../public/images/svg/iconRotate.svg";
+import iconDisabledAdd from "../../public/images/svg/iconDisabledAdd.svg";
+import iconDisabledMinus from "../../public/images/svg/iconDisabledMinus.svg";
+import iconSendGreen from "../../public/images/svg/iconSend.svg";
+import iconSendDisabled from "../../public/images/svg/iconSendDisabled.svg";
+import iconAttachement from "../../public/images/svg/iconAttachement.svg";
+import iconAvatar from "../../public/images/svg/iconAvatar.svg";
+import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
+import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
+import iconPartial from "../../public/images/svg/iconPartial.svg";
 
 const images = {
   iconArrowUp,
@@ -103,7 +124,8 @@ const images = {
   iconArrowDown2,
   avatar,
   logo,
-  cmibIcon,
+  iconCmibDark,
+  iconCmibLight,
   sun,
   moon,
   flagFr,
@@ -138,7 +160,6 @@ const images = {
   iconBuilding,
   iconLock,
   iconBack,
-  iconEdit,
   iconChange,
   iconDelete,
   iconCross,
@@ -147,7 +168,6 @@ const images = {
   iconTwitter,
   iconTick,
   iconYoutube,
-  iconCmibLogo,
   ticketIcon,
   iconSend,
   iconSetting,
@@ -196,6 +216,28 @@ const images = {
   iconArrowRight,
   iconCmibCALogo,
   iconRetry,
+  iconEditSvg,
+  iconCloseDark,
+  iconBackArrow,
+  iconAlert,
+  iconDownload,
+  iconCampus,
+  iconConsent,
+  iconDiscover,
+  iconApplication,
+  iconCalendar,
+  iconRotate,
+  iconDisabledAdd,
+  iconDisabledMinus,
+  iconSendGreen,
+  iconAttachement,
+  iconAvatar,
+  iconArrowDownSorting,
+  iconArrowUpSorting,
+  iconAddWhite,
+  iconAddBlack,
+  iconPartial,
+  iconSendDisabled,
 };
 
 export default images;

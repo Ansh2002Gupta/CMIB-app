@@ -1,10 +1,22 @@
+import {
+  Dimensions,
+  StyleSheet,
+  Platform,
+} from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const style = {
+const style = StyleSheet.create({
   optionCotainer: {
     flexDirection: "row",
-    padding: 16,
+    padding: 18,
     alignItems: "center",
+    ...Platform.select({
+      web: {
+        padding: 12,
+        paddingLeft: 16,
+        paddingRight: 16,
+      },
+    }),
   },
   optionCotainerBorder: {
     borderBottomWidth: 1,
@@ -17,6 +29,15 @@ const style = {
   profileParentContainer: {
     flex: 1,
     backgroundColor: colors.white,
+    height: "100%",
+    ...Platform.select({
+      web: {
+        maxHeight: "80vh",
+      },
+    }),
+  },
+  profileListContainer: {
+    flex: 1,
   },
   profileContainer: {
     marginTop: 16,
@@ -32,15 +53,13 @@ const style = {
     paddingLeft: 16,
     marginRight: 16,
     alignItems: "flex-start",
-    minWidth: 240,
   },
   initialsContainer: {
     justifyContent: "center",
-    backgroundColor: "white",
     borderRadius: 200,
     alignItems: "center",
-    height: 64,
-    width: 64,
+    height: 48,
+    width: 48,
     backgroundColor: colors.black,
   },
   detailContainer: {
@@ -88,6 +107,13 @@ const style = {
     fontSize: 20,
     color: colors.white,
   },
-};
+  omitIconStyle: {
+    width: 240,
+  },
+  customImageStyle: {
+    height: 48,
+    width: 48,
+  },
+});
 
 export default style;

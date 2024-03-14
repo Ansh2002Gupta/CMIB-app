@@ -11,16 +11,20 @@ import styles from "./CustomButton.style";
 
 const CustomButton = ({
   children,
+  customStyle,
   disabled,
+  disabledStyle,
   iconRight,
   iconLeft,
   isLoading,
   onPress,
   style,
+  shouldShowHover,
   type,
   withGreenBackground,
 }) => {
   const webProps = Platform.OS === "web" ? { size: "xs" } : {};
+  const { customTextStyle, textFontWeight } = customStyle || {};
 
   return (
     <Button
@@ -30,8 +34,10 @@ const CustomButton = ({
         ...style,
       }}
       disabled={isLoading || disabled}
+      disabledStyle={disabledStyle}
       onPress={onPress}
       type={type}
+      shouldShowHover={shouldShowHover}
     >
       {isLoading ? (
         <Spinner
@@ -51,11 +57,12 @@ const CustomButton = ({
             />
           )}
           <CommonText
-            customTextStyle={[
-              withGreenBackground && styles.whiteText,
-              styles.btnText,
-            ]}
-            fontWeight={"600"}
+            customTextStyle={{
+              ...(withGreenBackground ? styles.whiteText : {}),
+              ...styles.btnText,
+              ...customTextStyle,
+            }}
+            fontWeight={textFontWeight || "600"}
           >
             {children}
           </CommonText>
@@ -76,7 +83,9 @@ const CustomButton = ({
 
 CustomButton.defaultProps = {
   children: <></>,
+  customStyle: { customTextStyle: {}, textFontWeight: "" },
   disabled: false,
+  disabledStyle: {},
   iconLeft: {
     isLeftIconNotSvg: false,
     leftIconAlt: "",
@@ -96,7 +105,9 @@ CustomButton.defaultProps = {
 
 CustomButton.propTypes = {
   children: PropTypes.node,
+  customStyle: PropTypes.object,
   disabled: PropTypes.bool,
+  disabledStyle: PropTypes.object,
   iconLeft: PropTypes.object,
   iconRight: PropTypes.object,
   isLeftIconNotSvg: PropTypes.bool,

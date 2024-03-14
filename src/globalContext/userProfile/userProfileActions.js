@@ -40,3 +40,10 @@ export const setShowLogoutModal = (payload) => {
     payload,
   };
 };
+
+export const setShowViewProfileDetails = (payload) => {
+  return {
+    type: types.SET_SHOW_VIEW_PROFILE_DETAILS,
+    payload,
+  };
+};

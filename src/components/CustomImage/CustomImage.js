@@ -4,18 +4,48 @@ import { Image, Platform } from "@unthinkable/react-core-components";
 
 import styles from "./customImage.style";
 
-const CustomImage = ({ alt, Icon, isSvg, resizeMode, source, style }) => {
-  if (Platform.OS.toLowerCase() === "web") {
+const CustomImage = ({
+  alt,
+  height,
+  Icon,
+  isSvg,
+  resizeMode,
+  source,
+  style,
+  width,
+}) => {
+  const getDimensions = () => {
+    if (height && width) {
+      return { height, width };
+    }
+    if (height) {
+      return { height };
+    }
+    if (width) {
+      return { width };
+    }
+    return {};
+  };
+
+  const renderImage = () => {
     return (
-      <Image source={source} style={style} resizeMode={resizeMode} alt={alt} />
+      <Image
+        source={source}
+        style={style}
+        resizeMode={resizeMode}
+        alt={alt}
+        {...getDimensions()}
+      />
     );
+  };
+
+  if (Platform.OS.toLowerCase() === "web") {
+    return renderImage();
   }
   if (isSvg) {
-    return <Icon style={style} />;
+    return <Icon {...getDimensions()} style={style} />;
   }
-  return (
-    <Image source={source} style={style} resizeMode={resizeMode} alt={alt} />
-  );
+  return renderImage();
 };
 
 CustomImage.defaultProps = {
@@ -27,6 +57,7 @@ CustomImage.defaultProps = {
 
 CustomImage.propTypes = {
   alt: PropTypes.string,
+  height: PropTypes.number,
   isSvg: PropTypes.bool,
   resizeMode: PropTypes.oneOf([
     "center",
@@ -42,6 +73,7 @@ CustomImage.propTypes = {
     PropTypes.any,
   ]).isRequired,
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  width: PropTypes.number,
 };
 
 export default CustomImage;

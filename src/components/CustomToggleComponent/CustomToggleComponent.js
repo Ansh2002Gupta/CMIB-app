@@ -22,7 +22,7 @@ const CustomToggleComponent = ({
 
   return (
     <View>
-      <View style={styles.labelContainer}>
+      {label && <View style={styles.labelContainer}>
         <CommonText
           customTextStyle={[
             styles.label,
@@ -37,7 +37,7 @@ const CustomToggleComponent = ({
             {"*"}
           </CommonText>
         )}
-      </View>
+      </View>}
       <View style={[styles.mainView, customToggleStyle]}>
         <TouchableOpacity
           style={{

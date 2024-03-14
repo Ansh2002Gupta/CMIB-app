@@ -19,7 +19,15 @@ const ActionPairButton = ({
   onPressButtonOne,
   onPressButtonTwo,
 }) => {
-  const { buttonOneStyle, buttonTwoStyle, customContainerStyle } = customStyles;
+  const {
+    buttonOneStyle,
+    buttonOneContainerStyle,
+    buttonOneTextStyle,
+    buttonTwoStyle,
+    buttonTwoContainerStyle,
+    buttonTwoTextStyle,
+    customContainerStyle,
+  } = customStyles;
   const { buttonOneType, buttonTwoType } = buttonsType || {};
 
   return (
@@ -29,6 +37,7 @@ const ActionPairButton = ({
         <CustomButton
           iconLeft={iconLeft}
           onPress={onPressButtonOne}
+          customStyle={{ customTextStyle: buttonOneTextStyle }}
           style={{ ...styles.buttonStyle, ...buttonOneStyle }}
           type={buttonOneType}
           withGreenBackground={isButtonOneGreen}
@@ -39,6 +48,7 @@ const ActionPairButton = ({
       rightSection={
         <CustomButton
           disabled={isDisabled}
+          customStyle={{ customTextStyle: buttonTwoTextStyle }}
           iconRight={iconRight}
           isLoading={displayLoader}
           onPress={onPressButtonTwo}
@@ -49,8 +59,12 @@ const ActionPairButton = ({
           {buttonTwoText}
         </CustomButton>
       }
-      leftSectionStyle={styles.buttonStyle}
-      rightSectionStyle={{ ...styles.secondButtonStyle, ...styles.buttonStyle }}
+      leftSectionStyle={{ ...styles.buttonStyle, ...buttonOneContainerStyle }}
+      rightSectionStyle={{
+        ...styles.secondButtonStyle,
+        ...styles.buttonStyle,
+        ...buttonTwoContainerStyle,
+      }}
     />
   );
 };
@@ -62,7 +76,11 @@ ActionPairButton.defaultProps = {
   },
   customStyles: {
     buttonOneStyle: {},
+    buttonOneContainerStyle: {},
+    buttonOneTextStyle: {},
     buttonTwoStyle: {},
+    buttonTwoContainerStyle: {},
+    buttonTwoTextStyle: {},
     customContainerStyle: {},
   },
   displayLoader: false,

@@ -16,10 +16,12 @@ import SearchView from "../SearchView";
 import SvgUri from "../SvgUri";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import images from "../../images";
+import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./DropDownModal.style";
 
 const DropDownModal = ({
   customHeading,
+  isEditable,
   isMobileNumber,
   labelField,
   onChangeValue,
@@ -52,9 +54,12 @@ const DropDownModal = ({
       selectedIndex < selectedOption.length &&
       flatListRef.current
     ) {
-      scrollAnimation(selectedIndex);
+      const timer = setTimeout(() => {
+        scrollAnimation(selectedIndex);
+      }, 0);
+      return () => clearTimeout(timer);
     }
-  }, [selectedOption]);
+  }, [selectedOption, isDropDownOpen]);
 
   const keyboardDidHideCallback = () => {
     if (isIosPlatform) {
@@ -65,7 +70,7 @@ const DropDownModal = ({
   const keyboardDidShowCallback = (e) => {
     const keyboardHeight = e.endCoordinates.height;
     if (isIosPlatform) {
-      setModalStyle(styles.largeModalContainer(keyboardHeight));
+      setModalStyle(commonStyles.largeModalContainer(keyboardHeight));
     }
   };
 
@@ -81,8 +86,10 @@ const DropDownModal = ({
   };
 
   const handleDropDown = () => {
-    Keyboard.dismiss();
-    setIsDropDownOpen((prev) => !prev);
+    if (isEditable) {
+      Keyboard.dismiss();
+      setIsDropDownOpen((prev) => !prev);
+    }
   };
 
   const scrollAnimation = (index) => {
@@ -134,8 +141,8 @@ const DropDownModal = ({
   };
 
   const getItemLayout = (data, index) => ({
-    length: 50,
-    offset: 50 * index,
+    length: 52,
+    offset: 52 * index,
     index,
   });
 
@@ -166,7 +173,10 @@ const DropDownModal = ({
           <CustomImage source={images.iconDivider} style={styles.iconStyle} />
         </CustomTouchableOpacity>
       ) : (
-        <TouchableOpacity onPress={handleDropDown} style={styles.textButton}>
+        <TouchableOpacity
+          onPress={handleDropDown}
+          style={styles.textButton(isEditable)}
+        >
           <CommonText
             customTextStyle={value ? styles.valueText : styles.placeHolderText}
           >
@@ -197,6 +207,7 @@ const DropDownModal = ({
           <FlatList
             data={selectedOption}
             getItemLayout={getItemLayout}
+            initialNumToRender={10}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={renderEmptyFooter()}
             ref={flatListRef}
@@ -211,6 +222,7 @@ const DropDownModal = ({
 
 DropDownModal.defaultProps = {
   customHeading: "",
+  isEditable: true,
   labelField: "label",
   isMobileNumber: false,
   onChangeValue: () => {},
@@ -224,6 +236,7 @@ DropDownModal.defaultProps = {
 
 DropDownModal.propTypes = {
   customHeading: PropTypes.string,
+  isEditable: PropTypes.bool,
   labelField: PropTypes.string,
   isMobileNumber: PropTypes.bool,
   onChangeValue: PropTypes.func,

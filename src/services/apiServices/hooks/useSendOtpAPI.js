@@ -7,26 +7,25 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMe
 
 const useSendOtpAPI = () => {
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
-  const [sendOtpResult, setSendOtpResult] = useState({});
+  const [sendOtpResult, setSendOtpResult] = useState([]);
   const [apiStatus, setAPIStatus] = useState(API_STATUS.IDLE);
 
-  const handleSendOtpAPI = async (payload, errorCallback) => {
+  const handleSendOtpAPI = async ({ payload, errorCallback, url }) => {
     try {
       setAPIStatus(API_STATUS.LOADING);
       errorWhileResetPassword && setErrorWhileResetPassword("");
-      const res = await Http.post(COMPANY_SEND_OTP, payload);
+      const res = await Http.post(url || COMPANY_SEND_OTP, payload);
       if (res.status === STATUS_CODES.SUCCESS_STATUS) {
         setAPIStatus(API_STATUS.SUCCESS);
         setSendOtpResult(res.data);
         return;
-      } else {
-        setAPIStatus(API_STATUS.ERROR);
-        errorCallback(res);
       }
+      setAPIStatus(API_STATUS.ERROR);
+      errorCallback && errorCallback(res);
     } catch (err) {
       const errorMessage =
         err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE;
-      errorCallback(errorMessage);
+      errorCallback && errorCallback(errorMessage);
       setAPIStatus(API_STATUS.ERROR);
       if (err.response?.data?.message) {
         setErrorWhileResetPassword(err.response?.data?.message);
@@ -47,6 +46,7 @@ const useSendOtpAPI = () => {
     isError,
     isLoading,
     isSuccess,
+    setErrorWhileResetPassword,
     sendOtpResult,
     setSendOtpResult,
   };

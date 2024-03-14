@@ -16,17 +16,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.2,
     borderColor: colors.lightGrey,
     flexDirection: "row",
+    height: 52,
   },
   valueText: {
     fontSize: 14,
   },
-  textButton: {
+  textButton: (isEditable) => ({
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 14,
     paddingBottom: 14,
     marginTop: 4,
-    backgroundColor: colors.white,
+    backgroundColor: isEditable ? colors.white : colors.disabledTextFieldColor,
     borderWidth: 1,
     borderRadius: 8,
     borderColor: colors.lightGrey,
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: 48,
     alignItems: "center",
-  },
+  }),
   iconArrow: {
     marginLeft: 6,
     height: 16,
@@ -83,9 +84,6 @@ const styles = StyleSheet.create({
   searchView: {
     marginBottom: 8,
   },
-  largeModalContainer: (keyboardHeight) => ({
-    maxHeight: keyboardHeight * 2.2,
-  }),
 });
 
 export default styles;
