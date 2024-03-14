@@ -32,7 +32,7 @@ const useGetCompanyProfileAPI = () => {
     } catch (err) {
       setCompanyProfileApiStatus(API_STATUS.ERROR);
       setErrorWhileGettingResult(
-        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+        err.response?.data || { message: GENERIC_GET_API_FAILED_ERROR_MESSAGE }
       );
     }
   };
