@@ -21,6 +21,7 @@ const PersonalDetails = ({
           })}
           isMandatory
           isCounterInput
+          isYear={true}
           handleCountChange={(val) =>
             handleJobDetailsChange("minimumExperience", val)
           }
@@ -32,6 +33,7 @@ const PersonalDetails = ({
             id: "label.maximum_experience",
           })}
           isCounterInput
+          isYear={true}
           customStyle={styles.inputStyle(isWebView)}
           handleCountChange={(val) =>
             handleJobDetailsChange("maximumExperience", val)

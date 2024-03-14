@@ -421,6 +421,7 @@ const locale = {
   "label.enter_option": "Enter Option",
   "label.add_options": "+ Add options",
   "label.mandatory": "Mandatory",
+  "label.years": "Years",
 };
 
 export default locale;
