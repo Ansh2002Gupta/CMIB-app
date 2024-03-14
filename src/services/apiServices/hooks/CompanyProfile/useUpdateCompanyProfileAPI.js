@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Http from "../../../http-service";
 
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_PROFILE } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
@@ -12,6 +12,8 @@ const useUpdateCompanyProfile = () => {
   );
   const [updateProfileResult, setUpdateProfileResult] = useState([]);
   const [updationError, setUpdationError] = useState("");
+
+  const { Http } = useHttpService();
 
   const handleUpdateProfile = async (payload, successCallback) => {
     setUpdateProfileStatus(API_STATUS.LOADING);

@@ -26,7 +26,10 @@ import UploadImage from "../../components/UploadImage/UploadImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import { allFieldsFilled } from "./CompanyProfileUtils";
-import { DEFAULT_BALANCE_CREDIT } from "../../constants/constants";
+import {
+  DEFAULT_BALANCE_CREDIT,
+  STATUS_CODES,
+} from "../../constants/constants";
 import { gridStyles } from "../../theme/styles/commonStyles";
 import style from "./CompanyProfile.style";
 
@@ -273,7 +276,10 @@ const CompanyProfileUI = (props) => {
   };
 
   const renderContent = () => {
-    if (isLoading) {
+    if (
+      isLoading ||
+      (error && error?.code === STATUS_CODES.UNAUTHORIZED_USER)
+    ) {
       return (
         <View style={style.loaderStyle}>
           <Spinner />
@@ -281,8 +287,8 @@ const CompanyProfileUI = (props) => {
       );
     }
 
-    if (error) {
-      return <ErrorComponent errorMsg={error} />;
+    if (error && error?.code !== STATUS_CODES.UNAUTHORIZED_USER) {
+      return <ErrorComponent errorMsg={error.message} />;
     }
 
     return (

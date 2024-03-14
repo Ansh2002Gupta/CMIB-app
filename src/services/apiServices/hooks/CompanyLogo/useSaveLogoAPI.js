@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_LOGO } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
@@ -10,6 +10,8 @@ const useSaveLogo = () => {
   const [fileUploadResult, setFileUploadResult] = useState(null);
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
+
+  const { Http } = useHttpService();
 
   const handleFileUpload = async ({ file, successCallback, errorCallback }) => {
     try {
