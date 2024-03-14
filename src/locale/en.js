@@ -413,6 +413,7 @@ const locale = {
   "label.do_not_send_email":
     "Do not send me notifying E-mails of applicants applying for this job.",
   "label.post": "Post",
+  "label.years": "Years",
 };
 
 export default locale;

@@ -171,6 +171,7 @@ const BottomSection = ({ isWebView, jobData, handleJobDetailsChange }) => {
           handleCountChange={(val) => {
             handleJobDetailsChange("minimumSalary", val);
           }}
+          maxCount={99999999999}
           customStyle={getStyle(
             styles.textInputStyle,
             styles.textInputStyleColumn
@@ -181,9 +182,10 @@ const BottomSection = ({ isWebView, jobData, handleJobDetailsChange }) => {
             id: "label.maximum_salary",
           })}
           isCounterInput
-          value={jobData.minimumSalary}
+          value={jobData.maximumSalary}
+          maxCount={99999999999}
           handleCountChange={(val) => {
-            handleJobDetailsChange("minimumSalary", val);
+            handleJobDetailsChange("maximumSalary", val);
           }}
           customStyle={styles.textInputStyleColumn}
         />

@@ -8,6 +8,7 @@ import images from "../../images";
 import { useIntl } from "react-intl";
 import classes from "../../theme/styles/CssClassProvider";
 import CommonText from "../CommonText";
+import { getDisplayValue } from "../../constants/constants";
 const accountComponentProp = classes["react_datepicker__input_container"];
 function DatePickerModal({
   value,
@@ -36,14 +37,6 @@ function DatePickerModal({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [wrapperRef]);
 
-  // Function to format the selected date or return the placeholder
-  const getDisplayValue = () => {
-    if (value && value instanceof Date) {
-      return value.toDateString();
-    }
-    return intl.formatMessage({ id: "label.select" });
-  };
-
   return (
     <View
       style={[styles.container, open ? styles.focusedStyle : {}]}
@@ -56,7 +49,7 @@ function DatePickerModal({
               value ? styles.prefixStyle : styles.placeHolderText
             }
           >
-            {getDisplayValue()}
+            {getDisplayValue(value, intl)}
           </CommonText>
         </View>
         <View style={styles.iconContainer}>

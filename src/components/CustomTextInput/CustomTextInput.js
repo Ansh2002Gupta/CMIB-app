@@ -75,6 +75,7 @@ const CustomTextInput = (props) => {
     valueField,
     urlField,
     menuOptions,
+    isYear,
     ...remainingProps
   } = props;
 
@@ -200,6 +201,7 @@ const CustomTextInput = (props) => {
           maxCount={maxCount}
           onCountChange={handleCountChange}
           step={step}
+          isYear={isYear}
         />
       );
     }
@@ -403,6 +405,7 @@ CustomTextInput.defaultProps = {
   value: "",
   valueField: "value",
   urlField: "url",
+  isYear: false,
 };
 // Custom validator for Date objects
 const datePropType = (props, propName, componentName) => {
@@ -460,6 +463,7 @@ CustomTextInput.propTypes = {
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  isYear: PropTypes.bool,
 };
 
 export default CustomTextInput;

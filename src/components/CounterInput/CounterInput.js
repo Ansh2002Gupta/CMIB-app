@@ -9,6 +9,7 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import styles from "./CounterInput.style";
+import { useIntl } from "react-intl";
 
 const CounterInput = ({
   customErrorStyle,
@@ -19,17 +20,19 @@ const CounterInput = ({
   step = 1,
   initialCount = 0,
   onCountChange,
+  isYear = false,
 }) => {
   const [count, setCount] = useState(initialCount);
   const textInputRef = useRef(null);
   const ArrowUp = images.iconArrowUp;
   const ArrowDown = images.iconArrowDown;
+  const intl = useIntl();
 
   useEffect(() => {
     if (onCountChange) {
       onCountChange(count);
     }
-  }, [count]); //removed onCountChange as it was causing rerendering
+  }, [count]);
 
   const incrementCount = () => {
     setCount((prev) => Math.min(prev + step, maxCount));
@@ -91,7 +94,9 @@ const CounterInput = ({
         <CustomTouchableOpacity onPress={focusTextInput}>
           <TextInput
             ref={textInputRef}
-            value={count.toString()}
+            value={`${count} ${
+              isYear ? intl.formatMessage({ id: "label.years" }) : ""
+            }`.toString()}
             onChangeText={handleTextInputChange}
             style={styles.counterInputText}
             {...mobileProps}

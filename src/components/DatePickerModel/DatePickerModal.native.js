@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import images from "../../images";
+import { getDisplayValue } from "../../constants/constants";
 
 const DatePickerModal = ({
   placeholder,
@@ -19,6 +20,8 @@ const DatePickerModal = ({
   const handleDropDown = () => {
     setOpen(true);
   };
+  const intl = useIntl();
+
   return (
     <>
       <View style={[styles.container, open ? styles.focusedStyle : {}]}>
@@ -31,7 +34,7 @@ const DatePickerModal = ({
               customContainerStyle={styles.mobileTextStyle}
               customTextStyle={styles.valueText}
             >
-              {(value && value?.toDateString()) || placeholder}
+              {(value && getDisplayValue(value, intl)) || placeholder}
             </CommonText>
           </View>
           <View style={styles.imageContainer}>
