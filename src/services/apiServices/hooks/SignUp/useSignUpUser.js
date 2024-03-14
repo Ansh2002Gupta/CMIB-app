@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_SIGN_UP } from "../../apiEndPoint";
 import { appendStringsInNextLine } from "../../../../utils/util";
@@ -10,6 +10,8 @@ const useSignUpUser = () => {
   const [postStatus, setPostStatus] = useState(API_STATUS.IDLE);
   const [signUpUserResult, setSignUpUserResult] = useState([]);
   const [signUpError, setSignUpError] = useState("");
+
+  const { Http } = useHttpService();
 
   const handleSignUp = async (payload, successCallback) => {
     try {

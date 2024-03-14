@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import {
   COMPANY_TICKET_LISTING,
@@ -12,6 +12,8 @@ const useTicketReplies = () => {
   const [errorWhileSendingMessage, setErrorWhileSendingMessage] = useState("");
   const [ticketReplies, setTicketReplies] = useState({});
   const [apiStatus, setAPIStatus] = useState(API_STATUS.IDLE);
+
+  const { Http } = useHttpService();
 
   const handleTicketReplies = async ({ id, payload, successCallback }) => {
     try {

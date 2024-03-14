@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../http-service";
+import useHttpService from "../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { CORE_STATE } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
@@ -11,6 +11,8 @@ const useGetStates = () => {
   );
   const [stateResult, setStateResult] = useState(null);
   const [error, setError] = useState("");
+
+  const { Http } = useHttpService();
 
   const getStates = async () => {
     try {

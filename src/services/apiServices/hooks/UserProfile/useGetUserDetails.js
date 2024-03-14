@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 import { UserProfileContext } from "../../../../globalContext/userProfile/userProfileProvider";
 import { useHeader } from "../../../../hooks/useHeader";
@@ -26,6 +26,8 @@ const useGetUserDetails = () => {
   const { onLogout } = useHeader();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { Http } = useHttpService();
 
   const getSelectedModule = ({
     firstAccessibleModuleName,
