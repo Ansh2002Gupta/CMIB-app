@@ -162,6 +162,10 @@ const CompanyProfileComponent = () => {
       return acc;
     }, {});
 
+    const selectedModules = moduleOptions
+      .filter((item) => item.isSelected)
+      .map((item) => item.id);
+
     companyDetails.company_details = profileData?.companyProfile?.[0]?.value;
     companyDetails.website = profileData?.otherDetails?.find(
       (detail) => detail.key === "website"
@@ -181,6 +185,7 @@ const CompanyProfileComponent = () => {
     } else {
       companyDetails.company_logo = null;
     }
+    companyDetails.company_module_access = selectedModules;
 
     const contactDetails = profileData?.contactPersonInfo?.map((contact) => ({
       id: getContactPersonDetails({
