@@ -30,11 +30,13 @@ const useAxiosInstance = () => {
     (response) => {
       if (
         response.status === STATUS_CODES.UNAUTHORIZED_USER &&
-        response.message ===
-          intl.formatMessage({ id: "label.login_with_new_email" })
+        (response?.data?.message ===
+          intl.formatMessage({ id: "label.login_with_new_email" }) ||
+          response?.data?.message ===
+            intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
       ) {
         onLogout({
-          message: intl.formatMessage({ id: "label.login_with_new_email" }),
+          message: response?.data?.message,
           isLogoutToast: true,
           isError: false,
         });
@@ -53,11 +55,13 @@ const useAxiosInstance = () => {
     (error) => {
       if (
         error.response?.status === STATUS_CODES.UNAUTHORIZED_USER &&
-        error.response?.message ===
-          intl.formatMessage({ id: "label.login_with_new_email" })
+        (error.response?.data?.message ===
+          intl.formatMessage({ id: "label.login_with_new_email" }) ||
+          error.response?.data?.message ===
+            intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
       ) {
         onLogout({
-          message: intl.formatMessage({ id: "label.login_with_new_email" }),
+          message: error.response?.data?.message,
           isLogoutToast: true,
           isError: false,
         });
