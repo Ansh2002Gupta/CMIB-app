@@ -60,6 +60,7 @@ const CustomTextInput = (props) => {
     isLoading,
     initiateFileUpload,
     label,
+    label2,
     maxCount,
     minCount,
     options,
@@ -351,7 +352,22 @@ const CustomTextInput = (props) => {
         ...customStyle,
       }}
     >
-      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
+      {!!label && (
+        <View
+          style={{
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <CustomLabelView label={label} isMandatory={isMandatory} />
+          {!!label2 && (
+            <CommonText customContainerStyle={{ marginRight: 10 }}>
+              {label2}
+            </CommonText>
+          )}
+        </View>
+      )}
       {renderTextInput()}
       {isError && (
         <CommonText
@@ -392,6 +408,7 @@ CustomTextInput.defaultProps = {
   isSendButton: false,
   initiateFileUpload: () => {},
   label: "",
+  label2: "",
   labelField: "label",
   maxCount: 100,
   minCount: 0,
@@ -445,6 +462,7 @@ CustomTextInput.propTypes = {
   isSendButton: PropTypes.bool,
   initiateFileUpload: PropTypes.func,
   label: PropTypes.string,
+  label2: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
   menuOptions: PropTypes.array,

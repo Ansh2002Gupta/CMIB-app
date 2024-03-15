@@ -4,9 +4,19 @@ import useIsWebView from "../../hooks/useIsWebView";
 
 import useGetPostedJobsData from "../../services/apiServices/hooks/PostedJobs/useGetPostedJobsData";
 import LoadingScreen from "../../components/LoadingScreen";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 const PostedJobView = () => {
-  const { isLoading, isError, isSuccess, countryData, functionalData } =
-    useGetPostedJobsData();
+  const {
+    isLoading,
+    isError,
+    isSuccess,
+    countryData,
+    functionalData,
+    jobLocationData,
+    isErrorData,
+  } = useGetPostedJobsData();
+  console.log(isLoading, isSuccess);
   const [questionnairelist, setIsQuestionaireList] = useState([]);
   const [jobData, setJobData] = useState({
     jobSummary: "",
@@ -36,10 +46,6 @@ const PostedJobView = () => {
     minimumSalary: 0,
     maximumSalary: 0,
   });
-  //functinal
-  //country
-  //jobType
-  //categoryPrefernce
   const handleJobDetailsChange = (field, value) => {
     setJobData((prev) => {
       return {
@@ -48,13 +54,13 @@ const PostedJobView = () => {
       };
     });
   };
+  console.log("HELLO", JSON.stringify(questionnairelist));
 
   const { isWebView } = useIsWebView();
   return (
     <>
-      {isLoading ? (
-        <LoadingScreen />
-      ) : (
+      {isLoading && <LoadingScreen />}
+      {!isLoading && isSuccess && !isError && (
         <PostedJobsViewUI
           isWebView={isWebView}
           jobData={jobData}
@@ -63,6 +69,15 @@ const PostedJobView = () => {
           handleJobDetailsChange={handleJobDetailsChange}
           setIsQuestionaireList={setIsQuestionaireList}
           questionnairelist={questionnairelist}
+        />
+      )}
+      {!isLoading && isError && (
+        <ErrorComponent
+          errorMsg={
+            isErrorData?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+          }
+          // onRetry={getErrorDetails().onRetry}
+          // disableRetryBtn={isLoadingAPIs}
         />
       )}
     </>

@@ -1,5 +1,5 @@
-import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 import React, { useEffect, useRef, useState } from "react";
+import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CustomImage from "../CustomImage";
@@ -8,14 +8,19 @@ import images from "../../images";
 import { useIntl } from "react-intl";
 import classes from "../../theme/styles/CssClassProvider";
 import CommonText from "../CommonText";
-import { getDisplayValue } from "../../constants/constants";
+import { getDisplayValue } from "../../utils/util";
+import PropTypes from "prop-types";
+
 const accountComponentProp = classes["react_datepicker__input_container"];
 function DatePickerModal({
   value,
   onChangeValue,
-  placeholder,
   customTextInputOuterContainer,
   isError,
+  format = "MMMM d, yyyy",
+  minDate = Date.now(),
+  maxDate,
+  customStyles = {},
 }) {
   const [open, setOpen] = useState(false);
   const intl = useIntl();
@@ -36,14 +41,20 @@ function DatePickerModal({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [wrapperRef]);
+  const errorStyle = isError ? styles.invalidInput : {};
 
   return (
     <View
-      style={[styles.container, open ? styles.focusedStyle : {}]}
+      style={[
+        styles.container,
+        open ? styles.focusedStyle : {},
+        errorStyle,
+        customStyles,
+      ]}
       ref={wrapperRef}
     >
       <TouchableOpacity onPress={handleDropDown} style={styles.textButtonStyle}>
-        <View style={{ flex: 1 }}>
+        <View style={[{ flex: 1 }, customTextInputOuterContainer]}>
           <CommonText
             customTextStyle={
               value ? styles.prefixStyle : styles.placeHolderText
@@ -60,7 +71,8 @@ function DatePickerModal({
         <View style={styles.datePickerContainerStyle}>
           <DatePicker
             selected={value}
-            minDate={new Date()}
+            minDate={minDate}
+            maxDate={maxDate}
             portalId="my-popper"
             className={accountComponentProp}
             onChange={(date) => {
@@ -72,12 +84,22 @@ function DatePickerModal({
             showYearDropdown
             inline
             dropdownMode="select"
-            dateFormat="MMMM d, yyyy"
+            dateFormat={format}
           />
         </View>
       )}
     </View>
   );
 }
+
+DatePickerModal.propTypes = {
+  value: PropTypes.instanceOf(Date),
+  onChangeValue: PropTypes.func.isRequired,
+  format: PropTypes.string,
+  minDate: PropTypes.instanceOf(Date),
+  maxDate: PropTypes.instanceOf(Date),
+  customStyles: PropTypes.object,
+  // ...otherProps propTypes
+};
 
 export default DatePickerModal;

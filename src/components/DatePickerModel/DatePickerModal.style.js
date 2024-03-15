@@ -80,6 +80,9 @@ const styles = StyleSheet.create({
     flex: 0.1,
     alignItems: "center",
   },
+  invalidInput: {
+    borderColor: colors.errorRed,
+  },
 });
 
 export default styles;

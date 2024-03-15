@@ -1,12 +1,19 @@
 import { View, Text, ScrollView } from "@unthinkable/react-core-components";
-import React from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import CardComponent from "../../../components/CardComponent";
 import HeaderComponent from "../HeaderComponent";
 import { useIntl } from "react-intl";
 import CustomButton from "../../../components/CustomButton";
 import styles from "./AddQuestionaireComponent.styles";
 import RenderQuestion from "../RenderQuestion";
-import colors from "../../../assets/colors";
+import CustomModal from "../../../components/CustomModal";
+import CommonText from "../../../components/CommonText";
+import CustomTextInput from "../../../components/CustomTextInput";
+import { questionaireType } from "../../../constants/constants";
+import Switch from "../../../components/Switch/Switch";
+import CustomLabelView from "../../../components/CustomLabelView";
+import AddNewQuestionModal from "../AddNewQuestionModal";
+import { getQuestionInitalValue } from "../../../utils/util";
 const AddQuestionaireComponent = ({
   isQuestionaire,
   setIsQuestionaire,
@@ -15,32 +22,44 @@ const AddQuestionaireComponent = ({
   questionnairelist,
 }) => {
   const intl = useIntl();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [optionData, setoptionData] = useState(null);
+  const isEdited = useRef(false);
 
-  function addNewQuestion(isOption, id) {
-    if (isOption) {
-      let temp = {
-        id: Date.now(),
-        value: "",
+  useEffect(() => {
+    if (optionData) {
+      setIsModalVisible(true);
+    }
+  }, [optionData]);
+  const questionaireTypeFormatted = useMemo(() => {
+    return questionaireType.map((item) => {
+      return {
+        label: intl.formatMessage({ id: item.label }),
+        value: intl.formatMessage({ id: item.value }),
       };
+    });
+  }, []);
+
+  const [newQuestionnaireData, setNewQuestionnaireData] = useState(
+    getQuestionInitalValue(intl)
+  );
+
+  function addNewQuestion(isOption, id, item) {
+    if (isOption) {
       const updatedArray = questionnairelist.map((obj) => {
         if (obj.id === id) {
-          if (obj.hasOwnProperty("optionsArray")) {
-            obj.optionsArray = [...obj.optionsArray, temp];
+          if (obj.question_options) {
+            obj.question_options = [...obj.question_options, item];
+          } else {
+            obj.question_options = [item];
           }
         }
         return obj;
       });
       setIsQuestionaireList(updatedArray);
     } else {
-      setIsQuestionaireList((oldArray) => [
-        ...oldArray,
-        {
-          typeofQuestion: intl.formatMessage({ id: "label.text_question" }),
-          question: "",
-          id: Date.now(),
-          isMandatory: false,
-        },
-      ]);
+      // let tempItem = { ...item, question_order: questionnairelist.length + 1 };
+      setIsQuestionaireList((oldArray) => [...oldArray, item]);
     }
   }
 
@@ -48,11 +67,11 @@ const AddQuestionaireComponent = ({
     if (isOption) {
       const updatedArray = questionnairelist.map((obj) => {
         if (obj.id === id) {
-          if (obj.hasOwnProperty("optionsArray")) {
-            let tempObj = obj.optionsArray.filter(
+          if (obj.question_options) {
+            let tempObj = obj.question_options.filter(
               (item) => item.id !== optionId
             );
-            obj.optionsArray = tempObj;
+            obj.question_options = tempObj;
           }
         }
         return obj;
@@ -70,7 +89,7 @@ const AddQuestionaireComponent = ({
     if (isOption) {
       const updatedArray = questionnairelist.map((obj) => {
         if (obj.id === id) {
-          let temporary = obj.optionsArray.map((itemData) => {
+          let temporary = obj.question_options.map((itemData) => {
             if (itemData.id === optionId) {
               let tempObj = { ...itemData, [key]: value };
               return tempObj;
@@ -78,7 +97,7 @@ const AddQuestionaireComponent = ({
             return itemData;
           });
 
-          obj["optionsArray"] = temporary;
+          obj["question_options"] = temporary;
         }
         return obj;
       });
@@ -90,9 +109,9 @@ const AddQuestionaireComponent = ({
           if (
             key == "typeofQuestion" &&
             value !== intl.formatMessage({ id: "label.text_question" }) &&
-            !tempObj.hasOwnProperty("optionsArray")
+            !tempObj.question_options
           ) {
-            tempObj["optionsArray"] = [
+            tempObj.question_options = [
               {
                 id: Date.now(),
                 value: "",
@@ -105,9 +124,9 @@ const AddQuestionaireComponent = ({
           }
           if (
             value === intl.formatMessage({ id: "label.text_question" }) &&
-            tempObj.hasOwnProperty("optionsArray")
+            tempObj.question_options
           ) {
-            delete tempObj.optionsArray;
+            tempObj.question_options = null;
           }
           return tempObj;
         }
@@ -118,13 +137,24 @@ const AddQuestionaireComponent = ({
     }
   }
 
+  function editEntireQuestion(item) {
+    // Replace the object with id 1 using map
+    const updatedObjectArray = questionnairelist.map((obj) => {
+      if (obj.id === item.id) {
+        return item; // Return the new object if the id matches
+      }
+      return obj; // Otherwise, return the original object
+    });
+    setIsQuestionaireList(updatedObjectArray);
+  }
+
   function copyItem(isOption, item, id) {
     if (isOption) {
       const updatedArray = questionnairelist.map((obj) => {
         if (obj.id === id) {
-          if (obj.hasOwnProperty("optionsArray")) {
+          if (obj.question_options) {
             let temp = { ...item, id: Date.now() };
-            obj.optionsArray = [...obj.optionsArray, temp];
+            obj.question_options = [...obj.question_options, temp];
           }
         }
         return obj;
@@ -154,19 +184,10 @@ const AddQuestionaireComponent = ({
           })}
           isWebView={isWebView}
           progressText={questionnairelist.length}
-          onPress={() => addNewQuestion(false)}
+          onPress={() =>
+            addNewQuestion(false, null, getQuestionInitalValue(intl))
+          }
         />
-        {isQuestionaire && !isWebView && (
-          <CustomButton
-            style={isWebView ? styles.buttonStyle : styles.mobileButtonStyle}
-            onPress={() => addNewQuestion(false)}
-            customStyle={{
-              customTextStyle: styles.buttonTextStyle(isWebView),
-            }}
-          >
-            {intl.formatMessage({ id: "label.add_question" })}
-          </CustomButton>
-        )}
         {isQuestionaire &&
           questionnairelist?.map((item, index) => {
             return (
@@ -175,13 +196,51 @@ const AddQuestionaireComponent = ({
                   item={item}
                   copyItem={copyItem}
                   index={index}
+                  isWebView={isWebView}
                   deleteQuestion={deleteQuestion}
                   handleChange={handleChange}
                   addNewQuestion={addNewQuestion}
+                  questionaireTypeFormatted={questionaireTypeFormatted}
+                  setoptionData={setoptionData}
+                  setIsModalVisible={setIsModalVisible}
+                  setNewQuestionnaireData={setNewQuestionnaireData}
+                  isEdited={isEdited}
                 />
               </View>
             );
           })}
+        {isQuestionaire && !isWebView && (
+          <CustomButton
+            style={isWebView ? styles.buttonStyle : styles.mobileButtonStyle}
+            onPress={() => {
+              setIsModalVisible(true);
+            }}
+            customStyle={{
+              customTextStyle: styles.buttonTextStyle(isWebView),
+            }}
+          >
+            {intl.formatMessage({ id: "label.add_question" })}
+          </CustomButton>
+        )}
+        <AddNewQuestionModal
+          isWebView={isWebView}
+          isModalVisible={isModalVisible}
+          optionData={optionData}
+          setoptionData={setoptionData}
+          questionnairelistLength={
+            optionData
+              ? optionData.questionNumber
+              : questionnairelist.length + 1
+          }
+          newQuestionnaireData={newQuestionnaireData}
+          setNewQuestionnaireData={setNewQuestionnaireData}
+          questionaireTypeFormatted={questionaireTypeFormatted}
+          setIsModalVisible={setIsModalVisible}
+          isEdited={isEdited}
+          handleChange={handleChange}
+          editEntireQuestion={editEntireQuestion}
+          addNewQuestion={addNewQuestion}
+        />
       </ScrollView>
     </CardComponent>
   );

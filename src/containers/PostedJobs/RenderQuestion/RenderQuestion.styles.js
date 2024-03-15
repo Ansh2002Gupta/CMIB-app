@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
     width: 24,
   },
   redCrossStyle: {
-    marginLeft: 28,
-    height: 12,
-    width: 12,
+    marginLeft: 30,
+    height: 10,
+    width: 10,
   },
   crossStyle: {
     marginLeft: 28,
@@ -89,6 +89,11 @@ const styles = StyleSheet.create({
     height: 24,
     width: 24,
   },
+  editQuestionStyle: {
+    marginLeft: 24,
+    height: 30,
+    width: 30,
+  },
   switchViewStyle: {
     flexDirection: "row",
     marginLeft: 24,
@@ -98,6 +103,11 @@ const styles = StyleSheet.create({
   },
   marginLeftStyle: {
     marginLeft: 8,
+  },
+  editIconStyle: {
+    marginLeft: 24,
+    height: 24,
+    width: 24,
   },
 });
 export default styles;

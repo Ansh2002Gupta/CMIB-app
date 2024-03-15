@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     height: 60,
     backgroundColor: colors.secondaryGrey,
-    justifyContent: "flex:start",
+    justifyContent: "flex-start",
   },
   get buttonTextStyle() {
     return (isWebview) => ({

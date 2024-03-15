@@ -182,3 +182,32 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   return "receiver";
 };
+export const getQuestionInitalValue = (intl) => {
+  return {
+    typeofQuestion: intl.formatMessage({
+      id: "label.text_question",
+    }),
+    question: "",
+    id: Date.now(),
+    isMandatory: false,
+    question_options: null,
+    question_order: 1,
+  };
+};
+// Function to format the selected date or return the placeholder
+export const getDisplayValue = (value, intl) => {
+  if (value && value instanceof Date) {
+    // return value.toDateString();
+
+    let day = value.getDate();
+    let month = value.getMonth() + 1; // getMonth() returns 0-11
+    let year = value.getFullYear();
+
+    // Add leading zeros if day or month is less than 10
+    day = day < 10 ? "0" + day : day;
+    month = month < 10 ? "0" + month : month;
+
+    return day + "/" + month + "/" + year;
+  }
+  return intl.formatMessage({ id: "label.select" });
+};

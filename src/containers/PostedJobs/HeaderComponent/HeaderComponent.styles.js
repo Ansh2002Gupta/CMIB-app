@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     flex: 0.85,
   },
   textStyle: { fontSize: 16 },
-  subTextStyle: { fontSize: 14 },
+  subTextStyle: { fontSize: 14, color: colors.darkGrey },
+
   iconStyle: {
     height: 14,
     width: 14,

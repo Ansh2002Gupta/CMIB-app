@@ -422,6 +422,9 @@ const locale = {
   "label.add_options": "+ Add options",
   "label.mandatory": "Mandatory",
   "label.years": "Years",
+  "label.question": "Question",
+  "label.question_type": "Question Type",
+  "label.option": "Option",
 };
 
 export default locale;
