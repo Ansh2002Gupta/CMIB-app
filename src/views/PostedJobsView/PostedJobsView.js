@@ -16,7 +16,6 @@ const PostedJobView = () => {
     jobLocationData,
     isErrorData,
   } = useGetPostedJobsData();
-  console.log(isLoading, isSuccess);
   const [questionnairelist, setIsQuestionaireList] = useState([]);
   const [jobData, setJobData] = useState({
     jobSummary: "",
@@ -54,7 +53,6 @@ const PostedJobView = () => {
       };
     });
   };
-  console.log("HELLO", JSON.stringify(questionnairelist));
 
   const { isWebView } = useIsWebView();
   return (

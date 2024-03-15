@@ -24,7 +24,6 @@ const AddNewQuestionModal = ({
   editEntireQuestion,
   addNewQuestion,
 }) => {
-  // console.log("NOONE", newQuestionnaireData);
   const intl = useIntl();
   const [error, setErrors] = useState({});
   function validate() {
