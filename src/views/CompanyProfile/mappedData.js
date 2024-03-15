@@ -73,15 +73,19 @@ export const mapApiDataToUI = ({
     name: formatModuleOptions(moduleId, intl),
   });
 
-  const createModuleOptions = (moduleId, contact, intl, contactDetails) => ({
-    value: formatModuleOptions(moduleId, intl),
-    label: formatModuleOptions(moduleId, intl),
-    name: moduleId,
-    isSelected: contact?.modules.includes(moduleId),
-    selectedIndex: contactDetails.findIndex(
+  const createModuleOptions = (moduleId, contact, intl, contactDetails) => {
+    const index = contactDetails.findIndex(
       (c) => c.modules && c.modules.includes(moduleId)
-    ),
-  });
+    );
+
+    return {
+      value: formatModuleOptions(moduleId, intl),
+      label: formatModuleOptions(moduleId, intl),
+      name: moduleId,
+      isSelected: contact?.modules?.includes(moduleId),
+      selectedIndex: index !== -1 ? index : null,
+    };
+  };
 
   const mapContactDetails = (contactDetails) => {
     return contactDetails?.map((contact) => {
