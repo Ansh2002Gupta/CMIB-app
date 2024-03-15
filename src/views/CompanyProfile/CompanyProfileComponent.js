@@ -220,7 +220,7 @@ const CompanyProfileComponent = () => {
         data: contact?.contactInfo,
         keyName: "mobileNo",
       })?.value,
-      status: contact?.isContactActive ? 1 : 0,
+      status: contact?.isContactActive || contact?.isNewContactPerson ? 1 : 0,
     }));
 
     const payload = {
