@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import { USER_PROFILE } from "../../apiEndPoint";
@@ -9,6 +9,8 @@ const useUpdateLogoAPI = () => {
   const [updateStatus, setUpdateStatus] = useState(API_STATUS.IDLE);
   const [fileUpdateResult, setFileUpdateResult] = useState(null);
   const [errorWhileUpdate, setErrorWhileUpdate] = useState("");
+
+  const { Http } = useHttpService();
 
   const handleFileUpdate = async ({ file, successCallback, errorCallback }) => {
     try {

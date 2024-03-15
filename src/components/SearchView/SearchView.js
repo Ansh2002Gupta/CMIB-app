@@ -57,8 +57,8 @@ const SearchView = ({
 
   const clearSearch = () => {
     setQuery("");
-    onSearch([]);
-    customSearchCriteria();
+    onSearch(data);
+    customSearchCriteria("");
   };
 
   return (

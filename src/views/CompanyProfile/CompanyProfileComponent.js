@@ -1,53 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router";
+import { useSearchParams } from "../../routes";
+import { Platform } from "@unthinkable/react-core-components";
 
 import CompanyProfileUI from "./CompanyProfileUI";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import useGetCompanyProfileAPI from "../../services/apiServices/hooks/CompanyProfile/useGetCompanyProfileAPI";
-import useIndustryTypes from "../../services/apiServices/hooks/useIndustryTypes";
+import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
+import useFetch from "../../hooks/useFetch";
+import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
+import useUpdateCompanyProfile from "../../services/apiServices/hooks/CompanyProfile/useUpdateCompanyProfileAPI";
 import {
-  ADDRESS_MAX_LENGTH,
-  CODE_MAX_LENGTH,
-  CODE_MIN_LENGTH,
-  COMPANY_DETAIL_MAX_LENGTH,
-  DEFAULT_INPUT_MAX_LENGTH,
-  FIELD_MIN_LENGTH,
+  EDIT,
+  FIRM_OF_CHARTERED_ACCOUNTANTS,
   INTEREST_OPTIONS,
-  NUMBER_MAX_LENGTH,
-  NUMBER_MIN_LENGTH,
-  numRegex,
-  FIRM_REGISTRATION_NO_LENGTH,
+  MODULE_OPTIONS,
+  NUMBER_OF_PARTNERS_LENGTH,
+  SALUTATION_OPTIONS,
 } from "../../constants/constants";
-import { isValidUrl } from "../../utils/util";
+import {
+  CORE_INDUSTRY_TYPE,
+  COUNTRY_CODE,
+} from "../../services/apiServices/apiEndPoint";
 import { mapApiDataToUI } from "./mappedData";
-import { PREVIOUS_SCREEN } from "../../constants/constants";
-import { validateEmail } from "../../utils/validation";
+import { navigations } from "../../constants/routeNames";
+import { validateFields } from "./CompanyProfileUtils";
 
 const CompanyProfileComponent = () => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { errorWhileGettingResult, onGetProfile, profileResult, isLoading } =
-    useGetCompanyProfileAPI();
-  const [isEditProfile, showIsEditProfile] = useState(false);
+  const [userProfileState] = useContext(UserProfileContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isWebPlatform = Platform.OS.toLowerCase() === "web";
+
+  const [isEditProfile, setIsEditProfile] = useState(false);
   const [profileData, setProfileData] = useState(null);
-  const { getIndustryTypes, industryTypeResult } = useIndustryTypes();
-
-  const [inputErrors, setInputErrors] = useState({
-    companyName: "",
-    registrationNo: "",
-    noOfPartners: "",
-    address: "",
-    emailId: "",
-    telephoneNo: "",
-    code: "",
-    designation: "",
-    contactEmailId: "",
-    mobileNo: "",
-    name: "",
-    companyDetail: "",
-    website: "",
-  });
-
+  const [moduleUpdateWarning, setModuleUpdateWarning] = useState(false);
+  const [unoccupiedModules, setUnoccupiedModules] = useState([]);
   const [options, setOptions] = useState(
     INTEREST_OPTIONS.map((option) => ({
       ...option,
@@ -55,217 +45,235 @@ const CompanyProfileComponent = () => {
       isSelected: false,
     }))
   );
+  const [moduleOptions, setModuleOptions] = useState(
+    MODULE_OPTIONS.map((option) => ({
+      ...option,
+      title: intl.formatMessage({ id: option.messageId }),
+      isSelected: false,
+    }))
+  );
+
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
+  const { data: countryCodes } = useFetch({ url: COUNTRY_CODE });
+  const { errorWhileGettingResult, onGetProfile, profileResult, isLoading } =
+    useGetCompanyProfileAPI();
+  const { data: industryOptions } = useFetch({ url: CORE_INDUSTRY_TYPE });
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    isLoading: isUploadingImageToServer,
+    setErrorWhileUpload,
+    setFileUploadResult,
+    uploadPercentage,
+  } = useSaveLogo();
+  const {
+    handleUpdateProfile,
+    isLoading: isUpdatingCompanyProfile,
+    setUpdationError,
+    updationError,
+  } = useUpdateCompanyProfile();
 
   useEffect(() => {
+    if (searchParams.get("mode") === EDIT) {
+      setIsEditProfile(true);
+    }
     onGetProfile();
   }, []);
 
   useEffect(() => {
     if (profileResult) {
       setProfileData(
-        mapApiDataToUI(profileResult, industryTypeResult, isEditProfile)
+        mapApiDataToUI({
+          apiData: profileResult,
+          industryOptions: industryOptions,
+          intl,
+          countryCodes,
+          isEditMode: isEditProfile,
+        })
       );
+      const updatedModuleOptions = MODULE_OPTIONS.map((option) => ({
+        ...option,
+        title: intl.formatMessage({ id: option.messageId }),
+        isSelected: profileResult?.company_module_access?.includes(option.id),
+      }));
+      const updatedInfoOptions = INTEREST_OPTIONS.map((option) => ({
+        ...option,
+        title: intl.formatMessage({ id: option.messageId }),
+        isSelected: profileResult.source_of_information?.includes(
+          intl.formatMessage({ id: option.messageId })
+        ),
+      }));
+      setModuleOptions(updatedModuleOptions);
+      setOptions(updatedInfoOptions);
     }
-  }, [profileResult, industryTypeResult, isEditProfile]);
+  }, [profileResult, industryOptions, countryCodes, isEditProfile]);
 
-  const allFieldsFilled = () => {
-    const companyDetailsFilled = profileData.companyDetail.every(
-      (detail) => String(detail.value).trim() !== ""
-    );
-
-    const contactPersonInfoFilled = profileData.contactPersonInfo.every(
-      (detail) => String(detail.value).trim() !== ""
-    );
-
-    const companyProfileFilled = profileData.companyProfile.every(
-      (detail) => String(detail.value).trim() !== ""
-    );
-
-    return (
-      companyDetailsFilled && contactPersonInfoFilled && companyProfileFilled
-    );
+  const handleImageDeletion = () => {
+    if (profileData?.companyLogo) {
+      setProfileData((prevProfileData) => ({
+        ...prevProfileData,
+        companyLogo: "",
+      }));
+    }
+    if (fileUploadResult?.data?.file_name) {
+      const fileName = fileUploadResult?.data?.file_name.split("/");
+      handleDeleteLogo(fileName[fileName.length - 1]);
+    }
   };
 
-  const validateFields = () => {
-    //TODO: Need to be optimize
-    let isValid = true;
-    let newErrors = {
-      companyName: "",
-      registrationNo: "",
-      noOfPartners: "",
-      address: "",
-      emailId: "",
-      telephoneNo: "",
-      code: "",
-      designation: "",
-      contactEmailId: "",
-      mobileNo: "",
-      name: "",
-      companyDetail: "",
-      website: "",
+  const getContactPersonDetails = ({ data, dataKeyName = "key", keyName }) => {
+    return data.find((info) => info[dataKeyName] === keyName);
+  };
+
+  const createPayloadFromProfileData = (profileData) => {
+    const companyDetails = profileData.companyDetail.reduce((acc, detail) => {
+      if (detail.key) {
+        switch (detail.key) {
+          case "companyName":
+            acc.name = detail.value;
+            break;
+          case "entity":
+            acc.entity = detail.value;
+            break;
+          case "address":
+            acc.address = detail.value;
+            break;
+          case "emailId":
+            acc.email = detail.value;
+            break;
+          case "currentIndustry":
+            acc.industry_type_id = detail.value;
+          case "code":
+            acc.std_country_code = detail.value;
+            break;
+          case "telephoneNo":
+            acc.telephone_number = detail.value;
+            break;
+          case "registrationNo":
+            acc.frn_number = detail.value;
+          case "noOfPartners":
+            acc.number_of_partners = detail.value;
+          default:
+            break;
+        }
+      }
+      return acc;
+    }, {});
+
+    const selectedModules = moduleOptions
+      .filter((item) => item.isSelected)
+      .map((item) => item.id);
+
+    companyDetails.company_details = profileData?.companyProfile?.[0]?.value;
+    companyDetails.website = profileData?.otherDetails?.find(
+      (detail) => detail.key === "website"
+    ).value;
+    companyDetails.nature_of_suppliers = profileData?.otherDetails?.find(
+      (detail) => detail.label === "label.nature_of_supplier"
+    ).value;
+    companyDetails.type = profileData?.otherDetails?.find(
+      (detail) => detail.label === "label.company_type"
+    ).value;
+    companyDetails.source_of_information = profileData?.sourceOfInfo;
+    companyDetails.credit_amount = profileData?.balanceCredit;
+    if (fileUploadResult?.data?.file_name || profileData?.companyLogo) {
+      const logoFileName = profileData?.companyLogo?.split("/")?.pop();
+      companyDetails.company_logo =
+        fileUploadResult?.data?.file_name || logoFileName;
+    } else {
+      companyDetails.company_logo = null;
+    }
+    companyDetails.company_module_access = selectedModules;
+
+    const contactDetails = profileData?.contactPersonInfo?.map((contact) => ({
+      id: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "name",
+      })?.id,
+      modules: contact?.contactModules?.[0].value,
+      salutation: getContactPersonDetails({
+        data: contact?.contactInfo,
+        dataKeyName: "label",
+        keyName: "label.salutation",
+      })?.value,
+      name: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "name",
+      })?.value,
+      email: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "contactEmailId",
+      })?.value,
+      designation: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "designation",
+      })?.value,
+      mobile_country_code:
+        "+" +
+        getContactPersonDetails({
+          data: contact?.contactInfo,
+          keyName: "mobileNo",
+        })?.codeValue.replace(/\D/g, ""),
+      mobile_number: getContactPersonDetails({
+        data: contact?.contactInfo,
+        keyName: "mobileNo",
+      })?.value,
+      status: contact?.isContactActive || contact?.isNewContactPerson ? 1 : 0,
+    }));
+
+    const payload = {
+      ...companyDetails,
+      contact_details: contactDetails,
     };
-    const findValueByLabel = (label) => {
-      const combinedDetails = [
-        ...profileData.companyDetail,
-        ...profileData.contactPersonInfo,
-        ...profileData.companyProfile,
-        ...profileData.otherDetails,
-      ];
-      const detail = combinedDetails.find((d) => d.label === label);
-      return detail ? detail.value : "";
-    };
-    const companyName = findValueByLabel("label.company_name");
-    const registrationNo = findValueByLabel("label.registration_no");
-    const noOfPartners = findValueByLabel("label.no_of_partners");
-    const address = findValueByLabel("label.address_for_correspondence");
-    const emailId = findValueByLabel("label.email_id");
-    const telephoneNo = findValueByLabel("label.telephone_no");
-    const code = findValueByLabel("label.isd_std_code");
-    const name = findValueByLabel("label.contact_person_name");
-    const designation = findValueByLabel("label.contact_personal_designation");
-    const contactEmailId = findValueByLabel(
-      "label.enter_contact_person_email_id"
-    );
-    const mobileNo = findValueByLabel("label.mobile_number");
-    const companyDetail = findValueByLabel(
-      "label.short_profile_of_the_company"
-    );
-    const website = findValueByLabel("label.website");
-    if (
-      companyName.length < FIELD_MIN_LENGTH ||
-      companyName.length > DEFAULT_INPUT_MAX_LENGTH
-    ) {
-      newErrors.companyName = intl.formatMessage({
-        id: "label.company_name_validation",
-      });
-      isValid = false;
-    }
-    if (
-      !numRegex.test(String(code)) ||
-      code.length < CODE_MIN_LENGTH ||
-      code.length > CODE_MAX_LENGTH
-    ) {
-      newErrors.code = intl.formatMessage({
-        id: "label.country_code_validation",
-      });
-      isValid = false;
-    }
-    if (
-      !numRegex.test(String(telephoneNo)) ||
-      telephoneNo.length > NUMBER_MAX_LENGTH ||
-      telephoneNo.length < NUMBER_MIN_LENGTH
-    ) {
-      newErrors.telephoneNo = intl.formatMessage({
-        id: "label.telephone_no_validation",
-      });
-      isValid = false;
-    }
-    if (validateEmail(emailId)) {
-      newErrors.emailId = intl.formatMessage({
-        id: "label.email_id_validation",
-      });
-      isValid = false;
-    }
-    if (
-      !numRegex.test(String(registrationNo)) ||
-      registrationNo.length !== FIRM_REGISTRATION_NO_LENGTH
-    ) {
-      newErrors.registrationNo = intl.formatMessage({
-        id: "label.registration_no_validation",
-      });
-      isValid = false;
-    }
-    if (
-      address.length < FIELD_MIN_LENGTH ||
-      address.length > ADDRESS_MAX_LENGTH
-    ) {
-      newErrors.address = intl.formatMessage({
-        id: "label.address_validation",
-      });
-      isValid = false;
-    }
-    if (!numRegex.test(String(noOfPartners))) {
-      newErrors.noOfPartners = intl.formatMessage({
-        id: "label.no_of_partners_validation",
-      });
-      isValid = false;
-    }
-    if (
-      name.length < FIELD_MIN_LENGTH ||
-      name.length > DEFAULT_INPUT_MAX_LENGTH
-    ) {
-      newErrors.name = intl.formatMessage({
-        id: "label.contact_person_validation",
-      });
-    }
-    if (
-      designation.length < FIELD_MIN_LENGTH ||
-      designation.length > ADDRESS_MAX_LENGTH
-    ) {
-      newErrors.designation = intl.formatMessage({
-        id: "label.designation_validation",
-      });
-    }
-    if (
-      !numRegex.test(String(mobileNo)) ||
-      mobileNo.length !== FIRM_REGISTRATION_NO_LENGTH
-    ) {
-      newErrors.mobileNo = intl.formatMessage({
-        id: "label.mobile_number_validation",
-      });
-    }
-    if (validateEmail(contactEmailId)) {
-      newErrors.contactEmailId = intl.formatMessage({
-        id: "label.email_id_validation",
-      });
-    }
-    if (
-      companyDetail.length < FIELD_MIN_LENGTH ||
-      companyDetail.length > COMPANY_DETAIL_MAX_LENGTH
-    ) {
-      newErrors.companyDetail = intl.formatMessage({
-        id: "label.company_details_validation",
-      });
-      isValid = false;
-    }
-    if (!isValidUrl(String(website))) {
-      newErrors.website = intl.formatMessage({
-        id: "label.url_validation",
-      });
-      isValid = false;
-    }
-    const profileDataWithErrors = {
-      ...profileData,
-      companyDetail: profileData.companyDetail.map((detail) => ({
-        ...detail,
-        error: newErrors[detail?.key] || "",
-      })),
-      contactPersonInfo: profileData.contactPersonInfo.map((detail) => ({
-        ...detail,
-        error: newErrors[detail?.key] || "",
-      })),
-      companyProfile: profileData.companyProfile.map((detail) => ({
-        ...detail,
-        error: newErrors[detail?.key] || "",
-      })),
-      otherDetails: profileData.otherDetails.map((detail) => ({
-        ...detail,
-        error: newErrors[detail?.key] || "",
-      })),
-    };
-    setProfileData(profileDataWithErrors);
-    return isValid;
+
+    return payload;
+  };
+
+  const onProfileUpdate = () => {
+    fileUploadResult && setFileUploadResult("");
+    onGetProfile();
+    setIsEditProfile(false);
+    setSearchParams((params) => {
+      params.delete("mode");
+    });
+  };
+
+  const handleBlur = (name, index) => {
+    validateFields({ field: name, index, intl, profileData, setProfileData });
   };
 
   const onSaveClick = () => {
-    if (validateFields()) {
-      //TODO: CALL UPDATE API
-      console.log("Form is valid. Proceed with the save operation.");
+    if (validateFields({ intl, profileData, setProfileData })) {
+      const unoccupied = profileData.companyModuleAccess.filter(
+        (moduleId) =>
+          !profileData.contactPersonInfo.some((contact) =>
+            contact.contactModules?.[0].defaultValues.some(
+              (defaultValue) => defaultValue.value === moduleId
+            )
+          )
+      );
+
+      if (unoccupied.length > 0) {
+        setUnoccupiedModules(unoccupied);
+        return;
+      }
+      const payload = createPayloadFromProfileData(profileData);
+      handleUpdateProfile(payload, onProfileUpdate);
     }
   };
 
-  const handleBlur = (fieldName) => {
-    validateFields(fieldName);
+  const sureSaveProfile = () => {
+    const payload = createPayloadFromProfileData(profileData);
+    setUnoccupiedModules([]);
+    handleUpdateProfile(payload, onProfileUpdate);
+  };
+
+  const handleDismissToast = () => {
+    setUpdationError("");
+    setErrorWhileDeletion("");
+    setErrorWhileUpload("");
   };
 
   const handleToggle = (id) => {
@@ -275,42 +283,258 @@ const CompanyProfileComponent = () => {
       }
       return item;
     });
+
+    const toggledItem = updatedItems.find((item) => item.id === id);
+
+    let updatedSourceOfInfo;
+    if (toggledItem.isSelected) {
+      updatedSourceOfInfo = [...profileData.sourceOfInfo, toggledItem.title];
+    } else {
+      updatedSourceOfInfo = profileData.sourceOfInfo.filter(
+        (title) => title !== toggledItem.title
+      );
+    }
+    setProfileData({
+      ...profileData,
+      sourceOfInfo: updatedSourceOfInfo,
+    });
+
     setOptions(updatedItems);
+  };
+  const handleModuleToggle = (moduleId) => {
+    const moduleOption = MODULE_OPTIONS.find(
+      (option) => option.id === moduleId
+    );
+
+    const label = moduleOption
+      ? intl.formatMessage({
+          id: moduleOption.messageId,
+        })
+      : "";
+
+    const anyDefaultValueSelected = profileData.contactPersonInfo.some(
+      (contact) =>
+        contact.contactModules?.[0]?.defaultValues?.some(
+          (defaultValue) => defaultValue.label === moduleId
+        )
+    );
+
+    if (!anyDefaultValueSelected) {
+      const updatedModuleOptions = moduleOptions.map((item) => {
+        if (item.id === moduleId) {
+          return { ...item, isSelected: !item.isSelected };
+        }
+        return item;
+      });
+
+      setModuleOptions(updatedModuleOptions);
+
+      const updatedProfileData = {
+        ...profileData,
+        companyModuleAccess: profileData.companyModuleAccess.includes(label)
+          ? profileData.companyModuleAccess.filter((id) => id !== label)
+          : [...profileData.companyModuleAccess, label],
+        contactPersonInfo: profileData?.contactPersonInfo?.map((contact) => {
+          const moduleIndex = contact?.contactModules?.[0]?.options?.findIndex(
+            (module) => module.name === moduleId
+          );
+          const moduleSelected = moduleIndex !== -1;
+
+          const newOptions = moduleSelected
+            ? contact.contactModules?.[0]?.options?.filter(
+                (module) => module.name !== moduleId
+              )
+            : [
+                ...contact?.contactModules?.[0]?.options,
+                {
+                  name: moduleId,
+                  value: label,
+                  label: label,
+                  selectedIndex: null,
+                  isSelected: false,
+                },
+              ];
+
+          return {
+            ...contact,
+            contactModules: contact.contactModules.map((module) => ({
+              ...module,
+              options: newOptions,
+            })),
+          };
+        }),
+      };
+
+      setProfileData(updatedProfileData);
+    } else {
+      setModuleUpdateWarning(true);
+    }
   };
 
   const onGoBack = () => {
     if (isEditProfile) {
       handleEdit(false);
+      fileUploadResult && setFileUploadResult("");
+      onGetProfile();
+      navigate(navigations.COMPANY_PROFILE);
     } else {
-      navigate(PREVIOUS_SCREEN);
+      navigate(navigations.PROFILE);
     }
   };
 
   const handleCompanyDetailChange = (fieldName, value) => {
-    setProfileData({
-      ...profileData,
-      companyDetail: profileData.companyDetail.map((detail) =>
-        detail.label === fieldName ? { ...detail, value: value } : detail
-      ),
-    });
+    if (fieldName === "label.entity") {
+      let updatedCompanyDetail = [...profileData.companyDetail];
+      const entityIndex = updatedCompanyDetail.findIndex(
+        (detail) => detail.label === "label.entity"
+      );
+      const registrationNoIndex = updatedCompanyDetail.findIndex(
+        (detail) => detail.key === "registrationNo"
+      );
+      const noOfPartnersIndex = updatedCompanyDetail.findIndex(
+        (detail) => detail.key === "noOfPartners"
+      );
+
+      if (value === FIRM_OF_CHARTERED_ACCOUNTANTS) {
+        if (registrationNoIndex === -1) {
+          updatedCompanyDetail.splice(entityIndex + 1, 0, {
+            key: "registrationNo",
+            label: "label.firm_registration_no",
+            value: "",
+            isMajor: true,
+            placeholder: "label.enter_firm_no",
+            isMandatory: true,
+          });
+        }
+        if (noOfPartnersIndex === -1) {
+          updatedCompanyDetail.splice(entityIndex + 2, 0, {
+            key: "noOfPartners",
+            label: "label.no_of_partners",
+            value: "",
+            isMinor: true,
+            isNumeric: true,
+            placeholder: "label.no_placeholder",
+            isMandatory: true,
+            maxLength: NUMBER_OF_PARTNERS_LENGTH,
+          });
+        }
+      } else {
+        if (registrationNoIndex !== -1) {
+          updatedCompanyDetail.splice(registrationNoIndex, 1);
+        }
+        if (noOfPartnersIndex !== -1) {
+          const newNoOfPartnersIndex = updatedCompanyDetail.findIndex(
+            (detail) => detail.key === "noOfPartners"
+          );
+          updatedCompanyDetail.splice(newNoOfPartnersIndex, 1);
+        }
+      }
+      setProfileData({
+        ...profileData,
+        companyDetail: updatedCompanyDetail.map((detail) =>
+          detail.label === fieldName
+            ? { ...detail, value: value, error: "" }
+            : detail
+        ),
+      });
+    } else {
+      setProfileData({
+        ...profileData,
+        companyDetail: profileData.companyDetail.map((detail) =>
+          detail.label === fieldName
+            ? { ...detail, value: value, error: "" }
+            : detail
+        ),
+      });
+    }
   };
 
-  const handleContactPersonInfo = (fieldName, value) => {
+  const handleContactPersonInfo = (index, fieldName, value, isCode) => {
+    const updatedProfileData = { ...profileData };
+    if (
+      updatedProfileData.contactPersonInfo &&
+      index >= 0 &&
+      index < updatedProfileData.contactPersonInfo.length
+    ) {
+      const contactDetail = updatedProfileData.contactPersonInfo[index];
+      const infoIndex = contactDetail.contactInfo.findIndex(
+        (detail) => detail.label === fieldName
+      );
+      if (isCode && infoIndex !== -1) {
+        contactDetail.contactInfo[infoIndex].codeValue = value;
+      }
+      if (infoIndex !== -1 && !isCode) {
+        contactDetail.contactInfo[infoIndex].value = value;
+        contactDetail.contactInfo[infoIndex].error = "";
+      }
+      setProfileData(updatedProfileData);
+    }
+  };
+
+  const handleSwitchChange = (index) => {
+    const updatedContactPersonInfo = profileData?.contactPersonInfo?.map(
+      (contact, idx) => {
+        if (idx === index) {
+          const isContactActive = !contact.isContactActive;
+          const updatedContactModules = isContactActive
+            ? contact.contactModules
+            : contact.contactModules.map((module) => ({
+                ...module,
+                defaultValues: [],
+                value: [],
+                options: module.options.map((option) => ({
+                  ...option,
+                  isSelected:
+                    index === option.selectedIndex ? false : option.isSelected,
+                  selectedIndex:
+                    index === option.selectedIndex
+                      ? null
+                      : option.selectedIndex,
+                })),
+              }));
+
+          return {
+            ...contact,
+            isContactActive: isContactActive,
+            contactModules: updatedContactModules,
+          };
+        }
+        const updatedContactModules = contact.contactModules.map((module) => ({
+          ...module,
+          options: module.options.map((option) =>
+            option.selectedIndex === index
+              ? {
+                  ...option,
+                  isSelected: false,
+                  selectedIndex: null,
+                }
+              : option
+          ),
+        }));
+        return {
+          ...contact,
+          contactModules: updatedContactModules,
+        };
+      }
+    );
+
     setProfileData({
       ...profileData,
-      contactPersonInfo: profileData.contactPersonInfo.map((detail) =>
-        detail.label === fieldName ? { ...detail, value: value } : detail
-      ),
+      contactPersonInfo: updatedContactPersonInfo,
     });
   };
 
   const handleCompanyProfile = (fieldName, value) => {
     const updatedCompanyProfile = profileData.companyProfile.map((detail) =>
-      detail.label === fieldName ? { ...detail, value: value } : detail
+      detail.label === fieldName
+        ? { ...detail, value: value, error: "" }
+        : detail
     );
 
     const updatedOtherDetails = profileData.otherDetails.map((detail) =>
-      detail.label === fieldName ? { ...detail, value: value } : detail
+      detail.label === fieldName
+        ? { ...detail, value: value, error: "" }
+        : detail
     );
 
     setProfileData({
@@ -322,28 +546,262 @@ const CompanyProfileComponent = () => {
 
   const handleEdit = (value) => {
     if (value) {
-      getIndustryTypes();
+      if (isWebPlatform) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setSearchParams((prev) => {
+          prev.set("mode", EDIT);
+          return prev;
+        });
+      }
     }
-    showIsEditProfile(value);
+    setIsEditProfile(value);
+  };
+
+  const handleModuleWarning = () => {
+    setModuleUpdateWarning((prev) => !prev);
+  };
+
+  const handleModuleAccess = (index, updatedSelectedItems) => {
+    const moduleOption = MODULE_OPTIONS.find(
+      (option) =>
+        intl.formatMessage({
+          id: option.messageId,
+        }) === updatedSelectedItems
+    );
+    const moduleId = moduleOption ? moduleOption.id : "";
+
+    const updatedContactPersonInfo = profileData?.contactPersonInfo?.map(
+      (contact, idx) => {
+        const updatedContact = { ...contact };
+        updatedContact.contactModules = contact.contactModules.map((module) => {
+          const updatedModule = { ...module };
+          updatedModule.options = module.options.map((option) => {
+            const updatedOption = { ...option };
+            if (
+              option.value === updatedSelectedItems &&
+              (option.isSelected || option.selectedIndex === index)
+            ) {
+              updatedOption.isSelected = false;
+              updatedOption.selectedIndex = null;
+            }
+            if (
+              option.value === updatedSelectedItems &&
+              option.selectedIndex === null &&
+              idx === index
+            ) {
+              updatedOption.isSelected = true;
+              updatedOption.selectedIndex = idx;
+            }
+            if (
+              option.value === updatedSelectedItems &&
+              option.selectedIndex === null &&
+              idx !== index
+            ) {
+              updatedOption.isSelected = false;
+              updatedOption.selectedIndex = index;
+            }
+            return updatedOption;
+          });
+          if (idx === index) {
+            const itemIndex = updatedModule.defaultValues.findIndex(
+              (item) => item.value === updatedSelectedItems
+            );
+            if (itemIndex > -1) {
+              updatedModule.defaultValues.splice(itemIndex, 1);
+            } else {
+              updatedModule.defaultValues.push({
+                value: updatedSelectedItems,
+                label: moduleId,
+                name: updatedSelectedItems,
+              });
+            }
+            const valueIndex = updatedModule.value?.findIndex(
+              (value) => value === moduleId
+            );
+            if (valueIndex > -1) {
+              updatedModule.value.splice(valueIndex, 1);
+            } else {
+              updatedModule.value = updatedModule.value || [];
+              updatedModule.value.push(moduleId);
+            }
+          }
+          return updatedModule;
+        });
+        return updatedContact;
+      }
+    );
+
+    setProfileData({
+      ...profileData,
+      contactPersonInfo: updatedContactPersonInfo,
+    });
+  };
+
+  const handleRemoveContactPerson = (indexToRemove) => {
+    let updatedContactPersonInfo;
+
+    updatedContactPersonInfo = profileData?.contactPersonInfo?.map(
+      (contact) => {
+        const updatedContactModules = contact.contactModules.map((module) => ({
+          ...module,
+          options: module.options.map((option) => {
+            return option.selectedIndex === indexToRemove
+              ? {
+                  ...option,
+                  isSelected: false,
+                  selectedIndex: null,
+                }
+              : option;
+          }),
+        }));
+        return {
+          ...contact,
+          contactModules: updatedContactModules,
+        };
+      }
+    );
+
+    updatedContactPersonInfo = updatedContactPersonInfo.filter(
+      (_, index) => index !== indexToRemove
+    );
+
+    setProfileData({
+      ...profileData,
+      contactPersonInfo: updatedContactPersonInfo,
+    });
+  };
+
+  const onAddContactPerson = () => {
+    const selectedModules = new Set();
+    profileData.contactPersonInfo.forEach((contact) => {
+      contact.contactModules?.[0].defaultValues.forEach((module) => {
+        selectedModules.add(module.value);
+      });
+    });
+
+    const activeContact = profileData.contactPersonInfo.find(
+      (contact) => contact.isContactActive
+    );
+
+    let newContactModuleOptions;
+    if (activeContact) {
+      newContactModuleOptions = activeContact.contactModules[0].options;
+    }
+
+    const newContactPerson = {
+      contactModules: [
+        {
+          label: "label.module",
+          value: [],
+          showBadgeLabel: true,
+          isMandatory: true,
+          isMultiSelect: true,
+          isDropdown: true,
+          placeholder: "label.select_module",
+          defaultValues: [],
+          options: newContactModuleOptions,
+        },
+      ],
+      contactInfo: [
+        {
+          label: "label.salutation",
+          value: "",
+          isDropdown: true,
+          options: SALUTATION_OPTIONS,
+          placeholder: "label.select",
+          isMandatory: true,
+        },
+        {
+          id: 0,
+          key: "name",
+          label: "label.contact_person_name",
+          value: "",
+          isMandatory: true,
+          maxLength: 255,
+          placeholder: "label.enter_contact_person_name",
+        },
+        {
+          key: "designation",
+          label: "label.contact_personal_designation",
+          value: "",
+          maxLength: 500,
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_designation",
+        },
+        {
+          key: "mobileNo",
+          label: "label.mobile_number",
+          isMobileNumber: true,
+          value: "",
+          codeValue: "",
+          options: countryCodes,
+          isNumeric: true,
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_mobile_no",
+        },
+        {
+          key: "contactEmailId",
+          label: "label.email_id",
+          value: "",
+          isMandatory: true,
+          placeholder: "label.enter_contact_person_email_id",
+        },
+      ],
+      isNewContactPerson: true,
+    };
+
+    setProfileData({
+      ...profileData,
+      contactPersonInfo: [...profileData.contactPersonInfo, newContactPerson],
+    });
+  };
+
+  const handleunoccupiedModules = () => {
+    setUnoccupiedModules([]);
   };
 
   return (
     <CompanyProfileUI
-      handleBlur={handleBlur}
-      allFieldsFilled={allFieldsFilled}
-      error={errorWhileGettingResult}
-      handleCompanyDetailChange={handleCompanyDetailChange}
-      handleContactPersonInfo={handleContactPersonInfo}
-      handleCompanyProfile={handleCompanyProfile}
-      handleEdit={handleEdit}
-      handleToggle={handleToggle}
-      intl={intl}
-      isLoading={isLoading}
-      isEditProfile={isEditProfile}
-      options={options}
-      onGoBack={onGoBack}
-      onSaveClick={onSaveClick}
-      profileResult={profileData}
+      {...{
+        currentUser: userProfileState?.userDetails?.id,
+        error: errorWhileGettingResult,
+        errorWhileDeletion,
+        errorWhileUpload,
+        handleBlur,
+        handleCompanyDetailChange,
+        handleContactPersonInfo,
+        handleCompanyProfile,
+        handleDismissToast,
+        handleEdit,
+        handleModuleAccess,
+        handleModuleWarning,
+        handleModuleToggle,
+        handleRemoveContactPerson,
+        handleSwitchChange,
+        handleunoccupiedModules,
+        handleToggle,
+        isEditProfile,
+        isLoading,
+        isUpdatingCompanyProfile,
+        moduleOptions,
+        moduleUpdateWarning,
+        options,
+        onAddContactPerson,
+        onDeleteImage: handleImageDeletion,
+        onGoBack,
+        onSaveClick,
+        profileResult: profileData,
+        unoccupiedModules,
+        updationError,
+        uploadImageToServerUtils: {
+          fileUploadResult,
+          handleFileUpload,
+          isUploadingImageToServer,
+          setFileUploadResult,
+          uploadPercentage,
+        },
+        sureSaveProfile,
+      }}
     />
   );
 };

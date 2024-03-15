@@ -85,6 +85,7 @@ const style = {
     flexDirection: "row",
   },
   textInputStyle: {
+    fontWeight: "500",
     flex: 1,
     fontFamily,
     fontSize: 14,
@@ -93,6 +94,11 @@ const style = {
     textAlign: "auto",
   },
   errorMsg: {
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+      },
+    }),
     color: colors.errorRed,
     lineHeight: 18,
   },
@@ -206,6 +212,20 @@ const style = {
     backgroundColor: colors.secondaryGrey,
     borderRadius: 10,
     marginLeft: 5,
+  },
+  disabledStyle: {
+    backgroundColor: colors.disabledTextFieldColor,
+  },
+  limitStyle: {
+    color: colors.darkGrey,
+    paddingTop: 2,
+  },
+  errorAndCountLimitBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  onlyCountLimitBox: {
+    justifyContent: "flex-end",
   },
 };
 

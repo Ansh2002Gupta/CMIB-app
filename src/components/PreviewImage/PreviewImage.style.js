@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
     width: "100%",
     backgroundColor: colors.white,
@@ -47,18 +47,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 8,
     paddingTop: 16,
     paddingBottom: 16,
-  },
-  textContainerBox: {
-    ...Platform.select({
-      web: {
-        flexShrink: "unset",
-      },
-    }),
-  },
-  nameStyle: {
-    color: colors.darkBlue,
-    fontSize: 14,
-    lineHeight: 24,
   },
   deleteIcon: {
     ...Platform.select({
