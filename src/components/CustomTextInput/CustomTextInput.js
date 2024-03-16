@@ -367,6 +367,7 @@ const CustomTextInput = (props) => {
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
             ref={fieldRef}
+            type={isNumeric ? "number" : "text"}
             {...platformSpecificProps}
             {...(isNumeric ? mobileProps : {})}
             {...remainingProps}

@@ -9,12 +9,13 @@ import {
 import useFetch from "../../../hooks/useFetch";
 import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
 import { useIntl } from "react-intl";
+import { validateEmail } from "../../../utils/validation";
 
 const personal_detail = [
   {
     key: "gender",
     isMandatory: true,
-    isDropDown: true,
+    isDropdown: true,
     options: GENDER,
     label: "label.gender",
     placeholder: "label.gender",
@@ -27,10 +28,15 @@ const personal_detail = [
   {
     key: "marital_status",
     isMandatory: true,
-    isDropDown: true,
+    isDropdown: true,
     options: MARITAL_STATUS,
     label: "label.marital_status",
     placeholder: "label.marital_status",
+    validate: (value) => {
+      if (!value) {
+        return "Marital Status is required";
+      }
+    },
   },
   {
     key: "date_of_birth",
@@ -38,6 +44,11 @@ const personal_detail = [
     isDate: true,
     label: "label.date_of_birth",
     placeholder: "label.date_of_birth",
+    validate: (value) => {
+      if (!value) {
+        return "Date of Birth is required";
+      }
+    },
   },
   {
     key: "email",
@@ -45,20 +56,38 @@ const personal_detail = [
     isEmail: true,
     label: "label.email",
     placeholder: "label.email",
+    validate: (value) => {
+      if (!value) {
+        return "Email is required";
+      }
+      const err = validateEmail(value);
+      if (err) {
+        return err;
+      }
+    },
   },
   {
     key: "passport",
     isMandatory: true,
-    isRadio: true,
+    isToggle: true,
     label: "label.passport",
     placeholder: "label.passport",
+    validate: (value) => {
+      if (!value) {
+        return "Passport is required";
+      }
+    },
   },
   {
-    key: "phone",
+    key: "passport_number",
     isMandatory: true,
-    isPhone: true,
     label: "label.passport_number",
     placeholder: "label.passport_number",
+    validate: (value) => {
+      if (!value) {
+        return "Passport Number is required";
+      }
+    },
   },
 ];
 const correspondence_address = (countryData) => [
@@ -69,10 +98,14 @@ const correspondence_address = (countryData) => [
     noOfRows: 2,
     label: "label.address1",
     placeholder: "label.address1",
+    validate: (value) => {
+      if (!value) {
+        return "Address is required";
+      }
+    },
   },
   {
     key: "address2",
-    isMandatory: true,
     isMultiline: true,
     noOfRows: 2,
     label: "label.address2",
@@ -80,7 +113,6 @@ const correspondence_address = (countryData) => [
   },
   {
     key: "address3",
-    isMandatory: true,
     isMultiline: true,
     noOfRows: 2,
     label: "label.address3",
@@ -89,23 +121,35 @@ const correspondence_address = (countryData) => [
   {
     key: "country",
     isMandatory: true,
-    isDropDown: true,
     label: "label.country",
     placeholder: "label.country",
+    validate: (value) => {
+      if (!value) {
+        return "Country is required";
+      }
+    },
   },
   {
     key: "state",
     isMandatory: true,
-    isDropDown: true,
     label: "label.state",
     placeholder: "label.state",
+    validate: (value) => {
+      if (!value) {
+        return "State is required";
+      }
+    },
   },
   {
     key: "city",
     isMandatory: true,
-    isDropDown: true,
     label: "label.city",
     placeholder: "label.city",
+    validate: (value) => {
+      if (!value) {
+        return "City is required";
+      }
+    },
   },
   {
     key: "pincode",
@@ -113,14 +157,19 @@ const correspondence_address = (countryData) => [
     isNumeric: true,
     label: "label.pincode",
     placeholder: "label.pincode",
+    validate: (value) => {
+      if (!value) {
+        return "Pincode is required";
+      }
+    },
   },
   {
     key: "mobile_number",
     isMandatory: true,
     isMobileNumber: true,
+    isNumeric: true,
     label: "label.mobile_number",
     placeholder: "label.mobile_number",
-    codeValue: "+91",
     options: countryData,
     validate: (value, intl) => {
       if (
@@ -139,6 +188,11 @@ const correspondence_address = (countryData) => [
     isMandatory: true,
     label: "label.nationality",
     placeholder: "label.nationality",
+    validate: (value) => {
+      if (!value) {
+        return "Nationality is required";
+      }
+    },
   },
 ];
 
@@ -150,10 +204,14 @@ const permanent_address = [
     noOfRows: 2,
     label: "label.address1",
     placeholder: "label.address1",
+    validate: (value) => {
+      if (!value) {
+        return "Address is required";
+      }
+    },
   },
   {
     key: "permanent_address2",
-    isMandatory: true,
     isMultiline: true,
     noOfRows: 2,
     label: "label.address2",
@@ -161,7 +219,6 @@ const permanent_address = [
   },
   {
     key: "permanent_address3",
-    isMandatory: true,
     isMultiline: true,
     noOfRows: 2,
     label: "label.address3",
@@ -170,23 +227,35 @@ const permanent_address = [
   {
     key: "permanent_country",
     isMandatory: true,
-    isDropDown: true,
     label: "label.country",
     placeholder: "label.country",
+    validate: (value) => {
+      if (!value) {
+        return "Country is required";
+      }
+    },
   },
   {
     key: "permanent_state",
     isMandatory: true,
-    isDropDown: true,
     label: "label.state",
     placeholder: "label.state",
+    validate: (value) => {
+      if (!value) {
+        return "State is required";
+      }
+    },
   },
   {
     key: "permanent_city",
     isMandatory: true,
-    isDropDown: true,
     label: "label.city",
     placeholder: "label.city",
+    validate: (value) => {
+      if (!value) {
+        return "City is required";
+      }
+    },
   },
   {
     key: "permanent_pincode",
@@ -194,14 +263,20 @@ const permanent_address = [
     isNumeric: true,
     label: "label.pincode",
     placeholder: "label.pincode",
+    validate: (value) => {
+      if (!value) {
+        return "Pincode is required";
+      }
+    },
   },
 ];
 
-const addValueOnField = ({ state, details }) => {
+const addValueOnField = ({ state, details, isEditable }) => {
   return details.map((item) => {
     return {
       ...item,
-      value: state[item.key],
+      value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+      codeValue: state.codeValue,
     };
   });
 };
@@ -221,7 +296,7 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
   return updatedData;
 };
 
-export const usePersonalDetails = ({ state, setState }) => {
+export const usePersonalDetails = ({ state, isEditable }) => {
   const intl = useIntl();
   const { data: countryData } = useFetch({ url: COUNTRY_CODE });
   const [personal_detail_state, setPersonalDetailState] =
@@ -269,18 +344,39 @@ export const usePersonalDetails = ({ state, setState }) => {
     );
   };
 
+  const checkMandatoryFields = () => {
+    let error = false;
+    [
+      ...personal_detail_state,
+      ...correspondence_address_state,
+      ...permanent_address_state,
+    ].forEach((item) => {
+      if (item.isMandatory && !state[item.key]) {
+        error = true;
+      }
+    });
+    return error;
+  };
+
   return {
-    personal_detail: addValueOnField({ state, details: personal_detail_state }),
+    personal_detail: addValueOnField({
+      state,
+      details: personal_detail_state,
+      isEditable,
+    }),
     correspondence_address: addValueOnField({
       state,
       details: correspondence_address_state,
+      isEditable,
     }),
     permanent_address: addValueOnField({
       state,
       details: permanent_address_state,
+      isEditable,
     }),
     handlePersonalDetailBlur,
     handleCorrespondenceAddressBlur,
     handlePermanentAddressBlur,
+    isValidAllFields: checkMandatoryFields(),
   };
 };

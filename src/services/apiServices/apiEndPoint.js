@@ -34,3 +34,6 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+
+/* API Endpoints Member CA JOB profile */
+export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
