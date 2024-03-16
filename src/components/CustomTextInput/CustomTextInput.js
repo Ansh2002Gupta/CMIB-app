@@ -25,6 +25,7 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
+import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
 
 const CustomTextInput = (props) => {
   const {
@@ -58,6 +59,7 @@ const CustomTextInput = (props) => {
     isPaddingNotRequired,
     isPassword,
     isRupee,
+    isToggle,
     isSendButton,
     isLoading,
     isSelected,
@@ -223,6 +225,14 @@ const CustomTextInput = (props) => {
           maxCount={maxCount}
           onCountChange={handleCountChange}
           step={step}
+        />
+      );
+    }
+    if (isToggle) {
+      return (
+        <CustomToggleComponent
+          isMandatory={isMandatory}
+          customToggleStyle={style.customToggleStyle}
         />
       );
     }

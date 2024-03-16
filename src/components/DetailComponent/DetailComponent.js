@@ -164,6 +164,7 @@ const DetailComponent = ({
         placeholder={intl.formatMessage({ id: detail.placeholder })}
         maxLength={detail.maxLength}
         isNumeric={detail.isNumeric}
+        isRadio={detail.isToggle}
         valueField={detail.valueField || "label"}
         labelField={detail.labelField || "label"}
         inputKey={detail.inputKey || "value"}
