@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -44,7 +44,11 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   buttonMobileStyle: {
-    marginBottom: 30,
+    ...Platform.select({
+      ios: {
+        marginBottom: 30,
+      },
+    }),
   },
   middleSectionWeb: {
     minHeight: 278,

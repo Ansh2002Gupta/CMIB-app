@@ -4,7 +4,9 @@ import { useNavigate } from "../../routes";
 import { TwoRow } from "../../core/layouts";
 
 import CustomTable from "../../components/CustomTable";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useTicketListing from "./controller/useTicketListing";
 import { navigations } from "../../constants/routeNames";
 import {
@@ -29,6 +31,8 @@ const TicketsListing = () => {
     handleSearchResults,
     handleSaveAddTicket,
     headingTexts,
+    getErrorDetails,
+    isError,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
@@ -38,6 +42,7 @@ const TicketsListing = () => {
     onIconPress,
     queryTypeData,
     rowsPerPage,
+    setUpdationError,
     setCurrentRecords,
     statusData,
     statusText,
@@ -45,6 +50,7 @@ const TicketsListing = () => {
     tableIcon,
     ticketListingData,
     totalcards,
+    updationError,
   } = useTicketListing();
 
   const intl = useIntl();
@@ -76,46 +82,62 @@ const TicketsListing = () => {
       }
       isBottomFillSpace
       bottomSection={
-        <CustomTable
-          {...{
-            addNewTicket,
-            allDataLoaded,
-            currentPage,
-            currentRecords,
-            data: ticketListingData,
-            filterApplyHandler,
-            filterCategory,
-            getColoumConfigs,
-            getStatusStyle,
-            handleTicketModal,
-            handleLoadMore,
-            handlePageChange,
-            handleRowPerPageChange,
-            handleSearchResults,
-            handleSaveAddTicket,
-            headingTexts,
-            indexOfFirstRecord,
-            indexOfLastRecord,
-            isHeading,
-            isTicketListingLoading,
-            isFirstPageReceived,
-            loadingMore,
-            onIconPress,
-            queryTypeData,
-            rowsLimit,
-            rowsPerPage,
-            setCurrentRecords,
-            statusData,
-            statusText,
-            subHeadingText,
-            tableHeading,
-            tableIcon,
-            totalcards,
-            placeholder: intl.formatMessage({
-              id: "label.search_by_ticket",
-            }),
-          }}
-        />
+        <>
+          {!isError && (
+            <CustomTable
+              {...{
+                addNewTicket,
+                allDataLoaded,
+                currentPage,
+                currentRecords,
+                data: ticketListingData,
+                filterApplyHandler,
+                filterCategory,
+                getColoumConfigs,
+                getStatusStyle,
+                handleTicketModal,
+                handleLoadMore,
+                handlePageChange,
+                handleRowPerPageChange,
+                handleSearchResults,
+                handleSaveAddTicket,
+                headingTexts,
+                indexOfFirstRecord,
+                indexOfLastRecord,
+                isHeading,
+                isTicketListingLoading,
+                isFirstPageReceived,
+                loadingMore,
+                onIconPress,
+                queryTypeData,
+                rowsLimit,
+                rowsPerPage,
+                setCurrentRecords,
+                statusData,
+                statusText,
+                subHeadingText,
+                tableHeading,
+                tableIcon,
+                totalcards,
+                placeholder: intl.formatMessage({
+                  id: "label.search_by_ticket",
+                }),
+              }}
+            />
+          )}
+          {isError && getErrorDetails() && (
+            <ErrorComponent
+              errorMsg={getErrorDetails().errorMessage}
+              onRetry={() => getErrorDetails().onRetry()}
+            />
+          )}
+          {!!updationError && (
+            <ToastComponent
+              toastMessage={updationError}
+              onDismiss={() => setUpdationError("")}
+            />
+          )}
+        </>
       }
     />
   );
