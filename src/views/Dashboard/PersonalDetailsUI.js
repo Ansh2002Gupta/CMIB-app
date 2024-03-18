@@ -1,10 +1,10 @@
 import { ScrollView, View } from "@unthinkable/react-core-components";
-import style from "./PersonalDetail.style";
+import style from "./PersonalDetails.style";
 import DetailCard from "../../components/DetailCard";
 import { useIntl } from "react-intl";
 import useIsWebView from "../../hooks/useIsWebView";
 import ActionPairButton from "../../components/ActionPairButton";
-const PersonalDetailUI = ({
+const PersonalDetailsUI = ({
   isEditable = true,
   correspondence_address,
   permanent_address,
@@ -96,4 +96,4 @@ const PersonalDetailUI = ({
   );
 };
 
-export default PersonalDetailUI;
+export default PersonalDetailsUI;

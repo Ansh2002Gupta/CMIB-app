@@ -10,6 +10,7 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
 import styles from "./dashboard.style";
+import JobProfileTab from "./JobProfileTab";
 
 // Just ignore this file as just to test custom component
 function DashboardView() {
@@ -60,7 +61,7 @@ function DashboardView() {
       isFillSpace: false,
     },
   ];
-
+  return <JobProfileTab />;
   return (
     <View style={styles.container}>
       <CommonText customTextStyle={styles.header}>
