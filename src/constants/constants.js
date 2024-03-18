@@ -1,5 +1,3 @@
-import { navigations } from "./routeNames";
-
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
