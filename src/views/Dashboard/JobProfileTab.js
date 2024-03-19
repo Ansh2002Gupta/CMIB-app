@@ -3,6 +3,7 @@ import { TabView } from "../../components/Tab";
 import EducationDetailsTab from "./EducationDetailsTab";
 import PersonalDetailsComponent from "./PersonalDetailsComponent";
 import CommonText from "../../components/CommonText";
+import MembershipDetailComponent from "./Membership Details/MembershipDetailComponent";
 
 const JobProfileTab = () => {
   return (
@@ -30,6 +31,10 @@ const JobProfileTab = () => {
           {
             label: "Education Details",
             component: <EducationDetailsTab />,
+          },
+          {
+            label: "Membership Details",
+            component: <MembershipDetailComponent />,
           },
         ]}
       />

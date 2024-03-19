@@ -4,6 +4,7 @@ import DetailCard from "../../../components/DetailCard";
 import { useIntl } from "react-intl";
 import useIsWebView from "../../../hooks/useIsWebView";
 import ActionPairButton from "../../../components/ActionPairButton";
+import SaveCancelButton from "../SaveCancelButton";
 const MembershipDetailUI = ({
   isEditable = true,
   membership_detail,
@@ -21,42 +22,6 @@ const MembershipDetailUI = ({
   const intl = useIntl();
   const { isWebView } = useIsWebView();
 
-  const renderSaveCancelButton = () => {
-    if (isEditable) {
-      const isWebProps = isWebView
-        ? {
-            buttonOneStyle: style.customButtonStyle,
-            buttonOneTextStyle: style.buttonTextStyle,
-            buttonTwoStyle: style.customButtonStyle,
-            buttonTwoTextStyle: style.buttonTextStyle,
-            buttonOneContainerStyle: style.customButtonStyle,
-            buttonTwoContainerStyle: style.customButtonStyle,
-          }
-        : {};
-      return (
-        <View
-          style={{
-            ...(isWebView ? style.webButtonContainer : {}),
-            ...style.buttonContainer,
-          }}
-        >
-          <ActionPairButton
-            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
-            displayLoader={isLoading}
-            isButtonTwoGreen
-            isDisabled={isLoading || isValidAllFields}
-            onPressButtonOne={onClickCancel}
-            onPressButtonTwo={onClickSave}
-            customStyles={{
-              ...isWebProps,
-            }}
-          />
-        </View>
-      );
-    }
-    return null;
-  };
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -85,7 +50,13 @@ const MembershipDetailUI = ({
           handleBlur={handlePracticeDetailBlur}
         />
       </View>
-      {renderSaveCancelButton()}
+      <SaveCancelButton
+        isEditable={isEditable}
+        isLoading={isLoading}
+        onClickSave={onClickSave}
+        onClickCancel={onClickCancel}
+        isValidAllFields={isValidAllFields}
+      />
     </ScrollView>
   );
 };

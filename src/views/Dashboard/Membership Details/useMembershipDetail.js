@@ -6,67 +6,13 @@ import { useIntl } from "react-intl";
 const membership_detail = [
   {
     key: "date_of_enrollment",
-    isMandatory: false,
+    isMandatory: true,
     isDate: true,
     label: "label.dateOfEmrollmentAsMember",
     placeholder: "label.dateOfEmrollmentAsMember",
     validate: (value) => {
       if (!value) {
         return "Date of Enrollment is required";
-      }
-    },
-  },
-];
-
-const fellow_member_detail = [
-  {
-    key: "fellowMember",
-    isMandatory: false,
-    isToggle: true,
-    label: "label.areYouAFellowMember",
-    placeholder: "label.areYouAFellowMember",
-    validate: (value) => {
-      if (!value) {
-        return "Fellow member is required";
-      }
-    },
-  },
-  {
-    key: "fellow_member_admission_date",
-    isMandatory: false,
-    isDate: true,
-    label: "label.fellowMemberDateOfAdmission",
-    placeholder: "label.fellowMemberDateOfAdmission",
-    validate: (value) => {
-      if (!value) {
-        return "Fellow member date of admission is required";
-      }
-    },
-  },
-];
-
-const practice_detail = [
-  {
-    key: "inPractice",
-    isMandatory: false,
-    isToggle: true,
-    label: "label.whetherInPractice",
-    placeholder: "label.whetherInPractice",
-    validate: (value) => {
-      if (!value) {
-        return "Whether in practice is required";
-      }
-    },
-  },
-  {
-    key: "sinceWhenPracticing",
-    isMandatory: false,
-    isDate: true,
-    label: "label.sinceWhenHaveYouBeenPracticing",
-    placeholder: "label.sinceWhenHaveYouBeenPracticing",
-    validate: (value) => {
-      if (!value) {
-        return "since when have you been practicing is required";
       }
     },
   },
@@ -97,13 +43,72 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
   return updatedData;
 };
 
-export const useMembershipDetail = ({ state, isEditable }) => {
+export const useMembershipDetail = ({ state, isEditable}) => {
+  useEffect(() => {
+    const fellow_member_detail = [
+      {
+        key: "isFellowMember",
+        isMandatory: true,
+        isToggle: true,
+        label: "label.areYouAFellowMember",
+        placeholder: "label.areYouAFellowMember",
+        validate: (value) => {
+          if (!value) {
+            return "Fellow member is required";
+          }
+        },
+      },
+      ...(state.isFellowMember === 0 ? [{
+        key: "fellow_member_admission_date",
+        isMandatory: false,
+        isDate: true,
+        label: "label.fellowMemberDateOfAdmission",
+        placeholder: "label.fellowMemberDateOfAdmission",
+        validate: (value) => {
+          if (!value) {
+            return "Fellow member date of admission is required";
+          }
+        },
+      }] : []),
+    ];
+    setFellowMemberDetailState(fellow_member_detail);
+  }, [state.isFellowMember]);
+
+  useEffect(() => {
+    const practice_detail = [
+      {
+        key: "inPractice",
+        isMandatory: true,
+        isToggle: true,
+        label: "label.whetherInPractice",
+        placeholder: "label.whetherInPractice",
+        validate: (value) => {
+          if (!value) {
+            return "Whether in practice is required";
+          }
+        },
+      },
+      ...(state.inPractice === 0 ? [{
+        key: "sinceWhenPracticing",
+        isMandatory: false,
+        isDate: true,
+        label: "label.sinceWhenHaveYouBeenPracticing",
+        placeholder: "label.sinceWhenHaveYouBeenPracticing",
+        validate: (value) => {
+          if (!value) {
+            return "since when have you been practicing is required";
+          }
+        },
+      },] : []),
+    ];
+    setPracticeDetailState(practice_detail);
+  }, [state.inPractice]);
+
   const intl = useIntl();
   const { data: countryData } = useFetch({ url: COUNTRY_CODE });
   const [membership_detail_state, setMembershipDetailState] = useState(membership_detail);
-  const [fellow_member_detail_state, setFellowMemberDetailState] = useState(fellow_member_detail);
-  const [practice_detail_state, setPracticeDetailState] = useState(practice_detail);
-
+  const [fellow_member_detail_state, setFellowMemberDetailState] = useState([]);
+  const [practice_detail_state, setPracticeDetailState] = useState([]);
   const handleMembershipDetailBlur = (key, index) => {
     setMembershipDetailState(
       validateOnBlur({
