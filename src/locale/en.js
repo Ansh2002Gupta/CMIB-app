@@ -389,6 +389,13 @@ const locale = {
     "Please login using your updated email and password that you have received on your updated email.",
   "label.session_has_expired": "Your session has been expired.",
   "label.your_access_has_been_revoked": "Your access has been revoked.",
+  "label.name_of_examination": "Name of Examination",
+  "label.name_of_examination_placeholder": "10th/Metric/S.S",
+  "label.board_university": "Board/University",
+  "label.higher_secondary": "Higher Secondary",
+  "label.graduation": "Graduation",
+  "label.post_graduation": "Post Graduation",
+  "label.education_details": "Education Details",
 };
 
 export default locale;

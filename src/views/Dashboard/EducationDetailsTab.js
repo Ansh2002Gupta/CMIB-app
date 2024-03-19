@@ -3,10 +3,11 @@ import { FormTab } from "../../components/Tab";
 import EducationDetailComponent from "./EducationDetailsComponent";
 import ExamsComponent from "./ExamsComponent";
 import OtherCoursesComponent from "./OtherCoursesComponent";
+import colors from "../../assets/colors";
 
 const EducationDetailsTab = () => {
   return (
-    <View style={{ padding: 16 }}>
+    <View style={{ padding: 16, backgroundColor: colors.backgroundGrey }}>
       <FormTab
         tabs={[
           {
