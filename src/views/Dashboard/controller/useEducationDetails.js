@@ -17,7 +17,6 @@ const educational_detail = () => [
   },
   {
     key: "board",
-    isDropdown: true,
     label: "label.board_university",
     placeholder: "label.board_university",
   },
@@ -55,7 +54,6 @@ const higher_secondary_detail = () => [
   },
   {
     key: "higher_board",
-    isDropdown: true,
     label: "label.board_university",
     placeholder: "label.board_university",
   },
@@ -101,7 +99,6 @@ const graduation_detail = () => [
   },
   {
     key: "graduation_board",
-    isDropdown: true,
     label: "label.board_university",
     placeholder: "label.board_university",
   },
@@ -147,7 +144,6 @@ const post_graduation_detail = () => [
   },
   {
     key: "post_graduation_board",
-    isDropdown: true,
     label: "label.board_university",
     placeholder: "label.board_university",
   },

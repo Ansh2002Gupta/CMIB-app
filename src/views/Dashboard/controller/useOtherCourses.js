@@ -10,7 +10,6 @@ const other_courses = () => [
   },
   {
     key: "board",
-    isDropdown: true,
     label: "label.board_university",
     placeholder: "label.board_university",
   },
