@@ -389,6 +389,12 @@ const locale = {
     "Please login using your updated email and password that you have received on your updated email.",
   "label.session_has_expired": "Your session has been expired.",
   "label.your_access_has_been_revoked": "Your access has been revoked.",
+  "label.membershipDetail": "Membership Details",
+  "label.dateOfEmrollmentAsMember": "Date of enrollment as Member",
+  "label.areYouAFellowMember": "Are you a fellow member?",
+  "label.fellowMemberDateOfAdmission": "If a Fellow, please provide date of admission as a Fellow Member",
+  "label.whetherInPractice": "Whether in Practice",
+  "label.sinceWhenHaveYouBeenPracticing": "Since when you have been practicing? (Select months and years)",
 };
 
 export default locale;

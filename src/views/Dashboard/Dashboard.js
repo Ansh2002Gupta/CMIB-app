@@ -10,6 +10,8 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
 import styles from "./dashboard.style";
+import PersonalDetailComponent from "./PersonalDetailComponent";
+import MembershipDetailComponent from "./Membership Details/MembershipDetailComponent";
 
 // Just ignore this file as just to test custom component
 function DashboardView() {
@@ -60,6 +62,9 @@ function DashboardView() {
       isFillSpace: false,
     },
   ];
+
+  //return <PersonalDetailComponent />;
+  return <MembershipDetailComponent />;
 
   return (
     <View style={styles.container}>
