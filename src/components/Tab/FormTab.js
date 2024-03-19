@@ -12,7 +12,7 @@ const FormTab = ({ tabs }) => {
   return (
     <View style={styles.container}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <Row gap={12}>
+        <Row gap={12} style={styles.tabContainer}>
           {tabs.map((tab, index) => {
             const { label } = tab;
             return (

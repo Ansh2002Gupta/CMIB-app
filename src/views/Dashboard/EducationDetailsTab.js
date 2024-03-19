@@ -7,7 +7,7 @@ import colors from "../../assets/colors";
 
 const EducationDetailsTab = () => {
   return (
-    <View style={{ padding: 16, backgroundColor: colors.backgroundGrey }}>
+    <View style={{ backgroundColor: colors.backgroundGrey }}>
       <FormTab
         tabs={[
           {
