@@ -396,6 +396,7 @@ const locale = {
   "label.graduation": "Graduation",
   "label.post_graduation": "Post Graduation",
   "label.education_details": "Education Details",
+  "label.grade_cgpa": "Grade/CGPA",
 };
 
 export default locale;

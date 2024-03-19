@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Education_Status_Options } from "../../../constants/constants";
+import { Education_Status_Options, YEARS } from "../../../constants/constants";
 import { useIntl } from "react-intl";
 
 const educational_detail = () => [
@@ -26,6 +26,7 @@ const educational_detail = () => [
     isDropdown: true,
     label: "label.year",
     placeholder: "label.year",
+    options: YEARS,
   },
   {
     key: "mark_in_percent",
@@ -63,6 +64,7 @@ const higher_secondary_detail = () => [
     isDropdown: true,
     label: "label.year",
     placeholder: "label.year",
+    options: YEARS,
   },
   {
     key: "higher_secondary_mark_in_percent",
@@ -108,6 +110,7 @@ const graduation_detail = () => [
     isDropdown: true,
     label: "label.year",
     placeholder: "label.year",
+    options: YEARS,
   },
   {
     key: "graduation_mark_in_percent",
@@ -153,6 +156,7 @@ const post_graduation_detail = () => [
     isDropdown: true,
     label: "label.year",
     placeholder: "label.year",
+    options: YEARS,
   },
   {
     key: "post_graduation_mark_in_percent",
