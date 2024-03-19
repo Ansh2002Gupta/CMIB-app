@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import PersonalDetailUI from "./PersonalDetailUI";
+import PersonalDetailsUI from "./PersonalDetailsUI";
 import { usePersonalDetails } from "./controller/usePersonalDetails";
 import useFetch from "../../hooks/useFetch";
 import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
-const PersonalDetailComponent = ({ isEditable = true }) => {
+const PersonalDetailsComponent = ({ isEditable = true }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -59,10 +59,9 @@ const PersonalDetailComponent = ({ isEditable = true }) => {
       }));
     }
   };
-  console.log("state::", state)
 
   return (
-    <PersonalDetailUI
+    <PersonalDetailsUI
       correspondence_address={correspondence_address}
       permanent_address={permanent_address}
       personal_detail={personal_detail}
@@ -86,4 +85,4 @@ const PersonalDetailComponent = ({ isEditable = true }) => {
   );
 };
 
-export default PersonalDetailComponent;
+export default PersonalDetailsComponent;

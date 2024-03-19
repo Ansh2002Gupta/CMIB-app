@@ -1,10 +1,10 @@
 import { ScrollView, View } from "@unthinkable/react-core-components";
-import style from "./PersonalDetail.style";
+import style from "./PersonalDetails.style";
 import DetailCard from "../../components/DetailCard";
 import { useIntl } from "react-intl";
-import useIsWebView from "../../hooks/useIsWebView";
-import ActionPairButton from "../../components/ActionPairButton";
-const PersonalDetailUI = ({
+import SaveCancelButton from "./SaveCancelButton";
+
+const PersonalDetailsUI = ({
   isEditable = true,
   correspondence_address,
   permanent_address,
@@ -19,44 +19,7 @@ const PersonalDetailUI = ({
   isValidAllFields,
 }) => {
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
 
-  const renderSaveCancelButton = () => {
-    if (isEditable) {
-      const isWebProps = isWebView
-        ? {
-            buttonOneStyle: style.customButtonStyle,
-            buttonOneTextStyle: style.buttonTextStyle,
-            buttonTwoStyle: style.customButtonStyle,
-            buttonTwoTextStyle: style.buttonTextStyle,
-            buttonOneContainerStyle: style.customButtonStyle,
-            buttonTwoContainerStyle: style.customButtonStyle,
-          }
-        : {};
-      return (
-        <View
-          style={{
-            ...(isWebView ? style.webButtonContainer : {}),
-            ...style.buttonContainer,
-          }}
-        >
-          <ActionPairButton
-            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            buttonTwoText={intl.formatMessage({ id: "label.save_changes" })}
-            displayLoader={isLoading}
-            isButtonTwoGreen
-            isDisabled={isLoading || isValidAllFields}
-            onPressButtonOne={onClickCancel}
-            onPressButtonTwo={onClickSave}
-            customStyles={{
-              ...isWebProps,
-            }}
-          />
-        </View>
-      );
-    }
-    return null;
-  };
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -91,9 +54,15 @@ const PersonalDetailUI = ({
           handleBlur={handlePermanentAddressBlur}
         />
       </View>
-      {renderSaveCancelButton()}
+      <SaveCancelButton
+        isEditable={isEditable}
+        isLoading={isLoading}
+        onClickSave={onClickSave}
+        onClickCancel={onClickCancel}
+        isValidAllFields={isValidAllFields}
+      />
     </ScrollView>
   );
 };
 
-export default PersonalDetailUI;
+export default PersonalDetailsUI;
