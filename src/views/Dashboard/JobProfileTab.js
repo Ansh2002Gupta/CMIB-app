@@ -13,10 +13,13 @@ import { useState } from "react";
 import CustomImage from "../../components/CustomImage";
 import images from "../../images";
 import { useIntl } from "react-intl";
+import useIsWebView from "../../hooks/useIsWebView";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
-  if (!isEditable) {
+  const isWebView = useIsWebView();
+  if (isEditable) return null;
+  if (isWebView) {
     return (
       <CardComponent customStyle={style.cardContainer}>
         <TouchableOpacity
