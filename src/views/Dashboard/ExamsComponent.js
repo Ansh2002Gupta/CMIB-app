@@ -6,7 +6,7 @@ import { MEMBER_CA_JOB_PROFILE_EXAMS } from "../../services/apiServices/apiEndPo
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useExams } from "./controller/useExams";
 
-const ExamsComponent = ({ isEditable = true }) => {
+const ExamsComponent = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -69,10 +69,12 @@ const ExamsComponent = ({ isEditable = true }) => {
       onClickSave={() => {
         handleUpdate(state, () => {
           // turn off the edit mode
+          handleEdit(false);
         });
       }}
       onClickCancel={() => {
         // turn off the edit mode
+        handleEdit(false);
       }}
     />
   );

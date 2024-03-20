@@ -7,7 +7,8 @@ import {
 } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import styles from "./FormTab.style";
-const FormTab = ({ tabs }) => {
+
+export const FormTab = ({ tabs }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   return (
     <View style={styles.container}>

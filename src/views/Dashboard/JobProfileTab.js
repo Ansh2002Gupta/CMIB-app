@@ -1,35 +1,80 @@
-import { View } from "@unthinkable/react-core-components";
+import {
+  Row,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 import { TabView } from "../../components/Tab";
 import EducationDetailsTab from "./EducationDetailsTab";
 import PersonalDetailsComponent from "./PersonalDetailsComponent";
 import CommonText from "../../components/CommonText";
+import style from "./JobProfileTab.style";
+import CardComponent from "../../components/CardComponent";
+import { useState } from "react";
+import CustomImage from "../../components/CustomImage";
+import images from "../../images";
+import { useIntl } from "react-intl";
+
+const EditButton = ({ isEditable, handleEdit }) => {
+  const intl = useIntl();
+  if (!isEditable) {
+    return (
+      <CardComponent customStyle={style.cardContainer}>
+        <TouchableOpacity
+          style={style.editContainer}
+          onPress={() => handleEdit(true)}
+        >
+          <CustomImage
+            source={images.iconEdit}
+            Icon={images.iconEdit}
+            isSvg
+            alt={"edit icon"}
+            height={20}
+            width={20}
+          />
+          <CommonText customTextStyle={style.textStyle} fontWeight="600">
+            {intl.formatMessage({ id: "label.edit_job_profile" })}
+          </CommonText>
+        </TouchableOpacity>
+      </CardComponent>
+    );
+  }
+  return null;
+};
 
 const JobProfileTab = () => {
+  const [isEditable, setIsEditable] = useState(false);
+  const handleEdit = (value) => {
+    setIsEditable(value);
+  };
   return (
     <View style={{ flex: 1, overflow: "hidden" }}>
       <TabView
         renderHeader={() => (
-          <View style={{ paddingBottom: 24 }}>
-            <CommonText
-              fontWeight={"500"}
-              customTextStyle={{
-                fontSize: 32,
-                lineHeight: 40,
-                color: "#000833",
-              }}
-            >
+          <Row style={style.headerContainer}>
+            <CommonText fontWeight={"500"} customTextStyle={style.titleText}>
               Job Profile
             </CommonText>
-          </View>
+            <EditButton isEditable={isEditable} handleEdit={handleEdit} />
+          </Row>
         )}
         tabs={[
           {
             label: "Personal Details",
-            component: <PersonalDetailsComponent />,
+            component: (
+              <PersonalDetailsComponent
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+              />
+            ),
           },
           {
             label: "Education Details",
-            component: <EducationDetailsTab />,
+            component: (
+              <EducationDetailsTab
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+              />
+            ),
           },
         ]}
       />

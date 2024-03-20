@@ -7,7 +7,7 @@ import { MEMBER_CA_JOB_PROFILE_OTHER_COURSES } from "../../services/apiServices/
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useOtherCourses } from "./controller/useOtherCourses";
 
-const OtherCoursesComponent = ({ isEditable = true }) => {
+const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -59,10 +59,12 @@ const OtherCoursesComponent = ({ isEditable = true }) => {
       onClickSave={() => {
         handleUpdate(state, () => {
           // turn off the edit mode
+          handleEdit(false);
         });
       }}
       onClickCancel={() => {
         // turn off the edit mode
+        handleEdit(false);
       }}
     />
   );

@@ -8,7 +8,7 @@ import {
 import CommonText from "../CommonText";
 import styles from "./TabView.style";
 
-const TabView = ({ tabs, renderHeader }) => {
+export const TabView = ({ tabs, renderHeader }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   return (
     <View style={styles.container}>
@@ -48,4 +48,3 @@ const TabView = ({ tabs, renderHeader }) => {
   );
 };
 
-export default TabView;

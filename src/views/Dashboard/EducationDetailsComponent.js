@@ -6,7 +6,7 @@ import { MEMBER_CA_JOB_PROFILE_EDUCATION } from "../../services/apiServices/apiE
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useEducationDetails } from "./controller/useEducationDetails";
 
-const EducationDetailsComponent = ({ isEditable = true }) => {
+const EducationDetailsComponent = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -47,7 +47,7 @@ const EducationDetailsComponent = ({ isEditable = true }) => {
     });
   };
 
-  const onChangeValue = (details) => (label, value, ) => {
+  const onChangeValue = (details) => (label, value) => {
     const { key } = findKeyByLabel(label, details);
 
     setState((prev) => ({
@@ -73,10 +73,12 @@ const EducationDetailsComponent = ({ isEditable = true }) => {
       onClickSave={() => {
         handleUpdate(state, () => {
           // turn off the edit mode
+          handleEdit(false);
         });
       }}
       onClickCancel={() => {
         // turn off the edit mode
+        handleEdit(false);
       }}
     />
   );
