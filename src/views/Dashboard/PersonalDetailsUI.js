@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import SaveCancelButton from "./SaveCancelButton";
 
 const PersonalDetailsUI = ({
-  isEditable = true,
+  isEditable,
   correspondence_address,
   permanent_address,
   personal_detail,

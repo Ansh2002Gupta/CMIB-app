@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   Row,
+  ScrollView,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
@@ -13,34 +14,35 @@ const TabView = ({ tabs, renderHeader }) => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         {renderHeader && renderHeader()}
-        <Row gap={24} style={styles.tabsContainer}>
-          {tabs.map((tab, index) => {
-            const { label } = tab;
-            let isActive = index === activeTabIndex;
-            return (
-              <TouchableOpacity
-                onPress={() => setActiveTabIndex(index)}
-                key={index}
-                style={{
-                  ...styles.itemContainer,
-                  ...(isActive ? styles.activeItemContainer : {}),
-                }}
-              >
-                <CommonText
-                  fontWeight={isActive ? "600" : "500"}
-                  customTextStyle={{
-                    ...styles.itemText,
-                    ...(isActive ? styles.activeItemText : {}),
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <Row gap={24} style={styles.tabsContainer}>
+            {tabs.map((tab, index) => {
+              const { label } = tab;
+              let isActive = index === activeTabIndex;
+              return (
+                <TouchableOpacity
+                  onPress={() => setActiveTabIndex(index)}
+                  key={index}
+                  style={{
+                    ...styles.itemContainer,
+                    ...(isActive ? styles.activeItemContainer : {}),
                   }}
                 >
-                  {label}
-                </CommonText>
-              </TouchableOpacity>
-            );
-          })}
-        </Row>
+                  <CommonText
+                    fontWeight={isActive ? "600" : "500"}
+                    customTextStyle={{
+                      ...styles.itemText,
+                      ...(isActive ? styles.activeItemText : {}),
+                    }}
+                  >
+                    {label}
+                  </CommonText>
+                </TouchableOpacity>
+              );
+            })}
+          </Row>
+        </ScrollView>
       </View>
-
       {tabs[activeTabIndex].component}
     </View>
   );

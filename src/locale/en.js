@@ -405,6 +405,14 @@ const locale = {
   "label.empStrength": "Emp. Strength",
   "label.grossSalary": "Gross Salary Drawn (pa)",
   "label.areasOfWork": "Area(s) of Work",
+  "label.name_of_examination": "Name of Examination",
+  "label.name_of_examination_placeholder": "10th/Metric/S.S",
+  "label.board_university": "Board/University",
+  "label.higher_secondary": "Higher Secondary",
+  "label.graduation": "Graduation",
+  "label.post_graduation": "Post Graduation",
+  "label.education_details": "Education Details",
+  "label.grade_cgpa": "Grade/CGPA",
 };
 
 export default locale;

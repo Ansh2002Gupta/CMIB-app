@@ -404,3 +404,14 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   label: `${x + 1995}`,
   value: `${x + 1995}`,
 }));
+
+export const Education_Status_Options = [
+  {
+    label: "Regular",
+    value: "regular",
+  },
+  {
+    label: "Correspondence",
+    value: "correspondence",
+  },
+];

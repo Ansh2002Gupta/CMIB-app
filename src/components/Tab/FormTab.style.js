@@ -5,6 +5,11 @@ const style = {
     flex: 1,
     overflow: "hidden",
   },
+  tabContainer: {
+    paddingTop: 16,
+    paddingRight: 16,
+    paddingLeft: 16,
+  },
   itemContainer: {
     height: 36,
     paddingLeft: 16,
