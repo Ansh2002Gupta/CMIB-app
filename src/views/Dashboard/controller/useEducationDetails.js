@@ -88,7 +88,6 @@ const graduation_detail = () => [
     key: "graduation_examination_name",
     label: "label.name_of_examination",
     placeholder: "label.name_of_examination_placeholder",
-    isDropdown: true,
   },
   {
     key: "graduation_status",
@@ -133,7 +132,6 @@ const post_graduation_detail = () => [
     key: "post_graduation_examination_name",
     label: "label.name_of_examination",
     placeholder: "label.name_of_examination_placeholder",
-    isDropdown: true,
   },
   {
     key: "post_graduation__status",
