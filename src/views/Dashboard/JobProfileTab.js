@@ -4,6 +4,7 @@ import EducationDetailsTab from "./EducationDetailsTab";
 import PersonalDetailsComponent from "./PersonalDetailsComponent";
 import CommonText from "../../components/CommonText";
 import MembershipDetailComponent from "./Membership Details/MembershipDetailComponent";
+import WorkExperienceComponent from "./Work Experience/WorkExperienceComponent";
 
 const JobProfileTab = () => {
   return (
@@ -35,6 +36,10 @@ const JobProfileTab = () => {
           {
             label: "Membership Details",
             component: <MembershipDetailComponent />,
+          },
+          {
+            label: "Work Experience",
+            component: <WorkExperienceComponent />,
           },
         ]}
       />

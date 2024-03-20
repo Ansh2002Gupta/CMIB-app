@@ -395,6 +395,16 @@ const locale = {
   "label.fellowMemberDateOfAdmission": "If a Fellow, please provide date of admission as a Fellow Member",
   "label.whetherInPractice": "Whether in Practice",
   "label.sinceWhenHaveYouBeenPracticing": "Since when you have been practicing? (Select months and years)",
+  "label.haveAnyWorkExperience": "Do you have any work experience?",
+  "label.workExperience": "Work Experience",
+  "label.organizationName": "Name of the Organization",
+  "label.designation": "Designation",
+  "label.location": "Location",
+  "label.from": "From",
+  "label.to": "To",
+  "label.empStrength": "Emp. Strength",
+  "label.grossSalary": "Gross Salary Drawn (pa)",
+  "label.areasOfWork": "Area(s) of Work",
 };
 
 export default locale;
