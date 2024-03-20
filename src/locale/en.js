@@ -398,6 +398,15 @@ const locale = {
   "label.education_details": "Education Details",
   "label.grade_cgpa": "Grade/CGPA",
   "label.edit_job_profile": "Edit Job Profile",
+  "label.obtained_scholarships":
+    "Obtained Scholarships / Prizes / Certificate of Merit in Studies",
+  "label.won_prizes": "Won Prizes/Medals, etc. in games/sports",
+  "label.won_prizes_in_debates": "Won Prizes in debates",
+  "label.participation_in_social": "Participation in Social Programmes, etc.",
+  "label.any_other_specify": "Any Other (please specify)",
+  "label.hobbies": "Hobbies",
+  "label.hobbies_placeholder": "Enter your hobbies",
+  "label.achievements": "Achievements",
 };
 
 export default locale;

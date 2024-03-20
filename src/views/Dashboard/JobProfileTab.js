@@ -14,6 +14,7 @@ import CustomImage from "../../components/CustomImage";
 import images from "../../images";
 import { useIntl } from "react-intl";
 import useIsWebView from "../../hooks/useIsWebView";
+import ActivitiesComponent from "./ActivitiesComponent";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
@@ -74,6 +75,15 @@ const JobProfileTab = () => {
             label: "Education Details",
             component: (
               <EducationDetailsTab
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+              />
+            ),
+          },
+          {
+            label: "Activities",
+            component: (
+              <ActivitiesComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
               />

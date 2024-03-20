@@ -176,7 +176,7 @@ const CustomTextInput = (props) => {
             handleMultiSelect={handleMultiSelect}
             labelField={labelField}
             valueField={valueField}
-            placeholder={placeholder || ""}
+            placeholder={placeholder || "Select"}
             value={value}
             isMultiSelect={isMultiSelect}
             isSelected={isSelected}

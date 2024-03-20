@@ -149,7 +149,7 @@ const DetailComponent = ({
         value={detail.value}
         customHandleBlur={() => handleBlur(detail.key, index)}
         customStyle={styles.inputStyle}
-        label={intl.formatMessage({ id: detail.label })}
+        label={detail?.label && intl.formatMessage({ id: detail.label })}
         isDropdown={detail.isDropdown}
         isEditable={isInputDisable ? !isInputDisable : true}
         isCounterInput={detail.isCounterInput}
@@ -161,7 +161,9 @@ const DetailComponent = ({
         indexField="selectedIndex"
         options={detail.options || []}
         isMultiline={detail?.isMultiline}
-        placeholder={intl.formatMessage({ id: detail.placeholder })}
+        placeholder={
+          detail?.placeholder && intl.formatMessage({ id: detail.placeholder })
+        }
         maxLength={detail.maxLength}
         isNumeric={detail.isNumeric}
         isToggle={detail.isToggle}
@@ -221,9 +223,13 @@ const DetailComponent = ({
               ) : (
                 <>
                   <View style={styles.titleContainer}>
-                    <CommonText customTextStyle={styles.titleStyle}>
-                      {intl.formatMessage({ id: detail.label })}
-                    </CommonText>
+                    {detail.label ? (
+                      <CommonText customTextStyle={styles.titleStyle}>
+                        {intl.formatMessage({ id: detail.label })}
+                      </CommonText>
+                    ) : (
+                      void 0
+                    )}
                     {detail?.isMandatory && (
                       <CommonText customTextStyle={styles.starStyle}>
                         {" *"}
