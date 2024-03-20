@@ -7,7 +7,7 @@ const membership_detail = [
   {
     key: "date_of_enrollment",
     isMandatory: true,
-    isDate: true,
+    isCalendar: true,
     label: "label.dateOfEmrollmentAsMember",
     placeholder: "label.dateOfEmrollmentAsMember",
     validate: (value) => {
