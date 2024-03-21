@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginLeft: 0,
     flex: 1,
-    overflow: "hidden",
   },
   textInputStyle: {
     flex: 1,
@@ -72,7 +71,6 @@ const styles = StyleSheet.create({
   },
   flex1marginBottom48: {
     flex: 1,
-    marginBottom: 60,
   },
   spacer: {
     flex: 1,
