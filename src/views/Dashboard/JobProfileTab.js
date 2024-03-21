@@ -84,6 +84,24 @@ const JobProfileTab = () => {
             ),
           },
           {
+            label: "Membership Details",
+            component: (
+              <MembershipDetailComponent
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+              />
+            ),
+          },
+          {
+            label: "Work Experience",
+            component:  (
+              <WorkExperienceComponent
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+              />
+            ),
+          },
+          {
             label: "Activities",
             component: (
               <ActivitiesComponent
@@ -100,14 +118,6 @@ const JobProfileTab = () => {
                 handleEdit={handleEdit}
               />
             ),
-          },
-          {
-            label: "Membership Details",
-            component: <MembershipDetailComponent />,
-          },
-          {
-            label: "Work Experience",
-            component: <WorkExperienceComponent />,
           },
         ]}
       />

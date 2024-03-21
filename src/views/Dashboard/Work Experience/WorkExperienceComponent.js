@@ -5,7 +5,7 @@ import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import useUpdateService from "../../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useWorkExperienceDetail } from "./useWorkExperienceDetail";
 import WorkExperienceUI from "./WorkExperienceUI";
-const WorkExperienceComponent = ({ isEditable = true }) => {
+const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -64,10 +64,12 @@ const WorkExperienceComponent = ({ isEditable = true }) => {
       onClickSave={() => {
         handleUpdate(state, () => {
           // turn off the edit mode
+          handleEdit(false);
         });
       }}
       onClickCancel={() => {
         // turn off the edit mode
+        handleEdit(false);
       }}
       // onClickAdd={() => {
       //   //on add more experience
