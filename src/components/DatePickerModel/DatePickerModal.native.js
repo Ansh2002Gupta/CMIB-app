@@ -16,7 +16,7 @@ const DatePickerModal = ({
   customTextInputOuterContainer,
   isError,
   format = "date",
-  minDate = Date.now(),
+  minDate,
   maxDate,
   customStyles = {},
 }) => {
@@ -62,8 +62,8 @@ const DatePickerModal = ({
         open={open}
         date={new Date(value)}
         mode={format}
-        // minimumDate={minDate}
-        // maximumDate={maxDate}
+        minimumDate={minDate ? new Date(minDate) : ""}
+        maximumDate={maxDate ? new Date(maxDate) : ""}
         onConfirm={(date) => {
           setOpen(false);
           onChangeValue(date);

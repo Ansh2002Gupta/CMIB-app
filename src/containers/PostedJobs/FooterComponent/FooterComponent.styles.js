@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   checkBoxViewStyle: {
-    alignItems: "center",
+    justifyContent: "flex-start",
+    flex: 1,
   },
   buttonViewStyle: {
     flexDirection: "row",

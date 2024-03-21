@@ -76,7 +76,12 @@ const CustomTextInput = (props) => {
     valueField,
     urlField,
     menuOptions,
-    isYear,
+    numberText,
+    minDate,
+    maxDate,
+    includeAllKeys,
+    selectAllField,
+    onChangeDropDownText,
     ...remainingProps
   } = props;
 
@@ -149,12 +154,15 @@ const CustomTextInput = (props) => {
             search
             searchPlaceholder={intl.formatMessage({ id: "label.search" })}
             inputSearchStyle={style.searchStyle}
-            style={[
-              style.dropdown,
-              isFocused && style.focusedStyle,
-              isError && style.invalidInput,
-              dropdownStyle,
-            ]}
+            includeAllKeys={includeAllKeys}
+            selectAllField={selectAllField}
+            onChangeDropDownText={onChangeDropDownText}
+            dropdownStyle={{
+              ...style.dropdown,
+              ...(isFocused && style.focusedStyle,
+              isError && style.invalidInput),
+              ...dropdownStyle,
+            }}
             selectedTextStyle={style.valueStyle}
             renderRightIcon={() => <Image source={images.iconDownArrow} />}
             placeholderStyle={style.placeholderStyle}
@@ -183,16 +191,26 @@ const CustomTextInput = (props) => {
             labelField,
             onChangeValue,
             options,
+            includeAllKeys,
+            selectAllField,
             placeholder,
             value,
             valueField,
             urlField,
+            onChangeDropDownText,
           }}
         />
       );
     }
     if (isCalendar) {
-      return <DatePickerModal value={value} onChangeValue={onChangeValue} />;
+      return (
+        <DatePickerModal
+          value={value}
+          onChangeValue={onChangeValue}
+          maxDate={maxDate}
+          minDate={minDate}
+        />
+      );
     }
     if (isCounterInput) {
       return (
@@ -202,7 +220,8 @@ const CustomTextInput = (props) => {
           maxCount={maxCount}
           onCountChange={handleCountChange}
           step={step}
-          isYear={isYear}
+          numberText={numberText}
+          style={isError ? style.invalidInput : {}}
         />
       );
     }
@@ -422,7 +441,7 @@ CustomTextInput.defaultProps = {
   value: "",
   valueField: "value",
   urlField: "url",
-  isYear: false,
+  numberText: "",
 };
 // Custom validator for Date objects
 const datePropType = (props, propName, componentName) => {
@@ -481,7 +500,7 @@ CustomTextInput.propTypes = {
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
-  isYear: PropTypes.bool,
+  numberText: PropTypes.string,
 };
 
 export default CustomTextInput;

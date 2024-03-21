@@ -1,7 +1,7 @@
 import { Platform } from "@unthinkable/react-core-components";
 
 import dayjs from "dayjs";
-import { ANONYMOUS } from "../constants/constants";
+import { ANONYMOUS, jobType, questionType } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
   const queryParams = queryParamString.substring(1).split("&");
@@ -182,7 +182,7 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   return "receiver";
 };
-export const getQuestionInitalValue = (intl) => {
+export const getQuestionInitalValue = (intl, order = 0) => {
   return {
     typeofQuestion: intl.formatMessage({
       id: "label.text_question",
@@ -191,7 +191,7 @@ export const getQuestionInitalValue = (intl) => {
     id: Date.now(),
     isMandatory: false,
     question_options: null,
-    question_order: 1,
+    question_order: order + 1,
   };
 };
 // Function to format the selected date or return the placeholder
@@ -210,4 +210,174 @@ export const getDisplayValue = (value, intl) => {
     return day + "/" + month + "/" + year;
   }
   return intl.formatMessage({ id: "label.select" });
+};
+
+export function validateJobData(data) {
+  let errors = {};
+
+  // Check if text fields are not empty
+  if (!data.jobSummary.trim()) errors.jobSummary = "Job summary is required";
+  if (!data.jobDetails.trim()) errors.jobDetails = "Job details are required";
+  if (!data.designation.trim()) errors.designation = "Designation is required";
+  if (!data.essentialQualification.trim())
+    errors.essentialQualification = "Essential qualification is required";
+  if (!data.desiredQualification.trim())
+    errors.desiredQualification = "Desired qualification is required";
+
+  // Check if objects like jobType, jobLocation are not empty
+  // Assuming these should be objects with at least one key-value pair
+  if (Object.keys(data.jobType).length === 0)
+    errors.jobType = "Job type is required";
+  if (Object.keys(data.jobLocation).length === 0)
+    errors.jobLocation = "Job location is required";
+  if (Object.keys(data.functionalAreas).length === 0)
+    errors.functionalAreas = "Functional Areas  is required";
+  if (Object.keys(data.categoryPreference).length === 0)
+    errors.categoryPreference = "Category Preference is required";
+  if (Object.keys(data.modeofWork).length === 0)
+    errors.modeofWork = "Mode of work is required";
+  // ... similar checks for functionalAreas, genderPreference, categoryPreference, modeofWork
+
+  // Check if experience numbers are valid
+  if (data.minimumExperience < 0)
+    errors.minimumExperience = "Minimum experience cannot be negative";
+  if (data.maximumExperience < data.minimumExperience)
+    errors.maximumExperience =
+      "Maximum experience cannot be less than minimum experience";
+
+  // Check if the number of vacancies is a positive number
+  if (data.numberOfVacancies <= 0)
+    errors.numberOfVacancies = "Number of vacancies must be greater than zero";
+
+  // Check if salary range is valid
+  if (data.minimumSalary < 0)
+    errors.minimumSalary = "Minimum salary cannot be negative";
+  if (data.maximumSalary < data.minimumSalary)
+    errors.maximumSalary = "Maximum salary cannot be less than minimum salary";
+
+  // Check if contract duration is valid
+  if (
+    data.jobType.label == jobType.CONTRACTUAL &&
+    (data.contractYear === 0 ||
+      data.contractMonth === 0 ||
+      data.contractDay === 0)
+  ) {
+    errors.contractYear = "Contract Period is required";
+    errors.contractMonth = "Contract Period is required";
+    errors.contractDay = "Contract Period is required";
+  }
+  // Check if disablity  is valid
+  if (data.jobType.label == jobType.SPECIALLY_ABLE && !data.typeOfDisabilty) {
+    errors.typeOfDisabilty = "Type of Disability is required";
+  }
+  // Check if disablity  is valid
+  if (
+    data.jobType.label == jobType.SPECIALLY_ABLE &&
+    data.disabiltyPercentage == 0
+  ) {
+    errors.disabiltyPercentage = "Disability% should be greater than 0";
+  }
+
+  // Check if dates are valid and jobClosingDate is after jobOpeningDate
+  if (!(data.jobOpeningDate instanceof Date) || isNaN(data.jobOpeningDate))
+    errors.jobOpeningDate = "Job opening date is invalid";
+  if (!(data.jobClosingDate instanceof Date) || isNaN(data.jobClosingDate))
+    errors.jobClosingDate = "Job closing date is invalid";
+  if (data.jobClosingDate < data.jobOpeningDate)
+    errors.jobClosingDate =
+      "Job closing date must be after the job opening date";
+
+  // Add more validation as per your requirements
+
+  // Check if there are any errors
+  const isValid = Object.keys(errors).length === 0;
+
+  return { isValid, errors };
+}
+export function validateQuestions(questions) {
+  let isValidQuestion = true; // Assume the validation is valid initially
+  const questionError = {}; // Initialize an object to hold all the errors
+
+  questions.forEach((question) => {
+    let questionErrors = []; // Array to store errors for the current question
+
+    if (question.typeofQuestion === "Text Question") {
+      // The 'question' field should not be empty for text questions
+      if (!question.question || question.question.trim() === "") {
+        questionErrors.push(
+          "Text Question must have a non-empty question field."
+        );
+      }
+    } else if (question.typeofQuestion !== "Text Question") {
+      // The 'question' field should not be empty for single-select questions
+      if (!question.question || question.question.trim() === "") {
+        questionErrors.push("Question must have a non-empty question field.");
+      }
+      // 'question_options' should be a non-empty array with non-empty values
+      if (
+        !Array.isArray(question.question_options) ||
+        question.question_options.length === 0
+      ) {
+        questionErrors.push("Question must have at least one option.");
+      } else {
+        question.question_options.forEach((option) => {
+          if (!option.value || option.value.trim() === "") {
+            questionErrors.push("All options must have a non-empty value.");
+          }
+        });
+      }
+    } else {
+      questionErrors.push("Invalid question type.");
+    }
+
+    // If there are any errors for the question, add them to the errors object
+    if (questionErrors.length > 0) {
+      isValidQuestion = false; // Set isValid to false as there are errors
+      questionError[question.id] = questionErrors;
+    }
+  });
+
+  // Return an object with isValid and errors
+  return { isValidQuestion, questionError };
+}
+export const getFormatedData = (jobData, question) => {
+  let temp = {
+    summary: jobData.jobSummary,
+    detail: jobData.jobDetails,
+    job_type_id: jobData.jobType?.id,
+    isUrgent: jobData.isUrgentJob == 0 ? true : false,
+    is_salary_negotiable: jobData.salaryNagotiable == 0 ? true : false,
+    experience: {
+      min_experience: jobData.minimumExperience,
+      max_experience: jobData.maximumExperience,
+    },
+    location_id: jobData.jobLocation?.id,
+    nationality: jobData.nationality?.value,
+    designation: jobData.designation,
+    functional_area_id: jobData.functionalAreas?.id,
+    gender_preference: jobData.genderPreference?.label,
+    category_preference: jobData.categoryPreference?.id,
+    essential_qualification: jobData.essentialQualification,
+    desired_qualification: jobData.desiredQualification,
+    job_opening_date: jobData.jobOpeningDate.toISOString().slice(0, 10),
+    job_closing_date: jobData.jobClosingDate.toISOString().slice(0, 10),
+    min_salary: jobData.minimumSalary,
+    max_salary: jobData.maximumSalary,
+    number_of_vacancies: jobData.numberOfVacancies,
+    work_mode: jobData.modeofWork?.id,
+    flexi_hours: jobData.flexiHours == 0 ? true : false,
+    disability_type: jobData.typeOfDisabilty,
+    disability_percentage: jobData.disabiltyPercentage,
+    service_type: jobData.fullTime == 0 ? "Full Time" : "Part Time",
+  };
+  let tempQuestion = question.map((item) => {
+    return {
+      type: questionType[item.typeofQuestion],
+      question: item.question,
+      question_options: item.question_options,
+      question_order: item.question_order,
+    };
+  });
+  temp.questions = tempQuestion;
+  return temp;
 };

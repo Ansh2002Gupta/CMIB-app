@@ -493,6 +493,17 @@ export const questionaireType = [
     label: "label.multiple_select",
   },
 ];
+export const jobType = {
+  SPECIALLY_ABLE: "For Specially Abled Persons",
+  CONTRACTUAL: "Contractual",
+  REGULAR: "Regular",
+  RETIRED: "For Retired Persons",
+};
+export const questionType = {
+  "Text Question": "text",
+  "Single-select": "single-select",
+  "Multi-select": "multi-select",
+};
 
 // export const JOB_TYPE=[
 //   {

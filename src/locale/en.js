@@ -369,7 +369,7 @@ const locale = {
   "label.path.editDetails": "Edit User Details",
   "label.search_by_ticket": "Search by Ticket ID",
   "label.20": '"20"',
-  "label.more_than_20": 'More than "20"',
+  "label.more_than": "More than ",
   "label.active": "Active",
   "label.inactive": "Inactive",
   "label.job_opening_date": "Job Opening Date",
@@ -421,10 +421,13 @@ const locale = {
   "label.enter_option": "Enter Option",
   "label.add_options": "+ Add options",
   "label.mandatory": "Mandatory",
-  "label.years": "Years",
+  "label.year": "Years",
+  "label.month": "Month",
+  "label.day": "Days",
   "label.question": "Question",
   "label.question_type": "Question Type",
   "label.option": "Option",
+  "label.contractual_period": "Contractual Period",
 };
 
 export default locale;

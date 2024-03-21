@@ -6,22 +6,26 @@ import { useIntl } from "react-intl";
 import AddJobComponent from "../../containers/PostedJobs/AddJobComponent";
 import FooterComponent from "../../containers/PostedJobs/FooterComponent";
 import AddQuestionaireComponent from "../../containers/PostedJobs/AddQuestionaireComponent/AddQuestionaireComponent";
+import { TwoRow } from "../../core/layouts";
 
 const PostedJobsViewUI = ({
   isWebView,
   jobData,
   handleJobDetailsChange,
-  countryData,
-  functionalData,
   setIsQuestionaireList,
   questionnairelist,
+  isCheckList,
+  setIsCheckList,
+  error,
+  onSubmit,
+  setError,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isQuestionaire, setIsQuestionaire] = useState(true);
   const intl = useIntl();
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.flexGrow}>
         <IconHeader
           headerText={
             isWebView
@@ -29,25 +33,40 @@ const PostedJobsViewUI = ({
               : intl.formatMessage({ id: "label.posted_jobs" })
           }
         />
-        <View style={styles.innerContainer}>
-          <AddJobComponent
-            isExpanded={isExpanded}
-            jobData={jobData}
-            handleJobDetailsChange={handleJobDetailsChange}
-            setIsExpanded={setIsExpanded}
-            isWebView={isWebView}
-            countryData={countryData}
-            functionalData={functionalData}
-          />
-          <AddQuestionaireComponent
-            isQuestionaire={isQuestionaire}
-            setIsQuestionaire={setIsQuestionaire}
-            isWebView={isWebView}
-            setIsQuestionaireList={setIsQuestionaireList}
-            questionnairelist={questionnairelist}
-          />
-          <FooterComponent isWebView={isWebView} />
-        </View>
+
+        <TwoRow
+          topSection={
+            <View>
+              <AddJobComponent
+                isExpanded={isExpanded}
+                jobData={jobData}
+                handleJobDetailsChange={handleJobDetailsChange}
+                setIsExpanded={setIsExpanded}
+                isWebView={isWebView}
+                error={error}
+              />
+              <AddQuestionaireComponent
+                isQuestionaire={isQuestionaire}
+                setIsQuestionaire={setIsQuestionaire}
+                isWebView={isWebView}
+                setIsQuestionaireList={setIsQuestionaireList}
+                questionnairelist={questionnairelist}
+                questionError={error.questionError}
+                setError={setError}
+              />
+            </View>
+          }
+          style={styles.innerContainer}
+          isTopFillSpace
+          bottomSection={
+            <FooterComponent
+              isWebView={isWebView}
+              isCheckList={isCheckList}
+              setIsCheckList={setIsCheckList}
+              onSubmit={onSubmit}
+            />
+          }
+        />
       </ScrollView>
     </View>
   );

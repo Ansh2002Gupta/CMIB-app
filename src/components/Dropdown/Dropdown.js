@@ -16,6 +16,8 @@ const Dropdown = ({
   placeholderStyle,
   value,
   valueField,
+  selectAllField = false,
+  onChangeDropDownText,
 }) => {
   const getAllKeys = (option) => {
     let finalObj = {};
@@ -48,8 +50,16 @@ const Dropdown = ({
         isDisabled={!isEditable}
         styles={customStyles(dropdownStyle, placeholderStyle)}
         theme={customTheme}
+        onInputChange={(inputValue) => {
+          onChangeDropDownText && onChangeDropDownText(inputValue);
+          //get the character entered by user here in inputValue
+        }}
         onChange={(selectedItem) => {
-          onChange(selectedItem.value);
+          if (selectAllField) {
+            onChange(selectedItem);
+          } else {
+            onChange(selectedItem.value);
+          }
         }}
       />
     </div>
@@ -67,6 +77,7 @@ Dropdown.defaultProps = {
   value: "",
   valueField: "",
   urlField: "",
+  selectAllField: false,
 };
 
 Dropdown.propTypes = {
@@ -81,6 +92,7 @@ Dropdown.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  selectAllField: PropTypes.bool,
 };
 
 export default Dropdown;

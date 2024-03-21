@@ -6,12 +6,7 @@ import { useIntl } from "react-intl";
 import CustomButton from "../../../components/CustomButton";
 import styles from "./AddQuestionaireComponent.styles";
 import RenderQuestion from "../RenderQuestion";
-import CustomModal from "../../../components/CustomModal";
-import CommonText from "../../../components/CommonText";
-import CustomTextInput from "../../../components/CustomTextInput";
 import { questionaireType } from "../../../constants/constants";
-import Switch from "../../../components/Switch/Switch";
-import CustomLabelView from "../../../components/CustomLabelView";
 import AddNewQuestionModal from "../AddNewQuestionModal";
 import { getQuestionInitalValue } from "../../../utils/util";
 const AddQuestionaireComponent = ({
@@ -20,6 +15,8 @@ const AddQuestionaireComponent = ({
   isWebView,
   setIsQuestionaireList,
   questionnairelist,
+  questionError,
+  setError,
 }) => {
   const intl = useIntl();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -41,7 +38,7 @@ const AddQuestionaireComponent = ({
   }, []);
 
   const [newQuestionnaireData, setNewQuestionnaireData] = useState(
-    getQuestionInitalValue(intl)
+    getQuestionInitalValue(intl, questionnairelist.length)
   );
 
   function addNewQuestion(isOption, id, item) {
@@ -101,6 +98,7 @@ const AddQuestionaireComponent = ({
         }
         return obj;
       });
+
       setIsQuestionaireList(updatedArray);
     } else {
       const updatedArray = questionnairelist.map((obj) => {
@@ -131,6 +129,12 @@ const AddQuestionaireComponent = ({
           return tempObj;
         }
         return obj;
+      });
+      setError((prev) => {
+        return {
+          ...prev,
+          questionError: null,
+        };
       });
 
       setIsQuestionaireList(updatedArray);
@@ -185,7 +189,11 @@ const AddQuestionaireComponent = ({
           isWebView={isWebView}
           progressText={questionnairelist.length}
           onPress={() =>
-            addNewQuestion(false, null, getQuestionInitalValue(intl))
+            addNewQuestion(
+              false,
+              null,
+              getQuestionInitalValue(intl, questionnairelist.length)
+            )
           }
         />
         {isQuestionaire &&
@@ -200,6 +208,7 @@ const AddQuestionaireComponent = ({
                   deleteQuestion={deleteQuestion}
                   handleChange={handleChange}
                   addNewQuestion={addNewQuestion}
+                  questionError={questionError}
                   questionaireTypeFormatted={questionaireTypeFormatted}
                   setoptionData={setoptionData}
                   setIsModalVisible={setIsModalVisible}

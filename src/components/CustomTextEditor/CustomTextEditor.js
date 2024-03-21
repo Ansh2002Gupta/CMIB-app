@@ -17,7 +17,15 @@ import {
 import "./styles.css";
 
 const CustomTextEditor = (props) => {
-  const { label, isMandatory, customLabelStyle, onChangeText } = props;
+  const {
+    label,
+    isMandatory,
+    customLabelStyle,
+    onChangeText,
+    customErrorStyle,
+    isError,
+    errorMessage,
+  } = props;
   var modules = {
     toolbar: [
       [{ size: size }],
@@ -54,6 +62,7 @@ const CustomTextEditor = (props) => {
       <View style={styles.quillContainer}>
         <ReactQuill
           theme="snow"
+          className={isError ? "error" : ""}
           modules={modules}
           formats={formats}
           placeholder={intl.formatMessage({ id: "label.description" })}
@@ -61,6 +70,14 @@ const CustomTextEditor = (props) => {
           style={styles.quillStyling}
         />
       </View>
+      {isError && (
+        <CommonText
+          customTextStyle={[styles.errorMsg, customErrorStyle]}
+          fontWeight={customErrorStyle?.fontWeight || "600"}
+        >
+          {errorMessage}
+        </CommonText>
+      )}
     </View>
   );
 };

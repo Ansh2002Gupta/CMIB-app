@@ -1,17 +1,49 @@
-import React from "react";
-import { View } from "@unthinkable/react-core-components";
+import React, { useContext } from "react";
+import { Platform, View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
 import styles from "./PersonalDetails.styles"; // Import the styles
 import { useIntl } from "react-intl";
+import useGetPostedJobsData from "../../../services/apiServices/hooks/PostedJobs/useGetPostedJobsData";
+import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 
 const PersonalDetails = ({
   isWebView,
   jobData,
   handleJobDetailsChange,
-  countryData,
-  functionalData,
+  error,
 }) => {
   const intl = useIntl();
+  const { fetchSearch } = useGetPostedJobsData();
+  const [addJobs] = useContext(AddJobContext);
+  const {
+    countryData,
+    functionalData,
+    jobLocationData,
+    genderPreferenceData,
+    jobCategory,
+  } = addJobs;
+
+  const locationsArray = Array.from(
+    new Map(
+      jobLocationData
+        .concat(
+          jobData.jobLocation && jobData.jobLocation.id
+            ? [jobData.jobLocation]
+            : []
+        )
+        .filter((location) => location && location.id)
+        .map((location) => [location.id, location])
+    ).values()
+  ).reverse();
+
+  async function handleChange(text) {
+    return fetchSearch(text).then((res) => {
+      if (Platform.OS.toLowerCase() !== "web") {
+        return res;
+      }
+    });
+  }
+
   return (
     <View>
       <View style={styles.row(isWebView)}>
@@ -20,8 +52,10 @@ const PersonalDetails = ({
             id: "label.minimum_experience",
           })}
           isMandatory
+          isError={(error && error.minimumExperience) || false}
+          errorMessage={(error && error.minimumExperience) || ""}
           isCounterInput
-          isYear={true}
+          numberText={intl.formatMessage({ id: "label.year" })}
           handleCountChange={(val) =>
             handleJobDetailsChange("minimumExperience", val)
           }
@@ -33,8 +67,10 @@ const PersonalDetails = ({
             id: "label.maximum_experience",
           })}
           isCounterInput
-          isYear={true}
+          numberText={intl.formatMessage({ id: "label.year" })}
           customStyle={styles.inputStyle(isWebView)}
+          isError={(error && error.maximumExperience) || false}
+          errorMessage={(error && error.maximumExperience) || ""}
           handleCountChange={(val) =>
             handleJobDetailsChange("maximumExperience", val)
           }
@@ -45,9 +81,13 @@ const PersonalDetails = ({
             id: "label.nationality",
           })}
           options={countryData || []}
-          value={jobData.nationality}
+          value={jobData.nationality.value}
+          isError={(error && error.nationality) || false}
+          errorMessage={(error && error.nationality) || ""}
           isDropdown
           customStyle={styles.nationalityInputStyle}
+          includeAllKeys={true}
+          selectAllField={true}
           labelField="name"
           valueField="name"
           urlField="flag"
@@ -67,6 +107,8 @@ const PersonalDetails = ({
           isMandatory
           customStyle={styles.inputStyle(isWebView)}
           value={jobData.designation}
+          isError={(error && error.designation) || false}
+          errorMessage={(error && error.designation) || ""}
           onChangeText={(val) => {
             handleJobDetailsChange("designation", val);
           }}
@@ -77,6 +119,20 @@ const PersonalDetails = ({
           })}
           isDropdown
           isMandatory
+          includeAllKeys={true}
+          selectAllField={true}
+          options={locationsArray || []}
+          isError={(error && error.jobLocation) || false}
+          onChangeDropDownText={(item) => {
+            return handleChange(item);
+          }}
+          errorMessage={(error && error.jobLocation) || ""}
+          value={jobData.jobLocation.value}
+          onChangeValue={(value) => {
+            handleJobDetailsChange("jobLocation", value);
+          }}
+          labelField="city"
+          valueField="city"
           customStyle={styles.jobLocationInputStyle}
         />
       </View>
@@ -88,9 +144,13 @@ const PersonalDetails = ({
           isDropdown
           labelField="name"
           valueField="slug"
+          includeAllKeys={true}
+          selectAllField={true}
           options={functionalData || []}
           isMandatory
-          value={jobData.functionalAreas}
+          isError={(error && error.functionalAreas) || false}
+          errorMessage={(error && error.functionalAreas) || ""}
+          value={jobData.functionalAreas.value}
           customStyle={styles.functionalAreaInputStyle}
           onChangeValue={(value) => {
             handleJobDetailsChange("functionalAreas", value);
@@ -103,6 +163,15 @@ const PersonalDetails = ({
             id: "label.gender_preference",
           })}
           isDropdown
+          includeAllKeys={true}
+          selectAllField={true}
+          options={genderPreferenceData || []}
+          value={jobData.genderPreference.value}
+          onChangeValue={(value) => {
+            handleJobDetailsChange("genderPreference", value);
+          }}
+          labelField="label"
+          valueField="name"
           customStyle={styles.genderPreferenceInputStyle(isWebView)}
         />
         <CustomTextInput
@@ -110,6 +179,17 @@ const PersonalDetails = ({
             id: "label.category_preference",
           })}
           isDropdown
+          includeAllKeys={true}
+          selectAllField={true}
+          options={jobCategory || []}
+          value={jobData.categoryPreference.value}
+          isError={(error && error.categoryPreference) || false}
+          errorMessage={(error && error.categoryPreference) || ""}
+          onChangeValue={(value) => {
+            handleJobDetailsChange("categoryPreference", value);
+          }}
+          labelField="name"
+          valueField="slug"
           isMandatory
           customStyle={styles.categoryPreferenceInputStyle(isWebView)}
         />

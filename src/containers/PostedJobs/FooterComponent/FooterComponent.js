@@ -4,7 +4,12 @@ import CheckBox from "../../../components/CheckBox/CheckBox";
 import CustomButton from "../../../components/CustomButton";
 import styles from "./FooterComponent.styles";
 import { useIntl } from "react-intl";
-const FooterComponent = ({ isWebView }) => {
+const FooterComponent = ({
+  isWebView,
+  isCheckList,
+  setIsCheckList,
+  onSubmit,
+}) => {
   const intl = useIntl();
   return (
     <View style={styles.containerStyle(isWebView)}>
@@ -12,6 +17,11 @@ const FooterComponent = ({ isWebView }) => {
         <View style={styles.checkBoxViewStyle}>
           <CheckBox
             title={intl.formatMessage({ id: "label.do_not_send_email" })}
+            handleCheckbox={(vale) => {
+              setIsCheckList((prev) => !prev);
+            }}
+            id={`isCheckList${isCheckList}`}
+            isSelected={isCheckList}
           />
         </View>
       </View>
@@ -24,7 +34,7 @@ const FooterComponent = ({ isWebView }) => {
             {intl.formatMessage({ id: "label.cancel" })}
           </CustomButton>
           <CustomButton
-            // onPress={{}}
+            onPress={() => onSubmit()}
             style={styles.postButtonStyle(isWebView)}
             withGreenBackground
             disabledContainerStyle={{ opacity: 0.5 }}

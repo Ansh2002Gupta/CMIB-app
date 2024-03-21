@@ -6,8 +6,14 @@ import CustomTextInput from "../../../../../components/CustomTextInput";
 import { useIntl } from "react-intl";
 import stylesForMobile from "./QuestionHeader.styles";
 const QuestionHeader = (props) => {
-  const { item, handleChange, index, questionaireTypeFormatted, isWebView } =
-    props;
+  const {
+    item,
+    handleChange,
+    index,
+    questionaireTypeFormatted,
+    isWebView,
+    questionError,
+  } = props;
   const intl = useIntl();
   return (
     <View>
@@ -22,6 +28,8 @@ const QuestionHeader = (props) => {
             isPaddingNotRequired={true}
             value={item.question}
             placeholder={intl.formatMessage({ id: "label.enter_question" })}
+            isError={(questionError && questionError[0]) || false}
+            errorMessage={(questionError && questionError[0]) || ""}
             onChangeText={(value) => {
               handleChange(false, "question", value, item.id);
             }}

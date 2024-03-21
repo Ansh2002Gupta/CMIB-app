@@ -73,10 +73,14 @@ const AddNewQuestionModal = ({
           };
           addNewQuestion(true, optionData.id, temp);
           setoptionData(null);
-          setNewQuestionnaireData(getQuestionInitalValue(intl));
+          setNewQuestionnaireData(
+            getQuestionInitalValue(intl, questionnairelistLength)
+          );
         } else {
           addNewQuestion(false, null, newQuestionnaireData);
-          setNewQuestionnaireData(getQuestionInitalValue(intl));
+          setNewQuestionnaireData(
+            getQuestionInitalValue(intl, questionnairelistLength)
+          );
         }
       }
       setIsModalVisible(false);
@@ -90,7 +94,9 @@ const AddNewQuestionModal = ({
   function onCancel() {
     setErrors({});
     setIsModalVisible(false);
-    setNewQuestionnaireData(getQuestionInitalValue(intl));
+    setNewQuestionnaireData(
+      getQuestionInitalValue(intl, questionnairelistLength)
+    );
     if (optionData) {
       setoptionData(null);
     }
@@ -238,9 +244,8 @@ const AddNewQuestionModal = ({
                       });
                     }}
                     isError={error?.questionError || false}
-                    errorMessage={error?.questionError || false}
+                    errorMessage={error?.questionError || ""}
                     label={intl.formatMessage({ id: "label.question_type" })}
-                    customStyle={styles.marginBottom}
                   />
                 ) : (
                   <CustomTextInput
@@ -252,7 +257,7 @@ const AddNewQuestionModal = ({
                       id: "label.enter_text",
                     })}
                     isError={(error && error.optionValue) || false}
-                    errorMessage={(error && error.optionValue) || false}
+                    errorMessage={(error && error.optionValue) || ""}
                     onChangeText={(data) => {
                       setErrors((prev) => {
                         return {
@@ -293,7 +298,7 @@ const AddNewQuestionModal = ({
                             }
                             errorMessage={
                               (error && error[`option${indexofOption + 1}`]) ||
-                              false
+                              ""
                             }
                             onChangeText={(text) =>
                               onOptionChange(text, optionElement, indexofOption)

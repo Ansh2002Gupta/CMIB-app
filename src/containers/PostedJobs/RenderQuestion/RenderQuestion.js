@@ -19,6 +19,7 @@ const RenderQuestion = ({
   setNewQuestionnaireData,
   setIsModalVisible,
   isEdited,
+  questionError,
 }) => {
   return (
     <View style={styles.container}>
@@ -36,6 +37,7 @@ const RenderQuestion = ({
           handleChange={handleChange}
           index={index}
           isWebView={isWebView}
+          questionError={questionError && questionError[item.id]}
           questionaireTypeFormatted={questionaireTypeFormatted}
         />
         <QuestionMiddleSection
@@ -46,6 +48,7 @@ const RenderQuestion = ({
           addNewQuestion={addNewQuestion}
           isWebView={isWebView}
           index={index}
+          questionError={questionError && questionError[item.id]}
           setoptionData={setoptionData}
           setNewQuestionnaireData={setNewQuestionnaireData}
           isEdited={isEdited}

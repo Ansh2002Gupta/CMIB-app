@@ -20,6 +20,7 @@ const QuestionMiddleSection = ({
   setoptionData,
   setNewQuestionnaireData,
   isEdited,
+  questionError,
 }) => {
   const intl = useIntl();
   function onAddPress() {
@@ -63,6 +64,19 @@ const QuestionMiddleSection = ({
                         placeholder={intl.formatMessage({
                           id: "label.enter_option",
                         })}
+                        isError={
+                          (questionError &&
+                            questionError[indexofOption + 1] &&
+                            questionError[indexofOption + 1]) ||
+                          false
+                        }
+                        errorMessage={
+                          (questionError &&
+                            questionError[indexofOption + 1] &&
+                            questionError[indexofOption + 1]) ||
+                          false ||
+                          ""
+                        }
                         onChangeText={(value) => {
                           handleChange(
                             true,

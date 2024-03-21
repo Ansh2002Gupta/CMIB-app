@@ -13,13 +13,13 @@ const AddJobComponent = ({
   handleJobDetailsChange,
   setIsExpanded,
   isWebView,
-  countryData,
-  functionalData,
+  error,
 }) => {
   const intl = useIntl();
+
   return (
     <CardComponent customStyle={styles.extendedViewStyle(isExpanded)}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
         <HeaderComponent
           isExpanded={isExpanded}
           setIsExpanded={setIsExpanded}
@@ -30,18 +30,19 @@ const AddJobComponent = ({
             <JobDetailsComponent
               isWebView={isWebView}
               jobData={jobData}
+              error={error}
               handleJobDetailsChange={handleJobDetailsChange}
             />
             <PersonalDetails
               isWebView={isWebView}
               jobData={jobData}
+              error={error}
               handleJobDetailsChange={handleJobDetailsChange}
-              countryData={countryData}
-              functionalData={functionalData}
             />
             <BottomSection
               isWebView={isWebView}
               jobData={jobData}
+              error={error}
               handleJobDetailsChange={handleJobDetailsChange}
             />
           </View>

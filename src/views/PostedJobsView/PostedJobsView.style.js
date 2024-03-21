@@ -8,5 +8,8 @@ const styles = StyleSheet.create({
     padding: 24,
     flex: 1,
   },
+  flexGrow: {
+    flexGrow: 1,
+  },
 });
 export default styles;
