@@ -355,8 +355,8 @@ export const getFormatedData = (jobData, question) => {
     nationality: jobData.nationality?.value,
     designation: jobData.designation,
     functional_area_id: jobData.functionalAreas?.id,
-    gender_preference: jobData.genderPreference?.label,
-    category_preference: jobData.categoryPreference?.id,
+    gender_preference: jobData.genderPreference?.value,
+    category_preference: jobData.categoryPreference?.label,
     essential_qualification: jobData.essentialQualification,
     desired_qualification: jobData.desiredQualification,
     job_opening_date: jobData.jobOpeningDate.toISOString().slice(0, 10),
@@ -364,18 +364,28 @@ export const getFormatedData = (jobData, question) => {
     min_salary: jobData.minimumSalary,
     max_salary: jobData.maximumSalary,
     number_of_vacancies: jobData.numberOfVacancies,
-    work_mode: jobData.modeofWork?.id,
+    work_mode: jobData.modeofWork?.label,
     flexi_hours: jobData.flexiHours == 0 ? true : false,
-    disability_type: jobData.typeOfDisabilty,
-    disability_percentage: jobData.disabiltyPercentage,
+    is_extended_vacancy: jobData.vacanciesCountType == 0 ? true : false,
     service_type: jobData.fullTime == 0 ? "Full Time" : "Part Time",
   };
+  if (jobData.jobType?.label === jobType.CONTRACTUAL) {
+    temp.contract_period = {
+      years: jobData.contractYear,
+      months: jobData.contractMonth,
+      days: jobData.contractDay,
+    };
+  } else if (jobData.jobType?.label === jobType.SPECIALLY_ABLE) {
+    temp.disability_type = jobData.typeOfDisabilty;
+    temp.disability_percentage = jobData.disabiltyPercentage;
+  }
   let tempQuestion = question.map((item) => {
     return {
       type: questionType[item.typeofQuestion],
       question: item.question,
       question_options: item.question_options,
       question_order: item.question_order,
+      mandatory: item.isMandatory,
     };
   });
   temp.questions = tempQuestion;

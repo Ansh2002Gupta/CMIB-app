@@ -170,7 +170,7 @@ const PersonalDetails = ({
           onChangeValue={(value) => {
             handleJobDetailsChange("genderPreference", value);
           }}
-          labelField="label"
+          labelField="slug"
           valueField="name"
           customStyle={styles.genderPreferenceInputStyle(isWebView)}
         />
