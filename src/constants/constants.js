@@ -344,6 +344,26 @@ export const MARITAL_STATUS = [
   },
 ];
 
+export const EMP_STRENGTH = [
+  {
+    label: "200",
+    value: "200",
+  },
+  {
+    label: "1000",
+    value: "1000",
+  },
+];
+export const GROSS_SALARY = [
+  {
+    label: "5 lakh",
+    value: "5 lakh",
+  },
+  {
+    label: "10 lakh",
+    value: "10 lakh",
+  },
+];
 export const MONTHS = [
   {
     label: "January",

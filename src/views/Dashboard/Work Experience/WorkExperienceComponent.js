@@ -15,16 +15,16 @@ const WorkExperienceComponent = ({ isEditable = true }) => {
   const { handleUpdate, isError, isLoading } = useUpdateService({
     url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE}`,
   });
-  const [state, setState] = useState(
-    data !== null && Object.keys(data).length ? data : {}
-  );
+
+  const [state, setState] = useState(data !== null && Object.keys(data).length ? data : {});
+ // const [workExperiences, setWorkExperiences] = useState([{}]);
 
   const {
     workExperience_detail,
     handleWorkExperienceDetailBlur,
     isValidAllFields,
   } = useWorkExperienceDetail({
-    state,
+    state: state,
     isEditable,
   });
 
@@ -40,22 +40,16 @@ const WorkExperienceComponent = ({ isEditable = true }) => {
     });
   };
 
-  const onChangeValue = (details) => (label, value, codeValue) => {
+  const onChangeValue = (details) => (label, value) => {
+   // console.log("onChangeValue---",details,label,value,codeValue)
     const { key } = findKeyByLabel(label, details);
-
-    if (codeValue) {
-      setState((prev) => ({
-        ...prev,
-        codeValue: value,
-      }));
-    } else {
-      setState((prev) => ({
-        ...prev,
-        [key]: value,
-      }));
-    }
+    //console.log("value", value, "key", key, "label", label , "details", details)
+    setState((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   };
-  console.log("state::", state)
+  console.log("state::",state, workExperience_detail)
 
   return (
     <WorkExperienceUI
@@ -66,6 +60,7 @@ const WorkExperienceComponent = ({ isEditable = true }) => {
       isError={isError}
       isLoading={isLoading}
       isEditable={isEditable}
+      //workExperiences={state.workExperiences ? state.workExperiences : [{}]}
       onClickSave={() => {
         handleUpdate(state, () => {
           // turn off the edit mode
@@ -74,6 +69,12 @@ const WorkExperienceComponent = ({ isEditable = true }) => {
       onClickCancel={() => {
         // turn off the edit mode
       }}
+      // onClickAdd={() => {
+      //   //on add more experience
+      //   setState({workExperiences: [state.workExperiences, {}]});
+
+      //   //setState({})
+      // }}
     />
   );
 };

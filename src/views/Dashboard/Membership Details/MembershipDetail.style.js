@@ -6,5 +6,8 @@ const style = {
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
+  innerContainerStyle: {
+    marginBottom: 16,
+  },
 };
 export default style;

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
-import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
 import { useIntl } from "react-intl";
 import { EMP_STRENGTH, GROSS_SALARY, WORK_EXPERIENCE } from "../../../constants/constants";
 
@@ -115,19 +114,24 @@ const work_experience = [
 ];
 
 const addValueOnField = ({ state, details, isEditable }) => {
+  //const {workExperiences} = state;
+  //console.log("addValueOnField",workExperiences)
+ // const work = (workExperiences && workExperiences.length > 0) ? workExperiences[0] : undefined;
   return details.map((item) => {
     return {
       ...item,
       value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
-      codeValue: state.codeValue,
+     // codeValue: state.codeValue,
     };
   });
 };
 
 const validateOnBlur = ({ state, details, key, index, intl }) => {
+  //const {workExperiences} = state;
   const value = state[key];
   const updatedData = details.map((item, i) => {
     if (key === item.key) {
+      console.log("match vala")
       return {
         ...item,
         value,
@@ -141,8 +145,9 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
 
 export const useWorkExperienceDetail = ({ state, isEditable}) => {
   const intl = useIntl();
-  const { data: countryData } = useFetch({ url: COUNTRY_CODE });
+//  const { data: countryData } = useFetch({ url: COUNTRY_CODE });
   const [workExperience_detail_state, setWorkExperienceDetailState] = useState(work_experience);
+
   const handleWorkExperienceDetailBlur = (key, index) => {
     setWorkExperienceDetailState(
       validateOnBlur({
