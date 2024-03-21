@@ -1,23 +1,23 @@
-import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 import React, { useState } from "react";
 import DatePicker from "react-native-date-picker";
-import styles from "./DatePickerModal.style";
-import { useIntl } from "react-intl";
+import PropTypes from "prop-types";
+import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import images from "../../images";
+import { useIntl } from "react-intl";
 import { getDisplayValue } from "../../utils/util";
-import PropTypes from "prop-types";
+import styles from "./DatePickerModal.style";
 
 const DatePickerModal = ({
-  value,
-  onChangeValue,
   customTextInputOuterContainer,
-  isError,
+  customStyles = {},
   format = "date",
+  isError,
   minDate,
   maxDate,
-  customStyles = {},
+  onChangeValue,
+  value,
 }) => {
   const [open, setOpen] = useState(false);
   const handleDropDown = () => {
@@ -79,14 +79,14 @@ const DatePickerModal = ({
     </>
   );
 };
+
 DatePickerModal.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
-  onChangeValue: PropTypes.func.isRequired,
+  customStyles: PropTypes.object,
   format: PropTypes.string,
   minDate: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
-  customStyles: PropTypes.object,
-  // ...otherProps propTypes
+  onChangeValue: PropTypes.func.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
 };
 
 export default DatePickerModal;

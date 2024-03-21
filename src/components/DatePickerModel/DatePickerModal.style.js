@@ -1,4 +1,5 @@
 import { Platform, StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 import { fontFamily } from "../../theme/styles/commonStyles";
 
@@ -55,7 +56,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 0.1,
   },
-  // Uncomment the following style if you have specific styles for the DatePicker itself
   datePickerStyle: {
     backgroundColor: colors.white,
     border: "1px solid #d0d0d0",
