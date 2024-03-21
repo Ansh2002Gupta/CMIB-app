@@ -13,6 +13,7 @@ import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import DatePickerModal from "../DatePickerModel";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import Spinner from "../Spinner";
@@ -25,7 +26,6 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
-import DatePickerModal from "../DatePickerModel";
 
 const CustomTextInput = (props) => {
   const {
