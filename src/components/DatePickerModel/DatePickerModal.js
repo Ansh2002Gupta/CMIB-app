@@ -8,7 +8,7 @@ import CustomImage from "../CustomImage";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import images from "../../images";
 import { useIntl } from "react-intl";
-import { getDisplayValue } from "../../utils/util";
+import { formatDate } from "../../utils/util";
 import classes from "../../theme/styles/CssClassProvider";
 import styles from "./DatePickerModal.style";
 
@@ -50,10 +50,12 @@ function DatePickerModal({
         <View style={{ ...styles.flex1, ...customTextInputOuterContainer }}>
           <CommonText
             customTextStyle={
-              value ? styles.prefixStyle : styles.placeHolderText
+              !value ? styles.placeholderTextStyle : styles.valueStyle
             }
           >
-            {getDisplayValue(value, intl)}
+            {!value
+              ? intl.formatMessage({ id: "label.select" })
+              : formatDate(value)}
           </CommonText>
         </View>
         <View style={styles.iconContainer}>

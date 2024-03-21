@@ -6,7 +6,7 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import images from "../../images";
 import { useIntl } from "react-intl";
-import { getDisplayValue } from "../../utils/util";
+import { formatDate } from "../../utils/util";
 import styles from "./DatePickerModal.style";
 
 const DatePickerModal = ({
@@ -25,7 +25,7 @@ const DatePickerModal = ({
   };
   const intl = useIntl();
   const errorStyle = isError ? styles.invalidInput : {};
-
+  console.log("HELLO", formatDate(value));
   return (
     <>
       <View
@@ -48,9 +48,13 @@ const DatePickerModal = ({
           >
             <CommonText
               customContainerStyle={styles.mobileTextStyle}
-              customTextStyle={styles.valueText}
+              customTextStyle={
+                !value ? styles.placeholderTextStyle : styles.valueStyle
+              }
             >
-              {getDisplayValue(value, intl)}
+              {!value
+                ? intl.formatMessage({ id: "label.select" })
+                : formatDate(value)}
             </CommonText>
           </View>
           <View style={styles.imageContainer}>
