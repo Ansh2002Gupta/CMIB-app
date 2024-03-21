@@ -52,7 +52,11 @@ const Dropdown = ({
   );
 
   const handleValueChange = (selectedOption) => {
-    onChange(selectedOption.value);
+    if (selectAllField) {
+      onChange(selectedOption);
+    } else {
+      onChange(selectedOption.value);
+    }
   };
 
   const CheckboxOption = ({ data }) => {
@@ -68,7 +72,12 @@ const Dropdown = ({
           customTextStyle={styles.checkBoxTextStyle}
           handleCheckbox={() => handleValueChange(data)}
           id={data.value}
-          isSelected={data?.isSelected || data.index !== null}
+          isSelected={
+            data?.isSelected ||
+            (data.index && data.index !== null) ||
+            (!isSelected &&
+              selectedItems.findIndex((item) => item.id === data.id) !== -1)
+          }
           title={data?.label}
           isDisabled={isDisabled}
         />
@@ -86,6 +95,9 @@ const Dropdown = ({
           isDisabled={!isEditable}
           styles={customStyles(dropdownStyle, placeholderStyle, !isEditable)}
           theme={customTheme}
+          onInputChange={(inputValue) => {
+            onChangeDropDownText && onChangeDropDownText(inputValue);
+          }}
           onChange={handleValueChange}
           isMulti
           components={{ Option: CheckboxOption }}
@@ -95,7 +107,7 @@ const Dropdown = ({
             {selectedItems.map((item, index) => (
               <CustomChipCard
                 key={index}
-                message={item?.name}
+                message={item?.name ?? item.value}
                 onPress={() => handleValueChange(item)}
               />
             ))}
@@ -114,15 +126,8 @@ const Dropdown = ({
       theme={customTheme}
       onInputChange={(inputValue) => {
         onChangeDropDownText && onChangeDropDownText(inputValue);
-        //get the character entered by user here in inputValue
       }}
-      onChange={(selectedItem) => {
-        if (selectAllField) {
-          onChange(selectedItem);
-        } else {
-          onChange(selectedItem.value);
-        }
-      }}
+      onChange={handleValueChange}
     />
   );
 };

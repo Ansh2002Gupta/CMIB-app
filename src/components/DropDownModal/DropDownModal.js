@@ -225,7 +225,7 @@ const DropDownModal = ({
             {selectedItems.map((item, index) => (
               <>
                 <CustomChipCard
-                  message={item?.name}
+                  message={item?.name ?? item.value}
                   onPress={() => handleValueChange(item)}
                 />
               </>
@@ -242,6 +242,15 @@ const DropDownModal = ({
             }}
             onBackdropPress={handleDropDown}
           >
+            {(data?.length >= 20 || onChangeDropDownText) && (
+              <SearchView
+                data={data}
+                onSearch={onSearch}
+                customSearchCriteria={handleSearch}
+                customParentStyle={styles.searchView}
+                onChangeDropDownText={onChangeDropDownText}
+              />
+            )}
             <FlatList
               data={data}
               style={styles.modalContainer}
@@ -264,7 +273,14 @@ const DropDownModal = ({
                       customTextStyle={styles.checkBoxTextStyle}
                       handleCheckbox={() => handleValueChange(item)}
                       id={item.value}
-                      isSelected={item?.isSelected || item.index !== null}
+                      isSelected={
+                        item?.isSelected ||
+                        (item.index && item.index !== null) ||
+                        (!isSelected &&
+                          selectedItems.findIndex(
+                            (items) => items.id === item.id
+                          ) !== -1)
+                      }
                       title={item?.label}
                       isDisabled={isDisabled}
                     />

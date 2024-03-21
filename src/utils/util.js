@@ -215,7 +215,6 @@ export const getDisplayValue = (value, intl) => {
 export function validateJobData(data) {
   let errors = {};
 
-  // Check if text fields are not empty
   if (!data.jobSummary.trim()) errors.jobSummary = "Job summary is required";
   if (!data.jobDetails.trim()) errors.jobDetails = "Job details are required";
   if (!data.designation.trim()) errors.designation = "Designation is required";
@@ -223,9 +222,6 @@ export function validateJobData(data) {
     errors.essentialQualification = "Essential qualification is required";
   if (!data.desiredQualification.trim())
     errors.desiredQualification = "Desired qualification is required";
-
-  // Check if objects like jobType, jobLocation are not empty
-  // Assuming these should be objects with at least one key-value pair
   if (Object.keys(data.jobType).length === 0)
     errors.jobType = "Job type is required";
   if (Object.keys(data.jobLocation).length === 0)
@@ -236,26 +232,21 @@ export function validateJobData(data) {
     errors.categoryPreference = "Category Preference is required";
   if (Object.keys(data.modeofWork).length === 0)
     errors.modeofWork = "Mode of work is required";
-  // ... similar checks for functionalAreas, genderPreference, categoryPreference, modeofWork
-
-  // Check if experience numbers are valid
   if (data.minimumExperience < 0)
     errors.minimumExperience = "Minimum experience cannot be negative";
   if (data.maximumExperience < data.minimumExperience)
     errors.maximumExperience =
       "Maximum experience cannot be less than minimum experience";
-
-  // Check if the number of vacancies is a positive number
   if (data.numberOfVacancies <= 0)
     errors.numberOfVacancies = "Number of vacancies must be greater than zero";
-
-  // Check if salary range is valid
   if (data.minimumSalary < 0)
     errors.minimumSalary = "Minimum salary cannot be negative";
   if (data.maximumSalary < data.minimumSalary)
     errors.maximumSalary = "Maximum salary cannot be less than minimum salary";
-
-  // Check if contract duration is valid
+  if (data.maximumExperience == data.minimumExperience) {
+    errors.maximumExperience = "Maximum Minimum salary cannot be same";
+    errors.minimumExperience = "Maximum Minimum salary cannot be same";
+  }
   if (
     data.jobType.label == jobType.CONTRACTUAL &&
     (data.contractYear === 0 ||
@@ -266,11 +257,9 @@ export function validateJobData(data) {
     errors.contractMonth = "Contract Period is required";
     errors.contractDay = "Contract Period is required";
   }
-  // Check if disablity  is valid
   if (data.jobType.label == jobType.SPECIALLY_ABLE && !data.typeOfDisabilty) {
     errors.typeOfDisabilty = "Type of Disability is required";
   }
-  // Check if disablity  is valid
   if (
     data.jobType.label == jobType.SPECIALLY_ABLE &&
     data.disabiltyPercentage == 0
@@ -278,7 +267,6 @@ export function validateJobData(data) {
     errors.disabiltyPercentage = "Disability% should be greater than 0";
   }
 
-  // Check if dates are valid and jobClosingDate is after jobOpeningDate
   if (!(data.jobOpeningDate instanceof Date) || isNaN(data.jobOpeningDate))
     errors.jobOpeningDate = "Job opening date is invalid";
   if (!(data.jobClosingDate instanceof Date) || isNaN(data.jobClosingDate))
@@ -286,34 +274,26 @@ export function validateJobData(data) {
   if (data.jobClosingDate < data.jobOpeningDate)
     errors.jobClosingDate =
       "Job closing date must be after the job opening date";
-
-  // Add more validation as per your requirements
-
-  // Check if there are any errors
   const isValid = Object.keys(errors).length === 0;
-
   return { isValid, errors };
 }
 export function validateQuestions(questions) {
-  let isValidQuestion = true; // Assume the validation is valid initially
-  const questionError = {}; // Initialize an object to hold all the errors
+  let isValidQuestion = true;
+  const questionError = {};
 
   questions.forEach((question) => {
-    let questionErrors = []; // Array to store errors for the current question
+    let questionErrors = [];
 
     if (question.typeofQuestion === "Text Question") {
-      // The 'question' field should not be empty for text questions
       if (!question.question || question.question.trim() === "") {
         questionErrors.push(
           "Text Question must have a non-empty question field."
         );
       }
     } else if (question.typeofQuestion !== "Text Question") {
-      // The 'question' field should not be empty for single-select questions
       if (!question.question || question.question.trim() === "") {
         questionErrors.push("Question must have a non-empty question field.");
       }
-      // 'question_options' should be a non-empty array with non-empty values
       if (
         !Array.isArray(question.question_options) ||
         question.question_options.length === 0
@@ -330,14 +310,12 @@ export function validateQuestions(questions) {
       questionErrors.push("Invalid question type.");
     }
 
-    // If there are any errors for the question, add them to the errors object
     if (questionErrors.length > 0) {
-      isValidQuestion = false; // Set isValid to false as there are errors
+      isValidQuestion = false;
       questionError[question.id] = questionErrors;
     }
   });
 
-  // Return an object with isValid and errors
   return { isValidQuestion, questionError };
 }
 export const getFormatedData = (jobData, question) => {
@@ -351,10 +329,10 @@ export const getFormatedData = (jobData, question) => {
       min_experience: jobData.minimumExperience,
       max_experience: jobData.maximumExperience,
     },
-    location_id: jobData.jobLocation?.id,
+    location_id: jobData.jobLocation.map((object) => object.id),
     nationality: jobData.nationality?.value,
     designation: jobData.designation,
-    functional_area_id: jobData.functionalAreas?.id,
+    functional_area_id: jobData.functionalAreas.map((object) => object.id),
     gender_preference: jobData.genderPreference?.value,
     category_preference: jobData.categoryPreference?.label,
     essential_qualification: jobData.essentialQualification,

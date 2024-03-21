@@ -22,19 +22,14 @@ const PersonalDetails = ({
     genderPreferenceData,
     jobCategory,
   } = addJobs;
-
   const locationsArray = Array.from(
     new Map(
-      jobLocationData
-        .concat(
-          jobData.jobLocation && jobData.jobLocation.id
-            ? [jobData.jobLocation]
-            : []
-        )
-        .filter((location) => location && location.id)
-        .map((location) => [location.id, location])
+      [...jobData.jobLocation, ...jobLocationData].map((item) => [
+        item.id,
+        item,
+      ])
     ).values()
-  ).reverse();
+  );
 
   async function handleChange(text) {
     return fetchSearch(text).then((res) => {
@@ -43,7 +38,6 @@ const PersonalDetails = ({
       }
     });
   }
-
   return (
     <View>
       <View style={styles.row(isWebView)}>
@@ -129,12 +123,20 @@ const PersonalDetails = ({
             return handleChange(item);
           }}
           errorMessage={(error && error.jobLocation) || ""}
-          value={jobData.jobLocation.value}
+          selectedItems={jobData.jobLocation}
           onChangeValue={(value) => {
-            handleJobDetailsChange("jobLocation", value);
+            const arr = jobData.jobLocation;
+            const index = arr.findIndex((item) => item.id === value.id);
+            if (index > -1) {
+              arr.splice(index, 1);
+            } else {
+              arr.push(value);
+            }
+            handleJobDetailsChange("jobLocation", arr);
           }}
-          labelField="city"
-          valueField="city"
+          isMultiSelect
+          labelField={"city"}
+          valueField={"city"}
           customStyle={styles.jobLocationInputStyle}
         />
       </View>
@@ -150,12 +152,20 @@ const PersonalDetails = ({
           selectAllField={true}
           options={functionalData || []}
           isMandatory
+          isMultiSelect
           isError={(error && error.functionalAreas) || false}
           errorMessage={(error && error.functionalAreas) || ""}
-          value={jobData.functionalAreas.value}
+          selectedItems={jobData.functionalAreas}
           customStyle={styles.functionalAreaInputStyle}
           onChangeValue={(value) => {
-            handleJobDetailsChange("functionalAreas", value);
+            const arr = jobData.functionalAreas;
+            const index = arr.findIndex((item) => item.id === value.id);
+            if (index > -1) {
+              arr.splice(index, 1);
+            } else {
+              arr.push(value);
+            }
+            handleJobDetailsChange("functionalAreas", arr);
           }}
         />
       </View>
