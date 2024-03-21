@@ -25,7 +25,6 @@ const DatePickerModal = ({
   };
   const intl = useIntl();
   const errorStyle = isError ? styles.invalidInput : {};
-  console.log("HELLO", formatDate(value));
   return (
     <>
       <View
