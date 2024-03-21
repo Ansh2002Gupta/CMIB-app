@@ -69,8 +69,7 @@ function DatePickerModal({
             portalId="my-popper"
             className={accountComponentProp}
             onChange={(date) => {
-              let datetoBeFormatted = new Date(date);
-              onChangeValue(datetoBeFormatted);
+              onChangeValue(new Date(date));
               setOpen(false);
             }}
             showMonthDropdown
