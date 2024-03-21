@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { launchImageLibrary } from "react-native-image-picker";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
@@ -6,7 +7,6 @@ import { View } from "@unthinkable/react-core-components";
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 import PreviewImage from "../PreviewImage/PreviewImage";
 import { IMAGE_MAX_SIZE } from "../../constants/constants";
-import { launchImageLibrary } from "react-native-image-picker";
 
 import styles from "./UploadImage.style";
 
@@ -16,6 +16,7 @@ const UploadImage = ({
   errorWhileUpload: errorWhileUploading,
   fileUploadResult,
   handleFileUpload,
+  hideIconDelete,
   isUploadingImageToServer,
   onDeleteImage,
   setFileUploadResult,
@@ -76,6 +77,7 @@ const UploadImage = ({
           {...{
             fileName: imageUploadedToServer?.["file_name"] || imageName || "",
             isEditable: !!imageUrl,
+            hideIconDelete,
             onRemoveImage: onClickDeleteImage,
             source: { uri: imageUploadedToServer?.url || imageUrl || "" },
           }}
@@ -98,15 +100,23 @@ const UploadImage = ({
 UploadImage.defaultProps = {
   imageName: "",
   imageUrl: "",
+  handleFileUpload: () => {},
+  hideIconDelete: false,
   onDeleteImage: () => {},
-  onImageUpload: () => {},
+  setFileUploadResult: () => {},
 };
 
 UploadImage.propTypes = {
   imageName: PropTypes.string,
   imageUrl: PropTypes.string,
+  errorWhileUpload: PropTypes.string,
+  fileUploadResult: PropTypes.object,
+  handleFileUpload: PropTypes.func,
+  hideIconDelete: PropTypes.bool,
+  isUploadingImageToServer: PropTypes.bool,
   onDeleteImage: PropTypes.func,
-  onImageUpload: PropTypes.func,
+  setFileUploadResult: PropTypes.func,
+  uploadPercentage: PropTypes.string,
 };
 
 export default UploadImage;

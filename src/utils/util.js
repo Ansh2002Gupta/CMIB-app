@@ -391,3 +391,10 @@ export const getFormatedData = (jobData, question) => {
   temp.questions = tempQuestion;
   return temp;
 };
+export const getValidUrl = (url) => {
+  let link = url.toLowerCase();
+  if (!/^https?:\/\//.test(link) && !/^http?:\/\//.test(link)) {
+    link = `https://${link}`;
+  }
+  return link;
+};

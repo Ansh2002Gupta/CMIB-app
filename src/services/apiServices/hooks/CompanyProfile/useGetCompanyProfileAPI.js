@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
 import { COMPANY_PROFILE } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
@@ -11,6 +11,8 @@ const useGetCompanyProfileAPI = () => {
   const [companyProfileApiStatus, setCompanyProfileApiStatus] = useState(
     API_STATUS.IDLE
   );
+
+  const { Http } = useHttpService();
 
   const onGetProfile = async () => {
     try {
@@ -30,7 +32,7 @@ const useGetCompanyProfileAPI = () => {
     } catch (err) {
       setCompanyProfileApiStatus(API_STATUS.ERROR);
       setErrorWhileGettingResult(
-        err.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+        err.response?.data || { message: GENERIC_GET_API_FAILED_ERROR_MESSAGE }
       );
     }
   };

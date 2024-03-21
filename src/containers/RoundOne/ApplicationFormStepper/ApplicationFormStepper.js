@@ -1,25 +1,40 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { View, Platform } from "@unthinkable/react-core-components";
 
 import Stepper from "../../../components/Stepper";
+import StepperTabs from "../../../components/StepperTabs";
 import { APPLICATION_FORM_STEPPER_OPTIONS } from "../../../constants/constants";
+import styles from "./ApplicationFormStepper.style";
+
+const isWeb = Platform.OS.toLowerCase() === "web";
 
 const ApplicationFormStepper = ({ activeStep }) => {
   const intl = useIntl();
 
   return (
-    <View>
-      <Stepper
-        {...{
-          activeStep: activeStep,
-          steps: APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
-            intl.formatMessage({ id: step.title })
-          ),
-        }}
-      />
-    </View>
+    <>
+      {isWeb ? (
+        <View style={styles.stepperContainer}>
+          <StepperTabs
+            activeStep={activeStep}
+            steps={APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
+              intl.formatMessage({ id: step.title })
+            )}
+          />
+        </View>
+      ) : (
+        <Stepper
+          {...{
+            activeStep: activeStep,
+            steps: APPLICATION_FORM_STEPPER_OPTIONS.map((step) =>
+              intl.formatMessage({ id: step.title })
+            ),
+          }}
+        />
+      )}
+    </>
   );
 };
 

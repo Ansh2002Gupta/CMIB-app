@@ -200,6 +200,13 @@ const questionIcon = appendAppBaseURl("/images/question/question.png");
 const copyIcon = appendAppBaseURl("/images/copyIcon/copy.png");
 const redCrossIcon = appendAppBaseURl("/images/redCross/redClose.png");
 const editIcon = appendAppBaseURl("/images/editIcon/edit.png");
+const iconDisabledCheck = appendAppBaseURl("/images/svg/iconDisabledCheck.svg");
+const iconZoomIn = appendAppBaseURl("/images/svg/iconZoomIn.svg");
+const iconZoomOut = appendAppBaseURl("/images/svg/iconZoomOut.svg");
+const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
+const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
+const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
+const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
 
 const images = {
   iconArrowUp,
@@ -207,7 +214,6 @@ const images = {
   iconArrowDown2,
   avatar,
   logo,
-  iconSquareEdit,
   iconWarning,
   sun,
   iconLeftArrow,
@@ -341,6 +347,14 @@ const images = {
   copyIcon,
   redCrossIcon,
   editIcon,
+  iconDisabledCheck,
+  iconZoomIn,
+  iconZoomOut,
+  iconDeleteRed,
+  iconAddBlue,
+  iconEdit,
+  iconLoading,
+  iconGreyCross,
 };
 
 export default images;

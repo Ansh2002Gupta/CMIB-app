@@ -17,23 +17,20 @@ const SignUpScreenWelcomeComponent = ({ onClickGoToLogin, tabHandler }) => {
     validationError,
     setValidationError,
   } = useValidateSignUp();
-  const initialContactDetails =
-    signUpState?.signUpDetail?.contact_details || [];
+  const initialModuleList = signUpState?.signUpDetail?.module_list || [];
 
   const initialOptions = MODULE_OPTIONS.map((option) => ({
     ...option,
     title: intl.formatMessage({ id: option.messageId }),
-    isSelected: initialContactDetails.some(
-      (detail) => detail.module === option.id
-    ),
+    isSelected: initialModuleList.some((detail) => detail === option.id),
   }));
 
-  const [contactDetails, setContactDetails] = useState(initialContactDetails);
+  const [moduleList, setModuleList] = useState(initialModuleList);
   const [options, setOptions] = useState(initialOptions);
 
   const onClickNext = () => {
     const details = {
-      contact_details: contactDetails,
+      module_list: moduleList,
     };
 
     handleSignUpValidation({ details }, () => {
@@ -48,14 +45,14 @@ const SignUpScreenWelcomeComponent = ({ onClickGoToLogin, tabHandler }) => {
 
   return (
     <SignUpWelcomeScreenUI
-      contactDetails={contactDetails}
+      moduleList={moduleList}
       handleDismissToast={handleDismissToast}
       intl={intl}
       isLoading={isLoading}
       onClickGoToLogin={onClickGoToLogin}
       onClickNext={onClickNext}
       options={options}
-      setContactDetails={setContactDetails}
+      setModuleList={setModuleList}
       setOptions={setOptions}
       validationError={validationError}
     />

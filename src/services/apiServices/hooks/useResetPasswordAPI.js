@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../http-service";
+import useHttpService from "../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { COMPANY_RESET_PASSWORD_OTP } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
@@ -9,6 +9,8 @@ const useResetPasswordAPI = () => {
   const [resetPasswordResult, setResetPasswordResult] = useState({});
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
+
+  const { Http } = useHttpService();
 
   const handleResetPasswordAPI = async (payload) => {
     try {

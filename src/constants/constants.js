@@ -17,6 +17,7 @@ export const CODE_MIN_LENGTH = 2;
 export const CODE_MAX_LENGTH = 8;
 export const NUMBER_MIN_LENGTH = 7;
 export const NUMBER_MAX_LENGTH = 15;
+export const NUMBER_OF_PARTNERS_LENGTH = 3;
 export const MOBILE_NUMBER_MIN_LENGTH = 4;
 export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
@@ -30,6 +31,9 @@ export const OVERSEAS_PLACEMENTS = "overseas-chapters";
 export const CAREER_ASCENTS = "career-ascents";
 export const WOMENT_PLACEMENT = "women-placements";
 export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
+export const MIN_ZOOM_SCALE = 1;
+export const MAX_ZOOM_SCALE = 3;
+export const DEFAULT_BALANCE_CREDIT = 0;
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
@@ -40,6 +44,7 @@ export const PREVIOUS_SCREEN = -1;
 export const DOTS = "...";
 export const ANONYMOUS = "Anonymous";
 export const USER_TYPE_CANDIDATE = "candidate";
+export const EDIT = "edit";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -77,7 +82,7 @@ export const COMPANY_TYPE_OPTIONS = [
   { label: "Export", value: "export" },
   { label: "SEZ", value: "sez" },
   { label: "Deemed Export", value: "deemed export" },
-  { label: "Taxable", value: "taxan;e" },
+  { label: "Taxable", value: "taxable" },
 ];
 
 export const NATURE_OF_SUPPLIER = [
@@ -504,10 +509,3 @@ export const questionType = {
   "Single-select": "single-select",
   "Multi-select": "multi-select",
 };
-
-// export const JOB_TYPE=[
-//   {
-
-//   }
-//   Regular, contractual, Job for specially-abled, Post-retirement job
-// ]

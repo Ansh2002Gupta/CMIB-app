@@ -11,6 +11,7 @@ const styles = {
   },
   disabled: {
     cursor: "not-allowed",
+    opacity: 0.5,
   },
   selected: {
     borderColor: colors.black,

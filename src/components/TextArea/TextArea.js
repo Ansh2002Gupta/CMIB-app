@@ -4,12 +4,22 @@ import PropTypes from "prop-types";
 import classes from "../../theme/styles/CssClassProvider";
 import styles from "./TextArea.style";
 
-const TextArea = ({ cols, customStyle, onChangeText, rows, ...props }) => {
+const TextArea = ({
+  cols,
+  customStyle,
+  isError,
+  onChangeText,
+  rows,
+  ...props
+}) => {
   return (
     <textarea
       rows={rows}
       cols={cols}
-      style={styles.inputContainer}
+      style={{
+        ...styles.inputContainer,
+        ...(isError ? styles.invalidInput : {}),
+      }}
       className={classes["text-area__base"]}
       onChange={(e) => {
         onChangeText && onChangeText(e.target.value);
@@ -22,6 +32,7 @@ const TextArea = ({ cols, customStyle, onChangeText, rows, ...props }) => {
 TextArea.defaultProps = {
   cols: 0,
   customStyle: {},
+  isError: false,
   rows: 4,
   onChangeText: () => {},
 };
@@ -29,6 +40,7 @@ TextArea.defaultProps = {
 TextArea.propTypes = {
   cols: PropTypes.number,
   customStyle: PropTypes.object,
+  isError: PropTypes.bool,
   rows: PropTypes.number,
   onChangeText: PropTypes.func,
 };

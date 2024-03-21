@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import axiosInstance from "../axios/axiosInstance";
+import baseInstance from "../axios/baseInstance";
 
 export default class Http {
   static async get(_url, apiOptions = {}, handleDiscard = () => {}) {
@@ -22,11 +23,20 @@ export default class Http {
     data,
     headers = {},
     otherOptions = {},
-    handleDiscard = () => {}
+    handleDiscard = () => {},
+    isNotProtected
   ) {
     try {
       const cancelPostRequest = axios.CancelToken.source();
       handleDiscard(cancelPostRequest);
+      if (isNotProtected) {
+        const response = await baseInstance.post(_url, data, {
+          headers: headers,
+          cancelToken: cancelPostRequest.token,
+          ...otherOptions,
+        });
+        return response;
+      }
       const response = await axiosInstance.post(_url, data, {
         headers: headers,
         cancelToken: cancelPostRequest.token,

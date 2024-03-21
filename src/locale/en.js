@@ -121,7 +121,7 @@ const locale = {
   "label.women_placements": "Women Placements",
   "label.email_from_cmib": "Email from CMIB",
   "label.campus": "Campus",
-  "label.programme_brouchers": "Programme brochures from ICAI",
+  "label.programme_brouchers": "Programme brochure from ICAI",
   "label.based_on_prev_participation": "Based on previous participation",
   "label.telephonic_call_from_icai": "Telephonic Call from ICAI Officials",
   "label.advertisement_in_ca_journal":
@@ -159,7 +159,7 @@ const locale = {
     "The phone number must be a combination of numbers between 7 and 15 digits.",
   "label.email_id_validation": "Please enter a valid email address",
   "label.registration_no_validation":
-    "The registration number must be exactly 10 digits.",
+    "The firm registration number is required.",
   "label.address_validation": "The address must be within 500 characters.",
   "label.no_of_partners_validation":
     "The number of partners must be a combination of numbers.",
@@ -298,6 +298,7 @@ const locale = {
   "label.view_ticket_details": "View Ticket Details",
   "label.unable_to_delete": "Unable to delete account",
   "label.retry": "Retry",
+  "label.module_access": "Module Access",
   "label.srn": "SRN",
   "label.srn_placeholder": "Enter your SRN number",
   "label.enter_otp": "Enter OTP",
@@ -428,6 +429,26 @@ const locale = {
   "label.question_type": "Question Type",
   "label.option": "Option",
   "label.contractual_period": "Contractual Period",
+  "label.mark_as_active": "Mark as Active",
+  "label.enter_balance_credit": "Enter Balance Credit",
+  "label.select_module": "Select Module",
+  "label.module_removal_warning":
+    "You cannot remove this module access from here as it is assigned to a active contact person, kindly remove it from there first.",
+  "label.warning": "Warning",
+  "label.okay": "Okay",
+  "label.add_contact_person": "Add Contact Person",
+  "label.rupee": "₹",
+  "label.module_occupancy_warning":
+    "to any contact person, Are you sure that you want to save the details?",
+  "label.addContactPerson": "Add Contact Person",
+  "label.you_have_not_provided": "You have not provided ",
+  "label.particular_person_get_particlular_module":
+    "* Note - A particular module can be assigned to a single contact person only.",
+  "label.error": "Error",
+  "label.login_with_new_email":
+    "Please login using your updated email and password that you have received on your updated email.",
+  "label.session_has_expired": "Your session has been expired.",
+  "label.your_access_has_been_revoked": "Your access has been revoked.",
 };
 
 export default locale;
