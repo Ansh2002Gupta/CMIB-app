@@ -432,6 +432,17 @@ const locale = {
   "label.soft_skills_placeholder": "Enter skill",
   "label.other_skills": "Other Skills",
   "label.other_skills_placeholder": "Enter other skills",
+  "label.posting_anywhere_in_india": "Posting - Anywhere in India",
+  "label.whether_transferable_post_acceptable": "Whether Transferable Post Acceptable",
+  "label.ready_to_place_outside_india": "Are you ready to be placed outside India",
+  "label.preferred_region": "Preferred Region",
+  "label.expected_annual_salary": "Expected Annual Salary (Min : 750000)",
+  "label.preferences_kind_of_industry": "Preference for the Kind of Industry",
+  "label.cv_photo": "CV & Photo",
+  "label.job_preferences": "Job Preferences",
+  "label.photo": "Photo",
+  "label.intro_video_upload": "Introduction Video Upload: Showcase Your Personality for Recruiters",
+  "label.short_video": "Short Video",
 };
 
 export default locale;

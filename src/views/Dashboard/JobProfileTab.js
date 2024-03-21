@@ -18,6 +18,7 @@ import { useIntl } from "react-intl";
 import useIsWebView from "../../hooks/useIsWebView";
 import ActivitiesComponent from "./ActivitiesComponent";
 import SkillTrainingComponent from "./SkillTrainingComponent";
+import JobPreferencesComponent from "./Job Preferences/JobPreferencesComponent";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
@@ -114,6 +115,15 @@ const JobProfileTab = () => {
             label: "Skill Training",
             component: (
               <SkillTrainingComponent
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+              />
+            ),
+          },
+          {
+            label: "Job Preferences",
+            component: (
+              <JobPreferencesComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
               />

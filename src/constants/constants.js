@@ -354,6 +354,44 @@ export const EMP_STRENGTH = [
     value: "1000",
   },
 ];
+export const KIND_OF_INDUSTRY = [
+  {
+    name: "Information technology",
+    value: "Information_technology",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "BPO",
+    value: "bpo",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "Service Industry",
+    value: "service_industry",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "Information technology",
+    value: "Information_technology2",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "BPO",
+    value: "bpo2",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "Service Industry",
+    value: "service_industry2",
+    selectedIndex: null,
+    isSelected: false,
+  },
+];
 export const GROSS_SALARY = [
   {
     label: "5 lakh",
