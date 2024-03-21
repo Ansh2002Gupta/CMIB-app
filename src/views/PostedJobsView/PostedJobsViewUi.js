@@ -33,7 +33,6 @@ const PostedJobsViewUI = ({
               : intl.formatMessage({ id: "label.posted_jobs" })
           }
         />
-
         <TwoRow
           topSection={
             <View>

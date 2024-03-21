@@ -18,6 +18,7 @@ const CustomTextEditor = ({
   onChangeText,
   customErrorStyle,
   isError,
+  value,
   errorMessage,
 }) => {
   const richText = useRef(null);
@@ -64,6 +65,7 @@ const CustomTextEditor = ({
           <ScrollView>
             <RichEditor
               ref={richText}
+              initialContentHTML={value}
               onChange={(val) => {
                 onChangeText(val);
               }}

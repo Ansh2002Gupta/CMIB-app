@@ -100,9 +100,7 @@ const PostedJobView = () => {
   return (
     <>
       {isLoading && <LoadingScreen />}
-      {!isLoading && (
-        // && isSuccess
-        // && !isError
+      {!isLoading && isSuccess && !isError && (
         <PostedJobsViewUI
           isWebView={isWebView}
           jobData={jobData}
@@ -116,7 +114,7 @@ const PostedJobView = () => {
           onSubmit={onSubmit}
         />
       )}
-      {/* {!isLoading && isError && (
+      {!isLoading && isError && (
         <ErrorComponent
           errorMsg={
             isErrorData?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
@@ -124,7 +122,7 @@ const PostedJobView = () => {
           // onRetry={getErrorDetails().onRetry}
           // disableRetryBtn={isLoadingAPIs}
         />
-      )} */}
+      )}
     </>
   );
 };

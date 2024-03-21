@@ -46,7 +46,7 @@ const PersonalDetails = ({
             id: "label.minimum_experience",
           })}
           isMandatory
-          isError={(error && error.minimumExperience) || false}
+          isError={(error && error.minimumExperience && true) || false}
           errorMessage={(error && error.minimumExperience) || ""}
           isCounterInput
           maxCount={99}
@@ -64,7 +64,7 @@ const PersonalDetails = ({
           isCounterInput
           numberText={intl.formatMessage({ id: "label.year" })}
           customStyle={styles.inputStyle(isWebView)}
-          isError={(error && error.maximumExperience) || false}
+          isError={(error && error.maximumExperience && true) || false}
           maxCount={99}
           errorMessage={(error && error.maximumExperience) || ""}
           handleCountChange={(val) =>
@@ -78,7 +78,7 @@ const PersonalDetails = ({
           })}
           options={countryData || []}
           value={jobData.nationality.value}
-          isError={(error && error.nationality) || false}
+          isError={(error && error.nationality && true) || false}
           errorMessage={(error && error.nationality) || ""}
           isDropdown
           customStyle={styles.nationalityInputStyle}
@@ -103,7 +103,7 @@ const PersonalDetails = ({
           isMandatory
           customStyle={styles.inputStyle(isWebView)}
           value={jobData.designation}
-          isError={(error && error.designation) || false}
+          isError={(error && error.designation && true) || false}
           errorMessage={(error && error.designation) || ""}
           onChangeText={(val) => {
             handleJobDetailsChange("designation", val);
@@ -118,7 +118,7 @@ const PersonalDetails = ({
           includeAllKeys={true}
           selectAllField={true}
           options={locationsArray || []}
-          isError={(error && error.jobLocation) || false}
+          isError={(error && error.jobLocation && true) || false}
           onChangeDropDownText={(item) => {
             return handleChange(item);
           }}
@@ -153,7 +153,7 @@ const PersonalDetails = ({
           options={functionalData || []}
           isMandatory
           isMultiSelect
-          isError={(error && error.functionalAreas) || false}
+          isError={(error && error.functionalAreas && true) || false}
           errorMessage={(error && error.functionalAreas) || ""}
           selectedItems={jobData.functionalAreas}
           customStyle={styles.functionalAreaInputStyle}
@@ -195,7 +195,7 @@ const PersonalDetails = ({
           selectAllField={true}
           options={jobCategory || []}
           value={jobData.categoryPreference.value}
-          isError={(error && error.categoryPreference) || false}
+          isError={(error && error.categoryPreference && true) || false}
           errorMessage={(error && error.categoryPreference) || ""}
           onChangeValue={(value) => {
             handleJobDetailsChange("categoryPreference", value);

@@ -67,7 +67,7 @@ const QuestionMiddleSection = ({
                         isError={
                           (questionError &&
                             questionError[indexofOption + 1] &&
-                            questionError[indexofOption + 1]) ||
+                            true) ||
                           false
                         }
                         errorMessage={

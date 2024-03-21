@@ -9,7 +9,6 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import styles from "./CounterInput.style";
-import { useIntl } from "react-intl";
 
 const CounterInput = ({
   customErrorStyle,
@@ -27,7 +26,6 @@ const CounterInput = ({
   const textInputRef = useRef(null);
   const ArrowUp = images.iconArrowUp;
   const ArrowDown = images.iconArrowDown;
-  const intl = useIntl();
 
   useEffect(() => {
     if (onCountChange) {

@@ -5,7 +5,6 @@ import TouchableImage from "../../../components/TouchableImage";
 import images from "../../../images";
 import styles from "./HeaderComponent.styles";
 import CustomButton from "../../../components/CustomButton";
-import colors from "../../../assets/colors";
 import { useIntl } from "react-intl";
 
 const HeaderComponent = ({
@@ -15,7 +14,9 @@ const HeaderComponent = ({
   subText,
   isWebView,
   progressText,
+  progressJobData,
   onPress,
+  isQuestion,
 }) => {
   const ArrowUp = images.iconArrowUp;
   const ArrowDown = images.iconArrowDown;
@@ -40,10 +41,28 @@ const HeaderComponent = ({
               </CustomButton>
             </View>
           )}
-          {!isExpanded && progressText && progressText > 0 ? (
+          {!isExpanded && progressText && progressText > 0 && isQuestion ? (
             <View style={styles.progressViewStyle}>
               <CommonText customTextStyle={styles.progressTextStyle}>
                 {progressText}
+              </CommonText>
+            </View>
+          ) : null}
+          {!isExpanded && !isQuestion ? (
+            <View
+              style={{
+                ...{ backgroundColor: progressJobData.backgroundColor },
+
+                ...styles.jobDataProgressView,
+              }}
+            >
+              <CommonText
+                customTextStyle={{
+                  ...styles.fontSize12,
+                  ...{ color: progressJobData.textColor },
+                }}
+              >
+                {progressJobData.text}
               </CommonText>
             </View>
           ) : null}

@@ -188,6 +188,7 @@ const AddQuestionaireComponent = ({
           })}
           isWebView={isWebView}
           progressText={questionnairelist.length}
+          isQuestion={true}
           onPress={() =>
             addNewQuestion(
               false,

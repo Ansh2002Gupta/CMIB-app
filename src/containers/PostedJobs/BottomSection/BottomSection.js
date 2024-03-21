@@ -31,7 +31,7 @@ const BottomSection = ({
           isCalendar
           isMandatory
           value={jobData.jobOpeningDate}
-          isError={(error && error.jobOpeningDate) || false}
+          isError={(error && error.jobOpeningDate && true) || false}
           errorMessage={(error && error.jobOpeningDate) || ""}
           onChangeValue={(val) => {
             handleJobDetailsChange("jobOpeningDate", val);
@@ -46,7 +46,7 @@ const BottomSection = ({
           label={intl.formatMessage({ id: "label.job_closing_date" })}
           isCalendar
           isMandatory
-          isError={(error && error.jobClosingDate) || false}
+          isError={(error && error.jobClosingDate && true) || false}
           errorMessage={(error && error.jobClosingDate) || ""}
           minDate={jobData.jobOpeningDate}
           value={jobData.jobClosingDate}
@@ -69,7 +69,7 @@ const BottomSection = ({
           isCounterInput
           isMandatory
           value={jobData.numberOfVacancies}
-          isError={(error && error.numberOfVacancies) || false}
+          isError={(error && error.numberOfVacancies && true) || false}
           errorMessage={(error && error.numberOfVacancies) || ""}
           handleCountChange={(val) =>
             handleJobDetailsChange("numberOfVacancies", val)
@@ -115,10 +115,10 @@ const BottomSection = ({
           }}
           isMandatory
           value={jobData.modeofWork.label}
-          isError={(error && error.modeofWork) || false}
+          isError={(error && error.modeofWork && true) || false}
           errorMessage={(error && error.modeofWork) || ""}
           labelField={"name"}
-          valueField={"slug"}
+          valueField={"name"}
           isDropdown
           includeAllKeys={true}
           selectAllField={true}
@@ -179,8 +179,8 @@ const BottomSection = ({
             <CustomTextInput
               isMandatory
               numberText={intl.formatMessage({ id: "label.year" })}
-              value={jobData.contractYear}
-              isError={(error && error.contractYear) || false}
+              countValue={jobData.contractYear}
+              isError={(error && error.contractYear && true) || false}
               errorMessage={(error && error.contractYear) || ""}
               isCounterInput
               handleCountChange={(item) => {
@@ -189,10 +189,10 @@ const BottomSection = ({
               customStyle={styles.spacer}
             />
             <CustomTextInput
-              value={jobData.contractMonth}
+              countValue={jobData.contractMonth}
               isCounterInput
               numberText={intl.formatMessage({ id: "label.month" })}
-              isError={(error && error.contractMonth) || false}
+              isError={(error && error.contractMonth && true) || false}
               errorMessage={(error && error.contractMonth) || ""}
               handleCountChange={(item) => {
                 handleJobDetailsChange("contractMonth", item);
@@ -202,8 +202,8 @@ const BottomSection = ({
             <CustomTextInput
               isMandatory
               isCounterInput
-              value={jobData.contractDay}
-              isError={(error && error.contractDay) || false}
+              countValue={jobData.contractDay}
+              isError={(error && error.contractDay && true) || false}
               errorMessage={(error && error.contractDay) || ""}
               numberText={intl.formatMessage({ id: "label.day" })}
               handleCountChange={(item) => {
@@ -221,7 +221,7 @@ const BottomSection = ({
           <CustomTextInput
             label={intl.formatMessage({ id: "label.type_of_disability" })}
             isMandatory
-            isError={(error && error.typeOfDisabilty) || false}
+            isError={(error && error.typeOfDisabilty && true) || false}
             errorMessage={(error && error.typeOfDisabilty) || ""}
             value={jobData.typeOfDisabilty}
             onChangeText={(val) => {
@@ -235,8 +235,8 @@ const BottomSection = ({
             })}
             isCounterInput
             isMandatory
-            value={jobData.disabiltyPercentage}
-            isError={(error && error.disabiltyPercentage) || false}
+            countValue={jobData.disabiltyPercentage}
+            isError={(error && error.disabiltyPercentage && true) || false}
             errorMessage={(error && error.disabiltyPercentage) || ""}
             handleCountChange={(val) => {
               handleJobDetailsChange("disabiltyPercentage", val);
@@ -274,11 +274,11 @@ const BottomSection = ({
               id: "label.minimum_salary",
             })}
             isCounterInput
-            value={jobData.minimumSalary}
+            countValue={jobData.minimumSalary}
             handleCountChange={(val) => {
               handleJobDetailsChange("minimumSalary", val);
             }}
-            isError={(error && error.minimumSalary) || false}
+            isError={(error && error.minimumSalary && true) || false}
             errorMessage={(error && error.minimumSalary) || ""}
             maxCount={99999999999}
             customStyle={getStyle(
@@ -291,9 +291,9 @@ const BottomSection = ({
               id: "label.maximum_salary",
             })}
             isCounterInput
-            isError={(error && error.maximumSalary) || false}
+            isError={(error && error.maximumSalary && true) || false}
             errorMessage={(error && error.maximumSalary) || ""}
-            value={jobData.maximumSalary}
+            countValue={jobData.maximumSalary}
             maxCount={99999999999}
             handleCountChange={(val) => {
               handleJobDetailsChange("maximumSalary", val);

@@ -1,3 +1,4 @@
+import colors from "../assets/colors";
 import { navigations } from "./routeNames";
 
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
@@ -508,4 +509,26 @@ export const questionType = {
   "Text Question": "text",
   "Single-select": "single-select",
   "Multi-select": "multi-select",
+};
+export const progressData = {
+  0: {
+    backgroundColor: colors.greyOne,
+    text: "Form In Progress...",
+    textColor: colors.black,
+  },
+  1: {
+    backgroundColor: colors.skyBlueLight,
+    text: "Form Half Filled...",
+    textColor: colors.skyBlueDark,
+  },
+  2: {
+    backgroundColor: colors.lightPurple,
+    text: "Form Almost Done!",
+    textColor: colors.darkPurple,
+  },
+  3: {
+    backgroundColor: colors.lightGreen,
+    text: "Form Complete!",
+    textColor: colors.darkSecondGreen,
+  },
 };

@@ -218,10 +218,6 @@ export function validateJobData(data) {
   if (!data.jobSummary.trim()) errors.jobSummary = "Job summary is required";
   if (!data.jobDetails.trim()) errors.jobDetails = "Job details are required";
   if (!data.designation.trim()) errors.designation = "Designation is required";
-  if (!data.essentialQualification.trim())
-    errors.essentialQualification = "Essential qualification is required";
-  if (!data.desiredQualification.trim())
-    errors.desiredQualification = "Desired qualification is required";
   if (Object.keys(data.jobType).length === 0)
     errors.jobType = "Job type is required";
   if (Object.keys(data.jobLocation).length === 0)
@@ -249,9 +245,9 @@ export function validateJobData(data) {
   }
   if (
     data.jobType.label == jobType.CONTRACTUAL &&
-    (data.contractYear === 0 ||
-      data.contractMonth === 0 ||
-      data.contractDay === 0)
+    data.contractYear === 0 &&
+    data.contractMonth === 0 &&
+    data.contractDay === 0
   ) {
     errors.contractYear = "Contract Period is required";
     errors.contractMonth = "Contract Period is required";

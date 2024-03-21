@@ -24,6 +24,7 @@ const CustomTextEditor = (props) => {
     onChangeText,
     customErrorStyle,
     isError,
+    value,
     errorMessage,
   } = props;
   var modules = {
@@ -62,6 +63,7 @@ const CustomTextEditor = (props) => {
       <View style={styles.quillContainer}>
         <ReactQuill
           theme="snow"
+          value={value}
           className={isError ? "error" : ""}
           modules={modules}
           formats={formats}

@@ -243,7 +243,7 @@ const AddNewQuestionModal = ({
                         };
                       });
                     }}
-                    isError={error?.questionError || false}
+                    isError={(error?.questionError && true) || false}
                     errorMessage={error?.questionError || ""}
                     label={intl.formatMessage({ id: "label.question_type" })}
                   />
@@ -256,7 +256,7 @@ const AddNewQuestionModal = ({
                     placeholder={intl.formatMessage({
                       id: "label.enter_text",
                     })}
-                    isError={(error && error.optionValue) || false}
+                    isError={(error && error?.optionValue && true) || false}
                     errorMessage={(error && error.optionValue) || ""}
                     onChangeText={(data) => {
                       setErrors((prev) => {
@@ -293,7 +293,9 @@ const AddNewQuestionModal = ({
                             isPaddingNotRequired={true}
                             value={optionElement.value}
                             isError={
-                              (error && error[`option${indexofOption + 1}`]) ||
+                              (error &&
+                                error[`option${indexofOption + 1}`] &&
+                                true) ||
                               false
                             }
                             errorMessage={

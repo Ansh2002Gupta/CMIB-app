@@ -26,7 +26,7 @@ const JobDetailsComponent = ({
         placeholder={intl.formatMessage({
           id: "label.job_summary_placeHolder",
         })}
-        isError={(error && error.jobSummary) || false}
+        isError={(error && error.jobSummary && true) || false}
         errorMessage={(error && error.jobSummary) || ""}
         value={jobData.jobSummary}
         onChangeText={(val) => {
@@ -39,11 +39,12 @@ const JobDetailsComponent = ({
             id: "label.job_details",
           })}
           isMandatory
-          isError={(error && error.jobDetails) || false}
+          isError={(error && error.jobDetails && true) || false}
           errorMessage={(error && error.jobDetails) || ""}
           onChangeText={(val) => {
             handleJobDetailsChange("jobDetails", val);
           }}
+          value={jobData.jobDetails}
         />
       </View>
       <View style={styles.flexDirectionRowColumn(isWebView)}>
@@ -56,7 +57,7 @@ const JobDetailsComponent = ({
           selectAllField={true}
           value={jobData.jobType.value}
           options={jobType || []}
-          isError={(error && error.jobType) || false}
+          isError={(error && error.jobType && true) || false}
           errorMessage={(error && error.jobType) || ""}
           labelField={"name"}
           valueField={"slug"}

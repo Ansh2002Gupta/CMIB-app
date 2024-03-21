@@ -15,8 +15,17 @@ const styles = StyleSheet.create({
     flex: 0.85,
   },
   textStyle: { fontSize: 16 },
-  subTextStyle: { fontSize: 14, color: colors.darkGrey },
-
+  subTextStyle: {
+    fontSize: 14,
+    color: colors.darkGrey,
+  },
+  jobDataProgressView: {
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 4,
+    paddingBottom: 4,
+    borderRadius: 16,
+  },
   iconStyle: {
     height: 14,
     width: 14,
@@ -42,6 +51,9 @@ const styles = StyleSheet.create({
   progressTextStyle: {
     fontSize: 12,
     color: colors.white,
+  },
+  fontSize12: {
+    fontSize: 12,
   },
   webAddButtonStyle: {
     height: 44,
