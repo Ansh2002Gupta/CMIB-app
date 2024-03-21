@@ -407,6 +407,14 @@ const locale = {
   "label.hobbies": "Hobbies",
   "label.hobbies_placeholder": "Enter your hobbies",
   "label.achievements": "Achievements",
+  "label.languages_known": "Languages Known",
+  "label.languages_known_placeholder": "Select languages",
+  "label.it_skills": "I.T Skills",
+  "label.it_skills_placeholder": "Select skill",
+  "label.soft_skills": "Soft Skills",
+  "label.soft_skills_placeholder": "Enter skill",
+  "label.other_skills": "Other Skills",
+  "label.other_skills_placeholder": "Enter other skills",
 };
 
 export default locale;
