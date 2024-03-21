@@ -21,7 +21,6 @@ const BottomSection = ({
   const [addJobs] = useContext(AddJobContext);
   const { workModeData } = addJobs;
   const isWeb = Platform.OS.toLowerCase() === "web" && !isWebView;
-  console.log("isWeb", isWeb);
   return (
     <View>
       <View
@@ -75,8 +74,7 @@ const BottomSection = ({
           handleCountChange={(val) =>
             handleJobDetailsChange("numberOfVacancies", val)
           }
-          minCount={jobData.vacanciesCountType == 1 ? 20 : 0}
-          maxCount={jobData.vacanciesCountType == 0 ? 20 : 9999999}
+          maxCount={99999}
           countValue={jobData.numberOfVacancies}
           customStyle={getStyle(
             styles.textInputStyle,

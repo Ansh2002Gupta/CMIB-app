@@ -55,6 +55,7 @@ const PersonalDetails = ({
           isError={(error && error.minimumExperience) || false}
           errorMessage={(error && error.minimumExperience) || ""}
           isCounterInput
+          maxCount={99}
           numberText={intl.formatMessage({ id: "label.year" })}
           handleCountChange={(val) =>
             handleJobDetailsChange("minimumExperience", val)
@@ -70,6 +71,7 @@ const PersonalDetails = ({
           numberText={intl.formatMessage({ id: "label.year" })}
           customStyle={styles.inputStyle(isWebView)}
           isError={(error && error.maximumExperience) || false}
+          maxCount={99}
           errorMessage={(error && error.maximumExperience) || ""}
           handleCountChange={(val) =>
             handleJobDetailsChange("maximumExperience", val)
