@@ -1,13 +1,13 @@
 import React from "react";
-import OtherCoursesUI from "./OtherCoursesUI";
+import ActivitiesUI from "./ActivitesUI";
 import { useContext, useEffect, useState } from "react";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
 import { MEMBER_CA_JOB_PROFILE_OTHER_COURSES } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
-import { useOtherCourses } from "./controller/useOtherCourses";
+import { useActivities } from "./controller/useActivities";
 
-const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
+const ActivitiesComponent = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -21,11 +21,16 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
     data !== null && Object.keys(data).length ? data : {}
   );
 
-  const { isValidAllFields, handleOtherCoursesBlur, other_courses } =
-    useOtherCourses({
-      state,
-      isEditable,
-    });
+  const {
+    isValidAllFields,
+    achievements,
+    hobbies,
+    handleAchievementsBlur,
+    handleHobbiesBlur,
+  } = useActivities({
+    state,
+    isEditable,
+  });
 
   useEffect(() => {
     if (data !== null && Object.keys(data).length) {
@@ -48,11 +53,13 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
     }));
   };
   return (
-    <OtherCoursesUI
-      other_courses={other_courses}
+    <ActivitiesUI
+      achievements={achievements}
+      hobbies={hobbies}
+      handleAchievementsBlur={handleAchievementsBlur}
+      handleHobbiesBlur={handleHobbiesBlur}
       isEditable={isEditable}
       onChangeValue={onChangeValue}
-      handleOtherCoursesBlur={handleOtherCoursesBlur}
       isLoading={isLoading}
       isError={isError}
       isValidAllFields={isValidAllFields}
@@ -70,4 +77,4 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
   );
 };
 
-export default OtherCoursesComponent;
+export default ActivitiesComponent;

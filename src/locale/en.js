@@ -414,6 +414,24 @@ const locale = {
   "label.education_details": "Education Details",
   "label.grade_cgpa": "Grade/CGPA",
   "label.add_more_experience": "Add more experience",
+  "label.edit_job_profile": "Edit Job Profile",
+  "label.obtained_scholarships":
+    "Obtained Scholarships / Prizes / Certificate of Merit in Studies",
+  "label.won_prizes": "Won Prizes/Medals, etc. in games/sports",
+  "label.won_prizes_in_debates": "Won Prizes in debates",
+  "label.participation_in_social": "Participation in Social Programmes, etc.",
+  "label.any_other_specify": "Any Other (please specify)",
+  "label.hobbies": "Hobbies",
+  "label.hobbies_placeholder": "Enter your hobbies",
+  "label.achievements": "Achievements",
+  "label.languages_known": "Languages Known",
+  "label.languages_known_placeholder": "Select languages",
+  "label.it_skills": "I.T Skills",
+  "label.it_skills_placeholder": "Select skill",
+  "label.soft_skills": "Soft Skills",
+  "label.soft_skills_placeholder": "Enter skill",
+  "label.other_skills": "Other Skills",
+  "label.other_skills_placeholder": "Enter other skills",
 };
 
 export default locale;

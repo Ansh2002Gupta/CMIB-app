@@ -5,22 +5,34 @@ import ExamsComponent from "./ExamsComponent";
 import OtherCoursesComponent from "./OtherCoursesComponent";
 import colors from "../../assets/colors";
 
-const EducationDetailsTab = () => {
+const EducationDetailsTab = ({ isEditable, handleEdit }) => {
   return (
     <View style={{ backgroundColor: colors.backgroundGrey }}>
       <FormTab
         tabs={[
           {
             label: "Education Details",
-            component: <EducationDetailComponent />,
+            component: (
+              <EducationDetailComponent
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+              />
+            ),
           },
           {
             label: "Exams",
-            component: <ExamsComponent />,
+            component: (
+              <ExamsComponent isEditable={isEditable} handleEdit={handleEdit} />
+            ),
           },
           {
             label: "Other Courses",
-            component: <OtherCoursesComponent />,
+            component: (
+              <OtherCoursesComponent
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+              />
+            ),
           },
         ]}
       />

@@ -435,3 +435,14 @@ export const Education_Status_Options = [
     value: "correspondence",
   },
 ];
+
+export const BOOLEAN_OPTION = [
+  {
+    label: "Yes",
+    value: true,
+  },
+  {
+    label: "No",
+    value: false,
+  },
+];
