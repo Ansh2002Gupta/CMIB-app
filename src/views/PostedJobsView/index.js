@@ -1,12 +1,9 @@
 import { View, Text } from "@unthinkable/react-core-components";
-import React, { useState } from "react";
-import CustomTextInput from "../../components/CustomTextInput";
+import React from "react";
 
 const PostedJobs = () => {
-  const [value, setValue] = useState("");
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <CustomTextInput value={value} onChangeValue={setValue} isCalendar />
+    <View>
       <Text>PostedJobs</Text>
     </View>
   );
