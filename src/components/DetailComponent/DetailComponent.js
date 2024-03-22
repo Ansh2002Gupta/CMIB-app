@@ -243,31 +243,29 @@ const DetailComponent = ({
                       {renderEditableContent(columns)}
                     </View>
                   ) : (
-                    <>
-                      <View
-                        style={{
-                          ...(isWebView
-                            ? styles.webContainer
-                            : getRowStyle(detail)),
-                        }}
-                      >
-                        <View style={styles.titleContainer}>
-                          {columns.label ? (
-                            <CommonText customTextStyle={styles.titleStyle}>
-                              {intl.formatMessage({ id: columns.label })}
-                            </CommonText>
-                          ) : (
-                            void 0
-                          )}
-                          {columns?.isMandatory && (
-                            <CommonText customTextStyle={styles.starStyle}>
-                              {" *"}
-                            </CommonText>
-                          )}
-                        </View>
-                        {renderDetailContent(columns)}
+                    <View
+                      style={{
+                        ...(isWebView
+                          ? styles.webContainer
+                          : getRowStyle(detail)),
+                      }}
+                    >
+                      <View style={styles.titleContainer}>
+                        {columns.label ? (
+                          <CommonText customTextStyle={styles.titleStyle}>
+                            {intl.formatMessage({ id: columns.label })}
+                          </CommonText>
+                        ) : (
+                          void 0
+                        )}
+                        {columns?.isMandatory && (
+                          <CommonText customTextStyle={styles.starStyle}>
+                            {" *"}
+                          </CommonText>
+                        )}
                       </View>
-                    </>
+                      {renderDetailContent(columns)}
+                    </View>
                   );
                 })}
               </View>
