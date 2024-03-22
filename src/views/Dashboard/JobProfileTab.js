@@ -1,21 +1,22 @@
+import { useState } from "react";
 import {
   Row,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import { TabView } from "../../components/Tab";
+import { useIntl } from "react-intl";
+
+import { CustomTabs } from "../../components/Tab";
+import ActivitiesComponent from "./ActivitiesComponent";
 import EducationDetailsTab from "./EducationDetailsTab";
+import SkillTrainingComponent from "./SkillTrainingComponent";
 import PersonalDetailsComponent from "./PersonalDetailsComponent";
 import CommonText from "../../components/CommonText";
-import style from "./JobProfileTab.style";
 import CardComponent from "../../components/CardComponent";
-import { useState } from "react";
 import CustomImage from "../../components/CustomImage";
-import images from "../../images";
-import { useIntl } from "react-intl";
 import useIsWebView from "../../hooks/useIsWebView";
-import ActivitiesComponent from "./ActivitiesComponent";
-import SkillTrainingComponent from "./SkillTrainingComponent";
+import style from "./JobProfileTab.style";
+import images from "../../images";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
@@ -53,7 +54,7 @@ const JobProfileTab = () => {
   };
   return (
     <View style={{ flex: 1, overflow: "hidden" }}>
-      <TabView
+      <CustomTabs
         renderHeader={() => (
           <Row style={style.headerContainer}>
             <CommonText fontWeight={"500"} customTextStyle={style.titleText}>

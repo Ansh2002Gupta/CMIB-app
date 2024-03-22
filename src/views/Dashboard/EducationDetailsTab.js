@@ -1,5 +1,5 @@
 import { View } from "@unthinkable/react-core-components";
-import { FormTab } from "../../components/Tab";
+import { FormTabs } from "../../components/Tab";
 import EducationDetailComponent from "./EducationDetailsComponent";
 import ExamsComponent from "./ExamsComponent";
 import OtherCoursesComponent from "./OtherCoursesComponent";
@@ -8,7 +8,7 @@ import colors from "../../assets/colors";
 const EducationDetailsTab = ({ isEditable, handleEdit }) => {
   return (
     <View style={{ backgroundColor: colors.backgroundGrey }}>
-      <FormTab
+      <FormTabs
         tabs={[
           {
             label: "Education Details",

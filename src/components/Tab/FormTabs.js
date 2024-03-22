@@ -5,11 +5,13 @@ import {
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import CommonText from "../CommonText";
-import styles from "./FormTab.style";
 
-export const FormTab = ({ tabs }) => {
+import CommonText from "../CommonText";
+import styles from "./FormTabs.style.js";
+
+export const FormTabs = ({ tabs }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -46,4 +48,4 @@ export const FormTab = ({ tabs }) => {
   );
 };
 
-export default FormTab;
+export default FormTabs;

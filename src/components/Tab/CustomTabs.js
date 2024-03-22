@@ -5,11 +5,13 @@ import {
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import CommonText from "../CommonText";
-import styles from "./TabView.style";
 
-export const TabView = ({ tabs, renderHeader }) => {
+import CommonText from "../CommonText";
+import styles from "./CustomTabs.style.js";
+
+export const CustomTabs = ({ tabs, renderHeader }) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -47,4 +49,3 @@ export const TabView = ({ tabs, renderHeader }) => {
     </View>
   );
 };
-
