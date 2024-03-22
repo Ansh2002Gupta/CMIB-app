@@ -30,8 +30,6 @@ const style = {
     backgroundColor: "transparent",
   },
   addButtonStyle: {
-    justifyContent: 'flex-start',
-    width: '20%',
     marginBottom: 20
   },
   customTextStyle: {

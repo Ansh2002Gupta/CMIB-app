@@ -91,24 +91,19 @@ const addValueOnField = ({ state, details, isEditable }) => {
         item.isSelected = false;
       });
   }
-
   const selectedKindOfIndustry = kindOfIndustry.length > 0 && KIND_OF_INDUSTRY.filter(item =>
      kindOfIndustry.some(selectedItem => selectedItem === item.value));
-
-  console.log("kindOfIndustry",kindOfIndustry, KIND_OF_INDUSTRY)
   return details.map((item,index) => {
     if (item?.key === 'preferences_kindOfIndustry'){
         return{
             ...item,
             value: kindOfIndustry || [],
-            selectedItems: KIND_OF_INDUSTRY,//KIND_OF_INDUSTRY.filter((item) => item.selectedIndex === index),
-            //indexNumber:{index},
+            selectedItems: KIND_OF_INDUSTRY,
             defaultValues: selectedKindOfIndustry,
             labelField:"name",
             valueField:"value",
             indexField:"selectedIndex",
             isSelected:"isSelected",
-           // dropdownStyle={style.dropdownStyle}
         }
     }
     return {

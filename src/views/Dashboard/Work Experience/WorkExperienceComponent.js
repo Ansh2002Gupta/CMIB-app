@@ -16,13 +16,12 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
     url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE}`,
   });
 
-  const [state, setState] = useState(data !== null && Object.keys(data).length ? data : {});
- // const [workExperiences, setWorkExperiences] = useState([{}]);
-
+  const [state, setState] = useState(data !== null && Object.keys(data).length ? data : {kindOfIndustry: []});
   const {
-    workExperience_detail,
+    workExperiences,
     handleWorkExperienceDetailBlur,
     isValidAllFields,
+    initailWorkExperience
   } = useWorkExperienceDetail({
     state: state,
     isEditable,
@@ -34,33 +33,24 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
     }
   }, [data]);
 
-  const findKeyByLabel = (label, details) => {
-    return details.find((item) => {
-      return item.label === label;
-    });
-  };
-
   const onChangeValue = (details) => (label, value) => {
-   // console.log("onChangeValue---",details,label,value,codeValue)
-    const { key } = findKeyByLabel(label, details);
-    //console.log("value", value, "key", key, "label", label , "details", details)
     setState((prev) => ({
       ...prev,
-      [key]: value,
+      [label]: value,
     }));
   };
-  console.log("state::",state, workExperience_detail)
+  console.log("state::",state)
 
   return (
     <WorkExperienceUI
-      workExperience_detail={workExperience_detail}
+      initailWorkExperience={initailWorkExperience}
+      workExperiences={workExperiences}
       onChangeValue={onChangeValue}
       handleWorkExperienceDetailBlur={handleWorkExperienceDetailBlur}
       isValidAllFields={isValidAllFields}
       isError={isError}
       isLoading={isLoading}
       isEditable={isEditable}
-      //workExperiences={state.workExperiences ? state.workExperiences : [{}]}
       onClickSave={() => {
         handleUpdate(state, () => {
           // turn off the edit mode
@@ -71,12 +61,6 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
         // turn off the edit mode
         handleEdit(false);
       }}
-      // onClickAdd={() => {
-      //   //on add more experience
-      //   setState({workExperiences: [state.workExperiences, {}]});
-
-      //   //setState({})
-      // }}
     />
   );
 };

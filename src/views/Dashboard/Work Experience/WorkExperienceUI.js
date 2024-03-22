@@ -8,7 +8,7 @@ import images from "../../../images";
 import { useEffect, useState } from "react";
 const WorkExperienceUI = ({
   isEditable = true,
-  workExperience_detail,
+  workExperiences,
   handleWorkExperienceDetailBlur,
   onChangeValue,
   isLoading,
@@ -16,16 +16,17 @@ const WorkExperienceUI = ({
   onClickCancel,
   isValidAllFields,
   onClickAdd,
+  initailWorkExperience
 }) => {
   const intl = useIntl();
-  const [workExperiencesState, setWorkExperiencesState] = useState([{}]);
+  const [workExperiencesState, setWorkExperiencesState] = useState([initailWorkExperience]);
 
-  // useEffect(() => {
-  //   if (workExperiencesState.length > 0) {
-  //     const changeHandler = onChangeValue(workExperience_detail);
-  //     changeHandler("workExperiences", workExperiencesState);
-  //   }
-  // }, [workExperiencesState]);
+  useEffect(() => {
+    if (workExperiencesState.length > 0) {
+      const changeHandler = onChangeValue(workExperiences);
+      changeHandler("workExperiences", workExperiencesState);
+    }
+  }, [workExperiencesState]);
 
   const findKeyByLabel = (label, details) => {
     return details.find((item) => {
@@ -33,28 +34,34 @@ const WorkExperienceUI = ({
     });
   };
 
-  const onChangeWorkExp = (label, value, codeValue,index) => {
-    console.log("index---",index, workExperiencesState)
-     const { key } = findKeyByLabel(label, workExperience_detail);
-     let currentState = [...workExperiencesState];
-     let currentIndexState = currentState[index] || {};
-     currentIndexState[key] = value;
-     currentState[index] = currentIndexState;
-     setWorkExperiencesState(currentState);
-     const changeHandler = onChangeValue(workExperience_detail);
-     changeHandler(label,value);
+  function updateValueByKey(workExp, key, value) {
+    return workExp.map((item) => {
+      if (item.key === key) {
+        return { ...item, value: value };
+      }
+      return item;
+    });
   }
 
+  const onChangeWorkExp = (label, value, codeValue,index) => {
+     const { key } = findKeyByLabel(label, initailWorkExperience);
+     let currentState = [...workExperiencesState];
+     let currentIndexState = currentState[index] || {};
+     currentIndexState = updateValueByKey(currentIndexState, key, value);
+     currentState[index] = currentIndexState;
+     setWorkExperiencesState(currentState);
+  }
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={style.contentContainerStyle}
     >
       <View style={[style.innerContainerStyle]}>
-      {workExperiencesState.map((experience, index) => (
-        <DetailCard
+      {workExperiences.map((experience, index) => (
+        <View>
+           <DetailCard
         key={index}
-        details={workExperience_detail}
+        details={experience}
         customCardStyle={style.customCardStyle}
         headerId={intl.formatMessage({
           id: "label.workExperience",
@@ -63,26 +70,13 @@ const WorkExperienceUI = ({
         handleChange={(label, value, codeValue) => {
           onChangeWorkExp(label,value,codeValue,index)
         }}
-        // handleChange={(label, value, codeValue) => {
-
-        //   const changeHandler = onChangeValue(workExperience_detail);
-        //   changeHandler(label, value, codeValue); 
-
-        //   const { key } = findKeyByLabel(label, workExperience_detail);
-        //   let currentState = [...state];
-        //   let currentIndexState = currentState[index] || {};
-        //   currentIndexState[key] = value;
-        //   currentState[index] = currentIndexState;
-        //   setState(currentState);
-        // }}
-        //handleChange={onChangeWorkExp(index)}
-       // handleChange={onChangeValue(workExperience_detail)}
         handleBlur={handleWorkExperienceDetailBlur}
       />
+        </View>
       ))}  
-        <CustomButton
+      {isEditable &&  <CustomButton
           onPress={() =>{
-            setWorkExperiencesState([...workExperiencesState, {}]);
+            setWorkExperiencesState([...workExperiencesState, initailWorkExperience]);
           }}
           style={{ ...style.addButtonStyle }}
           iconLeft={{
@@ -92,7 +86,8 @@ const WorkExperienceUI = ({
           customStyle={{ customTextStyle: style.customTextStyle }}
           >
             {intl.formatMessage({ id: "label.add_more_experience" })}
-        </CustomButton>
+        </CustomButton> 
+        }
       </View>
       <SaveCancelButton
         isEditable={isEditable}

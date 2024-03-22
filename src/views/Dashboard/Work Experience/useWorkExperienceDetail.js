@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { useIntl } from "react-intl";
-import { EMP_STRENGTH, GROSS_SALARY, WORK_EXPERIENCE } from "../../../constants/constants";
+import { AREAS_OF_WORK, EMP_STRENGTH, GROSS_SALARY, WORK_EXPERIENCE } from "../../../constants/constants";
 
 const work_experience = [
  {
@@ -102,9 +102,10 @@ const work_experience = [
     key: "areasOfWork",
     isMandatory: true,
     isDropdown: true,
-    options: [],
+    options: AREAS_OF_WORK,
     label: "label.areasOfWork",
     placeholder: "label.areasOfWork",
+    selectedItems: [],
     validate: (value) => {
       if (!value) {
         return "Areas of work is required";
@@ -114,17 +115,12 @@ const work_experience = [
 ];
 
 const addValueOnField = ({ state, details, isEditable }) => {
-  //const {workExperiences} = state;
-  //console.log("addValueOnField",workExperiences)
- // const work = (workExperiences && workExperiences.length > 0) ? workExperiences[0] : undefined;
-  return details.map((item) => {
-    return {
-      ...item,
-      value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
-     // codeValue: state.codeValue,
-    };
-  });
-};
+  const {workExperiences} = state;
+  if (workExperiences && workExperiences.length > 0) {
+    return workExperiences;
+  } 
+   return [work_experience];
+  };
 
 const validateOnBlur = ({ state, details, key, index, intl }) => {
   //const {workExperiences} = state;
@@ -172,7 +168,8 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
   };
 
   return {
-    workExperience_detail: addValueOnField({
+    initailWorkExperience: work_experience,
+    workExperiences: addValueOnField({
       state,
       details: workExperience_detail_state,
       isEditable,
