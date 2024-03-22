@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../../assets/colors";
 
 const style = {
@@ -26,7 +27,7 @@ const style = {
         color:colors.darkGrey
       },
       customContentContainerStyle:{
-        width: "65%",
+        width: Platform.OS.toLowerCase() === "web" ? "65%" : "100%",
         marginBottom: 24,
       }
 };

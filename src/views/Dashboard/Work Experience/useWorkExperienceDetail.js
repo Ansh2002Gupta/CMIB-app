@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { useIntl } from "react-intl";
-import { AREAS_OF_WORK, EMP_STRENGTH, GROSS_SALARY, WORK_EXPERIENCE } from "../../../constants/constants";
+import { EMP_STRENGTH, GROSS_SALARY, WORK_EXPERIENCE } from "../../../constants/constants";
 
 const work_experience = [
  {
@@ -102,7 +102,7 @@ const work_experience = [
     key: "areasOfWork",
     isMandatory: true,
     isDropdown: true,
-    options: AREAS_OF_WORK,
+    options: [],
     label: "label.areasOfWork",
     placeholder: "label.areasOfWork",
     selectedItems: [],
@@ -113,6 +113,45 @@ const work_experience = [
     },
   },
 ];
+const current_status = [
+  [{
+    key: "currentSpecialisation",
+    isMandatory: true,
+    isDropdown: true,
+    options: [],
+    label: "label.current_specialisation",
+    placeholder: "label.current_specialisation",
+    validate: (value) => {
+      if (!value) {
+        return "Current specialisation is required";
+      }
+    },
+  },
+  {
+    key: "othersSpecialisation",
+    label: "label.other_specialisation",
+    placeholder: "label.other_specialisation",
+  }],
+  [{
+    key: "currentIndustrySpecialisation",
+    isMandatory: true,
+    isDropdown: true,
+    options: [],
+    label: "label.current_industry_specialisation",
+    placeholder: "label.current_industry_specialisation",
+    validate: (value) => {
+      if (!value) {
+        return "Current industry specialisation is required";
+      }
+    },
+  },
+  {
+    key: "othersIndustrySpecialisation",
+    label: "label.other_specialisation",
+    placeholder: "label.other_specialisation",
+  }],
+]
+
 
 const addValueOnField = ({ state, details, isEditable }) => {
   const {workExperiences} = state;
@@ -121,6 +160,16 @@ const addValueOnField = ({ state, details, isEditable }) => {
   } 
    return [work_experience];
   };
+
+  const addValueOnField_currentStatus = ({ state, details, isEditable }) => {
+    return details.map((item) => {
+      return {
+        ...item,
+        value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+      };
+    });
+  }; 
+
 
 const validateOnBlur = ({ state, details, key, index, intl }) => {
   //const {workExperiences} = state;
@@ -143,12 +192,24 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
   const intl = useIntl();
 //  const { data: countryData } = useFetch({ url: COUNTRY_CODE });
   const [workExperience_detail_state, setWorkExperienceDetailState] = useState(work_experience);
+  const [current_status_state, setCurrentStatusState] = useState(current_status);
 
   const handleWorkExperienceDetailBlur = (key, index) => {
     setWorkExperienceDetailState(
       validateOnBlur({
         state,
         details: workExperience_detail_state,
+        key,
+        index,
+        intl,
+      })
+    );
+  }
+  const handleCurrentStatusDetailBlur = (key, index) => {
+    setCurrentStatusState(
+      validateOnBlur({
+        state,
+        details: current_status_state,
         key,
         index,
         intl,
@@ -166,7 +227,7 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
     });
     return error;
   };
-
+  {console.log("current_status",current_status)}
   return {
     initailWorkExperience: work_experience,
     workExperiences: addValueOnField({
@@ -174,7 +235,14 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
       details: workExperience_detail_state,
       isEditable,
     }),
+    current_status: current_status,
+    // current_status : addValueOnField_currentStatus({
+    //   state,
+    //   details: current_status_state,
+    //   isEditable,
+    // }),
     handleWorkExperienceDetailBlur,
+    handleCurrentStatusDetailBlur,
     isValidAllFields: checkMandatoryFields(),
   };
 };

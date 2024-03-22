@@ -9,8 +9,11 @@ import { useEffect, useState } from "react";
 const WorkExperienceUI = ({
   isEditable = true,
   workExperiences,
+  current_status,
   handleWorkExperienceDetailBlur,
+  handleCurrentStatusDetailBlur,
   onChangeValue,
+  onChangeValue_currentStatus,
   isLoading,
   onClickSave,
   onClickCancel,
@@ -89,6 +92,16 @@ const WorkExperienceUI = ({
         </CustomButton> 
         }
       </View>
+      <DetailCard
+        details={current_status}
+        isColumnVariableWidth={true}
+        headerId={intl.formatMessage({
+          id: "label.current_status",
+        })}
+        isEditProfile={isEditable}
+        handleChange={onChangeValue_currentStatus(current_status)}
+        handleBlur={handleCurrentStatusDetailBlur}
+      />
       <SaveCancelButton
         isEditable={isEditable}
         isLoading={isLoading}

@@ -443,6 +443,10 @@ const locale = {
   "label.photo": "Photo",
   "label.intro_video_upload": "Introduction Video Upload: Showcase Your Personality for Recruiters",
   "label.short_video": "Short Video",
+  "label.current_specialisation": "Areas of Current Specialisation (Job Area)",
+  "label.other_specialisation": "Others (Please Specify)",
+  "label.current_industry_specialisation" : "Areas of Current Industry Specialisation (Job Area)",
+  "label.current_status": "Current Status",
 };
 
 export default locale;

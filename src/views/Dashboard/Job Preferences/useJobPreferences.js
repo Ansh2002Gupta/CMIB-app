@@ -44,7 +44,6 @@ const preferences_details = [
         key: "preferredRegion",
         isMandatory: true,
         label: "label.preferred_region",
-        isRow: true,
         placeholder: "label.preferred_region",
         validate: (value) => {
           if (!value) {

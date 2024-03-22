@@ -5,8 +5,9 @@ import { View } from "@unthinkable/react-core-components";
 import AddDesignation from "../../containers/AddDesignation/AddDesignation";
 import CommonText from "../../components/CommonText";
 import CustomCell from "../../components/CustomCell/";
-import SearchView from "../../components/SearchView";
+import DetailCard from "../../components/DetailCard/DetailCard";
 import MultiColumn from "../../core/layouts/MultiColumn";
+import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
 import styles from "./dashboard.style";
@@ -67,17 +68,66 @@ function DashboardView() {
       <CommonText customTextStyle={styles.header}>
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
-      <MultiColumn columns={searchData} />
-      <CustomCell
-        onPress={toggleSwitch}
-        title={"AddDesignation"}
-        isLeft
-        isSvg
-        leftSource={AddIcon}
-        style={styles.customCellStyle}
-        textStyle={styles.customCellTextStyle}
+      <DetailCard
+        isEditProfile
+        isColumnVariableWidth
+        details={[
+          [
+            {
+              label: "Test",
+              isLink: true,
+              value: "Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy ",
+            },
+            {
+              label: "Test",
+              isLink: true,
+              value: "Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy ",
+            },
+          ],
+          [
+            {
+              label: "Test",
+              isLink: true,
+              value: "Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy ",
+              width: 2, // Can be 1, 2 or 3 (1 for 100%, 2 for 75% and 3 for 33%)
+            },
+          ],
+          [
+            {
+              label: "Test",
+              isLink: true,
+              value: "Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy ",
+            },
+            {
+              label: "Test",
+              isLink: true,
+              value: "Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy ",
+            },
+            {
+              label: "Test",
+              isLink: true,
+              value: "Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy ",
+            },
+          ],
+        ]}
       />
-      {isEnabled && <AddDesignation resultCallback={handleAddDesignation} />}
+      <DetailCard
+        isEditProfile
+        details={[
+          {
+            label: "Test",
+            isLink: true,
+          },
+          {
+            label: "Test",
+            isLink: true,
+          },
+          {
+            label: "Test",
+            isLink: true,
+          },
+        ]}
+      />
     </View>
   );
 }

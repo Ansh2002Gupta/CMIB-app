@@ -17,13 +17,17 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
   });
 
   const [state, setState] = useState(data !== null && Object.keys(data).length ? data : {kindOfIndustry: []});
+  const [currentStatus, setCurrentStatus] = useState(data !== null && Object.keys(data).length ? data : {});
   const {
     workExperiences,
+    current_status,
     handleWorkExperienceDetailBlur,
+    handleCurrentStatusDetailBlur,
     isValidAllFields,
     initailWorkExperience
   } = useWorkExperienceDetail({
     state: state,
+    currentStatus: currentStatus,
     isEditable,
   });
 
@@ -39,14 +43,37 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
       [label]: value,
     }));
   };
+  const findKeyByLabel = (label, details) => {
+    return details.find((item) => {
+      return item.label === label;
+    });
+  };
+  const onChangeValue_currentStatus = (details) => (label, value, codeValue) => {
+    const { key } = findKeyByLabel(label, details);
+    if (codeValue) {
+      setCurrentStatus((prev) => ({
+        ...prev,
+        codeValue: value,
+      }));
+    } else {
+      setCurrentStatus((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+    }
+  };
   console.log("state::",state)
+  console.log("setCurrentStatus",setCurrentStatus)
 
   return (
     <WorkExperienceUI
       initailWorkExperience={initailWorkExperience}
       workExperiences={workExperiences}
+      current_status={current_status}
       onChangeValue={onChangeValue}
+      onChangeValue_currentStatus={onChangeValue_currentStatus}
       handleWorkExperienceDetailBlur={handleWorkExperienceDetailBlur}
+      handleCurrentStatusDetailBlur={handleCurrentStatusDetailBlur}
       isValidAllFields={isValidAllFields}
       isError={isError}
       isLoading={isLoading}
