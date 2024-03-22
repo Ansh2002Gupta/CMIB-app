@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Education_Status_Options, YEARS } from "../../constants/constants";
+import { Education_Status_Options, YEARS } from "../../../constants/constants";
 import { useIntl } from "react-intl";
 
 const educational_detail = () => [

@@ -5,11 +5,11 @@ import {
   NUMBER_MAX_LENGTH,
   NUMBER_MIN_LENGTH,
   numRegex,
-} from "../../constants/constants";
-import useFetch from "../../hooks/useFetch";
-import { COUNTRY_CODE } from "../../services/apiServices/apiEndPoint";
+} from "../../../constants/constants";
+import useFetch from "../../../hooks/useFetch";
+import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
 import { useIntl } from "react-intl";
-import { validateEmail } from "../../utils/validation";
+import { validateEmail } from "../../../utils/validation";
 
 const personal_detail = [
   {

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import PersonalDetailsUI from "./PersonalDetailsUI";
-import { usePersonalDetails } from "./usePersonalDetails";
+import { usePersonalDetails } from "./Controllers/usePersonalDetails";
 import useFetch from "../../hooks/useFetch";
 import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";

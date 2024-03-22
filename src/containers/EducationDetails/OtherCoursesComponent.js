@@ -5,7 +5,7 @@ import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
 import { MEMBER_CA_JOB_PROFILE_OTHER_COURSES } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
-import { useOtherCourses } from "./useOtherCourses";
+import { useOtherCourses } from "./Controllers/useOtherCourses";
 
 const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
