@@ -234,7 +234,7 @@ const DetailComponent = ({
                   return isEditable ? (
                     <View
                       style={{
-                        ...(columns.width === 3 ? styles.smallWidth : {}),
+                        ...(columns.width === 3 ? styles.oneThirdWidth : {}),
                         ...(isWebView
                           ? styles.webContainer
                           : getRowStyle(detail)),

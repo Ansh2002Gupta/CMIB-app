@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     fontSize: 16,
   },
-  smallWidth: {
+  oneThirdWidth: {
     width: "33%",
   },
   getVariableContainerStyles: (detail) => {
