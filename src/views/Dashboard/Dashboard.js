@@ -10,7 +10,7 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
 import styles from "./dashboard.style";
-import JobProfileTab from "./JobProfileTab";
+import JobProfileTab from "../JobProfile";
 
 // Just ignore this file as just to test custom component
 function DashboardView() {

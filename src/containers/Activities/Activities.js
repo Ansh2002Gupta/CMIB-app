@@ -1,20 +1,21 @@
+import React from "react";
+import ActivitiesUI from "./ActivitesUI";
 import { useContext, useEffect, useState } from "react";
-import EducationDetailsUI from "./EducationDetailsUI";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
-import { MEMBER_CA_JOB_PROFILE_EDUCATION } from "../../services/apiServices/apiEndPoint";
+import { MEMBER_CA_JOB_PROFILE_OTHER_COURSES } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
-import { useEducationDetails } from "./controller/useEducationDetails";
+import { useActivities } from "./useActivities";
 
-const EducationDetailsComponent = ({ isEditable = true, handleEdit }) => {
+const Activities = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_OTHER_COURSES}`,
   });
 
   const { handleUpdate, isError, isLoading } = useUpdateService({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_OTHER_COURSES}`,
   });
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? data : {}
@@ -22,15 +23,11 @@ const EducationDetailsComponent = ({ isEditable = true, handleEdit }) => {
 
   const {
     isValidAllFields,
-    education_detail,
-    higher_secondary_detail,
-    graduation_detail,
-    post_graduation_detail,
-    handleEducationDetailBlur,
-    handleHigherSecondaryDetailBlur,
-    handleGraduationDetailBlur,
-    handlePostGraduationDetailBlur,
-  } = useEducationDetails({
+    achievements,
+    hobbies,
+    handleAchievementsBlur,
+    handleHobbiesBlur,
+  } = useActivities({
     state,
     isEditable,
   });
@@ -56,20 +53,16 @@ const EducationDetailsComponent = ({ isEditable = true, handleEdit }) => {
     }));
   };
   return (
-    <EducationDetailsUI
-      education_detail={education_detail}
-      higher_secondary_detail={higher_secondary_detail}
-      graduation_detail={graduation_detail}
-      post_graduation_detail={post_graduation_detail}
-      onChangeValue={onChangeValue}
-      handleEducationDetailBlur={handleEducationDetailBlur}
-      handleHigherSecondaryDetailBlur={handleHigherSecondaryDetailBlur}
-      handleGraduationDetailBlur={handleGraduationDetailBlur}
-      handlePostGraduationDetailBlur={handlePostGraduationDetailBlur}
-      isValidAllFields={isValidAllFields}
-      isError={isError}
-      isLoading={isLoading}
+    <ActivitiesUI
+      achievements={achievements}
+      hobbies={hobbies}
+      handleAchievementsBlur={handleAchievementsBlur}
+      handleHobbiesBlur={handleHobbiesBlur}
       isEditable={isEditable}
+      onChangeValue={onChangeValue}
+      isLoading={isLoading}
+      isError={isError}
+      isValidAllFields={isValidAllFields}
       onClickSave={() => {
         handleUpdate(state, () => {
           // turn off the edit mode
@@ -84,4 +77,4 @@ const EducationDetailsComponent = ({ isEditable = true, handleEdit }) => {
   );
 };
 
-export default EducationDetailsComponent;
+export default Activities;

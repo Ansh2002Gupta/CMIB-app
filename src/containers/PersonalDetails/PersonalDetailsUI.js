@@ -2,7 +2,7 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 import style from "./PersonalDetails.style";
 import DetailCard from "../../components/DetailCard";
 import { useIntl } from "react-intl";
-import SaveCancelButton from "./SaveCancelButton";
+import SaveCancelButton from "../../components/SaveCancelButton";
 
 const PersonalDetailsUI = ({
   isEditable,

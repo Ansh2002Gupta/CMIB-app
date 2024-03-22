@@ -7,15 +7,15 @@ import {
 import { useIntl } from "react-intl";
 
 import { CustomTabs } from "../../components/Tab";
-import ActivitiesComponent from "./ActivitiesComponent";
-import EducationDetailsTab from "./EducationDetailsTab";
-import SkillTrainingComponent from "./SkillTrainingComponent";
-import PersonalDetailsComponent from "./PersonalDetailsComponent";
+import PersonalDetails from "../../containers/PersonalDetails";
+import EducationDetails from "../../containers/EducationDetails";
+import Activities from "../../containers/Activities";
+import SkillTraining from "../../containers/SkillTraining/SkillTraining";
 import CommonText from "../../components/CommonText";
 import CardComponent from "../../components/CardComponent";
 import CustomImage from "../../components/CustomImage";
 import useIsWebView from "../../hooks/useIsWebView";
-import style from "./JobProfileTab.style";
+import style from "./JobProfile.style";
 import images from "../../images";
 
 const EditButton = ({ isEditable, handleEdit }) => {
@@ -67,7 +67,7 @@ const JobProfileTab = () => {
           {
             label: "Personal Details",
             component: (
-              <PersonalDetailsComponent
+              <PersonalDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
               />
@@ -76,7 +76,7 @@ const JobProfileTab = () => {
           {
             label: "Education Details",
             component: (
-              <EducationDetailsTab
+              <EducationDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
               />
@@ -85,16 +85,13 @@ const JobProfileTab = () => {
           {
             label: "Activities",
             component: (
-              <ActivitiesComponent
-                isEditable={isEditable}
-                handleEdit={handleEdit}
-              />
+              <Activities isEditable={isEditable} handleEdit={handleEdit} />
             ),
           },
           {
             label: "Skill Training",
             component: (
-              <SkillTrainingComponent
+              <SkillTraining
                 isEditable={isEditable}
                 handleEdit={handleEdit}
               />

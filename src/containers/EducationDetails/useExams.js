@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MONTHS, YEARS } from "../../../constants/constants";
+import { MONTHS, YEARS } from "../../constants/constants";
 import { useIntl } from "react-intl";
 
 const ca_foundation = () => [

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BOOLEAN_OPTION } from "../../../constants/constants";
+import { BOOLEAN_OPTION } from "../../constants/constants";
 import { useIntl } from "react-intl";
 
 const achievements = () => [

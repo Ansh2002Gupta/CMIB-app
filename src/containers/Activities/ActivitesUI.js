@@ -1,9 +1,9 @@
 import React from "react";
 import { View, ScrollView } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
-import style from "./OtherCourses.style";
+import style from "../EducationDetails/OtherCourses.style";
 import DetailCard from "../../components/DetailCard";
-import SaveCancelButton from "./SaveCancelButton";
+import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 
 const ActivitiesUI = ({
   isEditable,

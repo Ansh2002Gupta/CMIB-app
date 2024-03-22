@@ -3,7 +3,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import DetailCard from "../../components/DetailCard";
 import style from "./Exams.style";
-import SaveCancelButton from "./SaveCancelButton";
+import SaveCancelButton from "../../components/SaveCancelButton";
 const ExamsUI = ({
   isEditable,
   ca_foundation,

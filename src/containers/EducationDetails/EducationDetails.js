@@ -1,31 +1,39 @@
-import React from "react";
-import OtherCoursesUI from "./OtherCoursesUI";
 import { useContext, useEffect, useState } from "react";
+import EducationDetailsUI from "./EducationDetailsUI";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
-import { MEMBER_CA_JOB_PROFILE_OTHER_COURSES } from "../../services/apiServices/apiEndPoint";
+import { MEMBER_CA_JOB_PROFILE_EDUCATION } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
-import { useOtherCourses } from "./controller/useOtherCourses";
+import { useEducationDetails } from "./useEducationDetails";
 
-const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
+const EducationDetails = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_OTHER_COURSES}`,
+    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
 
   const { handleUpdate, isError, isLoading } = useUpdateService({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_OTHER_COURSES}`,
+    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? data : {}
   );
 
-  const { isValidAllFields, handleOtherCoursesBlur, other_courses } =
-    useOtherCourses({
-      state,
-      isEditable,
-    });
+  const {
+    isValidAllFields,
+    education_detail,
+    higher_secondary_detail,
+    graduation_detail,
+    post_graduation_detail,
+    handleEducationDetailBlur,
+    handleHigherSecondaryDetailBlur,
+    handleGraduationDetailBlur,
+    handlePostGraduationDetailBlur,
+  } = useEducationDetails({
+    state,
+    isEditable,
+  });
 
   useEffect(() => {
     if (data !== null && Object.keys(data).length) {
@@ -48,14 +56,20 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
     }));
   };
   return (
-    <OtherCoursesUI
-      other_courses={other_courses}
-      isEditable={isEditable}
+    <EducationDetailsUI
+      education_detail={education_detail}
+      higher_secondary_detail={higher_secondary_detail}
+      graduation_detail={graduation_detail}
+      post_graduation_detail={post_graduation_detail}
       onChangeValue={onChangeValue}
-      handleOtherCoursesBlur={handleOtherCoursesBlur}
-      isLoading={isLoading}
-      isError={isError}
+      handleEducationDetailBlur={handleEducationDetailBlur}
+      handleHigherSecondaryDetailBlur={handleHigherSecondaryDetailBlur}
+      handleGraduationDetailBlur={handleGraduationDetailBlur}
+      handlePostGraduationDetailBlur={handlePostGraduationDetailBlur}
       isValidAllFields={isValidAllFields}
+      isError={isError}
+      isLoading={isLoading}
+      isEditable={isEditable}
       onClickSave={() => {
         handleUpdate(state, () => {
           // turn off the edit mode
@@ -70,4 +84,4 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
   );
 };
 
-export default OtherCoursesComponent;
+export default EducationDetails;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { YEARS } from "../../../constants/constants";
+import { YEARS } from "../../constants/constants";
 import { useIntl } from "react-intl";
 
 const other_courses = () => [
