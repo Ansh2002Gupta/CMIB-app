@@ -232,6 +232,14 @@ export const TICKET_TABLE_HEADING = {
   },
   created_at: "Created On",
 };
+export const POSTED_JOB_LISTING = {
+  job_id: "Job ID",
+  designation: "Designation",
+  status: "Active/Inactive",
+  number_of_interviews: "Scheduled Interview",
+  number_of_applications: "Applicants",
+  approve: "Approved/Not Approved by Admin",
+};
 
 export const FEEDBACK_TABLE_HEADING = {
   id: "Feedback ID",

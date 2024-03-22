@@ -34,3 +34,6 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+
+//Posted Job APi
+export const GET_POSTED_JOBS = `${USER_TYPE_COMPANY}/jobs`;

@@ -156,6 +156,7 @@ const iconTwitterWeb = appendAppBaseURl("/images/svg/iconTwitterWeb.svg");
 const iconCmibCALogo = appendAppBaseURl(
   "/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png"
 );
+const dotIcon = appendAppBaseURl("/images/dotIcon/dot.png");
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
 const iconEditSvg = appendAppBaseURl("/images/svg/editIcon.svg");
 const iconCloseDark = appendAppBaseURl("/images/svg/iconCloseDark.svg");
@@ -342,6 +343,7 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  dotIcon,
 };
 
 export default images;
