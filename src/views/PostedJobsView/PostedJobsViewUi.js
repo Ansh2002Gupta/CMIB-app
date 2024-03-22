@@ -10,14 +10,13 @@ import { TwoRow } from "../../core/layouts";
 
 const PostedJobsViewUI = ({
   isWebView,
-  setIsQuestionaireList,
-  questionnairelist,
   isCheckList,
   setIsCheckList,
   error,
   onSubmit,
   setError,
   addComponentRef,
+  addQuestionRef,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isQuestionaire, setIsQuestionaire] = useState(true);
@@ -43,11 +42,11 @@ const PostedJobsViewUI = ({
                 error={error}
               />
               <AddQuestionaireComponent
+                ref={addQuestionRef}
                 isQuestionaire={isQuestionaire}
                 setIsQuestionaire={setIsQuestionaire}
+                addQuestionRef={addQuestionRef}
                 isWebView={isWebView}
-                setIsQuestionaireList={setIsQuestionaireList}
-                questionnairelist={questionnairelist}
                 questionError={error.questionError}
                 setError={setError}
               />

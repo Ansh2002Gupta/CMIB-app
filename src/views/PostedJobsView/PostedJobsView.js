@@ -14,16 +14,19 @@ import Http from "../../services/http-service";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 const PostedJobView = () => {
   const { isLoading, isSuccess, isError, isErrorData } = useGetPostedJobsData();
-
-  const [questionnairelist, setIsQuestionaireList] = useState([]);
   const [error, setError] = useState({});
   const addComponentRef = useRef();
+  const addQuestionRef = useRef();
   const [isCheckList, setIsCheckList] = useState(false);
 
   const onSubmit = () => {
     let jobData;
+    let questionnairelist;
     if (addComponentRef.current) {
       jobData = addComponentRef.current.getChildState();
+    }
+    if (addQuestionRef.current) {
+      questionnairelist = addQuestionRef.current.getQuestionData();
     }
     const { isValid, errors } = validateJobData(jobData);
     const { isValidQuestion, questionError } =
@@ -62,8 +65,7 @@ const PostedJobView = () => {
         <PostedJobsViewUI
           isWebView={isWebView}
           addComponentRef={addComponentRef}
-          setIsQuestionaireList={setIsQuestionaireList}
-          questionnairelist={questionnairelist}
+          addQuestionRef={addQuestionRef}
           setIsCheckList={setIsCheckList}
           isCheckList={isCheckList}
           error={error}
