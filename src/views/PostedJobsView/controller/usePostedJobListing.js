@@ -391,12 +391,16 @@ const usePostedJobListing = () => {
       },
       {
         content: (
-          <TouchableImage
-            onPress={() => {
-              onIconPress && onIconPress(item);
-            }}
-            source={images.iconMore}
-          />
+          <View>
+            {!isHeading && (
+              <TouchableImage
+                onPress={() => {
+                  onIconPress && onIconPress(item);
+                }}
+                source={images.iconMore}
+              />
+            )}
+          </View>
         ),
         style: {
           ...commonStyles.columnStyle("18%"),

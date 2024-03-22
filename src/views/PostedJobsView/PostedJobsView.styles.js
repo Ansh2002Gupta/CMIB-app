@@ -88,6 +88,10 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
+  customTableStyle: {
+    backgroundColor: colors.white,
+    paddingBottom: 4,
+  },
 });
 
 export default styles;

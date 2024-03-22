@@ -128,7 +128,7 @@ const PostedJobsView = () => {
             placeholder: "Search By Designation or Job ID",
           }}
           mobileComponentToRender={getMobileView}
-          containerStyle={{ backgroundColor: colors.white, paddingBottom: 4 }}
+          containerStyle={styles.customTableStyle}
         />
       }
     />
