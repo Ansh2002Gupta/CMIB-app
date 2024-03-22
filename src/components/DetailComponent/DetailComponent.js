@@ -184,6 +184,7 @@ const DetailComponent = ({
           }
         }}
         isRupee={detail?.isRupee}
+        isCalendar={detail?.isCalendar}
       />
     );
   };

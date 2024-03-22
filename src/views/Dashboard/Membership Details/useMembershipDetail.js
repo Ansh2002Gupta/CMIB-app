@@ -61,7 +61,7 @@ export const useMembershipDetail = ({ state, isEditable}) => {
       ...(state.isFellowMember === 0 ? [{
         key: "fellow_member_admission_date",
         isMandatory: false,
-        isDate: true,
+        isCalendar: true,
         label: "label.fellowMemberDateOfAdmission",
         placeholder: "label.fellowMemberDateOfAdmission",
         validate: (value) => {
@@ -91,7 +91,7 @@ export const useMembershipDetail = ({ state, isEditable}) => {
       ...(state.inPractice === 0 ? [{
         key: "sinceWhenPracticing",
         isMandatory: false,
-        isDate: true,
+        isCalendar: true,
         label: "label.sinceWhenHaveYouBeenPracticing",
         placeholder: "label.sinceWhenHaveYouBeenPracticing",
         validate: (value) => {
