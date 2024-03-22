@@ -96,7 +96,9 @@ const CompanyProfileComponent = () => {
       const updatedModuleOptions = MODULE_OPTIONS.map((option) => ({
         ...option,
         title: intl.formatMessage({ id: option.messageId }),
-        isSelected: profileResult?.company_module_access?.includes(option.id),
+        isSelected: profileResult?.company_module_access?.find(
+          (module) => module.name === option.id
+        ),
       }));
       const updatedInfoOptions = INTEREST_OPTIONS.map((option) => ({
         ...option,
