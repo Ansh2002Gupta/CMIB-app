@@ -1,4 +1,9 @@
-import React, { useContext } from "react";
+import React, {
+  forwardRef,
+  useContext,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { Platform, Text, View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
 import CustomToggleComponent from "../../../components/CustomToggleComponent/CustomToggleComponent";
@@ -9,18 +14,47 @@ import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import CustomLabelView from "../../../components/CustomLabelView";
 import { jobType } from "../../../constants/constants";
 
-const BottomSection = ({
-  isWebView,
-  jobData,
-  handleJobDetailsChange,
-  error,
-}) => {
-  // Helper function to switch styles based on the isWebView prop
+const BottomSection = forwardRef(({ isWebView, error }, ref) => {
   const getStyle = (style, styleColumn) => (isWebView ? style : styleColumn);
   const intl = useIntl();
   const [addJobs] = useContext(AddJobContext);
   const { workModeData } = addJobs;
   const isWeb = Platform.OS.toLowerCase() === "web" && !isWebView;
+  const [jobData, setJobData] = useState({
+    jobOpeningDate: new Date(),
+    jobClosingDate: new Date(),
+    numberOfVacancies: 0,
+    vacanciesCountType: 0,
+    modeofWork: {},
+    flexiHours: 0,
+    fullTime: 0,
+    typeOfDisabilty: "",
+    disabiltyPercentage: 0,
+    salaryNagotiable: 0,
+    minimumSalary: 0,
+    maximumSalary: 0,
+    contractYear: 0,
+    contractMonth: 0,
+    contractDay: 0,
+  });
+
+  const getBottomSectionDetails = () => {
+    return jobData;
+  };
+
+  useImperativeHandle(ref, () => ({
+    getBottomSectionDetails: getBottomSectionDetails,
+  }));
+
+  const handleJobDetailsChange = (field, value) => {
+    setJobData((prev) => {
+      return {
+        ...prev,
+        [field]: value,
+      };
+    });
+  };
+
   return (
     <View>
       <View
@@ -114,7 +148,7 @@ const BottomSection = ({
             handleJobDetailsChange("modeofWork", value);
           }}
           isMandatory
-          value={jobData.modeofWork.label}
+          value={jobData.modeofWork?.label}
           isError={(error && error.modeofWork && true) || false}
           errorMessage={(error && error.modeofWork) || ""}
           labelField={"name"}
@@ -144,11 +178,11 @@ const BottomSection = ({
           customLabelStyle={styles.labelStyle}
         />
         {isWebView &&
-          (jobData.jobType.label == jobType.CONTRACTUAL ||
-            !jobData.jobType.label) && <View style={styles.spacer} />}
+          (jobData.jobType?.label == jobType.CONTRACTUAL ||
+            !jobData.jobType?.label) && <View style={styles.spacer} />}
 
-        {(jobData.jobType.label == jobType.REGULAR ||
-          jobData.jobType.label == jobType.RETIRED) && (
+        {(jobData.jobType?.label == jobType.REGULAR ||
+          jobData.jobType?.label == jobType.RETIRED) && (
           <CustomToggleComponent
             label={intl.formatMessage({ id: "label.fullorPartTime" })}
             isMandatory
@@ -162,7 +196,7 @@ const BottomSection = ({
           />
         )}
       </View>
-      {jobData.jobType.label === jobType.CONTRACTUAL && (
+      {jobData.jobType?.label === jobType.CONTRACTUAL && (
         <View style={styles.contractualPeriodViewStyle}>
           <View>
             <CustomLabelView
@@ -216,7 +250,7 @@ const BottomSection = ({
           </View>
         </View>
       )}
-      {jobData.jobType.label === jobType.SPECIALLY_ABLE && (
+      {jobData.jobType?.label === jobType.SPECIALLY_ABLE && (
         <View style={styles.row(isWebView)}>
           <CustomTextInput
             label={intl.formatMessage({ id: "label.type_of_disability" })}
@@ -311,6 +345,6 @@ const BottomSection = ({
       </View>
     </View>
   );
-};
+});
 
 export default BottomSection;

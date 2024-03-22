@@ -1,4 +1,9 @@
-import React, { useContext } from "react";
+import React, {
+  forwardRef,
+  useContext,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
 import styles from "./PersonalDetails.styles"; // Import the styles
@@ -6,15 +11,39 @@ import { useIntl } from "react-intl";
 import useGetPostedJobsData from "../../../services/apiServices/hooks/PostedJobs/useGetPostedJobsData";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 
-const PersonalDetails = ({
-  isWebView,
-  jobData,
-  handleJobDetailsChange,
-  error,
-}) => {
+const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
   const intl = useIntl();
   const { fetchSearch } = useGetPostedJobsData();
   const [addJobs] = useContext(AddJobContext);
+  const [jobData, setJobData] = useState({
+    minimumExperience: 0,
+    maximumExperience: 0,
+    nationality: "",
+    designation: "",
+    jobLocation: [],
+    functionalAreas: [],
+    genderPreference: {},
+    categoryPreference: {},
+    essentialQualification: "",
+    desiredQualification: "",
+  });
+
+  const getPersonalDetails = () => {
+    return jobData;
+  };
+
+  useImperativeHandle(ref, () => ({
+    getPersonalDetails: getPersonalDetails,
+  }));
+
+  const handleJobDetailsChange = (field, value) => {
+    setJobData((prev) => {
+      return {
+        ...prev,
+        [field]: value,
+      };
+    });
+  };
   const {
     countryData,
     functionalData,
@@ -237,6 +266,6 @@ const PersonalDetails = ({
       </View>
     </View>
   );
-};
+});
 
 export default PersonalDetails;

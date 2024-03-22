@@ -26,6 +26,7 @@ const AddNewQuestionModal = ({
 }) => {
   const intl = useIntl();
   const [error, setErrors] = useState({});
+
   function validate() {
     const error = {};
     let data = optionData ? optionData : newQuestionnaireData;

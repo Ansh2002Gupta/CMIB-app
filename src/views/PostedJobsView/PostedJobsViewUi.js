@@ -1,5 +1,5 @@
 import { View, ScrollView } from "@unthinkable/react-core-components";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import styles from "./PostedJobsView.style";
 import { useIntl } from "react-intl";
@@ -10,8 +10,6 @@ import { TwoRow } from "../../core/layouts";
 
 const PostedJobsViewUI = ({
   isWebView,
-  jobData,
-  handleJobDetailsChange,
   setIsQuestionaireList,
   questionnairelist,
   isCheckList,
@@ -19,6 +17,7 @@ const PostedJobsViewUI = ({
   error,
   onSubmit,
   setError,
+  addComponentRef,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isQuestionaire, setIsQuestionaire] = useState(true);
@@ -37,9 +36,8 @@ const PostedJobsViewUI = ({
           topSection={
             <View>
               <AddJobComponent
+                ref={addComponentRef}
                 isExpanded={isExpanded}
-                jobData={jobData}
-                handleJobDetailsChange={handleJobDetailsChange}
                 setIsExpanded={setIsExpanded}
                 isWebView={isWebView}
                 error={error}

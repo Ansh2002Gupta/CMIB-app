@@ -28,6 +28,7 @@ const AddQuestionaireComponent = ({
       setIsModalVisible(true);
     }
   }, [optionData]);
+
   const questionaireTypeFormatted = useMemo(() => {
     return questionaireType.map((item) => {
       return {
@@ -55,7 +56,6 @@ const AddQuestionaireComponent = ({
       });
       setIsQuestionaireList(updatedArray);
     } else {
-      // let tempItem = { ...item, question_order: questionnairelist.length + 1 };
       setIsQuestionaireList((oldArray) => [...oldArray, item]);
     }
   }
@@ -115,7 +115,7 @@ const AddQuestionaireComponent = ({
                 value: "",
               },
               {
-                id: Date.now() * Math.random(),
+                id: Math.floor(Date.now() * Math.random()),
                 value: "",
               },
             ];

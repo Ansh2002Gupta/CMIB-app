@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PostedJobsViewUI from "./PostedJobsViewUi";
 import useIsWebView from "../../hooks/useIsWebView";
 import useGetPostedJobsData from "../../services/apiServices/hooks/PostedJobs/useGetPostedJobsData";
@@ -13,50 +13,22 @@ import {
 import Http from "../../services/http-service";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 const PostedJobView = () => {
-  const { isLoading, isSuccess, isError, isErrorData, fetchData } =
-    useGetPostedJobsData();
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { isLoading, isSuccess, isError, isErrorData } = useGetPostedJobsData();
+
   const [questionnairelist, setIsQuestionaireList] = useState([]);
   const [error, setError] = useState({});
-  const [jobData, setJobData] = useState({
-    jobSummary: "",
-    jobDetails: "",
-    jobType: {},
-    isUrgentJob: 0,
-    minimumExperience: 0,
-    maximumExperience: 0,
-    nationality: "",
-    designation: "",
-    jobLocation: [],
-    functionalAreas: [],
-    genderPreference: {},
-    categoryPreference: {},
-    essentialQualification: "",
-    desiredQualification: "",
-    jobOpeningDate: new Date(),
-    jobClosingDate: new Date(),
-    numberOfVacancies: 0,
-    vacanciesCountType: 0,
-    modeofWork: {},
-    flexiHours: 0,
-    fullTime: 0,
-    typeOfDisabilty: "",
-    disabiltyPercentage: 0,
-    salaryNagotiable: 0,
-    minimumSalary: 0,
-    maximumSalary: 0,
-    contractYear: 0,
-    contractMonth: 0,
-    contractDay: 0,
-  });
+  const addComponentRef = useRef();
   const [isCheckList, setIsCheckList] = useState(false);
 
   const onSubmit = () => {
+    let jobData;
+    if (addComponentRef.current) {
+      jobData = addComponentRef.current.getChildState();
+    }
     const { isValid, errors } = validateJobData(jobData);
     const { isValidQuestion, questionError } =
       validateQuestions(questionnairelist);
+
     if (!isValid) {
       setError(errors);
     }
@@ -68,6 +40,7 @@ const PostedJobView = () => {
         };
       });
     }
+
     if (isValid && isValidQuestion) {
       const formattedData = getFormatedData(jobData, questionnairelist);
       Http.post(POST_JOB, formattedData)
@@ -79,32 +52,16 @@ const PostedJobView = () => {
         });
     }
   };
-  const handleJobDetailsChange = (field, value) => {
-    if (error[field]) {
-      setError((prev) => {
-        return {
-          ...prev,
-          [field]: null,
-        };
-      });
-    }
 
-    setJobData((prev) => {
-      return {
-        ...prev,
-        [field]: value,
-      };
-    });
-  };
   const { isWebView } = useIsWebView();
+
   return (
     <>
       {isLoading && <LoadingScreen />}
       {!isLoading && isSuccess && !isError && (
         <PostedJobsViewUI
           isWebView={isWebView}
-          jobData={jobData}
-          handleJobDetailsChange={handleJobDetailsChange}
+          addComponentRef={addComponentRef}
           setIsQuestionaireList={setIsQuestionaireList}
           questionnairelist={questionnairelist}
           setIsCheckList={setIsCheckList}

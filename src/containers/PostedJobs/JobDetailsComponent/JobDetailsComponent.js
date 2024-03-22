@@ -1,4 +1,9 @@
-import React, { useContext } from "react";
+import React, {
+  forwardRef,
+  useContext,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
 import CustomTextEditor from "../../../components/CustomTextEditor/CustomTextEditor";
@@ -7,15 +12,32 @@ import styles from "./JobDetailsComponent.style";
 import { useIntl } from "react-intl";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 
-const JobDetailsComponent = ({
-  isWebView,
-  jobData,
-  handleJobDetailsChange,
-  error,
-}) => {
+const JobDetailsComponent = forwardRef(({ isWebView, error }, ref) => {
   const intl = useIntl();
   const [addJobs] = useContext(AddJobContext);
   const { jobType } = addJobs;
+  const [jobData, setJobData] = useState({
+    jobSummary: "",
+    jobDetails: "",
+    jobType: {},
+    isUrgentJob: 0,
+  });
+  const getJobDetailsState = () => {
+    return jobData;
+  };
+
+  useImperativeHandle(ref, () => ({
+    getJobDetailsState: getJobDetailsState,
+  }));
+
+  const handleJobDetailsChange = (field, value) => {
+    setJobData((prev) => {
+      return {
+        ...prev,
+        [field]: value,
+      };
+    });
+  };
   return (
     <View>
       <CustomTextInput
@@ -83,6 +105,6 @@ const JobDetailsComponent = ({
       </View>
     </View>
   );
-};
+});
 
 export default JobDetailsComponent;

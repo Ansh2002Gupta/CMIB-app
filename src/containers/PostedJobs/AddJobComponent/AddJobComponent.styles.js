@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
       height: isExpanded ? undefined : 70,
       paddingLeft: 20,
       paddingRight: 20,
+      overflow: "hidden",
     });
   },
   mainViewStyle: {
