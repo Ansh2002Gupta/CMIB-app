@@ -228,6 +228,7 @@ const AddNewQuestionModal = ({
                     placeholder={intl.formatMessage({
                       id: "label.enter_text",
                     })}
+                    maxLength={200}
                     onChangeText={(value) => {
                       if (error.questionError) {
                         setErrors((prev) => {
