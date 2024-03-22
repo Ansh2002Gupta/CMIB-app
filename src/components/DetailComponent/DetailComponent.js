@@ -197,12 +197,6 @@ const DetailComponent = ({
     );
   };
 
-  const getColumnCount = (detail) => {
-    if (detail.length === 3) return "1fr 1fr 1fr";
-    if (detail.length === 2) return "1fr 1fr";
-    if (detail.length === 1) return "1fr";
-  };
-
   return (
     <View>
       {!!headerText && (
