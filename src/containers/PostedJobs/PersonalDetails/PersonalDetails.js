@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
-import styles from "./PersonalDetails.styles"; // Import the styles
+import styles from "./PersonalDetails.styles";
 import { useIntl } from "react-intl";
 import useGetPostedJobsData from "../../../services/apiServices/hooks/PostedJobs/useGetPostedJobsData";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";

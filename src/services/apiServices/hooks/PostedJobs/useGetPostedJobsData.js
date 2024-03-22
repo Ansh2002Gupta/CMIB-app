@@ -12,7 +12,6 @@ import {
 import Http from "../../../http-service";
 import { AddJobContext } from "../../../../globalContext/addJob/addJobsProvider";
 import {
-  modifyFilteredjobLocation,
   setCountryData,
   setFunctionalData,
   setGenderPreference,
@@ -21,21 +20,14 @@ import {
   setJobType,
   setWorkMode,
 } from "../../../../globalContext/addJob/addJobActions";
-import { Platform } from "@unthinkable/react-core-components";
 const useGetPostedJobsData = () => {
   const [, addJobsDispatch] = useContext(AddJobContext);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const hasFetchedRef = useRef(false); // useRef to track if data has been fetched
 
   const fetchData = async () => {
-    if (hasFetchedRef.current) {
-      // If data has already been fetched, don't fetch it again
-      return;
-    }
     try {
-      hasFetchedRef.current = true;
       setLoading(true);
       // Use axios or fetch to get data from the endpoints
       const responses = await Promise.all([
@@ -60,12 +52,6 @@ const useGetPostedJobsData = () => {
       setLoading(false);
     }
   };
-  // useEffect to call fetchData on component mount
-  useEffect(() => {
-    if (!hasFetchedRef.current) {
-      fetchData();
-    }
-  }, []); // Empty dependency array ensures this runs once on mount
   const fetchSearch = async (data) => {
     setLoading(true);
     return Http.get(`${GET_JOB_LOCATION}?city=${data ? data : ""}`)

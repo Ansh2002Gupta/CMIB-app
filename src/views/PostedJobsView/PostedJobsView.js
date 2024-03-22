@@ -13,11 +13,15 @@ import {
 import Http from "../../services/http-service";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 const PostedJobView = () => {
-  const { isLoading, isSuccess, isError, isErrorData } = useGetPostedJobsData();
+  const { isLoading, isSuccess, isError, isErrorData, fetchData } =
+    useGetPostedJobsData();
   const [error, setError] = useState({});
   const addComponentRef = useRef();
   const addQuestionRef = useRef();
   const [isCheckList, setIsCheckList] = useState(false);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const onSubmit = () => {
     let jobData;
