@@ -162,7 +162,7 @@ const AddNewQuestionModal = ({
           value: "",
         },
         {
-          id: Date.now() * Math.random(),
+          id: Math.ceil(Date.now() * Math.random()),
           value: "",
         },
       ];
