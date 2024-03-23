@@ -95,7 +95,7 @@ const AddJobComponent = forwardRef(
       if (bottomSectionRef.current) {
         error3 = bottomSectionRef.current.getErrors();
       }
-      return error1 && error2 && error3;
+      return error1 || error2 || error3;
     };
 
     useImperativeHandle(ref, () => ({

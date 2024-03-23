@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   useContext,
   useImperativeHandle,
+  useRef,
   useState,
 } from "react";
 import { Platform, Text, View } from "@unthinkable/react-core-components";
@@ -14,16 +15,20 @@ import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import CustomLabelView from "../../../components/CustomLabelView";
 import { jobType } from "../../../constants/constants";
 import dayjs from "dayjs";
+const today = new Date();
+const tomorrow = new Date(today);
+tomorrow.setDate(tomorrow.getDate() + 1);
 
 const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
   const getStyle = (style, styleColumn) => (isWebView ? style : styleColumn);
   const intl = useIntl();
   const [addJobs] = useContext(AddJobContext);
   const { workModeData } = addJobs;
+  const minDate = useRef(tomorrow);
   const isWeb = Platform.OS.toLowerCase() === "web" && !isWebView;
   const [jobData, setJobData] = useState({
-    jobOpeningDate: new Date(),
-    jobClosingDate: new Date(),
+    jobOpeningDate: today,
+    jobClosingDate: tomorrow,
     numberOfVacancies: 0,
     vacanciesCountType: 0,
     modeofWork: {},
@@ -57,7 +62,6 @@ const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
       setError((prev) => ({ ...prev, [field]: message }));
       hasError = true;
     };
-
     switch (field) {
       case "numberOfVacancies":
         if (jobData.numberOfVacancies === 0) {
@@ -179,8 +183,11 @@ const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
           onChangeValue={(val) => {
             const date1 = dayjs(val);
             const date2 = dayjs(jobData.jobClosingDate);
-            if (date2.isBefore(date1)) {
-              handleJobDetailsChange("jobClosingDate", val);
+            if (date2.isBefore(date1) || date2.add(1, "day") !== date1) {
+              var nextDay = new Date(val);
+              nextDay.setDate(val.getDate() + 1);
+              minDate.current = nextDay;
+              handleJobDetailsChange("jobClosingDate", nextDay);
             }
             handleJobDetailsChange("jobOpeningDate", val);
           }}
@@ -195,7 +202,7 @@ const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
           isMandatory
           isError={(error && error.jobClosingDate && true) || false}
           errorMessage={(error && error.jobClosingDate) || ""}
-          minDate={jobData.jobOpeningDate}
+          minDate={minDate.current}
           value={jobData.jobClosingDate}
           onChangeValue={(val) => {
             const date1 = dayjs(val);
