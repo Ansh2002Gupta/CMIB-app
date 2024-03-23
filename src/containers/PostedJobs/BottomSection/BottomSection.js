@@ -66,7 +66,7 @@ const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
         break;
       case "modeofWork":
         if (Object.values(jobData.modeofWork).length === 0) {
-          addError(field, intl.formatDate({ id: "label.mandatory" }));
+          addError(field, intl.formatMessage({ id: "label.mandatory" }));
         }
         break;
       case "typeOfDisabilty":
@@ -74,7 +74,7 @@ const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
           selectedJobType?.label === jobType.SPECIALLY_ABLE &&
           !jobData.typeOfDisabilty
         ) {
-          addError(field, intl.formatDate({ id: "label.mandatory" }));
+          addError(field, intl.formatMessage({ id: "label.mandatory" }));
         }
         break;
       case "disabiltyPercentage":
@@ -82,7 +82,7 @@ const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
           selectedJobType?.label === jobType.SPECIALLY_ABLE &&
           !jobData.disabiltyPercentage
         ) {
-          addError(field, intl.formatDate({ id: "label.mandatory" }));
+          addError(field, intl.formatMessage({ id: "label.mandatory" }));
         }
         break;
       case "maximumSalary":

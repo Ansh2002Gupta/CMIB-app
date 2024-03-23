@@ -32,7 +32,7 @@ const AddNewQuestionModal = ({
     let data = optionData ? optionData : newQuestionnaireData;
 
     if (!data.question.trim()) {
-      error.questionError = intl.formatDate({ id: "label.mandatory" });
+      error.questionError = intl.formatMessage({ id: "label.mandatory" });
     }
     if (
       data.typeofQuestion !== intl.formatMessage({ id: "label.text_question" })
@@ -40,14 +40,14 @@ const AddNewQuestionModal = ({
       if (data?.question_options) {
         data.question_options.map((item, index) => {
           if (!item.value.trim()) {
-            error[`option${index + 1}`] = intl.formatDate({
+            error[`option${index + 1}`] = intl.formatMessage({
               id: "label.mandatory",
             });
           }
         });
       }
       if (!data?.value && optionData) {
-        error.optionValue = intl.formatDate({ id: "label.mandatory" });
+        error.optionValue = intl.formatMessage({ id: "label.mandatory" });
       }
     }
     return error;

@@ -39,7 +39,7 @@ const JobDetailsComponent = forwardRef(
         setError((prev) => {
           return {
             ...prev,
-            [field]: intl.formatDate({ id: "label.mandatory" }),
+            [field]: intl.formatMessage({ id: "label.mandatory" }),
           };
         });
         return false;
@@ -52,7 +52,7 @@ const JobDetailsComponent = forwardRef(
         setError((prev) => {
           return {
             ...prev,
-            [field]: intl.formatDate({ id: "label.mandatory" }),
+            [field]: intl.formatMessage({ id: "label.mandatory" }),
           };
         });
 

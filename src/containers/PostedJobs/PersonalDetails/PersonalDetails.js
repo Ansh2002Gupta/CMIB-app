@@ -64,7 +64,7 @@ const PersonalDetails = forwardRef(({ isWebView }, ref) => {
           setError((prev) => {
             return {
               ...prev,
-              [name]: intl.formatDate({ id: "label.mandatory" }),
+              [name]: intl.formatMessage({ id: "label.mandatory" }),
             };
           });
           return false;
@@ -75,7 +75,7 @@ const PersonalDetails = forwardRef(({ isWebView }, ref) => {
           setError((prev) => {
             return {
               ...prev,
-              [name]: intl.formatDate({ id: "label.mandatory" }),
+              [name]: intl.formatMessage({ id: "label.mandatory" }),
             };
           });
           return false;
@@ -86,7 +86,7 @@ const PersonalDetails = forwardRef(({ isWebView }, ref) => {
           setError((prev) => {
             return {
               ...prev,
-              [name]: intl.formatDate({ id: "label.mandatory" }),
+              [name]: intl.formatMessage({ id: "label.mandatory" }),
             };
           });
           return false;
@@ -97,7 +97,7 @@ const PersonalDetails = forwardRef(({ isWebView }, ref) => {
           setError((prev) => {
             return {
               ...prev,
-              [name]: intl.formatDate({ id: "label.mandatory" }),
+              [name]: intl.formatMessage({ id: "label.mandatory" }),
             };
           });
           return false;
