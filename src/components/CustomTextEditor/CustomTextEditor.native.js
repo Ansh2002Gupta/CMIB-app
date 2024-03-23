@@ -20,6 +20,7 @@ const CustomTextEditor = ({
   isError,
   value,
   errorMessage,
+  customHandleBlur,
 }) => {
   const richText = useRef(null);
   const intl = useIntl();
@@ -65,6 +66,7 @@ const CustomTextEditor = ({
           <ScrollView>
             <RichEditor
               ref={richText}
+              onBlur={customHandleBlur}
               initialContentHTML={value}
               onChange={(val) => {
                 onChangeText(val);

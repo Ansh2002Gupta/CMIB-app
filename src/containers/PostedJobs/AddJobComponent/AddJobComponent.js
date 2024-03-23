@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import CardComponent from "../../../components/CardComponent";
-import { Animated, ScrollView, View } from "@unthinkable/react-core-components";
+import { Animated, ScrollView } from "@unthinkable/react-core-components";
 import HeaderComponent from "../HeaderComponent";
 import JobDetailsComponent from "../JobDetailsComponent";
 import PersonalDetails from "../PersonalDetails";
@@ -14,43 +14,41 @@ import BottomSection from "../BottomSection";
 import { useIntl } from "react-intl";
 import styles from "./AddJobComponent.styles";
 import { progressData } from "../../../constants/constants";
-import { validateJobData } from "../../../utils/util";
 const AddJobComponent = forwardRef(
   (
-    {
-      isExpanded,
-      jobData,
-      handleJobDetailsChange,
-      setIsExpanded,
-      isWebView,
-      error,
-    },
+    { isExpanded, handleJobDetailsChange, setIsExpanded, isWebView, error },
     ref
   ) => {
     const intl = useIntl();
     const [jobProgress, setJobProgress] = useState(0);
-
     useEffect(() => {
       if (!isExpanded) {
-        let jobData = getInternalState();
-        const { isValid, errors } = validateJobData(jobData);
-        if (isValid) {
-          setJobProgress(3);
-        } else if (Object.keys(errors).length > 8) {
+        let error1 = false;
+        let error2 = false;
+        let error3 = false;
+        if (jobDetailsRef.current) {
+          error1 = jobDetailsRef.current.getErrors();
+        }
+        if (personalDetailsRef.current) {
+          error2 = personalDetailsRef.current.getErrors();
+        }
+        if (bottomSectionRef.current) {
+          error3 = bottomSectionRef.current.getErrors();
+        }
+        let errorLength = [error1, error2, error3].filter(
+          (item) => item == true
+        );
+        if (errorLength.length === 3) {
           setJobProgress(0);
-        } else if (Object.keys(errors).length > 5) {
+        } else if (errorLength.length === 2) {
           setJobProgress(1);
-        } else if (Object.keys(errors).length > 3) {
+        } else if (errorLength.length === 1) {
           setJobProgress(2);
+        } else if (errorLength.length === 0) {
+          setJobProgress(3);
         }
       }
-      Animated.timing(animation, {
-        toValue: isExpanded ? 0 : 1,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
     }, [isExpanded]);
-
     const [animation] = useState(new Animated.Value(0));
     const minHeight = 0;
     const maxHeight = 200;
@@ -61,6 +59,7 @@ const AddJobComponent = forwardRef(
     const jobDetailsRef = useRef();
     const personalDetailsRef = useRef();
     const bottomSectionRef = useRef();
+    const [selectedJobType, setSelectedJobType] = useState({});
 
     const getInternalState = () => {
       let jobDetailsValues = {};
@@ -83,8 +82,25 @@ const AddJobComponent = forwardRef(
       };
     };
 
+    const getErrors = () => {
+      let error1 = true;
+      let error2 = true;
+      let error3 = true;
+      if (jobDetailsRef.current) {
+        error1 = jobDetailsRef.current.getErrors();
+      }
+      if (personalDetailsRef.current) {
+        error2 = personalDetailsRef.current.getErrors();
+      }
+      if (bottomSectionRef.current) {
+        error3 = bottomSectionRef.current.getErrors();
+      }
+      return error1 && error2 && error3;
+    };
+
     useImperativeHandle(ref, () => ({
       getChildState: getInternalState,
+      getErrors: getErrors,
     }));
 
     return (
@@ -102,21 +118,14 @@ const AddJobComponent = forwardRef(
             <JobDetailsComponent
               ref={jobDetailsRef}
               isWebView={isWebView}
-              jobData={jobData}
-              error={error}
-              handleJobDetailsChange={handleJobDetailsChange}
+              setSelectedJobType={setSelectedJobType}
+              selectedJobType={selectedJobType}
             />
-            <PersonalDetails
-              isWebView={isWebView}
-              ref={personalDetailsRef}
-              jobData={jobData}
-              error={error}
-              handleJobDetailsChange={handleJobDetailsChange}
-            />
+            <PersonalDetails isWebView={isWebView} ref={personalDetailsRef} />
             <BottomSection
               isWebView={isWebView}
               ref={bottomSectionRef}
-              jobData={jobData}
+              selectedJobType={selectedJobType}
               error={error}
               handleJobDetailsChange={handleJobDetailsChange}
             />

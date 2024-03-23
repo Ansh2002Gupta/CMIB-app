@@ -43,9 +43,11 @@ const DropDownModal = ({
   includeAllKeys,
   onChangeDropDownText,
   dropdownStyle,
+  customHandleBlur,
 }) => {
   const intl = useIntl();
   const flatListRef = useRef();
+  const isFirstTimeRef = useRef(true);
   const [modalStyle, setModalStyle] = useState({});
 
   const getAllKeys = (option) => {
@@ -85,6 +87,13 @@ const DropDownModal = ({
       return () => clearTimeout(timer);
     }
   }, [selectedOption, isDropDownOpen]);
+  useEffect(() => {
+    if (!isDropDownOpen && !isFirstTimeRef.current) {
+      customHandleBlur && customHandleBlur();
+    } else {
+      isFirstTimeRef.current = false;
+    }
+  }, [isDropDownOpen]);
 
   const handleValueChange = (selectedOption) => {
     if (selectAllField) {
@@ -214,7 +223,7 @@ const DropDownModal = ({
       <>
         <TouchableOpacity
           onPress={handleDropDown}
-          style={styles.textButton(isEditable)}
+          style={{ ...styles.textButton(isEditable), ...dropdownStyle }}
         >
           <CommonText
             customTextStyle={value ? styles.valueText : styles.placeHolderText}

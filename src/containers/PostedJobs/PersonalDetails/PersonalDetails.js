@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 import useGetPostedJobsData from "../../../services/apiServices/hooks/PostedJobs/useGetPostedJobsData";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 
-const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
+const PersonalDetails = forwardRef(({ isWebView }, ref) => {
   const intl = useIntl();
   const { fetchSearch } = useGetPostedJobsData();
   const [addJobs] = useContext(AddJobContext);
@@ -27,6 +27,98 @@ const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
     essentialQualification: "",
     desiredQualification: "",
   });
+  const [error, setError] = useState({
+    minimumExperience: "",
+    maximumExperience: "",
+    designation: "",
+    jobLocation: "",
+    functionalAreas: "",
+    categoryPreference: "",
+  });
+
+  const validateField = (name) => {
+    switch (name) {
+      case "maximumExperience":
+        if (jobData.minimumExperience >= jobData.maximumExperience) {
+          setError((prev) => {
+            return {
+              ...prev,
+              [name]:
+                "Maximum experience must be more than Minimum experience.",
+            };
+          });
+          return false;
+        }
+        if (jobData.minimumExperience == jobData.maximumExperience) {
+          setError((prev) => {
+            return {
+              ...prev,
+              [name]: "Maximum Experience is not Valid",
+            };
+          });
+          return false;
+        }
+        break;
+      case "designation":
+        if (!jobData.designation.trim()) {
+          setError((prev) => {
+            return {
+              ...prev,
+              [name]: intl.formatDate({ id: "label.mandatory" }),
+            };
+          });
+          return false;
+        }
+        break;
+      case "jobLocation":
+        if (!jobData.jobLocation.length) {
+          setError((prev) => {
+            return {
+              ...prev,
+              [name]: intl.formatDate({ id: "label.mandatory" }),
+            };
+          });
+          return false;
+        }
+        break;
+      case "functionalAreas":
+        if (!jobData.functionalAreas.length) {
+          setError((prev) => {
+            return {
+              ...prev,
+              [name]: intl.formatDate({ id: "label.mandatory" }),
+            };
+          });
+          return false;
+        }
+        break;
+      case "categoryPreference":
+        if (Object.keys(jobData.categoryPreference).length === 0) {
+          setError((prev) => {
+            return {
+              ...prev,
+              [name]: intl.formatDate({ id: "label.mandatory" }),
+            };
+          });
+          return false;
+        }
+        break;
+      default:
+        break;
+    }
+    return true;
+  };
+  const getErrors = () => {
+    let hasError = false;
+
+    Object.keys(error).forEach((field) => {
+      let isValid = validateField(field);
+      if (!isValid) {
+        hasError = true;
+      }
+    });
+    return hasError;
+  };
 
   const getPersonalDetails = () => {
     return jobData;
@@ -34,9 +126,18 @@ const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
 
   useImperativeHandle(ref, () => ({
     getPersonalDetails: getPersonalDetails,
+    getErrors: getErrors,
   }));
 
   const handleJobDetailsChange = (field, value) => {
+    if (error[field]) {
+      setError((prev) => {
+        return {
+          ...prev,
+          [field]: "",
+        };
+      });
+    }
     setJobData((prev) => {
       return {
         ...prev,
@@ -77,6 +178,9 @@ const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
           isMandatory
           isError={(error && error.minimumExperience && true) || false}
           errorMessage={(error && error.minimumExperience) || ""}
+          customHandleBlur={() => {
+            validateField("minimumExperience");
+          }}
           isCounterInput
           maxCount={99}
           numberText={intl.formatMessage({ id: "label.year" })}
@@ -90,11 +194,14 @@ const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
           label={intl.formatMessage({
             id: "label.maximum_experience",
           })}
+          customHandleBlur={() => {
+            validateField("maximumExperience");
+          }}
           isCounterInput
           numberText={intl.formatMessage({ id: "label.year" })}
           customStyle={styles.inputStyle(isWebView)}
-          isError={(error && error.maximumExperience && true) || false}
           maxCount={99}
+          isError={(error && error.maximumExperience && true) || false}
           errorMessage={(error && error.maximumExperience) || ""}
           handleCountChange={(val) =>
             handleJobDetailsChange("maximumExperience", val)
@@ -106,7 +213,7 @@ const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
             id: "label.nationality",
           })}
           options={countryData || []}
-          value={jobData.nationality.value}
+          value={jobData.nationality?.value}
           isError={(error && error.nationality && true) || false}
           errorMessage={(error && error.nationality) || ""}
           isDropdown
@@ -131,6 +238,9 @@ const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
           })}
           isMandatory
           customStyle={styles.inputStyle(isWebView)}
+          customHandleBlur={() => {
+            validateField("designation");
+          }}
           value={jobData.designation}
           isError={(error && error.designation && true) || false}
           errorMessage={(error && error.designation) || ""}
@@ -148,10 +258,13 @@ const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
           selectAllField={true}
           options={locationsArray || []}
           isError={(error && error.jobLocation && true) || false}
+          errorMessage={(error && error.jobLocation) || ""}
           onChangeDropDownText={(item) => {
             return handleChange(item);
           }}
-          errorMessage={(error && error.jobLocation) || ""}
+          customHandleBlur={() => {
+            validateField("jobLocation");
+          }}
           selectedItems={jobData.jobLocation}
           onChangeValue={(value) => {
             const arr = jobData.jobLocation;
@@ -186,6 +299,9 @@ const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
           errorMessage={(error && error.functionalAreas) || ""}
           selectedItems={jobData.functionalAreas}
           customStyle={styles.functionalAreaInputStyle}
+          customHandleBlur={() => {
+            validateField("functionalAreas");
+          }}
           onChangeValue={(value) => {
             const arr = jobData.functionalAreas;
             const index = arr.findIndex((item) => item.id === value.id);
@@ -226,6 +342,9 @@ const PersonalDetails = forwardRef(({ isWebView, error }, ref) => {
           value={jobData.categoryPreference.value}
           isError={(error && error.categoryPreference && true) || false}
           errorMessage={(error && error.categoryPreference) || ""}
+          customHandleBlur={() => {
+            validateField("categoryPreference");
+          }}
           onChangeValue={(value) => {
             handleJobDetailsChange("categoryPreference", value);
           }}

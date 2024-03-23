@@ -5,11 +5,7 @@ import useGetPostedJobsData from "../../services/apiServices/hooks/PostedJobs/us
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import {
-  getFormatedData,
-  validateJobData,
-  validateQuestions,
-} from "../../utils/util";
+import { getFormatedData } from "../../utils/util";
 import Http from "../../services/http-service";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 const PostedJobView = () => {
@@ -26,29 +22,22 @@ const PostedJobView = () => {
   const onSubmit = () => {
     let jobData;
     let questionnairelist;
+    let isError = true;
+    let questionError = true;
     if (addComponentRef.current) {
       jobData = addComponentRef.current.getChildState();
     }
     if (addQuestionRef.current) {
       questionnairelist = addQuestionRef.current.getQuestionData();
     }
-    const { isValid, errors } = validateJobData(jobData);
-    const { isValidQuestion, questionError } =
-      validateQuestions(questionnairelist);
-
-    if (!isValid) {
-      setError(errors);
+    if (addComponentRef.current) {
+      isError = addComponentRef.current.getErrors();
     }
-    if (!isValidQuestion) {
-      setError((prev) => {
-        return {
-          ...prev,
-          questionError: questionError,
-        };
-      });
+    if (addComponentRef.current) {
+      questionError = addQuestionRef.current.getQuestionError();
     }
 
-    if (isValid && isValidQuestion) {
+    if (!isError && !questionError) {
       const formattedData = getFormatedData(jobData, questionnairelist);
       Http.post(POST_JOB, formattedData)
         .then((res) => {
@@ -72,8 +61,6 @@ const PostedJobView = () => {
           addQuestionRef={addQuestionRef}
           setIsCheckList={setIsCheckList}
           isCheckList={isCheckList}
-          error={error}
-          setError={setError}
           onSubmit={onSubmit}
         />
       )}

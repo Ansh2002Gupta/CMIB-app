@@ -7,14 +7,15 @@ import React, {
 import { Platform, Text, View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
 import CustomToggleComponent from "../../../components/CustomToggleComponent/CustomToggleComponent";
-import styles from "./BottomSection.styles"; // Import the styles
+import styles from "./BottomSection.styles";
 import { useIntl } from "react-intl";
 
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import CustomLabelView from "../../../components/CustomLabelView";
 import { jobType } from "../../../constants/constants";
+import dayjs from "dayjs";
 
-const BottomSection = forwardRef(({ isWebView, error }, ref) => {
+const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
   const getStyle = (style, styleColumn) => (isWebView ? style : styleColumn);
   const intl = useIntl();
   const [addJobs] = useContext(AddJobContext);
@@ -37,24 +38,132 @@ const BottomSection = forwardRef(({ isWebView, error }, ref) => {
     contractMonth: 0,
     contractDay: 0,
   });
+  const [error, setError] = useState({
+    jobOpeningDate: "",
+    jobClosingDate: "",
+    numberOfVacancies: "",
+    modeofWork: "",
+    typeOfDisabilty: "",
+    disabiltyPercentage: "",
+    minimumSalary: "",
+    maximumSalary: "",
+    contractYear: "",
+    contractMonth: "",
+    contractDay: "",
+  });
+  const validateInput = (field) => {
+    let hasError = false;
+    const addError = (field, message) => {
+      setError((prev) => ({ ...prev, [field]: message }));
+      hasError = true;
+    };
+
+    switch (field) {
+      case "numberOfVacancies":
+        if (jobData.numberOfVacancies === 0) {
+          addError(field, "Should be greater than 0");
+        }
+        break;
+      case "modeofWork":
+        if (Object.values(jobData.modeofWork).length === 0) {
+          addError(field, intl.formatDate({ id: "label.mandatory" }));
+        }
+        break;
+      case "typeOfDisabilty":
+        if (
+          selectedJobType?.label === jobType.SPECIALLY_ABLE &&
+          !jobData.typeOfDisabilty
+        ) {
+          addError(field, intl.formatDate({ id: "label.mandatory" }));
+        }
+        break;
+      case "disabiltyPercentage":
+        if (
+          selectedJobType?.label === jobType.SPECIALLY_ABLE &&
+          !jobData.disabiltyPercentage
+        ) {
+          addError(field, intl.formatDate({ id: "label.mandatory" }));
+        }
+        break;
+      case "maximumSalary":
+        if (jobData.minimumSalary > jobData.maximumSalary) {
+          addError("maximumSalary", "Invalid Salary");
+          addError("minimumSalary", "Invalid Salary");
+        } else if (jobData.minimumSalary == jobData.maximumSalary) {
+          addError("maximumSalary", "Same Salary Not Allowed");
+          addError("minimumSalary", "Same Salary Not Allowed");
+        }
+        break;
+      case "contractYear":
+        if (
+          selectedJobType?.label === jobType.CONTRACTUAL &&
+          jobData.contractDay === 0 &&
+          jobData.contractMonth === 0 &&
+          jobData.contractYear === 0
+        ) {
+          addError("contractDay", "Invalid Day");
+          addError("contractMonth", "Invalid Month");
+          addError("contractYear", "Invalid Year");
+        }
+        break;
+      default:
+        break;
+    }
+
+    return hasError;
+  };
 
   const getBottomSectionDetails = () => {
     return jobData;
   };
+  const getErrors = () => {
+    let hasError = false;
 
+    Object.keys(error).forEach((field) => {
+      let isValid = validateInput(field);
+      if (isValid) {
+        hasError = true;
+      }
+    });
+    return hasError;
+  };
   useImperativeHandle(ref, () => ({
     getBottomSectionDetails: getBottomSectionDetails,
+    getErrors: getErrors,
   }));
 
   const handleJobDetailsChange = (field, value) => {
-    setJobData((prev) => {
-      return {
+    const contractFields = ["contractDay", "contractMonth", "contractYear"];
+    const salaryFields = ["maximumSalary", "minimumSalary"];
+    const isContractField = contractFields.includes(field);
+    const hasContractError = contractFields.some((f) => error[f]);
+    const isSalaryField = salaryFields.includes(field);
+    const hasSalaryError = salaryFields.some((f) => error[f]);
+    if (isContractField && hasContractError) {
+      setError((prev) => ({
         ...prev,
-        [field]: value,
-      };
-    });
-  };
+        contractDay: "",
+        contractMonth: "",
+        contractYear: "",
+      }));
+    } else if (isSalaryField && hasSalaryError) {
+      setError((prev) => ({
+        ...prev,
+        maximumSalary: "",
+        minimumSalary: "",
+      }));
+    } else if (error[field]) {
+      setError((prev) => ({
+        ...prev,
+        [field]: "",
+      }));
+    }
 
+    setJobData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
   return (
     <View>
       <View
@@ -68,8 +177,12 @@ const BottomSection = forwardRef(({ isWebView, error }, ref) => {
           isError={(error && error.jobOpeningDate && true) || false}
           errorMessage={(error && error.jobOpeningDate) || ""}
           onChangeValue={(val) => {
+            const date1 = dayjs(val);
+            const date2 = dayjs(jobData.jobClosingDate);
+            if (date2.isBefore(date1)) {
+              handleJobDetailsChange("jobClosingDate", val);
+            }
             handleJobDetailsChange("jobOpeningDate", val);
-            handleJobDetailsChange("jobClosingDate", val);
           }}
           customStyle={getStyle(
             styles.textInputStyle,
@@ -85,6 +198,12 @@ const BottomSection = forwardRef(({ isWebView, error }, ref) => {
           minDate={jobData.jobOpeningDate}
           value={jobData.jobClosingDate}
           onChangeValue={(val) => {
+            const date1 = dayjs(val);
+            const date2 = dayjs(jobData.jobOpeningDate);
+            if (date2.isAfter(date1)) {
+              handleJobDetailsChange("jobOpeningDate", val);
+            }
+
             handleJobDetailsChange("jobClosingDate", val);
           }}
           customStyle={getStyle(
@@ -102,6 +221,7 @@ const BottomSection = forwardRef(({ isWebView, error }, ref) => {
           label={intl.formatMessage({ id: "label.number_of_vacancies" })}
           isCounterInput
           isMandatory
+          customHandleBlur={() => validateInput("numberOfVacancies")}
           value={jobData.numberOfVacancies}
           isError={(error && error.numberOfVacancies && true) || false}
           errorMessage={(error && error.numberOfVacancies) || ""}
@@ -144,6 +264,7 @@ const BottomSection = forwardRef(({ isWebView, error }, ref) => {
         <CustomTextInput
           label={intl.formatMessage({ id: "label.mode_of_work" })}
           options={workModeData || []}
+          customHandleBlur={() => validateInput("modeofWork")}
           onChangeValue={(value) => {
             handleJobDetailsChange("modeofWork", value);
           }}
@@ -178,11 +299,11 @@ const BottomSection = forwardRef(({ isWebView, error }, ref) => {
           customLabelStyle={styles.labelStyle}
         />
         {isWebView &&
-          (jobData.jobType?.label == jobType.CONTRACTUAL ||
-            !jobData.jobType?.label) && <View style={styles.spacer} />}
+          (selectedJobType?.label == jobType.CONTRACTUAL ||
+            !selectedJobType?.label) && <View style={styles.spacer} />}
 
-        {(jobData.jobType?.label == jobType.REGULAR ||
-          jobData.jobType?.label == jobType.RETIRED) && (
+        {(selectedJobType?.label == jobType.REGULAR ||
+          selectedJobType?.label == jobType.RETIRED) && (
           <CustomToggleComponent
             label={intl.formatMessage({ id: "label.fullorPartTime" })}
             isMandatory
@@ -196,7 +317,7 @@ const BottomSection = forwardRef(({ isWebView, error }, ref) => {
           />
         )}
       </View>
-      {jobData.jobType?.label === jobType.CONTRACTUAL && (
+      {selectedJobType?.label === jobType.CONTRACTUAL && (
         <View style={styles.contractualPeriodViewStyle}>
           <View>
             <CustomLabelView
@@ -250,7 +371,7 @@ const BottomSection = forwardRef(({ isWebView, error }, ref) => {
           </View>
         </View>
       )}
-      {jobData.jobType?.label === jobType.SPECIALLY_ABLE && (
+      {selectedJobType?.label === jobType.SPECIALLY_ABLE && (
         <View style={styles.row(isWebView)}>
           <CustomTextInput
             label={intl.formatMessage({ id: "label.type_of_disability" })}
@@ -261,6 +382,7 @@ const BottomSection = forwardRef(({ isWebView, error }, ref) => {
             onChangeText={(val) => {
               handleJobDetailsChange("typeOfDisabilty", val);
             }}
+            customHandleBlur={() => validateInput("typeOfDisabilty")}
             customStyle={styles.disablityPreferenceStyle(isWebView)}
           />
           <CustomTextInput

@@ -26,6 +26,7 @@ const Dropdown = ({
   selectAllField = false,
   onChangeDropDownText,
   indexField,
+  customHandleBlur,
 }) => {
   const getAllKeys = (option) => {
     let finalObj = {};
@@ -92,6 +93,7 @@ const Dropdown = ({
           value={""}
           placeholder={placeholder}
           options={options}
+          onBlur={customHandleBlur}
           isDisabled={!isEditable}
           styles={customStyles(dropdownStyle, placeholderStyle, !isEditable)}
           theme={customTheme}
@@ -121,6 +123,7 @@ const Dropdown = ({
       value={selectedOption || ""}
       placeholder={placeholder}
       options={options}
+      onBlur={customHandleBlur}
       isDisabled={!isEditable}
       styles={customStyles(dropdownStyle, placeholderStyle, !isEditable)}
       theme={customTheme}

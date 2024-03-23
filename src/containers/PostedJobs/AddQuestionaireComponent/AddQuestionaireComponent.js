@@ -17,14 +17,12 @@ import { questionaireType } from "../../../constants/constants";
 import AddNewQuestionModal from "../AddNewQuestionModal";
 import { getQuestionInitalValue } from "../../../utils/util";
 const AddQuestionaireComponent = forwardRef(
-  (
-    { isQuestionaire, setIsQuestionaire, isWebView, questionError, setError },
-    ref
-  ) => {
+  ({ isQuestionaire, setIsQuestionaire, isWebView }, ref) => {
     const intl = useIntl();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [optionData, setoptionData] = useState(null);
     const [questionnairelist, setIsQuestionaireList] = useState([]);
+    const [questionError, setError] = useState({});
     const isEdited = useRef(false);
 
     useEffect(() => {
@@ -37,8 +35,51 @@ const AddQuestionaireComponent = forwardRef(
       return questionnairelist;
     };
 
+    function validateQuestions() {
+      let isValidQuestion = false;
+      const questionError = {};
+      questionnairelist.forEach((question) => {
+        let questionErrors = [];
+
+        if (question.typeofQuestion === "Text Question") {
+          if (!question.question || question.question.trim() === "") {
+            questionErrors.push(
+              "Text Question must have a non-empty question field."
+            );
+          }
+        } else if (question.typeofQuestion !== "Text Question") {
+          if (!question.question || question.question.trim() === "") {
+            questionErrors.push(
+              "Question must have a non-empty question field."
+            );
+          }
+          if (
+            !Array.isArray(question.question_options) ||
+            question.question_options.length === 0
+          ) {
+            questionErrors.push("Question must have at least one option.");
+          } else {
+            question.question_options.forEach((option) => {
+              if (!option.value || option.value.trim() === "") {
+                questionErrors.push("All options must have a non-empty value.");
+              }
+            });
+          }
+        } else {
+          questionErrors.push("Invalid question type.");
+        }
+        if (questionErrors.length > 0) {
+          isValidQuestion = true;
+          questionError[question.id] = questionErrors;
+        }
+      });
+      setError(questionError);
+      return isValidQuestion;
+    }
+
     useImperativeHandle(ref, () => ({
       getQuestionData: getQuestionData,
+      getQuestionError: validateQuestions,
     }));
 
     const questionaireTypeFormatted = useMemo(() => {

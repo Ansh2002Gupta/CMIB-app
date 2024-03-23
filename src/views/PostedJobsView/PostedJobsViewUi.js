@@ -12,9 +12,7 @@ const PostedJobsViewUI = ({
   isWebView,
   isCheckList,
   setIsCheckList,
-  error,
   onSubmit,
-  setError,
   addComponentRef,
   addQuestionRef,
 }) => {
@@ -39,7 +37,6 @@ const PostedJobsViewUI = ({
                 isExpanded={isExpanded}
                 setIsExpanded={setIsExpanded}
                 isWebView={isWebView}
-                error={error}
               />
               <AddQuestionaireComponent
                 ref={addQuestionRef}
@@ -47,8 +44,6 @@ const PostedJobsViewUI = ({
                 setIsQuestionaire={setIsQuestionaire}
                 addQuestionRef={addQuestionRef}
                 isWebView={isWebView}
-                questionError={error.questionError}
-                setError={setError}
               />
             </View>
           }

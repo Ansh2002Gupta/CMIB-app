@@ -26,6 +26,7 @@ const CustomTextEditor = (props) => {
     isError,
     value,
     errorMessage,
+    customHandleBlur,
   } = props;
   var modules = {
     toolbar: [
@@ -66,6 +67,7 @@ const CustomTextEditor = (props) => {
           value={value}
           className={isError ? "error" : ""}
           modules={modules}
+          onBlur={customHandleBlur}
           formats={formats}
           placeholder={intl.formatMessage({ id: "label.description" })}
           onChange={handleProcedureContentChange}

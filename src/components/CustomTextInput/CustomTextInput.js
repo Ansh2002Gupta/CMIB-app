@@ -169,6 +169,7 @@ const CustomTextInput = (props) => {
             searchPlaceholder={intl.formatMessage({ id: "label.search" })}
             inputSearchStyle={style.searchStyle}
             includeAllKeys={includeAllKeys}
+            customHandleBlur={customHandleBlur}
             selectAllField={selectAllField}
             onChangeDropDownText={onChangeDropDownText}
             dropdownStyle={{
@@ -216,6 +217,7 @@ const CustomTextInput = (props) => {
             labelField,
             onChangeValue,
             handleMultiSelect,
+            customHandleBlur,
             options,
             includeAllKeys,
             selectAllField,
@@ -227,6 +229,11 @@ const CustomTextInput = (props) => {
             urlField,
             onChangeDropDownText,
             isEditable,
+          }}
+          dropdownStyle={{
+            ...style.dropdown,
+            ...(isFocused && style.focusedStyle, isError && style.invalidInput),
+            ...dropdownStyle,
           }}
         />
       );
