@@ -94,9 +94,9 @@ const JobDetailsTemplate = ({
       content: (
         <CardComponent customStyle={styles.bottomMargin}>
           <CustomTextInput
-            label={intl.formatMessage({ id: "label.designationName" })}
+            label={intl.formatMessage({ id: "label.designation_name" })}
             placeholder={intl.formatMessage({
-              id: "label.enter_designationName",
+              id: "label.enter_designation_name",
             })}
             isMandatory
             value={designationName}
