@@ -103,7 +103,6 @@ function DashboardView() {
         isEditProfile
         isColumnVariableWidth
         handleMultiSelect={handleModuleSelection}
-        isSingleMutliSelect
         details={[
           [
             {
@@ -134,6 +133,7 @@ function DashboardView() {
               placeholder: "label.select_module",
               defaultValues: [],
               options: selectBoxState,
+              isSingleMutliSelect: true,
             },
           ],
           [

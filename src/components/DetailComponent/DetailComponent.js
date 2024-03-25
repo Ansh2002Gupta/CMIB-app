@@ -38,7 +38,6 @@ const DetailComponent = ({
   isInputDisable,
   isMandatory,
   isShowSwitch,
-  isSingleMutliSelect,
   onPressActionButton,
 }) => {
   const intl = useIntl();
@@ -194,7 +193,7 @@ const DetailComponent = ({
           }
         }}
         isRupee={detail?.isRupee}
-        {...{ isSingleMutliSelect }}
+        isSingleMutliSelect={detail.isSingleMutliSelect}
       />
     );
   };
@@ -342,7 +341,6 @@ DetailComponent.propTypes = {
   isInputDisable: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
-  isSingleMutliSelect: PropTypes.bool,
   onPressActionButton: PropTypes.func,
 };
 
