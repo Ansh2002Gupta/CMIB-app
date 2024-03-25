@@ -22,6 +22,7 @@ const DetailCard = ({
   isEditProfile,
   isRow,
   isShowSwitch,
+  isSingleMutliSelect,
   onPressActionButton,
   otherDetails,
 }) => {
@@ -49,6 +50,7 @@ const DetailCard = ({
           isActive,
           isColumnVariableWidth,
           isShowSwitch,
+          isSingleMutliSelect,
         }}
       />
       {!!otherDetails && (
@@ -61,7 +63,7 @@ const DetailCard = ({
           isEditable={isEditProfile}
           isInputDisable={isShowSwitch && !isActive}
           onPressActionButton={onPressActionButton}
-          {...{ isColumnVariableWidth }}
+          {...{ isColumnVariableWidth, isSingleMutliSelect }}
         />
       )}
     </CardComponent>
@@ -100,6 +102,7 @@ DetailCard.propTypes = {
   isEditProfile: PropTypes.bool,
   isRow: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
+  isSingleMutliSelect: PropTypes.bool,
   onPressActionButton: PropTypes.func,
   otherDetails: PropTypes.array,
 };
