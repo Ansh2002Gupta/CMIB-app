@@ -61,8 +61,9 @@ const CustomTable = ({
   tableHeading,
   tableIcon,
   totalcards,
-  mobileComponentToRender,
+  ThirdSection,
   containerStyle,
+  mobileComponentToRender,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -101,44 +102,46 @@ const CustomTable = ({
             {showSearchBar && (
               <TwoColumn
                 leftSection={
-                  <SearchView
-                    data={data?.records}
-                    customSearchCriteria={handleSearchResults}
-                    placeholder={placeholder}
-                  />
-                }
-                isLeftFillSpace
-                rightSection={
-                  <CustomTouchableOpacity
-                    onPress={handleFilterModal}
-                    style={styles.imageParentStyle}
-                  >
-                    <TouchableImage
-                      source={images.iconFilter}
-                      parentStyle={styles.iconTicket}
-                      onPress={handleFilterModal}
+                  <View style={styles.flexDirectionRow}>
+                    <SearchView
+                      data={data?.records}
+                      customSearchCriteria={handleSearchResults}
+                      placeholder={placeholder}
+                      customParentStyle={styles.getParentStyle(isWebView)}
                     />
-                    {isWebView && (
-                      <CommonText customTextStyle={styles.filterText}>
-                        {intl.formatMessage({ id: "label.filters" })}
-                      </CommonText>
-                    )}
-                    {isFilterCount && (
-                      <CommonText
-                        customContainerStyle={styles.activeTickets}
-                        customTextStyle={styles.activeTicketsText}
-                        fontWeight={"600"}
-                      >
-                        {filterState?.selectedStatus.length +
-                          filterState?.selectedQueryType.length}
-                      </CommonText>
-                    )}
-                  </CustomTouchableOpacity>
+                    <CustomTouchableOpacity
+                      onPress={handleFilterModal}
+                      style={styles.imageParentStyle}
+                    >
+                      <TouchableImage
+                        source={images.iconFilter}
+                        parentStyle={styles.iconTicket}
+                        onPress={handleFilterModal}
+                      />
+                      {isWebView && (
+                        <CommonText customTextStyle={styles.filterText}>
+                          {intl.formatMessage({ id: "label.filters" })}
+                        </CommonText>
+                      )}
+                      {isFilterCount && (
+                        <CommonText
+                          customContainerStyle={styles.activeTickets}
+                          customTextStyle={styles.activeTicketsText}
+                          fontWeight={"600"}
+                        >
+                          {filterState?.selectedStatus.length +
+                            filterState?.selectedQueryType.length}
+                        </CommonText>
+                      )}
+                    </CustomTouchableOpacity>
+                  </View>
                 }
+                rightSection={<>{ThirdSection ? ThirdSection : <></>}</>}
+                isLeftFillSpace={true}
                 style={styles.filterTopSection(isWebView)}
               />
             )}
-            {!isWeb && !!totalcards && (
+            {!isWeb && (
               <View style={styles.ticketTotals}>
                 <CommonText
                   fontWeight={"500"}

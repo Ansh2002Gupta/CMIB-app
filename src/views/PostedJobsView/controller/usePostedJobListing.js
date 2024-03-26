@@ -301,7 +301,7 @@ const usePostedJobListing = () => {
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("15%"),
+          ...commonStyles.columnStyle("14%"),
           ...styles.justifyContentCenter,
         }, // isFillSpace: true,
       },
@@ -365,7 +365,7 @@ const usePostedJobListing = () => {
           </View>
         ),
         style: {
-          ...commonStyles.columnStyle("15%"),
+          ...commonStyles.columnStyle("14%"),
           ...styles.justifyContentCenter,
         },
         // isFillSpace: true,
@@ -388,7 +388,7 @@ const usePostedJobListing = () => {
           </View>
         ),
         style: {
-          ...commonStyles.columnStyle("20%"),
+          ...commonStyles.columnStyle("15%"),
           ...styles.justifyContentCenter,
         }, // isFillSpace: true,
       },
@@ -401,13 +401,33 @@ const usePostedJobListing = () => {
                   console.log("i am presed");
                   // onIconPress && onIconPress(item);
                 }}
-                source={images.iconMore}
+                source={images.iconEye}
               />
             )}
           </View>
         ),
         style: {
-          ...commonStyles.columnStyle("18%"),
+          ...commonStyles.columnStyle("5%"),
+          ...styles.justifyContentCenter,
+          // ...{ backgroundColor: "red" },
+        },
+      },
+      {
+        content: (
+          <View>
+            {!isHeading && (
+              <TouchableImage
+                onPress={() => {
+                  console.log("i am presed");
+                  // onIconPress && onIconPress(item);
+                }}
+                source={images.iconEdit}
+              />
+            )}
+          </View>
+        ),
+        style: {
+          ...commonStyles.columnStyle("5%"),
           ...styles.justifyContentCenter,
         },
       },
