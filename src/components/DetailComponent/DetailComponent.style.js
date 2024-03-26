@@ -105,6 +105,10 @@ const styles = StyleSheet.create({
   oneThirdWidth: {
     width: "33%",
   },
+  cancelButton: {
+    position: 'absolute',
+    right: 0,
+  },
   getVariableContainerStyles: (detail) => {
     return {
       display: "grid",

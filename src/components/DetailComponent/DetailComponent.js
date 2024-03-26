@@ -39,6 +39,8 @@ const DetailComponent = ({
   isMandatory,
   isShowSwitch,
   onPressActionButton,
+  isShowCancel,
+  handleCancel,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -64,6 +66,19 @@ const DetailComponent = ({
         {intl.formatMessage({ id: "label.mark_as_active" })}
       </CommonText>
     </View>
+  );
+
+  const renderCancelButton = () => (
+    <View style={[{flex: 1}]}>
+      <View style={styles.cancelButton}>
+      <TouchableImage
+                  isSvg={isWebView}
+                  onPress={handleCancel}
+                  source={isWebView ? images.iconCloseDark : images.iconCross}
+                  style={{ height: 24, width: 24}}
+                />
+      </View>
+   </View>
   );
 
   const renderWebActionButton = () => (
@@ -209,16 +224,16 @@ const DetailComponent = ({
             }}
             fontWeight="600"
           >
-            {headerText}
+           {headerText}
           </CommonText>
           {isMandatory && (
             <CommonText customTextStyle={styles.starStyle}>{" *"}</CommonText>
           )}
+         {isShowCancel && isEditable && renderCancelButton()}
         </View>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
-        {console.log("details", details)}
         {details?.map((detail, idx) => {
           if (isEditable && detail.viewOnlyField) {
             return null;
@@ -232,7 +247,6 @@ const DetailComponent = ({
                     : styles.containerStyle),
                 }}
               >
-                {console.log("detail--", detail)}
                 {detail?.map((columns, idx) => {
                   return isEditable ? (
                     <View
@@ -325,6 +339,8 @@ DetailComponent.defaultProps = {
   isInputDisable: false,
   isShowSwitch: false,
   onPressActionButton: () => {},
+  isShowCancel: false,
+  handleCancel: () => {},
 };
 
 DetailComponent.propTypes = {
@@ -344,6 +360,8 @@ DetailComponent.propTypes = {
   isMandatory: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
   onPressActionButton: PropTypes.func,
+  isShowCancel: PropTypes.bool,
+  handleCancel: PropTypes.func,
 };
 
 export default DetailComponent;

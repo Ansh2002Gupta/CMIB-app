@@ -24,6 +24,8 @@ const DetailCard = ({
   isShowSwitch,
   onPressActionButton,
   otherDetails,
+  isShowCancel,
+  handleCancel,
 }) => {
   const { isWebView } = useIsWebView();
 
@@ -49,6 +51,8 @@ const DetailCard = ({
           isActive,
           isColumnVariableWidth,
           isShowSwitch,
+          isShowCancel,
+          handleCancel,
         }}
       />
       {!!otherDetails && (
@@ -83,6 +87,8 @@ DetailCard.defaultProps = {
   isShowSwitch: false,
   onPressActionButton: () => {},
   otherDetails: [],
+  isShowCancel: false,
+  handleCancel: () => {},
 };
 
 DetailCard.propTypes = {
@@ -102,6 +108,8 @@ DetailCard.propTypes = {
   isShowSwitch: PropTypes.bool,
   onPressActionButton: PropTypes.func,
   otherDetails: PropTypes.array,
+  isShowCancel: PropTypes.bool,
+  handleCancel: PropTypes.func,
 };
 
 export default DetailCard;
