@@ -15,10 +15,7 @@ import { useIntl } from "react-intl";
 import styles from "./AddJobComponent.styles";
 import { progressData } from "../../../constants/constants";
 const AddJobComponent = forwardRef(
-  (
-    { isExpanded, handleJobDetailsChange, setIsExpanded, isWebView, error },
-    ref
-  ) => {
+  ({ isExpanded, handleJobDetailsChange, setIsExpanded, isWebView }, ref) => {
     const intl = useIntl();
     const [jobProgress, setJobProgress] = useState(0);
     useEffect(() => {
@@ -126,7 +123,6 @@ const AddJobComponent = forwardRef(
               isWebView={isWebView}
               ref={bottomSectionRef}
               selectedJobType={selectedJobType}
-              error={error}
               handleJobDetailsChange={handleJobDetailsChange}
             />
           </Animated.View>

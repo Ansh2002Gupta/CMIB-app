@@ -217,7 +217,7 @@ export const getFormatedData = (jobData, question) => {
     summary: jobData.jobSummary,
     detail: jobData.jobDetails,
     job_type_id: jobData.jobType?.id,
-    isUrgent: jobData.isUrgentJob == 0 ? true : false,
+    is_urgent: jobData.isUrgentJob == 0 ? true : false,
     is_salary_negotiable: jobData.salaryNagotiable == 0 ? true : false,
     experience: {
       min_experience: jobData.minimumExperience,
@@ -227,7 +227,7 @@ export const getFormatedData = (jobData, question) => {
     nationality: jobData.nationality?.value,
     designation: jobData.designation,
     functional_area_id: jobData.functionalAreas.map((object) => object.id),
-    gender_preference: jobData.genderPreference?.value,
+    gender_preference: jobData.genderPreference?.value ?? null,
     category_preference: jobData.categoryPreference?.label,
     essential_qualification: jobData.essentialQualification,
     desired_qualification: jobData.desiredQualification,
@@ -260,7 +260,7 @@ export const getFormatedData = (jobData, question) => {
       mandatory: item.isMandatory,
     };
   });
-  temp.questions = tempQuestion;
+  temp.questions = tempQuestion.length ? tempQuestion : null;
   return temp;
 };
 export const getValidUrl = (url) => {
