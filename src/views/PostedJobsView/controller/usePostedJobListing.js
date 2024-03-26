@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
-
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import CustomImage from "../../../components/CustomImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
-  COMPANY_TICKET_LISTING,
   COMPANY_QUERY_TYPE_TICKET,
-  COMPANY_TICKET_STATUS,
   GET_POSTED_JOBS,
 } from "../../../services/apiServices/apiEndPoint";
-import { formatDate } from "../../../utils/util";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
@@ -27,6 +21,7 @@ import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../PostedJobsView.styles";
+import colors from "../../../assets/colors";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 const dummyData = [
@@ -91,7 +86,7 @@ const usePostedJobListing = () => {
   const { handleAddTicket } = useAddTicket();
 
   //   const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
-  const [statusData] = useState([
+  const statusData = [
     {
       id: 1,
       name: "Active",
@@ -100,10 +95,10 @@ const usePostedJobListing = () => {
       id: 2,
       name: "InActive",
     },
-  ]);
+  ];
 
   //   const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
-  const [queryTypeData] = useState([
+  const queryTypeData = [
     {
       id: 1,
       name: "Approved",
@@ -112,7 +107,7 @@ const usePostedJobListing = () => {
       id: 2,
       name: "Not Approved",
     },
-  ]);
+  ];
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -178,18 +173,18 @@ const usePostedJobListing = () => {
 
   const handlePageChange = async (page) => {
     handlePagePerChange(page);
-    await updateCurrentRecords({
-      perPage: rowsPerPage,
-      page: page,
-    });
+    // await updateCurrentRecords({
+    //   perPage: rowsPerPage,
+    //   page: page,
+    // });
   };
 
   const handleRowPerPageChange = async (option) => {
     handleRowsPerPageChange(option.value);
-    await updateCurrentRecords({
-      perPage: option.value,
-      page: currentPage,
-    });
+    // await updateCurrentRecords({
+    //   perPage: option.value,
+    //   page: currentPage,
+    // });
   };
 
   const handleSearchResults = async (searchedData) => {
@@ -215,21 +210,21 @@ const usePostedJobListing = () => {
   };
 
   const handleSaveAddTicket = async (queryType, enterQuery) => {
-    await handleAddTicket({ query_type: queryType, query: enterQuery });
-    if (isMob) {
-      const newData = await fetchPostedJobs();
-      if (newData && newData.records.length > 0) {
-        setCurrentRecords((prevRecords) => [
-          ...prevRecords,
-          ...newData.records,
-        ]);
-      }
-    } else {
-      await updateCurrentRecords({
-        perPage: rowsPerPage,
-        page: currentPage,
-      });
-    }
+    // await handleAddTicket({ query_type: queryType, query: enterQuery });
+    // if (isMob) {
+    //   const newData = await fetchPostedJobs();
+    //   if (newData && newData.records.length > 0) {
+    //     setCurrentRecords((prevRecords) => [
+    //       ...prevRecords,
+    //       ...newData.records,
+    //     ]);
+    //   }
+    // } else {
+    //   await updateCurrentRecords({
+    //     perPage: rowsPerPage,
+    //     page: currentPage,
+    //   });
+    // }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
@@ -296,9 +291,7 @@ const usePostedJobListing = () => {
         ),
         style: {
           ...commonStyles.columnStyle("16%"),
-          ...{
-            justifyContent: "center",
-          },
+          ...styles.justifyContentCenter,
         }, // isFillSpace: true,
       },
       {
@@ -308,37 +301,47 @@ const usePostedJobListing = () => {
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("12%"),
-          ...{
-            justifyContent: "center",
-          },
+          ...commonStyles.columnStyle("15%"),
+          ...styles.justifyContentCenter,
         }, // isFillSpace: true,
       },
       {
         content: (
-          <CommonText customTextStyle={tableStyle}>
+          <CommonText
+            customTextStyle={{
+              ...tableStyle,
+              ...(!isHeading && { color: colors.darkBlue }),
+            }}
+            isunderLine={!isHeading}
+            fontWeight={!isHeading && 600}
+            underLineStyle={styles.underLineStyle}
+          >
             {item.number_of_applications ?? "-"}
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("15%"),
-          ...{
-            justifyContent: "center",
-          },
-        }, // isFillSpace: true,
+          ...commonStyles.columnStyle("13%"),
+          ...styles.justifyContentCenter,
+        },
       },
 
       {
         content: (
-          <CommonText customTextStyle={tableStyle}>
+          <CommonText
+            customTextStyle={{
+              ...tableStyle,
+              ...(!isHeading && { color: colors.darkBlue }),
+            }}
+            isunderLine={!isHeading}
+            fontWeight={!isHeading && 600}
+            underLineStyle={styles.underLineStyle}
+          >
             {item?.number_of_interviews ?? "-"}
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("15%"),
-          ...{
-            justifyContent: "center",
-          },
+          ...commonStyles.columnStyle("13%"),
+          ...styles.justifyContentCenter,
         },
       },
 
@@ -351,7 +354,9 @@ const usePostedJobListing = () => {
               </CommonText>
             ) : (
               <Chip
-                label={item.status == 1 ? "Active" : "InActive"}
+                label={
+                  item.status == 1 ? statusData[0].name : statusData[1].name
+                }
                 style={{
                   ...getStatusStyle(item.status),
                 }}
@@ -361,9 +366,7 @@ const usePostedJobListing = () => {
         ),
         style: {
           ...commonStyles.columnStyle("15%"),
-          ...{
-            justifyContent: "center",
-          },
+          ...styles.justifyContentCenter,
         },
         // isFillSpace: true,
       },
@@ -377,16 +380,16 @@ const usePostedJobListing = () => {
               </CommonText>
             ) : (
               <CommonText customTextStyle={tableStyle}>
-                {item?.approve == 0 ? "Approved" : "Not Approved" ?? "-"}
+                {item?.approve == 0
+                  ? queryTypeData[0].name
+                  : queryTypeData[1].name ?? "-"}
               </CommonText>
             )}
           </View>
         ),
         style: {
           ...commonStyles.columnStyle("20%"),
-          ...{
-            justifyContent: "center",
-          },
+          ...styles.justifyContentCenter,
         }, // isFillSpace: true,
       },
       {
@@ -395,7 +398,8 @@ const usePostedJobListing = () => {
             {!isHeading && (
               <TouchableImage
                 onPress={() => {
-                  onIconPress && onIconPress(item);
+                  console.log("i am presed");
+                  // onIconPress && onIconPress(item);
                 }}
                 source={images.iconMore}
               />
@@ -404,9 +408,7 @@ const usePostedJobListing = () => {
         ),
         style: {
           ...commonStyles.columnStyle("18%"),
-          ...{
-            justifyContent: "center",
-          },
+          ...styles.justifyContentCenter,
         },
       },
     ];

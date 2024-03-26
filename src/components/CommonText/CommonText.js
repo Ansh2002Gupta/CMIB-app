@@ -13,6 +13,7 @@ const CommonText = ({
   fontWeight,
   isunderLine,
   underLinecolor,
+  underLineStyle,
 }) => {
   const styleArray = Array.isArray(customTextStyle)
     ? customTextStyle
@@ -30,7 +31,14 @@ const CommonText = ({
       <Text {...customTextProps} style={textStyles}>
         {children}
       </Text>
-      {isunderLine && <View style={styles.horizontalLine(underLinecolor)} />}
+      {isunderLine && (
+        <View
+          style={{
+            ...styles.horizontalLine(underLinecolor),
+            ...underLineStyle,
+          }}
+        />
+      )}
     </View>
   );
 };
@@ -43,6 +51,7 @@ CommonText.defaultProps = {
   fontWeight: "500",
   isunderLine: false,
   underLinecolor: colors.black,
+  underLineStyle: {},
 };
 
 CommonText.propTypes = {
@@ -53,6 +62,7 @@ CommonText.propTypes = {
   fontWeight: PropTypes.string,
   isunderLine: PropTypes.bool,
   underLinecolor: PropTypes.string,
+  underLineStyle: PropTypes.object,
 };
 
 export default CommonText;

@@ -55,10 +55,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
   },
-  marginLeft4: { marginLeft: 4 },
+  marginLeft4: {
+    marginLeft: 4,
+  },
   tableStyle: {
     height: 18,
     width: 18,
+  },
+  textAlign: {
+    textAlign: "left",
   },
 });
 export default styles;

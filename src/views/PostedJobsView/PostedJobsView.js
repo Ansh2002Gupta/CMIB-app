@@ -13,14 +13,11 @@ import {
 import images from "../../images";
 import styles from "./PostedJobsView.styles";
 import usePostedJobListing from "./controller/usePostedJobListing";
-import { View } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
-import CommonText from "../../components/CommonText";
-import TouchableImage from "../../components/TouchableImage";
-import CustomImage from "../../components/CustomImage";
 import MobileCard from "../../containers/PostedJobs/MobileCard";
+import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreComponent";
 
 const PostedJobsView = () => {
+  const intl = useIntl();
   const {
     allDataLoaded,
     currentRecords,
@@ -54,10 +51,9 @@ const PostedJobsView = () => {
   } = usePostedJobListing();
 
   const navigate = useNavigate();
-  const [addNewTicket, setAddNewTicket] = useState(false);
 
   const handleTicketModal = () => {
-    setAddNewTicket((prev) => !prev);
+    // setAddNewTicket((prev) => !prev);
   };
 
   const onGoBack = () => {
@@ -70,6 +66,7 @@ const PostedJobsView = () => {
         getStatusStyle={getStatusStyle}
         tableIcon={tableIcon}
         lastElement={postedJobData.length - 1 === index}
+        statusData={statusData}
       />
     );
   };
@@ -79,12 +76,12 @@ const PostedJobsView = () => {
       topSection={
         <IconHeader
           actionButtonIcon={images.iconAddWhite}
-          buttonTitle={"Add"}
+          buttonTitle={intl.formatMessage({ id: "label.add" })}
           customActionButtonStyle={styles.addNewButton}
           customActionButtonText={styles.addNewText}
           hasActionButton
           handleButtonClick={handleTicketModal}
-          headerText={"Posted Job"}
+          headerText={intl.formatMessage({ id: "label.posted_job" })}
           onPressLeftIcon={onGoBack}
         />
       }
@@ -92,7 +89,6 @@ const PostedJobsView = () => {
       bottomSection={
         <CustomTable
           {...{
-            addNewTicket,
             allDataLoaded,
             currentPage,
             currentRecords,
@@ -125,10 +121,19 @@ const PostedJobsView = () => {
             tableHeading,
             tableIcon,
             totalcards,
-            placeholder: "Search By Designation or Job ID",
+            placeholder: intl.formatMessage({
+              id: "label.search_by_designation",
+            }),
           }}
           mobileComponentToRender={getMobileView}
           containerStyle={styles.customTableStyle}
+          ThirdSection={
+            <DownloadMoreComponent
+              onPress={() => {
+                console.log("HI I AM pressed");
+              }}
+            />
+          }
         />
       }
     />

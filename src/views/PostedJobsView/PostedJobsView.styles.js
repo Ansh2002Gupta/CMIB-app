@@ -14,9 +14,8 @@ const styles = StyleSheet.create({
       },
     }),
   }),
-  inProgress: {
-    ...baseChipStyle,
-    color: colors.skyBlueDark,
+  justifyContentCenter: {
+    justifyContent: "center",
   },
   pending: {
     ...baseChipStyle,
@@ -28,11 +27,7 @@ const styles = StyleSheet.create({
     color: colors.darkGreen,
     fontSize: 14,
   },
-  inProgressWeb: {
-    ...baseChipStyle,
-    backgroundColor: colors.skyBlueLight,
-    color: colors.skyBlueDark,
-  },
+
   pendingWeb: {
     ...baseChipStyle,
     color: colors.black,
@@ -91,6 +86,10 @@ const styles = StyleSheet.create({
   customTableStyle: {
     backgroundColor: colors.white,
     paddingBottom: 4,
+  },
+  underLineStyle: {
+    width: "20%",
+    color: colors.darkBlue,
   },
 });
 

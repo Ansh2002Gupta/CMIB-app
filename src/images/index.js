@@ -200,6 +200,7 @@ const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
 const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
+const iconDownloading = appendAppBaseURl("/images/downloadIcon/download.png");
 
 const images = {
   iconArrowUp,
@@ -344,6 +345,7 @@ const images = {
   iconLoading,
   iconGreyCross,
   dotIcon,
+  iconDownloading,
 };
 
 export default images;

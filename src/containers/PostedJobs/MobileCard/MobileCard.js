@@ -17,6 +17,7 @@ const MobileCard = ({
   iconStyle = {},
   getStatusStyle,
   lastElement,
+  statusData,
 }) => {
   return (
     <View
@@ -61,8 +62,14 @@ const MobileCard = ({
             <View style={styles.detailRow}>
               <CustomImage style={styles.iconTicket} source={images.dotIcon} />
 
-              <CommonText customTextStyle={getStatusStyle(item.status)}>
-                {item.status === 0 ? "Inactive" : "Active"}
+              <CommonText
+                customTextStyle={{
+                  ...getStatusStyle(item.status),
+                  ...styles.textAlign,
+                }}
+                customContainerStyle={styles.contentContainer}
+              >
+                {item.status === 0 ? statusData[1].name : statusData[0].name}
               </CommonText>
             </View>
           </View>
