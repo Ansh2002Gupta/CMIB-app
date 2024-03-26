@@ -20,6 +20,7 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
   const [currentStatus, setCurrentStatus] = useState(data !== null && Object.keys(data).length ? data : {});
   const {
     workExperiences,
+    setWorkExperiences,
     current_status,
     handleWorkExperienceDetailBlur,
     handleCurrentStatusDetailBlur,
@@ -37,7 +38,7 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
     }
   }, [data]);
 
-  const onChangeValue = (details) => (label, value) => {
+  const onChangeValue_workExperiences = (details) => (label, value) => {
     setState((prev) => ({
       ...prev,
       [label]: value,
@@ -62,15 +63,16 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
       }));
     }
   };
-  console.log("state::",state)
-  console.log("setCurrentStatus",setCurrentStatus)
+  //console.log("state::",state)
+  //console.log("setCurrentStatus",setCurrentStatus)
 
   return (
     <WorkExperienceUI
       initailWorkExperience={initailWorkExperience}
       workExperiences={workExperiences}
+      setWorkExperiences={setWorkExperiences}
       current_status={current_status}
-      onChangeValue={onChangeValue}
+      onChangeValue_workExperiences={onChangeValue_workExperiences}
       onChangeValue_currentStatus={onChangeValue_currentStatus}
       handleWorkExperienceDetailBlur={handleWorkExperienceDetailBlur}
       handleCurrentStatusDetailBlur={handleCurrentStatusDetailBlur}

@@ -176,7 +176,6 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
   const value = state[key];
   const updatedData = details.map((item, i) => {
     if (key === item.key) {
-      console.log("match vala")
       return {
         ...item,
         value,
@@ -190,7 +189,9 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
 
 export const useWorkExperienceDetail = ({ state, isEditable}) => {
   const intl = useIntl();
-//  const { data: countryData } = useFetch({ url: COUNTRY_CODE });
+  const [workExperiences, setWorkExperiences] = useState([work_experience]);
+
+
   const [workExperience_detail_state, setWorkExperienceDetailState] = useState(work_experience);
   const [current_status_state, setCurrentStatusState] = useState(current_status);
 
@@ -227,22 +228,23 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
     });
     return error;
   };
-  {console.log("current_status",current_status)}
   return {
     initailWorkExperience: work_experience,
-    workExperiences: addValueOnField({
-      state,
-      details: workExperience_detail_state,
-      isEditable,
-    }),
+    setWorkExperiences: setWorkExperiences,
+    workExperiences: workExperiences,
+    // workExperiences: addValueOnField({
+    //   state,
+    //   details: workExperience_detail_state,
+    //   isEditable,
+    // }),
     current_status: current_status,
     // current_status : addValueOnField_currentStatus({
     //   state,
     //   details: current_status_state,
     //   isEditable,
     // }),
-    handleWorkExperienceDetailBlur,
-    handleCurrentStatusDetailBlur,
-    isValidAllFields: checkMandatoryFields(),
+    //handleWorkExperienceDetailBlur,
+   // handleCurrentStatusDetailBlur,
+   // isValidAllFields: checkMandatoryFields(),
   };
 };

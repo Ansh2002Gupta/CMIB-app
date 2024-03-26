@@ -9,10 +9,11 @@ import { useEffect, useState } from "react";
 const WorkExperienceUI = ({
   isEditable = true,
   workExperiences,
+  setWorkExperiences,
   current_status,
   handleWorkExperienceDetailBlur,
   handleCurrentStatusDetailBlur,
-  onChangeValue,
+  onChangeValue_workExperiences,
   onChangeValue_currentStatus,
   isLoading,
   onClickSave,
@@ -22,14 +23,13 @@ const WorkExperienceUI = ({
   initailWorkExperience
 }) => {
   const intl = useIntl();
-  const [workExperiencesState, setWorkExperiencesState] = useState([initailWorkExperience]);
 
   useEffect(() => {
-    if (workExperiencesState.length > 0) {
-      const changeHandler = onChangeValue(workExperiences);
-      changeHandler("workExperiences", workExperiencesState);
+    if (workExperiences.length > 0) {
+      const changeHandler = onChangeValue_workExperiences(workExperiences);
+      changeHandler("workExperiences", workExperiences);
     }
-  }, [workExperiencesState]);
+  }, [workExperiences]);
 
   const findKeyByLabel = (label, details) => {
     return details.find((item) => {
@@ -48,12 +48,18 @@ const WorkExperienceUI = ({
 
   const onChangeWorkExp = (label, value, codeValue,index) => {
      const { key } = findKeyByLabel(label, initailWorkExperience);
-     let currentState = [...workExperiencesState];
+     let currentState = [...workExperiences];
      let currentIndexState = currentState[index] || {};
      currentIndexState = updateValueByKey(currentIndexState, key, value);
      currentState[index] = currentIndexState;
-     setWorkExperiencesState(currentState);
+     setWorkExperiences(currentState);
   }
+
+  const handleCancelPress = (index) => {
+      workExperiences.splice(index, 1);
+      setWorkExperiences([...workExperiences]);
+  }
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -61,8 +67,7 @@ const WorkExperienceUI = ({
     >
       <View style={[style.innerContainerStyle]}>
       {workExperiences.map((experience, index) => (
-        <View>
-           <DetailCard
+          <DetailCard
         key={index}
         details={experience}
         customCardStyle={style.customCardStyle}
@@ -74,12 +79,13 @@ const WorkExperienceUI = ({
           onChangeWorkExp(label,value,codeValue,index)
         }}
         handleBlur={handleWorkExperienceDetailBlur}
+        isShowCancel={workExperiences.length > 1 ? true : false}
+        handleCancel={() => handleCancelPress(index)}
       />
-        </View>
       ))}  
       {isEditable &&  <CustomButton
           onPress={() =>{
-            setWorkExperiencesState([...workExperiencesState, initailWorkExperience]);
+            setWorkExperiences([...workExperiences, initailWorkExperience]);
           }}
           style={{ ...style.addButtonStyle }}
           iconLeft={{
