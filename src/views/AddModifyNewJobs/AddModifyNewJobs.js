@@ -42,10 +42,13 @@ const AddModifyNewJobs = () => {
       const formattedData = getFormatedData(jobData, questionnairelist);
       Http.post(POST_JOB, formattedData)
         .then((res) => {
-          console.log("RESPOSNE", res);
+          if (addQuestionRef.current) {
+            addQuestionRef.current?.resetQuestion();
+            addComponentRef.current?.resetJobs();
+          }
         })
         .catch((e) => {
-          console.log("ERROR in POST", e);
+          alert("SomeThing Went Wrong");
         });
     }
   };

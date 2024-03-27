@@ -18,6 +18,7 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
   const intl = useIntl();
   const { fetchSearch } = useGetAddNewJobData();
   const [addJobs] = useContext(AddJobContext);
+
   const [jobData, setJobData] = useState({
     minimumExperience: addNewJobData?.minimumExperience ?? 0,
     maximumExperience: addNewJobData?.maximumExperience ?? 0,
@@ -30,6 +31,7 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
     essentialQualification: addNewJobData?.essentialQualification ?? "",
     desiredQualification: addNewJobData?.desiredQualification ?? "",
   });
+  console.log("jobData", jobData);
   const [error, setError] = useState({
     minimumExperience: "",
     maximumExperience: "",
@@ -38,6 +40,20 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
     functionalAreas: "",
     categoryPreference: "",
   });
+  const resetJobs = () => {
+    setJobData({
+      minimumExperience: 0,
+      maximumExperience: 0,
+      nationality: "",
+      designation: "",
+      jobLocation: [],
+      functionalAreas: [],
+      genderPreference: {},
+      categoryPreference: {},
+      essentialQualification: "",
+      desiredQualification: "",
+    });
+  };
 
   const validateField = (name) => {
     switch (name) {
@@ -130,6 +146,7 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
   useImperativeHandle(ref, () => ({
     getPersonalDetails: getPersonalDetails,
     getErrors: getErrors,
+    resetJobs: resetJobs,
   }));
 
   const handleJobDetailsChange = (field, value) => {

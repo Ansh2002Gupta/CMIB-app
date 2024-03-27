@@ -18,11 +18,13 @@ import { useIntl } from "react-intl";
 import styles from "./AddModifyQuestionaireComponent.styles";
 
 const AddModifyQuestionaireComponent = forwardRef(
-  ({ isQuestionaire, setIsQuestionaire, isWebView }, ref) => {
+  ({ addNewJobData, isQuestionaire, setIsQuestionaire, isWebView }, ref) => {
     const intl = useIntl();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [optionData, setoptionData] = useState(null);
-    const [questionnairelist, setIsQuestionaireList] = useState([]);
+    const [questionnairelist, setIsQuestionaireList] = useState(
+      addNewJobData ?? []
+    );
     const [questionError, setError] = useState({});
     const isEdited = useRef(false);
 
@@ -34,6 +36,10 @@ const AddModifyQuestionaireComponent = forwardRef(
 
     const getQuestionData = () => {
       return questionnairelist;
+    };
+    const resetQuestion = () => {
+      setIsQuestionaireList([]);
+      setError({});
     };
 
     function validateQuestions() {
@@ -91,6 +97,7 @@ const AddModifyQuestionaireComponent = forwardRef(
     useImperativeHandle(ref, () => ({
       getQuestionData: getQuestionData,
       getQuestionError: validateQuestions,
+      resetQuestion: resetQuestion,
     }));
 
     const questionaireTypeFormatted = useMemo(() => {

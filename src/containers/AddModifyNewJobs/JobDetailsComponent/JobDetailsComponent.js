@@ -34,6 +34,13 @@ const JobDetailsComponent = forwardRef(
     const getJobDetailsState = () => {
       return { ...jobData, ...{ jobType: selectedJobType } };
     };
+    const resetJobs = () => {
+      setJobData({
+        jobSummary: "",
+        jobDetails: "",
+        isUrgentJob: 0,
+      });
+    };
 
     const validateInput = (field) => {
       if (field === "jobType" && Object.keys(selectedJobType).length === 0) {
@@ -76,6 +83,7 @@ const JobDetailsComponent = forwardRef(
     useImperativeHandle(ref, () => ({
       getJobDetailsState: getJobDetailsState,
       getErrors: getErrors,
+      resetJobs: resetJobs,
     }));
 
     const handleJobDetailsChange = (field, value) => {

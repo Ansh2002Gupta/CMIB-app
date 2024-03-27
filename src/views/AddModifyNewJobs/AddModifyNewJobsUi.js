@@ -46,7 +46,7 @@ const AddNewJobsUi = ({
                 setIsQuestionaire={setIsQuestionaire}
                 addQuestionRef={addQuestionRef}
                 isWebView={isWebView}
-                // addQuestionData={addNewJobData}
+                addQuestionData={addNewJobData}
               />
             </View>
           }
