@@ -1,26 +1,29 @@
 import React from "react";
 import { View } from "@unthinkable/react-core-components";
+
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
 import CustomButton from "../../../components/CustomButton";
+
 import { useIntl } from "react-intl";
 import images from "../../../images";
 import styles from "./HeaderComponent.styles";
 
 const HeaderComponent = ({
-  isExpanded,
-  setIsExpanded,
   headerText,
-  subText,
-  isWebView,
-  progressText,
-  progressJobData,
-  onPress,
+  isExpanded,
   isQuestion,
+  isWebView,
+  onPress,
+  progressJobData,
+  progressText,
+  setIsExpanded,
+  subText,
 }) => {
   const ArrowUp = images.iconArrowUp;
   const ArrowDown = images.iconArrowDown;
   const intl = useIntl();
+
   return (
     <View>
       <View style={styles.containerStyle}>

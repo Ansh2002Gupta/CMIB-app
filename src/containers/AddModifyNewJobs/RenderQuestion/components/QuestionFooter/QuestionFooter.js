@@ -1,8 +1,10 @@
 import React from "react";
 import { View } from "@unthinkable/react-core-components";
+
 import TouchableImage from "../../../../../components/TouchableImage";
 import Switch from "../../../../../components/Switch/Switch";
 import CommonText from "../../../../../components/CommonText";
+
 import images from "../../../../../images";
 import { useIntl } from "react-intl";
 import styles from "../../RenderQuestion.styles";
@@ -10,12 +12,12 @@ import styles from "../../RenderQuestion.styles";
 const QuestionFooter = ({
   copyItem,
   deleteQuestion,
-  item,
   handleChange,
-  isWebView,
-  setNewQuestionnaireData,
-  setIsModalVisible,
   isEdited,
+  isWebView,
+  item,
+  setIsModalVisible,
+  setNewQuestionnaireData,
 }) => {
   const intl = useIntl();
   return (

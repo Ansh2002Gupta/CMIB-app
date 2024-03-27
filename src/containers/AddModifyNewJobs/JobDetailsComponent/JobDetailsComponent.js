@@ -5,18 +5,17 @@ import React, {
   useState,
 } from "react";
 import { View } from "@unthinkable/react-core-components";
+
 import CustomTextInput from "../../../components/CustomTextInput";
 import CustomTextEditor from "../../../components/CustomTextEditor/CustomTextEditor";
 import CustomToggleComponent from "../../../components/CustomToggleComponent/CustomToggleComponent";
+
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import { useIntl } from "react-intl";
 import styles from "./JobDetailsComponent.style";
 
 const JobDetailsComponent = forwardRef(
-  (
-    { isWebView, selectedJobType, setSelectedJobType, addNewJobData = "" },
-    ref
-  ) => {
+  ({ addNewJobData, isWebView, selectedJobType, setSelectedJobType }, ref) => {
     const intl = useIntl();
     const [addJobs] = useContext(AddJobContext);
     const { jobType } = addJobs;
@@ -62,6 +61,7 @@ const JobDetailsComponent = forwardRef(
       }
       return true;
     };
+
     const getErrors = () => {
       let hasError = false;
       Object.keys(error).forEach((field) => {

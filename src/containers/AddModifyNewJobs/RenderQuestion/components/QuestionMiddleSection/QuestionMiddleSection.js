@@ -10,17 +10,17 @@ import stylesForMobile from "./QuestionMiddleSection.styles";
 import styles from "../../RenderQuestion.styles";
 
 const QuestionMiddleSection = ({
-  item,
-  handleChange,
+  addNewQuestion,
   copyItem,
   deleteQuestion,
-  addNewQuestion,
-  isWebView,
+  handleChange,
   index,
-  setoptionData,
-  setNewQuestionnaireData,
   isEdited,
+  isWebView,
+  item,
   questionError,
+  setNewQuestionnaireData,
+  setoptionData,
 }) => {
   const intl = useIntl();
   function onAddPress() {

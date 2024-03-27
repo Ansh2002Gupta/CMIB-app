@@ -18,16 +18,17 @@ import styles from "./AddModifyJobComponent.styles";
 const AddModifyJobComponent = forwardRef(
   (
     {
-      isExpanded,
-      handleJobDetailsChange,
-      setIsExpanded,
-      isWebView,
       addNewJobData,
+      handleJobDetailsChange,
+      isExpanded,
+      isWebView,
+      setIsExpanded,
     },
     ref
   ) => {
     const intl = useIntl();
     const [jobProgress, setJobProgress] = useState(0);
+
     useEffect(() => {
       if (!isExpanded) {
         let error1 = false;

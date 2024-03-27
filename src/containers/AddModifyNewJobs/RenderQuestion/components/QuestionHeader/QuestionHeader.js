@@ -7,12 +7,12 @@ import stylesForMobile from "./QuestionHeader.styles";
 import styles from "../../RenderQuestion.styles";
 const QuestionHeader = (props) => {
   const {
-    item,
     handleChange,
     index,
-    questionaireTypeFormatted,
     isWebView,
+    item,
     questionError,
+    questionaireTypeFormatted,
   } = props;
   const intl = useIntl();
   return (

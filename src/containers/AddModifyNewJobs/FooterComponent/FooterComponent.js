@@ -1,7 +1,9 @@
 import React from "react";
 import { View } from "@unthinkable/react-core-components";
+
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CustomButton from "../../../components/CustomButton";
+
 import { useIntl } from "react-intl";
 import styles from "./FooterComponent.styles";
 

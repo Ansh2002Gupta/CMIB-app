@@ -7,19 +7,21 @@ import React, {
 } from "react";
 import dayjs from "dayjs";
 import { Platform, Text, View } from "@unthinkable/react-core-components";
+
 import CustomTextInput from "../../../components/CustomTextInput";
 import CustomToggleComponent from "../../../components/CustomToggleComponent/CustomToggleComponent";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import CustomLabelView from "../../../components/CustomLabelView";
+
 import { jobType } from "../../../constants/constants";
-import styles from "./BottomSection.styles";
 import { useIntl } from "react-intl";
+import styles from "./BottomSection.styles";
 
 const today = new Date();
 const tomorrow = new Date(today);
 tomorrow.setDate(tomorrow.getDate() + 1);
 const BottomSection = forwardRef(
-  ({ isWebView, selectedJobType, addNewJobData }, ref) => {
+  ({ addNewJobData, isWebView, selectedJobType }, ref) => {
     const getStyle = (style, styleColumn) => (isWebView ? style : styleColumn);
     const intl = useIntl();
     const [addJobs] = useContext(AddJobContext);

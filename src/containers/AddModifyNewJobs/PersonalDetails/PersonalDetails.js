@@ -5,13 +5,16 @@ import React, {
   useState,
 } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
+
 import CustomTextInput from "../../../components/CustomTextInput";
+
 import useGetAddNewJobData from "../../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
+
 import { useIntl } from "react-intl";
 import styles from "./PersonalDetails.styles";
 
-const PersonalDetails = forwardRef(({ isWebView, addNewJobData }, ref) => {
+const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
   const intl = useIntl();
   const { fetchSearch } = useGetAddNewJobData();
   const [addJobs] = useContext(AddJobContext);

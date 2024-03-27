@@ -11,19 +11,19 @@ import { getQuestionInitalValue } from "../../../utils/util";
 import styles from "./AddModifyNewQuestionModal.styles";
 
 const AddModifyNewQuestionModal = ({
-  isWebView,
-  isModalVisible,
-  optionData,
-  setoptionData,
-  questionnairelistLength,
-  newQuestionnaireData,
-  setNewQuestionnaireData,
-  questionaireTypeFormatted,
-  setIsModalVisible,
-  isEdited,
-  handleChange,
-  editEntireQuestion,
   addNewQuestion,
+  editEntireQuestion,
+  handleChange,
+  isEdited,
+  isModalVisible,
+  isWebView,
+  newQuestionnaireData,
+  optionData,
+  questionnairelistLength,
+  questionaireTypeFormatted,
+  setNewQuestionnaireData,
+  setIsModalVisible,
+  setoptionData,
 }) => {
   const intl = useIntl();
   const [error, setErrors] = useState({});
@@ -88,11 +88,8 @@ const AddModifyNewQuestionModal = ({
         }
       }
       setIsModalVisible(false);
-
-      // Proceed with form submission or further processing
     } else {
       setErrors(validationErrors);
-      // Handle the errors, e.g., display them to the user
     }
   }
   function onCancel() {

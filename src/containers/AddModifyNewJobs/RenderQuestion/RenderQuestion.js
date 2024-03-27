@@ -8,19 +8,19 @@ import images from "../../../images";
 import styles from "./RenderQuestion.styles";
 
 const RenderQuestion = ({
-  item,
+  addNewQuestion,
   copyItem,
-  index,
   deleteQuestion,
   handleChange,
-  addNewQuestion,
+  index,
+  isEdited,
   isWebView,
+  item,
+  questionError,
   questionaireTypeFormatted,
-  setoptionData,
   setNewQuestionnaireData,
   setIsModalVisible,
-  isEdited,
-  questionError,
+  setoptionData,
 }) => {
   return (
     <View style={styles.container}>
