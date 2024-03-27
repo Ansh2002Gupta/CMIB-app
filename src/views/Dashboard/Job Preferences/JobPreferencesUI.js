@@ -20,6 +20,7 @@ const JobPreferencesUI = ({
   onClickSave,
   onClickCancel,
   isValidAllFields,
+  handleAreasOfInterestSelection,
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
@@ -32,6 +33,7 @@ const JobPreferencesUI = ({
       <View style={style.innerContainerStyle}>
         <DetailCard
          customCardStyle={style.customCardStyle}
+         isColumnVariableWidth
           details={preferences_details}
           headerId={intl.formatMessage({
             id: "label.job_preferences",
@@ -39,30 +41,8 @@ const JobPreferencesUI = ({
           isEditProfile={isEditable}
           handleChange={onChangeValue(preferences_details)}
           handleBlur={handlePreferencesDetailBlur}
-          handleMultiSelect={(val) =>
-            onChangeMultiSelect(val, "kindOfIndustry")
-          }
+          handleMultiSelect={handleAreasOfInterestSelection}
         />
-        {/* <CustomTextInput
-                label={"label.preferences_kind_of_industry"}
-                placeholder={"label.preferences_kind_of_industry"}
-                value={[]}
-                selectedItems={[]}
-                onChangeValue={(val) => {}
-                 // handleInputChange(val, "modules", index)
-                }
-                isMandatory
-               // indexNumber={index}
-               // includeAllKeys
-                labelField="name"
-                valueField="value"
-                indexField="selectedIndex"
-                isSelected="isSelected"
-                isMultiSelect
-                isDropdown
-                options={KIND_OF_INDUSTRY}
-                dropdownStyle={{outerWidth: 100}}
-              /> */}
       </View>
       <UploadPhotoVideoComponent
       isEditable={isEditable}

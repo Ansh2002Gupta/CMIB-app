@@ -23,6 +23,7 @@ const JobPreferencesComponent = ({isEditable, handleEdit}) => {
     preferences_details,
     handlePreferencesDetailBlur,
     isValidAllFields,
+    handleAreasOfInterestSelection,
   } = useJobPreferences({
     state,
     isEditable,
@@ -88,6 +89,7 @@ const JobPreferencesComponent = ({isEditable, handleEdit}) => {
       onChangeMultiSelect={onChangeMultiSelect}
       handlePreferencesDetailBlur={handlePreferencesDetailBlur}
       isValidAllFields={isValidAllFields}
+      handleAreasOfInterestSelection={handleAreasOfInterestSelection}
       isError={isError}
       isLoading={isLoading}
       isEditable={isEditable}
