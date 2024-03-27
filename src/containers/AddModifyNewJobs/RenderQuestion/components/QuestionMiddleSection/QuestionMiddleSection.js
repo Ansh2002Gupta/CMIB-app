@@ -1,14 +1,14 @@
-import { View } from "@unthinkable/react-core-components";
 import React from "react";
-import { useIntl } from "react-intl";
-import styles from "../../RenderQuestion.styles";
+import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../../../../components/CommonText";
 import CustomTextInput from "../../../../../components/CustomTextInput";
 import TouchableImage from "../../../../../components/TouchableImage";
-import images from "../../../../../images";
 import CustomButton from "../../../../../components/CustomButton";
-import colors from "../../../../../assets/colors";
+import { useIntl } from "react-intl";
+import images from "../../../../../images";
 import stylesForMobile from "./QuestionMiddleSection.styles";
+import styles from "../../RenderQuestion.styles";
+
 const QuestionMiddleSection = ({
   item,
   handleChange,

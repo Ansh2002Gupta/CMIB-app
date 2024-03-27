@@ -5,15 +5,16 @@ import React, {
   useRef,
   useState,
 } from "react";
-import CardComponent from "../../../components/CardComponent";
 import { Animated, ScrollView } from "@unthinkable/react-core-components";
+import CardComponent from "../../../components/CardComponent";
 import HeaderComponent from "../HeaderComponent";
 import JobDetailsComponent from "../JobDetailsComponent";
 import PersonalDetails from "../PersonalDetails";
 import BottomSection from "../BottomSection";
 import { useIntl } from "react-intl";
-import styles from "./AddModifyJobComponent.styles";
 import { progressData } from "../../../constants/constants";
+import styles from "./AddModifyJobComponent.styles";
+
 const AddModifyJobComponent = forwardRef(
   ({ isExpanded, handleJobDetailsChange, setIsExpanded, isWebView }, ref) => {
     const intl = useIntl();

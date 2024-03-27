@@ -5,20 +5,19 @@ import React, {
   useRef,
   useState,
 } from "react";
+import dayjs from "dayjs";
 import { Platform, Text, View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
 import CustomToggleComponent from "../../../components/CustomToggleComponent/CustomToggleComponent";
-import styles from "./BottomSection.styles";
-import { useIntl } from "react-intl";
-
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import CustomLabelView from "../../../components/CustomLabelView";
 import { jobType } from "../../../constants/constants";
-import dayjs from "dayjs";
+import styles from "./BottomSection.styles";
+import { useIntl } from "react-intl";
+
 const today = new Date();
 const tomorrow = new Date(today);
 tomorrow.setDate(tomorrow.getDate() + 1);
-
 const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
   const getStyle = (style, styleColumn) => (isWebView ? style : styleColumn);
   const intl = useIntl();

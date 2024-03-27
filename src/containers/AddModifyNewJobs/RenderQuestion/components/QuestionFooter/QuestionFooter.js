@@ -1,11 +1,12 @@
 import React from "react";
-import styles from "../../RenderQuestion.styles";
+import { View } from "@unthinkable/react-core-components";
 import TouchableImage from "../../../../../components/TouchableImage";
-import images from "../../../../../images";
 import Switch from "../../../../../components/Switch/Switch";
 import CommonText from "../../../../../components/CommonText";
-import { View } from "@unthinkable/react-core-components";
+import images from "../../../../../images";
 import { useIntl } from "react-intl";
+import styles from "../../RenderQuestion.styles";
+
 const QuestionFooter = ({
   copyItem,
   deleteQuestion,

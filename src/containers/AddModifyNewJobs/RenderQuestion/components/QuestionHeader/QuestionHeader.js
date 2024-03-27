@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "../../RenderQuestion.styles";
 import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../../../../components/CommonText";
 import CustomTextInput from "../../../../../components/CustomTextInput";
 import { useIntl } from "react-intl";
 import stylesForMobile from "./QuestionHeader.styles";
+import styles from "../../RenderQuestion.styles";
 const QuestionHeader = (props) => {
   const {
     item,

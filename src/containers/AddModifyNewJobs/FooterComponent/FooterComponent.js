@@ -1,9 +1,10 @@
-import { View } from "@unthinkable/react-core-components";
 import React from "react";
+import { View } from "@unthinkable/react-core-components";
 import CheckBox from "../../../components/CheckBox/CheckBox";
 import CustomButton from "../../../components/CustomButton";
-import styles from "./FooterComponent.styles";
 import { useIntl } from "react-intl";
+import styles from "./FooterComponent.styles";
+
 const FooterComponent = ({
   isWebView,
   isCheckList,

@@ -1,7 +1,6 @@
 import React, {
   forwardRef,
   useContext,
-  useEffect,
   useImperativeHandle,
   useState,
 } from "react";
@@ -9,9 +8,9 @@ import { View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
 import CustomTextEditor from "../../../components/CustomTextEditor/CustomTextEditor";
 import CustomToggleComponent from "../../../components/CustomToggleComponent/CustomToggleComponent";
-import styles from "./JobDetailsComponent.style";
-import { useIntl } from "react-intl";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
+import { useIntl } from "react-intl";
+import styles from "./JobDetailsComponent.style";
 
 const JobDetailsComponent = forwardRef(
   ({ isWebView, selectedJobType, setSelectedJobType }, ref) => {

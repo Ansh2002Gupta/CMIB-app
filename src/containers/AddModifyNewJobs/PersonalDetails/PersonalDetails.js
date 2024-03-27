@@ -6,10 +6,10 @@ import React, {
 } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
-import styles from "./PersonalDetails.styles";
-import { useIntl } from "react-intl";
-import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import useGetAddNewJobData from "../../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
+import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
+import { useIntl } from "react-intl";
+import styles from "./PersonalDetails.styles";
 
 const PersonalDetails = forwardRef(({ isWebView }, ref) => {
   const intl = useIntl();

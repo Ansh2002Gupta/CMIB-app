@@ -1,11 +1,12 @@
-import { View, Text } from "@unthinkable/react-core-components";
 import React from "react";
-import images from "../../../images";
+import { View } from "@unthinkable/react-core-components";
 import CustomImage from "../../../components/CustomImage";
-import styles from "./RenderQuestion.styles";
 import QuestionHeader from "./components/QuestionHeader";
 import QuestionMiddleSection from "./components/QuestionMiddleSection";
 import QuestionFooter from "./components/QuestionFooter/index";
+import images from "../../../images";
+import styles from "./RenderQuestion.styles";
+
 const RenderQuestion = ({
   item,
   copyItem,

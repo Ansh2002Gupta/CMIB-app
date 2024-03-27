@@ -2,10 +2,10 @@ import React from "react";
 import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
-import images from "../../../images";
-import styles from "./HeaderComponent.styles";
 import CustomButton from "../../../components/CustomButton";
 import { useIntl } from "react-intl";
+import images from "../../../images";
+import styles from "./HeaderComponent.styles";
 
 const HeaderComponent = ({
   isExpanded,

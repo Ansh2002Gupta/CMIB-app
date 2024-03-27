@@ -1,14 +1,15 @@
-import { ScrollView, View } from "@unthinkable/react-core-components";
 import React, { useState } from "react";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 import CustomModal from "../../../components/CustomModal";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
-import { useIntl } from "react-intl";
 import CustomLabelView from "../../../components/CustomLabelView";
 import Switch from "../../../components/Switch/Switch";
 import CustomButton from "../../../components/CustomButton";
-import styles from "./AddModifyNewQuestionModal.styles";
+import { useIntl } from "react-intl";
 import { getQuestionInitalValue } from "../../../utils/util";
+import styles from "./AddModifyNewQuestionModal.styles";
+
 const AddModifyNewQuestionModal = ({
   isWebView,
   isModalVisible,

@@ -1,4 +1,3 @@
-import { View, Text, ScrollView } from "@unthinkable/react-core-components";
 import React, {
   forwardRef,
   useEffect,
@@ -7,15 +6,17 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { View, ScrollView } from "@unthinkable/react-core-components";
 import CardComponent from "../../../components/CardComponent";
 import HeaderComponent from "../HeaderComponent";
-import { useIntl } from "react-intl";
 import CustomButton from "../../../components/CustomButton";
-import styles from "./AddModifyQuestionaireComponent.styles";
 import RenderQuestion from "../RenderQuestion";
-import { questionaireType } from "../../../constants/constants";
 import AddNewQuestionModal from "../AddModifyNewQuestionModal";
 import { getQuestionInitalValue } from "../../../utils/util";
+import { questionaireType } from "../../../constants/constants";
+import { useIntl } from "react-intl";
+import styles from "./AddModifyQuestionaireComponent.styles";
+
 const AddModifyQuestionaireComponent = forwardRef(
   ({ isQuestionaire, setIsQuestionaire, isWebView }, ref) => {
     const intl = useIntl();

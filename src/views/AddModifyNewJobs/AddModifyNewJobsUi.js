@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import styles from "./AddModifyNewJobs.styles.";
 import { useIntl } from "react-intl";
-import AddModifyJobComponent from "../../containers/AddNewJobs/AddModifyJobComponent";
-import FooterComponent from "../../containers/AddNewJobs/FooterComponent";
-import AddQuestionaireComponent from "../../containers/AddNewJobs/AddModifyQuestionaireComponent/AddModifyQuestionaireComponent";
+import AddModifyJobComponent from "../../containers/AddModifyNewJobs/AddModifyJobComponent";
+import FooterComponent from "../../containers/AddModifyNewJobs/FooterComponent";
+import AddQuestionaireComponent from "../../containers/AddModifyNewJobs/AddModifyQuestionaireComponent/AddModifyQuestionaireComponent";
 import { TwoRow } from "../../core/layouts";
 
 const AddNewJobsUi = ({
