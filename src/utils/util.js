@@ -217,6 +217,8 @@ export const getFormatedData = (jobData, question) => {
     summary: jobData.jobSummary,
     detail: jobData.jobDetails,
     job_type_id: jobData.jobType?.id,
+    is_contractual: jobData.jobType?.id == 2 ? true : false,
+    job_type_slug: jobData.jobType?.value,
     is_urgent: jobData.isUrgentJob == 0 ? true : false,
     is_salary_negotiable: jobData.salaryNagotiable == 0 ? true : false,
     experience: {
@@ -224,7 +226,7 @@ export const getFormatedData = (jobData, question) => {
       max_experience: jobData.maximumExperience,
     },
     location_id: jobData.jobLocation.map((object) => object.id),
-    nationality: jobData.nationality?.value,
+    nationality: jobData.nationality?.value ?? null,
     designation: jobData.designation,
     functional_area_id: jobData.functionalAreas.map((object) => object.id),
     gender_preference: jobData.genderPreference?.value ?? null,
