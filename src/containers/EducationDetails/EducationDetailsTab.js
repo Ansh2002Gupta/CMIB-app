@@ -9,6 +9,7 @@ const EducationDetailsTab = ({ isEditable, handleEdit }) => {
   return (
     <View style={{ backgroundColor: colors.backgroundGrey }}>
       <FormTabs
+        showWarningOnTabSwitch
         tabs={[
           {
             label: "Education Details",

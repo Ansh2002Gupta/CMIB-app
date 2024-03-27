@@ -415,6 +415,11 @@ const locale = {
   "label.soft_skills_placeholder": "Enter skill",
   "label.other_skills": "Other Skills",
   "label.other_skills_placeholder": "Enter other skills",
+  "label.dirtyFormAlertHeading":
+    "Are you sure you want to navigate from this tab ?",
+  "label.dirtyFormAlertSubHeading": "All unsaved changes will be lost.",
+  "label.continue": "Continue",
+  "label.close": "Close",
 };
 
 export default locale;
