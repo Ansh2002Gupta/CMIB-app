@@ -13,6 +13,7 @@ import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import DatePickerModal from "../DatePickerModel";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import Spinner from "../Spinner";
@@ -91,6 +92,7 @@ const CustomTextInput = (props) => {
     includeAllKeys,
     selectAllField,
     onChangeDropDownText,
+    isYear,
     ...remainingProps
   } = props;
 
@@ -507,7 +509,7 @@ CustomTextInput.defaultProps = {
   urlField: "url",
   numberText: "",
 };
-// Custom validator for Date objects
+
 const datePropType = (props, propName, componentName) => {
   if (props[propName] && !(props[propName] instanceof Date)) {
     return new Error(

@@ -12,8 +12,16 @@ const styles = StyleSheet.create({
     borderRadius: Platform.OS === "web" ? 12 : 8,
     flexDirection: "row",
     alignItems: "center",
+    minWidth: 280,
   },
-  focusedStyle: { borderColor: colors.lightBlue },
+  focusedStyle: {
+    borderColor: colors.lightBlue,
+  },
+  valueStyle: {
+    fontFamily,
+    fontSize: 14,
+    color: colors.black,
+  },
   iconArrow: {
     marginLeft: 6,
     height: 14,
@@ -29,16 +37,19 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
   },
-  valueText: {
+  placeholderTextStyle: {
     fontFamily,
     fontSize: 14,
+    color: colors.lightGray,
   },
   textButtonStyle: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
     height: 48,
     flex: 1,
     zindex: 1,
+    padding: 16,
   },
   datePickerContainer: {
     flex: 1,
@@ -50,7 +61,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 0.1,
   },
-  // Uncomment the following style if you have specific styles for the DatePicker itself
   datePickerStyle: {
     backgroundColor: colors.white,
     border: "1px solid #d0d0d0",
@@ -66,9 +76,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textViewStyles: {
-    flex: 0.85,
+    flex: 0.83,
     height: 48,
     justifyContent: "center",
+    padding: 16,
   },
   mobileTextStyle: {
     flex: 0.9,

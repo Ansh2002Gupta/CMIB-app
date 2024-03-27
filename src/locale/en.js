@@ -429,6 +429,7 @@ const locale = {
   "label.question_type": "Question Type",
   "label.option": "Option",
   "label.contractual_period": "Contractual Period",
+  "label.years": "Years",
   "label.mark_as_active": "Mark as Active",
   "label.enter_balance_credit": "Enter Balance Credit",
   "label.select_module": "Select Module",

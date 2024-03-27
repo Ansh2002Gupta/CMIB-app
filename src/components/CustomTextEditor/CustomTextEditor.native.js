@@ -12,15 +12,14 @@ import CommonText from "../CommonText";
 import styles from "./CustomTextEditor.style";
 
 const CustomTextEditor = ({
+  customErrorStyle,
+  customHandleBlur,
   customLabelStyle,
+  errorMessage,
   isMandatory,
   label,
   onChangeText,
-  customErrorStyle,
-  isError,
   value,
-  errorMessage,
-  customHandleBlur,
 }) => {
   const richText = useRef(null);
   const intl = useIntl();
@@ -46,7 +45,9 @@ const CustomTextEditor = ({
           </CommonText>
         )}
       </View>
-      <View style={[styles.mainView, isError ? styles.invalidInput : {}]}>
+      <View
+        style={[styles.mainView, !!errorMessage ? styles.invalidInput : {}]}
+      >
         <View>
           <RichToolbar
             editor={richText}
@@ -76,7 +77,7 @@ const CustomTextEditor = ({
           </ScrollView>
         </View>
       </View>
-      {isError && (
+      {!!errorMessage && (
         <CommonText
           customTextStyle={[styles.errorMsg, customErrorStyle]}
           fontWeight={customErrorStyle?.fontWeight || "600"}
@@ -95,9 +96,14 @@ CustomTextEditor.defaultProps = {
 };
 
 CustomTextEditor.propTypes = {
+  customErrorStyle: PropTypes.object,
+  customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
+  errorMessage: PropTypes.string,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,
+  onChangeText: PropTypes.func,
+  value: PropTypes.string,
 };
 
 export default CustomTextEditor;
