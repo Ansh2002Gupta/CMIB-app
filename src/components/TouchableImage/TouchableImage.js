@@ -32,7 +32,10 @@ const TouchableImage = ({
 
   return (
     <CustomTouchableOpacity
-      style={disabled ? styles.disabled : containerStyle}
+      style={{
+        ...parentStyle,
+        ...(disabled ? styles.disabled : containerStyle),
+      }}
       onPress={isSelector ? handlePress : onPress}
       disabled={disabled}
     >

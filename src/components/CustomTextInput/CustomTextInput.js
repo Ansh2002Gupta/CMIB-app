@@ -13,6 +13,7 @@ import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import DatePickerModal from "../DatePickerModel";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import Spinner from "../Spinner";
@@ -23,6 +24,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { getImageSource } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
+import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
 import DatePickerModal from "../DatePickerModel";
 
@@ -48,19 +50,26 @@ const CustomTextInput = (props) => {
     isCounterInput,
     isDropdown,
     isCalendar,
+    isEditable,
     isError,
     isMandatory,
+    handleMultiSelect,
     isMobileNumber,
     isMultiline,
+    isMultiSelect,
     isNumeric,
     isPaddingNotRequired,
     isPassword,
     isRupee,
     isSendButton,
     isLoading,
+    isSelected,
+    indexField,
+    indexNumber,
     initiateFileUpload,
     label,
     maxCount,
+    maxLength,
     minCount,
     options,
     onChangeValue,
@@ -69,6 +78,7 @@ const CustomTextInput = (props) => {
     onIconClose,
     placeholder,
     step,
+    selectedItems,
     setFile,
     value,
     labelField,
@@ -76,6 +86,8 @@ const CustomTextInput = (props) => {
     urlField,
     menuOptions,
     isYear,
+    maxDate,
+    minDate,
     ...remainingProps
   } = props;
 
@@ -116,10 +128,15 @@ const CustomTextInput = (props) => {
       : { ...style.inputContainer, ...customTextInputOuterContainer }),
     ...(isFocused ? style.focusedStyle : {}),
     ...(isError ? style.invalidInput : {}),
+    ...(!isEditable ? style.disabledStyle : {}),
   };
 
   const webProps = isWebPlatform
     ? { size: "xs", thickness: 3, color: colors.white }
+    : {};
+
+  const textInputWebProps = isWebPlatform
+    ? { className: classes["input_placeholder"] }
     : {};
 
   const getSendButtonStatus = () => {
@@ -160,38 +177,60 @@ const CustomTextInput = (props) => {
             menuOptions={menuOptions}
             data={options}
             maxHeight={200}
+            handleMultiSelect={handleMultiSelect}
             labelField={labelField}
             valueField={valueField}
             placeholder={placeholder || ""}
             value={value}
+            isMultiSelect={isMultiSelect}
+            isSelected={isSelected}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            selectedItems={selectedItems}
             urlField={urlField}
+            indexNumber={indexNumber}
+            indexField={indexField}
             onChange={(item) => {
               isWebPlatform
                 ? onChangeValue(item)
                 : onChangeValue(item[inputKey]);
               setIsFocused(false);
             }}
+            isEditable={isEditable}
             {...remainingProps}
           />
         );
       return (
         <DropDownModal
           {...{
+            isMultiSelect,
+            isSelected,
+            indexNumber,
+            indexField,
             labelField,
             onChangeValue,
+            handleMultiSelect,
             options,
             placeholder,
+            selectedItems,
+            urlField,
             value,
             valueField,
             urlField,
+            isEditable,
           }}
         />
       );
     }
     if (isCalendar) {
-      return <DatePickerModal value={value} onChangeValue={onChangeValue} />;
+      return (
+        <DatePickerModal
+          value={value}
+          onChangeValue={onChangeValue}
+          maxDate={maxDate}
+          minDate={minDate}
+        />
+      );
     }
     if (isCounterInput) {
       return (
@@ -221,17 +260,22 @@ const CustomTextInput = (props) => {
               value: codeValue,
               valueField,
               urlField,
+              isEditable,
             }}
           />
         )}
         {isRupee && !!value && (
           <View style={style.prefixContainer}>
-            <CommonText customTextStyle={style.prefixStyle}>{"₹"}</CommonText>
+            <CommonText customTextStyle={style.prefixStyle}>
+              {intl.formatMessage({ id: "label.rupee" })}
+            </CommonText>
           </View>
         )}
         {isMultiline ? (
           <TextArea
             {...{
+              isError,
+              maxLength,
               onBlur: handleBlur,
               onChangeText: remainingProps.onChangeText,
               onFocus: handleFocus,
@@ -251,8 +295,11 @@ const CustomTextInput = (props) => {
                   style.textInputStyle,
                   isMultiline && style.textAlignStyle,
                   isWebView && style.webLabel,
+                  !isEditable && style.disabledStyle,
                   customTextInputContainer,
                 ]}
+                editable={isEditable}
+                maxLength={maxLength}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 placeholder={placeholder}
@@ -261,6 +308,7 @@ const CustomTextInput = (props) => {
                 {...platformSpecificProps}
                 {...(isNumeric ? mobileProps : {})}
                 {...remainingProps}
+                {...textInputWebProps}
               />
               <TriggerFileUpload
                 onImageUpload={onClickAttachement}
@@ -320,6 +368,8 @@ const CustomTextInput = (props) => {
               isWebView && style.webLabel,
               customTextInputContainer,
             ]}
+            editable={isEditable}
+            maxLength={maxLength}
             onFocus={handleFocus}
             onBlur={handleBlur}
             placeholder={placeholder}
@@ -328,6 +378,7 @@ const CustomTextInput = (props) => {
             {...platformSpecificProps}
             {...(isNumeric ? mobileProps : {})}
             {...remainingProps}
+            {...textInputWebProps}
           />
         )}
         {eyeImage && (
@@ -353,13 +404,27 @@ const CustomTextInput = (props) => {
     >
       {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {renderTextInput()}
-      {isError && (
-        <CommonText
-          customTextStyle={[style.errorMsg, customErrorStyle]}
-          fontWeight={customErrorStyle?.fontWeight || "600"}
+      {(isError || isMultiline) && (
+        <View
+          style={{
+            ...style.errorAndCountLimitBox,
+            ...(!isError && isMultiline ? style.onlyCountLimitBox : {}),
+          }}
         >
-          {errorMessage}
-        </CommonText>
+          {isError && (
+            <CommonText
+              customTextStyle={[style.errorMsg, customErrorStyle]}
+              fontWeight={customErrorStyle?.fontWeight || "600"}
+            >
+              {errorMessage}
+            </CommonText>
+          )}
+          {isMultiline && (
+            <CommonText
+              customTextStyle={style.limitStyle}
+            >{`${value.length}/${maxLength}`}</CommonText>
+          )}
+        </View>
       )}
     </View>
   );
@@ -382,10 +447,12 @@ CustomTextInput.defaultProps = {
   isCounterInput: false,
   isDropdown: false,
   isError: false,
+  isEditable: true,
   inputKey: "value",
   isMandatory: false,
   isMobileNumber: false,
   isMultiline: false,
+  isMultiSelect: false,
   isNumeric: false,
   isPaddingNotRequired: false,
   isPassword: false,
@@ -407,7 +474,7 @@ CustomTextInput.defaultProps = {
   urlField: "url",
   isYear: false,
 };
-// Custom validator for Date objects
+
 const datePropType = (props, propName, componentName) => {
   if (props[propName] && !(props[propName] instanceof Date)) {
     return new Error(
@@ -435,10 +502,12 @@ CustomTextInput.propTypes = {
   inputKey: PropTypes.string,
   isCounterInput: PropTypes.bool,
   isDropdown: PropTypes.bool,
+  isEditable: PropTypes.bool,
   isError: PropTypes.bool,
   isMandatory: PropTypes.bool,
   isMobileNumber: PropTypes.bool,
   isMultiline: PropTypes.bool,
+  isMultiSelect: PropTypes.bool,
   isNumeric: PropTypes.bool,
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
@@ -447,6 +516,7 @@ CustomTextInput.propTypes = {
   label: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
+  maxLength: PropTypes.number,
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
   onChangeValue: PropTypes.func,
@@ -459,6 +529,7 @@ CustomTextInput.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.array,
     datePropType,
   ]),
   valueField: PropTypes.string,

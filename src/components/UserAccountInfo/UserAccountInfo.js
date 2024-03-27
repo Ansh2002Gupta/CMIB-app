@@ -220,6 +220,7 @@ const UserAccountInfo = ({ isMdOrGreater, onPressRightIcon, rightIcon }) => {
               isError: false,
             });
           }}
+          severity={"warning"}
           subHeading={intl.formatMessage({ id: "label.logout_message" })}
         />
       )}

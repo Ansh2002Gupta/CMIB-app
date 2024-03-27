@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../http-service";
+import useHttpService from "../../hooks/useHttpService";
 import { useHeader } from "../../../hooks/useHeader";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { COMPANY_CHANGE_PASSWORD_OTP } from "../apiEndPoint";
@@ -14,6 +14,8 @@ const useChangePasswordApi = () => {
   );
   const [changePasswordResult, setChangePasswordResult] = useState([]);
   const [errorWhileChangePassword, setErrorWhileChangePassword] = useState("");
+
+  const { Http } = useHttpService();
 
   const handleUseChangePassword = async (payload) => {
     try {

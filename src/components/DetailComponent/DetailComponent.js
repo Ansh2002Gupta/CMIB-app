@@ -2,22 +2,43 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
-import { Platform, View } from "@unthinkable/react-core-components";
+import { Linking, View } from "@unthinkable/react-core-components";
 
+import BadgeLabel from "../BadgeLabel/BadgeLabel";
 import CommonText from "../CommonText";
 import CustomTextInput from "../CustomTextInput";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import MobileNumberInput from "../MobileNumberInput";
+import Switch from "../Switch";
+import TouchableImage from "../TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
-import { gridStyles } from "../../theme/styles/commonStyles";
+import { getValidUrl } from "../../utils/util";
 import { numericValidator } from "../../utils/validation";
-import styles, { getRowStyle } from "./DetailComponent.style";
+import images from "../../images";
+import { gridStyles } from "../../theme/styles/commonStyles";
+import styles, {
+  getContainerStyles,
+  getRowStyle,
+} from "./DetailComponent.style";
 
 const DetailComponent = ({
   customContainerStyle,
   details,
-  headerText,
-  isEditable,
-  isMandatory,
+  handleBlur,
   handleChange,
+  handleSwitchChange,
+  handleMultiSelect,
+  hasActionButton,
+  headerText,
+  headerTextCustomStyles,
+  index,
+  isActive,
+  isColumnVariableWidth,
+  isEditable,
+  isInputDisable,
+  isMandatory,
+  isShowSwitch,
+  onPressActionButton,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -25,88 +46,264 @@ const DetailComponent = ({
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
-  const containerStyle = isWebView
-    ? styles.containerGridStyle(columnCount)
-    : styles.containerStyle;
+  const containerStyle = getContainerStyles({
+    columnCount,
+    isColumnVariableWidth,
+    isWebView,
+  });
 
-  const isPlatformWeb = Platform.OS.toLowerCase() === "web";
+  const renderSwitch = () => (
+    <View style={styles.switchContainer}>
+      <Switch
+        isToggled={isActive}
+        onChange={() => {
+          handleSwitchChange(index);
+        }}
+      />
+      <CommonText customTextStyle={styles.labelStyle}>
+        {intl.formatMessage({ id: "label.mark_as_active" })}
+      </CommonText>
+    </View>
+  );
 
-  const getMobileProps = (detail) => {
-    if (!isPlatformWeb && detail.isMultiline) {
-      return {
-        isMultiline: true,
-        height: 84,
-      };
+  const renderWebActionButton = () => (
+    <View style={styles.switchContainer}>
+      <TouchableImage
+        onPress={() => onPressActionButton(index)}
+        resizeMode="contain"
+        source={images.iconDeleteRed}
+        parentStyle={styles.iconStyle}
+      />
+    </View>
+  );
+
+  const renderMobActionButton = () => (
+    <CustomTouchableOpacity
+      style={styles.buttonContainer}
+      onPress={() => onPressActionButton(index)}
+    >
+      <TouchableImage
+        resizeMode="contain"
+        source={images.iconDeleteRed}
+        parentStyle={styles.iconStyle}
+      />
+      <CommonText customTextStyle={styles.removeTextStyle} fontWeight="600">
+        {intl.formatMessage({ id: "label.remove" })}
+      </CommonText>
+    </CustomTouchableOpacity>
+  );
+
+  const renderDetailContent = (detail) => {
+    if (detail.showBadgeLabel) {
+      return (
+        <BadgeLabel
+          badgeLabels={detail?.customValue || detail?.value}
+          customTextStyle={styles.badgeContainer}
+        />
+      );
     }
-    return {};
+
+    if (detail.isLink) {
+      return (
+        <CustomTouchableOpacity
+          onPress={() => {
+            Linking.openURL(getValidUrl(detail.value), "_blank");
+          }}
+        >
+          <CommonText
+            customTextStyle={{
+              ...styles.valueStyle,
+              ...(detail.isLink && styles.linkStyle),
+            }}
+          >
+            {detail.value}
+          </CommonText>
+        </CustomTouchableOpacity>
+      );
+    }
+
+    return (
+      <CommonText
+        customTextStyle={{
+          ...styles.valueStyle,
+          ...(detail.isCapitalize && styles.capitalizeValue),
+        }}
+      >
+        {detail?.defaultValue || detail?.value}
+      </CommonText>
+    );
+  };
+
+  const renderEditableContent = (detail) => {
+    if (detail.isMobileNumber) {
+      return (
+        <MobileNumberInput
+          mobNumberValue={detail.value}
+          options={detail.options}
+          codeValue={detail.codeValue}
+          customHandleBlur={() => handleBlur(detail.key, index)}
+          isEditable={isInputDisable ? !isInputDisable : true}
+          onChangeCode={(val) => handleChange(detail.label, val, true)}
+          onChangeMobNumber={(val) => handleChange(detail.label, val)}
+          mobNumberError={detail.error}
+        />
+      );
+    }
+    return (
+      <CustomTextInput
+        errorMessage={detail.error}
+        value={detail.value}
+        customHandleBlur={() => handleBlur(detail.key, index)}
+        customStyle={{
+          ...styles.inputStyle,
+          ...styles.getFieldWidth(detail.width, !isWebView),
+        }}
+        label={detail?.label && intl.formatMessage({ id: detail.label })}
+        isDropdown={detail.isDropdown}
+        isEditable={isInputDisable ? !isInputDisable : true}
+        isCounterInput={detail.isCounterInput}
+        isError={!!detail.error}
+        isMandatory={detail.isMandatory}
+        selectedItems={detail.defaultValues}
+        indexNumber={index}
+        isSelected="isSelected"
+        indexField="selectedIndex"
+        options={detail.options || []}
+        isMultiline={detail?.isMultiline}
+        placeholder={
+          detail?.placeholder && intl.formatMessage({ id: detail.placeholder })
+        }
+        maxLength={detail.maxLength}
+        isNumeric={detail.isNumeric}
+        isToggle={detail.isToggle}
+        valueField={detail.valueField || "label"}
+        labelField={detail.labelField || "label"}
+        inputKey={detail.inputKey || "value"}
+        onChangeValue={(val) =>
+          detail.isMultiSelect
+            ? handleMultiSelect(val)
+            : handleChange(detail.label, val)
+        }
+        isMultiSelect={detail.isMultiSelect}
+        onChangeText={(val) => {
+          if (detail?.isNumeric) {
+            if (numericValidator(val)) handleChange(detail.label, val);
+          } else {
+            handleChange(detail.label, val);
+          }
+        }}
+        isRupee={detail?.isRupee}
+      />
+    );
   };
 
   return (
     <View>
       {!!headerText && (
-        <CommonText customTextStyle={styles.headerText} fontWeight="600">
-          {headerText}
-        </CommonText>
+        <View style={styles.titleContainer}>
+          <CommonText
+            customTextStyle={{
+              ...styles.headerText,
+              ...headerTextCustomStyles,
+            }}
+            fontWeight="600"
+          >
+            {headerText}
+          </CommonText>
+          {isMandatory && (
+            <CommonText customTextStyle={styles.starStyle}>{" *"}</CommonText>
+          )}
+        </View>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
-        {details?.map((detail, index) => (
-          <View
-            key={index}
-            style={isWebView ? styles.webContainer : getRowStyle(detail)}
-          >
-            {isEditable ? (
-              <CustomTextInput
-                errorMessage={detail.error}
-                value={detail.value}
-                customStyle={styles.inputStyle}
-                label={intl.formatMessage({ id: detail.label })}
-                isDropdown={detail.isDropdown}
-                isCounterInput={detail.isCounterInput}
-                isError={!!detail.error}
-                isMobileNumber={detail.isMobileNumber}
-                isMandatory={isMandatory}
-                options={detail.options || []}
-                placeholder={intl.formatMessage({ id: detail.placeholder })}
-                maxLength={detail.maxLength}
-                isNumeric={detail.isNumeric}
-                valueField={detail.valueField || "label"}
-                labelField={detail.labelField || "label"}
-                inputKey={detail.inputKey || "value"}
-                onChangeValue={(val) => handleChange(detail.label, val)}
-                onChangeText={(val) => {
-                  if (detail?.isNumeric) {
-                    if (numericValidator(val)) handleChange(detail.label, val);
-                  } else {
-                    handleChange(detail.label, val);
-                  }
+        {isShowSwitch && isEditable && !isWebView && renderSwitch()}
+        {details?.map((detail, idx) => {
+          if (isEditable && detail.viewOnlyField) {
+            return null;
+          }
+          if (isColumnVariableWidth) {
+            return (
+              <View
+                style={{
+                  ...(isWebView
+                    ? styles.getVariableContainerStyles(detail)
+                    : styles.containerStyle),
                 }}
-                isRupee={detail?.isRupee}
-                {...getMobileProps(detail)}
-              />
-            ) : (
-              <>
-                <View style={styles.titleContainer}>
-                  <CommonText customTextStyle={styles.titleStyle}>
-                    {intl.formatMessage({ id: detail.label })}
-                  </CommonText>
-                  {isMandatory && (
-                    <CommonText customTextStyle={styles.starStyle}>
-                      {" *"}
-                    </CommonText>
-                  )}
-                </View>
-                <CommonText
-                  customTextStyle={[
-                    styles.valueStyle,
-                    detail.isLink && styles.linkStyle,
-                  ]}
-                >
-                  {detail.value}
-                </CommonText>
-              </>
-            )}
-          </View>
-        ))}
+              >
+                {detail.map((columns, idx) => {
+                  return isEditable ? (
+                    <View
+                      style={{
+                        ...(columns.width === 3 ? styles.oneThirdWidth : {}),
+                        ...(isWebView
+                          ? styles.webContainer
+                          : getRowStyle(detail)),
+                      }}
+                    >
+                      {renderEditableContent(columns)}
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        ...(isWebView
+                          ? styles.webContainer
+                          : getRowStyle(detail)),
+                      }}
+                    >
+                      <View style={styles.titleContainer}>
+                        {columns.label ? (
+                          <CommonText customTextStyle={styles.titleStyle}>
+                            {intl.formatMessage({ id: columns.label })}
+                          </CommonText>
+                        ) : (
+                          void 0
+                        )}
+                        {columns?.isMandatory && (
+                          <CommonText customTextStyle={styles.starStyle}>
+                            {" *"}
+                          </CommonText>
+                        )}
+                      </View>
+                      {renderDetailContent(columns)}
+                    </View>
+                  );
+                })}
+              </View>
+            );
+          }
+
+          return (
+            <View
+              key={idx}
+              style={isWebView ? styles.webContainer : getRowStyle(detail)}
+            >
+              {isEditable ? (
+                renderEditableContent(detail)
+              ) : (
+                <>
+                  <View style={styles.titleContainer}>
+                    {detail.label ? (
+                      <CommonText customTextStyle={styles.titleStyle}>
+                        {intl.formatMessage({ id: detail.label })}
+                      </CommonText>
+                    ) : (
+                      void 0
+                    )}
+                    {detail?.isMandatory && (
+                      <CommonText customTextStyle={styles.starStyle}>
+                        {" *"}
+                      </CommonText>
+                    )}
+                  </View>
+                  {renderDetailContent(detail)}
+                </>
+              )}
+            </View>
+          );
+        })}
+        {isShowSwitch && isWebView && isEditable && renderSwitch()}
+        {hasActionButton && isEditable && isWebView && renderWebActionButton()}
+        {hasActionButton && isEditable && !isWebView && renderMobActionButton()}
       </View>
     </View>
   );
@@ -115,19 +312,35 @@ const DetailComponent = ({
 DetailComponent.defaultProps = {
   customContainerStyle: {},
   details: [],
+  handleBlur: () => {},
   handleChange: () => {},
+  handleSwitchChange: () => {},
   headerText: "",
+  headerTextCustomStyles: {},
+  isActive: false,
   isEditable: false,
-  isMandatory: false,
+  isInputDisable: false,
+  isShowSwitch: false,
+  onPressActionButton: () => {},
 };
 
 DetailComponent.propTypes = {
   customContainerStyle: PropTypes.object,
   details: PropTypes.array,
+  handleBlur: PropTypes.func,
   handleChange: PropTypes.func,
+  handleSwitchChange: PropTypes.func,
+  hasActionButton: PropTypes.bool,
   headerText: PropTypes.string,
+  headerTextCustomStyles: PropTypes.object,
+  index: PropTypes.number,
+  isActive: PropTypes.bool,
+  isColumnVariableWidth: PropTypes.bool,
   isEditable: PropTypes.bool,
+  isInputDisable: PropTypes.bool,
   isMandatory: PropTypes.bool,
+  isShowSwitch: PropTypes.bool,
+  onPressActionButton: PropTypes.func,
 };
 
 export default DetailComponent;

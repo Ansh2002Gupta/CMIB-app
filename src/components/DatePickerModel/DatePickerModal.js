@@ -1,21 +1,27 @@
-import { TouchableOpacity, View } from "@unthinkable/react-core-components";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
+import PropTypes from "prop-types";
+import { TouchableOpacity, View } from "@unthinkable/react-core-components";
 import "react-datepicker/dist/react-datepicker.css";
+import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
-import styles from "./DatePickerModal.style";
+import useOutsideClick from "../../hooks/useOutsideClick";
 import images from "../../images";
 import { useIntl } from "react-intl";
+import { formatDate } from "../../utils/util";
 import classes from "../../theme/styles/CssClassProvider";
-import CommonText from "../CommonText";
-import { getDisplayValue } from "../../constants/constants";
+import styles from "./DatePickerModal.style";
+
 const accountComponentProp = classes["react_datepicker__input_container"];
 function DatePickerModal({
-  value,
-  onChangeValue,
-  placeholder,
   customTextInputOuterContainer,
+  customStyles = {},
+  format = "MMMM d, yyyy",
   isError,
+  minDate = Date.now(),
+  maxDate,
+  onChangeValue,
+  value,
 }) {
   const [open, setOpen] = useState(false);
   const intl = useIntl();
@@ -26,30 +32,30 @@ function DatePickerModal({
   };
 
   const wrapperRef = useRef(null);
+  useOutsideClick(wrapperRef, () => setOpen(false));
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [wrapperRef]);
+  const errorStyle = isError ? styles.invalidInput : {};
 
   return (
     <View
-      style={[styles.container, open ? styles.focusedStyle : {}]}
+      style={[
+        styles.container,
+        open ? styles.focusedStyle : {},
+        errorStyle,
+        customStyles,
+      ]}
       ref={wrapperRef}
     >
       <TouchableOpacity onPress={handleDropDown} style={styles.textButtonStyle}>
-        <View style={{ flex: 1 }}>
+        <View style={{ ...styles.flex1, ...customTextInputOuterContainer }}>
           <CommonText
             customTextStyle={
-              value ? styles.prefixStyle : styles.placeHolderText
+              !value ? styles.placeholderTextStyle : styles.valueStyle
             }
           >
-            {getDisplayValue(value, intl)}
+            {!value
+              ? intl.formatMessage({ id: "label.select" })
+              : formatDate(value)}
           </CommonText>
         </View>
         <View style={styles.iconContainer}>
@@ -60,24 +66,33 @@ function DatePickerModal({
         <View style={styles.datePickerContainerStyle}>
           <DatePicker
             selected={value}
-            minDate={new Date()}
+            minDate={minDate}
+            maxDate={maxDate}
             portalId="my-popper"
             className={accountComponentProp}
             onChange={(date) => {
-              let datetoBeFormatted = new Date(date);
-              onChangeValue(datetoBeFormatted);
+              onChangeValue(new Date(date));
               setOpen(false);
             }}
             showMonthDropdown
             showYearDropdown
             inline
             dropdownMode="select"
-            dateFormat="MMMM d, yyyy"
+            dateFormat={format}
           />
         </View>
       )}
     </View>
   );
 }
+
+DatePickerModal.propTypes = {
+  customStyles: PropTypes.object,
+  format: PropTypes.string,
+  minDate: PropTypes.instanceOf(Date),
+  maxDate: PropTypes.instanceOf(Date),
+  onChangeValue: PropTypes.func.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
+};
 
 export default DatePickerModal;

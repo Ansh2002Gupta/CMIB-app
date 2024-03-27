@@ -20,8 +20,13 @@ import {
   DEFAULT_INPUT_MAX_LENGTH,
   FIRM_OF_CHARTERED_ACCOUNTANTS,
   FIRM_REGISTRATION_NO_LENGTH,
+  NUMBER_MAX_LENGTH,
+  NUMBER_OF_PARTNERS_LENGTH,
 } from "../../../constants/constants";
-import { alphaNumericValidator, numericValidator } from "../../../utils/validation";
+import {
+  alphaNumericValidator,
+  numericValidator,
+} from "../../../utils/validation";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpSecondScreen.style";
 
@@ -137,7 +142,7 @@ const SignUpSecondScreenUI = ({
                 label={intl.formatMessage({
                   id: "label.no_of_partners",
                 })}
-                maxLength={3}
+                maxLength={NUMBER_OF_PARTNERS_LENGTH}
                 onChangeText={(val) =>
                   numericValidator(val) &&
                   handleInputChange(val, "noOfPartners")
@@ -241,7 +246,7 @@ const SignUpSecondScreenUI = ({
               label={intl.formatMessage({
                 id: "label.telephone_no",
               })}
-              maxLength={15}
+              maxLength={NUMBER_MAX_LENGTH}
               onChangeText={(val) =>
                 numericValidator(val) && handleInputChange(val, "telephoneNo")
               }

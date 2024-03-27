@@ -17,9 +17,9 @@ import UploadImage from "../../../components/UploadImage";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import {
-  ADDRESS_MAX_LENGTH,
-  NATURE_OF_SUPPLIER,
+  COMPANY_DETAIL_MAX_LENGTH,
   COMPANY_TYPE_OPTIONS,
+  NATURE_OF_SUPPLIER,
 } from "../../../constants/constants";
 import commonStyles from "../../../theme/styles/commonStyles";
 import { getResponsiveStyles, style } from "./SignUpLastScreen.style";
@@ -105,7 +105,7 @@ const SignUpLastScreenUI = ({
           placeholder={intl.formatMessage({
             id: "label.enter_profile_of_company",
           })}
-          maxLength={ADDRESS_MAX_LENGTH}
+          maxLength={COMPANY_DETAIL_MAX_LENGTH}
           errorMessage={errors.companyDetails}
           isError={!!errors.companyDetails}
           customHandleBlur={() => handleBlur("companyDetails")}

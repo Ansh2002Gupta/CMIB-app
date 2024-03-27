@@ -51,7 +51,6 @@ import iconRightArrow from "../../public/images/iconRightArrow/iconRightArrow.pn
 import iconFooterGlobal from "../../public/images/iconFooterGlobal/iconFooterGlobal.png";
 import iconArrowDown2 from "../../public/images/iconArrowDown2/iconArrowDown2.png";
 import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
-import iconSquareEdit from "../../public/images/iconSquareEdit/iconSquareEdit.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg";
 import iconFilter from "../../public/images/svg/iconFilter.svg";
 import iconMore from "../../public/images/svg/iconMore.svg";
@@ -117,6 +116,14 @@ import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
 import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
+import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
+import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
+import iconZoomIn from "../../public/images/svg/iconZoomIn.svg";
+import iconZoomOut from "../../public/images/svg/iconZoomOut.svg";
+import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
+import iconEdit from "../../public/images/svg/icon_edit.svg";
+import iconLoading from "../../public/images/IconLoading/iconLoading.png";
+import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 
 const images = {
   iconArrowUp,
@@ -188,7 +195,6 @@ const images = {
   iconRightArrow,
   iconFooterGlobal,
   iconWarning,
-  iconSquareEdit,
   iconSearch,
   iconFilter,
   iconMore,
@@ -238,6 +244,14 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
+  iconDisabledCheck,
+  iconDeleteRed,
+  iconZoomIn,
+  iconZoomOut,
+  iconAddBlue,
+  iconEdit,
+  iconLoading,
+  iconGreyCross,
 };
 
 export default images;

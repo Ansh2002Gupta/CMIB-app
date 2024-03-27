@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Http from "../../http-service";
+import useHttpService from "../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
 import { COMPANY_SEND_OTP } from "../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
@@ -9,6 +9,8 @@ const useSendOtpAPI = () => {
   const [errorWhileResetPassword, setErrorWhileResetPassword] = useState("");
   const [sendOtpResult, setSendOtpResult] = useState([]);
   const [apiStatus, setAPIStatus] = useState(API_STATUS.IDLE);
+
+  const { Http } = useHttpService();
 
   const handleSendOtpAPI = async ({ payload, errorCallback, url }) => {
     try {

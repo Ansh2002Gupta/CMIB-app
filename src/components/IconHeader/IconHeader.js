@@ -6,6 +6,7 @@ import { Image, View } from "@unthinkable/react-core-components";
 import CardComponent from "../CardComponent/CardComponent";
 import Chip from "../Chip";
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
@@ -112,24 +113,32 @@ const IconHeader = ({
             </CustomTouchableOpacity>
           )}
           {hasActionButton && showInWeb && (
-            <CardComponent
-              customStyle={{
-                ...styles.cardContainer,
-                ...customActionButtonStyle,
-              }}
-            >
-              <CustomTouchableOpacity onPress={handleButtonClick}>
-                <Image source={actionButtonIcon} />
-                <CommonText
-                  customTextStyle={{
-                    ...styles.textStyle,
-                    ...customActionButtonText,
-                  }}
-                >
-                  {buttonTitle}
-                </CommonText>
-              </CustomTouchableOpacity>
-            </CardComponent>
+            <CustomTouchableOpacity onPress={handleButtonClick}>
+              <CardComponent
+                customStyle={{
+                  ...styles.cardContainer,
+                  ...customActionButtonStyle,
+                }}
+              >
+                <View style={styles.editContainer}>
+                  <CustomImage
+                    style={styles.iconStyle}
+                    source={actionButtonIcon}
+                    Icon={actionButtonIcon}
+                    isSvg
+                    alt={"edit icon"}
+                  />
+                  <CommonText
+                    customTextStyle={{
+                      ...styles.textStyle,
+                      ...customActionButtonText,
+                    }}
+                  >
+                    {buttonTitle}
+                  </CommonText>
+                </View>
+              </CardComponent>
+            </CustomTouchableOpacity>
           )}
         </View>
       </>

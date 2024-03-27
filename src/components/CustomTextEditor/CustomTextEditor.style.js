@@ -3,7 +3,7 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   quillContainer: {
-    marginBottom: 48,
+    marginBottom: 78,
   },
   quillStyling: {
     height: "508px",
@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGray,
     marginTop: 4,
   },
+  invalidInput: {
+    borderColor: colors.red,
+  },
   formatOptionStyle: {
     alignItems: "center",
     paddingTop: 8,
@@ -50,6 +53,10 @@ const styles = StyleSheet.create({
   headingStyle: {
     fontSize: 18,
     color: colors.gray,
+  },
+  errorMsg: {
+    color: colors.errorRed,
+    lineHeight: 18,
   },
 });
 

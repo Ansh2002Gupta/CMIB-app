@@ -17,6 +17,7 @@ export const CODE_MIN_LENGTH = 2;
 export const CODE_MAX_LENGTH = 8;
 export const NUMBER_MIN_LENGTH = 7;
 export const NUMBER_MAX_LENGTH = 15;
+export const NUMBER_OF_PARTNERS_LENGTH = 3;
 export const MOBILE_NUMBER_MIN_LENGTH = 4;
 export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
@@ -30,6 +31,9 @@ export const OVERSEAS_PLACEMENTS = "overseas-chapters";
 export const CAREER_ASCENTS = "career-ascents";
 export const WOMENT_PLACEMENT = "women-placements";
 export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
+export const MIN_ZOOM_SCALE = 1;
+export const MAX_ZOOM_SCALE = 3;
+export const DEFAULT_BALANCE_CREDIT = 0;
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
@@ -40,6 +44,7 @@ export const PREVIOUS_SCREEN = -1;
 export const DOTS = "...";
 export const ANONYMOUS = "Anonymous";
 export const USER_TYPE_CANDIDATE = "candidate";
+export const EDIT = "edit";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -77,7 +82,7 @@ export const COMPANY_TYPE_OPTIONS = [
   { label: "Export", value: "export" },
   { label: "SEZ", value: "sez" },
   { label: "Deemed Export", value: "deemed export" },
-  { label: "Taxable", value: "taxan;e" },
+  { label: "Taxable", value: "taxable" },
 ];
 
 export const NATURE_OF_SUPPLIER = [
@@ -400,9 +405,79 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   value: `${x + 1995}`,
 }));
 
-export const breadcrumbs = [
-  { path: navigations.TICKETS, label: "Tickets" },
-  { path: navigations.TICKETS_VIEW_EDIT, label: "Ticket Details" },
+export const COLOR = [
+  "#000000",
+  "#e60000",
+  "#ff9900",
+  "#ffff00",
+  "#008a00",
+  "#0066cc",
+  "#9933ff",
+  "#ffffff",
+  "#facccc",
+  "#ffebcc",
+  "#ffffcc",
+  "#cce8cc",
+  "#cce0f5",
+  "#ebd6ff",
+  "#bbbbbb",
+  "#f06666",
+  "#ffc266",
+  "#ffff66",
+  "#66b966",
+  "#66a3e0",
+  "#c285ff",
+  "#888888",
+  "#a10000",
+  "#b26b00",
+  "#b2b200",
+  "#006100",
+  "#0047b2",
+  "#6b24b2",
+  "#444444",
+  "#5c0000",
+  "#663d00",
+  "#666600",
+  "#003700",
+  "#002966",
+  "#3d1466",
+  "custom-color",
+];
+
+export const SIZE = ["small", false, "large", "huge"];
+
+export const FORMAT = [
+  "header",
+  "height",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "color",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "align",
+  "size",
+];
+export const TEXT_FORMATS = [
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+];
+export const LIST_TYPE = [{ list: "ordered" }, { list: "bullet" }];
+export const ATTACHMENT_TYPE = ["link", "image"];
+export const LIST_OPTION = [
+  { list: "ordered" },
+  { list: "bullet" },
+  { indent: "-1" },
+  { indent: "+1" },
+  { align: [] },
 ];
 
 export const color = [
