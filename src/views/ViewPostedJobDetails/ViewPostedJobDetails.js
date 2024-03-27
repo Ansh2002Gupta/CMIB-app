@@ -1,5 +1,5 @@
 import { View, ScrollView } from "@unthinkable/react-core-components";
-import React, { useState } from "react";
+import React from "react";
 import CommonText from "../../components/CommonText";
 import CustomTextEditor from "../../components/CustomTextEditor";
 import { FormTabs } from "../../components/Tab/FormTabs";
@@ -10,6 +10,7 @@ import DetailComponent from "../../../src/components//DetailComponent/DetailComp
 import images from "../../images";
 import colors from "../../assets/colors";
 import CardComponent from "../../components/CardComponent";
+import useFetch from "../../hooks/useFetch";
 const details = [
   [
     {
@@ -161,163 +162,120 @@ const details = [
   ],
 ];
 const dummy2 = [
-  [
-    {
-      question: "Hoq are you",
-      option: [],
-      typeofQuestion: "Text Question",
-      ShouldRenderOwnComponent: function () {
-        return (
-          <View style={{ marginBottom: 16 }}>
-            <CardComponent>
-              <View style={{ flexDirection: "row" }}>
-                <CommonText
-                  customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-                >{`Question 1`}</CommonText>
-                <CommonText
-                  customContainerStyle={{ marginLeft: 4 }}
-                  customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-                >{`(${this.typeofQuestion})`}</CommonText>
-                <CommonText
-                  customContainerStyle={{ marginLeft: 4 }}
-                  customTextStyle={{ fontSize: 12, color: colors.red }}
-                >{`*`}</CommonText>
-              </View>
-              <View style={{ marginTop: 8 }}>
-                <CommonText
-                  customTextStyle={{ fontSize: 12, color: colors.black }}
-                >
-                  {this.question}
-                </CommonText>
-              </View>
-              <View style={{ marginTop: 8, marginBottom: 8 }}>
-                {this.option.map((item, index) => {
-                  return (
-                    <View style={{ marginBottom: 8, marginLeft: 2 }}>
-                      <CommonText
-                        customTextStyle={{
-                          fontSize: 12,
-                          color: colors.black,
-                        }}
-                      >{` ${index + 1}. ${item.value}`}</CommonText>
-                    </View>
-                  );
-                })}
-              </View>
-            </CardComponent>
-          </View>
-        );
-      },
+  {
+    question: "Hoq are you",
+    option: [],
+    typeofQuestion: "Text Question",
+  },
+
+  {
+    question: "Hoq are you",
+    option: [{ value: "this is india" }, { value: "this is india" }],
+    typeofQuestion: "Multi",
+    ShouldRenderOwnComponent: function () {
+      return (
+        <View style={{ marginBottom: 16 }}>
+          <CardComponent>
+            <View style={{ flexDirection: "row" }}>
+              <CommonText
+                customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
+              >{`Question 1`}</CommonText>
+              <CommonText
+                customContainerStyle={{ marginLeft: 4 }}
+                customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
+              >{`(${this.typeofQuestion})`}</CommonText>
+              <CommonText
+                customContainerStyle={{ marginLeft: 4 }}
+                customTextStyle={{ fontSize: 12, color: colors.red }}
+              >{`*`}</CommonText>
+            </View>
+            <View style={{ marginTop: 8 }}>
+              <CommonText
+                customTextStyle={{ fontSize: 12, color: colors.black }}
+              >
+                {this.question}
+              </CommonText>
+            </View>
+            <View style={{ marginTop: 8, marginBottom: 8 }}>
+              {this.option.map((item, index) => {
+                return (
+                  <View style={{ marginBottom: 8, marginLeft: 2 }}>
+                    <CommonText
+                      customTextStyle={{
+                        fontSize: 12,
+                        color: colors.black,
+                      }}
+                    >{` ${index + 1}. ${item.value}`}</CommonText>
+                  </View>
+                );
+              })}
+            </View>
+          </CardComponent>
+        </View>
+      );
     },
-  ],
-  [
-    {
-      question: "Hoq are you",
-      option: [{ value: "this is india" }, { value: "this is india" }],
-      typeofQuestion: "Multi",
-      ShouldRenderOwnComponent: function () {
-        return (
-          <View style={{ marginBottom: 16 }}>
-            <CardComponent>
-              <View style={{ flexDirection: "row" }}>
-                <CommonText
-                  customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-                >{`Question 1`}</CommonText>
-                <CommonText
-                  customContainerStyle={{ marginLeft: 4 }}
-                  customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-                >{`(${this.typeofQuestion})`}</CommonText>
-                <CommonText
-                  customContainerStyle={{ marginLeft: 4 }}
-                  customTextStyle={{ fontSize: 12, color: colors.red }}
-                >{`*`}</CommonText>
-              </View>
-              <View style={{ marginTop: 8 }}>
-                <CommonText
-                  customTextStyle={{ fontSize: 12, color: colors.black }}
-                >
-                  {this.question}
-                </CommonText>
-              </View>
-              <View style={{ marginTop: 8, marginBottom: 8 }}>
-                {this.option.map((item, index) => {
-                  return (
-                    <View style={{ marginBottom: 8, marginLeft: 2 }}>
-                      <CommonText
-                        customTextStyle={{
-                          fontSize: 12,
-                          color: colors.black,
-                        }}
-                      >{` ${index + 1}. ${item.value}`}</CommonText>
-                    </View>
-                  );
-                })}
-              </View>
-            </CardComponent>
-          </View>
-        );
-      },
+  },
+
+  {
+    question:
+      "Lorem ipsum dolor sit amet consectetur. Arcu dui convallis nulla sed eget phasellus gravida mattis. Risus neque nisi gravida faucibus. Morbi dictum vitae sed est ut metus velit et massa?",
+    option: [
+      { value: "Lorem ipsum dolor sit amet consectetur." },
+      { value: "Lorem ipsum dolor sit amet consectetur." },
+      { value: "Lorem ipsum dolor sit amet consectetur." },
+      { value: "Lorem ipsum dolor sit amet consectetur." },
+    ],
+    typeofQuestion: "text",
+    ShouldRenderOwnComponent: function () {
+      return (
+        <View style={{ marginBottom: 16 }}>
+          <CardComponent>
+            <View style={{ flexDirection: "row" }}>
+              <CommonText
+                customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
+              >{`Question 1`}</CommonText>
+              <CommonText
+                customContainerStyle={{ marginLeft: 4 }}
+                customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
+              >{`(${this.typeofQuestion})`}</CommonText>
+              <CommonText
+                customContainerStyle={{ marginLeft: 4 }}
+                customTextStyle={{ fontSize: 12, color: colors.red }}
+              >{`*`}</CommonText>
+            </View>
+            <View style={{ marginTop: 8 }}>
+              <CommonText
+                customTextStyle={{ fontSize: 12, color: colors.black }}
+              >
+                {this.question}
+              </CommonText>
+            </View>
+            <View style={{ marginTop: 8, marginBottom: 8 }}>
+              {this.option.map((item, index) => {
+                return (
+                  <View style={{ marginBottom: 8, marginLeft: 2 }}>
+                    <CommonText
+                      customTextStyle={{
+                        fontSize: 12,
+                        color: colors.black,
+                      }}
+                    >{` ${index + 1}. ${item.value}`}</CommonText>
+                  </View>
+                );
+              })}
+            </View>
+          </CardComponent>
+        </View>
+      );
     },
-  ],
-  [
-    {
-      question:
-        "Lorem ipsum dolor sit amet consectetur. Arcu dui convallis nulla sed eget phasellus gravida mattis. Risus neque nisi gravida faucibus. Morbi dictum vitae sed est ut metus velit et massa?",
-      option: [
-        { value: "Lorem ipsum dolor sit amet consectetur." },
-        { value: "Lorem ipsum dolor sit amet consectetur." },
-        { value: "Lorem ipsum dolor sit amet consectetur." },
-        { value: "Lorem ipsum dolor sit amet consectetur." },
-      ],
-      typeofQuestion: "text",
-      ShouldRenderOwnComponent: function () {
-        return (
-          <View style={{ marginBottom: 16 }}>
-            <CardComponent>
-              <View style={{ flexDirection: "row" }}>
-                <CommonText
-                  customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-                >{`Question 1`}</CommonText>
-                <CommonText
-                  customContainerStyle={{ marginLeft: 4 }}
-                  customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-                >{`(${this.typeofQuestion})`}</CommonText>
-                <CommonText
-                  customContainerStyle={{ marginLeft: 4 }}
-                  customTextStyle={{ fontSize: 12, color: colors.red }}
-                >{`*`}</CommonText>
-              </View>
-              <View style={{ marginTop: 8 }}>
-                <CommonText
-                  customTextStyle={{ fontSize: 12, color: colors.black }}
-                >
-                  {this.question}
-                </CommonText>
-              </View>
-              <View style={{ marginTop: 8, marginBottom: 8 }}>
-                {this.option.map((item, index) => {
-                  return (
-                    <View style={{ marginBottom: 8, marginLeft: 2 }}>
-                      <CommonText
-                        customTextStyle={{
-                          fontSize: 12,
-                          color: colors.black,
-                        }}
-                      >{` ${index + 1}. ${item.value}`}</CommonText>
-                    </View>
-                  );
-                })}
-              </View>
-            </CardComponent>
-          </View>
-        );
-      },
-    },
-  ],
+  },
 ];
 
 const ViewPostedJobDetails = () => {
-  const [selectedBar, setSelectedBar] = useState(0);
+  const { data, isLoading, isError, error, fetchData } = useFetch({
+    url: "/api/company/jobs/JOB_20240327_148",
+  });
+  console.log("DATA", data);
 
   return (
     <View style={{ flex: 1 }}>
@@ -345,7 +303,6 @@ const ViewPostedJobDetails = () => {
                     style={{
                       overflow: "hidden",
                     }}
-                    // contentContainerStyle={{ flex: 1 }}
                   >
                     <CardComponent
                       customStyle={{
@@ -366,12 +323,67 @@ const ViewPostedJobDetails = () => {
             {
               label: "Questionaire",
               component: (
-                <View style={{ flex: 1, marginLeft: 16, marginTop: 16 }}>
-                  <DetailComponent
-                    details={dummy2}
-                    isColumnVariableWidth
-                    isEditable={false}
-                  />
+                <View style={{ flex: 1, margin: 16 }}>
+                  <ScrollView>
+                    {dummy2.map((item) => {
+                      return (
+                        <View style={{ marginBottom: 16 }}>
+                          <CardComponent>
+                            <View style={{ flexDirection: "row" }}>
+                              <CommonText
+                                customTextStyle={{
+                                  fontSize: 12,
+                                  color: colors.darkGrey,
+                                }}
+                              >{`Question 1`}</CommonText>
+                              <CommonText
+                                customContainerStyle={{ marginLeft: 4 }}
+                                customTextStyle={{
+                                  fontSize: 12,
+                                  color: colors.darkGrey,
+                                }}
+                              >{`(${item.typeofQuestion})`}</CommonText>
+                              <CommonText
+                                customContainerStyle={{ marginLeft: 4 }}
+                                customTextStyle={{
+                                  fontSize: 12,
+                                  color: colors.red,
+                                }}
+                              >{`*`}</CommonText>
+                            </View>
+                            <View style={{ marginTop: 8 }}>
+                              <CommonText
+                                customTextStyle={{
+                                  fontSize: 12,
+                                  color: colors.black,
+                                }}
+                              >
+                                {item.question}
+                              </CommonText>
+                            </View>
+                            <View style={{ marginTop: 8, marginBottom: 8 }}>
+                              {item.option.map((items, index) => {
+                                return (
+                                  <View
+                                    style={{ marginBottom: 8, marginLeft: 2 }}
+                                  >
+                                    <CommonText
+                                      customTextStyle={{
+                                        fontSize: 12,
+                                        color: colors.black,
+                                      }}
+                                    >{` ${index + 1}.${
+                                      items.value
+                                    }`}</CommonText>
+                                  </View>
+                                );
+                              })}
+                            </View>
+                          </CardComponent>
+                        </View>
+                      );
+                    })}
+                  </ScrollView>
                 </View>
               ),
             },
