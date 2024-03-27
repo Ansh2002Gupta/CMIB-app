@@ -67,3 +67,6 @@
 .input_placeholder::placeholder {
   color: var(--darkGrey);
 }
+.ql-editor {
+  border-bottom: 1px solid red !important;
+}

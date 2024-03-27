@@ -2,17 +2,27 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
+  quillContainer: {
+    marginBottom: 78,
+  },
+  quillStyling: {
+    height: "508px",
+    backgroundColor: colors.white,
+    borderRadius: 15,
+  },
   toolbarStyle: {
     backgroundColor: colors.lightGray,
   },
   labelContainer: {
     flexDirection: "row",
+    marginBottom: 8,
   },
   label: {
     color: colors.darkGrey,
   },
   starStyle: {
     color: colors.errorRed,
+    marginLeft: 8,
   },
   mainView: {
     borderWidth: 1,
@@ -20,6 +30,9 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderColor: colors.lightGray,
     marginTop: 4,
+  },
+  invalidInput: {
+    borderColor: colors.red,
   },
   formatOptionStyle: {
     alignItems: "center",
@@ -40,6 +53,10 @@ const styles = StyleSheet.create({
   headingStyle: {
     fontSize: 18,
     color: colors.gray,
+  },
+  errorMsg: {
+    color: colors.errorRed,
+    lineHeight: 18,
   },
 });
 
