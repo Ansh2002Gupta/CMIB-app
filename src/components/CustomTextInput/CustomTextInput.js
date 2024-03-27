@@ -26,7 +26,6 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
-import DatePickerModal from "../DatePickerModel";
 
 const CustomTextInput = (props) => {
   const {
