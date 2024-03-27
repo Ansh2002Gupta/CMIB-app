@@ -24,39 +24,14 @@ import styles from "../PostedJobsView.styles";
 import colors from "../../../assets/colors";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
-const dummyData = [
-  {
-    job_id: "JOB_20240314_66",
-    designation: "Engineer",
-    status: 1,
-    approve: 0,
-    number_of_applications: 0,
-    number_of_interviews: 0,
-  },
-  {
-    job_id: "JOB_20240314_65",
-    designation: "Engineer",
-    status: 0,
-    approve: 1,
-    number_of_applications: 0,
-    number_of_interviews: 0,
-  },
-  {
-    job_id: "JOB_20240314_65",
-    designation: "Data Analyst",
-    status: 0,
-    approve: 1,
-    number_of_applications: 0,
-    number_of_interviews: 0,
-  },
-];
+
 const usePostedJobListing = () => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
-  const [currentRecords, setCurrentRecords] = useState(dummyData);
+  const [currentRecords, setCurrentRecords] = useState([]);
   const [filteredData, setFilteredData] = useState(null);
   const [filterOptions, setFilterOptions] = useState({
     activeorInctive: "",
@@ -146,57 +121,49 @@ const usePostedJobListing = () => {
 
   const handleLoadMore = async () => {
     if (loadingMore || allDataLoaded) return;
-    // setLoadingMore(true);
-    // const nextPage = currentPage + 1;
-    // try {
-    //   const newData = await fetchPostedJobs({
-    //     queryParamsObject: { perPage: rowsPerPage, page: nextPage },
-    //   });
+    setLoadingMore(true);
+    const nextPage = currentPage + 1;
+    try {
+      const newData = await fetchPostedJobs({
+        queryParamsObject: { perPage: rowsPerPage, page: nextPage },
+      });
 
-    //   if (newData && newData?.records?.length > 0) {
-    //     setCurrentRecords((prevRecords) => [
-    //       ...prevRecords,
-    //       ...newData.records,
-    //     ]);
-    //   }
+      if (newData && newData?.records?.length > 0) {
+        setCurrentRecords((prevRecords) => [
+          ...prevRecords,
+          ...newData.records,
+        ]);
+      }
 
-    //   setCurrentPage(nextPage);
-    //   if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
-    //     setAllDataLoaded(true);
-    //   }
-    // } catch (error) {
-    //   console.error("Error fetching tickets on load more:", error);
-    // } finally {
-    //   setLoadingMore(false);
-    // }
+      setCurrentPage(nextPage);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      }
+    } catch (error) {
+      console.error("Error fetching tickets on load more:", error);
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
   const handlePageChange = async (page) => {
     handlePagePerChange(page);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: page,
-    // });
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: page,
+    });
   };
 
   const handleRowPerPageChange = async (option) => {
     handleRowsPerPageChange(option.value);
-    // await updateCurrentRecords({
-    //   perPage: option.value,
-    //   page: currentPage,
-    // });
+    await updateCurrentRecords({
+      perPage: option.value,
+      page: currentPage,
+    });
   };
 
   const handleSearchResults = async (searchedData) => {
-    // await updateCurrentRecords({
-    //   q: searchedData,
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   status: filterOptions.status,
-    //   queryType: filterOptions.query_type,
-    // });
-    // });
-    let newRecords = dummyData.filter((record) =>
+    let newRecords = postedJobData?.records.filter((record) =>
       record.designation.toLowerCase().includes(searchedData.toLowerCase())
     );
 
@@ -229,7 +196,7 @@ const usePostedJobListing = () => {
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
     if (selectedStatus?.length || selectedQueryType?.length) {
-      const filteredRecords = dummyData.filter((item) => {
+      const filteredRecords = postedJobData.records.filter((item) => {
         const statusFilter = selectedStatus.includes(item.status === 0 ? 2 : 1);
         const queryTypeFilter = selectedQueryType.includes(
           item.approve === 0 ? 1 : 2
@@ -238,20 +205,8 @@ const usePostedJobListing = () => {
       });
       setCurrentRecords(filteredRecords);
     } else {
-      setCurrentRecords(dummyData);
+      setCurrentRecords(postedJobData.records);
     }
-
-    // Keep for reference but commented out
-    // setFilterOptions({
-    //   activeorInctive: selectedStatus,
-    //   approvedorNot: selectedQueryType,
-    // });
-    // await updateCurrentRecords({
-    //   status: selectedStatus,
-    //   queryType: selectedQueryType,
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    // });
   };
 
   let headingTexts = ["job_id"];
@@ -368,7 +323,6 @@ const usePostedJobListing = () => {
           ...commonStyles.columnStyle("14%"),
           ...styles.justifyContentCenter,
         },
-        // isFillSpace: true,
       },
 
       {
@@ -398,7 +352,6 @@ const usePostedJobListing = () => {
             {!isHeading && (
               <TouchableImage
                 onPress={() => {
-                  console.log("i am presed");
                   // onIconPress && onIconPress(item);
                 }}
                 source={images.iconEye}
@@ -409,7 +362,6 @@ const usePostedJobListing = () => {
         style: {
           ...commonStyles.columnStyle("5%"),
           ...styles.justifyContentCenter,
-          // ...{ backgroundColor: "red" },
         },
       },
       {
@@ -419,7 +371,6 @@ const usePostedJobListing = () => {
               <TouchableImage
                 onPress={() => {
                   console.log("i am presed");
-                  // onIconPress && onIconPress(item);
                 }}
                 source={images.iconEdit}
               />
