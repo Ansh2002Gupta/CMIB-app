@@ -7,11 +7,20 @@ import {
 } from "react-native-pell-rich-editor";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
-
 import CommonText from "../CommonText";
 import styles from "./CustomTextEditor.style";
 
-const CustomTextEditor = ({ customLabelStyle, isMandatory, label }) => {
+const CustomTextEditor = ({
+  customLabelStyle,
+  isMandatory,
+  label,
+  onChangeText,
+  customErrorStyle,
+  isError,
+  value,
+  errorMessage,
+  customHandleBlur,
+}) => {
   const richText = useRef(null);
   const intl = useIntl();
 
@@ -36,7 +45,7 @@ const CustomTextEditor = ({ customLabelStyle, isMandatory, label }) => {
           </CommonText>
         )}
       </View>
-      <View style={styles.mainView}>
+      <View style={[styles.mainView, isError ? styles.invalidInput : {}]}>
         <View>
           <RichToolbar
             editor={richText}
@@ -56,12 +65,24 @@ const CustomTextEditor = ({ customLabelStyle, isMandatory, label }) => {
           <ScrollView>
             <RichEditor
               ref={richText}
-              onChange={() => {}}
+              onBlur={customHandleBlur}
+              initialContentHTML={value}
+              onChange={(val) => {
+                onChangeText(val);
+              }}
               placeholder={intl.formatMessage({ id: "label.description" })}
             />
           </ScrollView>
         </View>
       </View>
+      {isError && (
+        <CommonText
+          customTextStyle={[styles.errorMsg, customErrorStyle]}
+          fontWeight={customErrorStyle?.fontWeight || "600"}
+        >
+          {errorMessage}
+        </CommonText>
+      )}
     </View>
   );
 };
