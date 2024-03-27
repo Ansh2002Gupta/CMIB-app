@@ -45,6 +45,7 @@ const AddModifyNewJobs = () => {
           if (addQuestionRef.current) {
             addQuestionRef.current?.resetQuestion();
             addComponentRef.current?.resetJobs();
+            alert("jon added successfully");
           }
         })
         .catch((e) => {
