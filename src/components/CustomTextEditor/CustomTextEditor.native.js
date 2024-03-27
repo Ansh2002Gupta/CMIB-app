@@ -7,6 +7,7 @@ import {
 } from "react-native-pell-rich-editor";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
+
 import CommonText from "../CommonText";
 import styles from "./CustomTextEditor.style";
 
