@@ -48,6 +48,7 @@ const CustomTextInput = (props) => {
     inputKey,
     isCounterInput,
     isDropdown,
+    isCalendar,
     isEditable,
     isError,
     isMandatory,
@@ -66,6 +67,7 @@ const CustomTextInput = (props) => {
     indexNumber,
     initiateFileUpload,
     label,
+    label2,
     maxCount,
     maxLength,
     minCount,
@@ -83,9 +85,13 @@ const CustomTextInput = (props) => {
     valueField,
     urlField,
     menuOptions,
-    isCalendar,
-    maxDate,
+    numberText,
     minDate,
+    maxDate,
+    includeAllKeys,
+    selectAllField,
+    onChangeDropDownText,
+    isYear,
     ...remainingProps
   } = props;
 
@@ -163,12 +169,16 @@ const CustomTextInput = (props) => {
             search
             searchPlaceholder={intl.formatMessage({ id: "label.search" })}
             inputSearchStyle={style.searchStyle}
-            style={[
-              style.dropdown,
-              isFocused && style.focusedStyle,
-              isError && style.invalidInput,
-              dropdownStyle,
-            ]}
+            includeAllKeys={includeAllKeys}
+            customHandleBlur={customHandleBlur}
+            selectAllField={selectAllField}
+            onChangeDropDownText={onChangeDropDownText}
+            dropdownStyle={{
+              ...style.dropdown,
+              ...(isFocused && style.focusedStyle,
+              isError && style.invalidInput),
+              ...dropdownStyle,
+            }}
             selectedTextStyle={style.valueStyle}
             renderRightIcon={() => <Image source={images.iconDownArrow} />}
             placeholderStyle={style.placeholderStyle}
@@ -208,13 +218,23 @@ const CustomTextInput = (props) => {
             labelField,
             onChangeValue,
             handleMultiSelect,
+            customHandleBlur,
             options,
+            includeAllKeys,
+            selectAllField,
             placeholder,
             selectedItems,
             urlField,
             value,
             valueField,
+            urlField,
+            onChangeDropDownText,
             isEditable,
+          }}
+          dropdownStyle={{
+            ...style.dropdown,
+            ...(isFocused && style.focusedStyle, isError && style.invalidInput),
+            ...dropdownStyle,
           }}
         />
       );
@@ -237,6 +257,8 @@ const CustomTextInput = (props) => {
           maxCount={maxCount}
           onCountChange={handleCountChange}
           step={step}
+          numberText={numberText}
+          style={isError ? style.invalidInput : {}}
         />
       );
     }
@@ -398,7 +420,22 @@ const CustomTextInput = (props) => {
         ...customStyle,
       }}
     >
-      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
+      {!!label && (
+        <View
+          style={{
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <CustomLabelView label={label} isMandatory={isMandatory} />
+          {!!label2 && (
+            <CommonText customContainerStyle={{ marginRight: 10 }}>
+              {label2}
+            </CommonText>
+          )}
+        </View>
+      )}
       {renderTextInput()}
       {(isError || isMultiline) && (
         <View
@@ -455,6 +492,7 @@ CustomTextInput.defaultProps = {
   isSendButton: false,
   initiateFileUpload: () => {},
   label: "",
+  label2: "",
   labelField: "label",
   maxCount: 100,
   minCount: 0,
@@ -468,8 +506,9 @@ CustomTextInput.defaultProps = {
   value: "",
   valueField: "value",
   urlField: "url",
+  numberText: "",
 };
-// Custom validator for Date objects
+
 const datePropType = (props, propName, componentName) => {
   if (props[propName] && !(props[propName] instanceof Date)) {
     return new Error(
@@ -509,6 +548,7 @@ CustomTextInput.propTypes = {
   isSendButton: PropTypes.bool,
   initiateFileUpload: PropTypes.func,
   label: PropTypes.string,
+  label2: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
   maxLength: PropTypes.number,
@@ -524,11 +564,12 @@ CustomTextInput.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.array,
     datePropType,
+    PropTypes.array,
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  numberText: PropTypes.string,
 };
 
 export default CustomTextInput;

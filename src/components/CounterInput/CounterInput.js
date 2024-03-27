@@ -19,6 +19,8 @@ const CounterInput = ({
   step = 1,
   initialCount = 0,
   onCountChange,
+  numberText = "",
+  style,
 }) => {
   const [count, setCount] = useState(initialCount);
   const textInputRef = useRef(null);
@@ -29,7 +31,7 @@ const CounterInput = ({
     if (onCountChange) {
       onCountChange(count);
     }
-  }, [count, onCountChange]);
+  }, [count]);
 
   const incrementCount = () => {
     setCount((prev) => Math.min(prev + step, maxCount));
@@ -91,7 +93,7 @@ const CounterInput = ({
         <CustomTouchableOpacity onPress={focusTextInput}>
           <TextInput
             ref={textInputRef}
-            value={count.toString()}
+            value={`${count} ${numberText ? numberText : ""}`.toString()}
             onChangeText={handleTextInputChange}
             style={styles.counterInputText}
             {...mobileProps}
@@ -108,7 +110,10 @@ const CounterInput = ({
 
   return (
     <View>
-      <MultiColumn columns={counterView} style={styles.counterMainView} />
+      <MultiColumn
+        columns={counterView}
+        style={{ ...styles.counterMainView, ...style }}
+      />
       {isError && (
         <CommonText
           customTextStyle={[styles.errorMsg, customErrorStyle]}
@@ -127,6 +132,7 @@ CounterInput.propTypes = {
   minCount: PropTypes.number,
   onCountChange: PropTypes.func,
   step: PropTypes.number,
+  style: PropTypes.object,
 };
 
 CounterInput.defaultProps = {
@@ -135,6 +141,7 @@ CounterInput.defaultProps = {
   minCount: 0,
   onCountChange: null,
   step: 1,
+  style: {},
 };
 
 export default CounterInput;

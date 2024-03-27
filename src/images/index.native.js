@@ -116,8 +116,12 @@ import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
 import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
-import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
 import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
+import questionIcon from "../../public/images/question/question.png";
+import copyIcon from "../../public/images/copyIcon/copy.png";
+import redCrossIcon from "../../public/images/redCross/redClose.png";
+import editIcon from "../../public/images/editIcon/edit.png";
+import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
 import iconZoomIn from "../../public/images/svg/iconZoomIn.svg";
 import iconZoomOut from "../../public/images/svg/iconZoomOut.svg";
 import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
@@ -244,8 +248,12 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
-  iconDisabledCheck,
   iconDeleteRed,
+  questionIcon,
+  copyIcon,
+  redCrossIcon,
+  editIcon,
+  iconDisabledCheck,
   iconZoomIn,
   iconZoomOut,
   iconAddBlue,

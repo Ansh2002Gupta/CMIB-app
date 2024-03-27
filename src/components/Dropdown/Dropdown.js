@@ -23,7 +23,10 @@ const Dropdown = ({
   selectedItems,
   value,
   valueField,
+  selectAllField = false,
+  onChangeDropDownText,
   indexField,
+  customHandleBlur,
 }) => {
   const getAllKeys = (option) => {
     let finalObj = {};
@@ -50,7 +53,11 @@ const Dropdown = ({
   );
 
   const handleValueChange = (selectedOption) => {
-    onChange(selectedOption.value);
+    if (selectAllField) {
+      onChange(selectedOption);
+    } else {
+      onChange(selectedOption.value);
+    }
   };
 
   const CheckboxOption = ({ data }) => {
@@ -66,7 +73,12 @@ const Dropdown = ({
           customTextStyle={styles.checkBoxTextStyle}
           handleCheckbox={() => handleValueChange(data)}
           id={data.value}
-          isSelected={data?.isSelected || data.index !== null}
+          isSelected={
+            data?.isSelected ||
+            (data.index && data.index !== null) ||
+            (!isSelected &&
+              selectedItems.findIndex((item) => item.id === data.id) !== -1)
+          }
           title={data?.label}
           isDisabled={isDisabled}
         />
@@ -81,9 +93,13 @@ const Dropdown = ({
           value={""}
           placeholder={placeholder}
           options={options}
+          onBlur={customHandleBlur}
           isDisabled={!isEditable}
           styles={customStyles(dropdownStyle, placeholderStyle, !isEditable)}
           theme={customTheme}
+          onInputChange={(inputValue) => {
+            onChangeDropDownText && onChangeDropDownText(inputValue);
+          }}
           onChange={handleValueChange}
           isMulti
           components={{ Option: CheckboxOption }}
@@ -93,7 +109,7 @@ const Dropdown = ({
             {selectedItems.map((item, index) => (
               <CustomChipCard
                 key={index}
-                message={item?.name}
+                message={item?.name ?? item.value}
                 onPress={() => handleValueChange(item)}
               />
             ))}
@@ -107,12 +123,14 @@ const Dropdown = ({
       value={selectedOption || ""}
       placeholder={placeholder}
       options={options}
+      onBlur={customHandleBlur}
       isDisabled={!isEditable}
       styles={customStyles(dropdownStyle, placeholderStyle, !isEditable)}
       theme={customTheme}
-      onChange={(selectedItem) => {
-        onChange(selectedItem.value);
+      onInputChange={(inputValue) => {
+        onChangeDropDownText && onChangeDropDownText(inputValue);
       }}
+      onChange={handleValueChange}
     />
   );
 };
@@ -129,6 +147,7 @@ Dropdown.defaultProps = {
   value: "",
   valueField: "",
   urlField: "",
+  selectAllField: false,
   isMultiSelect: false,
 };
 
@@ -150,6 +169,7 @@ Dropdown.propTypes = {
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  selectAllField: PropTypes.bool,
 };
 
 export default Dropdown;

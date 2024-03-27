@@ -1,7 +1,7 @@
 import { Platform } from "@unthinkable/react-core-components";
 
 import dayjs from "dayjs";
-import { ANONYMOUS } from "../constants/constants";
+import { ANONYMOUS, jobType, questionType } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
   const queryParams = queryParamString.substring(1).split("&");
@@ -182,7 +182,89 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   return "receiver";
 };
+export const getQuestionInitalValue = (intl, order = 0) => {
+  return {
+    typeofQuestion: intl.formatMessage({
+      id: "label.text_question",
+    }),
+    question: "",
+    id: Date.now(),
+    isMandatory: false,
+    question_options: null,
+    question_order: order + 1,
+  };
+};
+// Function to format the selected date or return the placeholder
+export const getDisplayValue = (value, intl) => {
+  if (value && value instanceof Date) {
+    // return value.toDateString();
 
+    let day = value.getDate();
+    let month = value.getMonth() + 1; // getMonth() returns 0-11
+    let year = value.getFullYear();
+
+    // Add leading zeros if day or month is less than 10
+    day = day < 10 ? "0" + day : day;
+    month = month < 10 ? "0" + month : month;
+
+    return day + "/" + month + "/" + year;
+  }
+  return intl.formatMessage({ id: "label.select" });
+};
+
+export const getFormatedData = (jobData, question) => {
+  let temp = {
+    summary: jobData.jobSummary,
+    detail: jobData.jobDetails,
+    job_type_id: jobData.jobType?.id,
+    is_contractual: jobData.jobType?.id == 2 ? true : false,
+    job_type_slug: jobData.jobType?.value,
+    is_urgent: jobData.isUrgentJob == 0 ? true : false,
+    is_salary_negotiable: jobData.salaryNagotiable == 0 ? true : false,
+    experience: {
+      min_experience: jobData.minimumExperience,
+      max_experience: jobData.maximumExperience,
+    },
+    location_id: jobData.jobLocation.map((object) => object.id),
+    nationality: jobData.nationality?.value ?? null,
+    designation: jobData.designation,
+    functional_area_id: jobData.functionalAreas.map((object) => object.id),
+    gender_preference: jobData.genderPreference?.value ?? null,
+    category_preference: jobData.categoryPreference?.label,
+    essential_qualification: jobData.essentialQualification,
+    desired_qualification: jobData.desiredQualification,
+    job_opening_date: jobData.jobOpeningDate.toISOString().slice(0, 10),
+    job_closing_date: jobData.jobClosingDate.toISOString().slice(0, 10),
+    min_salary: jobData.minimumSalary,
+    max_salary: jobData.maximumSalary,
+    number_of_vacancies: jobData.numberOfVacancies,
+    work_mode: jobData.modeofWork?.label,
+    flexi_hours: jobData.flexiHours == 0 ? true : false,
+    is_extended_vacancy: jobData.vacanciesCountType == 0 ? true : false,
+    service_type: jobData.fullTime == 0 ? "Full Time" : "Part Time",
+  };
+  if (jobData.jobType?.label === jobType.CONTRACTUAL) {
+    temp.contract_period = {
+      years: jobData.contractYear,
+      months: jobData.contractMonth,
+      days: jobData.contractDay,
+    };
+  } else if (jobData.jobType?.label === jobType.SPECIALLY_ABLE) {
+    temp.disability_type = jobData.typeOfDisabilty;
+    temp.disability_percentage = jobData.disabiltyPercentage;
+  }
+  let tempQuestion = question.map((item) => {
+    return {
+      type: questionType[item.typeofQuestion],
+      question: item.question,
+      question_options: item.question_options,
+      question_order: item.question_order,
+      mandatory: item.isMandatory,
+    };
+  });
+  temp.questions = tempQuestion.length ? tempQuestion : null;
+  return temp;
+};
 export const getValidUrl = (url) => {
   let link = url.toLowerCase();
   if (!/^https?:\/\//.test(link) && !/^http?:\/\//.test(link)) {
