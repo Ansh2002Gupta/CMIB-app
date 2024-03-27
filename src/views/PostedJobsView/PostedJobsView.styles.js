@@ -16,6 +16,8 @@ const styles = StyleSheet.create({
   }),
   justifyContentCenter: {
     justifyContent: "center",
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   pending: {
     ...baseChipStyle,

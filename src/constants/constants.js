@@ -235,7 +235,7 @@ export const TICKET_TABLE_HEADING = {
 export const POSTED_JOB_LISTING = {
   job_id: "Job ID",
   designation: "Designation",
-  status: "Active/Inactive",
+  status: "Active / Inactive",
   number_of_interviews: "Scheduled Interview",
   number_of_applications: "Applicants",
   approve: "Approved/Not Approved by Admin",

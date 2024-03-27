@@ -127,6 +127,7 @@ const PostedJobsView = () => {
           }}
           mobileComponentToRender={getMobileView}
           containerStyle={styles.customTableStyle}
+          isTotalCardVisible={false}
           ThirdSection={
             <DownloadMoreComponent
               onPress={() => {

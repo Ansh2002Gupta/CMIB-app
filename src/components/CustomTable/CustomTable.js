@@ -48,6 +48,7 @@ const CustomTable = ({
   isHeading,
   isTicketListingLoading,
   isFirstPageReceived,
+  isTotalCardVisible,
   loadingMore,
   onIconPress,
   placeholder,
@@ -141,7 +142,7 @@ const CustomTable = ({
                 style={styles.filterTopSection(isWebView)}
               />
             )}
-            {!isWeb && (
+            {!isWeb && isTotalCardVisible && (
               <View style={styles.ticketTotals}>
                 <CommonText
                   fontWeight={"500"}
@@ -346,6 +347,7 @@ CustomTable.defaultProps = {
   subHeadingText: "",
   totalcards: 0,
   placeholder: "Search",
+  isTotalCardVisible: true,
 };
 
 CustomTable.propTypes = {
@@ -380,6 +382,7 @@ CustomTable.propTypes = {
   tableIcon: PropTypes.any.isRequired,
   totalcards: PropTypes.number,
   placeholder: PropTypes.string,
+  isTotalCardVisible: PropTypes.bool,
 };
 
 export default CustomTable;

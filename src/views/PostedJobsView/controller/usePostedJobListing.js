@@ -32,7 +32,6 @@ const usePostedJobListing = () => {
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
-  const [filteredData, setFilteredData] = useState(null);
   const [filterOptions, setFilterOptions] = useState({
     activeorInctive: "",
     approvedorNot: "",
@@ -163,11 +162,13 @@ const usePostedJobListing = () => {
   };
 
   const handleSearchResults = async (searchedData) => {
-    let newRecords = postedJobData?.records.filter((record) =>
-      record.designation.toLowerCase().includes(searchedData.toLowerCase())
-    );
-
-    setCurrentRecords(newRecords);
+    await updateCurrentRecords({
+      search: searchedData,
+      perPage: rowsPerPage,
+      page: currentPage,
+      status: filterOptions.activeorInctive,
+      queryType: filterOptions.query_type,
+    });
   };
 
   const onIconPress = (item) => {
@@ -195,18 +196,16 @@ const usePostedJobListing = () => {
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    if (selectedStatus?.length || selectedQueryType?.length) {
-      const filteredRecords = postedJobData.records.filter((item) => {
-        const statusFilter = selectedStatus.includes(item.status === 0 ? 2 : 1);
-        const queryTypeFilter = selectedQueryType.includes(
-          item.approve === 0 ? 1 : 2
-        );
-        return statusFilter || queryTypeFilter;
-      });
-      setCurrentRecords(filteredRecords);
-    } else {
-      setCurrentRecords(postedJobData.records);
-    }
+    setFilterOptions({
+      activeorInctive: selectedStatus,
+      query_type: selectedQueryType,
+    });
+    await updateCurrentRecords({
+      status: selectedStatus,
+      queryType: selectedQueryType,
+      perPage: rowsPerPage,
+      page: currentPage,
+    });
   };
 
   let headingTexts = ["job_id"];
@@ -304,7 +303,11 @@ const usePostedJobListing = () => {
         content: (
           <View style={styles.statusStyle}>
             {isHeading ? (
-              <CommonText customTextStyle={tableStyle}>
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
                 {item.status}
               </CommonText>
             ) : (
