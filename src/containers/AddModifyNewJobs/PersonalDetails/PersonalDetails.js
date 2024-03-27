@@ -31,7 +31,6 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
     essentialQualification: addNewJobData?.essentialQualification ?? "",
     desiredQualification: addNewJobData?.desiredQualification ?? "",
   });
-  console.log("jobData", jobData);
   const [error, setError] = useState({
     minimumExperience: "",
     maximumExperience: "",
