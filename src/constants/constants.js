@@ -405,7 +405,7 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   value: `${x + 1995}`,
 }));
 
-export const color = [
+export const COLOR = [
   "#000000",
   "#e60000",
   "#ff9900",
@@ -444,9 +444,9 @@ export const color = [
   "custom-color",
 ];
 
-export const size = ["small", false, "large", "huge"];
+export const SIZE = ["small", false, "large", "huge"];
 
-export const format = [
+export const FORMAT = [
   "header",
   "height",
   "bold",
@@ -463,16 +463,16 @@ export const format = [
   "align",
   "size",
 ];
-export const textFormats = [
+export const TEXT_FORMATS = [
   "bold",
   "italic",
   "underline",
   "strike",
   "blockquote",
 ];
-export const listType = [{ list: "ordered" }, { list: "bullet" }];
-export const attachmentType = ["link", "image"];
-export const listOptions = [
+export const LIST_TYPE = [{ list: "ordered" }, { list: "bullet" }];
+export const ATTACHMENT_TYPE = ["link", "image"];
+export const LIST_OPTION = [
   { list: "ordered" },
   { list: "bullet" },
   { indent: "-1" },
