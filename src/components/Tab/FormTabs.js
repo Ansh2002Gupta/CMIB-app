@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -5,15 +6,25 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
+  Image,
 } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
 import styles from "./FormTabs.style.js";
+import images from "../../images";
+import colors from "../../assets/colors.js";
+import TouchableImage from "../TouchableImage";
+import CustomImage from "../CustomImage";
 
-export const FormTabs = ({ showWarningOnTabSwitch, tabs }) => {
+export const FormTabs = ({
+  showWarningOnTabSwitch,
+  tabs,
+  isEditButtonVisible,
+}) => {
   const intl = useIntl();
+  console.log("tabs", tabs);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [alertOnTabSwitch, setAlertOnTabSwitch] = useState({
@@ -47,39 +58,74 @@ export const FormTabs = ({ showWarningOnTabSwitch, tabs }) => {
   return (
     <>
       <View style={styles.container}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <Row gap={12} style={styles.tabContainer}>
-            {tabs.map((tab, index) => {
-              const { label } = tab;
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    handleTabChange({ tab, index });
-                  }}
-                  key={index}
-                  style={{
-                    ...styles.itemContainer,
-                    ...(index === activeTabIndex
-                      ? styles.activeItemContainer
-                      : {}),
-                  }}
-                >
-                  <CommonText
-                    fontWeight={"500"}
-                    customTextStyle={{
-                      ...styles.itemText,
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingRight: 16,
+            alignItems: "flex-end",
+          }}
+        >
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <Row gap={12} style={styles.tabContainer}>
+              {tabs.map((tab, index) => {
+                const { label } = tab;
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleTabChange({ tab, index });
+                    }}
+                    key={index}
+                    style={{
+                      ...styles.itemContainer,
                       ...(index === activeTabIndex
-                        ? styles.activeItemText
+                        ? styles.activeItemContainer
                         : {}),
                     }}
                   >
-                    {label}
-                  </CommonText>
-                </TouchableOpacity>
-              );
-            })}
-          </Row>
-        </ScrollView>
+                    <CommonText
+                      fontWeight={"500"}
+                      customTextStyle={{
+                        ...styles.itemText,
+                        ...(index === activeTabIndex
+                          ? styles.activeItemText
+                          : {}),
+                      }}
+                    >
+                      {label}
+                    </CommonText>
+                  </TouchableOpacity>
+                );
+              })}
+            </Row>
+          </ScrollView>
+
+          {isEditButtonVisible && (
+            <View
+              style={{
+                flexDirection: "row",
+                borderWidth: 1,
+                borderRadius: 12,
+                justifyContent: "center",
+                alignItems: "center",
+                paddingRight: 12,
+                paddingLeft: 12,
+                borderColor: colors.lightGrey,
+                paddingTop: 8,
+                paddingBottom: 8,
+                height: 36,
+              }}
+            >
+              <TouchableImage
+                source={images.iconEditSvg}
+                style={{ height: 20, width: 30 }}
+              />
+              <CommonText customContainerStyle={{ marginLeft: 8 }}>
+                Edit
+              </CommonText>
+            </View>
+          )}
+        </View>
         {tabs[activeTabIndex].component}
       </View>
       {alertOnTabSwitch?.showAlert && (
