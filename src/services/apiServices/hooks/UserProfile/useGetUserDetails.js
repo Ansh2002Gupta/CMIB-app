@@ -10,10 +10,7 @@ import {
   setIsGettingUserDetails,
   setUserDetails,
 } from "../../../../globalContext/userProfile/userProfileActions";
-import {
-  setSelectedModule,
-  setSelectedSession,
-} from "../../../../globalContext/sidebar/sidebarActions";
+import { setSelectedModule } from "../../../../globalContext/sidebar/sidebarActions";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import { moduleKeys, modules } from "../../../../constants/sideBarHelpers";
 import { CORE_USERS_PERMISSION } from "../../apiEndPoint";
@@ -75,7 +72,6 @@ const useGetUserDetails = () => {
             accessibleModuleKeys,
           });
         sideBarDispatch(setSelectedModule(moduleDetails));
-        sideBarDispatch(setSelectedSession(moduleDetails?.session?.[0]));
         const activeModuleInPath = location.pathname?.split("/")?.[1];
         if (
           isTriedToAccessProtectedModule &&

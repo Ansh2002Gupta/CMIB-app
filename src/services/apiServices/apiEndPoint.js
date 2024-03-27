@@ -25,6 +25,9 @@ export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
 export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
+export const ROUND_ONE_DASHBOARD = `/dashboard`;
+export const ROUNDS = `/round`;
+export const GLOBAL_SESSIONS = `/sessions`;
 
 /* API Endpoints Members*/
 export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;

@@ -190,3 +190,10 @@ export const getValidUrl = (url) => {
   }
   return link;
 };
+
+export const isObjectFilled = (obj) => {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) return true;
+  }
+  return false;
+};

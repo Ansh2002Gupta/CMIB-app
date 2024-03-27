@@ -25,8 +25,8 @@ export const navigations = {
   JOB_SEEKERS: "job-seekers",
   MODULE_LANDING_PAGE: "dashboard",
   POSTED_JOBS: "posted-jobs",
-  ROUND_ONE: "round-one",
-  ROUND_TWO: "round-two",
+  ROUND_ONE: "round1",
+  ROUND_TWO: "round2",
   SAVED_CANDIDATES: "saved-candidates",
   TICKETS_VIEW_EDIT: "ticket-details",
 };

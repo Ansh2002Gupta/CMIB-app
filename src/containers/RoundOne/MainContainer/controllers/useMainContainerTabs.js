@@ -1,15 +1,44 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../../../routes";
 
-import { ROUND_ONE_CARD } from "../../../../constants/constants";
-import { navigations } from "../../../../constants/routeNames";
+import useFetch from "../../../../hooks/useFetch";
+import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 import images from "../../../../images";
+import {
+  ROUNDS,
+  ROUND_ONE_DASHBOARD,
+  USER_TYPE_COMPANY,
+} from "../../../../services/apiServices/apiEndPoint";
+import { navigations } from "../../../../constants/routeNames";
+import { ROUND_ONE_CARD } from "../../../../constants/constants";
 
 const useMainContainerTabs = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState(null);
+
+  const [sideBarState] = useContext(SideBarContext);
+  const selectedModule = sideBarState?.selectedModule?.key;
+  const selectedSession = sideBarState?.selectedSession;
+
+  const { data, fetchData } = useFetch({
+    url:
+      USER_TYPE_COMPANY +
+      `/${selectedModule}` +
+      ROUNDS +
+      `/${selectedSession?.value}` +
+      ROUND_ONE_DASHBOARD,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  useEffect(async () => {
+    if (!!selectedSession?.value && !!selectedModule) {
+      await fetchData();
+    }
+  }, []);
 
   const roundOneTabs = ROUND_ONE_CARD.map((card) => ({
     title: intl.formatMessage({ id: card.title }),

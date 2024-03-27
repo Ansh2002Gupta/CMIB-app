@@ -9,7 +9,21 @@ export const setSelectedModule = (value) => {
 
 export const setSelectedSession = (value) => {
   return {
-    type: types.SESSION_LIST,
+    type: types.SELECTED_SESSION,
     payload: value,
+  };
+};
+
+export const setGlobalSessionList = (payload) => {
+  return {
+    type: types.SET_GLOBAL_SESSION_LIST,
+    payload,
+  };
+};
+
+export const setRoundsData = (payload) => {
+  return {
+    type: types.SET_ROUNDS_DATA,
+    payload,
   };
 };
