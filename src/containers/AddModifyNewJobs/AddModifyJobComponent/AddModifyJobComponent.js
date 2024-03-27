@@ -16,7 +16,16 @@ import { progressData } from "../../../constants/constants";
 import styles from "./AddModifyJobComponent.styles";
 
 const AddModifyJobComponent = forwardRef(
-  ({ isExpanded, handleJobDetailsChange, setIsExpanded, isWebView }, ref) => {
+  (
+    {
+      isExpanded,
+      handleJobDetailsChange,
+      setIsExpanded,
+      isWebView,
+      addNewJobData,
+    },
+    ref
+  ) => {
     const intl = useIntl();
     const [jobProgress, setJobProgress] = useState(0);
     useEffect(() => {
@@ -118,13 +127,19 @@ const AddModifyJobComponent = forwardRef(
               isWebView={isWebView}
               setSelectedJobType={setSelectedJobType}
               selectedJobType={selectedJobType}
+              addNewJobData={addNewJobData}
             />
-            <PersonalDetails isWebView={isWebView} ref={personalDetailsRef} />
+            <PersonalDetails
+              isWebView={isWebView}
+              ref={personalDetailsRef}
+              addNewJobData={addNewJobData}
+            />
             <BottomSection
               isWebView={isWebView}
               ref={bottomSectionRef}
               selectedJobType={selectedJobType}
               handleJobDetailsChange={handleJobDetailsChange}
+              addNewJobData={addNewJobData}
             />
           </Animated.View>
         </ScrollView>

@@ -40,36 +40,46 @@ const AddModifyQuestionaireComponent = forwardRef(
       let isValidQuestion = false;
       const questionError = {};
       questionnairelist.forEach((question) => {
-        let questionErrors = [];
+        let questionErrors = {};
 
         if (question.typeofQuestion === "Text Question") {
           if (!question.question || question.question.trim() === "") {
-            questionErrors.push(
-              "Text Question must have a non-empty question field."
-            );
+            questionErrors["questionError"] = intl.formatMessage({
+              id: "label.question_error",
+            });
           }
         } else if (question.typeofQuestion !== "Text Question") {
           if (!question.question || question.question.trim() === "") {
-            questionErrors.push(
-              "Question must have a non-empty question field."
-            );
+            questionErrors["questionError"] = intl.formatMessage({
+              id: "label.question_error",
+            });
           }
           if (
             !Array.isArray(question.question_options) ||
             question.question_options.length === 0
           ) {
-            questionErrors.push("Question must have at least one option.");
+            questionErrors["questionError"] = intl.formatMessage({
+              id: "label.multi_question_error",
+            });
           } else {
+            let optionError = {};
             question.question_options.forEach((option) => {
               if (!option.value || option.value.trim() === "") {
-                questionErrors.push("All options must have a non-empty value.");
+                optionError[option.id] = intl.formatMessage({
+                  id: "label.option_error",
+                });
               }
             });
+            if (Object.keys(optionError).length > 0) {
+              questionErrors["optionError"] = optionError;
+            }
           }
         } else {
-          questionErrors.push("Invalid question type.");
+          questionErrors["questionError"] = intl.formatMessage({
+            id: "label.invalid_question_type",
+          });
         }
-        if (questionErrors.length > 0) {
+        if (Object.keys(questionErrors).length > 0) {
           isValidQuestion = true;
           questionError[question.id] = questionErrors;
         }
@@ -184,15 +194,10 @@ const AddModifyQuestionaireComponent = forwardRef(
           }
           return obj;
         });
-        setError((prev) => {
-          return {
-            ...prev,
-            questionError: null,
-          };
-        });
 
         setIsQuestionaireList(updatedArray);
       }
+      setError({});
     }
 
     function editEntireQuestion(item) {

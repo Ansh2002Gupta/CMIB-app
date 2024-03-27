@@ -15,6 +15,7 @@ const AddNewJobsUi = ({
   onSubmit,
   addComponentRef,
   addQuestionRef,
+  addNewJobData,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isQuestionaire, setIsQuestionaire] = useState(true);
@@ -37,6 +38,7 @@ const AddNewJobsUi = ({
                 isExpanded={isExpanded}
                 setIsExpanded={setIsExpanded}
                 isWebView={isWebView}
+                addNewJobData={addNewJobData}
               />
               <AddQuestionaireComponent
                 ref={addQuestionRef}
@@ -44,6 +46,7 @@ const AddNewJobsUi = ({
                 setIsQuestionaire={setIsQuestionaire}
                 addQuestionRef={addQuestionRef}
                 isWebView={isWebView}
+                // addQuestionData={addNewJobData}
               />
             </View>
           }

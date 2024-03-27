@@ -11,21 +11,21 @@ import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 import { useIntl } from "react-intl";
 import styles from "./PersonalDetails.styles";
 
-const PersonalDetails = forwardRef(({ isWebView }, ref) => {
+const PersonalDetails = forwardRef(({ isWebView, addNewJobData }, ref) => {
   const intl = useIntl();
   const { fetchSearch } = useGetAddNewJobData();
   const [addJobs] = useContext(AddJobContext);
   const [jobData, setJobData] = useState({
-    minimumExperience: 0,
-    maximumExperience: 0,
-    nationality: "",
-    designation: "",
-    jobLocation: [],
-    functionalAreas: [],
-    genderPreference: {},
-    categoryPreference: {},
-    essentialQualification: "",
-    desiredQualification: "",
+    minimumExperience: addNewJobData?.minimumExperience ?? 0,
+    maximumExperience: addNewJobData?.maximumExperience ?? 0,
+    nationality: addNewJobData?.nationality ?? "",
+    designation: addNewJobData?.designation ?? "",
+    jobLocation: addNewJobData?.jobLocation ?? [],
+    functionalAreas: addNewJobData?.functionalAreas ?? [],
+    genderPreference: addNewJobData?.genderPreference ?? {},
+    categoryPreference: addNewJobData?.categoryPreference ?? {},
+    essentialQualification: addNewJobData?.essentialQualification ?? "",
+    desiredQualification: addNewJobData?.desiredQualification ?? "",
   });
   const [error, setError] = useState({
     minimumExperience: "",

@@ -38,7 +38,7 @@ const RenderQuestion = ({
           handleChange={handleChange}
           index={index}
           isWebView={isWebView}
-          questionError={questionError && questionError[item.id]}
+          questionError={questionError && questionError[item.id]?.questionError}
           questionaireTypeFormatted={questionaireTypeFormatted}
         />
         <QuestionMiddleSection
@@ -49,7 +49,7 @@ const RenderQuestion = ({
           addNewQuestion={addNewQuestion}
           isWebView={isWebView}
           index={index}
-          questionError={questionError && questionError[item.id]}
+          questionError={questionError && questionError[item.id]?.optionError}
           setoptionData={setoptionData}
           setNewQuestionnaireData={setNewQuestionnaireData}
           isEdited={isEdited}

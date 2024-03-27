@@ -449,6 +449,10 @@ const locale = {
     "Please login using your updated email and password that you have received on your updated email.",
   "label.session_has_expired": "Your session has been expired.",
   "label.your_access_has_been_revoked": "Your access has been revoked.",
+  "label.question_error": "Question must have a non-empty question field.",
+  "label.multi_question_error": "Question must have at least one option.",
+  "label.option_error": "All options must have a non-empty value",
+  "label.invalid_question_type": "Invalid question type.",
 };
 
 export default locale;

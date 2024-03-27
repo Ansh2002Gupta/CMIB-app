@@ -29,7 +29,7 @@ const QuestionHeader = (props) => {
             value={item.question}
             placeholder={intl.formatMessage({ id: "label.enter_question" })}
             isError={(questionError && questionError[0] && true) || false}
-            errorMessage={(questionError && questionError[0]) || ""}
+            errorMessage={(questionError && questionError) || ""}
             onChangeText={(value) => {
               handleChange(false, "question", value, item.id);
             }}

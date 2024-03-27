@@ -13,14 +13,17 @@ import { useIntl } from "react-intl";
 import styles from "./JobDetailsComponent.style";
 
 const JobDetailsComponent = forwardRef(
-  ({ isWebView, selectedJobType, setSelectedJobType }, ref) => {
+  (
+    { isWebView, selectedJobType, setSelectedJobType, addNewJobData = "" },
+    ref
+  ) => {
     const intl = useIntl();
     const [addJobs] = useContext(AddJobContext);
     const { jobType } = addJobs;
     const [jobData, setJobData] = useState({
-      jobSummary: "",
-      jobDetails: "",
-      isUrgentJob: 0,
+      jobSummary: addNewJobData?.jobSummary ?? "",
+      jobDetails: addNewJobData?.jobDetails ?? "",
+      isUrgentJob: addNewJobData?.isUrgentJob ?? 0,
     });
 
     const [error, setError] = useState({
