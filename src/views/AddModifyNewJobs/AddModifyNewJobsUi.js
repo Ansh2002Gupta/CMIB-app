@@ -1,14 +1,14 @@
 import { View, ScrollView } from "@unthinkable/react-core-components";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import styles from "./PostedJobsView.style";
+import styles from "./AddModifyNewJobs.styles.";
 import { useIntl } from "react-intl";
-import AddJobComponent from "../../containers/PostedJobs/AddJobComponent";
-import FooterComponent from "../../containers/PostedJobs/FooterComponent";
-import AddQuestionaireComponent from "../../containers/PostedJobs/AddQuestionaireComponent/AddQuestionaireComponent";
+import AddModifyJobComponent from "../../containers/AddNewJobs/AddModifyJobComponent";
+import FooterComponent from "../../containers/AddNewJobs/FooterComponent";
+import AddQuestionaireComponent from "../../containers/AddNewJobs/AddModifyQuestionaireComponent/AddModifyQuestionaireComponent";
 import { TwoRow } from "../../core/layouts";
 
-const PostedJobsViewUI = ({
+const AddNewJobsUi = ({
   isWebView,
   isCheckList,
   setIsCheckList,
@@ -32,7 +32,7 @@ const PostedJobsViewUI = ({
         <TwoRow
           topSection={
             <View>
-              <AddJobComponent
+              <AddModifyJobComponent
                 ref={addComponentRef}
                 isExpanded={isExpanded}
                 setIsExpanded={setIsExpanded}
@@ -63,4 +63,4 @@ const PostedJobsViewUI = ({
   );
 };
 
-export default PostedJobsViewUI;
+export default AddNewJobsUi;

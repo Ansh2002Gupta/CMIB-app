@@ -93,9 +93,9 @@ const BottomSection = forwardRef(({ isWebView, selectedJobType }, ref) => {
         if (jobData.minimumSalary > jobData.maximumSalary) {
           addError("maximumSalary", "Invalid Salary");
           addError("minimumSalary", "Invalid Salary");
-        } else if (jobData.minimumSalary == jobData.maximumSalary) {
-          addError("maximumSalary", "Same Salary Not Allowed");
-          addError("minimumSalary", "Same Salary Not Allowed");
+        } else if (jobData.maximumSalary == 0 || jobData.maximumSalary == 0) {
+          addError("maximumSalary", "Invalid Salary");
+          addError("minimumSalary", "Invalid Salary");
         }
         break;
       case "contractYear":

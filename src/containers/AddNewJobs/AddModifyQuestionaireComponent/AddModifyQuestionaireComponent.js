@@ -11,12 +11,12 @@ import CardComponent from "../../../components/CardComponent";
 import HeaderComponent from "../HeaderComponent";
 import { useIntl } from "react-intl";
 import CustomButton from "../../../components/CustomButton";
-import styles from "./AddQuestionaireComponent.styles";
+import styles from "./AddModifyQuestionaireComponent.styles";
 import RenderQuestion from "../RenderQuestion";
 import { questionaireType } from "../../../constants/constants";
-import AddNewQuestionModal from "../AddNewQuestionModal";
+import AddNewQuestionModal from "../AddModifyNewQuestionModal";
 import { getQuestionInitalValue } from "../../../utils/util";
-const AddQuestionaireComponent = forwardRef(
+const AddModifyQuestionaireComponent = forwardRef(
   ({ isQuestionaire, setIsQuestionaire, isWebView }, ref) => {
     const intl = useIntl();
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -309,4 +309,4 @@ const AddQuestionaireComponent = forwardRef(
     );
   }
 );
-export default AddQuestionaireComponent;
+export default AddModifyQuestionaireComponent;

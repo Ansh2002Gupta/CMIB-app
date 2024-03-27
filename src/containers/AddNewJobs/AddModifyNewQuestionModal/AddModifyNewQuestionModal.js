@@ -7,9 +7,9 @@ import { useIntl } from "react-intl";
 import CustomLabelView from "../../../components/CustomLabelView";
 import Switch from "../../../components/Switch/Switch";
 import CustomButton from "../../../components/CustomButton";
-import styles from "./AddNewQuestionModal.styles";
+import styles from "./AddModifyNewQuestionModal.styles";
 import { getQuestionInitalValue } from "../../../utils/util";
-const AddNewQuestionModal = ({
+const AddModifyNewQuestionModal = ({
   isWebView,
   isModalVisible,
   optionData,
@@ -376,4 +376,4 @@ const AddNewQuestionModal = ({
     </View>
   );
 };
-export default AddNewQuestionModal;
+export default AddModifyNewQuestionModal;

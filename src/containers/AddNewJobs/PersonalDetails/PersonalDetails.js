@@ -8,12 +8,12 @@ import { Platform, View } from "@unthinkable/react-core-components";
 import CustomTextInput from "../../../components/CustomTextInput";
 import styles from "./PersonalDetails.styles";
 import { useIntl } from "react-intl";
-import useGetPostedJobsData from "../../../services/apiServices/hooks/PostedJobs/useGetPostedJobsData";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
+import useGetAddNewJobData from "../../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 
 const PersonalDetails = forwardRef(({ isWebView }, ref) => {
   const intl = useIntl();
-  const { fetchSearch } = useGetPostedJobsData();
+  const { fetchSearch } = useGetAddNewJobData();
   const [addJobs] = useContext(AddJobContext);
   const [jobData, setJobData] = useState({
     minimumExperience: 0,

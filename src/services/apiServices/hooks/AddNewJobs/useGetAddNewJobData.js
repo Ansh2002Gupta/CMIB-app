@@ -20,9 +20,8 @@ import {
   setJobType,
   setWorkMode,
 } from "../../../../globalContext/addJob/addJobActions";
-const useGetPostedJobsData = () => {
+const useGetAddNewJobData = () => {
   const [, addJobsDispatch] = useContext(AddJobContext);
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -76,4 +75,4 @@ const useGetPostedJobsData = () => {
   };
 };
 
-export default useGetPostedJobsData;
+export default useGetAddNewJobData;

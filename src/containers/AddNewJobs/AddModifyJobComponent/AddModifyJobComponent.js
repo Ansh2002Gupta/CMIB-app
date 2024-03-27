@@ -12,9 +12,9 @@ import JobDetailsComponent from "../JobDetailsComponent";
 import PersonalDetails from "../PersonalDetails";
 import BottomSection from "../BottomSection";
 import { useIntl } from "react-intl";
-import styles from "./AddJobComponent.styles";
+import styles from "./AddModifyJobComponent.styles";
 import { progressData } from "../../../constants/constants";
-const AddJobComponent = forwardRef(
+const AddModifyJobComponent = forwardRef(
   ({ isExpanded, handleJobDetailsChange, setIsExpanded, isWebView }, ref) => {
     const intl = useIntl();
     const [jobProgress, setJobProgress] = useState(0);
@@ -131,4 +131,4 @@ const AddJobComponent = forwardRef(
     );
   }
 );
-export default AddJobComponent;
+export default AddModifyJobComponent;

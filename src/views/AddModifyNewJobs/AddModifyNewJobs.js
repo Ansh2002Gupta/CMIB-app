@@ -1,19 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import PostedJobsViewUI from "./PostedJobsViewUi";
-import useIsWebView from "../../hooks/useIsWebView";
-import useGetPostedJobsData from "../../services/apiServices/hooks/PostedJobs/useGetPostedJobsData";
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { getFormatedData } from "../../utils/util";
 import Http from "../../services/http-service";
+import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
+import useIsWebView from "../../hooks/useIsWebView";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
-const PostedJobView = () => {
+import AddModifyNewJobsUi from "./AddModifyNewJobsUi";
+
+const AddModifyNewJobs = () => {
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
-    useGetPostedJobsData();
+    useGetAddNewJobData();
   const addComponentRef = useRef();
   const addQuestionRef = useRef();
   const [isCheckList, setIsCheckList] = useState(false);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -54,7 +56,7 @@ const PostedJobView = () => {
     <>
       {isLoading && <LoadingScreen />}
       {!isLoading && isSuccess && !isError && (
-        <PostedJobsViewUI
+        <AddModifyNewJobsUi
           isWebView={isWebView}
           addComponentRef={addComponentRef}
           addQuestionRef={addQuestionRef}
@@ -68,11 +70,9 @@ const PostedJobView = () => {
           errorMsg={
             isErrorData?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
           }
-          // onRetry={getErrorDetails().onRetry}
-          // disableRetryBtn={isLoadingAPIs}
         />
       )}
     </>
   );
 };
-export default PostedJobView;
+export default AddModifyNewJobs;
