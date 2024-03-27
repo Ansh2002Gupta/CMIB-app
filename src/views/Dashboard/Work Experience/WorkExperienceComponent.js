@@ -22,10 +22,12 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
     workExperiences,
     setWorkExperiences,
     current_status,
+    setCurrentStatusState,
     handleWorkExperienceDetailBlur,
     handleCurrentStatusDetailBlur,
     isValidAllFields,
-    initailWorkExperience
+    initailWorkExperience,
+    handleAreasOfInterestSelection,
   } = useWorkExperienceDetail({
     state: state,
     currentStatus: currentStatus,
@@ -72,8 +74,10 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
       workExperiences={workExperiences}
       setWorkExperiences={setWorkExperiences}
       current_status={current_status}
+      setCurrentStatusState={setCurrentStatusState}
       onChangeValue_workExperiences={onChangeValue_workExperiences}
       onChangeValue_currentStatus={onChangeValue_currentStatus}
+      handleAreasOfInterestSelection={handleAreasOfInterestSelection}
       handleWorkExperienceDetailBlur={handleWorkExperienceDetailBlur}
       handleCurrentStatusDetailBlur={handleCurrentStatusDetailBlur}
       isValidAllFields={isValidAllFields}

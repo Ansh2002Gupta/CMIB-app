@@ -20,7 +20,8 @@ const WorkExperienceUI = ({
   onClickCancel,
   isValidAllFields,
   onClickAdd,
-  initailWorkExperience
+  initailWorkExperience,
+  handleAreasOfInterestSelection
 }) => {
   const intl = useIntl();
 
@@ -81,6 +82,7 @@ const WorkExperienceUI = ({
         handleBlur={handleWorkExperienceDetailBlur}
         isShowCancel={workExperiences.length > 1 ? true : false}
         handleCancel={() => handleCancelPress(index)}
+        handleMultiSelect={handleAreasOfInterestSelection}
       />
       ))}  
       {isEditable &&  <CustomButton
@@ -107,6 +109,7 @@ const WorkExperienceUI = ({
         isEditProfile={isEditable}
         handleChange={onChangeValue_currentStatus(current_status)}
         handleBlur={handleCurrentStatusDetailBlur}
+        handleMultiSelect={handleAreasOfInterestSelection}
       />
       <SaveCancelButton
         isEditable={isEditable}
