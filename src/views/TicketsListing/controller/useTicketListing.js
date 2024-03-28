@@ -146,6 +146,9 @@ const useTicketListing = () => {
       });
       if (initialData && initialData?.records?.length > 0) {
         setCurrentRecords(initialData?.records);
+        if (initialData?.records?.length < rowsPerPage && isMob) {
+          setAllDataLoaded(true);
+        }
       }
       setIsFirstPageReceived(false);
     };
@@ -214,6 +217,7 @@ const useTicketListing = () => {
   };
 
   const handleSearchResults = async (searchedData) => {
+    setIsFirstPageReceived(true);
     setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
     if (isMob) {
       setCurrentPage(1);
@@ -224,6 +228,7 @@ const useTicketListing = () => {
           queryType: filterOptions.query_type,
         },
       });
+      setIsFirstPageReceived(false);
       setCurrentRecords(newData?.records);
       if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
         setAllDataLoaded(true);
@@ -248,40 +253,49 @@ const useTicketListing = () => {
   };
 
   const handleSaveAddTicket = async (queryType, enterQuery) => {
-    await handleAddTicket({
-      query_type: queryType,
-      query: enterQuery,
+    setIsFirstPageReceived(true);
+    handleAddTicket({
+      payload: {
+        query_type: queryType,
+        query: enterQuery,
+      },
+      onSuccessCallback: async () => {
+        if (isMob) {
+          setCurrentPage(1);
+          const newData = await fetchDataTicketListing({
+            queryParamsObject: {
+              status: filterOptions.status,
+              queryType: filterOptions.query_type,
+              perPage: rowsPerPage,
+              page: 1,
+            },
+          });
+          if (newData && newData?.records.length > 0) {
+            setCurrentRecords(newData?.records);
+            setIsFirstPageReceived(false);
+          }
+          if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+            setAllDataLoaded(true);
+          } else {
+            setAllDataLoaded(false);
+          }
+        } else {
+          await updateCurrentRecords({
+            perPage: rowsPerPage,
+            page: currentPage,
+          });
+        }
+      },
     });
-    if (isMob) {
-      const newData = await fetchDataTicketListing({
-        queryParamsObject: {
-          status: filterOptions.status,
-          queryType: filterOptions.query_type,
-        },
-      });
-      if (newData && newData?.records.length > 0) {
-        setCurrentRecords([...newData.records]);
-      }
-      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
-        setAllDataLoaded(true);
-      } else {
-        setAllDataLoaded(false);
-      }
-    } else {
-      await updateCurrentRecords({
-        perPage: rowsPerPage,
-        page: currentPage,
-      });
-    }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
+    setIsFirstPageReceived(true);
     setFilterOptions((prev) => ({
       ...prev,
       status: selectedStatus,
       query_type: selectedQueryType,
     }));
-
     if (isMob) {
       setLoadingMore(false);
       setCurrentPage(1);
@@ -293,6 +307,7 @@ const useTicketListing = () => {
         },
       });
       setCurrentRecords(newData?.records);
+      setIsFirstPageReceived(false);
       if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
         setAllDataLoaded(true);
       } else {
