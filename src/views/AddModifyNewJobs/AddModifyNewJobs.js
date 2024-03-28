@@ -41,14 +41,15 @@ const AddModifyNewJobs = () => {
     }
 
     if (!isError && !questionError) {
-      const formattedData = getFormatedData(jobData, questionnairelist);
+      const formattedData = getFormatedData(
+        jobData,
+        questionnairelist,
+        isCheckList
+      );
       Http.post(POST_JOB, formattedData)
         .then((res) => {
-          if (addQuestionRef.current) {
-            addQuestionRef.current?.resetQuestion();
-            addComponentRef.current?.resetJobs();
-            navigate(-1);
-          }
+          alert("Job Saved Successfully");
+          navigate(-1);
         })
         .catch((e) => {
           alert("SomeThing Went Wrong");

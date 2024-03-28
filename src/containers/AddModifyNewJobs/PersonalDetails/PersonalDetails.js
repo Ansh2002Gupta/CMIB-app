@@ -39,20 +39,6 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
     functionalAreas: "",
     categoryPreference: "",
   });
-  const resetJobs = () => {
-    setJobData({
-      minimumExperience: 0,
-      maximumExperience: 0,
-      nationality: "",
-      designation: "",
-      jobLocation: [],
-      functionalAreas: [],
-      genderPreference: {},
-      categoryPreference: {},
-      essentialQualification: "",
-      desiredQualification: "",
-    });
-  };
 
   const validateField = (name) => {
     switch (name) {
@@ -145,7 +131,6 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
   useImperativeHandle(ref, () => ({
     getPersonalDetails: getPersonalDetails,
     getErrors: getErrors,
-    resetJobs: resetJobs,
   }));
 
   const handleJobDetailsChange = (field, value) => {

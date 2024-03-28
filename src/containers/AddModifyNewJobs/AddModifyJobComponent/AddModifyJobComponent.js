@@ -106,24 +106,10 @@ const AddModifyJobComponent = forwardRef(
       }
       return error1 || error2 || error3;
     };
-    const resetJobs = () => {
-      setJobProgress(0);
-      setSelectedJobType({});
-      if (jobDetailsRef.current) {
-        jobDetailsRef.current.resetJobs();
-      }
-      if (personalDetailsRef.current) {
-        personalDetailsRef.current.resetJobs();
-      }
-      if (bottomSectionRef.current) {
-        bottomSectionRef.current.resetJobs();
-      }
-    };
 
     useImperativeHandle(ref, () => ({
       getChildState: getInternalState,
       getErrors: getErrors,
-      resetJobs: resetJobs,
     }));
 
     return (
