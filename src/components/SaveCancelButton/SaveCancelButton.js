@@ -1,8 +1,10 @@
+import React from "react";
 import { useIntl } from "react-intl";
+import { View } from "@unthinkable/react-core-components";
+
+import ActionPairButton from "../ActionPairButton";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./SaveCancelButton.style";
-import { View } from "@unthinkable/react-core-components";
-import ActionPairButton from "../ActionPairButton";
 
 const SaveCancelButton = ({
   isEditable,
