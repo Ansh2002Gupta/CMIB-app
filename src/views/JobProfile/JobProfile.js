@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Row,
   TouchableOpacity,
@@ -48,17 +48,18 @@ const EditButton = ({ isEditable, handleEdit }) => {
 };
 
 const JobProfileTab = () => {
+  const intl = useIntl();
   const [isEditable, setIsEditable] = useState(false);
   const handleEdit = (value) => {
     setIsEditable(value);
   };
   return (
-    <View style={{ flex: 1, overflow: "hidden" }}>
+    <View style={style.containerStyle}>
       <CustomTabs
         renderHeader={() => (
           <Row style={style.headerContainer}>
             <CommonText fontWeight={"500"} customTextStyle={style.titleText}>
-              Job Profile
+              {intl.formatMessage({ id: "label.job_profile" })}
             </CommonText>
             <EditButton isEditable={isEditable} handleEdit={handleEdit} />
           </Row>
@@ -91,10 +92,7 @@ const JobProfileTab = () => {
           {
             label: "Skill Training",
             component: (
-              <SkillTraining
-                isEditable={isEditable}
-                handleEdit={handleEdit}
-              />
+              <SkillTraining isEditable={isEditable} handleEdit={handleEdit} />
             ),
           },
         ]}

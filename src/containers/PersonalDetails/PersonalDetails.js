@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import PersonalDetailsUI from "./PersonalDetailsUI";
-import { usePersonalDetails } from "./Controllers/usePersonalDetails";
+import React, { useContext, useEffect, useState } from "react";
+
 import useFetch from "../../hooks/useFetch";
+import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
+import PersonalDetailsUI from "./PersonalDetailsUI";
 import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
+import { usePersonalDetails } from "./Controllers/usePersonalDetails";
+
 const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};

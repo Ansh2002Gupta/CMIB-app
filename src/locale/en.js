@@ -420,6 +420,7 @@ const locale = {
   "label.dirtyFormAlertSubHeading": "All unsaved changes will be lost.",
   "label.continue": "Continue",
   "label.close": "Close",
+  "label.job_profile": "Job Profile",
 };
 
 export default locale;
