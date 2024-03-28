@@ -299,14 +299,32 @@ const details = [
 ];
 
 const ViewPostedJobDetails = () => {
-  const { data, isLoading, isError, error, fetchData } = useFetch({
-    url: "/api/company/jobs/JOB_20240327_148",
+  const {
+    data: apiData,
+    isLoading,
+    isError,
+    error,
+    fetchData,
+  } = useFetch({
+    url: "/company/jobs/124",
   });
   const { isWebView } = useIsWebView();
   const [isEdited, setIsEdit] = useState(false);
   const [questionnaireData, setQuestionnaireData] = useState([]);
+  const [appData, setAppData] = useState([]);
 
   useEffect(() => {
+    let obj = {};
+    if (apiData) {
+      obj.jobSummary = apiData.summary;
+      obj.jobDetail = apiData.detail;
+      obj.jobType = apiData.job_type_id;
+      obj.isUrgentJob = apiData.is_urgent ? 1 : 0;
+      obj.salaryNagotiable = apiData.is_salary_negotiable;
+      obj.minimumExperience;
+      console.log("data", data, "XX", apiData);
+    }
+
     const transformedQuestionnaire = dataApi.questionnaire.map((item) => {
       if (
         Array.isArray(item.question_options) &&
@@ -330,7 +348,7 @@ const ViewPostedJobDetails = () => {
       }
     });
     setQuestionnaireData(transformedQuestionnaire);
-  }, []);
+  }, [apiData]);
   return (
     <View style={{ flex: 1 }}>
       <IconHeader headerText={"Hello"} />
