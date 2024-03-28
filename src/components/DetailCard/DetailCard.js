@@ -18,6 +18,7 @@ const DetailCard = ({
   headerId,
   index,
   isActive,
+  isColumnVariableWidth,
   isEditProfile,
   isRow,
   isShowSwitch,
@@ -25,6 +26,7 @@ const DetailCard = ({
   otherDetails,
 }) => {
   const { isWebView } = useIsWebView();
+
   return (
     <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
       <DetailComponent
@@ -32,19 +34,22 @@ const DetailCard = ({
           ...(isRow ? style.customStyle : {}),
           ...customContainerStyle,
         }}
-        details={details}
-        handleBlur={handleBlur}
-        handleChange={handleChange}
-        handleMultiSelect={handleMultiSelect}
-        handleSwitchChange={handleSwitchChange}
         hasActionButton={isWebView && hasActionButton}
         headerText={headerId}
         index={index}
-        isActive={isActive}
         isEditable={isEditProfile}
         isInputDisable={isShowSwitch && !isActive}
-        isShowSwitch={isShowSwitch}
         onPressActionButton={onPressActionButton}
+        {...{
+          details,
+          handleBlur,
+          handleChange,
+          handleMultiSelect,
+          handleSwitchChange,
+          isActive,
+          isColumnVariableWidth,
+          isShowSwitch,
+        }}
       />
       {!!otherDetails && (
         <DetailComponent
@@ -56,6 +61,7 @@ const DetailCard = ({
           isEditable={isEditProfile}
           isInputDisable={isShowSwitch && !isActive}
           onPressActionButton={onPressActionButton}
+          {...{ isColumnVariableWidth }}
         />
       )}
     </CardComponent>
@@ -90,6 +96,7 @@ DetailCard.propTypes = {
   headerId: PropTypes.string,
   index: PropTypes.number,
   isActive: PropTypes.bool,
+  isColumnVariableWidth: PropTypes.bool,
   isEditProfile: PropTypes.bool,
   isRow: PropTypes.bool,
   isShowSwitch: PropTypes.bool,

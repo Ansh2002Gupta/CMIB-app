@@ -13,6 +13,7 @@ import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import DatePickerModal from "../DatePickerModel";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import Spinner from "../Spinner";
@@ -82,6 +83,9 @@ const CustomTextInput = (props) => {
     valueField,
     urlField,
     menuOptions,
+    isCalendar,
+    maxDate,
+    minDate,
     ...remainingProps
   } = props;
 
@@ -212,6 +216,16 @@ const CustomTextInput = (props) => {
             valueField,
             isEditable,
           }}
+        />
+      );
+    }
+    if (isCalendar) {
+      return (
+        <DatePickerModal
+          value={value}
+          onChangeValue={onChangeValue}
+          maxDate={maxDate}
+          minDate={minDate}
         />
       );
     }
@@ -455,6 +469,15 @@ CustomTextInput.defaultProps = {
   valueField: "value",
   urlField: "url",
 };
+// Custom validator for Date objects
+const datePropType = (props, propName, componentName) => {
+  if (props[propName] && !(props[propName] instanceof Date)) {
+    return new Error(
+      `Invalid prop \`${propName}\` supplied to` +
+        ` \`${componentName}\`. Validation failed. It needs to be a Date object.`
+    );
+  }
+};
 
 CustomTextInput.propTypes = {
   countValue: PropTypes.number,
@@ -502,6 +525,7 @@ CustomTextInput.propTypes = {
     PropTypes.string,
     PropTypes.number,
     PropTypes.array,
+    datePropType,
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
