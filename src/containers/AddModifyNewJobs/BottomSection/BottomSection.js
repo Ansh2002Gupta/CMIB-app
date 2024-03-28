@@ -343,7 +343,11 @@ const BottomSection = forwardRef(
           <View style={styles.contractualPeriodViewStyle}>
             <View>
               <CustomLabelView
-                label={intl.formatMessage({ id: "label.contractual_period" })}
+                label={`${intl.formatMessage({
+                  id: "label.contractual_period",
+                })} ${intl.formatMessage({
+                  id: "label.year_month_day",
+                })}`}
                 isMandatory
               />
             </View>

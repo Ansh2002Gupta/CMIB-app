@@ -180,9 +180,11 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
     <View>
       <View style={styles.row(isWebView)}>
         <CustomTextInput
-          label={intl.formatMessage({
+          label={`${intl.formatMessage({
             id: "label.minimum_experience",
-          })}
+          })} (${intl.formatMessage({
+            id: "label.year",
+          })})`}
           isMandatory
           isError={(error && error.minimumExperience && true) || false}
           errorMessage={(error && error.minimumExperience) || ""}
@@ -199,9 +201,11 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
           customStyle={styles.inputStyle(isWebView)}
         />
         <CustomTextInput
-          label={intl.formatMessage({
+          label={`${intl.formatMessage({
             id: "label.maximum_experience",
-          })}
+          })} (${intl.formatMessage({
+            id: "label.year",
+          })})`}
           customHandleBlur={() => {
             validateField("maximumExperience");
           }}

@@ -429,7 +429,6 @@ const locale = {
   "label.question_type": "Question Type",
   "label.option": "Option",
   "label.contractual_period": "Contractual Period",
-  "label.years": "Years",
   "label.mark_as_active": "Mark as Active",
   "label.enter_balance_credit": "Enter Balance Credit",
   "label.select_module": "Select Module",
@@ -461,6 +460,7 @@ const locale = {
   "label.select_gender_preference": "Select Gender Preference",
   "label.select_category_preference": "Select Category Preference",
   "label.select_mode_of_work": "Select Mode of Work",
+  "label.year_month_day": "(Year/Month/Day)",
 };
 
 export default locale;

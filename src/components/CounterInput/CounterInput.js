@@ -19,7 +19,6 @@ const CounterInput = ({
   step = 1,
   initialCount = 0,
   onCountChange,
-  numberText = "",
   style,
 }) => {
   const [count, setCount] = useState(initialCount);
@@ -93,7 +92,7 @@ const CounterInput = ({
         <CustomTouchableOpacity onPress={focusTextInput}>
           <TextInput
             ref={textInputRef}
-            value={`${count} ${numberText ? numberText : ""}`.toString()}
+            value={`${count}`.toString()}
             onChangeText={handleTextInputChange}
             style={styles.counterInputText}
             {...mobileProps}
