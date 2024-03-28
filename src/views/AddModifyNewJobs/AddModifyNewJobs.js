@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "../../routes";
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
@@ -12,6 +13,7 @@ import AddModifyNewJobsUi from "./AddModifyNewJobsUi";
 const AddModifyNewJobs = () => {
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
     useGetAddNewJobData();
+  const navigate = useNavigate();
   const addComponentRef = useRef();
   const addQuestionRef = useRef();
   const [isCheckList, setIsCheckList] = useState(false);
@@ -45,7 +47,7 @@ const AddModifyNewJobs = () => {
           if (addQuestionRef.current) {
             addQuestionRef.current?.resetQuestion();
             addComponentRef.current?.resetJobs();
-            alert("jon added successfully");
+            navigate(-1);
           }
         })
         .catch((e) => {

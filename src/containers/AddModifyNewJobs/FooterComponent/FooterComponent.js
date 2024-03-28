@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
 import CheckBox from "../../../components/CheckBox/CheckBox";
@@ -13,6 +14,7 @@ const FooterComponent = ({
   setIsCheckList,
   onSubmit,
 }) => {
+  const navigate = useNavigate();
   const intl = useIntl();
   return (
     <View style={styles.containerStyle(isWebView)}>
@@ -31,7 +33,9 @@ const FooterComponent = ({
       <View style={styles.getSecondViewStyle(isWebView)}>
         <View style={styles.buttonViewStyle}>
           <CustomButton
-            // onPress={{}}
+            onPress={() => {
+              navigate(-1);
+            }}
             style={styles.cancelButtonStyle(isWebView)}
           >
             {intl.formatMessage({ id: "label.cancel" })}
