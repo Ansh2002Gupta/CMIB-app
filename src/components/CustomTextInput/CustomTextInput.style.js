@@ -84,6 +84,12 @@ const style = {
     borderRadius: Platform.OS === "web" ? 12 : 8,
     flexDirection: "row",
   },
+  customToggleStyle: {
+    paddingTop: 20,
+    marginBottom: 12,
+    paddingBottom: 12,
+    marginRight: 24,
+  },
   textInputStyle: {
     fontWeight: "500",
     flex: 1,
