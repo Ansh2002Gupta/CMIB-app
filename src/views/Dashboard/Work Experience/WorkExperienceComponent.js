@@ -28,6 +28,8 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
     isValidAllFields,
     initailWorkExperience,
     handleAreasOfInterestSelection,
+    handleCurrentSpecialisationSelection,
+    handleCurrentIndustrySpecialisationSelection,
   } = useWorkExperienceDetail({
     state: state,
     currentStatus: currentStatus,
@@ -41,10 +43,10 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
   }, [data]);
 
   const onChangeValue_workExperiences = (details) => (label, value) => {
-    setState((prev) => ({
-      ...prev,
-      [label]: value,
-    }));
+    // setState((prev) => ({
+    //   ...prev,
+    //   [label]: value,
+    // }));
   };
   const findKeyByLabel = (label, details) => {
     return details.find((item) => {
@@ -80,6 +82,8 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
       handleAreasOfInterestSelection={handleAreasOfInterestSelection}
       handleWorkExperienceDetailBlur={handleWorkExperienceDetailBlur}
       handleCurrentStatusDetailBlur={handleCurrentStatusDetailBlur}
+      handleCurrentSpecialisationSelection={handleCurrentSpecialisationSelection}
+      handleCurrentIndustrySpecialisationSelection={handleCurrentIndustrySpecialisationSelection}
       isValidAllFields={isValidAllFields}
       isError={isError}
       isLoading={isLoading}

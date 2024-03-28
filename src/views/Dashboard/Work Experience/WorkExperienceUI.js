@@ -21,16 +21,18 @@ const WorkExperienceUI = ({
   isValidAllFields,
   onClickAdd,
   initailWorkExperience,
-  handleAreasOfInterestSelection
+  handleAreasOfInterestSelection,
+  handleCurrentSpecialisationSelection,
+  handleCurrentIndustrySpecialisationSelection
 }) => {
   const intl = useIntl();
 
-  useEffect(() => {
-    if (workExperiences.length > 0) {
-      const changeHandler = onChangeValue_workExperiences(workExperiences);
-      changeHandler("workExperiences", workExperiences);
-    }
-  }, [workExperiences]);
+  // useEffect(() => {
+  //   if (workExperiences.length > 0) {
+  //     const changeHandler = onChangeValue_workExperiences(workExperiences);
+  //     changeHandler("workExperiences", workExperiences);
+  //   }
+  // }, [workExperiences]);
 
   const findKeyByLabel = (label, details) => {
     return details.find((item) => {
@@ -82,7 +84,7 @@ const WorkExperienceUI = ({
         handleBlur={handleWorkExperienceDetailBlur}
         isShowCancel={workExperiences.length > 1 ? true : false}
         handleCancel={() => handleCancelPress(index)}
-        handleMultiSelect={handleAreasOfInterestSelection}
+        handleMultiSelect={(updatedSelectedItems) => handleAreasOfInterestSelection(updatedSelectedItems, index)}
       />
       ))}  
       {isEditable &&  <CustomButton
@@ -109,7 +111,7 @@ const WorkExperienceUI = ({
         isEditProfile={isEditable}
         handleChange={onChangeValue_currentStatus(current_status)}
         handleBlur={handleCurrentStatusDetailBlur}
-        handleMultiSelect={handleAreasOfInterestSelection}
+        handleMultiSelect={handleCurrentSpecialisationSelection}
       />
       <SaveCancelButton
         isEditable={isEditable}

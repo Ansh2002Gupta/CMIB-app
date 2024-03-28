@@ -447,6 +447,13 @@ const locale = {
   "label.other_specialisation": "Others (Please Specify)",
   "label.current_industry_specialisation" : "Areas of Current Industry Specialisation (Job Area)",
   "label.current_status": "Current Status",
+  "label.skills": "Skills",
+  "label.speak": "Speak",
+  "label.read": "Read",
+  "label.write": "Write",
+  "label.high": "High",
+  "label.medium": "Medium",
+  "label.low": "Low",
 };
 
 export default locale;

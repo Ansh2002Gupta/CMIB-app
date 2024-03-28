@@ -27,6 +27,7 @@ import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
 import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
+import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
 
 const CustomTextInput = (props) => {
   const {
@@ -88,6 +89,12 @@ const CustomTextInput = (props) => {
     isCalendar,
     maxDate,
     minDate,
+    isCheckBoxSelection,
+    checkBoxOptions,
+    handleAddRemoveRow,
+    isActionToAdd,
+    handleCheckBoxSelection,
+    isSingleSelection,
     ...remainingProps
   } = props;
 
@@ -253,6 +260,16 @@ const CustomTextInput = (props) => {
         />
       );
     }
+    if (isCheckBoxSelection){
+      return(<CheckBoxSelection
+           checkBoxOptions={checkBoxOptions}
+           customStyle={style.CheckBoxSelection}
+           handleAddRemoveRow={(isActionToAdd) => handleAddRemoveRow(isActionToAdd)}
+           isActionToAdd={isActionToAdd}
+           handleCheckBoxSelection={(id) => handleCheckBoxSelection(id)}
+           isSingleSelection={isSingleSelection}
+            />)
+   }
     return (
       <View style={inputStyle}>
         {isMobileNumber && (
@@ -482,6 +499,12 @@ CustomTextInput.defaultProps = {
   value: "",
   valueField: "value",
   urlField: "url",
+  isCheckBoxSelection: false,
+  checkBoxOptions: [],
+  handleAddRemoveRow: () => {},
+  isActionToAdd: true,
+  handleCheckBoxSelection: () => {},
+  isSingleSelection: false,
 };
 // Custom validator for Date objects
 const datePropType = (props, propName, componentName) => {
@@ -543,6 +566,12 @@ CustomTextInput.propTypes = {
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  CheckBoxSelection: PropTypes.bool,
+  checkBoxOptions: PropTypes.array,
+  handleAddRemoveRow: PropTypes.func,
+  isActionToAdd: PropTypes.bool,
+  handleCheckBoxSelection: PropTypes.func,
+  isSingleSelection: PropTypes.bool,
 };
 
 export default CustomTextInput;

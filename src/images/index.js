@@ -199,6 +199,10 @@ const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
 const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
+const iconAddRoundGreen = appendAppBaseURl("/images/svg/iconAddRoundGreen.svg")
+const iconDeleteRoundRed = appendAppBaseURl("/images/svg/iconDeleteRoundRed.svg")
+const iconCheckBoxRound = appendAppBaseURl("/images/svg/iconCheckBoxRound.svg")
+const iconUnCheckBoxRound = appendAppBaseURl("/images/svg/iconUnCheckBoxRound.svg")
 
 const images = {
   iconArrowUp,
@@ -342,6 +346,10 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  iconAddRoundGreen,
+  iconDeleteRoundRed,
+  iconCheckBoxRound,
+  iconUnCheckBoxRound,
 };
 
 export default images;

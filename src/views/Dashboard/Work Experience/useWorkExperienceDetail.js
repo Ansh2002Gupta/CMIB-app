@@ -3,13 +3,16 @@ import useFetch from "../../../hooks/useFetch";
 import { useIntl } from "react-intl";
 import { EMP_STRENGTH, GROSS_SALARY, WORK_EXPERIENCE } from "../../../constants/constants";
 
-// const addValueOnField = ({ state, details, isEditable }) => {
-//   const {workExperiences} = state;
-//   if (workExperiences && workExperiences.length > 0) {
-//     return workExperiences;
-//   } 
-//    return [work_experience];
-//   };
+const addValueOnField = ({ state, details, isEditable }) => {
+  return details.map((workExp) => {
+    return workExp.map((item) => {
+      return {
+        ...item,
+        value: !isEditable && !workExp?.[item?.key] ? "--" : workExp?.[item?.value],
+      };
+    });
+  })
+  };
 
   const addValueOnField_currentStatus = ({ state, details, isEditable }) => {
     return details.map((item) => {
@@ -40,6 +43,38 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
 export const useWorkExperienceDetail = ({ state, isEditable}) => {
   const intl = useIntl();
   const [selectAreaOfInterest, setSelectAreaOfInterest] = useState([
+    {
+      isSelected: false,
+      label: "Ca Jobs",
+      name: "Ca Jobs",
+      selectedIndex: null,
+      value: "Ca Jobs",
+    },
+    {
+      isSelected: false,
+      label: "Nqca",
+      name: "Nqca",
+      selectedIndex: null,
+      value: "Nqca",
+    },
+  ]);
+  const [selectCurrentSpecialisation, setSelectCurrentSpecialisation] = useState([
+    {
+      isSelected: false,
+      label: "Ca Jobs",
+      name: "Ca Jobs",
+      selectedIndex: null,
+      value: "Ca Jobs",
+    },
+    {
+      isSelected: false,
+      label: "Nqca",
+      name: "Nqca",
+      selectedIndex: null,
+      value: "Nqca",
+    },
+  ]);
+  const [selectCurrentIndustrySpecialisation, setSelectCurrentIndustrySpecialisation] = useState([
     {
       isSelected: false,
       label: "Ca Jobs",
@@ -154,7 +189,7 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
      {
        key: "areasOfWork",
        value: [],
-       showBadgeLabel: true,
+       showBadgeLabel: isEditable ? true : false,
        isMandatory: true,
        isMultiSelect: true,
        isDropdown: true,
@@ -175,7 +210,7 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
     [{
       key: "currentSpecialisation",
       value:[],
-      showBadgeLabel: true,
+      showBadgeLabel: isEditable ? true : false,
       isMandatory: true,
       isMultiSelect: true,
       isDropdown: true,
@@ -198,7 +233,7 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
     [{
       key: "currentIndustrySpecialisation",
       value:[],
-      showBadgeLabel: true,
+      showBadgeLabel: isEditable ? true : false,
       isMandatory: true,
       isMultiSelect: true,
       isDropdown: true,
@@ -222,6 +257,7 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
 
    const [workExperiences, setWorkExperiences] = useState([work_experience]);
    const handleAreasOfInterestSelection = (updatedSelectedItems) => {
+    console.log("handleAreasOfInterestSelection", updatedSelectedItems)
     const updatedState = selectAreaOfInterest.map((item) => {
       if (item.value === updatedSelectedItems) {
         if (item.isSelected) {
@@ -236,14 +272,45 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
     setSelectAreaOfInterest(updatedState);
   };
 
-  const [workExperience_detail_state, setWorkExperienceDetailState] = useState(work_experience);
+  const handleCurrentSpecialisationSelection = (updatedSelectedItems) => {
+    console.log("handleAreasOfInterestSelection", updatedSelectedItems)
+    const updatedState = selectAreaOfInterest.map((item) => {
+      if (item.value === updatedSelectedItems) {
+        if (item.isSelected) {
+          item.isSelected = false;
+        } else {
+          item.isSelected = true;
+        }
+        return item;
+      }
+      return item;
+    });
+    setSelectCurrentSpecialisation(updatedState);
+  };
+
+  const handleCurrentIndustrySpecialisationSelection = (updatedSelectedItems) => {
+    console.log("handleAreasOfInterestSelection", updatedSelectedItems)
+    const updatedState = selectAreaOfInterest.map((item) => {
+      if (item.value === updatedSelectedItems) {
+        if (item.isSelected) {
+          item.isSelected = false;
+        } else {
+          item.isSelected = true;
+        }
+        return item;
+      }
+      return item;
+    });
+    setSelectCurrentIndustrySpecialisation(updatedState);
+  };
+
   const [current_status_state, setCurrentStatusState] = useState(current_status);
 
   const handleWorkExperienceDetailBlur = (key, index) => {
-    setWorkExperienceDetailState(
+    setWorkExperiences(
       validateOnBlur({
         state,
-        details: workExperience_detail_state,
+        details: workExperiences,
         key,
         index,
         intl,
@@ -264,7 +331,7 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
   const checkMandatoryFields = () => {
     let error = false;
     [
-      ...workExperience_detail_state,
+      ...workExperiences,
     ].forEach((item) => {
       if (item.isMandatory && !state[item.key]) {
         error = true;
@@ -275,13 +342,14 @@ export const useWorkExperienceDetail = ({ state, isEditable}) => {
   return {
     initailWorkExperience: work_experience,
     setWorkExperiences: setWorkExperiences,
-    workExperiences: workExperiences,
+     workExperiences: addValueOnField({
+      state,
+      details: workExperiences,
+      isEditable,
+    }),
     handleAreasOfInterestSelection: handleAreasOfInterestSelection,
-    // workExperiences: addValueOnField({
-    //   state,
-    //   details: workExperience_detail_state,
-    //   isEditable,
-    // }),
+    handleCurrentSpecialisationSelection: handleCurrentSpecialisationSelection,
+    handleCurrentIndustrySpecialisationSelection: handleCurrentIndustrySpecialisationSelection,
     current_status: current_status,
     setCurrentStatusState: setCurrentStatusState,
     // current_status : addValueOnField_currentStatus({

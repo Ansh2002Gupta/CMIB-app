@@ -20,6 +20,7 @@ import styles, {
   getContainerStyles,
   getRowStyle,
 } from "./DetailComponent.style";
+import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -41,6 +42,8 @@ const DetailComponent = ({
   onPressActionButton,
   isShowCancel,
   handleCancel,
+  handleAddRemoveRow,
+  handleCheckBoxSelection,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -149,7 +152,7 @@ const DetailComponent = ({
     );
   };
 
-  const renderEditableContent = (detail) => {
+  const renderEditableContent = (detail, index) => {
     if (detail.isMobileNumber) {
       return (
         <MobileNumberInput
@@ -185,6 +188,12 @@ const DetailComponent = ({
         indexField="selectedIndex"
         options={detail.options || []}
         isMultiline={detail?.isMultiline}
+        isCheckBoxSelection={detail?.isCheckBoxSelection}
+        checkBoxOptions={detail?.checkBoxOptions}
+        handleAddRemoveRow={(isActionToAdd) => handleAddRemoveRow(isActionToAdd, index, detail?.key)}
+        handleCheckBoxSelection={(id) => handleCheckBoxSelection(id, index, detail?.key)}
+        isActionToAdd={detail?.isActionToAdd}
+        isSingleSelection={detail?.isSingleSelection}
         placeholder={
           detail?.placeholder && intl.formatMessage({ id: detail.placeholder })
         }
@@ -197,7 +206,7 @@ const DetailComponent = ({
         onChangeValue={(val) =>
           detail.isMultiSelect
             ? handleMultiSelect(val)
-            : handleChange(detail.label, val)
+            : handleChange(detail.label, val, index, detail?.key)
         }
         isMultiSelect={detail.isMultiSelect}
         onChangeText={(val) => {
@@ -209,6 +218,7 @@ const DetailComponent = ({
         }}
         isRupee={detail?.isRupee}
         isCalendar={detail?.isCalendar}
+        isSingleMutliSelect={detail.isSingleMutliSelect}
       />
     );
   };
@@ -247,7 +257,7 @@ const DetailComponent = ({
                     : styles.containerStyle),
                 }}
               >
-                {detail?.map((columns, idx) => {
+                {detail?.map((columns, index) => {
                   return isEditable ? (
                     <View
                       style={{
@@ -257,7 +267,7 @@ const DetailComponent = ({
                           : getRowStyle(detail)),
                       }}
                     >
-                      {renderEditableContent(columns)}
+                      {renderEditableContent(columns, idx)}
                     </View>
                   ) : (
                     <View
@@ -341,6 +351,8 @@ DetailComponent.defaultProps = {
   onPressActionButton: () => {},
   isShowCancel: false,
   handleCancel: () => {},
+  handleAddRemoveRow: () => {},
+  handleCheckBoxSelection: () => {},
 };
 
 DetailComponent.propTypes = {
@@ -362,6 +374,8 @@ DetailComponent.propTypes = {
   onPressActionButton: PropTypes.func,
   isShowCancel: PropTypes.bool,
   handleCancel: PropTypes.func,
+  handleAddRemoveRow: PropTypes.func,
+  handleCheckBoxSelection: PropTypes.func,
 };
 
 export default DetailComponent;

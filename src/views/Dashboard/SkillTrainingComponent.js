@@ -24,6 +24,7 @@ const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
   const {
     isValidAllFields,
     languagesKnown,
+    handleValueUpdate,
     ITSkills,
     softSkills,
     otherSkills,
@@ -31,6 +32,8 @@ const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
     handleITSkillsBlur,
     handleSoftSkillsBlur,
     handleOtherSkillsBlur,
+    handleAddRemoveRow,
+    handleCheckBoxSelection,
   } = useSkillTraining({
     state,
     isEditable,
@@ -49,16 +52,18 @@ const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
   };
 
   const onChangeValue = (details) => (label, value) => {
-    const { key } = findKeyByLabel(label, details);
+    // const { key } = findKeyByLabel(label, details);
 
-    setState((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+    // setState((prev) => ({
+    //   ...prev,
+    //   [key]: value,
+    // }));
   };
   return (
     <SkillTrainingUI
       languagesKnown={languagesKnown}
+      handleValueUpdate={handleValueUpdate}
+      handleCheckBoxSelection={handleCheckBoxSelection}
       ITSkills={ITSkills}
       softSkills={softSkills}
       otherSkills={otherSkills}
@@ -66,6 +71,7 @@ const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
       handleITSkillsBlur={handleITSkillsBlur}
       handleSoftSkillsBlur={handleSoftSkillsBlur}
       handleOtherSkillsBlur={handleOtherSkillsBlur}
+      handleAddRemoveRow={handleAddRemoveRow}
       isEditable={isEditable}
       onChangeValue={onChangeValue}
       isLoading={isLoading}

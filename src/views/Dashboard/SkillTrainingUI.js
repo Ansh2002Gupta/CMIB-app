@@ -8,6 +8,7 @@ import SaveCancelButton from "./SaveCancelButton";
 const SkillTrainingUI = ({
   isEditable,
   languagesKnown,
+  handleValueUpdate,
   ITSkills,
   softSkills,
   otherSkills,
@@ -20,6 +21,8 @@ const SkillTrainingUI = ({
   onClickCancel,
   isLoading,
   isValidAllFields,
+  handleAddRemoveRow,
+  handleCheckBoxSelection,
 }) => {
   const intl = useIntl();
 
@@ -35,8 +38,13 @@ const SkillTrainingUI = ({
             id: "label.languages_known",
           })}
           isEditProfile={isEditable}
-          handleChange={onChangeValue(languagesKnown)}
+          handleChange={(label, value, index, type) => {
+            handleValueUpdate(label,value,index, type);
+          }}
           handleBlur={handleLanguagesKnownBlur}
+          isColumnVariableWidth
+          handleAddRemoveRow={handleAddRemoveRow}
+          handleCheckBoxSelection={handleCheckBoxSelection}
         />
         <DetailCard
           details={ITSkills}
@@ -44,8 +52,13 @@ const SkillTrainingUI = ({
             id: "label.it_skills",
           })}
           isEditProfile={isEditable}
-          handleChange={onChangeValue(ITSkills)}
-          handleBlur={handleITSkillsBlur}
+          handleChange={(label, value, index, type) => {
+            handleValueUpdate(label,value,index, type);
+          }}
+          handleBlur={handleLanguagesKnownBlur}
+          isColumnVariableWidth
+          handleAddRemoveRow={handleAddRemoveRow}
+          handleCheckBoxSelection={handleCheckBoxSelection}
         />
         <DetailCard
           details={softSkills}
@@ -53,11 +66,17 @@ const SkillTrainingUI = ({
             id: "label.soft_skills",
           })}
           isEditProfile={isEditable}
-          handleChange={onChangeValue(softSkills)}
-          handleBlur={handleSoftSkillsBlur}
+          handleChange={(label, value, index, type) => {
+            handleValueUpdate(label,value,index, type);
+          }}
+          handleBlur={handleLanguagesKnownBlur}
+          isColumnVariableWidth
+          handleAddRemoveRow={handleAddRemoveRow}
+          handleCheckBoxSelection={handleCheckBoxSelection}
         />
         <DetailCard
           details={otherSkills}
+          isColumnVariableWidth
           headerId={intl.formatMessage({
             id: "label.other_skills",
           })}

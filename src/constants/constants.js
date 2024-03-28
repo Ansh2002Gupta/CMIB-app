@@ -484,3 +484,18 @@ export const BOOLEAN_OPTION = [
     value: false,
   },
 ];
+
+export const LANGUAGE = [
+  {
+    label: "English",
+    value: "English",
+  },
+  {
+    label: "Hindi",
+    value: "Hindi",
+  },
+  {
+    label: "Urdu",
+    value: "Urdu",
+  },
+];
