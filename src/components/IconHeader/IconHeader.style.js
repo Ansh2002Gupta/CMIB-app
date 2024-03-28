@@ -52,7 +52,6 @@ const style = {
   },
   cardContainer: {
     height: 44,
-    width: 88,
     paddingTop: 12,
     paddingBottom: 12,
     paddingRight: 16,
