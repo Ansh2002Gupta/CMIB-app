@@ -173,7 +173,7 @@ export const modules = [
     isExperiencedMember: true,
   },
   {
-    label: "Women PartTime",
+    label: "Women Part Time",
     key: moduleKeys.WOMEN_PARTTIME_KEY,
     children: experiencedMembersMenu,
     session: items,
