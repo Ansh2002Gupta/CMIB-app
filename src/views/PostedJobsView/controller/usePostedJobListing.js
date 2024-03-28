@@ -57,9 +57,6 @@ const usePostedJobListing = () => {
     },
   });
 
-  const { handleAddTicket } = useAddTicket();
-
-  //   const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
   const statusData = [
     {
       id: 1,
@@ -71,7 +68,6 @@ const usePostedJobListing = () => {
     },
   ];
 
-  //   const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
   const queryTypeData = [
     {
       id: 1,
@@ -175,24 +171,6 @@ const usePostedJobListing = () => {
     navigate(navigations.TICKETS_VIEW_EDIT, {
       state: item,
     });
-  };
-
-  const handleSaveAddTicket = async (queryType, enterQuery) => {
-    // await handleAddTicket({ query_type: queryType, query: enterQuery });
-    // if (isMob) {
-    //   const newData = await fetchPostedJobs();
-    //   if (newData && newData.records.length > 0) {
-    //     setCurrentRecords((prevRecords) => [
-    //       ...prevRecords,
-    //       ...newData.records,
-    //     ]);
-    //   }
-    // } else {
-    //   await updateCurrentRecords({
-    //     perPage: rowsPerPage,
-    //     page: currentPage,
-    //   });
-    // }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
@@ -355,7 +333,7 @@ const usePostedJobListing = () => {
             {!isHeading && (
               <TouchableImage
                 onPress={() => {
-                  // onIconPress && onIconPress(item);
+                  navigate(`${navigations.DETAIL_JOB_WITHOUT_ID}?mode=view`);
                 }}
                 source={images.iconEye}
               />
@@ -372,8 +350,10 @@ const usePostedJobListing = () => {
           <View>
             {!isHeading && (
               <TouchableImage
-                onPress={() => {
-                  console.log("i am presed");
+                onPress={(id) => {
+                  navigate(
+                    `${navigations.DETAIL_JOB_WITHOUT_ID}/${25}?mode=edit`
+                  );
                 }}
                 source={images.iconEdit}
               />
@@ -400,7 +380,6 @@ const usePostedJobListing = () => {
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
-    handleSaveAddTicket,
     headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,

@@ -53,6 +53,7 @@ const PostedJobsView = () => {
   const navigate = useNavigate();
 
   const handleTicketModal = () => {
+    navigate(navigations.ADD_NEW_JOBS);
     // setAddNewTicket((prev) => !prev);
   };
 
@@ -82,7 +83,6 @@ const PostedJobsView = () => {
           hasActionButton
           handleButtonClick={handleTicketModal}
           headerText={intl.formatMessage({ id: "label.posted_job" })}
-          onPressLeftIcon={onGoBack}
         />
       }
       isBottomFillSpace
