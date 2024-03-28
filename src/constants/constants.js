@@ -45,6 +45,7 @@ export const DOTS = "...";
 export const ANONYMOUS = "Anonymous";
 export const USER_TYPE_CANDIDATE = "candidate";
 export const EDIT = "edit";
+export const HYPHEN = "-";
 
 export const API_STATUS = {
   IDLE: "idle",
