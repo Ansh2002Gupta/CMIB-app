@@ -1,5 +1,5 @@
 import { View, ScrollView } from "@unthinkable/react-core-components";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CommonText from "../../components/CommonText";
 import CustomTextEditor from "../../components/CustomTextEditor";
 import { FormTabs } from "../../components/Tab/FormTabs";
@@ -11,18 +11,131 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import CardComponent from "../../components/CardComponent";
 import useFetch from "../../hooks/useFetch";
+import AddModifyQuestionaireComponent from "../../containers/AddModifyNewJobs/AddModifyQuestionaireComponent/AddModifyQuestionaireComponent";
+import useIsWebView from "../../hooks/useIsWebView";
+const dataApi = {
+  id: 62,
+  approved: 0,
+  approved_by: 1,
+  category_preference: "General",
+  closing_date: "2024-04-06 00:00:00",
+  company_id: 1,
+  company_name: "Test Company",
+  contract_period: null,
+  created_at: "2024-03-14T09:40:48.000000Z",
+  created_by: 84,
+  designation: "Engineer",
+  qualification_details: "BCA",
+  perks: "Remote Job",
+  desired_qualification: "Master's degree in Computer Science",
+  detail:
+    "<ul><li>Responsibilities include coding,</li><li>testing, and debugging.</li></ul>",
+  disability_percentage: 20,
+  disability_type: "Intellectual Disability",
+  essential_qualification: "Bachelor's degree in Computer Science",
+  flexi_hours: 0,
+  functional_areas: [],
+  gender_preference: "Male",
+  industry: null,
+  is_contractual: 1,
+  is_for_disabled: 1,
+  is_salary_negotiable: 1,
+  is_urgent: 1,
+  location: [],
+  max_experience: 5,
+  max_salary: 800000,
+  min_experience: 2,
+  min_salary: 600000,
+  mode: null,
+  nationality: "Any",
+  opening_date: "2024-03-20 00:00:00",
+  service_type: "Full Time",
+  status: 1,
+  summary: "Exciting opportunity for a skilled software engineer.",
+  type: null,
+  updated_at: "2024-03-14T09:40:48.000000Z",
+  updated_by: null,
+  vacancy: 5,
+  questionnaire: [
+    {
+      id: 35,
+      question: "Select your preferred php framework",
+      type: "multi-select",
+      mandatory: 0,
+      company_id: 2,
+      created_at: "2024-03-11T08:43:28.000000Z",
+      updated_at: "2024-03-11T08:43:28.000000Z",
+      deleted_at: null,
+      job_id: 62,
+      question_options: ["laravel", "symphony"],
+      question_order: null,
+    },
+    {
+      id: 52,
+      question: "What is your full name?",
+      type: "text",
+      mandatory: 0,
+      company_id: 1,
+      created_at: "2024-03-14T09:40:48.000000Z",
+      updated_at: "2024-03-14T09:40:48.000000Z",
+      deleted_at: null,
+      job_id: 62,
+      question_options: null,
+      question_order: 0,
+    },
+    {
+      id: 72,
+      question: "What is your favorite color?",
+      type: "single_select",
+      mandatory: 0,
+      company_id: 1,
+      created_at: "2024-03-14T13:43:06.000000Z",
+      updated_at: "2024-03-14T13:43:06.000000Z",
+      deleted_at: null,
+      job_id: 62,
+      question_options: ["Red", "Blue", "Green"],
+      question_order: 0,
+    },
+    {
+      id: 73,
+      question: "Select your preferred programming languages",
+      type: "multi_select",
+      mandatory: 1,
+      company_id: 1,
+      created_at: "2024-03-14T13:43:06.000000Z",
+      updated_at: "2024-03-14T13:43:06.000000Z",
+      deleted_at: null,
+      job_id: 62,
+      question_options: ["JavaScript", "Python", "Java", "C#"],
+      question_order: 0,
+    },
+    {
+      id: 74,
+      question: "Select your preferred php framework",
+      type: "multi_select",
+      mandatory: 0,
+      company_id: 1,
+      created_at: "2024-03-14T13:43:06.000000Z",
+      updated_at: "2024-03-14T13:43:06.000000Z",
+      deleted_at: null,
+      job_id: 62,
+      question_options: ["laravel", "symphony"],
+      question_order: 0,
+    },
+  ],
+};
 const details = [
   [
     {
       label: "Job Summary",
-      value: "ANiket",
+      value: dataApi.summary,
       isMandatory: true,
     },
   ],
   [
     {
       label: "Job Details",
-      value: "HOW ARE YOU",
+      value: dataApi.detail,
       isMandatory: true,
       style: {
         padding: 16,
@@ -36,246 +149,157 @@ const details = [
   [
     {
       label: "Job Type",
-      value: "Dummy Dummy  ",
+      value: dataApi.type ?? "-",
       isMandatory: true,
     },
     {
       label: "Urgent Job",
-      value: "Dummy Dummy Dummy ",
+      value: dataApi.is_urgent,
       isMandatory: true,
     },
+    {},
   ],
   [
     {
       label: "Minimum Experience",
-      value: "Dummy Dummy ",
+      value: dataApi.min_experience,
       isMandatory: true,
     },
     {
       label: "Maximum Experience",
-      value: "Dummy Dummy  ",
+      value: dataApi.max_experience,
     },
 
     {
       label: "Nationality",
-      value: "Dummy Dummy",
+      value: dataApi.nationality ?? "-",
     },
   ],
   [
     {
       label: "Designation",
-      value: "Dummy Dummy  ",
+      value: dataApi.designation ?? "-",
       isMandatory: true,
     },
     {
       label: "Job Location",
-      value: "Dummy Dummy Du",
+      value: dataApi.location ?? "-",
       isMandatory: true,
     },
+    {},
   ],
   [
     {
       label: "Functional Areas",
-      value: "Dummy Dummy ",
       isMandatory: true,
       showBadgeLabel: true,
-      customValue: [1, 2, 3],
+      customValue: dataApi.functional_areas ?? "-",
     },
   ],
   [
     {
       label: "Gender Preference",
-      value: "Dummy Dummy  ",
+      value: dataApi.gender_preference ?? "-",
     },
     {
       label: "Category Preference",
-      value: "Dummy Dummy  ",
+      value: dataApi.category_preference ?? "-",
       isMandatory: true,
     },
+    {},
   ],
   [
     {
       label: "Essential Qualification",
-      value: "Dummy Dummy  ",
+      value: dataApi.essential_qualification ?? "-",
     },
   ],
   [
     {
       label: "Desired Qualification",
-      value: "Dummy Dummy ",
+      value: dataApi.desired_qualification ?? "-",
     },
   ],
   [
     {
       label: "Job Opening Date",
-      value: "Dummy Dummy  ",
+      value: dataApi.opening_date ?? "-",
       isMandatory: true,
     },
     {
       label: "Job Closing Date",
-      value: "Dummy Dummy Dummy ",
+      value: dataApi.closing_date ?? "-",
       isMandatory: true,
     },
+    {},
   ],
   [
     {
       label: "Number of Vacancies",
-      value: "Dummy Dummy  ",
+      value: dataApi.vacancy ?? "-",
       isMandatory: true,
     },
   ],
   [
     {
       label: "Mode of Work",
-      value: "Dummy Dummy Dummy D ",
+      value: dataApi.mode ?? "-",
       isMandatory: true,
     },
     {
       label: "Flexi Hours",
-      value: "Dummy Dummy Du ",
+      value: dataApi.flexi_hours ?? "-",
     },
     {
       label: "Full Time/Part Time",
-      value: "Dummy Dummy Dummy ",
+      value: dataApi.service_type ?? "-",
       isMandatory: true,
     },
   ],
   [
     {
       label: "Salary Negotiable",
-      value: "Dummy Dummy Dummy D ",
+      value: dataApi.is_salary_negotiable ?? "-",
     },
     {
       label: "Minimum Salary(Annual CTC)",
-      value: "Dummy Dummy Dumm ",
+      value: dataApi.min_salary ?? "-",
     },
     {
       label: "Maximum Salary",
-      value: "Dummy Dummy Dummy ",
+      value: dataApi.max_experience ?? "-",
     },
   ],
   [
     {
       label: "Job Status",
-      value: "Dummy Dummy ",
+      value: dataApi.status === 1 ? "Active" : "InActive" ?? "-",
     },
   ],
-];
-const dummy2 = [
-  {
-    question: "Hoq are you",
-    option: [],
-    typeofQuestion: "Text Question",
-  },
-
-  {
-    question: "Hoq are you",
-    option: [{ value: "this is india" }, { value: "this is india" }],
-    typeofQuestion: "Multi",
-    ShouldRenderOwnComponent: function () {
-      return (
-        <View style={{ marginBottom: 16 }}>
-          <CardComponent>
-            <View style={{ flexDirection: "row" }}>
-              <CommonText
-                customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-              >{`Question 1`}</CommonText>
-              <CommonText
-                customContainerStyle={{ marginLeft: 4 }}
-                customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-              >{`(${this.typeofQuestion})`}</CommonText>
-              <CommonText
-                customContainerStyle={{ marginLeft: 4 }}
-                customTextStyle={{ fontSize: 12, color: colors.red }}
-              >{`*`}</CommonText>
-            </View>
-            <View style={{ marginTop: 8 }}>
-              <CommonText
-                customTextStyle={{ fontSize: 12, color: colors.black }}
-              >
-                {this.question}
-              </CommonText>
-            </View>
-            <View style={{ marginTop: 8, marginBottom: 8 }}>
-              {this.option.map((item, index) => {
-                return (
-                  <View style={{ marginBottom: 8, marginLeft: 2 }}>
-                    <CommonText
-                      customTextStyle={{
-                        fontSize: 12,
-                        color: colors.black,
-                      }}
-                    >{` ${index + 1}. ${item.value}`}</CommonText>
-                  </View>
-                );
-              })}
-            </View>
-          </CardComponent>
-        </View>
-      );
-    },
-  },
-
-  {
-    question:
-      "Lorem ipsum dolor sit amet consectetur. Arcu dui convallis nulla sed eget phasellus gravida mattis. Risus neque nisi gravida faucibus. Morbi dictum vitae sed est ut metus velit et massa?",
-    option: [
-      { value: "Lorem ipsum dolor sit amet consectetur." },
-      { value: "Lorem ipsum dolor sit amet consectetur." },
-      { value: "Lorem ipsum dolor sit amet consectetur." },
-      { value: "Lorem ipsum dolor sit amet consectetur." },
-    ],
-    typeofQuestion: "text",
-    ShouldRenderOwnComponent: function () {
-      return (
-        <View style={{ marginBottom: 16 }}>
-          <CardComponent>
-            <View style={{ flexDirection: "row" }}>
-              <CommonText
-                customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-              >{`Question 1`}</CommonText>
-              <CommonText
-                customContainerStyle={{ marginLeft: 4 }}
-                customTextStyle={{ fontSize: 12, color: colors.darkGrey }}
-              >{`(${this.typeofQuestion})`}</CommonText>
-              <CommonText
-                customContainerStyle={{ marginLeft: 4 }}
-                customTextStyle={{ fontSize: 12, color: colors.red }}
-              >{`*`}</CommonText>
-            </View>
-            <View style={{ marginTop: 8 }}>
-              <CommonText
-                customTextStyle={{ fontSize: 12, color: colors.black }}
-              >
-                {this.question}
-              </CommonText>
-            </View>
-            <View style={{ marginTop: 8, marginBottom: 8 }}>
-              {this.option.map((item, index) => {
-                return (
-                  <View style={{ marginBottom: 8, marginLeft: 2 }}>
-                    <CommonText
-                      customTextStyle={{
-                        fontSize: 12,
-                        color: colors.black,
-                      }}
-                    >{` ${index + 1}. ${item.value}`}</CommonText>
-                  </View>
-                );
-              })}
-            </View>
-          </CardComponent>
-        </View>
-      );
-    },
-  },
 ];
 
 const ViewPostedJobDetails = () => {
   const { data, isLoading, isError, error, fetchData } = useFetch({
     url: "/api/company/jobs/JOB_20240327_148",
   });
-  console.log("DATA", data);
+  const { isWebView } = useIsWebView();
+  const [isEdited, setIsEdit] = useState(false);
+  const [questionnaireData, setQuestionnaireData] = useState([]);
+  useEffect(() => {
+    const transformedQuestionnaire = dataApi.questionnaire.map((item) => {
+      if (item.question_options) {
+        return {
+          ...item,
+          question_options: item.question_options.map((option, index) => ({
+            id: Date.now(),
+            value: option,
+          })),
+        };
+      }
+      return { ...item, typeofQuestion: item.type };
+    });
+    setQuestionnaireData(transformedQuestionnaire);
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
@@ -294,6 +318,7 @@ const ViewPostedJobDetails = () => {
         }}
       >
         <FormTabs
+          onEditClick={() => setIsEdit(!isEdited)}
           tabs={[
             {
               label: "Job Details",
@@ -304,18 +329,22 @@ const ViewPostedJobDetails = () => {
                       overflow: "hidden",
                     }}
                   >
-                    <CardComponent
-                      customStyle={{
-                        margin: 16,
-                        padding: 16,
-                      }}
-                    >
-                      <DetailComponent
-                        details={details}
-                        isColumnVariableWidth
-                        customContainerStyle={{ marginTop: 0 }}
-                      />
-                    </CardComponent>
+                    {isEdited ? (
+                      <CardComponent
+                        customStyle={{
+                          margin: 16,
+                          padding: 16,
+                        }}
+                      >
+                        <DetailComponent
+                          details={details}
+                          isColumnVariableWidth
+                          customContainerStyle={{ marginTop: 0 }}
+                        />
+                      </CardComponent>
+                    ) : (
+                      <View />
+                    )}
                   </ScrollView>
                 </View>
               ),
@@ -325,64 +354,82 @@ const ViewPostedJobDetails = () => {
               component: (
                 <View style={{ flex: 1, margin: 16 }}>
                   <ScrollView>
-                    {dummy2.map((item) => {
-                      return (
-                        <View style={{ marginBottom: 16 }}>
-                          <CardComponent>
-                            <View style={{ flexDirection: "row" }}>
-                              <CommonText
-                                customTextStyle={{
-                                  fontSize: 12,
-                                  color: colors.darkGrey,
-                                }}
-                              >{`Question 1`}</CommonText>
-                              <CommonText
-                                customContainerStyle={{ marginLeft: 4 }}
-                                customTextStyle={{
-                                  fontSize: 12,
-                                  color: colors.darkGrey,
-                                }}
-                              >{`(${item.typeofQuestion})`}</CommonText>
-                              <CommonText
-                                customContainerStyle={{ marginLeft: 4 }}
-                                customTextStyle={{
-                                  fontSize: 12,
-                                  color: colors.red,
-                                }}
-                              >{`*`}</CommonText>
-                            </View>
-                            <View style={{ marginTop: 8 }}>
-                              <CommonText
-                                customTextStyle={{
-                                  fontSize: 12,
-                                  color: colors.black,
-                                }}
-                              >
-                                {item.question}
-                              </CommonText>
-                            </View>
-                            <View style={{ marginTop: 8, marginBottom: 8 }}>
-                              {item.option.map((items, index) => {
-                                return (
-                                  <View
-                                    style={{ marginBottom: 8, marginLeft: 2 }}
-                                  >
-                                    <CommonText
-                                      customTextStyle={{
-                                        fontSize: 12,
-                                        color: colors.black,
-                                      }}
-                                    >{` ${index + 1}.${
-                                      items.value
-                                    }`}</CommonText>
-                                  </View>
-                                );
-                              })}
-                            </View>
-                          </CardComponent>
-                        </View>
-                      );
-                    })}
+                    {isEdited ? (
+                      <View>
+                        <AddModifyQuestionaireComponent
+                          isQuestionaire={true}
+                          addNewJobData={questionnaireData}
+                          isWebView={isWebView}
+                        />
+                      </View>
+                    ) : (
+                      dataApi?.questionnaire?.map((item) => {
+                        return (
+                          <View style={{ marginBottom: 16 }}>
+                            <CardComponent>
+                              <View style={{ flexDirection: "row" }}>
+                                <CommonText
+                                  customTextStyle={{
+                                    fontSize: 12,
+                                    color: colors.darkGrey,
+                                  }}
+                                >{`Question 1`}</CommonText>
+                                <CommonText
+                                  customContainerStyle={{ marginLeft: 4 }}
+                                  customTextStyle={{
+                                    fontSize: 12,
+                                    color: colors.darkGrey,
+                                  }}
+                                >{`(${item.type})`}</CommonText>
+                                {item.mandatory == 1 && (
+                                  <CommonText
+                                    customContainerStyle={{ marginLeft: 4 }}
+                                    customTextStyle={{
+                                      fontSize: 12,
+                                      color: colors.red,
+                                    }}
+                                  >{`*`}</CommonText>
+                                )}
+                              </View>
+                              <View style={{ marginTop: 8 }}>
+                                <CommonText
+                                  customTextStyle={{
+                                    fontSize: 12,
+                                    color: colors.black,
+                                  }}
+                                >
+                                  {item.question}
+                                </CommonText>
+                              </View>
+                              <View style={{ marginTop: 8, marginBottom: 8 }}>
+                                {Array.isArray(item.question_options) &&
+                                  item?.question_options?.map(
+                                    (items, index) => {
+                                      return (
+                                        <View
+                                          style={{
+                                            marginBottom: 8,
+                                            marginLeft: 2,
+                                          }}
+                                        >
+                                          <CommonText
+                                            customTextStyle={{
+                                              fontSize: 12,
+                                              color: colors.black,
+                                            }}
+                                          >{` ${
+                                            index + 1
+                                          }.${items}`}</CommonText>
+                                        </View>
+                                      );
+                                    }
+                                  )}
+                              </View>
+                            </CardComponent>
+                          </View>
+                        );
+                      })
+                    )}
                   </ScrollView>
                 </View>
               ),

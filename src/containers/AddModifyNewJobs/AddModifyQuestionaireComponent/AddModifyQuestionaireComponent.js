@@ -18,7 +18,7 @@ import { useIntl } from "react-intl";
 import styles from "./AddModifyQuestionaireComponent.styles";
 
 const AddModifyQuestionaireComponent = forwardRef(
-  ({ addNewJobData, isQuestionaire, setIsQuestionaire, isWebView }, ref) => {
+  ({ addNewJobData, isQuestionaire, isWebView, setIsQuestionaire }, ref) => {
     const intl = useIntl();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [optionData, setoptionData] = useState(null);

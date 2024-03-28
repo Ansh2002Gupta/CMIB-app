@@ -19,12 +19,12 @@ import TouchableImage from "../TouchableImage";
 import CustomImage from "../CustomImage";
 
 export const FormTabs = ({
+  isEditButtonVisible,
+  onEditClick,
   showWarningOnTabSwitch,
   tabs,
-  isEditButtonVisible,
 }) => {
   const intl = useIntl();
-  console.log("tabs", tabs);
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [alertOnTabSwitch, setAlertOnTabSwitch] = useState({
@@ -118,6 +118,7 @@ export const FormTabs = ({
             >
               <TouchableImage
                 source={images.iconEditSvg}
+                onPress={onEditClick}
                 style={{ height: 20, width: 30 }}
               />
               <CommonText customContainerStyle={{ marginLeft: 8 }}>
