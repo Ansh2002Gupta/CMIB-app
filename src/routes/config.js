@@ -24,6 +24,7 @@ import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
 import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
+import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -219,6 +220,10 @@ const config = [
       {
         viewPath: navigations.POSTED_JOBS,
         element: <PostedJobsView />,
+      },
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
+        element: <AddModifyNewJobs />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,

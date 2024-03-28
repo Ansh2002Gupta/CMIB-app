@@ -212,7 +212,7 @@ export const getDisplayValue = (value, intl) => {
   return intl.formatMessage({ id: "label.select" });
 };
 
-export const getFormatedData = (jobData, question) => {
+export const getFormatedData = (jobData, question, isCheckList) => {
   let temp = {
     summary: jobData.jobSummary,
     detail: jobData.jobDetails,
@@ -242,6 +242,7 @@ export const getFormatedData = (jobData, question) => {
     flexi_hours: jobData.flexiHours == 0 ? true : false,
     is_extended_vacancy: jobData.vacanciesCountType == 0 ? true : false,
     service_type: jobData.fullTime == 0 ? "Full Time" : "Part Time",
+    notify_company: isCheckList,
   };
   if (jobData.jobType?.label === jobType.CONTRACTUAL) {
     temp.contract_period = {

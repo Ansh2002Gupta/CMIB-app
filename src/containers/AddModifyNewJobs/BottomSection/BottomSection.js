@@ -59,25 +59,6 @@ const BottomSection = forwardRef(
       contractDay: "",
     });
 
-    const resetJobs = () => {
-      setJobData({
-        jobOpeningDate: today,
-        jobClosingDate: tomorrow,
-        numberOfVacancies: 0,
-        vacanciesCountType: 0,
-        modeofWork: {},
-        flexiHours: 0,
-        fullTime: 0,
-        typeOfDisabilty: "",
-        disabiltyPercentage: 0,
-        salaryNagotiable: 0,
-        minimumSalary: 0,
-        maximumSalary: 0,
-        contractYear: 0,
-        contractMonth: 0,
-        contractDay: 0,
-      });
-    };
     const validateInput = (field) => {
       let hasError = false;
       const addError = (field, message) => {
@@ -156,7 +137,6 @@ const BottomSection = forwardRef(
     useImperativeHandle(ref, () => ({
       getBottomSectionDetails: getBottomSectionDetails,
       getErrors: getErrors,
-      resetJobs: resetJobs,
     }));
 
     const handleJobDetailsChange = (field, value) => {

@@ -37,10 +37,6 @@ const AddModifyQuestionaireComponent = forwardRef(
     const getQuestionData = () => {
       return questionnairelist;
     };
-    const resetQuestion = () => {
-      setIsQuestionaireList([]);
-      setError({});
-    };
 
     function validateQuestions() {
       let isValidQuestion = false;
@@ -97,7 +93,6 @@ const AddModifyQuestionaireComponent = forwardRef(
     useImperativeHandle(ref, () => ({
       getQuestionData: getQuestionData,
       getQuestionError: validateQuestions,
-      resetQuestion: resetQuestion,
     }));
 
     const questionaireTypeFormatted = useMemo(() => {
