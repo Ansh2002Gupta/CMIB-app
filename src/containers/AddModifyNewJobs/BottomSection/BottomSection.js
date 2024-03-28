@@ -70,6 +70,9 @@ const BottomSection = forwardRef(
           if (jobData.numberOfVacancies === 0) {
             addError(field, "Should be greater than 0");
           }
+          if (jobData.numberOfVacancies.length == 0) {
+            addError(field, intl.formatMessage({ id: "label.mandatory" }));
+          }
           break;
         case "modeofWork":
           if (Object.values(jobData.modeofWork).length === 0) {
@@ -247,9 +250,15 @@ const BottomSection = forwardRef(
           />
           <CustomToggleComponent
             label={intl.formatMessage({ id: "label.vacancy_count_type" })}
-            toggleTitle1={`"${jobData.numberOfVacancies}"`}
+            toggleTitle1={`"${
+              jobData.numberOfVacancies.length === 0
+                ? 0
+                : jobData.numberOfVacancies
+            }"`}
             toggleTitle2={`"${intl.formatMessage({ id: "label.more_than" })} ${
-              jobData.numberOfVacancies
+              jobData.numberOfVacancies.length === 0
+                ? 0
+                : jobData.numberOfVacancies
             }"`}
             isMandatory
             value={jobData.vacanciesCountType}
@@ -274,6 +283,9 @@ const BottomSection = forwardRef(
           <CustomTextInput
             label={intl.formatMessage({ id: "label.mode_of_work" })}
             options={workModeData || []}
+            placeholder={intl.formatMessage({
+              id: "label.select_mode_of_work",
+            })}
             customHandleBlur={() => validateInput("modeofWork")}
             onChangeValue={(value) => {
               handleJobDetailsChange("modeofWork", value);

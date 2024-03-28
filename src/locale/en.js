@@ -454,6 +454,13 @@ const locale = {
   "label.multi_question_error": "Question must have at least one option.",
   "label.option_error": "All options must have a non-empty value",
   "label.invalid_question_type": "Invalid question type.",
+  "label.select_nationality": "Select Nationality",
+  "label.select_job_type": "Select Job Type",
+  "label.search_job_location": "Search Job Location",
+  "label.select_functional_area": "Select Functional Areas",
+  "label.select_gender_preference": "Select Gender Preference",
+  "label.select_category_preference": "Select Category Preference",
+  "label.select_mode_of_work": "Select Mode of Work",
 };
 
 export default locale;

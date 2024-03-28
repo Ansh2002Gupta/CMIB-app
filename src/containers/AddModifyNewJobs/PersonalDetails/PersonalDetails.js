@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   useContext,
   useImperativeHandle,
+  useRef,
   useState,
 } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
@@ -13,9 +14,12 @@ import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
 
 import { useIntl } from "react-intl";
 import styles from "./PersonalDetails.styles";
+import { DEBOUNCE_TIME } from "../../../constants/constants";
 
 const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
   const intl = useIntl();
+  const debounceTimeout = useRef(null);
+
   const { fetchSearch } = useGetAddNewJobData();
   const [addJobs] = useContext(AddJobContext);
 
@@ -217,6 +221,7 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
             id: "label.nationality",
           })}
           options={countryData || []}
+          placeholder={intl.formatMessage({ id: "label.select_nationality" })}
           value={jobData.nationality?.value}
           isError={(error && error.nationality && true) || false}
           errorMessage={(error && error.nationality) || ""}
@@ -260,11 +265,19 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
           isMandatory
           includeAllKeys={true}
           selectAllField={true}
+          placeholder={intl.formatMessage({ id: "label.search_job_location" })}
           options={locationsArray || []}
           isError={(error && error.jobLocation && true) || false}
           errorMessage={(error && error.jobLocation) || ""}
           onChangeDropDownText={(item) => {
-            return handleChange(item);
+            if (debounceTimeout.current) {
+              clearTimeout(debounceTimeout.current);
+            }
+            debounceTimeout.current = setTimeout(() => {
+              if (item.trim().length) {
+                return handleChange(item);
+              }
+            }, DEBOUNCE_TIME);
           }}
           customHandleBlur={() => {
             validateField("jobLocation");
@@ -294,6 +307,9 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
           isDropdown
           labelField="name"
           valueField="slug"
+          placeholder={intl.formatMessage({
+            id: "label.select_functional_area",
+          })}
           includeAllKeys={true}
           selectAllField={true}
           options={functionalData || []}
@@ -324,6 +340,9 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
             id: "label.gender_preference",
           })}
           isDropdown
+          placeholder={intl.formatMessage({
+            id: "label.select_gender_preference",
+          })}
           includeAllKeys={true}
           selectAllField={true}
           options={genderPreferenceData || []}
@@ -342,6 +361,9 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
           isDropdown
           includeAllKeys={true}
           selectAllField={true}
+          placeholder={intl.formatMessage({
+            id: "label.select_category_preference",
+          })}
           options={jobCategory || []}
           value={jobData.categoryPreference.value}
           isError={(error && error.categoryPreference && true) || false}
