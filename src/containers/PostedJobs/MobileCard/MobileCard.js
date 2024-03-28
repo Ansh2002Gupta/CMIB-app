@@ -10,7 +10,6 @@ const MobileCard = ({
   item,
   onEditPress,
   onViewPress,
-  tableIcon,
   containerStyle = {},
   contentContainerStyle = {},
   designationTextStyle = {},

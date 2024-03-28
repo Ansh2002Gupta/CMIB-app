@@ -73,7 +73,6 @@ const PostedJobsView = () => {
       <MobileCard
         item={item}
         getStatusStyle={getStatusStyle}
-        tableIcon={tableIcon}
         lastElement={postedJobData.length - 1 === index}
         statusData={statusData}
         onEditPress={onEditPress}

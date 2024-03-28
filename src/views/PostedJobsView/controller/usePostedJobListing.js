@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
-import {
-  COMPANY_QUERY_TYPE_TICKET,
-  GET_POSTED_JOBS,
-} from "../../../services/apiServices/apiEndPoint";
+import { GET_POSTED_JOBS } from "../../../services/apiServices/apiEndPoint";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
@@ -18,7 +15,6 @@ import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import images from "../../../images";
-import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../PostedJobsView.styles";
 import colors from "../../../assets/colors";
@@ -44,8 +40,6 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(searchParams.get("page"))
   );
-
-  const navigate = useNavigate();
 
   const {
     data: postedJobData,
