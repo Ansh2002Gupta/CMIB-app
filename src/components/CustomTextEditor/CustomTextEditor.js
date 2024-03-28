@@ -22,6 +22,7 @@ const CustomTextEditor = (props) => {
     customErrorStyle,
     customHandleBlur,
     customLabelStyle,
+    disabled,
     errorMessage,
     isMandatory,
     label,
@@ -71,6 +72,7 @@ const CustomTextEditor = (props) => {
           placeholder={intl.formatMessage({ id: "label.description" })}
           onChange={handleProcedureContentChange}
           style={styles.quillStyling}
+          readOnly={disabled}
         />
       </View>
       {!!errorMessage && (
@@ -84,10 +86,17 @@ const CustomTextEditor = (props) => {
     </View>
   );
 };
+CustomTextEditor.defaultProps = {
+  customLabelStyle: {},
+  isMandatory: false,
+  label: "",
+  disabled: false,
+};
 CustomTextEditor.propTypes = {
   customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
+  disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,

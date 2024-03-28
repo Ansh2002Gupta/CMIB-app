@@ -454,6 +454,7 @@ const locale = {
   "label.multi_question_error": "Question must have at least one option.",
   "label.option_error": "All options must have a non-empty value",
   "label.invalid_question_type": "Invalid question type.",
+  "label.job_status": "Job Status",
 };
 
 export default locale;

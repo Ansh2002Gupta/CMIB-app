@@ -15,6 +15,7 @@ const CustomTextEditor = ({
   customErrorStyle,
   customHandleBlur,
   customLabelStyle,
+  disabled,
   errorMessage,
   isMandatory,
   label,
@@ -69,6 +70,7 @@ const CustomTextEditor = ({
               ref={richText}
               onBlur={customHandleBlur}
               initialContentHTML={value}
+              disabled={disabled}
               onChange={(val) => {
                 onChangeText(val);
               }}
@@ -93,12 +95,14 @@ CustomTextEditor.defaultProps = {
   customLabelStyle: {},
   isMandatory: false,
   label: "",
+  disabled: false,
 };
 
 CustomTextEditor.propTypes = {
   customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
+  disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,

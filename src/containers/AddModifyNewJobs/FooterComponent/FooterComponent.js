@@ -10,24 +10,27 @@ import styles from "./FooterComponent.styles";
 const FooterComponent = ({
   isWebView,
   isCheckList,
+  isMessageVisible,
   setIsCheckList,
   onSubmit,
 }) => {
   const intl = useIntl();
   return (
     <View style={styles.containerStyle(isWebView)}>
-      <View style={styles.firstViewStyles}>
-        <View style={styles.checkBoxViewStyle}>
-          <CheckBox
-            title={intl.formatMessage({ id: "label.do_not_send_email" })}
-            handleCheckbox={(vale) => {
-              setIsCheckList((prev) => !prev);
-            }}
-            id={`isCheckList${isCheckList}`}
-            isSelected={isCheckList}
-          />
+      {isMessageVisible && (
+        <View style={styles.firstViewStyles}>
+          <View style={styles.checkBoxViewStyle}>
+            <CheckBox
+              title={intl.formatMessage({ id: "label.do_not_send_email" })}
+              handleCheckbox={(vale) => {
+                setIsCheckList((prev) => !prev);
+              }}
+              id={`isCheckList${isCheckList}`}
+              isSelected={isCheckList}
+            />
+          </View>
         </View>
-      </View>
+      )}
       <View style={styles.getSecondViewStyle(isWebView)}>
         <View style={styles.buttonViewStyle}>
           <CustomButton

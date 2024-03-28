@@ -13,6 +13,9 @@ import CardComponent from "../../components/CardComponent";
 import useFetch from "../../hooks/useFetch";
 import AddModifyQuestionaireComponent from "../../containers/AddModifyNewJobs/AddModifyQuestionaireComponent/AddModifyQuestionaireComponent";
 import useIsWebView from "../../hooks/useIsWebView";
+import { getQuestionType } from "../../utils/util";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import EditJobDetails from "../EditJobDetails";
 const dataApi = {
   id: 62,
   approved: 0,
@@ -61,7 +64,7 @@ const dataApi = {
       id: 35,
       question: "Select your preferred php framework",
       type: "multi-select",
-      mandatory: 0,
+      mandatory: 1,
       company_id: 2,
       created_at: "2024-03-11T08:43:28.000000Z",
       updated_at: "2024-03-11T08:43:28.000000Z",
@@ -127,16 +130,33 @@ const dataApi = {
 const details = [
   [
     {
-      label: "Job Summary",
+      label: "label.job_summary",
       value: dataApi.summary,
       isMandatory: true,
     },
   ],
   [
     {
-      label: "Job Details",
+      label: "label.job_details",
       value: dataApi.detail,
       isMandatory: true,
+      ShouldRenderOwnComponent: function () {
+        return (
+          <CustomTextEditor
+            value={dataApi.detail}
+            disabled={true}
+            // label={intl.formatMessage({
+            //   id: "label.job_details",
+            // })}
+            // isError={(error && error.jobDetails && true) || false}
+            // errorMessage={(error && error.jobDetails) || ""}
+            // customHandleBlur={() => validateInput("jobDetails")}
+            // onChangeText={(val) => {
+            //   handleJobDetailsChange("jobDetails", val);
+            // }}
+          />
+        );
+      },
       style: {
         padding: 16,
         borderWidth: 0.5,
@@ -148,12 +168,12 @@ const details = [
   ],
   [
     {
-      label: "Job Type",
+      label: "label.job_type",
       value: dataApi.type ?? "-",
       isMandatory: true,
     },
     {
-      label: "Urgent Job",
+      label: "label.urgent",
       value: dataApi.is_urgent,
       isMandatory: true,
     },
@@ -161,28 +181,28 @@ const details = [
   ],
   [
     {
-      label: "Minimum Experience",
+      label: "label.minimum_experience",
       value: dataApi.min_experience,
       isMandatory: true,
     },
     {
-      label: "Maximum Experience",
+      label: "label.maximum_experience",
       value: dataApi.max_experience,
     },
 
     {
-      label: "Nationality",
+      label: "label.nationality",
       value: dataApi.nationality ?? "-",
     },
   ],
   [
     {
-      label: "Designation",
+      label: "label.designation",
       value: dataApi.designation ?? "-",
       isMandatory: true,
     },
     {
-      label: "Job Location",
+      label: "label.job_location",
       value: dataApi.location ?? "-",
       isMandatory: true,
     },
@@ -190,7 +210,7 @@ const details = [
   ],
   [
     {
-      label: "Functional Areas",
+      label: "label.functional_areas",
       isMandatory: true,
       showBadgeLabel: true,
       customValue: dataApi.functional_areas ?? "-",
@@ -198,11 +218,11 @@ const details = [
   ],
   [
     {
-      label: "Gender Preference",
+      label: "label.gender_preference",
       value: dataApi.gender_preference ?? "-",
     },
     {
-      label: "Category Preference",
+      label: "label.category_preference",
       value: dataApi.category_preference ?? "-",
       isMandatory: true,
     },
@@ -210,24 +230,24 @@ const details = [
   ],
   [
     {
-      label: "Essential Qualification",
+      label: "label.essential_qualification",
       value: dataApi.essential_qualification ?? "-",
     },
   ],
   [
     {
-      label: "Desired Qualification",
+      label: "label.desired_qualification",
       value: dataApi.desired_qualification ?? "-",
     },
   ],
   [
     {
-      label: "Job Opening Date",
+      label: "label.job_opening_date",
       value: dataApi.opening_date ?? "-",
       isMandatory: true,
     },
     {
-      label: "Job Closing Date",
+      label: "label.job_closing_date",
       value: dataApi.closing_date ?? "-",
       isMandatory: true,
     },
@@ -235,44 +255,44 @@ const details = [
   ],
   [
     {
-      label: "Number of Vacancies",
+      label: "label.number_of_vacancies",
       value: dataApi.vacancy ?? "-",
       isMandatory: true,
     },
   ],
   [
     {
-      label: "Mode of Work",
+      label: "label.mode_of_work",
       value: dataApi.mode ?? "-",
       isMandatory: true,
     },
     {
-      label: "Flexi Hours",
+      label: "label.flexi_hours",
       value: dataApi.flexi_hours ?? "-",
     },
     {
-      label: "Full Time/Part Time",
+      label: "label.fullorPartTime",
       value: dataApi.service_type ?? "-",
       isMandatory: true,
     },
   ],
   [
     {
-      label: "Salary Negotiable",
+      label: "label.salary_negotiable",
       value: dataApi.is_salary_negotiable ?? "-",
     },
     {
-      label: "Minimum Salary(Annual CTC)",
+      label: "label.minimum_salary",
       value: dataApi.min_salary ?? "-",
     },
     {
-      label: "Maximum Salary",
+      label: "label.maximum_salary",
       value: dataApi.max_experience ?? "-",
     },
   ],
   [
     {
-      label: "Job Status",
+      label: "label.job_status",
       value: dataApi.status === 1 ? "Active" : "InActive" ?? "-",
     },
   ],
@@ -285,24 +305,35 @@ const ViewPostedJobDetails = () => {
   const { isWebView } = useIsWebView();
   const [isEdited, setIsEdit] = useState(false);
   const [questionnaireData, setQuestionnaireData] = useState([]);
+
   useEffect(() => {
     const transformedQuestionnaire = dataApi.questionnaire.map((item) => {
-      if (item.question_options) {
+      if (
+        Array.isArray(item.question_options) &&
+        item.question_options.length > 0
+      ) {
         return {
           ...item,
+          typeofQuestion: getQuestionType[item.type],
+          isMandatory: item.mandatory,
           question_options: item.question_options.map((option, index) => ({
-            id: Date.now(),
+            id: Date.now() + index,
             value: option,
           })),
         };
+      } else {
+        return {
+          ...item,
+          typeofQuestion: getQuestionType[item.type],
+          isMandatory: item.mandatory,
+        };
       }
-      return { ...item, typeofQuestion: item.type };
     });
     setQuestionnaireData(transformedQuestionnaire);
   }, []);
-
   return (
     <View style={{ flex: 1 }}>
+      <IconHeader headerText={"Hello"} />
       <View style={{ backgroundColor: "white", height: 80 }}>
         <CustomTabs
           tabs={[
@@ -330,6 +361,8 @@ const ViewPostedJobDetails = () => {
                     }}
                   >
                     {isEdited ? (
+                      <View />
+                    ) : (
                       <CardComponent
                         customStyle={{
                           margin: 16,
@@ -342,8 +375,6 @@ const ViewPostedJobDetails = () => {
                           customContainerStyle={{ marginTop: 0 }}
                         />
                       </CardComponent>
-                    ) : (
-                      <View />
                     )}
                   </ScrollView>
                 </View>
@@ -355,15 +386,9 @@ const ViewPostedJobDetails = () => {
                 <View style={{ flex: 1, margin: 16 }}>
                   <ScrollView>
                     {isEdited ? (
-                      <View>
-                        <AddModifyQuestionaireComponent
-                          isQuestionaire={true}
-                          addNewJobData={questionnaireData}
-                          isWebView={isWebView}
-                        />
-                      </View>
+                      <EditJobDetails questionnaireData={questionnaireData} />
                     ) : (
-                      dataApi?.questionnaire?.map((item) => {
+                      questionnaireData?.map((item) => {
                         return (
                           <View style={{ marginBottom: 16 }}>
                             <CardComponent>
@@ -380,7 +405,7 @@ const ViewPostedJobDetails = () => {
                                     fontSize: 12,
                                     color: colors.darkGrey,
                                   }}
-                                >{`(${item.type})`}</CommonText>
+                                >{`(${item.typeofQuestion})`}</CommonText>
                                 {item.mandatory == 1 && (
                                   <CommonText
                                     customContainerStyle={{ marginLeft: 4 }}
@@ -417,9 +442,9 @@ const ViewPostedJobDetails = () => {
                                               fontSize: 12,
                                               color: colors.black,
                                             }}
-                                          >{` ${
-                                            index + 1
-                                          }.${items}`}</CommonText>
+                                          >{` ${index + 1}.${
+                                            items.value
+                                          }`}</CommonText>
                                         </View>
                                       );
                                     }
