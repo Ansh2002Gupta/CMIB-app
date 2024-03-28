@@ -1,9 +1,10 @@
 import React from "react";
 import { View } from "@unthinkable/react-core-components";
-import { FormTabs } from "../../components/Tab";
+
 import EducationDetailComponent from "./EducationDetails";
 import ExamsComponent from "./ExamsComponent";
 import OtherCoursesComponent from "./OtherCoursesComponent";
+import { FormTabs } from "../../components/Tab";
 import colors from "../../assets/colors";
 
 const EducationDetailsTab = ({ isEditable, handleEdit }) => {
