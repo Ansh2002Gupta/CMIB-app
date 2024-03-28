@@ -13,13 +13,6 @@ const EditJobDetails = ({ questionnaireData }) => {
         addNewJobData={questionnaireData}
         isWebView={isWebView}
       />
-      <FooterComponent
-        isWebView={isWebView}
-        isMessageVisible={false}
-        // isCheckList={isCheckList}
-        // setIsCheckList={setIsCheckList}
-        // onSubmit={onSubmit}
-      />
     </View>
   );
 };
