@@ -48,7 +48,7 @@ export const useMembershipDetail = ({ state, isEditable}) => {
     const fellow_member_detail = [
       {
         key: "isFellowMember",
-        isMandatory: true,
+        isMandatory: false,
         isToggle: true,
         label: "label.areYouAFellowMember",
         placeholder: "label.areYouAFellowMember",
@@ -60,7 +60,7 @@ export const useMembershipDetail = ({ state, isEditable}) => {
       },
       ...(state.isFellowMember === 0 ? [{
         key: "fellow_member_admission_date",
-        isMandatory: false,
+        isMandatory: true,
         isCalendar: true,
         label: "label.fellowMemberDateOfAdmission",
         placeholder: "label.fellowMemberDateOfAdmission",
@@ -78,7 +78,7 @@ export const useMembershipDetail = ({ state, isEditable}) => {
     const practice_detail = [
       {
         key: "inPractice",
-        isMandatory: true,
+        isMandatory: false,
         isToggle: true,
         label: "label.whetherInPractice",
         placeholder: "label.whetherInPractice",
@@ -90,7 +90,7 @@ export const useMembershipDetail = ({ state, isEditable}) => {
       },
       ...(state.inPractice === 0 ? [{
         key: "sinceWhenPracticing",
-        isMandatory: false,
+        isMandatory: true,
         isCalendar: true,
         label: "label.sinceWhenHaveYouBeenPracticing",
         placeholder: "label.sinceWhenHaveYouBeenPracticing",
@@ -148,6 +148,8 @@ export const useMembershipDetail = ({ state, isEditable}) => {
     let error = false;
     [
       ...membership_detail_state,
+      ...fellow_member_detail_state,
+      ...practice_detail_state,
     ].forEach((item) => {
       if (item.isMandatory && !state[item.key]) {
         error = true;
