@@ -125,10 +125,10 @@ const TicketsListing = () => {
               }}
             />
           )}
-          {isError && getErrorDetails() && (
+          {isError && !!getErrorDetails()?.errorMessage && (
             <ErrorComponent
-              errorMsg={getErrorDetails().errorMessage}
-              onRetry={() => getErrorDetails().onRetry()}
+              errorMsg={getErrorDetails()?.errorMessage}
+              onRetry={() => getErrorDetails()?.onRetry()}
             />
           )}
           {!!updationError && (
