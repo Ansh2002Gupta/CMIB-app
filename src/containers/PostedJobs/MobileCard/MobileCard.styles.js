@@ -65,5 +65,8 @@ const styles = StyleSheet.create({
   textAlign: {
     textAlign: "left",
   },
+  marginRight16: {
+    marginRight: 16,
+  },
 });
 export default styles;

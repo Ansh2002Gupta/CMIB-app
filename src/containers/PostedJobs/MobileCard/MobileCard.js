@@ -8,7 +8,8 @@ import styles from "./MobileCard.styles";
 
 const MobileCard = ({
   item,
-  onIconPress,
+  onEditPress,
+  onViewPress,
   tableIcon,
   containerStyle = {},
   contentContainerStyle = {},
@@ -77,9 +78,18 @@ const MobileCard = ({
       </View>
       <TouchableImage
         onPress={() => {
-          onIconPress && onIconPress(item);
+          onViewPress && onViewPress(item);
         }}
-        source={tableIcon}
+        source={images.iconEye}
+        isSvg={false}
+        style={{ ...styles.tableStyle, ...styles.marginRight16 }}
+      />
+      <TouchableImage
+        onPress={() => {
+          onEditPress && onEditPress(item);
+        }}
+        isSvg={false}
+        source={images.iconEdit}
         style={styles.tableStyle}
       />
     </View>

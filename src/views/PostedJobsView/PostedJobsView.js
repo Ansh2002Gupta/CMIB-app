@@ -18,6 +18,16 @@ import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreCompo
 
 const PostedJobsView = () => {
   const intl = useIntl();
+  const onEditPress = (item) => {
+    navigate(navigations.DETAILS_JOBS, {
+      state: { ...item, isEdit: false },
+    });
+  };
+  const onViewPress = (item) => {
+    navigate(navigations.DETAILS_JOBS, {
+      state: { ...item, isEdit: true },
+    });
+  };
   const {
     allDataLoaded,
     currentRecords,
@@ -37,6 +47,8 @@ const PostedJobsView = () => {
     isHeading,
     isTicketListingLoading,
     isFirstPageReceived,
+    getErrorDetails,
+    isErrorGetPostedJob,
     loadingMore,
     onIconPress,
     queryTypeData,
@@ -48,18 +60,14 @@ const PostedJobsView = () => {
     tableIcon,
     postedJobData,
     totalcards,
-  } = usePostedJobListing();
+  } = usePostedJobListing(onViewPress, onEditPress);
 
   const navigate = useNavigate();
 
   const handleTicketModal = () => {
     navigate(navigations.ADD_NEW_JOBS);
-    // setAddNewTicket((prev) => !prev);
   };
 
-  const onGoBack = () => {
-    navigate(navigations.PROFILE);
-  };
   const getMobileView = (item, index) => {
     return (
       <MobileCard
@@ -68,6 +76,8 @@ const PostedJobsView = () => {
         tableIcon={tableIcon}
         lastElement={postedJobData.length - 1 === index}
         statusData={statusData}
+        onEditPress={onEditPress}
+        onViewPress={onViewPress}
       />
     );
   };
@@ -99,6 +109,8 @@ const PostedJobsView = () => {
             getStatusStyle,
             handleTicketModal,
             handleLoadMore,
+            getErrorDetails,
+            isErrorGetPostedJob,
             handlePageChange,
             handleRowPerPageChange,
             handleSearchResults,

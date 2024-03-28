@@ -16,7 +16,7 @@ import {
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
-import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
@@ -25,7 +25,7 @@ import colors from "../../../assets/colors";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const usePostedJobListing = () => {
+const usePostedJobListing = (onViewPress, onEditPress) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -35,6 +35,7 @@ const usePostedJobListing = () => {
   const [filterOptions, setFilterOptions] = useState({
     activeorInctive: "",
     approvedorNot: "",
+    searchData: "",
   });
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
@@ -50,6 +51,8 @@ const usePostedJobListing = () => {
     data: postedJobData,
     isLoading: isTicketListingLoading,
     fetchData: fetchPostedJobs,
+    isError: isErrorGetPostedJob,
+    error: errorGetPostedJobs,
   } = useFetch({
     url: GET_POSTED_JOBS,
     otherOptions: {
@@ -78,6 +81,27 @@ const usePostedJobListing = () => {
       name: "Not Approved",
     },
   ];
+  const getErrorDetails = () => {
+    if (isErrorGetPostedJob) {
+      let errorMessage = "";
+      if (errorGetPostedJobs === GENERIC_GET_API_FAILED_ERROR_MESSAGE) {
+        errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      } else {
+        errorMessage = `${errorGetPostedJobs?.data?.message}`;
+      }
+      return {
+        errorMessage,
+        onRetry: () => {
+          fetchPostedJobs({});
+        },
+      };
+    }
+    if (isErrorGetPostedJob)
+      return {
+        errorMessage: errorGetPostedJobs?.data?.message,
+        onRetry: () => fetchPostedJobs({}),
+      };
+  };
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -120,7 +144,12 @@ const usePostedJobListing = () => {
     const nextPage = currentPage + 1;
     try {
       const newData = await fetchPostedJobs({
-        queryParamsObject: { perPage: rowsPerPage, page: nextPage },
+        queryParamsObject: {
+          perPage: rowsPerPage,
+          page: nextPage,
+          status: filterOptions.activeorInctive,
+          queryType: filterOptions.approvedorNot,
+        },
       });
 
       if (newData && newData?.records?.length > 0) {
@@ -146,6 +175,8 @@ const usePostedJobListing = () => {
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: page,
+      status: filterOptions.activeorInctive,
+      queryType: filterOptions.approvedorNot,
     });
   };
 
@@ -154,36 +185,68 @@ const usePostedJobListing = () => {
     await updateCurrentRecords({
       perPage: option.value,
       page: currentPage,
+      status: filterOptions.activeorInctive,
+      queryType: filterOptions.approvedorNot,
     });
   };
 
   const handleSearchResults = async (searchedData) => {
-    await updateCurrentRecords({
-      search: searchedData,
-      perPage: rowsPerPage,
-      page: currentPage,
-      status: filterOptions.activeorInctive,
-      queryType: filterOptions.query_type,
-    });
-  };
-
-  const onIconPress = (item) => {
-    navigate(navigations.TICKETS_VIEW_EDIT, {
-      state: item,
-    });
+    setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
+    if (isMob) {
+      setCurrentPage(1);
+      const newData = await fetchPostedJobs({
+        queryParamsObject: {
+          search: searchedData,
+          status: filterOptions.activeorInctive,
+          queryType: filterOptions.approvedorNot,
+        },
+      });
+      setCurrentRecords(newData?.records);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        search: searchedData,
+        perPage: rowsPerPage,
+        page: currentPage,
+        status: filterOptions.activeorInctive,
+        queryType: filterOptions.approvedorNot,
+      });
+    }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    setFilterOptions({
-      activeorInctive: selectedStatus,
+    setFilterOptions((prev) => ({
+      ...prev,
       query_type: selectedQueryType,
-    });
-    await updateCurrentRecords({
-      status: selectedStatus,
-      queryType: selectedQueryType,
-      perPage: rowsPerPage,
-      page: currentPage,
-    });
+    }));
+    if (isMob) {
+      setLoadingMore(false);
+      setCurrentPage(1);
+      const newData = await fetchPostedJobs({
+        queryParamsObject: {
+          search: filterOptions.searchData,
+          status: selectedStatus,
+          queryType: selectedQueryType,
+        },
+      });
+      setCurrentRecords(newData?.records);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        status: selectedStatus,
+        queryType: selectedQueryType,
+        perPage: rowsPerPage,
+        page: currentPage,
+      });
+    }
   };
 
   let headingTexts = ["job_id"];
@@ -333,7 +396,7 @@ const usePostedJobListing = () => {
             {!isHeading && (
               <TouchableImage
                 onPress={() => {
-                  navigate(`${navigations.DETAIL_JOB_WITHOUT_ID}?mode=view`);
+                  onViewPress && onViewPress(item);
                 }}
                 source={images.iconEye}
               />
@@ -350,10 +413,8 @@ const usePostedJobListing = () => {
           <View>
             {!isHeading && (
               <TouchableImage
-                onPress={(id) => {
-                  navigate(
-                    `${navigations.DETAIL_JOB_WITHOUT_ID}/${25}?mode=edit`
-                  );
+                onPress={() => {
+                  onEditPress && onEditPress(item);
                 }}
                 source={images.iconEdit}
               />
@@ -381,15 +442,15 @@ const usePostedJobListing = () => {
     handleRowPerPageChange,
     handleSearchResults,
     headingTexts,
+    getErrorDetails,
+    isErrorGetPostedJob,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
     isTicketListingLoading,
     isFirstPageReceived,
     loadingMore,
-    onIconPress,
     queryTypeData,
-    queryTypeUrl: COMPANY_QUERY_TYPE_TICKET,
     rowsPerPage,
     statusData,
     statusText,

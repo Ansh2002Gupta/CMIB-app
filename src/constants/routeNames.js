@@ -30,6 +30,5 @@ export const navigations = {
   SAVED_CANDIDATES: "saved-candidates",
   TICKETS_VIEW_EDIT: "ticket-details",
   ADD_NEW_JOBS: "add-new-jobs",
-  DETAILS_JOBS: "details-jobs/:id",
-  DETAIL_JOB_WITHOUT_ID: "details-jobs",
+  DETAILS_JOBS: "details-jobs",
 };

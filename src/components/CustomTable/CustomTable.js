@@ -113,6 +113,7 @@ const CustomTable = ({
                     <CustomTouchableOpacity
                       onPress={handleFilterModal}
                       style={styles.imageParentStyle}
+                      disabled={isTicketListingLoading}
                     >
                       <TouchableImage
                         source={images.iconFilter}
