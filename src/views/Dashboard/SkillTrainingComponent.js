@@ -34,6 +34,7 @@ const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
     handleOtherSkillsBlur,
     handleAddRemoveRow,
     handleCheckBoxSelection,
+    handleOtherSkillsUpdate,
   } = useSkillTraining({
     state,
     isEditable,
@@ -72,6 +73,7 @@ const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
       handleSoftSkillsBlur={handleSoftSkillsBlur}
       handleOtherSkillsBlur={handleOtherSkillsBlur}
       handleAddRemoveRow={handleAddRemoveRow}
+      handleOtherSkillsUpdate={handleOtherSkillsUpdate}
       isEditable={isEditable}
       onChangeValue={onChangeValue}
       isLoading={isLoading}

@@ -23,6 +23,7 @@ const SkillTrainingUI = ({
   isValidAllFields,
   handleAddRemoveRow,
   handleCheckBoxSelection,
+  handleOtherSkillsUpdate,
 }) => {
   const intl = useIntl();
 
@@ -81,8 +82,7 @@ const SkillTrainingUI = ({
             id: "label.other_skills",
           })}
           isEditProfile={isEditable}
-          handleChange={onChangeValue(otherSkills)}
-          handleBlur={handleOtherSkillsBlur}
+          onChipUpdate={(chips) => handleOtherSkillsUpdate(chips)}
         />
       </View>
       <SaveCancelButton

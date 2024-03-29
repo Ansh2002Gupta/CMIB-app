@@ -28,6 +28,7 @@ import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
 import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
 import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
+import TextInputWithChip from "../TextInputWithChip";
 
 const CustomTextInput = (props) => {
   const {
@@ -95,6 +96,8 @@ const CustomTextInput = (props) => {
     isActionToAdd,
     handleCheckBoxSelection,
     isSingleSelection,
+    isTextInputWithChip,
+    onChipUpdate,
     ...remainingProps
   } = props;
 
@@ -269,6 +272,14 @@ const CustomTextInput = (props) => {
            handleCheckBoxSelection={(id) => handleCheckBoxSelection(id)}
            isSingleSelection={isSingleSelection}
             />)
+   }
+   if (isTextInputWithChip){
+    return(
+      <TextInputWithChip
+      placeholderText={placeholder}
+      onChipUpdate={(chipData) => onChipUpdate(chipData)}
+      />
+    )
    }
     return (
       <View style={inputStyle}>
@@ -505,6 +516,8 @@ CustomTextInput.defaultProps = {
   isActionToAdd: true,
   handleCheckBoxSelection: () => {},
   isSingleSelection: false,
+  isTextInputWithChip: false,
+  onChipUpdate: () => {}
 };
 // Custom validator for Date objects
 const datePropType = (props, propName, componentName) => {
@@ -572,6 +585,8 @@ CustomTextInput.propTypes = {
   isActionToAdd: PropTypes.bool,
   handleCheckBoxSelection: PropTypes.func,
   isSingleSelection: PropTypes.bool,
+  isTextInputWithChip: PropTypes.bool,
+  onChipUpdate: PropTypes.func,
 };
 
 export default CustomTextInput;

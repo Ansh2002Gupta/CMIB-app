@@ -106,9 +106,9 @@ const softSkills = () => [
 const otherSkills = () => [
   [{
     key: "other_skills",
-    label: "label.other_skills",
     placeholder: "label.other_skills_placeholder",
-    width: 1
+    width: 1,
+    isTextInputWithChip: true
   }],
 ];
 
@@ -311,7 +311,10 @@ export const useSkillTraining = ({ state, isEditable }) => {
     currentState[index] = currentIndexState;
     stateToPerformAction(currentState);
   }
-
+  const performOtherSkillsUpdate = (chips) => {
+     console.log("performOtherSkillsUpdate", chips)
+     
+  }
   return {
     isValidAllFields: checkMandatoryFields(),
     languagesKnown: languagesKnownState,
@@ -321,6 +324,7 @@ export const useSkillTraining = ({ state, isEditable }) => {
     handleValueUpdate: performValueUpdate,
     handleAddRemoveRow: performHandleAddRemoveRow,
     handleCheckBoxSelection: perfromHandleCheckBoxSelection,
+    handleOtherSkillsUpdate: performOtherSkillsUpdate,
 
     // languagesKnown: addValueOnField({
     //   state,
