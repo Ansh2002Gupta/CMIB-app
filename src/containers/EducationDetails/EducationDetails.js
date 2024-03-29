@@ -1,20 +1,20 @@
-import { useContext, useEffect, useState } from "react";
-import ExamsUI from "./ExamsUI";
+import React, { useContext, useEffect, useState } from "react";
+import EducationDetailsUI from "./EducationDetailsUI";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
-import { MEMBER_CA_JOB_PROFILE_EXAMS } from "../../services/apiServices/apiEndPoint";
+import { MEMBER_CA_JOB_PROFILE_EDUCATION } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
-import { useExams } from "./controller/useExams";
+import { useEducationDetails } from "./Controllers/useEducationDetails";
 
-const ExamsComponent = ({ isEditable = true, handleEdit }) => {
+const EducationDetails = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EXAMS}`,
+    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
 
   const { handleUpdate, isError, isLoading } = useUpdateService({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EXAMS}`,
+    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? data : {}
@@ -22,13 +22,15 @@ const ExamsComponent = ({ isEditable = true, handleEdit }) => {
 
   const {
     isValidAllFields,
-    ca_final,
-    ca_foundation,
-    ca_inter,
-    handleFinalDetailBlur,
-    handleFoundationDetailBlur,
-    handleInternDetailBlur,
-  } = useExams({
+    education_detail,
+    higher_secondary_detail,
+    graduation_detail,
+    post_graduation_detail,
+    handleEducationDetailBlur,
+    handleHigherSecondaryDetailBlur,
+    handleGraduationDetailBlur,
+    handlePostGraduationDetailBlur,
+  } = useEducationDetails({
     state,
     isEditable,
   });
@@ -54,18 +56,20 @@ const ExamsComponent = ({ isEditable = true, handleEdit }) => {
     }));
   };
   return (
-    <ExamsUI
-      ca_final={ca_final}
-      ca_foundation={ca_foundation}
-      ca_inter={ca_inter}
-      isEditable={isEditable}
-      isLoading={isLoading}
-      isError={isError}
+    <EducationDetailsUI
+      education_detail={education_detail}
+      higher_secondary_detail={higher_secondary_detail}
+      graduation_detail={graduation_detail}
+      post_graduation_detail={post_graduation_detail}
       onChangeValue={onChangeValue}
-      handleFinalDetailBlur={handleFinalDetailBlur}
-      handleFoundationDetailBlur={handleFoundationDetailBlur}
-      handleInternDetailBlur={handleInternDetailBlur}
+      handleEducationDetailBlur={handleEducationDetailBlur}
+      handleHigherSecondaryDetailBlur={handleHigherSecondaryDetailBlur}
+      handleGraduationDetailBlur={handleGraduationDetailBlur}
+      handlePostGraduationDetailBlur={handlePostGraduationDetailBlur}
       isValidAllFields={isValidAllFields}
+      isError={isError}
+      isLoading={isLoading}
+      isEditable={isEditable}
       onClickSave={() => {
         handleUpdate(state, () => {
           // turn off the edit mode
@@ -80,4 +84,4 @@ const ExamsComponent = ({ isEditable = true, handleEdit }) => {
   );
 };
 
-export default ExamsComponent;
+export default EducationDetails;

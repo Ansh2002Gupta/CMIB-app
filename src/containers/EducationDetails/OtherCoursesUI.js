@@ -3,7 +3,7 @@ import { View, ScrollView } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
 import style from "./OtherCourses.style";
 import DetailCard from "../../components/DetailCard";
-import SaveCancelButton from "./SaveCancelButton";
+import SaveCancelButton from "../../components/SaveCancelButton";
 const OtherCoursesUI = ({
   isEditable,
   other_courses,

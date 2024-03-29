@@ -1,13 +1,13 @@
 import React from "react";
-import SkillTrainingUI from "./SkillTrainingUI";
+import ActivitiesUI from "./ActivitesUI";
 import { useContext, useEffect, useState } from "react";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
 import { MEMBER_CA_JOB_PROFILE_OTHER_COURSES } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
-import { useSkillTraining } from "./controller/useSkillTraining";
+import { useActivities } from "./Controllers/useActivities";
 
-const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
+const Activities = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -23,19 +23,11 @@ const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
 
   const {
     isValidAllFields,
-    languagesKnown,
-    handleValueUpdate,
-    ITSkills,
-    softSkills,
-    otherSkills,
-    handleLanguagesKnownBlur,
-    handleITSkillsBlur,
-    handleSoftSkillsBlur,
-    handleOtherSkillsBlur,
-    handleAddRemoveRow,
-    handleCheckBoxSelection,
-    handleOtherSkillsUpdate,
-  } = useSkillTraining({
+    achievements,
+    hobbies,
+    handleAchievementsBlur,
+    handleHobbiesBlur,
+  } = useActivities({
     state,
     isEditable,
   });
@@ -53,27 +45,19 @@ const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
   };
 
   const onChangeValue = (details) => (label, value) => {
-    // const { key } = findKeyByLabel(label, details);
+    const { key } = findKeyByLabel(label, details);
 
-    // setState((prev) => ({
-    //   ...prev,
-    //   [key]: value,
-    // }));
+    setState((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   };
   return (
-    <SkillTrainingUI
-      languagesKnown={languagesKnown}
-      handleValueUpdate={handleValueUpdate}
-      handleCheckBoxSelection={handleCheckBoxSelection}
-      ITSkills={ITSkills}
-      softSkills={softSkills}
-      otherSkills={otherSkills}
-      handleLanguagesKnownBlur={handleLanguagesKnownBlur}
-      handleITSkillsBlur={handleITSkillsBlur}
-      handleSoftSkillsBlur={handleSoftSkillsBlur}
-      handleOtherSkillsBlur={handleOtherSkillsBlur}
-      handleAddRemoveRow={handleAddRemoveRow}
-      handleOtherSkillsUpdate={handleOtherSkillsUpdate}
+    <ActivitiesUI
+      achievements={achievements}
+      hobbies={hobbies}
+      handleAchievementsBlur={handleAchievementsBlur}
+      handleHobbiesBlur={handleHobbiesBlur}
       isEditable={isEditable}
       onChangeValue={onChangeValue}
       isLoading={isLoading}
@@ -93,4 +77,4 @@ const SkillTrainingComponent = ({ isEditable = true, handleEdit }) => {
   );
 };
 
-export default SkillTrainingComponent;
+export default Activities;

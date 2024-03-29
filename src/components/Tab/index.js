@@ -1,4 +1,4 @@
-import { FormTab } from "./FormTab";
-import { TabView } from "./TabView";
+import { FormTabs } from "./FormTabs";
+import { CustomTabs } from "./CustomTabs";
 
-export { FormTab, TabView };
+export { FormTabs, CustomTabs };

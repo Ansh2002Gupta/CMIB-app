@@ -1,21 +1,20 @@
-import React from "react";
-import ActivitiesUI from "./ActivitesUI";
 import { useContext, useEffect, useState } from "react";
+import ExamsUI from "./ExamsUI";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
-import { MEMBER_CA_JOB_PROFILE_OTHER_COURSES } from "../../services/apiServices/apiEndPoint";
+import { MEMBER_CA_JOB_PROFILE_EXAMS } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
-import { useActivities } from "./controller/useActivities";
+import { useExams } from "./Controllers/useExams";
 
-const ActivitiesComponent = ({ isEditable = true, handleEdit }) => {
+const ExamsComponent = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_OTHER_COURSES}`,
+    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EXAMS}`,
   });
 
   const { handleUpdate, isError, isLoading } = useUpdateService({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_OTHER_COURSES}`,
+    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EXAMS}`,
   });
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? data : {}
@@ -23,11 +22,13 @@ const ActivitiesComponent = ({ isEditable = true, handleEdit }) => {
 
   const {
     isValidAllFields,
-    achievements,
-    hobbies,
-    handleAchievementsBlur,
-    handleHobbiesBlur,
-  } = useActivities({
+    ca_final,
+    ca_foundation,
+    ca_inter,
+    handleFinalDetailBlur,
+    handleFoundationDetailBlur,
+    handleInternDetailBlur,
+  } = useExams({
     state,
     isEditable,
   });
@@ -53,15 +54,17 @@ const ActivitiesComponent = ({ isEditable = true, handleEdit }) => {
     }));
   };
   return (
-    <ActivitiesUI
-      achievements={achievements}
-      hobbies={hobbies}
-      handleAchievementsBlur={handleAchievementsBlur}
-      handleHobbiesBlur={handleHobbiesBlur}
+    <ExamsUI
+      ca_final={ca_final}
+      ca_foundation={ca_foundation}
+      ca_inter={ca_inter}
       isEditable={isEditable}
-      onChangeValue={onChangeValue}
       isLoading={isLoading}
       isError={isError}
+      onChangeValue={onChangeValue}
+      handleFinalDetailBlur={handleFinalDetailBlur}
+      handleFoundationDetailBlur={handleFoundationDetailBlur}
+      handleInternDetailBlur={handleInternDetailBlur}
       isValidAllFields={isValidAllFields}
       onClickSave={() => {
         handleUpdate(state, () => {
@@ -77,4 +80,4 @@ const ActivitiesComponent = ({ isEditable = true, handleEdit }) => {
   );
 };
 
-export default ActivitiesComponent;
+export default ExamsComponent;

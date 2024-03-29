@@ -1,8 +1,10 @@
-import { ScrollView, View } from "@unthinkable/react-core-components";
-import style from "./PersonalDetails.style";
-import DetailCard from "../../components/DetailCard";
+import React from "react";
 import { useIntl } from "react-intl";
-import SaveCancelButton from "./SaveCancelButton";
+import { ScrollView, View } from "@unthinkable/react-core-components";
+
+import DetailCard from "../../components/DetailCard";
+import SaveCancelButton from "../../components/SaveCancelButton";
+import style from "./PersonalDetails.style";
 
 const PersonalDetailsUI = ({
   isEditable,

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, ScrollView } from "@unthinkable/react-core-components";
 import style from "./EducationDetails.style";
-import SaveCancelButton from "./SaveCancelButton";
+import SaveCancelButton from "../../components/SaveCancelButton";
 import DetailCard from "../../components/DetailCard";
 import { useIntl } from "react-intl";
 const EducationDetailsUI = ({

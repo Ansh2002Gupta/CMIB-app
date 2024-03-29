@@ -25,6 +25,10 @@ const style = {
     paddingTop: 14,
     paddingBottom: 14,
   },
+  containerStyle: {
+    flex: 1,
+    overflow: "hidden",
+  },
 };
 
 export default style;

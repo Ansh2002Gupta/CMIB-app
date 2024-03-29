@@ -454,6 +454,12 @@ const locale = {
   "label.high": "High",
   "label.medium": "Medium",
   "label.low": "Low",
+  "label.dirtyFormAlertHeading":
+    "Are you sure you want to navigate from this tab ?",
+  "label.dirtyFormAlertSubHeading": "All unsaved changes will be lost.",
+  "label.continue": "Continue",
+  "label.close": "Close",
+  "label.job_profile": "Job Profile",
 };
 
 export default locale;

@@ -1,24 +1,22 @@
+import React, { useState } from "react";
 import {
   Row,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
-import { TabView } from "../../components/Tab";
-import EducationDetailsTab from "./EducationDetailsTab";
-import PersonalDetailsComponent from "./PersonalDetailsComponent";
-import CommonText from "../../components/CommonText";
-import MembershipDetailComponent from "./Membership Details/MembershipDetailComponent";
-import WorkExperienceComponent from "./Work Experience/WorkExperienceComponent";
-import style from "./JobProfileTab.style";
-import CardComponent from "../../components/CardComponent";
-import { useState } from "react";
-import CustomImage from "../../components/CustomImage";
-import images from "../../images";
 import { useIntl } from "react-intl";
+
+import { CustomTabs } from "../../components/Tab";
+import PersonalDetails from "../../containers/PersonalDetails";
+import EducationDetails from "../../containers/EducationDetails";
+import Activities from "../../containers/Activities";
+import SkillTraining from "../../containers/SkillTraining/SkillTraining";
+import CommonText from "../../components/CommonText";
+import CardComponent from "../../components/CardComponent";
+import CustomImage from "../../components/CustomImage";
 import useIsWebView from "../../hooks/useIsWebView";
-import ActivitiesComponent from "./ActivitiesComponent";
-import SkillTrainingComponent from "./SkillTrainingComponent";
-import JobPreferencesComponent from "./Job Preferences/JobPreferencesComponent";
+import style from "./JobProfile.style";
+import images from "../../images";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
@@ -50,17 +48,18 @@ const EditButton = ({ isEditable, handleEdit }) => {
 };
 
 const JobProfileTab = () => {
+  const intl = useIntl();
   const [isEditable, setIsEditable] = useState(false);
   const handleEdit = (value) => {
     setIsEditable(value);
   };
   return (
-    <View style={{ flex: 1, overflow: "hidden" }}>
-      <TabView
+    <View style={style.containerStyle}>
+      <CustomTabs
         renderHeader={() => (
           <Row style={style.headerContainer}>
             <CommonText fontWeight={"500"} customTextStyle={style.titleText}>
-              Job Profile
+              {intl.formatMessage({ id: "label.job_profile" })}
             </CommonText>
             <EditButton isEditable={isEditable} handleEdit={handleEdit} />
           </Row>
@@ -69,7 +68,7 @@ const JobProfileTab = () => {
           {
             label: "Personal Details",
             component: (
-              <PersonalDetailsComponent
+              <PersonalDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
               />
@@ -78,57 +77,51 @@ const JobProfileTab = () => {
           {
             label: "Education Details",
             component: (
-              <EducationDetailsTab
+              <EducationDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
               />
             ),
           },
-          {
-            label: "Membership Details",
-            component: (
-              <MembershipDetailComponent
-                isEditable={isEditable}
-                handleEdit={handleEdit}
-              />
-            ),
-          },
-          {
-            label: "Work Experience",
-            component:  (
-              <WorkExperienceComponent
-                isEditable={isEditable}
-                handleEdit={handleEdit}
-              />
-            ),
-          },
+          // {
+          //   label: "Membership Details",
+          //   component: (
+          //     <MembershipDetailComponent
+          //       isEditable={isEditable}
+          //       handleEdit={handleEdit}
+          //     />
+          //   ),
+          // },
+          // {
+          //   label: "Work Experience",
+          //   component:  (
+          //     <WorkExperienceComponent
+          //       isEditable={isEditable}
+          //       handleEdit={handleEdit}
+          //     />
+          //   ),
+          // },
           {
             label: "Activities",
             component: (
-              <ActivitiesComponent
-                isEditable={isEditable}
-                handleEdit={handleEdit}
-              />
+              <Activities isEditable={isEditable} handleEdit={handleEdit} />
             ),
           },
           {
             label: "Skill Training",
             component: (
-              <SkillTrainingComponent
-                isEditable={isEditable}
-                handleEdit={handleEdit}
-              />
+              <SkillTraining isEditable={isEditable} handleEdit={handleEdit} />
             ),
           },
-          {
-            label: "Job Preferences",
-            component: (
-              <JobPreferencesComponent
-                isEditable={isEditable}
-                handleEdit={handleEdit}
-              />
-            ),
-          },
+          // {
+          //   label: "Job Preferences",
+          //   component: (
+          //     <JobPreferencesComponent
+          //       isEditable={isEditable}
+          //       handleEdit={handleEdit}
+          //     />
+          //   ),
+          // },
         ]}
       />
     </View>
