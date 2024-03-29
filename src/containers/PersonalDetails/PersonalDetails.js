@@ -11,11 +11,11 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE}`,
+    url: `${MEMBER_CA_JOB_PROFILE}`,
   });
 
   const { handleUpdate, isError, isLoading } = useUpdateService({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE}`,
+    url: `${MEMBER_CA_JOB_PROFILE}`,
   });
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? data : {}
