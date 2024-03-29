@@ -1,16 +1,14 @@
-import { ScrollView, View } from "@unthinkable/react-core-components";
-import style from './JobPreferences.style';
-import DetailCard from "../../../components/DetailCard";
+import React from "react";
 import { useIntl } from "react-intl";
-import useIsWebView from "../../../hooks/useIsWebView";
-import SaveCancelButton from "../SaveCancelButton";
-import CustomTextInput from "../../../components/CustomTextInput";
-import { KIND_OF_INDUSTRY } from "../../../constants/constants";
-import DragAndDropCard from "../../../components/DragAndDropCard/DragAndDropCard";
-import UploadCVPhotoUI from "./UploadCVPhotoUI";
-import CommonText from "../../../components/CommonText";
-import UploadPhotoVideoComponent from "./UploadPhotoVideoComponent";
-const JobPreferencesUI = ({
+import { ScrollView, View } from "@unthinkable/react-core-components";
+
+import DetailCard from "../../components/DetailCard";
+import useIsWebView from "../../hooks/useIsWebView";
+import SaveCancelButton from "../../components/SaveCancelButton";
+import UploadPhotoVideoComponent from "./UploadPhotoVideo";
+import style from './JobPreference.style';
+
+const JobPreferenceTemplate = ({
   isEditable,
   preferences_details,
   onChangeValue,
@@ -59,4 +57,4 @@ const JobPreferencesUI = ({
   );
 };
 
-export default JobPreferencesUI;
+export default JobPreferenceTemplate;

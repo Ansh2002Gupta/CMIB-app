@@ -1,5 +1,5 @@
 import { Platform } from "@unthinkable/react-core-components";
-import colors from "../../../assets/colors";
+import colors from "../../assets/colors";
 
 const style = {
   contentContainerStyle: {
@@ -29,12 +29,5 @@ const style = {
     borderRadius: 0,
     backgroundColor: "transparent",
   },
-  addButtonStyle: {
-    marginBottom: 20
-  },
-  customTextStyle: {
-    fontSize: 14,
-  },
 };
-
 export default style;

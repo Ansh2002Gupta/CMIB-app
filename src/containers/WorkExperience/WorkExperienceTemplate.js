@@ -1,12 +1,14 @@
-import { ScrollView, View } from "@unthinkable/react-core-components";
-import style from './WorkExperience.style';
-import DetailCard from "../../../components/DetailCard";
+import React from "react";
 import { useIntl } from "react-intl";
-import SaveCancelButton from "../SaveCancelButton";
-import CustomButton from "../../../components/CustomButton";
-import images from "../../../images";
-import { useEffect, useState } from "react";
-const WorkExperienceUI = ({
+import { ScrollView, View } from "@unthinkable/react-core-components";
+
+import DetailCard from "../../components/DetailCard";
+import SaveCancelButton from "../../components/SaveCancelButton";
+import CustomButton from "../../components/CustomButton";
+import images from "../../images";
+import style from './WorkExperience.style';
+
+const WorkExperienceTemplate = ({
   isEditable = true,
   workExperiences,
   setWorkExperiences,
@@ -124,4 +126,4 @@ const WorkExperienceUI = ({
   );
 };
 
-export default WorkExperienceUI;
+export default WorkExperienceTemplate;

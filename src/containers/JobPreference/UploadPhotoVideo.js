@@ -1,13 +1,12 @@
-import { useIntl } from "react-intl";
-import useIsWebView from "../../../hooks/useIsWebView";
 import { View } from "@unthinkable/react-core-components";
-import style from "./UploadCVPhotoUI.style";
-import CommonText from "../../../components/CommonText";
-import useUploadedFileValidations from "../../../hooks/useUploadedFileValidations";
-import UploadImage from "../../../components/UploadImage/UploadImage";
-import UploadCVPhotoUI from "./UploadCVPhotoUI";
+import { useIntl } from "react-intl";
 
-const UploadPhotoVideoComponent = ({
+import useIsWebView from "../../hooks/useIsWebView";
+import style from "./UploadCVPhotoTemplate.style";
+import CommonText from "../../components/CommonText";
+import UploadCVPhotoUI from "./UploadCVPhotoTemplate";
+
+const UploadPhotoVideo = ({
   isEditable,
   onDeleteImage,
   errorWhileUpload,
@@ -56,4 +55,4 @@ const UploadPhotoVideoComponent = ({
   return null;
 };
 
-export default UploadPhotoVideoComponent;
+export default UploadPhotoVideo;

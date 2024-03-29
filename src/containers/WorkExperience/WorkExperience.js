@@ -1,11 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import useFetch from "../../../hooks/useFetch";
-import { MEMBER_CA_JOB_PROFILE } from "../../../services/apiServices/apiEndPoint";
-import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
-import useUpdateService from "../../../services/apiServices/hooks/JobProfile/useUpdateService";
-import { useWorkExperienceDetail } from "./useWorkExperienceDetail";
-import WorkExperienceUI from "./WorkExperienceUI";
-const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
+import React, { useContext, useEffect, useState } from "react";
+
+import useFetch from "../../hooks/useFetch";
+import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
+import WorkExperienceTemplate from "./WorkExperienceTemplate";
+import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { useWorkExperience } from "./controller/useWorkExperience";
+
+const WorkExperience = ({ isEditable, handleEdit}) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -30,7 +32,7 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
     handleAreasOfInterestSelection,
     handleCurrentSpecialisationSelection,
     handleCurrentIndustrySpecialisationSelection,
-  } = useWorkExperienceDetail({
+  } = useWorkExperience({
     state: state,
     currentStatus: currentStatus,
     isEditable,
@@ -71,7 +73,7 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
   //console.log("setCurrentStatus",setCurrentStatus)
 
   return (
-    <WorkExperienceUI
+    <WorkExperienceTemplate
       initailWorkExperience={initailWorkExperience}
       workExperiences={workExperiences}
       setWorkExperiences={setWorkExperiences}
@@ -102,4 +104,4 @@ const WorkExperienceComponent = ({ isEditable, handleEdit}) => {
   );
 };
 
-export default WorkExperienceComponent;
+export default WorkExperience;

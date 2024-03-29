@@ -40,7 +40,7 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
   return updatedData;
 };
 
-export const useWorkExperienceDetail = ({ state, isEditable}) => {
+export const useWorkExperience = ({ state, isEditable}) => {
   const intl = useIntl();
   const [selectAreaOfInterest, setSelectAreaOfInterest] = useState([
     {

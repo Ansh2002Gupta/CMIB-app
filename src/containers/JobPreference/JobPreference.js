@@ -1,11 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import useFetch from "../../../hooks/useFetch";
-import { MEMBER_CA_JOB_PROFILE } from "../../../services/apiServices/apiEndPoint";
-import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
-import useUpdateService from "../../../services/apiServices/hooks/JobProfile/useUpdateService";
-import JobPreferencesUI from "./JobPreferencesUI";
-import { useJobPreferences } from "./useJobPreferences";
-const JobPreferencesComponent = ({isEditable, handleEdit}) => {
+import React, { useContext, useEffect, useState } from "react";
+
+import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
+import JobPreferenceTemplate from "./JobPreferenceTemplate";
+import useFetch from "../../hooks/useFetch";
+import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { useJobPreference } from "./controller/useJobPreference";
+
+const JobPreference = ({isEditable, handleEdit}) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -24,7 +26,7 @@ const JobPreferencesComponent = ({isEditable, handleEdit}) => {
     handlePreferencesDetailBlur,
     isValidAllFields,
     handleAreasOfInterestSelection,
-  } = useJobPreferences({
+  } = useJobPreference({
     state,
     isEditable,
   });
@@ -83,7 +85,7 @@ const JobPreferencesComponent = ({isEditable, handleEdit}) => {
   console.log("state::", state)
 
   return (
-    <JobPreferencesUI
+    <JobPreferenceTemplate
       preferences_details={preferences_details}
       onChangeValue={onChangeValue}
       onChangeMultiSelect={onChangeMultiSelect}
@@ -107,4 +109,4 @@ const JobPreferencesComponent = ({isEditable, handleEdit}) => {
   );
 };
 
-export default JobPreferencesComponent;
+export default JobPreference;

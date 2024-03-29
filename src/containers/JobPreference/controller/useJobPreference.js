@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import useFetch from "../../../hooks/useFetch";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
-import { GROSS_SALARY, KIND_OF_INDUSTRY } from "../../../constants/constants";
 
 // const addValueOnField = ({ state, details, isEditable }) => {
 //   const {kindOfIndustry} = state;
@@ -82,7 +80,7 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
   return updatedData;
 };
 
-export const useJobPreferences = ({ state, isEditable}) => {
+export const useJobPreference = ({ state, isEditable}) => {
   const intl = useIntl();
   const [selectAreaOfInterest, setSelectAreaOfInterest] = useState([
     {

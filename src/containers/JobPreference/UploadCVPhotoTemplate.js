@@ -1,12 +1,12 @@
 import { useIntl } from "react-intl";
-import useIsWebView from "../../../hooks/useIsWebView";
 import { View } from "@unthinkable/react-core-components";
-import style from "./UploadCVPhotoUI.style";
-import CommonText from "../../../components/CommonText";
-import useUploadedFileValidations from "../../../hooks/useUploadedFileValidations";
-import UploadImage from "../../../components/UploadImage/UploadImage";
 
-const UploadCVPhotoUI = ({
+import useIsWebView from "../../hooks/useIsWebView";
+import style from "./UploadCVPhotoTemplate.style";
+import CommonText from "../../components/CommonText";
+import UploadImage from "../../components/UploadImage/UploadImage";
+
+const UploadCVPhotoTemplate = ({
   isEditable,
   headerText,
   onDeleteImage,
@@ -46,4 +46,4 @@ const UploadCVPhotoUI = ({
   return null;
 };
 
-export default UploadCVPhotoUI;
+export default UploadCVPhotoTemplate;

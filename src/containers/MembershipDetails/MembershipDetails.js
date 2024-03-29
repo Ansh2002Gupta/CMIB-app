@@ -1,11 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import MembershipDetailUI from "./MembershipDetailUI";
-import useFetch from "../../../hooks/useFetch";
-import { MEMBER_CA_JOB_PROFILE } from "../../../services/apiServices/apiEndPoint";
-import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
-import useUpdateService from "../../../services/apiServices/hooks/JobProfile/useUpdateService";
-import { useMembershipDetail } from "./useMembershipDetail";
-const MembershipDetailComponent = ({isEditable, handleEdit}) => {
+import React, { useContext, useEffect, useState } from "react";
+
+import useFetch from "../../hooks/useFetch";
+import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
+import MembershipDetailsTemplate from "./MembershipDetailsTemplate";
+import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { useMembershipDetails } from "./controller/useMembershipDetails";
+
+const MembershipDetails = ({isEditable, handleEdit}) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
@@ -27,7 +29,7 @@ const MembershipDetailComponent = ({isEditable, handleEdit}) => {
     handleFellowMemberDetailBlur,
     handlePracticeDetailBlur,
     isValidAllFields,
-  } = useMembershipDetail({
+  } = useMembershipDetails({
     state,
     isEditable,
   });
@@ -62,7 +64,7 @@ const MembershipDetailComponent = ({isEditable, handleEdit}) => {
   console.log("state::", state)
 
   return (
-    <MembershipDetailUI
+    <MembershipDetailsTemplate
       membership_detail={membership_detail}
       fellow_member_detail={fellow_member_detail}
       practice_detail={practice_detail}
@@ -88,4 +90,4 @@ const MembershipDetailComponent = ({isEditable, handleEdit}) => {
   );
 };
 
-export default MembershipDetailComponent;
+export default MembershipDetails;

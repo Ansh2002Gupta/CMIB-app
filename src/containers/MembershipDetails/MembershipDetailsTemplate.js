@@ -1,11 +1,13 @@
-import { ScrollView, View } from "@unthinkable/react-core-components";
-import style from './MembershipDetail.style';
-import DetailCard from "../../../components/DetailCard";
+import React from "react";
 import { useIntl } from "react-intl";
-import useIsWebView from "../../../hooks/useIsWebView";
-import ActionPairButton from "../../../components/ActionPairButton";
-import SaveCancelButton from "../SaveCancelButton";
-const MembershipDetailUI = ({
+import { ScrollView, View } from "@unthinkable/react-core-components";
+
+import DetailCard from "../../components/DetailCard";
+import useIsWebView from "../../hooks/useIsWebView";
+import SaveCancelButton from "../../components/SaveCancelButton";
+import style from './MembershipDetails.style';
+
+const MembershipDetailsTemplate = ({
   isEditable = true,
   membership_detail,
   fellow_member_detail,
@@ -61,4 +63,4 @@ const MembershipDetailUI = ({
   );
 };
 
-export default MembershipDetailUI;
+export default MembershipDetailsTemplate;

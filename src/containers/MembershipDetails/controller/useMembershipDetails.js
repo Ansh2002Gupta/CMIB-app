@@ -43,7 +43,7 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
   return updatedData;
 };
 
-export const useMembershipDetail = ({ state, isEditable}) => {
+export const useMembershipDetails = ({ state, isEditable}) => {
   useEffect(() => {
     const fellow_member_detail = [
       {
