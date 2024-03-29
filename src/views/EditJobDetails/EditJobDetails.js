@@ -4,23 +4,25 @@ import AddModifyQuestionaireComponent from "../../containers/AddModifyNewJobs/Ad
 import useIsWebView from "../../hooks/useIsWebView";
 import FooterComponent from "../../containers/AddModifyNewJobs/FooterComponent";
 import AddModifyJobComponent from "../../containers/AddModifyNewJobs/AddModifyJobComponent";
-const EditJobDetails = ({ questionnaireData, appData }) => {
+const EditJobDetails = ({ questionnaireData, appData, isJob }) => {
   const { isWebView } = useIsWebView();
 
   return (
     <View style={{ flex: 1, padding: 16 }}>
-      {false && (
+      {isJob ? (
         <AddModifyQuestionaireComponent
           isQuestionaire={true}
           addNewJobData={questionnaireData}
           isWebView={isWebView}
         />
+      ) : (
+        <AddModifyJobComponent
+          addNewJobData={appData}
+          isExpanded={true}
+          isWebView={isWebView}
+        />
       )}
-      <AddModifyJobComponent
-        addNewJobData={appData}
-        isExpanded={true}
-        isWebView={isWebView}
-      />
+      <FooterComponent isCheckBoxVisible={false} />
     </View>
   );
 };

@@ -60,9 +60,8 @@ const AddModifyJobComponent = forwardRef(
     const personalDetailsRef = useRef();
     const bottomSectionRef = useRef();
     const [selectedJobType, setSelectedJobType] = useState(
-      addNewJobData.jobType[0] ?? {}
+      addNewJobData.jobType ?? {}
     );
-    console.log("selectedJobType", selectedJobType);
 
     const getInternalState = () => {
       let jobDetailsValues = {};

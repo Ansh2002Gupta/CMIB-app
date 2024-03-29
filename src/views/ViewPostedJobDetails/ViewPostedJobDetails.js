@@ -308,49 +308,55 @@ const ViewPostedJobDetails = () => {
     // isError,
     // error,
   } = useFetch({
-    url: "/company/jobs/132",
+    url: "/company/jobs/153",
   });
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
     useGetAddNewJobData();
-
   const [isEdited, setIsEdit] = useState(false);
   const [questionnaireData, setQuestionnaireData] = useState([]);
   const [appData, setAppData] = useState([]);
   const [addJobs] = useContext(AddJobContext);
-  console.log(appData);
+  console.log(appData, apiData?.genderPreferenceData);
 
   useEffect(() => {
     fetchData();
   }, []);
-  console.log("APIDARA", addJobs);
   useEffect(() => {
     let obj = {};
     if (apiData && isSuccess) {
       obj.jobSummary = apiData.summary;
       obj.jobDetails = apiData.detail;
-      obj.jobType = addJobs.jobType
-        .filter((item) => item.id === apiData.job_type_id)
-        .map((item) => ({
-          id: item.id,
-          label: item.name,
-          value: item.slug,
-        }));
-      obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
-      obj.salaryNagotiable = apiData.is_salary_negotiable;
-      obj.minimumExperience = apiData.experience?.min_experience;
-      obj.maximumExperience = apiData.experience?.max_experience;
-      obj.jobLocation = apiData.location_id
-        ? addJobs.jobLocationData
-            .filter((item) => apiData.location_id.includes(item.id))
+      obj.jobType = apiData.job_type_id
+        ? addJobs.jobType
+            .filter((item) => item.id === apiData.job_type_id)
             .map((item) => ({
               id: item.id,
               label: item.name,
               value: item.slug,
+            }))[0]
+        : {};
+      obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
+      obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
+      obj.minimumExperience = apiData?.min_experience;
+      obj.maximumExperience = apiData?.max_experience;
+      obj.jobLocation = apiData.location_id
+        ? addJobs.jobLocationData
+            .filter((item) => {
+              if (JSON.parse(apiData.location_id).includes(item.id)) {
+                return item;
+              }
+            })
+            .map((item) => ({
+              id: item.id,
+              label: item.city,
+              value: item.city,
             }))
         : []; //
       obj.nationality = apiData.countryData
         ? addJobs.countryData
-            ?.filter((item) => apiData.nationality.includes(item.name))
+            ?.filter((item) =>
+              JSON.parse(apiData.nationality).includes(item.name)
+            )
             .map((item) => ({
               id: item.id,
               label: item.name,
@@ -360,37 +366,71 @@ const ViewPostedJobDetails = () => {
       obj.designation = apiData.designation;
       obj.functionalAreas =
         apiData.functional_area_id.length > 0
-          ? addJobs.genderPreferenceData
-              .filter((item) => apiData.functional_area_id.includes(item.id))
+          ? addJobs.functionalData
+              .filter((item) => {
+                if (JSON.parse(apiData.functional_area_id).includes(item.id)) {
+                  return item;
+                }
+              })
               .map((item) => ({
                 id: item.id,
                 label: item.name,
                 value: item.slug,
               }))
           : []; //
-      obj.genderPreference =
-        addJobs.genderPreferenceData &&
-        addJobs.genderPreferenceData?.filter(
-          (item) => item.name == apiData.gender_preference
-        ); //
-      obj.categoryPreference = apiData.category_preference; //
+      obj.genderPreference = apiData.gender_preference
+        ? addJobs.genderPreferenceData
+            ?.filter((item) => item.name == apiData.gender_preference)
+            .map((item) => ({
+              id: item.name,
+              label: item.label,
+              value: item.name,
+            }))[0]
+        : {}; //
+      obj.categoryPreference = apiData.category_preference
+        ? addJobs.jobCategory
+            ?.filter((item) => item.name == apiData.category_preference)
+            .map((item) => ({
+              id: item.id,
+              label: item.name,
+              value: item.slug,
+            }))[0]
+        : {}; //
       obj.essentialQualification = apiData.essential_qualification;
       obj.desiredQualification = apiData.desired_qualification;
-      obj.jobOpeningDate = apiData.job_opening_date;
-      obj.jobClosingDate = apiData.job_closing_date;
+      obj.jobOpeningDate = apiData.opening_date;
+      obj.jobClosingDate = apiData.closing_date;
       obj.minimumSalary = apiData.min_salary;
       obj.maximumSalary = apiData.max_salary;
-      obj.numberOfVacancies = apiData.number_of_vacancies;
-      obj.modeofWork =
-        addJobs.genderPreferenceData &&
-        addJobs.genderPreferenceData.filter(
-          (item) => item.name == apiData.work_mode
-        ); //
+      obj.numberOfVacancies = apiData.vacancy;
+      obj.modeofWork = apiData.work_mode
+        ? addJobs.workModeData
+            .filter((item) => {
+              if (item.name == apiData.work_mode) {
+                console.log("ITEEEEM", item);
+                return item;
+              }
+            })
+            .map((item) => ({
+              id: item.id,
+              label: item.name,
+              value: item.slug,
+            }))[0]
+        : {}; //
       obj.flexiHours = apiData.flexi_hours ? 0 : 1;
-      obj.vacanciesCountType = apiData.is_extended_vacancy ? 1 : 0;
+      obj.vacanciesCountType = apiData.is_extended_vacancy == 1 ? 0 : 1;
       obj.fullTime = apiData.service_type == "Full Time" ? 0 : 1;
       obj.disabiltyPercentage = apiData?.disability_percentage;
       obj.typeOfDisabilty = apiData?.disability_type;
+      obj.contractYear = apiData?.contract_period
+        ? JSON.parse(apiData.contract_period).years
+        : 0;
+      obj.contractMonth = apiData?.contract_period
+        ? JSON.parse(apiData.contract_period).months
+        : 0;
+      obj.contractDay = apiData?.contract_period
+        ? JSON.parse(apiData.contract_period).days
+        : 0;
     }
     setAppData(obj);
 
@@ -448,7 +488,7 @@ const ViewPostedJobDetails = () => {
                     }}
                   >
                     {isEdited ? (
-                      <EditJobDetails appData={appData} />
+                      <EditJobDetails appData={appData} isJob={false} />
                     ) : (
                       <CardComponent
                         customStyle={{
@@ -473,7 +513,18 @@ const ViewPostedJobDetails = () => {
                 <View style={{ flex: 1, margin: 16 }}>
                   <ScrollView>
                     {isEdited ? (
-                      <EditJobDetails questionnaireData={questionnaireData} />
+                      <View
+                        style={{
+                          marginTop: -40,
+                          marginLeft: -16,
+                          marginRight: -16,
+                        }}
+                      >
+                        <EditJobDetails
+                          questionnaireData={questionnaireData}
+                          isJob={true}
+                        />
+                      </View>
                     ) : (
                       questionnaireData?.map((item) => {
                         return (
