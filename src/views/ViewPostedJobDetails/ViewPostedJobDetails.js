@@ -1,5 +1,5 @@
 import { View, ScrollView } from "@unthinkable/react-core-components";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CommonText from "../../components/CommonText";
 import CustomTextEditor from "../../components/CustomTextEditor";
 import { FormTabs } from "../../components/Tab/FormTabs";
@@ -16,6 +16,9 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { getQuestionType } from "../../utils/util";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import EditJobDetails from "../EditJobDetails";
+import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
+import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
+import AddModifyJobComponent from "../../containers/AddModifyNewJobs/AddModifyJobComponent";
 const dataApi = {
   id: 62,
   approved: 0,
@@ -301,29 +304,95 @@ const details = [
 const ViewPostedJobDetails = () => {
   const {
     data: apiData,
-    isLoading,
-    isError,
-    error,
-    fetchData,
+    // isLoading,
+    // isError,
+    // error,
   } = useFetch({
-    url: "/company/jobs/124",
+    url: "/company/jobs/132",
   });
-  const { isWebView } = useIsWebView();
+  const { isLoading, isSuccess, isError, isErrorData, fetchData } =
+    useGetAddNewJobData();
+
   const [isEdited, setIsEdit] = useState(false);
   const [questionnaireData, setQuestionnaireData] = useState([]);
   const [appData, setAppData] = useState([]);
+  const [addJobs] = useContext(AddJobContext);
+  console.log(appData);
 
   useEffect(() => {
+    fetchData();
+  }, []);
+  console.log("APIDARA", addJobs);
+  useEffect(() => {
     let obj = {};
-    if (apiData) {
+    if (apiData && isSuccess) {
       obj.jobSummary = apiData.summary;
-      obj.jobDetail = apiData.detail;
-      obj.jobType = apiData.job_type_id;
-      obj.isUrgentJob = apiData.is_urgent ? 1 : 0;
+      obj.jobDetails = apiData.detail;
+      obj.jobType = addJobs.jobType
+        .filter((item) => item.id === apiData.job_type_id)
+        .map((item) => ({
+          id: item.id,
+          label: item.name,
+          value: item.slug,
+        }));
+      obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
       obj.salaryNagotiable = apiData.is_salary_negotiable;
-      obj.minimumExperience;
-      console.log("data", data, "XX", apiData);
+      obj.minimumExperience = apiData.experience?.min_experience;
+      obj.maximumExperience = apiData.experience?.max_experience;
+      obj.jobLocation = apiData.location_id
+        ? addJobs.jobLocationData
+            .filter((item) => apiData.location_id.includes(item.id))
+            .map((item) => ({
+              id: item.id,
+              label: item.name,
+              value: item.slug,
+            }))
+        : []; //
+      obj.nationality = apiData.countryData
+        ? addJobs.countryData
+            ?.filter((item) => apiData.nationality.includes(item.name))
+            .map((item) => ({
+              id: item.id,
+              label: item.name,
+              value: item.slug,
+            }))
+        : ""; //
+      obj.designation = apiData.designation;
+      obj.functionalAreas =
+        apiData.functional_area_id.length > 0
+          ? addJobs.genderPreferenceData
+              .filter((item) => apiData.functional_area_id.includes(item.id))
+              .map((item) => ({
+                id: item.id,
+                label: item.name,
+                value: item.slug,
+              }))
+          : []; //
+      obj.genderPreference =
+        addJobs.genderPreferenceData &&
+        addJobs.genderPreferenceData?.filter(
+          (item) => item.name == apiData.gender_preference
+        ); //
+      obj.categoryPreference = apiData.category_preference; //
+      obj.essentialQualification = apiData.essential_qualification;
+      obj.desiredQualification = apiData.desired_qualification;
+      obj.jobOpeningDate = apiData.job_opening_date;
+      obj.jobClosingDate = apiData.job_closing_date;
+      obj.minimumSalary = apiData.min_salary;
+      obj.maximumSalary = apiData.max_salary;
+      obj.numberOfVacancies = apiData.number_of_vacancies;
+      obj.modeofWork =
+        addJobs.genderPreferenceData &&
+        addJobs.genderPreferenceData.filter(
+          (item) => item.name == apiData.work_mode
+        ); //
+      obj.flexiHours = apiData.flexi_hours ? 0 : 1;
+      obj.vacanciesCountType = apiData.is_extended_vacancy ? 1 : 0;
+      obj.fullTime = apiData.service_type == "Full Time" ? 0 : 1;
+      obj.disabiltyPercentage = apiData?.disability_percentage;
+      obj.typeOfDisabilty = apiData?.disability_type;
     }
+    setAppData(obj);
 
     const transformedQuestionnaire = dataApi.questionnaire.map((item) => {
       if (
@@ -348,7 +417,7 @@ const ViewPostedJobDetails = () => {
       }
     });
     setQuestionnaireData(transformedQuestionnaire);
-  }, [apiData]);
+  }, [apiData, isSuccess]);
   return (
     <View style={{ flex: 1 }}>
       <IconHeader headerText={"Hello"} />
@@ -379,7 +448,7 @@ const ViewPostedJobDetails = () => {
                     }}
                   >
                     {isEdited ? (
-                      <View />
+                      <EditJobDetails appData={appData} />
                     ) : (
                       <CardComponent
                         customStyle={{

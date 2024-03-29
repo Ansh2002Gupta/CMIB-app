@@ -16,16 +16,7 @@ import { progressData } from "../../../constants/constants";
 import styles from "./AddModifyJobComponent.styles";
 
 const AddModifyJobComponent = forwardRef(
-  (
-    {
-      addNewJobData,
-      handleJobDetailsChange,
-      isExpanded,
-      isWebView,
-      setIsExpanded,
-    },
-    ref
-  ) => {
+  ({ addNewJobData, isExpanded, isWebView, setIsExpanded }, ref) => {
     const intl = useIntl();
     const [jobProgress, setJobProgress] = useState(0);
 
@@ -68,7 +59,10 @@ const AddModifyJobComponent = forwardRef(
     const jobDetailsRef = useRef();
     const personalDetailsRef = useRef();
     const bottomSectionRef = useRef();
-    const [selectedJobType, setSelectedJobType] = useState({});
+    const [selectedJobType, setSelectedJobType] = useState(
+      addNewJobData.jobType[0] ?? {}
+    );
+    console.log("selectedJobType", selectedJobType);
 
     const getInternalState = () => {
       let jobDetailsValues = {};
@@ -140,7 +134,6 @@ const AddModifyJobComponent = forwardRef(
               isWebView={isWebView}
               ref={bottomSectionRef}
               selectedJobType={selectedJobType}
-              handleJobDetailsChange={handleJobDetailsChange}
               addNewJobData={addNewJobData}
             />
           </Animated.View>
