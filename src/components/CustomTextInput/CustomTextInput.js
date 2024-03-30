@@ -280,6 +280,7 @@ const CustomTextInput = (props) => {
     if (isTextInputWithChip) {
       return (
         <TextInputWithChip
+          value={value}
           placeholderText={placeholder}
           onChipUpdate={(chipData) => onChipUpdate(chipData)}
         />

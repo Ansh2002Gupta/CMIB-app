@@ -1,35 +1,36 @@
 import { useState } from "react";
 import { BOOLEAN_OPTION } from "../../../constants/constants";
 import { useIntl } from "react-intl";
+import { booleanToYesNo } from "../../../utils/util";
 
 const achievements = () => [
   {
-    key: "obtained_scholarships",
+    key: "study_certificates",
     label: "label.obtained_scholarships",
     isDropdown: true,
     options: BOOLEAN_OPTION,
     placeholder: "",
   },
   {
-    key: "won_prizes",
+    key: "sport_prizes",
     label: "label.won_prizes",
     isDropdown: true,
     options: BOOLEAN_OPTION,
   },
   {
-    key: "won_prizes_in_debates",
+    key: "debate_prizes",
     label: "label.won_prizes_in_debates",
     isDropdown: true,
     options: BOOLEAN_OPTION,
   },
   {
-    key: "participation_in_social",
+    key: "social_programe_participation",
     label: "label.participation_in_social",
     isDropdown: true,
     options: BOOLEAN_OPTION,
   },
   {
-    key: "other",
+    key: "anyother_achievements",
     label: "label.any_other_specify",
   },
 ];
@@ -38,6 +39,7 @@ const hobbies = () => [
   {
     key: "hobbies",
     placeholder: "label.hobbies_placeholder",
+    isTextInputWithChip: true,
   },
 ];
 
@@ -45,7 +47,11 @@ const addValueOnField = ({ state, details, isEditable }) => {
   return details.map((item) => {
     return {
       ...item,
-      value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+      // todo: need to review this condition again
+      value:
+        !isEditable && state?.[item?.key] === null
+          ? "--"
+          : booleanToYesNo(state?.[item?.key] ?? "--"),
       codeValue: state.codeValue,
     };
   });

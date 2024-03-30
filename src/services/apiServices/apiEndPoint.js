@@ -43,3 +43,4 @@ export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/
 export const MEMBER_CA_JOB_PROFILE_SKILLS =  `${USER_TYPE_MEMBER}/profile/skills`;
 export const LANGUAGES = `${CORE}/languages`;
 export const SKILLS = `${USER_TYPE_MEMBER}/ca-jobs/master/configurations`;
+export const MEMBER_CA_JOB_PROFILE_ACTIVITY = `${USER_TYPE_MEMBER}/profile/activities`;

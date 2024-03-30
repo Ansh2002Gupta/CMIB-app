@@ -21,6 +21,7 @@ import styles, {
   getRowStyle,
 } from "./DetailComponent.style";
 import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
+import CustomChipCard from "../CustomChipCard/CustomChipCard";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -73,16 +74,16 @@ const DetailComponent = ({
   );
 
   const renderCancelButton = () => (
-    <View style={[{flex: 1}]}>
+    <View style={[{ flex: 1 }]}>
       <View style={styles.cancelButton}>
-      <TouchableImage
-                  isSvg={isWebView}
-                  onPress={handleCancel}
-                  source={isWebView ? images.iconCloseDark : images.iconCross}
-                  style={{ height: 24, width: 24}}
-                />
+        <TouchableImage
+          isSvg={isWebView}
+          onPress={handleCancel}
+          source={isWebView ? images.iconCloseDark : images.iconCross}
+          style={{ height: 24, width: 24 }}
+        />
       </View>
-   </View>
+    </View>
   );
 
   const renderWebActionButton = () => (
@@ -141,6 +142,25 @@ const DetailComponent = ({
       );
     }
 
+    if (detail.isTextInputWithChip) {
+      return (
+        <View
+          style={{
+            ...styles.valueStyle,
+            ...styles.chipDataContainer,
+          }}
+        >
+          {typeof detail?.value !== "string" ? (
+            detail?.value?.map((value, index) => (
+              <CustomChipCard key={index} message={value} />
+            ))
+          ) : (
+            <CommonText>{detail.value}</CommonText>
+          )}
+        </View>
+      );
+    }
+
     return (
       <CommonText
         customTextStyle={{
@@ -191,8 +211,12 @@ const DetailComponent = ({
         isMultiline={detail?.isMultiline}
         isCheckBoxSelection={detail?.isCheckBoxSelection}
         checkBoxOptions={detail?.checkBoxOptions}
-        handleAddRemoveRow={(isActionToAdd) => handleAddRemoveRow(isActionToAdd, index, detail?.key)}
-        handleCheckBoxSelection={(id) => handleCheckBoxSelection(id, index, detail?.key)}
+        handleAddRemoveRow={(isActionToAdd) =>
+          handleAddRemoveRow(isActionToAdd, index, detail?.key)
+        }
+        handleCheckBoxSelection={(id) =>
+          handleCheckBoxSelection(id, index, detail?.key)
+        }
         isActionToAdd={detail?.isActionToAdd}
         isSingleSelection={detail?.isSingleSelection}
         placeholder={
@@ -202,7 +226,7 @@ const DetailComponent = ({
         isNumeric={detail.isNumeric}
         isToggle={detail.isToggle}
         isTextInputWithChip={detail?.isTextInputWithChip}
-        onChipUpdate={(chipData) => onChipUpdate(chipData)}
+        onChipUpdate={(chipData) => onChipUpdate(detail.label, chipData)}
         valueField={detail.valueField || "label"}
         labelField={detail.labelField || "label"}
         inputKey={detail.inputKey || "value"}
@@ -237,12 +261,12 @@ const DetailComponent = ({
             }}
             fontWeight="600"
           >
-           {headerText}
+            {headerText}
           </CommonText>
           {isMandatory && (
             <CommonText customTextStyle={styles.starStyle}>{" *"}</CommonText>
           )}
-         {isShowCancel && isEditable && renderCancelButton()}
+          {isShowCancel && isEditable && renderCancelButton()}
         </View>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
