@@ -221,3 +221,41 @@ export function booleanToYesNo(value) {
   }
   return value;
 }
+
+export const formatDateToYYYYMMDD = (dateInput) => {
+  const date = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
+  if (isNaN(date)) {
+    throw new Error('Invalid date');
+  }
+  const year = date.getFullYear() ?? "--";
+  const month = (date.getMonth() + 1).toString().padStart(2, '0') ?? "--"; // Months are 0-indexed
+  const day = date.getDate().toString().padStart(2, '0') ?? "--";
+  return `${year}-${month}-${day}`;
+};
+
+export const formatDateToDDMMYYYY = (isoDateString) => {
+  const date = new Date(isoDateString);
+  const day = date.getUTCDate().toString().padStart(2, '0') ?? "--";
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0')?? "--";
+  const year = date.getUTCFullYear()?? "--";
+  return `${day}/${month}/${year}`;
+};
+
+export const formatDateToMonthNameYear = (isoDateString) => {
+  const date = new Date(isoDateString);
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    throw new Error('Invalid date');
+  }
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  const monthIndex = date.getMonth();
+  const year = date.getFullYear();
+  return `${monthNames[monthIndex]}/${year}`;
+};
+
+export const getCurrentYear= () =>{
+  return new Date().getFullYear();
+}
