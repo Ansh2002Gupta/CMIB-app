@@ -45,7 +45,6 @@ const DetailComponent = ({
   handleCancel,
   handleAddRemoveRow,
   handleCheckBoxSelection,
-  onChipUpdate,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -226,7 +225,7 @@ const DetailComponent = ({
         isNumeric={detail.isNumeric}
         isToggle={detail.isToggle}
         isTextInputWithChip={detail?.isTextInputWithChip}
-        onChipUpdate={(chipData) => onChipUpdate(detail.label, chipData)}
+        onChipUpdate={(chipData) => handleChange(detail.label, chipData)}
         valueField={detail.valueField || "label"}
         labelField={detail.labelField || "label"}
         inputKey={detail.inputKey || "value"}
@@ -383,7 +382,6 @@ DetailComponent.defaultProps = {
   handleCancel: () => {},
   handleAddRemoveRow: () => {},
   handleCheckBoxSelection: () => {},
-  onChipUpdate: () => {},
 };
 
 DetailComponent.propTypes = {
@@ -407,7 +405,6 @@ DetailComponent.propTypes = {
   handleCancel: PropTypes.func,
   handleAddRemoveRow: PropTypes.func,
   handleCheckBoxSelection: PropTypes.func,
-  onChipUpdate: PropTypes.func,
 };
 
 export default DetailComponent;
