@@ -30,6 +30,7 @@ const FooterComponent = ({
           />
         </View>
       </View>
+
       <View style={styles.getSecondViewStyle(isWebView)}>
         <View style={styles.buttonViewStyle}>
           <CustomButton

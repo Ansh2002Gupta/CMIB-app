@@ -31,4 +31,5 @@ export const navigations = {
   TICKETS_VIEW_EDIT: "ticket-details",
   ADD_NEW_JOBS: "add-new-jobs",
   DETAILS_JOBS: "details-jobs",
+  EDIT_JOB: "edit-job",
 };

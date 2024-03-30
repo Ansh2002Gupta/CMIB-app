@@ -66,7 +66,7 @@ const SearchView = ({
 
   const clearSearch = () => {
     setQuery("");
-    onChangeDropDownText("");
+    onChangeDropDownText && onChangeDropDownText("");
     onSearch(data);
     customSearchCriteria("");
   };

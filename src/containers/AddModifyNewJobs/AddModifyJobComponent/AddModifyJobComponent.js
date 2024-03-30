@@ -19,10 +19,11 @@ const AddModifyJobComponent = forwardRef(
   (
     {
       addNewJobData,
-      handleJobDetailsChange,
       isExpanded,
       isWebView,
       setIsExpanded,
+      isMinimisedVisible = true,
+      cleanUpFunction,
     },
     ref
   ) => {
@@ -57,6 +58,12 @@ const AddModifyJobComponent = forwardRef(
         }
       }
     }, [isExpanded]);
+    useEffect(() => {
+      return () => {
+        let data = getInternalState();
+        cleanUpFunction && cleanUpFunction(data);
+      };
+    }, []);
 
     const [animation] = useState(new Animated.Value(0));
     const minHeight = 0;
@@ -68,7 +75,9 @@ const AddModifyJobComponent = forwardRef(
     const jobDetailsRef = useRef();
     const personalDetailsRef = useRef();
     const bottomSectionRef = useRef();
-    const [selectedJobType, setSelectedJobType] = useState({});
+    const [selectedJobType, setSelectedJobType] = useState(
+      addNewJobData?.jobType ?? {}
+    );
 
     const getInternalState = () => {
       let jobDetailsValues = {};
@@ -120,6 +129,7 @@ const AddModifyJobComponent = forwardRef(
             setIsExpanded={setIsExpanded}
             isQuestion={false}
             progressJobData={progressData[jobProgress]}
+            isMinimisedVisible={isMinimisedVisible}
             headerText={intl.formatMessage({ id: "label.job_details" })}
           />
 
@@ -140,7 +150,6 @@ const AddModifyJobComponent = forwardRef(
               isWebView={isWebView}
               ref={bottomSectionRef}
               selectedJobType={selectedJobType}
-              handleJobDetailsChange={handleJobDetailsChange}
               addNewJobData={addNewJobData}
             />
           </Animated.View>

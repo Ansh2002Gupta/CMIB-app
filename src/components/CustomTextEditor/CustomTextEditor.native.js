@@ -15,11 +15,13 @@ const CustomTextEditor = ({
   customErrorStyle,
   customHandleBlur,
   customLabelStyle,
+  disabled,
   errorMessage,
   isMandatory,
   label,
   onChangeText,
   value,
+  quillContainerStyle,
 }) => {
   const richText = useRef(null);
   const intl = useIntl();
@@ -46,7 +48,11 @@ const CustomTextEditor = ({
         )}
       </View>
       <View
-        style={[styles.mainView, !!errorMessage ? styles.invalidInput : {}]}
+        style={[
+          styles.mainView,
+          !!errorMessage ? styles.invalidInput : {},
+          quillContainerStyle,
+        ]}
       >
         <View>
           <RichToolbar
@@ -69,6 +75,7 @@ const CustomTextEditor = ({
               ref={richText}
               onBlur={customHandleBlur}
               initialContentHTML={value}
+              disabled={disabled}
               onChange={(val) => {
                 onChangeText(val);
               }}
@@ -93,12 +100,14 @@ CustomTextEditor.defaultProps = {
   customLabelStyle: {},
   isMandatory: false,
   label: "",
+  disabled: false,
 };
 
 CustomTextEditor.propTypes = {
   customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
+  disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,

@@ -9,6 +9,7 @@ const style = {
     paddingTop: 16,
     paddingRight: 16,
     paddingLeft: 16,
+    flex: 1,
   },
   itemContainer: {
     height: 36,

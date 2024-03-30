@@ -168,7 +168,6 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
       ])
     ).values()
   );
-
   async function handleChange(text) {
     return fetchSearch(text).then((res) => {
       if (Platform.OS.toLowerCase() !== "web") {

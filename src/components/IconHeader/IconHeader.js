@@ -12,6 +12,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
 import images from "../../images";
 import styles from "./IconHeader.style";
+import Switch from "../Switch";
 
 const IconHeader = ({
   actionButtonIcon,
@@ -22,9 +23,13 @@ const IconHeader = ({
   hasActionButton,
   hasIconBar,
   headerText,
+  handleSwitchChange,
   iconLeft,
   iconRight,
   iconStyle,
+  isActive,
+  isSwitchVisible,
+  isBorderVisible,
   mobActionButton,
   onPressLeftIcon,
   onPressRightIcon,
@@ -140,9 +145,19 @@ const IconHeader = ({
               </CardComponent>
             </CustomTouchableOpacity>
           )}
+          {isSwitchVisible && (
+            <View>
+              <Switch
+                isToggled={isActive}
+                onChange={() => {
+                  handleSwitchChange && handleSwitchChange();
+                }}
+              />
+            </View>
+          )}
         </View>
       </>
-      <View style={styles.borderStyle} />
+      {isBorderVisible && <View style={styles.borderStyle} />}
     </View>
   );
 };
@@ -154,11 +169,15 @@ IconHeader.defaultProps = {
   customActionButtonText: {},
   handleButtonClick: () => {},
   hasActionButton: false,
+  handleSwitchChange: () => {},
   hasIconBar: false,
   headerText: "",
   iconLeft: images.iconBack,
   iconRight: images.iconNotification,
   iconStyle: {},
+  isSwitchVisible: false,
+  isActive: false,
+  isBorderVisible: true,
   mobActionButton: "",
   onPressLeftIcon: () => {},
   onPressRightIcon: () => {},
@@ -174,9 +193,13 @@ IconHeader.propTypes = {
   hasActionButton: PropTypes.bool,
   hasIconBar: PropTypes.bool,
   headerText: PropTypes.string,
+  handleSwitchChange: PropTypes.func,
   iconLeft: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   iconRight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   iconStyle: PropTypes.object,
+  isSwitchVisible: PropTypes.bool,
+  isActive: PropTypes.bool,
+  isBorderVisible: PropTypes.bool,
   mobActionButton: PropTypes.node,
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,

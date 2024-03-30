@@ -234,7 +234,7 @@ const DropDownModal = ({
         </TouchableOpacity>
         {!!selectedItems.length && (
           <View style={styles.multiSelectOptions}>
-            {selectedItems.map((item, index) => (
+            {selectedItems?.map((item, index) => (
               <>
                 <CustomChipCard
                   message={item?.name ?? item.value}

@@ -320,6 +320,10 @@ const BottomSection = forwardRef(
             customToggleStyle={styles.toggleComponentStyle}
             customLabelStyle={styles.labelStyle}
           />
+          {isWebView && selectedJobType?.label === jobType.SPECIALLY_ABLE && (
+            <View style={styles.spacer} />
+          )}
+
           {isWebView &&
             (selectedJobType?.label == jobType.CONTRACTUAL ||
               !selectedJobType?.label) && <View style={styles.spacer} />}
@@ -378,7 +382,11 @@ const BottomSection = forwardRef(
                 handleCountChange={(item) => {
                   handleJobDetailsChange("contractMonth", item);
                 }}
-                customStyle={isWeb ? styles.spacer : styles.flex1MarginLeft8}
+                customStyle={
+                  isWeb
+                    ? styles.spacer
+                    : { ...styles.flex1MarginLeft8, ...{ marginLeft: 24 } }
+                }
               />
               <CustomTextInput
                 isMandatory
@@ -391,7 +399,9 @@ const BottomSection = forwardRef(
                   handleJobDetailsChange("contractDay", item);
                 }}
                 customStyle={
-                  isWeb ? styles.flex1marginBottom48 : styles.flex1MarginLeft8
+                  isWeb
+                    ? styles.flex1marginBottom48
+                    : { ...styles.flex1MarginLeft8, ...{ marginLeft: 24 } }
                 }
               />
             </View>
