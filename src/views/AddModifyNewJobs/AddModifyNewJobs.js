@@ -39,7 +39,6 @@ const AddModifyNewJobs = () => {
     if (addComponentRef.current) {
       questionError = addQuestionRef.current.getQuestionError();
     }
-
     if (!isError && !questionError) {
       const formattedData = getFormatedData(
         jobData,

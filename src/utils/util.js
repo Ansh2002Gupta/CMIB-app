@@ -256,9 +256,13 @@ export const getFormatedData = (jobData, question, isCheckList) => {
   }
   let tempQuestion = question.map((item) => {
     return {
+      id: item.id,
       type: questionType[item.typeofQuestion],
       question: item.question,
-      question_options: item.question_options,
+      question_options:
+        item.question_options?.map((option) => {
+          return option.value;
+        }) || null,
       question_order: item.question_order,
       mandatory: item.isMandatory,
     };
