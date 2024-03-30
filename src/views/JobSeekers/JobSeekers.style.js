@@ -34,13 +34,6 @@ const styles = StyleSheet.create({
     height: 16,
     width: 16,
   },
-  iconMoreColumn: {
-    ...Platform.select({
-      web: {
-        height: "90vh",
-      },
-    }),
-  },
   tableContent: {
     height: "90%",
   },
