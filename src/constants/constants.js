@@ -46,6 +46,13 @@ export const ANONYMOUS = "Anonymous";
 export const USER_TYPE_CANDIDATE = "candidate";
 export const EDIT = "edit";
 export const HYPHEN = "-";
+export const MINIMUM_EXPERIENCE_LIMIT = 0;
+export const MAXIMUM_EXPERIENCE_LIMIT = 40;
+export const MINIMUM_SALARY_LIMIT = 0;
+export const MAXIMUM_SALARY_LIMIT = 100;
+export const MINIMUM_FRESHNESS_LIMIT = 0;
+export const MAXIMUM_FRESHNESS_LIMIT = 100;
+export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = "work mode";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -222,6 +229,16 @@ export const ROWS_PER_PAGE_ARRAY = [
   { value: 30, label: "30" },
   { value: 40, label: "40" },
 ];
+
+export const APPLIED_JOBS_TABLE_HEADING = {
+  readable_id: "Job Id",
+  company_name: "Company Name",
+  designation: "Designation",
+  vacancies: "Vacancies",
+  status: "Status",
+  active_status: "Active/Inactive",
+  created_at: "Created On",
+};
 
 export const TICKET_TABLE_HEADING = {
   readable_id: "Ticket ID",

@@ -70,6 +70,9 @@ const styles = StyleSheet.create({
   renderOptionCatigory: {
     height: 300,
   },
+  slider: {
+    flex: 1,
+  },
 });
 
 export default styles;

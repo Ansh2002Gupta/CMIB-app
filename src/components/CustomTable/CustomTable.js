@@ -30,10 +30,16 @@ const initialFilterState = {
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
+  companyData,
   currentPage,
   data,
+  defaultCategory,
+  departmentData,
+  educationData,
+  experienceData,
   filterApplyHandler,
   filterCategory,
+  freshnessData,
   getColoumConfigs,
   getStatusStyle,
   handleLoadMore,
@@ -45,22 +51,27 @@ const CustomTable = ({
   handleSaveAddTicket,
   indexOfFirstRecord,
   indexOfLastRecord,
+  industryData,
   isHeading,
   isTicketListingLoading,
   isFirstPageReceived,
+  jobTypeData,
   loadingMore,
+  locationData,
   onIconPress,
   placeholder,
   queryTypeData,
   rowsLimit,
   rowsPerPage,
   statusData,
+  salaryData,
   showSearchBar,
   statusText,
   subHeadingText,
   tableHeading,
   tableIcon,
   totalcards,
+  workModeData,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -77,8 +88,34 @@ const CustomTable = ({
     setShowFilterOptions((prev) => !prev);
   };
 
-  const onApplyFilter = ({ selectedStatus, selectedQueryType }) => {
-    filterApplyHandler({ selectedStatus, selectedQueryType });
+  const onApplyFilter = ({
+    selectedCompany,
+    selectedDepartment,
+    selectedEducation,
+    selectedExperience,
+    selectedFreshness,
+    selectedSalary,
+    selectedStatus,
+    selectedIndustry,
+    selectedJobType,
+    selectedLocation,
+    selectedWorkMode,
+    selectedQueryType,
+  }) => {
+    filterApplyHandler({
+      selectedCompany,
+      selectedDepartment,
+      selectedEducation,
+      selectedExperience,
+      selectedFreshness,
+      selectedSalary,
+      selectedStatus,
+      selectedIndustry,
+      selectedJobType,
+      selectedLocation,
+      selectedWorkMode,
+      selectedQueryType,
+    });
     handleFilterModal();
   };
 
@@ -302,15 +339,26 @@ const CustomTable = ({
       {showFilterOptions && (
         <FilterModal
           {...{
+            companyData,
             data,
+            defaultCategory,
+            departmentData,
+            educationData,
+            experienceData,
             filterCategory,
             filterState,
+            freshnessData,
+            industryData,
             initialFilterState,
+            queryTypeData,
+            salaryData,
             setFilterState,
             setShowFilterOptions,
             onApplyFilter,
             statusData,
-            queryTypeData,
+            jobTypeData,
+            locationData,
+            workModeData,
           }}
         />
       )}
@@ -365,6 +413,16 @@ CustomTable.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
   showSearchBar: PropTypes.bool,
   statusData: PropTypes.array,
+  workModeData: PropTypes.array,
+  jobTypeData: PropTypes.array,
+  experienceData: PropTypes.array,
+  locationData: PropTypes.array,
+  educationData: PropTypes.array,
+  salaryData: PropTypes.array,
+  departmentData: PropTypes.array,
+  freshnessData: PropTypes.array,
+  companyData: PropTypes.array,
+  industryData: PropTypes.array,
   statusText: PropTypes.array,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,

@@ -28,6 +28,7 @@ import WebViewScreen from "../views/WebViewScreen/index";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
+import AppliedJobsView from "../views/AppliedJobsView";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -219,6 +220,10 @@ const config = [
       {
         viewPath: navigations.POSTED_JOBS,
         element: <PostedJobsView />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <AppliedJobsView />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,
