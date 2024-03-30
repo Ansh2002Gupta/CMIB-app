@@ -9,11 +9,11 @@ import { useIntl } from "react-intl";
 import { CustomTabs } from "../../components/Tab";
 import PersonalDetails from "../../containers/PersonalDetails";
 import EducationDetails from "../../containers/EducationDetails";
-import MembershipDetails from "../../containers/MembershipDetails";
-import WorkExperience from "../../containers/WorkExperience";
+import MembershipDetails from "../../containers/MembershipDetails/MembershipDetails";
+import WorkExperience from "../../containers/WorkExperience/WorkExperience";
 import Activities from "../../containers/Activities";
 import SkillTraining from "../../containers/SkillTraining/SkillTraining";
-import JobPreference from "../../containers/JobPreference";
+import JobPreference from "../../containers/JobPreference/JobPreference";
 import CommonText from "../../components/CommonText";
 import CardComponent from "../../components/CardComponent";
 import CustomImage from "../../components/CustomImage";
@@ -97,11 +97,8 @@ const JobProfileTab = () => {
           },
           {
             label: "Work Experience",
-            component:  (
-              <WorkExperience
-                isEditable={isEditable}
-                handleEdit={handleEdit}
-              />
+            component: (
+              <WorkExperience isEditable={isEditable} handleEdit={handleEdit} />
             ),
           },
           {
@@ -119,10 +116,7 @@ const JobProfileTab = () => {
           {
             label: "Job Preference",
             component: (
-              <JobPreference
-                isEditable={isEditable}
-                handleEdit={handleEdit}
-              />
+              <JobPreference isEditable={isEditable} handleEdit={handleEdit} />
             ),
           },
         ]}
