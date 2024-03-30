@@ -45,7 +45,9 @@ const CustomTextEditor = ({
           </CommonText>
         )}
       </View>
-      <View style={[styles.mainView, !!rrorMessage ? styles.invalidInput : {}]}>
+      <View
+        style={[styles.mainView, !!errorMessage ? styles.invalidInput : {}]}
+      >
         <View>
           <RichToolbar
             editor={richText}
