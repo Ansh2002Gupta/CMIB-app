@@ -13,16 +13,18 @@ import LoadingScreen from "../../components/LoadingScreen";
 import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
 import { jobType } from "../../constants/constants";
 import { useIntl } from "react-intl";
-import { getFormatedData, getQuestionType } from "../../utils/util";
+import { getQuestionType } from "../../utils/util";
 import styles from "./ViewPostedJobDetails.styles";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import { useNavigate } from "../../routes";
+import { useLocation, useNavigate } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 
 const ViewPostedJobDetails = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { id } = location.state;
   const {
     isLoading: isConstantLoading,
     data: apiData,
@@ -30,7 +32,7 @@ const ViewPostedJobDetails = () => {
     error: apiError,
     fetchData: getData,
   } = useFetch({
-    url: `${POST_JOB}/161`,
+    url: `${POST_JOB}/${id}`,
   });
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
     useGetAddNewJobData();
@@ -336,7 +338,7 @@ const ViewPostedJobDetails = () => {
           },
           {
             label: "label.flexi_hours",
-            value: apiData?.flexi_hours == 0 ? "Yes" : "No" ?? "-",
+            value: apiData?.flexi_hours == 1 ? "Yes" : "No" ?? "-",
           },
           !jobName === jobType.CONTRACTUAL
             ? {
@@ -383,7 +385,7 @@ const ViewPostedJobDetails = () => {
         [
           {
             label: "label.salary_negotiable",
-            value: apiData?.is_salary_negotiable ?? "-",
+            value: apiData?.is_salary_negotiable == 1 ? "Yes" : "No" ?? "-",
           },
           {
             label: "label.minimum_salary",
@@ -450,6 +452,7 @@ const ViewPostedJobDetails = () => {
                     state: {
                       jobData: appData,
                       questionData: questionnaireData,
+                      id: id,
                     },
                   })
                 }

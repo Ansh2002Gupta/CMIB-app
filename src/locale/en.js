@@ -471,6 +471,7 @@ const locale = {
   "label.download_job_list": "Download Jobs List",
   "label.search_by_designation": "Search By Designation or Job ID",
   "label.posted_job": "Posted Job",
+  "label.edit_jobs": "Edit Jobs",
 };
 
 export default locale;

@@ -1,25 +1,28 @@
-import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import React, { useEffect, useRef, useState } from "react";
+import { ScrollView, View } from "@unthinkable/react-core-components";
+
 import useIsWebView from "../../hooks/useIsWebView";
+
 import AddModifyQuestionaireComponent from "../../containers/AddModifyNewJobs/AddModifyQuestionaireComponent/AddModifyQuestionaireComponent";
 import AddModifyJobComponent from "../../containers/AddModifyNewJobs/AddModifyJobComponent";
 import FooterComponent from "../../containers/AddModifyNewJobs/FooterComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import { CustomTabs, FormTabs } from "../../components/Tab";
-import { useIntl } from "react-intl";
+import { CustomTabs } from "../../components/Tab";
 import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
-import colors from "../../assets/colors";
 import { useLocation, useNavigate } from "../../routes";
 import LoadingScreen from "../../components/LoadingScreen";
+
 import { getFormatedData } from "../../utils/util";
 import Http from "../../services/http-service";
-import { UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
+import { useIntl } from "react-intl";
 
+import { UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
+import styles from "./EditJobDetails.styles";
 const EditJobDetails = () => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
   const location = useLocation();
-  const { jobData, questionData } = location.state;
+  const { jobData, questionData, id } = location.state;
   const [jobDetails, setJobDetails] = useState(jobData);
   const [questionaire, setQuestionaire] = useState(questionData);
   const [isChecklist, setIsCheckList] = useState(false);
@@ -55,7 +58,7 @@ const EditJobDetails = () => {
       jobDataPosted.jobOpeningDate = new Date(jobDataPosted.jobOpeningDate);
       jobDataPosted.jobClosingDate = new Date(jobDataPosted.jobClosingDate);
       const formattedData = getFormatedData(jobDataPosted, questionnairelist);
-      Http.put(`${UPDATE_JOB}/161`, formattedData)
+      Http.put(`${UPDATE_JOB}/${id}`, formattedData)
         .then((res) => {
           alert("Job Updated Successfully");
         })
@@ -68,20 +71,18 @@ const EditJobDetails = () => {
     }
   };
   return (
-    <View style={{ flex: 1, backgroundColor: colors.backgroundGrey }}>
-      <IconHeader headerText={"Edit Jobs"} isBorderVisible={false} />
+    <View style={styles.mainViewStyle}>
+      <IconHeader
+        headerText={intl.formatMessage({ id: "label.edit_jobs" })}
+        isBorderVisible={false}
+      />
       {isLoading ? (
         <LoadingScreen />
       ) : (
-        <ScrollView style={{ flex: 1 }}>
-          <View
-            style={{
-              backgroundColor: colors.backgroundGrey,
-              flex: 1,
-            }}
-          >
+        <ScrollView style={styles.container}>
+          <View style={styles.mainViewStyle}>
             <CustomTabs
-              containerStyle={{ backgroundColor: colors.white }}
+              containerStyle={styles.backgroundWhite}
               setSelectedTab={setSelectedTab}
               cleanupFuntion={() => {
                 let jobData;
@@ -101,7 +102,7 @@ const EditJobDetails = () => {
                     id: "label.job_details",
                   }),
                   component: (
-                    <View style={{ padding: 16 }}>
+                    <View style={styles.padding16}>
                       <AddModifyJobComponent
                         ref={addJobRef}
                         addNewJobData={jobDetails}
@@ -117,13 +118,7 @@ const EditJobDetails = () => {
                     id: "label.view_questionaire",
                   }),
                   component: (
-                    <View
-                      style={{
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingBottom: 16,
-                      }}
-                    >
+                    <View style={styles.paddingAllSide}>
                       <AddModifyQuestionaireComponent
                         isQuestionaire={true}
                         addNewJobData={questionaire}
@@ -138,7 +133,7 @@ const EditJobDetails = () => {
               ]}
             />
           </View>
-          <View style={{ padding: 16 }}>
+          <View style={styles.padding16}>
             <FooterComponent
               onSubmit={onSubmit}
               isWebView={isWebView}

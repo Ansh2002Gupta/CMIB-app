@@ -20,12 +20,12 @@ const PostedJobsView = () => {
   const intl = useIntl();
   const onEditPress = (item) => {
     navigate(navigations.DETAILS_JOBS, {
-      state: { ...item, isEdit: false },
+      state: item,
     });
   };
   const onViewPress = (item) => {
     navigate(navigations.DETAILS_JOBS, {
-      state: { ...item, isEdit: true },
+      state: item,
     });
   };
   const {
