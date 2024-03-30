@@ -9,7 +9,7 @@ const ViewQuestion = ({ questionnaireData }) => {
       <ScrollView>
         {Array.isArray(questionnaireData) &&
           questionnaireData?.map((item, index) => {
-            return <RenderViewQuestion item={item} index={index} />;
+            return <RenderViewQuestion item={item} index={index} key={index} />;
           })}
       </ScrollView>
     </View>

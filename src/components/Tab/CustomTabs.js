@@ -18,6 +18,7 @@ export const CustomTabs = ({
   renderHeader,
   showWarningOnTabSwitch,
   tabs,
+  cleanupFuntion,
 }) => {
   const intl = useIntl();
 
@@ -38,6 +39,7 @@ export const CustomTabs = ({
         });
         return;
       }
+      cleanupFuntion && cleanupFuntion();
       setActiveTabIndex(index);
     }
   };

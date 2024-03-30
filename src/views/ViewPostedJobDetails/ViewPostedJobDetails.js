@@ -15,8 +15,7 @@ import { jobType } from "../../constants/constants";
 import { useIntl } from "react-intl";
 import { getFormatedData, getQuestionType } from "../../utils/util";
 import styles from "./ViewPostedJobDetails.styles";
-import { POST_JOB, UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
-import Http from "../../services/http-service";
+import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { useNavigate } from "../../routes";
@@ -26,18 +25,16 @@ const ViewPostedJobDetails = () => {
   const navigate = useNavigate();
   const {
     data: apiData,
-    isLoading: apiLoading,
     isError: apiIsError,
     error: apiError,
     fetchData: getData,
   } = useFetch({
     url: `${POST_JOB}/158`,
   });
-
-  const { isLoading, isSuccess, isError, isErrorData, fetchData } =
-    useGetAddNewJobData();
+  const { isSuccess, isError, isErrorData, fetchData } = useGetAddNewJobData();
   const [questionnaireData, setQuestionnaireData] = useState([]);
-  const [appData, setAppData] = useState([]);
+  const [appData, setAppData] = useState({});
+  const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState([]);
   const [addJobs] = useContext(AddJobContext);
   const [isActive, setActive] = useState(false);
@@ -50,45 +47,60 @@ const ViewPostedJobDetails = () => {
   useEffect(() => {
     let obj = {};
     if (apiData && isSuccess) {
+      apiData.locations = Array.isArray(apiData.location_id)
+        ? apiData.location_id
+        : JSON.parse(apiData.location_id);
+      apiData.functional_areas = Array.isArray(apiData.functional_area_id)
+        ? apiData.functional_area_id
+        : JSON.parse(apiData.functional_area_id);
+      apiData.contract_period = Array.isArray(apiData.contract_period)
+        ? apiData.contract_period
+        : JSON.parse(apiData.contract_period);
+
       obj.jobSummary = apiData.summary;
       obj.jobDetails = apiData.detail;
       obj.jobType = apiData.job_type_id
         ? addJobs.jobType
-            .filter((item) => item.id === apiData.job_type_id)
             .map((item) => ({
               id: item.id,
               label: item.name,
               value: item.slug,
-            }))[0]
+            }))
+            .find((item) => item.id === apiData.job_type_id) || {}
         : {};
       obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
       obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
       obj.minimumExperience = apiData?.min_experience;
       obj.maximumExperience = apiData?.max_experience;
       obj.jobLocation = apiData.locations
-        ? apiData.locations.map((item) => ({
-            id: item.id,
-            label: item.city,
-            value: item.city,
-          }))
-        : []; //
-      obj.nationality = apiData.countryData
-        ? addJobs.countryData
-            ?.filter((item) => apiData.nationality.includes(item.name))
+        ? addJobs.jobLocationData
+            .filter((item) => {
+              if (apiData.locations.includes(item.id)) {
+                return item;
+              }
+            })
             .map((item) => ({
               id: item.id,
-              label: item.name,
-              value: item.slug,
+              label: item.city,
+              value: item.city,
             }))
-        : ""; //
+        : []; //
+      obj.nationality = apiData.nationality
+        ? addJobs.countryData.find(
+            (item) => item.name === apiData.nationality
+          ) || ""
+        : "";
+
       obj.designation = apiData.designation;
       obj.functionalAreas =
         apiData.functional_areas.length > 0
-          ? apiData.functional_areas.map((item) => ({
-              id: item.id,
-              label: item.name,
-              value: item.slug,
-            }))
+          ? addJobs.functionalData
+              .filter((item) => apiData.functional_areas.includes(item.id))
+              .map((item) => ({
+                id: item.id,
+                label: item.name,
+                value: item.slug,
+              }))
           : [];
       obj.genderPreference = apiData.gender_preference
         ? addJobs.genderPreferenceData
@@ -101,7 +113,11 @@ const ViewPostedJobDetails = () => {
         : {};
       obj.categoryPreference = apiData.category_preference
         ? addJobs.jobCategory
-            ?.filter((item) => item.name == apiData.category_preference)
+            ?.filter((item) => {
+              if (item.name == apiData.category_preference) {
+                return item;
+              }
+            })
             .map((item) => ({
               id: item.id,
               label: item.name,
@@ -145,6 +161,9 @@ const ViewPostedJobDetails = () => {
     }
     setAppData(obj);
     const transformedQuestionnaire = apiData?.questionnaires.map((item) => {
+      item.question_options = Array.isArray(item.question_options)
+        ? item.question_options
+        : JSON.parse(item.question_options);
       if (
         Array.isArray(item.question_options) &&
         item.question_options.length > 0
@@ -169,9 +188,8 @@ const ViewPostedJobDetails = () => {
 
     setQuestionnaireData(transformedQuestionnaire);
   }, [apiData, isSuccess]);
-
   useEffect(() => {
-    if (apiData && addJobs.jobType) {
+    if (apiData && addJobs.jobType && Object.keys(appData).length > 0) {
       let jobName = addJobs.jobType.find(
         (item) => item.id == apiData.job_type_id
       )?.name;
@@ -239,10 +257,13 @@ const ViewPostedJobDetails = () => {
             label: "label.job_location",
             isMandatory: true,
             showBadgeLabel: true,
-            customValue: apiData?.locations.map((item) => item.city) ?? "-",
+            customValue:
+              (Array.isArray(appData.jobLocation) &&
+                appData?.jobLocation.map((item) => item.value)) ??
+              "-",
             value: apiData?.locations ?? "-",
           },
-          false ? {} : [],
+          {},
         ],
         [
           {
@@ -250,7 +271,9 @@ const ViewPostedJobDetails = () => {
             isMandatory: true,
             showBadgeLabel: true,
             customValue:
-              apiData?.functional_areas.map((item) => item.name) ?? "-",
+              (Array.isArray(appData.functionalAreas) &&
+                appData?.functionalAreas.map((item) => item.value)) ??
+              "-",
           },
         ],
         [
@@ -309,7 +332,7 @@ const ViewPostedJobDetails = () => {
           },
           {
             label: "label.flexi_hours",
-            value: apiData?.flexi_hours ?? "-",
+            value: apiData?.flexi_hours == 0 ? "Yes" : "No" ?? "-",
           },
           !jobName === jobType.CONTRACTUAL
             ? {
@@ -377,8 +400,9 @@ const ViewPostedJobDetails = () => {
       setActive(apiData?.status === 1);
 
       setDetails(temp);
+      setLoading(false);
     }
-  }, [apiData, addJobs]);
+  }, [apiData, addJobs, appData]);
 
   return (
     <View style={styles.container}>
@@ -409,7 +433,7 @@ const ViewPostedJobDetails = () => {
           ]}
         />
       </View>
-      {isLoading || apiLoading ? (
+      {loading ? (
         <LoadingScreen />
       ) : (
         <View style={styles.container}>
@@ -439,7 +463,7 @@ const ViewPostedJobDetails = () => {
           />
         </View>
       )}
-      {!isLoading && isError && apiIsError && (
+      {loading && isError && apiIsError && (
         <ErrorComponent
           errorMsg={
             isErrorData?.data?.message ||

@@ -23,6 +23,7 @@ const AddModifyJobComponent = forwardRef(
       isWebView,
       setIsExpanded,
       isMinimisedVisible = true,
+      cleanUpFunction,
     },
     ref
   ) => {
@@ -57,6 +58,13 @@ const AddModifyJobComponent = forwardRef(
         }
       }
     }, [isExpanded]);
+    useEffect(() => {
+      return () => {
+        let data = getInternalState();
+        console.log("DATAAA", data);
+        cleanUpFunction && cleanUpFunction(data);
+      };
+    }, []);
 
     const [animation] = useState(new Animated.Value(0));
     const minHeight = 0;

@@ -26,6 +26,7 @@ const AddModifyQuestionaireComponent = forwardRef(
       setIsQuestionaire,
       isMinimisedVisible = true,
       headerText = "label.questionnaire",
+      cleanUpFunction,
     },
     ref
   ) => {
@@ -47,6 +48,11 @@ const AddModifyQuestionaireComponent = forwardRef(
     const getQuestionData = () => {
       return questionnairelist;
     };
+    useEffect(() => {
+      return () => {
+        cleanUpFunction && cleanUpFunction(getQuestionData());
+      };
+    }, []);
 
     function validateQuestions() {
       let isValidQuestion = false;

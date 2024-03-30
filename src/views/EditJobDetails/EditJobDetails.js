@@ -20,6 +20,8 @@ const EditJobDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { jobData, questionData } = location.state;
+  const [jobDetails, setJobDetails] = useState(jobData);
+  const [questionaire, setQuestionaire] = useState(questionData);
   const [isChecklist, setIsCheckList] = useState(false);
   const questionaireRef = useRef(null);
   const addJobRef = useRef(null);
@@ -76,6 +78,19 @@ const EditJobDetails = () => {
           >
             <CustomTabs
               containerStyle={{ backgroundColor: colors.white }}
+              showWarningOnTabSwitch
+              cleanupFuntion={() => {
+                let jobData;
+                let questionnairelist;
+                if (addJobRef.current) {
+                  jobData = addJobRef.current.getChildState();
+                  setJobDetails(jobData);
+                }
+                if (questionaireRef.current) {
+                  questionnairelist = questionaireRef.current.getQuestionData();
+                  setQuestionaire(questionnairelist);
+                }
+              }}
               tabs={[
                 {
                   label: intl.formatMessage({
@@ -85,7 +100,7 @@ const EditJobDetails = () => {
                     <View style={{ padding: 16 }}>
                       <AddModifyJobComponent
                         ref={addJobRef}
-                        addNewJobData={jobData}
+                        addNewJobData={jobDetails}
                         isExpanded={true}
                         isWebView={isWebView}
                         isMinimisedVisible={false}
@@ -98,10 +113,16 @@ const EditJobDetails = () => {
                     id: "label.view_questionaire",
                   }),
                   component: (
-                    <View style={{ padding: 16 }}>
+                    <View
+                      style={{
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingBottom: 16,
+                      }}
+                    >
                       <AddModifyQuestionaireComponent
                         isQuestionaire={true}
-                        addNewJobData={questionData}
+                        addNewJobData={questionaire}
                         isWebView={isWebView}
                         ref={questionaireRef}
                         isMinimisedVisible={false}
