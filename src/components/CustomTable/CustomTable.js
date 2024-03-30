@@ -110,6 +110,7 @@ const CustomTable = ({
                   <CustomTouchableOpacity
                     onPress={handleFilterModal}
                     style={styles.imageParentStyle}
+                    disabled={isTicketListingLoading}
                   >
                     <TouchableImage
                       source={images.iconFilter}
@@ -145,7 +146,8 @@ const CustomTable = ({
                     ...styles.textSize,
                   }}
                 >
-                  {intl.formatMessage({ id: "label.tickets" })}&nbsp;&#58;&nbsp;
+                  {intl.formatMessage({ id: "label.tickets" })}
+                  &nbsp;&#58;&nbsp;
                 </CommonText>
 
                 <CommonText

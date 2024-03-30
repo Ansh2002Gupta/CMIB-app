@@ -105,11 +105,12 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
 };
 
 CustomTabs.propTypes = {
+  renderHeader: PropTypes.func,
+  showWarningOnTabSwitch: PropTypes.bool,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       component: PropTypes.element.isRequired,
     })
   ).isRequired,
-  renderHeader: PropTypes.func,
 };

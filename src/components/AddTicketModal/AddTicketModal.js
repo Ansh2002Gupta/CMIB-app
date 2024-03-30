@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
+import ActionPairButton from "../ActionPairButton";
 import CustomModal from "../CustomModal";
 import CustomTextInput from "../CustomTextInput";
-import ActionPairButton from "../ActionPairButton";
+import { MESSAGE_MAX_LENGTH } from "../../constants/constants";
+import styles from "./AddTicketModal.style";
+
+const isIos = Platform.OS.toLowerCase() === "ios";
 
 const AddTicketModal = ({
   onPressButtonOne,
@@ -19,7 +23,7 @@ const AddTicketModal = ({
   return (
     <>
       <CustomModal headerText={intl.formatMessage({ id: "label.addTicket" })}>
-        <View>
+        <View style={isIos ? styles.mobContainer : {}}>
           <CustomTextInput
             isDropdown
             label={intl.formatMessage({ id: "label.query_type" })}
@@ -44,6 +48,7 @@ const AddTicketModal = ({
               setEnterQuery(val);
             }}
             isMultiline
+            maxLength={MESSAGE_MAX_LENGTH}
           />
           <ActionPairButton
             onPressButtonTwo={() => {
