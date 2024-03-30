@@ -114,7 +114,8 @@ const FilterModal = ({
           isSelected={selectedStatus.includes(status.id)}
         />
       ));
-    } else if (category === "Query Type") {
+    }
+    if (category === "Query Type") {
       return queryTypeData.map((queryType) => (
         <RenderCheckButton
           key={queryType.id}
@@ -125,18 +126,17 @@ const FilterModal = ({
         />
       ));
     }
+    return null;
   };
 
   const getCheckBoxesStatus = (title) => {
     const status = title === "Status";
     const query_type = title === "Query Type";
-
     if (status) {
       if (!selectedStatus.length) return "empty";
       if (selectedStatus.length !== statusData.length) return "partial";
       return "full";
     }
-
     if (query_type) {
       if (!selectedQueryType.length) return "empty";
       if (selectedQueryType.length !== queryTypeData.length) return "partial";
@@ -207,12 +207,10 @@ const FilterModal = ({
                         }
                         isLeftFillSpace
                         rightSection={
-                          <>
-                            <CustomImage
-                              source={images.iconArrowRight}
-                              style={styles.arrowRight}
-                            />
-                          </>
+                          <CustomImage
+                            source={images.iconArrowRight}
+                            style={styles.arrowRight}
+                          />
                         }
                       />
                     </View>
