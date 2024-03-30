@@ -19,7 +19,6 @@ const style = {
     paddingLeft: 24,
     paddingRight: 24,
   },
-  tabsContainer: {},
   itemContainer: {
     height: 38,
     borderBottomWidth: 1,
