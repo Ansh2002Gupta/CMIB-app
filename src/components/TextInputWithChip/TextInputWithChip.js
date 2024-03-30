@@ -1,25 +1,26 @@
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from '@unthinkable/react-core-components';
-import React, { useEffect, useState } from 'react';
+import {
+  ScrollView,
+  TextInput,
+  View,
+} from "@unthinkable/react-core-components";
+import React, { useEffect, useState } from "react";
 import styles from "./TextInputWithChip.style";
-import CustomChipCard from '../CustomChipCard/CustomChipCard';
-import colors from '../../assets/colors';
+import CustomChipCard from "../CustomChipCard/CustomChipCard";
+import colors from "../../assets/colors";
 
-const TextInputWithChip = ({
- placeholderText,
- onChipUpdate,
-}) => {
-  const [inputValue, setInputValue] = useState('');
-  const [chips, setChips] = useState([]);
+const TextInputWithChip = ({ placeholderText, onChipUpdate, value = [] }) => {
+  const [inputValue, setInputValue] = useState("");
+  const [chips, setChips] = useState([...value]);
 
   useEffect(() => {
     onChipUpdate(chips);
-    return 
+    return;
   }, [chips]);
 
   const handleAddChip = () => {
     if (inputValue.trim()) {
       setChips([...chips, inputValue.trim()]);
-      setInputValue(''); // Clear input field
+      setInputValue(""); // Clear input field
     }
   };
 
@@ -42,11 +43,11 @@ const TextInputWithChip = ({
       />
       <ScrollView style={styles.chipContainer} horizontal>
         {chips.map((chip, index) => (
-           <CustomChipCard
-           key={index}
-           message={chip}
-           onPress={() => handleRemoveChip(index)}
-         />
+          <CustomChipCard
+            key={index}
+            message={chip}
+            onPress={() => handleRemoveChip(index)}
+          />
         ))}
       </ScrollView>
     </View>

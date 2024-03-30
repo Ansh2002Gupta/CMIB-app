@@ -11,13 +11,15 @@ const CustomChipCard = ({ message, onPress }) => {
   return (
     <View style={styles.selectedItemsContainer}>
       <CommonText>{message}</CommonText>
-      <TouchableImage
-        onPress={onPress}
-        source={images.iconCloseDark}
-        style={styles.iconCloseDark}
-        height={15}
-        width={15}
-      />
+      {onPress && (
+        <TouchableImage
+          onPress={onPress}
+          source={images.iconCloseDark}
+          style={styles.iconCloseDark}
+          height={15}
+          width={15}
+        />
+      )}
     </View>
   );
 };

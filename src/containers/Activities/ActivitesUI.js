@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import style from "../EducationDetails/OtherCourses.style";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const ActivitiesUI = ({
   isEditable,
@@ -16,42 +17,49 @@ const ActivitiesUI = ({
   onClickCancel,
   isLoading,
   isValidAllFields,
+  error,
+  setError,
 }) => {
   const intl = useIntl();
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={style.contentContainerStyle}
-    >
-      <View style={style.innerContainerStyle}>
-        <DetailCard
-          details={achievements}
-          headerId={intl.formatMessage({
-            id: "label.achievements",
-          })}
-          isEditProfile={isEditable}
-          handleChange={onChangeValue(achievements)}
-          handleBlur={handleAchievementsBlur}
+    <>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={style.contentContainerStyle}
+      >
+        <View style={style.innerContainerStyle}>
+          <DetailCard
+            details={achievements}
+            headerId={intl.formatMessage({
+              id: "label.achievements",
+            })}
+            isEditProfile={isEditable}
+            handleChange={onChangeValue(achievements)}
+            handleBlur={handleAchievementsBlur}
+          />
+          <DetailCard
+            details={hobbies}
+            headerId={intl.formatMessage({
+              id: "label.hobbies",
+            })}
+            isEditProfile={isEditable}
+            handleChange={onChangeValue(hobbies)}
+            handleBlur={handleHobbiesBlur}
+          />
+        </View>
+        <SaveCancelButton
+          isEditable={isEditable}
+          isLoading={isLoading}
+          onClickSave={onClickSave}
+          onClickCancel={onClickCancel}
+          isValidAllFields={isValidAllFields}
         />
-        <DetailCard
-          details={hobbies}
-          headerId={intl.formatMessage({
-            id: "label.hobbies",
-          })}
-          isEditProfile={isEditable}
-          handleChange={onChangeValue(hobbies)}
-          handleBlur={handleHobbiesBlur}
-        />
-      </View>
-      <SaveCancelButton
-        isEditable={isEditable}
-        isLoading={isLoading}
-        onClickSave={onClickSave}
-        onClickCancel={onClickCancel}
-        isValidAllFields={isValidAllFields}
-      />
-    </ScrollView>
+      </ScrollView>
+      {!!error && (
+        <ToastComponent toastMessage={error} onDismiss={() => setError("")} />
+      )}
+    </>
   );
 };
 

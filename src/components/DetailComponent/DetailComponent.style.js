@@ -106,9 +106,10 @@ const styles = StyleSheet.create({
     width: "33%",
   },
   cancelButton: {
-    position: 'absolute',
+    position: "absolute",
     right: 0,
   },
+  chipDataContainer: { flexDirection: "row" },
   getVariableContainerStyles: (detail) => {
     return {
       display: "grid",

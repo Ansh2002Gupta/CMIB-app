@@ -190,3 +190,29 @@ export const getValidUrl = (url) => {
   }
   return link;
 };
+
+export const getIndexForBoolean = (value) => {
+  if (typeof value !== "boolean") {
+    return value;
+  }
+  return value ? 1 : 0;
+};
+
+// Converts "Yes" to true and "No" to false
+export function yesNoToBoolean(value) {
+  if (value === "Yes") {
+    return true;
+  } else if (value === "No") {
+    return false;
+  } else {
+    return value;
+  }
+}
+
+// Converts true to "Yes" and false to "No"
+export function booleanToYesNo(value) {
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
+  }
+  return value;
+}
