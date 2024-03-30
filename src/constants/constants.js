@@ -573,3 +573,10 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+
+export const JOB_SEEKERS_TABLE_HEADING = {
+  company_name: "Company Name",
+  candidate_id: "Candidate ID",
+  total_experience: "Total Experience",
+  functional_area: "Functional Area",
+};
