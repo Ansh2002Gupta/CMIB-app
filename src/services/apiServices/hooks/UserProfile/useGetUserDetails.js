@@ -17,8 +17,7 @@ import {
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 import {
   moduleKeys,
-  modules,
-  memberModules,
+  getAppModules,
 } from "../../../../constants/sideBarHelpers";
 import { CORE_USERS_PERMISSION } from "../../apiEndPoint";
 import { navigations } from "../../../../constants/routeNames";
@@ -80,7 +79,7 @@ const useGetUserDetails = () => {
           getSelectedModule({
             firstAccessibleModuleName,
             accessibleModuleKeys,
-            currentModules: isMemberOrCandidate ? memberModules : modules,
+            currentModules: getAppModules({ isMember: isMemberOrCandidate }),
           });
         sideBarDispatch(setSelectedModule(moduleDetails));
         sideBarDispatch(setSelectedSession(moduleDetails?.session?.[0]));

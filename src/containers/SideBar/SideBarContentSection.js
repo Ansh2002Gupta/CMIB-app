@@ -25,11 +25,7 @@ import {
   setSelectedSession,
 } from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
-import {
-  getIconImages,
-  memberModules,
-  modules,
-} from "../../constants/sideBarHelpers";
+import { getIconImages, getAppModules } from "../../constants/sideBarHelpers";
 import { COMPANY } from "../../constants/constants";
 import { getSelectedSubModuleFromRoute } from "../../utils/util";
 import images from "../../images";
@@ -54,8 +50,6 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
 
   const isMemberOrCandidate =
     userProfileDetails?.userDetails?.user_type?.toLowerCase() !== COMPANY;
-
-  const currentModules = isMemberOrCandidate ? memberModules : modules;
 
   useEffect(() => {
     if (isWebView && sideBarContent === SideBarContentEnum.SESSION) {
@@ -188,7 +182,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           </CustomButton>
 
           <ModuleList
-            modules={currentModules}
+            modules={getAppModules({ isMember: isMemberOrCandidate })}
             onSelectItem={handleOnSelectModuleItem}
             selectedModule={selectedModule}
           />

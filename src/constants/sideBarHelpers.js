@@ -160,121 +160,67 @@ export const moduleKeys = {
   OVERSEAS_CHAPTERS_KEY: "overseas-chapters",
 };
 
-export const modules = [
-  {
-    label: "Newly Qualified Placements",
-    key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
-    children: newlyQualifiedPlacementsMenu,
-    session: items,
-    visible: false,
-    image: images.iconNewlyQualified,
-    isExperiencedMember: false,
-  },
-  {
-    label: "CA Jobs",
-    key: moduleKeys.CA_JOBS_KEY,
-    children: caJobsMenu,
-    session: items,
-    visible: false,
-    image: images.iconCAJobs,
-    isExperiencedMember: false,
-  },
-  {
-    label: "Experienced Members",
-    key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
-    visible: false,
-    sectionHeading: true,
-  },
-  {
-    label: "Career Ascent",
-    key: moduleKeys.CARRER_ASCENT_KEY,
-    children: experiencedMembersMenu,
-    session: items,
-    visible: false,
-    isSubMenu: true,
-    image: images.iconCareerAscent,
-    isExperiencedMember: true,
-  },
-  {
-    label: "Women PartTime",
-    key: moduleKeys.WOMEN_PARTTIME_KEY,
-    children: experiencedMembersMenu,
-    session: items,
-    visible: false,
-    isSubMenu: true,
-    image: images.iconWomanPartTime,
-    isExperiencedMember: true,
-  },
-  {
-    label: "Overseas Chapters",
-    key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
-    children: experiencedMembersMenu,
-    session: items,
-    visible: false,
-    isSubMenu: true,
-    image: images.iconOverseasChapters,
-    isExperiencedMember: true,
-  },
-];
+export const getAppModules = ({ isMember }) => {
+  return [
+    {
+      label: "Newly Qualified Placements",
+      key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
+      children: newlyQualifiedPlacementsMenu,
+      session: items,
+      visible: false,
+      image: images.iconNewlyQualified,
+      isExperiencedMember: false,
+    },
+    {
+      label: "CA Jobs",
+      key: moduleKeys.CA_JOBS_KEY,
+      children: isMember ? memberCaJobsMenu : caJobsMenu,
+      session: items,
+      visible: false,
+      image: images.iconCAJobs,
+      isExperiencedMember: false,
+    },
+    {
+      label: "Experienced Members",
+      key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
+      visible: false,
+      sectionHeading: true,
+    },
+    {
+      label: "Career Ascent",
+      key: moduleKeys.CARRER_ASCENT_KEY,
+      children: experiencedMembersMenu,
+      session: items,
+      visible: false,
+      isSubMenu: true,
+      image: images.iconCareerAscent,
+      isExperiencedMember: true,
+    },
+    {
+      label: "Women PartTime",
+      key: moduleKeys.WOMEN_PARTTIME_KEY,
+      children: experiencedMembersMenu,
+      session: items,
+      visible: false,
+      isSubMenu: true,
+      image: images.iconWomanPartTime,
+      isExperiencedMember: true,
+    },
+    {
+      label: "Overseas Chapters",
+      key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
+      children: experiencedMembersMenu,
+      session: items,
+      visible: false,
+      isSubMenu: true,
+      image: images.iconOverseasChapters,
+      isExperiencedMember: true,
+    },
+  ];
+};
 
-export const memberModules = [
-  {
-    label: "Newly Qualified Placements",
-    key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
-    children: newlyQualifiedPlacementsMenu,
-    session: items,
-    visible: false,
-    image: images.iconNewlyQualified,
-    isExperiencedMember: false,
-  },
-  {
-    label: "CA Jobs",
-    key: moduleKeys.CA_JOBS_KEY,
-    children: memberCaJobsMenu,
-    session: items,
-    visible: false,
-    image: images.iconCAJobs,
-    isExperiencedMember: false,
-  },
-  {
-    label: "Experienced Members",
-    key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
-    visible: false,
-    sectionHeading: true,
-  },
-  {
-    label: "Career Ascent",
-    key: moduleKeys.CARRER_ASCENT_KEY,
-    children: experiencedMembersMenu,
-    session: items,
-    visible: false,
-    isSubMenu: true,
-    image: images.iconCareerAscent,
-    isExperiencedMember: true,
-  },
-  {
-    label: "Women PartTime",
-    key: moduleKeys.WOMEN_PARTTIME_KEY,
-    children: experiencedMembersMenu,
-    session: items,
-    visible: false,
-    isSubMenu: true,
-    image: images.iconWomanPartTime,
-    isExperiencedMember: true,
-  },
-  {
-    label: "Overseas Chapters",
-    key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
-    children: experiencedMembersMenu,
-    session: items,
-    visible: false,
-    isSubMenu: true,
-    image: images.iconOverseasChapters,
-    isExperiencedMember: true,
-  },
-];
-
-export const resetAllModules = () => {
+export const resetAllModules = (isMember) => {
+  const modules = getAppModules({ isMember });
   modules.forEach((module) => {
     module.visible = false;
   });
