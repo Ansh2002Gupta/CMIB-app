@@ -128,6 +128,8 @@ import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
+import dotIcon from "../../public/images/dotIcon/dot.png";
+import iconDownloading from "../../public/images/downloadIcon/download.png";
 
 const images = {
   iconArrowUp,
@@ -260,6 +262,8 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  dotIcon,
+  iconDownloading,
 };
 
 export default images;

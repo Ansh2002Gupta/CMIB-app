@@ -461,6 +461,9 @@ const locale = {
   "label.select_category_preference": "Select Category Preference",
   "label.select_mode_of_work": "Select Mode of Work",
   "label.year_month_day": "(Year/Month/Day)",
+  "label.download_job_list": "Download Jobs List",
+  "label.search_by_designation": "Search By Designation or Job ID",
+  "label.posted_job": "Posted Job",
 };
 
 export default locale;

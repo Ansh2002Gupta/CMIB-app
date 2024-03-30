@@ -160,6 +160,7 @@ const iconTwitterWeb = appendAppBaseURl("/images/svg/iconTwitterWeb.svg");
 const iconCmibCALogo = appendAppBaseURl(
   "/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png"
 );
+const dotIcon = appendAppBaseURl("/images/dotIcon/dot.png");
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
 const iconEditSvg = appendAppBaseURl("/images/svg/editIcon.svg");
 const iconCloseDark = appendAppBaseURl("/images/svg/iconCloseDark.svg");
@@ -207,6 +208,7 @@ const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
 const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
+const iconDownloading = appendAppBaseURl("/images/downloadIcon/download.png");
 
 const images = {
   iconArrowUp,
@@ -355,6 +357,8 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  dotIcon,
+  iconDownloading,
 };
 
 export default images;
