@@ -3,7 +3,6 @@ import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import DetailCard from "../../components/DetailCard";
-import useIsWebView from "../../hooks/useIsWebView";
 import SaveCancelButton from "../../components/SaveCancelButton";
 import style from './MembershipDetails.style';
 
@@ -22,7 +21,6 @@ const MembershipDetailsTemplate = ({
   isValidAllFields,
 }) => {
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
 
   return (
     <ScrollView

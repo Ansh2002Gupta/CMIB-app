@@ -1,22 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import useFetch from "../../hooks/useFetch";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import MembershipDetailsTemplate from "./MembershipDetailsTemplate";
-import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
+import { MEMBER_CA_JOB_MEMBERSHIP_DETAILS } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { useMembershipDetails } from "./controller/useMembershipDetails";
+import { formatDateToYYYYMMDD } from "../../utils/util";
 
 const MembershipDetails = ({isEditable, handleEdit}) => {
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState || {};
-  const { data } = useFetch({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE}`,
+  const { fetchData, data } = useFetch({
+   url: MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
   });
-
-  const { handleUpdate, isError, isLoading } = useUpdateService({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE}`,
-  });
+  const { handleUpdate, isError, isLoading } = useUpdateService(MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? data : {}
   );
@@ -36,7 +32,7 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
 
   useEffect(() => {
     if (data !== null && Object.keys(data).length) {
-      setState(data);
+     setState(data);
     }
   }, [data]);
 
@@ -61,7 +57,26 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
       }));
     }
   };
-  console.log("state::", state)
+
+  const performSaveChanges = () => {
+    const payload = getMembershipDetailsPayload() 
+    handleUpdate(payload, () => {
+      // turn off the edit mode
+      handleEdit(false);
+      fetchData();
+    });
+  }
+
+  const getMembershipDetailsPayload = () => {
+    const payload = {
+      membership_enrollment_date:  formatDateToYYYYMMDD(state?.membership_enrollment_date),
+      is_fellow_member: !state?.is_fellow_member,
+      fellow_member_admission_date: !state?.is_fellow_member ? formatDateToYYYYMMDD(state?.fellow_member_admission_date) : "",
+      is_practising: !state?.is_practising,
+      practising_start_date: !state?.is_practising ? formatDateToYYYYMMDD(state?.practising_start_date) : "",
+    }
+    return payload;
+  }
 
   return (
     <MembershipDetailsTemplate
@@ -77,10 +92,7 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
       isLoading={isLoading}
       isEditable={isEditable}
       onClickSave={() => {
-        handleUpdate(state, () => {
-          // turn off the edit mode
-          handleEdit(false);
-        });
+        performSaveChanges();
       }}
       onClickCancel={() => {
         // turn off the edit mode
