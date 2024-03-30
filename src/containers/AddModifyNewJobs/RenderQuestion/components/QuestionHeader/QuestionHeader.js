@@ -14,7 +14,6 @@ const QuestionHeader = (props) => {
     questionError,
     questionaireTypeFormatted,
   } = props;
-  console.log("typeofQuestion", item.typeofQuestion);
   const intl = useIntl();
   return (
     <View>

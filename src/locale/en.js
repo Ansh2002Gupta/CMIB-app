@@ -455,6 +455,12 @@ const locale = {
   "label.option_error": "All options must have a non-empty value",
   "label.invalid_question_type": "Invalid question type.",
   "label.job_status": "Job Status",
+  "label.contractual_period_year": "Contractual Period(Years)",
+  "label.contractual_period_month": "Contractual Period(Months)",
+  "label.contractual_period_day": "Contractual Period(Days)",
+  "label.applicants": "Applicants",
+  "label.schedule_interview": "Scheduled Interview",
+  "label.view_questionaire": "Questionaire",
 };
 
 export default locale;

@@ -13,7 +13,12 @@ import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
 import styles from "./CustomTabs.style.js";
 
-export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
+export const CustomTabs = ({
+  containerStyle,
+  renderHeader,
+  showWarningOnTabSwitch,
+  tabs,
+}) => {
   const intl = useIntl();
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -48,7 +53,7 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.headerContainer}>
+        <View style={{ ...styles.headerContainer, ...containerStyle }}>
           {renderHeader && renderHeader()}
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Row gap={24} style={styles.tabsContainer}>
@@ -106,6 +111,7 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
 };
 
 CustomTabs.propTypes = {
+  containerStyle: PropTypes.object,
   renderHeader: PropTypes.func,
   showWarningOnTabSwitch: PropTypes.bool,
   tabs: PropTypes.arrayOf(

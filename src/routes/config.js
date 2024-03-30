@@ -29,6 +29,7 @@ import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
+import EditJobDetails from "../views/EditJobDetails/EditJobDetails";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -221,9 +222,14 @@ const config = [
         viewPath: navigations.POSTED_JOBS,
         element: <PostedJobsView />,
       },
+
       {
         viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
         element: <AddModifyNewJobs />,
+      },
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.EDIT_JOB}`,
+        element: <EditJobDetails />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,

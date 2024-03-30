@@ -21,6 +21,7 @@ const CustomTextEditor = ({
   label,
   onChangeText,
   value,
+  quillContainerStyle,
 }) => {
   const richText = useRef(null);
   const intl = useIntl();
@@ -47,7 +48,11 @@ const CustomTextEditor = ({
         )}
       </View>
       <View
-        style={[styles.mainView, !!errorMessage ? styles.invalidInput : {}]}
+        style={[
+          styles.mainView,
+          !!errorMessage ? styles.invalidInput : {},
+          quillContainerStyle,
+        ]}
       >
         <View>
           <RichToolbar

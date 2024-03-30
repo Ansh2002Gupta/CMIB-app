@@ -16,7 +16,16 @@ import { progressData } from "../../../constants/constants";
 import styles from "./AddModifyJobComponent.styles";
 
 const AddModifyJobComponent = forwardRef(
-  ({ addNewJobData, isExpanded, isWebView, setIsExpanded }, ref) => {
+  (
+    {
+      addNewJobData,
+      isExpanded,
+      isWebView,
+      setIsExpanded,
+      isMinimisedVisible = true,
+    },
+    ref
+  ) => {
     const intl = useIntl();
     const [jobProgress, setJobProgress] = useState(0);
 
@@ -60,7 +69,7 @@ const AddModifyJobComponent = forwardRef(
     const personalDetailsRef = useRef();
     const bottomSectionRef = useRef();
     const [selectedJobType, setSelectedJobType] = useState(
-      addNewJobData.jobType ?? {}
+      addNewJobData?.jobType ?? {}
     );
 
     const getInternalState = () => {
@@ -113,6 +122,7 @@ const AddModifyJobComponent = forwardRef(
             setIsExpanded={setIsExpanded}
             isQuestion={false}
             progressJobData={progressData[jobProgress]}
+            isMinimisedVisible={isMinimisedVisible}
             headerText={intl.formatMessage({ id: "label.job_details" })}
           />
 

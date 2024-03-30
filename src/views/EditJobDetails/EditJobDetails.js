@@ -1,28 +1,128 @@
-import { View } from "@unthinkable/react-core-components";
-import React from "react";
-import AddModifyQuestionaireComponent from "../../containers/AddModifyNewJobs/AddModifyQuestionaireComponent/AddModifyQuestionaireComponent";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
+import React, { useEffect, useRef, useState } from "react";
 import useIsWebView from "../../hooks/useIsWebView";
-import FooterComponent from "../../containers/AddModifyNewJobs/FooterComponent";
+import AddModifyQuestionaireComponent from "../../containers/AddModifyNewJobs/AddModifyQuestionaireComponent/AddModifyQuestionaireComponent";
 import AddModifyJobComponent from "../../containers/AddModifyNewJobs/AddModifyJobComponent";
-const EditJobDetails = ({ questionnaireData, appData, isJob }) => {
-  const { isWebView } = useIsWebView();
+import FooterComponent from "../../containers/AddModifyNewJobs/FooterComponent";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import { CustomTabs, FormTabs } from "../../components/Tab";
+import { useIntl } from "react-intl";
+import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
+import colors from "../../assets/colors";
+import { useLocation, useNavigate } from "../../routes";
+import LoadingScreen from "../../components/LoadingScreen";
+import { getFormatedData } from "../../utils/util";
+import Http from "../../services/http-service";
+import { UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
 
+const EditJobDetails = () => {
+  const { isWebView } = useIsWebView();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { jobData, questionData } = location.state;
+  const [isChecklist, setIsCheckList] = useState(false);
+  const questionaireRef = useRef(null);
+  const addJobRef = useRef(null);
+  const intl = useIntl();
+  const { fetchData, isLoading } = useGetAddNewJobData();
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const onSubmit = () => {
+    let jobData;
+    let questionnairelist;
+    let isError = true;
+    let questionError = true;
+    if (addJobRef.current) {
+      jobData = addJobRef.current.getChildState();
+    }
+    if (questionaireRef.current) {
+      questionnairelist = questionaireRef.current.getQuestionData();
+    }
+    if (addJobRef.current) {
+      isError = addJobRef.current.getErrors();
+    }
+    if (questionaireRef.current) {
+      questionError = questionaireRef.current.getQuestionError();
+    }
+    if (!isError && !questionError) {
+      jobData.jobOpeningDate = new Date(jobData.jobOpeningDate);
+      jobData.jobClosingDate = new Date(jobData.jobClosingDate);
+      const formattedData = getFormatedData(jobData, questionnairelist);
+      Http.put(`${UPDATE_JOB}/158`, formattedData)
+        .then((res) => {
+          alert("Job Updated Successfully");
+        })
+        .catch((e) => {
+          alert("SomeThing Went Wrong");
+        })
+        .finally(() => {
+          navigate(-1);
+        });
+    }
+  };
   return (
-    <View style={{ flex: 1, padding: 16 }}>
-      {isJob ? (
-        <AddModifyQuestionaireComponent
-          isQuestionaire={true}
-          addNewJobData={questionnaireData}
-          isWebView={isWebView}
-        />
+    <View style={{ flex: 1, backgroundColor: colors.offWhite }}>
+      <IconHeader headerText={"Edit Jobs"} isBorderVisible={false} />
+      {isLoading ? (
+        <LoadingScreen />
       ) : (
-        <AddModifyJobComponent
-          addNewJobData={appData}
-          isExpanded={true}
-          isWebView={isWebView}
-        />
+        <ScrollView style={{ flex: 1 }}>
+          <View
+            style={{
+              backgroundColor: colors.offWhite,
+              flex: 1,
+            }}
+          >
+            <CustomTabs
+              containerStyle={{ backgroundColor: colors.white }}
+              tabs={[
+                {
+                  label: intl.formatMessage({
+                    id: "label.job_details",
+                  }),
+                  component: (
+                    <View style={{ padding: 16 }}>
+                      <AddModifyJobComponent
+                        ref={addJobRef}
+                        addNewJobData={jobData}
+                        isExpanded={true}
+                        isWebView={isWebView}
+                        isMinimisedVisible={false}
+                      />
+                    </View>
+                  ),
+                },
+                {
+                  label: intl.formatMessage({
+                    id: "label.view_questionaire",
+                  }),
+                  component: (
+                    <View style={{ padding: 16 }}>
+                      <AddModifyQuestionaireComponent
+                        isQuestionaire={true}
+                        addNewJobData={questionData}
+                        isWebView={isWebView}
+                        ref={questionaireRef}
+                        isMinimisedVisible={false}
+                        headerText={"label.view_questionaire"}
+                      />
+                    </View>
+                  ),
+                },
+              ]}
+            />
+          </View>
+          <View style={{ padding: 16 }}>
+            <FooterComponent
+              onSubmit={onSubmit}
+              isWebView={isWebView}
+              isCheckList={isChecklist}
+              setIsCheckList={setIsCheckList}
+            />
+          </View>
+        </ScrollView>
       )}
-      <FooterComponent isCheckBoxVisible={false} />
     </View>
   );
 };

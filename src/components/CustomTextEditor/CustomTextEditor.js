@@ -28,6 +28,8 @@ const CustomTextEditor = (props) => {
     label,
     onChangeText,
     value,
+    quilStyle,
+    quillContainerStyle,
   } = props;
 
   const modules = {
@@ -45,6 +47,14 @@ const CustomTextEditor = (props) => {
   const handleProcedureContentChange = (content) => {
     onChangeText && onChangeText(content);
   };
+  const getError = () => {
+    if (!!errorMessage) {
+      return "error";
+    } else if (disabled) {
+      return "disabled";
+    }
+    return "";
+  };
 
   return (
     <View>
@@ -61,17 +71,17 @@ const CustomTextEditor = (props) => {
           </CommonText>
         )}
       </View>
-      <View style={styles.quillContainer}>
+      <View style={{ ...styles.quillContainer, ...quillContainerStyle }}>
         <ReactQuill
           theme="snow"
           value={value}
-          className={!!errorMessage ? "error" : ""}
+          className={getError()}
           modules={modules}
           onBlur={customHandleBlur}
           formats={FORMAT}
           placeholder={intl.formatMessage({ id: "label.description" })}
           onChange={handleProcedureContentChange}
-          style={styles.quillStyling}
+          style={{ ...styles.quillStyling, ...quilStyle }}
           readOnly={disabled}
         />
       </View>
@@ -91,6 +101,8 @@ CustomTextEditor.defaultProps = {
   isMandatory: false,
   label: "",
   disabled: false,
+  quillContainerStyle: {},
+  quilStyle: PropTypes.object,
 };
 CustomTextEditor.propTypes = {
   customErrorStyle: PropTypes.object,
@@ -102,6 +114,8 @@ CustomTextEditor.propTypes = {
   label: PropTypes.string,
   onChangeText: PropTypes.func,
   value: PropTypes.string,
+  quilStyle: PropTypes.object,
+  quillContainerStyle: PropTypes.object,
 };
 
 export default CustomTextEditor;

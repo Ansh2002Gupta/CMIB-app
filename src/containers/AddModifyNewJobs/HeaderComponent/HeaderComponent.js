@@ -14,6 +14,7 @@ const HeaderComponent = ({
   isExpanded,
   isQuestion,
   isWebView,
+  isMinimisedVisible,
   onPress,
   progressJobData,
   progressText,
@@ -55,7 +56,6 @@ const HeaderComponent = ({
             <View
               style={{
                 ...{ backgroundColor: progressJobData.backgroundColor },
-
                 ...styles.jobDataProgressView,
               }}
             >
@@ -70,13 +70,15 @@ const HeaderComponent = ({
             </View>
           ) : null}
 
-          <TouchableImage
-            source={isExpanded ? ArrowUp : ArrowDown}
-            style={styles.iconStyle}
-            onPress={() => {
-              setIsExpanded(!isExpanded);
-            }}
-          />
+          {isMinimisedVisible && (
+            <TouchableImage
+              source={isExpanded ? ArrowUp : ArrowDown}
+              style={styles.iconStyle}
+              onPress={() => {
+                setIsExpanded(!isExpanded);
+              }}
+            />
+          )}
         </View>
       </View>
       {subText && isExpanded && (

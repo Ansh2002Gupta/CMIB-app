@@ -18,7 +18,17 @@ import { useIntl } from "react-intl";
 import styles from "./AddModifyQuestionaireComponent.styles";
 
 const AddModifyQuestionaireComponent = forwardRef(
-  ({ addNewJobData, isQuestionaire, isWebView, setIsQuestionaire }, ref) => {
+  (
+    {
+      addNewJobData,
+      isQuestionaire,
+      isWebView,
+      setIsQuestionaire,
+      isMinimisedVisible = true,
+      headerText = "label.questionnaire",
+    },
+    ref
+  ) => {
     const intl = useIntl();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [optionData, setoptionData] = useState(null);
@@ -242,7 +252,7 @@ const AddModifyQuestionaireComponent = forwardRef(
             isExpanded={isQuestionaire}
             setIsExpanded={setIsQuestionaire}
             headerText={intl.formatMessage({
-              id: "label.questionnaire",
+              id: headerText,
             })}
             subText={intl.formatMessage({
               id: "label.questionaire_subHeading",
@@ -257,6 +267,7 @@ const AddModifyQuestionaireComponent = forwardRef(
                 getQuestionInitalValue(intl, questionnairelist.length)
               )
             }
+            isMinimisedVisible={isMinimisedVisible}
           />
           {isQuestionaire &&
             questionnairelist?.map((item, index) => {

@@ -1,326 +1,52 @@
-import { View, ScrollView } from "@unthinkable/react-core-components";
-import React, { useContext, useEffect, useState } from "react";
-import CommonText from "../../components/CommonText";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import dayjs from "dayjs";
+import { View } from "@unthinkable/react-core-components";
 import CustomTextEditor from "../../components/CustomTextEditor";
 import { FormTabs } from "../../components/Tab/FormTabs";
 import { CustomTabs } from "../../components/Tab";
-import TouchableImage from "../../../src/components/TouchableImage";
-import DetailComponent from "../../../src/components//DetailComponent/DetailComponent";
-
-import images from "../../images";
-import colors from "../../assets/colors";
-import CardComponent from "../../components/CardComponent";
 import useFetch from "../../hooks/useFetch";
-import AddModifyQuestionaireComponent from "../../containers/AddModifyNewJobs/AddModifyQuestionaireComponent/AddModifyQuestionaireComponent";
-import useIsWebView from "../../hooks/useIsWebView";
-import { getQuestionType } from "../../utils/util";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import EditJobDetails from "../EditJobDetails";
 import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
+import ViewJobs from "../../containers/ViewPostedJobDetails/ViewJobs";
+import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
+import LoadingScreen from "../../components/LoadingScreen";
 import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
-import AddModifyJobComponent from "../../containers/AddModifyNewJobs/AddModifyJobComponent";
-const dataApi = {
-  id: 62,
-  approved: 0,
-  approved_by: 1,
-  category_preference: "General",
-  closing_date: "2024-04-06 00:00:00",
-  company_id: 1,
-  company_name: "Test Company",
-  contract_period: null,
-  created_at: "2024-03-14T09:40:48.000000Z",
-  created_by: 84,
-  designation: "Engineer",
-  qualification_details: "BCA",
-  perks: "Remote Job",
-  desired_qualification: "Master's degree in Computer Science",
-  detail:
-    "<ul><li>Responsibilities include coding,</li><li>testing, and debugging.</li></ul>",
-  disability_percentage: 20,
-  disability_type: "Intellectual Disability",
-  essential_qualification: "Bachelor's degree in Computer Science",
-  flexi_hours: 0,
-  functional_areas: [],
-  gender_preference: "Male",
-  industry: null,
-  is_contractual: 1,
-  is_for_disabled: 1,
-  is_salary_negotiable: 1,
-  is_urgent: 1,
-  location: [],
-  max_experience: 5,
-  max_salary: 800000,
-  min_experience: 2,
-  min_salary: 600000,
-  mode: null,
-  nationality: "Any",
-  opening_date: "2024-03-20 00:00:00",
-  service_type: "Full Time",
-  status: 1,
-  summary: "Exciting opportunity for a skilled software engineer.",
-  type: null,
-  updated_at: "2024-03-14T09:40:48.000000Z",
-  updated_by: null,
-  vacancy: 5,
-  questionnaire: [
-    {
-      id: 35,
-      question: "Select your preferred php framework",
-      type: "multi-select",
-      mandatory: 1,
-      company_id: 2,
-      created_at: "2024-03-11T08:43:28.000000Z",
-      updated_at: "2024-03-11T08:43:28.000000Z",
-      deleted_at: null,
-      job_id: 62,
-      question_options: ["laravel", "symphony"],
-      question_order: null,
-    },
-    {
-      id: 52,
-      question: "What is your full name?",
-      type: "text",
-      mandatory: 0,
-      company_id: 1,
-      created_at: "2024-03-14T09:40:48.000000Z",
-      updated_at: "2024-03-14T09:40:48.000000Z",
-      deleted_at: null,
-      job_id: 62,
-      question_options: null,
-      question_order: 0,
-    },
-    {
-      id: 72,
-      question: "What is your favorite color?",
-      type: "single_select",
-      mandatory: 0,
-      company_id: 1,
-      created_at: "2024-03-14T13:43:06.000000Z",
-      updated_at: "2024-03-14T13:43:06.000000Z",
-      deleted_at: null,
-      job_id: 62,
-      question_options: ["Red", "Blue", "Green"],
-      question_order: 0,
-    },
-    {
-      id: 73,
-      question: "Select your preferred programming languages",
-      type: "multi_select",
-      mandatory: 1,
-      company_id: 1,
-      created_at: "2024-03-14T13:43:06.000000Z",
-      updated_at: "2024-03-14T13:43:06.000000Z",
-      deleted_at: null,
-      job_id: 62,
-      question_options: ["JavaScript", "Python", "Java", "C#"],
-      question_order: 0,
-    },
-    {
-      id: 74,
-      question: "Select your preferred php framework",
-      type: "multi_select",
-      mandatory: 0,
-      company_id: 1,
-      created_at: "2024-03-14T13:43:06.000000Z",
-      updated_at: "2024-03-14T13:43:06.000000Z",
-      deleted_at: null,
-      job_id: 62,
-      question_options: ["laravel", "symphony"],
-      question_order: 0,
-    },
-  ],
-};
-const details = [
-  [
-    {
-      label: "label.job_summary",
-      value: dataApi.summary,
-      isMandatory: true,
-    },
-  ],
-  [
-    {
-      label: "label.job_details",
-      value: dataApi.detail,
-      isMandatory: true,
-      ShouldRenderOwnComponent: function () {
-        return (
-          <CustomTextEditor
-            value={dataApi.detail}
-            disabled={true}
-            // label={intl.formatMessage({
-            //   id: "label.job_details",
-            // })}
-            // isError={(error && error.jobDetails && true) || false}
-            // errorMessage={(error && error.jobDetails) || ""}
-            // customHandleBlur={() => validateInput("jobDetails")}
-            // onChangeText={(val) => {
-            //   handleJobDetailsChange("jobDetails", val);
-            // }}
-          />
-        );
-      },
-      style: {
-        padding: 16,
-        borderWidth: 0.5,
-        borderColor: "gray",
-        marginBottom: 10,
-        borderRadius: 12,
-      },
-    },
-  ],
-  [
-    {
-      label: "label.job_type",
-      value: dataApi.type ?? "-",
-      isMandatory: true,
-    },
-    {
-      label: "label.urgent",
-      value: dataApi.is_urgent,
-      isMandatory: true,
-    },
-    {},
-  ],
-  [
-    {
-      label: "label.minimum_experience",
-      value: dataApi.min_experience,
-      isMandatory: true,
-    },
-    {
-      label: "label.maximum_experience",
-      value: dataApi.max_experience,
-    },
-
-    {
-      label: "label.nationality",
-      value: dataApi.nationality ?? "-",
-    },
-  ],
-  [
-    {
-      label: "label.designation",
-      value: dataApi.designation ?? "-",
-      isMandatory: true,
-    },
-    {
-      label: "label.job_location",
-      value: dataApi.location ?? "-",
-      isMandatory: true,
-    },
-    {},
-  ],
-  [
-    {
-      label: "label.functional_areas",
-      isMandatory: true,
-      showBadgeLabel: true,
-      customValue: dataApi.functional_areas ?? "-",
-    },
-  ],
-  [
-    {
-      label: "label.gender_preference",
-      value: dataApi.gender_preference ?? "-",
-    },
-    {
-      label: "label.category_preference",
-      value: dataApi.category_preference ?? "-",
-      isMandatory: true,
-    },
-    {},
-  ],
-  [
-    {
-      label: "label.essential_qualification",
-      value: dataApi.essential_qualification ?? "-",
-    },
-  ],
-  [
-    {
-      label: "label.desired_qualification",
-      value: dataApi.desired_qualification ?? "-",
-    },
-  ],
-  [
-    {
-      label: "label.job_opening_date",
-      value: dataApi.opening_date ?? "-",
-      isMandatory: true,
-    },
-    {
-      label: "label.job_closing_date",
-      value: dataApi.closing_date ?? "-",
-      isMandatory: true,
-    },
-    {},
-  ],
-  [
-    {
-      label: "label.number_of_vacancies",
-      value: dataApi.vacancy ?? "-",
-      isMandatory: true,
-    },
-  ],
-  [
-    {
-      label: "label.mode_of_work",
-      value: dataApi.mode ?? "-",
-      isMandatory: true,
-    },
-    {
-      label: "label.flexi_hours",
-      value: dataApi.flexi_hours ?? "-",
-    },
-    {
-      label: "label.fullorPartTime",
-      value: dataApi.service_type ?? "-",
-      isMandatory: true,
-    },
-  ],
-  [
-    {
-      label: "label.salary_negotiable",
-      value: dataApi.is_salary_negotiable ?? "-",
-    },
-    {
-      label: "label.minimum_salary",
-      value: dataApi.min_salary ?? "-",
-    },
-    {
-      label: "label.maximum_salary",
-      value: dataApi.max_experience ?? "-",
-    },
-  ],
-  [
-    {
-      label: "label.job_status",
-      value: dataApi.status === 1 ? "Active" : "InActive" ?? "-",
-    },
-  ],
-];
+import { jobType } from "../../constants/constants";
+import { useIntl } from "react-intl";
+import { getFormatedData, getQuestionType } from "../../utils/util";
+import styles from "./ViewPostedJobDetails.styles";
+import { POST_JOB, UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
+import Http from "../../services/http-service";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import { useNavigate } from "../../routes";
+import { navigations } from "../../constants/routeNames";
 
 const ViewPostedJobDetails = () => {
+  const navigate = useNavigate();
   const {
     data: apiData,
-    // isLoading,
-    // isError,
-    // error,
+    isLoading: apiLoading,
+    isError: apiIsError,
+    error: apiError,
+    fetchData: getData,
   } = useFetch({
-    url: "/company/jobs/153",
+    url: `${POST_JOB}/158`,
   });
+
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
     useGetAddNewJobData();
-  const [isEdited, setIsEdit] = useState(false);
   const [questionnaireData, setQuestionnaireData] = useState([]);
   const [appData, setAppData] = useState([]);
+  const [details, setDetails] = useState([]);
   const [addJobs] = useContext(AddJobContext);
-  console.log(appData, apiData?.genderPreferenceData);
+  const [isActive, setActive] = useState(false);
+  const intl = useIntl();
 
   useEffect(() => {
     fetchData();
   }, []);
+
   useEffect(() => {
     let obj = {};
     if (apiData && isSuccess) {
@@ -339,24 +65,16 @@ const ViewPostedJobDetails = () => {
       obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
       obj.minimumExperience = apiData?.min_experience;
       obj.maximumExperience = apiData?.max_experience;
-      obj.jobLocation = apiData.location_id
-        ? addJobs.jobLocationData
-            .filter((item) => {
-              if (JSON.parse(apiData.location_id).includes(item.id)) {
-                return item;
-              }
-            })
-            .map((item) => ({
-              id: item.id,
-              label: item.city,
-              value: item.city,
-            }))
+      obj.jobLocation = apiData.locations
+        ? apiData.locations.map((item) => ({
+            id: item.id,
+            label: item.city,
+            value: item.city,
+          }))
         : []; //
       obj.nationality = apiData.countryData
         ? addJobs.countryData
-            ?.filter((item) =>
-              JSON.parse(apiData.nationality).includes(item.name)
-            )
+            ?.filter((item) => apiData.nationality.includes(item.name))
             .map((item) => ({
               id: item.id,
               label: item.name,
@@ -365,19 +83,13 @@ const ViewPostedJobDetails = () => {
         : ""; //
       obj.designation = apiData.designation;
       obj.functionalAreas =
-        apiData.functional_area_id.length > 0
-          ? addJobs.functionalData
-              .filter((item) => {
-                if (JSON.parse(apiData.functional_area_id).includes(item.id)) {
-                  return item;
-                }
-              })
-              .map((item) => ({
-                id: item.id,
-                label: item.name,
-                value: item.slug,
-              }))
-          : []; //
+        apiData.functional_areas.length > 0
+          ? apiData.functional_areas.map((item) => ({
+              id: item.id,
+              label: item.name,
+              value: item.slug,
+            }))
+          : [];
       obj.genderPreference = apiData.gender_preference
         ? addJobs.genderPreferenceData
             ?.filter((item) => item.name == apiData.gender_preference)
@@ -386,7 +98,7 @@ const ViewPostedJobDetails = () => {
               label: item.label,
               value: item.name,
             }))[0]
-        : {}; //
+        : {};
       obj.categoryPreference = apiData.category_preference
         ? addJobs.jobCategory
             ?.filter((item) => item.name == apiData.category_preference)
@@ -407,7 +119,6 @@ const ViewPostedJobDetails = () => {
         ? addJobs.workModeData
             .filter((item) => {
               if (item.name == apiData.work_mode) {
-                console.log("ITEEEEM", item);
                 return item;
               }
             })
@@ -420,21 +131,20 @@ const ViewPostedJobDetails = () => {
       obj.flexiHours = apiData.flexi_hours ? 0 : 1;
       obj.vacanciesCountType = apiData.is_extended_vacancy == 1 ? 0 : 1;
       obj.fullTime = apiData.service_type == "Full Time" ? 0 : 1;
-      obj.disabiltyPercentage = apiData?.disability_percentage;
-      obj.typeOfDisabilty = apiData?.disability_type;
+      obj.disabiltyPercentage = apiData?.disability_percentage ?? 0;
+      obj.typeOfDisabilty = apiData?.disability_type ?? "";
       obj.contractYear = apiData?.contract_period
-        ? JSON.parse(apiData.contract_period).years
+        ? apiData.contract_period.years
         : 0;
       obj.contractMonth = apiData?.contract_period
-        ? JSON.parse(apiData.contract_period).months
+        ? apiData.contract_period.months
         : 0;
       obj.contractDay = apiData?.contract_period
-        ? JSON.parse(apiData.contract_period).days
+        ? apiData.contract_period.days
         : 0;
     }
     setAppData(obj);
-
-    const transformedQuestionnaire = dataApi.questionnaire.map((item) => {
+    const transformedQuestionnaire = apiData?.questionnaires.map((item) => {
       if (
         Array.isArray(item.question_options) &&
         item.question_options.length > 0
@@ -456,151 +166,288 @@ const ViewPostedJobDetails = () => {
         };
       }
     });
+
     setQuestionnaireData(transformedQuestionnaire);
   }, [apiData, isSuccess]);
+
+  useEffect(() => {
+    if (apiData && addJobs.jobType) {
+      let jobName = addJobs.jobType.find(
+        (item) => item.id == apiData.job_type_id
+      )?.name;
+      let temp = [
+        [
+          {
+            label: "label.job_summary",
+            value: apiData?.summary,
+            isMandatory: true,
+          },
+        ],
+        [
+          {
+            label: "label.job_details",
+            value: apiData?.detail,
+            isMandatory: true,
+            ShouldRenderOwnComponent: function () {
+              return (
+                <CustomTextEditor
+                  value={apiData?.detail}
+                  disabled={true}
+                  quillContainerStyle={{ marginBottom: 24 }}
+                  quilStyle={{ height: undefined }}
+                />
+              );
+            },
+          },
+        ],
+        [
+          {
+            label: "label.job_type",
+            value: jobName ?? "-",
+            isMandatory: true,
+          },
+          {
+            label: "label.urgent",
+            value: apiData?.is_urgent == 1 ? "Yes" : "No",
+            isMandatory: true,
+          },
+          {},
+        ],
+        [
+          {
+            label: "label.minimum_experience",
+            value: apiData?.min_experience,
+            isMandatory: true,
+          },
+          {
+            label: "label.maximum_experience",
+            value: apiData?.max_experience,
+          },
+
+          {
+            label: "label.nationality",
+            value: apiData?.nationality ?? "-",
+          },
+        ],
+        [
+          {
+            label: "label.designation",
+            value: apiData?.designation ?? "-",
+            isMandatory: true,
+          },
+          {
+            label: "label.job_location",
+            isMandatory: true,
+            showBadgeLabel: true,
+            customValue: apiData?.locations.map((item) => item.city) ?? "-",
+            value: apiData?.locations ?? "-",
+          },
+          false ? {} : [],
+        ],
+        [
+          {
+            label: "label.functional_areas",
+            isMandatory: true,
+            showBadgeLabel: true,
+            customValue:
+              apiData?.functional_areas.map((item) => item.name) ?? "-",
+          },
+        ],
+        [
+          {
+            label: "label.gender_preference",
+            value: apiData?.gender_preference ?? "-",
+          },
+          {
+            label: "label.category_preference",
+            value: apiData?.category_preference ?? "-",
+            isMandatory: true,
+          },
+          {},
+        ],
+        [
+          {
+            label: "label.essential_qualification",
+            value: apiData?.essential_qualification ?? "-",
+          },
+        ],
+        [
+          {
+            label: "label.desired_qualification",
+            value: apiData?.desired_qualification ?? "-",
+          },
+        ],
+        [
+          {
+            label: "label.job_opening_date",
+            value: apiData?.opening_date
+              ? dayjs(apiData?.opening_date).format("DD/MM/YYYY")
+              : "-",
+            isMandatory: true,
+          },
+          {
+            label: "label.job_closing_date",
+            value: apiData?.closing_date
+              ? dayjs(apiData?.closing_date).format("DD/MM/YYYY")
+              : "-",
+            isMandatory: true,
+          },
+          {},
+        ],
+        [
+          {
+            label: "label.number_of_vacancies",
+            value: apiData?.vacancy ?? "-",
+            isMandatory: true,
+          },
+        ],
+        [
+          {
+            label: "label.mode_of_work",
+            value: apiData?.work_mode ?? "-",
+            isMandatory: true,
+          },
+          {
+            label: "label.flexi_hours",
+            value: apiData?.flexi_hours ?? "-",
+          },
+          !jobName === jobType.CONTRACTUAL
+            ? {
+                label: "label.fullorPartTime",
+                value: apiData?.service_type ?? "-",
+                isMandatory: true,
+              }
+            : {},
+        ],
+        jobName === jobType.CONTRACTUAL
+          ? [
+              {
+                label: "label.contractual_period_year",
+                value: apiData?.contract_period.years ?? "-",
+                isMandatory: true,
+              },
+              {
+                label: "label.contractual_period_month",
+                value: apiData?.contract_period.months ?? "-",
+                isMandatory: true,
+              },
+              {
+                label: "label.contractual_period_day",
+                value: apiData?.contract_period.days ?? "-",
+                isMandatory: true,
+              },
+            ]
+          : [],
+        jobName === jobType.SPECIALLY_ABLE
+          ? [
+              {
+                label: "label.type_of_disability",
+                value: apiData?.disability_type ?? "-",
+                isMandatory: true,
+              },
+              {
+                label: "label.disability_percentage",
+                value: apiData?.disability_percentage ?? "-",
+                isMandatory: true,
+              },
+            ]
+          : [],
+
+        [
+          {
+            label: "label.salary_negotiable",
+            value: apiData?.is_salary_negotiable ?? "-",
+          },
+          {
+            label: "label.minimum_salary",
+            value: apiData?.min_salary ?? "-",
+          },
+          {
+            label: "label.maximum_salary",
+            value: apiData?.max_experience ?? "-",
+          },
+        ],
+        [
+          {
+            label: "label.job_status",
+            value: apiData?.status === 1 ? "Active" : "InActive" ?? "-",
+          },
+        ],
+      ];
+      setActive(apiData?.status === 1);
+
+      setDetails(temp);
+    }
+  }, [apiData, addJobs]);
+
   return (
-    <View style={{ flex: 1 }}>
-      <IconHeader headerText={"Hello"} />
-      <View style={{ backgroundColor: "white", height: 80 }}>
+    <View style={styles.container}>
+      <IconHeader
+        headerText={apiData?.designation}
+        isSwitchVisible
+        isActive={isActive}
+        isBorderVisible={false}
+        handleSwitchChange={() => {
+          setActive(!isActive);
+        }}
+      />
+      <View style={styles.backgroundColorWhite}>
         <CustomTabs
           tabs={[
-            { label: "Job Details", component: <View /> },
-            { label: "Applicants", component: <View /> },
-            { label: "Scheduled Interview", component: <View /> },
+            {
+              label: intl.formatMessage({ id: "label.job_details" }),
+              component: <></>,
+            },
+            {
+              label: intl.formatMessage({ id: "label.applicants" }),
+              component: <View />,
+            },
+            {
+              label: intl.formatMessage({ id: "label.schedule_interview" }),
+              component: <View />,
+            },
           ]}
         />
       </View>
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <FormTabs
-          onEditClick={() => setIsEdit(!isEdited)}
-          tabs={[
-            {
-              label: "Job Details",
-              component: (
-                <View style={{ flex: 1 }}>
-                  <ScrollView
-                    style={{
-                      overflow: "hidden",
-                    }}
-                  >
-                    {isEdited ? (
-                      <EditJobDetails appData={appData} isJob={false} />
-                    ) : (
-                      <CardComponent
-                        customStyle={{
-                          margin: 16,
-                          padding: 16,
-                        }}
-                      >
-                        <DetailComponent
-                          details={details}
-                          isColumnVariableWidth
-                          customContainerStyle={{ marginTop: 0 }}
-                        />
-                      </CardComponent>
-                    )}
-                  </ScrollView>
-                </View>
-              ),
-            },
-            {
-              label: "Questionaire",
-              component: (
-                <View style={{ flex: 1, margin: 16 }}>
-                  <ScrollView>
-                    {isEdited ? (
-                      <View
-                        style={{
-                          marginTop: -40,
-                          marginLeft: -16,
-                          marginRight: -16,
-                        }}
-                      >
-                        <EditJobDetails
-                          questionnaireData={questionnaireData}
-                          isJob={true}
-                        />
-                      </View>
-                    ) : (
-                      questionnaireData?.map((item) => {
-                        return (
-                          <View style={{ marginBottom: 16 }}>
-                            <CardComponent>
-                              <View style={{ flexDirection: "row" }}>
-                                <CommonText
-                                  customTextStyle={{
-                                    fontSize: 12,
-                                    color: colors.darkGrey,
-                                  }}
-                                >{`Question 1`}</CommonText>
-                                <CommonText
-                                  customContainerStyle={{ marginLeft: 4 }}
-                                  customTextStyle={{
-                                    fontSize: 12,
-                                    color: colors.darkGrey,
-                                  }}
-                                >{`(${item.typeofQuestion})`}</CommonText>
-                                {item.mandatory == 1 && (
-                                  <CommonText
-                                    customContainerStyle={{ marginLeft: 4 }}
-                                    customTextStyle={{
-                                      fontSize: 12,
-                                      color: colors.red,
-                                    }}
-                                  >{`*`}</CommonText>
-                                )}
-                              </View>
-                              <View style={{ marginTop: 8 }}>
-                                <CommonText
-                                  customTextStyle={{
-                                    fontSize: 12,
-                                    color: colors.black,
-                                  }}
-                                >
-                                  {item.question}
-                                </CommonText>
-                              </View>
-                              <View style={{ marginTop: 8, marginBottom: 8 }}>
-                                {Array.isArray(item.question_options) &&
-                                  item?.question_options?.map(
-                                    (items, index) => {
-                                      return (
-                                        <View
-                                          style={{
-                                            marginBottom: 8,
-                                            marginLeft: 2,
-                                          }}
-                                        >
-                                          <CommonText
-                                            customTextStyle={{
-                                              fontSize: 12,
-                                              color: colors.black,
-                                            }}
-                                          >{` ${index + 1}.${
-                                            items.value
-                                          }`}</CommonText>
-                                        </View>
-                                      );
-                                    }
-                                  )}
-                              </View>
-                            </CardComponent>
-                          </View>
-                        );
-                      })
-                    )}
-                  </ScrollView>
-                </View>
-              ),
-            },
-          ]}
-          isEditButtonVisible
+      {isLoading || apiLoading ? (
+        <LoadingScreen />
+      ) : (
+        <View style={styles.container}>
+          <FormTabs
+            onEditClick={() =>
+              navigate(navigations.EDIT_JOB, {
+                state: { jobData: appData, questionData: questionnaireData },
+              })
+            }
+            tabs={[
+              {
+                label: intl.formatMessage({
+                  id: "label.job_details",
+                }),
+                component: <ViewJobs details={details} />,
+              },
+              {
+                label: intl.formatMessage({
+                  id: "label.view_questionaire",
+                }),
+                component: (
+                  <ViewQuestion questionnaireData={questionnaireData} />
+                ),
+              },
+            ]}
+            isEditButtonVisible
+          />
+        </View>
+      )}
+      {!isLoading && isError && apiIsError && (
+        <ErrorComponent
+          errorMsg={
+            isErrorData?.data?.message ||
+            apiError?.data?.message ||
+            GENERIC_GET_API_FAILED_ERROR_MESSAGE
+          }
         />
-      </View>
+      )}
     </View>
   );
 };

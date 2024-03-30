@@ -164,11 +164,6 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
       ])
     ).values()
   );
-  console.log(
-    "jobData.genderPreference.valuejobData.genderPreference.value",
-    jobData?.genderPreference
-  );
-
   async function handleChange(text) {
     return fetchSearch(text).then((res) => {
       if (Platform.OS.toLowerCase() !== "web") {
@@ -333,7 +328,6 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
           options={genderPreferenceData || []}
           value={jobData.genderPreference.value}
           onChangeValue={(value) => {
-            console.log("VALUE", value);
             handleJobDetailsChange("genderPreference", value);
           }}
           labelField="slug"

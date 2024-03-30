@@ -3,10 +3,10 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   quillContainer: {
-    marginBottom: 78,
+    marginBottom: 60,
   },
   quillStyling: {
-    // height: "508px",
+    height: "508px",
     backgroundColor: colors.white,
     borderRadius: 15,
   },
