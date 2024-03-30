@@ -193,6 +193,7 @@ const DetailComponent = ({
           }
         }}
         isRupee={detail?.isRupee}
+        isSingleMutliSelect={detail.isSingleMutliSelect}
       />
     );
   };

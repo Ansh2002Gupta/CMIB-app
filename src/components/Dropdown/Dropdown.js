@@ -24,6 +24,7 @@ const Dropdown = ({
   value,
   valueField,
   indexField,
+  isSingleMutliSelect,
 }) => {
   const getAllKeys = (option) => {
     let finalObj = {};
@@ -88,9 +89,21 @@ const Dropdown = ({
           isMulti
           components={{ Option: CheckboxOption }}
         />
-        {!!selectedItems.length && (
+        {isSingleMutliSelect ? (
           <View style={styles.multiSelectOptions}>
-            {selectedItems.map((item, index) => (
+            {options
+              ?.filter((item) => item.isSelected)
+              ?.map((item, index) => (
+                <CustomChipCard
+                  key={index}
+                  message={item?.name || item?.label}
+                  onPress={() => handleValueChange(item)}
+                />
+              ))}
+          </View>
+        ) : (
+          <View style={styles.multiSelectOptions}>
+            {selectedItems?.map((item, index) => (
               <CustomChipCard
                 key={index}
                 message={item?.name}
@@ -130,6 +143,7 @@ Dropdown.defaultProps = {
   valueField: "",
   urlField: "",
   isMultiSelect: false,
+  isSingleMutliSelect: false,
 };
 
 Dropdown.propTypes = {
@@ -138,6 +152,7 @@ Dropdown.propTypes = {
   isEditable: PropTypes.bool,
   includeAllKeys: PropTypes.bool,
   isMultiSelect: PropTypes.bool,
+  isSingleMutliSelect: PropTypes.bool,
   labelField: PropTypes.string,
   onChange: PropTypes.func,
   onDeleteSelectedItem: PropTypes.func,
