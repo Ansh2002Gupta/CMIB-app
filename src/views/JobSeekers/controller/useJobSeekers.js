@@ -293,7 +293,7 @@ const useJobSeekers = () => {
             customTextStyle={styles.labelStyle}
           />
         ),
-        style: commonStyles.columnStyle("25%"),
+        style: commonStyles.columnStyle("35%"),
         isFillSpace: true,
       },
       {
@@ -306,7 +306,7 @@ const useJobSeekers = () => {
           />
         ),
         style: {
-          ...commonStyles.columnStyle("10%"),
+          ...commonStyles.columnStyle("5%"),
           ...styles.iconMoreColumn,
         },
         isFillSpace: true,
