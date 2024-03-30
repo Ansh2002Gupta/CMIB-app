@@ -216,6 +216,7 @@ const useJobSeekers = () => {
   };
 
   let headingTexts = ["company_name"];
+  let subHeadingText = ["candidate_id"];
   let tableIcon = images.iconMore;
   let isHeading = true;
   let filterCategory = [
@@ -317,23 +318,24 @@ const useJobSeekers = () => {
     allDataLoaded,
     currentPage,
     filterApplyHandler,
+    filterCategory,
     getColoumConfigs,
+    getErrorDetails,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
-    getErrorDetails,
+    headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
     isFirstPageReceived,
+    isHeading,
+    jobSeekersData: JobSeekersData.records || currentRecords, //TODO: Remove dummy data after api integration
     loadingMore,
     rowsPerPage,
-    jobSeekersData: JobSeekersData.records || currentRecords, //TODO: Remove dummy data after api integration
-    totalcards: JobSeekersData?.meta?.total,
-    filterCategory,
-    headingTexts,
+    subHeadingText,
     tableIcon,
-    isHeading,
+    totalcards: JobSeekersData?.meta?.total,
   };
 };
 
