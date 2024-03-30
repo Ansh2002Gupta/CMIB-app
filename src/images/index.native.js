@@ -124,10 +124,10 @@ import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
-import iconAddRoundGreen from "../../public/images/iconAddRoundGreen/iconAddRoundGreen.png"
-import iconDeleteRoundRed from "../../public/images/iconDeleteRoundRed/iconDeleteRoundRed.png"
-import iconCheckBoxRound from "../../public/images/iconCheckBoxRound/iconCheckBoxRound.png"
-import iconUnCheckBoxRound from "../../public/images/iconUnCheckBoxRound/iconUnCheckBoxRound.png"
+import iconAddRoundGreen from "../../public/images/svg/iconAddRoundGreen.svg"
+import iconDeleteRoundRed from "../../public/images/svg/iconDeleteRoundRed.svg"
+import iconCheckBoxRound from "../../public/images/svg/iconCheckBoxRound.svg"
+import iconUnCheckBoxRound from "../../public/images/svg/iconUnCheckBoxRound.svg"
 import iconError from "../../public/images/svg/iconError.svg";
 
 const images = {

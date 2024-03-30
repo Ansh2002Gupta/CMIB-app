@@ -40,3 +40,6 @@ export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
 export const MEMBER_CA_JOB_PROFILE_EDUCATION = `${USER_TYPE_MEMBER}/profile/education`;
 export const MEMBER_CA_JOB_PROFILE_EXAMS = `${USER_TYPE_MEMBER}/profile/exams`;
 export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/other-courses`;
+export const MEMBER_CA_JOB_PROFILE_SKILLS =  `${USER_TYPE_MEMBER}/profile/skills`;
+export const LANGUAGES = `${CORE}/languages`;
+export const SKILLS = `${USER_TYPE_MEMBER}/ca-jobs/master/configurations`;

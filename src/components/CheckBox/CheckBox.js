@@ -84,8 +84,8 @@ CheckBox.propTypes = {
   isPartial: PropTypes.bool,
   isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,
-  iconCheck: PropTypes.string,
-  iconUnCheck: PropTypes.string,
+  iconCheck: PropTypes.node,
+  iconUnCheck: PropTypes.node,
 };
 
 export default CheckBox;

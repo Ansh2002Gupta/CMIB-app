@@ -3,24 +3,24 @@ import SkillTrainingUI from "./SkillTrainingUI";
 import { useContext, useEffect, useState } from "react";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
-import { MEMBER_CA_JOB_PROFILE_OTHER_COURSES } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useSkillTraining } from "././Controller/useSkillTraining";
+import { MEMBER_CA_JOB_PROFILE_SKILLS } from "../../services/apiServices/apiEndPoint";
 
 const SkillTraining = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_OTHER_COURSES}`,
+    url: `${MEMBER_CA_JOB_PROFILE_SKILLS}`,
   });
 
-  const { handleUpdate, isError, isLoading } = useUpdateService({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_OTHER_COURSES}`,
-  });
+  const { handleUpdate, isError, isLoading } = useUpdateService(
+       MEMBER_CA_JOB_PROFILE_SKILLS
+  );
+
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? data : {}
   );
-
   const {
     isValidAllFields,
     languagesKnown,
@@ -60,6 +60,53 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
     //   [key]: value,
     // }));
   };
+
+  const performSaveChanges = () => {
+      const payload = getSkillTrainingPayload()
+      console.log("payload", payload)
+      handleUpdate(payload, () => {
+          handleEdit(false);
+          console.log("***api success")
+      });
+  }
+
+  const getSkillTrainingPayload = () => {
+    const payload = {
+      languages_known: setPayloadByField("languages_known", "languages_skill", languagesKnown),
+      it_skills: setPayloadByField("it_skills", "itSkillPriority", ITSkills),
+      soft_skills: setPayloadByField("soft_skills", "softSkillPriority", softSkills),
+      other_skills: getOtherSkillsPayload(),
+    }
+    return payload;
+  }
+
+  const getOtherSkillsPayload = () => {
+    let otherSkills_ = [];
+    otherSkills[0].map((item) => {
+      otherSkills_ = item.value;
+    })
+    return otherSkills_;
+  }
+
+  const setPayloadByField = (skillKey, levelKey, data) => {   
+    let payload = [];
+    data.map((item) => {
+      let skill_name;
+      let level;
+      item.map((field) => {
+        if (field.key === skillKey){
+            skill_name = field?.value
+         }
+         else if (field.key === levelKey){
+          level = field.checkBoxOptions[0]?.name
+          //todo - need to add array of level in payload - need to update from backend first
+         }
+      }) 
+      skill_name && level && payload.push( {skill_name: skill_name, level: level }) 
+    })
+    return payload;
+  }
+
   return (
     <SkillTrainingUI
       languagesKnown={languagesKnown}
@@ -80,10 +127,7 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
       isError={isError}
       isValidAllFields={isValidAllFields}
       onClickSave={() => {
-        handleUpdate(state, () => {
-          // turn off the edit mode
-          handleEdit(false);
-        });
+         performSaveChanges()
       }}
       onClickCancel={() => {
         // turn off the edit mode

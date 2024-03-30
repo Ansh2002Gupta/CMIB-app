@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
-import { LANGUAGE } from "../../../constants/constants";
+import { LANGUAGES, SKILLS } from "../../../services/apiServices/apiEndPoint";
+import useFetch from "../../../hooks/useFetch";
+import { addKeyValuePair } from "../../../utils/util";
 
 const languageSkill= [
   {
@@ -49,31 +51,31 @@ const skillPriority= [
     value: "Low",
   },
 ];
-
-const languagesKnown = () => [
+const languagesKnown = (languageList) => [
   {
     key: "languages_known",
     label: "label.languages_known",
     placeholder: "label.languages_known_placeholder",
     isDropdown: true,
-    options: LANGUAGE,
+    options: languageList,
+    labelField: "name",
+    valueField: "name",
   },
   {
     key: "languages_skill",
     label: "label.skills",
     isCheckBoxSelection: true,
     checkBoxOptions: languageSkill, 
-    isActionToAdd: true
+    isActionToAdd: true,
   },
 ];
-
-const ITSkills = () => [
+const ITSkills = (skills) => [
   {
     key: "it_skills",
     label: "label.it_skills",
     placeholder: "label.it_skills_placeholder",
     isDropdown: true,
-    options: LANGUAGE,
+    options: skills,
   },
   {
     key: "itSkillPriority",
@@ -85,13 +87,13 @@ const ITSkills = () => [
   },
 ];
 
-const softSkills = () => [
+const softSkills = (skills) => [
   {
     key: "soft_skills",
     label: "label.soft_skills",
     placeholder: "label.soft_skills_placeholder",
     isDropdown: true,
-    options: LANGUAGE,
+    options: skills,
   },
   {
     key: "softSkillPriority",
@@ -103,12 +105,13 @@ const softSkills = () => [
   },
 ];
 
-const otherSkills = () => [
+const otherSkills = (value) => [
   [{
     key: "other_skills",
     placeholder: "label.other_skills_placeholder",
     width: 1,
-    isTextInputWithChip: true
+    isTextInputWithChip: true,
+    value: value
   }],
 ];
 
@@ -139,10 +142,33 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
 
 export const useSkillTraining = ({ state, isEditable }) => {
   const intl = useIntl();
-  const [languagesKnownState, setLanguagesKnownState] = useState([languagesKnown()]);
   const [ITSkillsState, setITSkillsState] = useState([ITSkills()]);
   const [softSkillsState, setSoftSkillsState] = useState([softSkills()]);
   const [otherSkillsState, setOtherSkillsState] = useState(otherSkills());
+
+  const { data: languagesData } = useFetch({ url: LANGUAGES });
+  const { data: skillsData } = useFetch({ url: SKILLS });
+
+  useEffect(() => {
+    if (languagesData !== null && languagesData.length > 0){
+      setLanguagesKnownState([languagesKnown(languagesData)])
+    }
+    if (skillsData !== null){
+      setITSkillsState([ITSkills(getSkills()[0])])
+      setSoftSkillsState([softSkills(getSkills()[1])])
+    } 
+  }, [languagesData, skillsData]);
+
+  const getSkills = () => {
+    if (skillsData !== null){
+      const {it_skill, soft_skill} = skillsData[0]
+      let itSkiils = addKeyValuePair(it_skill) || []
+      let softSkiils = addKeyValuePair(soft_skill) || []
+      return[itSkiils, softSkiils]
+    }
+  }
+
+  const [languagesKnownState, setLanguagesKnownState] = useState([languagesKnown()]);
 
   const handleLanguagesKnownBlur = (key, index) => {
     const updatedData = validateOnBlur({
@@ -210,15 +236,15 @@ export const useSkillTraining = ({ state, isEditable }) => {
     if (type === "itSkillPriority"){
          dataToPerformAction = ITSkillsState
          stateToPerformAction = setITSkillsState
-         itemToAdd = ITSkills()
+         itemToAdd = ITSkills(getSkills()[0])
     }else if (type === "softSkillPriority"){
          dataToPerformAction = softSkillsState
          stateToPerformAction = setSoftSkillsState
-         itemToAdd = softSkills()
+         itemToAdd = softSkills(getSkills()[1])
     } else {
       dataToPerformAction = languagesKnownState
       stateToPerformAction = setLanguagesKnownState
-      itemToAdd = languagesKnown()
+      itemToAdd = languagesKnown(languagesData)
     }
       const updatedState = dataToPerformAction[dataToPerformAction.length - 1].map((item) => {
         item.isActionToAdd = isActionToAdd ? false : true
@@ -312,9 +338,37 @@ export const useSkillTraining = ({ state, isEditable }) => {
     stateToPerformAction(currentState);
   }
   const performOtherSkillsUpdate = (chips) => {
-     console.log("performOtherSkillsUpdate", chips)
-     
+     setOtherSkillsState(otherSkills(chips))
   }
+
+  const addValueOnField = ({details, key, value }) => {
+    return details.map((item) => {
+      return {
+        ...item,
+        value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+      };
+    });
+  };
+  
+
+  const updateGetValues = () => {
+    const {languages_known, it_skills, soft_skills, other_skills} = state;
+
+    if (languages_known?.length > 0){
+      let updateLanguages = [];
+      languages_known.map((language) => {
+           let languageField = languagesKnown()
+           languageField.map((field) => {
+            //TODO - once api works
+            //let updatedlanguageField = addValueOnField(field, language?.type, language?.skill_name);
+           })
+      })
+     }
+  }
+  // useEffect(() => {
+  //   updateGetValues()
+  // }, [state]);
+
   return {
     isValidAllFields: checkMandatoryFields(),
     languagesKnown: languagesKnownState,
@@ -340,6 +394,6 @@ export const useSkillTraining = ({ state, isEditable }) => {
    // handleLanguagesKnownBlur,
     //handleITSkillsBlur,
     //handleSoftSkillsBlur,
-    handleOtherSkillsBlur,
+    //handleOtherSkillsBlur,
   };
 };

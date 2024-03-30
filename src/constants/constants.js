@@ -499,6 +499,7 @@ export const LANGUAGE = [
     label: "Urdu",
     value: "Urdu",
   },
+]
 export const COLOR = [
   "#000000",
   "#e60000",
