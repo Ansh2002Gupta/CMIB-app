@@ -30,12 +30,11 @@ const ViewPostedJobDetails = () => {
     error: apiError,
     fetchData: getData,
   } = useFetch({
-    url: `${POST_JOB}/157`,
+    url: `${POST_JOB}/161`,
   });
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
     useGetAddNewJobData();
   const [questionnaireData, setQuestionnaireData] = useState([]);
-  console.log("questionnaireData", questionnaireData);
   const [appData, setAppData] = useState({});
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);

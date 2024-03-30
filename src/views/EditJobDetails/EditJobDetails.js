@@ -32,12 +32,12 @@ const EditJobDetails = () => {
     fetchData();
   }, []);
   const onSubmit = () => {
-    let jobData = jobDetails;
-    let questionnairelist = questionaire;
+    let jobDataPosted = jobData;
+    let questionnairelist = questionData;
     let isError = true;
     let questionError = true;
     if (addJobRef.current) {
-      jobData = addJobRef.current.getChildState();
+      jobDataPosted = addJobRef.current.getChildState();
     }
     if (questionaireRef.current) {
       questionnairelist = questionaireRef.current.getQuestionData();
@@ -52,20 +52,19 @@ const EditJobDetails = () => {
       (!isError || selectedTab == 1) &&
       (!questionError || selectedTab == 0)
     ) {
-      jobData.jobOpeningDate = new Date(jobData.jobOpeningDate);
-      jobData.jobClosingDate = new Date(jobData.jobClosingDate);
-      console.log("ccc", questionnairelist);
-      const formattedData = getFormatedData(jobData, questionnairelist);
-      // Http.put(`${UPDATE_JOB}/157`, formattedData)
-      //   .then((res) => {
-      //     alert("Job Updated Successfully");
-      //   })
-      //   .catch((e) => {
-      //     alert("SomeThing Went Wrong");
-      //   })
-      //   .finally(() => {
-      //     navigate(-1);
-      //   });
+      jobDataPosted.jobOpeningDate = new Date(jobDataPosted.jobOpeningDate);
+      jobDataPosted.jobClosingDate = new Date(jobDataPosted.jobClosingDate);
+      const formattedData = getFormatedData(jobDataPosted, questionnairelist);
+      Http.put(`${UPDATE_JOB}/161`, formattedData)
+        .then((res) => {
+          alert("Job Updated Successfully");
+        })
+        .catch((e) => {
+          alert("SomeThing Went Wrong");
+        })
+        .finally(() => {
+          navigate(-1);
+        });
     }
   };
   return (
