@@ -210,10 +210,12 @@ const CustomTable = ({
                                   </CommonText>
                                 </View>
                                 <View style={styles.rowsPerPageWeb}>
-                                  <Chip
-                                    label={getRenderText(item, statusText)}
-                                    style={getStatusStyle(item.status)}
-                                  />
+                                  {!!item.status && (
+                                    <Chip
+                                      label={getRenderText(item, statusText)}
+                                      style={getStatusStyle(item.status)}
+                                    />
+                                  )}
                                   <TouchableImage
                                     onPress={() => {
                                       onIconPress(item);

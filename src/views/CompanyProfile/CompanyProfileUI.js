@@ -191,7 +191,7 @@ const CompanyProfileUI = (props) => {
     ) : (
       <BadgeLabel
         badgeLabels={profileResult?.companyModuleAccess}
-        customTextStyle={style.badgeContainer}
+        customTextContainerStyle={style.badgeContainer}
       />
     );
   };
@@ -213,7 +213,7 @@ const CompanyProfileUI = (props) => {
     ) : (
       <BadgeLabel
         badgeLabels={profileResult?.sourceOfInfo}
-        customTextStyle={style.badgeContainer}
+        customTextContainerStyle={style.badgeContainer}
       />
     );
   };

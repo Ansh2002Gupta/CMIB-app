@@ -392,9 +392,11 @@ const locale = {
   "label.membershipDetail": "Membership Details",
   "label.dateOfEmrollmentAsMember": "Date of enrollment as Member",
   "label.areYouAFellowMember": "Are you a fellow member?",
-  "label.fellowMemberDateOfAdmission": "If a Fellow, please provide date of admission as a Fellow Member",
+  "label.fellowMemberDateOfAdmission":
+    "If a Fellow, please provide date of admission as a Fellow Member",
   "label.whetherInPractice": "Whether in Practice",
-  "label.sinceWhenHaveYouBeenPracticing": "Since when you have been practicing? (Select months and years)",
+  "label.sinceWhenHaveYouBeenPracticing":
+    "Since when you have been practicing? (Select months and years)",
   "label.haveAnyWorkExperience": "Do you have any work experience?",
   "label.workExperience": "Work Experience",
   "label.organizationName": "Name of the Organization",
@@ -433,19 +435,23 @@ const locale = {
   "label.other_skills": "Other Skills",
   "label.other_skills_placeholder": "Enter other skills",
   "label.posting_anywhere_in_india": "Posting - Anywhere in India",
-  "label.whether_transferable_post_acceptable": "Whether Transferable Post Acceptable",
-  "label.ready_to_place_outside_india": "Are you ready to be placed outside India",
+  "label.whether_transferable_post_acceptable":
+    "Whether Transferable Post Acceptable",
+  "label.ready_to_place_outside_india":
+    "Are you ready to be placed outside India",
   "label.preferred_region": "Preferred Region",
   "label.expected_annual_salary": "Expected Annual Salary (Min : 750000)",
   "label.preferences_kind_of_industry": "Preference for the Kind of Industry",
   "label.cv_photo": "CV & Photo",
   "label.job_preferences": "Job Preferences",
   "label.photo": "Photo",
-  "label.intro_video_upload": "Introduction Video Upload: Showcase Your Personality for Recruiters",
+  "label.intro_video_upload":
+    "Introduction Video Upload: Showcase Your Personality for Recruiters",
   "label.short_video": "Short Video",
   "label.current_specialisation": "Areas of Current Specialisation (Job Area)",
   "label.other_specialisation": "Others (Please Specify)",
-  "label.current_industry_specialisation" : "Areas of Current Industry Specialisation (Job Area)",
+  "label.current_industry_specialisation":
+    "Areas of Current Industry Specialisation (Job Area)",
   "label.current_status": "Current Status",
   "label.skills": "Skills",
   "label.speak": "Speak",
@@ -460,6 +466,8 @@ const locale = {
   "label.continue": "Continue",
   "label.close": "Close",
   "label.job_profile": "Job Profile",
+  "label.job_seekers": "Job Seekers",
+  "label.search_by_candidate_name_or_id": "Search by candidate name or ID",
 };
 
 export default locale;

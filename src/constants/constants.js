@@ -499,7 +499,8 @@ export const LANGUAGE = [
     label: "Urdu",
     value: "Urdu",
   },
-]
+];
+
 export const COLOR = [
   "#000000",
   "#e60000",
@@ -574,3 +575,10 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+
+export const JOB_SEEKERS_TABLE_HEADING = {
+  company_name: "Company Name",
+  candidate_id: "Candidate ID",
+  total_experience: "Total Experience",
+  functional_area: "Functional Area",
+};

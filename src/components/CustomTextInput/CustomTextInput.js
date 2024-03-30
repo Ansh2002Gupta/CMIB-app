@@ -28,7 +28,7 @@ import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
 import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
 import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
-import TextInputWithChip from "../TextInputWithChip";
+import TextInputWithChip from "../TextInputWithChip/TextInputWithChip";
 
 const CustomTextInput = (props) => {
   const {
@@ -263,24 +263,28 @@ const CustomTextInput = (props) => {
         />
       );
     }
-    if (isCheckBoxSelection){
-      return(<CheckBoxSelection
-           checkBoxOptions={checkBoxOptions}
-           customStyle={style.CheckBoxSelection}
-           handleAddRemoveRow={(isActionToAdd) => handleAddRemoveRow(isActionToAdd)}
-           isActionToAdd={isActionToAdd}
-           handleCheckBoxSelection={(id) => handleCheckBoxSelection(id)}
-           isSingleSelection={isSingleSelection}
-            />)
-   }
-   if (isTextInputWithChip){
-    return(
-      <TextInputWithChip
-      placeholderText={placeholder}
-      onChipUpdate={(chipData) => onChipUpdate(chipData)}
-      />
-    )
-   }
+    if (isCheckBoxSelection) {
+      return (
+        <CheckBoxSelection
+          checkBoxOptions={checkBoxOptions}
+          customStyle={style.CheckBoxSelection}
+          handleAddRemoveRow={(isActionToAdd) =>
+            handleAddRemoveRow(isActionToAdd)
+          }
+          isActionToAdd={isActionToAdd}
+          handleCheckBoxSelection={(id) => handleCheckBoxSelection(id)}
+          isSingleSelection={isSingleSelection}
+        />
+      );
+    }
+    if (isTextInputWithChip) {
+      return (
+        <TextInputWithChip
+          placeholderText={placeholder}
+          onChipUpdate={(chipData) => onChipUpdate(chipData)}
+        />
+      );
+    }
     return (
       <View style={inputStyle}>
         {isMobileNumber && (
@@ -517,7 +521,7 @@ CustomTextInput.defaultProps = {
   handleCheckBoxSelection: () => {},
   isSingleSelection: false,
   isTextInputWithChip: false,
-  onChipUpdate: () => {}
+  onChipUpdate: () => {},
 };
 // Custom validator for Date objects
 const datePropType = (props, propName, componentName) => {
