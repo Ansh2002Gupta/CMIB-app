@@ -7,7 +7,12 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { HYPHEN } from "../../constants/constants";
 import style from "./BadgeLabel.style";
 
-const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
+const BadgeLabel = ({
+  badgeLabels,
+  customContainerStyle,
+  customTextContainerStyle,
+  customTextStyle,
+}) => {
   const { isWebView } = useIsWebView();
 
   const containerStyles = {
@@ -22,11 +27,11 @@ const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
         badgeLabels.map((label, index) => (
           <CommonText
             key={index}
-            customTextStyle={style.badgeStyle}
+            customTextStyle={{ ...style.badgeStyle, ...customTextStyle }}
             customContainerStyle={{
               ...(isWebView && style.webInnerContainer),
               ...style.innerContainerStyle,
-              ...customTextStyle,
+              ...customTextContainerStyle,
             }}
           >
             {label}
@@ -42,12 +47,14 @@ const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
 BadgeLabel.defaultProps = {
   badgeLabels: [],
   customContainerStyle: {},
+  customTextContainerStyle: {},
   customTextStyle: {},
 };
 
 BadgeLabel.propTypes = {
   badgeLabels: PropTypes.array,
   customContainerStyle: PropTypes.object,
+  customTextContainerStyle: PropTypes.object,
   customTextStyle: PropTypes.object,
 };
 
