@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -17,6 +17,7 @@ export const CustomTabs = ({
   containerStyle,
   renderHeader,
   showWarningOnTabSwitch,
+  setSelectedTab,
   tabs,
   cleanupFuntion,
 }) => {
@@ -29,6 +30,9 @@ export const CustomTabs = ({
     tabIndex: -1,
   });
 
+  useEffect(() => {
+    setSelectedTab && setSelectedTab(activeTabIndex);
+  }, [activeTabIndex]);
   const handleTabChange = ({ tab, index }) => {
     if (index !== activeTabIndex) {
       if (showWarningOnTabSwitch) {
@@ -122,4 +126,6 @@ CustomTabs.propTypes = {
       component: PropTypes.element.isRequired,
     })
   ).isRequired,
+  setSelectedTab: PropTypes.func,
+  cleanupFuntion: PropTypes.func,
 };

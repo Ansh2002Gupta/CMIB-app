@@ -30,7 +30,7 @@ const ViewPostedJobDetails = () => {
     error: apiError,
     fetchData: getData,
   } = useFetch({
-    url: `${POST_JOB}/158`,
+    url: `${POST_JOB}/157`,
   });
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
     useGetAddNewJobData();
@@ -56,9 +56,10 @@ const ViewPostedJobDetails = () => {
       apiData.functional_areas = Array.isArray(apiData.functional_area_id)
         ? apiData.functional_area_id
         : JSON.parse(apiData.functional_area_id);
-      apiData.contract_period = Array.isArray(apiData.contract_period)
-        ? apiData.contract_period
-        : JSON.parse(apiData.contract_period);
+      apiData.contract_period =
+        typeof apiData.contract_period === "object"
+          ? apiData.contract_period
+          : JSON.parse(apiData.contract_period);
 
       obj.jobSummary = apiData.summary;
       obj.jobDetails = apiData.detail;

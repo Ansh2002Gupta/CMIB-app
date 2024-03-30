@@ -23,6 +23,7 @@ const EditJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(jobData);
   const [questionaire, setQuestionaire] = useState(questionData);
   const [isChecklist, setIsCheckList] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(0);
   const questionaireRef = useRef(null);
   const addJobRef = useRef(null);
   const intl = useIntl();
@@ -31,8 +32,8 @@ const EditJobDetails = () => {
     fetchData();
   }, []);
   const onSubmit = () => {
-    let jobData;
-    let questionnairelist;
+    let jobData = jobDetails;
+    let questionnairelist = questionaire;
     let isError = true;
     let questionError = true;
     if (addJobRef.current) {
@@ -47,20 +48,24 @@ const EditJobDetails = () => {
     if (questionaireRef.current) {
       questionError = questionaireRef.current.getQuestionError();
     }
-    if (!isError && !questionError) {
+    if (
+      (!isError || selectedTab == 1) &&
+      (!questionError || selectedTab == 0)
+    ) {
       jobData.jobOpeningDate = new Date(jobData.jobOpeningDate);
       jobData.jobClosingDate = new Date(jobData.jobClosingDate);
+      console.log("ccc", questionnairelist);
       const formattedData = getFormatedData(jobData, questionnairelist);
-      Http.put(`${UPDATE_JOB}/158`, formattedData)
-        .then((res) => {
-          alert("Job Updated Successfully");
-        })
-        .catch((e) => {
-          alert("SomeThing Went Wrong");
-        })
-        .finally(() => {
-          navigate(-1);
-        });
+      // Http.put(`${UPDATE_JOB}/157`, formattedData)
+      //   .then((res) => {
+      //     alert("Job Updated Successfully");
+      //   })
+      //   .catch((e) => {
+      //     alert("SomeThing Went Wrong");
+      //   })
+      //   .finally(() => {
+      //     navigate(-1);
+      //   });
     }
   };
   return (
@@ -78,6 +83,7 @@ const EditJobDetails = () => {
           >
             <CustomTabs
               containerStyle={{ backgroundColor: colors.white }}
+              setSelectedTab={setSelectedTab}
               cleanupFuntion={() => {
                 let jobData;
                 let questionnairelist;
