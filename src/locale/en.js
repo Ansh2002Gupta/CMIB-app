@@ -468,6 +468,10 @@ const locale = {
   "label.job_profile": "Job Profile",
   "label.job_seekers": "Job Seekers",
   "label.search_by_candidate_name_or_id": "Search by candidate name or ID",
+  "label.candidates": "Candidates",
+  "label.job_applicants": "Job Applicants",
+  "label.job_seekers": "Job Seekers",
+  "label.saved_candidates": "Saved Candidates",
 };
 
 export default locale;
