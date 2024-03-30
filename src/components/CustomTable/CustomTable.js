@@ -36,6 +36,7 @@ const CustomTable = ({
   filterCategory,
   getColoumConfigs,
   getStatusStyle,
+  hideTotalCount,
   handleLoadMore,
   handlePageChange,
   handleTicketModal,
@@ -137,7 +138,7 @@ const CustomTable = ({
                 style={styles.filterTopSection(isWebView)}
               />
             )}
-            {!isWeb && (
+            {!isWeb && !hideTotalCount && (
               <View style={styles.ticketTotals}>
                 <CommonText
                   fontWeight={"500"}
@@ -334,6 +335,7 @@ CustomTable.defaultProps = {
   addNewTicket: false,
   headingTexts: [],
   handleTicketModal: () => {},
+  onIconPress: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
@@ -361,7 +363,7 @@ CustomTable.propTypes = {
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   loadingMore: PropTypes.bool.isRequired,
-  onIconPress: PropTypes.func.isRequired,
+  onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
