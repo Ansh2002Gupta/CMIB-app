@@ -245,6 +245,9 @@ const DetailComponent = ({
         }}
         isRupee={detail?.isRupee}
         isCalendar={detail?.isCalendar}
+        minDate={detail?.minDate}
+        maxDate={detail?.maxDate}
+        format={detail?.format}
         isSingleMutliSelect={detail.isSingleMutliSelect}
       />
     );

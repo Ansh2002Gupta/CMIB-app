@@ -21,7 +21,7 @@ import TriggerFileUpload from "../TriggerFileUpload";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
-import { getImageSource } from "../../utils/util";
+import { getImageSource, yesNoToBoolean } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
@@ -90,6 +90,7 @@ const CustomTextInput = (props) => {
     isCalendar,
     maxDate,
     minDate,
+    format,
     isCheckBoxSelection,
     checkBoxOptions,
     handleAddRemoveRow,
@@ -238,6 +239,7 @@ const CustomTextInput = (props) => {
           onChangeValue={onChangeValue}
           maxDate={maxDate}
           minDate={minDate}
+          format={format}
         />
       );
     }
@@ -260,6 +262,7 @@ const CustomTextInput = (props) => {
           onChange={(item) => {
             onChangeValue(item);
           }}
+          selectedOption={value === true ? 0 : 1}
         />
       );
     }
