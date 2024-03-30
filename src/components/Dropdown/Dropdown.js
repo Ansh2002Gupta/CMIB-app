@@ -53,10 +53,12 @@ const Dropdown = ({
   );
 
   const handleValueChange = (selectedOption) => {
-    if (selectAllField) {
-      onChange(selectedOption);
-    } else {
-      onChange(selectedOption.value);
+    if (!Array.isArray(selectedOption)) {
+      if (selectAllField) {
+        onChange(selectedOption);
+      } else {
+        onChange(selectedOption.value);
+      }
     }
   };
 

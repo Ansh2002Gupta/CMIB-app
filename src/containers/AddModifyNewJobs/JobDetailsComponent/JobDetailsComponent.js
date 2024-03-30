@@ -140,6 +140,7 @@ const JobDetailsComponent = forwardRef(
             isDropdown
             includeAllKeys={true}
             selectAllField={true}
+            placeholder={intl.formatMessage({ id: "label.select_job_type" })}
             value={selectedJobType.value}
             options={jobType || []}
             isError={(error && error.jobType && true) || false}

@@ -85,13 +85,11 @@ const CustomTextInput = (props) => {
     valueField,
     urlField,
     menuOptions,
-    numberText,
     minDate,
     maxDate,
     includeAllKeys,
     selectAllField,
     onChangeDropDownText,
-    isYear,
     ...remainingProps
   } = props;
 
@@ -257,7 +255,6 @@ const CustomTextInput = (props) => {
           maxCount={maxCount}
           onCountChange={handleCountChange}
           step={step}
-          numberText={numberText}
           style={isError ? style.invalidInput : {}}
         />
       );
@@ -506,7 +503,6 @@ CustomTextInput.defaultProps = {
   value: "",
   valueField: "value",
   urlField: "url",
-  numberText: "",
 };
 
 const datePropType = (props, propName, componentName) => {
@@ -569,7 +565,6 @@ CustomTextInput.propTypes = {
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
-  numberText: PropTypes.string,
 };
 
 export default CustomTextInput;
