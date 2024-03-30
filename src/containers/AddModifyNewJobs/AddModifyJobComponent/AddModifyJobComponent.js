@@ -61,7 +61,6 @@ const AddModifyJobComponent = forwardRef(
     useEffect(() => {
       return () => {
         let data = getInternalState();
-        console.log("DATAAA", data);
         cleanUpFunction && cleanUpFunction(data);
       };
     }, []);

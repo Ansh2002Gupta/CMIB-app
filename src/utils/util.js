@@ -275,6 +275,6 @@ export const getValidUrl = (url) => {
 };
 export const getQuestionType = {
   text: "Text Question",
-  single_select: "Single-select",
-  multi_select: "Multi-select",
+  "single-select": "Single-select",
+  "multi-select": "Multi-select",
 };

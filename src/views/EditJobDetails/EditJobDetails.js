@@ -78,7 +78,6 @@ const EditJobDetails = () => {
           >
             <CustomTabs
               containerStyle={{ backgroundColor: colors.white }}
-              showWarningOnTabSwitch
               cleanupFuntion={() => {
                 let jobData;
                 let questionnairelist;

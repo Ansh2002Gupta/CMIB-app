@@ -24,6 +24,7 @@ import { navigations } from "../../constants/routeNames";
 const ViewPostedJobDetails = () => {
   const navigate = useNavigate();
   const {
+    isLoading: isConstantLoading,
     data: apiData,
     isError: apiIsError,
     error: apiError,
@@ -31,11 +32,13 @@ const ViewPostedJobDetails = () => {
   } = useFetch({
     url: `${POST_JOB}/158`,
   });
-  const { isSuccess, isError, isErrorData, fetchData } = useGetAddNewJobData();
+  const { isLoading, isSuccess, isError, isErrorData, fetchData } =
+    useGetAddNewJobData();
   const [questionnaireData, setQuestionnaireData] = useState([]);
+  console.log("questionnaireData", questionnaireData);
   const [appData, setAppData] = useState({});
-  const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [addJobs] = useContext(AddJobContext);
   const [isActive, setActive] = useState(false);
   const intl = useIntl();
@@ -84,7 +87,7 @@ const ViewPostedJobDetails = () => {
               label: item.city,
               value: item.city,
             }))
-        : []; //
+        : [];
       obj.nationality = apiData.nationality
         ? addJobs.countryData.find(
             (item) => item.name === apiData.nationality
@@ -190,6 +193,7 @@ const ViewPostedJobDetails = () => {
   }, [apiData, isSuccess]);
   useEffect(() => {
     if (apiData && addJobs.jobType && Object.keys(appData).length > 0) {
+      setLoading(true);
       let jobName = addJobs.jobType.find(
         (item) => item.id == apiData.job_type_id
       )?.name;
@@ -272,7 +276,7 @@ const ViewPostedJobDetails = () => {
             showBadgeLabel: true,
             customValue:
               (Array.isArray(appData.functionalAreas) &&
-                appData?.functionalAreas.map((item) => item.value)) ??
+                appData?.functionalAreas.map((item) => item.label)) ??
               "-",
           },
         ],
@@ -433,45 +437,53 @@ const ViewPostedJobDetails = () => {
           ]}
         />
       </View>
-      {loading ? (
+      {isConstantLoading || isLoading || loading ? (
         <LoadingScreen />
       ) : (
-        <View style={styles.container}>
-          <FormTabs
-            onEditClick={() =>
-              navigate(navigations.EDIT_JOB, {
-                state: { jobData: appData, questionData: questionnaireData },
-              })
+        <>
+          {!(isError || apiIsError) ? (
+            <View style={styles.container}>
+              <FormTabs
+                onEditClick={() =>
+                  navigate(navigations.EDIT_JOB, {
+                    state: {
+                      jobData: appData,
+                      questionData: questionnaireData,
+                    },
+                  })
+                }
+                tabs={[
+                  {
+                    label: intl.formatMessage({
+                      id: "label.job_details",
+                    }),
+                    component: <ViewJobs details={details} />,
+                  },
+                  {
+                    label: intl.formatMessage({
+                      id: "label.view_questionaire",
+                    }),
+                    component: (
+                      <ViewQuestion questionnaireData={questionnaireData} />
+                    ),
+                  },
+                ]}
+                isEditButtonVisible
+              />
+            </View>
+          ) : null}
+        </>
+      )}
+      {!(isConstantLoading || isLoading || loading) &&
+        (isError || apiIsError) && (
+          <ErrorComponent
+            errorMsg={
+              isErrorData?.data?.message ||
+              apiError?.data?.message ||
+              GENERIC_GET_API_FAILED_ERROR_MESSAGE
             }
-            tabs={[
-              {
-                label: intl.formatMessage({
-                  id: "label.job_details",
-                }),
-                component: <ViewJobs details={details} />,
-              },
-              {
-                label: intl.formatMessage({
-                  id: "label.view_questionaire",
-                }),
-                component: (
-                  <ViewQuestion questionnaireData={questionnaireData} />
-                ),
-              },
-            ]}
-            isEditButtonVisible
           />
-        </View>
-      )}
-      {loading && isError && apiIsError && (
-        <ErrorComponent
-          errorMsg={
-            isErrorData?.data?.message ||
-            apiError?.data?.message ||
-            GENERIC_GET_API_FAILED_ERROR_MESSAGE
-          }
-        />
-      )}
+        )}
     </View>
   );
 };
