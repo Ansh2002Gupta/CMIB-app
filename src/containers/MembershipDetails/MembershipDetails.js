@@ -12,7 +12,7 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
   const { fetchData, data } = useFetch({
    url: MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
   });
-  const { handleUpdate, isError, isLoading } = useUpdateService(MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
+  const { handleUpdate, isError, isLoading, error, setError } = useUpdateService(MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? data : {}
   );
@@ -88,8 +88,10 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
       handleFellowMemberDetailBlur={handleFellowMemberDetailBlur}
       handlePracticeDetailBlur={handlePracticeDetailBlur}
       isValidAllFields={isValidAllFields}
-      isError={isError}
       isLoading={isLoading}
+      isError={isError}
+      error={error}
+      setError={setError}
       isEditable={isEditable}
       onClickSave={() => {
         performSaveChanges();

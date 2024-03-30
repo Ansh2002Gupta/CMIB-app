@@ -5,6 +5,7 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton";
 import style from './MembershipDetails.style';
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const MembershipDetailsTemplate = ({
   isEditable = true,
@@ -19,10 +20,13 @@ const MembershipDetailsTemplate = ({
   onClickSave,
   onClickCancel,
   isValidAllFields,
+  error,
+  setError,
 }) => {
   const intl = useIntl();
 
   return (
+    <>
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={style.contentContainerStyle}
@@ -58,6 +62,10 @@ const MembershipDetailsTemplate = ({
         isValidAllFields={isValidAllFields}
       />
     </ScrollView>
+     {!!error && (
+      <ToastComponent toastMessage={error} onDismiss={() => setError("")} />
+    )}
+    </>
   );
 };
 
