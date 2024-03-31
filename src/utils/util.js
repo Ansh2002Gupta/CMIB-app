@@ -235,6 +235,10 @@ export const formatDateToYYYYMMDD = (dateInput) => {
 
 export const formatDateToDDMMYYYY = (isoDateString) => {
   const date = new Date(isoDateString);
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return "--"
+  }
   const day = date.getUTCDate().toString().padStart(2, '0') ?? "--";
   const month = (date.getUTCMonth() + 1).toString().padStart(2, '0')?? "--";
   const year = date.getUTCFullYear()?? "--";
