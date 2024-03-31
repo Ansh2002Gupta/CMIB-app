@@ -19,7 +19,7 @@ import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreCompo
 const PostedJobsView = () => {
   const intl = useIntl();
   const onEditPress = (item) => {
-    navigate(navigations.DETAILS_JOBS, {
+    navigate(navigations.EDIT_JOB, {
       state: item,
     });
   };

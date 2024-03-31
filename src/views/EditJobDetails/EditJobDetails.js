@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import useIsWebView from "../../hooks/useIsWebView";
@@ -12,31 +12,85 @@ import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/use
 import { useLocation, useNavigate } from "../../routes";
 import LoadingScreen from "../../components/LoadingScreen";
 
-import { getFormatedData } from "../../utils/util";
+import { getDecryptApiData, getFormatedData } from "../../utils/util";
 import Http from "../../services/http-service";
 import { useIntl } from "react-intl";
 
-import { UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
+import { POST_JOB, UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
 import styles from "./EditJobDetails.styles";
+import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
+import useFetch from "../../hooks/useFetch";
 const EditJobDetails = () => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
   const location = useLocation();
-  const { jobData, questionData, id } = location.state;
-  const [jobDetails, setJobDetails] = useState(jobData);
-  const [questionaire, setQuestionaire] = useState(questionData);
+  const {
+    jobData: intialJobData,
+    questionData: intialQuestionData,
+    id,
+  } = location.state;
+  const [jobDetails, setJobDetails] = useState(intialJobData);
+  const [questionaire, setQuestionaire] = useState(intialQuestionData);
+  const [loading, setLoading] = useState(false);
   const [isChecklist, setIsCheckList] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
   const questionaireRef = useRef(null);
   const addJobRef = useRef(null);
   const intl = useIntl();
-  const { fetchData, isLoading } = useGetAddNewJobData();
+  const [addJobs] = useContext(AddJobContext);
+
+  const {
+    fetchData,
+    isLoading,
+    isSuccess: newJobSuccess,
+  } = useGetAddNewJobData();
+  const {
+    isLoading: isGetApiLoading,
+    isSuccess: fetchApiSuccess,
+    data,
+    fetchData: fetchApiData,
+  } = useFetch({
+    url: `${POST_JOB}/${id}`,
+  });
+
   useEffect(() => {
+    if (!intialJobData) {
+      fetchApiData();
+    }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (data && fetchApiSuccess && newJobSuccess) {
+      setLoading(true);
+      const { obj, transformedQuestionnaire } = getDecryptApiData(
+        data,
+        addJobs
+      );
+      setJobDetails(obj);
+      setQuestionaire(transformedQuestionnaire);
+      setLoading(false);
+    }
+  }, [data, newJobSuccess, fetchApiSuccess, addJobs]);
+  console.log("XYZ", jobDetails);
+
+  const addIsDeleteKey = (updatedArray) => {
+    let mainArray = intialQuestionData;
+
+    const updatedIds = new Set(updatedArray.map((item) => item.id));
+
+    updatedArray = updatedArray.map((item) => ({ ...item, isDeleted: false }));
+
+    mainArray.forEach((item) => {
+      if (!updatedIds.has(item.id)) {
+        updatedArray.push({ ...item, isDeleted: true });
+      }
+    });
+    return updatedArray;
+  };
   const onSubmit = () => {
-    let jobDataPosted = jobData;
-    let questionnairelist = questionData;
+    let jobDataPosted = intialJobData;
+    let questionnairelist = intialQuestionData;
     let isError = true;
     let questionError = true;
     if (addJobRef.current) {
@@ -57,7 +111,16 @@ const EditJobDetails = () => {
     ) {
       jobDataPosted.jobOpeningDate = new Date(jobDataPosted.jobOpeningDate);
       jobDataPosted.jobClosingDate = new Date(jobDataPosted.jobClosingDate);
-      const formattedData = getFormatedData(jobDataPosted, questionnairelist);
+      let formattedData = getFormatedData(
+        jobDataPosted,
+        questionnairelist,
+        isChecklist
+      );
+      if (questionaireRef.current) {
+        formattedData.questions = addIsDeleteKey(
+          formattedData.questions ? formattedData.questions : []
+        );
+      }
       Http.put(`${UPDATE_JOB}/${id}`, formattedData)
         .then((res) => {
           alert("Job Updated Successfully");
@@ -76,9 +139,8 @@ const EditJobDetails = () => {
         headerText={intl.formatMessage({ id: "label.edit_jobs" })}
         isBorderVisible={false}
       />
-      {isLoading ? (
-        <LoadingScreen />
-      ) : (
+      {(isLoading || isGetApiLoading || loading) && <LoadingScreen />}
+      {!(isLoading || isGetApiLoading) && jobDetails && questionaire && (
         <ScrollView style={styles.container}>
           <View style={styles.mainViewStyle}>
             <CustomTabs

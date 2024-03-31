@@ -34,7 +34,7 @@ const RenderViewQuestion = ({ item, index }) => {
                 <View style={styles.innerOptionView}>
                   <CommonText customTextStyle={styles.optionStyle}>{` ${
                     index + 1
-                  }.${items.value}`}</CommonText>
+                  }. ${items.value}`}</CommonText>
                 </View>
               );
             })}

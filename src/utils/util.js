@@ -282,3 +282,148 @@ export const getQuestionType = {
   "single-select": "Single-select",
   "multi-select": "Multi-select",
 };
+export const getDecryptApiData = (apiData, addJobs) => {
+  let obj = {};
+  apiData.locations = Array.isArray(apiData.location_id)
+    ? apiData.location_id
+    : JSON.parse(apiData.location_id);
+  apiData.functional_areas = Array.isArray(apiData.functional_area_id)
+    ? apiData.functional_area_id
+    : JSON.parse(apiData.functional_area_id);
+  apiData.contract_period =
+    typeof apiData.contract_period === "object"
+      ? apiData.contract_period
+      : JSON.parse(apiData.contract_period);
+
+  obj.jobSummary = apiData.summary;
+  obj.jobDetails = apiData.detail;
+  obj.jobType = apiData.job_type_id
+    ? addJobs.jobType
+        .map((item) => ({
+          id: item.id,
+          label: item.name,
+          value: item.slug,
+        }))
+        .find((item) => item.id === apiData.job_type_id) || {}
+    : {};
+  obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
+  obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
+  obj.minimumExperience = apiData?.min_experience;
+  obj.maximumExperience = apiData?.max_experience;
+  obj.jobLocation = apiData.locations
+    ? addJobs.jobLocationData
+        .filter((item) => {
+          if (apiData.locations.includes(item.id)) {
+            return item;
+          }
+        })
+        .map((item) => ({
+          id: item.id,
+          label: item.city,
+          value: item.city,
+        }))
+    : [];
+  obj.nationality = apiData.nationality
+    ? addJobs.countryData.find((item) => {
+        if (item.name === apiData.nationality) {
+          item.value = item.name;
+          item.label = item.name;
+          delete item.name;
+          return true;
+        }
+        return false;
+      }) || ""
+    : "";
+
+  obj.designation = apiData.designation;
+  obj.functionalAreas =
+    apiData.functional_areas.length > 0
+      ? addJobs.functionalData
+          .filter((item) => apiData.functional_areas.includes(item.id))
+          .map((item) => ({
+            id: item.id,
+            label: item.name,
+            value: item.slug,
+          }))
+      : [];
+  obj.genderPreference = apiData.gender_preference
+    ? addJobs.genderPreferenceData
+        ?.filter((item) => item.name == apiData.gender_preference)
+        .map((item) => ({
+          id: item.name,
+          label: item.label,
+          value: item.name,
+        }))[0]
+    : {};
+  obj.categoryPreference = apiData.category_preference
+    ? addJobs.jobCategory
+        ?.filter((item) => {
+          if (item.name == apiData.category_preference) {
+            return item;
+          }
+        })
+        .map((item) => ({
+          id: item.id,
+          label: item.name,
+          value: item.slug,
+        }))[0]
+    : {}; //
+  obj.essentialQualification = apiData.essential_qualification;
+  obj.desiredQualification = apiData.desired_qualification;
+  obj.jobOpeningDate = apiData.opening_date;
+  obj.jobClosingDate = apiData.closing_date;
+  obj.minimumSalary = apiData.min_salary;
+  obj.maximumSalary = apiData.max_salary;
+  obj.numberOfVacancies = apiData.vacancy;
+  obj.modeofWork = apiData.work_mode
+    ? addJobs.workModeData
+        .filter((item) => {
+          if (item.name == apiData.work_mode) {
+            return item;
+          }
+        })
+        .map((item) => ({
+          id: item.id,
+          label: item.name,
+          value: item.slug,
+        }))[0]
+    : {}; //
+  obj.flexiHours = apiData.flexi_hours ? 0 : 1;
+  obj.vacanciesCountType = apiData.is_extended_vacancy == 1 ? 0 : 1;
+  obj.fullTime = apiData.service_type == "Full Time" ? 0 : 1;
+  obj.disabiltyPercentage = apiData?.disability_percentage ?? 0;
+  obj.typeOfDisabilty = apiData?.disability_type ?? "";
+  obj.contractYear = apiData?.contract_period
+    ? apiData.contract_period.years
+    : 0;
+  obj.contractMonth = apiData?.contract_period
+    ? apiData.contract_period.months
+    : 0;
+  obj.contractDay = apiData?.contract_period ? apiData.contract_period.days : 0;
+  const transformedQuestionnaire = apiData?.questionnaires.map((item) => {
+    item.question_options = Array.isArray(item.question_options)
+      ? item.question_options
+      : JSON.parse(item.question_options);
+    if (
+      Array.isArray(item.question_options) &&
+      item.question_options.length > 0
+    ) {
+      return {
+        ...item,
+        typeofQuestion: getQuestionType[item.type],
+        isMandatory: item.mandatory,
+        question_options: item.question_options.map((option, index) => ({
+          id: Date.now() + index,
+          value: option,
+        })),
+      };
+    } else {
+      return {
+        ...item,
+        typeofQuestion: getQuestionType[item.type],
+        isMandatory: item.mandatory,
+      };
+    }
+  });
+  return { obj, transformedQuestionnaire };
+};

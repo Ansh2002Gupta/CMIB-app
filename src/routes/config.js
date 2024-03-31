@@ -237,6 +237,10 @@ const config = [
         element: <EditJobDetails />,
       },
       {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.EDIT_JOB}`,
+        element: <EditJobDetails />,
+      },
+      {
         viewPath: navigations.JOB_APPLICANTS,
         element: <JobApplicantsView />,
       },
