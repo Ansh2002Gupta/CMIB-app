@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import LoadingScreen from "../../components/LoadingScreen";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useFetch from "../../hooks/useFetch";
 import { usePut } from "../../hooks/useApiRequest";
 import PersonalDetailsUI from "./PersonalDetailsUI";
@@ -18,10 +19,14 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     url: `${MEMBER_CA_JOB_PROFILE}`,
   });
 
-  const { makeRequest: handleUpdate, isLoading: isUpdatingPersonalData } =
-    usePut({
-      url: `${MEMBER_CA_JOB_PROFILE}`,
-    });
+  const {
+    makeRequest: handleUpdate,
+    isLoading: isUpdatingPersonalData,
+    error,
+    setError,
+  } = usePut({
+    url: `${MEMBER_CA_JOB_PROFILE}`,
+  });
 
   const getData = (data) =>
     data && Object.keys(data).length
@@ -104,6 +109,10 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     }
   };
 
+  const handleDismissToast = () => {
+    setError("");
+  };
+
   return isGettingPersonalData ? (
     <LoadingScreen />
   ) : errorWhileGettingPersonalData ? (
@@ -114,77 +123,82 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
       }
     />
   ) : (
-    <PersonalDetailsUI
-      accessibility_information={accessibility_information}
-      correspondence_address={correspondence_address}
-      permanent_address={permanent_address}
-      personal_detail={personal_detail}
-      onChangeValue={onChangeValue}
-      handleAccessibilityInformationBlur={handleAccessibilityInformationBlur}
-      handlePersonalDetailBlur={handlePersonalDetailBlur}
-      handleCorrespondenceAddressBlur={handleCorrespondenceAddressBlur}
-      handlePermanentAddressBlur={handlePermanentAddressBlur}
-      isValidAllFields={false}
-      isLoading={isUpdatingPersonalData}
-      isEditable={isEditable}
-      onClickSave={() => {
-        let payload = {
-          gender: state?.gender,
-          marital_status: state?.marital_status,
-          dob: state?.dob,
-          email: state?.email,
-          has_passport: state?.has_passport,
-          passport_number: state?.passport_number,
-          category_id: state?.category,
-          mobile_country_code: state?.mobile_country_code.split(" ")?.[0],
-          mobile_number: state?.mobile_number,
-          phone_number: state?.phone_number,
-          nationality: state?.nationality,
-          has_disability: state?.has_disability,
-          handicap_description: state?.handicap_description,
-          handicap_percentage: state?.handicap_percentage,
-          addresses: [
-            {
-              id: state?.address_id ? state?.address_id : null,
-              type: "Permanent",
-              address_line_1: state?.address1,
-              address_line_2: state?.address2,
-              address_line_3: state?.address3,
-              country: state?.country,
-              city: state?.city,
-              pincode: state?.pincode,
-              state: state?.state,
-            },
-            {
-              id: state?.permanent_address_id
-                ? state?.permanent_address_id
-                : null,
-              type: "Correspondence",
-              address_line_1: state?.permanent_address1,
-              address_line_2: state?.permanent_address2,
-              address_line_3: state?.permanent_address3,
-              country: state?.permanent_country,
-              city: state?.permanent_city,
-              pincode: state?.permanent_pincode,
-              state: state?.permanent_state,
-            },
-          ],
-        };
-        handleUpdate({
-          body: payload,
+    <>
+      {error && (
+        <ToastComponent toastMessage={error} onDismiss={handleDismissToast} />
+      )}
+      <PersonalDetailsUI
+        accessibility_information={accessibility_information}
+        correspondence_address={correspondence_address}
+        permanent_address={permanent_address}
+        personal_detail={personal_detail}
+        onChangeValue={onChangeValue}
+        handleAccessibilityInformationBlur={handleAccessibilityInformationBlur}
+        handlePersonalDetailBlur={handlePersonalDetailBlur}
+        handleCorrespondenceAddressBlur={handleCorrespondenceAddressBlur}
+        handlePermanentAddressBlur={handlePermanentAddressBlur}
+        isValidAllFields={false}
+        isLoading={isUpdatingPersonalData}
+        isEditable={isEditable}
+        onClickSave={() => {
+          let payload = {
+            gender: state?.gender,
+            marital_status: state?.marital_status,
+            dob: state?.dob,
+            email: state?.email,
+            has_passport: state?.has_passport,
+            passport_number: state?.passport_number,
+            category_id: state?.category,
+            mobile_country_code: state?.mobile_country_code.split(" ")?.[0],
+            mobile_number: state?.mobile_number,
+            phone_number: state?.phone_number,
+            nationality: state?.nationality,
+            has_disability: state?.has_disability,
+            handicap_description: state?.handicap_description,
+            handicap_percentage: state?.handicap_percentage,
+            addresses: [
+              {
+                id: state?.address_id ? state?.address_id : null,
+                type: "Permanent",
+                address_line_1: state?.address1,
+                address_line_2: state?.address2,
+                address_line_3: state?.address3,
+                country: state?.country,
+                city: state?.city,
+                pincode: state?.pincode,
+                state: state?.state,
+              },
+              {
+                id: state?.permanent_address_id
+                  ? state?.permanent_address_id
+                  : null,
+                type: "Correspondence",
+                address_line_1: state?.permanent_address1,
+                address_line_2: state?.permanent_address2,
+                address_line_3: state?.permanent_address3,
+                country: state?.permanent_country,
+                city: state?.permanent_city,
+                pincode: state?.permanent_pincode,
+                state: state?.permanent_state,
+              },
+            ],
+          };
+          handleUpdate({
+            body: payload,
 
-          onSuccessCallback: () => {
-            handleEdit(false);
-            // turn off the edit mode
-          },
-        });
-      }}
-      onClickCancel={() => {
-        // turn off the edit mode
-        setState(getData(data));
-        handleEdit(false);
-      }}
-    />
+            onSuccessCallback: () => {
+              handleEdit(false);
+              // turn off the edit mode
+            },
+          });
+        }}
+        onClickCancel={() => {
+          // turn off the edit mode
+          setState(getData(data));
+          handleEdit(false);
+        }}
+      />
+    </>
   );
 };
 
