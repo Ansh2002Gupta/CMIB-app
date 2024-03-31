@@ -22,7 +22,7 @@ const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
   const isWebView = useIsWebView();
   if (isEditable) return null;
-  if (isWebView) {
+  if (isWebView?.isWebView) {
     return (
       <CardComponent customStyle={style.cardContainer}>
         <TouchableOpacity
@@ -44,7 +44,21 @@ const EditButton = ({ isEditable, handleEdit }) => {
       </CardComponent>
     );
   }
-  return null;
+  return (
+    <TouchableOpacity
+      style={style.mobileEditContainer}
+      onPress={() => handleEdit(true)}
+    >
+      <CustomImage
+        source={images.iconEdit}
+        Icon={images.iconEdit}
+        isSvg
+        alt={"edit icon"}
+        height={20}
+        width={20}
+      />
+    </TouchableOpacity>
+  );
 };
 
 const JobProfileTab = () => {

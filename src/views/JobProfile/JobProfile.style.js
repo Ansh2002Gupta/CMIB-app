@@ -28,6 +28,13 @@ const style = {
   containerStyle: {
     flex: 1,
     overflow: "hidden",
+    backgroundColor: colors.white,
+  },
+  mobileEditContainer: {
+    backgroundColor: colors.secondaryGrey,
+    padding: 4,
+    borderRadius: 4,
+    justifyContent: "center",
   },
 };
 
