@@ -201,6 +201,7 @@ const EditJobDetails = () => {
               isWebView={isWebView}
               isCheckList={isChecklist}
               setIsCheckList={setIsCheckList}
+              submitButtonText={"label.save"}
             />
           </View>
         </ScrollView>

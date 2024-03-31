@@ -13,6 +13,7 @@ const FooterComponent = ({
   isCheckList,
   setIsCheckList,
   onSubmit,
+  submitButtonText = "label.post",
 }) => {
   const navigate = useNavigate();
   const intl = useIntl();
@@ -47,7 +48,7 @@ const FooterComponent = ({
             withGreenBackground
             disabledContainerStyle={{ opacity: 0.5 }}
           >
-            {intl.formatMessage({ id: "label.post" })}
+            {intl.formatMessage({ id: submitButtonText })}
           </CustomButton>
         </View>
       </View>
