@@ -31,6 +31,7 @@ const FilterModal = ({
   const {
     currentCategory,
     filterData,
+    filterCategory,
     handleCategoryChange,
     handleStatusChange,
     handleQueryTypeChange,
@@ -65,8 +66,8 @@ const FilterModal = ({
       : {};
 
   const handleAllcategorySet = (item) => {
-    const status = item === "Status";
-    const query_type = item === "Query Type";
+    const status = item === filterCategory[0] || item === "Status";
+    const query_type = item === filterCategory[1] || item === "Query Type";
 
     if (status) {
       const getStatusDataId = statusData.map((item) => item.id);
@@ -104,7 +105,7 @@ const FilterModal = ({
   };
 
   const renderOptionsByCategory = (category) => {
-    if (category === "Status") {
+    if (category === filterCategory[0] || category === "Status") {
       return statusData.map((status) => (
         <RenderCheckButton
           key={status.id}
@@ -114,7 +115,7 @@ const FilterModal = ({
           isSelected={selectedStatus.includes(status.id)}
         />
       ));
-    } else if (category === "Query Type") {
+    } else if (category === filterCategory[1] || category === "Query Type") {
       return queryTypeData.map((queryType) => (
         <RenderCheckButton
           key={queryType.id}
@@ -128,8 +129,8 @@ const FilterModal = ({
   };
 
   const getCheckBoxesStatus = (title) => {
-    const status = title === "Status";
-    const query_type = title === "Query Type";
+    const status = title === filterCategory[0] || title === "Status";
+    const query_type = title === filterCategory[1] || title === "Query Type";
 
     if (status) {
       if (!selectedStatus.length) return "empty";
@@ -266,6 +267,7 @@ FilterModal.propTypes = {
   onApplyFilter: PropTypes.func.isRequired,
   setFilterState: PropTypes.func.isRequired,
   setShowFilterOptions: PropTypes.func.isRequired,
+  filterCategory: PropTypes.array.isRequired,
 };
 
 export default FilterModal;
