@@ -118,7 +118,12 @@ export const mapApiDataToUI = ({
             createModuleValue(moduleId, intl)
           ),
           options: company_module_access?.map((moduleId) =>
-            createModuleOptions(moduleId, contact, intl, contactDetails)
+            createModuleOptions(
+              moduleId?.name || moduleId,
+              contact,
+              intl,
+              contactDetails
+            )
           ),
         },
       ];
@@ -325,7 +330,9 @@ export const mapApiDataToUI = ({
     companyLogo: company_logo || null,
     balanceCredit: credit_amount,
     companyModuleAccess: company_module_access?.map((accessId) => {
-      const option = MODULE_OPTIONS?.find((option) => option?.id === accessId);
+      const option = MODULE_OPTIONS?.find(
+        (option) => option?.id === accessId.name || option?.id === accessId
+      );
       return option
         ? intl.formatMessage({
             id: option?.messageId,

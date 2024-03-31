@@ -1,7 +1,8 @@
 :root {
   /* Blues */
+  --blueCharcoal: #212529;
   --darkBlue: #00137e;
-  --lightBlue: #2FA5CB;
+  --lightBlue: #2fa5cb;
 
   /* Greens */
   --green: #04af55;
@@ -9,15 +10,16 @@
 
   /* Greys */
   --secondaryGrey: #f2f4fc;
-  --secondaryLightGrey:  #F2F4FC;
-  --darkGrey: #616C82;
+  --secondaryCyanBlue: #ced4da;
+  --secondaryLightGrey: #f2f4fc;
+  --darkGrey: #616c82;
 
   /* Whites */
   --white: #fff;
 }
 
 .account-dropdown__base:hover {
-   background:  var(--secondaryLightGrey) !important;
+  background: var(--secondaryLightGrey) !important;
 }
 
 .card-box__outline--green:hover {
@@ -36,18 +38,35 @@
     var(--white);
 }
 
+.react_datepicker__input_container {
+  width: 100%;
+  -moz-padding-start: calc(0.75rem - 3px);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--blueCharcoal);
+  background-color: var(--white);
+  border: 0px solid var(--secondaryCyanBlue);
+  border-radius: 0.25rem;
+  appearance: none;
+  z-index: 999;
+}
 .text-area__base {
   font-weight: 500;
 }
 
-.text-area__base:hover, .text-area__base:focus {
+.text-area__base:hover,
+.text-area__base:focus {
   border-color: var(--lightBlue) !important;
 }
 
 .text-area__base::placeholder {
-  color: var(--darkGrey)
+  color: var(--darkGrey);
 }
 
 .input_placeholder::placeholder {
-  color: var(--darkGrey)
-} 
+  color: var(--darkGrey);
+}
+.ql-editor {
+  border-bottom: 1px solid red !important;
+}

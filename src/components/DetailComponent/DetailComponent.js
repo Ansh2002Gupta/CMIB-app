@@ -16,7 +16,10 @@ import { getValidUrl } from "../../utils/util";
 import { numericValidator } from "../../utils/validation";
 import images from "../../images";
 import { gridStyles } from "../../theme/styles/commonStyles";
-import styles, { getRowStyle } from "./DetailComponent.style";
+import styles, {
+  getContainerStyles,
+  getRowStyle,
+} from "./DetailComponent.style";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -30,6 +33,7 @@ const DetailComponent = ({
   headerTextCustomStyles,
   index,
   isActive,
+  isColumnVariableWidth,
   isEditable,
   isInputDisable,
   isMandatory,
@@ -42,9 +46,11 @@ const DetailComponent = ({
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
 
-  const containerStyle = isWebView
-    ? styles.containerGridStyle(columnCount)
-    : styles.containerStyle;
+  const containerStyle = getContainerStyles({
+    columnCount,
+    isColumnVariableWidth,
+    isWebView,
+  });
 
   const renderSwitch = () => (
     <View style={styles.switchContainer}>
@@ -92,7 +98,7 @@ const DetailComponent = ({
       return (
         <BadgeLabel
           badgeLabels={detail?.customValue || detail?.value}
-          customTextStyle={styles.badgeContainer}
+          customTextContainerStyle={styles.badgeContainer}
         />
       );
     }
@@ -148,7 +154,10 @@ const DetailComponent = ({
         errorMessage={detail.error}
         value={detail.value}
         customHandleBlur={() => handleBlur(detail.key, index)}
-        customStyle={styles.inputStyle}
+        customStyle={{
+          ...styles.inputStyle,
+          ...styles.getFieldWidth(detail.width, !isWebView),
+        }}
         label={detail?.label && intl.formatMessage({ id: detail.label })}
         isDropdown={detail.isDropdown}
         isEditable={isInputDisable ? !isInputDisable : true}
@@ -211,6 +220,56 @@ const DetailComponent = ({
         {details?.map((detail, idx) => {
           if (isEditable && detail.viewOnlyField) {
             return null;
+          }
+          if (isColumnVariableWidth) {
+            return (
+              <View
+                style={{
+                  ...(isWebView
+                    ? styles.getVariableContainerStyles(detail)
+                    : styles.containerStyle),
+                }}
+              >
+                {detail.map((columns, idx) => {
+                  return isEditable ? (
+                    <View
+                      style={{
+                        ...(columns.width === 3 ? styles.oneThirdWidth : {}),
+                        ...(isWebView
+                          ? styles.webContainer
+                          : getRowStyle(detail)),
+                      }}
+                    >
+                      {renderEditableContent(columns)}
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        ...(isWebView
+                          ? styles.webContainer
+                          : getRowStyle(detail)),
+                      }}
+                    >
+                      <View style={styles.titleContainer}>
+                        {columns.label ? (
+                          <CommonText customTextStyle={styles.titleStyle}>
+                            {intl.formatMessage({ id: columns.label })}
+                          </CommonText>
+                        ) : (
+                          void 0
+                        )}
+                        {columns?.isMandatory && (
+                          <CommonText customTextStyle={styles.starStyle}>
+                            {" *"}
+                          </CommonText>
+                        )}
+                      </View>
+                      {renderDetailContent(columns)}
+                    </View>
+                  );
+                })}
+              </View>
+            );
           }
 
           return (
@@ -276,6 +335,7 @@ DetailComponent.propTypes = {
   headerTextCustomStyles: PropTypes.object,
   index: PropTypes.number,
   isActive: PropTypes.bool,
+  isColumnVariableWidth: PropTypes.bool,
   isEditable: PropTypes.bool,
   isInputDisable: PropTypes.bool,
   isMandatory: PropTypes.bool,
