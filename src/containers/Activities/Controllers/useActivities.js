@@ -51,7 +51,7 @@ const addValueOnField = ({ state, details, isEditable }) => {
       value:
         !isEditable && state?.[item?.key] === null
           ? "--"
-          : booleanToYesNo(state?.[item?.key] ?? "--"),
+          : booleanToYesNo(state?.[item?.key]),
       codeValue: state.codeValue,
     };
   });
