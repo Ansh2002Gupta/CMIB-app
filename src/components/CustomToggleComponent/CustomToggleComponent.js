@@ -23,22 +23,24 @@ const CustomToggleComponent = ({
 
   return (
     <View>
-      {label && <View style={styles.labelContainer}>
-        <CommonText
-          customTextStyle={[
-            styles.label,
-            isWebView && styles.webLabel,
-            customLabelStyle,
-          ]}
-        >
-          {label}
-        </CommonText>
-        {isMandatory && (
-          <CommonText customTextStyle={[styles.label, styles.starStyle]}>
-            {"*"}
+      {label && (
+        <View style={styles.labelContainer}>
+          <CommonText
+            customTextStyle={[
+              styles.label,
+              isWebView && styles.webLabel,
+              customLabelStyle,
+            ]}
+          >
+            {label}
           </CommonText>
-        )}
-      </View>}
+          {isMandatory && (
+            <CommonText customTextStyle={[styles.label, styles.starStyle]}>
+              {"*"}
+            </CommonText>
+          )}
+        </View>
+      )}
       <View style={[styles.mainView, customToggleStyle]}>
         <TouchableOpacity
           style={{
@@ -81,6 +83,7 @@ const CustomToggleComponent = ({
 
 CustomToggleComponent.defaultProps = {
   value: 1,
+  onChange: () => {},
 };
 
 CustomToggleComponent.propTypes = {
