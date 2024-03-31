@@ -12,9 +12,7 @@ const style = {
     gap: 4,
   },
   dropdown: {
-    paddingTop: 6,
     paddingBottom: 6,
-    paddingLeft: 14,
     paddingRight: 16,
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
@@ -212,6 +210,11 @@ const style = {
     backgroundColor: colors.secondaryGrey,
     borderRadius: 10,
     marginLeft: 5,
+  },
+  innerLabelContainer: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
   },
   disabledStyle: {
     backgroundColor: colors.disabledTextFieldColor,
