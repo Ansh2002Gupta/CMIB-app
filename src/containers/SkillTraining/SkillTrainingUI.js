@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import style from "../EducationDetails/OtherCourses.style";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const SkillTrainingUI = ({
   isEditable,
@@ -13,10 +14,6 @@ const SkillTrainingUI = ({
   softSkills,
   otherSkills,
   handleLanguagesKnownBlur,
-  handleITSkillsBlur,
-  handleSoftSkillsBlur,
-  handleOtherSkillsBlur,
-  onChangeValue,
   onClickSave,
   onClickCancel,
   isLoading,
@@ -24,10 +21,13 @@ const SkillTrainingUI = ({
   handleAddRemoveRow,
   handleCheckBoxSelection,
   handleOtherSkillsUpdate,
+  error,
+  setError,
 }) => {
   const intl = useIntl();
 
   return (
+    <>
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={style.contentContainerStyle}
@@ -82,7 +82,7 @@ const SkillTrainingUI = ({
             id: "label.other_skills",
           })}
           isEditProfile={isEditable}
-          onChipUpdate={(chips) => handleOtherSkillsUpdate(chips)}
+          handleChange={(label, chips) => handleOtherSkillsUpdate(chips)}
         />
       </View>
       <SaveCancelButton
@@ -93,6 +93,10 @@ const SkillTrainingUI = ({
         isValidAllFields={isValidAllFields}
       />
     </ScrollView>
+    {!!error && (
+      <ToastComponent toastMessage={error} onDismiss={() => setError("")} />
+    )}
+    </>
   );
 };
 

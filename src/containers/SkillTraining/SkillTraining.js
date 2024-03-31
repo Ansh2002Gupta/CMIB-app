@@ -1,20 +1,18 @@
 import React from "react";
 import SkillTrainingUI from "./SkillTrainingUI";
-import { useContext, useEffect, useState } from "react";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useSkillTraining } from "././Controller/useSkillTraining";
 import { MEMBER_CA_JOB_PROFILE_SKILLS } from "../../services/apiServices/apiEndPoint";
+import { SkillTraining_keys } from "./Controller/utils";
 
 const SkillTraining = ({ isEditable = true, handleEdit }) => {
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE_SKILLS}`,
   });
 
-  const { handleUpdate, isError, isLoading } = useUpdateService(
+  const { handleUpdate, isError, isLoading, error, setError } = useUpdateService(
        MEMBER_CA_JOB_PROFILE_SKILLS
   );
 
@@ -46,35 +44,19 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
     }
   }, [data]);
 
-  const findKeyByLabel = (label, details) => {
-    return details.find((item) => {
-      return item.label === label;
-    });
-  };
-
-  const onChangeValue = (details) => (label, value) => {
-    // const { key } = findKeyByLabel(label, details);
-
-    // setState((prev) => ({
-    //   ...prev,
-    //   [key]: value,
-    // }));
-  };
-
   const performSaveChanges = () => {
       const payload = getSkillTrainingPayload()
-      console.log("payload", payload)
       handleUpdate(payload, () => {
           handleEdit(false);
-          console.log("***api success")
+          handleUpdate();
       });
   }
 
   const getSkillTrainingPayload = () => {
     const payload = {
-      languages_known: setPayloadByField("languages_known", "languages_skill", languagesKnown),
-      it_skills: setPayloadByField("it_skills", "itSkillPriority", ITSkills),
-      soft_skills: setPayloadByField("soft_skills", "softSkillPriority", softSkills),
+      languages_known: setPayloadByField(SkillTraining_keys.LANGUAGE_KNOWN, SkillTraining_keys.LANGUAGE_SKILL, languagesKnown),
+      it_skills: setPayloadByField(SkillTraining_keys.IT_SKIILS, SkillTraining_keys.ITSKILL_LEVEL, ITSkills),
+      soft_skills: setPayloadByField(SkillTraining_keys.SOFT_SKILLS, SkillTraining_keys.SOFTSKILL_LEVEL, softSkills),
       other_skills: getOtherSkillsPayload(),
     }
     return payload;
@@ -98,7 +80,7 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
             skill_name = field?.value
          }
          else if (field.key === levelKey){
-          level = field.checkBoxOptions[0]?.name
+          level = field.checkBoxOptions[1]?.value
           //todo - need to add array of level in payload - need to update from backend first
          }
       }) 
@@ -122,9 +104,10 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
       handleAddRemoveRow={handleAddRemoveRow}
       handleOtherSkillsUpdate={handleOtherSkillsUpdate}
       isEditable={isEditable}
-      onChangeValue={onChangeValue}
       isLoading={isLoading}
       isError={isError}
+      error={error}
+      setError={setError}
       isValidAllFields={isValidAllFields}
       onClickSave={() => {
          performSaveChanges()
