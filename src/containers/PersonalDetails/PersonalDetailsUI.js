@@ -8,10 +8,12 @@ import style from "./PersonalDetails.style";
 
 const PersonalDetailsUI = ({
   isEditable,
+  accessibility_information,
   correspondence_address,
   permanent_address,
   personal_detail,
   onChangeValue,
+  handleAccessibilityInformationBlur,
   handlePersonalDetailBlur,
   handleCorrespondenceAddressBlur,
   handlePermanentAddressBlur,
@@ -54,6 +56,15 @@ const PersonalDetailsUI = ({
           details={permanent_address}
           handleChange={onChangeValue(permanent_address)}
           handleBlur={handlePermanentAddressBlur}
+        />
+        <DetailCard
+          isEditProfile={isEditable}
+          headerId={intl.formatMessage({
+            id: "label.accessibility_information",
+          })}
+          details={accessibility_information}
+          handleChange={onChangeValue(accessibility_information)}
+          handleBlur={handleAccessibilityInformationBlur}
         />
       </View>
       <SaveCancelButton

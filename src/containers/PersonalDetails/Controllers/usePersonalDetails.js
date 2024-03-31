@@ -7,11 +7,52 @@ import {
   numRegex,
 } from "../../../constants/constants";
 import useFetch from "../../../hooks/useFetch";
-import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
+import {
+  COUNTRY_CODE,
+  MEMBER_CATEGORY,
+} from "../../../services/apiServices/apiEndPoint";
 import { useIntl } from "react-intl";
 import { validateEmail } from "../../../utils/validation";
 
-const personal_detail = [
+const accessibility_information = [
+  {
+    key: "has_disability",
+    isMandatory: true,
+    isToggle: true,
+    label: "label.has_disability",
+    placeholder: "label.has_disability",
+    validate: (value) => {
+      if (!value) {
+        return "This Field is required";
+      }
+    },
+  },
+  {
+    key: "handicap_description",
+    isMandatory: true,
+    label: "label.passport_number",
+    placeholder: "label.passport_number",
+    validate: (value) => {
+      if (!value) {
+        return "Handicap Description is required";
+      }
+    },
+  },
+  {
+    key: "handicap_percentage",
+    isCounterInput: true,
+    isMandatory: true,
+    label: "label.handicap_percentage",
+    placeholder: "label.handicap_percentage",
+    validate: (value) => {
+      if (!value) {
+        return "Handicap Percentage is required";
+      }
+    },
+  },
+];
+
+const personal_detail = (categoryData) => [
   {
     key: "gender",
     isMandatory: true,
@@ -86,6 +127,22 @@ const personal_detail = [
     validate: (value) => {
       if (!value) {
         return "Passport Number is required";
+      }
+    },
+  },
+  {
+    key: "category_id",
+    isMandatory: true,
+    isDropdown: true,
+    labelField: "name",
+    valueField: "id",
+    inputKey: "id",
+    options: categoryData,
+    label: "label.category",
+    placeholder: "label.category",
+    validate: (value) => {
+      if (!value) {
+        return "Category is required";
       }
     },
   },
@@ -299,8 +356,12 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
 export const usePersonalDetails = ({ state, isEditable }) => {
   const intl = useIntl();
   const { data: countryData } = useFetch({ url: COUNTRY_CODE });
-  const [personal_detail_state, setPersonalDetailState] =
-    useState(personal_detail);
+  const { data: categoryData } = useFetch({ url: MEMBER_CATEGORY });
+  const [accessibility_information_state, setAccessibility_information_state] =
+    useState(accessibility_information);
+  const [personal_detail_state, setPersonalDetailState] = useState(
+    personal_detail(categoryData)
+  );
   const [correspondence_address_state, setCorrespondenceAddressState] =
     useState(correspondence_address(countryData));
   const [permanent_address_state, setPermanentAddressState] =
@@ -308,6 +369,7 @@ export const usePersonalDetails = ({ state, isEditable }) => {
 
   useEffect(() => {
     setCorrespondenceAddressState(correspondence_address(countryData));
+    setPersonalDetailState(personal_detail(categoryData));
   }, [countryData]);
 
   const handlePersonalDetailBlur = (key, index) => {
@@ -344,9 +406,22 @@ export const usePersonalDetails = ({ state, isEditable }) => {
     );
   };
 
+  const handleAccessibilityInformationBlur = (key, index) => {
+    setAccessibility_information_state(
+      validateOnBlur({
+        state,
+        details: accessibility_information_state,
+        key,
+        index,
+        intl,
+      })
+    );
+  };
+
   const checkMandatoryFields = () => {
     let error = false;
     [
+      ...accessibility_information_state,
       ...personal_detail_state,
       ...correspondence_address_state,
       ...permanent_address_state,
@@ -359,6 +434,11 @@ export const usePersonalDetails = ({ state, isEditable }) => {
   };
 
   return {
+    accessibility_information: addValueOnField({
+      state,
+      details: accessibility_information_state,
+      isEditable,
+    }),
     personal_detail: addValueOnField({
       state,
       details: personal_detail_state,
@@ -374,6 +454,7 @@ export const usePersonalDetails = ({ state, isEditable }) => {
       details: permanent_address_state,
       isEditable,
     }),
+    handleAccessibilityInformationBlur,
     handlePersonalDetailBlur,
     handleCorrespondenceAddressBlur,
     handlePermanentAddressBlur,

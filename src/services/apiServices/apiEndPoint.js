@@ -27,6 +27,7 @@ export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
 
 /* API Endpoints Members*/
+export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
 export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;
 export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/otp/verify`;
 export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;

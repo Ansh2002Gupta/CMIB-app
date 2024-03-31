@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import useFetch from "../../hooks/useFetch";
+import { usePut } from "../../hooks/useApiRequest";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import PersonalDetailsUI from "./PersonalDetailsUI";
 import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
@@ -14,17 +15,24 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     url: `${MEMBER_CA_JOB_PROFILE}`,
   });
 
-  const { handleUpdate, isError, isLoading } = useUpdateService({
+  const {
+    makeRequest: handleUpdate,
+    isError,
+    isLoading,
+  } = usePut({
     url: `${MEMBER_CA_JOB_PROFILE}`,
   });
+
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? data : {}
   );
 
   const {
+    accessibility_information,
     correspondence_address,
     permanent_address,
     personal_detail,
+    handleAccessibilityInformationBlur,
     handlePersonalDetailBlur,
     handleCorrespondenceAddressBlur,
     handlePermanentAddressBlur,
@@ -64,21 +72,34 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
 
   return (
     <PersonalDetailsUI
+      accessibility_information={accessibility_information}
       correspondence_address={correspondence_address}
       permanent_address={permanent_address}
       personal_detail={personal_detail}
       onChangeValue={onChangeValue}
+      handleAccessibilityInformationBlur={handleAccessibilityInformationBlur}
       handlePersonalDetailBlur={handlePersonalDetailBlur}
       handleCorrespondenceAddressBlur={handleCorrespondenceAddressBlur}
       handlePermanentAddressBlur={handlePermanentAddressBlur}
-      isValidAllFields={isValidAllFields}
+      isValidAllFields={false}
       isError={isError}
       isLoading={isLoading}
       isEditable={isEditable}
       onClickSave={() => {
-        handleUpdate(state, () => {
-          // turn off the edit mode
-          handleEdit(false);
+        let payload = { ...state };
+        payload.category_id = parseInt(payload.category_id, 10);
+        handleUpdate({
+          body: {
+            ...payload,
+            category_id: 0,
+            has_disability: 1,
+            mobile_country_code: "+91",
+            has_passport: 1,
+          },
+          onSuccessCallback: () => {
+            handleEdit(false);
+            // turn off the edit mode
+          },
         });
       }}
       onClickCancel={() => {
