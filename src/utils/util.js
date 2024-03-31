@@ -190,3 +190,13 @@ export const getValidUrl = (url) => {
   }
   return link;
 };
+
+export const formatCountryCode = (code, countryData) => {
+  if (!code) return code;
+  const countryOption = countryData?.find(
+    (country) => country["dial_code"] === code
+  );
+  return countryOption && Platform.OS === "web"
+    ? `${code} (${countryOption["name"]})`
+    : code;
+};

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  ADDRESS_MAX_LENGTH,
   GENDER,
   MARITAL_STATUS,
   NUMBER_MAX_LENGTH,
@@ -12,6 +13,7 @@ import {
   MEMBER_CATEGORY,
 } from "../../../services/apiServices/apiEndPoint";
 import { useIntl } from "react-intl";
+import { formatCountryCode } from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 
 const accessibility_information = [
@@ -40,7 +42,7 @@ const accessibility_information = [
   },
   {
     key: "handicap_percentage",
-    isCounterInput: true,
+    isNumeric: true,
     isMandatory: true,
     label: "label.handicap_percentage",
     placeholder: "label.handicap_percentage",
@@ -80,7 +82,7 @@ const personal_detail = (categoryData) => [
     },
   },
   {
-    key: "date_of_birth",
+    key: "dob",
     isMandatory: true,
     isDate: true,
     label: "label.date_of_birth",
@@ -131,7 +133,7 @@ const personal_detail = (categoryData) => [
     },
   },
   {
-    key: "category_id",
+    key: "category",
     isMandatory: true,
     isDropdown: true,
     labelField: "name",
@@ -152,6 +154,7 @@ const correspondence_address = (countryData) => [
     key: "address1",
     isMandatory: true,
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address1",
     placeholder: "label.address1",
@@ -164,6 +167,7 @@ const correspondence_address = (countryData) => [
   {
     key: "address2",
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address2",
     placeholder: "label.address2",
@@ -171,6 +175,7 @@ const correspondence_address = (countryData) => [
   {
     key: "address3",
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address3",
     placeholder: "label.address3",
@@ -258,6 +263,7 @@ const permanent_address = [
     key: "permanent_address1",
     isMandatory: true,
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address1",
     placeholder: "label.address1",
@@ -270,6 +276,7 @@ const permanent_address = [
   {
     key: "permanent_address2",
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address2",
     placeholder: "label.address2",
@@ -277,6 +284,7 @@ const permanent_address = [
   {
     key: "permanent_address3",
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address3",
     placeholder: "label.address3",
@@ -328,12 +336,18 @@ const permanent_address = [
   },
 ];
 
-const addValueOnField = ({ state, details, isEditable }) => {
+const addValueOnField = ({ state, details, isEditable, countryData }) => {
   return details.map((item) => {
+    if (item?.isMobileNumber) {
+      return {
+        ...item,
+        value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+        codeValue: formatCountryCode(state?.mobile_country_code, countryData),
+      };
+    }
     return {
       ...item,
       value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
-      codeValue: state.codeValue,
     };
   });
 };
@@ -405,7 +419,6 @@ export const usePersonalDetails = ({ state, isEditable }) => {
       })
     );
   };
-
   const handleAccessibilityInformationBlur = (key, index) => {
     setAccessibility_information_state(
       validateOnBlur({
@@ -448,6 +461,7 @@ export const usePersonalDetails = ({ state, isEditable }) => {
       state,
       details: correspondence_address_state,
       isEditable,
+      countryData,
     }),
     permanent_address: addValueOnField({
       state,
