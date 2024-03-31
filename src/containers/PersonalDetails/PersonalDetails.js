@@ -91,10 +91,29 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
         handleUpdate({
           body: {
             ...payload,
-            category_id: 0,
-            has_disability: 1,
             mobile_country_code: "+91",
-            has_passport: 1,
+            addresses: [
+              {
+                type: "Permanent",
+                address_line_1: "XXXXXXXXXXXX",
+                address_line_2: "XXXXXXXXXXXXXX",
+                address_line_3: "XXXXXXXXXXXXXXXXXX",
+                country: "India",
+                city: "India",
+                pincode: "XXXXXXX",
+                state: "Delhi",
+              },
+              {
+                type: "Correspondence",
+                address_line_1: "XXXXXXXXXXXX",
+                address_line_2: "XXXXXXXXXXXXXX",
+                address_line_3: "XXXXXXXXXXXXXXXXXX",
+                country: "India",
+                city: "India",
+                pincode: "XXXXXXX",
+                state: "Delhi",
+              },
+            ],
           },
           onSuccessCallback: () => {
             handleEdit(false);

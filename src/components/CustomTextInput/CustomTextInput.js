@@ -233,6 +233,8 @@ const CustomTextInput = (props) => {
         <CustomToggleComponent
           isMandatory={isMandatory}
           customToggleStyle={style.customToggleStyle}
+          value={value}
+          onChange={onChangeValue}
         />
       );
     }

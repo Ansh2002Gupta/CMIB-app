@@ -30,8 +30,8 @@ const accessibility_information = [
   {
     key: "handicap_description",
     isMandatory: true,
-    label: "label.passport_number",
-    placeholder: "label.passport_number",
+    label: "label.handicap_description",
+    placeholder: "label.handicap_description",
     validate: (value) => {
       if (!value) {
         return "Handicap Description is required";
@@ -108,7 +108,7 @@ const personal_detail = (categoryData) => [
     },
   },
   {
-    key: "passport",
+    key: "has_passport",
     isMandatory: true,
     isToggle: true,
     label: "label.passport",
