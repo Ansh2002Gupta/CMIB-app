@@ -83,15 +83,24 @@ const EditJobDetails = () => {
   const addIsDeleteKey = (updatedArray) => {
     let mainArray = initialQuestion.current;
 
+    const mainIds = new Set(mainArray.map((item) => item.id));
     const updatedIds = new Set(updatedArray.map((item) => item.id));
 
-    updatedArray = updatedArray.map((item) => ({ ...item, deleted: false }));
+    updatedArray = updatedArray.map((item) => {
+      if (mainIds.has(item.id)) {
+        return { ...item, deleted: false };
+      } else {
+        const { id, ...newItem } = item;
+        return { ...newItem, deleted: false };
+      }
+    });
 
     mainArray.forEach((item) => {
       if (!updatedIds.has(item.id)) {
         updatedArray.push({ ...item, deleted: true });
       }
     });
+
     return updatedArray;
   };
   const onSubmit = () => {
