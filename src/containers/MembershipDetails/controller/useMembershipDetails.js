@@ -33,12 +33,12 @@ const getRefineValueByKey = (key, value) => {
   switch (key) {
     case "membership_enrollment_date":
     case "fellow_member_admission_date":
-      return formatDateToDDMMYYYY(value ?? "--");
+      return formatDateToDDMMYYYY(value);
     case "is_fellow_member":
     case "is_practising":
       return (typeof value === "boolean") ? booleanToYesNo(value ?? "--") : (value === 0 ? "Yes" : "No");
     case "practising_start_date" :
-      return formatDateToMonthNameYear(value ?? "--")
+      return formatDateToMonthNameYear(value)
     default:
       return value;
   }
