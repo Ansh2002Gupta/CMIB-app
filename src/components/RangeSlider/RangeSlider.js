@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
@@ -6,14 +6,24 @@ import CommonText from "../CommonText";
 import classes from "./RangeSlider.module.css";
 import { styles } from "./RangeSlider.styles";
 
-const RangeSlider = ({ isDisabled, label, max, min, onChange, step }) => {
-  const [minVal, setMinVal] = useState(min);
-  const [maxVal, setMaxVal] = useState(max);
+const RangeSlider = ({
+  isDisabled,
+  label,
+  max,
+  min,
+  onChange,
+  range,
+  setRange,
+  step,
+}) => {
   const minValRef = useRef(null);
   const maxValRef = useRef(null);
-  const range = useRef(null);
+  const rangeRef = useRef(null);
   const minLabelValRef = useRef(null);
   const maxLabelValRef = useRef(null);
+
+  const maxVal = range?.max || 0;
+  const minVal = range?.min || 0;
 
   const getPercent = useCallback(
     (value) => Math.round(((value - min) / (max - min)) * 100),
@@ -25,9 +35,9 @@ const RangeSlider = ({ isDisabled, label, max, min, onChange, step }) => {
       const minPercent = getPercent(minVal);
       const maxPercent = getPercent(+maxValRef.current.value);
 
-      if (range.current) {
-        range.current.style.left = `${minPercent}%`;
-        range.current.style.width = `${maxPercent - minPercent}%`;
+      if (rangeRef.current) {
+        rangeRef.current.style.left = `${minPercent}%`;
+        rangeRef.current.style.width = `${maxPercent - minPercent}%`;
         if (minLabelValRef.current) {
           minLabelValRef.current.style.left = `${minPercent}%`;
           minLabelValRef.current.style.transform = `translate(-${minPercent}%, -25px)`;
@@ -41,8 +51,8 @@ const RangeSlider = ({ isDisabled, label, max, min, onChange, step }) => {
       const minPercent = getPercent(+minValRef.current.value);
       const maxPercent = getPercent(maxVal);
 
-      if (range.current) {
-        range.current.style.width = `${maxPercent - minPercent}%`;
+      if (rangeRef.current) {
+        rangeRef.current.style.width = `${maxPercent - minPercent}%`;
       }
       if (maxLabelValRef.current) {
         maxLabelValRef.current.style.left = `${maxPercent}%`;
@@ -77,7 +87,9 @@ const RangeSlider = ({ isDisabled, label, max, min, onChange, step }) => {
           ref={minValRef}
           onChange={(event) => {
             const value = Math.min(+event.target.value, maxVal - step);
-            setMinVal(value);
+            setRange((prev) => {
+              return { ...prev, ...{ min: value } };
+            });
             event.target.value = value.toString();
           }}
           {...{ min, max, step }}
@@ -103,7 +115,9 @@ const RangeSlider = ({ isDisabled, label, max, min, onChange, step }) => {
           disabled={isDisabled}
           onChange={(event) => {
             const value = Math.max(+event.target.value, minVal + step);
-            setMaxVal(value);
+            setRange((prev) => {
+              return { ...prev, ...{ max: value } };
+            });
             event.target.value = value.toString();
           }}
           {...{ min, max, step }}
@@ -112,7 +126,7 @@ const RangeSlider = ({ isDisabled, label, max, min, onChange, step }) => {
       <View style={styles.slider}>
         <View style={{ ...styles.sliderCommon, ...styles.sliderTrack }} />
         <View
-          ref={range}
+          ref={rangeRef}
           style={{ ...styles.sliderCommon, ...styles.sliderRange }}
         />
         <View style={{ ...styles.sliderValue, ...styles.sliderLeftValue }}>
@@ -136,6 +150,7 @@ RangeSlider.defaultProps = {
   max: 0,
   min: 0,
   onChange: () => {},
+  setRange: () => {},
   step: 1,
 };
 
@@ -145,6 +160,11 @@ RangeSlider.propTypes = {
   max: PropTypes.number,
   min: PropTypes.number,
   onChange: PropTypes.func,
+  range: PropTypes.shape({
+    max: PropTypes.number.isRequired,
+    min: PropTypes.number.isRequired,
+  }).isRequired,
+  setRange: PropTypes.func,
   step: PropTypes.number,
 };
 
