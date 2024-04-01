@@ -382,6 +382,7 @@ const BottomSection = forwardRef(
                 handleCountChange={(item) => {
                   handleJobDetailsChange("contractMonth", item);
                 }}
+                maxCount={12}
                 customStyle={
                   isWeb
                     ? styles.spacer
@@ -394,6 +395,7 @@ const BottomSection = forwardRef(
                 countValue={jobData.contractDay}
                 isError={(error && error.contractDay && true) || false}
                 errorMessage={(error && error.contractDay) || ""}
+                maxCount={31}
                 numberText={intl.formatMessage({ id: "label.day" })}
                 handleCountChange={(item) => {
                   handleJobDetailsChange("contractDay", item);
