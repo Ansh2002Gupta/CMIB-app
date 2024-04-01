@@ -7,6 +7,7 @@ import styles from "./CommonText.style";
 
 const CommonText = ({
   children,
+  containerRef,
   customContainerStyle,
   customTextProps,
   customTextStyle,
@@ -26,6 +27,7 @@ const CommonText = ({
         ...styles.container,
         ...customContainerStyle,
       }}
+      ref={containerRef}
     >
       <Text {...customTextProps} style={textStyles}>
         {children}

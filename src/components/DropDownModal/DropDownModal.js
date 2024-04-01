@@ -30,6 +30,7 @@ const DropDownModal = ({
   isSelected,
   indexNumber,
   indexField,
+  isSingleMutliSelect,
   labelField,
   onChangeValue,
   menuOptions,
@@ -199,15 +200,26 @@ const DropDownModal = ({
           </CommonText>
           <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
         </TouchableOpacity>
-        {!!selectedItems.length && (
+        {isSingleMutliSelect ? (
           <View style={styles.multiSelectOptions}>
-            {selectedItems.map((item, index) => (
-              <>
+            {options
+              ?.filter((item) => item.isSelected)
+              ?.map((item, index) => (
                 <CustomChipCard
-                  message={item?.name}
+                  key={index}
+                  message={item?.name || item?.label}
                   onPress={() => handleValueChange(item)}
                 />
-              </>
+              ))}
+          </View>
+        ) : (
+          <View style={styles.multiSelectOptions}>
+            {selectedItems?.map((item, index) => (
+              <CustomChipCard
+                key={index}
+                message={item?.name}
+                onPress={() => handleValueChange(item)}
+              />
             ))}
           </View>
         )}
@@ -320,6 +332,7 @@ DropDownModal.defaultProps = {
   isEditable: true,
   labelField: "label",
   isMobileNumber: false,
+  isSingleMutliSelect: false,
   onChangeValue: () => {},
   menuOptions: {},
   options: [],
@@ -334,6 +347,7 @@ DropDownModal.propTypes = {
   isEditable: PropTypes.bool,
   labelField: PropTypes.string,
   isMobileNumber: PropTypes.bool,
+  isSingleMutliSelect: PropTypes.bool,
   onChangeValue: PropTypes.func,
   menuOptions: PropTypes.object,
   options: PropTypes.arrayOf(PropTypes.object),
