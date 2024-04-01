@@ -20,6 +20,8 @@ import { UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
 import styles from "./EditJobDetails.styles";
 import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
 import useGetEditJobs from "../../services/apiServices/hooks/EditJobs/useGetEditJobs";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 const EditJobDetails = () => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ const EditJobDetails = () => {
   const [loading, setLoading] = useState(false);
   const [isChecklist, setIsCheckList] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [postError, setPostError] = useState(null);
   const questionaireRef = useRef(null);
   const addJobRef = useRef(null);
   const intl = useIntl();
@@ -44,12 +47,16 @@ const EditJobDetails = () => {
     fetchData,
     isLoading,
     isSuccess: newJobSuccess,
+    isError,
+    isErrorData,
   } = useGetAddNewJobData();
   const {
     isLoading: isGetApiLoading,
     isSuccess: fetchApiSuccess,
     stateResult: data,
     getJobs: fetchApiData,
+    error: error,
+    isError: jobError,
   } = useGetEditJobs(id);
 
   useEffect(() => {
@@ -129,6 +136,7 @@ const EditJobDetails = () => {
         })
         .catch((e) => {
           setLoading(false);
+          setPostError(e);
           alert("SomeThing Went Wrong");
         })
         .finally(() => {
@@ -214,6 +222,16 @@ const EditJobDetails = () => {
             </View>
           </ScrollView>
         )}
+      {!isLoading && (isError || jobError || postError) && (
+        <ErrorComponent
+          errorMsg={
+            isErrorData?.data?.message ||
+            error ||
+            postError?.data?.message ||
+            GENERIC_GET_API_FAILED_ERROR_MESSAGE
+          }
+        />
+      )}
     </View>
   );
 };
