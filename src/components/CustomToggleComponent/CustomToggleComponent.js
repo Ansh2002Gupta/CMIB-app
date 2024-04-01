@@ -23,7 +23,7 @@ const CustomToggleComponent = ({
 
   return (
     <View>
-      {label && (
+      {!!label && (
         <View style={styles.labelContainer}>
           <CommonText
             customTextStyle={[

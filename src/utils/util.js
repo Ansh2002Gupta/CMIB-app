@@ -200,3 +200,8 @@ export const formatCountryCode = (code, countryData) => {
     ? `${code} (${countryOption["name"]})`
     : code;
 };
+
+export const getNameById = (data, id) => {
+  const item = data?.find((obj) => obj.id === id);
+  return item ? item.name : null;
+};

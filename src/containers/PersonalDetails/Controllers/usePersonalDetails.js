@@ -13,7 +13,7 @@ import {
   MEMBER_CATEGORY,
 } from "../../../services/apiServices/apiEndPoint";
 import { useIntl } from "react-intl";
-import { formatCountryCode } from "../../../utils/util";
+import { formatCountryCode, getNameById } from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 
 const accessibility_information = [
@@ -133,7 +133,7 @@ const personal_detail = (categoryData) => [
     },
   },
   {
-    key: "category",
+    key: "category_id",
     isMandatory: true,
     isDropdown: true,
     labelField: "name",
@@ -249,11 +249,11 @@ const correspondence_address = (countryData) => [
     key: "phone_number",
     isMandatory: true,
     isNumeric: true,
-    label: "label.phone_number",
-    placeholder: "label.phone_number",
+    label: "label.telephone_no",
+    placeholder: "label.telephone_no",
     validate: (value) => {
       if (!value) {
-        return "phone_number is required";
+        return "phone number is required";
       }
     },
   },
@@ -348,12 +348,40 @@ const permanent_address = [
   },
 ];
 
-const addValueOnField = ({ state, details, isEditable, countryData }) => {
+const addValueOnField = ({
+  state,
+  details,
+  isEditable,
+  countryData,
+  categoryData,
+  intl,
+}) => {
   return details.map((item) => {
     if (item?.isMobileNumber) {
       return {
         ...item,
         value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+        codeValue: formatCountryCode(state?.mobile_country_code, countryData),
+      };
+    }
+    if (item.isToggle) {
+      return {
+        ...item,
+        value: !isEditable
+          ? state?.[item?.key] === null
+            ? "--"
+            : intl.formatMessage({ id: `toggle.${state?.[item?.key]}` })
+          : state?.[item?.key],
+      };
+    }
+    if (item?.key === "category_id") {
+      return {
+        ...item,
+        value: !isEditable
+          ? !state?.[item?.key]
+            ? "--"
+            : getNameById(categoryData, state?.[item?.key])
+          : state?.[item?.key],
         codeValue: formatCountryCode(state?.mobile_country_code, countryData),
       };
     }
@@ -381,8 +409,12 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
 
 export const usePersonalDetails = ({ state, isEditable }) => {
   const intl = useIntl();
-  const { data: countryData } = useFetch({ url: COUNTRY_CODE });
-  const { data: categoryData } = useFetch({ url: MEMBER_CATEGORY });
+  const { data: countryData, isLoading: countryLoading } = useFetch({
+    url: COUNTRY_CODE,
+  });
+  const { data: categoryData, isLoading: categoryLoading } = useFetch({
+    url: MEMBER_CATEGORY,
+  });
   const [accessibility_information_state, setAccessibility_information_state] =
     useState(accessibility_information);
   const [personal_detail_state, setPersonalDetailState] = useState(
@@ -463,23 +495,29 @@ export const usePersonalDetails = ({ state, isEditable }) => {
       state,
       details: accessibility_information_state,
       isEditable,
+      intl,
     }),
     personal_detail: addValueOnField({
       state,
       details: personal_detail_state,
       isEditable,
+      categoryData,
+      intl,
     }),
     correspondence_address: addValueOnField({
       state,
       details: correspondence_address_state,
       isEditable,
       countryData,
+      intl,
     }),
     permanent_address: addValueOnField({
       state,
       details: permanent_address_state,
       isEditable,
+      intl,
     }),
+    isLoading: categoryLoading || countryLoading,
     handleAccessibilityInformationBlur,
     handlePersonalDetailBlur,
     handleCorrespondenceAddressBlur,

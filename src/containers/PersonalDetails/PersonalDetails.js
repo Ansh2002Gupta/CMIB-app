@@ -37,7 +37,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
           email: data?.email,
           has_passport: data?.has_passport,
           passport_number: data?.passport_number,
-          category: data?.category,
+          category_id: data?.category_id,
           mobile_country_code: data?.mobile_country_code,
           mobile_number: data?.mobile_number,
           phone_number: data?.phone_number,
@@ -76,6 +76,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     handleCorrespondenceAddressBlur,
     handlePermanentAddressBlur,
     isValidAllFields,
+    isLoading: isGettingDropdownData,
   } = usePersonalDetails({
     state,
     isEditable,
@@ -113,7 +114,56 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     setError("");
   };
 
-  return isGettingPersonalData ? (
+  const handleSave = () => {
+    let payload = {
+      gender: state?.gender,
+      marital_status: state?.marital_status,
+      dob: state?.dob,
+      email: state?.email,
+      has_passport: state?.has_passport,
+      passport_number: state?.passport_number,
+      category_id: state?.category_id,
+      mobile_country_code: state?.mobile_country_code.split(" ")?.[0],
+      mobile_number: state?.mobile_number,
+      phone_number: state?.phone_number,
+      nationality: state?.nationality,
+      has_disability: state?.has_disability,
+      handicap_description: state?.handicap_description,
+      handicap_percentage: state?.handicap_percentage,
+      addresses: [
+        {
+          id: state?.address_id ? state?.address_id : null,
+          type: "Permanent",
+          address_line_1: state?.address1,
+          address_line_2: state?.address2,
+          address_line_3: state?.address3,
+          country: state?.country,
+          city: state?.city,
+          pincode: state?.pincode,
+          state: state?.state,
+        },
+        {
+          id: state?.permanent_address_id ? state?.permanent_address_id : null,
+          type: "Correspondence",
+          address_line_1: state?.permanent_address1,
+          address_line_2: state?.permanent_address2,
+          address_line_3: state?.permanent_address3,
+          country: state?.permanent_country,
+          city: state?.permanent_city,
+          pincode: state?.permanent_pincode,
+          state: state?.permanent_state,
+        },
+      ],
+    };
+    handleUpdate({
+      body: payload,
+      onSuccessCallback: () => {
+        handleEdit(false);
+      },
+    });
+  };
+
+  return isGettingPersonalData || isGettingDropdownData ? (
     <LoadingScreen />
   ) : errorWhileGettingPersonalData ? (
     <ErrorComponent
@@ -140,58 +190,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
         isValidAllFields={isValidAllFields}
         isLoading={isUpdatingPersonalData}
         isEditable={isEditable}
-        onClickSave={() => {
-          let payload = {
-            gender: state?.gender,
-            marital_status: state?.marital_status,
-            dob: state?.dob,
-            email: state?.email,
-            has_passport: state?.has_passport,
-            passport_number: state?.passport_number,
-            category_id: state?.category,
-            mobile_country_code: state?.mobile_country_code.split(" ")?.[0],
-            mobile_number: state?.mobile_number,
-            phone_number: state?.phone_number,
-            nationality: state?.nationality,
-            has_disability: state?.has_disability,
-            handicap_description: state?.handicap_description,
-            handicap_percentage: state?.handicap_percentage,
-            addresses: [
-              {
-                id: state?.address_id ? state?.address_id : null,
-                type: "Permanent",
-                address_line_1: state?.address1,
-                address_line_2: state?.address2,
-                address_line_3: state?.address3,
-                country: state?.country,
-                city: state?.city,
-                pincode: state?.pincode,
-                state: state?.state,
-              },
-              {
-                id: state?.permanent_address_id
-                  ? state?.permanent_address_id
-                  : null,
-                type: "Correspondence",
-                address_line_1: state?.permanent_address1,
-                address_line_2: state?.permanent_address2,
-                address_line_3: state?.permanent_address3,
-                country: state?.permanent_country,
-                city: state?.permanent_city,
-                pincode: state?.permanent_pincode,
-                state: state?.permanent_state,
-              },
-            ],
-          };
-          handleUpdate({
-            body: payload,
-
-            onSuccessCallback: () => {
-              handleEdit(false);
-              // turn off the edit mode
-            },
-          });
-        }}
+        onClickSave={handleSave}
         onClickCancel={() => {
           // turn off the edit mode
           setState(getData(data));

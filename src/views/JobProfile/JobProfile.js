@@ -20,9 +20,9 @@ import images from "../../images";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
-  const isWebView = useIsWebView();
+  const { isWebView } = useIsWebView();
   if (isEditable) return null;
-  if (isWebView?.isWebView) {
+  if (isWebView) {
     return (
       <CardComponent customStyle={style.cardContainer}>
         <TouchableOpacity

@@ -426,7 +426,8 @@ const locale = {
   "label.has_disability": "Do you have any physical impairment?",
   "label.handicap_description": "Handicapped Description",
   "label.handicap_percentage": "Handicapped %",
-  "label.phone_number": "Phone Number",
+  "toggle.1": "Yes",
+  "toggle.0": "NO",
 };
 
 export default locale;
