@@ -152,6 +152,7 @@ const useTicketDetails = (location) => {
     handlePopup,
     handleSendButton,
     ErrorChatData,
+    fetchChatData,
     isErrorChatData,
     erroticketViewDetails,
     isErrorticketViewDetails,

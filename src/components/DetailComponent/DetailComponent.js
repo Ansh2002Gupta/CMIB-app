@@ -98,7 +98,7 @@ const DetailComponent = ({
       return (
         <BadgeLabel
           badgeLabels={detail?.customValue || detail?.value}
-          customTextStyle={styles.badgeContainer}
+          customTextContainerStyle={styles.badgeContainer}
         />
       );
     }
@@ -193,6 +193,7 @@ const DetailComponent = ({
           }
         }}
         isRupee={detail?.isRupee}
+        isSingleMutliSelect={detail.isSingleMutliSelect}
       />
     );
   };
