@@ -62,7 +62,39 @@ function DashboardView() {
       isFillSpace: false,
     },
   ];
-  return <JobProfileTab />;
+
+  const [selectBoxState, setSelectBoxState] = useState([
+    {
+      isSelected: false,
+      label: "Ca Jobs",
+      name: "Ca Jobs",
+      selectedIndex: null,
+      value: "Ca Jobs",
+    },
+    {
+      isSelected: false,
+      label: "Nqca",
+      name: "Nqca",
+      selectedIndex: null,
+      value: "Nqca",
+    },
+  ]);
+
+  const handleModuleSelection = (updatedSelectedItems) => {
+    const updatedState = selectBoxState.map((item) => {
+      if (item.value === updatedSelectedItems) {
+        if (item.isSelected) {
+          item.isSelected = false;
+        } else {
+          item.isSelected = true;
+        }
+        return item;
+      }
+      return item;
+    });
+    setSelectBoxState(updatedState);
+  };
+
   return (
     <View style={styles.container}>
       <CommonText customTextStyle={styles.header}>
@@ -71,6 +103,7 @@ function DashboardView() {
       <DetailCard
         isEditProfile
         isColumnVariableWidth
+        handleMultiSelect={handleModuleSelection}
         details={[
           [
             {
@@ -90,6 +123,18 @@ function DashboardView() {
               isLink: true,
               value: "Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy Dummy ",
               width: 2, // Can be 1, 2 or 3 (1 for 100%, 2 for 75% and 3 for 33%)
+            },
+            {
+              label: "label.module",
+              value: [],
+              showBadgeLabel: true,
+              isMandatory: true,
+              isMultiSelect: true,
+              isDropdown: true,
+              placeholder: "label.select_module",
+              defaultValues: [],
+              options: selectBoxState,
+              isSingleMutliSelect: true,
             },
           ],
           [
