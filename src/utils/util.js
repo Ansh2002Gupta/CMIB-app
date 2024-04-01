@@ -284,16 +284,12 @@ export const getQuestionType = {
 };
 export const getDecryptApiData = (apiData, addJobs) => {
   let obj = {};
-  apiData.locations = Array.isArray(apiData.location_id)
-    ? apiData.location_id
-    : JSON.parse(apiData.location_id);
-  apiData.functional_areas = Array.isArray(apiData.functional_area_id)
-    ? apiData.functional_area_id
-    : JSON.parse(apiData.functional_area_id);
+  apiData.locations = Array.isArray(apiData.locations) ? apiData.locations : [];
+  apiData.functional_areas = Array.isArray(apiData.functional_areas)
+    ? apiData.functional_areas
+    : [];
   apiData.contract_period =
-    typeof apiData.contract_period === "object"
-      ? apiData.contract_period
-      : JSON.parse(apiData.contract_period);
+    typeof apiData.contract_period === "object" ? apiData.contract_period : {};
 
   obj.jobSummary = apiData.summary;
   obj.jobDetails = apiData.detail;
@@ -311,40 +307,27 @@ export const getDecryptApiData = (apiData, addJobs) => {
   obj.minimumExperience = apiData?.min_experience;
   obj.maximumExperience = apiData?.max_experience;
   obj.jobLocation = apiData.locations
-    ? addJobs.jobLocationData
-        .filter((item) => {
-          if (apiData.locations.includes(item.id)) {
-            return item;
-          }
-        })
-        .map((item) => ({
-          id: item.id,
-          label: item.city,
-          value: item.city,
-        }))
+    ? apiData.locations.map((item) => ({
+        id: item.id,
+        label: item.city,
+        value: item.city,
+      }))
     : [];
   obj.nationality = apiData.nationality
-    ? addJobs.countryData.find((item) => {
-        if (item.name === apiData.nationality) {
-          item.value = item.name;
-          item.label = item.name;
-          delete item.name;
-          return true;
-        }
-        return false;
-      }) || ""
+    ? {
+        value: apiData.nationality,
+        label: apiData.nationality,
+      }
     : "";
 
   obj.designation = apiData.designation;
   obj.functionalAreas =
     apiData.functional_areas.length > 0
-      ? addJobs.functionalData
-          .filter((item) => apiData.functional_areas.includes(item.id))
-          .map((item) => ({
-            id: item.id,
-            label: item.name,
-            value: item.slug,
-          }))
+      ? apiData.functional_areas.map((item) => ({
+          id: item.id,
+          label: item.name,
+          value: item.slug,
+        }))
       : [];
   obj.genderPreference = apiData.gender_preference
     ? addJobs.genderPreferenceData
