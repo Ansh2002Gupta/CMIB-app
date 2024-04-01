@@ -1,15 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { ScrollView } from "@unthinkable/react-core-components";
+
+import { TwoRow } from "../../../core/layouts";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
-import CustomButton from "../../../components/CustomButton";
-import JobDetails from "./JobDetails";
-import styles from "./ApplicationFormContainer.style";
 import CompanyProfile from "./CompanyProfileForm/CompanyProfile";
-import { ThreeRow, TwoRow } from "../../../core/layouts";
-import IconHeader from "../../../components/IconHeader/IconHeader";
+import JobDetails from "./JobDetails";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const intl = useIntl();
@@ -27,40 +25,20 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
 
   return (
-    <ThreeRow
-      topSection={
-        <ApplicationFormStepper
-          headingText={intl.formatMessage({ id: "label.add_application_form" })}
-          activeStep={activeStep}
-        />
-      }
-      middleSection={
-        <ActiveTabComponent
-          tabHandler={onHandleTab}
-          // onClickGoToLogin={onClickGoToLogin}
-        />
-      }
-      isMiddleFillSpace
-      bottomSection={
-        <View style={styles.actionBtnContainer}>
-          <CustomButton
-            onPress={() => {
-              onHandleTab("prev");
-            }}
-          >
-            {intl.formatMessage({ id: "label.cancel" })}
-          </CustomButton>
-          <CustomButton
-            onPress={() => {
-              onHandleTab("next");
-            }}
-            withGreenBackground
-          >
-            {intl.formatMessage({ id: "label.save" })}
-          </CustomButton>
-        </View>
-      }
-    />
+    <ScrollView style={{ flex: 1 }}>
+      <TwoRow
+        topSection={
+          <ApplicationFormStepper
+            headingText={intl.formatMessage({
+              id: "label.add_application_form",
+            })}
+            activeStep={activeStep}
+          />
+        }
+        bottomSection={<ActiveTabComponent tabHandler={onHandleTab} />}
+        isBottomFillSpace
+      />
+    </ScrollView>
   );
 };
 
