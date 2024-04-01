@@ -119,12 +119,16 @@ const EditJobDetails = () => {
       formattedData.questions = addIsDeleteKey(
         formattedData.questions ? formattedData.questions : []
       );
+      setLoading(true);
 
       Http.put(`${UPDATE_JOB}/${id}`, formattedData)
         .then((res) => {
+          setLoading(false);
+
           alert("Job Updated Successfully");
         })
         .catch((e) => {
+          setLoading(false);
           alert("SomeThing Went Wrong");
         })
         .finally(() => {
@@ -141,72 +145,75 @@ const EditJobDetails = () => {
         isBorderVisible={false}
       />
       {(isLoading || isGetApiLoading || loading) && <LoadingScreen />}
-      {!(isLoading || isGetApiLoading) && jobDetails && questionaire && (
-        <ScrollView style={styles.container}>
-          <View style={styles.mainViewStyle}>
-            <CustomTabs
-              containerStyle={styles.backgroundWhite}
-              setSelectedTab={setSelectedTab}
-              cleanupFuntion={() => {
-                let jobData;
-                let questionnairelist;
-                if (addJobRef.current) {
-                  jobData = addJobRef.current.getChildState();
-                  setJobDetails(jobData);
-                }
-                if (questionaireRef.current) {
-                  questionnairelist = questionaireRef.current.getQuestionData();
-                  setQuestionaire(questionnairelist);
-                }
-              }}
-              tabs={[
-                {
-                  label: intl.formatMessage({
-                    id: "label.job_details",
-                  }),
-                  component: (
-                    <View style={styles.padding16}>
-                      <AddModifyJobComponent
-                        ref={addJobRef}
-                        addNewJobData={jobDetails}
-                        isExpanded={true}
-                        isWebView={isWebView}
-                        isMinimisedVisible={false}
-                      />
-                    </View>
-                  ),
-                },
-                {
-                  label: intl.formatMessage({
-                    id: "label.view_questionaire",
-                  }),
-                  component: (
-                    <View style={styles.paddingAllSide}>
-                      <AddModifyQuestionaireComponent
-                        isQuestionaire={true}
-                        addNewJobData={questionaire}
-                        isWebView={isWebView}
-                        ref={questionaireRef}
-                        isMinimisedVisible={false}
-                        headerText={"label.view_questionaire"}
-                      />
-                    </View>
-                  ),
-                },
-              ]}
-            />
-          </View>
-          <View style={styles.padding16}>
-            <FooterComponent
-              onSubmit={onSubmit}
-              isWebView={isWebView}
-              isCheckList={isChecklist}
-              setIsCheckList={setIsCheckList}
-              submitButtonText={"label.save"}
-            />
-          </View>
-        </ScrollView>
-      )}
+      {!(isLoading || isGetApiLoading || loading) &&
+        jobDetails &&
+        questionaire && (
+          <ScrollView style={styles.container}>
+            <View style={styles.mainViewStyle}>
+              <CustomTabs
+                containerStyle={styles.backgroundWhite}
+                setSelectedTab={setSelectedTab}
+                cleanupFuntion={() => {
+                  let jobData;
+                  let questionnairelist;
+                  if (addJobRef.current) {
+                    jobData = addJobRef.current.getChildState();
+                    setJobDetails(jobData);
+                  }
+                  if (questionaireRef.current) {
+                    questionnairelist =
+                      questionaireRef.current.getQuestionData();
+                    setQuestionaire(questionnairelist);
+                  }
+                }}
+                tabs={[
+                  {
+                    label: intl.formatMessage({
+                      id: "label.job_details",
+                    }),
+                    component: (
+                      <View style={styles.padding16}>
+                        <AddModifyJobComponent
+                          ref={addJobRef}
+                          addNewJobData={jobDetails}
+                          isExpanded={true}
+                          isWebView={isWebView}
+                          isMinimisedVisible={false}
+                        />
+                      </View>
+                    ),
+                  },
+                  {
+                    label: intl.formatMessage({
+                      id: "label.view_questionaire",
+                    }),
+                    component: (
+                      <View style={styles.paddingAllSide}>
+                        <AddModifyQuestionaireComponent
+                          isQuestionaire={true}
+                          addNewJobData={questionaire}
+                          isWebView={isWebView}
+                          ref={questionaireRef}
+                          isMinimisedVisible={false}
+                          headerText={"label.view_questionaire"}
+                        />
+                      </View>
+                    ),
+                  },
+                ]}
+              />
+            </View>
+            <View style={styles.padding16}>
+              <FooterComponent
+                onSubmit={onSubmit}
+                isWebView={isWebView}
+                isCheckList={isChecklist}
+                setIsCheckList={setIsCheckList}
+                submitButtonText={"label.save"}
+              />
+            </View>
+          </ScrollView>
+        )}
     </View>
   );
 };
