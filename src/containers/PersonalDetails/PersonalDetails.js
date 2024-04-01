@@ -137,7 +137,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
         handlePersonalDetailBlur={handlePersonalDetailBlur}
         handleCorrespondenceAddressBlur={handleCorrespondenceAddressBlur}
         handlePermanentAddressBlur={handlePermanentAddressBlur}
-        isValidAllFields={false}
+        isValidAllFields={isValidAllFields}
         isLoading={isUpdatingPersonalData}
         isEditable={isEditable}
         onClickSave={() => {

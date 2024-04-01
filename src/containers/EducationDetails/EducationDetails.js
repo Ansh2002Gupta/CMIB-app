@@ -10,7 +10,7 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const { data } = useFetch({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
 
   const { handleUpdate, isError, isLoading } = useUpdateService({
