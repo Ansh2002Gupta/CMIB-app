@@ -115,11 +115,11 @@ const EditJobDetails = () => {
         questionnairelist,
         isChecklist
       );
-      if (questionaireRef.current) {
-        formattedData.questions = addIsDeleteKey(
-          formattedData.questions ? formattedData.questions : []
-        );
-      }
+
+      formattedData.questions = addIsDeleteKey(
+        formattedData.questions ? formattedData.questions : []
+      );
+
       Http.put(`${UPDATE_JOB}/${id}`, formattedData)
         .then((res) => {
           alert("Job Updated Successfully");
