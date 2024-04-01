@@ -1,4 +1,5 @@
 import { Platform, StyleSheet } from "@unthinkable/react-core-components";
+
 import colors from "../../assets/colors";
 import { fontFamily } from "../../theme/styles/commonStyles";
 

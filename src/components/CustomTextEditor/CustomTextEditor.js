@@ -102,7 +102,7 @@ CustomTextEditor.defaultProps = {
   label: "",
   disabled: false,
   quillContainerStyle: {},
-  quilStyle: PropTypes.object,
+  quilStyle: {},
 };
 CustomTextEditor.propTypes = {
   customErrorStyle: PropTypes.object,

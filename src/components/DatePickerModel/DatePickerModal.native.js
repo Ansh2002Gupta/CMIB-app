@@ -82,15 +82,6 @@ const DatePickerModal = ({
     </>
   );
 };
-DatePickerModal.propTypes = {
-  value: PropTypes.instanceOf(Date),
-  onChangeValue: PropTypes.func.isRequired,
-  format: PropTypes.string,
-  minDate: PropTypes.instanceOf(Date),
-  maxDate: PropTypes.instanceOf(Date),
-  customStyles: PropTypes.object,
-  // ...otherProps propTypes
-};
 
 DatePickerModal.propTypes = {
   customStyles: PropTypes.object,
