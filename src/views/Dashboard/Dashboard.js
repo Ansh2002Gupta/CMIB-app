@@ -22,6 +22,7 @@ function DashboardView() {
         onChange={(obj) => {
           console.log(obj);
         }}
+        step={5}
       />
     </View>
   );

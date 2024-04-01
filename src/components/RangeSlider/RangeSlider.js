@@ -6,7 +6,7 @@ import CommonText from "../CommonText";
 import classes from "./RangeSlider.module.css";
 import { styles } from "./RangeSlider.styles";
 
-const RangeSlider = ({ isDisabled, label, max, min, onChange }) => {
+const RangeSlider = ({ isDisabled, label, max, min, onChange, step }) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);
   const minValRef = useRef(null);
@@ -68,8 +68,6 @@ const RangeSlider = ({ isDisabled, label, max, min, onChange }) => {
         )}
         <input
           type="range"
-          min={min}
-          max={max}
           style={{ ...styles.thumb, ...styles.elevatedThumbSm }}
           className={`${isDisabled ? classes.disabledRange : ""} ${
             classes.thumb
@@ -78,10 +76,11 @@ const RangeSlider = ({ isDisabled, label, max, min, onChange }) => {
           value={minVal}
           ref={minValRef}
           onChange={(event) => {
-            const value = Math.min(+event.target.value, maxVal - 1);
+            const value = Math.min(+event.target.value, maxVal - step);
             setMinVal(value);
             event.target.value = value.toString();
           }}
+          {...{ min, max, step }}
         />
       </View>
       <View style={styles.thumbAndLabelBox}>
@@ -95,8 +94,6 @@ const RangeSlider = ({ isDisabled, label, max, min, onChange }) => {
         )}
         <input
           type="range"
-          min={min}
-          max={max}
           style={{ ...styles.thumb, ...styles.elevatedThumbMd }}
           className={`${isDisabled ? classes.disabledRange : ""} ${
             classes.thumb
@@ -105,10 +102,11 @@ const RangeSlider = ({ isDisabled, label, max, min, onChange }) => {
           ref={maxValRef}
           disabled={isDisabled}
           onChange={(event) => {
-            const value = Math.max(+event.target.value, minVal + 1);
+            const value = Math.max(+event.target.value, minVal + step);
             setMaxVal(value);
             event.target.value = value.toString();
           }}
+          {...{ min, max, step }}
         />
       </View>
       <View style={styles.slider}>
@@ -138,6 +136,7 @@ RangeSlider.defaultProps = {
   max: 0,
   min: 0,
   onChange: () => {},
+  step: 1,
 };
 
 RangeSlider.propTypes = {
@@ -146,6 +145,7 @@ RangeSlider.propTypes = {
   max: PropTypes.number,
   min: PropTypes.number,
   onChange: PropTypes.func,
+  step: PropTypes.number,
 };
 
 export default RangeSlider;
