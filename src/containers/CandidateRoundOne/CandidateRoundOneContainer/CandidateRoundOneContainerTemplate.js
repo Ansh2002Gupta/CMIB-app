@@ -23,7 +23,7 @@ const CandidateRoundOneContainerTemplate = ({ roundOneCards, onPressCard }) => {
     : {};
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={styles.mainContainer}>
       <TwoRow
         topSection={
           <IconHeader headerText={intl.formatMessage({ id: "label.round1" })} />
