@@ -12,46 +12,47 @@ const CustomToggleComponent = ({
   customToggleStyle,
   isMandatory,
   label,
+  onChange,
+  value,
 }) => {
-  const [selectedToggleOption, setSelectedToggleOption] = useState(-1);
   const intl = useIntl();
   const handleOptionSelect = (option) => {
-    setSelectedToggleOption(option);
+    onChange(option);
   };
   const { isWebView } = useIsWebView();
 
   return (
     <View>
-      {label && <View style={styles.labelContainer}>
-        <CommonText
-          customTextStyle={[
-            styles.label,
-            isWebView && styles.webLabel,
-            customLabelStyle,
-          ]}
-        >
-          {label}
-        </CommonText>
-        {isMandatory && (
-          <CommonText customTextStyle={[styles.label, styles.starStyle]}>
-            {"*"}
+      {label && (
+        <View style={styles.labelContainer}>
+          <CommonText
+            customTextStyle={[
+              styles.label,
+              isWebView && styles.webLabel,
+              customLabelStyle,
+            ]}
+          >
+            {label}
           </CommonText>
-        )}
-      </View>}
+          {isMandatory && (
+            <CommonText customTextStyle={[styles.label, styles.starStyle]}>
+              {"*"}
+            </CommonText>
+          )}
+        </View>
+      )}
       <View style={[styles.mainView, customToggleStyle]}>
         <TouchableOpacity
           style={{
             ...styles.yesButtonStyle,
-            ...(selectedToggleOption === 0 ? styles.activeButtonStyle : null),
+            ...(value === 1 ? styles.activeButtonStyle : null),
           }}
-          onPress={() => handleOptionSelect(0)}
+          onPress={() => handleOptionSelect(1)}
         >
           <View
             style={{
               ...styles.buttonViewStyle,
-              ...(selectedToggleOption === 0
-                ? styles.activeButtonViewStyle
-                : null),
+              ...(value === 1 ? styles.activeButtonViewStyle : null),
             }}
           />
         </TouchableOpacity>
@@ -61,16 +62,14 @@ const CustomToggleComponent = ({
         <TouchableOpacity
           style={{
             ...styles.noButtonStyle,
-            ...(selectedToggleOption === 1 ? styles.activeButtonStyle : null),
+            ...(value === 0 ? styles.activeButtonStyle : null),
           }}
-          onPress={() => handleOptionSelect(1)}
+          onPress={() => handleOptionSelect(0)}
         >
           <View
             style={{
               ...styles.buttonViewStyle,
-              ...(selectedToggleOption === 1
-                ? styles.activeButtonViewStyle
-                : null),
+              ...(value === 0 ? styles.activeButtonViewStyle : null),
             }}
           />
         </TouchableOpacity>
@@ -82,10 +81,17 @@ const CustomToggleComponent = ({
   );
 };
 
+CustomToggleComponent.defaultProps = {
+  value: 1,
+  onChange: () => {},
+};
+
 CustomToggleComponent.propTypes = {
   customLabelStyle: PropTypes.object,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.number,
 };
 
 export default CustomToggleComponent;
