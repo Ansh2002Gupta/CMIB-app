@@ -2,16 +2,14 @@ import { useRef, useState } from "react";
 
 const useFilterModal = (
   filterState,
-  filterCategory,
   initialFilterState,
   onApplyFilter,
   setFilterState,
-  setShowFilterOptions
+  setShowFilterOptions,
+  filterCategory
 ) => {
   const { selectedStatus, selectedQueryType, activeCategories } = filterState;
-  const [currentCategory, setCurrentCategory] = useState(
-    filterCategory[0] ? filterCategory[0] : "Status"
-  );
+  const [currentCategory, setCurrentCategory] = useState(filterCategory[0]);
 
   const prevFilterState = useRef(filterState);
 
