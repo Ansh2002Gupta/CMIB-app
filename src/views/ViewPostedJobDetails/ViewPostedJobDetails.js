@@ -255,11 +255,13 @@ const ViewPostedJobDetails = () => {
           },
           {
             label: "label.minimum_salary",
-            value: apiData?.min_salary ?? "-",
+            value: apiData?.min_salary ? Math.trunc(apiData?.min_salary) : "-",
           },
           {
             label: "label.maximum_salary",
-            value: apiData?.max_experience ?? "-",
+            value: apiData?.max_experience
+              ? Math.trunc(apiData?.max_experience)
+              : "-",
           },
         ],
         [

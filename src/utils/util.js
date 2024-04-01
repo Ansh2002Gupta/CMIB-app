@@ -233,8 +233,8 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     category_preference: jobData.categoryPreference?.label,
     essential_qualification: jobData.essentialQualification,
     desired_qualification: jobData.desiredQualification,
-    job_opening_date: jobData.jobOpeningDate.toISOString().slice(0, 10),
-    job_closing_date: jobData.jobClosingDate.toISOString().slice(0, 10),
+    job_opening_date: dayjs(jobData.jobOpeningDate).format("YYYY-MM-DD"),
+    job_closing_date: dayjs(jobData.jobClosingDate).format("YYYY-MM-DD"),
     min_salary: jobData.minimumSalary,
     max_salary: jobData.maximumSalary,
     number_of_vacancies: jobData.numberOfVacancies,
@@ -372,8 +372,8 @@ export const getDecryptApiData = (apiData, addJobs) => {
   obj.desiredQualification = apiData.desired_qualification;
   obj.jobOpeningDate = apiData.opening_date;
   obj.jobClosingDate = apiData.closing_date;
-  obj.minimumSalary = apiData.min_salary;
-  obj.maximumSalary = apiData.max_salary;
+  obj.minimumSalary = Math.trunc(apiData.min_salary);
+  obj.maximumSalary = Math.trunc(apiData.max_salary);
   obj.numberOfVacancies = apiData.vacancy;
   obj.modeofWork = apiData.work_mode
     ? addJobs.workModeData

@@ -16,10 +16,10 @@ import { getDecryptApiData, getFormatedData } from "../../utils/util";
 import Http from "../../services/http-service";
 import { useIntl } from "react-intl";
 
-import { POST_JOB, UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
+import { UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
 import styles from "./EditJobDetails.styles";
 import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
-import useFetch from "../../hooks/useFetch";
+import useGetEditJobs from "../../services/apiServices/hooks/EditJobs/useGetEditJobs";
 const EditJobDetails = () => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
@@ -30,6 +30,8 @@ const EditJobDetails = () => {
     id,
   } = location.state;
   const [jobDetails, setJobDetails] = useState(intialJobData);
+  const initialJob = useRef(intialJobData);
+  const initialQuestion = useRef(intialQuestionData);
   const [questionaire, setQuestionaire] = useState(intialQuestionData);
   const [loading, setLoading] = useState(false);
   const [isChecklist, setIsCheckList] = useState(false);
@@ -38,7 +40,6 @@ const EditJobDetails = () => {
   const addJobRef = useRef(null);
   const intl = useIntl();
   const [addJobs] = useContext(AddJobContext);
-
   const {
     fetchData,
     isLoading,
@@ -47,11 +48,9 @@ const EditJobDetails = () => {
   const {
     isLoading: isGetApiLoading,
     isSuccess: fetchApiSuccess,
-    data,
-    fetchData: fetchApiData,
-  } = useFetch({
-    url: `${POST_JOB}/${id}`,
-  });
+    stateResult: data,
+    getJobs: fetchApiData,
+  } = useGetEditJobs(id);
 
   useEffect(() => {
     if (!intialJobData) {
@@ -59,7 +58,6 @@ const EditJobDetails = () => {
     }
     fetchData();
   }, []);
-
   useEffect(() => {
     if (data && fetchApiSuccess && newJobSuccess) {
       setLoading(true);
@@ -67,30 +65,31 @@ const EditJobDetails = () => {
         data,
         addJobs
       );
+      initialJob.current = obj;
+      initialQuestion.current = transformedQuestionnaire;
       setJobDetails(obj);
       setQuestionaire(transformedQuestionnaire);
       setLoading(false);
     }
   }, [data, newJobSuccess, fetchApiSuccess, addJobs]);
-  console.log("XYZ", jobDetails);
 
   const addIsDeleteKey = (updatedArray) => {
-    let mainArray = intialQuestionData;
+    let mainArray = initialQuestion.current;
 
     const updatedIds = new Set(updatedArray.map((item) => item.id));
 
-    updatedArray = updatedArray.map((item) => ({ ...item, isDeleted: false }));
+    updatedArray = updatedArray.map((item) => ({ ...item, deleted: false }));
 
     mainArray.forEach((item) => {
       if (!updatedIds.has(item.id)) {
-        updatedArray.push({ ...item, isDeleted: true });
+        updatedArray.push({ ...item, deleted: true });
       }
     });
     return updatedArray;
   };
   const onSubmit = () => {
-    let jobDataPosted = intialJobData;
-    let questionnairelist = intialQuestionData;
+    let jobDataPosted = initialJob.current;
+    let questionnairelist = initialQuestion.current;
     let isError = true;
     let questionError = true;
     if (addJobRef.current) {
@@ -131,6 +130,8 @@ const EditJobDetails = () => {
         .finally(() => {
           navigate(-1);
         });
+    } else {
+      alert(intl.formatMessage({ id: "label.fill_mandatory" }));
     }
   };
   return (

@@ -472,6 +472,9 @@ const locale = {
   "label.search_by_designation": "Search By Designation or Job ID",
   "label.posted_job": "Posted Job",
   "label.edit_jobs": "Edit Jobs",
+  "label.summary_error": "Length should be greater than 10 and less than 1000",
+  "label.details_error": "Length should be greater than 50 and less than 65535",
+  "label.fill_mandatory": "Please fill mandatory field",
 };
 
 export default locale;

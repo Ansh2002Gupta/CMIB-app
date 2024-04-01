@@ -9,6 +9,7 @@ import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/use
 import useIsWebView from "../../hooks/useIsWebView";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 import AddModifyNewJobsUi from "./AddModifyNewJobsUi";
+import { useIntl } from "react-intl";
 
 const AddModifyNewJobs = () => {
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
@@ -17,12 +18,15 @@ const AddModifyNewJobs = () => {
   const addComponentRef = useRef();
   const addQuestionRef = useRef();
   const [isCheckList, setIsCheckList] = useState(false);
+  const [error, setError] = useState(null);
+  const intl = useIntl();
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const onSubmit = () => {
+    setError(null);
     let jobData;
     let questionnairelist;
     let isError = true;
@@ -51,8 +55,13 @@ const AddModifyNewJobs = () => {
           navigate(-1);
         })
         .catch((e) => {
-          alert("SomeThing Went Wrong");
+          setError(
+            e.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+          );
+          alert(GENERIC_GET_API_FAILED_ERROR_MESSAGE, e);
         });
+    } else {
+      alert(intl.formatMessage({ id: "label.fill_mandatory" }));
     }
   };
 
@@ -61,7 +70,7 @@ const AddModifyNewJobs = () => {
   return (
     <>
       {isLoading && <LoadingScreen />}
-      {!isLoading && isSuccess && !isError && (
+      {!isLoading && isSuccess && !isError && !error && (
         <AddModifyNewJobsUi
           isWebView={isWebView}
           addComponentRef={addComponentRef}
@@ -71,7 +80,7 @@ const AddModifyNewJobs = () => {
           onSubmit={onSubmit}
         />
       )}
-      {!isLoading && isError && (
+      {!isLoading && isError && error && (
         <ErrorComponent
           errorMsg={
             isErrorData?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE

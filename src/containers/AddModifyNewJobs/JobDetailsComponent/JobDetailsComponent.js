@@ -58,6 +58,30 @@ const JobDetailsComponent = forwardRef(
         });
 
         return false;
+      } else if (
+        field == "jobSummary" &&
+        (jobData[field].length < 10 || jobData[field] > 1000)
+      ) {
+        setError((prev) => {
+          return {
+            ...prev,
+            [field]: intl.formatMessage({ id: "label.summary_error" }),
+          };
+        });
+
+        return false;
+      } else if (
+        field == "jobDetails" &&
+        (jobData[field].length < 50 || jobData[field] > 65535)
+      ) {
+        setError((prev) => {
+          return {
+            ...prev,
+            [field]: intl.formatMessage({ id: "label.details_error" }),
+          };
+        });
+
+        return false;
       }
       return true;
     };
