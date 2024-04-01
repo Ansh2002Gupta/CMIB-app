@@ -246,6 +246,18 @@ const correspondence_address = (countryData) => [
     },
   },
   {
+    key: "phone_number",
+    isMandatory: true,
+    isNumeric: true,
+    label: "label.phone_number",
+    placeholder: "label.phone_number",
+    validate: (value) => {
+      if (!value) {
+        return "phone_number is required";
+      }
+    },
+  },
+  {
     key: "nationality",
     isMandatory: true,
     label: "label.nationality",
