@@ -10,7 +10,7 @@ const useFilterModal = (
 ) => {
   const { selectedStatus, selectedQueryType, activeCategories } = filterState;
   const [currentCategory, setCurrentCategory] = useState(
-    filterCategory[0] || "Status"
+    filterCategory[0] ? filterCategory[0] : "Status"
   );
 
   const prevFilterState = useRef(filterState);
