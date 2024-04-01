@@ -5,6 +5,7 @@ import style from "../EducationDetails/OtherCourses.style";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
 
 const SkillTrainingUI = ({
   isEditable,
@@ -32,6 +33,12 @@ const SkillTrainingUI = ({
       showsVerticalScrollIndicator={false}
       style={style.contentContainerStyle}
     >
+      <KeyboardAwareScrollView
+                  keyboardShouldPersistTaps="handled"
+                  extraScrollHeight={-50}
+                  showsVerticalScrollIndicator={false}
+                  style={style.contentContainerStyle}
+        >
       <View style={style.innerContainerStyle}>
         <DetailCard
           details={languagesKnown}
@@ -92,6 +99,7 @@ const SkillTrainingUI = ({
         onClickCancel={onClickCancel}
         isValidAllFields={isValidAllFields}
       />
+       </KeyboardAwareScrollView>
     </ScrollView>
     {!!error && (
       <ToastComponent toastMessage={error} onDismiss={() => setError("")} />
