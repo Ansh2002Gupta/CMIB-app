@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import {
   Row,
@@ -15,11 +14,11 @@ import styles from "./CustomTabs.style.js";
 
 export const CustomTabs = ({
   containerStyle,
+  cleanupFuntion,
   renderHeader,
   showWarningOnTabSwitch,
   setSelectedTab,
   tabs,
-  cleanupFuntion,
 }) => {
   const intl = useIntl();
 

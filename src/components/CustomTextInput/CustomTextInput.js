@@ -66,30 +66,30 @@ const CustomTextInput = (props) => {
     indexField,
     indexNumber,
     initiateFileUpload,
+    includeAllKeys,
     label,
     label2,
     maxCount,
     maxLength,
     minCount,
+    menuOptions,
+    minDate,
+    maxDate,
     options,
     onChangeValue,
     onClickAttachement,
     onClickSend,
     onIconClose,
+    onChangeDropDownText,
     placeholder,
     step,
     selectedItems,
     setFile,
+    selectAllField,
     value,
     labelField,
     valueField,
     urlField,
-    menuOptions,
-    minDate,
-    maxDate,
-    includeAllKeys,
-    selectAllField,
-    onChangeDropDownText,
     ...remainingProps
   } = props;
 
@@ -173,8 +173,8 @@ const CustomTextInput = (props) => {
             onChangeDropDownText={onChangeDropDownText}
             dropdownStyle={{
               ...style.dropdown,
-              ...(isFocused && style.focusedStyle,
-              isError && style.invalidInput),
+              ...(isFocused ? style.focusedStyle : {},
+              isError ? style.invalidInput : {}),
               ...dropdownStyle,
             }}
             selectedTextStyle={style.valueStyle}
@@ -231,7 +231,8 @@ const CustomTextInput = (props) => {
           }}
           dropdownStyle={{
             ...style.dropdown,
-            ...(isFocused && style.focusedStyle, isError && style.invalidInput),
+            ...(isFocused ? style.focusedStyle : {},
+            isError ? style.invalidInput : {}),
             ...dropdownStyle,
           }}
         />
@@ -418,16 +419,10 @@ const CustomTextInput = (props) => {
       }}
     >
       {!!label && (
-        <View
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
+        <View style={style.innerLabelContainer}>
           <CustomLabelView label={label} isMandatory={isMandatory} />
           {!!label2 && (
-            <CommonText customContainerStyle={{ marginRight: 10 }}>
+            <CommonText customContainerStyle={style.marginRight10}>
               {label2}
             </CommonText>
           )}
@@ -487,6 +482,7 @@ CustomTextInput.defaultProps = {
   isPaddingNotRequired: false,
   isPassword: false,
   isSendButton: false,
+  includeAllKeys: false,
   initiateFileUpload: () => {},
   label: "",
   label2: "",
@@ -542,6 +538,7 @@ CustomTextInput.propTypes = {
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
   isSendButton: PropTypes.bool,
+  includeAllKeys: PropTypes.bool,
   initiateFileUpload: PropTypes.func,
   label: PropTypes.string,
   label2: PropTypes.string,

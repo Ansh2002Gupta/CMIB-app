@@ -130,6 +130,7 @@ import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 import dotIcon from "../../public/images/dotIcon/dot.png";
 import iconDownloading from "../../public/images/downloadIcon/download.png";
+import iconError from "../../public/images/svg/iconError.svg";
 
 const images = {
   iconArrowUp,
@@ -264,6 +265,7 @@ const images = {
   iconGreyCross,
   dotIcon,
   iconDownloading,
+  iconError,
 };
 
 export default images;

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import {
   Row,
@@ -14,9 +13,7 @@ import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
 import styles from "./FormTabs.style.js";
 import images from "../../images";
-import colors from "../../assets/colors.js";
 import TouchableImage from "../TouchableImage";
-import CustomImage from "../CustomImage";
 
 export const FormTabs = ({
   isEditButtonVisible,
@@ -58,14 +55,7 @@ export const FormTabs = ({
   return (
     <>
       <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingRight: 16,
-            alignItems: "flex-end",
-          }}
-        >
+        <View style={styles.innerContainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Row gap={12} style={styles.tabContainer}>
               {tabs.map((tab, index) => {
@@ -99,30 +89,15 @@ export const FormTabs = ({
               })}
             </Row>
           </ScrollView>
-
           {isEditButtonVisible && (
-            <View
-              style={{
-                flexDirection: "row",
-                borderWidth: 1,
-                borderRadius: 12,
-                justifyContent: "center",
-                alignItems: "center",
-                paddingRight: 12,
-                paddingLeft: 12,
-                borderColor: colors.lightGrey,
-                paddingTop: 8,
-                paddingBottom: 8,
-                height: 36,
-              }}
-            >
+            <View style={styles.editButtonViewStyle}>
               <TouchableImage
                 source={images.iconEditSvg}
                 onPress={onEditClick}
-                style={{ height: 20, width: 30 }}
+                style={styles.editIconStyle}
               />
-              <CommonText customContainerStyle={{ marginLeft: 8 }}>
-                Edit
+              <CommonText customContainerStyle={styles.marginLeft8}>
+                {intl.formatMessage({ id: "label.edit" })}
               </CommonText>
             </View>
           )}
@@ -153,6 +128,8 @@ export const FormTabs = ({
 
 FormTabs.propTypes = {
   showWarningOnTabSwitch: PropTypes.bool,
+  isEditButtonVisible: PropTypes.bool,
+  onEditClick: PropTypes.func,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,

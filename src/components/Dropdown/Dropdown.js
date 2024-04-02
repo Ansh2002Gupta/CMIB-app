@@ -8,6 +8,7 @@ import CustomChipCard from "../CustomChipCard/CustomChipCard";
 import { customTheme, customStyles, styles } from "./Dropdown.style";
 
 const Dropdown = ({
+  customHandleBlur,
   data,
   dropdownStyle,
   isEditable,
@@ -18,15 +19,15 @@ const Dropdown = ({
   labelField,
   menuOptions,
   onChange,
+  onChangeDropDownText,
   placeholder,
   placeholderStyle,
   selectedItems,
+  selectAllField,
   value,
   valueField,
-  selectAllField = false,
-  onChangeDropDownText,
   indexField,
-  customHandleBlur,
+  isSingleMutliSelect,
 }) => {
   const getAllKeys = (option) => {
     let finalObj = {};
@@ -54,11 +55,7 @@ const Dropdown = ({
 
   const handleValueChange = (selectedOption) => {
     if (!Array.isArray(selectedOption)) {
-      if (selectAllField) {
-        onChange(selectedOption);
-      } else {
-        onChange(selectedOption.value);
-      }
+      onChange(selectAllField ? selectedOption : selectedOption.value);
     }
   };
 
@@ -106,7 +103,19 @@ const Dropdown = ({
           isMulti
           components={{ Option: CheckboxOption }}
         />
-        {!!selectedItems.length && (
+        {isSingleMutliSelect ? (
+          <View style={styles.multiSelectOptions}>
+            {options
+              ?.filter((item) => item.isSelected)
+              ?.map((item, index) => (
+                <CustomChipCard
+                  key={index}
+                  message={item?.name || item?.label}
+                  onPress={() => handleValueChange(item)}
+                />
+              ))}
+          </View>
+        ) : (
           <View style={styles.multiSelectOptions}>
             {selectedItems?.map((item, index) => (
               <CustomChipCard
@@ -151,6 +160,7 @@ Dropdown.defaultProps = {
   urlField: "",
   selectAllField: false,
   isMultiSelect: false,
+  isSingleMutliSelect: false,
 };
 
 Dropdown.propTypes = {
@@ -159,6 +169,7 @@ Dropdown.propTypes = {
   isEditable: PropTypes.bool,
   includeAllKeys: PropTypes.bool,
   isMultiSelect: PropTypes.bool,
+  isSingleMutliSelect: PropTypes.bool,
   labelField: PropTypes.string,
   onChange: PropTypes.func,
   onDeleteSelectedItem: PropTypes.func,
@@ -172,6 +183,8 @@ Dropdown.propTypes = {
   valueField: PropTypes.string,
   urlField: PropTypes.string,
   selectAllField: PropTypes.bool,
+  onChangeDropDownText: PropTypes.func,
+  customHandleBlur: PropTypes.func,
 };
 
 export default Dropdown;
