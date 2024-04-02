@@ -68,14 +68,24 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
   }
 
   const getMembershipDetailsPayload = () => {
+    const isFellowMember = getUpdatedValue(state?.is_fellow_member)
+    const isPractising = getUpdatedValue(state?.is_practising)
     const payload = {
       membership_enrollment_date:  formatDateToYYYYMMDD(state?.membership_enrollment_date),
-      is_fellow_member: !state?.is_fellow_member,
-      fellow_member_admission_date: !state?.is_fellow_member ? formatDateToYYYYMMDD(state?.fellow_member_admission_date) : "",
-      is_practising: !state?.is_practising,
-      practising_start_date: !state?.is_practising ? formatDateToYYYYMMDD(state?.practising_start_date) : "",
+      is_fellow_member: isFellowMember,
+      fellow_member_admission_date: isFellowMember ? formatDateToYYYYMMDD(state?.fellow_member_admission_date) : "",
+      is_practising: isPractising,
+      practising_start_date: isPractising ? formatDateToYYYYMMDD(state?.practising_start_date) : "",
     }
     return payload;
+  }
+
+  const getUpdatedValue = (value) => {
+    if (typeof value === 'boolean'){
+      return value
+    } else {
+      return !value
+    }
   }
 
   return (
