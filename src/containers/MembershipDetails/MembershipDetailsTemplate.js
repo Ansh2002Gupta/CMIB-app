@@ -6,6 +6,9 @@ import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton";
 import style from './MembershipDetails.style';
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import Spinner from "../../components/Spinner";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { STATUS_CODES } from "../../constants/constants";
 
 const MembershipDetailsTemplate = ({
   isEditable = true,
@@ -22,8 +25,23 @@ const MembershipDetailsTemplate = ({
   isValidAllFields,
   error,
   setError,
+  isLoadingPage,
+  isErrorLoadingPage
 }) => {
   const intl = useIntl();
+
+  if (
+    isLoadingPage) {
+    return (
+      <View style={style.loaderStyle}>
+        <Spinner />
+      </View>
+    );
+  }
+
+  if (isErrorLoadingPage && isErrorLoadingPage?.code !== STATUS_CODES.UNAUTHORIZED_USER) {
+    return <ErrorComponent errorMsg={isErrorLoadingPage.message} />;
+  }
 
   return (
     <>

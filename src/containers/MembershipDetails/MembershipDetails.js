@@ -9,7 +9,7 @@ import { useMembershipDetails } from "./controller/useMembershipDetails";
 import { formatDateToYYYYMMDD } from "../../utils/util";
 
 const MembershipDetails = ({isEditable, handleEdit}) => {
-  const { fetchData, data } = useFetch({
+  const { fetchData, data, isError: isErrorLoadingPage, isLoading: isLoadingPage } = useFetch({
    url: MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
   });
   const { handleUpdate, isError, isLoading, error, setError } = useUpdateService(MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
@@ -90,6 +90,8 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
       isValidAllFields={isValidAllFields}
       isLoading={isLoading}
       isError={isError}
+      isLoadingPage={isLoadingPage}
+      isErrorLoadingPage={isErrorLoadingPage}
       error={error}
       setError={setError}
       isEditable={isEditable}
