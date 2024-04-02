@@ -52,16 +52,14 @@ const CustomToggleComponent = ({
         <TouchableOpacity
           style={{
             ...styles.yesButtonStyle,
-            ...(selectedToggleOption === 0 ? styles.activeButtonStyle : null),
+            ...(value === 1 ? styles.activeButtonStyle : null),
           }}
-          onPress={() => handleOptionSelect(0)}
+          onPress={() => handleOptionSelect(1)}
         >
           <View
             style={{
               ...styles.buttonViewStyle,
-              ...(selectedToggleOption === 0
-                ? styles.activeButtonViewStyle
-                : null),
+              ...(value === 1 ? styles.activeButtonViewStyle : null),
             }}
           />
         </TouchableOpacity>
@@ -75,16 +73,14 @@ const CustomToggleComponent = ({
         <TouchableOpacity
           style={{
             ...styles.noButtonStyle,
-            ...(selectedToggleOption === 1 ? styles.activeButtonStyle : null),
+            ...(value === 0 ? styles.activeButtonStyle : null),
           }}
-          onPress={() => handleOptionSelect(1)}
+          onPress={() => handleOptionSelect(0)}
         >
           <View
             style={{
               ...styles.buttonViewStyle,
-              ...(selectedToggleOption === 1
-                ? styles.activeButtonViewStyle
-                : null),
+              ...(value === 0 ? styles.activeButtonViewStyle : null),
             }}
           />
         </TouchableOpacity>

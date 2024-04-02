@@ -468,6 +468,13 @@ const locale = {
   "label.job_profile": "Job Profile",
   "label.job_seekers": "Job Seekers",
   "label.search_by_candidate_name_or_id": "Search by candidate name or ID",
+  "label.category": "Category",
+  "label.accessibility_information": "Accessibility Information",
+  "label.has_disability": "Do you have any physical impairment?",
+  "label.handicap_description": "Handicapped Description",
+  "label.handicap_percentage": "Handicapped %",
+  "toggle.1": "Yes",
+  "toggle.0": "No",
 };
 
 export default locale;
