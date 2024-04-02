@@ -53,7 +53,7 @@ const WorkExperienceTemplate = ({
                 workExperiences,
                 index
               )}
-              handleBlur={handleWorkExperienceDetailBlur}
+              handleBlur={handleWorkExperienceDetailBlur(index)}
               isShowCancel={
                 workExperiences.length > 1 && index > 0 ? true : false
               }

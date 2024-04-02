@@ -80,6 +80,7 @@ export const useWorkExperience = ({
   functionalAreas,
   industryTypes,
   formError,
+  currentStatusError,
 }) => {
   const intl = useIntl();
   const [selectAreaOfInterest, setSelectAreaOfInterest] = useState([
@@ -252,7 +253,7 @@ export const useWorkExperience = ({
             options: BOOLEAN_OPTION,
             placeholder: "label.haveAnyWorkExperience",
             validate: (value) => {
-              if (!value) {
+              if (value.length === 0) {
                 return "Work experience is required";
               }
             },
@@ -270,7 +271,7 @@ export const useWorkExperience = ({
         label: "label.current_specialisation",
         placeholder: "label.current_specialisation",
         validate: (value) => {
-          if (!value) {
+          if (value.length === 0) {
             return "Current specialisation is required";
           }
         },
@@ -303,7 +304,7 @@ export const useWorkExperience = ({
         isSingleMutliSelect: true,
         options: [],
         validate: (value) => {
-          if (!value) {
+          if (value.length === 0) {
             return "Current industry specialisation is required";
           }
         },
@@ -331,9 +332,11 @@ export const useWorkExperience = ({
   const current_status_data = useMemo(() => {
     return current_status.map((row) => {
       return row.map((data) => {
+        const prevError = currentStatusError?.[data.key];
         if (data.key === "functional_areas_specialisation") {
           return {
             ...data,
+            error: prevError,
             options: functionalAreas?.map((area) => {
               return createModuleOptions(
                 area,
@@ -345,6 +348,7 @@ export const useWorkExperience = ({
         if (data.key === "industry_specialisation") {
           return {
             ...data,
+            error: prevError,
             options: industryTypes?.map((area) => {
               return createModuleOptions(area, state.industry_specialisation);
             }),
@@ -354,7 +358,7 @@ export const useWorkExperience = ({
         return data;
       });
     });
-  }, [state, isEditable]);
+  }, [state, isEditable, currentStatusError]);
 
   const workExperiencs_data = useMemo(() => {
     let initailWorkExperienceArr = [];
@@ -372,7 +376,7 @@ export const useWorkExperience = ({
 
     return work_experience_template.map((work, index) => {
       return work?.map((fields) => {
-        let prevError = formError?.[`${index}:${fields.key}`];
+        let prevError = formError[index]?.[fields.key];
 
         if (fields.key === "areas_of_work") {
           return {
@@ -491,6 +495,14 @@ export const useWorkExperience = ({
               state.work_experiences?.[index]?.[fields.key].length === 0)
           )
             error = true;
+        }
+      });
+    });
+
+    current_status_state.map((row) => {
+      return row.map((data) => {
+        if (data && data?.isMandatory && state?.[data.key]?.length === 0) {
+          error = true;
         }
       });
     });

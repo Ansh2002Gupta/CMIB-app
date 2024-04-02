@@ -16,7 +16,10 @@ import {
 } from "./controller/useWorkExperience";
 import { formatDate, yesNoToBoolean } from "../../utils/util";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
-import { validateFields } from "./controller/WorkExperienceUtils";
+import {
+  validateCurrentStatus,
+  validateFields,
+} from "./controller/WorkExperienceUtils";
 
 const workExperienceKeys = () => ({
   haveWorkExperience: null,
@@ -46,7 +49,8 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
   const { handleUpdate, isError, isLoading, error, setError } =
     useUpdateService(MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE);
 
-  const [formFieldsError, setFormFieldsError] = useState({});
+  const [formFieldsError, setFormFieldsError] = useState([]);
+  const [currentStatusError, setCurrentStatusError] = useState({});
 
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? {} : {}
@@ -66,18 +70,20 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
   } = useWorkExperience({
     state: state,
     formError: formFieldsError,
+    currentStatusError,
     isEditable,
     functionalAreas,
     industryTypes,
   });
 
-  const handleWorkExperienceDetailBlur = (key, index) => {
+  const handleWorkExperienceDetailBlur = (index) => (key) => {
     validateFields(
       workExperiences,
       setWorkExperiences,
       formFieldsError,
       setFormFieldsError,
-      key
+      key,
+      index
     );
   };
 
@@ -97,6 +103,10 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
             return v;
           })
         : [{ ...workExperienceKeys() }];
+
+    setFormFieldsError([
+      new Array(workExperienceData.length).fill(0).map(() => ({})),
+    ]);
     setState({
       ...data,
       work_experiences: workExperienceData,
@@ -126,6 +136,8 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
     } else {
       state?.[detail.key].push(value);
     }
+
+    setCurrentStatusError({ ...currentStatusError, [`${detail.key}`]: null });
     setState({ ...state });
   };
 
@@ -139,13 +151,15 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
           [key]: value,
         },
       ];
+      setFormFieldsError([{}]);
     } else {
       state.work_experiences[index] = {
         ...state.work_experiences[index],
         [key]: value,
       };
+      formFieldsError[index] = { ...formFieldsError[index], [key]: null };
+      setFormFieldsError([...formFieldsError]);
     }
-    setFormFieldsError({ ...formFieldsError, [`${index}:${key}`]: null });
 
     setState({ ...state });
   };
@@ -171,15 +185,25 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
   const handleCancelPress = (index) => {
     state.work_experiences.splice(index, 1);
     setState({ ...state });
+
+    formFieldsError.splice(index, 1);
+    setFormFieldsError([...formFieldsError]);
   };
 
   const handleSave = () => {
+    //check both work experience and current status validation
     if (
       validateFields(
         workExperiences,
         setWorkExperiences,
         formFieldsError,
         setFormFieldsError
+      ) &&
+      validateCurrentStatus(
+        current_status,
+        setCurrentStatusState,
+        currentStatusError,
+        setCurrentStatusError
       )
     ) {
       let body = { ...state };
