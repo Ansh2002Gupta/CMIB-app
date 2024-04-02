@@ -30,10 +30,17 @@ const style = {
     backgroundColor: "transparent",
   },
   addButtonStyle: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   customTextStyle: {
     fontSize: 14,
+  },
+  loaderStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.backgroundColor,
   },
 };
 

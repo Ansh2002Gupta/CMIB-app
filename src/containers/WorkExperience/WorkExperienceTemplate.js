@@ -8,6 +8,9 @@ import CustomButton from "../../components/CustomButton";
 import images from "../../images";
 import style from "./WorkExperience.style";
 import { yesNoToBoolean } from "../../utils/util";
+import Spinner from "../../components/Spinner";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { STATUS_CODES } from "../../constants/constants";
 
 const WorkExperienceTemplate = ({
   isEditable = true,
@@ -29,9 +32,22 @@ const WorkExperienceTemplate = ({
   handleCurrentIndustrySpecialisationSelection,
   addMoreWorkExperience,
   handleCancelPress,
+  isPageLoading,
+  error,
 }) => {
   const intl = useIntl();
 
+  if (isPageLoading) {
+    return (
+      <View style={style.loaderStyle}>
+        <Spinner />
+      </View>
+    );
+  }
+
+  if (error && error?.code !== STATUS_CODES.UNAUTHORIZED_USER) {
+    return <ErrorComponent errorMsg={error.message} />;
+  }
 
   return (
     <ScrollView

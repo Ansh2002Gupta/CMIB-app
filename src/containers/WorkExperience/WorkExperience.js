@@ -36,13 +36,29 @@ const workExperienceKeys = () => ({
 const WorkExperience = ({ isEditable, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
-  const { data, fetchData } = useFetch({
+
+  const {
+    data,
+    fetchData,
+    isLoading: workExperienceIsLoading,
+    error: workExperienceError,
+  } = useFetch({
     url: MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE,
   });
-  const { data: functionalAreas } = useFetch({
+
+  const {
+    data: functionalAreas,
+    isLoading: functionalAreasIsLoading,
+    error: functionalAreasError,
+  } = useFetch({
     url: FUNCTION_AREAS,
   });
-  const { data: industryTypes } = useFetch({
+
+  const {
+    data: industryTypes,
+    isLoading: industryTypesIsLoading,
+    error: industryTypesError,
+  } = useFetch({
     url: INDUSTRY_TYPES,
   });
 
@@ -233,6 +249,16 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
     setError("");
   };
 
+  const isPageLoading =
+    workExperienceIsLoading ||
+    functionalAreasIsLoading ||
+    industryTypesIsLoading;
+
+  const fetchDataError =
+    workExperienceError?.data ||
+    functionalAreasError?.data ||
+    industryTypesError?.data;
+
   return (
     <>
       <WorkExperienceTemplate
@@ -260,6 +286,8 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
           handleEdit(false);
           updateFormattedData(data);
         }}
+        isPageLoading={isPageLoading}
+        error={fetchDataError}
       />
       {!!error && (
         <ToastComponent toastMessage={error} onDismiss={handleDismissToast} />
