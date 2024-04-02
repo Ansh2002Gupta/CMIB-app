@@ -210,10 +210,13 @@ const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
 const iconDownloading = appendAppBaseURl("/images/downloadIcon/download.png");
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
+const iconTickCircle = appendAppBaseURl("/images/svg/tick-circle.svg");
+const iconLineArrowDown = appendAppBaseURl("/images/svg/arrow-down.svg");
 const iconAppliedJobs = appendAppBaseURl("/images/svg/iconAppliedJobs.svg");
 const iconAppliedJobsActiveJobs = appendAppBaseURl(
   "/images/svg/iconAppliedJobsActiveJobs.svg"
 );
+
 const images = {
   iconArrowUp,
   iconArrowDown,
@@ -364,6 +367,8 @@ const images = {
   dotIcon,
   iconDownloading,
   iconError,
+  iconTickCircle,
+  iconLineArrowDown,
   iconAppliedJobs,
   iconAppliedJobsActiveJobs,
 };

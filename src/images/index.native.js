@@ -131,6 +131,7 @@ import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 import dotIcon from "../../public/images/dotIcon/dot.png";
 import iconDownloading from "../../public/images/downloadIcon/download.png";
 import iconError from "../../public/images/svg/iconError.svg";
+import iconTickCircle from "../../public/images/svg/tick-circle.svg";
 import iconAppliedJobs from "../../public/images/svg/iconAppliedJobs.svg";
 import iconAppliedJobsActiveJobs from "../../public/images/svg/iconAppliedJobsActiveJobs.svg";
 
@@ -268,6 +269,7 @@ const images = {
   dotIcon,
   iconDownloading,
   iconError,
+  iconTickCircle,
   iconAppliedJobs,
   iconAppliedJobsActiveJobs,
 };
