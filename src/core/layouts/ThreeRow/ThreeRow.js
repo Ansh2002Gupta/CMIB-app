@@ -1,6 +1,6 @@
-import React from 'react';
-import BaseLayout from '../Base';
-import layoutStyle from './threeRow.style';
+import React from "react";
+import BaseLayout from "../Base";
+import layoutStyle from "./threeRow.style";
 
 function ThreeRow({
   style,
@@ -8,16 +8,25 @@ function ThreeRow({
   middleSectionStyle,
   bottomSectionStyle,
   topSection,
+  isTopFillSpace,
+  isMiddleFillSpace,
+  isBottomFillSpace,
   middleSection,
   bottomSection,
 }) {
   return (
-    <BaseLayout style={{...layoutStyle, ...style}}>
-      {({Row}) => (
+    <BaseLayout style={{ ...layoutStyle, ...style }}>
+      {({ Row }) => (
         <>
-          <Row style={topSectionStyle}>{topSection}</Row>
-          <Row style={middleSectionStyle}>{middleSection}</Row>
-          <Row style={bottomSectionStyle}>{bottomSection}</Row>
+          <Row isFillSpace={isTopFillSpace} style={topSectionStyle}>
+            {topSection}
+          </Row>
+          <Row isFillSpace={isMiddleFillSpace} style={middleSectionStyle}>
+            {middleSection}
+          </Row>
+          <Row isFillSpace={isBottomFillSpace} style={bottomSectionStyle}>
+            {bottomSection}
+          </Row>
         </>
       )}
     </BaseLayout>
@@ -27,6 +36,9 @@ function ThreeRow({
 ThreeRow.defaultProps = {
   style: {},
   topSectionStyle: {},
+  isTopFillSpace: false,
+  isMiddleFillSpace: false,
+  isBottomFillSpace: false,
   middleSectionStyle: {},
   bottomSectionStyle: {},
 };

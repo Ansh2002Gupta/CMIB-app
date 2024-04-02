@@ -51,6 +51,7 @@ const CustomTextInput = (props) => {
     inputKey,
     isCounterInput,
     isDropdown,
+    isCalendar,
     isEditable,
     isError,
     isMandatory,
@@ -69,28 +70,31 @@ const CustomTextInput = (props) => {
     indexField,
     indexNumber,
     initiateFileUpload,
+    includeAllKeys,
     label,
     showLabel,
+    label2,
     maxCount,
     maxLength,
     minCount,
+    menuOptions,
+    minDate,
+    maxDate,
     options,
     onChangeValue,
     onClickAttachement,
     onClickSend,
     onIconClose,
+    onChangeDropDownText,
     placeholder,
     step,
     selectedItems,
     setFile,
+    selectAllField,
     value,
     labelField,
     valueField,
     urlField,
-    menuOptions,
-    isCalendar,
-    maxDate,
-    minDate,
     format,
     isCheckBoxSelection,
     checkBoxOptions,
@@ -177,12 +181,16 @@ const CustomTextInput = (props) => {
             search
             searchPlaceholder={intl.formatMessage({ id: "label.search" })}
             inputSearchStyle={style.searchStyle}
-            style={[
-              style.dropdown,
-              isFocused && style.focusedStyle,
-              isError && style.invalidInput,
-              dropdownStyle,
-            ]}
+            includeAllKeys={includeAllKeys}
+            customHandleBlur={customHandleBlur}
+            selectAllField={selectAllField}
+            onChangeDropDownText={onChangeDropDownText}
+            dropdownStyle={{
+              ...style.dropdown,
+              ...(isFocused ? style.focusedStyle : {},
+              isError ? style.invalidInput : {}),
+              ...dropdownStyle,
+            }}
             selectedTextStyle={style.valueStyle}
             renderRightIcon={() => <Image source={images.iconDownArrow} />}
             placeholderStyle={style.placeholderStyle}
@@ -222,13 +230,24 @@ const CustomTextInput = (props) => {
             labelField,
             onChangeValue,
             handleMultiSelect,
+            customHandleBlur,
             options,
+            includeAllKeys,
+            selectAllField,
             placeholder,
             selectedItems,
             urlField,
             value,
             valueField,
+            urlField,
+            onChangeDropDownText,
             isEditable,
+          }}
+          dropdownStyle={{
+            ...style.dropdown,
+            ...(isFocused ? style.focusedStyle : {},
+            isError ? style.invalidInput : {}),
+            ...dropdownStyle,
           }}
         />
       );
@@ -252,6 +271,7 @@ const CustomTextInput = (props) => {
           maxCount={maxCount}
           onCountChange={handleCountChange}
           step={step}
+          style={isError ? style.invalidInput : {}}
         />
       );
     }
@@ -260,10 +280,10 @@ const CustomTextInput = (props) => {
         <CustomToggleComponent
           isMandatory={isMandatory}
           customToggleStyle={style.customToggleStyle}
-          onChange={(item) => {
+          onValueChange={(item) => {
             onChangeValue(item);
           }}
-          selectedOption={ (typeof value === "boolean") && value === true ? 0 : 1}
+          value={ (typeof value === "boolean") && value === true ? 0 : 1}
         />
       );
     }
@@ -450,7 +470,16 @@ const CustomTextInput = (props) => {
         ...customStyle,
       }}
     >
-      {!!label && showLabel && <CustomLabelView label={label} isMandatory={isMandatory} />}
+      {!!label && showLabel && (
+        <View style={style.innerLabelContainer}>
+          <CustomLabelView label={label} isMandatory={isMandatory} />
+          {!!label2 && (
+            <CommonText customContainerStyle={style.marginRight10}>
+              {label2}
+            </CommonText>
+          )}
+        </View>
+      )}
       {renderTextInput()}
       {(isError || isMultiline) && (
         <View
@@ -505,8 +534,10 @@ CustomTextInput.defaultProps = {
   isPaddingNotRequired: false,
   isPassword: false,
   isSendButton: false,
+  includeAllKeys: false,
   initiateFileUpload: () => {},
   label: "",
+  label2: "",
   labelField: "label",
   maxCount: 100,
   minCount: 0,
@@ -530,7 +561,7 @@ CustomTextInput.defaultProps = {
   onChipUpdate: () => {},
   showLabel: true,
 };
-// Custom validator for Date objects
+
 const datePropType = (props, propName, componentName) => {
   if (props[propName] && !(props[propName] instanceof Date)) {
     return new Error(
@@ -568,8 +599,10 @@ CustomTextInput.propTypes = {
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
   isSendButton: PropTypes.bool,
+  includeAllKeys: PropTypes.bool,
   initiateFileUpload: PropTypes.func,
   label: PropTypes.string,
+  label2: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
   maxLength: PropTypes.number,
@@ -585,8 +618,8 @@ CustomTextInput.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.array,
     datePropType,
+    PropTypes.array,
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
