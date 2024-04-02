@@ -392,6 +392,14 @@ export const useWorkExperience = ({
           };
         }
 
+        //set minDate in to_date to from_date
+        if (fields?.key === "to_date") {
+          fields = {
+            ...fields,
+            minDate: state.work_experiences[index]?.from_date,
+          };
+        }
+
         return { ...fields, error: prevError };
       });
     });
