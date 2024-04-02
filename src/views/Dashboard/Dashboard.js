@@ -4,6 +4,7 @@ import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import styles from "./dashboard.style";
+import JobProfileTab from "../JobProfile";
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
