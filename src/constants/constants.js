@@ -241,6 +241,11 @@ export const POSTED_JOB_LISTING = {
   number_of_applications: "Applicants",
   approve: "Approved/Not Approved by Admin",
 };
+export const APPLICANT_LISTING = {
+  name: "Applicant Name",
+  applicant_id: "Applicant ID",
+  status: "Status",
+};
 
 export const FEEDBACK_TABLE_HEADING = {
   id: "Feedback ID",

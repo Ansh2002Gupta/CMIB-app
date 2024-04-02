@@ -21,6 +21,7 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessa
 import { useLocation, useNavigate } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 import ViewJobApplicants from "../../containers/ViewPostedJobDetails/ViewJobApplicants/ViewJobApplicants";
+import colors from "../../assets/colors";
 
 const ViewPostedJobDetails = () => {
   const navigate = useNavigate();
@@ -292,12 +293,12 @@ const ViewPostedJobDetails = () => {
       />
       <View style={styles.container}>
         <CustomTabs
-          containerStyle={{ backgroundColor: "white" }}
+          containerStyle={{ backgroundColor: colors.white }}
           tabs={[
             {
               label: intl.formatMessage({ id: "label.job_details" }),
               component: (
-                <View>
+                <View style={{ backgroundColor: colors.backgroundGrey }}>
                   {isConstantLoading || isLoading || loading ? (
                     <LoadingScreen />
                   ) : (

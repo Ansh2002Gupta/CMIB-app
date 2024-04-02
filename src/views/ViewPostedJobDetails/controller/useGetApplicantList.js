@@ -27,6 +27,8 @@ import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
 import colors from "../../../assets/colors";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import { items } from "../../../constants/sideBarHelpers";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -106,7 +108,6 @@ const useGetApplicantList = () => {
       actions: ["Download Profile and Resume", "View Details"],
     },
   ];
-  console.log("ticketListingData", postedJobData?.record);
 
   //   const { handleAddTicket } = useAddTicket();
 
@@ -129,6 +130,7 @@ const useGetApplicantList = () => {
       const initialData = await fetchDataTicketListing({
         queryParamsObject: requestedParams,
       });
+      setCurrentRecords(postedJobData);
       if (initialData && initialData?.records?.length > 0) {
         setCurrentRecords(postedJobData);
       }
@@ -243,8 +245,8 @@ const useGetApplicantList = () => {
     // });
   };
 
-  let headingTexts = ["job_id"];
-  let subHeadingText = ["designation"];
+  let headingTexts = ["name"];
+  let subHeadingText = ["applicant_id"];
   let statusText = ["status"];
   let tableIcon = images.iconTicket;
   let filterCategory = ["Active/Inactive", "Approved/Not Approved"];
@@ -274,6 +276,7 @@ const useGetApplicantList = () => {
   }
 
   const getColoumConfigs = (item, isHeading) => {
+    console.log("item", item);
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
@@ -281,22 +284,22 @@ const useGetApplicantList = () => {
       {
         content: (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item?.job_id ?? "-"}
+            {item?.name ?? "-"}
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("16%"),
+          ...commonStyles.columnStyle("40%"),
           ...styles.justifyContentCenter,
         }, // isFillSpace: true,
       },
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item?.designation ?? "-"}
+            {item?.applicant_id ?? "-"}
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("14%"),
+          ...commonStyles.columnStyle("33%"),
           ...styles.justifyContentCenter,
         }, // isFillSpace: true,
       },
@@ -307,64 +310,14 @@ const useGetApplicantList = () => {
               ...tableStyle,
               ...(!isHeading && { color: colors.darkBlue }),
             }}
-            isunderLine={!isHeading}
             fontWeight={!isHeading && 600}
             underLineStyle={styles.underLineStyle}
           >
-            {item?.number_of_applications ?? "-"}
+            {item?.status ?? "-"}
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("13%"),
-          ...styles.justifyContentCenter,
-        },
-      },
-
-      {
-        content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-              ...(!isHeading && { color: colors.darkBlue }),
-            }}
-            isunderLine={!isHeading}
-            fontWeight={!isHeading && 600}
-            underLineStyle={styles.underLineStyle}
-          >
-            {item?.number_of_interviews ?? "-"}
-          </CommonText>
-        ),
-        style: {
-          ...commonStyles.columnStyle("13%"),
-          ...styles.justifyContentCenter,
-        },
-      },
-
-      {
-        content: (
-          <View style={styles.statusStyle}>
-            {isHeading ? (
-              <CommonText
-                customTextStyle={{
-                  ...tableStyle,
-                }}
-              >
-                {item?.status ?? "-"}
-              </CommonText>
-            ) : (
-              <Chip
-                label={
-                  item.status == 1 ? statusData[0].name : statusData[1].name
-                }
-                style={{
-                  ...getStatusStyle(item.status),
-                }}
-              />
-            )}
-          </View>
-        ),
-        style: {
-          ...commonStyles.columnStyle("14%"),
+          ...commonStyles.columnStyle("20%"),
           ...styles.justifyContentCenter,
         },
       },
@@ -372,57 +325,11 @@ const useGetApplicantList = () => {
       {
         content: (
           <View>
-            {isHeading ? (
-              <CommonText customTextStyle={tableStyle}>
-                {item?.approve ?? "-"}
-              </CommonText>
-            ) : (
-              <CommonText customTextStyle={tableStyle}>
-                {item?.approve == 0
-                  ? queryTypeData[0].name
-                  : queryTypeData[1].name ?? "-"}
-              </CommonText>
-            )}
+            {!isHeading && <PopupMessage popUpArray={item?.actions} />}
           </View>
         ),
         style: {
-          ...commonStyles.columnStyle("15%"),
-          ...styles.justifyContentCenter,
-        }, // isFillSpace: true,
-      },
-      {
-        content: (
-          <View>
-            {!isHeading && (
-              <TouchableImage
-                onPress={() => {
-                  //   onViewPress && onViewPress(item);
-                }}
-                source={images.iconEye}
-              />
-            )}
-          </View>
-        ),
-        style: {
-          ...commonStyles.columnStyle("5%"),
-          ...styles.justifyContentCenter,
-        },
-      },
-      {
-        content: (
-          <View>
-            {!isHeading && (
-              <TouchableImage
-                onPress={() => {
-                  //   onEditPress && onEditPress(item);
-                }}
-                source={images.iconEdit}
-              />
-            )}
-          </View>
-        ),
-        style: {
-          ...commonStyles.columnStyle("5%"),
+          ...commonStyles.columnStyle("20%"),
           ...styles.justifyContentCenter,
         },
       },

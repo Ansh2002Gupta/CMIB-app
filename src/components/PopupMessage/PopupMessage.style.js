@@ -15,8 +15,31 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderRadius: 8,
   },
+  containerStyle: {
+    flexDirection: "row",
+    height: 20,
+    width: 20,
+  },
+  popUpArrayView: {
+    position: "absolute",
+    right: 8,
+    top: -50,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    borderRadius: 8,
+    maxHeight: 150,
+  },
   deletetext: {
     fontSize: 14,
+  },
+  popUpComponentStyle: {
+    backgroundColor: colors.white,
+    zIndex: 10,
+    padding: 16,
+    width: 240,
+    height: 54,
+    borderColor: colors.lightGrey,
+    borderRadius: 8,
   },
 });
 

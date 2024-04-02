@@ -11,6 +11,12 @@ import CustomTable from "../../../components/CustomTable";
 import DownloadMoreComponent from "../../PostedJobs/DownloadMoreComponent";
 import images from "../../../images";
 import useGetApplicantList from "../../../views/ViewPostedJobDetails/controller/useGetApplicantList";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import TouchableImage from "../../../components/TouchableImage";
+import {
+  ROWS_PER_PAGE_ARRAY as rowsLimit,
+  APPLICANT_LISTING as tableHeading,
+} from "../../../constants/constants";
 const ViewJobApplicants = () => {
   const intl = useIntl();
   const onEditPress = (item) => {
@@ -56,7 +62,6 @@ const ViewJobApplicants = () => {
     postedJobData,
     totalcards,
     rowsLimit,
-    tableHeading,
   } = useGetApplicantList();
 
   const navigate = useNavigate();
@@ -92,6 +97,7 @@ const ViewJobApplicants = () => {
         handleTicketModal,
         handleLoadMore,
         getErrorDetails,
+        tableHeading,
         isErrorGetPostedJob,
         handlePageChange,
         handleRowPerPageChange,
