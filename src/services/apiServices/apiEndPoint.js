@@ -25,6 +25,8 @@ export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
 export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
+export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`;
+export const COMPANY_INIT_PAYMENT = `${CORE}/payments/init-payment`;
 
 /* API Endpoints Members*/
 export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;

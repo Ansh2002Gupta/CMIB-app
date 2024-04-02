@@ -200,6 +200,8 @@ const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
+const iconTickCircle = appendAppBaseURl("/images/svg/tick-circle.svg");
+const iconLineArrowDown = appendAppBaseURl("/images/svg/arrow-down.svg");
 
 const images = {
   iconArrowUp,
@@ -344,6 +346,8 @@ const images = {
   iconLoading,
   iconGreyCross,
   iconError,
+  iconTickCircle,
+  iconLineArrowDown,
 };
 
 export default images;
