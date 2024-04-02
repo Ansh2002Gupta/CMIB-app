@@ -125,6 +125,8 @@ import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 import iconError from "../../public/images/svg/iconError.svg";
+import pdfIcon from "../../public/images/svg/pdfIcon.svg";
+import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
 
 const images = {
   iconArrowUp,
@@ -254,6 +256,8 @@ const images = {
   iconLoading,
   iconGreyCross,
   iconError,
+  pdfIcon,
+  rightDiagonalArrow,
 };
 
 export default images;

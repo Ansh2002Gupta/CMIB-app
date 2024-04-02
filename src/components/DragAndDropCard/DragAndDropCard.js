@@ -22,6 +22,7 @@ const DragAndDropCard = ({
   handleDragOver,
   handleDrop,
   handleUploadClick,
+  isDocumentUpload,
   isLoading,
   uploadPercentage,
 }) => {
@@ -45,6 +46,13 @@ const DragAndDropCard = ({
         : {}),
     };
   }
+
+  const getAcceptedFiles = () => {
+    if (isDocumentUpload) {
+      return ".pdf";
+    }
+    return "image/png, image/jpeg, image/svg, image/eps";
+  };
 
   return (
     <>
@@ -75,7 +83,9 @@ const DragAndDropCard = ({
             </TouchableOpacity>
           </View>
           <CommonText customTextStyle={styles.infoStyle}>
-            {intl.formatMessage({ id: "label.supported_type" })}
+            {isDocumentUpload
+              ? intl.formatMessage({ id: "label.supported_document" })
+              : intl.formatMessage({ id: "label.supported_type" })}
           </CommonText>
           {!!errorMessage && (
             <CommonText
@@ -93,7 +103,7 @@ const DragAndDropCard = ({
               type="file"
               ref={fileInputRef}
               name="fileUpload"
-              accept="image/png, image/jpeg, image/svg, image/eps"
+              accept={getAcceptedFiles()}
               onChange={(event) => fileUploadHandler(event)}
               style={styles.hideRawInputField}
             />
@@ -122,6 +132,7 @@ DragAndDropCard.propTypes = {
   handleDragOver: PropTypes.func,
   handleDrop: PropTypes.func,
   handleUploadClick: PropTypes.func,
+  isDocumentUpload: PropTypes.bool,
   isLoading: PropTypes.bool,
   uploadPercentage: PropTypes.number,
 };

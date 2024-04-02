@@ -6,11 +6,14 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
+import PdfCard from "../PdfCard/PdfCard";
 import images from "../../images";
 import styles from "./PreviewImage.style";
 
 const PreviewImage = ({
   hideIconDelete,
+  fileUrl,
+  isDocumentUpload,
   isEditable,
   onRemoveImage,
   source,
@@ -23,7 +26,11 @@ const PreviewImage = ({
       ]}
     >
       <View style={styles.imageContainer}>
-        <Image source={source} style={styles.selectedImageStyle} />
+        {isDocumentUpload ? (
+          <PdfCard pdfUrl={fileUrl} />
+        ) : (
+          <Image source={source} style={styles.selectedImageStyle} />
+        )}
       </View>
       {!hideIconDelete && (
         <View style={styles.innerContainer}>
@@ -45,6 +52,8 @@ PreviewImage.defaultProps = {
 
 PreviewImage.propTypes = {
   hideIconDelete: PropTypes.bool,
+  fileUrl: PropTypes.string,
+  isDocumentUpload: PropTypes.bool,
   isEditable: PropTypes.bool,
   onRemoveImage: PropTypes.func,
   source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

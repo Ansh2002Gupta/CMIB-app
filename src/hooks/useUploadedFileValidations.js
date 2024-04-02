@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { IMAGE_MAX_SIZE, TOAST_TIMEOUT } from "../constants/constants";
-import { IMAGE_ACCEPTABLE_FORMAT_REGEX } from "../constants/Regex";
+import {
+  DOCUMENT_ACCEPTABLE_FORMAT_REGEX,
+  IMAGE_ACCEPTABLE_FORMAT_REGEX,
+} from "../constants/Regex";
 import { getImageSource } from "../utils/util";
 
-const useUploadedFileValidations = () => {
+const useUploadedFileValidations = ({ isDocumentUpload }) => {
   const intl = useIntl();
 
   const [fileTooLargeError, setFileTooLargeError] = useState("");
@@ -32,12 +35,21 @@ const useUploadedFileValidations = () => {
     setInvalidFormatError("");
     setNonUploadableImageError("");
     const imageMimeType = IMAGE_ACCEPTABLE_FORMAT_REGEX;
+    const documentMimeType = DOCUMENT_ACCEPTABLE_FORMAT_REGEX;
     if (uploadedFile) {
-      if (!uploadedFile.type.match(imageMimeType)) {
+      if (
+        !uploadedFile.type.match(
+          isDocumentUpload ? documentMimeType : imageMimeType
+        )
+      ) {
         setInvalidFormatError(
-          intl.formatMessage({
-            id: "label.allowedFileFormatsError",
-          })
+          isDocumentUpload
+            ? intl.formatMessage({
+                id: "label.allowedDocumentFormatsError",
+              })
+            : intl.formatMessage({
+                id: "label.allowedFileFormatsError",
+              })
         );
         resetUploadInput && resetUploadInput();
         return;
@@ -47,6 +59,10 @@ const useUploadedFileValidations = () => {
           intl.formatMessage({ id: "label.fileTooLargeError" })
         );
         resetUploadInput && resetUploadInput();
+        return;
+      }
+      if (isDocumentUpload) {
+        onLoad && onLoad({ uploadedFile });
         return;
       }
       const img = document.createElement("img");

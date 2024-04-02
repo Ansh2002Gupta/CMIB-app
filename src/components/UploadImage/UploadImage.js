@@ -12,6 +12,7 @@ const UploadImage = ({
   fileUploadResult,
   handleFileUpload,
   hideIconDelete,
+  isDocumentUpload,
   isUploadingImageToServer,
   onDeleteImage,
   openCropViewAfterImageSelection,
@@ -28,7 +29,7 @@ const UploadImage = ({
     fileTooLargeError,
     initiateFileUpload,
     invalidFormatError,
-  } = useUploadedFileValidations();
+  } = useUploadedFileValidations({ isDocumentUpload });
 
   const imageUploadedToServer = fileUploadResult?.data;
 
@@ -99,6 +100,8 @@ const UploadImage = ({
             {...{
               fileName: imageUploadedToServer?.["file_name"] || "",
               hideIconDelete,
+              fileUrl: imageUploadedToServer?.["url"] || "",
+              isDocumentUpload,
               onRemoveImage: handleDeleteImage,
               source: imageUploadedToServer?.url || "",
             }}
@@ -117,6 +120,7 @@ const UploadImage = ({
             handleDragOver,
             handleDrop,
             handleUploadClick,
+            isDocumentUpload,
             isLoading: isUploadingImageToServer,
             uploadPercentage,
           }}
@@ -130,6 +134,7 @@ UploadImage.defaultProps = {
   errorWhileUpload: "",
   fileUploadResult: {},
   handleFileUpload: () => {},
+  isDocumentUpload: false,
   isUploadingImageToServer: false,
   onDeleteImage: () => {},
   openCropViewAfterImageSelection: false,
@@ -142,6 +147,7 @@ UploadImage.propTypes = {
   fileUploadResult: PropTypes.object,
   handleFileUpload: PropTypes.func,
   hideIconDelete: PropTypes.bool,
+  isDocumentUpload: PropTypes.bool,
   isUploadingImageToServer: PropTypes.bool,
   onDeleteImage: PropTypes.func,
   openCropViewAfterImageSelection: PropTypes.bool,

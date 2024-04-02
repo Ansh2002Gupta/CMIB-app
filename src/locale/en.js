@@ -88,6 +88,7 @@ const locale = {
   "label.drag_drop_files": "Drag & drop files or",
   "label.browse": "Browse",
   "label.supported_type": "Supported formats: JPEG, PNG, SVG",
+  "label.supported_document": "Supported formats: PDF",
   "label.signup_success": "Thank You for Signing Up!",
   "label.signup_info":
     "Your application has been submitted for approval. You will receive a confirmation email once it is processed by CMI&B admin.",
@@ -198,6 +199,7 @@ const locale = {
   "label.times": "times!",
   "label.fileTooLargeError": "Uploaded file must be less than 5MB",
   "label.allowedFileFormatsError": "Only JPEG, PNG, SVG formats are allowed",
+  "label.allowedDocumentFormatsError": "Only PDF format is allowed",
   "label.nonUploadableImageError":
     "Failed to upload this file, please try uploading a different image",
   "label.description": "Description",
@@ -389,6 +391,7 @@ const locale = {
     "Please login using your updated email and password that you have received on your updated email.",
   "label.session_has_expired": "Your session has been expired.",
   "label.your_access_has_been_revoked": "Your access has been revoked.",
+  "label.viewPdf": "View pdf",
 };
 
 export default locale;
