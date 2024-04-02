@@ -15,6 +15,7 @@ const SearchView = ({
   data,
   onSearch,
   placeholder,
+  onChangeDropDownText,
 }) => {
   const SearchIcon = images.iconSearch;
   const ClearIcon = images.iconCross;
@@ -35,18 +36,25 @@ const SearchView = ({
     if (text.length < 3) {
       return;
     }
+
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
     debounceTimeout.current = setTimeout(() => {
       let filtered = data;
-      const formattedQuery = text.toLowerCase();
-      if (customSearchCriteria) {
-        filtered = customSearchCriteria(formattedQuery);
-      } else {
-        filtered = data.filter((item) => {
-          return item.toLowerCase().includes(formattedQuery);
+      if (onChangeDropDownText) {
+        onChangeDropDownText(text).then((response) => {
+          filtered = response;
         });
+      } else {
+        const formattedQuery = text?.toLowerCase();
+        if (customSearchCriteria) {
+          filtered = customSearchCriteria(formattedQuery);
+        } else {
+          filtered = data.filter((item) => {
+            return item.toLowerCase().includes(formattedQuery);
+          });
+        }
       }
       if (onSearch) {
         onSearch(filtered);
@@ -57,6 +65,7 @@ const SearchView = ({
 
   const clearSearch = () => {
     setQuery("");
+    onChangeDropDownText && onChangeDropDownText("");
     onSearch(data);
     customSearchCriteria("");
   };
@@ -102,6 +111,7 @@ SearchView.propTypes = {
   ]),
   placeholder: PropTypes.string,
   onSearch: PropTypes.func,
+  onChangeDropDownText: PropTypes.func,
 };
 
 export default SearchView;
