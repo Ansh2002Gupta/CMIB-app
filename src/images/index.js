@@ -204,6 +204,8 @@ const iconDeleteRoundRed = appendAppBaseURl("/images/svg/iconDeleteRoundRed.svg"
 const iconCheckBoxRound = appendAppBaseURl("/images/svg/iconCheckBoxRound.svg")
 const iconUnCheckBoxRound = appendAppBaseURl("/images/svg/iconUnCheckBoxRound.svg")
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
+const iconTickGreen = appendAppBaseURl("/images/svg/iconTickGreen.svg");
+const iconCrossRed = appendAppBaseURl("/images/svg/iconCrossRed.svg");
 
 const images = {
   iconArrowUp,
@@ -352,6 +354,8 @@ const images = {
   iconCheckBoxRound,
   iconUnCheckBoxRound,
   iconError,
+  iconTickGreen,
+  iconCrossRed,
 };
 
 export default images;

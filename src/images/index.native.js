@@ -129,6 +129,8 @@ import iconDeleteRoundRed from "../../public/images/svg/iconDeleteRoundRed.svg"
 import iconCheckBoxRound from "../../public/images/svg/iconCheckBoxRound.svg"
 import iconUnCheckBoxRound from "../../public/images/svg/iconUnCheckBoxRound.svg"
 import iconError from "../../public/images/svg/iconError.svg";
+import iconTickGreen from "../../public/images/svg/iconTickGreen.svg";
+import iconCrossRed from "../../public/images/svg/iconCrossRed.svg";
 
 const images = {
   iconArrowUp,
@@ -262,6 +264,8 @@ const images = {
   iconCheckBoxRound,
   iconUnCheckBoxRound,
   iconError,
+  iconTickGreen,
+  iconCrossRed,
 };
 
 export default images;

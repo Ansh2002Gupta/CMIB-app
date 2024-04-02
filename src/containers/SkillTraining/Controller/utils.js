@@ -14,16 +14,16 @@ export const updateState = (state, formFields, skillKey, levelKey, skillLevelOpt
   
     if (state?.length > 0) {
         updatedState = state.map((item, index) => {
-        const isLastItem = index === state.length - 1;    
+        const isLastItem = index === state.length - 1; 
         let fields = formFields;
   
         let updatedFields = fields.map((field) => {
-          
+          const isSingleSelection = field.isSingleSelection
           if (field.key === skillKey) {
-            return { ...field, value: item.skill_name };
+            return { ...field, value: item.skill_name , showLabel: index === 0 ? true : false};
           }
           if (field.key === levelKey) {
-            return { ...field, value: item.level, isActionToAdd: isLastItem ? true : false, checkBoxOptions: updateSkillLevel(skillLevelOptions, item.level) };
+            return { ...field, value: isSingleSelection ? updateSingleSkillLevelValue(item.level) : item.level, showLabel: index === 0 ? true : false, isActionToAdd: isLastItem ? true : false, checkBoxOptions: updateSkillLevel(skillLevelOptions, item.level) };
           }
           return field;
         });
@@ -40,13 +40,21 @@ export const updateState = (state, formFields, skillKey, levelKey, skillLevelOpt
     return updatedState;
   };
 
+  const updateSingleSkillLevelValue = (valueArr) => {
+    if (valueArr?.length > 0) {
+       return capitalizeFirstLetter(valueArr[0])
+    }
+  };
+
+  function capitalizeFirstLetter(string) {
+    if (!string) return string; 
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   const updateSkillLevel = (skillLevelOptions, value) => {
     const updatedSkillLevelOptions = skillLevelOptions.map((level) => {
-      
-      if (level.value === value) {
-        return { ...level, isSelected: true };
-      }
-      return { ...level, isSelected: level.isSelected || false };
+      const isSelected = value.some(v => level.value === v || level.name === v);
+      return { ...level, isSelected };
     });
     return updatedSkillLevelOptions;
   };
@@ -77,3 +85,8 @@ export const updateState = (state, formFields, skillKey, levelKey, skillLevelOpt
     }
   }  
 
+  export const updateItemToAdd = (field) => {
+    return field.map(item => {
+      return {...item, showLabel: false}
+    })
+  }

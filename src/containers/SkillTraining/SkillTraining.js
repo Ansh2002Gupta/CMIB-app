@@ -80,13 +80,18 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
             skill_name = field?.value
          }
          else if (field.key === levelKey){
-          level = field.checkBoxOptions[1]?.value
-          //todo - need to add array of level in payload - need to update from backend first
+          level = getSelectedLevel(field.checkBoxOptions)
          }
       }) 
       skill_name && level && payload.push( {skill_name: skill_name, level: level }) 
     })
     return payload;
+  }
+  const getSelectedLevel = (checkBoxes) => {
+    const selectedLevel = checkBoxes
+      .filter(checkBox => checkBox.isSelected)
+      .map(checkBox => checkBox.name);
+    return selectedLevel;
   }
 
   return (

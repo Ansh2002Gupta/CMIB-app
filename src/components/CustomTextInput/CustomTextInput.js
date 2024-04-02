@@ -70,6 +70,7 @@ const CustomTextInput = (props) => {
     indexNumber,
     initiateFileUpload,
     label,
+    showLabel,
     maxCount,
     maxLength,
     minCount,
@@ -262,13 +263,14 @@ const CustomTextInput = (props) => {
           onChange={(item) => {
             onChangeValue(item);
           }}
-          selectedOption={value === true ? 0 : 1}
+          selectedOption={ (typeof value === "boolean") && value === true ? 0 : 1}
         />
       );
     }
     if (isCheckBoxSelection) {
       return (
         <CheckBoxSelection
+          isEditable={isEditable}
           checkBoxOptions={checkBoxOptions}
           customStyle={style.CheckBoxSelection}
           handleAddRemoveRow={(isActionToAdd) =>
@@ -448,7 +450,7 @@ const CustomTextInput = (props) => {
         ...customStyle,
       }}
     >
-      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
+      {!!label && showLabel && <CustomLabelView label={label} isMandatory={isMandatory} />}
       {renderTextInput()}
       {(isError || isMultiline) && (
         <View
@@ -526,6 +528,7 @@ CustomTextInput.defaultProps = {
   isSingleSelection: false,
   isTextInputWithChip: false,
   onChipUpdate: () => {},
+  showLabel: true,
 };
 // Custom validator for Date objects
 const datePropType = (props, propName, componentName) => {
@@ -595,6 +598,7 @@ CustomTextInput.propTypes = {
   isSingleSelection: PropTypes.bool,
   isTextInputWithChip: PropTypes.bool,
   onChipUpdate: PropTypes.func,
+  showLabel: PropTypes.bool
 };
 
 export default CustomTextInput;

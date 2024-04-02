@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { LANGUAGES, SKILLS } from "../../../services/apiServices/apiEndPoint";
 import useFetch from "../../../hooks/useFetch";
-import { SkillTraining_keys, getDropDownList, getSkills, updateState } from "./utils";
+import { SkillTraining_keys, getDropDownList, getSkills, updateItemToAdd, updateState } from "./utils";
 
 const languageSkill = [
   {
@@ -59,7 +59,7 @@ const languagesKnownField = (options) => [
     isDropdown: true,
     labelField: "name",
     valueField: "name",
-    options: options
+    options: options,
   },
   {
     key: SkillTraining_keys.LANGUAGE_SKILL,
@@ -195,7 +195,7 @@ export const useSkillTraining = ({ state, isEditable }) => {
           return { ...item, isActionToAdd: false }; 
         });
         dataToPerformAction[dataToPerformAction.length - 1] = updatedState;
-        stateToPerformAction((prevState) => [...prevState, itemToAdd]);
+        stateToPerformAction((prevState) => [...prevState, updateItemToAdd(itemToAdd)]);
       }
     } else {
       stateToPerformAction((prevState) => {
@@ -222,7 +222,7 @@ export const useSkillTraining = ({ state, isEditable }) => {
     return skill.map((item) => {
       if (item.key === key) {
         const updatedCheckBoxOptions = item.checkBoxOptions.map((checkBoxItem) => {
-          if (checkBoxItem.name === name) {
+          if (checkBoxItem.value === name) {
             return { ...checkBoxItem, isSelected: !checkBoxItem.isSelected};
           }
           if (isSingleSelection){
@@ -288,7 +288,7 @@ export const useSkillTraining = ({ state, isEditable }) => {
   }
 
   return {
-    isValidAllFields: checkMandatoryFields(), //miku
+    isValidAllFields: checkMandatoryFields(),
     languagesKnown: languagesKnownState,
     ITSkills: ITSkillsState,
     softSkills: softSkillsState,

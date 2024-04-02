@@ -160,6 +160,18 @@ const DetailComponent = ({
       );
     }
 
+    if (detail.isCheckBoxSelection && detail?.value !== "--") {
+      return (
+        <CheckBoxSelection
+          isEditable={isEditable}
+          checkBoxOptions={detail?.checkBoxOptions}
+          customStyle={styles.CheckBoxSelection}
+          isSingleSelection={detail?.isSingleSelection}
+          value={detail?.value}
+        />
+      );
+    }
+
     return (
       <CommonText
         customTextStyle={{
@@ -197,6 +209,7 @@ const DetailComponent = ({
           ...styles.getFieldWidth(detail.width, !isWebView),
         }}
         label={detail?.label && intl.formatMessage({ id: detail.label })}
+        showLabel={detail.showLabel}
         isDropdown={detail.isDropdown}
         isEditable={isInputDisable ? !isInputDisable : true}
         isCounterInput={detail.isCounterInput}
@@ -307,7 +320,7 @@ const DetailComponent = ({
                       }}
                     >
                       <View style={styles.titleContainer}>
-                        {columns.label ? (
+                        {columns.label && (columns.showLabel ?? true) ? (
                           <CommonText customTextStyle={styles.titleStyle}>
                             {intl.formatMessage({ id: columns.label })}
                           </CommonText>
