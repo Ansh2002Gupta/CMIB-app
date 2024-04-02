@@ -43,7 +43,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
   });
 
   const isNextDisabled = () => {
-    return !gstNumber || !panNumber || !tdsAmount || !tan;
+    return !gstNumber || !panNumber || !tdsAmount || !tan || Number(amount)<= Number(tdsAmount);
   };
 
   // const handleDismissToast = () => {
@@ -54,7 +54,15 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     if (isNextDisabled()) return;
 
     getpaymentInitialized({
-      body: { final_amt: finalAmount, subscription_id: subscriptionId },
+      body: {
+        final_amt: finalAmount,
+        subscription_id: subscriptionId,
+        pan: panNumber,
+        tan: tan,
+        po_number: PONumber,
+        address: address,
+        gstin: gstNumber,
+      },
       onErrorCallback: (errorMessage) => {
         console.log("Error", errorMessage);
         onPressCancel();
@@ -102,6 +110,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     );
   };
 
+
   const finalAmount = tdsAmount ? Number(amount) - Number(tdsAmount) : amount;
   const CREDIT_SCORE = 0;
 
@@ -115,7 +124,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         keyboardShouldPersistTaps="handled"
         {...isMobileProps}
       >
-        <View style={{ marginTop: 24, marginBottom: 24 }}>
+        <View style={styles.subscriptionCostContainer}>
           {renderAmountHeading("Subscription Cost", amount)}
         </View>
         <FiveColumn
@@ -128,6 +137,8 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
               onChangeText={(val) => {
                 setTdsAmount(val);
               }}
+              isError={Number(amount)<= Number(tdsAmount)}
+              errorMessage={Number(amount)<= Number(tdsAmount) ? "TDS/GTDS amount must be less than Subscription Cost" : ""}
               isMandatory
               isNumeric
             />
@@ -198,19 +209,18 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
           isError={!!error}
           errorMessage={error}
         />
-        <View
-          style={
-            {
-              // display: "grid",
-              // gridTemplateColumns: "1fr 1fr",
-            }
+        <TwoColumn
+          leftSection={
+            <View>{renderAmountHeading("Final Amount", finalAmount)}</View>
           }
-        >
-          {renderAmountHeading("Final Amount", finalAmount)}
-          {renderAmountHeading("Credit Score", CREDIT_SCORE)}
-          <View style={{ marginTop: 24 }}>
-            {renderAmountHeading("Amount to be Paid", finalAmount)}
-          </View>
+          rightSection={
+            <View>{renderAmountHeading("Credit Score", CREDIT_SCORE)}</View>
+          }
+          isLeftFillSpace
+          isRightFillSpace
+        />
+        <View style={{ marginTop: 24 }}>
+          {renderAmountHeading("Amount to be Paid", finalAmount)}
         </View>
       </ScrollView>
       <View style={isWebView ? styles.buttonWebStyle : {}}>
@@ -232,17 +242,6 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
           />
         </View>
       </View>
-      {/* {(errorWhileChangePassword || isSuccess) && (
-                <ToastComponent
-                    toastMessage={
-                        errorWhileChangePassword ||
-                        intl.formatMessage({
-                            id: "label.change_password_message",
-                        })
-                    }
-                    onDismiss={handleDismissToast}
-                />
-            )} */}
     </>
   );
 };

@@ -46,13 +46,10 @@ const style = {
   subContainerStyle: {
     width: "50%",
   },
-  // webView: {
-  //     requirementsPoints: (currentBreakpoint) => ({
-  //         display: "grid",
-  //         gridTemplateColumns: currentBreakpoint === "sm" ? "1fr" : "1fr 1fr",
-  //         gridRowGap: currentBreakpoint === "sm" ? 0 : 16,
-  //     }),
-  // },
+  subscriptionCostContainer: {
+    marginTop: 24,
+    marginBottom: 24
+  },
   erroInputStyleWeb: {
     paddingBottom: 6,
   },

@@ -6,7 +6,8 @@ import {
 
 import colors from "../../assets/colors";
 
-const { width: WIDTH } = Dimensions.get("window");
+
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -194,6 +195,16 @@ const styles = StyleSheet.create({
     },
     pointersButtonContainerMob: {
       flexDirection: "column",
+    },
+    modalInnerContainer: {
+      ...Platform.select({
+        ios: {
+          maxHeight: HEIGHT / 1.5,
+        },
+        android: {
+          maxHeight: HEIGHT * 0.65,
+        },
+      }),
     },
   },
 });
