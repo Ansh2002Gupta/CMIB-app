@@ -6,7 +6,7 @@ import { ScrollView } from "@unthinkable/react-core-components";
 import { TwoRow } from "../../../core/layouts";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
-import CompanyProfile from "./CompanyProfileForm/CompanyProfile";
+import CompanyProfile from "./CompanyProfileForm/CompanyProfileForm";
 import JobDetails from "./JobDetails";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {

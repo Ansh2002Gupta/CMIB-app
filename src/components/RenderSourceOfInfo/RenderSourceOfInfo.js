@@ -7,10 +7,10 @@ import BadgeLabel from "../BadgeLabel/BadgeLabel";
 
 const RenderSourceOfInfo = ({
   badgeStyle,
-  isEditProfile,
-  options,
   containerStyle,
   handleToggle,
+  isEditProfile,
+  options,
   profileResult,
 }) => {
   return isEditProfile ? (
@@ -34,18 +34,18 @@ const RenderSourceOfInfo = ({
   );
 };
 
-RenderSourceOfInfo.propTypes = {
-  badgeStyle: PropTypes.object,
-  options: PropTypes.array,
-  containerStyle: PropTypes.object,
-  profileResult: PropTypes.array,
-};
-
 RenderSourceOfInfo.defaultProps = {
   badgeStyle: {},
-  options: [],
   containerStyle: {},
+  options: [],
   profileResult: [],
+};
+
+RenderSourceOfInfo.propTypes = {
+  badgeStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
+  options: PropTypes.array,
+  profileResult: PropTypes.array,
 };
 
 export default RenderSourceOfInfo;

@@ -1,6 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { View, Platform } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
 import ActionPairButton from "../../../../components/ActionPairButton";
 import CommonText from "../../../../components/CommonText";
@@ -12,12 +12,12 @@ import RenderSourceOfInfo from "../../../../components/RenderSourceOfInfo/Render
 import LoadingScreen from "../../../../components/LoadingScreen";
 import UploadImage from "../../../../components/UploadImage";
 import useIsWebView from "../../../../hooks/useIsWebView";
-import useCompanyProfile from "./controllers/useCompanyProfile";
+import useCompanyProfile from "./controllers/useCompanyProfileForm";
 import { DEFAULT_BALANCE_CREDIT } from "../../../../constants/constants";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./CompanyProfileForm.style";
 
-const CompanyProfile = ({ tabHandler }) => {
+const CompanyProfileForm = ({ tabHandler }) => {
   const {
     columnCount,
     countryCodes,
@@ -30,11 +30,11 @@ const CompanyProfile = ({ tabHandler }) => {
     handleCompanyProfile,
     handleToggle,
     industryOptions,
-    uploadImageToServerUtils,
     isLoading,
     isEditProfile,
     onDeleteImage,
     options,
+    uploadImageToServerUtils,
   } = useCompanyProfile();
   const intl = useIntl();
   const { isWebView } = useIsWebView();
@@ -212,4 +212,4 @@ const CompanyProfile = ({ tabHandler }) => {
   );
 };
 
-export default CompanyProfile;
+export default CompanyProfileForm;

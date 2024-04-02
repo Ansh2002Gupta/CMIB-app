@@ -3,21 +3,22 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View, Platform } from "@unthinkable/react-core-components";
 
+import { TwoColumn } from "../../../core/layouts";
+
+import CommonText from "../../../components/CommonText";
 import Stepper from "../../../components/Stepper";
 import StepperTabs from "../../../components/StepperTabs";
 import { APPLICATION_FORM_STEPPER_OPTIONS } from "../../../constants/constants";
 import styles from "./ApplicationFormStepper.style";
-import { TwoColumn } from "../../../core/layouts";
-import CommonText from "../../../components/CommonText";
 
 const isWeb = Platform.OS.toLowerCase() === "web";
 
 const ApplicationFormStepper = ({
   activeStep,
-  headingText,
-  webActionButton,
-  mobActionButton,
   customMobHeadingText,
+  headingText,
+  mobActionButton,
+  webActionButton,
 }) => {
   const intl = useIntl();
 
