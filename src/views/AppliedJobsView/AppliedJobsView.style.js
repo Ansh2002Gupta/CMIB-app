@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
       },
     }),
   }),
+  sortingIcon: {
+    height: 16,
+    width: 16,
+  },
   inProgress: {
     ...baseChipStyle,
     color: colors.skyBlueDark,

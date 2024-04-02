@@ -29,6 +29,7 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../AppliedJobsView.style";
 import { useIntl } from "react-intl";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -275,7 +276,7 @@ const useAppliedJobsListing = () => {
     });
   };
 
-  const onDateSorting = async (sortField) => {
+  const onCompanySorting = async (sortField) => {
     setIsAscendingOrder((prev) => !prev);
     await updateCurrentRecords({
       perPage: rowsPerPage,
@@ -304,7 +305,7 @@ const useAppliedJobsListing = () => {
   let isHeading = true;
 
   function getStatusStyle(status) {
-    status = status.toLowerCase();
+    status = !!status ? status?.toLowerCase() : '-"';
     switch (status) {
       case "pending":
         return {
@@ -341,7 +342,23 @@ const useAppliedJobsListing = () => {
         isFillSpace: true,
       },
       {
-        content: (
+        content: isHeading ? (
+          <CustomTouchableOpacity
+            onPress={() => onCompanySorting("company_name")}
+          >
+            <CommonText customTextStyle={tableStyle}>
+              {item.company_name}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
           <CommonText customTextStyle={tableStyle}>
             {item.company_name}
           </CommonText>
@@ -349,6 +366,15 @@ const useAppliedJobsListing = () => {
         style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
+      // {
+      //   content: (
+      //     <CommonText customTextStyle={tableStyle}>
+      //       {item.company_name}
+      //     </CommonText>
+      //   ),
+      //   style: commonStyles.columnStyle("20%"),
+      //   isFillSpace: true,
+      // },
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
