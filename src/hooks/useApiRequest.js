@@ -76,6 +76,7 @@ const useApiRequest = ({ method, url, apiOptions = {}, otherOptions = {} }) => {
     isLoading,
     isSuccess,
     setData,
+    setError,
   };
 };
 

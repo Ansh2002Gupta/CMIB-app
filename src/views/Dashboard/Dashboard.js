@@ -3,14 +3,8 @@ import { useIntl } from "react-intl";
 import { View, Text } from "@unthinkable/react-core-components";
 import useIsWebView from "../../hooks/useIsWebView";
 
-import AddDesignation from "../../containers/AddDesignation/AddDesignation";
 import CommonText from "../../components/CommonText";
-import CustomCell from "../../components/CustomCell/";
-import DetailCard from "../../components/DetailCard/DetailCard";
-import MultiColumn from "../../core/layouts/MultiColumn";
-import SearchView from "../../components/SearchView";
-import TouchableImage from "../../components/TouchableImage";
-import images from "../../images";
+import RangeSlider from "../../components/RangeSlider";
 import styles from "./dashboard.style";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -25,7 +19,10 @@ import CustomImage from "../../components/CustomImage";
 import PackageListing from "./PackageListing";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { ScrollView } from "@unthinkable/react-core-components";
+import images from "../../images";
 
+const MIN_VALUE = 0;
+const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
 // Just ignore this file as just to test custom component
 function DashboardView() {
   const intl = useIntl();

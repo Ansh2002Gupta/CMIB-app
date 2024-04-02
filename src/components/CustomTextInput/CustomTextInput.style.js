@@ -12,9 +12,7 @@ const style = {
     gap: 4,
   },
   dropdown: {
-    paddingTop: 6,
     paddingBottom: 6,
-    paddingLeft: 14,
     paddingRight: 16,
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
@@ -213,6 +211,11 @@ const style = {
     borderRadius: 10,
     marginLeft: 5,
   },
+  innerLabelContainer: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+  },
   disabledStyle: {
     backgroundColor: colors.disabledTextFieldColor,
   },
@@ -226,6 +229,9 @@ const style = {
   },
   onlyCountLimitBox: {
     justifyContent: "flex-end",
+  },
+  marginRight10: {
+    marginRight: 10,
   },
 };
 
