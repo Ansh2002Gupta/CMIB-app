@@ -1,5 +1,6 @@
 /* Blacks */
 const black = "#000833";
+const blackSecond = "#0E0E0F";
 const darkBlack = "#0F0F0F";
 const darkBlackSecond = "#18181B";
 const trueBlack = "#000";
@@ -65,6 +66,7 @@ const colors = {
   disabledBtn,
   backgroundColor,
   black,
+  blackSecond,
   blackWithOneForthOpacity,
   backgroundSecondGrey,
   darkBlack,

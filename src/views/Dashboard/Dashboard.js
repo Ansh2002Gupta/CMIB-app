@@ -13,6 +13,7 @@ const MAX_VALUE = 100; // Created for demo purposes , therefore not defining the
 function DashboardView() {
   const intl = useIntl();
   const [range, setRange] = useState({ max: MAX_VALUE, min: MIN_VALUE });
+  const [isEnabled, setIsEnabled] = useState(false);
 
   return (
     <View style={styles.container}>
