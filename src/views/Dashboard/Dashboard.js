@@ -62,7 +62,6 @@ function DashboardView() {
       isFillSpace: false,
     },
   ];
-  return <JobProfileTab />;
   return (
     <View style={styles.container}>
       <CommonText customTextStyle={styles.header}>
