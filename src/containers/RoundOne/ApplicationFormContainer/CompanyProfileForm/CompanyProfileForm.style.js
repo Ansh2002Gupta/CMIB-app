@@ -4,6 +4,7 @@ import colors from "../../../../assets/colors";
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.backgroundGrey,
+    flex: 1,
   },
   containerGridStyle: (columnCount) => ({
     display: "grid",
@@ -58,6 +59,12 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   buttonStyle: { maxHeight: 44, maxWidth: 80 },
+  loading: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export default styles;

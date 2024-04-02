@@ -6,6 +6,8 @@ import { mapApiDataToUI } from "../../../../../views/CompanyProfile/mappedData";
 import { validateFields } from "../../../../../views/CompanyProfile/CompanyProfileUtils";
 import useIsWebView from "../../../../../hooks/useIsWebView";
 import useFetch from "../../../../../hooks/useFetch";
+import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
+import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import {
   CORE_INDUSTRY_TYPE,
   COUNTRY_CODE,
@@ -15,6 +17,7 @@ import {
   INTEREST_OPTIONS,
   NUMBER_OF_PARTNERS_LENGTH,
 } from "../../../../../constants/constants";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
 import { gridStyles } from "../../../../../theme/styles/commonStyles";
 
 const profiledata = {
@@ -76,6 +79,8 @@ const useCompanyProfile = () => {
   const {
     data: countryCodes,
     isLoading: isCountryCodeLoading,
+    isError: isErrorGettingCountryCodes,
+    error: errorGettingCountryCodes,
     fetchData: getCountryCodes,
   } = useFetch({
     url: COUNTRY_CODE,
@@ -86,6 +91,8 @@ const useCompanyProfile = () => {
   const {
     data: industryOptions,
     isLoading: isIndustryTypeLoading,
+    isError: isErrorGettingIndustries,
+    error: errorGettingIndustries,
     fetchData: getIndustryType,
   } = useFetch({
     url: CORE_INDUSTRY_TYPE,
@@ -93,19 +100,35 @@ const useCompanyProfile = () => {
       skipApiCallOnMount: true,
     },
   });
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    isLoading: isUploadingImageToServer,
+    setErrorWhileUpload,
+    setFileUploadResult,
+    uploadPercentage,
+  } = useSaveLogo();
 
   useEffect(async () => {
-    const newIndustyOptions = await getIndustryType();
-    const newCountryCode = await getCountryCodes();
-    setFormDetails(
-      mapApiDataToUI({
-        apiData: profiledata,
-        industryOptions: newIndustyOptions,
-        intl,
-        countryCodes: newCountryCode,
-        isEditMode: true,
-      })
-    );
+    const fetchData = async () => {
+      const newIndustryOptions = await getIndustryType();
+      const newCountryCodes = await getCountryCodes();
+
+      setFormDetails(
+        mapApiDataToUI({
+          apiData: profiledata,
+          industryOptions: newIndustryOptions,
+          intl,
+          countryCodes: newCountryCodes,
+          isEditMode: true,
+        })
+      );
+    };
+
+    fetchData();
   }, []);
 
   const handleInputChange = (fieldName, value) => {
@@ -253,21 +276,84 @@ const useCompanyProfile = () => {
     });
   };
 
-  console.log("formDetails", formDetails);
+  const isLoading = isCountryCodeLoading || isIndustryTypeLoading;
+
+  const getErrorDetails = () => {
+    if (isErrorGettingIndustries && isErrorGettingCountryCodes) {
+      let errorMessage = "";
+      if (
+        errorGettingIndustries === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
+        errorGettingCountryCodes === GENERIC_GET_API_FAILED_ERROR_MESSAGE
+      ) {
+        errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      } else {
+        errorMessage = `${errorGettingIndustries} , ${errorGettingCountryCodes}`;
+      }
+      return {
+        errorMessage,
+        onRetry: () => {
+          getCountryCodes();
+          getIndustryType();
+        },
+      };
+    }
+    if (isErrorGettingIndustries)
+      return {
+        errorMessage: errorGettingIndustries?.data?.message,
+        onRetry: getIndustryType,
+      };
+    if (isErrorGettingCountryCodes)
+      return {
+        errorMessage: errorGettingCountryCodes?.data?.message,
+        onRetry: getCountryCodes,
+      };
+    return {
+      errorMessage: "",
+      onRetry: () => {},
+    };
+  };
+
+  const handleImageDeletion = () => {
+    if (formDetails?.companyLogo) {
+      setFormDetails((prevProfileData) => ({
+        ...prevProfileData,
+        companyLogo: "",
+      }));
+    }
+    if (fileUploadResult?.data?.file_name) {
+      const fileName = fileUploadResult?.data?.file_name.split("/");
+      handleDeleteLogo(fileName[fileName.length - 1]);
+    }
+  };
 
   return {
     countryCodes,
     columnCount,
     formDetails,
+    errorWhileUpload,
+    getErrorDetails,
     handleInputChange,
     handleContactPersonInfo,
     handleCompanyProfile,
     handleBlur,
     handleToggle,
+    handleFileUpload,
     industryOptions,
     isEditProfile,
+    isLoading,
+    isUploadingImageToServer,
     options,
+    onDeleteImage: handleImageDeletion,
+    setFileUploadResult,
     setFormDetails,
+    uploadImageToServerUtils: {
+      fileUploadResult,
+      handleFileUpload,
+      isUploadingImageToServer,
+      setFileUploadResult,
+      uploadPercentage,
+    },
+    uploadPercentage,
   };
 };
 
