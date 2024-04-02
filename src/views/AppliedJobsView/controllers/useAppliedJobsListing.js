@@ -304,7 +304,7 @@ const useAppliedJobsListing = () => {
 
   const handleSearchResults = async (searchedData) => {
     await updateCurrentRecords({
-      q: searchedData,
+      search: searchedData,
       perPage: rowsPerPage,
       page: currentPage,
       multiFacet: 1,
