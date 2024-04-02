@@ -12,6 +12,7 @@ import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import JobsView from "../views/JobsView/JobsView";
 import JobApplicantsView from "../views/JobApplicantsView/index";
+import JobProfileTab from "../views/JobProfile";
 import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
@@ -108,6 +109,16 @@ const config = [
       {
         viewPath: "",
         element: <CompanyProfile />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.JOB_PROFILE,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobProfileTab />,
       },
     ],
   },

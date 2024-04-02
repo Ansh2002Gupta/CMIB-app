@@ -37,20 +37,19 @@
     ),
     var(--white);
 }
-
 .react_datepicker__input_container {
   width: 100%;
   -moz-padding-start: calc(0.75rem - 3px);
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-  color: var(--blueCharcoal);
-  background-color: var(--white);
-  border: 0px solid var(--secondaryCyanBlue);
+  color: #212529;
+  background-color: #fff;
+  border: 0px solid #ced4da;
   border-radius: 0.25rem;
   appearance: none;
-  z-index: 999;
 }
+
 .text-area__base {
   font-weight: 500;
 }
