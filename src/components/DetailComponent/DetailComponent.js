@@ -121,6 +121,9 @@ const DetailComponent = ({
         />
       );
     }
+    if (detail.ShouldRenderOwnComponent) {
+      return detail.ShouldRenderOwnComponent();
+    }
 
     if (detail.isLink) {
       return (
@@ -160,12 +163,25 @@ const DetailComponent = ({
       );
     }
 
+    if (detail.isCheckBoxSelection && detail?.value !== "--") {
+      return (
+        <CheckBoxSelection
+          isEditable={isEditable}
+          checkBoxOptions={detail?.checkBoxOptions}
+          customStyle={styles.CheckBoxSelection}
+          isSingleSelection={detail?.isSingleSelection}
+          value={detail?.value}
+        />
+      );
+    }
+
     return (
       <CommonText
         customTextStyle={{
           ...styles.valueStyle,
           ...(detail.isCapitalize && styles.capitalizeValue),
         }}
+        customContainerStyle={{ ...detail.style }}
       >
         {detail?.defaultValue || detail?.value}
       </CommonText>
@@ -197,6 +213,7 @@ const DetailComponent = ({
           ...styles.getFieldWidth(detail.width, !isWebView),
         }}
         label={detail?.label && intl.formatMessage({ id: detail.label })}
+        showLabel={detail.showLabel}
         isDropdown={detail.isDropdown}
         isEditable={isInputDisable ? !isInputDisable : true}
         isCounterInput={detail.isCounterInput}
@@ -244,6 +261,9 @@ const DetailComponent = ({
         }}
         isRupee={detail?.isRupee}
         isCalendar={detail?.isCalendar}
+        minDate={detail?.minDate}
+        maxDate={detail?.maxDate}
+        format={detail?.format}
         isSingleMutliSelect={detail.isSingleMutliSelect}
       />
     );
@@ -283,44 +303,45 @@ const DetailComponent = ({
                     : styles.containerStyle),
                 }}
               >
-                {detail?.map((columns, index) => {
-                  return isEditable ? (
-                    <View
-                      style={{
-                        ...(columns.width === 3 ? styles.oneThirdWidth : {}),
-                        ...(isWebView
-                          ? styles.webContainer
-                          : getRowStyle(detail)),
-                      }}
-                    >
-                      {renderEditableContent(columns, idx)}
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        ...(isWebView
-                          ? styles.webContainer
-                          : getRowStyle(detail)),
-                      }}
-                    >
-                      <View style={styles.titleContainer}>
-                        {columns.label ? (
-                          <CommonText customTextStyle={styles.titleStyle}>
-                            {intl.formatMessage({ id: columns.label })}
-                          </CommonText>
-                        ) : (
-                          void 0
-                        )}
-                        {columns?.isMandatory && (
-                          <CommonText customTextStyle={styles.starStyle}>
-                            {" *"}
-                          </CommonText>
-                        )}
+                {Array.isArray(detail) &&
+                  detail?.map((columns, idx) => {
+                    return isEditable ? (
+                      <View
+                        style={{
+                          ...(columns.width === 3 ? styles.oneThirdWidth : {}),
+                          ...(isWebView
+                            ? styles.webContainer
+                            : getRowStyle(detail)),
+                        }}
+                      >
+                        {renderEditableContent(columns)}
                       </View>
-                      {renderDetailContent(columns)}
-                    </View>
-                  );
-                })}
+                    ) : (
+                      <View
+                        style={{
+                          ...(isWebView
+                            ? styles.webContainer
+                            : getRowStyle(detail)),
+                        }}
+                      >
+                        <View style={styles.titleContainer}>
+                          {columns.label ? (
+                            <CommonText customTextStyle={styles.titleStyle}>
+                              {intl.formatMessage({ id: columns.label })}
+                            </CommonText>
+                          ) : (
+                            void 0
+                          )}
+                          {columns?.isMandatory && (
+                            <CommonText customTextStyle={styles.starStyle}>
+                              {" *"}
+                            </CommonText>
+                          )}
+                        </View>
+                        {renderDetailContent(columns)}
+                      </View>
+                    );
+                  })}
               </View>
             );
           }

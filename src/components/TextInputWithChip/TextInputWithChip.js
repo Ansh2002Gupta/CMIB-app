@@ -10,7 +10,7 @@ import colors from "../../assets/colors";
 
 const TextInputWithChip = ({ placeholderText, onChipUpdate, value = [] }) => {
   const [inputValue, setInputValue] = useState("");
-  const [chips, setChips] = useState([...value]);
+  const [chips, setChips] = useState(Array.isArray(value) ? [...value] : []);
 
   useEffect(() => {
     onChipUpdate(chips);
