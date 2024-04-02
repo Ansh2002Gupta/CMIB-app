@@ -109,8 +109,8 @@ export const capitalize = (text) => {
   return firstLetter + restLetter;
 };
 
-export const formatDate = (date) => {
-  return dayjs(date).format("DD/MM/YYYY");
+export const formatDate = (date, format = "DD/MM/YYYY") => {
+  return dayjs(date).format(format);
 };
 
 export const extractFilename = (fileUri) => {

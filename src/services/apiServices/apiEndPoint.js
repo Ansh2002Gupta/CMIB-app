@@ -41,3 +41,6 @@ export const MEMBER_CA_JOB_PROFILE_EDUCATION = `${USER_TYPE_MEMBER}/profile/educ
 export const MEMBER_CA_JOB_PROFILE_EXAMS = `${USER_TYPE_MEMBER}/profile/exams`;
 export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/other-courses`;
 export const MEMBER_CA_JOB_PROFILE_ACTIVITY = `${USER_TYPE_MEMBER}/profile/activities`;
+export const MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE = `${USER_TYPE_MEMBER}/profile/work-experiences`;
+export const FUNCTION_AREAS = `${USER_TYPE_COMPANY}/functional-areas`;
+export const INDUSTRY_TYPES = `${CORE}/industry-types`;
