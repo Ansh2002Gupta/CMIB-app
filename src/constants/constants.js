@@ -52,7 +52,7 @@ export const MINIMUM_SALARY_LIMIT = 0;
 export const MAXIMUM_SALARY_LIMIT = 100;
 export const MINIMUM_FRESHNESS_LIMIT = 0;
 export const MAXIMUM_FRESHNESS_LIMIT = 100;
-export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = "work mode";
+export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = "WorkMode";
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -234,7 +234,7 @@ export const APPLIED_JOBS_TABLE_HEADING = {
   readable_id: "Job Id",
   company_name: "Company Name",
   designation: "Designation",
-  vacancies: "Vacancies",
+  vacancy: "Vacancies",
   status: "Status",
   active_status: "Active/Inactive",
   created_at: "Created On",

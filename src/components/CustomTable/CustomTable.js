@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
@@ -13,10 +13,12 @@ import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
+import PopupMessage from "../PopupMessage/PopupMessage";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import useOutsideClick from "../../hooks/useOutsideClick";
 import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
@@ -30,16 +32,14 @@ const initialFilterState = {
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
-  companyData,
   currentPage,
+  customFilterInfo,
+  customModal,
   data,
   defaultCategory,
-  departmentData,
-  educationData,
-  experienceData,
+  selectedFilterOptions,
   filterApplyHandler,
   filterCategory,
-  freshnessData,
   getColoumConfigs,
   getStatusStyle,
   handleLoadMore,
@@ -51,71 +51,51 @@ const CustomTable = ({
   handleSaveAddTicket,
   indexOfFirstRecord,
   indexOfLastRecord,
-  industryData,
   isHeading,
   isTicketListingLoading,
   isFirstPageReceived,
-  jobTypeData,
+  isStatusTextBoolean,
   loadingMore,
-  locationData,
   onIconPress,
   placeholder,
-  queryTypeData,
   rowsLimit,
   rowsPerPage,
-  statusData,
-  salaryData,
   showSearchBar,
+  showJobOfferResponseModal,
+  showInterviewTimeModal,
   statusText,
   subHeadingText,
   tableHeading,
   tableIcon,
   totalcards,
-  workModeData,
+  statusLabels,
+  showPopUpWithID,
+  setShowPopUpWithID,
+  popUpMessage,
+  setModalData,
+  setShowJobOfferResponseModal,
+  setShowInterviewTimeModal,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
 
+  const popUpRef = useRef(null);
+
+  useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [filterState, setFilterState] = useState(initialFilterState);
 
   const isFilterCount =
-    !!filterState?.selectedStatus.length ||
-    !!filterState?.selectedQueryType.length;
+    !!filterState?.selectedStatus?.length ||
+    !!filterState?.selectedQueryType?.length;
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
   };
 
-  const onApplyFilter = ({
-    selectedCompany,
-    selectedDepartment,
-    selectedEducation,
-    selectedExperience,
-    selectedFreshness,
-    selectedSalary,
-    selectedStatus,
-    selectedIndustry,
-    selectedJobType,
-    selectedLocation,
-    selectedWorkMode,
-    selectedQueryType,
-  }) => {
-    filterApplyHandler({
-      selectedCompany,
-      selectedDepartment,
-      selectedEducation,
-      selectedExperience,
-      selectedFreshness,
-      selectedSalary,
-      selectedStatus,
-      selectedIndustry,
-      selectedJobType,
-      selectedLocation,
-      selectedWorkMode,
-      selectedQueryType,
-    });
+  const onApplyFilter = (customFilterInfo) => {
+    filterApplyHandler(customFilterInfo);
     handleFilterModal();
   };
 
@@ -213,7 +193,7 @@ const CustomTable = ({
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
                         style={
-                          data.length
+                          !!data
                             ? styles.columnHeaderStyle
                             : styles.columnHeaderStyleWithBorder
                         }
@@ -248,9 +228,51 @@ const CustomTable = ({
                                 </View>
                                 <View style={styles.rowsPerPageWeb}>
                                   <Chip
-                                    label={getRenderText(item, statusText)}
-                                    style={getStatusStyle(item.status)}
+                                    label={
+                                      isStatusTextBoolean
+                                        ? getRenderText(item, statusText) ===
+                                          "1"
+                                          ? statusLabels[1]
+                                          : statusLabels[0]
+                                        : getRenderText(item, statusText)
+                                    }
+                                    style={
+                                      isStatusTextBoolean
+                                        ? getStatusStyle(
+                                            getRenderText(item, statusText) ===
+                                              "1"
+                                              ? statusLabels[1].toLowerCase()
+                                              : statusLabels[0].toLowerCase()
+                                          )
+                                        : getStatusStyle(item?.status)
+                                    }
                                   />
+                                  {showPopUpWithID === item?.id && (
+                                    <View ref={popUpRef}>
+                                      <PopupMessage
+                                        message={popUpMessage}
+                                        customStyle={styles.mobilePopUpPosition}
+                                        onPopupClick={() => {
+                                          if (
+                                            popUpMessage ===
+                                            intl.formatMessage({
+                                              id: "label.respond_to_job_offer",
+                                            })
+                                          ) {
+                                            setShowJobOfferResponseModal(
+                                              (prev) => !prev
+                                            );
+                                            setModalData(item);
+                                          } else {
+                                            setShowInterviewTimeModal(
+                                              (prev) => !prev
+                                            );
+                                          }
+                                          setShowPopUpWithID(-1);
+                                        }}
+                                      />
+                                    </View>
+                                  )}
                                   <TouchableImage
                                     onPress={() => {
                                       onIconPress(item);
@@ -266,7 +288,7 @@ const CustomTable = ({
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if (!data.length)
+                        if (!!data && !data?.length)
                           return (
                             <CommonText
                               customContainerStyle={styles.loadingStyleNoData}
@@ -339,39 +361,22 @@ const CustomTable = ({
       {showFilterOptions && (
         <FilterModal
           {...{
-            companyData,
+            filterInfo: customFilterInfo,
             data,
             defaultCategory,
-            departmentData,
-            educationData,
-            experienceData,
             filterCategory,
-            filterState,
-            freshnessData,
-            industryData,
+            filterState: !!selectedFilterOptions
+              ? selectedFilterOptions
+              : filterState,
             initialFilterState,
-            queryTypeData,
-            salaryData,
             setFilterState,
             setShowFilterOptions,
             onApplyFilter,
-            statusData,
-            jobTypeData,
-            locationData,
-            workModeData,
           }}
         />
       )}
-      {addNewTicket && (
-        <AddTicketModal
-          queryTypeData={queryTypeData}
-          onPressButtonOne={handleTicketModal}
-          onPressButtonTwo={(queryType, enterQuery) => {
-            handleSaveAddTicket(queryType, enterQuery);
-            handleTicketModal();
-          }}
-        />
-      )}
+      {(addNewTicket || showJobOfferResponseModal || showInterviewTimeModal) &&
+        customModal}
     </View>
   );
 };

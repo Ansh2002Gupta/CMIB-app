@@ -393,6 +393,16 @@ const locale = {
   "label.search_applied_jobs": "Search Applied Jobs",
   "label.select_interview_time": "Select Interview Time",
   "label.respond_to_job_offer": "Respond to Job Offer",
+  "label.job_offer_response": "Job Offer Response",
+  "label.reject_offer": "Reject Offer",
+  "label.accept_offer": "Accept Offer",
+  "label.select_interview_time_slot": "Select Interview Time Slot",
+  "label.confirm": "Confirm",
+  "label.some_error_occured": "Some error occured",
+  "label.success.acceptOffer": "Congratulations on Offer Acception!",
+  "label.active": "Active",
+  "label.inactive": "Inactive",
+  "label.no_response_from_applicant": "No response from applicant",
 };
 
 export default locale;

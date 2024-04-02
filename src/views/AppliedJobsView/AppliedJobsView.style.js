@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
     ...baseChipStyle,
     color: colors.orange,
   },
+  active: {
+    ...baseChipStyle,
+    color: colors.darkSecondGreen,
+  },
   close: {
     ...baseChipStyle,
     color: colors.darkGreen,
@@ -39,6 +43,11 @@ const styles = StyleSheet.create({
     ...baseChipStyle,
     color: colors.orange,
     backgroundColor: colors.lightOrange,
+  },
+  activeWeb: {
+    ...baseChipStyle,
+    backgroundColor: colors.lightGreen2,
+    color: colors.darkSecondGreen,
   },
   closeWeb: {
     ...baseChipStyle,

@@ -17,8 +17,9 @@ const skyBlueLight = "#E8FCFF";
 const darkGreen = "#00873E";
 const green = "#04AF55";
 const greenOne = "#04af55";
-const lightGreen = "#DFFFDC";
 const darkSecondGreen = "#258B01";
+const lightGreen = "#E6F9EF";
+const lightGreen2 = "#DFFFDC";
 
 /* Greys */
 const backgroundGrey = "#F6F8F9";
@@ -105,5 +106,6 @@ const colors = {
   skyBlueLight,
   disabledTextFieldColor,
   neutralGrey,
+  lightGreen2,
 };
 export default colors;

@@ -200,6 +200,14 @@ const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
+const iconTickInsideCircle = appendAppBaseURl(
+  "/images/svg/iconTickInsideCircle.svg"
+);
+const iconCrossInsideCircle = appendAppBaseURl("/images/close-circle.png");
+const iconSelectCircle = appendAppBaseURl("/images/svg/selectCircle.svg");
+const iconSelectedSolidCircle = appendAppBaseURl(
+  "/images/svg/selectedCircle.svg"
+);
 
 const images = {
   iconArrowUp,
@@ -344,6 +352,10 @@ const images = {
   iconLoading,
   iconGreyCross,
   iconError,
+  iconTickInsideCircle,
+  iconCrossInsideCircle,
+  iconSelectCircle,
+  iconSelectedSolidCircle,
 };
 
 export default images;

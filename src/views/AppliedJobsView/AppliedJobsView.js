@@ -1,27 +1,32 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { Platform } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { TwoRow } from "../../core/layouts";
 
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
+import InterviewTimeModal from "../../components/InterviewTimeModal/InterviewTimeModal";
+import JobOfferResponseModal from "../../components/JobOfferResponseModal/JobOfferResponseModal";
 import useAppliedJobsListing from "./controllers/useAppliedJobsListing";
-import { navigations } from "../../constants/routeNames";
+import useOutsideClick from "../../hooks/useOutsideClick";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   APPLIED_JOBS_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
 import images from "../../images";
-import styles from "./AppliedJobsView.style";
-import PopupMessage from "../../components/PopupMessage/PopupMessage";
+
+const isIos = Platform.OS.toLowerCase() === "ios";
 
 const AppliedJobsView = () => {
   const {
     allDataLoaded,
     currentRecords,
     currentPage,
+    customFilterInfo,
     filterApplyHandler,
     filterCategory,
+    filterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,
@@ -29,54 +34,45 @@ const AppliedJobsView = () => {
     handleRowPerPageChange,
     handleSearchResults,
     handleSaveAddTicket,
-    headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
-    isTicketListingLoading,
+    isAppliedJobsListingLoading,
+    fetchDataAppliedJobs,
     isFirstPageReceived,
     loadingMore,
     onIconPress,
     popUpMessage,
     rowsPerPage,
     setCurrentRecords,
-    showPopup,
     defaultCategory,
-    statusData,
-    workModeData,
-    jobTypeData,
-    experienceData,
-    locationData,
-    educationData,
-    salaryData,
-    departmentData,
-    freshnessData,
-    companyData,
-    industryData,
-    statusText,
-    subHeadingText,
-    tableIcon,
-    ticketListingData,
+
+    appliedJobsData,
     totalcards,
+    showJobOfferResponseModal,
+    setShowJobOfferResponseModal,
+    showInterviewTimeModal,
+    setShowInterviewTimeModal,
+    handleAcceptRejectOffer,
+    modalData,
+    isLoading,
+    setIsLoading,
+    showPopUpWithID,
+    setModalData,
+    setShowPopUpWithID,
   } = useAppliedJobsListing();
 
   const intl = useIntl();
-  const navigate = useNavigate();
-  const [addNewTicket, setAddNewTicket] = useState(false);
-
-  const handleTicketModal = () => {
-    setAddNewTicket((prev) => !prev);
-  };
-
-  const onGoBack = () => {
-    navigate(navigations.PROFILE);
-  };
+  const modalRef = useRef(null);
+  useOutsideClick(modalRef, () => {
+    setShowJobOfferResponseModal(false);
+    setShowInterviewTimeModal(false);
+  });
 
   return (
     <TwoRow
       topSection={
         <IconHeader
-          handleButtonClick={handleTicketModal}
           headerText={intl.formatMessage({ id: "label.applied_jobs" })}
         />
       }
@@ -85,26 +81,26 @@ const AppliedJobsView = () => {
         <>
           <CustomTable
             {...{
-              addNewTicket,
+              selectedFilterOptions: filterState,
               allDataLoaded,
               currentPage,
               currentRecords,
-              data: ticketListingData,
+              customFilterInfo,
+              data: appliedJobsData,
               filterApplyHandler,
               filterCategory,
               getColoumConfigs,
               getStatusStyle,
-              handleTicketModal,
               handleLoadMore,
               handlePageChange,
               handleRowPerPageChange,
               handleSearchResults,
               handleSaveAddTicket,
-              headingTexts,
+              headingTexts: ["designation"],
               indexOfFirstRecord,
               indexOfLastRecord,
               isHeading,
-              isTicketListingLoading,
+              isAppliedJobsListingLoading,
               isFirstPageReceived,
               loadingMore,
               onIconPress,
@@ -112,26 +108,49 @@ const AppliedJobsView = () => {
               rowsPerPage,
               setCurrentRecords,
               defaultCategory,
-              statusData,
-              workModeData,
-              jobTypeData,
-              experienceData,
-              locationData,
-              educationData,
-              salaryData,
-              departmentData,
-              freshnessData,
-              companyData,
-              industryData,
-              statusText,
-              subHeadingText,
+              statusText: ["active"],
+              isStatusTextBoolean: true,
+              statusLabels: ["Inactive", "Active"],
+              subHeadingText: ["status"],
               tableHeading,
-              tableIcon,
+              tableIcon: images.iconMore,
               totalcards,
               placeholder: intl.formatMessage({
                 id: "label.search_applied_jobs",
               }),
+              showJobOfferResponseModal,
+              setShowJobOfferResponseModal,
+              showInterviewTimeModal,
+              setShowInterviewTimeModal,
+              modalData,
+              isLoading,
+              setIsLoading,
+              showPopUpWithID,
+              popUpMessage,
+              setModalData,
+              setShowPopUpWithID,
+              isTicketListingLoading: isAppliedJobsListingLoading,
             }}
+            customModal={
+              showJobOfferResponseModal ? (
+                <JobOfferResponseModal
+                  {...{
+                    data: modalData,
+                    setShowJobOfferResponseModal,
+                    handleAcceptRejectOffer,
+                    isLoading,
+                  }}
+                />
+              ) : (
+                <InterviewTimeModal
+                  {...{
+                    data: appliedJobsData,
+                    setShowInterviewTimeModal,
+                    isLoading,
+                  }}
+                />
+              )
+            }
           />
         </>
       }

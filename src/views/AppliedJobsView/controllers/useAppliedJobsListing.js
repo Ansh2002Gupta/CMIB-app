@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useIntl } from "react-intl";
 import { useNavigate, useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
-import TouchableImage from "../../../components/TouchableImage";
 import CustomImage from "../../../components/CustomImage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
+import TouchableImage from "../../../components/TouchableImage";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
   COMPANY_QUERY_TYPE_TICKET,
-  COMPANY_TICKET_STATUS,
+  JOB_LOCATION_OPTIONS,
+  JOB_TYPE_OPTIONS,
   MEMBER_JOBS_LISTING,
+  OFFER_RESPONSE,
+  WORK_MODE_OPTIONS,
 } from "../../../services/apiServices/apiEndPoint";
 import {
   getValidCurrentPage,
@@ -22,16 +29,25 @@ import {
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
+import { usePatch } from "../../../hooks/useApiRequest";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import images from "../../../images";
-import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../AppliedJobsView.style";
-import { useIntl } from "react-intl";
-import PopupMessage from "../../../components/PopupMessage/PopupMessage";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
+
+const initialFilterState = {
+  selectedWorkMode: [],
+  selectedCompany: [],
+  selectedDepartment: [],
+  selectedExperience: 0,
+  selectedEducation: [],
+  selectedJobType: [],
+  selectedLocation: [],
+  activeCategories: [],
+};
 
 const useAppliedJobsListing = () => {
   const intl = useIntl();
@@ -45,6 +61,7 @@ const useAppliedJobsListing = () => {
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const [showPopUpWithID, setShowPopUpWithID] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState("");
+  const [filterState, setFilterState] = useState(initialFilterState);
   const [filterOptions, setFilterOptions] = useState({
     status: "",
     work_mode: "",
@@ -57,6 +74,16 @@ const useAppliedJobsListing = () => {
     company: "",
     industry: "",
   });
+  const [modalData, setModalData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showToast, setShowToast] = useState(true);
+  const popUpRef = useRef(null);
+
+  useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
+
+  const [showJobOfferResponseModal, setShowJobOfferResponseModal] =
+    useState(false);
+  const [showInterviewTimeModal, setShowInterviewTimeModal] = useState(false);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -68,9 +95,9 @@ const useAppliedJobsListing = () => {
   const navigate = useNavigate();
 
   const {
-    data: ticketListingData,
-    isLoading: isTicketListingLoading,
-    fetchData: fetchDataTicketListing,
+    data: appliedJobsData,
+    isLoading: isAppliedJobsListingLoading,
+    fetchData: fetchDataAppliedJobs,
   } = useFetch({
     url: MEMBER_JOBS_LISTING,
     otherOptions: {
@@ -80,33 +107,123 @@ const useAppliedJobsListing = () => {
 
   const { handleAddTicket } = useAddTicket();
 
-  const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
-
   const { data: workModeData } = useFetch({
-    url: COMPANY_TICKET_STATUS,
+    url: WORK_MODE_OPTIONS,
   });
 
-  const { data: jobTypeData } = useFetch({ url: COMPANY_TICKET_STATUS });
+  const { data: jobTypeData } = useFetch({ url: JOB_TYPE_OPTIONS });
 
   const experienceData = 20;
 
-  const { data: locationData } = useFetch({ url: COMPANY_TICKET_STATUS });
+  const { data: locationData } = useFetch({ url: JOB_LOCATION_OPTIONS });
 
-  const salaryData = 40;
-
-  const { data: educationData } = useFetch({ url: COMPANY_TICKET_STATUS });
-
-  const { data: departmentData } = useFetch({
-    url: COMPANY_TICKET_STATUS,
+  const { makeRequest: patchAcceptRejectOfferDecision } = usePatch({
+    url: OFFER_RESPONSE,
   });
 
-  const { data: companyData } = useFetch({ url: COMPANY_TICKET_STATUS });
+  const handleAcceptRejectOffer = ({ decision, applicantID }) => {
+    setIsLoading(true);
+    patchAcceptRejectOfferDecision({
+      url: OFFER_RESPONSE + `/${applicantID}/status`,
+      body: { status: decision ? 7 : 8 },
+      onErrorCallback: () => {
+        showToast && (
+          <ToastComponent
+            toastMessage={intl.formatMessage({
+              id: "label.some_error_occured",
+            })}
+            onDismiss={() => {
+              setShowToast((prev) => !prev);
+            }}
+          />
+        );
+      },
+      onSuccessCallback: () => {
+        showToast && (
+          <ToastComponent
+            toastMessage={intl.formatMessage({
+              id: "label.success.acceptOffer",
+            })}
+            onDismiss={() => {
+              setShowToast((prev) => !prev);
+            }}
+          />
+        );
+      },
+    });
+    setIsLoading(false);
+  };
 
-  const { data: industryData } = useFetch({
-    url: COMPANY_TICKET_STATUS,
-  });
+  const handleFilterChange = (selectedFilter, filterName) => {
+    console.log("selectedFilter, filterName", selectedFilter, filterName);
+    setFilterState((prevState) => {
+      const filterInfo = customFilterInfo.find(
+        (info) => info.name === filterName
+      );
+      const filterKey = `selected${filterInfo?.name}`;
+      console.log("filterKey", filterKey);
+      const existingSelectedOptions = prevState[filterKey];
+      console.log("prevState:", prevState);
+      console.log("existingSelectedOptions:", existingSelectedOptions);
+      let newSelectedOptions;
 
-  const freshnessData = 60;
+      if (filterInfo?.type === "checkbox") {
+        newSelectedOptions = existingSelectedOptions.includes(selectedFilter.id)
+          ? existingSelectedOptions.filter((id) => id !== selectedFilter.id)
+          : [...existingSelectedOptions, selectedFilter.id];
+      } else {
+        newSelectedOptions = selectedFilter.value;
+      }
+
+      return {
+        ...prevState,
+        [filterKey]: newSelectedOptions,
+      };
+    });
+  };
+
+  const extractLocation = ({ data, keyName }) => {
+    const locationArr = !!data
+      ? data?.map((obj, index) => {
+          return { id: index + 1, name: obj?.[keyName] };
+        })
+      : [];
+    console.log("locationArr:", locationArr);
+    return locationArr;
+  };
+
+  const customFilterInfo = [
+    {
+      name: "WorkMode",
+      type: "checkbox",
+      options: workModeData,
+      selectedOptions: filterState?.selectedWorkMode,
+      handler: handleFilterChange,
+    },
+    {
+      name: "JobType",
+      type: "checkbox",
+      options: jobTypeData,
+      selectedOptions: filterState?.selectedJobType,
+      handler: handleFilterChange,
+    },
+    {
+      name: "Experience",
+      type: "slider",
+      minimumSliderLimit: 0,
+      maximumSliderLimit: 40,
+      options: experienceData,
+      selectedOptions: filterState?.selectedExperience,
+      handler: handleFilterChange,
+    },
+    {
+      name: "Location",
+      type: "checkbox",
+      options: extractLocation({ data: locationData, keyName: "country" }),
+      selectedOptions: filterState?.selectedLocation,
+      handler: handleFilterChange,
+    },
+  ];
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -120,7 +237,7 @@ const useAppliedJobsListing = () => {
         perPage: rowsPerPage,
         page: currentPage,
       };
-      const initialData = await fetchDataTicketListing({
+      const initialData = await fetchDataAppliedJobs({
         queryParamsObject: requestedParams,
       });
       if (initialData && initialData?.records?.length > 0) {
@@ -136,7 +253,7 @@ const useAppliedJobsListing = () => {
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
   const updateCurrentRecords = async (params) => {
-    const newData = await fetchDataTicketListing({
+    const newData = await fetchDataAppliedJobs({
       queryParamsObject: params,
     });
     setCurrentRecords(newData?.records);
@@ -147,7 +264,7 @@ const useAppliedJobsListing = () => {
     setLoadingMore(true);
     const nextPage = currentPage + 1;
     try {
-      const newData = await fetchDataTicketListing({
+      const newData = await fetchDataAppliedJobs({
         queryParamsObject: { perPage: rowsPerPage, page: nextPage },
       });
 
@@ -190,23 +307,25 @@ const useAppliedJobsListing = () => {
       q: searchedData,
       perPage: rowsPerPage,
       page: currentPage,
-      status: filterOptions.status,
-      workMode: filterOptions.work_mode,
-      jobType: filterOptions.job_type,
+      work_mode: filterOptions.work_mode,
+      job_type: filterOptions.job_type,
       experience: filterOptions.experience,
       location: filterOptions.location,
-      salary: filterOptions.salary,
-      education: filterOptions.education,
       department: filterOptions.department,
-      companyType: filterOptions.companyType,
-      industry: filterOptions.industry,
-      freshness: filterOptions.freshness,
     });
   };
 
   const onIconPress = (item) => {
-    setShowPopUpWithID(item?.id);
-    item?.status === "pending"
+    console.log("item:", item);
+    showPopUpWithID !== item?.id
+      ? setShowPopUpWithID(item?.id)
+      : setShowPopUpWithID(-1);
+    if (!item?.status) {
+      setPopUpMessage(intl.formatMessage({ id: "label.respond_to_job_offer" }));
+      return;
+    }
+    item?.status.trim().toLowerCase() ===
+    intl.formatMessage({ id: "label.no_response_from_applicant" })
       ? setPopUpMessage(
           intl.formatMessage({ id: "label.select_interview_time" })
         )
@@ -214,11 +333,10 @@ const useAppliedJobsListing = () => {
           intl.formatMessage({ id: "label.respond_to_job_offer" })
         );
   };
-
   const handleSaveAddTicket = async (queryType, enterQuery) => {
     await handleAddTicket({ query_type: queryType, query: enterQuery });
     if (isMob) {
-      const newData = await fetchDataTicketListing();
+      const newData = await fetchDataAppliedJobs();
       if (newData && newData.records.length > 0) {
         setCurrentRecords((prevRecords) => [
           ...prevRecords,
@@ -233,46 +351,29 @@ const useAppliedJobsListing = () => {
     }
   };
 
-  const filterApplyHandler = async ({
-    selectedStatus,
-    selectedWorkMode,
-    selectedJobType,
-    selectedExperience,
-    selectedLocation,
-    selectedSalary,
-    selectedEducation,
-    selectedDepartment,
-    selectedCompany,
-    selectedIndustry,
-    selectedFreshness,
-  }) => {
-    setFilterOptions({
-      status: selectedStatus,
-      work_mode: selectedWorkMode,
-      job_type: selectedJobType,
-      experience: selectedExperience,
-      location: selectedLocation,
-      salary: selectedSalary,
-      education: selectedEducation,
-      department: selectedDepartment,
-      companyType: selectedCompany,
-      industry: selectedIndustry,
-      freshness: selectedFreshness,
-    });
+  const returnSelectedFilterOption = (filterName) => {
+    const filterObj = customFilterInfo?.find((obj) => obj.name === filterName);
+    return filterObj?.selectedOptions;
+  };
+
+  const filterApplyHandler = async (filterInfo) => {
+    const currentFilterOptions = {
+      work_mode: returnSelectedFilterOption("WorkMode"),
+      job_type: returnSelectedFilterOption("JobType"),
+      experience: returnSelectedFilterOption("Experience"),
+      location: returnSelectedFilterOption("Location"),
+      education: returnSelectedFilterOption("Education"),
+    };
+    setFilterOptions(currentFilterOptions);
+    console.log("curretnFilterOptions:", currentFilterOptions);
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: currentPage,
-      status: filterOptions.status,
-      workMode: filterOptions.work_mode,
-      jobType: filterOptions.job_type,
-      experience: filterOptions.experience,
-      location: filterOptions.location,
-      salary: filterOptions.salary,
-      education: filterOptions.education,
-      department: filterOptions.department,
-      companyType: filterOptions.companyType,
-      industry: filterOptions.industry,
-      freshness: filterOptions.freshness,
+      work_mode: currentFilterOptions.work_mode,
+      job_type: currentFilterOptions.job_type,
+      experience: currentFilterOptions.experience,
+      location: currentFilterOptions.location,
+      department: currentFilterOptions.department,
     });
   };
 
@@ -286,22 +387,11 @@ const useAppliedJobsListing = () => {
     });
   };
 
-  let headingTexts = ["readable_id"];
-  let subHeadingText = ["query_type"];
-  let statusText = ["status"];
+  let headingTexts = ["id"];
+  let subHeadingText = ["company_name"];
+  let statusText = ["active"];
   let tableIcon = images.iconTicket;
-  let filterCategory = [
-    "Work Mode",
-    "Job Type",
-    "Experience",
-    "Location",
-    "Salary",
-    "Education",
-    "Department",
-    "Company Type",
-    "Industry",
-    "Freshness",
-  ];
+  let filterCategory = ["Work Mode", "Job Type", "Experience", "Location"];
   let isHeading = true;
 
   function getStatusStyle(status) {
@@ -322,6 +412,11 @@ const useAppliedJobsListing = () => {
           ...(!isWebView ? styles.inProgress : styles.inProgressWeb),
           ...styles.cellTextStyle(12),
         };
+      case "active":
+        return {
+          ...(!isWebView ? styles.active : styles.activeWeb),
+          ...styles.cellTextStyle(12),
+        };
       default:
         return styles.cellTextStyle(12);
     }
@@ -335,10 +430,12 @@ const useAppliedJobsListing = () => {
       {
         content: (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.readable_id}
+            {item.readable_id || item.job_id
+              ? item.readable_id || item.job_id
+              : "-"}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("15%"),
+        style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
@@ -360,42 +457,37 @@ const useAppliedJobsListing = () => {
           </CustomTouchableOpacity>
         ) : (
           <CommonText customTextStyle={tableStyle}>
-            {item.company_name}
+            {item.company_name ? item.company_name : "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
-      // {
-      //   content: (
-      //     <CommonText customTextStyle={tableStyle}>
-      //       {item.company_name}
-      //     </CommonText>
-      //   ),
-      //   style: commonStyles.columnStyle("20%"),
-      //   isFillSpace: true,
-      // },
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item.designation}
+            {item.designation ? item.designation : "-"}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
         content: (
-          <CommonText customTextStyle={tableStyle}>{item.vacancies}</CommonText>
+          <CommonText customTextStyle={tableStyle}>
+            {item.vacancy ? item.vacancy : "0"}
+          </CommonText>
         ),
         style: commonStyles.columnStyle("10%"),
         isFillSpace: true,
       },
       {
         content: (
-          <CommonText customTextStyle={tableStyle}>{item.status}</CommonText>
+          <CommonText customTextStyle={tableStyle}>
+            {item.status ? item.status : "-"}
+          </CommonText>
         ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
       },
       {
@@ -403,27 +495,45 @@ const useAppliedJobsListing = () => {
           <View style={styles.statusStyle}>
             {isHeading ? (
               <CommonText customTextStyle={tableStyle}>
-                {item.active_status}
+                {item.active_status ? item.active_status : "No status"}
               </CommonText>
             ) : (
               <Chip
-                label={item.active_status}
-                style={getStatusStyle(item.status)}
+                label={
+                  item.active
+                    ? intl.formatMessage({ id: "label.active" })
+                    : intl.formatMessage({ id: "label.inactive" })
+                }
+                style={getStatusStyle(item?.active ? "active" : "inactive")}
               />
             )}
           </View>
         ),
-        style: commonStyles.columnStyle("15%"),
+        style: commonStyles.columnStyle("10%"),
         isFillSpace: true,
       },
       {
         content: !isHeading && (
           <>
             {showPopUpWithID === item?.id && (
-              <PopupMessage
-                message={popUpMessage}
-                customStyle={styles.popUpMessagePosition}
-              />
+              <View ref={popUpRef}>
+                <PopupMessage
+                  message={popUpMessage}
+                  customStyle={styles.popUpMessagePosition}
+                  onPopupClick={() => {
+                    if (
+                      popUpMessage ===
+                      intl.formatMessage({ id: "label.respond_to_job_offer" })
+                    ) {
+                      setShowJobOfferResponseModal((prev) => !prev);
+                      setModalData(item);
+                    } else {
+                      setShowInterviewTimeModal((prev) => !prev);
+                    }
+                    setShowPopUpWithID(-1);
+                  }}
+                />
+              </View>
             )}
             <TouchableImage
               onPress={() => {
@@ -435,9 +545,7 @@ const useAppliedJobsListing = () => {
             />
           </>
         ),
-        style: {
-          ...styles.iconMoreColumn,
-        },
+        style: commonStyles.columnStyle("8%"),
         isFillSpace: true,
       },
     ];
@@ -446,9 +554,11 @@ const useAppliedJobsListing = () => {
   return {
     allDataLoaded,
     currentPage,
-    fetchDataTicketListing,
+    customFilterInfo,
+    fetchDataAppliedJobs,
     filterApplyHandler,
     filterCategory,
+    filterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,
@@ -460,7 +570,7 @@ const useAppliedJobsListing = () => {
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
-    isTicketListingLoading,
+    isAppliedJobsListingLoading,
     isFirstPageReceived,
     loadingMore,
     onIconPress,
@@ -469,22 +579,26 @@ const useAppliedJobsListing = () => {
     defaultCategory,
     showPopUpWithID,
     popUpMessage,
-    statusData,
     workModeData,
     jobTypeData,
     experienceData,
     locationData,
-    educationData,
-    salaryData,
-    departmentData,
-    freshnessData,
-    companyData,
-    industryData,
     statusText,
     subHeadingText,
     tableIcon,
-    ticketListingData: currentRecords,
-    totalcards: ticketListingData?.meta?.total,
+    appliedJobsData: currentRecords,
+    totalcards: appliedJobsData?.meta?.total,
+    showJobOfferResponseModal,
+    setShowJobOfferResponseModal,
+    showInterviewTimeModal,
+    setShowInterviewTimeModal,
+    handleAcceptRejectOffer,
+    modalData,
+    isLoading,
+    setIsLoading,
+    showPopUpWithID,
+    setModalData,
+    setShowPopUpWithID,
   };
 };
 

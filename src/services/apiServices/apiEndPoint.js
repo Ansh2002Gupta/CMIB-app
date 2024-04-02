@@ -1,6 +1,7 @@
 /* User Types */
 export const USER_TYPE_COMPANY = "company";
 export const USER_TYPE_MEMBER = "member";
+export const USER_TYPE_ADMIN = "admin";
 export const CORE = "core";
 
 /* API Endpoints */
@@ -33,6 +34,10 @@ export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/otp/verify`;
 export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
 export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 export const MEMBER_JOBS_LISTING = `${USER_TYPE_MEMBER}/${JOBS}/apply`;
+export const OFFER_RESPONSE = `${USER_TYPE_ADMIN}/${JOBS}/applicants`;
+export const JOB_LOCATION_OPTIONS = `${USER_TYPE_COMPANY}/job/locations`;
+export const JOB_TYPE_OPTIONS = `${USER_TYPE_COMPANY}/job-type`;
+export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
 
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";

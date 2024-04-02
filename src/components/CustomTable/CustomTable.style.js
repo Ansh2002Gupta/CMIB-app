@@ -140,6 +140,10 @@ const styles = StyleSheet.create({
   activeTicketsText: {
     color: colors.white,
   },
+  mobilePopUpPosition: {
+    top: 10,
+    right: -10,
+  },
 });
 
 export default styles;
