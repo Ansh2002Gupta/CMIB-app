@@ -22,11 +22,14 @@ const CustomTextEditor = (props) => {
     customErrorStyle,
     customHandleBlur,
     customLabelStyle,
+    disabled,
     errorMessage,
     isMandatory,
     label,
     onChangeText,
     value,
+    quilStyle,
+    quillContainerStyle,
   } = props;
 
   const modules = {
@@ -44,6 +47,14 @@ const CustomTextEditor = (props) => {
   const handleProcedureContentChange = (content) => {
     onChangeText && onChangeText(content);
   };
+  const getTextEditorStyles = () => {
+    if (!!errorMessage) {
+      return "error";
+    } else if (disabled) {
+      return "disabled";
+    }
+    return "";
+  };
 
   return (
     <View>
@@ -60,17 +71,18 @@ const CustomTextEditor = (props) => {
           </CommonText>
         )}
       </View>
-      <View style={styles.quillContainer}>
+      <View style={{ ...styles.quillContainer, ...quillContainerStyle }}>
         <ReactQuill
           theme="snow"
           value={value}
-          className={!!errorMessage ? "error" : ""}
+          className={getTextEditorStyles()}
           modules={modules}
           onBlur={customHandleBlur}
           formats={FORMAT}
           placeholder={intl.formatMessage({ id: "label.description" })}
           onChange={handleProcedureContentChange}
-          style={styles.quillStyling}
+          style={{ ...styles.quillStyling, ...quilStyle }}
+          readOnly={disabled}
         />
       </View>
       {!!errorMessage && (
@@ -84,15 +96,28 @@ const CustomTextEditor = (props) => {
     </View>
   );
 };
+
+CustomTextEditor.defaultProps = {
+  customLabelStyle: {},
+  isMandatory: false,
+  label: "",
+  disabled: false,
+  quillContainerStyle: {},
+  quilStyle: {},
+};
+
 CustomTextEditor.propTypes = {
   customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,
   customLabelStyle: PropTypes.object,
+  disabled: PropTypes.bool,
   errorMessage: PropTypes.string,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,
   onChangeText: PropTypes.func,
   value: PropTypes.string,
+  quilStyle: PropTypes.object,
+  quillContainerStyle: PropTypes.object,
 };
 
 export default CustomTextEditor;

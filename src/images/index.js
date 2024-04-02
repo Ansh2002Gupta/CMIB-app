@@ -82,6 +82,10 @@ const iconArrowDown2 = appendAppBaseURl(
 const iconLeftArrow = appendAppBaseURl(
   "/images/iconLeftArrow/iconLeftArrow.png"
 );
+const iconSquareEdit = appendAppBaseURl(
+  "/images/iconSquareEdit/iconSquareEdit.png"
+);
+
 const iconProfile = appendAppBaseURl("/images/iconProfile/iconProfile.png");
 const iconWarning = appendAppBaseURl("/images/svg/iconWarning.svg");
 const iconTick = appendAppBaseURl("/images/iconTick/iconTick.png");
@@ -156,6 +160,7 @@ const iconTwitterWeb = appendAppBaseURl("/images/svg/iconTwitterWeb.svg");
 const iconCmibCALogo = appendAppBaseURl(
   "/images/cmibCAIndiaLogo/cmibCAIndiaLogo.png"
 );
+const dotIcon = appendAppBaseURl("/images/dotIcon/dot.png");
 const iconRetry = appendAppBaseURl("/images/svg/iconRetry.svg");
 const iconEditSvg = appendAppBaseURl("/images/svg/editIcon.svg");
 const iconCloseDark = appendAppBaseURl("/images/svg/iconCloseDark.svg");
@@ -191,14 +196,19 @@ const iconArrowUpSorting = appendAppBaseURl(
   "/images/svg/iconArrowUpSorting.svg"
 );
 const iconPartial = appendAppBaseURl("/images/svg/iconPartial.svg");
+const iconDeleteRed = appendAppBaseURl("/images/svg/iconDeleteRed.svg");
+const questionIcon = appendAppBaseURl("/images/question/question.png");
+const copyIcon = appendAppBaseURl("/images/copyIcon/copy.png");
+const redCrossIcon = appendAppBaseURl("/images/redCross/redClose.png");
+const editIcon = appendAppBaseURl("/images/editIcon/edit.png");
 const iconDisabledCheck = appendAppBaseURl("/images/svg/iconDisabledCheck.svg");
 const iconZoomIn = appendAppBaseURl("/images/svg/iconZoomIn.svg");
 const iconZoomOut = appendAppBaseURl("/images/svg/iconZoomOut.svg");
-const iconDeleteRed = appendAppBaseURl("/images/svg/iconDeleteRed.svg");
 const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
 const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
+const iconDownloading = appendAppBaseURl("/images/downloadIcon/download.png");
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
 const iconAppliedJobs = appendAppBaseURl("/images/svg/iconAppliedJobs.svg");
 const iconAppliedJobsActiveJobs = appendAppBaseURl(
@@ -338,6 +348,11 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
+  iconDeleteRed,
+  questionIcon,
+  copyIcon,
+  redCrossIcon,
+  editIcon,
   iconDisabledCheck,
   iconZoomIn,
   iconZoomOut,
@@ -346,6 +361,8 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  dotIcon,
+  iconDownloading,
   iconError,
   iconAppliedJobs,
   iconAppliedJobsActiveJobs,

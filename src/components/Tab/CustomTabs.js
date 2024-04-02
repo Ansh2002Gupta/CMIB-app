@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import {
   Row,
@@ -12,7 +12,14 @@ import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
 import styles from "./CustomTabs.style.js";
 
-export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
+export const CustomTabs = ({
+  containerStyle,
+  cleanupFuntion,
+  renderHeader,
+  showWarningOnTabSwitch,
+  setSelectedTab,
+  tabs,
+}) => {
   const intl = useIntl();
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -22,6 +29,9 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
     tabIndex: -1,
   });
 
+  useEffect(() => {
+    setSelectedTab && setSelectedTab(activeTabIndex);
+  }, [activeTabIndex]);
   const handleTabChange = ({ tab, index }) => {
     if (index !== activeTabIndex) {
       if (showWarningOnTabSwitch) {
@@ -32,6 +42,7 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
         });
         return;
       }
+      cleanupFuntion && cleanupFuntion();
       setActiveTabIndex(index);
     }
   };
@@ -47,7 +58,7 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.headerContainer}>
+        <View style={{ ...styles.headerContainer, ...containerStyle }}>
           {renderHeader && renderHeader()}
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Row gap={24} style={styles.tabsContainer}>
@@ -105,6 +116,7 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
 };
 
 CustomTabs.propTypes = {
+  containerStyle: PropTypes.object,
   renderHeader: PropTypes.func,
   showWarningOnTabSwitch: PropTypes.bool,
   tabs: PropTypes.arrayOf(
@@ -113,4 +125,6 @@ CustomTabs.propTypes = {
       component: PropTypes.element.isRequired,
     })
   ).isRequired,
+  setSelectedTab: PropTypes.func,
+  cleanupFuntion: PropTypes.func,
 };

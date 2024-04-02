@@ -5,6 +5,8 @@ import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../components/CommonText";
 import styles from "./dashboard.style";
 
+const MIN_VALUE = 0;
+const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
 // Just ignore this file as just to test custom component
 function DashboardView() {
   const intl = useIntl();

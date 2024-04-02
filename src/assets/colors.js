@@ -43,6 +43,7 @@ const silver = "#EBEBEB";
 const slateGray = "#616c82";
 const disabledTextFieldColor = "#F2F2F2";
 const neutralGrey = "#0F172A";
+const greyFive = "#E7E7F1";
 
 /* Reds */
 const errorBackground = "#ffeded"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
@@ -59,6 +60,10 @@ const yellow = "#FABB00";
 /* Oranges */
 const orange = "#D76200";
 const lightOrange = "#FFEFE5";
+
+/* Purple */
+const lightPurple = "#E3E2F5";
+const darkPurple = "#6F6AC4";
 
 const colors = {
   darkBlueShade,
@@ -107,5 +112,8 @@ const colors = {
   skyBlueLight,
   disabledTextFieldColor,
   neutralGrey,
+  lightPurple,
+  darkPurple,
+  greyFive,
 };
 export default colors;

@@ -24,10 +24,13 @@ import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
 import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
+import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
+import EditJobDetails from "../views/EditJobDetails/EditJobDetails";
+import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -219,6 +222,23 @@ const config = [
       {
         viewPath: navigations.POSTED_JOBS,
         element: <PostedJobsView />,
+      },
+
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
+        element: <AddModifyNewJobs />,
+      },
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}`,
+        element: <ViewPostedJobDetails />,
+      },
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}/${navigations.EDIT_JOB}`,
+        element: <EditJobDetails />,
+      },
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.EDIT_JOB}`,
+        element: <EditJobDetails />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,
