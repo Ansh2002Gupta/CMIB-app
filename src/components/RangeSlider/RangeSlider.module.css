@@ -1,0 +1,44 @@
+:root {
+  --white: #fff;
+  --green: #04af55;
+  --disabledGrey: #f2f2f2;
+}
+
+.thumb,
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  margin: 2px 0;
+}
+
+.thumb::-webkit-slider-thumb {
+  background-color: var(--white);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 1px 1px var(--green);
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  margin-top: 4px;
+  pointer-events: all;
+  position: relative;
+}
+
+/* For Firefox browsers */
+.thumb::-moz-range-thumb {
+  background-color: var(--white);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 1px 1px var(--green);
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  margin-top: 4px;
+  pointer-events: all;
+  position: relative;
+}
+
+.disabledRange::-webkit-slider-thumb {
+  background-color: var(--disabledGrey);
+  cursor: not-allowed;
+}

@@ -64,6 +64,7 @@ const EditButton = ({ isEditable, handleEdit }) => {
 const JobProfileTab = () => {
   const intl = useIntl();
   const [isEditable, setIsEditable] = useState(false);
+  //Todo:editable will be in query params
   const handleEdit = (value) => {
     setIsEditable(value);
   };
