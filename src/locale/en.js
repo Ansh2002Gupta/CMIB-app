@@ -427,7 +427,7 @@ const locale = {
   "label.handicap_description": "Handicapped Description",
   "label.handicap_percentage": "Handicapped %",
   "toggle.1": "Yes",
-  "toggle.0": "NO",
+  "toggle.0": "No",
 };
 
 export default locale;

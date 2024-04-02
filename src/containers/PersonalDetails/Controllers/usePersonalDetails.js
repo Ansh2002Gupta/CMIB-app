@@ -13,7 +13,11 @@ import {
   MEMBER_CATEGORY,
 } from "../../../services/apiServices/apiEndPoint";
 import { useIntl } from "react-intl";
-import { formatCountryCode, getNameById } from "../../../utils/util";
+import {
+  isValueEmpty,
+  formatCountryCode,
+  getNameById,
+} from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 
 const accessibility_information = [
@@ -483,7 +487,7 @@ export const usePersonalDetails = ({ state, isEditable }) => {
       ...correspondence_address_state,
       ...permanent_address_state,
     ].forEach((item) => {
-      if (item.isMandatory && !state[item.key]) {
+      if (item.isMandatory && isValueEmpty(state[item.key])) {
         error = true;
       }
     });
