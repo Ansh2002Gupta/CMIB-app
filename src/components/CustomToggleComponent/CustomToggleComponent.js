@@ -9,21 +9,28 @@ import styles from "./CustomToggleComponent.style";
 
 const CustomToggleComponent = ({
   customLabelStyle,
+  containerStyle,
   customToggleStyle,
   isMandatory,
   label,
-  onChange,
+  onValueChange,
+  toggleTitle1,
+  toggleTitle2,
   value,
 }) => {
+  const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
   const intl = useIntl();
   const handleOptionSelect = (option) => {
-    onChange(option);
+    if (onValueChange) {
+      onValueChange(option);
+    }
+    setSelectedToggleOption(option);
   };
   const { isWebView } = useIsWebView();
 
   return (
-    <View>
-      {!!label && (
+    <View style={containerStyle}>
+      {label && (
         <View style={styles.labelContainer}>
           <CommonText
             customTextStyle={[
@@ -57,7 +64,11 @@ const CustomToggleComponent = ({
           />
         </TouchableOpacity>
         <CommonText customTextStyle={styles.textStyle}>
-          {intl.formatMessage({ id: "label.yes" })}
+          {toggleTitle1
+            ? toggleTitle1
+            : intl.formatMessage({
+                id: "label.yes",
+              })}
         </CommonText>
         <TouchableOpacity
           style={{
@@ -74,7 +85,11 @@ const CustomToggleComponent = ({
           />
         </TouchableOpacity>
         <CommonText customTextStyle={styles.textStyle}>
-          {intl.formatMessage({ id: "label.no" })}
+          {toggleTitle2
+            ? toggleTitle2
+            : intl.formatMessage({
+                id: "label.no",
+              })}
         </CommonText>
       </View>
     </View>
@@ -82,16 +97,18 @@ const CustomToggleComponent = ({
 };
 
 CustomToggleComponent.defaultProps = {
-  value: 1,
-  onChange: () => {},
+  onValueChange: () => {},
 };
 
 CustomToggleComponent.propTypes = {
   customLabelStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,
-  onChange: PropTypes.func,
-  value: PropTypes.number,
+  onValueChange: PropTypes.func,
+  toggleTitle1: PropTypes.string,
+  toggleTitle2: PropTypes.string,
+  value: PropTypes.string,
 };
 
 export default CustomToggleComponent;

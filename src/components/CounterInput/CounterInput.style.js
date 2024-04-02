@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   counterInputText: {
-    flex: 1,
     color: colors.black,
     justifyContent: "center",
     alignItems: "center",

@@ -11,8 +11,15 @@ import PropTypes from "prop-types";
 import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
 import styles from "./FormTabs.style.js";
+import images from "../../images";
+import TouchableImage from "../TouchableImage";
 
-export const FormTabs = ({ showWarningOnTabSwitch, tabs }) => {
+export const FormTabs = ({
+  isEditButtonVisible,
+  onEditClick,
+  showWarningOnTabSwitch,
+  tabs,
+}) => {
   const intl = useIntl();
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -47,7 +54,7 @@ export const FormTabs = ({ showWarningOnTabSwitch, tabs }) => {
   return (
     <>
       <View style={styles.container}>
-        <View>
+        <View style={styles.innerContainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Row gap={12} style={styles.tabContainer}>
               {tabs.map((tab, index) => {
@@ -81,6 +88,18 @@ export const FormTabs = ({ showWarningOnTabSwitch, tabs }) => {
               })}
             </Row>
           </ScrollView>
+          {isEditButtonVisible && (
+            <View style={styles.editButtonViewStyle}>
+              <TouchableImage
+                source={images.iconEditSvg}
+                onPress={onEditClick}
+                style={styles.editIconStyle}
+              />
+              <CommonText customContainerStyle={styles.marginLeft8}>
+                {intl.formatMessage({ id: "label.edit" })}
+              </CommonText>
+            </View>
+          )}
         </View>
         {tabs[activeTabIndex].component}
       </View>
@@ -108,6 +127,8 @@ export const FormTabs = ({ showWarningOnTabSwitch, tabs }) => {
 
 FormTabs.propTypes = {
   showWarningOnTabSwitch: PropTypes.bool,
+  isEditButtonVisible: PropTypes.bool,
+  onEditClick: PropTypes.func,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
