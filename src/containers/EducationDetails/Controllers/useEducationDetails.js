@@ -241,7 +241,7 @@ export const useEducationDetails = ({ state, isEditable }) => {
     setPostGraduationDetailState(
       post_graduation_detail(state?.post_graduation)
     );
-  }, [state]);
+  }, [state?.graduation, state?.post_graduation]);
 
   const handleEducationDetailBlur = (key, index) => {
     const updatedData = validateOnBlur({

@@ -138,7 +138,7 @@ const ExamsComponent = ({ isEditable = true, handleEdit }) => {
     />
   ) : (
     <>
-      {error && (
+      {!!error && (
         <ToastComponent toastMessage={error} onDismiss={handleDismissToast} />
       )}
       <ExamsUI

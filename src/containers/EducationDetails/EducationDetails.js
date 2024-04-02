@@ -47,7 +47,7 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
           higher_secondary_mark_in_percent:
             data["Class 10"]?.passing_percentage,
 
-          graduation: data["Graduation"]?.has_education,
+          graduation: data["Graduation"]?.has_education || 1,
           graduation_examination_name: data["Graduation"]?.exam_name,
           graduation_status: data["Graduation"]?.exam_status,
           graduation_board: data["Graduation"]?.exam_board,
@@ -55,7 +55,7 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
           graduation_rank_medal: data["Graduation"]?.passing_rank,
           graduation_mark_in_percent: data["Graduation"]?.passing_percentage,
 
-          post_graduation: data["Post Graduation"]?.has_education,
+          post_graduation: data["Post Graduation"]?.has_education || 1,
           post_graduation_examination_name: data["Post Graduation"]?.exam_name,
           post_graduation__status: data["Post Graduation"]?.exam_status,
           post_graduation_board: data["Post Graduation"]?.exam_board,
@@ -166,7 +166,7 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
     />
   ) : (
     <>
-      {error && (
+      {!!error && (
         <ToastComponent toastMessage={error} onDismiss={handleDismissToast} />
       )}
       <EducationDetailsUI

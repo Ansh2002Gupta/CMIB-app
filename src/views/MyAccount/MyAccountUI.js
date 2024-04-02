@@ -9,6 +9,7 @@ import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
+import { Candidate, Company } from "../../constants/constants";
 import style from "./MyAccount.style";
 
 const MyAccountUI = ({
@@ -80,8 +81,8 @@ const MyAccountUI = ({
         <ScrollView style={style.profileListContainer}>
           {options.map(
             (option, index) =>
-              ((userType === "Candidate" && option?.isCandidate) ||
-                (userType === "Company" && option?.isCompany)) && (
+              ((userType === Candidate && option?.isCandidate) ||
+                (userType === Company && option?.isCompany)) && (
                 <CustomTouchableOpacity
                   style={[
                     style.optionCotainer,
