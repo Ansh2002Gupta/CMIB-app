@@ -125,6 +125,7 @@ import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 import iconError from "../../public/images/svg/iconError.svg";
+import iconTickCircle from "../../public/images/svg/tick-circle.svg";
 
 const images = {
   iconArrowUp,
@@ -254,6 +255,7 @@ const images = {
   iconLoading,
   iconGreyCross,
   iconError,
+  iconTickCircle,
 };
 
 export default images;

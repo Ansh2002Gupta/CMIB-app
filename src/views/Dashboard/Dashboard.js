@@ -17,10 +17,14 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import CustomButton from "../../components/CustomButton";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import useFetch from "../../hooks/useFetch";
-import { COMPANY_SUBSCRIPTION_LISTING, USER_TYPE_COMPANY } from "../../services/apiServices/apiEndPoint";
+import {
+  COMPANY_SUBSCRIPTION_LISTING,
+  USER_TYPE_COMPANY,
+} from "../../services/apiServices/apiEndPoint";
 import CustomImage from "../../components/CustomImage";
-import PackageListing from './PackageListing'
+import PackageListing from "./PackageListing";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { ScrollView } from "@unthinkable/react-core-components";
 
 // Just ignore this file as just to test custom component
 function DashboardView() {
@@ -49,7 +53,7 @@ function DashboardView() {
     url: `${USER_TYPE_COMPANY}/1/status`,
   });
 
-  console.log(subscribedPackageData, "subscribedPackageData")
+  console.log(subscribedPackageData, "subscribedPackageData");
   // const [userProfileDetails] =
   //   useContext(UserProfileContext);
 
@@ -133,8 +137,8 @@ function DashboardView() {
   // };
 
   const handleViewpackages = () => {
-    fetchDataSubscriptionListing()
-  }
+    fetchDataSubscriptionListing();
+  };
 
   return (
     <View style={styles.container}>
@@ -144,77 +148,133 @@ function DashboardView() {
             hasActionButton={false}
             showInWeb={isWebView}
             hasIconBar
-            headerText={
-              intl.formatMessage({ id: "label.dashboard" })
-            }
+            headerText={intl.formatMessage({ id: "label.dashboard" })}
             intl={intl}
-          />}
+          />
+        }
         isBottomFillSpace
         bottomSection={
-          <View style={{ paddingLeft: 16, paddingRight: 16 }}>
-            <TwoRow
-              topSection={
-                <View style={styles.headingTextContainer}>
-                  <CommonText customTextStyle={styles.headingText} fontWeight={"500"}>Subscribe to Get Started!</CommonText>
-                  <CommonText customTextStyle={styles.subHeadingText} fontWeight={"500"}>Unlock the following benefits and features by subscribing to one of our packages, starting at just ₹2000.</CommonText>
-                </View>
-              }
-              bottomSection={
-                <View style={styles.pointersButtonContainer}>
-                  <View>
-                    <TwoColumn
-                      style={styles.pointersContainer}
-                      leftSection={
-                        <CustomImage
-                          style={styles.tickIcon}
-                          source={images.iconTickCircle}
-                        />
-                      }
-                      rightSection={
-                        <CommonText customTextStyle={styles.pointersText} fontWeight={"600"}>Post Jobs Openings and find top talent effortlessly</CommonText>
-                      }
-                    />
-                    <TwoColumn
-                      style={styles.pointersContainer}
-                      leftSection={
-                        <CustomImage
-                          style={styles.tickIcon}
-                          source={images.iconTickCircle}
-                        />
-                      }
-                      rightSection={
-                        <CommonText customTextStyle={styles.pointersText} fontWeight={"600"}>Schedule Interviews with Applicants & streamline hiring process</CommonText>
-                      }
-                    />
-                    <TwoColumn
-                      style={styles.pointersContainer}
-                      leftSection={
-                        <CustomImage
-                          style={styles.tickIcon}
-                          source={images.iconTickCircle}
-                        />
-                      }
-                      rightSection={
-                        <CommonText customTextStyle={styles.pointersText} fontWeight={"600"}>Tap into an extensive database of Job Seekers</CommonText>
-                      }
-                    />
+          <ScrollView style={{ flex: 1 }}>
+            <View style={{ paddingLeft: 16, paddingRight: 16 }}>
+              <TwoRow
+                topSection={
+                  <View style={styles.headingTextContainer}>
+                    <CommonText
+                      customTextStyle={styles.headingText}
+                      fontWeight={"500"}
+                    >
+                      Subscribe to Get Started!
+                    </CommonText>
+                    <CommonText
+                      customTextStyle={styles.subHeadingText}
+                      fontWeight={"500"}
+                    >
+                      Unlock the following benefits and features by subscribing
+                      to one of our packages, starting at just ₹2000.
+                    </CommonText>
                   </View>
-                  {!subscriptionListingData && !subscriptionListingData?.length > 0 ?
-                    <CustomTouchableOpacity style={styles.viewPackagesButton} onPress={handleViewpackages}>
-                      <CommonText customTextStyle={styles.viewPackageText}>View Packages</CommonText>
-                      <CustomImage
-                        style={styles.arrowDown}
-                        source={images.iconLineArrowDown}
+                }
+                bottomSection={
+                  <View
+                    style={
+                      isWebView
+                        ? styles.pointersButtonContainer
+                        : styles.pointersButtonContainerMob
+                    }
+                  >
+                    <View style={styles.pointerMainContainer}>
+                      <TwoColumn
+                        style={styles.pointersContainer}
+                        leftSection={
+                          <CustomImage
+                            style={styles.tickIcon}
+                            source={images.iconTickCircle}
+                          />
+                        }
+                        rightSection={
+                          <CommonText
+                            customContainerStyle={styles.pointersTextContainer}
+                            customTextStyle={
+                              isWebView
+                                ? styles.pointersTextWeb
+                                : styles.pointersText
+                            }
+                            fontWeight={"600"}
+                          >
+                            Post Jobs Openings and find top talent effortlessly
+                          </CommonText>
+                        }
                       />
-                    </CustomTouchableOpacity> : null}
-                </View>
-              }
-            />
-            <PackageListing subscriptionListingData={subscriptionListingData} />
-          </View>
+                      <TwoColumn
+                        style={styles.pointersContainer}
+                        leftSection={
+                          <CustomImage
+                            style={styles.tickIcon}
+                            source={images.iconTickCircle}
+                          />
+                        }
+                        rightSection={
+                          <CommonText
+                            customTextStyle={
+                              isWebView
+                                ? styles.pointersTextWeb
+                                : styles.pointersText
+                            }
+                            fontWeight={"600"}
+                          >
+                            Schedule Interviews with Applicants & streamline
+                            hiring process
+                          </CommonText>
+                        }
+                      />
+                      <TwoColumn
+                        style={styles.pointersContainer}
+                        leftSection={
+                          <CustomImage
+                            style={styles.tickIcon}
+                            source={images.iconTickCircle}
+                          />
+                        }
+                        rightSection={
+                          <CommonText
+                            customTextStyle={
+                              isWebView
+                                ? styles.pointersTextWeb
+                                : styles.pointersText
+                            }
+                            fontWeight={"600"}
+                          >
+                            Tap into an extensive database of Job Seekers
+                          </CommonText>
+                        }
+                      />
+                    </View>
+                    {!subscriptionListingData &&
+                    !subscriptionListingData?.length > 0 ? (
+                      <CustomTouchableOpacity
+                        style={styles.viewPackagesButton}
+                        onPress={handleViewpackages}
+                      >
+                        <CommonText customTextStyle={styles.viewPackageText}>
+                          View Packages
+                        </CommonText>
+                        <CustomImage
+                          style={styles.arrowDown}
+                          source={images.iconLineArrowDown}
+                        />
+                      </CustomTouchableOpacity>
+                    ) : null}
+                  </View>
+                }
+              />
+              <PackageListing
+                subscriptionListingData={subscriptionListingData}
+              />
+            </View>
+          </ScrollView>
         }
       />
-    </View >
+    </View>
   );
 }
 

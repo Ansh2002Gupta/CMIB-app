@@ -17,216 +17,222 @@ import { usePost } from "../../hooks/useApiRequest";
 import { COMPANY_INIT_PAYMENT } from "../../services/apiServices/apiEndPoint";
 
 const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
-    const intl = useIntl();
-    const { isWebView } = useIsWebView();
-    const [error, setError] = useState("");
-    const [tdsAmount, setTdsAmount] = useState("");
-    const [tan, setTan] = useState("");
-    const [panNumber, setPanNumber] = useState("");
-    const [gstNumber, setGstNumber] = useState("");
-    const [PONumber, setPONumber] = useState("");
-    const [address, setAddress] = useState("");
+  const intl = useIntl();
+  const { isWebView } = useIsWebView();
+  const [error, setError] = useState("");
+  const [tdsAmount, setTdsAmount] = useState("");
+  const [tan, setTan] = useState("");
+  const [panNumber, setPanNumber] = useState("");
+  const [gstNumber, setGstNumber] = useState("");
+  const [PONumber, setPONumber] = useState("");
+  const [address, setAddress] = useState("");
 
-    // const {
-    //     errorWhileChangePassword,
-    //     handleUseChangePassword,
-    //     isLoading,
-    //     isSuccess,
-    //     setErrorWhileChangePassword,
-    // } = useChangePasswordApi();
+  // const {
+  //     errorWhileChangePassword,
+  //     handleUseChangePassword,
+  //     isLoading,
+  //     isSuccess,
+  //     setErrorWhileChangePassword,
+  // } = useChangePasswordApi();
 
-    const {
-        isLoading: isPaymentInitializedLoading,
-        makeRequest: getpaymentInitialized,
-    } = usePost({
-        url: COMPANY_INIT_PAYMENT,
+  const {
+    isLoading: isPaymentInitializedLoading,
+    makeRequest: getpaymentInitialized,
+  } = usePost({
+    url: COMPANY_INIT_PAYMENT,
+  });
+
+  const isNextDisabled = () => {
+    return !gstNumber || !panNumber || !tdsAmount || !tan;
+  };
+
+  // const handleDismissToast = () => {
+  //     setErrorWhileChangePassword("");
+  // };
+
+  const handleSave = () => {
+    if (isNextDisabled()) return;
+
+    getpaymentInitialized({
+      body: { final_amt: finalAmount, subscription_id: subscriptionId },
+      onErrorCallback: (errorMessage) => {
+        console.log("Error", errorMessage);
+        onPressCancel();
+      },
+      onSuccessCallback: (data) => {
+        if (isWebView) {
+          window.open(data?.data, "_self");
+        }
+        onPressCancel();
+      },
     });
+  };
 
-    const isNextDisabled = () => {
-        return (
-            !gstNumber || !panNumber || !tdsAmount || !tan
-        );
-    };
+  const baseStyle = isWebView ? styles.containerStyle : styles.inputStyle;
+  const errorStyle = isWebView
+    ? styles.erroInputStyleWeb
+    : styles.erroInputStyle;
+  const customStyle = error ? errorStyle : baseStyle;
 
-    // const handleDismissToast = () => {
-    //     setErrorWhileChangePassword("");
-    // };
+  const isWebProps =
+    Platform.OS.toLowerCase() === "web"
+      ? {
+          buttonOneStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonStyle,
+          buttonOneContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonStyle,
+        }
+      : {};
 
-    const handleSave = () => {
-        if (isNextDisabled()) return;
+  const isMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { automaticallyAdjustKeyboardInsets: false }
+      : {};
 
-        getpaymentInitialized({
-            body: { final_amt: finalAmount, subscription_id: subscriptionId },
-            onErrorCallback: (errorMessage) => {
-                console.log("Error", errorMessage)
-                onPressCancel()
-            },
-            onSuccessCallback: (data) => {
-                if (isWebView) {
-                    window.open(data?.data, "_self")
-                }
-                onPressCancel()
-            },
-        });
-    };
-
-    const baseStyle = isWebView ? styles.containerStyle : styles.inputStyle;
-    const errorStyle = isWebView
-        ? styles.erroInputStyleWeb
-        : styles.erroInputStyle;
-    const customStyle = error ? errorStyle : baseStyle;
-
-    const isWebProps =
-        Platform.OS.toLowerCase() === "web"
-            ? {
-                buttonOneStyle: styles.buttonStyle,
-                buttonTwoStyle: styles.buttonStyle,
-                buttonOneContainerStyle: styles.buttonStyle,
-                buttonTwoContainerStyle: styles.buttonStyle,
-            }
-            : {};
-
-    const isMobileProps =
-        Platform.OS.toLowerCase() !== "web"
-            ? { automaticallyAdjustKeyboardInsets: false }
-            : {};
-
-    const renderAmountHeading = (heading, amount) => {
-        return (
-            <View>
-                <CommonText customTextStyle={styles.amountHeading} fontWeight={"500"}>{heading}</CommonText>
-                <CommonText customTextStyle={styles.amountValueText}>{amount}</CommonText>
-            </View>
-        )
-    }
-
-    const finalAmount = tdsAmount ? Number(amount) - Number(tdsAmount) : amount;
-    const CREDIT_SCORE = 0
-
+  const renderAmountHeading = (heading, amount) => {
     return (
-        <>
-            <ScrollView
-                contentContainerStyle={{
-                    ...styles.contentContainerStyle,
-                    ...(isWebView ? styles.webContentContainerStyle : {}),
-                }}
-                keyboardShouldPersistTaps="handled"
-                {...isMobileProps}
-            >
-                <View style={{ marginTop: 24, marginBottom: 24 }}>
-                    {renderAmountHeading("Subscription Cost", amount)}
-                </View>
-                <FiveColumn
-                    firstSection={
-                        <CustomTextInput
-                            label={"TDS/GTDS amount"}
-                            placeholder={"Enter TDS/GTDS amount"}
-                            customStyle={styles.containerStyle}
-                            value={tdsAmount}
-                            onChangeText={(val) => { setTdsAmount(val) }}
-                            isMandatory
-                            isNumeric
-                        />
-                    }
-                    secoundSection={
-                        <CustomTextInput
-                            label={"TAN"}
-                            placeholder={"Enter TAN"}
-                            customStyle={styles.containerStyle}
-                            value={tan}
-                            onChangeText={(val) => {
-                                setTan(val)
-                            }}
-                            isMandatory
-                        />
-                    }
-                    thirdSection={
-                        <CustomTextInput
-                            label={"PAN"}
-                            placeholder={"Enter PAN"}
-                            value={panNumber}
-                            onChangeText={(val) => {
-                                setPanNumber(val)
-                            }}
-                            customStyle={customStyle}
-                            isMandatory
-                            isError={!!error}
-                            errorMessage={error}
-                        />
-                    }
-                    fourthSection={
-                        <CustomTextInput
-                            label={"GSTIN"}
-                            placeholder={"Enter GSTIN"}
-                            value={gstNumber}
-                            onChangeText={(val) => {
-                                setGstNumber(val)
-                            }}
-                            customHandleBlur={() => {
+      <View>
+        <CommonText customTextStyle={styles.amountHeading} fontWeight={"500"}>
+          {heading}
+        </CommonText>
+        <CommonText customTextStyle={styles.amountValueText}>
+          {amount}
+        </CommonText>
+      </View>
+    );
+  };
 
-                            }}
-                            customStyle={customStyle}
-                            isMandatory
-                            isError={!!error}
-                            errorMessage={error}
-                        />
-                    }
-                    fiveSection={
-                        <CustomTextInput
-                            label={"PO Number"}
-                            placeholder={"Enter PO Number"}
-                            value={PONumber}
-                            onChangeText={(val) => {
-                                setPONumber(val)
-                            }}
-                            customStyle={customStyle}
-                            isError={!!error}
-                            errorMessage={error}
-                        />
-                    }
-                ></FiveColumn>
-                <CustomTextInput
-                    label={"Address For Hard Copy"}
-                    placeholder={"Enter Address"}
-                    value={address}
-                    onChangeText={(val) => {
-                        setAddress(val)
-                    }}
-                    customStyle={customStyle}
-                    isError={!!error}
-                    errorMessage={error}
-                />
-                <View style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                }}>
-                    {renderAmountHeading("Final Amount", finalAmount)}
-                    {renderAmountHeading("Credit Score", CREDIT_SCORE)}
-                    <View style={{ marginTop: 24 }}>
-                        {renderAmountHeading("Amount to be Paid", finalAmount)}
-                    </View>
-                </View>
-            </ScrollView>
-            <View style={isWebView ? styles.buttonWebStyle : {}}>
-                <View style={isWebView ? styles.subContainerStyle : {}}>
-                    <ActionPairButton
-                        buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                        buttonTwoText={intl.formatMessage({ id: "label.save" })}
-                        customStyles={{
-                            ...isWebProps,
-                            customContainerStyle: styles.customContainerStyle,
-                        }}
-                        // displayLoader={isLoading}
-                        isDisabled={isNextDisabled()}
-                        isButtonTwoGreen
-                        onPressButtonOne={() => {
-                            onPressCancel(false);
-                        }}
-                        onPressButtonTwo={handleSave}
-                    />
-                </View>
-            </View>
-            {/* {(errorWhileChangePassword || isSuccess) && (
+  const finalAmount = tdsAmount ? Number(amount) - Number(tdsAmount) : amount;
+  const CREDIT_SCORE = 0;
+
+  return (
+    <>
+      <ScrollView
+        contentContainerStyle={{
+          ...styles.contentContainerStyle,
+          ...(isWebView ? styles.webContentContainerStyle : {}),
+        }}
+        keyboardShouldPersistTaps="handled"
+        {...isMobileProps}
+      >
+        <View style={{ marginTop: 24, marginBottom: 24 }}>
+          {renderAmountHeading("Subscription Cost", amount)}
+        </View>
+        <FiveColumn
+          firstSection={
+            <CustomTextInput
+              label={"TDS/GTDS amount"}
+              placeholder={"Enter TDS/GTDS amount"}
+              customStyle={styles.containerStyle}
+              value={tdsAmount}
+              onChangeText={(val) => {
+                setTdsAmount(val);
+              }}
+              isMandatory
+              isNumeric
+            />
+          }
+          secoundSection={
+            <CustomTextInput
+              label={"TAN"}
+              placeholder={"Enter TAN"}
+              customStyle={styles.containerStyle}
+              value={tan}
+              onChangeText={(val) => {
+                setTan(val);
+              }}
+              isMandatory
+            />
+          }
+          thirdSection={
+            <CustomTextInput
+              label={"PAN"}
+              placeholder={"Enter PAN"}
+              value={panNumber}
+              onChangeText={(val) => {
+                setPanNumber(val);
+              }}
+              customStyle={customStyle}
+              isMandatory
+              isError={!!error}
+              errorMessage={error}
+            />
+          }
+          fourthSection={
+            <CustomTextInput
+              label={"GSTIN"}
+              placeholder={"Enter GSTIN"}
+              value={gstNumber}
+              onChangeText={(val) => {
+                setGstNumber(val);
+              }}
+              customHandleBlur={() => {}}
+              customStyle={customStyle}
+              isMandatory
+              isError={!!error}
+              errorMessage={error}
+            />
+          }
+          fiveSection={
+            <CustomTextInput
+              label={"PO Number"}
+              placeholder={"Enter PO Number"}
+              value={PONumber}
+              onChangeText={(val) => {
+                setPONumber(val);
+              }}
+              customStyle={customStyle}
+              isError={!!error}
+              errorMessage={error}
+            />
+          }
+        ></FiveColumn>
+        <CustomTextInput
+          label={"Address For Hard Copy"}
+          placeholder={"Enter Address"}
+          value={address}
+          onChangeText={(val) => {
+            setAddress(val);
+          }}
+          customStyle={customStyle}
+          isError={!!error}
+          errorMessage={error}
+        />
+        <View
+          style={
+            {
+              // display: "grid",
+              // gridTemplateColumns: "1fr 1fr",
+            }
+          }
+        >
+          {renderAmountHeading("Final Amount", finalAmount)}
+          {renderAmountHeading("Credit Score", CREDIT_SCORE)}
+          <View style={{ marginTop: 24 }}>
+            {renderAmountHeading("Amount to be Paid", finalAmount)}
+          </View>
+        </View>
+      </ScrollView>
+      <View style={isWebView ? styles.buttonWebStyle : {}}>
+        <View style={isWebView ? styles.subContainerStyle : {}}>
+          <ActionPairButton
+            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+            buttonTwoText={intl.formatMessage({ id: "label.save" })}
+            customStyles={{
+              ...isWebProps,
+              customContainerStyle: styles.customContainerStyle,
+            }}
+            // displayLoader={isLoading}
+            isDisabled={isNextDisabled()}
+            isButtonTwoGreen
+            onPressButtonOne={() => {
+              onPressCancel(false);
+            }}
+            onPressButtonTwo={handleSave}
+          />
+        </View>
+      </View>
+      {/* {(errorWhileChangePassword || isSuccess) && (
                 <ToastComponent
                     toastMessage={
                         errorWhileChangePassword ||
@@ -237,13 +243,13 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
                     onDismiss={handleDismissToast}
                 />
             )} */}
-        </>
-    );
+    </>
+  );
 };
 
 PaymentInitiateModal.propTypes = {
-    onPressCancel: PropTypes.func,
-    amount: PropTypes.string,
+  onPressCancel: PropTypes.func,
+  amount: PropTypes.string,
 };
 
 export default PaymentInitiateModal;

@@ -1,6 +1,12 @@
-import { StyleSheet, Platform } from "@unthinkable/react-core-components";
+import {
+  StyleSheet,
+  Platform,
+  Dimensions,
+} from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
+
+const { width: WIDTH } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -43,16 +49,19 @@ const styles = StyleSheet.create({
   },
   headingTextContainer: {
     marginBottom: 16,
-    marginTop: 32
+    marginTop: 32,
   },
   pointersButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end'
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+  },
+  pointerMainContainer: {
+    marginBottom: 24,
   },
   viewPackagesButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 8,
     backgroundColor: colors.green,
     paddingTop: 17,
@@ -61,8 +70,8 @@ const styles = StyleSheet.create({
     paddingRight: 32,
   },
   subscribePackagesButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 8,
     backgroundColor: colors.green,
     paddingTop: 12,
@@ -71,7 +80,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   subscribeButtonContainer: {
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   arrowDown: {
     height: 16,
@@ -91,42 +100,57 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   tickIcon: {
-    paddingRight: 8,
+    marginRight: 8,
+    height: 24,
+    width: 24,
   },
   pointersText: {
     fontSize: 16,
-    lineHeight: 24,
     color: colors.black,
+    flexWrap: "wrap",
+    width: WIDTH * 0.8,
+  },
+  pointersTextWeb: {
+    fontSize: 16,
+    color: colors.black,
+    flexWrap: "wrap",
+  },
+  pointersTextContainer: {
+    flexWrap: "wrap",
+    // lineBreak: "normal",
   },
   pointersContainer: {
     paddingLeft: 4,
     marginTop: 16,
+    // paddingRight: 16,
   },
   webComponentStyle: {
     flexDirection: "column",
     padding: 16,
-    maxWidth: 300,
+    width: 378,
+    // maxWidth: 378,
+    // minWidth: 350,
   },
   webContainerStyle: {
     backgroundColor: colors.backgroundColor,
     paddingLeft: 16,
     paddingRight: 16,
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
+    // width: WIDTH,
+    flexWrap: "wrap",
+    flexDirection: "row",
+    gap: 24,
   },
-  buttonStyle: {
-  },
+  buttonStyle: {},
   containerStyle: {
     backgroundColor: colors.backgroundColor,
     paddingLeft: 16,
     paddingRight: 16,
     marginBottom: 16,
   },
-  addApplicationView: {
-  },
+  addApplicationView: {},
   webAddApplicationView: {
     textOverFlow: "ellipsis",
-    overFlow: 'hidden',
+    overFlow: "hidden",
   },
   addApplicationFormText: {
     fontSize: 24,
@@ -141,12 +165,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.black,
     marginTop: 4,
-    textOverFlow: 'elipsis'
   },
   descriptionText: {
     fontSize: 14,
     color: colors.black,
     marginTop: 16,
+    flexWrap: "wrap",
+    wordBreak: "break-word",
+    overFlow: "hidden",
+    whiteSpace: "break-space",
   },
   borderStyle: {
     borderWidth: 1,
@@ -164,6 +191,9 @@ const styles = StyleSheet.create({
     inputTextBox: {
       background: colors.white,
       marginTop: 0,
+    },
+    pointersButtonContainerMob: {
+      flexDirection: "column",
     },
   },
 });
