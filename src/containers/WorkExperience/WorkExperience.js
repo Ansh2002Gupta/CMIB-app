@@ -160,23 +160,13 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
   const onChangeValue_workExperiences = (details, index) => (label, value) => {
     const { key } = findKeyByLabel(label, initailWorkExperience);
 
-    if (key === "haveWorkExperience" && !yesNoToBoolean(value)) {
-      state.work_experiences = [
-        {
-          ...workExperienceKeys(),
-          [key]: value,
-        },
-      ];
-      setFormFieldsError([{}]);
-    } else {
-      state.work_experiences[index] = {
-        ...state.work_experiences[index],
-        [key]: value,
-      };
-      formFieldsError[index] = { ...formFieldsError[index], [key]: null };
-      setFormFieldsError([...formFieldsError]);
-    }
+    formFieldsError[index] = { ...formFieldsError[index], [key]: null };
+    setFormFieldsError([...formFieldsError]);
 
+    state.work_experiences[index] = {
+      ...state.work_experiences[index],
+      [key]: value,
+    };
     setState({ ...state });
   };
 
