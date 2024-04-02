@@ -9,9 +9,9 @@ import colors from "../../assets/colors";
 
 const EducationDetailsTab = ({ isEditable, handleEdit }) => {
   return (
-    <View style={{ backgroundColor: colors.backgroundGrey }}>
+    <View style={{ backgroundColor: colors.backgroundGrey, flex: 1 }}>
       <FormTabs
-        showWarningOnTabSwitch
+        showWarningOnTabSwitch={isEditable}
         tabs={[
           {
             label: "Education Details",

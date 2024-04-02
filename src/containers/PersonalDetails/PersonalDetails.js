@@ -192,7 +192,6 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
         isEditable={isEditable}
         onClickSave={handleSave}
         onClickCancel={() => {
-          // turn off the edit mode
           setState(getData(data));
           handleEdit(false);
         }}
