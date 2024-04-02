@@ -100,6 +100,10 @@ const CustomToggleComponent = ({
   );
 };
 
+CustomToggleComponent.defaultProps = {
+  onValueChange: () => {},
+};
+
 CustomToggleComponent.propTypes = {
   customLabelStyle: PropTypes.object,
   isMandatory: PropTypes.bool,

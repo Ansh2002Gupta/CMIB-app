@@ -7,13 +7,13 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "relative",
   },
-  container: {
+  container: (isMember) => ({
     flex: 1,
     height: "100%",
-    backgroundColor: colors.black,
+    backgroundColor: isMember ? colors.blackSecond : colors.darkBlueShade,
     paddingBottom: 80,
     paddingTop: 32,
-  },
+  }),
   imageView: {
     alignItems: "center",
     justifyContent: "center",
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   menuItemsText: {
-    color: colors.black,
+    color: colors.darkBlueShade,
     fontSize: 14,
   },
   bottomView: {
