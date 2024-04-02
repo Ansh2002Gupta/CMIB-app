@@ -9,6 +9,7 @@ import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
 import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
+import { Candidate, Company } from "../../constants/constants";
 import style from "./MyAccount.style";
 
 const MyAccountUI = ({
@@ -23,6 +24,7 @@ const MyAccountUI = ({
   const profileImage = userProfileDetails?.profile_photo;
   const name = userProfileDetails?.name;
   const email = userProfileDetails?.email;
+  const userType = userProfileDetails?.user_type;
 
   const renderProfileIcon = () => {
     return (
@@ -77,35 +79,43 @@ const MyAccountUI = ({
         </View>
         {omitArrowIcon && renderHorizontalLine()}
         <ScrollView style={style.profileListContainer}>
-          {options.map((option, index) => (
-            <CustomTouchableOpacity
-              style={[
-                style.optionCotainer,
-                omitArrowIcon
-                  ? index === options.length - 2 && style.optionCotainerBorder
-                  : index !== options.length - 1 &&
-                    style.optionCotainerBordeLight,
-              ]}
-              key={option.id}
-              onPress={() => handleOptionClick(option)}
-              {...accountComponentProp}
-            >
-              <CustomImage source={option.iconLeft} style={style.leftIcon} />
-              <View style={style.titleParentStyle}>
-                <CommonText customTextStyle={style.titleStyle}>
-                  {intl.formatMessage({ id: option.title })}
-                </CommonText>
-              </View>
-              {!omitArrowIcon && (
-                <View style={style.iconContainer}>
+          {options.map(
+            (option, index) =>
+              ((userType === Candidate && option?.isCandidate) ||
+                (userType === Company && option?.isCompany)) && (
+                <CustomTouchableOpacity
+                  style={[
+                    style.optionCotainer,
+                    omitArrowIcon
+                      ? index === options.length - 2 &&
+                        style.optionCotainerBorder
+                      : index !== options.length - 1 &&
+                        style.optionCotainerBordeLight,
+                  ]}
+                  key={option.id}
+                  onPress={() => handleOptionClick(option)}
+                  {...accountComponentProp}
+                >
                   <CustomImage
-                    source={images.iconArrowRight}
-                    style={style.arrowIcon}
+                    source={option.iconLeft}
+                    style={style.leftIcon}
                   />
-                </View>
-              )}
-            </CustomTouchableOpacity>
-          ))}
+                  <View style={style.titleParentStyle}>
+                    <CommonText customTextStyle={style.titleStyle}>
+                      {intl.formatMessage({ id: option.title })}
+                    </CommonText>
+                  </View>
+                  {!omitArrowIcon && (
+                    <View style={style.iconContainer}>
+                      <CustomImage
+                        source={images.iconArrowRight}
+                        style={style.arrowIcon}
+                      />
+                    </View>
+                  )}
+                </CustomTouchableOpacity>
+              )
+          )}
         </ScrollView>
       </ScrollView>
     </>
