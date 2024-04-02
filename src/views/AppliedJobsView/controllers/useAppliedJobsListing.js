@@ -307,6 +307,7 @@ const useAppliedJobsListing = () => {
       q: searchedData,
       perPage: rowsPerPage,
       page: currentPage,
+      multiFacet: 1,
       work_mode: filterOptions.work_mode,
       job_type: filterOptions.job_type,
       experience: filterOptions.experience,
@@ -369,6 +370,7 @@ const useAppliedJobsListing = () => {
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: currentPage,
+      multiFacet: 1,
       work_mode: currentFilterOptions.work_mode,
       job_type: currentFilterOptions.job_type,
       experience: currentFilterOptions.experience,
