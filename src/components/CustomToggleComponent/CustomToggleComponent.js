@@ -98,7 +98,7 @@ const CustomToggleComponent = ({
 
 CustomToggleComponent.defaultProps = {
   value: 1,
-  onChange: () => {},
+  onValueChange: () => {},
 };
 
 CustomToggleComponent.propTypes = {

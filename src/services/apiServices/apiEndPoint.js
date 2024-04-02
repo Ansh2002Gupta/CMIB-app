@@ -34,3 +34,13 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+
+//endpoint add Job
+export const GET_FUNCTIONAL_TYPE = `${USER_TYPE_COMPANY}/functional-areas`;
+export const GET_JOB_LOCATION = `${USER_TYPE_COMPANY}/job/locations`;
+export const GET_JOB_TYPE = `${USER_TYPE_COMPANY}/job-type`;
+export const GET_CATERORY_PREFERENCE = `${USER_TYPE_COMPANY}/job/category`;
+export const GET_GENDER_PREFERENCE = `${USER_TYPE_COMPANY}/genders`;
+export const GET_WORK_MODE = `${USER_TYPE_COMPANY}/workmode`;
+export const POST_JOB = `${USER_TYPE_COMPANY}/jobs`;
+export const UPDATE_JOB = `${USER_TYPE_COMPANY}/jobs/update`;

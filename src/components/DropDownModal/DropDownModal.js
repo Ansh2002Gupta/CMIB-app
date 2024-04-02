@@ -123,7 +123,6 @@ const DropDownModal = ({
   const onSearch = (filteredData) => {
     setSelectedOption(filteredData);
   };
-
   const handleDropDown = () => {
     if (isEditable) {
       Keyboard.dismiss();
@@ -214,7 +213,6 @@ const DropDownModal = ({
       />
     );
   };
-
   if (isMultiSelect) {
     return (
       <>
@@ -262,7 +260,7 @@ const DropDownModal = ({
             }}
             onBackdropPress={handleDropDown}
           >
-            {data?.length >= 20 && onChangeDropDownText && (
+            {(data?.length >= 20 || onChangeDropDownText) && (
               <SearchView
                 data={data}
                 onSearch={onSearch}
@@ -388,6 +386,7 @@ DropDownModal.defaultProps = {
   value: "",
   valueField: "value",
   urlField: "url",
+  selectAllField: false,
 };
 
 DropDownModal.propTypes = {
@@ -408,6 +407,7 @@ DropDownModal.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  selectAllField: PropTypes.bool,
 };
 
 export default DropDownModal;
