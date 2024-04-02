@@ -167,19 +167,21 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       )}
       {sideBarContent === SideBarContentEnum.MODULE && (
         <>
-          <CustomButton
-            customStyle={{
-              customTextStyle: styles.btnTextStyles,
-            }}
-            iconLeft={{
-              leftIconSource: images.iconBackArrow,
-              leftIconAlt: "Left arrow",
-            }}
-            onPress={handleBackButton}
-            style={styles.backBtnStyles}
-          >
-            {intl.formatMessage({ id: "label.back" })}
-          </CustomButton>
+          {!isWebView && (
+            <CustomButton
+              customStyle={{
+                customTextStyle: styles.btnTextStyles,
+              }}
+              iconLeft={{
+                leftIconSource: images.iconBackArrow,
+                leftIconAlt: "Left arrow",
+              }}
+              onPress={handleBackButton}
+              style={styles.backBtnStyles}
+            >
+              {intl.formatMessage({ id: "label.back" })}
+            </CustomButton>
+          )}
 
           <ModuleList
             modules={getAppModules({ isMember: isMemberOrCandidate })}
@@ -199,7 +201,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           />
         )}
       <View style={styles.bottomView}>
-        {sideBarContent === SideBarContentEnum.NONE && (
+        {(sideBarContent === SideBarContentEnum.NONE || isWebView) && (
           <CustomImage
             source={images.iconCmibCALogo}
             style={styles.logoStyle}
