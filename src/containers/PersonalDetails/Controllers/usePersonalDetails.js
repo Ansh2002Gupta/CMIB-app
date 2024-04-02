@@ -60,7 +60,7 @@ const accessibility_information = (has_disability) => {
       },
     },
   ];
-  if (has_disability) {
+  if (!has_disability) {
     return [...commonFields, ...otherFileds];
   } else {
     return commonFields;
@@ -165,7 +165,7 @@ const personal_detail = (categoryData, has_passport) => {
     },
   };
 
-  if (has_passport) {
+  if (!has_passport) {
     return [...commonFields, passportField];
   } else {
     return commonFields;

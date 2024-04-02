@@ -124,7 +124,7 @@ const graduation_detail = (graduation) => {
     },
   ];
 
-  if (graduation) {
+  if (!graduation) {
     return [...graduationFields, ...commonFileds];
   }
   return graduationFields;
@@ -177,7 +177,7 @@ const post_graduation_detail = (post_graduation) => {
     },
   ];
 
-  if (post_graduation) {
+  if (!post_graduation) {
     return [...postGraduationFiels, ...commonFileds];
   }
   return postGraduationFiels;
