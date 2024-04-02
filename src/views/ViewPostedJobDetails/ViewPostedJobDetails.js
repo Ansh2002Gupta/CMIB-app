@@ -25,7 +25,7 @@ import ViewJobApplicants from "../../containers/ViewPostedJobDetails/ViewJobAppl
 const ViewPostedJobDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  // const { id } = location?.state;
+  const { id } = location?.state;
   const {
     isLoading: isConstantLoading,
     data: apiData,
@@ -353,7 +353,7 @@ const ViewPostedJobDetails = () => {
             },
             {
               label: intl.formatMessage({ id: "label.applicants" }),
-              component: <ViewJobApplicants id={id} />,
+              component: <ViewJobApplicants />,
             },
             {
               label: intl.formatMessage({ id: "label.schedule_interview" }),

@@ -10,6 +10,7 @@ import IconHeader from "../../../components/IconHeader/IconHeader";
 import CustomTable from "../../../components/CustomTable";
 import DownloadMoreComponent from "../../PostedJobs/DownloadMoreComponent";
 import images from "../../../images";
+import useGetApplicantList from "../../../views/ViewPostedJobDetails/controller/useGetApplicantList";
 const ViewJobApplicants = () => {
   const intl = useIntl();
   const onEditPress = (item) => {
@@ -56,7 +57,7 @@ const ViewJobApplicants = () => {
     totalcards,
     rowsLimit,
     tableHeading,
-  } = usePostedJobListing(onViewPress, onEditPress);
+  } = useGetApplicantList();
 
   const navigate = useNavigate();
 
@@ -78,70 +79,54 @@ const ViewJobApplicants = () => {
   };
 
   return (
-    <TwoRow
-      topSection={
-        <IconHeader
-          actionButtonIcon={images.iconAddWhite}
-          buttonTitle={intl.formatMessage({ id: "label.add" })}
-          customActionButtonStyle={styles.addNewButton}
-          customActionButtonText={styles.addNewText}
-          hasActionButton
-          handleButtonClick={handleTicketModal}
-          headerText={intl.formatMessage({ id: "label.posted_job" })}
-        />
-      }
-      isBottomFillSpace
-      bottomSection={
-        <CustomTable
-          {...{
-            allDataLoaded,
-            currentPage,
-            currentRecords,
-            data: postedJobData,
-            filterApplyHandler,
-            filterCategory,
-            getColoumConfigs,
-            getStatusStyle,
-            handleTicketModal,
-            handleLoadMore,
-            getErrorDetails,
-            isErrorGetPostedJob,
-            handlePageChange,
-            handleRowPerPageChange,
-            handleSearchResults,
-            handleSaveAddTicket,
-            headingTexts,
-            indexOfFirstRecord,
-            indexOfLastRecord,
-            isHeading,
-            isTicketListingLoading,
-            isFirstPageReceived,
-            loadingMore,
-            onIconPress,
-            queryTypeData,
-            rowsLimit,
-            rowsPerPage,
-            setCurrentRecords,
-            statusData,
-            statusText,
-            subHeadingText,
-            tableHeading,
-            tableIcon,
-            totalcards,
-            placeholder: intl.formatMessage({
-              id: "label.search_by_designation",
-            }),
+    <CustomTable
+      {...{
+        allDataLoaded,
+        currentPage,
+        currentRecords,
+        data: postedJobData,
+        filterApplyHandler,
+        filterCategory,
+        getColoumConfigs,
+        getStatusStyle,
+        handleTicketModal,
+        handleLoadMore,
+        getErrorDetails,
+        isErrorGetPostedJob,
+        handlePageChange,
+        handleRowPerPageChange,
+        handleSearchResults,
+        handleSaveAddTicket,
+        headingTexts,
+        indexOfFirstRecord,
+        indexOfLastRecord,
+        isHeading,
+        isTicketListingLoading,
+        isFirstPageReceived,
+        loadingMore,
+        onIconPress,
+        queryTypeData,
+        rowsLimit,
+        rowsPerPage,
+        setCurrentRecords,
+        statusData,
+        statusText,
+        subHeadingText,
+        tableHeading,
+        tableIcon,
+        totalcards,
+        placeholder: intl.formatMessage({
+          id: "label.search_by_designation",
+        }),
+      }}
+      mobileComponentToRender={getMobileView}
+      containerStyle={styles.customTableStyle}
+      isTotalCardVisible={false}
+      ThirdSection={
+        <DownloadMoreComponent
+          onPress={() => {
+            console.log("HI I AM pressed");
           }}
-          mobileComponentToRender={getMobileView}
-          containerStyle={styles.customTableStyle}
-          isTotalCardVisible={false}
-          ThirdSection={
-            <DownloadMoreComponent
-              onPress={() => {
-                console.log("HI I AM pressed");
-              }}
-            />
-          }
         />
       }
     />
