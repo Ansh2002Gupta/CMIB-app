@@ -421,6 +421,13 @@ const locale = {
   "label.continue": "Continue",
   "label.close": "Close",
   "label.job_profile": "Job Profile",
+  "label.category": "Category",
+  "label.accessibility_information": "Accessibility Information",
+  "label.has_disability": "Do you have any physical impairment?",
+  "label.handicap_description": "Handicapped Description",
+  "label.handicap_percentage": "Handicapped %",
+  "toggle.1": "Yes",
+  "toggle.0": "No",
 };
 
 export default locale;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  ADDRESS_MAX_LENGTH,
   GENDER,
   MARITAL_STATUS,
   NUMBER_MAX_LENGTH,
@@ -7,11 +8,57 @@ import {
   numRegex,
 } from "../../../constants/constants";
 import useFetch from "../../../hooks/useFetch";
-import { COUNTRY_CODE } from "../../../services/apiServices/apiEndPoint";
+import {
+  COUNTRY_CODE,
+  MEMBER_CATEGORY,
+} from "../../../services/apiServices/apiEndPoint";
 import { useIntl } from "react-intl";
+import {
+  isValueEmpty,
+  formatCountryCode,
+  getNameById,
+} from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 
-const personal_detail = [
+const accessibility_information = [
+  {
+    key: "has_disability",
+    isMandatory: true,
+    isToggle: true,
+    label: "label.has_disability",
+    placeholder: "label.has_disability",
+    validate: (value) => {
+      if (!value) {
+        return "This Field is required";
+      }
+    },
+  },
+  {
+    key: "handicap_description",
+    isMandatory: true,
+    label: "label.handicap_description",
+    placeholder: "label.handicap_description",
+    validate: (value) => {
+      if (!value) {
+        return "Handicap Description is required";
+      }
+    },
+  },
+  {
+    key: "handicap_percentage",
+    isNumeric: true,
+    isMandatory: true,
+    label: "label.handicap_percentage",
+    placeholder: "label.handicap_percentage",
+    validate: (value) => {
+      if (!value) {
+        return "Handicap Percentage is required";
+      }
+    },
+  },
+];
+
+const personal_detail = (categoryData) => [
   {
     key: "gender",
     isMandatory: true,
@@ -39,7 +86,7 @@ const personal_detail = [
     },
   },
   {
-    key: "date_of_birth",
+    key: "dob",
     isMandatory: true,
     isDate: true,
     label: "label.date_of_birth",
@@ -67,7 +114,7 @@ const personal_detail = [
     },
   },
   {
-    key: "passport",
+    key: "has_passport",
     isMandatory: true,
     isToggle: true,
     label: "label.passport",
@@ -89,12 +136,29 @@ const personal_detail = [
       }
     },
   },
+  {
+    key: "category_id",
+    isMandatory: true,
+    isDropdown: true,
+    labelField: "name",
+    valueField: "id",
+    inputKey: "id",
+    options: categoryData,
+    label: "label.category",
+    placeholder: "label.category",
+    validate: (value) => {
+      if (!value) {
+        return "Category is required";
+      }
+    },
+  },
 ];
 const correspondence_address = (countryData) => [
   {
     key: "address1",
     isMandatory: true,
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address1",
     placeholder: "label.address1",
@@ -107,6 +171,7 @@ const correspondence_address = (countryData) => [
   {
     key: "address2",
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address2",
     placeholder: "label.address2",
@@ -114,6 +179,7 @@ const correspondence_address = (countryData) => [
   {
     key: "address3",
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address3",
     placeholder: "label.address3",
@@ -184,6 +250,18 @@ const correspondence_address = (countryData) => [
     },
   },
   {
+    key: "phone_number",
+    isMandatory: true,
+    isNumeric: true,
+    label: "label.telephone_no",
+    placeholder: "label.telephone_no",
+    validate: (value) => {
+      if (!value) {
+        return "phone number is required";
+      }
+    },
+  },
+  {
     key: "nationality",
     isMandatory: true,
     label: "label.nationality",
@@ -201,6 +279,7 @@ const permanent_address = [
     key: "permanent_address1",
     isMandatory: true,
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address1",
     placeholder: "label.address1",
@@ -213,6 +292,7 @@ const permanent_address = [
   {
     key: "permanent_address2",
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address2",
     placeholder: "label.address2",
@@ -220,6 +300,7 @@ const permanent_address = [
   {
     key: "permanent_address3",
     isMultiline: true,
+    maxLength: ADDRESS_MAX_LENGTH,
     noOfRows: 2,
     label: "label.address3",
     placeholder: "label.address3",
@@ -271,12 +352,46 @@ const permanent_address = [
   },
 ];
 
-const addValueOnField = ({ state, details, isEditable }) => {
+const addValueOnField = ({
+  state,
+  details,
+  isEditable,
+  countryData,
+  categoryData,
+  intl,
+}) => {
   return details.map((item) => {
+    if (item?.isMobileNumber) {
+      return {
+        ...item,
+        value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
+        codeValue: formatCountryCode(state?.mobile_country_code, countryData),
+      };
+    }
+    if (item.isToggle) {
+      return {
+        ...item,
+        value: !isEditable
+          ? state?.[item?.key] === null
+            ? "--"
+            : intl.formatMessage({ id: `toggle.${state?.[item?.key]}` })
+          : state?.[item?.key],
+      };
+    }
+    if (item?.key === "category_id") {
+      return {
+        ...item,
+        value: !isEditable
+          ? !state?.[item?.key]
+            ? "--"
+            : getNameById(categoryData, state?.[item?.key])
+          : state?.[item?.key],
+        codeValue: formatCountryCode(state?.mobile_country_code, countryData),
+      };
+    }
     return {
       ...item,
       value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
-      codeValue: state.codeValue,
     };
   });
 };
@@ -298,9 +413,17 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
 
 export const usePersonalDetails = ({ state, isEditable }) => {
   const intl = useIntl();
-  const { data: countryData } = useFetch({ url: COUNTRY_CODE });
-  const [personal_detail_state, setPersonalDetailState] =
-    useState(personal_detail);
+  const { data: countryData, isLoading: countryLoading } = useFetch({
+    url: COUNTRY_CODE,
+  });
+  const { data: categoryData, isLoading: categoryLoading } = useFetch({
+    url: MEMBER_CATEGORY,
+  });
+  const [accessibility_information_state, setAccessibility_information_state] =
+    useState(accessibility_information);
+  const [personal_detail_state, setPersonalDetailState] = useState(
+    personal_detail(categoryData)
+  );
   const [correspondence_address_state, setCorrespondenceAddressState] =
     useState(correspondence_address(countryData));
   const [permanent_address_state, setPermanentAddressState] =
@@ -308,6 +431,7 @@ export const usePersonalDetails = ({ state, isEditable }) => {
 
   useEffect(() => {
     setCorrespondenceAddressState(correspondence_address(countryData));
+    setPersonalDetailState(personal_detail(categoryData));
   }, [countryData]);
 
   const handlePersonalDetailBlur = (key, index) => {
@@ -343,15 +467,27 @@ export const usePersonalDetails = ({ state, isEditable }) => {
       })
     );
   };
+  const handleAccessibilityInformationBlur = (key, index) => {
+    setAccessibility_information_state(
+      validateOnBlur({
+        state,
+        details: accessibility_information_state,
+        key,
+        index,
+        intl,
+      })
+    );
+  };
 
   const checkMandatoryFields = () => {
     let error = false;
     [
+      ...accessibility_information_state,
       ...personal_detail_state,
       ...correspondence_address_state,
       ...permanent_address_state,
     ].forEach((item) => {
-      if (item.isMandatory && !state[item.key]) {
+      if (item.isMandatory && isValueEmpty(state[item.key])) {
         error = true;
       }
     });
@@ -359,21 +495,34 @@ export const usePersonalDetails = ({ state, isEditable }) => {
   };
 
   return {
+    accessibility_information: addValueOnField({
+      state,
+      details: accessibility_information_state,
+      isEditable,
+      intl,
+    }),
     personal_detail: addValueOnField({
       state,
       details: personal_detail_state,
       isEditable,
+      categoryData,
+      intl,
     }),
     correspondence_address: addValueOnField({
       state,
       details: correspondence_address_state,
       isEditable,
+      countryData,
+      intl,
     }),
     permanent_address: addValueOnField({
       state,
       details: permanent_address_state,
       isEditable,
+      intl,
     }),
+    isLoading: categoryLoading || countryLoading,
+    handleAccessibilityInformationBlur,
     handlePersonalDetailBlur,
     handleCorrespondenceAddressBlur,
     handlePermanentAddressBlur,
