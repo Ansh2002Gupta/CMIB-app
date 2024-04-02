@@ -275,7 +275,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       {
         content: (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.job_id}
+            {item?.job_id ?? "-"}
           </CommonText>
         ),
         style: {
@@ -286,7 +286,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item.designation}
+            {item?.designation ?? "-"}
           </CommonText>
         ),
         style: {
@@ -305,7 +305,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
             fontWeight={!isHeading && 600}
             underLineStyle={styles.underLineStyle}
           >
-            {item.number_of_applications ?? "-"}
+            {item?.number_of_applications ?? "-"}
           </CommonText>
         ),
         style: {
@@ -343,7 +343,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                   ...tableStyle,
                 }}
               >
-                {item.status}
+                {item?.status ?? "-"}
               </CommonText>
             ) : (
               <Chip
@@ -368,7 +368,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
           <View>
             {isHeading ? (
               <CommonText customTextStyle={tableStyle}>
-                {item.approve}
+                {item?.approve ?? "-"}
               </CommonText>
             ) : (
               <CommonText customTextStyle={tableStyle}>
