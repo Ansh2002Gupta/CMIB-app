@@ -11,8 +11,15 @@ import PropTypes from "prop-types";
 import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
 import styles from "./FormTabs.style.js";
+import images from "../../images";
+import TouchableImage from "../TouchableImage";
 
-export const FormTabs = ({ showWarningOnTabSwitch, tabs }) => {
+export const FormTabs = ({
+  isEditButtonVisible,
+  onEditClick,
+  showWarningOnTabSwitch,
+  tabs,
+}) => {
   const intl = useIntl();
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -47,39 +54,53 @@ export const FormTabs = ({ showWarningOnTabSwitch, tabs }) => {
   return (
     <>
       <View style={styles.container}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <Row gap={12} style={styles.tabContainer}>
-            {tabs.map((tab, index) => {
-              const { label } = tab;
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    handleTabChange({ tab, index });
-                  }}
-                  key={index}
-                  style={{
-                    ...styles.itemContainer,
-                    ...(index === activeTabIndex
-                      ? styles.activeItemContainer
-                      : {}),
-                  }}
-                >
-                  <CommonText
-                    fontWeight={"500"}
-                    customTextStyle={{
-                      ...styles.itemText,
+        <View style={styles.innerContainer}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <Row gap={12} style={styles.tabContainer}>
+              {tabs.map((tab, index) => {
+                const { label } = tab;
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleTabChange({ tab, index });
+                    }}
+                    key={index}
+                    style={{
+                      ...styles.itemContainer,
                       ...(index === activeTabIndex
-                        ? styles.activeItemText
+                        ? styles.activeItemContainer
                         : {}),
                     }}
                   >
-                    {label}
-                  </CommonText>
-                </TouchableOpacity>
-              );
-            })}
-          </Row>
-        </ScrollView>
+                    <CommonText
+                      fontWeight={"500"}
+                      customTextStyle={{
+                        ...styles.itemText,
+                        ...(index === activeTabIndex
+                          ? styles.activeItemText
+                          : {}),
+                      }}
+                    >
+                      {label}
+                    </CommonText>
+                  </TouchableOpacity>
+                );
+              })}
+            </Row>
+          </ScrollView>
+          {isEditButtonVisible && (
+            <View style={styles.editButtonViewStyle}>
+              <TouchableImage
+                source={images.iconEditSvg}
+                onPress={onEditClick}
+                style={styles.editIconStyle}
+              />
+              <CommonText customContainerStyle={styles.marginLeft8}>
+                {intl.formatMessage({ id: "label.edit" })}
+              </CommonText>
+            </View>
+          )}
+        </View>
         {tabs[activeTabIndex].component}
       </View>
       {alertOnTabSwitch?.showAlert && (
@@ -106,6 +127,8 @@ export const FormTabs = ({ showWarningOnTabSwitch, tabs }) => {
 
 FormTabs.propTypes = {
   showWarningOnTabSwitch: PropTypes.bool,
+  isEditButtonVisible: PropTypes.bool,
+  onEditClick: PropTypes.func,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
