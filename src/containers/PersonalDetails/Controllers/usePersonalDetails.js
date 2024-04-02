@@ -258,8 +258,8 @@ const correspondence_address = (countryData) => [
     validate: (value, intl) => {
       if (
         !numRegex.test(String(value)) ||
-        value.length > NUMBER_MAX_LENGTH ||
-        value.length < NUMBER_MIN_LENGTH
+        value?.length > NUMBER_MAX_LENGTH ||
+        value?.length < NUMBER_MIN_LENGTH
       ) {
         return intl.formatMessage({
           id: "label.telephone_no_validation",

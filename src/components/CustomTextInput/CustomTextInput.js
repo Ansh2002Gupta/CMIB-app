@@ -431,7 +431,7 @@ const CustomTextInput = (props) => {
           {isMultiline && (
             <CommonText
               customTextStyle={style.limitStyle}
-            >{`${value.length}/${maxLength}`}</CommonText>
+            >{`${value?.length}/${maxLength}`}</CommonText>
           )}
         </View>
       )}

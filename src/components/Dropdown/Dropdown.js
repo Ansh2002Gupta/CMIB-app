@@ -88,7 +88,7 @@ const Dropdown = ({
           isMulti
           components={{ Option: CheckboxOption }}
         />
-        {!!selectedItems.length && (
+        {!!selectedItems?.length && (
           <View style={styles.multiSelectOptions}>
             {selectedItems.map((item, index) => (
               <CustomChipCard

@@ -30,7 +30,7 @@ const ExamsComponent = ({ isEditable = true, handleEdit }) => {
   });
 
   const getData = (data) =>
-    data && Object.keys(data).length
+    data && Object.keys(data)?.length
       ? {
           foundation_has_education: data["CA Foundation"]?.has_education,
           foundation_month: data["CA Foundation"]?.passing_month,

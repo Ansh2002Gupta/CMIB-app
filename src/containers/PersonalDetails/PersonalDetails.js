@@ -29,7 +29,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   });
 
   const getData = (data) =>
-    data && Object.keys(data).length
+    data && Object.keys(data)?.length
       ? {
           gender: data?.gender,
           marital_status: data?.marital_status,
@@ -83,7 +83,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   });
 
   useEffect(() => {
-    if (data !== null && Object.keys(data).length) {
+    if (data !== null && Object.keys(data)?.length) {
       setState(getData(data));
     }
   }, [data]);
