@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     marginLeft: 8,
-    width: 68,
   },
   contentText: {
     color: colors.white,
@@ -40,12 +39,12 @@ const styles = StyleSheet.create({
   leftSection: {
     ...Platform.select({
       web: {
-      maxWidth: "70%",
-      flex: 1,
+        maxWidth: "70%",
+        flex: 1,
       },
       default: {
-        flex: 1
-      }
+        flex: 1,
+      },
     }),
   },
   mainContainer: {

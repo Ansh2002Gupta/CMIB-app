@@ -18,19 +18,22 @@ import SideBarItemView from "../../components/SideBarItemView/SideBarItemView";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import {
   setSelectedModule,
   setSelectedSession,
 } from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
-import { getIconImages, modules } from "../../constants/sideBarHelpers";
+import { getIconImages, getAppModules } from "../../constants/sideBarHelpers";
+import { COMPANY } from "../../constants/constants";
 import { getSelectedSubModuleFromRoute } from "../../utils/util";
 import images from "../../images";
 import styles from "./SideBar.style";
 
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
+  const [userProfileDetails] = useContext(UserProfileContext);
   const { selectedModule, selectedSession } = sideBarState;
   const { navigateScreen } = useNavigateScreen();
   const navigate = useNavigate();
@@ -44,6 +47,9 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       selectedModule,
     })
   );
+
+  const isMemberOrCandidate =
+    userProfileDetails?.userDetails?.user_type?.toLowerCase() !== COMPANY;
 
   useEffect(() => {
     if (isWebView && sideBarContent === SideBarContentEnum.SESSION) {
@@ -109,7 +115,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container(isMemberOrCandidate)}>
       {showCloseIcon && (
         <TouchableImage
           onPress={onClose}
@@ -161,22 +167,24 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       )}
       {sideBarContent === SideBarContentEnum.MODULE && (
         <>
-          <CustomButton
-            customStyle={{
-              customTextStyle: styles.btnTextStyles,
-            }}
-            iconLeft={{
-              leftIconSource: images.iconBackArrow,
-              leftIconAlt: "Left arrow",
-            }}
-            onPress={handleBackButton}
-            style={styles.backBtnStyles}
-          >
-            {intl.formatMessage({ id: "label.back" })}
-          </CustomButton>
+          {!isWebView && (
+            <CustomButton
+              customStyle={{
+                customTextStyle: styles.btnTextStyles,
+              }}
+              iconLeft={{
+                leftIconSource: images.iconBackArrow,
+                leftIconAlt: "Left arrow",
+              }}
+              onPress={handleBackButton}
+              style={styles.backBtnStyles}
+            >
+              {intl.formatMessage({ id: "label.back" })}
+            </CustomButton>
+          )}
 
           <ModuleList
-            modules={modules}
+            modules={getAppModules({ isMember: isMemberOrCandidate })}
             onSelectItem={handleOnSelectModuleItem}
             selectedModule={selectedModule}
           />
@@ -193,7 +201,7 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
           />
         )}
       <View style={styles.bottomView}>
-        {sideBarContent === SideBarContentEnum.NONE && (
+        {(sideBarContent === SideBarContentEnum.NONE || isWebView) && (
           <CustomImage
             source={images.iconCmibCALogo}
             style={styles.logoStyle}
