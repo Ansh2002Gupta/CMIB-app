@@ -1,11 +1,14 @@
 import React from "react";
 import { View, ScrollView } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
-import style from "../EducationDetails/OtherCourses.style";
+import style from "./SkillTraining.style";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
+import Spinner from "../../components/Spinner";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { STATUS_CODES } from "../../constants/constants";
 
 const SkillTrainingUI = ({
   isEditable,
@@ -24,8 +27,23 @@ const SkillTrainingUI = ({
   handleOtherSkillsUpdate,
   error,
   setError,
+  isLoadingPage,
+  isErrorLoadingPage
 }) => {
   const intl = useIntl();
+
+  if (
+    isLoadingPage) {
+    return (
+      <View style={style.loaderStyle}>
+        <Spinner />
+      </View>
+    );
+  }
+
+  if (isErrorLoadingPage && isErrorLoadingPage?.code !== STATUS_CODES.UNAUTHORIZED_USER) {
+    return <ErrorComponent errorMsg={isErrorLoadingPage.message} />;
+  }
 
   return (
     <>

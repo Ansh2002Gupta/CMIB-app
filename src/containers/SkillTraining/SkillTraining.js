@@ -8,7 +8,7 @@ import { MEMBER_CA_JOB_PROFILE_SKILLS } from "../../services/apiServices/apiEndP
 import { SkillTraining_keys } from "./Controller/utils";
 
 const SkillTraining = ({ isEditable = true, handleEdit }) => {
-  const { data } = useFetch({
+  const { data, isError: isErrorLoadingPage, isLoading: isLoadingPage } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE_SKILLS}`,
   });
 
@@ -111,6 +111,8 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
       isEditable={isEditable}
       isLoading={isLoading}
       isError={isError}
+      isLoadingPage={isLoadingPage}
+      isErrorLoadingPage={isErrorLoadingPage}
       error={error}
       setError={setError}
       isValidAllFields={isValidAllFields}
