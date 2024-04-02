@@ -173,8 +173,8 @@ const CustomTextInput = (props) => {
             onChangeDropDownText={onChangeDropDownText}
             dropdownStyle={{
               ...style.dropdown,
-              ...(isFocused && style.focusedStyle,
-              isError && style.invalidInput),
+              ...(isFocused ? style.focusedStyle : {},
+              isError ? style.invalidInput : {}),
               ...dropdownStyle,
             }}
             selectedTextStyle={style.valueStyle}
@@ -231,7 +231,8 @@ const CustomTextInput = (props) => {
           }}
           dropdownStyle={{
             ...style.dropdown,
-            ...(isFocused && style.focusedStyle, isError && style.invalidInput),
+            ...(isFocused ? style.focusedStyle : {},
+            isError ? style.invalidInput : {}),
             ...dropdownStyle,
           }}
         />
@@ -421,7 +422,7 @@ const CustomTextInput = (props) => {
         <View style={style.innerLabelContainer}>
           <CustomLabelView label={label} isMandatory={isMandatory} />
           {!!label2 && (
-            <CommonText customContainerStyle={{ marginRight: 10 }}>
+            <CommonText customContainerStyle={style.marginRight10}>
               {label2}
             </CommonText>
           )}

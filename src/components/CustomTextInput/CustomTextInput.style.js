@@ -230,6 +230,9 @@ const style = {
   onlyCountLimitBox: {
     justifyContent: "flex-end",
   },
+  marginRight10: {
+    marginRight: 10,
+  },
 };
 
 export default style;

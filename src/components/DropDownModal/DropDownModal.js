@@ -97,11 +97,7 @@ const DropDownModal = ({
   }, [isDropDownOpen]);
 
   const handleValueChange = (selectedOption) => {
-    if (selectAllField) {
-      onChangeValue(selectedOption);
-    } else {
-      onChangeValue(selectedOption.value);
-    }
+    onChangeValue(selectAllField ? selectedOption : selectedOption.value);
   };
 
   const keyboardDidHideCallback = () => {
