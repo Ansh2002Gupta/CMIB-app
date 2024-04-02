@@ -1,16 +1,9 @@
 import { StyleSheet } from "@unthinkable/react-core-components";
+import colors from "../../../assets/colors";
 
 const styles = StyleSheet.create({
   saveCancelButtonStyle: {
     padding: 16,
-  },
-  actionBtnContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 16,
-    marginTop: 8,
-    marginRight: 16,
   },
   mainViewStyle: {
     flex: 1,

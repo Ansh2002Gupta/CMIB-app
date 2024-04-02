@@ -175,7 +175,6 @@ const DetailComponent = ({
         }
         maxLength={detail.maxLength}
         isNumeric={detail.isNumeric}
-        isToggle={detail.isToggle}
         valueField={detail.valueField || "label"}
         labelField={detail.labelField || "label"}
         inputKey={detail.inputKey || "value"}
@@ -193,7 +192,6 @@ const DetailComponent = ({
           }
         }}
         isRupee={detail?.isRupee}
-        isSingleMutliSelect={detail.isSingleMutliSelect}
       />
     );
   };

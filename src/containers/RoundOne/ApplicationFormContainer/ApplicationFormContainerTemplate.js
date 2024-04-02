@@ -1,39 +1,44 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { ScrollView } from "@unthinkable/react-core-components";
+
+import { TwoRow } from "../../../core/layouts";
 
 import ApplicationFormStepper from "../ApplicationFormStepper";
-import CustomButton from "../../../components/CustomButton";
+import CompanyProfile from "./CompanyProfileForm/CompanyProfileForm";
 import JobDetails from "./JobDetails";
-import styles from "./ApplicationFormContainer.style";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const intl = useIntl();
 
+  let tabConfig = [
+    {
+      component: CompanyProfile,
+    },
+    {
+      component: JobDetails,
+    },
+  ];
+
+  const activeTabIndex = Math.min(activeStep, tabConfig.length - 1);
+  const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
+
   return (
-    <View style={styles.mainViewStyle}>
-      <ApplicationFormStepper activeStep={activeStep} />
-      <JobDetails />
-      {/* TODO This button will be in seprate form file*/}
-      <View style={styles.actionBtnContainer}>
-        <CustomButton
-          onPress={() => {
-            onHandleTab("prev");
-          }}
-        >
-          {intl.formatMessage({ id: "label.cancel" })}
-        </CustomButton>
-        <CustomButton
-          onPress={() => {
-            onHandleTab("next");
-          }}
-          withGreenBackground
-        >
-          {intl.formatMessage({ id: "label.save" })}
-        </CustomButton>
-      </View>
-    </View>
+    <ScrollView style={{ flex: 1 }}>
+      <TwoRow
+        topSection={
+          <ApplicationFormStepper
+            headingText={intl.formatMessage({
+              id: "label.add_application_form",
+            })}
+            activeStep={activeStep}
+          />
+        }
+        bottomSection={<ActiveTabComponent tabHandler={onHandleTab} />}
+        isBottomFillSpace
+      />
+    </ScrollView>
   );
 };
 
