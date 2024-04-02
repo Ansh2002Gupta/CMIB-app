@@ -36,7 +36,9 @@ const EditJobDetails = () => {
   const initialQuestion = useRef(intialQuestionData);
   const [questionaire, setQuestionaire] = useState(intialQuestionData);
   const [loading, setLoading] = useState(false);
-  const [isChecklist, setIsCheckList] = useState(false);
+  const [isChecklist, setIsCheckList] = useState(
+    intialJobData?.notify_company === 1 ?? false
+  );
   const [selectedTab, setSelectedTab] = useState(0);
   const [postError, setPostError] = useState(null);
   const questionaireRef = useRef(null);
@@ -76,6 +78,7 @@ const EditJobDetails = () => {
       initialQuestion.current = transformedQuestionnaire;
       setJobDetails(obj);
       setQuestionaire(transformedQuestionnaire);
+      setIsCheckList(obj?.notify_company === 1 ?? false);
       setLoading(false);
     }
   }, [data, newJobSuccess, fetchApiSuccess, addJobs]);
@@ -129,7 +132,7 @@ const EditJobDetails = () => {
       let formattedData = getFormatedData(
         jobDataPosted,
         questionnairelist,
-        isChecklist
+        isChecklist == 1 ? true : false
       );
 
       formattedData.questions = addIsDeleteKey(

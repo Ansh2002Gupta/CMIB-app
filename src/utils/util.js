@@ -242,8 +242,10 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     flexi_hours: jobData.flexiHours == 0 ? true : false,
     is_extended_vacancy: jobData.vacanciesCountType == 0 ? true : false,
     service_type: jobData.fullTime == 0 ? "Full Time" : "Part Time",
-    notify_company: isCheckList,
   };
+  if (isCheckList) {
+    temp.notify_company = isCheckList;
+  }
   if (jobData.jobType?.label === jobType.CONTRACTUAL) {
     temp.contract_period = {
       years: jobData.contractYear,
@@ -376,6 +378,9 @@ export const getDecryptApiData = (apiData, addJobs) => {
   obj.fullTime = apiData.service_type == "Full Time" ? 0 : 1;
   obj.disabiltyPercentage = apiData?.disability_percentage ?? 0;
   obj.typeOfDisabilty = apiData?.disability_type ?? "";
+  obj.notify_company = apiData?.notify_company
+    ? apiData?.notify_company
+    : false;
   obj.contractYear = apiData?.contract_period
     ? apiData.contract_period.years
     : 0;
