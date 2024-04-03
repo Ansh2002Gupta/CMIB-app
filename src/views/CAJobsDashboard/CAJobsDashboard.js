@@ -67,7 +67,7 @@ function CAJobsDashboard() {
   return (
     <ScrollView style={styles.container}>
       <View style={{ paddingLeft: 16, paddingRight: 16 }}>
-        {subscribedPackageData && Object.keys(subscribedPackageData)  ? (
+        {subscribedPackageData && subscribedPackageData.length>0  ? (
           <PurchasedPackage
             packageName={subscribedPackageData?.package_name}
             description={subscribedPackageData?.description}
