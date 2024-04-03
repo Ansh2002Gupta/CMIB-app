@@ -73,6 +73,9 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         paddingTop: 16,
       },
+      android: {
+        paddingTop: 16,
+      },
       web: webActionButtonContainer,
     }),
   },
