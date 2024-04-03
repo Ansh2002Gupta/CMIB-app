@@ -54,7 +54,7 @@ export const FormTabs = ({
 
   return (
     <>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.innerContainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Row gap={12} style={styles.tabContainer}>
@@ -103,7 +103,7 @@ export const FormTabs = ({
           )}
         </View>
         {tabs[activeTabIndex].component}
-      </View>
+      </ScrollView>
       {alertOnTabSwitch?.showAlert && (
         <ConfirmationModal
           headingText={intl.formatMessage({
