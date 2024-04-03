@@ -5,23 +5,34 @@ import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import styles from "./PopupMessage.style";
 
-const PopupMessage = ({ customStyle, message, onPopupClick }) => {
+const PopupMessage = ({
+  customMessageStyle,
+  customStyle,
+  message,
+  onPopupClick,
+}) => {
   return (
     <CustomTouchableOpacity
       style={{ ...styles.deletetextContainer, ...customStyle }}
       onPress={onPopupClick}
     >
-      <CommonText customTextStyle={styles.deletetext}>{message}</CommonText>
+      <CommonText
+        customTextStyle={{ ...styles.deletetext, ...customMessageStyle }}
+      >
+        {message}
+      </CommonText>
     </CustomTouchableOpacity>
   );
 };
 
 PopupMessage.defaultProps = {
+  customMessageStyle: {},
   customStyle: {},
 };
 
 PopupMessage.propTypes = {
-  customStyle: PropTypes.func,
+  customMessageStyle: PropTypes.object,
+  customStyle: PropTypes.object,
   message: PropTypes.string.isRequired,
   onPopupClick: PropTypes.func.isRequired,
 };

@@ -1,14 +1,11 @@
 import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import { baseChipStyle } from "../../theme/styles/commonStyles";
+
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   cellTextStyle: (fontSize = 14) => ({
     fontSize,
-    //    flexWrap: "wrap",
-    // wordBreak: "break-word",
-    // overFlow: "hidden",
-    // whiteSpace: "break-space",
     ...Platform.select({
       web: {
         textOverflow: "ellipsis",
@@ -43,6 +40,17 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     color: colors.darkBlue,
     textDecorationLine: "underline",
+  },
+  popupMessageStyle: {
+    position: "absolute",
+    top: 20,
+    right: 10,
+    height: "auto",
+    width: "auto",
+    minWidth: 233,
+  },
+  customMessageSTyle: {
+    lineHeight: 24,
   },
 });
 

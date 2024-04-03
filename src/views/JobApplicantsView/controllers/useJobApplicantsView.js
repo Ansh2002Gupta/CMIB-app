@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import styles from "../JobApplicantsView.style";
-import CommonText from "../../../components/CommonText";
+import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
-import commonStyles from "../../../theme/styles/commonStyles";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+
+import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
-import images from "../../../images";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import Chip from "../../../components/Chip";
-import { JOB_APPLICANTS } from "../../../services/apiServices/apiEndPoint";
-import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
+import images from "../../../images";
+import commonStyles from "../../../theme/styles/commonStyles";
+import styles from "../JobApplicantsView.style";
 
 const useJobApplicants = () => {
   let isHeading = true;
@@ -17,6 +17,7 @@ const useJobApplicants = () => {
   let subHeadingText = ["status"];
   let statusText = ["active_inactive"];
   let tableIcon = images.iconMore;
+  const [showCurrentPopupmessage, setCurrentPopupMessage] = useState(0);
   const { isWebView } = useIsWebView();
 
   //We'll uncomment this code when API is available
@@ -52,7 +53,11 @@ const useJobApplicants = () => {
     }
   }
 
-  const onIconPress = () => {};
+  const onIconPress = (item) => {
+    showCurrentPopupmessage !== item?.id
+      ? setCurrentPopupMessage(item?.id)
+      : setCurrentPopupMessage(-1);
+  };
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
@@ -132,14 +137,23 @@ const useJobApplicants = () => {
       },
       {
         content: !isHeading && (
-          <TouchableImage
-            onPress={() => {
-              onIconPress(item);
-            }}
-            source={images.iconMore}
-            imageStyle={styles.iconTicket}
-            isSvg={true}
-          />
+          <View>
+            <TouchableImage
+              onPress={() => {
+                onIconPress(item);
+              }}
+              source={images.iconMore}
+              imageStyle={styles.iconTicket}
+              isSvg={true}
+            />
+            {showCurrentPopupmessage === item.id && (
+              <PopupMessage
+                message={"Aniket Made this component"}
+                customStyle={styles.popupMessageStyle}
+                customMessageStyle={styles.customMessageSTyle}
+              />
+            )}
+          </View>
         ),
         style: {
           ...commonStyles.columnStyle("5%"),
@@ -151,12 +165,12 @@ const useJobApplicants = () => {
   };
   return {
     getColoumConfigs,
-    isHeading,
+    getStatusStyle,
     headingTexts,
+    isHeading,
     subHeadingText,
     statusText,
     tableIcon,
-    getStatusStyle,
   };
 };
 

@@ -8,19 +8,22 @@ import CustomTable from "../../components/CustomTable";
 import useIsWebView from "../../hooks/useIsWebView";
 import useJobApplicants from "./controllers/useJobApplicantsView";
 import { data } from "./constant";
-import { JOB_APPLICANTS_HEADING } from "../../constants/constants";
+import {
+  JOB_APPLICANTS_HEADING,
+  ROWS_PER_PAGE_ARRAY,
+} from "../../constants/constants";
 
 const JobApplicants = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const {
     getColoumConfigs,
-    isHeading,
+    getStatusStyle,
     headingTexts,
+    isHeading,
     subHeadingText,
     statusText,
     tableIcon,
-    getStatusStyle,
   } = useJobApplicants();
 
   return (
@@ -44,6 +47,7 @@ const JobApplicants = () => {
           statusText={statusText}
           getStatusStyle={getStatusStyle}
           tableIcon={tableIcon}
+          rowsLimit={ROWS_PER_PAGE_ARRAY}
         />
       }
     />
