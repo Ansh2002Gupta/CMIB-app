@@ -208,6 +208,7 @@ const iconSelectCircle = appendAppBaseURl("/images/svg/selectCircle.svg");
 const iconSelectedSolidCircle = appendAppBaseURl(
   "/images/svg/selectedCircle.svg"
 );
+const iconCircleCross = appendAppBaseURl("/images/svg/close-circle.svg");
 
 const images = {
   iconArrowUp,
@@ -356,6 +357,7 @@ const images = {
   iconCrossInsideCircle,
   iconSelectCircle,
   iconSelectedSolidCircle,
+  iconCircleCross,
 };
 
 export default images;

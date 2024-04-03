@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
   },
   columnHeaderStyle: {
     backgroundColor: colors.white,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
   columnHeaderStyleWithBorder: {
     backgroundColor: colors.white,
@@ -65,7 +67,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: colors.lightGrey,
     borderRadius: 16,
-    overflow: "hidden",
   },
   iconTicket: {
     height: 20,

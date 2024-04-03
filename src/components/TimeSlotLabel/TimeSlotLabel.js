@@ -1,12 +1,13 @@
-import { Platform, View } from "@unthinkable/react-core-components";
 import React from "react";
-import styles from "./TimeSlotLable.styles";
+import { Platform, View } from "@unthinkable/react-core-components";
+import PropTypes from "prop-types";
 import { TwoColumn } from "../../core/layouts";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
+import styles from "./TimeSlotLable.styles";
 
 const TimeSlotLabel = ({ dataObj, onSelect, selectedDateLabelID }) => {
   const isWeb = Platform.OS.toLowerCase() === "web";
@@ -51,6 +52,18 @@ const TimeSlotLabel = ({ dataObj, onSelect, selectedDateLabelID }) => {
       ></TwoColumn>
     </CustomTouchableOpacity>
   );
+};
+
+TimeSlotLabel.propTypes = {
+  dataObj: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  selectedDateLabelID: PropTypes.number,
+};
+
+TimeSlotLabel.defaultProps = {
+  dataObj: {},
+  onSelect: () => {},
+  selectedDateLabelID: 0,
 };
 
 export default TimeSlotLabel;

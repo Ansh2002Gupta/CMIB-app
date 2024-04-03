@@ -38,6 +38,7 @@ const CustomTable = ({
   data,
   defaultCategory,
   selectedFilterOptions,
+  setSelectedFilterOptions,
   filterApplyHandler,
   filterCategory,
   getColoumConfigs,
@@ -75,6 +76,7 @@ const CustomTable = ({
   setModalData,
   setShowJobOfferResponseModal,
   setShowInterviewTimeModal,
+  unit,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -82,13 +84,15 @@ const CustomTable = ({
 
   const popUpRef = useRef(null);
 
-  useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
+  useOutsideClick(popUpRef, isWeb ? () => setShowPopUpWithID(-1) : () => {});
   const [showFilterOptions, setShowFilterOptions] = useState(false);
-  const [filterState, setFilterState] = useState(initialFilterState);
 
-  const isFilterCount =
-    !!filterState?.selectedStatus?.length ||
-    !!filterState?.selectedQueryType?.length;
+  const isFilterCount = Object.values(selectedFilterOptions).find(
+    (state) => !!state.length
+  );
+
+  console.log("isFilterCount:", isFilterCount);
+  console.log("filterStat | CustomTable:", selectedFilterOptions);
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
@@ -107,6 +111,17 @@ const CustomTable = ({
       };
 
   const webProps = isWeb ? { size: "xs" } : {};
+
+  const getFilterCount = () => {
+    const selectedValue = Object.values(selectedFilterOptions);
+    let filterCount = 0;
+    for (let key in selectedValue) {
+      filterCount += Array.isArray(selectedValue[key])
+        ? selectedValue[key].length
+        : 0;
+    }
+    return filterCount;
+  };
 
   return (
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
@@ -145,8 +160,7 @@ const CustomTable = ({
                         customTextStyle={styles.activeTicketsText}
                         fontWeight={"600"}
                       >
-                        {filterState?.selectedStatus.length +
-                          filterState?.selectedQueryType.length}
+                        {getFilterCount()}
                       </CommonText>
                     )}
                   </CustomTouchableOpacity>
@@ -365,13 +379,12 @@ const CustomTable = ({
             data,
             defaultCategory,
             filterCategory,
-            filterState: !!selectedFilterOptions
-              ? selectedFilterOptions
-              : filterState,
+            filterState: selectedFilterOptions,
             initialFilterState,
-            setFilterState,
+            setFilterState: setSelectedFilterOptions,
             setShowFilterOptions,
             onApplyFilter,
+            unit,
           }}
         />
       )}

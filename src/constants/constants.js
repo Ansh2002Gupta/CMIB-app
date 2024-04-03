@@ -54,6 +54,8 @@ export const MINIMUM_FRESHNESS_LIMIT = 0;
 export const MAXIMUM_FRESHNESS_LIMIT = 100;
 export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = "WorkMode";
 
+export const FILTER_TYPE_ENUM = { CHECKBOX: "checkbox", SLIDER: "slider" };
+
 export const API_STATUS = {
   IDLE: "idle",
   LOADING: "loading",
@@ -481,6 +483,11 @@ export const FORMAT = [
   "align",
   "size",
 ];
+
+export const UNITS = {
+  YRS: "Yrs",
+};
+
 export const TEXT_FORMATS = [
   "bold",
   "italic",

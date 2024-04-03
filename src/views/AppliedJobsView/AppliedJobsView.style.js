@@ -103,8 +103,9 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   popUpMessagePosition: {
-    top: 0,
-    right: 70,
+    position: "absolute",
+    top: 20,
+    right: 10,
   },
 });
 

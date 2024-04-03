@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   },
   limitsContainer: {
     width: "100%",
+    marginTop: 8,
     flexDirection: "row",
     justifyContent: "space-between",
   },

@@ -26,6 +26,7 @@ import {
 } from "../../../utils/queryParamsHelpers";
 import {
   DEFAULT_CATEGORY_FOR_FILTER_MODAL,
+  FILTER_TYPE_ENUM,
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
@@ -40,13 +41,9 @@ const isMob = Platform.OS.toLowerCase() !== "web";
 
 const initialFilterState = {
   selectedWorkMode: [],
-  selectedCompany: [],
-  selectedDepartment: [],
   selectedExperience: 0,
-  selectedEducation: [],
   selectedJobType: [],
   selectedLocation: [],
-  activeCategories: [],
 };
 
 const useAppliedJobsListing = () => {
@@ -76,7 +73,6 @@ const useAppliedJobsListing = () => {
   });
   const [modalData, setModalData] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [showToast, setShowToast] = useState(true);
   const popUpRef = useRef(null);
 
   useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
@@ -84,6 +80,10 @@ const useAppliedJobsListing = () => {
   const [showJobOfferResponseModal, setShowJobOfferResponseModal] =
     useState(false);
   const [showInterviewTimeModal, setShowInterviewTimeModal] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState({
+    isShow: false,
+    decision: -1,
+  });
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -91,6 +91,10 @@ const useAppliedJobsListing = () => {
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(searchParams.get("page"))
   );
+  const [candidateDecision, setCandidateDecision] = useState({
+    decision: null,
+    applicantID: null,
+  });
 
   const navigate = useNavigate();
 
@@ -117,57 +121,58 @@ const useAppliedJobsListing = () => {
 
   const { data: locationData } = useFetch({ url: JOB_LOCATION_OPTIONS });
 
-  const { makeRequest: patchAcceptRejectOfferDecision } = usePatch({
+  const {
+    makeRequest: patchAcceptRejectOfferDecision,
+    error: toastMsg,
+    setError: setToastMsg,
+    isLoading: isPatching,
+    isSuccess: isPatchingSuccess,
+    isError: isPatchingError,
+  } = usePatch({
     url: OFFER_RESPONSE,
   });
 
-  const handleAcceptRejectOffer = ({ decision, applicantID }) => {
-    setIsLoading(true);
+  const handleConfirmation = () => {
+    const { decision, applicantID } = candidateDecision;
     patchAcceptRejectOfferDecision({
-      url: OFFER_RESPONSE + `/${applicantID}/status`,
+      overrideUrl: OFFER_RESPONSE + `/${applicantID}/status`,
       body: { status: decision ? 7 : 8 },
-      onErrorCallback: () => {
-        showToast && (
-          <ToastComponent
-            toastMessage={intl.formatMessage({
-              id: "label.some_error_occured",
-            })}
-            onDismiss={() => {
-              setShowToast((prev) => !prev);
-            }}
-          />
-        );
+      onErrorCallback: (error) => {
+        setConfirmationModal((prev) => ({
+          ...prev,
+          isShow: false,
+        }));
+        setShowJobOfferResponseModal(false);
       },
       onSuccessCallback: () => {
-        showToast && (
-          <ToastComponent
-            toastMessage={intl.formatMessage({
-              id: "label.success.acceptOffer",
-            })}
-            onDismiss={() => {
-              setShowToast((prev) => !prev);
-            }}
-          />
-        );
+        setConfirmationModal((prev) => ({
+          ...prev,
+          isShow: false,
+        }));
+        setShowJobOfferResponseModal(false);
       },
     });
-    setIsLoading(false);
+  };
+
+  const handleAcceptRejectOffer = ({ decision, applicantID }) => {
+    setConfirmationModal((prev) => ({
+      ...prev,
+      isShow: true,
+      decision: decision,
+    }));
+    setCandidateDecision({ decision, applicantID });
   };
 
   const handleFilterChange = (selectedFilter, filterName) => {
-    console.log("selectedFilter, filterName", selectedFilter, filterName);
     setFilterState((prevState) => {
       const filterInfo = customFilterInfo.find(
         (info) => info.name === filterName
       );
       const filterKey = `selected${filterInfo?.name}`;
-      console.log("filterKey", filterKey);
       const existingSelectedOptions = prevState[filterKey];
-      console.log("prevState:", prevState);
-      console.log("existingSelectedOptions:", existingSelectedOptions);
       let newSelectedOptions;
 
-      if (filterInfo?.type === "checkbox") {
+      if (filterInfo?.type === FILTER_TYPE_ENUM.CHECKBOX) {
         newSelectedOptions = existingSelectedOptions.includes(selectedFilter.id)
           ? existingSelectedOptions.filter((id) => id !== selectedFilter.id)
           : [...existingSelectedOptions, selectedFilter.id];
@@ -188,28 +193,27 @@ const useAppliedJobsListing = () => {
           return { id: index + 1, name: obj?.[keyName] };
         })
       : [];
-    console.log("locationArr:", locationArr);
     return locationArr;
   };
 
   const customFilterInfo = [
     {
       name: "WorkMode",
-      type: "checkbox",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
       options: workModeData,
       selectedOptions: filterState?.selectedWorkMode,
       handler: handleFilterChange,
     },
     {
       name: "JobType",
-      type: "checkbox",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
       options: jobTypeData,
       selectedOptions: filterState?.selectedJobType,
       handler: handleFilterChange,
     },
     {
       name: "Experience",
-      type: "slider",
+      type: FILTER_TYPE_ENUM.SLIDER,
       minimumSliderLimit: 0,
       maximumSliderLimit: 40,
       options: experienceData,
@@ -218,7 +222,7 @@ const useAppliedJobsListing = () => {
     },
     {
       name: "Location",
-      type: "checkbox",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
       options: extractLocation({ data: locationData, keyName: "country" }),
       selectedOptions: filterState?.selectedLocation,
       handler: handleFilterChange,
@@ -317,7 +321,6 @@ const useAppliedJobsListing = () => {
   };
 
   const onIconPress = (item) => {
-    console.log("item:", item);
     showPopUpWithID !== item?.id
       ? setShowPopUpWithID(item?.id)
       : setShowPopUpWithID(-1);
@@ -366,7 +369,6 @@ const useAppliedJobsListing = () => {
       education: returnSelectedFilterOption("Education"),
     };
     setFilterOptions(currentFilterOptions);
-    console.log("curretnFilterOptions:", currentFilterOptions);
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: currentPage,
@@ -527,7 +529,7 @@ const useAppliedJobsListing = () => {
                       popUpMessage ===
                       intl.formatMessage({ id: "label.respond_to_job_offer" })
                     ) {
-                      setShowJobOfferResponseModal((prev) => !prev);
+                      setShowJobOfferResponseModal(true);
                       setModalData(item);
                     } else {
                       setShowInterviewTimeModal((prev) => !prev);
@@ -555,6 +557,7 @@ const useAppliedJobsListing = () => {
 
   return {
     allDataLoaded,
+    confirmationModal,
     currentPage,
     customFilterInfo,
     fetchDataAppliedJobs,
@@ -563,6 +566,7 @@ const useAppliedJobsListing = () => {
     filterState,
     getColoumConfigs,
     getStatusStyle,
+    handleConfirmation,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
@@ -574,6 +578,9 @@ const useAppliedJobsListing = () => {
     isHeading,
     isAppliedJobsListingLoading,
     isFirstPageReceived,
+    isPatching,
+    isPatchingSuccess,
+    isPatchingError,
     loadingMore,
     onIconPress,
     queryTypeUrl: COMPANY_QUERY_TYPE_TICKET,
@@ -588,16 +595,20 @@ const useAppliedJobsListing = () => {
     statusText,
     subHeadingText,
     tableIcon,
+    toastMsg,
     appliedJobsData: currentRecords,
     totalcards: appliedJobsData?.meta?.total,
     showJobOfferResponseModal,
     setShowJobOfferResponseModal,
+    setConfirmationModal,
     showInterviewTimeModal,
     setShowInterviewTimeModal,
     handleAcceptRejectOffer,
     modalData,
     isLoading,
     setIsLoading,
+    setToastMsg,
+    setFilterState,
     showPopUpWithID,
     setModalData,
     setShowPopUpWithID,

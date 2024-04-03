@@ -1,12 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {
-  Platform,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
+import { Platform, View } from "@unthinkable/react-core-components";
 import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
+import PropTypes from "prop-types";
 
+import ActionPairButton from "../ActionPairButton";
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomImage from "../CustomImage";
@@ -31,7 +29,15 @@ const CustomModal = ({
   onPressIconCross,
   secondaryText,
   onBackdropPress,
+  showActionButtonOnSuccess,
+  imageOnSuccess,
+  customStyles,
+  handleButtonOnePress,
+  handleButtonTwoPress,
+  isLoading,
+  isButtonOneDisabled,
 }) => {
+  const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
   const webProps = isWeb ? { maxWidth } : { onBackdropPress };
 
@@ -52,8 +58,8 @@ const CustomModal = ({
           <>
             <CustomImage
               alt={"Success Icon"}
-              source={images.iconSuccess}
-              Icon={images.iconSuccess}
+              source={imageOnSuccess}
+              Icon={imageOnSuccess}
               isSvg
               style={style.iconStyle}
             />
@@ -71,9 +77,22 @@ const CustomModal = ({
                 {secondaryText}
               </CommonText>
             )}
-            <CustomButton onPress={onPress} withGreenBackground>
-              {buttonTitle}
-            </CustomButton>
+            {showActionButtonOnSuccess ? (
+              <ActionPairButton
+                buttonOneText={intl.formatMessage({ id: "label.no_need_time" })}
+                buttonTwoText={intl.formatMessage({ id: "label.yes_pass_on" })}
+                isButtonTwoGreen
+                onPressButtonOne={handleButtonOnePress}
+                onPressButtonTwo={handleButtonTwoPress}
+                customStyles={customStyles}
+                displayLoader={isLoading}
+                isButtonOneDisabled={isLoading}
+              />
+            ) : (
+              <CustomButton onPress={onPress} withGreenBackground>
+                {buttonTitle}
+              </CustomButton>
+            )}
           </>
         ) : (
           <>
@@ -118,6 +137,7 @@ CustomModal.defaultProps = {
   onPressIconCross: () => {},
   onBackdropPress: () => {},
   secondaryText: "",
+  showActionButtonOnSuccess: false,
 };
 
 CustomModal.propTypes = {
@@ -135,6 +155,7 @@ CustomModal.propTypes = {
   onPressIconCross: PropTypes.func,
   onBackdropPress: PropTypes.func,
   secondaryText: PropTypes.string,
+  showActionButtonOnSuccess: PropTypes.bool,
 };
 
 export default CustomModal;

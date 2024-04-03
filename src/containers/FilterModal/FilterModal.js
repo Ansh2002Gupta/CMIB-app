@@ -18,6 +18,7 @@ import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./FilterModal.style";
 import {
+  FILTER_TYPE_ENUM,
   MAXIMUM_EXPERIENCE_LIMIT,
   MAXIMUM_FRESHNESS_LIMIT,
   MAXIMUM_SALARY_LIMIT,
@@ -36,6 +37,7 @@ const FilterModal = ({
   setFilterState,
   setShowFilterOptions,
   defaultCategory,
+  unit,
 }) => {
   const {
     currentCategory,
@@ -72,23 +74,24 @@ const FilterModal = ({
       : {};
 
   const handleAllcategorySet = (filterName) => {
+    const keyName = `selected` + filterName;
     const filterObj = returnFilterObj(filterInfo, filterName);
-    if (filterObj?.type?.trim()?.toLowerCase() === "checkbox") {
+    if (filterObj?.type?.trim()?.toLowerCase() === FILTER_TYPE_ENUM.CHECKBOX) {
       const getFilterDataID = filterObj?.options?.map((item) => item.id);
-      setFilterState({
-        ...filterState,
-        [filterObj?.selectedOptions]:
+      setFilterState((prev) => ({
+        ...prev,
+        [keyName]:
           filterObj?.selectedOptions?.length !== getFilterDataID?.length
             ? getFilterDataID
             : [],
-      });
+      }));
     }
-    if (filterObj?.type?.trim()?.toLowerCase() === "slider") {
+    if (filterObj?.type?.trim()?.toLowerCase() === FILTER_TYPE_ENUM.SLIDER) {
       const getFilterData = filterObj?.options;
-      setFilterState({
-        ...filterState,
-        [filterObj?.selectedOptions]: getFilterData,
-      });
+      setFilterState((prev) => ({
+        ...prev,
+        [keyName]: getFilterData,
+      }));
     }
   };
 
@@ -114,9 +117,9 @@ const FilterModal = ({
 
   const renderOptionsByCategory = (category) => {
     category = getFilterName(category);
-    console.log("category:", category);
     const filterObj = returnFilterObj(filterInfo, category);
-    return filterObj?.type?.trim().toLowerCase() === "checkbox" ? (
+    return filterObj?.type?.trim().toLowerCase() ===
+      FILTER_TYPE_ENUM.CHECKBOX ? (
       filterObj?.options.map((option) => (
         <RenderCheckButton
           key={option.id}
@@ -128,10 +131,9 @@ const FilterModal = ({
       ))
     ) : (
       <View style={styles.slider}>
-        {/* <View style={styles.popUpAndSlider}> */}
         <View style={styles.customExperienceContainer}>
           <CommonText customTextStyle={styles.customExperience}>
-            {filterState?.selectedExperience} Yrs
+            {`${filterState?.selectedExperience} ${unit}`}
           </CommonText>
         </View>
         <Slider
@@ -141,13 +143,12 @@ const FilterModal = ({
           onChange={(val) => filterObj?.handler({ value: val }, "Experience")}
           value={filterState?.selectedExperience}
         />
-        {/* </View> */}
         <View style={styles.limitsContainer}>
           <CommonText customTextStyle={styles.sliderLimitLabel}>
-            {filterObj?.minimumSliderLimit} Yrs
+            {`${filterObj?.minimumSliderLimit} ${unit}`}
           </CommonText>
           <CommonText customTextStyle={styles.sliderLimitLabel}>
-            {filterObj?.maximumSliderLimit} Yrs
+            {`${filterObj?.maximumSliderLimit} ${unit}`}
           </CommonText>
         </View>
       </View>
@@ -222,7 +223,7 @@ const FilterModal = ({
                         leftSection={
                           <CustomTouchableOpacity
                             onPress={() => {
-                              handleCategoryChange(item);
+                              handleCategoryChange(getFilterName(item));
                             }}
                           >
                             <RenderCategoryButton
@@ -230,7 +231,7 @@ const FilterModal = ({
                               title={item}
                               onClick={(item) => {
                                 handleAllcategorySet(getFilterName(item));
-                                handleCategoryChange(item);
+                                handleCategoryChange(getFilterName(item));
                               }}
                             />
                           </CustomTouchableOpacity>
@@ -296,6 +297,7 @@ FilterModal.propTypes = {
   onApplyFilter: PropTypes.func.isRequired,
   setFilterState: PropTypes.func.isRequired,
   setShowFilterOptions: PropTypes.func.isRequired,
+  unit: PropTypes.string,
 };
 
 export default FilterModal;

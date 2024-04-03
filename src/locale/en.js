@@ -403,6 +403,22 @@ const locale = {
   "label.active": "Active",
   "label.inactive": "Inactive",
   "label.no_response_from_applicant": "No response from applicant",
+  "label.message_acception":
+    "Are you sure you're ready to embrace this exciting opportunity? ",
+  "label.message_rejection": "Are you sure about declining this offer? ",
+  "label.acception_description":
+    "Once you click 'Accept Offer,' you're on your way to a new chapter. Confirm your decision and let the journey begin.",
+  "label.rejection_description":
+    "We value your decision either way. Click 'Reject Offer' only if you're certain this isn't the right fit for you.",
+  "label.yes_ready": "Yes, I'm Ready",
+  "label.yes_pass_on": "Yes, Decided to Pass",
+  "label.no_need_time": "No, Need More Time",
+  "label.offer_extend_msg":
+    "We're thrilled to extend this offer to you! Your next steps await your decision",
+  "label.clock_ticking_msg":
+    "Still deciding? Take your time, but remember, the clock is ticking. Your future awaits your response!",
+  "label.shortlisted_congratulations":
+    "Congratulations on being shortlisted! Select a suitable interview time from the options below:",
 };
 
 export default locale;

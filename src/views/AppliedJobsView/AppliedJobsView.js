@@ -1,16 +1,17 @@
 import React, { useRef, useState } from "react";
 import { Platform } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../routes";
 import { TwoRow } from "../../core/layouts";
 
 import CustomTable from "../../components/CustomTable";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import InterviewTimeModal from "../../components/InterviewTimeModal/InterviewTimeModal";
-import JobOfferResponseModal from "../../components/JobOfferResponseModal/JobOfferResponseModal";
+import InterviewTimeModal from "../../containers/InterviewTimeModal/InterviewTimeModal";
+import JobOfferResponseModal from "../../containers/JobOfferResponseModal/JobOfferResponseModal";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useAppliedJobsListing from "./controllers/useAppliedJobsListing";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import {
+  UNITS,
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   APPLIED_JOBS_TABLE_HEADING as tableHeading,
 } from "../../constants/constants";
@@ -46,7 +47,6 @@ const AppliedJobsView = () => {
     rowsPerPage,
     setCurrentRecords,
     defaultCategory,
-
     appliedJobsData,
     totalcards,
     showJobOfferResponseModal,
@@ -54,12 +54,21 @@ const AppliedJobsView = () => {
     showInterviewTimeModal,
     setShowInterviewTimeModal,
     handleAcceptRejectOffer,
+    confirmationModal,
+    setConfirmationModal,
     modalData,
     isLoading,
     setIsLoading,
     showPopUpWithID,
     setModalData,
     setShowPopUpWithID,
+    handleConfirmation,
+    toastMsg,
+    setToastMsg,
+    isPatching,
+    isPatchingSuccess,
+    isPatchingError,
+    setFilterState,
   } = useAppliedJobsListing();
 
   const intl = useIntl();
@@ -82,6 +91,7 @@ const AppliedJobsView = () => {
           <CustomTable
             {...{
               selectedFilterOptions: filterState,
+              setSelectedFilterOptions: setFilterState,
               allDataLoaded,
               currentPage,
               currentRecords,
@@ -130,28 +140,39 @@ const AppliedJobsView = () => {
               setModalData,
               setShowPopUpWithID,
               isTicketListingLoading: isAppliedJobsListingLoading,
+              unit: UNITS.YRS,
             }}
             customModal={
-              showJobOfferResponseModal ? (
-                <JobOfferResponseModal
-                  {...{
-                    data: modalData,
-                    setShowJobOfferResponseModal,
-                    handleAcceptRejectOffer,
-                    isLoading,
-                  }}
-                />
-              ) : (
-                <InterviewTimeModal
-                  {...{
-                    data: appliedJobsData,
-                    setShowInterviewTimeModal,
-                    isLoading,
-                  }}
-                />
-              )
+              <>
+                {showJobOfferResponseModal ? (
+                  <JobOfferResponseModal
+                    {...{
+                      data: modalData,
+                      showJobOfferResponseModal,
+                      setShowJobOfferResponseModal,
+                      handleAcceptRejectOffer,
+                      isLoading,
+                      handleConfirmation,
+                      isPatching,
+                      isPatchingSuccess,
+                      isPatchingError,
+                    }}
+                    confirmModalDetails={confirmationModal}
+                    showConfirmModal={confirmationModal?.isShow}
+                    setShowConfirmModal={setConfirmationModal}
+                  />
+                ) : (
+                  <InterviewTimeModal />
+                )}
+              </>
             }
           />
+          {!!toastMsg && (
+            <ToastComponent
+              toastMessage={toastMsg}
+              onDismiss={() => setToastMsg("")}
+            />
+          )}
         </>
       }
     />

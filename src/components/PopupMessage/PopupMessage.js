@@ -21,7 +21,7 @@ PopupMessage.defaultProps = {
 };
 
 PopupMessage.propTypes = {
-  customStyle: PropTypes.func,
+  customStyle: PropTypes.object,
   message: PropTypes.string.isRequired,
   onPopupClick: PropTypes.func.isRequired,
 };
