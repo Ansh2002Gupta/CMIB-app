@@ -390,6 +390,8 @@ const locale = {
   "label.session_has_expired": "Your session has been expired.",
   "label.your_access_has_been_revoked": "Your access has been revoked.",
   "label.saved_jobs": "Saved Jobs",
+  "label.applyJob": "Apply job",
+  "label.urgent": "Urgent",
 };
 
 export default locale;

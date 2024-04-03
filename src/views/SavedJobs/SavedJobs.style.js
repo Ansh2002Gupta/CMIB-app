@@ -17,6 +17,9 @@ const style = {
     flex: 1,
   },
   loaderStyle: { justifyContent: "center", alignItems: "center", flex: 1 },
+  scrollstyle: {
+    flex: 1,
+  },
 };
 
 export default style;
