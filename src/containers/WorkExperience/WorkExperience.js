@@ -80,9 +80,6 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
     handleCurrentStatusDetailBlur,
     isValidAllFields,
     initailWorkExperience,
-    handleAreasOfInterestSelection,
-    handleCurrentSpecialisationSelection,
-    handleCurrentIndustrySpecialisationSelection,
   } = useWorkExperience({
     state: state,
     formError: formFieldsError,
