@@ -40,17 +40,7 @@ function DashboardView() {
       <CommonText customTextStyle={styles.header}>
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
-      <RangeSlider
-        label="Yrs"
-        max={MAX_VALUE}
-        min={MIN_VALUE}
-        onChange={(obj) => {
-          console.log(obj);
-        }}
-        step={5}
-        {...{ range, setRange }}
-      />
-      <View style={{ marginTop: "5rem" }}>
+      <View>
         <UploadImage
           {...{
             onDeleteImage,
@@ -64,6 +54,21 @@ function DashboardView() {
           }}
         />
       </View>
+      <View>
+        <CommonText customTextStyle={styles.header}>
+          {intl.formatMessage({ id: "label.dashboard" })}
+        </CommonText>
+      </View>
+      <RangeSlider
+        label="Yrs"
+        max={MAX_VALUE}
+        min={MIN_VALUE}
+        onChange={(obj) => {
+          console.log(obj);
+        }}
+        step={5}
+        {...{ range, setRange }}
+      />
     </View>
   );
 }
