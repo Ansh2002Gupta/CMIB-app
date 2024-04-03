@@ -1,3 +1,5 @@
+import colors from "../../assets/colors";
+
 const style = {
   contentContainerStyle: {
     flex: 1,
@@ -5,6 +7,10 @@ const style = {
 
   innerContainerStyle: {
     marginBottom: 16,
+  },
+  tabContainer: {
+    backgroundColor: colors.backgroundGrey,
+    flex: 1,
   },
 };
 

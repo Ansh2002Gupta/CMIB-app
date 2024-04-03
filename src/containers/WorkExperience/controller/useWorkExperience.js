@@ -3,8 +3,6 @@ import useFetch from "../../../hooks/useFetch";
 import { useIntl } from "react-intl";
 import {
   BOOLEAN_OPTION,
-  EMP_STRENGTH,
-  GROSS_SALARY,
   numRegex,
 } from "../../../constants/constants";
 import { formatDate, yesNoToBoolean } from "../../../utils/util";

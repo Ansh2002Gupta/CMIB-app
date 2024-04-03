@@ -307,7 +307,7 @@ const CustomTextInput = (props) => {
         <TextInputWithChip
           value={value}
           placeholderText={placeholder}
-          onChipUpdate={(chipData) => onChipUpdate(chipData)}
+          onValueChange={onChangeValue}
         />
       );
     }
@@ -499,7 +499,7 @@ const CustomTextInput = (props) => {
           {isMultiline && (
             <CommonText
               customTextStyle={style.limitStyle}
-            >{`${value.length}/${maxLength}`}</CommonText>
+            >{`${value?.length}/${maxLength}`}</CommonText>
           )}
         </View>
       )}

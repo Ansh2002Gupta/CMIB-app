@@ -34,6 +34,8 @@ export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
 export const MIN_ZOOM_SCALE = 1;
 export const MAX_ZOOM_SCALE = 3;
 export const DEFAULT_BALANCE_CREDIT = 0;
+export const Candidate = "Candidate";
+export const Company = "Company";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
@@ -344,65 +346,6 @@ export const MARITAL_STATUS = [
     value: "Single",
   },
 ];
-
-export const EMP_STRENGTH = [
-  {
-    label: "200",
-    value: "200",
-  },
-  {
-    label: "1000",
-    value: "1000",
-  },
-];
-export const KIND_OF_INDUSTRY = [
-  {
-    name: "Information technology",
-    value: "Information_technology",
-    selectedIndex: null,
-    isSelected: false,
-  },
-  {
-    name: "BPO",
-    value: "bpo",
-    selectedIndex: null,
-    isSelected: false,
-  },
-  {
-    name: "Service Industry",
-    value: "service_industry",
-    selectedIndex: null,
-    isSelected: false,
-  },
-  {
-    name: "Information technology",
-    value: "Information_technology2",
-    selectedIndex: null,
-    isSelected: false,
-  },
-  {
-    name: "BPO",
-    value: "bpo2",
-    selectedIndex: null,
-    isSelected: false,
-  },
-  {
-    name: "Service Industry",
-    value: "service_industry2",
-    selectedIndex: null,
-    isSelected: false,
-  },
-];
-export const GROSS_SALARY = [
-  {
-    label: "5 lakh",
-    value: "5 lakh",
-  },
-  {
-    label: "10 lakh",
-    value: "10 lakh",
-  },
-];
 export const MONTHS = [
   {
     label: "January",
@@ -485,22 +428,6 @@ export const BOOLEAN_OPTION = [
     value: false,
   },
 ];
-
-export const LANGUAGE = [
-  {
-    label: "English",
-    value: "English",
-  },
-  {
-    label: "Hindi",
-    value: "Hindi",
-  },
-  {
-    label: "Urdu",
-    value: "Urdu",
-  },
-];
-
 export const COLOR = [
   "#000000",
   "#e60000",

@@ -6,6 +6,9 @@ import CommonText from "../../components/CommonText";
 import RangeSlider from "../../components/RangeSlider";
 import styles from "./dashboard.style";
 import JobProfileTab from "../JobProfile";
+import images from "../../images";
+import SearchView from "../../components/SearchView";
+import TouchableImage from "../../components/TouchableImage";
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
@@ -20,11 +23,11 @@ function DashboardView() {
   const AddIcon = images.iconAdd;
 
   const toggleSwitch = () => {
-    setIsEnabled((previousState) => !previousState);
+   // setIsEnabled((previousState) => !previousState);
   };
 
   const handleAddDesignation = () => {
-    setIsEnabled((previousState) => !previousState);
+   // setIsEnabled((previousState) => !previousState);
   };
 
   const handleSearchResults = (filteredData) => {};
@@ -90,7 +93,7 @@ function DashboardView() {
     });
     setSelectBoxState(updatedState);
   };
-
+  return (<JobProfileTab/>)
   return (
     <View style={styles.container}>
       <CommonText customTextStyle={styles.header}>

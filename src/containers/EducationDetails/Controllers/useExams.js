@@ -32,7 +32,7 @@ const ca_foundation = () => [
     key: "foundation_attempt_count",
     label: "label.foundation_attempt_count",
     placeholder: "label.foundation_attempt_count",
-    isCounterInput: true,
+    isNumeric: true,
   },
 ];
 const ca_inter = () => [

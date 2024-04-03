@@ -23,7 +23,7 @@ import images from "../../images";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
-  const isWebView = useIsWebView();
+  const { isWebView } = useIsWebView();
   if (isEditable) return null;
   if (isWebView) {
     return (
@@ -47,12 +47,27 @@ const EditButton = ({ isEditable, handleEdit }) => {
       </CardComponent>
     );
   }
-  return null;
+  return (
+    <TouchableOpacity
+      style={style.mobileEditContainer}
+      onPress={() => handleEdit(true)}
+    >
+      <CustomImage
+        source={images.iconEdit}
+        Icon={images.iconEdit}
+        isSvg
+        alt={"edit icon"}
+        height={20}
+        width={20}
+      />
+    </TouchableOpacity>
+  );
 };
 
 const JobProfileTab = () => {
   const intl = useIntl();
   const [isEditable, setIsEditable] = useState(false);
+  //Todo:editable will be in query params
   const handleEdit = (value) => {
     setIsEditable(value);
   };

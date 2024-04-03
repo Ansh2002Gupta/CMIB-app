@@ -46,7 +46,6 @@ const DragAndDropCard = ({
         : {}),
     };
   }
-  console.log("customContentContainerStyle", customContentContainerStyle)
   return (
     <>
       {isLoading ? (

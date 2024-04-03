@@ -468,6 +468,18 @@ const locale = {
   "label.job_profile": "Job Profile",
   "label.job_seekers": "Job Seekers",
   "label.search_by_candidate_name_or_id": "Search by candidate name or ID",
+  "label.category": "Category",
+  "label.accessibility_information": "Accessibility Information",
+  "label.has_disability": "Do you have any physical impairment?",
+  "label.handicap_description": "Handicapped Description",
+  "label.handicap_percentage": "Handicapped %",
+  "toggle.1": "Yes",
+  "toggle.0": "No",
+  "label.dateOfEmrollmentAsMemberRequired": " Date of Enrollment is required",
+  "label.areYouAFellowMemberRequired": "Fellow member is required",
+  "label.fellowMemberDateOfAdmissionRequired": "Fellow member date of admission is required",
+  "label.whetherInPracticeRequired": "Whether in practice is required",
+  "label.sinceWhenHaveYouBeenPracticingRequired" : "since when have you been practicing is required",
 };
 
 export default locale;
