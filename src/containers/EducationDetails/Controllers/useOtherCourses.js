@@ -32,12 +32,6 @@ const other_courses = () => [
     label: "label.mark_in_percent",
     placeholder: "label.mark_in_percent",
   },
-  {
-    key: "other_courses_mark_in_percent",
-    isNumeric: true,
-    label: "label.mark_in_percent",
-    placeholder: "label.mark_in_percent",
-  },
 ];
 
 const addValueOnField = ({ state, details, isEditable }) => {

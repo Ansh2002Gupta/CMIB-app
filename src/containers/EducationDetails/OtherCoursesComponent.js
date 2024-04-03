@@ -72,6 +72,27 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
     setError("");
   };
 
+  const handleSave = () => {
+    let payload = {
+      Others: [
+        {
+          has_education: state?.has_education,
+          exam_name: state?.examination_name,
+          passing_percentage: state?.mark_in_percent,
+          passing_year: state?.year,
+          exam_board: state?.board,
+          passing_cgpa: state?.cgpa,
+        },
+      ],
+    };
+    handleUpdate({
+      body: payload,
+      onSuccessCallback: () => {
+        handleEdit(false);
+      },
+    });
+  };
+
   return isGettingEducationData ? (
     <LoadingScreen />
   ) : errorWhileGettingEducationData ? (
@@ -93,26 +114,7 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
         handleOtherCoursesBlur={handleOtherCoursesBlur}
         isLoading={isUpdatingEducationData}
         isValidAllFields={isValidAllFields}
-        onClickSave={() => {
-          let payload = {
-            Others: [
-              {
-                has_education: state?.has_education,
-                exam_name: state?.examination_name,
-                passing_percentage: state?.mark_in_percent,
-                passing_year: state?.year,
-                exam_board: state?.board,
-                passing_cgpa: state?.cgpa,
-              },
-            ],
-          };
-          handleUpdate({
-            body: payload,
-            onSuccessCallback: () => {
-              handleEdit(false);
-            },
-          });
-        }}
+        onClickSave={handleSave}
         onClickCancel={() => {
           handleEdit(false);
         }}

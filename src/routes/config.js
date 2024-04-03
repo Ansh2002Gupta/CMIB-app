@@ -12,7 +12,8 @@ import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import JobsView from "../views/JobsView/JobsView";
 import JobApplicantsView from "../views/JobApplicantsView/index";
-import JobSeekers from "../views/JobSeekers";
+import JobProfileTab from "../views/JobProfile";
+import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
@@ -108,6 +109,16 @@ const config = [
       {
         viewPath: "",
         element: <CompanyProfile />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.JOB_PROFILE,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobProfileTab />,
       },
     ],
   },
@@ -226,7 +237,7 @@ const config = [
       },
       {
         viewPath: navigations.JOB_SEEKERS,
-        element: <JobSeekers />,
+        element: <JobSeekersView />,
       },
       {
         viewPath: navigations.SAVED_CANDIDATES,

@@ -20,112 +20,140 @@ import {
 } from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 
-const accessibility_information = [
-  {
-    key: "has_disability",
-    isMandatory: true,
-    isToggle: true,
-    label: "label.has_disability",
-    placeholder: "label.has_disability",
-    validate: (value) => {
-      if (!value) {
-        return "This Field is required";
-      }
+const accessibility_information = (has_disability) => {
+  const commonFields = [
+    {
+      key: "has_disability",
+      isMandatory: true,
+      isToggle: true,
+      label: "label.has_disability",
+      placeholder: "label.has_disability",
+      validate: (value) => {
+        if (!value) {
+          return "This Field is required";
+        }
+      },
     },
-  },
-  {
-    key: "handicap_description",
-    isMandatory: true,
-    label: "label.handicap_description",
-    placeholder: "label.handicap_description",
-    validate: (value) => {
-      if (!value) {
-        return "Handicap Description is required";
-      }
+  ];
+  const otherFileds = [
+    {
+      key: "handicap_description",
+      isMandatory: true,
+      label: "label.handicap_description",
+      placeholder: "label.handicap_description",
+      validate: (value) => {
+        if (!value) {
+          return "Handicap Description is required";
+        }
+      },
     },
-  },
-  {
-    key: "handicap_percentage",
-    isNumeric: true,
-    isMandatory: true,
-    label: "label.handicap_percentage",
-    placeholder: "label.handicap_percentage",
-    validate: (value) => {
-      if (!value) {
-        return "Handicap Percentage is required";
-      }
+    {
+      key: "handicap_percentage",
+      isNumeric: true,
+      isMandatory: true,
+      label: "label.handicap_percentage",
+      placeholder: "label.handicap_percentage",
+      validate: (value) => {
+        if (!value) {
+          return "Handicap Percentage is required";
+        }
+      },
     },
-  },
-];
+  ];
+  if (!has_disability) {
+    return [...commonFields, ...otherFileds];
+  } else {
+    return commonFields;
+  }
+};
 
-const personal_detail = (categoryData) => [
-  {
-    key: "gender",
-    isMandatory: true,
-    isDropdown: true,
-    options: GENDER,
-    label: "label.gender",
-    placeholder: "label.gender",
-    validate: (value) => {
-      if (!value) {
-        return "Gender is required";
-      }
+const personal_detail = (categoryData, has_passport) => {
+  const commonFields = [
+    {
+      key: "gender",
+      isMandatory: true,
+      isDropdown: true,
+      options: GENDER,
+      label: "label.gender",
+      placeholder: "label.gender",
+      validate: (value) => {
+        if (!value) {
+          return "Gender is required";
+        }
+      },
     },
-  },
-  {
-    key: "marital_status",
-    isMandatory: true,
-    isDropdown: true,
-    options: MARITAL_STATUS,
-    label: "label.marital_status",
-    placeholder: "label.marital_status",
-    validate: (value) => {
-      if (!value) {
-        return "Marital Status is required";
-      }
+    {
+      key: "marital_status",
+      isMandatory: true,
+      isDropdown: true,
+      options: MARITAL_STATUS,
+      label: "label.marital_status",
+      placeholder: "label.marital_status",
+      validate: (value) => {
+        if (!value) {
+          return "Marital Status is required";
+        }
+      },
     },
-  },
-  {
-    key: "dob",
-    isMandatory: true,
-    isDate: true,
-    label: "label.date_of_birth",
-    placeholder: "label.date_of_birth",
-    validate: (value) => {
-      if (!value) {
-        return "Date of Birth is required";
-      }
+    {
+      key: "dob",
+      isMandatory: true,
+      isDate: true,
+      label: "label.date_of_birth",
+      placeholder: "label.date_of_birth",
+      validate: (value) => {
+        if (!value) {
+          return "Date of Birth is required";
+        }
+      },
     },
-  },
-  {
-    key: "email",
-    isMandatory: true,
-    isEmail: true,
-    label: "label.email",
-    placeholder: "label.email",
-    validate: (value) => {
-      if (!value) {
-        return "Email is required";
-      }
-      const err = validateEmail(value);
-      if (err) {
-        return err;
-      }
+    {
+      key: "email",
+      isMandatory: true,
+      isEmail: true,
+      label: "label.email",
+      placeholder: "label.email",
+      validate: (value) => {
+        if (!value) {
+          return "Email is required";
+        }
+        const err = validateEmail(value);
+        if (err) {
+          return err;
+        }
+      },
     },
-  },
-  {
-    key: "has_passport",
-    isMandatory: true,
-    isToggle: true,
-    label: "label.passport",
-    placeholder: "label.passport",
-    validate: (value) => {
-      if (!value) {
-        return "Passport is required";
-      }
+    {
+      key: "has_passport",
+      isMandatory: true,
+      isToggle: true,
+      label: "label.passport",
+      placeholder: "label.passport",
+      validate: (value) => {
+        if (!value) {
+          return "Passport is required";
+        }
+      },
     },
-  },
-  {
+    {
+      key: "category_id",
+      isMandatory: true,
+      isDropdown: true,
+      labelField: "name",
+      valueField: "id",
+      inputKey: "id",
+      options: categoryData,
+      label: "label.category",
+      placeholder: "label.category",
+      validate: (value) => {
+        if (!value) {
+          return "Category is required";
+        }
+      },
+    },
+  ];
+
+  const passportField = {
     key: "passport_number",
     isMandatory: true,
     label: "label.passport_number",
@@ -135,24 +163,14 @@ const personal_detail = (categoryData) => [
         return "Passport Number is required";
       }
     },
-  },
-  {
-    key: "category_id",
-    isMandatory: true,
-    isDropdown: true,
-    labelField: "name",
-    valueField: "id",
-    inputKey: "id",
-    options: categoryData,
-    label: "label.category",
-    placeholder: "label.category",
-    validate: (value) => {
-      if (!value) {
-        return "Category is required";
-      }
-    },
-  },
-];
+  };
+
+  if (!has_passport) {
+    return [...commonFields, passportField];
+  } else {
+    return commonFields;
+  }
+};
 const correspondence_address = (countryData) => [
   {
     key: "address1",
@@ -240,8 +258,8 @@ const correspondence_address = (countryData) => [
     validate: (value, intl) => {
       if (
         !numRegex.test(String(value)) ||
-        value.length > NUMBER_MAX_LENGTH ||
-        value.length < NUMBER_MIN_LENGTH
+        value?.length > NUMBER_MAX_LENGTH ||
+        value?.length < NUMBER_MIN_LENGTH
       ) {
         return intl.formatMessage({
           id: "label.telephone_no_validation",
@@ -420,9 +438,9 @@ export const usePersonalDetails = ({ state, isEditable }) => {
     url: MEMBER_CATEGORY,
   });
   const [accessibility_information_state, setAccessibility_information_state] =
-    useState(accessibility_information);
+    useState(accessibility_information(state?.has_disability));
   const [personal_detail_state, setPersonalDetailState] = useState(
-    personal_detail(categoryData)
+    personal_detail(categoryData, state?.has_passport)
   );
   const [correspondence_address_state, setCorrespondenceAddressState] =
     useState(correspondence_address(countryData));
@@ -430,9 +448,13 @@ export const usePersonalDetails = ({ state, isEditable }) => {
     useState(permanent_address);
 
   useEffect(() => {
+    setAccessibility_information_state(
+      accessibility_information(state?.has_disability)
+    );
+    setPersonalDetailState(personal_detail(categoryData, state?.has_passport));
     setCorrespondenceAddressState(correspondence_address(countryData));
-    setPersonalDetailState(personal_detail(categoryData));
-  }, [countryData]);
+    setPermanentAddressState(permanent_address);
+  }, [countryData, state]);
 
   const handlePersonalDetailBlur = (key, index) => {
     setPersonalDetailState(
