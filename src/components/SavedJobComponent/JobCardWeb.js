@@ -1,7 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import CommonText from "../CommonText";
-import { Platform, Image, View } from "@unthinkable/react-core-components";
+import { Image, View } from "@unthinkable/react-core-components";
 
 import { ThreeRow, TwoColumn } from "../../core/layouts";
 import MultiColumn from "../../core/layouts/MultiColumn";
@@ -16,6 +16,7 @@ import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
 
 const JobCardWeb = ({
+  isLoading,
   companyName,
   createdAt,
   jobPostion,
@@ -173,6 +174,9 @@ const JobCardWeb = ({
           }
           rightSection={
             <ActionPairButton
+              displayLoaderLeft={isLoading}
+              isDisabledLeft={isLoading}
+              isDisabled={isLoading}
               onPressButtonTwo={handleApply}
               onPressButtonOne={handleRemove}
               isButtonTwoGreen

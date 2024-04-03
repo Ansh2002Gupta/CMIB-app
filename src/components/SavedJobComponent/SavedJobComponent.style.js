@@ -121,6 +121,10 @@ const style = {
     paddingRight: 24,
     marginTop: 16,
   },
+  customToastStyle: {
+    top: 50,
+    bottom: "50%",
+  },
 };
 
 export default style;

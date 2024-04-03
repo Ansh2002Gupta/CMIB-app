@@ -15,6 +15,7 @@ import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
 
 const JobCardMobile = ({
+  isLoading,
   companyName,
   createdAt,
   jobPostion,
@@ -175,6 +176,7 @@ const JobCardMobile = ({
           }
           rightSection={
             <CustomButton
+              disabled={isLoading}
               iconLeft={{
                 leftIconAlt: "left-saved",
                 leftIconSource: images.iconSaveSlashBlue,
