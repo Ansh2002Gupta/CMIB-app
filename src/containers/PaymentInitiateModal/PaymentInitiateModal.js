@@ -43,7 +43,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
       !panNumber ||
       !tdsAmount ||
       !tan ||
-      Number(amount) <= Number(tdsAmount)
+      Number(amount) < Number(tdsAmount)
     );
   };
 
@@ -66,7 +66,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
       },
       onErrorCallback: (errorMessage) => {
         console.log("Error", errorMessage);
-        onPressCancel();
+        // onPressCancel();
       },
       onSuccessCallback: (data) => {
         console.log(data, 'Success')
@@ -119,7 +119,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     isPaymentInitializedLoading
   ) {
     return (
-      <View style={styles.loaderStyle}>
+      <View style={{...(isWebView ? styles.loaderStyle : {flex: 1})}}>
         <Spinner />
       </View>
     );
@@ -146,11 +146,12 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
               customStyle={styles.containerStyle}
               value={tdsAmount}
               onChangeText={(val) => {
-                setTdsAmount(val);
-              }}
-              isError={Number(amount) <= Number(tdsAmount)}
+                if(!isNaN(val) && val>=0)
+                  setTdsAmount(val);
+                }}
+              isError={Number(amount) < Number(tdsAmount)}
               errorMessage={
-                Number(amount) <= Number(tdsAmount)
+                Number(amount) < Number(tdsAmount)
                   ? intl.formatMessage({ id: "label.tds_input_error" })
                   : ""
               }
@@ -256,7 +257,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
             onPressButtonTwo={handleSave}
           />
         </View>
-        {(errorWhilePaymentInitialization) && (
+        {!!errorWhilePaymentInitialization && (
         <ToastComponent
           toastMessage={
             errorWhilePaymentInitialization

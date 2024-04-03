@@ -39,6 +39,7 @@ const style = {
   buttonWebStyle: {
     width: "100%",
     alignItems: "flex-end",
+    marginTop: 16,
   },
   webContentContainerStyle: {
     maxHeight: "60vh",
@@ -75,11 +76,11 @@ const style = {
     marginTop: 8,
   },
   loaderStyle: {
-    flex: 1,
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
     backgroundColor: colors.backgroundColor,
+    height: '60vh'
   },
 };
 
