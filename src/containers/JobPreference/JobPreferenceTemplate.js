@@ -5,8 +5,11 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 import DetailCard from "../../components/DetailCard";
 import useIsWebView from "../../hooks/useIsWebView";
 import SaveCancelButton from "../../components/SaveCancelButton";
-import UploadPhotoVideoComponent from "./UploadPhotoVideo";
+import UploadPhotoVideo from "./UploadPhotoVideo";
 import style from './JobPreference.style';
+import Spinner from "../../components/Spinner";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { STATUS_CODES } from "../../constants/constants";
 
 const JobPreferenceTemplate = ({
   isEditable,
@@ -18,10 +21,32 @@ const JobPreferenceTemplate = ({
   onClickSave,
   onClickCancel,
   isValidAllFields,
-  handleAreasOfInterestSelection,
+  handleMultiSelection,
+  isLoadingPage,
+  isErrorLoadingPage,
+  isPageLoading,
+  error,
+  errorWhileDeletion,
+  errorWhileUpload,
+  updatedFileUploadResult,
+  uploadImageToServerUtils,
+  onDeleteImage,
+  handleImageUploadResult
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  if (isPageLoading) {
+    return (
+      <View style={style.loaderStyle}>
+        <Spinner />
+      </View>
+    );
+  }
+
+  if (error && error?.code !== STATUS_CODES.UNAUTHORIZED_USER) {
+    return <ErrorComponent errorMsg={error.message} />;
+  }
 
   return (
     <ScrollView
@@ -39,13 +64,18 @@ const JobPreferenceTemplate = ({
           isEditProfile={isEditable}
           handleChange={onChangeValue(preferences_details)}
           handleBlur={handlePreferencesDetailBlur}
-          handleMultiSelect={handleAreasOfInterestSelection}
+          handleMultiSelect={handleMultiSelection}
         />
       </View>
-      <UploadPhotoVideoComponent
+      <UploadPhotoVideo
       isEditable={isEditable}
+      onDeleteImage={onDeleteImage}
+      errorWhileUpload={errorWhileUpload}
+      hideIconDelete={isEditable}
+      uploadImageToServerUtils={uploadImageToServerUtils}
+      handleImageUploadResult={handleImageUploadResult}
       >
-      </UploadPhotoVideoComponent>
+      </UploadPhotoVideo>
       <SaveCancelButton
         isEditable={isEditable}
         isLoading={isLoading}

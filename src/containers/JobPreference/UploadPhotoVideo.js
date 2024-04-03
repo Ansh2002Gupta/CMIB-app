@@ -15,7 +15,9 @@ const UploadPhotoVideo = ({
   isUploadingImageToServer,
   setFileUploadResult,
   uploadPercentage,
-  isEditProfile
+  isEditProfile,
+  uploadImageToServerUtils,
+  handleImageUploadResult
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
@@ -30,12 +32,30 @@ const UploadPhotoVideo = ({
         <UploadCVPhotoUI
       isEditable={isEditable}
       headerText={"label.cv_photo"}
-      onDeleteImage={() => console.log("call when image deleted")}
+      onDeleteImage={onDeleteImage}
+      errorWhileUpload={errorWhileUpload}
+      updatedFileUploadResult={updatedFileUploadResult}
+      handleFileUpload={handleFileUpload}
+      isUploadingImageToServer={isUploadingImageToServer}
+      setFileUploadResult={setFileUploadResult}
+      uploadPercentage={uploadPercentage}
+      uploadImageToServerUtils={uploadImageToServerUtils}
+      handleImageUploadResult={handleImageUploadResult}
+      indexKey="cv_path"
       ></UploadCVPhotoUI>
-      <UploadCVPhotoUI
+       <UploadCVPhotoUI
       isEditable={isEditable}
       headerText={"label.photo"}
-      onDeleteImage={() => console.log("call when image deleted")}
+      onDeleteImage={onDeleteImage}
+      errorWhileUpload={errorWhileUpload}
+      updatedFileUploadResult={updatedFileUploadResult}
+      handleFileUpload={handleFileUpload}
+      isUploadingImageToServer={isUploadingImageToServer}
+      setFileUploadResult={setFileUploadResult}
+      uploadPercentage={uploadPercentage}
+      uploadImageToServerUtils={uploadImageToServerUtils}
+      handleImageUploadResult={handleImageUploadResult}
+      indexKey="job_photo_path"
       ></UploadCVPhotoUI>
         </View>
 
@@ -46,7 +66,16 @@ const UploadPhotoVideo = ({
         <UploadCVPhotoUI
       isEditable={isEditable}
       headerText={"label.short_video"}
-      onDeleteImage={() => console.log("call when image deleted")}
+      onDeleteImage={onDeleteImage}
+      errorWhileUpload={errorWhileUpload}
+      updatedFileUploadResult={updatedFileUploadResult}
+      handleFileUpload={handleFileUpload}
+      isUploadingImageToServer={isUploadingImageToServer}
+      setFileUploadResult={setFileUploadResult}
+      uploadPercentage={uploadPercentage}
+      uploadImageToServerUtils={uploadImageToServerUtils}
+      handleImageUploadResult={handleImageUploadResult}
+      indexKey="introduction_video_path"
       ></UploadCVPhotoUI>
          </View>
          </View>

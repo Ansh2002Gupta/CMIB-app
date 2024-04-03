@@ -480,6 +480,7 @@ const locale = {
   "label.fellowMemberDateOfAdmissionRequired": "Fellow member date of admission is required",
   "label.whetherInPracticeRequired": "Whether in practice is required",
   "label.sinceWhenHaveYouBeenPracticingRequired" : "since when have you been practicing is required",
+  "label.preference_for_area_of_work" : "Preference for Area of Work",
 };
 
 export default locale;
