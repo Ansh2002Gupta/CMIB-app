@@ -3,6 +3,8 @@ import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 import useIsWebView from "../../hooks/useIsWebView";
 
+import CommonText from "../../components/CommonText";
+import RangeSlider from "../../components/RangeSlider";
 import styles from "./dashboard.style";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { TwoRow } from "../../core/layouts";
