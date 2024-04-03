@@ -127,6 +127,7 @@ import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 import iconError from "../../public/images/svg/iconError.svg";
 import pdfIcon from "../../public/images/svg/pdfIcon.svg";
 import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
+import videoPlayIcon from "../../public/images/svg/videoPlayIcon.svg";
 
 const images = {
   iconArrowUp,
@@ -258,6 +259,7 @@ const images = {
   iconError,
   pdfIcon,
   rightDiagonalArrow,
+  videoPlayIcon,
 };
 
 export default images;

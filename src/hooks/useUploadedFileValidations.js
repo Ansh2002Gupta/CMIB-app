@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { IMAGE_MAX_SIZE, TOAST_TIMEOUT } from "../constants/constants";
+import {
+  IMAGE_MAX_SIZE,
+  TOAST_TIMEOUT,
+  VIDEO_MAX_SIZE,
+} from "../constants/constants";
 import {
   DOCUMENT_ACCEPTABLE_FORMAT_REGEX,
   IMAGE_ACCEPTABLE_FORMAT_REGEX,
+  VIDEO_ACCEPTABLE_FORMAT_REGEX,
 } from "../constants/Regex";
 import { getImageSource } from "../utils/util";
 
-const useUploadedFileValidations = ({ isDocumentUpload }) => {
+const useUploadedFileValidations = ({ isDocumentUpload, isVideoUpload }) => {
   const intl = useIntl();
 
   const [fileTooLargeError, setFileTooLargeError] = useState("");
@@ -30,18 +35,18 @@ const useUploadedFileValidations = ({ isDocumentUpload }) => {
     };
   }, [fileTooLargeError, invalidFormatError, nonUploadableImageError]);
 
+  const getMimeType = () => {
+    if (isDocumentUpload) return DOCUMENT_ACCEPTABLE_FORMAT_REGEX;
+    if (isVideoUpload) return VIDEO_ACCEPTABLE_FORMAT_REGEX;
+    return IMAGE_ACCEPTABLE_FORMAT_REGEX;
+  };
+
   const initiateFileUpload = ({ onLoad, resetUploadInput, uploadedFile }) => {
     setFileTooLargeError("");
     setInvalidFormatError("");
     setNonUploadableImageError("");
-    const imageMimeType = IMAGE_ACCEPTABLE_FORMAT_REGEX;
-    const documentMimeType = DOCUMENT_ACCEPTABLE_FORMAT_REGEX;
     if (uploadedFile) {
-      if (
-        !uploadedFile.type.match(
-          isDocumentUpload ? documentMimeType : imageMimeType
-        )
-      ) {
+      if (!uploadedFile.type.match(getMimeType())) {
         setInvalidFormatError(
           isDocumentUpload
             ? intl.formatMessage({
@@ -54,14 +59,21 @@ const useUploadedFileValidations = ({ isDocumentUpload }) => {
         resetUploadInput && resetUploadInput();
         return;
       }
-      if (uploadedFile.size > IMAGE_MAX_SIZE) {
+      if (isVideoUpload && uploadedFile.size > VIDEO_MAX_SIZE) {
+        setFileTooLargeError(
+          intl.formatMessage({ id: "label.videoTooLargeError" })
+        );
+        resetUploadInput && resetUploadInput();
+        return;
+      }
+      if (!isVideoUpload && uploadedFile.size > IMAGE_MAX_SIZE) {
         setFileTooLargeError(
           intl.formatMessage({ id: "label.fileTooLargeError" })
         );
         resetUploadInput && resetUploadInput();
         return;
       }
-      if (isDocumentUpload) {
+      if (isDocumentUpload || isVideoUpload) {
         onLoad && onLoad({ uploadedFile });
         return;
       }

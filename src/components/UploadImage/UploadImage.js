@@ -13,6 +13,7 @@ const UploadImage = ({
   handleFileUpload,
   hideIconDelete,
   isDocumentUpload,
+  isVideoUpload,
   isUploadingImageToServer,
   onDeleteImage,
   openCropViewAfterImageSelection,
@@ -29,7 +30,7 @@ const UploadImage = ({
     fileTooLargeError,
     initiateFileUpload,
     invalidFormatError,
-  } = useUploadedFileValidations({ isDocumentUpload });
+  } = useUploadedFileValidations({ isDocumentUpload, isVideoUpload });
 
   const imageUploadedToServer = fileUploadResult?.data;
 
@@ -102,6 +103,7 @@ const UploadImage = ({
               hideIconDelete,
               fileUrl: imageUploadedToServer?.["url"] || "",
               isDocumentUpload,
+              isVideoUpload,
               onRemoveImage: handleDeleteImage,
               source: imageUploadedToServer?.url || "",
             }}
@@ -121,6 +123,7 @@ const UploadImage = ({
             handleDrop,
             handleUploadClick,
             isDocumentUpload,
+            isVideoUpload,
             isLoading: isUploadingImageToServer,
             uploadPercentage,
           }}

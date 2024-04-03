@@ -23,6 +23,7 @@ const DragAndDropCard = ({
   handleDrop,
   handleUploadClick,
   isDocumentUpload,
+  isVideoUpload,
   isLoading,
   uploadPercentage,
 }) => {
@@ -51,7 +52,18 @@ const DragAndDropCard = ({
     if (isDocumentUpload) {
       return ".pdf";
     }
+    if (isVideoUpload) {
+      return ".mp4";
+    }
     return "image/png, image/jpeg, image/svg, image/eps";
+  };
+
+  const getSupportedFilesLabel = () => {
+    if (isDocumentUpload)
+      return intl.formatMessage({ id: "label.supported_document" });
+    if (isVideoUpload)
+      return intl.formatMessage({ id: "label.supported_video" });
+    return intl.formatMessage({ id: "label.supported_type" });
   };
 
   return (
@@ -83,9 +95,7 @@ const DragAndDropCard = ({
             </TouchableOpacity>
           </View>
           <CommonText customTextStyle={styles.infoStyle}>
-            {isDocumentUpload
-              ? intl.formatMessage({ id: "label.supported_document" })
-              : intl.formatMessage({ id: "label.supported_type" })}
+            {getSupportedFilesLabel()}
           </CommonText>
           {!!errorMessage && (
             <CommonText
@@ -133,6 +143,7 @@ DragAndDropCard.propTypes = {
   handleDrop: PropTypes.func,
   handleUploadClick: PropTypes.func,
   isDocumentUpload: PropTypes.bool,
+  isVideoUpload: PropTypes.bool,
   isLoading: PropTypes.bool,
   uploadPercentage: PropTypes.number,
 };

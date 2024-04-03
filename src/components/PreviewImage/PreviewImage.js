@@ -7,6 +7,7 @@ import {
 } from "@unthinkable/react-core-components";
 
 import PdfCard from "../PdfCard/PdfCard";
+import VideoCard from "../VideoCard/VideoCard";
 import images from "../../images";
 import styles from "./PreviewImage.style";
 
@@ -14,6 +15,7 @@ const PreviewImage = ({
   hideIconDelete,
   fileUrl,
   isDocumentUpload,
+  isVideoUpload,
   isEditable,
   onRemoveImage,
   source,
@@ -28,6 +30,8 @@ const PreviewImage = ({
       <View style={styles.imageContainer}>
         {isDocumentUpload ? (
           <PdfCard pdfUrl={fileUrl} />
+        ) : isVideoUpload ? (
+          <VideoCard url={fileUrl} />
         ) : (
           <Image source={source} style={styles.selectedImageStyle} />
         )}
@@ -54,6 +58,7 @@ PreviewImage.propTypes = {
   hideIconDelete: PropTypes.bool,
   fileUrl: PropTypes.string,
   isDocumentUpload: PropTypes.bool,
+  isVideoUpload: PropTypes.bool,
   isEditable: PropTypes.bool,
   onRemoveImage: PropTypes.func,
   source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

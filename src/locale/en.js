@@ -89,6 +89,7 @@ const locale = {
   "label.browse": "Browse",
   "label.supported_type": "Supported formats: JPEG, PNG, SVG",
   "label.supported_document": "Supported formats: PDF",
+  "label.supported_video": "Supported formats: MP4",
   "label.signup_success": "Thank You for Signing Up!",
   "label.signup_info":
     "Your application has been submitted for approval. You will receive a confirmation email once it is processed by CMI&B admin.",
@@ -198,6 +199,7 @@ const locale = {
   "label.left_brace": "left)",
   "label.times": "times!",
   "label.fileTooLargeError": "Uploaded file must be less than 5MB",
+  "label.videoTooLargeError": "Uploaded video must be less than 16MB",
   "label.allowedFileFormatsError": "Only JPEG, PNG, SVG formats are allowed",
   "label.allowedDocumentFormatsError": "Only PDF format is allowed",
   "label.nonUploadableImageError":

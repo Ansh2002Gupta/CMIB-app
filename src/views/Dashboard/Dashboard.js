@@ -24,7 +24,7 @@ function DashboardView() {
     setErrorWhileUpload,
     setFileUploadResult,
     uploadPercentage,
-  } = useSaveLogo({ isDocumentUpload: true });
+  } = useSaveLogo({});
 
   const { handleDeleteLogo } = useDeleteLogo();
 
@@ -57,7 +57,7 @@ function DashboardView() {
             errorWhileUpload,
             fileUploadResult,
             handleFileUpload,
-            isDocumentUpload: true,
+            isVideoUpload: true,
             isUploadingImageToServer,
             setFileUploadResult,
             uploadPercentage,

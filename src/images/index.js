@@ -204,6 +204,7 @@ const pdfIcon = appendAppBaseURl("/images/svg/pdfIcon.svg");
 const rightDiagonalArrow = appendAppBaseURl(
   "/images/svg/rightDiagonalArrow.svg"
 );
+const videoPlayIcon = appendAppBaseURl("/images/svg/videoPlayIcon.svg");
 
 const images = {
   iconArrowUp,
@@ -350,6 +351,7 @@ const images = {
   iconError,
   pdfIcon,
   rightDiagonalArrow,
+  videoPlayIcon,
 };
 
 export default images;
