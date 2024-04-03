@@ -389,6 +389,11 @@ const locale = {
     "Please login using your updated email and password that you have received on your updated email.",
   "label.session_has_expired": "Your session has been expired.",
   "label.your_access_has_been_revoked": "Your access has been revoked.",
+  "label.candidates": "Candidates",
+  "label.job_applicants": "Job Applicants",
+  "label.job_seekers": "Job Seekers",
+  "label.saved_candidates": "Saved Candidates",
+  "label.download_profile_resume": "Download Profile Resume",
 };
 
 export default locale;

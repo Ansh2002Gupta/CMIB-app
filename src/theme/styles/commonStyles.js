@@ -23,6 +23,10 @@ const commonStyles = {
   middleContainer: {
     flex: 1,
   },
+  customTableHeading: {
+    fontWeight: "600",
+    color: colors.darkGrey,
+  },
   commonWebContainer: {
     borderRadius: 24,
     borderWidth: 1,

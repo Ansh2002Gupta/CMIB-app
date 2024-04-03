@@ -10,7 +10,7 @@ export const urlRegex =
   /^(?:https?:\/\/)?www\.[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&=]*)/;
 
 export const TOAST_TIMEOUT = 5000;
-export const API_VERSION_NUMBER = "v1";
+export const API_VERSION_NUMBER = "1.0.0";
 export const FIELD_MIN_LENGTH = 6;
 export const DEFAULT_INPUT_MAX_LENGTH = 100;
 export const CODE_MIN_LENGTH = 2;
@@ -480,3 +480,42 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+
+export const JOB_APPLICANTS_HEADING = {
+  name: "Application Name",
+  application_id: "Application ID",
+  job_id: "Job Id",
+  designation: "Designation",
+  active_inactive: "Active/Inactive",
+  status: "Status",
+};
+
+export const JOB_APPLICANTS_POP_MESSAGE = {
+  pending: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.shorlist_candidate",
+    "label.reject_candidate",
+  ],
+  shorlisted: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.schedule_interview",
+  ],
+  noresponse: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.view_interview_details",
+  ],
+  interviewscheduled: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.view_interview_details",
+    "label.offer_job",
+    "label.reject_after_interview",
+  ],
+  offerrejected: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+  ],
+};

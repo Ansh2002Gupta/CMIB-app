@@ -192,6 +192,10 @@ const CustomTable = ({
                       showsVerticalScrollIndicator={false}
                       keyExtractor={(item, index) => index.toString()}
                       renderItem={({ item, index }) => {
+                        const statusRenderText = getRenderText(
+                          item,
+                          statusText
+                        );
                         return (
                           <>
                             {isWebView ? (
@@ -220,8 +224,8 @@ const CustomTable = ({
                                     </View>
                                     <View style={styles.rowsPerPageWeb}>
                                       <Chip
-                                        label={getRenderText(item, statusText)}
-                                        style={getStatusStyle(item.status)}
+                                        label={statusRenderText}
+                                        style={getStatusStyle(statusRenderText)}
                                       />
                                       <TouchableImage
                                         onPress={() => {

@@ -2,6 +2,7 @@ import React from "react";
 import { Platform } from "@unthinkable/react-core-components";
 
 import ContentLayout from "../pages/ContentLayout";
+import Candidates from "../views/Candidates/index";
 import DashboardView from "../views/Dashboard";
 import MyAccount from "../views/MyAccount";
 import ViewProfile from "../views/ViewProfile";
@@ -11,7 +12,7 @@ import ForgotPassword from "../views/ForgotPassword/index";
 import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import JobsView from "../views/JobsView/JobsView";
-import JobApplicantsView from "../views/JobApplicantsView/index";
+import JobApplicantsView from "../views/JobApplicantsView";
 import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
@@ -231,6 +232,10 @@ const config = [
       {
         viewPath: navigations.SAVED_CANDIDATES,
         element: <SavedCandidatesView />,
+      },
+      {
+        viewPath: navigations.CANDIDATES,
+        element: <Candidates />,
       },
     ],
   },
