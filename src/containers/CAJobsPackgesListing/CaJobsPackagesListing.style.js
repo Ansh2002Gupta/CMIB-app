@@ -38,14 +38,11 @@ const styles = StyleSheet.create({
   webComponentStyle: {
     flexDirection: "column",
     padding: 16,
-    width: 378,
   },
   webContainerStyle: {
     backgroundColor: colors.backgroundGrey,
     paddingLeft: 16,
     paddingRight: 16,
-    flexWrap: "wrap",
-    flexDirection: "row",
     gap: 24,
   },
   buttonStyle: {},
@@ -67,7 +64,6 @@ const styles = StyleSheet.create({
   componentStyle: {
     marginTop: 24,
     flexDirection: "row",
-    ...(Platform.OS.toLowerCase() === "web" ? { cursor: "pointer" } : {}),
   },
   addApplicationFormDescriptionText: {
     fontSize: 16,

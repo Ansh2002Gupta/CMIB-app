@@ -32,7 +32,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     isLoading: isPaymentInitializedLoading,
     makeRequest: packagePaymentInitialization,
     error: errorWhilePaymentInitialization,
-    setError: setErrorWhilePaymentInitialization
+    setError: setErrorWhilePaymentInitialization,
   } = usePost({
     url: COMPANY_INIT_PAYMENT,
   });
@@ -113,9 +113,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
   const finalAmount = tdsAmount ? Number(amount) - Number(tdsAmount) : amount;
   const CREDIT_SCORE = 0;
 
-  if (
-    isPaymentInitializedLoading
-  ) {
+  if (isPaymentInitializedLoading) {
     return (
       <View style={styles.loaderStyle}>
         <Spinner />
@@ -134,13 +132,18 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         {...isMobileProps}
       >
         <View style={styles.subscriptionCostContainer}>
-          {renderAmountHeading(intl.formatMessage({ id: "label.subscription_cost" }), amount)}
+          {renderAmountHeading(
+            intl.formatMessage({ id: "label.subscription_cost" }),
+            amount
+          )}
         </View>
         <FiveColumn
           firstSection={
             <CustomTextInput
               label={intl.formatMessage({ id: "label.TDS_GTDS_amount" })}
-              placeholder={intl.formatMessage({ id: "label.enter_TDS_GTDS_amount" })}
+              placeholder={intl.formatMessage({
+                id: "label.enter_TDS_GTDS_amount",
+              })}
               customStyle={styles.containerStyle}
               value={tdsAmount}
               onChangeText={(val) => {
@@ -171,7 +174,9 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
           thirdSection={
             <CustomTextInput
               label={intl.formatMessage({ id: "label.pan" })}
-              placeholder={`${intl.formatMessage({ id: "label.enter" })} ${intl.formatMessage({ id: "label.pan" })}`}
+              placeholder={`${intl.formatMessage({
+                id: "label.enter",
+              })} ${intl.formatMessage({ id: "label.pan" })}`}
               value={panNumber}
               onChangeText={(val) => {
                 setPanNumber(val);
@@ -224,16 +229,29 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         />
         <TwoColumn
           leftSection={
-            <View>{renderAmountHeading(intl.formatMessage({ id: "label.final_amt" }), finalAmount)}</View>
+            <View>
+              {renderAmountHeading(
+                intl.formatMessage({ id: "label.final_amt" }),
+                finalAmount
+              )}
+            </View>
           }
           rightSection={
-            <View>{renderAmountHeading(intl.formatMessage({ id: "label.credit_score" }), CREDIT_SCORE)}</View>
+            <View>
+              {renderAmountHeading(
+                intl.formatMessage({ id: "label.credit_score" }),
+                CREDIT_SCORE
+              )}
+            </View>
           }
           isLeftFillSpace
           isRightFillSpace
         />
         <View style={{ marginTop: 24 }}>
-          {renderAmountHeading(intl.formatMessage({ id: "label.amount_to_be_paid" }), finalAmount)}
+          {renderAmountHeading(
+            intl.formatMessage({ id: "label.amount_to_be_paid" }),
+            finalAmount
+          )}
         </View>
       </ScrollView>
       <View style={isWebView ? styles.buttonWebStyle : {}}>
@@ -254,15 +272,13 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
             onPressButtonTwo={handleSave}
           />
         </View>
-        {(errorWhilePaymentInitialization) && (
+      </View>
+      {errorWhilePaymentInitialization && (
         <ToastComponent
-          toastMessage={
-            errorWhilePaymentInitialization
-          }
+          toastMessage={errorWhilePaymentInitialization}
           onDismiss={handleDismissToast}
         />
       )}
-      </View>
     </>
   );
 };

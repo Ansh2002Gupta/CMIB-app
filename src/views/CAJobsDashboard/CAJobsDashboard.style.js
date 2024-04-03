@@ -1,17 +1,14 @@
-import {
-  StyleSheet,
-  Dimensions,
-} from "@unthinkable/react-core-components";
+import { StyleSheet, Dimensions } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
 
 const { width: WIDTH } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.backgroundGrey
-    },
+  container: {
+    flex: 1,
+    backgroundColor: colors.backgroundGrey,
+  },
   headingTextContainer: {
     marginBottom: 16,
     marginTop: 32,
@@ -118,7 +115,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.black,
     lineHeight: 20,
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
     marginTop: 16,
     marginBottom: 16,
   },
