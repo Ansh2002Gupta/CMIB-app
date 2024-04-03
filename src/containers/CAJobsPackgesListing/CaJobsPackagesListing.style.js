@@ -44,6 +44,8 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     gap: 24,
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
   },
   buttonStyle: {},
   containerStyle: {
