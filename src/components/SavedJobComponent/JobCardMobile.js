@@ -6,12 +6,13 @@ import { TwoColumn } from "../../core/layouts";
 import MultiRow from "../../core/layouts/MultiRow";
 import MultiColumn from "../../core/layouts/MultiColumn";
 
-import { changeComma, timeAgo } from "../../utils/util";
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
 import Chip from "../Chip";
+import { changeComma, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
+import colors from "../../assets/colors";
 
 const JobCardMobile = ({
   companyName,
@@ -54,26 +55,52 @@ const JobCardMobile = ({
           label={`${vaccancies} ${intl.formatMessage({
             id: "label.vacancies",
           })}`}
+          isBackground
+          bgColor={colors.lightGray}
+          textColor={colors.black}
         />
       ),
-      isFillSpace: false,
+      style: style.mobileChipStyle,
     },
     {
       content: (
-        <CommonText
-          customTextStyle={style.normalText}
-        >{`${minSalary}-${maxSalary} ${intl.formatMessage({
-          id: "label.lpa",
-        })}`}</CommonText>
+        <View style={[style.leftBorder, style.mobileEvenPadding]}>
+          <TwoColumn
+            style={style.iconView}
+            leftSection={
+              <Image source={images.iconRupee} style={style.mobileIconStyle} />
+            }
+            rightSection={
+              <CommonText
+                customTextStyle={style.normalText}
+              >{`${minSalary}-${maxSalary} ${intl.formatMessage({
+                id: "label.lpa",
+              })}`}</CommonText>
+            }
+          />
+        </View>
       ),
     },
     {
       content: (
-        <CommonText
-          customTextStyle={style.normalText}
-        >{`${minExperience}-${maxExperience} ${intl.formatMessage({
-          id: "label.yrs",
-        })}`}</CommonText>
+        <View style={[style.leftBorder, style.mobileEvenPadding]}>
+          <TwoColumn
+            style={style.iconView}
+            leftSection={
+              <Image
+                source={images.iconBriefcase}
+                style={style.mobileIconStyle}
+              />
+            }
+            rightSection={
+              <CommonText
+                customTextStyle={style.normalText}
+              >{`${minExperience}-${maxExperience} ${intl.formatMessage({
+                id: "label.yrs",
+              })}`}</CommonText>
+            }
+          />
+        </View>
       ),
     },
   ];
@@ -86,35 +113,56 @@ const JobCardMobile = ({
     },
     {
       content: (
-        <CommonText customTextStyle={style.companyNameStyle} fontWeight="600">
+        <CommonText
+          customTextStyle={[style.companyNameStyle, style.mobileMargin8]}
+          fontWeight="600"
+        >
           {companyName}
         </CommonText>
       ),
     },
     {
       content: (
-        <CommonText customTextStyle={style.jobPositionText} fontWeight="600">
+        <CommonText
+          customTextStyle={[style.jobPositionText, style.mobileMargin4]}
+          fontWeight="600"
+        >
           {jobPostion}
         </CommonText>
       ),
     },
     {
       content: (
-        <MultiColumn columns={multiCoulmn} style={style.multiColumnstyles} />
+        <MultiColumn columns={multiCoulmn} style={style.mobileMargin8} />
       ),
-    },
-    {
-      content: (
-        <TwoColumn rightSection={<CommonText>{jobLocation}</CommonText>} />
-      ),
-    },
-    {
-      content: <MultiColumn columns={rowConfig(changeComma(requirement, 3))} />,
     },
     {
       content: (
         <TwoColumn
-          style={{ paddingRight: 24 }}
+          style={{ ...style.iconView, ...style.mobileMargin8 }}
+          leftSection={
+            <Image source={images.iconLocation} style={style.mobileIconStyle} />
+          }
+          rightSection={
+            <CommonText customTextStyle={style.normalText}>
+              {jobLocation}
+            </CommonText>
+          }
+        />
+      ),
+    },
+    {
+      content: (
+        <MultiColumn
+          columns={rowConfig(changeComma(requirement, 3))}
+          style={style.mobileMargin8}
+        />
+      ),
+    },
+    {
+      content: (
+        <TwoColumn
+          style={style.mobileActionHandle}
           isLeftFillSpace
           leftSection={
             <CommonText customTextStyle={style.greyText}>{`${intl.formatMessage(

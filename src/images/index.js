@@ -206,6 +206,9 @@ const iconSaveSlashBlack = appendAppBaseURl(
   "/images/svg/iconSaveSlashBlack.svg"
 );
 const iconSaveSlashBlue = appendAppBaseURl("/images/svg/iconSaveSlashBlue.svg");
+const iconBriefcase = appendAppBaseURl("/images/svg/iconBriefcase.svg");
+const iconLocation = appendAppBaseURl("/images/svg/iconLocation.svg");
+const iconRupee = appendAppBaseURl("/images/svg/iconRupee.svg");
 
 const images = {
   iconArrowUp,
@@ -354,6 +357,9 @@ const images = {
   iconSingleSave,
   iconSaveSlashBlack,
   iconSaveSlashBlue,
+  iconBriefcase,
+  iconLocation,
+  iconRupee,
 };
 
 export default images;

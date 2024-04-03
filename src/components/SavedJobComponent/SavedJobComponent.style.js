@@ -50,9 +50,8 @@ const style = {
     fontWeight: "600",
     color: colors.darkBlue,
   },
-  multiColumnstyles: {
+  center: {
     alignItems: "center",
-    gap: 32,
   },
   normalText: { fontSize: 14 },
   blackText: { fontSize: 12, colors: colors.black },
@@ -75,6 +74,53 @@ const style = {
   },
   buttonContainerStyle: { paddingRight: 24, alignItems: "center" },
   buttonTextStyle: { fontWeight: "500", fontSize: 14 },
+  iconView: { alignItems: "center", gap: 8 },
+  iconStyle: {
+    height: 16,
+    widht: 16,
+  },
+  chipStyle: {
+    paddingRight: 16,
+  },
+  mobileChipStyle: {
+    paddingRight: 12,
+  },
+  leftBorder: {
+    borderLeftWidth: 1,
+    borderColor: colors.lightGrey,
+  },
+  rightBorder: {
+    borderRightWidth: 1,
+    borderColor: colors.lightGrey,
+  },
+  evenPadding: {
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
+  mobileEvenPadding: {
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  mobileIconStyle: {
+    marginRight: 8,
+    height: 16,
+    widht: 16,
+  },
+  customContainerStyle: {
+    borderWidth: 1,
+    borderRadius: 16,
+    borderColor: colors.lightGray,
+  },
+  mobileMargin4: {
+    marginTop: 4,
+  },
+  mobileMargin8: {
+    marginTop: 8,
+  },
+  mobileActionHandle: {
+    paddingRight: 24,
+    marginTop: 16,
+  },
 };
 
 export default style;

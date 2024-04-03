@@ -129,6 +129,9 @@ import iconError from "../../public/images/svg/iconError.svg";
 import iconSingleSave from "../../public/images/svg/iconSingleSave.svg";
 import iconSaveSlashBlack from "../../public/images/svg/iconSaveSlashBlack.svg";
 import iconSaveSlashBlue from "../../public/images/svg/iconSaveSlashBlue.svg";
+import iconBriefcase from "../../public/images/svg/iconBriefcase.svg";
+import iconLocation from "../../public/images/svg/iconLocation.svg";
+import iconRupee from "../../public/images/svg/iconRupee.svg";
 
 const images = {
   iconArrowUp,
@@ -262,6 +265,9 @@ const images = {
   iconSingleSave,
   iconSaveSlashBlack,
   iconSaveSlashBlue,
+  iconBriefcase,
+  iconLocation,
+  iconRupee,
 };
 
 export default images;

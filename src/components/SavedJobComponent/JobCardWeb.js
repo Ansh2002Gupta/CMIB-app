@@ -5,12 +5,15 @@ import { Platform, Image, View } from "@unthinkable/react-core-components";
 
 import { ThreeRow, TwoColumn } from "../../core/layouts";
 import MultiColumn from "../../core/layouts/MultiColumn";
+import MultiRow from "../../core/layouts/MultiRow";
+
 import ActionPairButton from "../ActionPairButton";
-import { changeComma, timeAgo } from "../../utils/util";
 import Chip from "../Chip";
+import { changeComma, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
-import MultiRow from "../../core/layouts/MultiRow";
+
+import colors from "../../assets/colors";
 
 const JobCardWeb = ({
   companyName,
@@ -32,7 +35,14 @@ const JobCardWeb = ({
   const columnConfig = (data) => {
     return data.map((item) => {
       return {
-        content: <Chip label={item} />,
+        content: (
+          <Chip
+            label={item}
+            textColor={colors.black}
+            bgColor={colors.white}
+            customContainerStyle={style.customContainerStyle}
+          />
+        ),
       };
     });
   };
@@ -44,33 +54,65 @@ const JobCardWeb = ({
           label={`${vaccancies} ${intl.formatMessage({
             id: "label.vacancies",
           })}`}
+          bgColor={colors.lightGray}
+          textColor={colors.black}
         />
       ),
-      isFillSpace: false,
+      style: style.chipStyle,
     },
     {
       content: (
-        <CommonText
-          customTextStyle={style.normalText}
-        >{`${minSalary}-${maxSalary} ${intl.formatMessage({
-          id: "label.lpa",
-        })}`}</CommonText>
+        <View style={[style.leftBorder, style.evenPadding]}>
+          <TwoColumn
+            style={style.iconView}
+            leftSection={
+              <Image source={images.iconRupee} style={style.iconStyle} />
+            }
+            rightSection={
+              <CommonText
+                customTextStyle={style.normalText}
+              >{`${minSalary}-${maxSalary} ${intl.formatMessage({
+                id: "label.lpa",
+              })}`}</CommonText>
+            }
+          />
+        </View>
       ),
     },
     {
       content: (
-        <CommonText
-          customTextStyle={style.normalText}
-        >{`${minExperience}-${maxExperience} ${intl.formatMessage({
-          id: "label.yrs",
-        })}`}</CommonText>
+        <View style={[style.leftBorder, style.evenPadding]}>
+          <TwoColumn
+            style={style.iconView}
+            leftSection={
+              <Image source={images.iconBriefcase} style={style.iconStyle} />
+            }
+            rightSection={
+              <CommonText
+                customTextStyle={style.normalText}
+              >{`${minExperience}-${maxExperience} ${intl.formatMessage({
+                id: "label.yrs",
+              })}`}</CommonText>
+            }
+          />
+        </View>
       ),
     },
     {
       content: (
-        <CommonText customTextStyle={style.normalText}>
-          {jobLocation}
-        </CommonText>
+        <View style={[style.evenPadding, style.leftBorder]}>
+          <TwoColumn
+            style={style.iconView}
+            leftSection={
+              <Image source={images.iconLocation} style={style.iconStyle} />
+            }
+            rightSection={
+              <CommonText customTextStyle={style.normalText}>
+                {jobLocation}
+              </CommonText>
+            }
+          />
+        </View>
       ),
     },
   ];
@@ -98,10 +140,7 @@ const JobCardWeb = ({
               }
               bottomSection={
                 <View>
-                  <MultiColumn
-                    columns={multiCoulmn}
-                    style={style.multiColumnstyles}
-                  />
+                  <MultiColumn columns={multiCoulmn} style={style.center} />
                 </View>
               }
             />

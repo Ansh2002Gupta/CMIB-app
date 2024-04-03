@@ -64,7 +64,7 @@ const SavedJobComponent = ({ details }) => {
             createdAt={"2024-04-01T11:23:51.000000Z"}
             jobPostion={"vsvfs"}
             jobDescription={"sjdhbsvkhdsbvjlbsdjkvbjksdbvsf"}
-            jobLocation={"svasfsfsdvsdvsdvss"}
+            jobLocation={"Lomat unalyi Vaya"}
             vaccancies={10}
             minSalary={5}
             maxSalary={7}
