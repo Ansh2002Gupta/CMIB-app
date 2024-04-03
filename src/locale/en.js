@@ -475,6 +475,11 @@ const locale = {
   "label.handicap_percentage": "Handicapped %",
   "toggle.1": "Yes",
   "toggle.0": "No",
+  "label.dateOfEmrollmentAsMemberRequired": " Date of Enrollment is required",
+  "label.areYouAFellowMemberRequired": "Fellow member is required",
+  "label.fellowMemberDateOfAdmissionRequired": "Fellow member date of admission is required",
+  "label.whetherInPracticeRequired": "Whether in practice is required",
+  "label.sinceWhenHaveYouBeenPracticingRequired" : "since when have you been practicing is required",
 };
 
 export default locale;

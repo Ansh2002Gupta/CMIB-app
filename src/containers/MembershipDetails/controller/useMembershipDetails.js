@@ -13,7 +13,7 @@ const membership_detail = [
     placeholder: "label.dateOfEmrollmentAsMember",
     validate: (value) => {
       if (!value) {
-        return "Date of Enrollment is required";
+        return "label.dateOfEmrollmentAsMemberRequired";
       }
     },
   },
@@ -70,7 +70,7 @@ export const useMembershipDetails = ({ state, isEditable}) => {
         placeholder: "label.areYouAFellowMember",
         validate: (value) => {
           if (!value) {
-            return "Fellow member is required";
+            return "label.areYouAFellowMemberRequired";
           }
         },
       },
@@ -84,7 +84,7 @@ export const useMembershipDetails = ({ state, isEditable}) => {
         placeholder: "label.fellowMemberDateOfAdmission",
         validate: (value) => {
           if (!value) {
-            return "Fellow member date of admission is required";
+            return "label.fellowMemberDateOfAdmissionRequired";
           }
         },
       }] : []),
@@ -102,7 +102,7 @@ export const useMembershipDetails = ({ state, isEditable}) => {
         placeholder: "label.whetherInPractice",
         validate: (value) => {
           if (!value) {
-            return "Whether in practice is required";
+            return  "label.whetherInPracticeRequired";
           }
         },
       },
@@ -116,7 +116,7 @@ export const useMembershipDetails = ({ state, isEditable}) => {
         placeholder: "label.sinceWhenHaveYouBeenPracticing",
         validate: (value) => {
           if (!value) {
-            return "since when have you been practicing is required";
+            return "label.sinceWhenHaveYouBeenPracticingRequired";
           }
         },
       },] : []),
