@@ -56,9 +56,7 @@ const AddModifyNewJobs = () => {
           setSuccessMessage(
             intl.formatMessage({ id: "label.job_saved_successfully" })
           );
-          setTimeout(() => {
-            navigate(-1);
-          }, 1000);
+          navigate(-1);
         })
         .catch((e) => {
           setError(
