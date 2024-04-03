@@ -475,6 +475,9 @@ const locale = {
   "label.summary_error": "Length should be greater than 10 and less than 1000",
   "label.details_error": "Length should be greater than 50 and less than 65535",
   "label.fill_mandatory": "Please fill mandatory field",
+  "label.job_saved_successfully": "Job Saved Successfully",
+  "label.job_updated_successfully": "Job Updated Successfully",
+  "label.no_question_available": "No Question Available",
 };
 
 export default locale;

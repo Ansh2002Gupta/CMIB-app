@@ -53,14 +53,18 @@ const AddModifyNewJobs = () => {
       );
       Http.post(POST_JOB, formattedData)
         .then((res) => {
-          setSuccessMessage("Job Saved Successfully");
-          navigate(-1);
+          setSuccessMessage(
+            intl.formatMessage({ id: "label.job_saved_successfully" })
+          );
+          setTimeout(() => {
+            navigate(-1);
+          }, 1000);
         })
         .catch((e) => {
           setError(
             e.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
           );
-          alert(GENERIC_GET_API_FAILED_ERROR_MESSAGE, e);
+          setSuccessMessage(`${GENERIC_GET_API_FAILED_ERROR_MESSAGE}, ${e}`);
         });
     } else {
       setSuccessMessage(intl.formatMessage({ id: "label.fill_mandatory" }));
@@ -93,7 +97,6 @@ const AddModifyNewJobs = () => {
         <ToastComponent
           toastMessage={successMessage}
           onDismiss={() => {
-            console.log("here");
             setSuccessMessage(null);
           }}
         />
