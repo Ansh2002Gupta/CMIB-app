@@ -27,8 +27,6 @@ const RoundOneView = () => {
     },
   });
 
-  console.log("roundone", savedRoundsData?.rounds?.[0]);
-
   const hasRoundsData = isObjectFilled(savedRoundsData);
 
   useEffect(async () => {

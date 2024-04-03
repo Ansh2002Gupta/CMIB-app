@@ -25,9 +25,6 @@ function RoundTwoUI(props) {
   });
 
   const hasRoundsData = isObjectFilled(savedRoundsData);
-
-  console.log("roundTwo", savedRoundsData?.rounds?.[1]);
-
   useEffect(async () => {
     if (
       selectedModule &&
