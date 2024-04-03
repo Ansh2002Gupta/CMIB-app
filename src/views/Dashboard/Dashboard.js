@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 import useIsWebView from "../../hooks/useIsWebView";
+
 import styles from "./dashboard.style";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { TwoRow } from "../../core/layouts";
@@ -14,9 +15,6 @@ function DashboardView() {
   const { isWebView } = useIsWebView();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
-
-  console.log(selectedModule.key, "selectedModule");
-
   return (
     <View style={styles.container}>
       <TwoRow

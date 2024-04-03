@@ -16,10 +16,12 @@ import LocaleSwitcher from "../../components/LocaleSwitcher";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import ThemeSwitcher from "../../components/ThemeSwitcher";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { useLocation } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages } from "../../constants/sideBarHelpers";
+import { COMPANY } from "../../constants/constants";
 import styles from "./bottomBar.style";
 
 function BottomBar() {
@@ -27,10 +29,14 @@ function BottomBar() {
   const intl = useIntl();
   const { navigateScreen } = useNavigateScreen();
   const [sideBarState] = useContext(SideBarContext);
+  const [userProfileDetails] = useContext(UserProfileContext);
   const { selectedModule } = sideBarState;
   const { logo, homeOutline, homeSolid, profileOutline, profileSolid } = icons;
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { pathname: currentRoute } = useLocation();
+
+  const isMemberOrCandidate =
+    userProfileDetails?.userDetails?.user_type?.toLowerCase() !== COMPANY;
 
   const navigateTo = (route) => {
     navigateScreen(route);
@@ -120,10 +126,12 @@ function BottomBar() {
   }
 
   function preprocessMenu(menuItems) {
+    // will add more Naigations of ca-jobs when we made screens
     const candidateKeys = new Set([
       navigations.JOB_APPLICANTS,
       navigations.JOB_SEEKERS,
       navigations.SAVED_CANDIDATES,
+      navigations.SAVED_JOBS,
     ]);
     const hasCandidates = menuItems.some((item) => candidateKeys.has(item.key));
 
@@ -142,7 +150,9 @@ function BottomBar() {
       icon: "iconCandidates",
     };
 
-    filteredMenu.push(candidatesTab);
+    if (!isMemberOrCandidate) {
+      filteredMenu.push(candidatesTab);
+    }
 
     return filteredMenu;
   }
