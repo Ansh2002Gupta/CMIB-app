@@ -65,11 +65,9 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         gstin: gstNumber,
       },
       onErrorCallback: (errorMessage) => {
-        console.log("Error", errorMessage);
         // onPressCancel();
       },
       onSuccessCallback: (data) => {
-        console.log(data, 'Success')
         if (isWebView) {
           window.open(data?.data, "_self");
         }
