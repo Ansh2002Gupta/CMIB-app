@@ -22,6 +22,7 @@ import { useLocation, useNavigate } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 import ViewJobApplicants from "../../containers/ViewPostedJobDetails/ViewJobApplicants/ViewJobApplicants";
 import colors from "../../assets/colors";
+import ViewScheduleInterview from "../../containers/ViewPostedJobDetails/ViewScheduleInterview";
 
 const ViewPostedJobDetails = () => {
   const navigate = useNavigate();
@@ -367,7 +368,7 @@ const ViewPostedJobDetails = () => {
             },
             {
               label: intl.formatMessage({ id: "label.schedule_interview" }),
-              component: <View />,
+              component: <ViewScheduleInterview />,
             },
           ]}
         />
