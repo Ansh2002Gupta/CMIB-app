@@ -26,6 +26,7 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
+import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
 
 const CustomTextInput = (props) => {
   const {
@@ -60,6 +61,7 @@ const CustomTextInput = (props) => {
     isPaddingNotRequired,
     isPassword,
     isRupee,
+    isToggle,
     isSendButton,
     isLoading,
     isSelected,
@@ -186,7 +188,7 @@ const CustomTextInput = (props) => {
             handleMultiSelect={handleMultiSelect}
             labelField={labelField}
             valueField={valueField}
-            placeholder={placeholder || ""}
+            placeholder={placeholder || "Select"}
             value={value}
             isMultiSelect={isMultiSelect}
             isSelected={isSelected}
@@ -257,6 +259,16 @@ const CustomTextInput = (props) => {
           onCountChange={handleCountChange}
           step={step}
           style={isError ? style.invalidInput : {}}
+        />
+      );
+    }
+    if (isToggle) {
+      return (
+        <CustomToggleComponent
+          isMandatory={isMandatory}
+          customToggleStyle={style.customToggleStyle}
+          value={value}
+          onValueChange={onChangeValue}
         />
       );
     }
@@ -391,6 +403,7 @@ const CustomTextInput = (props) => {
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
             ref={fieldRef}
+            type={isNumeric ? "number" : "text"}
             {...platformSpecificProps}
             {...(isNumeric ? mobileProps : {})}
             {...remainingProps}
@@ -447,7 +460,7 @@ const CustomTextInput = (props) => {
           {isMultiline && (
             <CommonText
               customTextStyle={style.limitStyle}
-            >{`${value.length}/${maxLength}`}</CommonText>
+            >{`${value?.length}/${maxLength}`}</CommonText>
           )}
         </View>
       )}
