@@ -242,7 +242,7 @@ const DetailComponent = ({
         isNumeric={detail.isNumeric}
         isToggle={detail.isToggle}
         isTextInputWithChip={detail?.isTextInputWithChip}
-        onChipUpdate={(chipData) => handleChange(detail.label, chipData)}
+        onChange={(chipData) => handleChange(detail.label, chipData, index, detail.key)}
         valueField={detail.valueField || "label"}
         labelField={detail.labelField || "label"}
         inputKey={detail.inputKey || "value"}
@@ -304,7 +304,7 @@ const DetailComponent = ({
                 }}
               >
                 {Array.isArray(detail) &&
-                  detail?.map((columns, idx) => {
+                  detail?.map((columns, index) => {
                     return isEditable ? (
                       <View
                         style={{
@@ -314,7 +314,7 @@ const DetailComponent = ({
                             : getRowStyle(detail)),
                         }}
                       >
-                        {renderEditableContent(columns)}
+                        {renderEditableContent(columns, idx)}
                       </View>
                     ) : (
                       <View
