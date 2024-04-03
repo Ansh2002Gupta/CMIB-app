@@ -514,6 +514,34 @@ const locale = {
   "label.summary_error": "Length should be greater than 10 and less than 1000",
   "label.details_error": "Length should be greater than 50 and less than 65535",
   "label.fill_mandatory": "Please fill mandatory field",
+  "label.subscribe_to_get_started": "Subscribe to Get Started!",
+  "label.unlock_benefits_features_of_packages":
+    "Unlock the following benefits and features by subscribing to one of our packages, starting at just ₹2000.",
+  "label.post_jobs_openings_find_top_talent":
+    "Post Jobs Openings and find top talent effortlessly",
+  "label.schedule_interviews_with_applicants":
+    "Schedule Interviews with Applicants & streamline hiring process",
+  "label.tap_into_extensive_database_job_seeker":
+    "Tap into an extensive database of Job Seekers",
+  "label.view_packages": "View Packages",
+  "label.validityFor": "Validity for",
+  "label.subscribe": "Subscribe",
+  "label.subscription_cost": "Subscription Cost",
+  "label.TDS_GTDS_amount": "TDS/GTDS amount",
+  "label.enter_TDS_GTDS_amount": "Enter TDS/GTDS amount",
+  "label.tds_input_error":
+    "TDS/GTDS amount must be less than Subscription Cost",
+  "label.tan": "TAN",
+  "label.enter_tan": "Enter TAN",
+  "label.pan": "PAN",
+  "label.gstin": "GSTIN",
+  "label.po_number": "PO Number",
+  "label.address_for_hard_copy": "Address For Hard Copy",
+  "label.valid_till": "Validity till",
+  "label.current_package": "Current Package",
+  "label.final_amt": "Final Amount",
+  "label.credit_score": "Credit Score",
+  "label.amount_to_be_paid": "Amount to be Paid",
 };
 
 export default locale;

@@ -26,6 +26,11 @@ const style = {
     paddingBottom: 24,
     justifyContent: "space-between",
     paddingRight: 10,
+    ...Platform.select({
+      web: {
+        maxHeight: "60vh",
+      },
+    }),
   },
   fourthSectionStyle: { paddingBottom: 16 },
   notMatchingError: {
@@ -34,9 +39,10 @@ const style = {
   buttonWebStyle: {
     width: "100%",
     alignItems: "flex-end",
+    marginTop: 16,
   },
   webContentContainerStyle: {
-    maxHeight: "60vh",
+    height: "60vh",
     paddingRight: 10,
   },
   buttonStyle: { maxHeight: 44, maxWidth: 80 },
@@ -48,7 +54,7 @@ const style = {
   },
   subscriptionCostContainer: {
     marginTop: 24,
-    marginBottom: 24
+    marginBottom: 24,
   },
   erroInputStyleWeb: {
     paddingBottom: 6,
@@ -68,6 +74,13 @@ const style = {
     lineHeight: 20,
     color: colors.black,
     marginTop: 8,
+  },
+  loaderStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.backgroundColor,
   },
 };
 
