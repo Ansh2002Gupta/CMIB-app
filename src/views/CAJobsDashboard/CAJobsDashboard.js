@@ -67,14 +67,13 @@ function CAJobsDashboard() {
   return (
     <ScrollView style={styles.container}>
       <View style={{ paddingLeft: 16, paddingRight: 16 }}>
-        {subscribedPackageData?.data &&
-        Object.keys(subscribedPackageData?.data) ? (
+        {subscribedPackageData && Object.keys(subscribedPackageData)  ? (
           <PurchasedPackage
-            packageName={subscribedPackageData?.data?.package_name}
-            description={subscribedPackageData?.data?.description}
-            price={subscribedPackageData?.data?.price}
-            validity={subscribedPackageData?.data?.validity}
-            validityDate={subscribedPackageData?.data?.validity_date}
+            packageName={subscribedPackageData?.package_name}
+            description={subscribedPackageData?.description}
+            price={subscribedPackageData?.price}
+            validity={subscribedPackageData?.validity}
+            validityDate={subscribedPackageData?.validity_date}
           />
         ) : (
           <>
