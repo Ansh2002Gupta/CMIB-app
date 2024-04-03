@@ -165,19 +165,22 @@ const useAppliedJobsListing = () => {
 
   const handleFilterChange = (selectedFilter, filterName) => {
     setFilterState((prevState) => {
-      const filterInfo = customFilterInfo.find(
+      const filterObj = customFilterInfo.find(
         (info) => info.name === filterName
       );
-      const filterKey = `selected${filterInfo?.name}`;
+      const filterKey = `selected${filterObj?.name}`;
       const existingSelectedOptions = prevState[filterKey];
-      let newSelectedOptions;
-
-      if (filterInfo?.type === FILTER_TYPE_ENUM.CHECKBOX) {
-        newSelectedOptions = existingSelectedOptions.includes(selectedFilter.id)
-          ? existingSelectedOptions.filter((id) => id !== selectedFilter.id)
-          : [...existingSelectedOptions, selectedFilter.id];
-      } else {
-        newSelectedOptions = selectedFilter.value;
+      let newSelectedOptions = [];
+      if (!!existingSelectedOptions) {
+        if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
+          newSelectedOptions = existingSelectedOptions?.includes(
+            selectedFilter.id
+          )
+            ? existingSelectedOptions?.filter((id) => id !== selectedFilter.id)
+            : [...existingSelectedOptions, selectedFilter.id];
+        } else {
+          newSelectedOptions = selectedFilter.value;
+        }
       }
 
       return {
@@ -355,18 +358,18 @@ const useAppliedJobsListing = () => {
     }
   };
 
-  const returnSelectedFilterOption = (filterName) => {
-    const filterObj = customFilterInfo?.find((obj) => obj.name === filterName);
+  const returnSelectedFilterOption = (filterInfo, filterName) => {
+    const filterObj = filterInfo?.find((obj) => obj.name === filterName);
     return filterObj?.selectedOptions;
   };
 
   const filterApplyHandler = async (filterInfo) => {
     const currentFilterOptions = {
-      work_mode: returnSelectedFilterOption("WorkMode"),
-      job_type: returnSelectedFilterOption("JobType"),
-      experience: returnSelectedFilterOption("Experience"),
-      location: returnSelectedFilterOption("Location"),
-      education: returnSelectedFilterOption("Education"),
+      work_mode: returnSelectedFilterOption(filterInfo, "WorkMode"),
+      job_type: returnSelectedFilterOption(filterInfo, "JobType"),
+      experience: returnSelectedFilterOption(filterInfo, "Experience"),
+      location: returnSelectedFilterOption(filterInfo, "Location"),
+      education: returnSelectedFilterOption(filterInfo, "Education"),
     };
     setFilterOptions(currentFilterOptions);
     await updateCurrentRecords({

@@ -91,9 +91,6 @@ const CustomTable = ({
     (state) => !!state.length
   );
 
-  console.log("isFilterCount:", isFilterCount);
-  console.log("filterStat | CustomTable:", selectedFilterOptions);
-
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
   };
