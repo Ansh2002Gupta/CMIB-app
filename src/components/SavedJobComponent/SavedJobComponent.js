@@ -23,7 +23,9 @@ const SavedJobComponent = ({ details }) => {
       style={style.mainContainer}
       topSection={
         <TwoColumn
+          style={style.topCurveSection}
           isLeftFillSpace
+          leftSection={<View style={style.whiteCurveSection} />}
           rightSection={
             <CommonText
               customContainerStyle={style.urgentText}
@@ -32,6 +34,7 @@ const SavedJobComponent = ({ details }) => {
               {intl.formatMessage({ id: "label.urgent" })}
             </CommonText>
           }
+          rightSectionStyle={style.backgroundWhite}
         />
       }
       bottomSection={

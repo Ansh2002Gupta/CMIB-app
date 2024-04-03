@@ -196,7 +196,7 @@ const JobCardWeb = ({
     },
   ];
 
-  return <MultiRow style={{ gap: 24 }} rows={mainCardMultiRow} />;
+  return <MultiRow style={style.webContainer} rows={mainCardMultiRow} />;
 };
 
 export default JobCardWeb;
