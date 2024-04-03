@@ -21,7 +21,7 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
           <View style={styles.zIndex10}>
             {isPopUpVisible && (
               <ScrollView style={styles.popUpArrayView} ref={wrapperRef}>
-                {message.map((item) => {
+                {message?.map((item) => {
                   return (
                     <CustomTouchableOpacity
                       style={{
@@ -42,7 +42,6 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
               </ScrollView>
             )}
           </View>
-
           <TouchableImage
             source={images.iconMore}
             disabled={isPopUpVisible}
@@ -67,11 +66,12 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
 
 PopupMessage.defaultProps = {
   customStyle: {},
+  message: [],
 };
 
 PopupMessage.propTypes = {
   customStyle: PropTypes.func,
-  message: PropTypes.string.isRequired,
+  message: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   onPopupClick: PropTypes.func.isRequired,
 };
 
