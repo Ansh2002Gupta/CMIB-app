@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  Platform,
-  View,
-} from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
 
 import CommonText from "../CommonText";

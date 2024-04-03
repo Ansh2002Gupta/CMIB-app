@@ -211,6 +211,11 @@ const style = {
     borderRadius: 10,
     marginLeft: 5,
   },
+  innerLabelContainer: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+  },
   disabledStyle: {
     backgroundColor: colors.disabledTextFieldColor,
   },
@@ -224,6 +229,9 @@ const style = {
   },
   onlyCountLimitBox: {
     justifyContent: "flex-end",
+  },
+  marginRight10: {
+    marginRight: 10,
   },
 };
 

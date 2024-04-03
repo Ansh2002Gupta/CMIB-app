@@ -47,7 +47,7 @@ const CustomTextEditor = (props) => {
   const handleProcedureContentChange = (content) => {
     onChangeText && onChangeText(content);
   };
-  const getError = () => {
+  const getTextEditorStyles = () => {
     if (!!errorMessage) {
       return "error";
     } else if (disabled) {
@@ -75,7 +75,7 @@ const CustomTextEditor = (props) => {
         <ReactQuill
           theme="snow"
           value={value}
-          className={getError()}
+          className={getTextEditorStyles()}
           modules={modules}
           onBlur={customHandleBlur}
           formats={FORMAT}
@@ -96,6 +96,7 @@ const CustomTextEditor = (props) => {
     </View>
   );
 };
+
 CustomTextEditor.defaultProps = {
   customLabelStyle: {},
   isMandatory: false,
@@ -104,6 +105,7 @@ CustomTextEditor.defaultProps = {
   quillContainerStyle: {},
   quilStyle: {},
 };
+
 CustomTextEditor.propTypes = {
   customErrorStyle: PropTypes.object,
   customHandleBlur: PropTypes.func,

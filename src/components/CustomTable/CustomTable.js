@@ -31,6 +31,7 @@ const CustomTable = ({
   addNewTicket,
   allDataLoaded,
   currentPage,
+  containerStyle,
   data,
   filterApplyHandler,
   filterCategory,
@@ -50,6 +51,7 @@ const CustomTable = ({
   isFirstPageReceived,
   isTotalCardVisible,
   loadingMore,
+  mobileComponentToRender,
   onIconPress,
   placeholder,
   queryTypeData,
@@ -63,8 +65,6 @@ const CustomTable = ({
   tableIcon,
   totalcards,
   ThirdSection,
-  containerStyle,
-  mobileComponentToRender,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -138,7 +138,7 @@ const CustomTable = ({
                     </CustomTouchableOpacity>
                   </View>
                 }
-                rightSection={<>{ThirdSection ? ThirdSection : <></>}</>}
+                rightSection={ThirdSection ? ThirdSection : <></>}
                 isLeftFillSpace={true}
                 style={styles.filterTopSection(isWebView)}
               />
@@ -341,6 +341,7 @@ const CustomTable = ({
 
 CustomTable.defaultProps = {
   addNewTicket: false,
+  containerStyle: {},
   headingTexts: [],
   handleTicketModal: () => {},
   showSearchBar: true,
@@ -353,6 +354,7 @@ CustomTable.defaultProps = {
 
 CustomTable.propTypes = {
   addNewTicket: PropTypes.bool,
+  containerStyle: PropTypes.object,
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   data: PropTypes.array,
@@ -366,6 +368,7 @@ CustomTable.propTypes = {
   handleLoadMore: PropTypes.func.isRequired,
   handleTicketModal: PropTypes.func,
   headingTexts: PropTypes.array,
+  mobileComponentToRender: PropTypes.func,
   isHeading: PropTypes.bool.isRequired,
   isTicketListingLoading: PropTypes.bool,
   indexOfFirstRecord: PropTypes.number.isRequired,
@@ -382,6 +385,7 @@ CustomTable.propTypes = {
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,
   totalcards: PropTypes.number,
+  ThirdSection: PropTypes.elementType,
   placeholder: PropTypes.string,
   isTotalCardVisible: PropTypes.bool,
 };

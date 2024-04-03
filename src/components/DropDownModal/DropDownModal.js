@@ -30,6 +30,7 @@ const DropDownModal = ({
   isSelected,
   indexNumber,
   indexField,
+  isSingleMutliSelect,
   labelField,
   onChangeValue,
   menuOptions,
@@ -39,7 +40,7 @@ const DropDownModal = ({
   value,
   valueField,
   urlField,
-  selectAllField = false,
+  selectAllField,
   includeAllKeys,
   onChangeDropDownText,
   dropdownStyle,
@@ -96,11 +97,7 @@ const DropDownModal = ({
   }, [isDropDownOpen]);
 
   const handleValueChange = (selectedOption) => {
-    if (selectAllField) {
-      onChangeValue(selectedOption);
-    } else {
-      onChangeValue(selectedOption.value);
-    }
+    onChangeValue(selectAllField ? selectedOption : selectedOption.value);
   };
 
   const keyboardDidHideCallback = () => {
@@ -129,9 +126,7 @@ const DropDownModal = ({
   const handleDropDown = () => {
     if (isEditable) {
       Keyboard.dismiss();
-
       onChangeDropDownText && onChangeDropDownText("");
-
       setIsDropDownOpen((prev) => !prev);
     }
   };
@@ -232,15 +227,26 @@ const DropDownModal = ({
           </CommonText>
           <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
         </TouchableOpacity>
-        {!!selectedItems.length && (
+        {isSingleMutliSelect ? (
           <View style={styles.multiSelectOptions}>
-            {selectedItems?.map((item, index) => (
-              <>
+            {options
+              ?.filter((item) => item.isSelected)
+              ?.map((item, index) => (
                 <CustomChipCard
-                  message={item?.name ?? item.value}
+                  key={index}
+                  message={item?.name || item?.label}
                   onPress={() => handleValueChange(item)}
                 />
-              </>
+              ))}
+          </View>
+        ) : (
+          <View style={styles.multiSelectOptions}>
+            {selectedItems?.map((item, index) => (
+              <CustomChipCard
+                key={index}
+                message={item?.name ?? item.value}
+                onPress={() => handleValueChange(item)}
+              />
             ))}
           </View>
         )}
@@ -366,10 +372,14 @@ const DropDownModal = ({
 
 DropDownModal.defaultProps = {
   customHeading: "",
+  dropdownStyle: {},
   isEditable: true,
   labelField: "label",
+  includeAllKeys: false,
   isMobileNumber: false,
+  isSingleMutliSelect: false,
   onChangeValue: () => {},
+  selectAllField: false,
   menuOptions: {},
   options: [],
   placeholder: "",
@@ -381,11 +391,17 @@ DropDownModal.defaultProps = {
 
 DropDownModal.propTypes = {
   customHeading: PropTypes.string,
+  customHandleBlur: PropTypes.func,
+  dropdownStyle: PropTypes.object,
   isEditable: PropTypes.bool,
   labelField: PropTypes.string,
   isMobileNumber: PropTypes.bool,
+  isSingleMutliSelect: PropTypes.bool,
+  includeAllKeys: PropTypes.bool,
   onChangeValue: PropTypes.func,
+  onChangeDropDownText: PropTypes.func,
   menuOptions: PropTypes.object,
+  selectAllField: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

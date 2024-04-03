@@ -101,6 +101,7 @@ CustomTextEditor.defaultProps = {
   isMandatory: false,
   label: "",
   disabled: false,
+  quillContainerStyle: {},
 };
 
 CustomTextEditor.propTypes = {
@@ -113,6 +114,7 @@ CustomTextEditor.propTypes = {
   label: PropTypes.string,
   onChangeText: PropTypes.func,
   value: PropTypes.string,
+  quillContainerStyle: PropTypes.object,
 };
 
 export default CustomTextEditor;

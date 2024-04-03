@@ -9,14 +9,14 @@ import styles from "./CustomToggleComponent.style";
 
 const CustomToggleComponent = ({
   customLabelStyle,
+  containerStyle,
   customToggleStyle,
   isMandatory,
-  containerStyle,
   label,
+  onValueChange,
   toggleTitle1,
   toggleTitle2,
   value,
-  onValueChange,
 }) => {
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
   const intl = useIntl();
@@ -100,10 +100,19 @@ const CustomToggleComponent = ({
   );
 };
 
+CustomToggleComponent.defaultProps = {
+  onValueChange: () => {},
+};
+
 CustomToggleComponent.propTypes = {
   customLabelStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,
+  onValueChange: PropTypes.func,
+  toggleTitle1: PropTypes.string,
+  toggleTitle2: PropTypes.string,
+  value: PropTypes.string,
 };
 
 export default CustomToggleComponent;

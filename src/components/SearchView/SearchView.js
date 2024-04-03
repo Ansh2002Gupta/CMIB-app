@@ -112,6 +112,7 @@ SearchView.propTypes = {
   ]),
   placeholder: PropTypes.string,
   onSearch: PropTypes.func,
+  onChangeDropDownText: PropTypes.func,
 };
 
 export default SearchView;

@@ -86,7 +86,7 @@ const PostedJobsView = () => {
       topSection={
         <IconHeader
           actionButtonIcon={images.iconAddWhite}
-          buttonTitle={intl.formatMessage({ id: "label.add" })}
+          buttonTitle={intl.formatMessage({ id: "label.add_new_jobs" })}
           customActionButtonStyle={styles.addNewButton}
           customActionButtonText={styles.addNewText}
           hasActionButton

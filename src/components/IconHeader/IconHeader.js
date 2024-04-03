@@ -8,11 +8,11 @@ import Chip from "../Chip";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import Switch from "../Switch";
 import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
 import images from "../../images";
 import styles from "./IconHeader.style";
-import Switch from "../Switch";
 
 const IconHeader = ({
   actionButtonIcon,
