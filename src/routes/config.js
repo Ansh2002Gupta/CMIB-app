@@ -2,6 +2,7 @@ import React from "react";
 import { Platform } from "@unthinkable/react-core-components";
 
 import ContentLayout from "../pages/ContentLayout";
+import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
 import MyAccount from "../views/MyAccount";
 import ViewProfile from "../views/ViewProfile";
@@ -192,7 +193,7 @@ const config = [
     views: [
       {
         viewPath: navigations.MODULE_LANDING_PAGE,
-        element: <DashboardView />,
+        element: <SavedJobs />,
       },
       {
         viewPath: navigations.ROUND_ONE,

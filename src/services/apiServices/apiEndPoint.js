@@ -31,6 +31,7 @@ export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;
 export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/otp/verify`;
 export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
 export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
+export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
 
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
