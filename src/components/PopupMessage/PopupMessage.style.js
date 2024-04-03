@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   popUpArrayView: {
     position: "absolute",
     right: 8,
-    top: -50,
+    top: 0,
     borderWidth: 1,
     borderColor: colors.lightGrey,
     borderRadius: 8,

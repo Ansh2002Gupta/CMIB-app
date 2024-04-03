@@ -298,13 +298,22 @@ const ViewPostedJobDetails = () => {
             {
               label: intl.formatMessage({ id: "label.job_details" }),
               component: (
-                <View style={{ backgroundColor: colors.backgroundGrey }}>
+                <View
+                  style={{
+                    backgroundColor: colors.backgroundGrey,
+                    flex: 1,
+                  }}
+                >
                   {isConstantLoading || isLoading || loading ? (
                     <LoadingScreen />
                   ) : (
-                    <>
+                    <View style={{ flex: 1 }}>
                       {!(isError || apiIsError) ? (
-                        <View style={styles.container}>
+                        <View
+                          style={{
+                            ...styles.container,
+                          }}
+                        >
                           <FormTabs
                             onEditClick={() =>
                               navigate(navigations.EDIT_JOB, {
@@ -337,7 +346,7 @@ const ViewPostedJobDetails = () => {
                           />
                         </View>
                       ) : null}
-                    </>
+                    </View>
                   )}
                   {!(isConstantLoading || isLoading || loading) &&
                     (isError || apiIsError) && (

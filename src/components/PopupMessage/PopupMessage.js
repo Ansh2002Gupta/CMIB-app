@@ -1,31 +1,37 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import styles from "./PopupMessage.style";
 import { ScrollView, View } from "@unthinkable/react-core-components";
-import colors from "../../assets/colors";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
-const PopupMessage = ({ customStyle, message, onPopupClick, popUpArray }) => {
+const PopupMessage = ({ customStyle, message, onPopupClick }) => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const wrapperRef = useRef(null);
+  useOutsideClick(wrapperRef, () => setIsPopUpVisible(false));
+
   return (
     <View>
-      {popUpArray.length ? (
+      {Array.isArray(message) ? (
         <View style={styles.containerStyle}>
           <View style={{ zIndex: 10 }}>
             {isPopUpVisible && (
-              <ScrollView style={styles.popUpArrayView}>
-                {popUpArray.map((item) => {
+              <ScrollView style={styles.popUpArrayView} ref={wrapperRef}>
+                {message.map((item) => {
                   return (
                     <CustomTouchableOpacity
                       style={{
                         ...styles.popUpComponentStyle,
                         ...customStyle,
                       }}
-                      onPress={() => onPopupClick(item)}
+                      onPress={() => {
+                        onPopupClick && onPopupClick(item);
+                        setIsPopUpVisible(false);
+                      }}
                     >
                       <CommonText customTextStyle={styles.deletetext}>
                         {item}
@@ -39,7 +45,12 @@ const PopupMessage = ({ customStyle, message, onPopupClick, popUpArray }) => {
 
           <TouchableImage
             source={images.iconMore}
-            onPress={() => setIsPopUpVisible(!isPopUpVisible)}
+            disabled={isPopUpVisible}
+            onPress={() => {
+              if (!isPopUpVisible) {
+                setIsPopUpVisible(!isPopUpVisible);
+              }
+            }}
           />
         </View>
       ) : (
@@ -56,14 +67,12 @@ const PopupMessage = ({ customStyle, message, onPopupClick, popUpArray }) => {
 
 PopupMessage.defaultProps = {
   customStyle: {},
-  popUpArray: [],
 };
 
 PopupMessage.propTypes = {
   customStyle: PropTypes.func,
   message: PropTypes.string.isRequired,
   onPopupClick: PropTypes.func.isRequired,
-  popUpArray: PropTypes.array,
 };
 
 export default PopupMessage;

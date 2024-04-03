@@ -6,6 +6,7 @@ import images from "../../../images";
 import CommonText from "../../../components/CommonText";
 import useIsWebView from "../../../hooks/useIsWebView";
 import { useIntl } from "react-intl";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 const DownloadMoreComponent = ({ onPress }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -26,10 +27,11 @@ const DownloadMoreComponent = ({ onPress }) => {
           </CommonText>
         </View>
       ) : (
-        <TouchableImage
-          source={images.iconMore}
-          style={styles.iconstyle}
-          onPress={onPress}
+        <PopupMessage
+          // source={images.iconMore}
+          // style={styles.iconstyle}
+          message={["Download all"]}
+          onPopupClick={onPress}
         />
       )}
     </View>

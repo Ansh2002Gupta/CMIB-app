@@ -4,6 +4,7 @@ const style = {
   container: {
     flex: 1,
     overflow: "hidden",
+    marginBottom: 80,
   },
   tabContainer: {
     paddingTop: 16,

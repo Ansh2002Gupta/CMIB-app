@@ -308,10 +308,7 @@ const useGetApplicantList = () => {
           <CommonText
             customTextStyle={{
               ...tableStyle,
-              ...(!isHeading && { color: colors.darkBlue }),
             }}
-            fontWeight={!isHeading && 600}
-            underLineStyle={styles.underLineStyle}
           >
             {item?.status ?? "-"}
           </CommonText>
@@ -324,9 +321,7 @@ const useGetApplicantList = () => {
 
       {
         content: (
-          <View>
-            {!isHeading && <PopupMessage popUpArray={item?.actions} />}
-          </View>
+          <View>{!isHeading && <PopupMessage message={item?.actions} />}</View>
         ),
         style: {
           ...commonStyles.columnStyle("20%"),
