@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderRadius: 8,
   },
+  zIndex10: {
+    zIndex: 10,
+  },
   containerStyle: {
     flexDirection: "row",
     height: 20,

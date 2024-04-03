@@ -18,7 +18,7 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
     <View>
       {Array.isArray(message) ? (
         <View style={styles.containerStyle}>
-          <View style={{ zIndex: 10 }}>
+          <View style={styles.zIndex10}>
             {isPopUpVisible && (
               <ScrollView style={styles.popUpArrayView} ref={wrapperRef}>
                 {message.map((item) => {
