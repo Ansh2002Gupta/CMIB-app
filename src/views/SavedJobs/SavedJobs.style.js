@@ -6,6 +6,7 @@ const style = {
     justifyContent: "center",
     padding: 16,
   },
+  customParentStyle: { width: "40%" },
   innerContainer: {
     backgroundColor: colors.backgroundGrey,
     paddingTop: 16,
@@ -19,6 +20,14 @@ const style = {
   loaderStyle: { justifyContent: "center", alignItems: "center", flex: 1 },
   scrollstyle: {
     flex: 1,
+  },
+  noResultContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+  noResultText: {
+    fontSize: 18,
   },
 };
 
