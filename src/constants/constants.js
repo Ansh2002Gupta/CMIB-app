@@ -480,3 +480,5 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+
+export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];

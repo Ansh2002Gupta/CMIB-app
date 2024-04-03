@@ -241,6 +241,7 @@ const CustomTextInput = (props) => {
     if (isCalendar) {
       return (
         <DatePickerModal
+          customStyles={customStyle}
           value={value}
           onChangeValue={onChangeValue}
           maxDate={maxDate}
