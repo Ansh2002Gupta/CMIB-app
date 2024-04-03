@@ -10,6 +10,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 import AddModifyNewJobsUi from "./AddModifyNewJobsUi";
 import { useIntl } from "react-intl";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const AddModifyNewJobs = () => {
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
@@ -19,6 +20,7 @@ const AddModifyNewJobs = () => {
   const addQuestionRef = useRef();
   const [isCheckList, setIsCheckList] = useState(false);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const intl = useIntl();
 
   useEffect(() => {
@@ -51,7 +53,7 @@ const AddModifyNewJobs = () => {
       );
       Http.post(POST_JOB, formattedData)
         .then((res) => {
-          alert("Job Saved Successfully");
+          setSuccessMessage("Job Saved Successfully");
           navigate(-1);
         })
         .catch((e) => {
@@ -61,7 +63,7 @@ const AddModifyNewJobs = () => {
           alert(GENERIC_GET_API_FAILED_ERROR_MESSAGE, e);
         });
     } else {
-      alert(intl.formatMessage({ id: "label.fill_mandatory" }));
+      setSuccessMessage(intl.formatMessage({ id: "label.fill_mandatory" }));
     }
   };
 
@@ -85,6 +87,15 @@ const AddModifyNewJobs = () => {
           errorMsg={
             isErrorData?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
           }
+        />
+      )}
+      {successMessage && (
+        <ToastComponent
+          toastMessage={successMessage}
+          onDismiss={() => {
+            console.log("here");
+            setSuccessMessage(null);
+          }}
         />
       )}
     </>
