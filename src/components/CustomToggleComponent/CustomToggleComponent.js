@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View, TouchableOpacity } from "@unthinkable/react-core-components";
@@ -9,14 +9,14 @@ import styles from "./CustomToggleComponent.style";
 
 const CustomToggleComponent = ({
   customLabelStyle,
-  containerStyle,
   customToggleStyle,
   isMandatory,
+  containerStyle,
   label,
-  onValueChange,
   toggleTitle1,
   toggleTitle2,
   value,
+  onValueChange,
 }) => {
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
   const intl = useIntl();
@@ -52,14 +52,16 @@ const CustomToggleComponent = ({
         <TouchableOpacity
           style={{
             ...styles.yesButtonStyle,
-            ...(value === 1 ? styles.activeButtonStyle : null),
+            ...(selectedToggleOption === 0 ? styles.activeButtonStyle : null),
           }}
-          onPress={() => handleOptionSelect(1)}
+          onPress={() => handleOptionSelect(0)}
         >
           <View
             style={{
               ...styles.buttonViewStyle,
-              ...(value === 1 ? styles.activeButtonViewStyle : null),
+              ...(selectedToggleOption === 0
+                ? styles.activeButtonViewStyle
+                : null),
             }}
           />
         </TouchableOpacity>
@@ -73,14 +75,16 @@ const CustomToggleComponent = ({
         <TouchableOpacity
           style={{
             ...styles.noButtonStyle,
-            ...(value === 0 ? styles.activeButtonStyle : null),
+            ...(selectedToggleOption === 1 ? styles.activeButtonStyle : null),
           }}
-          onPress={() => handleOptionSelect(0)}
+          onPress={() => handleOptionSelect(1)}
         >
           <View
             style={{
               ...styles.buttonViewStyle,
-              ...(value === 0 ? styles.activeButtonViewStyle : null),
+              ...(selectedToggleOption === 1
+                ? styles.activeButtonViewStyle
+                : null),
             }}
           />
         </TouchableOpacity>
@@ -96,19 +100,10 @@ const CustomToggleComponent = ({
   );
 };
 
-CustomToggleComponent.defaultProps = {
-  onValueChange: () => {},
-};
-
 CustomToggleComponent.propTypes = {
   customLabelStyle: PropTypes.object,
-  containerStyle: PropTypes.object,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,
-  onValueChange: PropTypes.func,
-  toggleTitle1: PropTypes.string,
-  toggleTitle2: PropTypes.string,
-  value: PropTypes.string,
 };
 
 export default CustomToggleComponent;
