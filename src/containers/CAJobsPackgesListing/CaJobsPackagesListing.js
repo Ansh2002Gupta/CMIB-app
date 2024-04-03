@@ -1,28 +1,22 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {
-  Image,
-  Keyboard,
-  Platform,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from "@unthinkable/react-core-components";
+import { Keyboard, Platform, View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
-import classes from "../../theme/styles/CssClassProvider";
-import styles from "./dashboard.style";
+import styles from "./CaJobsPackagesListing.style";
 import { TwoColumn } from "../../core/layouts";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomModal from "../../components/CustomModal";
-import PaymentInitiateModal from "../../containers/PaymentInitiateModal";
+import PaymentInitiateModal from "../PaymentInitiateModal";
 import commonStyles from "../../theme/styles/commonStyles";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
+import { useIntl } from "react-intl";
 
 const MainContainerTemplate = ({ subscriptionListingData }) => {
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
   const [showPaymentInitiateModal, setShowPaymentInitiateModal] = useState();
   const [modalData, setModalData] = useState({ amount: 0, subscriptionId: "" });
@@ -46,10 +40,6 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
     keyboardDidHideCallback,
     keyboardDidShowCallback,
   });
-
-  // const cardComponentWebProps = isWebPlatform
-  //     ? { className: classes["card-box__outline--green"] }
-  //     : {};
 
   const renderPaymentInitiateModal = () => {
     return (
@@ -107,7 +97,9 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
                 customTextStyle={styles.addApplicationFormDescriptionText}
                 fontWeight={"500"}
               >
-                Validity for {container?.validity} days
+                {`${intl.formatMessage({ id: "label.validityFor" })} ${
+                  container?.validity
+                } days`}
               </CommonText>
               <CommonText customTextStyle={styles.descriptionText}>
                 {container?.description}
@@ -134,7 +126,7 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
                   }}
                 >
                   <CommonText customTextStyle={styles.viewPackageText}>
-                    Subscribe
+                    {intl.formatMessage({ id: "label.subscribe" })}
                   </CommonText>
                 </CustomTouchableOpacity>
               }
