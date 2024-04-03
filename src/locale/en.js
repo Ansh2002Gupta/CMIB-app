@@ -392,6 +392,11 @@ const locale = {
   "label.saved_jobs": "Saved Jobs",
   "label.applyJob": "Apply job",
   "label.urgent": "Urgent",
+  "label.vacancies": "Vacancies",
+  "label.lpa": "LPA",
+  "label.yrs": "yrs",
+  "label.posted": "Posted",
+  "label.ago": "ago",
 };
 
 export default locale;

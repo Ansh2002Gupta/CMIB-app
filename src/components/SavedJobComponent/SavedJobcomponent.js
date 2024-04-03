@@ -22,49 +22,66 @@ const SavedJobComponent = ({ details }) => {
     <TwoRow
       style={style.mainContainer}
       topSection={
-        <TwoRow
-          topSection={
-            <TwoColumn
-              isLeftFillSpace
-              rightSection={
-                <CommonText
-                  customContainerStyle={style.urgentText}
-                  customTextStyle={style.urgentTextStyles}
-                >
-                  {intl.formatMessage({ id: "label.urgent" })}
-                </CommonText>
-              }
-            />
+        <TwoColumn
+          isLeftFillSpace
+          rightSection={
+            <CommonText
+              customContainerStyle={style.urgentText}
+              customTextStyle={style.urgentTextStyles}
+            >
+              {intl.formatMessage({ id: "label.urgent" })}
+            </CommonText>
           }
-          bottomSection={isWeb ? <JobCardWeb /> : <JobCardMobile />}
         />
       }
       bottomSection={
-        <TwoColumn
-          style={{}}
-          isLeftFillSpace
-          rightSection={
-            // <ActionPairButton
-            //   buttonOneText={intl.formatMessage({ id: "label.remove" })}
-            //   buttonTwoText={intl.formatMessage({ id: "label.applyJob" })}
-            //   displayLoader={false}
-            //   iconLeft={{
-            //     leftIconAlt: "left-saved",
-            //     leftIconSource: images.iconSavedActive,
-            //   }}
-            //   isDisabled={false}
-            //   isButtonTwoGreen
-            //   onPressButtonOne={() => {}}
-            //   onPressButtonTwo={() => {}}
-            //   customStyles={{
-            //     customContainerStyle: !isWebView
-            //       ? { ...style.customSaveButtonContainer }
-            //       : { buttonTwoTextStyle: style.buttonTwoTextStyle },
-            //   }}
-            // />
-            <></>
-          }
-        />
+        isWebView ? (
+          <JobCardWeb
+            companyName={"sdafdsf"}
+            createdAt={"2024-04-01T11:23:51.000000Z"}
+            jobPostion={"vsvfs"}
+            jobDescription={"sjdhbsvkhdsbvjlbsdjkvbjksdbvsf"}
+            jobLocation={"dfsdfsf"}
+            vaccancies={10}
+            minSalary={5}
+            maxSalary={7}
+            minExperience={0}
+            maxExperience={2}
+            requirement={[
+              "Audit",
+              "dsbdf",
+              "dfsbdsfb",
+              "dfgsdfg",
+              "dfgsg",
+              "dsfgwergw",
+              "regwerg",
+              "Rtfergwer",
+            ]}
+          />
+        ) : (
+          <JobCardMobile
+            companyName={"sdafdsf"}
+            createdAt={"2024-04-01T11:23:51.000000Z"}
+            jobPostion={"vsvfs"}
+            jobDescription={"sjdhbsvkhdsbvjlbsdjkvbjksdbvsf"}
+            jobLocation={"svasfsfsdvsdvsdvss"}
+            vaccancies={10}
+            minSalary={5}
+            maxSalary={7}
+            minExperience={0}
+            maxExperience={2}
+            requirement={[
+              "Audit",
+              "dsbdf",
+              "dfsbdsfb",
+              "dfgsdfg",
+              "dfgsg",
+              "dsfgwergw",
+              "regwerg",
+              "Rtfergwer",
+            ]}
+          />
+        )
       }
     />
   );

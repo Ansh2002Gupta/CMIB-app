@@ -1,7 +1,7 @@
 import appendAppBaseURl from "./imageHelpers";
 
 const avatar = appendAppBaseURl("/images/Avatar.svg");
-const companyLogo = appendAppBaseURl("/images/companyLogo.svg");
+const companyLogo = appendAppBaseURl("/images/svg/companyLogo.svg");
 const logo = appendAppBaseURl("/images/logo.png");
 const sun = appendAppBaseURl("/images/sun.png");
 const moon = appendAppBaseURl("/images/moon.png");
