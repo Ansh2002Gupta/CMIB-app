@@ -84,7 +84,7 @@ const CustomTable = ({
 
   const popUpRef = useRef(null);
 
-  useOutsideClick(popUpRef, isWeb ? () => setShowPopUpWithID(-1) : () => {});
+  useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
   const [showFilterOptions, setShowFilterOptions] = useState(false);
 
   const isFilterCount = Object.values(selectedFilterOptions).find(
