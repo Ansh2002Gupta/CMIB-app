@@ -1,6 +1,7 @@
 import appendAppBaseURl from "./imageHelpers";
 
 const avatar = appendAppBaseURl("/images/Avatar.svg");
+const companyLogo = appendAppBaseURl("/images/svg/companyLogo.svg");
 const logo = appendAppBaseURl("/images/logo.png");
 const sun = appendAppBaseURl("/images/sun.png");
 const moon = appendAppBaseURl("/images/moon.png");
@@ -200,12 +201,25 @@ const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
+const iconAppliedJobs = appendAppBaseURl("/images/svg/iconAppliedJobs.svg");
+const iconAppliedJobsActiveJobs = appendAppBaseURl(
+  "/images/svg/iconAppliedJobsActiveJobs.svg"
+);
+const iconSingleSave = appendAppBaseURl("/images/svg/iconSingleSave.svg");
+const iconSaveSlashBlack = appendAppBaseURl(
+  "/images/svg/iconSaveSlashBlack.svg"
+);
+const iconSaveSlashBlue = appendAppBaseURl("/images/svg/iconSaveSlashBlue.svg");
+const iconBriefcase = appendAppBaseURl("/images/svg/iconBriefcase.svg");
+const iconLocation = appendAppBaseURl("/images/svg/iconLocation.svg");
+const iconRupee = appendAppBaseURl("/images/svg/iconRupee.svg");
 
 const images = {
   iconArrowUp,
   iconArrowDown,
   iconArrowDown2,
   avatar,
+  companyLogo,
   logo,
   iconWarning,
   sun,
@@ -344,6 +358,14 @@ const images = {
   iconLoading,
   iconGreyCross,
   iconError,
+  iconAppliedJobs,
+  iconAppliedJobsActiveJobs,
+  iconSingleSave,
+  iconSaveSlashBlack,
+  iconSaveSlashBlue,
+  iconBriefcase,
+  iconLocation,
+  iconRupee,
 };
 
 export default images;

@@ -25,6 +25,7 @@ export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
 export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
+export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
 export const JOB_APPLICANTS = `${USER_TYPE_COMPANY}/applicants`;
 
 /* API Endpoints Members*/
