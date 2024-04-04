@@ -27,7 +27,8 @@ export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
 export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`;
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
-export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`
+export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
+export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
 
 /* API Endpoints Members*/
 export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;
