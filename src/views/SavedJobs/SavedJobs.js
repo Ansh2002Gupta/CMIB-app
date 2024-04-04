@@ -71,9 +71,11 @@ const SavedJobs = () => {
       )}
       <TwoRow
         topSection={
-          <IconHeader
-            headerText={intl.formatMessage({ id: "label.saved_jobs" })}
-          />
+          isWebView && (
+            <IconHeader
+              headerText={intl.formatMessage({ id: "label.saved_jobs" })}
+            />
+          )
         }
         bottomSection={
           <TwoRow

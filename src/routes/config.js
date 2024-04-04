@@ -11,6 +11,7 @@ import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
+import Jobs from "../views/Jobs";
 import JobsView from "../views/JobsView/JobsView";
 import JobApplicantsView from "../views/JobApplicantsView/index";
 import JobSeekersView from "../views/JobSeekersView/index";
@@ -193,7 +194,7 @@ const config = [
     views: [
       {
         viewPath: navigations.MODULE_LANDING_PAGE,
-        element: <SavedJobs />,
+        element: <DashboardView />,
       },
       {
         viewPath: navigations.ROUND_ONE,
@@ -229,13 +230,27 @@ const config = [
         viewPath: navigations.JOB_SEEKERS,
         element: <JobSeekersView />,
       },
-      {
-        viewPath: navigations.SAVED_JOBS,
-        element: <JobSeekersView />,
-      },
+
       {
         viewPath: navigations.SAVED_CANDIDATES,
         element: <SavedCandidatesView />,
+      },
+      {
+        viewPath: navigations.SAVED_JOBS,
+        element: <SavedJobs />,
+      },
+      {
+        viewPath: navigations.ALL_JOBS,
+        element: <PostedJobsView />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <PostedJobsView />,
+      },
+
+      {
+        viewPath: navigations.JOBS,
+        element: <Jobs />,
       },
     ],
   },
