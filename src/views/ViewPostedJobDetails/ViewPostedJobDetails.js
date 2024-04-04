@@ -33,6 +33,7 @@ const ViewPostedJobDetails = () => {
     data: apiData,
     isError: apiIsError,
     error: apiError,
+    fetchData: getPostedData,
   } = useFetch({
     url: `${POST_JOB}/${id}`,
   });
@@ -284,6 +285,14 @@ const ViewPostedJobDetails = () => {
       setLoading(false);
     }
   }, [apiData, addJobs, appData]);
+  const onCancelPress = (shouldApiBeCalled = false) => {
+    if (isEditable) {
+      setIsEditable(false);
+      if (shouldApiBeCalled) {
+        getPostedData();
+      }
+    }
+  };
 
   return (
     <>
@@ -298,6 +307,7 @@ const ViewPostedJobDetails = () => {
                 jobData={appData}
                 questionData={questionnaireData}
                 id={id}
+                onCancelPress={onCancelPress}
               />
             )
           ) : (

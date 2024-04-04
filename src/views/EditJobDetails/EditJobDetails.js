@@ -24,6 +24,7 @@ import { useParams } from "react-router";
 const EditJobDetails = ({
   jobData: intialJobData,
   questionData: intialQuestionData,
+  onCancelPress,
 }) => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
@@ -122,7 +123,7 @@ const EditJobDetails = ({
           setLoading(false);
         })
         .finally(() => {
-          navigate(-1);
+          onCancelPress(true);
         });
     } else {
       setSuccessMessage(intl.formatMessage({ id: "label.fill_mandatory" }));
@@ -196,6 +197,7 @@ const EditJobDetails = ({
               isWebView={isWebView}
               isCheckList={isChecklist}
               setIsCheckList={setIsCheckList}
+              onCancelPress={onCancelPress}
               submitButtonText={"label.save"}
             />
           </View>

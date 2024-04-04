@@ -14,6 +14,7 @@ const FooterComponent = ({
   setIsCheckList,
   onSubmit,
   submitButtonText = "label.post",
+  onCancelPress,
 }) => {
   const navigate = useNavigate();
   const intl = useIntl();
@@ -36,7 +37,11 @@ const FooterComponent = ({
         <View style={styles.buttonViewStyle}>
           <CustomButton
             onPress={() => {
-              navigate(-1);
+              if (onCancelPress) {
+                onCancelPress(false);
+              } else {
+                navigate(-1);
+              }
             }}
             style={styles.cancelButtonStyle(isWebView)}
           >
