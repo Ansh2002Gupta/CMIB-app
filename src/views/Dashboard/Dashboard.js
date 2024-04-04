@@ -42,7 +42,7 @@ function DashboardView() {
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
       <View>
-        {/* <UploadImage
+        <UploadImage
           {...{
             onDeleteImage,
             errorWhileUpload,
@@ -53,7 +53,7 @@ function DashboardView() {
             setFileUploadResult,
             uploadPercentage,
           }}
-        /> */}
+        />
         <SavedJobComponent />
       </View>
       <View>

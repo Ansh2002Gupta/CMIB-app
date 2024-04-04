@@ -6,8 +6,7 @@ import { View } from "@unthinkable/react-core-components";
 
 import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 import PreviewImage from "../PreviewImage/PreviewImage";
-import { IMAGE_MAX_SIZE } from "../../constants/constants";
-
+import { FILE_MAX_SIZE } from "../../constants/constants";
 import styles from "./UploadImage.style";
 
 const UploadImage = ({
@@ -46,7 +45,7 @@ const UploadImage = ({
         setErrorWhileUpload(response.error);
       } else if (
         response.assets &&
-        response.assets[0].fileSize > IMAGE_MAX_SIZE
+        response.assets[0].fileSize > FILE_MAX_SIZE
       ) {
         setErrorWhileUpload(
           intl.formatMessage({ id: "label.fileTooLargeError" })
