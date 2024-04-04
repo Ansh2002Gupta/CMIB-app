@@ -14,7 +14,7 @@ import images from "../../images";
 import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
 
-const JobCardMobile = ({ cardDetails }) => {
+const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
   const intl = useIntl();
   const {
     companyName,
@@ -22,7 +22,6 @@ const JobCardMobile = ({ cardDetails }) => {
     jobPostion,
     jobDescription,
     jobLocation,
-    handleRemove,
     vaccancies,
     minSalary,
     maxSalary,
@@ -38,11 +37,26 @@ const JobCardMobile = ({ cardDetails }) => {
           <CommonText
             customTextStyle={[
               style.marginRightText,
-              index !== data.length - 1 ? style.blackText : style.greyText,
+              index !== data.length - 1 || data.length <= 3
+                ? style.blackText
+                : style.greyText,
             ]}
           >
-            {item}
+            {item?.name}
             {index !== data.length - 1 && ","}
+          </CommonText>
+        ),
+      };
+    });
+  };
+
+  const locationConfig = (data) => {
+    return data.map((item, index) => {
+      return {
+        content: (
+          <CommonText customTextStyle={[style.blackText]}>
+            {item?.name}
+            {index !== data.length - 1 && "/"}
           </CommonText>
         ),
       };
@@ -144,11 +158,7 @@ const JobCardMobile = ({ cardDetails }) => {
           leftSection={
             <Image source={images.iconLocation} style={style.mobileIconStyle} />
           }
-          rightSection={
-            <CommonText customTextStyle={style.normalText}>
-              {jobLocation}
-            </CommonText>
-          }
+          rightSection={<MultiColumn columns={locationConfig(jobLocation)} />}
         />
       ),
     },

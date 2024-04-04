@@ -15,7 +15,7 @@ import style from "./SavedJobComponent.style";
 
 import colors from "../../assets/colors";
 
-const JobCardWeb = ({ cardDetails }) => {
+const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
   const intl = useIntl();
   const {
     companyName,
@@ -23,8 +23,6 @@ const JobCardWeb = ({ cardDetails }) => {
     jobPostion,
     jobDescription,
     jobLocation,
-    handleRemove,
-    handleApply,
     vaccancies,
     minSalary,
     maxSalary,
@@ -38,11 +36,26 @@ const JobCardWeb = ({ cardDetails }) => {
       return {
         content: (
           <Chip
-            label={item}
+            label={item?.name}
             textColor={colors.black}
             bgColor={colors.white}
             customContainerStyle={style.customContainerStyle}
           />
+        ),
+      };
+    });
+  };
+
+  const locationConfig = (data) => {
+    return data.map((item, index) => {
+      return {
+        content: (
+          <CommonText
+            customTextStyle={[style.marginRightText, style.blackText]}
+          >
+            {item?.name}
+            {index !== data.length - 1 && "/"}
+          </CommonText>
         ),
       };
     });
@@ -107,11 +120,7 @@ const JobCardWeb = ({ cardDetails }) => {
             leftSection={
               <Image source={images.iconLocation} style={style.iconStyle} />
             }
-            rightSection={
-              <CommonText customTextStyle={style.normalText}>
-                {jobLocation}
-              </CommonText>
-            }
+            rightSection={<MultiColumn columns={locationConfig(jobLocation)} />}
           />
         </View>
       ),
