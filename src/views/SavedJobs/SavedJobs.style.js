@@ -29,6 +29,10 @@ const style = {
   noResultText: {
     fontSize: 18,
   },
+  customToastStyle: {
+    top: 50,
+    bottom: "50%",
+  },
 };
 
 export default style;
