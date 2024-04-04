@@ -20,6 +20,7 @@ const JobCardWeb = ({ cardDetails }) => {
   const {
     companyName,
     createdAt,
+    isLoading,
     jobPostion,
     jobDescription,
     jobLocation,

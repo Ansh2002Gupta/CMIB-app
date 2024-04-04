@@ -19,6 +19,7 @@ const JobCardMobile = ({ cardDetails }) => {
   const {
     companyName,
     createdAt,
+    isLoading,
     jobPostion,
     jobDescription,
     jobLocation,
