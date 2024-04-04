@@ -7,6 +7,7 @@ export const navigations = {
   FEEDBACK: "/feedback",
   FORGOT_PASSWORD: "/forgot-password",
   JOBS: "/jobs",
+  JOB_PROFILE: "/job-profile",
   LOGIN: "/login",
   NQCA: "/nqca-placements",
   OUT_SOURCED: "*",

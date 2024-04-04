@@ -34,6 +34,8 @@ export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
 export const MIN_ZOOM_SCALE = 1;
 export const MAX_ZOOM_SCALE = 3;
 export const DEFAULT_BALANCE_CREDIT = 0;
+export const Candidate = "Candidate";
+export const Company = "Company";
 export const COMPANY = "company";
 
 export const OTP_TRY_COUNT = 5;
@@ -427,6 +429,28 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   label: `${x + 1995}`,
   value: `${x + 1995}`,
 }));
+
+export const Education_Status_Options = [
+  {
+    label: "Regular",
+    value: "regular",
+  },
+  {
+    label: "Correspondence",
+    value: "correspondence",
+  },
+];
+
+export const BOOLEAN_OPTION = [
+  {
+    label: "Yes",
+    value: true,
+  },
+  {
+    label: "No",
+    value: false,
+  },
+];
 
 export const COLOR = [
   "#000000",

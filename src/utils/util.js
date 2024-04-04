@@ -279,6 +279,26 @@ export const getValidUrl = (url) => {
   }
   return link;
 };
+
+export const formatCountryCode = (code, countryData) => {
+  if (!code) return code;
+  const countryOption = countryData?.find(
+    (country) => country["dial_code"] === code
+  );
+  return countryOption && Platform.OS === "web"
+    ? `${code} (${countryOption["name"]})`
+    : code;
+};
+
+export const getNameById = (data, id) => {
+  const item = data?.find((obj) => obj.id === id);
+  return item ? item.name : null;
+};
+
+export const isValueEmpty = (value) => {
+  return value === null || value === undefined || value === "";
+};
+
 export const getQuestionType = {
   text: "Text Question",
   "single-select": "Single-select",
