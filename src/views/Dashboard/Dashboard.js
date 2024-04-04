@@ -11,6 +11,7 @@ import UploadImage from "../../components/UploadImage";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import styles from "./dashboard.style";
 import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
+import ViewInterviewDetails from "../../containers/ViewInterviewDetails";
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
@@ -86,6 +87,9 @@ function DashboardView() {
       {showScheduledInterviewModal && (
         <ScheduleInterviewModal onClose={handleOnClose} />
       )}
+
+      {/* change to false to close the modal */}
+      {true && <ViewInterviewDetails />}
     </View>
   );
 }

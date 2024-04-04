@@ -68,7 +68,7 @@ const ScheduleInterviewModal = ({ onClose }) => {
   };
 
   const renderHorizontalLine = () => {
-    return <View style={styles.horizontalLine} />;
+    return <View style={commonStyles.horizontalLine} />;
   };
 
   const renderDateComponents = (details, setDetails, interviewKey) => {
@@ -208,7 +208,7 @@ const ScheduleInterviewModal = ({ onClose }) => {
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={styles.modalInnerContainer}
+        style={commonStyles.modalInnerContainer}
       >
         <CustomToggleComponent
           isMandatory

@@ -410,6 +410,9 @@ const locale = {
   "label.date": "Date",
   "label.time": "Time",
   "label.schedule": "Schedule",
+  "label.interview_details": "Interview Details",
+  "label.applicant_name": "Application Name",
+  "label.applicant_id": "Applicant ID",
 };
 
 export default locale;
