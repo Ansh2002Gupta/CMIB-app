@@ -40,6 +40,8 @@ export const DEFAULT_BALANCE_CREDIT = 0;
 export const GSTIN_MAX_LENGTH = 15;
 export const PAN_MAX_LENGTH = 10;
 export const COMPANY = "company";
+export const Candidate = "Candidate";
+export const Company = "Company";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
@@ -419,6 +421,28 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   label: `${x + 1995}`,
   value: `${x + 1995}`,
 }));
+
+export const Education_Status_Options = [
+  {
+    label: "Regular",
+    value: "regular",
+  },
+  {
+    label: "Correspondence",
+    value: "correspondence",
+  },
+];
+
+export const BOOLEAN_OPTION = [
+  {
+    label: "Yes",
+    value: true,
+  },
+  {
+    label: "No",
+    value: false,
+  },
+];
 
 export const COLOR = [
   "#000000",

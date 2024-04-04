@@ -46,15 +46,13 @@ function CAJobsDashboard() {
     url: `${COMPANY_SUBSCRIPTION_STATUS}`,
   });
 
-  const errorMessage = errorPackageSubscribed || errorSubscriptionListing
+  const errorMessage = errorPackageSubscribed || errorSubscriptionListing;
 
   const handleViewpackages = () => {
     fetchDataSubscriptionListing();
   };
 
-  if (
-    isPackageSubscribedLoading || isSubscriptionListingLoading
-  ) {
+  if (isPackageSubscribedLoading || isSubscriptionListingLoading) {
     return (
       <View style={styles.loaderStyle}>
         <Spinner />
@@ -63,7 +61,7 @@ function CAJobsDashboard() {
   }
 
   if (isErrorSubscriptionListing || isPackageSubscribedError) {
-        return <ErrorComponent errorMsg={errorMessage?.data?.message} />;
+    return <ErrorComponent errorMsg={errorMessage?.data?.message} />;
   }
 
   return (
@@ -86,13 +84,17 @@ function CAJobsDashboard() {
                     customTextStyle={styles.headingText}
                     fontWeight={"500"}
                   >
-                    {intl.formatMessage({ id: "label.subscribe_to_get_started" })}
+                    {intl.formatMessage({
+                      id: "label.subscribe_to_get_started",
+                    })}
                   </CommonText>
                   <CommonText
                     customTextStyle={styles.subHeadingText}
                     fontWeight={"500"}
                   >
-                    {intl.formatMessage({ id: "label.unlock_benefits_features_of_packages" })}
+                    {intl.formatMessage({
+                      id: "label.unlock_benefits_features_of_packages",
+                    })}
                   </CommonText>
                 </View>
               }
@@ -123,7 +125,9 @@ function CAJobsDashboard() {
                           }
                           fontWeight={"600"}
                         >
-                          {intl.formatMessage({ id: "label.post_jobs_openings_find_top_talent" })}
+                          {intl.formatMessage({
+                            id: "label.post_jobs_openings_find_top_talent",
+                          })}
                         </CommonText>
                       }
                     />
@@ -144,7 +148,9 @@ function CAJobsDashboard() {
                           }
                           fontWeight={"600"}
                         >
-                            {intl.formatMessage({ id: "label.schedule_interviews_with_applicants" })}
+                          {intl.formatMessage({
+                            id: "label.schedule_interviews_with_applicants",
+                          })}
                         </CommonText>
                       }
                     />
@@ -165,7 +171,9 @@ function CAJobsDashboard() {
                           }
                           fontWeight={"600"}
                         >
-                            {intl.formatMessage({ id: "label.tap_into_extensive_database_job_seeker" })}
+                          {intl.formatMessage({
+                            id: "label.tap_into_extensive_database_job_seeker",
+                          })}
                         </CommonText>
                       }
                     />
@@ -177,7 +185,7 @@ function CAJobsDashboard() {
                       onPress={handleViewpackages}
                     >
                       <CommonText customTextStyle={styles.viewPackageText}>
-                      {intl.formatMessage({ id: "label.view_packages" })}
+                        {intl.formatMessage({ id: "label.view_packages" })}
                       </CommonText>
                       <CustomImage
                         style={styles.arrowDown}

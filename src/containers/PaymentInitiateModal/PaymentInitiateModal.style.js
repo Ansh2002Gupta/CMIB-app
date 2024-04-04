@@ -28,7 +28,7 @@ const style = {
     paddingRight: 10,
     ...Platform.select({
       web: {
-        maxHeight: '60vh',
+        maxHeight: "60vh",
       },
     }),
   },
@@ -42,7 +42,7 @@ const style = {
     marginTop: 16,
   },
   webContentContainerStyle: {
-    maxHeight: "60vh",
+    height: "60vh",
     paddingRight: 10,
   },
   buttonStyle: { maxHeight: 44, maxWidth: 80 },

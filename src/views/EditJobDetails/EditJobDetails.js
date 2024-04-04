@@ -22,6 +22,7 @@ import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
 import useGetEditJobs from "../../services/apiServices/hooks/EditJobs/useGetEditJobs";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 const EditJobDetails = () => {
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const EditJobDetails = () => {
   const initialJob = useRef(intialJobData);
   const initialQuestion = useRef(intialQuestionData);
   const [questionaire, setQuestionaire] = useState(intialQuestionData);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isChecklist, setIsCheckList] = useState(
     intialJobData?.notify_company === 1 ?? false
@@ -142,20 +144,21 @@ const EditJobDetails = () => {
 
       Http.put(`${UPDATE_JOB}/${id}`, formattedData)
         .then((res) => {
+          setSuccessMessage(
+            intl.formatMessage({ id: "label.job_updated_successfully" })
+          );
           setLoading(false);
-
-          alert("Job Updated Successfully");
         })
         .catch((e) => {
-          setLoading(false);
           setPostError(e);
-          alert("SomeThing Went Wrong");
+          setSuccessMessage(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+          setLoading(false);
         })
         .finally(() => {
           navigate(-1);
         });
     } else {
-      alert(intl.formatMessage({ id: "label.fill_mandatory" }));
+      setSuccessMessage(intl.formatMessage({ id: "label.fill_mandatory" }));
     }
   };
   return (
@@ -242,6 +245,14 @@ const EditJobDetails = () => {
             postError?.data?.message ||
             GENERIC_GET_API_FAILED_ERROR_MESSAGE
           }
+        />
+      )}
+      {successMessage && (
+        <ToastComponent
+          toastMessage={successMessage}
+          onDismiss={() => {
+            setSuccessMessage(null);
+          }}
         />
       )}
     </View>

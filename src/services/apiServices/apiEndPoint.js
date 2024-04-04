@@ -31,6 +31,7 @@ export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscrip
 export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
 
 /* API Endpoints Members*/
+export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
 export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;
 export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/otp/verify`;
 export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
@@ -39,6 +40,11 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
 
+/* API Endpoints Member CA JOB profile */
+export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
+export const MEMBER_CA_JOB_PROFILE_EDUCATION = `${USER_TYPE_MEMBER}/profile/academics`;
+export const MEMBER_CA_JOB_PROFILE_EXAMS = `${USER_TYPE_MEMBER}/profile/exams`;
+export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/other-courses`;
 //endpoint add Job
 export const GET_FUNCTIONAL_TYPE = `${USER_TYPE_COMPANY}/functional-areas`;
 export const GET_JOB_LOCATION = `${USER_TYPE_COMPANY}/job/locations`;
