@@ -70,9 +70,9 @@ const SavedJobs = () => {
               />
             ) : (
               <View style={style.scrollstyle}>
-                {savedJobsList?.records?.length ? (
+                {savedJobsList?.length ? (
                   <ScrollView>
-                    {savedJobsList?.records?.map((details) => {
+                    {savedJobsList?.map((details) => {
                       return <SavedJobComponent details={details} />;
                     })}
                   </ScrollView>

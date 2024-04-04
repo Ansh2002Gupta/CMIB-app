@@ -68,7 +68,7 @@ const SavedJobComponent = ({ details }) => {
               createdAt={details?.created_at}
               jobPostion={"vsvfs"}
               jobDescription={details?.summary}
-              jobLocation={details?.location}
+              jobLocation={details?.adress}
               handleRemove={() => handleRemove(details.id)}
               vaccancies={details?.vacancy}
               minSalary={details?.min_salary}
