@@ -102,6 +102,9 @@ const DetailComponent = ({
         />
       );
     }
+    if (detail.ShouldRenderOwnComponent) {
+      return detail.ShouldRenderOwnComponent();
+    }
 
     if (detail.isLink) {
       return (
@@ -128,6 +131,7 @@ const DetailComponent = ({
           ...styles.valueStyle,
           ...(detail.isCapitalize && styles.capitalizeValue),
         }}
+        customContainerStyle={{ ...detail.style }}
       >
         {detail?.defaultValue || detail?.value}
       </CommonText>
@@ -193,6 +197,7 @@ const DetailComponent = ({
           }
         }}
         isRupee={detail?.isRupee}
+        isSingleMutliSelect={detail.isSingleMutliSelect}
       />
     );
   };
@@ -230,44 +235,45 @@ const DetailComponent = ({
                     : styles.containerStyle),
                 }}
               >
-                {detail.map((columns, idx) => {
-                  return isEditable ? (
-                    <View
-                      style={{
-                        ...(columns.width === 3 ? styles.oneThirdWidth : {}),
-                        ...(isWebView
-                          ? styles.webContainer
-                          : getRowStyle(detail)),
-                      }}
-                    >
-                      {renderEditableContent(columns)}
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        ...(isWebView
-                          ? styles.webContainer
-                          : getRowStyle(detail)),
-                      }}
-                    >
-                      <View style={styles.titleContainer}>
-                        {columns.label ? (
-                          <CommonText customTextStyle={styles.titleStyle}>
-                            {intl.formatMessage({ id: columns.label })}
-                          </CommonText>
-                        ) : (
-                          void 0
-                        )}
-                        {columns?.isMandatory && (
-                          <CommonText customTextStyle={styles.starStyle}>
-                            {" *"}
-                          </CommonText>
-                        )}
+                {Array.isArray(detail) &&
+                  detail?.map((columns, idx) => {
+                    return isEditable ? (
+                      <View
+                        style={{
+                          ...(columns.width === 3 ? styles.oneThirdWidth : {}),
+                          ...(isWebView
+                            ? styles.webContainer
+                            : getRowStyle(detail)),
+                        }}
+                      >
+                        {renderEditableContent(columns)}
                       </View>
-                      {renderDetailContent(columns)}
-                    </View>
-                  );
-                })}
+                    ) : (
+                      <View
+                        style={{
+                          ...(isWebView
+                            ? styles.webContainer
+                            : getRowStyle(detail)),
+                        }}
+                      >
+                        <View style={styles.titleContainer}>
+                          {columns.label ? (
+                            <CommonText customTextStyle={styles.titleStyle}>
+                              {intl.formatMessage({ id: columns.label })}
+                            </CommonText>
+                          ) : (
+                            void 0
+                          )}
+                          {columns?.isMandatory && (
+                            <CommonText customTextStyle={styles.starStyle}>
+                              {" *"}
+                            </CommonText>
+                          )}
+                        </View>
+                        {renderDetailContent(columns)}
+                      </View>
+                    );
+                  })}
               </View>
             );
           }

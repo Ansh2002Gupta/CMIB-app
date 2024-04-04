@@ -5,10 +5,11 @@ const useFilterModal = (
   initialFilterState,
   onApplyFilter,
   setFilterState,
-  setShowFilterOptions
+  setShowFilterOptions,
+  filterCategory
 ) => {
   const { selectedStatus, selectedQueryType, activeCategories } = filterState;
-  const [currentCategory, setCurrentCategory] = useState("Status");
+  const [currentCategory, setCurrentCategory] = useState(filterCategory[0]);
 
   const prevFilterState = useRef(filterState);
 
