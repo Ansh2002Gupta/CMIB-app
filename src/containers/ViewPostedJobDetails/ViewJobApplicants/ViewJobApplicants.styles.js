@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     paddingTop: 12,
     paddingBottom: 12,
+    zIndex: 2,
   },
 });
 export default styles;

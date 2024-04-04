@@ -4,6 +4,7 @@ import CommonText from "../../../../components/CommonText";
 import TouchableImage from "../../../../components/TouchableImage";
 import images from "../../../../images";
 import styles from "./RenderMobileItem.styles";
+import PopupMessage from "../../../../components/PopupMessage/PopupMessage";
 const RenderMobileItem = ({ item, lastItem }) => {
   return (
     <View
@@ -33,7 +34,7 @@ const RenderMobileItem = ({ item, lastItem }) => {
           </CommonText>
         </View>
       </View>
-      <TouchableImage source={images.iconMore} />
+      <PopupMessage message={item?.action} />
     </View>
   );
 };

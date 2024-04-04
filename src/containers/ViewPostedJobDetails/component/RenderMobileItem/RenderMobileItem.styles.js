@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderColor: colors.lightGray,
     paddingBottom: 12,
+    zIndex: 1,
   },
   borderBottom0: {
     borderBottomWidth: 0,
