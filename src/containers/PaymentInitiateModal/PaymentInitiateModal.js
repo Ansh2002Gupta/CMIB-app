@@ -11,18 +11,16 @@ import CustomTextInput from "../../components/CustomTextInput";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./PaymentInitiateModal.style";
-import { TwoColumn, TwoRow } from "../../core/layouts";
 import CommonText from "../../components/CommonText";
 import { usePost } from "../../hooks/useApiRequest";
 import { COMPANY_INIT_PAYMENT } from "../../services/apiServices/apiEndPoint";
 import Spinner from "../../components/Spinner";
+import { ADDRESS_MAX_LENGTH, GSTIN_MAX_LENGTH, PAN_MAX_LENGTH } from "../../constants/constants";
 
 const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const [error, setError] = useState("");
-  const [tdsAmount, setTdsAmount] = useState("");
-  const [tan, setTan] = useState("");
   const [panNumber, setPanNumber] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [PONumber, setPONumber] = useState("");
@@ -32,34 +30,21 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     isLoading: isPaymentInitializedLoading,
     makeRequest: packagePaymentInitialization,
     error: errorWhilePaymentInitialization,
-    setError: setErrorWhilePaymentInitialization
+    setError: setErrorWhilePaymentInitialization,
   } = usePost({
     url: COMPANY_INIT_PAYMENT,
   });
-
-  const isNextDisabled = () => {
-    return (
-      !gstNumber ||
-      !panNumber ||
-      !tdsAmount ||
-      !tan ||
-      Number(amount) < Number(tdsAmount)
-    );
-  };
 
   const handleDismissToast = () => {
     setErrorWhilePaymentInitialization("");
   };
 
   const handleSave = () => {
-    if (isNextDisabled()) return;
 
     packagePaymentInitialization({
       body: {
-        final_amt: finalAmount,
         subscription_id: subscriptionId,
         pan: panNumber,
-        tan: tan,
         po_number: PONumber,
         address: address,
         gstin: gstNumber,
@@ -68,8 +53,10 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         // onPressCancel();
       },
       onSuccessCallback: (data) => {
-        if (isWebView) {
-          window.open(data?.data, "_self");
+        if (isWebView && data?.data && data?.data?.url) {
+          window.open(data?.data?.url, "_self");
+        } else {
+          window.location.reload();
         }
         onPressCancel();
       },
@@ -110,14 +97,10 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     );
   };
 
-  const finalAmount = tdsAmount ? Number(amount) - Number(tdsAmount) : amount;
-  const CREDIT_SCORE = 0;
 
-  if (
-    isPaymentInitializedLoading
-  ) {
+  if (isPaymentInitializedLoading) {
     return (
-      <View style={{...(isWebView ? styles.loaderStyle : {flex: 1})}}>
+      <View style={{ ...(isWebView ? styles.loaderStyle : { flex: 1 }) }}>
         <Spinner />
       </View>
     );
@@ -134,56 +117,29 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         {...isMobileProps}
       >
         <View style={styles.subscriptionCostContainer}>
-          {renderAmountHeading(intl.formatMessage({ id: "label.subscription_cost" }), amount)}
+          {renderAmountHeading(
+            intl.formatMessage({ id: "label.subscription_cost" }),
+            amount
+          )}
         </View>
         <FiveColumn
           firstSection={
             <CustomTextInput
-              label={intl.formatMessage({ id: "label.TDS_GTDS_amount" })}
-              placeholder={intl.formatMessage({ id: "label.enter_TDS_GTDS_amount" })}
-              customStyle={styles.containerStyle}
-              value={tdsAmount}
-              onChangeText={(val) => {
-                if(!isNaN(val) && val>=0)
-                  setTdsAmount(val);
-                }}
-              isError={Number(amount) < Number(tdsAmount)}
-              errorMessage={
-                Number(amount) < Number(tdsAmount)
-                  ? intl.formatMessage({ id: "label.tds_input_error" })
-                  : ""
-              }
-              isMandatory
-              isNumeric
-            />
-          }
-          secoundSection={
-            <CustomTextInput
-              label={intl.formatMessage({ id: "label.tan" })}
-              placeholder={intl.formatMessage({ id: "label.enter_tan" })}
-              customStyle={styles.containerStyle}
-              value={tan}
-              onChangeText={(val) => {
-                setTan(val);
-              }}
-              isMandatory
-            />
-          }
-          thirdSection={
-            <CustomTextInput
               label={intl.formatMessage({ id: "label.pan" })}
-              placeholder={`${intl.formatMessage({ id: "label.enter" })} ${intl.formatMessage({ id: "label.pan" })}`}
+              placeholder={`${intl.formatMessage({
+                id: "label.enter",
+              })} ${intl.formatMessage({ id: "label.pan" })}`}
               value={panNumber}
               onChangeText={(val) => {
                 setPanNumber(val);
               }}
               customStyle={customStyle}
-              isMandatory
               isError={!!error}
               errorMessage={error}
+              maxLength={PAN_MAX_LENGTH}
             />
           }
-          fourthSection={
+          secoundSection={
             <CustomTextInput
               label={intl.formatMessage({ id: "label.gstin" })}
               placeholder={"Enter GSTIN"}
@@ -193,12 +149,12 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
               }}
               customHandleBlur={() => {}}
               customStyle={customStyle}
-              isMandatory
               isError={!!error}
               errorMessage={error}
+              maxLength={GSTIN_MAX_LENGTH}
             />
           }
-          fiveSection={
+          thirdSection={
             <CustomTextInput
               label={intl.formatMessage({ id: "label.po_number" })}
               placeholder={"Enter PO Number"}
@@ -211,31 +167,21 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
               errorMessage={error}
             />
           }
+          fourthSection={
+            <CustomTextInput
+              label={intl.formatMessage({ id: "label.address_for_hard_copy" })}
+              placeholder={"Enter Address"}
+              value={address}
+              onChangeText={(val) => {
+                setAddress(val);
+              }}
+              customStyle={customStyle}
+              isError={!!error}
+              errorMessage={error}
+              maxLength={ADDRESS_MAX_LENGTH}
+            />
+          }
         ></FiveColumn>
-        <CustomTextInput
-          label={intl.formatMessage({ id: "label.address_for_hard_copy" })}
-          placeholder={"Enter Address"}
-          value={address}
-          onChangeText={(val) => {
-            setAddress(val);
-          }}
-          customStyle={customStyle}
-          isError={!!error}
-          errorMessage={error}
-        />
-        <TwoColumn
-          leftSection={
-            <View>{renderAmountHeading(intl.formatMessage({ id: "label.final_amt" }), finalAmount)}</View>
-          }
-          rightSection={
-            <View>{renderAmountHeading(intl.formatMessage({ id: "label.credit_score" }), CREDIT_SCORE)}</View>
-          }
-          isLeftFillSpace
-          isRightFillSpace
-        />
-        <View style={{ marginTop: 24 }}>
-          {renderAmountHeading(intl.formatMessage({ id: "label.amount_to_be_paid" }), finalAmount)}
-        </View>
       </ScrollView>
       <View style={isWebView ? styles.buttonWebStyle : {}}>
         <View style={isWebView ? styles.subContainerStyle : {}}>
@@ -246,8 +192,6 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
               ...isWebProps,
               customContainerStyle: styles.customContainerStyle,
             }}
-            // displayLoader={isLoading}
-            isDisabled={isNextDisabled()}
             isButtonTwoGreen
             onPressButtonOne={() => {
               onPressCancel(false);
@@ -256,13 +200,11 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
           />
         </View>
         {!!errorWhilePaymentInitialization && (
-        <ToastComponent
-          toastMessage={
-            errorWhilePaymentInitialization
-          }
-          onDismiss={handleDismissToast}
-        />
-      )}
+          <ToastComponent
+            toastMessage={errorWhilePaymentInitialization}
+            onDismiss={handleDismissToast}
+          />
+        )}
       </View>
     </>
   );
