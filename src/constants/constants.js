@@ -481,3 +481,18 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+export const JOBS_SEEKERS_TABLE_HEADING = {
+  candidate_name: "Candidate Name",
+  readable_id: "Candidate ID",
+  totalExprience: "Total Experience",
+  functionalArea: "Functional Areas",
+};
+export const UNITS = {
+  YRS: "Yrs",
+};
+export const FILTER_TYPE_ENUM = {
+  CHECKBOX: "checbox",
+  SLIDER: "slider",
+};
+export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = "WorkMode";
+export const COMPANY_QUERY_TYPE_TICKET = "/";

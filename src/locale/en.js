@@ -394,6 +394,7 @@ const locale = {
   "label.session_has_expired": "Your session has been expired.",
   "label.your_access_has_been_revoked": "Your access has been revoked.",
   "label.viewPdf": "View PDF",
+  "label.job_seekers": "Job Seekers",
 };
 
 export default locale;
