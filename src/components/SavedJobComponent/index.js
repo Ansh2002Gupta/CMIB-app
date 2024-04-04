@@ -1,3 +1,3 @@
-import SavedJobComponent from "./vedJobComponent";
+import SavedJobComponent from "./SavedJobComponent";
 
 export default SavedJobComponent;
