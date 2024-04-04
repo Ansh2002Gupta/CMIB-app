@@ -170,7 +170,6 @@ const FilterModal = ({
       <CheckBox
         isPartial={isPartial}
         title={title}
-        isDisabled={title === "Date"}
         isSelected={isActive}
         handleCheckbox={() => onClick(title)}
         id={title}
