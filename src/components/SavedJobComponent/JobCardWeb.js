@@ -15,22 +15,23 @@ import style from "./SavedJobComponent.style";
 
 import colors from "../../assets/colors";
 
-const JobCardWeb = ({
-  companyName,
-  createdAt,
-  jobPostion,
-  jobDescription,
-  jobLocation,
-  handleRemove,
-  handleApply,
-  vaccancies,
-  minSalary,
-  maxSalary,
-  minExperience,
-  maxExperience,
-  requirement,
-}) => {
+const JobCardWeb = ({ cardDetails }) => {
   const intl = useIntl();
+  const {
+    companyName,
+    createdAt,
+    jobPostion,
+    jobDescription,
+    jobLocation,
+    handleRemove,
+    handleApply,
+    vaccancies,
+    minSalary,
+    maxSalary,
+    minExperience,
+    maxExperience,
+    requirement,
+  } = cardDetails;
 
   const columnConfig = (data) => {
     return data.map((item) => {

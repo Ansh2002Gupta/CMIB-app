@@ -18,6 +18,29 @@ const SavedJobComponent = ({ details }) => {
   const isWeb = Platform.OS.toLowerCase() === "web";
   const { isWebView } = useIsWebView();
 
+  const cardDetails = {
+    companyName: "sdafdsf",
+    createdAt: "2024-04-01T11:23:51.000000Z",
+    jobPostion: "vsvfs",
+    jobDescription: "sjdhbsvkhdsbvjlbsdjkvbjksdbvsf",
+    jobLocation: "dfsdfsf",
+    vaccancies: 10,
+    minSalary: 5,
+    maxSalary: 7,
+    minExperience: 0,
+    maxExperience: 2,
+    requirement: [
+      "Audit",
+      "dsbdf",
+      "dfsbdsfb",
+      "dfgsdfg",
+      "dfgsg",
+      "dsfgwergw",
+      "regwerg",
+      "Rtfergwer",
+    ],
+  };
+
   return (
     <TwoRow
       style={style.mainContainer}
@@ -30,6 +53,7 @@ const SavedJobComponent = ({ details }) => {
             <CommonText
               customContainerStyle={style.urgentText}
               customTextStyle={style.urgentTextStyles}
+              fontWeight="600"
             >
               {intl.formatMessage({ id: "label.urgent" })}
             </CommonText>
@@ -39,51 +63,9 @@ const SavedJobComponent = ({ details }) => {
       }
       bottomSection={
         isWebView ? (
-          <JobCardWeb
-            companyName={"sdafdsf"}
-            createdAt={"2024-04-01T11:23:51.000000Z"}
-            jobPostion={"vsvfs"}
-            jobDescription={"sjdhbsvkhdsbvjlbsdjkvbjksdbvsf"}
-            jobLocation={"dfsdfsf"}
-            vaccancies={10}
-            minSalary={5}
-            maxSalary={7}
-            minExperience={0}
-            maxExperience={2}
-            requirement={[
-              "Audit",
-              "dsbdf",
-              "dfsbdsfb",
-              "dfgsdfg",
-              "dfgsg",
-              "dsfgwergw",
-              "regwerg",
-              "Rtfergwer",
-            ]}
-          />
+          <JobCardWeb cardDetails={cardDetails} />
         ) : (
-          <JobCardMobile
-            companyName={"sdafdsf"}
-            createdAt={"2024-04-01T11:23:51.000000Z"}
-            jobPostion={"vsvfs"}
-            jobDescription={"sjdhbsvkhdsbvjlbsdjkvbjksdbvsf"}
-            jobLocation={"Lomat unalyi Vaya"}
-            vaccancies={10}
-            minSalary={5}
-            maxSalary={7}
-            minExperience={0}
-            maxExperience={2}
-            requirement={[
-              "Audit",
-              "dsbdf",
-              "dfsbdsfb",
-              "dfgsdfg",
-              "dfgsg",
-              "dsfgwergw",
-              "regwerg",
-              "Rtfergwer",
-            ]}
-          />
+          <JobCardMobile cardDetails={cardDetails} />
         )
       }
     />

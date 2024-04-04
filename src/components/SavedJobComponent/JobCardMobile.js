@@ -14,21 +14,22 @@ import images from "../../images";
 import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
 
-const JobCardMobile = ({
-  companyName,
-  createdAt,
-  jobPostion,
-  jobDescription,
-  jobLocation,
-  handleRemove,
-  vaccancies,
-  minSalary,
-  maxSalary,
-  minExperience,
-  maxExperience,
-  requirement,
-}) => {
+const JobCardMobile = ({ cardDetails }) => {
   const intl = useIntl();
+  const {
+    companyName,
+    createdAt,
+    jobPostion,
+    jobDescription,
+    jobLocation,
+    handleRemove,
+    vaccancies,
+    minSalary,
+    maxSalary,
+    minExperience,
+    maxExperience,
+    requirement,
+  } = cardDetails;
 
   const rowConfig = (data) => {
     return data.map((item, index) => {

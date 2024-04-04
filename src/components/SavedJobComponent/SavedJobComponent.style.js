@@ -1,6 +1,7 @@
 import colors from "../../assets/colors";
+import { StyleSheet } from "@unthinkable/react-core-components";
 
-const style = {
+const style = StyleSheet.create({
   mainContainer: {
     justifyContent: "center",
     paddingLeft: 24,
@@ -30,7 +31,6 @@ const style = {
   urgentTextStyles: {
     color: colors.white,
     fontSize: 14,
-    // fontWeight: 600,
   },
   companyLogoStyle: {
     height: 56,
@@ -129,6 +129,6 @@ const style = {
     flex: 1,
   },
   backgroundWhite: { backgroundColor: colors.white },
-};
+});
 
 export default style;
