@@ -487,7 +487,7 @@ export const JOB_APPLICANTS_HEADING = {
   name: "Application Name",
   application_id: "Application ID",
   job_id: "Job Id",
-  designation: "Desgnation",
+  designation: "Designation",
   active_inactive: "Active/Inactive",
   status: "Status",
 };

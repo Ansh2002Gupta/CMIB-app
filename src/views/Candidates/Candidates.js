@@ -1,21 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
-import { useNavigate } from "../../routes";
-import { CustomTabs } from "../../components/Tab/CustomTabs";
+import { Row } from "@unthinkable/react-core-components";
 
-import styles from "./Candidates.style";
+import { CustomTabs } from "../../components/Tab/CustomTabs";
 import CommonText from "../../components/CommonText";
-import { Row, View } from "@unthinkable/react-core-components";
 import JobApplicants from "../JobApplicantsView/JobApplicantsView";
-import useIsWebView from "../../hooks/useIsWebView";
-import { navigations } from "../../constants/routeNames";
+import styles from "./Candidates.style";
 
 const Candidates = () => {
   const intl = useIntl();
-  const isEditable = false;
-  const { isWebView } = useIsWebView();
-  const handleEdit = () => {};
-  const navigate = useNavigate();
 
   return (
     <CustomTabs
