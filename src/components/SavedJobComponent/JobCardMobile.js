@@ -14,21 +14,22 @@ import images from "../../images";
 import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
 
-const JobCardMobile = ({
-  companyName,
-  createdAt,
-  jobPostion,
-  jobDescription,
-  jobLocation,
-  handleRemove,
-  vaccancies,
-  minSalary,
-  maxSalary,
-  minExperience,
-  maxExperience,
-  requirement,
-}) => {
+const JobCardMobile = ({ cardDetails }) => {
   const intl = useIntl();
+  const {
+    companyName,
+    createdAt,
+    jobPostion,
+    jobDescription,
+    jobLocation,
+    handleRemove,
+    vaccancies,
+    minSalary,
+    maxSalary,
+    minExperience,
+    maxExperience,
+    requirement,
+  } = cardDetails;
 
   const rowConfig = (data) => {
     return data.map((item, index) => {
@@ -117,7 +118,7 @@ const JobCardMobile = ({
           customTextStyle={[style.companyNameStyle, style.mobileMargin8]}
           fontWeight="600"
         >
-          {companyName}
+          {jobPostion}
         </CommonText>
       ),
     },
@@ -127,7 +128,7 @@ const JobCardMobile = ({
           customTextStyle={[style.jobPositionText, style.mobileMargin4]}
           fontWeight="600"
         >
-          {jobPostion}
+          {companyName}
         </CommonText>
       ),
     },
@@ -175,6 +176,7 @@ const JobCardMobile = ({
           }
           rightSection={
             <CustomButton
+              disabled={isLoading}
               iconLeft={{
                 leftIconAlt: "left-saved",
                 leftIconSource: images.iconSaveSlashBlue,

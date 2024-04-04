@@ -1,6 +1,7 @@
 import colors from "../../assets/colors";
+import { StyleSheet } from "@unthinkable/react-core-components";
 
-const style = {
+const style = StyleSheet.create({
   mainContainer: {
     justifyContent: "center",
     paddingLeft: 24,
@@ -30,7 +31,6 @@ const style = {
   urgentTextStyles: {
     color: colors.white,
     fontSize: 14,
-    // fontWeight: 600,
   },
   companyLogoStyle: {
     height: 56,
@@ -59,6 +59,7 @@ const style = {
   marginRightText: { marginRight: 8 },
   mobileContainer: {
     gap: 8,
+    paddingRight: 24,
   },
   buttonStyle: {
     borderWidth: 0,
@@ -72,7 +73,7 @@ const style = {
     fontSize: 12,
     color: colors.darkBlue,
   },
-  buttonContainerStyle: { paddingRight: 24, alignItems: "center" },
+  buttonContainerStyle: { alignItems: "center" },
   buttonTextStyle: { fontWeight: "500", fontSize: 14 },
   iconView: { alignItems: "center", gap: 8 },
   iconStyle: {
@@ -118,9 +119,20 @@ const style = {
     marginTop: 8,
   },
   mobileActionHandle: {
-    paddingRight: 24,
     marginTop: 16,
   },
-};
+  webContainer: { gap: 24, paddingRight: 24 },
+  topCurveSection: { backgroundColor: colors.darkBlue, marginRight: -1 },
+  whiteCurveSection: {
+    backgroundColor: colors.white,
+    borderTopRightRadius: 20,
+    flex: 1,
+  },
+  backgroundWhite: { backgroundColor: colors.white },
+  customToastStyle: {
+    top: 50,
+    bottom: "50%",
+  },
+});
 
 export default style;

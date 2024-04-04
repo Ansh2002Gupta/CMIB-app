@@ -10,13 +10,16 @@ import SavedJobComponent from "../../components/SavedJobComponent";
 import SearchView from "../../components/SearchView";
 import Spinner from "../../components/Spinner";
 import useFetch from "../../hooks/useFetch";
+import useIsWebView from "../../hooks/useIsWebView";
 import { MEMBER_SAVED_JOBS } from "../../services/apiServices/apiEndPoint";
 import images from "../../images";
 import style from "./SavedJobs.style";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import CommonText from "../../components/CommonText";
 
 const SavedJobs = () => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
   const {
     data: savedJobsList,
     isLoading: isGettingSavedJob,
@@ -26,138 +29,12 @@ const SavedJobs = () => {
     url: `${MEMBER_SAVED_JOBS}`,
   });
 
-  const savedjob = {
-    records: [
-      {
-        id: 1,
-        approved: 1,
-        approved_by: 1,
-        category_preference: "General",
-        closing_date: "2024-04-06 00:00:00",
-        company_id: 1,
-        contract_period: null,
-        created_at: "2023-12-14T05:35:32.000000Z",
-        created_by: 1,
-        designation: "Engineer",
-        qualification_details: "BCA",
-        perks: "Remote Job",
-        desired_qualification: "Master's degree in Computer Science",
-        detail:
-          "<ul><li>Responsibilities include coding,</li><li>testing, and debugging.</li></ul>",
-        disability_percentage: 20,
-        disability_type: "Intellectual Disability",
-        essential_qualification: "Bachelor's degree in Computer Science",
-        flexi_hours: 0,
-        functional_areas: null,
-        gender_preference: "Male",
-        industry: null,
-        is_contractual: 1,
-        is_for_disabled: 1,
-        is_salary_negotiable: 1,
-        is_urgent: 1,
-        location: null,
-        max_experience: 5,
-        max_salary: 800000,
-        min_experience: 2,
-        min_salary: 600000,
-        mode: null,
-        nationality: "Any",
-        opening_date: "2024-03-20 00:00:00",
-        service_type: "Full Time",
-        status: 1,
-        summary: "Exciting opportunity for a skilled software engineer.",
-        type: null,
-        updated_at: "2024-03-14T19:13:06.000000Z",
-        updated_by: 84,
-        vacancy: 5,
+  const handleSearch = (val) => {
+    fetchSavedJobList({
+      queryParamsObject: {
+        search: val,
       },
-      {
-        id: 2,
-        approved: 1,
-        approved_by: 1,
-        category_preference: "General",
-        closing_date: "2024-04-06 00:00:00",
-        company_id: 1,
-        contract_period: null,
-        created_at: "2023-12-14T05:35:32.000000Z",
-        created_by: 1,
-        designation: "Engineer",
-        qualification_details: "BCA",
-        perks: "Remote Job",
-        desired_qualification: "Master's degree in Computer Science",
-        detail:
-          "<ul><li>Responsibilities include coding,</li><li>testing, and debugging.</li></ul>",
-        disability_percentage: 20,
-        disability_type: "Intellectual Disability",
-        essential_qualification: "Bachelor's degree in Computer Science",
-        flexi_hours: 0,
-        functional_areas: null,
-        gender_preference: "Male",
-        industry: null,
-        is_contractual: 1,
-        is_for_disabled: 1,
-        is_salary_negotiable: 1,
-        is_urgent: 1,
-        location: null,
-        max_experience: 5,
-        max_salary: 800000,
-        min_experience: 2,
-        min_salary: 600000,
-        mode: null,
-        nationality: "Any",
-        opening_date: "2024-03-20 00:00:00",
-        service_type: "Full Time",
-        status: 1,
-        summary: "Exciting opportunity for a skilled software engineer.",
-        type: null,
-        updated_at: "2024-03-14T19:13:06.000000Z",
-        updated_by: 84,
-        vacancy: 5,
-      },
-      {
-        id: 3,
-        approved: 1,
-        approved_by: 1,
-        category_preference: "General",
-        closing_date: "2024-04-06 00:00:00",
-        company_id: 1,
-        contract_period: null,
-        created_at: "2023-12-14T05:35:32.000000Z",
-        created_by: 1,
-        designation: "Engineer",
-        qualification_details: "BCA",
-        perks: "Remote Job",
-        desired_qualification: "Master's degree in Computer Science",
-        detail:
-          "<ul><li>Responsibilities include coding,</li><li>testing, and debugging.</li></ul>",
-        disability_percentage: 20,
-        disability_type: "Intellectual Disability",
-        essential_qualification: "Bachelor's degree in Computer Science",
-        flexi_hours: 0,
-        functional_areas: null,
-        gender_preference: "Male",
-        industry: null,
-        is_contractual: 1,
-        is_for_disabled: 1,
-        is_salary_negotiable: 1,
-        is_urgent: 1,
-        location: null,
-        max_experience: 5,
-        max_salary: 800000,
-        min_experience: 2,
-        min_salary: 600000,
-        mode: null,
-        nationality: "Any",
-        opening_date: "2024-03-20 00:00:00",
-        service_type: "Full Time",
-        status: 1,
-        summary: "Exciting opportunity for a skilled software engineer.",
-        type: null,
-        updated_at: "2024-03-14T19:13:06.000000Z",
-        updated_by: 84,
-        vacancy: 5,
-      },
-    ],
+    });
   };
 
   return (
@@ -170,7 +47,12 @@ const SavedJobs = () => {
       bottomSection={
         <TwoRow
           style={style.innerContainer}
-          topSection={<SearchView />}
+          topSection={
+            <SearchView
+              customParentStyle={isWebView && style.customParentStyle}
+              customSearchCriteria={handleSearch}
+            />
+          }
           bottomSection={
             isGettingSavedJob ? (
               <View style={style.loaderStyle}>
@@ -189,11 +71,22 @@ const SavedJobs = () => {
               />
             ) : (
               <View style={style.scrollstyle}>
-                <ScrollView>
-                  {savedJobsList?.records?.map((details) => {
-                    return <SavedJobComponent details={details} />;
-                  })}
-                </ScrollView>
+                {savedJobsList?.length ? (
+                  <ScrollView>
+                    {savedJobsList?.map((details) => {
+                      return <SavedJobComponent details={details} />;
+                    })}
+                  </ScrollView>
+                ) : (
+                  <View style={style.noResultContainer}>
+                    <CommonText
+                      customTextStyle={style.noResultText}
+                      fontWeight={"600"}
+                    >
+                      {intl.formatMessage({ id: "label.no_result_found" })}
+                    </CommonText>
+                  </View>
+                )}
               </View>
             )
           }

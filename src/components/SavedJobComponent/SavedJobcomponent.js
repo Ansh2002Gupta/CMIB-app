@@ -1,7 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { Platform, View } from "@unthinkable/react-core-components";
+import { Platform } from "@unthinkable/react-core-components";
+
+import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import { ThreeRow, TwoColumn, TwoRow } from "../../core/layouts";
 
@@ -9,81 +10,114 @@ import ActionPairButton from "../ActionPairButton";
 import CommonText from "../CommonText";
 import JobCardMobile from "./JobCardMobile";
 import JobCardWeb from "./JobCardWeb";
+import ToastComponent from "../ToastComponent/ToastComponent";
+import { useDelete } from "../../hooks/useApiRequest";
 import useIsWebView from "../../hooks/useIsWebView";
-import images from "../../images";
+import { MEMBER_JOB, SAVE } from "../../services/apiServices/apiEndPoint";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import style from "./SavedJobComponent.style";
 
 const SavedJobComponent = ({ details }) => {
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
   const { isWebView } = useIsWebView();
+  const {
+    makeRequest: deleteJob,
+    isLoading: isDeletingJob,
+    isSuccess,
+    error: errorWhileDeletingJob,
+    setError: setErrorWhileDeletingJob,
+  } = useDelete({ url: MEMBER_JOB });
+
+  const handleDismissToast = () => {
+    setErrorWhileDeletingJob("");
+  };
+
+  const handleRemove = (id) => {
+    deleteJob({ overrideUrl: MEMBER_JOB + `/${id}` + SAVE });
+  };
 
   return (
-    <TwoRow
-      style={style.mainContainer}
-      topSection={
-        <TwoColumn
-          isLeftFillSpace
-          rightSection={
-            <CommonText
-              customContainerStyle={style.urgentText}
-              customTextStyle={style.urgentTextStyles}
-            >
-              {intl.formatMessage({ id: "label.urgent" })}
-            </CommonText>
+    <>
+      {errorWhileDeletingJob && (
+        <ToastComponent
+          toastMessage={
+            errorWhileDeletingJob || GENERIC_GET_API_FAILED_ERROR_MESSAGE
           }
+          onDismiss={handleDismissToast}
+          customToastStyle={style.customToastStyle}
         />
-      }
-      bottomSection={
-        isWebView ? (
-          <JobCardWeb
-            companyName={"sdafdsf"}
-            createdAt={"2024-04-01T11:23:51.000000Z"}
-            jobPostion={"vsvfs"}
-            jobDescription={"sjdhbsvkhdsbvjlbsdjkvbjksdbvsf"}
-            jobLocation={"dfsdfsf"}
-            vaccancies={10}
-            minSalary={5}
-            maxSalary={7}
-            minExperience={0}
-            maxExperience={2}
-            requirement={[
-              "Audit",
-              "dsbdf",
-              "dfsbdsfb",
-              "dfgsdfg",
-              "dfgsg",
-              "dsfgwergw",
-              "regwerg",
-              "Rtfergwer",
-            ]}
+      )}
+      <TwoRow
+        style={style.mainContainer}
+        topSection={
+          <TwoColumn
+            isLeftFillSpace
+            rightSection={
+              <CommonText
+                customContainerStyle={style.urgentText}
+                customTextStyle={style.urgentTextStyles}
+              >
+                {intl.formatMessage({ id: "label.urgent" })}
+              </CommonText>
+            }
           />
-        ) : (
-          <JobCardMobile
-            companyName={"sdafdsf"}
-            createdAt={"2024-04-01T11:23:51.000000Z"}
-            jobPostion={"vsvfs"}
-            jobDescription={"sjdhbsvkhdsbvjlbsdjkvbjksdbvsf"}
-            jobLocation={"Lomat unalyi Vaya"}
-            vaccancies={10}
-            minSalary={5}
-            maxSalary={7}
-            minExperience={0}
-            maxExperience={2}
-            requirement={[
-              "Audit",
-              "dsbdf",
-              "dfsbdsfb",
-              "dfgsdfg",
-              "dfgsg",
-              "dsfgwergw",
-              "regwerg",
-              "Rtfergwer",
-            ]}
-          />
-        )
-      }
-    />
+        }
+        bottomSection={
+          isWebView ? (
+            <JobCardWeb
+              isLoading={isDeletingJob}
+              companyName={details?.company_name}
+              createdAt={details?.created_at}
+              jobPostion={"vsvfs"}
+              jobDescription={details?.summary}
+              jobLocation={details?.adress}
+              handleRemove={() => handleRemove(details.id)}
+              vaccancies={details?.vacancy}
+              minSalary={details?.min_salary}
+              maxSalary={details?.max_salary}
+              minExperience={details?.min_experience}
+              maxExperience={details?.max_experience}
+              requirement={[
+                "Audit",
+                "dsbdf",
+                "dfsbdsfb",
+                "dfgsdfg",
+                "dfgsg",
+                "dsfgwergw",
+                "regwerg",
+                "Rtfergwer",
+              ]}
+            />
+          ) : (
+            <JobCardMobile
+              isLoading={isDeletingJob}
+              companyName={details?.company_name}
+              createdAt={details?.created_at}
+              jobPostion={"vsvfs"}
+              jobDescription={details?.summary}
+              jobLocation={details?.location}
+              handleRemove={() => handleRemove(details.id)}
+              vaccancies={details?.vacancy}
+              minSalary={details?.min_salary}
+              maxSalary={details?.max_salary}
+              minExperience={details?.min_experience}
+              maxExperience={details?.max_experience}
+              requirement={[
+                "Audit",
+                "dsbdf",
+                "dfsbdsfb",
+                "dfgsdfg",
+                "dfgsg",
+                "dsfgwergw",
+                "regwerg",
+                "Rtfergwer",
+              ]}
+            />
+          )
+        }
+      />
+    </>
   );
 };
 

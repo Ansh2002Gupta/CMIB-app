@@ -25,6 +25,7 @@ export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
 export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
+export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
 
 /* API Endpoints Members*/
 export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;
@@ -32,6 +33,8 @@ export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/otp/verify`;
 export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
 export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
+export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
+export const SAVE = `/save`;
 
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";

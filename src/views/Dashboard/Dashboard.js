@@ -4,7 +4,10 @@ import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import RangeSlider from "../../components/RangeSlider";
+import UploadImage from "../../components/UploadImage";
+import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import styles from "./dashboard.style";
+import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
@@ -13,11 +16,49 @@ function DashboardView() {
   const intl = useIntl();
   const [range, setRange] = useState({ max: MAX_VALUE, min: MIN_VALUE });
 
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    isLoading: isUploadingImageToServer,
+    setErrorWhileUpload,
+    setFileUploadResult,
+    uploadPercentage,
+  } = useSaveLogo({});
+
+  const { handleDeleteLogo } = useDeleteLogo();
+
+  const onDeleteImage = () => {
+    if (fileUploadResult?.data?.file_name) {
+      const fileName = fileUploadResult?.data?.file_name.split("/");
+      handleDeleteLogo(fileName[fileName.length - 1]);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <CommonText customTextStyle={styles.header}>
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
+      <View>
+        <UploadImage
+          {...{
+            onDeleteImage,
+            errorWhileUpload,
+            fileUploadResult,
+            handleFileUpload,
+            isVideoUpload: true,
+            isUploadingImageToServer,
+            setFileUploadResult,
+            uploadPercentage,
+          }}
+        />
+      </View>
+      <View>
+        <CommonText customTextStyle={styles.header}>
+          {intl.formatMessage({ id: "label.dashboard" })}
+        </CommonText>
+      </View>
       <RangeSlider
         label="Yrs"
         max={MAX_VALUE}
