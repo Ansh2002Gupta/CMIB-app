@@ -3,6 +3,8 @@ import colors from "../assets/colors";
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
+export const VALID_PAN = "Not a valid PAN, Please enter again";
+export const VALID_GSTIN = "Not a valid GSTIN, Please enter again"
 
 export const numRegex = /^\d+$/;
 export const alphaNumericRegex = /^[a-zA-Z0-9]+$/;

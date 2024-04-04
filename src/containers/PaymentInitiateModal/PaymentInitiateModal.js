@@ -15,12 +15,24 @@ import CommonText from "../../components/CommonText";
 import { usePost } from "../../hooks/useApiRequest";
 import { COMPANY_INIT_PAYMENT } from "../../services/apiServices/apiEndPoint";
 import Spinner from "../../components/Spinner";
-import { ADDRESS_MAX_LENGTH, GSTIN_MAX_LENGTH, PAN_MAX_LENGTH } from "../../constants/constants";
+import {
+  ADDRESS_MAX_LENGTH,
+  GSTIN_MAX_LENGTH,
+  PAN_MAX_LENGTH,
+} from "../../constants/constants";
+import {
+  validateGSTIN,
+  validatePAN,
+} from "../../utils/validation";
 
 const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({
+    panNumber: "",
+    gstNumber: "",
+    address: "",
+  });
   const [panNumber, setPanNumber] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [PONumber, setPONumber] = useState("");
@@ -35,12 +47,68 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     url: COMPANY_INIT_PAYMENT,
   });
 
+  const validateFields = ({ field }) => {
+    let isValid = true;
+    let newErrors = {
+      panNumber: "",
+      gstNumber: "",
+      address: "",
+    };
+
+    if (!field || field === "address") {
+      const enteredAddress = address;
+      if (enteredAddress && enteredAddress.trim().length > ADDRESS_MAX_LENGTH) {
+        newErrors.address = intl.formatMessage({
+          id: "label.address_validation",
+        });
+        isValid = false;
+      }
+    }
+
+    if (!field || field === "panNumber") {
+      const enteredGstin = panNumber;
+      if (enteredGstin && validatePAN(enteredGstin)) {
+        newErrors.panNumber = intl.formatMessage({
+          id: "label.pan_validation",
+        });
+        isValid = false;
+      }
+    }
+
+    if (!field || field === "gstNumber") {
+      const enteredPAN = gstNumber;
+      if (enteredPAN && validateGSTIN(enteredPAN)) {
+        newErrors.gstNumber = intl.formatMessage({
+          id: "label.gstin_validation",
+        });
+        isValid = false;
+      }
+    }
+
+    if (field && newErrors[field] !== undefined) {
+      setErrors({
+        ...errors,
+        [field]: newErrors[field],
+      });
+    } else {
+      setErrors(newErrors);
+    }
+
+    return isValid;
+  };
+
   const handleDismissToast = () => {
     setErrorWhilePaymentInitialization("");
   };
 
-  const handleSave = () => {
+  const isNextDisabled = () => {
+    return (
+      errors.address || errors.panNumber || errors.gstNumber
+    );
+  };
 
+  const handleSave = () => {
+    if (isNextDisabled()) return
     packagePaymentInitialization({
       body: {
         subscription_id: subscriptionId,
@@ -63,11 +131,12 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     });
   };
 
+  const handleBlur = (name) => {
+    validateFields({ field: name })
+  }
+
   const baseStyle = isWebView ? styles.containerStyle : styles.inputStyle;
-  const errorStyle = isWebView
-    ? styles.erroInputStyleWeb
-    : styles.erroInputStyle;
-  const customStyle = error ? errorStyle : baseStyle;
+  const customStyle = baseStyle;
 
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
@@ -125,32 +194,33 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         <FiveColumn
           firstSection={
             <CustomTextInput
+              customHandleBlur={() => handleBlur("panNumber")}
               label={intl.formatMessage({ id: "label.pan" })}
               placeholder={`${intl.formatMessage({
                 id: "label.enter",
               })} ${intl.formatMessage({ id: "label.pan" })}`}
               value={panNumber}
               onChangeText={(val) => {
-                setPanNumber(val);
+                setPanNumber(val.trim());
               }}
               customStyle={customStyle}
-              isError={!!error}
-              errorMessage={error}
+              isError={!!errors.panNumber}
+              errorMessage={errors.panNumber}
               maxLength={PAN_MAX_LENGTH}
             />
           }
           secoundSection={
             <CustomTextInput
+              customHandleBlur={() => handleBlur("gstNumber")}
               label={intl.formatMessage({ id: "label.gstin" })}
               placeholder={"Enter GSTIN"}
               value={gstNumber}
               onChangeText={(val) => {
-                setGstNumber(val);
+                setGstNumber(val.trim());
               }}
-              customHandleBlur={() => {}}
               customStyle={customStyle}
-              isError={!!error}
-              errorMessage={error}
+              isError={!!errors.gstNumber}
+              errorMessage={errors.gstNumber}
               maxLength={GSTIN_MAX_LENGTH}
             />
           }
@@ -160,25 +230,28 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
               placeholder={"Enter PO Number"}
               value={PONumber}
               onChangeText={(val) => {
-                setPONumber(val);
+                setPONumber(val.trim());
               }}
               customStyle={customStyle}
-              isError={!!error}
-              errorMessage={error}
+              // isError={!!errors.address}
+              // errorMessage={errors.address}
             />
           }
           fourthSection={
             <CustomTextInput
-              label={intl.formatMessage({ id: "label.address_for_hard_copy" })}
-              placeholder={"Enter Address"}
-              value={address}
-              onChangeText={(val) => {
-                setAddress(val);
-              }}
-              customStyle={customStyle}
-              isError={!!error}
-              errorMessage={error}
+              customHandleBlur={() => handleBlur("address")}
+              isMultiline
+              label={intl.formatMessage({
+                id: "label.address_for_hard_copy",
+              })}
               maxLength={ADDRESS_MAX_LENGTH}
+              onChangeText={(val) => setAddress(val)}
+              placeholder={intl.formatMessage({
+                id: "label.address_for_hard_copy",
+              })}
+              value={address}
+              isError={!!errors.address}
+              errorMessage={errors.address}
             />
           }
         ></FiveColumn>
@@ -187,7 +260,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         <View style={isWebView ? styles.subContainerStyle : {}}>
           <ActionPairButton
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            buttonTwoText={intl.formatMessage({ id: "label.save" })}
+            buttonTwoText={intl.formatMessage({ id: "label.pay" })}
             customStyles={{
               ...isWebProps,
               customContainerStyle: styles.customContainerStyle,
@@ -197,6 +270,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
               onPressCancel(false);
             }}
             onPressButtonTwo={handleSave}
+            isDisabled={isNextDisabled()}
           />
         </View>
         {!!errorWhilePaymentInitialization && (

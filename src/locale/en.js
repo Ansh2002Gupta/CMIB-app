@@ -497,7 +497,10 @@ const locale = {
   "label.current_package": "Current Package",
   "label.final_amt": "Final Amount",
   "label.credit_score": "Credit Score",
-  "label.amount_to_be_paid": "Amount to be Paid"
+  "label.amount_to_be_paid": "Amount to be Paid",
+  "label.pay": "Pay",
+  "label.pan_validation": "Please enter a valid PAN",
+  "label.gstin_validation": "Please enter a valid GSTIN",
 };
 
 export default locale;
