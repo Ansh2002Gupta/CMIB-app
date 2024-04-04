@@ -1,10 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import useFetch from "../../../hooks/useFetch";
 import { useIntl } from "react-intl";
-import {
-  BOOLEAN_OPTION,
-  numRegex,
-} from "../../../constants/constants";
+import { BOOLEAN_OPTION, numRegex } from "../../../constants/constants";
 import { formatDate, yesNoToBoolean } from "../../../utils/util";
 
 const addValueOnField = ({ state, details, isEditable }) => {
@@ -81,60 +77,6 @@ export const useWorkExperience = ({
   currentStatusError,
 }) => {
   const intl = useIntl();
-  const [selectAreaOfInterest, setSelectAreaOfInterest] = useState([
-    {
-      isSelected: false,
-      label: "Ca Jobs",
-      name: "Ca Jobs",
-      selectedIndex: null,
-      value: "Ca Jobs",
-    },
-    {
-      isSelected: false,
-      label: "Nqca",
-      name: "Nqca",
-      selectedIndex: null,
-      value: "Nqca",
-    },
-  ]);
-
-  const [selectCurrentSpecialisation, setSelectCurrentSpecialisation] =
-    useState([
-      {
-        isSelected: false,
-        label: "Ca Jobs",
-        name: "Ca Jobs",
-        selectedIndex: null,
-        value: "Ca Jobs",
-      },
-      {
-        isSelected: false,
-        label: "Nqca",
-        name: "Nqca",
-        selectedIndex: null,
-        value: "Nqca",
-      },
-    ]);
-
-  const [
-    selectCurrentIndustrySpecialisation,
-    setSelectCurrentIndustrySpecialisation,
-  ] = useState([
-    {
-      isSelected: false,
-      label: "Ca Jobs",
-      name: "Ca Jobs",
-      selectedIndex: null,
-      value: "Ca Jobs",
-    },
-    {
-      isSelected: false,
-      label: "Nqca",
-      name: "Nqca",
-      selectedIndex: null,
-      value: "Nqca",
-    },
-  ]);
 
   let showOtherFields = doHaveWorkExperience(state);
 
@@ -147,7 +89,9 @@ export const useWorkExperience = ({
           placeholder: "label.organizationName",
           validate: (value) => {
             if (!value) {
-              return "Organization is required";
+              return intl.formatMessage({
+                id: "label.organizationRequired",
+              });
             }
           },
         },
@@ -158,7 +102,9 @@ export const useWorkExperience = ({
           placeholder: "label.designation",
           validate: (value) => {
             if (!value) {
-              return "designation is required";
+              return intl.formatMessage({
+                id: "label.designationRequired",
+              });
             }
           },
         },
@@ -169,7 +115,9 @@ export const useWorkExperience = ({
           placeholder: "label.location",
           validate: (value) => {
             if (!value) {
-              return "location is required";
+              return intl.formatMessage({
+                id: "label.locationRequired",
+              });
             }
           },
         },
@@ -182,7 +130,9 @@ export const useWorkExperience = ({
           placeholder: "label.from",
           validate: (value) => {
             if (!value) {
-              return "From date is required";
+              return intl.formatMessage({
+                id: "label.fromDateRequired",
+              });
             }
           },
         },
@@ -195,7 +145,9 @@ export const useWorkExperience = ({
           placeholder: "label.to",
           validate: (value) => {
             if (!value) {
-              return "To date is required";
+              return intl.formatMessage({
+                id: "label.toDateRequired",
+              });
             }
           },
         },
@@ -205,7 +157,9 @@ export const useWorkExperience = ({
           placeholder: "label.empStrength",
           validate: (value) => {
             if (value.length > 0 && !numRegex.test(String(value))) {
-              return "Enter valid input";
+              return intl.formatMessage({
+                id: "label.enterValidInput",
+              });
             }
           },
         },
@@ -215,7 +169,9 @@ export const useWorkExperience = ({
           placeholder: "label.grossSalary",
           validate: (value) => {
             if (value.length > 0 && !numRegex.test(String(value))) {
-              return "Enter valid input";
+              return intl.formatMessage({
+                id: "label.enterValidInput",
+              });
             }
           },
         },
@@ -233,7 +189,9 @@ export const useWorkExperience = ({
           isSingleMutliSelect: true,
           validate: (value) => {
             if (value.length === 0) {
-              return "Areas of work is required";
+              return intl.formatMessage({
+                id: "label.enterValidInput",
+              });
             }
           },
         },
@@ -252,7 +210,9 @@ export const useWorkExperience = ({
             placeholder: "label.haveAnyWorkExperience",
             validate: (value) => {
               if (value.length === 0) {
-                return "Work experience is required";
+                return intl.formatMessage({
+                  id: "label.workExperienceRequired",
+                });
               }
             },
           },
@@ -270,7 +230,9 @@ export const useWorkExperience = ({
         placeholder: "label.current_specialisation",
         validate: (value) => {
           if (value.length === 0) {
-            return "Current specialisation is required";
+            return intl.formatMessage({
+              id: "label.currentSpecialisationRequired",
+            });
           }
         },
         showBadgeLabel: true,
@@ -303,7 +265,7 @@ export const useWorkExperience = ({
         options: [],
         validate: (value) => {
           if (value.length === 0) {
-            return "Current industry specialisation is required";
+            return "label.currentIndustrySpecialisationRequired";
           }
         },
       },
@@ -390,6 +352,14 @@ export const useWorkExperience = ({
           };
         }
 
+        //set minDate in to_date to from_date
+        if (fields?.key === "to_date") {
+          fields = {
+            ...fields,
+            minDate: state.work_experiences[index]?.from_date,
+          };
+        }
+
         return { ...fields, error: prevError };
       });
     });
@@ -399,88 +369,12 @@ export const useWorkExperience = ({
     setWorkExperiences(workExperiencs_data);
   }, [workExperiencs_data]);
 
-  const handleAreasOfInterestSelection =
-    (_, index) => (updatedSelectedItems, fieldIndex) => {
-      workExperiences[index][fieldIndex].options = [
-        ...workExperiences[index][fieldIndex]?.options.map((item) => {
-          if (item.value === updatedSelectedItems) {
-            if (item.isSelected) {
-              item.isSelected = false;
-            } else {
-              item.isSelected = true;
-            }
-            return item;
-          }
-          return item;
-        }),
-      ];
-
-      setWorkExperiences([...workExperiences]);
-    };
-
-  const handleCurrentSpecialisationSelection = (updatedSelectedItems) => {
-    const updatedState = selectAreaOfInterest.map((item) => {
-      if (item.value === updatedSelectedItems) {
-        if (item.isSelected) {
-          item.isSelected = false;
-        } else {
-          item.isSelected = true;
-        }
-        return item;
-      }
-      return item;
-    });
-    setSelectCurrentSpecialisation(updatedState);
-  };
-
-  const handleCurrentIndustrySpecialisationSelection = (
-    updatedSelectedItems
-  ) => {
-    const updatedState = selectAreaOfInterest.map((item) => {
-      if (item.value === updatedSelectedItems) {
-        if (item.isSelected) {
-          item.isSelected = false;
-        } else {
-          item.isSelected = true;
-        }
-        return item;
-      }
-      return item;
-    });
-
-    setSelectCurrentIndustrySpecialisation(updatedState);
-  };
-
   const [current_status_state, setCurrentStatusState] =
     useState(current_status);
 
   useEffect(() => {
     setCurrentStatusState([...current_status_data]);
   }, [current_status_data]);
-
-  const handleWorkExperienceDetailBlur = (key, index) => {
-    setWorkExperiences(
-      validateOnBlur({
-        state,
-        details: workExperiences,
-        key,
-        index,
-        intl,
-      })
-    );
-  };
-
-  const handleCurrentStatusDetailBlur = (key, index) => {
-    setCurrentStatusState(
-      validateOnBlur({
-        state,
-        details: current_status_state,
-        key,
-        index,
-        intl,
-      })
-    );
-  };
 
   const checkMandatoryFields = () => {
     let error = false;
@@ -515,18 +409,12 @@ export const useWorkExperience = ({
       details: workExperiences,
       isEditable,
     }),
-    handleAreasOfInterestSelection: handleAreasOfInterestSelection,
-    handleCurrentSpecialisationSelection: handleCurrentSpecialisationSelection,
-    handleCurrentIndustrySpecialisationSelection:
-      handleCurrentIndustrySpecialisationSelection,
     setCurrentStatusState: setCurrentStatusState,
     current_status: addValueOnField_currentStatus({
       state,
       details: current_status_state,
       isEditable,
     }),
-    //handleWorkExperienceDetailBlur,
-    // handleCurrentStatusDetailBlur,
     isValidAllFields: checkMandatoryFields(),
   };
 };

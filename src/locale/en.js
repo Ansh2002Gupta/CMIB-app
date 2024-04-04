@@ -477,8 +477,22 @@ const locale = {
   "toggle.0": "No",
   "label.dateOfEmrollmentAsMemberRequired": " Date of Enrollment is required",
   "label.areYouAFellowMemberRequired": "Fellow member is required",
-  "label.fellowMemberDateOfAdmissionRequired": "Fellow member date of admission is required",
+  "label.fellowMemberDateOfAdmissionRequired":
+    "Fellow member date of admission is required",
   "label.whetherInPracticeRequired": "Whether in practice is required",
+  "label.sinceWhenHaveYouBeenPracticingRequired":
+    "since when have you been practicing is required",
+  "label.organizationRequired": "Organization is required",
+  "label.designationRequired": "Designation is required",
+  "label.locationRequired": "Location is required",
+  "label.fromDateRequired": "From date is required",
+  "label.toDateRequired": "To date is required",
+  "label.enterValidInput": "Enter valid input",
+  "label.areaOfWorkRequired": "Areas of work is required",
+  "label.workExperienceRequired": "Work experience is required",
+  "label.currentSpecialisationRequired": "Current specialisation is required",
+  "label.currentIndustrySpecialisationRequired":
+    "Current industry specialisation is required",
   "label.sinceWhenHaveYouBeenPracticingRequired" : "since when have you been practicing is required",
   "label.preference_for_area_of_work" : "Preference for Area of Work",
 };
