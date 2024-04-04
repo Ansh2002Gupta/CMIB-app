@@ -6,7 +6,7 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import images from "../../images";
 import { useIntl } from "react-intl";
-import { formatDate } from "../../utils/util";
+import { convertToTime, formatDate } from "../../utils/util";
 import styles from "./DatePickerModal.style";
 
 const DatePickerModal = ({
@@ -17,6 +17,7 @@ const DatePickerModal = ({
   minDate,
   maxDate,
   onChangeValue,
+  showTimeSelect,
   value,
 }) => {
   const [open, setOpen] = useState(false);
@@ -53,12 +54,17 @@ const DatePickerModal = ({
             >
               {!value
                 ? intl.formatMessage({ id: "label.select" })
+                : showTimeSelect
+                ? convertToTime({
+                    dateString: value,
+                    format24Hour: false,
+                  })
                 : formatDate(value)}
             </CommonText>
           </View>
           <View style={styles.imageContainer}>
             <CustomImage
-              source={images.iconCalendar}
+              source={showTimeSelect ? images.iconClock : images.iconCalendar}
               style={styles.iconArrow}
             />
           </View>

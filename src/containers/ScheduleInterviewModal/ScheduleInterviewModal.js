@@ -17,6 +17,7 @@ import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ScheduleInterviewModal.style";
 
 const radioButtonOptions = ["Face to Face ", "Telephonic", "Remote"];
+const isMob = Platform.OS.toLowerCase() !== "web";
 
 const ScheduleInterviewModal = ({ onClose }) => {
   const intl = useIntl();
@@ -55,7 +56,7 @@ const ScheduleInterviewModal = ({ onClose }) => {
     },
   });
 
-  const handleValueChange = (setDetails, fieldName, value) => {
+  const handleValueChange = (details, setDetails, fieldName, value) => {
     const [interviewKey, field] = fieldName.split(".");
     setDetails((prevDetails) => ({
       ...prevDetails,
@@ -109,7 +110,8 @@ const ScheduleInterviewModal = ({ onClose }) => {
               )
             }
             isCalendar
-            format={"time"}
+            showTimeSelect
+            dateFormate={isMob && "time"}
             value={details.time}
             customStyle={datePickerStyle}
           />

@@ -105,7 +105,7 @@ import iconCampus from "../../public/images/svg/campus.svg";
 import iconConsent from "../../public/images/svg/consent.svg";
 import iconDiscover from "../../public/images/svg/discover.svg";
 import iconApplication from "../../public/images/svg/application.svg";
-import iconCalendar from "../../public/images/calendar.png";
+import iconCalendar from "../../public/images/svg/calendar.svg";
 import iconRotate from "../../public/images/svg/iconRotate.svg";
 import iconDisabledAdd from "../../public/images/svg/iconDisabledAdd.svg";
 import iconDisabledMinus from "../../public/images/svg/iconDisabledMinus.svg";
@@ -125,6 +125,7 @@ import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 import iconError from "../../public/images/svg/iconError.svg";
+import iconClock from "../../public/images/svg/iconClock.svg";
 
 const images = {
   iconArrowUp,
@@ -253,7 +254,7 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
-  iconError,
+  iconClock,
 };
 
 export default images;

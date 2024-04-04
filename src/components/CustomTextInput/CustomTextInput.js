@@ -40,6 +40,7 @@ const CustomTextInput = (props) => {
     countValue,
     codeValue,
     dropdownStyle,
+    dateFormate,
     errorMessage,
     eyeImage,
     file,
@@ -74,7 +75,9 @@ const CustomTextInput = (props) => {
     minCount,
     menuOptions,
     minDate,
+    minTime,
     maxDate,
+    maxTime,
     options,
     onChangeValue,
     onClickAttachement,
@@ -82,10 +85,12 @@ const CustomTextInput = (props) => {
     onIconClose,
     onChangeDropDownText,
     placeholder,
+    showTimeSelect,
     step,
     selectedItems,
     setFile,
     selectAllField,
+    timeFormat,
     value,
     labelField,
     valueField,
@@ -225,7 +230,6 @@ const CustomTextInput = (props) => {
             urlField,
             value,
             valueField,
-            urlField,
             onChangeDropDownText,
             isEditable,
           }}
@@ -241,11 +245,18 @@ const CustomTextInput = (props) => {
     if (isCalendar) {
       return (
         <DatePickerModal
-          customStyles={customStyle}
-          value={value}
-          onChangeValue={onChangeValue}
-          maxDate={maxDate}
-          minDate={minDate}
+          {...{
+            customStyles: customStyle,
+            value,
+            onChangeValue,
+            maxDate,
+            minDate,
+            showTimeSelect,
+            timeFormate: timeFormat,
+            format: dateFormate,
+            minTime,
+            maxTime,
+          }}
         />
       );
     }
@@ -490,6 +501,10 @@ CustomTextInput.defaultProps = {
   labelField: "label",
   maxCount: 100,
   minCount: 0,
+  minDate: "",
+  minTime: "",
+  maxDate: "",
+  maxTime: "",
   options: [],
   onChangeValue: () => {},
   onClickAttachement: () => {},
@@ -497,6 +512,8 @@ CustomTextInput.defaultProps = {
   onIconClose: () => {},
   placeholder: "",
   step: 1,
+  showTimeSelect: false,
+  timeFormat: "",
   value: "",
   valueField: "value",
   urlField: "url",
@@ -548,6 +565,10 @@ CustomTextInput.propTypes = {
   maxLength: PropTypes.number,
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
+  minDate: PropTypes.string,
+  minTime: PropTypes.string,
+  maxDate: PropTypes.string,
+  maxTime: PropTypes.string,
   onChangeValue: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
   onClickAttachement: PropTypes.func,
@@ -562,6 +583,8 @@ CustomTextInput.propTypes = {
     PropTypes.array,
   ]),
   valueField: PropTypes.string,
+  showTimeSelect: PropTypes.bool,
+  timeFormat: PropTypes.string,
   urlField: PropTypes.string,
 };
 

@@ -176,7 +176,7 @@ const iconCampus = appendAppBaseURl("/images/svg/campus.svg");
 const iconConsent = appendAppBaseURl("/images/svg/consent.svg");
 const iconDiscover = appendAppBaseURl("/images/svg/discover.svg");
 const iconApplication = appendAppBaseURl("/images/svg/application.svg");
-const iconCalendar = appendAppBaseURl("/images/calendar.png");
+const iconCalendar = appendAppBaseURl("/images/svg/calendar.svg");
 const iconRotate = appendAppBaseURl("/images/svg/iconRotate.svg");
 const iconDisabledAdd = appendAppBaseURl("/images/svg/iconDisabledAdd.svg");
 const iconDisabledMinus = appendAppBaseURl("/images/svg/iconDisabledMinus.svg");
@@ -200,6 +200,7 @@ const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
+const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
 
 const images = {
   iconArrowUp,
@@ -344,6 +345,7 @@ const images = {
   iconLoading,
   iconGreyCross,
   iconError,
+  iconClock,
 };
 
 export default images;

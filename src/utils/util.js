@@ -190,3 +190,10 @@ export const getValidUrl = (url) => {
   }
   return link;
 };
+
+export const convertToTime = ({ dateString, format24Hour = true }) => {
+  const date = dayjs(dateString);
+  const timeFormat = format24Hour ? "HH:mm" : "hh:mm A";
+  const timeString = date.format(timeFormat);
+  return timeString;
+};
