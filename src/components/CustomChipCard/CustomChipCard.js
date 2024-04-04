@@ -8,11 +8,15 @@ import images from "../../images";
 import styles from "./CustomChipCard.style";
 
 const CustomChipCard = ({ message, onPress }) => {
+  const handleClickOnImage = () => {
+    onPress && onPress();
+  };
+
   return (
     <View style={styles.selectedItemsContainer}>
       <CommonText>{message}</CommonText>
       <TouchableImage
-        onPress={onPress}
+        onPress={handleClickOnImage}
         source={images.iconCloseDark}
         style={styles.iconCloseDark}
         height={15}

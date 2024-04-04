@@ -4,11 +4,12 @@ import { View } from "@unthinkable/react-core-components";
 import useIsWebView from "../../hooks/useIsWebView";
 
 import styles from "./dashboard.style";
+
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { TwoRow } from "../../core/layouts";
-import CAJobsDashboard from "../CAJobsDashboard";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { moduleKeys } from "../../constants/sideBarHelpers";
+import CAJobsDashboard from "../CAJobsDashboard";
 
 function DashboardView() {
   const intl = useIntl();

@@ -25,6 +25,7 @@ export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const IMAGE_MAX_SIZE = 5000000;
+export const VIDEO_MAX_SIZE = 16000000;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "nqca-placements";
 export const OVERSEAS_PLACEMENTS = "overseas-chapters";
@@ -368,7 +369,6 @@ export const MARITAL_STATUS = [
     value: "Single",
   },
 ];
-
 export const MONTHS = [
   {
     label: "January",
@@ -451,7 +451,6 @@ export const BOOLEAN_OPTION = [
     value: false,
   },
 ];
-
 export const COLOR = [
   "#000000",
   "#e60000",
@@ -647,4 +646,10 @@ export const progressData = {
     text: "Form Complete!",
     textColor: colors.darkSecondGreen,
   },
+};
+export const JOB_SEEKERS_TABLE_HEADING = {
+  company_name: "Company Name",
+  candidate_id: "Candidate ID",
+  total_experience: "Total Experience",
+  functional_area: "Functional Area",
 };

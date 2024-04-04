@@ -22,8 +22,13 @@ const DragAndDropCard = ({
   handleDragOver,
   handleDrop,
   handleUploadClick,
+  isDocumentUpload,
+  isVideoUpload,
   isLoading,
   uploadPercentage,
+  customContentContainerStyle,
+  isAllFormat,
+  isImageAndPDF,
 }) => {
   const isPlatformWeb = Platform.OS.toLowerCase() === "web";
 
@@ -46,10 +51,39 @@ const DragAndDropCard = ({
     };
   }
 
+  const getAcceptedFiles = () => {
+    if (isDocumentUpload) {
+      return ".pdf";
+    }
+    if (isVideoUpload) {
+      return ".mp4";
+    }
+    if (isAllFormat) {
+      return "image/png, image/jpeg, image/svg, image/eps, .mp4, .pdf";
+    }
+    if (isImageAndPDF) {
+      return "image/png, image/jpeg, image/svg, image/eps, .pdf";
+    }
+    return "image/png, image/jpeg, image/svg, image/eps";
+  };
+
+  const getSupportedFilesLabel = () => {
+    if (isDocumentUpload)
+      return intl.formatMessage({ id: "label.supported_document" });
+    if (isVideoUpload)
+      return intl.formatMessage({ id: "label.supported_video" });
+    if (isAllFormat) return intl.formatMessage({ id: "label.all_format" });
+    if (isImageAndPDF) return intl.formatMessage({ id: "label.supported_image_pdf" });
+
+    return intl.formatMessage({ id: "label.supported_type" });
+  };
+  
   return (
     <>
       {isLoading ? (
-        <View style={styles.contentContainerStyle}>
+        <View
+          style={[styles.contentContainerStyle, customContentContainerStyle]}
+        >
           <View style={styles.loaderBox}>
             <Spinner customStyle={styles.spinnerStyle} />
             {(uploadPercentage || uploadPercentage === 0) && (
@@ -62,7 +96,10 @@ const DragAndDropCard = ({
           </View>
         </View>
       ) : (
-        <View style={styles.contentContainerStyle} {...webProps}>
+        <View
+          style={[styles.contentContainerStyle, customContentContainerStyle]}
+          {...webProps}
+        >
           <Image source={images.iconUpload} />
           <View style={styles.textContainer}>
             <CommonText customTextStyle={styles.textStyle}>
@@ -75,7 +112,7 @@ const DragAndDropCard = ({
             </TouchableOpacity>
           </View>
           <CommonText customTextStyle={styles.infoStyle}>
-            {intl.formatMessage({ id: "label.supported_type" })}
+            {getSupportedFilesLabel()}
           </CommonText>
           {!!errorMessage && (
             <CommonText
@@ -93,7 +130,7 @@ const DragAndDropCard = ({
               type="file"
               ref={fileInputRef}
               name="fileUpload"
-              accept="image/png, image/jpeg, image/svg, image/eps"
+              accept={getAcceptedFiles()}
               onChange={(event) => fileUploadHandler(event)}
               style={styles.hideRawInputField}
             />
@@ -113,6 +150,7 @@ DragAndDropCard.defaultProps = {
   handleUploadClick: () => {},
   isLoading: false,
   uploadPercentage: 0,
+  customContentContainerStyle: {},
 };
 
 DragAndDropCard.propTypes = {
@@ -122,8 +160,12 @@ DragAndDropCard.propTypes = {
   handleDragOver: PropTypes.func,
   handleDrop: PropTypes.func,
   handleUploadClick: PropTypes.func,
+  isDocumentUpload: PropTypes.bool,
+  isVideoUpload: PropTypes.bool,
   isLoading: PropTypes.bool,
   uploadPercentage: PropTypes.number,
+  customContentContainerStyle: PropTypes.object,
+  accept: PropTypes.string,
 };
 
 export default DragAndDropCard;
