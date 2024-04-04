@@ -6,7 +6,7 @@ import DetailCard from "../../components/DetailCard";
 import useIsWebView from "../../hooks/useIsWebView";
 import SaveCancelButton from "../../components/SaveCancelButton";
 import UploadPhotoVideo from "./UploadPhotoVideo";
-import style from './JobPreference.style';
+import style from "./JobPreference.style";
 import Spinner from "../../components/Spinner";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { STATUS_CODES } from "../../constants/constants";
@@ -15,26 +15,20 @@ const JobPreferenceTemplate = ({
   isEditable,
   preferences_details,
   onChangeValue,
-  onChangeMultiSelect,
   handlePreferencesDetailBlur,
   isLoading,
   onClickSave,
   onClickCancel,
   isValidAllFields,
   handleMultiSelection,
-  isLoadingPage,
-  isErrorLoadingPage,
   isPageLoading,
   error,
-  errorWhileDeletion,
   errorWhileUpload,
-  updatedFileUploadResult,
-  uploadImageToServerUtils,
   onDeleteImage,
-  handleImageUploadResult
+  handleImageUploadResult,
+  imageDetails,
 }) => {
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
 
   if (isPageLoading) {
     return (
@@ -55,8 +49,8 @@ const JobPreferenceTemplate = ({
     >
       <View style={style.innerContainerStyle}>
         <DetailCard
-         customCardStyle={style.customCardStyle}
-         isColumnVariableWidth
+          customCardStyle={style.customCardStyle}
+          isColumnVariableWidth
           details={preferences_details}
           headerId={intl.formatMessage({
             id: "label.job_preferences",
@@ -68,14 +62,14 @@ const JobPreferenceTemplate = ({
         />
       </View>
       <UploadPhotoVideo
-      isEditable={isEditable}
-      onDeleteImage={onDeleteImage}
-      errorWhileUpload={errorWhileUpload}
-      hideIconDelete={isEditable}
-      uploadImageToServerUtils={uploadImageToServerUtils}
-      handleImageUploadResult={handleImageUploadResult}
-      >
-      </UploadPhotoVideo>
+        isEditable={isEditable}
+        onDeleteImage={onDeleteImage}
+        errorWhileUpload={errorWhileUpload}
+        hideIconDelete={isEditable}
+        details={preferences_details}
+        handleImageUploadResult={handleImageUploadResult}
+        imageDetails={imageDetails}
+      />
       <SaveCancelButton
         isEditable={isEditable}
         isLoading={isLoading}

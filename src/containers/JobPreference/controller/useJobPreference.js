@@ -4,7 +4,8 @@ import { useIntl } from "react-intl";
 import { JobPreferences_keys, updateDropDownOptions } from "./utils";
 
 const preferences_details = [
-  [{
+  [
+    {
       key: "posting_anywhere_in_india",
       isMandatory: true,
       isToggle: true,
@@ -27,8 +28,10 @@ const preferences_details = [
           return "transferable post acceptable is required";
         }
       },
-    },],
-    [{
+    },
+  ],
+  [
+    {
       key: "posting_outside_india",
       isMandatory: true,
       isToggle: true,
@@ -61,8 +64,10 @@ const preferences_details = [
           return "expected annual salary is required";
         }
       },
-    },],
-    [{
+    },
+  ],
+  [
+    {
       key: "industry_preference",
       label: "label.preferences_kind_of_industry",
       labelField: "name",
@@ -73,10 +78,13 @@ const preferences_details = [
       placeholder: "label.preferences_kind_of_industry",
       defaultValues: [],
       isSingleMutliSelect: true,
+
       isEditable: true,
       width: 2,
-    }],
-    [{
+    },
+  ],
+  [
+    {
       key: "functional_area_preference",
       label: "label.preference_for_area_of_work",
       value: [],
@@ -92,12 +100,12 @@ const preferences_details = [
           return "Prefrence for area of work is required";
         }
       },
-    },],
+    },
+  ],
 ];
 
-  
 const addValueOnField = ({ state, details, isEditable }) => {
-  const updatedState = details.map(subArray => {
+  const updatedState = details.map((subArray) => {
     return subArray.map((field) => {
       return {
         ...field,
@@ -106,7 +114,7 @@ const addValueOnField = ({ state, details, isEditable }) => {
     });
   });
   return updatedState;
-}
+};
 
 const validateOnBlur = ({ state, details, key, index, intl }) => {
   const value = state[key];
@@ -123,20 +131,46 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
   return updatedData;
 };
 
-export const useJobPreference = ({ state, isEditable, functionalAreas, industryTypes}) => {
+export const useJobPreference = ({
+  state,
+  isEditable,
+  functionalAreas,
+  industryTypes,
+}) => {
   const intl = useIntl();
-  
-  const [preferences_details_state, setPreferencesDetailsState] = useState(preferences_details);
+
+  const [preferences_details_state, setPreferencesDetailsState] =
+    useState(preferences_details);
 
   const updatedDropDownList = useMemo(() => {
-    const updatedWithIndustryType = updateDropDownOptions(industryTypes, preferences_details_state, 2, JobPreferences_keys.INDUSTRY_PREFERENCE, state.industry_preference);
-    const updatedWithFunctionalAreas = updateDropDownOptions(functionalAreas, updatedWithIndustryType, 3, JobPreferences_keys.FUNCTIONAL_AREA_PREFERENCE, state.functional_area_preference);
+    const updatedWithIndustryType = updateDropDownOptions(
+      industryTypes,
+      preferences_details_state,
+      2,
+      JobPreferences_keys.INDUSTRY_PREFERENCE,
+      state.industry_preference
+    );
+    const updatedWithFunctionalAreas = updateDropDownOptions(
+      functionalAreas,
+      updatedWithIndustryType,
+      3,
+      JobPreferences_keys.FUNCTIONAL_AREA_PREFERENCE,
+      state.functional_area_preference
+    );
     return updatedWithFunctionalAreas;
   }, [industryTypes, functionalAreas, state]);
 
   useEffect(() => {
     setPreferencesDetailsState(updatedDropDownList);
   }, [updatedDropDownList]);
+
+  const imageDetails = useMemo(() => {
+    return {
+      cv_path: state?.cv_path ?? "",
+      job_photo_path: state?.job_photo_path ?? "",
+      introduction_video_path: state?.introduction_video_path ?? "",
+    };
+  }, [state]);
 
   const handlePreferencesDetailBlur = (key, index) => {
     setPreferencesDetailsState(
@@ -148,12 +182,10 @@ export const useJobPreference = ({ state, isEditable, functionalAreas, industryT
         intl,
       })
     );
-  }
+  };
   const checkMandatoryFields = () => {
     let error = false;
-    [
-      ...preferences_details_state,
-    ].forEach((item) => {
+    [...preferences_details_state].forEach((item) => {
       if (item.isMandatory && !state[item.key]) {
         error = true;
       }
@@ -167,6 +199,7 @@ export const useJobPreference = ({ state, isEditable, functionalAreas, industryT
       details: preferences_details_state,
       isEditable,
     }),
+    imageDetails,
     handlePreferencesDetailBlur,
     isValidAllFields: checkMandatoryFields(),
   };

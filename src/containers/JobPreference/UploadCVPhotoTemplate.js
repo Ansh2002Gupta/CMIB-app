@@ -1,71 +1,79 @@
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import useIsWebView from "../../hooks/useIsWebView";
 import style from "./UploadCVPhotoTemplate.style";
 import CommonText from "../../components/CommonText";
 import UploadImage from "../../components/UploadImage/UploadImage";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 
 const UploadCVPhotoTemplate = ({
   isEditable,
   headerText,
   onDeleteImage,
-  errorWhileUpload,
-  isEditProfile,
-  uploadImageToServerUtils,
   handleImageUploadResult,
-  indexKey
+  indexKey,
+  imageUrl,
 }) => {
-  console.log("indexKey", indexKey)
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
-
   const {
+    errorWhileUpload,
     fileUploadResult,
     handleFileUpload,
-    isUploadingImageToServer,
+    isLoading: isUploadingImageToServer,
+    setErrorWhileUpload,
     setFileUploadResult,
     uploadPercentage,
-  } = uploadImageToServerUtils;
+  } = useSaveLogo();
 
-  const updatedFileUploadResult = fileUploadResult;
-  const newFileUploadResult = [];
+  const updatedFileUploadResult = useMemo(() => {
+    let url = imageUrl || fileUploadResult?.data?.url;
+    return {
+      ...(fileUploadResult ?? {}),
+      data: url ? { ...(fileUploadResult?.data ?? {}), url } : null,
+    };
+  }, [imageUrl, isEditable, fileUploadResult]);
 
+  useEffect(() => {
+    handleImageUploadResult &&
+      handleImageUploadResult(updatedFileUploadResult, indexKey);
+  }, [updatedFileUploadResult]);
 
-  // useEffect(() => {
-  //   if (indexKey in newFileUploadResult) {
-  //     newFileUploadResult[indexKey] = updatedFileUploadResult;
-  //   } else {
-  //     newFileUploadResult[indexKey] = updatedFileUploadResult;
-  //   }
-  //  //handleFileUpload(updatedFileUploadResult);
-  //  console.log("updatedFileUploadResult", newFileUploadResult)
-  // }, [updatedFileUploadResult]);
-   
+  const handleClickOnDeleteImage = () => {
+    onDeleteImage && onDeleteImage(indexKey);
+  };
 
-  if (isEditable) {
+  const handleUpload = (data) => {
+    setErrorWhileUpload("");
+    handleFileUpload(data);
+  };
+
+  if (isEditable || updatedFileUploadResult?.data?.url) {
     return (
-        <View >
+      <View>
         <CommonText customTextStyle={style.labelText}>
-        {intl.formatMessage({ id: headerText })}
-        </CommonText>   
-        <UploadImage
-                    {...{
-                      onDeleteImage,
-                      errorWhileUpload,
-                      fileUploadResult: updatedFileUploadResult,
-                      handleFileUpload,
-                      isUploadingImageToServer,
-                      setFileUploadResult,
-                      uploadPercentage,
-                      hideIconDelete: !isEditProfile,
-                      customContentContainerStyle: style.customContentContainerStyle
-                    }}
-         />
+          {intl.formatMessage({ id: headerText })}
+        </CommonText>
+        <View style={style.customContentContainerStyle}>
+          <UploadImage
+            {...{
+              indexKey,
+              onDeleteImage: handleClickOnDeleteImage,
+              errorWhileUpload,
+              fileUploadResult: updatedFileUploadResult,
+              handleFileUpload: handleUpload,
+              isUploadingImageToServer,
+              setFileUploadResult,
+              uploadPercentage,
+              isEditable,
+              hideIconDelete: !isEditable,
+            }}
+          />
         </View>
+      </View>
     );
   }
+
   return null;
 };
 

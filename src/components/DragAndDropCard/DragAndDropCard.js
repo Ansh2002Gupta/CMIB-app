@@ -24,7 +24,8 @@ const DragAndDropCard = ({
   handleUploadClick,
   isLoading,
   uploadPercentage,
-  customContentContainerStyle
+  customContentContainerStyle,
+  accept,
 }) => {
   const isPlatformWeb = Platform.OS.toLowerCase() === "web";
 
@@ -49,7 +50,9 @@ const DragAndDropCard = ({
   return (
     <>
       {isLoading ? (
-        <View style={[styles.contentContainerStyle, customContentContainerStyle]}>
+        <View
+          style={[styles.contentContainerStyle, customContentContainerStyle]}
+        >
           <View style={styles.loaderBox}>
             <Spinner customStyle={styles.spinnerStyle} />
             {(uploadPercentage || uploadPercentage === 0) && (
@@ -62,7 +65,10 @@ const DragAndDropCard = ({
           </View>
         </View>
       ) : (
-        <View style={[styles.contentContainerStyle, customContentContainerStyle]} {...webProps}>
+        <View
+          style={[styles.contentContainerStyle, customContentContainerStyle]}
+          {...webProps}
+        >
           <Image source={images.iconUpload} />
           <View style={styles.textContainer}>
             <CommonText customTextStyle={styles.textStyle}>
@@ -93,7 +99,7 @@ const DragAndDropCard = ({
               type="file"
               ref={fileInputRef}
               name="fileUpload"
-              accept="image/png, image/jpeg, image/svg, image/eps"
+              accept={accept ?? "image/png, image/jpeg, image/svg, image/eps"}
               onChange={(event) => fileUploadHandler(event)}
               style={styles.hideRawInputField}
             />
@@ -113,7 +119,7 @@ DragAndDropCard.defaultProps = {
   handleUploadClick: () => {},
   isLoading: false,
   uploadPercentage: 0,
-  customContentContainerStyle: {}
+  customContentContainerStyle: {},
 };
 
 DragAndDropCard.propTypes = {
@@ -125,7 +131,8 @@ DragAndDropCard.propTypes = {
   handleUploadClick: PropTypes.func,
   isLoading: PropTypes.bool,
   uploadPercentage: PropTypes.number,
-  customContentContainerStyle: PropTypes.object
+  customContentContainerStyle: PropTypes.object,
+  accept: PropTypes.string,
 };
 
 export default DragAndDropCard;
