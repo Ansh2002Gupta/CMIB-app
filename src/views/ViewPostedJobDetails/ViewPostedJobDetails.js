@@ -18,8 +18,7 @@ import styles from "./ViewPostedJobDetails.styles";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import { useLocation, useNavigate, useSearchParams } from "../../routes";
-import { navigations } from "../../constants/routeNames";
+import { useSearchParams } from "../../routes";
 import ViewJobApplicants from "../../containers/ViewPostedJobDetails/ViewJobApplicants/ViewJobApplicants";
 import colors from "../../assets/colors";
 import ViewScheduleInterview from "../../containers/ViewPostedJobDetails/ViewScheduleInterview";
@@ -27,8 +26,6 @@ import { useParams } from "react-router";
 import EditJobDetails from "../EditJobDetails/EditJobDetails";
 
 const ViewPostedJobDetails = () => {
-  const navigate = useNavigate();
-
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const {
