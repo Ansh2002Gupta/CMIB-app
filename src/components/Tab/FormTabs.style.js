@@ -7,7 +7,7 @@ const style = {
     overflow: "hidden",
     ...Platform.select({
       web: {
-        marginBottom: 80,
+        marginBottom: 20,
       },
     }),
   },
