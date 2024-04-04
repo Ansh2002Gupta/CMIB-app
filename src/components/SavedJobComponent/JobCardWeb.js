@@ -131,12 +131,12 @@ const JobCardWeb = ({ cardDetails }) => {
               style={{ gap: 2 }}
               topSection={
                 <CommonText customTextStyle={style.companyNameStyle}>
-                  {companyName}
+                  {jobPostion}
                 </CommonText>
               }
               middleSection={
                 <CommonText customTextStyle={style.jobPositionText}>
-                  {jobPostion}
+                  {companyName}
                 </CommonText>
               }
               bottomSection={

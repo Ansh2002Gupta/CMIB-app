@@ -118,7 +118,7 @@ const JobCardMobile = ({ cardDetails }) => {
           customTextStyle={[style.companyNameStyle, style.mobileMargin8]}
           fontWeight="600"
         >
-          {companyName}
+          {jobPostion}
         </CommonText>
       ),
     },
@@ -128,7 +128,7 @@ const JobCardMobile = ({ cardDetails }) => {
           customTextStyle={[style.jobPositionText, style.mobileMargin4]}
           fontWeight="600"
         >
-          {jobPostion}
+          {companyName}
         </CommonText>
       ),
     },
