@@ -280,25 +280,6 @@ export const getValidUrl = (url) => {
   return link;
 };
 
-export const formatCountryCode = (code, countryData) => {
-  if (!code) return code;
-  const countryOption = countryData?.find(
-    (country) => country["dial_code"] === code
-  );
-  return countryOption && Platform.OS === "web"
-    ? `${code} (${countryOption["name"]})`
-    : code;
-};
-
-export const getNameById = (data, id) => {
-  const item = data?.find((obj) => obj.id === id);
-  return item ? item.name : null;
-};
-
-export const isValueEmpty = (value) => {
-  return value === null || value === undefined || value === "";
-};
-
 export const getQuestionType = {
   text: "Text Question",
   "single-select": "Single-select",
@@ -434,4 +415,56 @@ export const getDecryptApiData = (apiData, addJobs) => {
     }
   });
   return { obj, transformedQuestionnaire };
+};
+
+export const changeComma = (data, index) => {
+  if (index < data.length) {
+    return [...data.slice(0, index), "+" + (data.length - index) + " more"];
+  }
+  return data;
+};
+
+export const timeAgo = (dateString) => {
+  const date = dayjs(dateString);
+  const now = dayjs();
+
+  const minutes = now.diff(date, "minute");
+  const hours = now.diff(date, "hour");
+  const days = now.diff(date, "day");
+  const months = now.diff(date, "month");
+  const years = now.diff(date, "year");
+
+  if (years > 0) {
+    return `${years} ${years === 1 ? "year" : "years"}`;
+  } else if (months > 0) {
+    return `${months} ${months === 1 ? "month" : "months"}`;
+  } else if (days > 0) {
+    return `${days} ${days === 1 ? "day" : "days"}`;
+  } else if (hours > 0) {
+    return `${hours} ${hours === 1 ? "hour" : "hours"}`;
+  } else if (minutes > 0) {
+    return `${minutes} ${minutes === 1 ? "minute" : "minutes"}`;
+  } else {
+    return `a few seconds`;
+  }
+};
+
+
+export const formatCountryCode = (code, countryData) => {
+  if (!code) return code;
+  const countryOption = countryData?.find(
+    (country) => country["dial_code"] === code
+  );
+  return countryOption && Platform.OS === "web"
+    ? `${code} (${countryOption["name"]})`
+    : code;
+};
+
+export const getNameById = (data, id) => {
+  const item = data?.find((obj) => obj.id === id);
+  return item ? item.name : null;
+};
+
+export const isValueEmpty = (value) => {
+  return value === null || value === undefined || value === "";
 };
