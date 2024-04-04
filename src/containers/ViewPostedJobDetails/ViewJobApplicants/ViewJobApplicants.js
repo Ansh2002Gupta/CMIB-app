@@ -123,6 +123,7 @@ const ViewJobApplicants = () => {
         }),
       }}
       mobileComponentToRender={getMobileView}
+      isFilterVisible={false}
       containerStyle={styles.innerContainerStyle}
       isTotalCardVisible={false}
       data={postedJobData}
