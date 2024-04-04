@@ -117,9 +117,7 @@ const MembershipDetails = ({ isEditable, handleEdit }) => {
       error={error}
       setError={setError}
       isEditable={isEditable}
-      onClickSave={() => {
-        performSaveChanges();
-      }}
+      onClickSave={performSaveChanges}
       onClickCancel={() => {
         setState(data);
         // turn off the edit mode

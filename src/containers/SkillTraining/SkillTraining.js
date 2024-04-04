@@ -133,9 +133,7 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
       error={error}
       setError={setError}
       isValidAllFields={isValidAllFields}
-      onClickSave={() => {
-        performSaveChanges();
-      }}
+      onClickSave={performSaveChanges}
       onClickCancel={() => {
         setState({ ...data });
         // turn off the edit mode

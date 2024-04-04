@@ -14,7 +14,7 @@ import { getIndexForBoolean, yesNoToBoolean } from "../../utils/util";
 const Activities = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
-  const { data } = useFetch({
+  const { data, fetchData } = useFetch({
     url: MEMBER_CA_JOB_PROFILE_ACTIVITY,
   });
 
@@ -69,6 +69,7 @@ const Activities = ({ isEditable = true, handleEdit }) => {
     };
 
     handleUpdate(body, () => {
+      fetchData();
       // turn off the edit mode
       handleEdit(false);
     });
