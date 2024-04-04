@@ -17,10 +17,7 @@ const RedirectToAccessedModule = () => {
   useEffect(() => {
     if (sideBarState?.selectedModule?.key) {
       const moduleKey = sideBarState.selectedModule.key;
-      const moduleRoute =
-        role === USER_TYPE_CANDIDATE
-          ? navigations.ROUND_ONE
-          : navigations.MODULE_LANDING_PAGE;
+      const moduleRoute = navigations.MODULE_LANDING_PAGE;
 
       navigateScreen(`/${moduleKey}/${moduleRoute}`);
     }
