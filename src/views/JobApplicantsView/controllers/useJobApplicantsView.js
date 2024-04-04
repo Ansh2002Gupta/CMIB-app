@@ -10,6 +10,8 @@ import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../JobApplicantsView.style";
+import { JOB_APPLICANTS } from "../../../services/apiServices/apiEndPoint";
+import useFetch from "../../../hooks/useFetch";
 
 const useJobApplicants = () => {
   let isHeading = true;

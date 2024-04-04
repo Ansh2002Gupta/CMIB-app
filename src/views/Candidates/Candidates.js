@@ -12,6 +12,7 @@ const Candidates = () => {
 
   return (
     <CustomTabs
+      containerStyle={styles.customTabsStyle}
       renderHeader={() => (
         <Row style={styles.headerContainer}>
           <CommonText fontWeight={"600"} customTextStyle={styles.titleText}>
