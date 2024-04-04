@@ -65,6 +65,7 @@ const CustomTable = ({
   tableIcon,
   totalcards,
   ThirdSection,
+  renderCalendar,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -322,6 +323,7 @@ const CustomTable = ({
             onApplyFilter,
             statusData,
             queryTypeData,
+            renderCalendar,
           }}
         />
       )}

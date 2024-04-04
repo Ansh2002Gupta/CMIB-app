@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import styles from "./PopupMessage.style";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import useOutsideClick from "../../hooks/useOutsideClick";
@@ -15,7 +15,7 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
   useOutsideClick(wrapperRef, () => setIsPopUpVisible(false));
 
   return (
-    <View>
+    <View style={styles.zIndex10}>
       {Array.isArray(message) ? (
         <View style={styles.containerStyle}>
           <View style={styles.zIndex10}>

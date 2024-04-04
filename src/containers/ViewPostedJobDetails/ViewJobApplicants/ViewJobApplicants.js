@@ -72,14 +72,15 @@ const ViewJobApplicants = () => {
 
   const getMobileView = (item, index) => {
     return (
-      <MobileCard
-        item={item}
-        getStatusStyle={getStatusStyle}
-        lastElement={postedJobData.length - 1 === index}
-        statusData={statusData}
-        onEditPress={onEditPress}
-        onViewPress={onViewPress}
-      />
+      <View />
+      // <MobileCard
+      //   item={item}
+      //   getStatusStyle={getStatusStyle}
+      //   lastElement={postedJobData.length - 1 === index}
+      //   statusData={statusData}
+      //   onEditPress={onEditPress}
+      //   onViewPress={onViewPress}
+      // />
     );
   };
 
@@ -89,7 +90,6 @@ const ViewJobApplicants = () => {
         allDataLoaded,
         currentPage,
         currentRecords,
-        data: postedJobData,
         filterApplyHandler,
         filterCategory,
         getColoumConfigs,
@@ -128,6 +128,7 @@ const ViewJobApplicants = () => {
       mobileComponentToRender={getMobileView}
       containerStyle={styles.customTableStyle}
       isTotalCardVisible={false}
+      data={postedJobData}
       ThirdSection={
         <DownloadMoreComponent
           onPress={() => {

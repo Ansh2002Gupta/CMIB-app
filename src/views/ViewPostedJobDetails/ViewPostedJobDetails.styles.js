@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     height: 16,
     width: 16,
   },
-  container: {
+  container2: {
     ...Platform.select({
       web: {
         height: "90vh",

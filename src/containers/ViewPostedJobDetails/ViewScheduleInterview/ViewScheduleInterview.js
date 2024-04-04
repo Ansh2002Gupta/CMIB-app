@@ -54,14 +54,13 @@ const ViewScheduleInterview = () => {
   const handleTicketModal = () => {
     // navigate(navigations.ADD_NEW_JOBS);
   };
-
   const getMobileView = (item, index) => {
     return (
       <MobileCard
         item={item}
         getStatusStyle={getStatusStyle}
         lastElement={postedJobData.length - 1 === index}
-        statusData={statusData}
+        statusData={statusData ? statusData : []}
         onEditPress={() => {}}
         onViewPress={() => {}}
       />
@@ -119,6 +118,7 @@ const ViewScheduleInterview = () => {
           }}
         />
       }
+      renderCalendar={true}
     />
   );
 };

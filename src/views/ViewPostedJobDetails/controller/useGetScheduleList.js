@@ -1,38 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import { useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
-
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import CustomImage from "../../../components/CustomImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
-import {
-  COMPANY_TICKET_LISTING,
-  COMPANY_QUERY_TYPE_TICKET,
-  COMPANY_TICKET_STATUS,
-} from "../../../services/apiServices/apiEndPoint";
-import { formatDate } from "../../../utils/util";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
-import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import images from "../../../images";
-import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
 import colors from "../../../assets/colors";
+import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
-import { items } from "../../../constants/sideBarHelpers";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const useGetScheduleList = () => {
+const useGetScheduleList = (onViewPress, onEditPress) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -40,9 +30,11 @@ const useGetScheduleList = () => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+
   const [filterOptions, setFilterOptions] = useState({
-    status: "",
-    query_type: "",
+    activeorInctive: "",
+    approvedorNot: "",
+    searchData: "",
   });
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
@@ -52,52 +44,58 @@ const useGetScheduleList = () => {
     getValidCurrentPage(searchParams.get("page"))
   );
 
-  const navigate = useNavigate();
-
   const {
-    data: x,
+    data: postedJobData,
     isLoading: isTicketListingLoading,
-    fetchData: fetchDataTicketListing,
+    fetchData: fetchPostedJobs,
+    isError: isErrorGetPostedJob,
+    error: errorGetPostedJobs,
   } = useFetch({
     url: "admin/jobs/175/scheduled-interview",
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
-  const postedJobData = [
+
+  const statusData = [];
+
+  const queryTypeData = [
     {
       id: 1,
-      name: "User328148",
-      application_id: 22,
-      applicant_id: "APP20240321_1_1",
-      type: "Telephonic",
-      status: "Job Offered",
-      primary_interview_date: "29.03.2024",
-      primary_interview_time: "14:53",
+      name: "Active",
     },
     {
       id: 2,
-      name: "User979559",
-      application_id: 23,
-      applicant_id: "APP20240321_1_2",
-      type: "Face-To-Face",
-      status: "Shortlisted",
-      primary_interview_date: "30.03.2024",
-      primary_interview_time: "14:53",
+      name: "InActive",
     },
   ];
+  const getErrorDetails = () => {
+    if (isErrorGetPostedJob) {
+      let errorMessage = "";
+      if (errorGetPostedJobs === GENERIC_GET_API_FAILED_ERROR_MESSAGE) {
+        errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      } else {
+        errorMessage = `${errorGetPostedJobs?.data?.message}`;
+      }
+      return {
+        errorMessage,
+        onRetry: () => {
+          fetchPostedJobs({});
+        },
+      };
+    }
+    if (isErrorGetPostedJob)
+      return {
+        errorMessage: errorGetPostedJobs?.data?.message,
+        onRetry: () => fetchPostedJobs({}),
+      };
+  };
 
-  //   const { handleAddTicket } = useAddTicket();
-
-  const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
-
-  const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
-
-  //   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
-  //     shouldSetQueryParamsOnMount: true,
-  //     setCurrentPage,
-  //     setRowPerPage,
-  //   });
+  const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
+    shouldSetQueryParamsOnMount: true,
+    setCurrentPage,
+    setRowPerPage,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,12 +103,11 @@ const useGetScheduleList = () => {
         perPage: rowsPerPage,
         page: currentPage,
       };
-      const initialData = await fetchDataTicketListing({
+      const initialData = await fetchPostedJobs({
         queryParamsObject: requestedParams,
       });
-      setCurrentRecords(postedJobData);
       if (initialData && initialData?.records?.length > 0) {
-        setCurrentRecords(postedJobData);
+        setCurrentRecords(initialData?.records);
       }
       setIsFirstPageReceived(false);
     };
@@ -122,35 +119,40 @@ const useGetScheduleList = () => {
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
   const updateCurrentRecords = async (params) => {
-    // const newData = await fetchDataTicketListing({
-    //   queryParamsObject: params,
-    // });
-    // setCurrentRecords(newData?.records);
+    const newData = await fetchPostedJobs({
+      queryParamsObject: params,
+    });
+    setCurrentRecords(newData.records);
   };
 
   const handleLoadMore = async () => {
-    //   if (loadingMore || allDataLoaded) return;
-    //   setLoadingMore(true);
-    //   const nextPage = currentPage + 1;
-    //   try {
-    //     const newData = await fetchDataTicketListing({
-    //       queryParamsObject: { perPage: rowsPerPage, page: nextPage },
-    //     });
-    //     if (newData && newData?.records?.length > 0) {
-    //       setCurrentRecords((prevRecords) => [
-    //         ...prevRecords,
-    //         ...newData.records,
-    //       ]);
-    //     }
-    //     setCurrentPage(nextPage);
-    //     if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
-    //       setAllDataLoaded(true);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching tickets on load more:", error);
-    //   } finally {
-    //     setLoadingMore(false);
-    //   }
+    if (loadingMore || allDataLoaded) return;
+    setLoadingMore(true);
+    const nextPage = currentPage + 1;
+    try {
+      const newData = await fetchPostedJobs({
+        queryParamsObject: {
+          perPage: rowsPerPage,
+          page: nextPage,
+          status: filterOptions.activeorInctive,
+          queryType: filterOptions.approvedorNot,
+        },
+      });
+      if (newData && newData?.records?.length > 0) {
+        setCurrentRecords((prevRecords) => [
+          ...prevRecords,
+          ...newData.records,
+        ]);
+      }
+      setCurrentPage(nextPage);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      }
+    } catch (error) {
+      console.error("Error fetching tickets on load more:", error);
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
   const handlePageChange = async (page) => {
@@ -158,6 +160,8 @@ const useGetScheduleList = () => {
     // await updateCurrentRecords({
     //   perPage: rowsPerPage,
     //   page: page,
+    //   status: filterOptions.activeorInctive,
+    //   queryType: filterOptions.approvedorNot,
     // });
   };
 
@@ -166,53 +170,69 @@ const useGetScheduleList = () => {
     // await updateCurrentRecords({
     //   perPage: option.value,
     //   page: currentPage,
+    //   status: filterOptions.activeorInctive,
+    //   queryType: filterOptions.approvedorNot,
     // });
   };
 
   const handleSearchResults = async (searchedData) => {
-    // await updateCurrentRecords({
-    //   q: searchedData,
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   status: filterOptions.status,
-    //   queryType: filterOptions.query_type,
-    // });
-  };
-
-  const onIconPress = (item) => {
-    // navigate(navigations.TICKETS_VIEW_EDIT, {
-    //   state: item,
-    // });
-  };
-
-  const handleSaveAddTicket = async (queryType, enterQuery) => {
-    // await handleAddTicket({ query_type: queryType, query: enterQuery });
-    // if (isMob) {
-    //   const newData = await fetchDataTicketListing();
-    //   if (newData && newData.records.length > 0) {
-    //     setCurrentRecords((prevRecords) => [
-    //       ...prevRecords,
-    //       ...newData.records,
-    //     ]);
-    //   }
-    // } else {
-    //   await updateCurrentRecords({
-    //     perPage: rowsPerPage,
-    //     page: currentPage,
-    //   });
-    // }
+    setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
+    if (isMob) {
+      setCurrentPage(1);
+      const newData = await fetchPostedJobs({
+        queryParamsObject: {
+          search: searchedData,
+          status: filterOptions.activeorInctive,
+          queryType: filterOptions.approvedorNot,
+        },
+      });
+      setCurrentRecords(newData?.records);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        search: searchedData,
+        perPage: rowsPerPage,
+        page: currentPage,
+        status: filterOptions.activeorInctive,
+        queryType: filterOptions.approvedorNot,
+      });
+    }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    // setFilterOptions({ status: selectedStatus, query_type: selectedQueryType });
-    // await updateCurrentRecords({
-    //   status: selectedStatus,
-    //   queryType: selectedQueryType,
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    // });
+    setFilterOptions((prev) => ({
+      ...prev,
+      query_type: selectedQueryType,
+    }));
+    if (isMob) {
+      setLoadingMore(false);
+      setCurrentPage(1);
+      const newData = await fetchPostedJobs({
+        queryParamsObject: {
+          search: filterOptions.searchData,
+          status: selectedStatus,
+          queryType: selectedQueryType,
+        },
+      });
+      setCurrentRecords(newData?.records);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        status: selectedStatus,
+        queryType: selectedQueryType,
+        perPage: rowsPerPage,
+        page: currentPage,
+      });
+    }
   };
-
   const onDateSorting = async (sortField) => {
     // setIsAscendingOrder((prev) => !prev);
     // await updateCurrentRecords({
@@ -226,27 +246,21 @@ const useGetScheduleList = () => {
   let headingTexts = ["name"];
   let subHeadingText = ["applicant_id"];
   let statusText = ["status"];
-  let tableIcon = images.iconTicket;
-  let filterCategory = ["Active/Inactive", "Approved/Not Approved"];
+  let tableIcon = images.iconMore;
+  let filterCategory = ["Date", "Status"];
   let isHeading = true;
 
   function getStatusStyle(status) {
-    status = status.toLowerCase();
     switch (status) {
-      case "pending":
+      case 0:
         return {
           ...(!isWebView ? styles.pending : styles.pendingWeb),
-          ...styles.cellTextStyle(12),
+          ...(!isWebView ? styles.cellTextStyle(14) : styles.cellTextStyle(12)),
         };
-      case "closed":
+      case 1:
         return {
           ...(!isWebView ? styles.close : styles.closeWeb),
-          ...styles.cellTextStyle(12),
-        };
-      case "in-progress":
-        return {
-          ...(!isWebView ? styles.inProgress : styles.inProgressWeb),
-          ...styles.cellTextStyle(12),
+          ...(!isWebView ? styles.cellTextStyle(14) : styles.cellTextStyle(12)),
         };
       default:
         return styles.cellTextStyle(12);
@@ -369,7 +383,7 @@ const useGetScheduleList = () => {
   return {
     allDataLoaded,
     currentPage,
-    fetchDataTicketListing,
+    fetchPostedJobs,
     filterApplyHandler,
     filterCategory,
     getColoumConfigs,
@@ -379,8 +393,8 @@ const useGetScheduleList = () => {
     handleRowPerPageChange,
     handleSearchResults,
     headingTexts,
-    // getErrorDetails,
-    // isErrorGetPostedJob,
+    getErrorDetails,
+    isErrorGetPostedJob,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,

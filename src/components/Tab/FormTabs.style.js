@@ -1,10 +1,15 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
   container: {
     flex: 1,
     overflow: "hidden",
-    marginBottom: 80,
+    ...Platform.select({
+      web: {
+        marginBottom: 80,
+      },
+    }),
   },
   innerContainer: {
     flexDirection: "row",

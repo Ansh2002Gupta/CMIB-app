@@ -18,16 +18,19 @@ import styles from "./ViewPostedJobDetails.styles";
 import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import { useLocation, useNavigate } from "../../routes";
+import { useLocation, useNavigate, useSearchParams } from "../../routes";
 import { navigations } from "../../constants/routeNames";
 import ViewJobApplicants from "../../containers/ViewPostedJobDetails/ViewJobApplicants/ViewJobApplicants";
 import colors from "../../assets/colors";
 import ViewScheduleInterview from "../../containers/ViewPostedJobDetails/ViewScheduleInterview";
+import { useParams } from "react-router";
+import EditJobDetails from "../EditJobDetails/EditJobDetails";
 
 const ViewPostedJobDetails = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { id } = location?.state;
+
+  const { id } = useParams();
+  const [searchParams] = useSearchParams();
   const {
     isLoading: isConstantLoading,
     data: apiData,
@@ -44,9 +47,13 @@ const ViewPostedJobDetails = () => {
   const [loading, setLoading] = useState(false);
   const [addJobs] = useContext(AddJobContext);
   const [isActive, setActive] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
   const intl = useIntl();
 
   useEffect(() => {
+    if (searchParams.get("mode") === "edit") {
+      setIsEditable(true);
+    }
     fetchData();
   }, []);
 
@@ -282,98 +289,108 @@ const ViewPostedJobDetails = () => {
   }, [apiData, addJobs, appData]);
 
   return (
-    <View style={styles.container}>
-      <IconHeader
-        headerText={apiData?.designation}
-        isSwitchVisible
-        isActive={isActive}
-        isBorderVisible={false}
-        handleSwitchChange={() => {
-          setActive(!isActive);
-        }}
-      />
-      <View style={styles.container}>
-        <CustomTabs
-          containerStyle={{ backgroundColor: colors.white }}
-          tabs={[
-            {
-              label: intl.formatMessage({ id: "label.job_details" }),
-              component: (
-                <View
-                  style={{
-                    backgroundColor: colors.backgroundGrey,
-                    flex: 1,
-                  }}
-                >
-                  {isConstantLoading || isLoading || loading ? (
-                    <LoadingScreen />
-                  ) : (
-                    <View style={{ flex: 1 }}>
-                      {!(isError || apiIsError) ? (
+    <>
+      {isConstantLoading || isLoading || loading ? (
+        <LoadingScreen />
+      ) : (
+        <>
+          {isEditable ? (
+            appData &&
+            questionnaireData && (
+              <EditJobDetails
+                jobData={appData}
+                questionData={questionnaireData}
+                id={id}
+              />
+            )
+          ) : (
+            <View style={styles.container}>
+              <IconHeader
+                headerText={apiData?.designation}
+                isSwitchVisible
+                isActive={isActive}
+                isBorderVisible={false}
+                handleSwitchChange={() => {
+                  setActive(!isActive);
+                }}
+              />
+              <View style={styles.container}>
+                <CustomTabs
+                  containerStyle={{ backgroundColor: colors.white }}
+                  tabs={[
+                    {
+                      label: intl.formatMessage({ id: "label.job_details" }),
+                      component: (
                         <View
                           style={{
-                            ...styles.container,
+                            backgroundColor: colors.backgroundGrey,
+                            flex: 1,
                           }}
                         >
-                          <FormTabs
-                            onEditClick={() =>
-                              navigate(navigations.EDIT_JOB, {
-                                state: {
-                                  jobData: appData,
-                                  questionData: questionnaireData,
-                                  id: id,
-                                },
-                              })
-                            }
-                            tabs={[
-                              {
-                                label: intl.formatMessage({
-                                  id: "label.job_details",
-                                }),
-                                component: <ViewJobs details={details} />,
-                              },
-                              {
-                                label: intl.formatMessage({
-                                  id: "label.view_questionaire",
-                                }),
-                                component: (
-                                  <ViewQuestion
-                                    questionnaireData={questionnaireData}
-                                  />
-                                ),
-                              },
-                            ]}
-                            isEditButtonVisible
-                          />
+                          <View style={{ flex: 1 }}>
+                            {!(isError || apiIsError) ? (
+                              <View
+                                style={{
+                                  ...styles.container,
+                                }}
+                              >
+                                <FormTabs
+                                  onEditClick={() => setIsEditable(true)}
+                                  tabs={[
+                                    {
+                                      label: intl.formatMessage({
+                                        id: "label.job_details",
+                                      }),
+                                      component: <ViewJobs details={details} />,
+                                    },
+                                    {
+                                      label: intl.formatMessage({
+                                        id: "label.view_questionaire",
+                                      }),
+                                      component: (
+                                        <ViewQuestion
+                                          questionnaireData={questionnaireData}
+                                        />
+                                      ),
+                                    },
+                                  ]}
+                                  isEditButtonVisible
+                                />
+                              </View>
+                            ) : null}
+                          </View>
+
+                          {!(isConstantLoading || isLoading || loading) &&
+                            (isError || apiIsError) && (
+                              <ErrorComponent
+                                errorMsg={
+                                  isErrorData?.data?.message ||
+                                  apiError?.data?.message ||
+                                  GENERIC_GET_API_FAILED_ERROR_MESSAGE
+                                }
+                              />
+                            )}
                         </View>
-                      ) : null}
-                    </View>
-                  )}
-                  {!(isConstantLoading || isLoading || loading) &&
-                    (isError || apiIsError) && (
-                      <ErrorComponent
-                        errorMsg={
-                          isErrorData?.data?.message ||
-                          apiError?.data?.message ||
-                          GENERIC_GET_API_FAILED_ERROR_MESSAGE
-                        }
-                      />
-                    )}
-                </View>
-              ),
-            },
-            {
-              label: intl.formatMessage({ id: "label.applicants" }),
-              component: <ViewJobApplicants />,
-            },
-            {
-              label: intl.formatMessage({ id: "label.schedule_interview" }),
-              component: <ViewScheduleInterview />,
-            },
-          ]}
-        />
-      </View>
-    </View>
+                      ),
+                    },
+                    {
+                      label: intl.formatMessage({ id: "label.applicants" }),
+                      component: <ViewJobApplicants />,
+                    },
+                    {
+                      label: intl.formatMessage({
+                        id: "label.schedule_interview",
+                      }),
+                      component: <ViewScheduleInterview />,
+                    },
+                  ]}
+                />
+              </View>
+            </View>
+          )}
+        </>
+      )}
+    </>
   );
 };
 export default ViewPostedJobDetails;

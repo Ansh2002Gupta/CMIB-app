@@ -22,6 +22,7 @@ function DatePickerModal({
   maxDate,
   onChangeValue,
   value,
+  datePickerViewStyle,
 }) {
   const [open, setOpen] = useState(false);
   const intl = useIntl();
@@ -63,7 +64,9 @@ function DatePickerModal({
         </View>
       </TouchableOpacity>
       {open && (
-        <View style={styles.datePickerContainerStyle}>
+        <View
+          style={{ ...styles.datePickerContainerStyle, ...datePickerViewStyle }}
+        >
           <DatePicker
             selected={value}
             minDate={minDate}

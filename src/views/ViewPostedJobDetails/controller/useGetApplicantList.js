@@ -28,7 +28,6 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
 import colors from "../../../assets/colors";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
-import { items } from "../../../constants/sideBarHelpers";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -55,7 +54,7 @@ const useGetApplicantList = () => {
   const navigate = useNavigate();
 
   const {
-    data: x,
+    data: postedJobData,
     isLoading: isTicketListingLoading,
     fetchData: fetchDataTicketListing,
   } = useFetch({
@@ -64,62 +63,19 @@ const useGetApplicantList = () => {
       skipApiCallOnMount: true,
     },
   });
-  const postedJobData = [
-    {
-      id: 22,
-      name: "User382067",
-      applicant_id: "APP20240321_1_22",
-      status: "Shortlisted",
-      actions: [
-        "Download Profile and Resume",
-        "View Details",
-        "Schedule Interview",
-      ],
-    },
-    {
-      id: 23,
-      name: "User827698",
-      applicant_id: "APP20240321_1_23",
-      status: "Pending",
-      actions: [
-        "Download Profile and Resume",
-        "View Details",
-        "Shortlist Candidate",
-        "Reject Candidate",
-      ],
-    },
-    {
-      id: 25,
-      name: "User248863",
-      applicant_id: null,
-      status: "Pending",
-      actions: [
-        "Download Profile and Resume",
-        "View Details",
-        "Shortlist Candidate",
-        "Reject Candidate",
-      ],
-    },
-    {
-      id: 27,
-      name: "User328148",
-      applicant_id: null,
-      status: "Rejected",
-      actions: ["Download Profile and Resume", "View Details"],
-    },
-  ];
 
+  console.log("postedJobData", postedJobData);
   //   const { handleAddTicket } = useAddTicket();
 
   const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
 
   const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
 
-  //   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
-  //     shouldSetQueryParamsOnMount: true,
-  //     setCurrentPage,
-  //     setRowPerPage,
-  //   });
+  const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
+    shouldSetQueryParamsOnMount: false,
+    setCurrentPage,
+    setRowPerPage,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -130,9 +86,8 @@ const useGetApplicantList = () => {
       const initialData = await fetchDataTicketListing({
         queryParamsObject: requestedParams,
       });
-      setCurrentRecords(postedJobData);
       if (initialData && initialData?.records?.length > 0) {
-        setCurrentRecords(postedJobData);
+        setCurrentRecords(initialData?.records);
       }
       setIsFirstPageReceived(false);
     };
@@ -276,7 +231,6 @@ const useGetApplicantList = () => {
   }
 
   const getColoumConfigs = (item, isHeading) => {
-    console.log("item", item);
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
@@ -321,7 +275,7 @@ const useGetApplicantList = () => {
 
       {
         content: (
-          <View>{!isHeading && <PopupMessage message={item?.actions} />}</View>
+          <View>{!isHeading && <PopupMessage message={item?.action} />}</View>
         ),
         style: {
           ...commonStyles.columnStyle("20%"),
