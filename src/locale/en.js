@@ -88,6 +88,8 @@ const locale = {
   "label.drag_drop_files": "Drag & drop files or",
   "label.browse": "Browse",
   "label.supported_type": "Supported formats: JPEG, PNG, SVG",
+  "label.supported_document": "Supported formats: PDF",
+  "label.supported_video": "Supported formats: MP4",
   "label.signup_success": "Thank You for Signing Up!",
   "label.signup_info":
     "Your application has been submitted for approval. You will receive a confirmation email once it is processed by CMI&B admin.",
@@ -197,7 +199,9 @@ const locale = {
   "label.left_brace": "left)",
   "label.times": "times!",
   "label.fileTooLargeError": "Uploaded file must be less than 5MB",
+  "label.videoTooLargeError": "Uploaded video must be less than 16MB",
   "label.allowedFileFormatsError": "Only JPEG, PNG, SVG formats are allowed",
+  "label.allowedDocumentFormatsError": "Only PDF format is allowed",
   "label.nonUploadableImageError":
     "Failed to upload this file, please try uploading a different image",
   "label.description": "Description",
@@ -495,6 +499,14 @@ const locale = {
     "Current industry specialisation is required",
   "label.sinceWhenHaveYouBeenPracticingRequired" : "since when have you been practicing is required",
   "label.preference_for_area_of_work" : "Preference for Area of Work",
+  "label.viewPdf": "View PDF",
+  "label.applyJob": "Apply job",
+  "label.urgent": "Urgent",
+  "label.vacancies": "Vacancies",
+  "label.lpa": "LPA",
+  "label.yrs": "yrs",
+  "label.posted": "Posted",
+  "label.ago": "ago",
 };
 
 export default locale;

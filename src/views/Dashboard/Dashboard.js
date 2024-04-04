@@ -4,11 +4,15 @@ import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import RangeSlider from "../../components/RangeSlider";
+import SavedJobComponent from "../../components/SavedJobComponent/SavedJobComponent";
+import UploadImage from "../../components/UploadImage";
+import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import styles from "./dashboard.style";
 import JobProfileTab from "../JobProfile";
 import images from "../../images";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
+import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
@@ -99,6 +103,26 @@ function DashboardView() {
       <CommonText customTextStyle={styles.header}>
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
+      <View>
+        {/* <UploadImage
+          {...{
+            onDeleteImage,
+            errorWhileUpload,
+            fileUploadResult,
+            handleFileUpload,
+            isVideoUpload: true,
+            isUploadingImageToServer,
+            setFileUploadResult,
+            uploadPercentage,
+          }}
+        /> */}
+        <SavedJobComponent />
+      </View>
+      <View>
+        <CommonText customTextStyle={styles.header}>
+          {intl.formatMessage({ id: "label.dashboard" })}
+        </CommonText>
+      </View>
       <RangeSlider
         label="Yrs"
         max={MAX_VALUE}

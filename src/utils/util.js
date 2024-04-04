@@ -193,9 +193,9 @@ export const getValidUrl = (url) => {
 
 export const addKeyValuePair = (arr) => {
   return arr.map((item) => {
-    return { value: item, label: item } 
-  })
-}
+    return { value: item, label: item };
+  });
+};
 export const getIndexForBoolean = (value) => {
   if (typeof value !== "boolean") {
     return value;
@@ -223,13 +223,13 @@ export function booleanToYesNo(value) {
 }
 
 export const formatDateToYYYYMMDD = (dateInput) => {
-  const date = (dateInput instanceof Date) ? dateInput : new Date(dateInput);
+  const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
   if (isNaN(date)) {
-    throw new Error('Invalid date');
+    throw new Error("Invalid date");
   }
   const year = date.getFullYear() ?? "--";
-  const month = (date.getMonth() + 1).toString().padStart(2, '0') ?? "--"; // Months are 0-indexed
-  const day = date.getDate().toString().padStart(2, '0') ?? "--";
+  const month = (date.getMonth() + 1).toString().padStart(2, "0") ?? "--"; // Months are 0-indexed
+  const day = date.getDate().toString().padStart(2, "0") ?? "--";
   return `${year}-${month}-${day}`;
 };
 
@@ -237,11 +237,11 @@ export const formatDateToDDMMYYYY = (isoDateString) => {
   const date = new Date(isoDateString);
   // Check if the date is valid
   if (isNaN(date.getTime())) {
-    return "--"
+    return "--";
   }
-  const day = date.getUTCDate().toString().padStart(2, '0') ?? "--";
-  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0')?? "--";
-  const year = date.getUTCFullYear()?? "--";
+  const day = date.getUTCDate().toString().padStart(2, "0") ?? "--";
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, "0") ?? "--";
+  const year = date.getUTCFullYear() ?? "--";
   return `${day}/${month}/${year}`;
 };
 
@@ -249,20 +249,30 @@ export const formatDateToMonthNameYear = (isoDateString) => {
   const date = new Date(isoDateString);
   // Check if the date is valid
   if (isNaN(date.getTime())) {
-    throw new Error('Invalid date');
+    throw new Error("Invalid date");
   }
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   const monthIndex = date.getMonth();
   const year = date.getFullYear();
   return `${monthNames[monthIndex]}/${year}`;
 };
 
-export const getCurrentYear= () =>{
+export const getCurrentYear = () => {
   return new Date().getFullYear();
-}
+};
 export const formatCountryCode = (code, countryData) => {
   if (!code) return code;
   const countryOption = countryData?.find(
@@ -280,4 +290,36 @@ export const getNameById = (data, id) => {
 
 export const isValueEmpty = (value) => {
   return value === null || value === undefined || value === "";
+};
+
+export const changeComma = (data, index) => {
+  if (index < data.length) {
+    return [...data.slice(0, index), "+" + (data.length - index) + " more"];
+  }
+  return data;
+};
+
+export const timeAgo = (dateString) => {
+  const date = dayjs(dateString);
+  const now = dayjs();
+
+  const minutes = now.diff(date, "minute");
+  const hours = now.diff(date, "hour");
+  const days = now.diff(date, "day");
+  const months = now.diff(date, "month");
+  const years = now.diff(date, "year");
+
+  if (years > 0) {
+    return `${years} ${years === 1 ? "year" : "years"}`;
+  } else if (months > 0) {
+    return `${months} ${months === 1 ? "month" : "months"}`;
+  } else if (days > 0) {
+    return `${days} ${days === 1 ? "day" : "days"}`;
+  } else if (hours > 0) {
+    return `${hours} ${hours === 1 ? "hour" : "hours"}`;
+  } else if (minutes > 0) {
+    return `${minutes} ${minutes === 1 ? "minute" : "minutes"}`;
+  } else {
+    return `a few seconds`;
+  }
 };
