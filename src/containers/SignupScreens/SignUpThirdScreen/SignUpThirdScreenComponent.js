@@ -199,12 +199,15 @@ const SignUpThirdScreenComponent = ({ onClickGoToLogin, tabHandler }) => {
       updatedErrors[idx] = {
         ...updatedErrors[idx],
         [name]: duplicateIndices[idx]
-          ? intl.formatMessage({
-              id:
-                name === "emailId"
-                  ? "label.duplicate_email_validation"
-                  : "label.duplicate_mobileNo_validation",
-            })
+          ? name === "emailId"
+            ? intl.formatMessage({
+                id: "label.duplicate_email_validation",
+              })
+            : name === "mobileNo"
+            ? intl.formatMessage({
+                id: "label.duplicate_mobileNo_validation",
+              })
+            : ""
           : validateField({ name, index: idx }) || "",
       };
     });

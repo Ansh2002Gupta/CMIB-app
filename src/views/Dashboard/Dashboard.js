@@ -1,32 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
+import useIsWebView from "../../hooks/useIsWebView";
 
-import CommonText from "../../components/CommonText";
-import RangeSlider from "../../components/RangeSlider";
 import styles from "./dashboard.style";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import { TwoRow } from "../../core/layouts";
+import CAJobsDashboard from "../CAJobsDashboard";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { moduleKeys } from "../../constants/sideBarHelpers";
 
-const MIN_VALUE = 0;
-const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
-// Just ignore this file as just to test custom component
 function DashboardView() {
   const intl = useIntl();
-  const [range, setRange] = useState({ max: MAX_VALUE, min: MIN_VALUE });
-
+  const { isWebView } = useIsWebView();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   return (
     <View style={styles.container}>
-      <CommonText customTextStyle={styles.header}>
-        {intl.formatMessage({ id: "label.dashboard" })}
-      </CommonText>
-      <RangeSlider
-        label="Yrs"
-        max={MAX_VALUE}
-        min={MIN_VALUE}
-        onChange={(obj) => {
-          console.log(obj);
-        }}
-        step={5}
-        {...{ range, setRange }}
+      <TwoRow
+        topSection={
+          <IconHeader
+            hasActionButton={false}
+            showInWeb={isWebView}
+            hasIconBar
+            headerText={intl.formatMessage({ id: "label.dashboard" })}
+            intl={intl}
+          />
+        }
+        isBottomFillSpace
+        bottomSection={
+          <>
+            {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
+              <CAJobsDashboard />
+            ) : null}
+          </>
+        }
       />
     </View>
   );
