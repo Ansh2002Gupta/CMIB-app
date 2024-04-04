@@ -103,6 +103,7 @@ const CustomTextInput = (props) => {
     handleCheckBoxSelection,
     isSingleSelection,
     isTextInputWithChip,
+    onChipUpdate,
     ...remainingProps
   } = props;
 
@@ -282,7 +283,7 @@ const CustomTextInput = (props) => {
           onValueChange={(item) => {
             onChangeValue(item);
           }}
-          value={ (typeof value === "boolean") && value === true ? 0 : 1}
+          value={typeof value === "boolean" && value === true ? 0 : 1}
         />
       );
     }
@@ -558,6 +559,7 @@ CustomTextInput.defaultProps = {
   isSingleSelection: false,
   isTextInputWithChip: false,
   showLabel: true,
+  onChipUpdate: () => {},
 };
 
 const datePropType = (props, propName, componentName) => {
@@ -628,7 +630,8 @@ CustomTextInput.propTypes = {
   handleCheckBoxSelection: PropTypes.func,
   isSingleSelection: PropTypes.bool,
   isTextInputWithChip: PropTypes.bool,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  onChipUpdate: PropTypes.func,
 };
 
 export default CustomTextInput;

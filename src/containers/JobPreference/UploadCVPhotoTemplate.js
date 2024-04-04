@@ -14,6 +14,10 @@ const UploadCVPhotoTemplate = ({
   handleImageUploadResult,
   indexKey,
   imageUrl,
+  isDocumentUpload,
+  isVideoUpload,
+  isImageAndPDF,
+  isAllFormat,
 }) => {
   const intl = useIntl();
   const {
@@ -67,6 +71,10 @@ const UploadCVPhotoTemplate = ({
               uploadPercentage,
               isEditable,
               hideIconDelete: !isEditable,
+              isDocumentUpload,
+              isVideoUpload,
+              isImageAndPDF,
+              isAllFormat,
             }}
           />
         </View>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import JobPreferenceTemplate from "./JobPreferenceTemplate";
@@ -10,6 +10,8 @@ import {
 } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { useJobPreference } from "./controller/useJobPreference";
+import { formatJobPreferenceData } from "./controller/utils";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const JobPreference = ({ isEditable, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
@@ -20,7 +22,7 @@ const JobPreference = ({ isEditable, handleEdit }) => {
     isLoading: functionalAreasIsLoading,
     error: functionalAreasError,
   } = useFetch({
-    url: CORE_INDUSTRY_TYPE,
+    url: COMPANY_FUNCTIONAL_AREAS,
   });
 
   const {
@@ -28,13 +30,14 @@ const JobPreference = ({ isEditable, handleEdit }) => {
     isLoading: industryTypesIsLoading,
     error: industryTypesError,
   } = useFetch({
-    url: COMPANY_FUNCTIONAL_AREAS,
+    url: CORE_INDUSTRY_TYPE,
   });
 
   const {
     data,
     isError: isErrorJobPreferences,
     isLoading: isLoadingJobPreferences,
+    fetchData,
   } = useFetch({
     url: MEMBER_CA_JOB_JOB_PREFERENCES,
   });
@@ -42,8 +45,15 @@ const JobPreference = ({ isEditable, handleEdit }) => {
   const { handleUpdate, isError, isLoading, error, setError } =
     useUpdateService(MEMBER_CA_JOB_JOB_PREFERENCES);
 
+  const formattedJobPreference = useMemo(() => {
+    return formatJobPreferenceData(data);
+  }, [data]);
+
   const [state, setState] = useState(
-    data !== null && Object.keys(data).length ? data : {}
+    formattedJobPreference !== null &&
+      Object.keys(formattedJobPreference).length
+      ? formattedJobPreference
+      : {}
   );
 
   const {
@@ -51,6 +61,7 @@ const JobPreference = ({ isEditable, handleEdit }) => {
     handlePreferencesDetailBlur,
     isValidAllFields,
     imageDetails,
+    handleResetError,
   } = useJobPreference({
     state,
     isEditable,
@@ -59,8 +70,8 @@ const JobPreference = ({ isEditable, handleEdit }) => {
   });
 
   useEffect(() => {
-    handleSetData(data);
-  }, [data]);
+    handleSetData(formattedJobPreference);
+  }, [formattedJobPreference]);
 
   const handleSetData = (data) => {
     if (data !== null && Object.keys(data).length) {
@@ -69,12 +80,12 @@ const JobPreference = ({ isEditable, handleEdit }) => {
   };
 
   const handleMultiSelect = (value, detail) => {
-    const updatedArray = state?.[detail.key] ? [...state[detail.key]] : [];
+    let updatedArray = state?.[detail.key] ? [...state[detail.key]] : [];
     const valIndex = updatedArray.indexOf(value);
     if (valIndex > -1) {
       updatedArray.splice(valIndex, 1);
     } else {
-      updatedArray.push(value);
+      updatedArray = [...updatedArray, value];
     }
     setState({ ...state, [detail.key]: updatedArray });
   };
@@ -87,28 +98,29 @@ const JobPreference = ({ isEditable, handleEdit }) => {
   };
 
   const onChangeValue = (details) => (label, value) => {
-    const { key } = findKeyByLabel(label, details);
-    setState((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+    const { key, isToggle } = findKeyByLabel(label, details);
+    setState({
+      ...state,
+      [key]: isToggle ? Number(!Boolean(value)) : value,
+    });
+    handleResetError(key);
   };
 
   const handleSave = () => {
     const payload = {
-      posting_anywhere_in_india: state?.posting_anywhere_in_india,
-      transferable_post_acceptable: state?.transferable_post_acceptable,
-      posting_outside_india: state?.posting_outside_india,
+      posting_anywhere_in_india: state?.posting_anywhere_in_india ?? 1,
+      transferable_post_acceptable: state?.transferable_post_acceptable ?? 1,
+      posting_outside_india: state?.posting_outside_india ?? 1,
       preferred_region: state?.preferred_region,
       expected_annual_salary: state?.expected_annual_salary,
       industry_preference: state?.industry_preference,
-      functional_area_preference: state?.industry_preference,
+      functional_area_preference: state?.functional_area_preference,
       cv_path: state?.cv_path,
       job_photo_path: state?.job_photo_path,
       introduction_video_path: state?.introduction_video_path,
     };
-
     handleUpdate(payload, () => {
+      fetchData();
       handleEdit(false);
     });
   };
@@ -131,28 +143,37 @@ const JobPreference = ({ isEditable, handleEdit }) => {
     setState({ ...state, [indexKey]: uploadResult?.data?.url ?? "" });
   };
 
+  const handleDismissToast = () => {
+    setError("");
+  };
+
   return (
-    <JobPreferenceTemplate
-      preferences_details={preferences_details}
-      onChangeValue={onChangeValue}
-      handlePreferencesDetailBlur={handlePreferencesDetailBlur}
-      isValidAllFields={isValidAllFields}
-      handleMultiSelection={handleMultiSelect}
-      handleImageUploadResult={handleImageUploadResult}
-      isError={isError}
-      isLoading={isLoading}
-      isEditable={isEditable}
-      onClickSave={handleSave}
-      onClickCancel={() => {
-        handleSetData(data);
-        // turn off the edit mode
-        handleEdit(false);
-      }}
-      isPageLoading={isPageLoading}
-      error={fetchDataError}
-      onDeleteImage={handleImageDeletion}
-      imageDetails={imageDetails}
-    />
+    <>
+      <JobPreferenceTemplate
+        preferences_details={preferences_details}
+        onChangeValue={onChangeValue}
+        handlePreferencesDetailBlur={handlePreferencesDetailBlur}
+        isValidAllFields={isValidAllFields}
+        handleMultiSelection={handleMultiSelect}
+        handleImageUploadResult={handleImageUploadResult}
+        isError={isError}
+        isLoading={isLoading}
+        isEditable={isEditable}
+        onClickSave={handleSave}
+        onClickCancel={() => {
+          handleSetData(formattedJobPreference);
+          // turn off the edit mode
+          handleEdit(false);
+        }}
+        isPageLoading={isPageLoading}
+        error={fetchDataError}
+        onDeleteImage={handleImageDeletion}
+        imageDetails={imageDetails}
+      />
+      {error && (
+        <ToastComponent toastMessage={error} onDismiss={handleDismissToast} />
+      )}
+    </>
   );
 };
 

@@ -242,7 +242,9 @@ const DetailComponent = ({
         isNumeric={detail.isNumeric}
         isToggle={detail.isToggle}
         isTextInputWithChip={detail?.isTextInputWithChip}
-        onChange={(chipData) => handleChange(detail.label, chipData, index, detail.key)}
+        onChipUpdate={(chipData) =>
+          handleChange(detail.label, chipData, index, detail)
+        }
         valueField={detail.valueField || "label"}
         labelField={detail.labelField || "label"}
         inputKey={detail.inputKey || "value"}
@@ -381,25 +383,6 @@ const DetailComponent = ({
       </View>
     </View>
   );
-};
-
-DetailComponent.defaultProps = {
-  customContainerStyle: {},
-  details: [],
-  handleBlur: () => {},
-  handleChange: () => {},
-  handleSwitchChange: () => {},
-  headerText: "",
-  headerTextCustomStyles: {},
-  isActive: false,
-  isEditable: false,
-  isInputDisable: false,
-  isShowSwitch: false,
-  onPressActionButton: () => {},
-  isShowCancel: false,
-  handleCancel: () => {},
-  handleAddRemoveRow: () => {},
-  handleCheckBoxSelection: () => {},
 };
 
 DetailComponent.propTypes = {

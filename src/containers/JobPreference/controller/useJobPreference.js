@@ -2,8 +2,10 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { JobPreferences_keys, updateDropDownOptions } from "./utils";
+import { booleanToYesNo } from "../../../utils/util";
+import { numRegex } from "../../../constants/constants";
 
-const preferences_details = [
+const preferences_details = (intl) => [
   [
     {
       key: "posting_anywhere_in_india",
@@ -13,7 +15,9 @@ const preferences_details = [
       placeholder: "label.posting_anywhere_in_india",
       validate: (value) => {
         if (!value) {
-          return "posting anywhere in india is required";
+          return intl.formatMessage({
+            id: "label.postingAnyWhereRequired",
+          });
         }
       },
     },
@@ -25,7 +29,9 @@ const preferences_details = [
       placeholder: "label.whether_transferable_post_acceptable",
       validate: (value) => {
         if (!value) {
-          return "transferable post acceptable is required";
+          return intl.formatMessage({
+            id: "label.transferableRequired",
+          });
         }
       },
     },
@@ -39,7 +45,9 @@ const preferences_details = [
       placeholder: "label.ready_to_place_outside_india",
       validate: (value) => {
         if (!value) {
-          return "ready to place india is required";
+          return intl.formatMessage({
+            id: "label.readyToPlaceRequired",
+          });
         }
       },
     },
@@ -50,7 +58,9 @@ const preferences_details = [
       placeholder: "label.preferred_region",
       validate: (value) => {
         if (!value) {
-          return "preferred region is required";
+          return intl.formatMessage({
+            id: "label.preferredRegionRequired",
+          });
         }
       },
     },
@@ -61,7 +71,14 @@ const preferences_details = [
       placeholder: "label.expected_annual_salary",
       validate: (value) => {
         if (!value) {
-          return "expected annual salary is required";
+          return intl.formatMessage({
+            id: "label.expectedAnnualSalaryRequired",
+          });
+        }
+        if (value.length > 0 && !numRegex.test(String(value))) {
+          return intl.formatMessage({
+            id: "label.enterValidInput",
+          });
         }
       },
     },
@@ -70,17 +87,15 @@ const preferences_details = [
     {
       key: "industry_preference",
       label: "label.preferences_kind_of_industry",
-      labelField: "name",
-      valueField: "name",
+      value: [],
+      showBadgeLabel: true,
       isMandatory: true,
       isMultiSelect: true,
       isDropdown: true,
       placeholder: "label.preferences_kind_of_industry",
       defaultValues: [],
+      options: [],
       isSingleMutliSelect: true,
-
-      isEditable: true,
-      width: 2,
     },
   ],
   [
@@ -94,12 +109,8 @@ const preferences_details = [
       placeholder: "label.preference_for_area_of_work",
       defaultValues: [],
       options: [],
+      showBadgeLabel: true,
       isSingleMutliSelect: true,
-      validate: (value) => {
-        if (value.length === 0) {
-          return "Prefrence for area of work is required";
-        }
-      },
     },
   ],
 ];
@@ -107,26 +118,61 @@ const preferences_details = [
 const addValueOnField = ({ state, details, isEditable }) => {
   const updatedState = details.map((subArray) => {
     return subArray.map((field) => {
+      if (field?.isToggle) {
+        return {
+          ...field,
+          value: isEditable
+            ? Boolean(state?.[field?.key] ?? true)
+            : state?.[field?.key] === undefined
+            ? "-"
+            : booleanToYesNo(Boolean(state?.[field?.key])),
+        };
+      }
+
       return {
         ...field,
-        value: isEditable || state[field.key] ? state[field.key] : "--",
+        value: isEditable
+          ? state?.[field?.key]
+          : state?.[field?.key] === null
+          ? "-"
+          : state?.[field?.key],
       };
     });
   });
+
   return updatedState;
 };
 
-const validateOnBlur = ({ state, details, key, index, intl }) => {
+const validateOnBlur = ({ state, details, key, intl }) => {
   const value = state[key];
-  const updatedData = details.map((item, i) => {
-    if (key === item.key) {
-      return {
-        ...item,
-        value,
-        error: item.validate ? item.validate(value, intl) : "",
-      };
-    }
-    return item;
+  const updatedData = details.map((row, i) => {
+    return row.map((item) => {
+      if (item.isMandatory && key === item.key) {
+        return {
+          ...item,
+          value,
+          error: item.validate ? item.validate(value, intl) : "",
+        };
+      }
+      return item;
+    });
+  });
+  return updatedData;
+};
+
+const resetError = ({ state, details, key }) => {
+  const value = state[key];
+  const updatedData = details.map((row, i) => {
+    return row.map((item) => {
+      if (item.isMandatory && key === item.key) {
+        return {
+          ...item,
+          value,
+          error: undefined,
+        };
+      }
+      return item;
+    });
   });
   return updatedData;
 };
@@ -139,8 +185,9 @@ export const useJobPreference = ({
 }) => {
   const intl = useIntl();
 
-  const [preferences_details_state, setPreferencesDetailsState] =
-    useState(preferences_details);
+  const [preferences_details_state, setPreferencesDetailsState] = useState(
+    preferences_details(intl)
+  );
 
   const updatedDropDownList = useMemo(() => {
     const updatedWithIndustryType = updateDropDownOptions(
@@ -172,23 +219,37 @@ export const useJobPreference = ({
     };
   }, [state]);
 
-  const handlePreferencesDetailBlur = (key, index) => {
+  const handlePreferencesDetailBlur = (key) => {
     setPreferencesDetailsState(
       validateOnBlur({
         state,
         details: preferences_details_state,
         key,
-        index,
         intl,
       })
     );
   };
+
+  const handleResetError = (key) => {
+    setPreferencesDetailsState(
+      resetError({ state, details: preferences_details_state, key })
+    );
+  };
+
   const checkMandatoryFields = () => {
     let error = false;
-    [...preferences_details_state].forEach((item) => {
-      if (item.isMandatory && !state[item.key]) {
-        error = true;
-      }
+    [...preferences_details_state].forEach((row) => {
+      row.map((item) => {
+        if (item.isMandatory && !item?.isToggle) {
+          if (
+            item?.error ||
+            !state[item.key] ||
+            (item?.isDropdown && state[item.key]?.length === 0)
+          ) {
+            error = true;
+          }
+        }
+      });
     });
     return error;
   };
@@ -202,5 +263,6 @@ export const useJobPreference = ({
     imageDetails,
     handlePreferencesDetailBlur,
     isValidAllFields: checkMandatoryFields(),
+    handleResetError,
   };
 };

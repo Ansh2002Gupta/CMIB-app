@@ -120,8 +120,9 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
     setFormFieldsError([
       new Array(workExperienceData.length).fill(0).map(() => ({})),
     ]);
+
     setState({
-      ...data,
+      ...workExpData,
       work_experiences: workExperienceData,
     });
   };
@@ -147,7 +148,7 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
     if (valIndex > -1) {
       state?.[detail.key].splice(valIndex, 1);
     } else {
-      state?.[detail.key].push(value);
+      state[detail.key] = [...(state?.[detail?.key] ?? []), value];
     }
 
     setCurrentStatusError({ ...currentStatusError, [`${detail.key}`]: null });

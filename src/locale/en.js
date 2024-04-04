@@ -88,6 +88,8 @@ const locale = {
   "label.drag_drop_files": "Drag & drop files or",
   "label.browse": "Browse",
   "label.supported_type": "Supported formats: JPEG, PNG, SVG",
+  "label.all_format": "Supported formats: JPEG, PNG, SVG, MP4, PDF",
+  "label.supported_image_pdf": "Supported formats: JPEG, PNG, SVG, PDF",
   "label.supported_document": "Supported formats: PDF",
   "label.supported_video": "Supported formats: MP4",
   "label.signup_success": "Thank You for Signing Up!",
@@ -497,8 +499,9 @@ const locale = {
   "label.currentSpecialisationRequired": "Current specialisation is required",
   "label.currentIndustrySpecialisationRequired":
     "Current industry specialisation is required",
-  "label.sinceWhenHaveYouBeenPracticingRequired" : "since when have you been practicing is required",
-  "label.preference_for_area_of_work" : "Preference for Area of Work",
+  "label.sinceWhenHaveYouBeenPracticingRequired":
+    "since when have you been practicing is required",
+  "label.preference_for_area_of_work": "Preference for Area of Work",
   "label.viewPdf": "View PDF",
   "label.applyJob": "Apply job",
   "label.urgent": "Urgent",
@@ -507,6 +510,11 @@ const locale = {
   "label.yrs": "yrs",
   "label.posted": "Posted",
   "label.ago": "ago",
+  "label.postingAnyWhereRequired": "Posting anywhere in india is required",
+  "label.transferableRequired": "Transferable post acceptable is required",
+  "label.readyToPlaceRequired": "Ready to place india is required",
+  "label.preferredRegionRequired": "Preferred region is required",
+  "label.expectedAnnualSalaryRequired": "Expected annual salary is required",
 };
 
 export default locale;
