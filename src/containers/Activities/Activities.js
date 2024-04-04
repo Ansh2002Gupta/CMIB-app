@@ -21,7 +21,7 @@ const Activities = ({ isEditable = true, handleEdit }) => {
   const { handleUpdate, isError, isLoading, error, setError } =
     useUpdateService(MEMBER_CA_JOB_PROFILE_ACTIVITY);
   const [state, setState] = useState(
-    data !== null && Object.keys(data).length ? data : {}
+    data !== null && Object.keys(data).length ? { ...data } : {}
   );
 
   const {
@@ -37,7 +37,7 @@ const Activities = ({ isEditable = true, handleEdit }) => {
 
   useEffect(() => {
     if (data !== null && Object.keys(data).length) {
-      setState(data);
+      setState({ ...data });
     }
   }, [data]);
 
@@ -89,6 +89,7 @@ const Activities = ({ isEditable = true, handleEdit }) => {
       isValidAllFields={isValidAllFields}
       onClickSave={handleActivityUpdate}
       onClickCancel={() => {
+        setState({ ...data });
         // turn off the edit mode
         handleEdit(false);
       }}
