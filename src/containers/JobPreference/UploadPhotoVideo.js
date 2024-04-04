@@ -1,3 +1,4 @@
+import React from "react";
 import { View } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
 
@@ -55,7 +56,6 @@ const UploadPhotoVideo = ({
           imageUrl={imageDetails?.job_photo_path}
         />
       </View>
-
       <View style={style.innerContainerStyle}>
         <CommonText customTextStyle={style.headerText}>
           {intl.formatMessage({ id: "label.intro_video_upload" })}

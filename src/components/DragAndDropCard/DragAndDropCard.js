@@ -73,11 +73,12 @@ const DragAndDropCard = ({
     if (isVideoUpload)
       return intl.formatMessage({ id: "label.supported_video" });
     if (isAllFormat) return intl.formatMessage({ id: "label.all_format" });
-    if (isImageAndPDF) return intl.formatMessage({ id: "label.supported_image_pdf" });
+    if (isImageAndPDF)
+      return intl.formatMessage({ id: "label.supported_image_pdf" });
 
     return intl.formatMessage({ id: "label.supported_type" });
   };
-  
+
   return (
     <>
       {isLoading ? (

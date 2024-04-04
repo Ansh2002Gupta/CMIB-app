@@ -170,9 +170,9 @@ const JobPreference = ({ isEditable, handleEdit }) => {
         onDeleteImage={handleImageDeletion}
         imageDetails={imageDetails}
       />
-      {error && (
+      {error ? (
         <ToastComponent toastMessage={error} onDismiss={handleDismissToast} />
-      )}
+      ) : null}
     </>
   );
 };

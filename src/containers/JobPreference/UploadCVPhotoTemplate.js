@@ -1,3 +1,4 @@
+import React from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
