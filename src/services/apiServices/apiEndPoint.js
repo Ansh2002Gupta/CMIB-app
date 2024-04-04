@@ -25,6 +25,9 @@ export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
 export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
+export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`;
+export const COMPANY_INIT_PAYMENT = `${CORE}/payments/init-payment`;
+export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
@@ -41,3 +44,12 @@ export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
 export const MEMBER_CA_JOB_PROFILE_EDUCATION = `${USER_TYPE_MEMBER}/profile/academics`;
 export const MEMBER_CA_JOB_PROFILE_EXAMS = `${USER_TYPE_MEMBER}/profile/exams`;
 export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/other-courses`;
+//endpoint add Job
+export const GET_FUNCTIONAL_TYPE = `${USER_TYPE_COMPANY}/functional-areas`;
+export const GET_JOB_LOCATION = `${USER_TYPE_COMPANY}/job/locations`;
+export const GET_JOB_TYPE = `${USER_TYPE_COMPANY}/job-type`;
+export const GET_CATERORY_PREFERENCE = `${USER_TYPE_COMPANY}/job/category`;
+export const GET_GENDER_PREFERENCE = `${USER_TYPE_COMPANY}/genders`;
+export const GET_WORK_MODE = `${USER_TYPE_COMPANY}/workmode`;
+export const POST_JOB = `${USER_TYPE_COMPANY}/jobs`;
+export const UPDATE_JOB = `${USER_TYPE_COMPANY}/jobs/update`;

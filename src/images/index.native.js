@@ -116,15 +116,22 @@ import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
 import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
-import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
 import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
+import questionIcon from "../../public/images/question/question.png";
+import copyIcon from "../../public/images/copyIcon/copy.png";
+import redCrossIcon from "../../public/images/redCross/redClose.png";
+import editIcon from "../../public/images/editIcon/edit.png";
+import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
 import iconZoomIn from "../../public/images/svg/iconZoomIn.svg";
 import iconZoomOut from "../../public/images/svg/iconZoomOut.svg";
 import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
+import dotIcon from "../../public/images/dotIcon/dot.png";
+import iconDownloading from "../../public/images/downloadIcon/download.png";
 import iconError from "../../public/images/svg/iconError.svg";
+import iconTickCircle from "../../public/images/svg/tick-circle.svg";
 import iconAppliedJobs from "../../public/images/svg/iconAppliedJobs.svg";
 import iconAppliedJobsActiveJobs from "../../public/images/svg/iconAppliedJobsActiveJobs.svg";
 
@@ -247,15 +254,22 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
-  iconDisabledCheck,
   iconDeleteRed,
+  questionIcon,
+  copyIcon,
+  redCrossIcon,
+  editIcon,
+  iconDisabledCheck,
   iconZoomIn,
   iconZoomOut,
   iconAddBlue,
   iconEdit,
   iconLoading,
   iconGreyCross,
+  dotIcon,
+  iconDownloading,
   iconError,
+  iconTickCircle,
   iconAppliedJobs,
   iconAppliedJobsActiveJobs,
 };
