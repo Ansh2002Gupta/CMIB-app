@@ -447,3 +447,23 @@ export const timeAgo = (dateString) => {
     return `a few seconds`;
   }
 };
+
+
+export const formatCountryCode = (code, countryData) => {
+  if (!code) return code;
+  const countryOption = countryData?.find(
+    (country) => country["dial_code"] === code
+  );
+  return countryOption && Platform.OS === "web"
+    ? `${code} (${countryOption["name"]})`
+    : code;
+};
+
+export const getNameById = (data, id) => {
+  const item = data?.find((obj) => obj.id === id);
+  return item ? item.name : null;
+};
+
+export const isValueEmpty = (value) => {
+  return value === null || value === undefined || value === "";
+};
