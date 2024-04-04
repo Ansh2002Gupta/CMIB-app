@@ -18,6 +18,7 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
   const intl = useIntl();
   const {
     companyName,
+    company_logo,
     createdAt,
     jobPostion,
     jobDescription,
@@ -123,7 +124,11 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
   const multiRow = [
     {
       content: (
-        <Image source={images.companyLogo} style={style.mobileComponyLogo} />
+        <Image
+          source={company_logo || images.companyLogo}
+          style={style.mobileComponyLogo}
+          alt={"company_logo"}
+        />
       ),
     },
     {

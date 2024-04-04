@@ -19,6 +19,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
   const intl = useIntl();
   const {
     companyName,
+    company_logo,
     createdAt,
     jobPostion,
     jobDescription,
@@ -133,7 +134,11 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
         <TwoColumn
           style={{ gap: 16 }}
           leftSection={
-            <Image source={images.companyLogo} style={style.companyLogoStyle} />
+            <Image
+              source={{ uri: company_logo || images.companyLogo }}
+              style={style.companyLogoStyle}
+              alt={"company_logo"}
+            />
           }
           rightSection={
             <ThreeRow
