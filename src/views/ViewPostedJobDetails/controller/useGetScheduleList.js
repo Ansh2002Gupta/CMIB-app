@@ -51,7 +51,7 @@ const useGetScheduleList = (onViewPress, onEditPress) => {
     isError: isErrorGetPostedJob,
     error: errorGetPostedJobs,
   } = useFetch({
-    url: "admin/jobs/175/scheduled-interview",
+    url: "company/jobs/175/schedule-interview",
     otherOptions: {
       skipApiCallOnMount: true,
     },

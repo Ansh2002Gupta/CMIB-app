@@ -1,6 +1,5 @@
 import { View } from "@unthinkable/react-core-components";
 import React from "react";
-import useGetApplicantList from "../../../views/ViewPostedJobDetails/controller/useGetApplicantList";
 import MobileCard from "../../PostedJobs/MobileCard";
 import CustomTable from "../../../components/CustomTable";
 import DownloadMoreComponent from "../../PostedJobs/DownloadMoreComponent";
@@ -46,7 +45,6 @@ const ViewScheduleInterview = () => {
     tableIcon,
     postedJobData,
     totalcards,
-    rowsLimit,
   } = useGetScheduleList();
 
   //   const navigate = useNavigate();
@@ -105,7 +103,7 @@ const ViewScheduleInterview = () => {
         tableIcon,
         totalcards,
         placeholder: intl.formatMessage({
-          id: "label.search_by_designation",
+          id: "label.search_by_applicant_name",
         }),
       }}
       mobileComponentToRender={getMobileView}

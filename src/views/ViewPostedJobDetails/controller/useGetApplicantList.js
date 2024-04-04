@@ -64,7 +64,6 @@ const useGetApplicantList = () => {
     },
   });
 
-  console.log("postedJobData", postedJobData);
   //   const { handleAddTicket } = useAddTicket();
 
   const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
@@ -72,7 +71,7 @@ const useGetApplicantList = () => {
   const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
-    shouldSetQueryParamsOnMount: false,
+    shouldSetQueryParamsOnMount: true,
     setCurrentPage,
     setRowPerPage,
   });
@@ -99,61 +98,61 @@ const useGetApplicantList = () => {
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
   const updateCurrentRecords = async (params) => {
-    // const newData = await fetchDataTicketListing({
-    //   queryParamsObject: params,
-    // });
-    // setCurrentRecords(newData?.records);
+    const newData = await fetchDataTicketListing({
+      queryParamsObject: params,
+    });
+    setCurrentRecords(newData?.records);
   };
 
   const handleLoadMore = async () => {
-    //   if (loadingMore || allDataLoaded) return;
-    //   setLoadingMore(true);
-    //   const nextPage = currentPage + 1;
-    //   try {
-    //     const newData = await fetchDataTicketListing({
-    //       queryParamsObject: { perPage: rowsPerPage, page: nextPage },
-    //     });
-    //     if (newData && newData?.records?.length > 0) {
-    //       setCurrentRecords((prevRecords) => [
-    //         ...prevRecords,
-    //         ...newData.records,
-    //       ]);
-    //     }
-    //     setCurrentPage(nextPage);
-    //     if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
-    //       setAllDataLoaded(true);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching tickets on load more:", error);
-    //   } finally {
-    //     setLoadingMore(false);
-    //   }
+    if (loadingMore || allDataLoaded) return;
+    setLoadingMore(true);
+    const nextPage = currentPage + 1;
+    try {
+      const newData = await fetchDataTicketListing({
+        queryParamsObject: { perPage: rowsPerPage, page: nextPage },
+      });
+      if (newData && newData?.records?.length > 0) {
+        setCurrentRecords((prevRecords) => [
+          ...prevRecords,
+          ...newData.records,
+        ]);
+      }
+      setCurrentPage(nextPage);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      }
+    } catch (error) {
+      console.error("Error fetching tickets on load more:", error);
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
   const handlePageChange = async (page) => {
-    // handlePagePerChange(page);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: page,
-    // });
+    handlePagePerChange(page);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: page,
+    });
   };
 
   const handleRowPerPageChange = async (option) => {
-    // handleRowsPerPageChange(option.value);
-    // await updateCurrentRecords({
-    //   perPage: option.value,
-    //   page: currentPage,
-    // });
+    handleRowsPerPageChange(option.value);
+    await updateCurrentRecords({
+      perPage: option.value,
+      page: currentPage,
+    });
   };
 
   const handleSearchResults = async (searchedData) => {
-    // await updateCurrentRecords({
-    //   q: searchedData,
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   status: filterOptions.status,
-    //   queryType: filterOptions.query_type,
-    // });
+    await updateCurrentRecords({
+      search: searchedData,
+      perPage: rowsPerPage,
+      page: currentPage,
+      status: filterOptions.status,
+      queryType: filterOptions.query_type,
+    });
   };
 
   const onIconPress = (item) => {

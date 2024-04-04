@@ -17,6 +17,9 @@ import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   APPLICANT_LISTING as tableHeading,
 } from "../../../constants/constants";
+import CommonText from "../../../components/CommonText";
+import colors from "../../../assets/colors";
+import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
 const ViewJobApplicants = () => {
   const intl = useIntl();
   const onEditPress = (item) => {
@@ -61,7 +64,6 @@ const ViewJobApplicants = () => {
     tableIcon,
     postedJobData,
     totalcards,
-    rowsLimit,
   } = useGetApplicantList();
 
   const navigate = useNavigate();
@@ -72,15 +74,10 @@ const ViewJobApplicants = () => {
 
   const getMobileView = (item, index) => {
     return (
-      <View />
-      // <MobileCard
-      //   item={item}
-      //   getStatusStyle={getStatusStyle}
-      //   lastElement={postedJobData.length - 1 === index}
-      //   statusData={statusData}
-      //   onEditPress={onEditPress}
-      //   onViewPress={onViewPress}
-      // />
+      <RenderMobileItem
+        lastElement={postedJobData.length - 1 === index}
+        item={item}
+      />
     );
   };
 
@@ -122,11 +119,11 @@ const ViewJobApplicants = () => {
         tableIcon,
         totalcards,
         placeholder: intl.formatMessage({
-          id: "label.search_by_designation",
+          id: "label.search_by_applicant_name",
         }),
       }}
       mobileComponentToRender={getMobileView}
-      containerStyle={styles.customTableStyle}
+      containerStyle={styles.innerContainerStyle}
       isTotalCardVisible={false}
       data={postedJobData}
       ThirdSection={
