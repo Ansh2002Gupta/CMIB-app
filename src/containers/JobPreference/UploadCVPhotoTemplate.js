@@ -5,21 +5,44 @@ import useIsWebView from "../../hooks/useIsWebView";
 import style from "./UploadCVPhotoTemplate.style";
 import CommonText from "../../components/CommonText";
 import UploadImage from "../../components/UploadImage/UploadImage";
+import { useEffect } from "react";
 
 const UploadCVPhotoTemplate = ({
   isEditable,
   headerText,
   onDeleteImage,
   errorWhileUpload,
-  updatedFileUploadResult,
-  handleFileUpload,
-  isUploadingImageToServer,
-  setFileUploadResult,
-  uploadPercentage,
-  isEditProfile
+  isEditProfile,
+  uploadImageToServerUtils,
+  handleImageUploadResult,
+  indexKey
 }) => {
+  console.log("indexKey", indexKey)
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  const {
+    fileUploadResult,
+    handleFileUpload,
+    isUploadingImageToServer,
+    setFileUploadResult,
+    uploadPercentage,
+  } = uploadImageToServerUtils;
+
+  const updatedFileUploadResult = fileUploadResult;
+  const newFileUploadResult = [];
+
+
+  // useEffect(() => {
+  //   if (indexKey in newFileUploadResult) {
+  //     newFileUploadResult[indexKey] = updatedFileUploadResult;
+  //   } else {
+  //     newFileUploadResult[indexKey] = updatedFileUploadResult;
+  //   }
+  //  //handleFileUpload(updatedFileUploadResult);
+  //  console.log("updatedFileUploadResult", newFileUploadResult)
+  // }, [updatedFileUploadResult]);
+   
 
   if (isEditable) {
     return (

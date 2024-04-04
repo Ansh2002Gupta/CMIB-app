@@ -29,5 +29,12 @@ const style = {
     borderRadius: 0,
     backgroundColor: "transparent",
   },
+  loaderStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.backgroundColor,
+  },
 };
 export default style;

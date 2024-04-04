@@ -8,12 +8,12 @@ import styles from "./TextInputWithChip.style";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
 import colors from "../../assets/colors";
 
-const TextInputWithChip = ({ placeholderText, onChipUpdate, value = [] }) => {
+const TextInputWithChip = ({ placeholderText, onValueChange, value = [] }) => {
   const [inputValue, setInputValue] = useState("");
   const [chips, setChips] = useState(Array.isArray(value) ? [...value] : []);
 
   useEffect(() => {
-    onChipUpdate(chips);
+    onValueChange(chips);
     return;
   }, [chips]);
 

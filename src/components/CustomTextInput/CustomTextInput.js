@@ -103,7 +103,6 @@ const CustomTextInput = (props) => {
     handleCheckBoxSelection,
     isSingleSelection,
     isTextInputWithChip,
-    onChipUpdate,
     ...remainingProps
   } = props;
 
@@ -558,7 +557,6 @@ CustomTextInput.defaultProps = {
   handleCheckBoxSelection: () => {},
   isSingleSelection: false,
   isTextInputWithChip: false,
-  onChipUpdate: () => {},
   showLabel: true,
 };
 
@@ -630,7 +628,6 @@ CustomTextInput.propTypes = {
   handleCheckBoxSelection: PropTypes.func,
   isSingleSelection: PropTypes.bool,
   isTextInputWithChip: PropTypes.bool,
-  onChipUpdate: PropTypes.func,
   showLabel: PropTypes.bool
 };
 

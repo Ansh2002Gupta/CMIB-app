@@ -49,3 +49,6 @@ export const MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE = `${USER_TYPE_MEMBER}/profil
 export const FUNCTION_AREAS = `${USER_TYPE_COMPANY}/functional-areas`;
 export const INDUSTRY_TYPES = `${CORE}/industry-types`;
 export const MEMBER_CA_JOB_MEMBERSHIP_DETAILS = `${USER_TYPE_MEMBER}/profile/membership`;
+export const MEMBER_CA_JOB_JOB_PREFERENCES = `${USER_TYPE_MEMBER}/profile/job-preferences`;
+export const COMPANY_FUNCTIONAL_AREAS = `${USER_TYPE_COMPANY}/functional-areas`;
+export const UPLOAD_IMAGE = `${USER_TYPE_COMPANY}/upload-image`; 

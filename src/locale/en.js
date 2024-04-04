@@ -493,6 +493,8 @@ const locale = {
   "label.currentSpecialisationRequired": "Current specialisation is required",
   "label.currentIndustrySpecialisationRequired":
     "Current industry specialisation is required",
+  "label.sinceWhenHaveYouBeenPracticingRequired" : "since when have you been practicing is required",
+  "label.preference_for_area_of_work" : "Preference for Area of Work",
 };
 
 export default locale;
