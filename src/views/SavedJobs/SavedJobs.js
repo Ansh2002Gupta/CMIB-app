@@ -12,6 +12,7 @@ import Spinner from "../../components/Spinner";
 import useFetch from "../../hooks/useFetch";
 import useIsWebView from "../../hooks/useIsWebView";
 import { MEMBER_SAVED_JOBS } from "../../services/apiServices/apiEndPoint";
+import images from "../../images";
 import style from "./SavedJobs.style";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import CommonText from "../../components/CommonText";
