@@ -11,18 +11,28 @@ import CustomTextInput from "../../components/CustomTextInput";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./PaymentInitiateModal.style";
-import { TwoColumn, TwoRow } from "../../core/layouts";
 import CommonText from "../../components/CommonText";
 import { usePost } from "../../hooks/useApiRequest";
 import { COMPANY_INIT_PAYMENT } from "../../services/apiServices/apiEndPoint";
 import Spinner from "../../components/Spinner";
+import {
+  ADDRESS_MAX_LENGTH,
+  GSTIN_MAX_LENGTH,
+  PAN_MAX_LENGTH,
+} from "../../constants/constants";
+import {
+  validateGSTIN,
+  validatePAN,
+} from "../../utils/validation";
 
 const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-  const [error, setError] = useState("");
-  const [tdsAmount, setTdsAmount] = useState("");
-  const [tan, setTan] = useState("");
+  const [errors, setErrors] = useState({
+    panNumber: "",
+    gstNumber: "",
+    address: "",
+  });
   const [panNumber, setPanNumber] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [PONumber, setPONumber] = useState("");
@@ -37,51 +47,96 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     url: COMPANY_INIT_PAYMENT,
   });
 
-  const isNextDisabled = () => {
-    return (
-      !gstNumber ||
-      !panNumber ||
-      !tdsAmount ||
-      !tan ||
-      Number(amount) < Number(tdsAmount)
-    );
+  const validateFields = ({ field }) => {
+    let isValid = true;
+    let newErrors = {
+      panNumber: "",
+      gstNumber: "",
+      address: "",
+    };
+
+    if (!field || field === "address") {
+      const enteredAddress = address;
+      if (enteredAddress && enteredAddress.trim().length > ADDRESS_MAX_LENGTH) {
+        newErrors.address = intl.formatMessage({
+          id: "label.address_validation",
+        });
+        isValid = false;
+      }
+    }
+
+    if (!field || field === "panNumber") {
+      const enteredGstin = panNumber;
+      if (enteredGstin && validatePAN(enteredGstin)) {
+        newErrors.panNumber = intl.formatMessage({
+          id: "label.pan_validation",
+        });
+        isValid = false;
+      }
+    }
+
+    if (!field || field === "gstNumber") {
+      const enteredPAN = gstNumber;
+      if (enteredPAN && validateGSTIN(enteredPAN)) {
+        newErrors.gstNumber = intl.formatMessage({
+          id: "label.gstin_validation",
+        });
+        isValid = false;
+      }
+    }
+
+    if (field && newErrors[field] !== undefined) {
+      setErrors({
+        ...errors,
+        [field]: newErrors[field],
+      });
+    } else {
+      setErrors(newErrors);
+    }
+
+    return isValid;
   };
 
   const handleDismissToast = () => {
     setErrorWhilePaymentInitialization("");
   };
 
-  const handleSave = () => {
-    if (isNextDisabled()) return;
+  const isNextDisabled = () => {
+    return (
+      errors.address || errors.panNumber || errors.gstNumber
+    );
+  };
 
+  const handleSave = () => {
+    if (isNextDisabled()) return
     packagePaymentInitialization({
       body: {
-        final_amt: finalAmount,
         subscription_id: subscriptionId,
         pan: panNumber,
-        tan: tan,
         po_number: PONumber,
         address: address,
         gstin: gstNumber,
       },
       onErrorCallback: (errorMessage) => {
-        console.log("Error", errorMessage);
         // onPressCancel();
       },
       onSuccessCallback: (data) => {
-        if (isWebView) {
-          window.open(data?.data, "_self");
+        if (isWebView && data?.data && data?.data?.url) {
+          window.open(data?.data?.url, "_self");
+        } else {
+          window.location.reload();
         }
         onPressCancel();
       },
     });
   };
 
+  const handleBlur = (name) => {
+    validateFields({ field: name })
+  }
+
   const baseStyle = isWebView ? styles.containerStyle : styles.inputStyle;
-  const errorStyle = isWebView
-    ? styles.erroInputStyleWeb
-    : styles.erroInputStyle;
-  const customStyle = error ? errorStyle : baseStyle;
+  const customStyle = baseStyle;
 
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
@@ -111,8 +166,6 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
     );
   };
 
-  const finalAmount = tdsAmount ? Number(amount) - Number(tdsAmount) : amount;
-  const CREDIT_SCORE = 0;
 
   if (isPaymentInitializedLoading) {
     return (
@@ -141,145 +194,92 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
         <FiveColumn
           firstSection={
             <CustomTextInput
-              label={intl.formatMessage({ id: "label.TDS_GTDS_amount" })}
-              placeholder={intl.formatMessage({
-                id: "label.enter_TDS_GTDS_amount",
-              })}
-              customStyle={styles.containerStyle}
-              value={tdsAmount}
-              onChangeText={(val) => {
-                if (!isNaN(val) && val >= 0) setTdsAmount(val);
-              }}
-              isError={Number(amount) < Number(tdsAmount)}
-              errorMessage={
-                Number(amount) < Number(tdsAmount)
-                  ? intl.formatMessage({ id: "label.tds_input_error" })
-                  : ""
-              }
-              isMandatory
-              isNumeric
-            />
-          }
-          secoundSection={
-            <CustomTextInput
-              label={intl.formatMessage({ id: "label.tan" })}
-              placeholder={intl.formatMessage({ id: "label.enter_tan" })}
-              customStyle={styles.containerStyle}
-              value={tan}
-              onChangeText={(val) => {
-                setTan(val);
-              }}
-              isMandatory
-            />
-          }
-          thirdSection={
-            <CustomTextInput
+              customHandleBlur={() => handleBlur("panNumber")}
               label={intl.formatMessage({ id: "label.pan" })}
               placeholder={`${intl.formatMessage({
                 id: "label.enter",
               })} ${intl.formatMessage({ id: "label.pan" })}`}
               value={panNumber}
               onChangeText={(val) => {
-                setPanNumber(val);
+                setPanNumber(val.trim());
               }}
               customStyle={customStyle}
-              isMandatory
-              isError={!!error}
-              errorMessage={error}
+              isError={!!errors.panNumber}
+              errorMessage={errors.panNumber}
+              maxLength={PAN_MAX_LENGTH}
             />
           }
-          fourthSection={
+          secoundSection={
             <CustomTextInput
+              customHandleBlur={() => handleBlur("gstNumber")}
               label={intl.formatMessage({ id: "label.gstin" })}
               placeholder={"Enter GSTIN"}
               value={gstNumber}
               onChangeText={(val) => {
-                setGstNumber(val);
+                setGstNumber(val.trim());
               }}
-              customHandleBlur={() => {}}
               customStyle={customStyle}
-              isMandatory
-              isError={!!error}
-              errorMessage={error}
+              isError={!!errors.gstNumber}
+              errorMessage={errors.gstNumber}
+              maxLength={GSTIN_MAX_LENGTH}
             />
           }
-          fiveSection={
+          thirdSection={
             <CustomTextInput
               label={intl.formatMessage({ id: "label.po_number" })}
               placeholder={"Enter PO Number"}
               value={PONumber}
               onChangeText={(val) => {
-                setPONumber(val);
+                setPONumber(val.trim());
               }}
               customStyle={customStyle}
-              isError={!!error}
-              errorMessage={error}
+              // isError={!!errors.address}
+              // errorMessage={errors.address}
+            />
+          }
+          fourthSection={
+            <CustomTextInput
+              customHandleBlur={() => handleBlur("address")}
+              isMultiline
+              label={intl.formatMessage({
+                id: "label.address_for_hard_copy",
+              })}
+              maxLength={ADDRESS_MAX_LENGTH}
+              onChangeText={(val) => setAddress(val)}
+              placeholder={intl.formatMessage({
+                id: "label.address_for_hard_copy",
+              })}
+              value={address}
+              isError={!!errors.address}
+              errorMessage={errors.address}
             />
           }
         ></FiveColumn>
-        <CustomTextInput
-          label={intl.formatMessage({ id: "label.address_for_hard_copy" })}
-          placeholder={"Enter Address"}
-          value={address}
-          onChangeText={(val) => {
-            setAddress(val);
-          }}
-          customStyle={customStyle}
-          isError={!!error}
-          errorMessage={error}
-        />
-        <TwoColumn
-          leftSection={
-            <View>
-              {renderAmountHeading(
-                intl.formatMessage({ id: "label.final_amt" }),
-                finalAmount
-              )}
-            </View>
-          }
-          rightSection={
-            <View>
-              {renderAmountHeading(
-                intl.formatMessage({ id: "label.credit_score" }),
-                CREDIT_SCORE
-              )}
-            </View>
-          }
-          isLeftFillSpace
-          isRightFillSpace
-        />
-        <View style={{ marginTop: 24 }}>
-          {renderAmountHeading(
-            intl.formatMessage({ id: "label.amount_to_be_paid" }),
-            finalAmount
-          )}
-        </View>
       </ScrollView>
       <View style={isWebView ? styles.buttonWebStyle : {}}>
         <View style={isWebView ? styles.subContainerStyle : {}}>
           <ActionPairButton
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            buttonTwoText={intl.formatMessage({ id: "label.save" })}
+            buttonTwoText={intl.formatMessage({ id: "label.pay" })}
             customStyles={{
               ...isWebProps,
               customContainerStyle: styles.customContainerStyle,
             }}
-            // displayLoader={isLoading}
-            isDisabled={isNextDisabled()}
             isButtonTwoGreen
             onPressButtonOne={() => {
               onPressCancel(false);
             }}
             onPressButtonTwo={handleSave}
+            isDisabled={isNextDisabled()}
           />
         </View>
+        {!!errorWhilePaymentInitialization && (
+          <ToastComponent
+            toastMessage={errorWhilePaymentInitialization}
+            onDismiss={handleDismissToast}
+          />
+        )}
       </View>
-      {!!errorWhilePaymentInitialization && (
-        <ToastComponent
-          toastMessage={errorWhilePaymentInitialization}
-          onDismiss={handleDismissToast}
-        />
-      )}
     </>
   );
 };
