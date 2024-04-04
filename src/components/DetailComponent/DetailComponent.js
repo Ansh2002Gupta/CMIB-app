@@ -20,6 +20,7 @@ import styles, {
   getContainerStyles,
   getRowStyle,
 } from "./DetailComponent.style";
+import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -39,6 +40,11 @@ const DetailComponent = ({
   isMandatory,
   isShowSwitch,
   onPressActionButton,
+  isShowCancel,
+  handleCancel,
+  handleAddRemoveRow,
+  handleCheckBoxSelection,
+  onChipUpdate,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -63,6 +69,19 @@ const DetailComponent = ({
       <CommonText customTextStyle={styles.labelStyle}>
         {intl.formatMessage({ id: "label.mark_as_active" })}
       </CommonText>
+    </View>
+  );
+
+  const renderCancelButton = () => (
+    <View style={[{ flex: 1 }]}>
+      <View style={styles.cancelButton}>
+        <TouchableImage
+          isSvg={isWebView}
+          onPress={handleCancel}
+          source={isWebView ? images.iconCloseDark : images.iconCross}
+          style={{ height: 24, width: 24 }}
+        />
+      </View>
     </View>
   );
 
@@ -138,7 +157,7 @@ const DetailComponent = ({
     );
   };
 
-  const renderEditableContent = (detail) => {
+  const renderEditableContent = (detail, index) => {
     if (detail.isMobileNumber) {
       return (
         <MobileNumberInput
@@ -174,19 +193,31 @@ const DetailComponent = ({
         indexField="selectedIndex"
         options={detail.options || []}
         isMultiline={detail?.isMultiline}
+        isCheckBoxSelection={detail?.isCheckBoxSelection}
+        checkBoxOptions={detail?.checkBoxOptions}
+        handleAddRemoveRow={(isActionToAdd) =>
+          handleAddRemoveRow(isActionToAdd, index, detail?.key)
+        }
+        handleCheckBoxSelection={(id) =>
+          handleCheckBoxSelection(id, index, detail?.key)
+        }
+        isActionToAdd={detail?.isActionToAdd}
+        isSingleSelection={detail?.isSingleSelection}
         placeholder={
           detail?.placeholder && intl.formatMessage({ id: detail.placeholder })
         }
         maxLength={detail.maxLength}
         isNumeric={detail.isNumeric}
         isToggle={detail.isToggle}
+        isTextInputWithChip={detail?.isTextInputWithChip}
+        onChipUpdate={(chipData) => onChipUpdate(chipData)}
         valueField={detail.valueField || "label"}
         labelField={detail.labelField || "label"}
         inputKey={detail.inputKey || "value"}
         onChangeValue={(val) =>
           detail.isMultiSelect
             ? handleMultiSelect(val)
-            : handleChange(detail.label, val)
+            : handleChange(detail.label, val, index, detail?.key)
         }
         isMultiSelect={detail.isMultiSelect}
         onChangeText={(val) => {
@@ -197,6 +228,7 @@ const DetailComponent = ({
           }
         }}
         isRupee={detail?.isRupee}
+        isCalendar={detail?.isCalendar}
         isSingleMutliSelect={detail.isSingleMutliSelect}
       />
     );
@@ -218,6 +250,7 @@ const DetailComponent = ({
           {isMandatory && (
             <CommonText customTextStyle={styles.starStyle}>{" *"}</CommonText>
           )}
+          {isShowCancel && isEditable && renderCancelButton()}
         </View>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
@@ -235,77 +268,46 @@ const DetailComponent = ({
                     : styles.containerStyle),
                 }}
               >
-                {Array.isArray(detail) &&
-                  detail?.map((columns, idx) => {
-                    return isEditable ? (
-                      <View
-                        style={{
-                          ...(columns.width === 3 ? styles.oneThirdWidth : {}),
-                          ...(isWebView
-                            ? styles.webContainer
-                            : getRowStyle(detail)),
-                        }}
-                      >
-                        {renderEditableContent(columns)}
+                {detail?.map((columns, index) => {
+                  return isEditable ? (
+                    <View
+                      style={{
+                        ...(columns.width === 3 ? styles.oneThirdWidth : {}),
+                        ...(isWebView
+                          ? styles.webContainer
+                          : getRowStyle(detail)),
+                      }}
+                    >
+                      {renderEditableContent(columns, idx)}
+                    </View>
+                  ) : (
+                    <View
+                      style={{
+                        ...(isWebView
+                          ? styles.webContainer
+                          : getRowStyle(detail)),
+                      }}
+                    >
+                      <View style={styles.titleContainer}>
+                        {columns.label ? (
+                          <CommonText customTextStyle={styles.titleStyle}>
+                            {intl.formatMessage({ id: columns.label })}
+                          </CommonText>
+                        ) : (
+                          void 0
+                        )}
+                        {columns?.isMandatory && (
+                          <CommonText customTextStyle={styles.starStyle}>
+                            {" *"}
+                          </CommonText>
+                        )}
                       </View>
-                    ) : (
-                      <View
-                        style={{
-                          ...(isWebView
-                            ? styles.webContainer
-                            : getRowStyle(detail)),
-                        }}
-                      >
-                        <View style={styles.titleContainer}>
-                          {columns.label ? (
-                            <CommonText customTextStyle={styles.titleStyle}>
-                              {intl.formatMessage({ id: columns.label })}
-                            </CommonText>
-                          ) : (
-                            void 0
-                          )}
-                          {columns?.isMandatory && (
-                            <CommonText customTextStyle={styles.starStyle}>
-                              {" *"}
-                            </CommonText>
-                          )}
-                        </View>
-                        {renderDetailContent(columns)}
-                      </View>
-                    );
-                  })}
+                    </View>
+                  );
+                })}
               </View>
             );
           }
-
-          return (
-            <View
-              key={idx}
-              style={isWebView ? styles.webContainer : getRowStyle(detail)}
-            >
-              {isEditable ? (
-                renderEditableContent(detail)
-              ) : (
-                <>
-                  <View style={styles.titleContainer}>
-                    {detail.label ? (
-                      <CommonText customTextStyle={styles.titleStyle}>
-                        {intl.formatMessage({ id: detail.label })}
-                      </CommonText>
-                    ) : (
-                      void 0
-                    )}
-                    {detail?.isMandatory && (
-                      <CommonText customTextStyle={styles.starStyle}>
-                        {" *"}
-                      </CommonText>
-                    )}
-                  </View>
-                  {renderDetailContent(detail)}
-                </>
-              )}
-            </View>
-          );
         })}
         {isShowSwitch && isWebView && isEditable && renderSwitch()}
         {hasActionButton && isEditable && isWebView && renderWebActionButton()}
@@ -328,6 +330,11 @@ DetailComponent.defaultProps = {
   isInputDisable: false,
   isShowSwitch: false,
   onPressActionButton: () => {},
+  isShowCancel: false,
+  handleCancel: () => {},
+  handleAddRemoveRow: () => {},
+  handleCheckBoxSelection: () => {},
+  onChipUpdate: () => {},
 };
 
 DetailComponent.propTypes = {
@@ -347,6 +354,11 @@ DetailComponent.propTypes = {
   isMandatory: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
   onPressActionButton: PropTypes.func,
+  isShowCancel: PropTypes.bool,
+  handleCancel: PropTypes.func,
+  handleAddRemoveRow: PropTypes.func,
+  handleCheckBoxSelection: PropTypes.func,
+  onChipUpdate: PropTypes.func,
 };
 
 export default DetailComponent;

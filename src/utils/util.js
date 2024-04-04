@@ -190,3 +190,9 @@ export const getValidUrl = (url) => {
   }
   return link;
 };
+
+export const addKeyValuePair = (arr) => {
+  return arr.map((item) => {
+    return { value: item, label: item } 
+  })
+}

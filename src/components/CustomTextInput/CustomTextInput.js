@@ -26,6 +26,9 @@ import images from "../../images";
 import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
+import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
+import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
+import TextInputWithChip from "../TextInputWithChip/TextInputWithChip";
 
 const CustomTextInput = (props) => {
   const {
@@ -60,6 +63,7 @@ const CustomTextInput = (props) => {
     isPaddingNotRequired,
     isPassword,
     isRupee,
+    isToggle,
     isSendButton,
     isLoading,
     isSelected,
@@ -90,6 +94,14 @@ const CustomTextInput = (props) => {
     labelField,
     valueField,
     urlField,
+    isCheckBoxSelection,
+    checkBoxOptions,
+    handleAddRemoveRow,
+    isActionToAdd,
+    handleCheckBoxSelection,
+    isSingleSelection,
+    isTextInputWithChip,
+    onChipUpdate,
     ...remainingProps
   } = props;
 
@@ -186,7 +198,7 @@ const CustomTextInput = (props) => {
             handleMultiSelect={handleMultiSelect}
             labelField={labelField}
             valueField={valueField}
-            placeholder={placeholder || ""}
+            placeholder={placeholder || "Select"}
             value={value}
             isMultiSelect={isMultiSelect}
             isSelected={isSelected}
@@ -257,6 +269,39 @@ const CustomTextInput = (props) => {
           onCountChange={handleCountChange}
           step={step}
           style={isError ? style.invalidInput : {}}
+        />
+      );
+    }
+    if (isToggle) {
+      return (
+        <CustomToggleComponent
+          isMandatory={isMandatory}
+          customToggleStyle={style.customToggleStyle}
+          onChange={(item) => {
+            onChangeValue(item);
+          }}
+        />
+      );
+    }
+    if (isCheckBoxSelection) {
+      return (
+        <CheckBoxSelection
+          checkBoxOptions={checkBoxOptions}
+          customStyle={style.CheckBoxSelection}
+          handleAddRemoveRow={(isActionToAdd) =>
+            handleAddRemoveRow(isActionToAdd)
+          }
+          isActionToAdd={isActionToAdd}
+          handleCheckBoxSelection={(id) => handleCheckBoxSelection(id)}
+          isSingleSelection={isSingleSelection}
+        />
+      );
+    }
+    if (isTextInputWithChip) {
+      return (
+        <TextInputWithChip
+          placeholderText={placeholder}
+          onChipUpdate={(chipData) => onChipUpdate(chipData)}
         />
       );
     }
@@ -391,6 +436,7 @@ const CustomTextInput = (props) => {
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
             ref={fieldRef}
+            type={isNumeric ? "number" : "text"}
             {...platformSpecificProps}
             {...(isNumeric ? mobileProps : {})}
             {...remainingProps}
@@ -499,6 +545,14 @@ CustomTextInput.defaultProps = {
   value: "",
   valueField: "value",
   urlField: "url",
+  isCheckBoxSelection: false,
+  checkBoxOptions: [],
+  handleAddRemoveRow: () => {},
+  isActionToAdd: true,
+  handleCheckBoxSelection: () => {},
+  isSingleSelection: false,
+  isTextInputWithChip: false,
+  onChipUpdate: () => {},
 };
 
 const datePropType = (props, propName, componentName) => {
@@ -562,6 +616,14 @@ CustomTextInput.propTypes = {
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  CheckBoxSelection: PropTypes.bool,
+  checkBoxOptions: PropTypes.array,
+  handleAddRemoveRow: PropTypes.func,
+  isActionToAdd: PropTypes.bool,
+  handleCheckBoxSelection: PropTypes.func,
+  isSingleSelection: PropTypes.bool,
+  isTextInputWithChip: PropTypes.bool,
+  onChipUpdate: PropTypes.func,
 };
 
 export default CustomTextInput;

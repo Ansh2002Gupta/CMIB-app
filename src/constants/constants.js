@@ -346,6 +346,64 @@ export const MARITAL_STATUS = [
   },
 ];
 
+export const EMP_STRENGTH = [
+  {
+    label: "200",
+    value: "200",
+  },
+  {
+    label: "1000",
+    value: "1000",
+  },
+];
+export const KIND_OF_INDUSTRY = [
+  {
+    name: "Information technology",
+    value: "Information_technology",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "BPO",
+    value: "bpo",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "Service Industry",
+    value: "service_industry",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "Information technology",
+    value: "Information_technology2",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "BPO",
+    value: "bpo2",
+    selectedIndex: null,
+    isSelected: false,
+  },
+  {
+    name: "Service Industry",
+    value: "service_industry2",
+    selectedIndex: null,
+    isSelected: false,
+  },
+];
+export const GROSS_SALARY = [
+  {
+    label: "5 lakh",
+    value: "5 lakh",
+  },
+  {
+    label: "10 lakh",
+    value: "10 lakh",
+  },
+];
 export const MONTHS = [
   {
     label: "January",
@@ -406,6 +464,43 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   label: `${x + 1995}`,
   value: `${x + 1995}`,
 }));
+
+export const Education_Status_Options = [
+  {
+    label: "Regular",
+    value: "regular",
+  },
+  {
+    label: "Correspondence",
+    value: "correspondence",
+  },
+];
+
+export const BOOLEAN_OPTION = [
+  {
+    label: "Yes",
+    value: true,
+  },
+  {
+    label: "No",
+    value: false,
+  },
+];
+
+export const LANGUAGE = [
+  {
+    label: "English",
+    value: "English",
+  },
+  {
+    label: "Hindi",
+    value: "Hindi",
+  },
+  {
+    label: "Urdu",
+    value: "Urdu",
+  },
+];
 
 export const COLOR = [
   "#000000",
@@ -481,12 +576,7 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
-export const JOBS_SEEKERS_TABLE_HEADING = {
-  candidate_name: "Candidate Name",
-  readable_id: "Candidate ID",
-  totalExprience: "Total Experience",
-  functionalArea: "Functional Areas",
-};
+
 export const UNITS = {
   YRS: "Yrs",
 };
@@ -496,3 +586,10 @@ export const FILTER_TYPE_ENUM = {
 };
 export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = "WorkMode";
 export const COMPANY_QUERY_TYPE_TICKET = "/";
+
+export const JOB_SEEKERS_TABLE_HEADING = {
+  company_name: "Company Name",
+  candidate_id: "Candidate ID",
+  total_experience: "Total Experience",
+  functional_area: "Functional Area",
+};

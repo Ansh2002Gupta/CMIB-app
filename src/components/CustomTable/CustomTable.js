@@ -37,6 +37,7 @@ const CustomTable = ({
   filterCategory,
   getColoumConfigs,
   getStatusStyle,
+  hideTotalCount,
   handleLoadMore,
   handlePageChange,
   handleTicketModal,
@@ -143,7 +144,7 @@ const CustomTable = ({
                 style={styles.filterTopSection(isWebView)}
               />
             )}
-            {!isWeb && isTotalCardVisible && (
+            {!isWeb && !hideTotalCount && (
               <View style={styles.ticketTotals}>
                 <CommonText
                   fontWeight={"500"}
@@ -200,40 +201,36 @@ const CustomTable = ({
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
-                              <>
-                                {mobileComponentToRender ? (
-                                  mobileComponentToRender(item, index)
-                                ) : (
-                                  <View style={styles.mobileContainer}>
-                                    <View>
-                                      <CommonText
-                                        fontWeight={"600"}
-                                        customTextStyle={styles.cellTextStyle()}
-                                      >
-                                        {getRenderText(item, headingTexts)}
-                                      </CommonText>
-                                      <CommonText
-                                        customTextStyle={styles.tableQueryText}
-                                      >
-                                        {getRenderText(item, subHeadingText)}
-                                      </CommonText>
-                                    </View>
-                                    <View style={styles.rowsPerPageWeb}>
-                                      <Chip
-                                        label={getRenderText(item, statusText)}
-                                        style={getStatusStyle(item.status)}
-                                      />
-                                      <TouchableImage
-                                        onPress={() => {
-                                          onIconPress(item);
-                                        }}
-                                        source={tableIcon}
-                                        style={styles.iconTicket}
-                                      />
-                                    </View>
-                                  </View>
-                                )}
-                              </>
+                              <View style={styles.mobileContainer}>
+                                <View>
+                                  <CommonText
+                                    fontWeight={"600"}
+                                    customTextStyle={styles.cellTextStyle()}
+                                  >
+                                    {getRenderText(item, headingTexts)}
+                                  </CommonText>
+                                  <CommonText
+                                    customTextStyle={styles.tableQueryText}
+                                  >
+                                    {getRenderText(item, subHeadingText)}
+                                  </CommonText>
+                                </View>
+                                <View style={styles.rowsPerPageWeb}>
+                                  {!!item.status && (
+                                    <Chip
+                                      label={getRenderText(item, statusText)}
+                                      style={getStatusStyle(item.status)}
+                                    />
+                                  )}
+                                  <TouchableImage
+                                    onPress={() => {
+                                      onIconPress(item);
+                                    }}
+                                    source={tableIcon}
+                                    style={styles.iconTicket}
+                                  />
+                                </View>
+                              </View>
                             )}
                           </>
                         );
@@ -344,6 +341,7 @@ CustomTable.defaultProps = {
   containerStyle: {},
   headingTexts: [],
   handleTicketModal: () => {},
+  onIconPress: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
@@ -374,7 +372,7 @@ CustomTable.propTypes = {
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   loadingMore: PropTypes.bool.isRequired,
-  onIconPress: PropTypes.func.isRequired,
+  onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
