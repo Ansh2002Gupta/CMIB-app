@@ -1,12 +1,29 @@
 import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
+const webActionButtonContainer = {
+  paddingTop: 16,
+  position: "fixed",
+  bottom: 0,
+  maxWidth: 530,
+  width: "90%",
+  paddingBottom: 16,
+  borderBottomLeftRadius: 12,
+  borderBottomRightRadius: 12,
+};
+
 const styles = StyleSheet.create({
   customerInnerContainerStyle: {
     paddingTop: 16,
     paddingBottom: 16,
     paddingLeft: 0,
     paddingRight: 0,
+    ...Platform.select({
+      web: {
+        maxHeight: "60vh",
+        overflowY: "auto",
+      },
+    }),
   },
   headerSection: {
     justifyContent: "space-between",
@@ -33,12 +50,19 @@ const styles = StyleSheet.create({
   bottomSection: {
     width: "100%",
     borderTopWidth: 1,
-    padding: 16,
     paddingBottom: 0,
     borderColor: colors.lightGrey,
+    backgroundColor: colors.white,
+    ...Platform.select({
+      web: {
+        paddingLeft: 16,
+        paddingRight: 16,
+      },
+    }),
   },
   buttonWebStyle: {
     alignItems: "flex-end",
+    ...webActionButtonContainer,
   },
   subContainerStyle: {
     width: "50%",
@@ -46,8 +70,13 @@ const styles = StyleSheet.create({
   buttonMobileStyle: {
     ...Platform.select({
       ios: {
-        marginBottom: 30,
+        paddingBottom: 16,
+        paddingTop: 16,
       },
+      android: {
+        paddingTop: 16,
+      },
+      web: webActionButtonContainer,
     }),
   },
   middleSectionWeb: {

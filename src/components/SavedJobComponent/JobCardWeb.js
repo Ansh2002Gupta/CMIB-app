@@ -1,7 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import CommonText from "../CommonText";
-import { Image, View } from "@unthinkable/react-core-components";
+import { Platform, Image, View } from "@unthinkable/react-core-components";
 
 import { ThreeRow, TwoColumn } from "../../core/layouts";
 import MultiColumn from "../../core/layouts/MultiColumn";
@@ -15,23 +15,23 @@ import style from "./SavedJobComponent.style";
 
 import colors from "../../assets/colors";
 
-const JobCardWeb = ({
-  isLoading,
-  companyName,
-  createdAt,
-  jobPostion,
-  jobDescription,
-  jobLocation,
-  handleRemove,
-  handleApply,
-  vaccancies,
-  minSalary,
-  maxSalary,
-  minExperience,
-  maxExperience,
-  requirement,
-}) => {
+const JobCardWeb = ({ cardDetails }) => {
   const intl = useIntl();
+  const {
+    companyName,
+    createdAt,
+    jobPostion,
+    jobDescription,
+    jobLocation,
+    handleRemove,
+    handleApply,
+    vaccancies,
+    minSalary,
+    maxSalary,
+    minExperience,
+    maxExperience,
+    requirement,
+  } = cardDetails;
 
   const columnConfig = (data) => {
     return data.map((item) => {
@@ -131,12 +131,12 @@ const JobCardWeb = ({
               style={{ gap: 2 }}
               topSection={
                 <CommonText customTextStyle={style.companyNameStyle}>
-                  {companyName}
+                  {jobPostion}
                 </CommonText>
               }
               middleSection={
                 <CommonText customTextStyle={style.jobPositionText}>
-                  {jobPostion}
+                  {companyName}
                 </CommonText>
               }
               bottomSection={
@@ -200,7 +200,7 @@ const JobCardWeb = ({
     },
   ];
 
-  return <MultiRow style={{ gap: 24 }} rows={mainCardMultiRow} />;
+  return <MultiRow style={style.webContainer} rows={mainCardMultiRow} />;
 };
 
 export default JobCardWeb;
