@@ -191,6 +191,38 @@ export const getValidUrl = (url) => {
   return link;
 };
 
+export const changeComma = (data, index) => {
+  if (index < data.length) {
+    return [...data.slice(0, index), "+" + (data.length - index) + " more"];
+  }
+  return data;
+};
+
+export const timeAgo = (dateString) => {
+  const date = dayjs(dateString);
+  const now = dayjs();
+
+  const minutes = now.diff(date, "minute");
+  const hours = now.diff(date, "hour");
+  const days = now.diff(date, "day");
+  const months = now.diff(date, "month");
+  const years = now.diff(date, "year");
+
+  if (years > 0) {
+    return `${years} ${years === 1 ? "year" : "years"}`;
+  } else if (months > 0) {
+    return `${months} ${months === 1 ? "month" : "months"}`;
+  } else if (days > 0) {
+    return `${days} ${days === 1 ? "day" : "days"}`;
+  } else if (hours > 0) {
+    return `${hours} ${hours === 1 ? "hour" : "hours"}`;
+  } else if (minutes > 0) {
+    return `${minutes} ${minutes === 1 ? "minute" : "minutes"}`;
+  } else {
+    return `a few seconds`;
+  }
+};
+
 export const convertToTime = ({ dateString, format24Hour = true }) => {
   const date = dayjs(dateString);
   const timeFormat = format24Hour ? "HH:mm" : "hh:mm A";

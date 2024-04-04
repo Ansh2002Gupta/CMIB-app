@@ -147,8 +147,8 @@ const FilterModal = ({
   };
 
   const RenderCategoryButton = ({ title, onClick }) => {
-    const isActive = getCheckBoxesStatus(title) === "full" ? true : false;
-    const isPartial = getCheckBoxesStatus(title) === "partial" ? true : false;
+    const isActive = getCheckBoxesStatus(title) === "full";
+    const isPartial = getCheckBoxesStatus(title) === "partial";
 
     return (
       <CheckBox
@@ -185,7 +185,7 @@ const FilterModal = ({
         middleSection={
           <TwoColumn
             leftSection={
-              <>
+              <ScrollView>
                 {filterCategory.map((item) => {
                   return (
                     <View style={styles.renderCheckButton} {...webProps}>
@@ -219,7 +219,7 @@ const FilterModal = ({
                     </View>
                   );
                 })}
-              </>
+              </ScrollView>
             }
             leftSectionStyle={styles.leftSection}
             rightSectionStyle={styles.rightSection}

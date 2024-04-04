@@ -1,4 +1,5 @@
 import avatar from "../../public/images/Avatar.svg";
+import companyLogo from "../../public/images/svg/companyLogo.svg";
 import iconCmibDark from "../../public/images/svg/iconCmibDark.svg";
 import iconCmibLight from "../../public/images/svg/iconCmibLight.svg";
 import logo from "../../public/images/logo.png";
@@ -125,6 +126,12 @@ import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 import iconError from "../../public/images/svg/iconError.svg";
+import iconSingleSave from "../../public/images/svg/iconSingleSave.svg";
+import iconSaveSlashBlack from "../../public/images/svg/iconSaveSlashBlack.svg";
+import iconSaveSlashBlue from "../../public/images/svg/iconSaveSlashBlue.svg";
+import iconBriefcase from "../../public/images/svg/iconBriefcase.svg";
+import iconLocation from "../../public/images/svg/iconLocation.svg";
+import iconRupee from "../../public/images/svg/iconRupee.svg";
 import iconClock from "../../public/images/svg/iconClock.svg";
 
 const images = {
@@ -132,6 +139,7 @@ const images = {
   iconArrowDown,
   iconArrowDown2,
   avatar,
+  companyLogo,
   logo,
   iconCmibDark,
   iconCmibLight,
@@ -255,6 +263,12 @@ const images = {
   iconLoading,
   iconGreyCross,
   iconClock,
+  iconSingleSave,
+  iconSaveSlashBlack,
+  iconSaveSlashBlue,
+  iconBriefcase,
+  iconLocation,
+  iconRupee,
 };
 
 export default images;
