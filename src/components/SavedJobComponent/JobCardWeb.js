@@ -32,7 +32,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
   } = cardDetails;
 
   const columnConfig = (data) => {
-    return data.map((item) => {
+    return data?.map((item) => {
       return {
         content: (
           <Chip
@@ -47,14 +47,14 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
   };
 
   const locationConfig = (data) => {
-    return data.map((item, index) => {
+    return data?.map((item, index) => {
       return {
         content: (
           <CommonText
             customTextStyle={[style.marginRightText, style.blackText]}
           >
             {item?.name}
-            {index !== data.length - 1 && "/"}
+            {/* {index !== data?.length - 1 && "/"} */}
           </CommonText>
         ),
       };

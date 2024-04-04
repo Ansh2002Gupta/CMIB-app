@@ -31,19 +31,19 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
   } = cardDetails;
 
   const rowConfig = (data) => {
-    return data.map((item, index) => {
+    return data?.map((item, index) => {
       return {
         content: (
           <CommonText
             customTextStyle={[
               style.marginRightText,
-              index !== data.length - 1 || data.length <= 3
+              index !== data?.length - 1 || data?.length <= 3
                 ? style.blackText
                 : style.greyText,
             ]}
           >
             {item?.name}
-            {index !== data.length - 1 && ","}
+            {index !== data?.length - 1 && ","}
           </CommonText>
         ),
       };
@@ -51,12 +51,12 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
   };
 
   const locationConfig = (data) => {
-    return data.map((item, index) => {
+    return data?.map((item, index) => {
       return {
         content: (
           <CommonText customTextStyle={[style.blackText]}>
             {item?.name}
-            {index !== data.length - 1 && "/"}
+            {index !== data?.length - 1 && "/"}
           </CommonText>
         ),
       };
