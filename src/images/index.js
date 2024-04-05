@@ -207,6 +207,10 @@ const iconUnCheckBoxRound = appendAppBaseURl("/images/svg/iconUnCheckBoxRound.sv
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
 const iconTickGreen = appendAppBaseURl("/images/svg/iconTickGreen.svg");
 const iconCrossRed = appendAppBaseURl("/images/svg/iconCrossRed.svg");
+const iconAppliedJobs = appendAppBaseURl("/images/svg/iconAppliedJobs.svg");
+const iconAppliedJobsActiveJobs = appendAppBaseURl(
+  "/images/svg/iconAppliedJobsActiveJobs.svg"
+);
 const iconSingleSave = appendAppBaseURl("/images/svg/iconSingleSave.svg");
 const iconSaveSlashBlack = appendAppBaseURl(
   "/images/svg/iconSaveSlashBlack.svg"
@@ -215,6 +219,7 @@ const iconSaveSlashBlue = appendAppBaseURl("/images/svg/iconSaveSlashBlue.svg");
 const iconBriefcase = appendAppBaseURl("/images/svg/iconBriefcase.svg");
 const iconLocation = appendAppBaseURl("/images/svg/iconLocation.svg");
 const iconRupee = appendAppBaseURl("/images/svg/iconRupee.svg");
+const videoPlayIcon = appendAppBaseURl("/images/svg/videoPlayIcon.svg");
 
 const images = {
   iconArrowUp,
@@ -366,12 +371,15 @@ const images = {
   iconError,
   iconTickGreen,
   iconCrossRed,
+  iconAppliedJobs,
+  iconAppliedJobsActiveJobs,
   iconSingleSave,
   iconSaveSlashBlack,
   iconSaveSlashBlue,
   iconBriefcase,
   iconLocation,
   iconRupee,
+  videoPlayIcon,
 };
 
 export default images;

@@ -240,6 +240,10 @@ const config = [
         element: <JobSeekersView />,
       },
       {
+        viewPath: navigations.SAVED_JOBS,
+        element: <JobSeekersView />,
+      },
+      {
         viewPath: navigations.SAVED_CANDIDATES,
         element: <SavedCandidatesView />,
       },
