@@ -67,4 +67,3 @@ export const GET_GENDER_PREFERENCE = `${USER_TYPE_COMPANY}/genders`;
 export const GET_WORK_MODE = `${USER_TYPE_COMPANY}/workmode`;
 export const POST_JOB = `${USER_TYPE_COMPANY}/jobs`;
 export const UPDATE_JOB = `${USER_TYPE_COMPANY}/jobs/update`;
-
