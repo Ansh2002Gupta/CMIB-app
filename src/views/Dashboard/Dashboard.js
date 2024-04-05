@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
+import useIsWebView from "../../hooks/useIsWebView";
 
 import CommonText from "../../components/CommonText";
 import RangeSlider from "../../components/RangeSlider";
@@ -8,109 +9,37 @@ import styles from "./dashboard.style";
 import images from "../../images";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import { TwoRow } from "../../core/layouts";
+import CAJobsDashboard from "../CAJobsDashboard";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { moduleKeys } from "../../constants/sideBarHelpers";
 
-const MIN_VALUE = 0;
-const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
-// Just ignore this file as just to test custom component
 function DashboardView() {
   const intl = useIntl();
-  const [range, setRange] = useState({ max: MAX_VALUE, min: MIN_VALUE });
-
-  const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
-  const FilterIcon = images.iconFilter;
-  const MoreIcon = images.iconMore;
-  const AddIcon = images.iconAdd;
-
-  const toggleSwitch = () => {
-    // setIsEnabled((previousState) => !previousState);
-  };
-
-  const handleAddDesignation = () => {
-    // setIsEnabled((previousState) => !previousState);
-  };
-
-  const handleSearchResults = (filteredData) => {};
-
-  const searchData = [
-    {
-      content: <SearchView data={dataList} onSearch={handleSearchResults} />,
-      style: {},
-      isFillSpace: true,
-    },
-    {
-      content: (
-        <TouchableImage
-          source={FilterIcon}
-          parentStyle={styles.imageParentStyle}
-        />
-      ),
-      style: {},
-      isFillSpace: false,
-    },
-    {
-      content: (
-        <TouchableImage
-          source={MoreIcon}
-          disabled={false}
-          isSelector={true}
-          parentStyle={styles.imageParentStyle}
-        />
-      ),
-      style: {},
-      isFillSpace: false,
-    },
-  ];
-
-  const [selectBoxState, setSelectBoxState] = useState([
-    {
-      isSelected: false,
-      label: "Ca Jobs",
-      name: "Ca Jobs",
-      selectedIndex: null,
-      value: "Ca Jobs",
-    },
-    {
-      isSelected: false,
-      label: "Nqca",
-      name: "Nqca",
-      selectedIndex: null,
-      value: "Nqca",
-    },
-  ]);
-
-  const handleModuleSelection = (updatedSelectedItems) => {
-    const updatedState = selectBoxState.map((item) => {
-      if (item.value === updatedSelectedItems) {
-        if (item.isSelected) {
-          item.isSelected = false;
-        } else {
-          item.isSelected = true;
-        }
-        return item;
-      }
-      return item;
-    });
-    setSelectBoxState(updatedState);
-  };
+  const { isWebView } = useIsWebView();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   return (
     <View style={styles.container}>
-      <CommonText customTextStyle={styles.header}>
-        {intl.formatMessage({ id: "label.dashboard" })}
-      </CommonText>
-      <View>
-        <CommonText customTextStyle={styles.header}>
-          {intl.formatMessage({ id: "label.dashboard" })}
-        </CommonText>
-      </View>
-      <RangeSlider
-        label="Yrs"
-        max={MAX_VALUE}
-        min={MIN_VALUE}
-        onChange={(obj) => {
-          console.log(obj);
-        }}
-        step={5}
-        {...{ range, setRange }}
+      <TwoRow
+        topSection={
+          <IconHeader
+            hasActionButton={false}
+            showInWeb={isWebView}
+            hasIconBar
+            headerText={intl.formatMessage({ id: "label.dashboard" })}
+            intl={intl}
+          />
+        }
+        isBottomFillSpace
+        bottomSection={
+          <>
+            {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
+              <CAJobsDashboard />
+            ) : null}
+          </>
+        }
       />
     </View>
   );
