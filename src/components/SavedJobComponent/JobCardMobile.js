@@ -9,6 +9,7 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
 import Chip from "../Chip";
+import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
@@ -44,19 +45,6 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
           >
             {item?.name}
             {index !== data?.length - 1 && ","}
-          </CommonText>
-        ),
-      };
-    });
-  };
-
-  const locationConfig = (data) => {
-    return data?.map((item, index) => {
-      return {
-        content: (
-          <CommonText customTextStyle={[style.blackText]}>
-            {item?.name}
-            {index !== data?.length - 1 && "/"}
           </CommonText>
         ),
       };
@@ -158,7 +146,7 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
           leftSection={
             <Image source={images.iconLocation} style={style.mobileIconStyle} />
           }
-          rightSection={<MultiColumn columns={locationConfig(jobLocation)} />}
+          rightSection={<MultiColumn columns={LocationConfig(jobLocation)} />}
         />
       ),
     },

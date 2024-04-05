@@ -9,6 +9,7 @@ import MultiRow from "../../core/layouts/MultiRow";
 
 import ActionPairButton from "../ActionPairButton";
 import Chip from "../Chip";
+import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
@@ -41,21 +42,6 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
             bgColor={colors.white}
             customContainerStyle={style.customContainerStyle}
           />
-        ),
-      };
-    });
-  };
-
-  const locationConfig = (data) => {
-    return data?.map((item, index) => {
-      return {
-        content: (
-          <CommonText
-            customTextStyle={[style.marginRightText, style.blackText]}
-          >
-            {item?.name}
-            {/* {index !== data?.length - 1 && "/"} */}
-          </CommonText>
         ),
       };
     });
@@ -120,7 +106,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
             leftSection={
               <Image source={images.iconLocation} style={style.iconStyle} />
             }
-            rightSection={<MultiColumn columns={locationConfig(jobLocation)} />}
+            rightSection={<MultiColumn columns={LocationConfig(jobLocation)} />}
           />
         </View>
       ),

@@ -60,17 +60,11 @@ const SavedJobComponent = ({
       bottomSection={
         isWebView ? (
           <JobCardWeb
-            cardDetails={cardDetails}
-            isLoading={isLoading}
-            handleRemove={handleRemove}
-            handleApply={handleApply}
+            {...{ cardDetails, isLoading, handleRemove, handleApply }}
           />
         ) : (
           <JobCardMobile
-            cardDetails={cardDetails}
-            isLoading={isLoading}
-            handleRemove={handleRemove}
-            handleApply={handleApply}
+            {...{ cardDetails, isLoading, handleRemove, handleApply }}
           />
         )
       }
