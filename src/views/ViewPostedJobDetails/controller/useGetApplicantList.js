@@ -31,7 +31,7 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const useGetApplicantList = () => {
+const useGetApplicantList = (onEditPress) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -274,7 +274,17 @@ const useGetApplicantList = () => {
 
       {
         content: (
-          <View>{!isHeading && <PopupMessage message={item?.action} />}</View>
+          <View>
+            {!isHeading && (
+              <PopupMessage
+                message={item?.action}
+                onPopupClick={(item) => {
+                  onEditPress(item);
+                  // navigate(navigations.JOB_PROFILE);
+                }}
+              />
+            )}
+          </View>
         ),
         style: {
           ...commonStyles.columnStyle("20%"),

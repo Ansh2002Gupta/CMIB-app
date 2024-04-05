@@ -633,6 +633,7 @@ const locale = {
   "label.readyToPlaceRequired": "Ready to place india is required",
   "label.preferredRegionRequired": "Preferred region is required",
   "label.expectedAnnualSalaryRequired": "Expected annual salary is required",
+  "label.schedule_interview": "Schedule Interview",
 };
 
 export default locale;

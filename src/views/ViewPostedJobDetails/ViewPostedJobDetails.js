@@ -382,7 +382,11 @@ const ViewPostedJobDetails = () => {
                     },
                     {
                       label: intl.formatMessage({ id: "label.applicants" }),
-                      component: <ViewJobApplicants />,
+                      component: (
+                        <ViewJobApplicants
+                          questionaireData={questionnaireData}
+                        />
+                      ),
                     },
                     {
                       label: intl.formatMessage({
