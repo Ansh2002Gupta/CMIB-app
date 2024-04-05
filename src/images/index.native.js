@@ -134,6 +134,8 @@ import iconSaveSlashBlue from "../../public/images/svg/iconSaveSlashBlue.svg";
 import iconBriefcase from "../../public/images/svg/iconBriefcase.svg";
 import iconLocation from "../../public/images/svg/iconLocation.svg";
 import iconRupee from "../../public/images/svg/iconRupee.svg";
+import pdfIcon from "../../public/images/svg/pdfIcon.svg";
+import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
 
 const images = {
   iconArrowUp,
@@ -272,6 +274,8 @@ const images = {
   iconBriefcase,
   iconLocation,
   iconRupee,
+  pdfIcon,
+  rightDiagonalArrow,
 };
 
 export default images;
