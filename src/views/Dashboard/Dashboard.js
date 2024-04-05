@@ -89,7 +89,7 @@ function DashboardView() {
       )}
 
       {/* change to false to close the modal */}
-      {true && <ViewInterviewDetails />}
+      {/* {true && <ViewInterviewDetails />} */}
     </View>
   );
 }
