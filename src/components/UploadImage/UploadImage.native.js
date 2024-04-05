@@ -48,7 +48,7 @@ const UploadImage = ({
       type: [types.pdf],
     });
     if (response.didCancel) {
-      console.log("User cancelled document picker");
+      return;
     } else if (response.error) {
       setErrorWhileUpload(response.error);
     } else if (response[0]?.fileSize > FILE_MAX_SIZE) {
@@ -76,7 +76,7 @@ const UploadImage = ({
 
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
-        console.log("User cancelled image picker");
+        return;
       } else if (response.error) {
         setErrorWhileUpload(response.error);
       } else if (
