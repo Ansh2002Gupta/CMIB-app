@@ -8,7 +8,6 @@ import AddModifyJobComponent from "../../containers/AddModifyNewJobs/AddModifyJo
 import FooterComponent from "../../containers/AddModifyNewJobs/FooterComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { CustomTabs } from "../../components/Tab";
-import { useNavigate } from "../../routes";
 import LoadingScreen from "../../components/LoadingScreen";
 
 import { getFormatedData } from "../../utils/util";
@@ -27,7 +26,6 @@ const EditJobDetails = ({
   onCancelPress,
 }) => {
   const { isWebView } = useIsWebView();
-  const navigate = useNavigate();
   const { id } = useParams();
   const [jobDetails, setJobDetails] = useState(intialJobData);
   const initialJob = useRef(intialJobData);

@@ -22,16 +22,6 @@ import colors from "../../../assets/colors";
 import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
 const ViewJobApplicants = () => {
   const intl = useIntl();
-  const onEditPress = (item) => {
-    //   navigate(navigations.EDIT_JOB, {
-    //     state: item,
-    //   });
-  };
-  const onViewPress = (item) => {
-    //   navigate(navigations.DETAILS_JOBS, {
-    //     state: item,
-    //   });
-  };
   const {
     allDataLoaded,
     currentRecords,
@@ -66,12 +56,6 @@ const ViewJobApplicants = () => {
     totalcards,
   } = useGetApplicantList();
 
-  const navigate = useNavigate();
-
-  const handleTicketModal = () => {
-    // navigate(navigations.ADD_NEW_JOBS);
-  };
-
   const getMobileView = (item, index) => {
     return (
       <RenderMobileItem
@@ -91,7 +75,6 @@ const ViewJobApplicants = () => {
         filterCategory,
         getColoumConfigs,
         getStatusStyle,
-        handleTicketModal,
         handleLoadMore,
         getErrorDetails,
         tableHeading,
@@ -127,13 +110,7 @@ const ViewJobApplicants = () => {
       containerStyle={styles.innerContainerStyle}
       isTotalCardVisible={false}
       data={postedJobData}
-      ThirdSection={
-        <DownloadMoreComponent
-          onPress={() => {
-            console.log("HI I AM pressed");
-          }}
-        />
-      }
+      ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
     />
   );
 };

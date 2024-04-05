@@ -24,21 +24,28 @@ import colors from "../../assets/colors";
 import ViewScheduleInterview from "../../containers/ViewPostedJobDetails/ViewScheduleInterview";
 import { useParams } from "react-router";
 import EditJobDetails from "../EditJobDetails/EditJobDetails";
+import useGetEditJobs from "../../services/apiServices/hooks/EditJobs/useGetEditJobs";
 
 const ViewPostedJobDetails = () => {
   const { id } = useParams();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     isLoading: isConstantLoading,
-    data: apiData,
+    stateResult: apiData,
     isError: apiIsError,
     error: apiError,
-    fetchData: getPostedData,
-  } = useFetch({
-    url: `${POST_JOB}/${id}`,
-  });
-  const { isLoading, isSuccess, isError, isErrorData, fetchData } =
-    useGetAddNewJobData();
+    getJobs: getPostedData,
+  } = useGetEditJobs(id);
+
+  const {
+    isLoading,
+    isSuccess,
+    isError,
+    isErrorData,
+    fetchData,
+    fetchRemainingViewData,
+    fetchViewData,
+  } = useGetAddNewJobData();
   const [questionnaireData, setQuestionnaireData] = useState([]);
   const [appData, setAppData] = useState({});
   const [details, setDetails] = useState([]);
@@ -51,9 +58,18 @@ const ViewPostedJobDetails = () => {
   useEffect(() => {
     if (searchParams.get("mode") === "edit") {
       setIsEditable(true);
+      fetchData();
+      getPostedData();
+    } else {
+      fetchViewData();
     }
-    fetchData();
   }, []);
+  useEffect(() => {
+    if (searchParams.get("mode") === "view" && isEditable) {
+      setIsEditable(false);
+      getPostedData();
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (apiData && isSuccess) {
@@ -288,12 +304,15 @@ const ViewPostedJobDetails = () => {
   const onCancelPress = (shouldApiBeCalled = false) => {
     if (isEditable) {
       setIsEditable(false);
+      setSearchParams((prev) => {
+        prev.set("mode", "view");
+        return prev;
+      });
       if (shouldApiBeCalled) {
         getPostedData();
       }
     }
   };
-
   return (
     <>
       {isConstantLoading || isLoading || loading ? (
@@ -342,7 +361,14 @@ const ViewPostedJobDetails = () => {
                                 }}
                               >
                                 <FormTabs
-                                  onEditClick={() => setIsEditable(true)}
+                                  onEditClick={() => {
+                                    setIsEditable(true);
+                                    setSearchParams((prev) => {
+                                      prev.set("mode", "edit");
+                                      return prev;
+                                    });
+                                    fetchRemainingViewData();
+                                  }}
                                   tabs={[
                                     {
                                       label: intl.formatMessage({

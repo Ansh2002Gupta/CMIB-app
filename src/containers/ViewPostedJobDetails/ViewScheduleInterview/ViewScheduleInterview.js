@@ -47,11 +47,6 @@ const ViewScheduleInterview = () => {
     totalcards,
   } = useGetScheduleList();
 
-  //   const navigate = useNavigate();
-
-  const handleTicketModal = () => {
-    // navigate(navigations.ADD_NEW_JOBS);
-  };
   const getMobileView = (item, index) => {
     return (
       <MobileCard
@@ -76,7 +71,6 @@ const ViewScheduleInterview = () => {
         filterCategory,
         getColoumConfigs,
         getStatusStyle,
-        handleTicketModal,
         handleLoadMore,
         getErrorDetails,
         tableHeading,
@@ -109,13 +103,7 @@ const ViewScheduleInterview = () => {
       mobileComponentToRender={getMobileView}
       containerStyle={styles.customTableStyle}
       isTotalCardVisible={false}
-      ThirdSection={
-        <DownloadMoreComponent
-          onPress={() => {
-            console.log("HI I AM pressed");
-          }}
-        />
-      }
+      ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
       renderCalendar={true}
     />
   );

@@ -143,13 +143,7 @@ const PostedJobsView = () => {
           mobileComponentToRender={getMobileView}
           containerStyle={styles.customTableStyle}
           isTotalCardVisible={false}
-          ThirdSection={
-            <DownloadMoreComponent
-              onPress={() => {
-                console.log("HI I AM pressed");
-              }}
-            />
-          }
+          ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
         />
       }
     />

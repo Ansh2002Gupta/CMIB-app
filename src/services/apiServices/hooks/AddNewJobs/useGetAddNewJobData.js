@@ -22,7 +22,7 @@ import {
 } from "../../../../globalContext/addJob/addJobActions";
 const useGetAddNewJobData = () => {
   const [, addJobsDispatch] = useContext(AddJobContext);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
@@ -51,6 +51,45 @@ const useGetAddNewJobData = () => {
       setLoading(false);
     }
   };
+  const fetchViewData = async () => {
+    try {
+      setLoading(true);
+      // Use axios or fetch to get data from the endpoints
+      const responses = await Promise.all([
+        Http.get(GET_JOB_TYPE),
+        Http.get(GET_GENDER_PREFERENCE),
+        Http.get(GET_CATERORY_PREFERENCE),
+        Http.get(GET_WORK_MODE),
+      ]);
+
+      addJobsDispatch(setJobType(responses[0].data));
+      addJobsDispatch(setGenderPreference(responses[1].data));
+      addJobsDispatch(setJobCategory(responses[2].data));
+      addJobsDispatch(setWorkMode(responses[3].data));
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fetchRemainingViewData = async () => {
+    try {
+      setLoading(true);
+      const responses = await Promise.all([
+        Http.get(COUNTRY_CODE),
+        Http.get(GET_FUNCTIONAL_TYPE),
+        Http.get(GET_JOB_LOCATION),
+      ]);
+      addJobsDispatch(setCountryData(responses[0].data));
+      addJobsDispatch(setFunctionalData(responses[1].data));
+      addJobsDispatch(setJobLocation(responses[2].data));
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const fetchSearch = async (data) => {
     setLoading(true);
     return Http.get(`${GET_JOB_LOCATION}?city=${data ? data : ""}`)
@@ -72,6 +111,8 @@ const useGetAddNewJobData = () => {
     isErrorData: error,
     fetchData,
     fetchSearch,
+    fetchViewData,
+    fetchRemainingViewData,
   };
 };
 
