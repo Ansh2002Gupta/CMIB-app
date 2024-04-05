@@ -8,6 +8,7 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import MultiRow from "../../core/layouts/MultiRow";
 
 import ActionPairButton from "../ActionPairButton";
+import CustomTextEditor from "../CustomTextEditor/CustomTextEditor";
 import Chip from "../Chip";
 import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo } from "../../utils/util";
@@ -38,7 +39,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
       return {
         content: (
           <Chip
-            label={item?.name}
+            label={item?.name || item}
             textColor={colors.black}
             bgColor={colors.white}
             customContainerStyle={style.customContainerStyle}
@@ -151,16 +152,20 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
     },
     {
       content: (
-        <CommonText customTextStyle={style.breakWordStyle}>
-          {jobDescription}
+        <CommonText customTextStyle={[style.breakWordStyle]}>
+          <CustomTextEditor
+            value={jobDescription}
+            disabled
+            quilStyle={style.customQuilStyle}
+          />
         </CommonText>
       ),
     },
-    {
+    requirement?.length && {
       content: (
         <MultiColumn
           columns={columnConfig(changeComma(requirement, 3))}
-          style={{ gap: 8 }}
+          style={style.chipContainerStyle}
         />
       ),
     },

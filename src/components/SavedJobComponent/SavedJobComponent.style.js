@@ -73,6 +73,11 @@ const style = StyleSheet.create({
     fontSize: 12,
     color: colors.darkBlue,
   },
+  customButtonApplyStyle: {
+    fontSize: 12,
+    color: colors.green,
+    marginRight: 20,
+  },
   buttonContainerStyle: { alignItems: "center" },
   buttonTextStyle: { fontWeight: "500", fontSize: 14 },
   iconView: { alignItems: "center", gap: 8 },
@@ -120,8 +125,9 @@ const style = StyleSheet.create({
   },
   mobileActionHandle: {
     marginTop: 16,
+    alignItems: "center",
   },
-  webContainer: { gap: 24, paddingRight: 24 },
+  webContainer: { paddingRight: 24 },
   topCurveSection: { backgroundColor: colors.darkBlue, marginRight: -1 },
   whiteCurveSection: {
     backgroundColor: colors.white,
@@ -141,6 +147,9 @@ const style = StyleSheet.create({
       },
     }),
   },
+  detailStyle: {
+    marginTop: 24,
+  },
   webJobLocation: {
     ...Platform.select({
       web: {
@@ -151,6 +160,8 @@ const style = StyleSheet.create({
       },
     }),
   },
+  customQuilStyle: { height: undefined, borderWidth: 0 },
+  chipContainerStyle: { gap: 8, marginBottom: 16 },
 });
 
 export default style;

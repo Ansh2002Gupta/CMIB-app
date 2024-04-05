@@ -15,7 +15,12 @@ import images from "../../images";
 import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
 
-const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
+const JobCardMobile = ({
+  cardDetails,
+  isLoading,
+  handleRemove,
+  handleApply,
+}) => {
   const intl = useIntl();
   const {
     companyName,
@@ -44,7 +49,7 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
                 : style.greyText,
             ]}
           >
-            {item?.name}
+            {item?.name || item}
             {index !== data?.length - 1 && ","}
           </CommonText>
         ),
@@ -196,18 +201,34 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
             })}`}</CommonText>
           }
           rightSection={
-            <CustomButton
-              disabled={isLoading}
-              iconLeft={{
-                leftIconAlt: "left-saved",
-                leftIconSource: images.iconSaveSlashBlue,
-              }}
-              onPress={handleRemove}
-              customStyle={{ customTextStyle: style.customButtonTextStyle }}
-              style={style.buttonStyle}
-            >
-              {intl.formatMessage({ id: "label.remove" })}
-            </CustomButton>
+            <TwoColumn
+              leftSection={
+                <CustomButton
+                  disabled={isLoading}
+                  onPress={handleApply}
+                  customStyle={{
+                    customTextStyle: style.customButtonApplyStyle,
+                  }}
+                  style={style.buttonStyle}
+                >
+                  {intl.formatMessage({ id: "label.applyJob" })}
+                </CustomButton>
+              }
+              rightSection={
+                <CustomButton
+                  disabled={isLoading}
+                  iconLeft={{
+                    leftIconAlt: "left-saved",
+                    leftIconSource: images.iconSaveSlashBlue,
+                  }}
+                  onPress={handleRemove}
+                  customStyle={{ customTextStyle: style.customButtonTextStyle }}
+                  style={style.buttonStyle}
+                >
+                  {intl.formatMessage({ id: "label.remove" })}
+                </CustomButton>
+              }
+            />
           }
         />
       ),
