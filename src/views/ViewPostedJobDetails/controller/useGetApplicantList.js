@@ -31,7 +31,7 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const useGetApplicantList = () => {
+const useGetApplicantList = (id) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -58,7 +58,7 @@ const useGetApplicantList = () => {
     isLoading: isTicketListingLoading,
     fetchData: fetchDataTicketListing,
   } = useFetch({
-    url: "company/jobs/175/applicants",
+    url: `company/jobs/${id}/applicants`,
     otherOptions: {
       skipApiCallOnMount: true,
     },

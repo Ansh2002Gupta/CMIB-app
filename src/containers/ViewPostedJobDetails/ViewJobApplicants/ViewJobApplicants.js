@@ -20,7 +20,7 @@ import {
 import CommonText from "../../../components/CommonText";
 import colors from "../../../assets/colors";
 import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
-const ViewJobApplicants = () => {
+const ViewJobApplicants = ({ id }) => {
   const intl = useIntl();
   const {
     allDataLoaded,
@@ -54,7 +54,7 @@ const ViewJobApplicants = () => {
     tableIcon,
     postedJobData,
     totalcards,
-  } = useGetApplicantList();
+  } = useGetApplicantList(id);
 
   const getMobileView = (item, index) => {
     return (

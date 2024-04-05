@@ -40,6 +40,9 @@ const ViewPostedJobDetails = () => {
   const [loading, setLoading] = useState(false);
   const [isActive, setActive] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
+  const [activeTab, setActiveTab] = useState(
+    Number(searchParams.get("activeTab"))
+  );
   const intl = useIntl();
 
   useEffect(() => {
@@ -319,17 +322,19 @@ const ViewPostedJobDetails = () => {
               <View style={styles.container}>
                 <CustomTabs
                   containerStyle={{ backgroundColor: colors.white }}
+                  setSelectedTab={(item) => {
+                    setSearchParams((prev) => {
+                      prev.set("activeTab", `${item}`);
+                      return prev;
+                    });
+                    setActiveTab(item);
+                  }}
                   tabs={[
                     {
                       label: intl.formatMessage({ id: "label.job_details" }),
                       component: (
-                        <View
-                          style={{
-                            backgroundColor: colors.backgroundGrey,
-                            flex: 1,
-                          }}
-                        >
-                          <View style={{ flex: 1 }}>
+                        <View style={styles.innerContainer}>
+                          <View style={styles.flex1}>
                             {!apiIsError ? (
                               <View
                                 style={{
@@ -381,15 +386,16 @@ const ViewPostedJobDetails = () => {
                     },
                     {
                       label: intl.formatMessage({ id: "label.applicants" }),
-                      component: <ViewJobApplicants />,
+                      component: <ViewJobApplicants id={id} />,
                     },
                     {
                       label: intl.formatMessage({
                         id: "label.schedule_interview",
                       }),
-                      component: <ViewScheduleInterview />,
+                      component: <ViewScheduleInterview id={id} />,
                     },
                   ]}
+                  intialActiveTab={activeTab}
                 />
               </View>
             </View>

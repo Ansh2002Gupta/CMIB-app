@@ -92,6 +92,8 @@ const styles = StyleSheet.create({
   underLineStyle: {
     width: "20%",
     color: colors.darkBlue,
+    borderBottomWidth: 1,
+    borderColor: colors.darkBlue,
   },
 });
 

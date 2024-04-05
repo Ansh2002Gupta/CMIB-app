@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "../../../routes";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
@@ -18,12 +18,18 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../PostedJobsView.styles";
 import colors from "../../../assets/colors";
 import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import { navigations } from "../../../constants/routeNames";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const usePostedJobListing = (onViewPress, onEditPress) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -213,9 +219,11 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    const temporaryArray = selectedQueryType.map((item) => {
-      return item - 1;
-    });
+    const temporaryArray = selectedQueryType
+      ? selectedQueryType.map((item) => {
+          return item - 1;
+        })
+      : "";
     setFilterOptions((prev) => ({
       ...prev,
       query_type: temporaryArray,
@@ -299,17 +307,36 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-              ...(!isHeading && { color: colors.darkBlue }),
-            }}
-            isunderLine={!isHeading}
-            fontWeight={!isHeading && 600}
-            underLineStyle={styles.underLineStyle}
-          >
-            {item?.number_of_applications ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.number_of_applications ?? "-"}
+              </CommonText>
+            ) : (
+              <CustomTouchableOpacity
+                onPress={() => {
+                  navigate(
+                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=1`
+                  );
+                }}
+                style={styles.underLineStyle}
+              >
+                <CommonText
+                  customTextStyle={{
+                    ...tableStyle,
+                    ...(!isHeading && { color: colors.darkBlue }),
+                  }}
+                  fontWeight={!isHeading && 600}
+                >
+                  {item?.number_of_applications ?? "-"}
+                </CommonText>
+              </CustomTouchableOpacity>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("13%"),
@@ -319,17 +346,36 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
 
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-              ...(!isHeading && { color: colors.darkBlue }),
-            }}
-            isunderLine={!isHeading}
-            fontWeight={!isHeading && 600}
-            underLineStyle={styles.underLineStyle}
-          >
-            {item?.number_of_interviews ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.number_of_interviews ?? "-"}
+              </CommonText>
+            ) : (
+              <CustomTouchableOpacity
+                onPress={() => {
+                  navigate(
+                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=2`
+                  );
+                }}
+                style={styles.underLineStyle}
+              >
+                <CommonText
+                  customTextStyle={{
+                    ...tableStyle,
+                    ...(!isHeading && { color: colors.darkBlue }),
+                  }}
+                  fontWeight={!isHeading && 600}
+                >
+                  {item?.number_of_interviews ?? "-"}
+                </CommonText>
+              </CustomTouchableOpacity>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("13%"),

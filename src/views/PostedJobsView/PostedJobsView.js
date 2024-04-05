@@ -23,12 +23,12 @@ const PostedJobsView = () => {
   const { selectedModule } = sideBarState;
   const onViewPress = (item) => {
     navigate(
-      `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view`
+      `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=0`
     );
   };
   const onEditPress = (item) => {
     navigate(
-      `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=edit`
+      `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=edit&activeTab=0`
     );
   };
 
