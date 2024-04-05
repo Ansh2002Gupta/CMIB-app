@@ -4,7 +4,7 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.greySix,
+    backgroundColor: colors.blackWithMinorOpacity,
     height: "100%",
     width: "100%",
     position: "relative",
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: "50%",
     top: "35%",
-    right: "50%"
+    right: "50%",
   },
   playIconStyles: {
     width: 50,

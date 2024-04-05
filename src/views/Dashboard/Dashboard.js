@@ -6,7 +6,6 @@ import CommonText from "../../components/CommonText";
 import CustomButton from "../../components/CustomButton";
 import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 import RangeSlider from "../../components/RangeSlider";
-import SavedJobComponent from "../../components/SavedJobComponent/SavedJobComponent";
 import UploadImage from "../../components/UploadImage";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import styles from "./dashboard.style";
@@ -51,7 +50,7 @@ function DashboardView() {
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
       <View>
-        {/* <UploadImage
+        <UploadImage
           {...{
             onDeleteImage,
             errorWhileUpload,
@@ -62,7 +61,7 @@ function DashboardView() {
             setFileUploadResult,
             uploadPercentage,
           }}
-        /> */}
+        />
         <SavedJobComponent />
       </View>
       <View>

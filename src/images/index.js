@@ -213,6 +213,7 @@ const iconSaveSlashBlue = appendAppBaseURl("/images/svg/iconSaveSlashBlue.svg");
 const iconBriefcase = appendAppBaseURl("/images/svg/iconBriefcase.svg");
 const iconLocation = appendAppBaseURl("/images/svg/iconLocation.svg");
 const iconRupee = appendAppBaseURl("/images/svg/iconRupee.svg");
+const videoPlayIcon = appendAppBaseURl("/images/svg/videoPlayIcon.svg");
 const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
 
 const images = {
@@ -367,6 +368,7 @@ const images = {
   iconBriefcase,
   iconLocation,
   iconRupee,
+  videoPlayIcon,
   iconClock,
 };
 
