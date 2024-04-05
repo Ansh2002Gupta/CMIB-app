@@ -4,7 +4,7 @@ export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
 export const VALID_PAN = "Not a valid PAN, Please enter again";
-export const VALID_GSTIN = "Not a valid GSTIN, Please enter again"
+export const VALID_GSTIN = "Not a valid GSTIN, Please enter again";
 
 export const numRegex = /^\d+$/;
 export const alphaNumericRegex = /^[a-zA-Z0-9]+$/;
@@ -26,8 +26,7 @@ export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
-export const IMAGE_MAX_SIZE = 5000000;
-export const VIDEO_MAX_SIZE = 16000000;
+export const FILE_MAX_SIZE = 5000000;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "nqca-placements";
 export const OVERSEAS_PLACEMENTS = "overseas-chapters";
@@ -360,7 +359,6 @@ export const MARITAL_STATUS = [
     value: "Single",
   },
 ];
-
 export const MONTHS = [
   {
     label: "January",
@@ -443,7 +441,6 @@ export const BOOLEAN_OPTION = [
     value: false,
   },
 ];
-
 export const COLOR = [
   "#000000",
   "#e60000",
@@ -518,6 +515,13 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+
+export const JOB_SEEKERS_TABLE_HEADING = {
+  company_name: "Company Name",
+  candidate_id: "Candidate ID",
+  total_experience: "Total Experience",
+  functional_area: "Functional Area",
+};
 
 export const color = [
   "#000000",

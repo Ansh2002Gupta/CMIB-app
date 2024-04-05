@@ -109,8 +109,8 @@ export const capitalize = (text) => {
   return firstLetter + restLetter;
 };
 
-export const formatDate = (date) => {
-  return dayjs(date).format("DD/MM/YYYY");
+export const formatDate = (date, format = "DD/MM/YYYY") => {
+  return dayjs(date).format(format);
 };
 
 export const extractFilename = (fileUri) => {
@@ -278,6 +278,108 @@ export const getValidUrl = (url) => {
     link = `https://${link}`;
   }
   return link;
+};
+
+export const addKeyValuePair = (arr) => {
+  return arr.map((item) => {
+    return { value: item, label: item };
+  });
+};
+
+export const getIndexForBoolean = (value) => {
+  if (typeof value !== "boolean") {
+    return value;
+  }
+  return value ? 1 : 0;
+};
+
+// Converts "Yes" to true and "No" to false
+export function yesNoToBoolean(value) {
+  if (value === "Yes") {
+    return true;
+  } else if (value === "No") {
+    return false;
+  } else {
+    return value;
+  }
+}
+
+// Converts true to "Yes" and false to "No"
+export function booleanToYesNo(value) {
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
+  }
+  return value;
+}
+
+export const formatDateToYYYYMMDD = (dateInput) => {
+  const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+  if (isNaN(date)) {
+    throw new Error("Invalid date");
+  }
+  const year = date.getFullYear() ?? "--";
+  const month = (date.getMonth() + 1).toString().padStart(2, "0") ?? "--"; // Months are 0-indexed
+  const day = date.getDate().toString().padStart(2, "0") ?? "--";
+  return `${year}-${month}-${day}`;
+};
+
+export const formatDateToDDMMYYYY = (isoDateString) => {
+  const date = new Date(isoDateString);
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return "--";
+  }
+  const day = date.getUTCDate().toString().padStart(2, "0") ?? "--";
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, "0") ?? "--";
+  const year = date.getUTCFullYear() ?? "--";
+  return `${day}/${month}/${year}`;
+};
+
+export const formatDateToMonthNameYear = (isoDateString) => {
+  const date = new Date(isoDateString);
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    throw new Error("Invalid date");
+  }
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const monthIndex = date.getMonth();
+  const year = date.getFullYear();
+  return `${monthNames[monthIndex]}/${year}`;
+};
+
+export const getCurrentYear = () => {
+  return new Date().getFullYear();
+};
+export const formatCountryCode = (code, countryData) => {
+  if (!code) return code;
+  const countryOption = countryData?.find(
+    (country) => country["dial_code"] === code
+  );
+  return countryOption && Platform.OS === "web"
+    ? `${code} (${countryOption["name"]})`
+    : code;
+};
+
+export const getNameById = (data, id) => {
+  const item = data?.find((obj) => obj.id === id);
+  return item ? item.name : null;
+};
+
+export const isValueEmpty = (value) => {
+  return value === null || value === undefined || value === "";
 };
 
 export const getQuestionType = {
@@ -449,22 +551,13 @@ export const timeAgo = (dateString) => {
   }
 };
 
-
-export const formatCountryCode = (code, countryData) => {
-  if (!code) return code;
-  const countryOption = countryData?.find(
-    (country) => country["dial_code"] === code
-  );
-  return countryOption && Platform.OS === "web"
-    ? `${code} (${countryOption["name"]})`
-    : code;
-};
-
-export const getNameById = (data, id) => {
-  const item = data?.find((obj) => obj.id === id);
-  return item ? item.name : null;
-};
-
-export const isValueEmpty = (value) => {
-  return value === null || value === undefined || value === "";
+export const containsDuplicate = (arr) => {
+  const seen = new Set();
+  for (const value of arr) {
+    if (seen.has(value)) {
+      return true; // Duplicate found
+    }
+    seen.add(value);
+  }
+  return false;
 };

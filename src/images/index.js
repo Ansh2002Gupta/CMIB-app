@@ -209,8 +209,18 @@ const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
 const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
-const iconDownloading = appendAppBaseURl("/images/downloadIcon/download.png");
+const iconAddRoundGreen = appendAppBaseURl("/images/svg/iconAddRoundGreen.svg");
+const iconDeleteRoundRed = appendAppBaseURl(
+  "/images/svg/iconDeleteRoundRed.svg"
+);
+const iconCheckBoxRound = appendAppBaseURl("/images/svg/iconCheckBoxRound.svg");
+const iconUnCheckBoxRound = appendAppBaseURl(
+  "/images/svg/iconUnCheckBoxRound.svg"
+);
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
+const iconTickGreen = appendAppBaseURl("/images/svg/iconTickGreen.svg");
+const iconCrossRed = appendAppBaseURl("/images/svg/iconCrossRed.svg");
+const iconDownloading = appendAppBaseURl("/images/downloadIcon/download.png");
 const iconTickCircle = appendAppBaseURl("/images/svg/tick-circle.svg");
 const iconLineArrowDown = appendAppBaseURl("/images/svg/arrow-down.svg");
 const iconAppliedJobs = appendAppBaseURl("/images/svg/iconAppliedJobs.svg");
@@ -225,6 +235,7 @@ const iconSaveSlashBlue = appendAppBaseURl("/images/svg/iconSaveSlashBlue.svg");
 const iconBriefcase = appendAppBaseURl("/images/svg/iconBriefcase.svg");
 const iconLocation = appendAppBaseURl("/images/svg/iconLocation.svg");
 const iconRupee = appendAppBaseURl("/images/svg/iconRupee.svg");
+const videoPlayIcon = appendAppBaseURl("/images/svg/videoPlayIcon.svg");
 
 const images = {
   iconArrowUp,
@@ -374,9 +385,15 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  iconAddRoundGreen,
+  iconDeleteRoundRed,
+  iconCheckBoxRound,
+  iconUnCheckBoxRound,
+  iconError,
+  iconTickGreen,
+  iconCrossRed,
   dotIcon,
   iconDownloading,
-  iconError,
   iconTickCircle,
   iconLineArrowDown,
   iconAppliedJobs,
@@ -387,6 +404,7 @@ const images = {
   iconBriefcase,
   iconLocation,
   iconRupee,
+  videoPlayIcon,
 };
 
 export default images;
