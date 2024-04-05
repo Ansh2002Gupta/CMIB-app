@@ -38,6 +38,7 @@
     "react-native": "0.68.2",
     "react-native-config": "1.5.1",
     "react-native-date-picker": "^4.4.2",
+    "react-native-document-picker": "9.1.1",
     "react-native-element-dropdown": "2.10.0",
     "react-native-image-crop-picker": "0.40.2",
     "react-native-image-pan-zoom": "^2.1.12",
