@@ -1,8 +1,10 @@
-import { alphaNumericRegex, numRegex, VALID_EMAIL, VALID_OTP } from "../constants/constants";
+import { alphaNumericRegex, numRegex, VALID_EMAIL, VALID_GSTIN, VALID_OTP } from "../constants/constants";
 import {
+  gstNumberRegex,
   mailformat,
   NEW_PASSWORD_VALIDATIONS,
   otpRegex,
+  panNumberRegex,
 } from "../constants/Regex";
 
 export const isStringContainsNumber = (string) =>
@@ -36,6 +38,20 @@ export const alphaNumericValidator = (val) => {
 export const validateEmail = (userEmail) => {
   if (!userEmail.toLowerCase().match(mailformat)) {
     return VALID_EMAIL;
+  }
+  return "";
+};
+
+export const validatePAN = (pan) => {
+  if (!pan.match(panNumberRegex)) {
+    return VALID_EMAIL;
+  }
+  return "";
+}
+
+export const validateGSTIN = (gstNumber) => {
+  if (!gstNumber.match(gstNumberRegex)) {
+    return VALID_GSTIN;
   }
   return "";
 };

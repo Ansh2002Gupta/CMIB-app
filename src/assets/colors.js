@@ -44,6 +44,7 @@ const slateGray = "#616c82";
 const disabledTextFieldColor = "#F2F2F2";
 const neutralGrey = "#0F172A";
 const greyFive = "#E7E7F1";
+const greySix = "#808080";
 
 /* Reds */
 const errorBackground = "#ffeded"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
@@ -115,5 +116,6 @@ const colors = {
   lightPurple,
   darkPurple,
   greyFive,
+  greySix,
 };
 export default colors;
