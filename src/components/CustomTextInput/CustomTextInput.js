@@ -21,12 +21,14 @@ import TriggerFileUpload from "../TriggerFileUpload";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
-import { getImageSource } from "../../utils/util";
+import { getImageSource, yesNoToBoolean } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
 import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
+import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
+import TextInputWithChip from "../TextInputWithChip/TextInputWithChip";
 
 const CustomTextInput = (props) => {
   const {
@@ -70,6 +72,7 @@ const CustomTextInput = (props) => {
     initiateFileUpload,
     includeAllKeys,
     label,
+    showLabel,
     label2,
     maxCount,
     maxLength,
@@ -92,6 +95,16 @@ const CustomTextInput = (props) => {
     labelField,
     valueField,
     urlField,
+    format,
+    isCheckBoxSelection,
+    checkBoxOptions,
+    handleAddRemoveRow,
+    isActionToAdd,
+    handleCheckBoxSelection,
+    isSingleSelection,
+    isTextInputWithChip,
+    onChipUpdate,
+    showMonthYearPicker,
     ...remainingProps
   } = props;
 
@@ -247,6 +260,8 @@ const CustomTextInput = (props) => {
           onChangeValue={onChangeValue}
           maxDate={maxDate}
           minDate={minDate}
+          format={format}
+          showMonthYearPicker={showMonthYearPicker}
         />
       );
     }
@@ -267,8 +282,35 @@ const CustomTextInput = (props) => {
         <CustomToggleComponent
           isMandatory={isMandatory}
           customToggleStyle={style.customToggleStyle}
+          onValueChange={(item) => {
+            onChangeValue(item);
+          }}
+          value={typeof value === "boolean" && value === true ? 0 : 1}
+        />
+      );
+    }
+    if (isCheckBoxSelection) {
+      return (
+        <CheckBoxSelection
+          isEditable={isEditable}
+          checkBoxOptions={checkBoxOptions}
+          customStyle={style.CheckBoxSelection}
+          handleAddRemoveRow={(isActionToAdd) =>
+            handleAddRemoveRow(isActionToAdd)
+          }
+          isActionToAdd={isActionToAdd}
+          handleCheckBoxSelection={(id) => handleCheckBoxSelection(id)}
+          isSingleSelection={isSingleSelection}
+        />
+      );
+    }
+    if (isTextInputWithChip) {
+      return (
+        <TextInputWithChip
           value={value}
+          placeholderText={placeholder}
           onValueChange={onChangeValue}
+          isEditable={isEditable}
         />
       );
     }
@@ -431,7 +473,7 @@ const CustomTextInput = (props) => {
         ...customStyle,
       }}
     >
-      {!!label && (
+      {!!label && showLabel && (
         <View style={style.innerLabelContainer}>
           <CustomLabelView label={label} isMandatory={isMandatory} />
           {!!label2 && (
@@ -512,6 +554,15 @@ CustomTextInput.defaultProps = {
   value: "",
   valueField: "value",
   urlField: "url",
+  isCheckBoxSelection: false,
+  checkBoxOptions: [],
+  handleAddRemoveRow: () => {},
+  isActionToAdd: true,
+  handleCheckBoxSelection: () => {},
+  isSingleSelection: false,
+  isTextInputWithChip: false,
+  showLabel: true,
+  onChipUpdate: () => {},
 };
 
 const datePropType = (props, propName, componentName) => {
@@ -575,6 +626,15 @@ CustomTextInput.propTypes = {
   ]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  CheckBoxSelection: PropTypes.bool,
+  checkBoxOptions: PropTypes.array,
+  handleAddRemoveRow: PropTypes.func,
+  isActionToAdd: PropTypes.bool,
+  handleCheckBoxSelection: PropTypes.func,
+  isSingleSelection: PropTypes.bool,
+  isTextInputWithChip: PropTypes.bool,
+  showLabel: PropTypes.bool,
+  onChipUpdate: PropTypes.func,
 };
 
 export default CustomTextInput;

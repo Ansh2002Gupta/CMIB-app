@@ -191,8 +191,10 @@ const addValueOnField = ({ state, details, isEditable, intl }) => {
         value: !isEditable
           ? state?.[item?.key] === null
             ? "--"
-            : intl.formatMessage({ id: `toggle.${state?.[item?.key]}` })
-          : state?.[item?.key],
+            : intl.formatMessage({
+                id: `toggle.${Number(!state?.[item?.key])}`,
+              })
+          : Boolean(Number(!state?.[item?.key])),
       };
     }
 
