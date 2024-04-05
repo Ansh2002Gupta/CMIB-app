@@ -7,13 +7,13 @@ export const validateFields = (
   index
 ) => {
   let isValid = true;
-  let workExpData = workExperiences.map((workExp, workExpIndex) => {
-    let expWithError = workExp.map((item) => {
+  let workExpData = workExperiences?.map((workExp, workExpIndex) => {
+    let expWithError = workExp?.map((item) => {
       if (
         fieldName === null ||
         (fieldName === item.key && workExpIndex === index)
       ) {
-        let error = item.validate(item.value);
+        let error = item?.validate(item.value);
         if (error) {
           isValid = false;
           formFieldsError[index] = {
@@ -42,10 +42,10 @@ export const validateCurrentStatus = (
   setFormError = () => {}
 ) => {
   let isValid = true;
-  let currentStatusData = current_status.map((row, index) => {
-    return row.map((item) => {
-      if (item.validate) {
-        let error = item.validate(item.value);
+  let currentStatusData = current_status?.map((row, index) => {
+    return row?.map((item) => {
+      if (item?.validate) {
+        let error = item?.validate(item.value);
         if (error) {
           isValid = false;
           formFieldsError = {

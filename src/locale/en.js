@@ -515,6 +515,7 @@ const locale = {
   "label.readyToPlaceRequired": "Ready to place india is required",
   "label.preferredRegionRequired": "Preferred region is required",
   "label.expectedAnnualSalaryRequired": "Expected annual salary is required",
+  'label.removeDuplicateInputs':'Please remove duplicate values'
 };
 
 export default locale;

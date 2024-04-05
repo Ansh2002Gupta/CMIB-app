@@ -154,7 +154,11 @@ const DetailComponent = ({
         >
           {typeof detail?.value !== "string" ? (
             detail?.value?.map((value, index) => (
-              <CustomChipCard key={index} message={value} />
+              <CustomChipCard
+                key={index}
+                message={value}
+                isEditable={isEditable}
+              />
             ))
           ) : (
             <CommonText>{detail.value}</CommonText>
@@ -267,6 +271,7 @@ const DetailComponent = ({
         maxDate={detail?.maxDate}
         format={detail?.format}
         isSingleMutliSelect={detail.isSingleMutliSelect}
+        showMonthYearPicker={detail?.showMonthYearPicker}
       />
     );
   };

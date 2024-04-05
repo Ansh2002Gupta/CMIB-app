@@ -8,7 +8,12 @@ import styles from "./TextInputWithChip.style";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
 import colors from "../../assets/colors";
 
-const TextInputWithChip = ({ placeholderText, onValueChange, value = [] }) => {
+const TextInputWithChip = ({
+  placeholderText,
+  onValueChange,
+  value = [],
+  isEditable,
+}) => {
   const [inputValue, setInputValue] = useState("");
   const [chips, setChips] = useState(Array.isArray(value) ? [...value] : []);
 
@@ -47,6 +52,7 @@ const TextInputWithChip = ({ placeholderText, onValueChange, value = [] }) => {
             key={index}
             message={chip}
             onPress={() => handleRemoveChip(index)}
+            isEditable={isEditable}
           />
         ))}
       </ScrollView>

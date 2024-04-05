@@ -323,3 +323,14 @@ export const timeAgo = (dateString) => {
     return `a few seconds`;
   }
 };
+
+export const containsDuplicate = (arr) => {
+  const seen = new Set();
+  for (const value of arr) {
+    if (seen.has(value)) {
+      return true; // Duplicate found
+    }
+    seen.add(value);
+  }
+  return false; // No duplicates
+};

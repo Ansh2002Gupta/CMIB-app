@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { BOOLEAN_OPTION, numRegex } from "../../../constants/constants";
-import { formatDate, yesNoToBoolean } from "../../../utils/util";
+import { yesNoToBoolean } from "../../../utils/util";
+import dayjs from "dayjs";
 
 const addValueOnField = ({ state, details, isEditable }) => {
   return details.map((workExp, index) => {
@@ -14,7 +15,7 @@ const addValueOnField = ({ state, details, isEditable }) => {
             ? state[index]?.[item?.key]
             : state[index]?.[item?.key] === null
             ? "--"
-            : formatDate(state[index]?.[item?.key], "DD-MM-YYYY"),
+            : dayjs(state[index]?.[item?.key]).format(item?.format),
         };
       }
       let value = isEditable
@@ -126,6 +127,8 @@ export const useWorkExperience = ({
           isMandatory: true,
           isDate: true,
           isCalendar: true,
+          format: "MMMM, YYYY",
+          showMonthYearPicker: true,
           label: "label.from",
           placeholder: "label.from",
           validate: (value) => {
@@ -141,6 +144,8 @@ export const useWorkExperience = ({
           isMandatory: true,
           isDate: true,
           isCalendar: true,
+          format: "MMMM, YYYY",
+          showMonthYearPicker: true,
           label: "label.to",
           placeholder: "label.to",
           validate: (value) => {
@@ -188,7 +193,7 @@ export const useWorkExperience = ({
           options: [],
           isSingleMutliSelect: true,
           validate: (value) => {
-            if (value.length === 0) {
+            if (value?.length === 0) {
               return intl.formatMessage({
                 id: "label.enterValidInput",
               });
@@ -209,7 +214,7 @@ export const useWorkExperience = ({
             options: BOOLEAN_OPTION,
             placeholder: "label.haveAnyWorkExperience",
             validate: (value) => {
-              if (value.length === 0) {
+              if (value?.length === 0) {
                 return intl.formatMessage({
                   id: "label.workExperienceRequired",
                 });
@@ -229,7 +234,7 @@ export const useWorkExperience = ({
         label: "label.current_specialisation",
         placeholder: "label.current_specialisation",
         validate: (value) => {
-          if (value.length === 0) {
+          if (value?.length === 0) {
             return intl.formatMessage({
               id: "label.currentSpecialisationRequired",
             });
@@ -264,7 +269,7 @@ export const useWorkExperience = ({
         isSingleMutliSelect: true,
         options: [],
         validate: (value) => {
-          if (value.length === 0) {
+          if (value?.length === 0) {
             return "label.currentIndustrySpecialisationRequired";
           }
         },

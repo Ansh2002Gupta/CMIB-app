@@ -5,9 +5,11 @@ import useFetch from "../../hooks/useFetch";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useSkillTraining } from "././Controller/useSkillTraining";
 import { MEMBER_CA_JOB_PROFILE_SKILLS } from "../../services/apiServices/apiEndPoint";
-import { SkillTraining_keys } from "./Controller/utils";
+import { SkillTraining_keys, isDuplicateExist } from "./Controller/utils";
+import { useIntl } from "react-intl";
 
 const SkillTraining = ({ isEditable = true, handleEdit }) => {
+  const intl = useIntl();
   const {
     data,
     isError: isErrorLoadingPage,
@@ -16,7 +18,7 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
   } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE_SKILLS}`,
   });
-
+  const [toastError, setToastError] = useState(null);
   const { handleUpdate, isError, isLoading, error, setError } =
     useUpdateService(MEMBER_CA_JOB_PROFILE_SKILLS);
 
@@ -50,10 +52,20 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
 
   const performSaveChanges = () => {
     const payload = getSkillTrainingPayload();
-    handleUpdate(payload, () => {
-      handleEdit(false);
-      fetchData();
-    });
+    const isDuplicatedDataExist = isDuplicateExist(payload);
+    if (!isDuplicatedDataExist) {
+      handleUpdate(payload, () => {
+        handleEdit(false);
+        fetchData();
+      });
+    } else {
+      setToastError(intl.formatMessage({ id: "label.removeDuplicateInputs" }));
+    }
+  };
+
+  const onDismissError = () => {
+    setToastError(null);
+    setError("");
   };
 
   const getSkillTrainingPayload = () => {
@@ -111,6 +123,8 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
     return selectedLevel;
   };
 
+  const errordata = error || toastError;
+
   return (
     <SkillTrainingUI
       languagesKnown={languagesKnown}
@@ -130,8 +144,8 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
       isError={isError}
       isLoadingPage={isLoadingPage}
       isErrorLoadingPage={isErrorLoadingPage}
-      error={error}
-      setError={setError}
+      error={errordata}
+      setError={onDismissError}
       isValidAllFields={isValidAllFields}
       onClickSave={performSaveChanges}
       onClickCancel={() => {

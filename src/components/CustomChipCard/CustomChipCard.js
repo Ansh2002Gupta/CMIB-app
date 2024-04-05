@@ -7,7 +7,7 @@ import TouchableImage from "../TouchableImage";
 import images from "../../images";
 import styles from "./CustomChipCard.style";
 
-const CustomChipCard = ({ message, onPress }) => {
+const CustomChipCard = ({ message, onPress, isEditable = true }) => {
   const handleClickOnImage = () => {
     onPress && onPress();
   };
@@ -15,13 +15,15 @@ const CustomChipCard = ({ message, onPress }) => {
   return (
     <View style={styles.selectedItemsContainer}>
       <CommonText>{message}</CommonText>
-      <TouchableImage
-        onPress={handleClickOnImage}
-        source={images.iconCloseDark}
-        style={styles.iconCloseDark}
-        height={15}
-        width={15}
-      />
+      {isEditable && (
+        <TouchableImage
+          onPress={handleClickOnImage}
+          source={images.iconCloseDark}
+          style={styles.iconCloseDark}
+          height={15}
+          width={15}
+        />
+      )}
     </View>
   );
 };
