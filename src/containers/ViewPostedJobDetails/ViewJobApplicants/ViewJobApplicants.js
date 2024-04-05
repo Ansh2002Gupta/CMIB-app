@@ -1,24 +1,13 @@
-import { View } from "@unthinkable/react-core-components";
 import React from "react";
 import styles from "./ViewJobApplicants.styles";
 import { useIntl } from "react-intl";
-import usePostedJobListing from "../../../views/PostedJobsView/controller/usePostedJobListing";
-import { useNavigate } from "../../../routes";
-import MobileCard from "../../PostedJobs/MobileCard";
-import { TwoRow } from "../../../core/layouts";
-import IconHeader from "../../../components/IconHeader/IconHeader";
 import CustomTable from "../../../components/CustomTable";
 import DownloadMoreComponent from "../../PostedJobs/DownloadMoreComponent";
-import images from "../../../images";
 import useGetApplicantList from "../../../views/ViewPostedJobDetails/controller/useGetApplicantList";
-import PopupMessage from "../../../components/PopupMessage/PopupMessage";
-import TouchableImage from "../../../components/TouchableImage";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   APPLICANT_LISTING as tableHeading,
 } from "../../../constants/constants";
-import CommonText from "../../../components/CommonText";
-import colors from "../../../assets/colors";
 import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
 const ViewJobApplicants = ({ id }) => {
   const intl = useIntl();

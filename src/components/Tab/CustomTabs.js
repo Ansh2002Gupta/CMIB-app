@@ -23,12 +23,15 @@ export const CustomTabs = ({
 }) => {
   const intl = useIntl();
 
-  const [activeTabIndex, setActiveTabIndex] = useState(intialActiveTab);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [alertOnTabSwitch, setAlertOnTabSwitch] = useState({
     showAlert: false,
     tab: {},
     tabIndex: -1,
   });
+  useEffect(() => {
+    setActiveTabIndex(intialActiveTab);
+  }, [intialActiveTab]);
   useEffect(() => {
     setSelectedTab && setSelectedTab(activeTabIndex);
   }, [activeTabIndex]);

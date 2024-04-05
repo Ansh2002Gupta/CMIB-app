@@ -40,9 +40,7 @@ const ViewPostedJobDetails = () => {
   const [loading, setLoading] = useState(false);
   const [isActive, setActive] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
-  const [activeTab, setActiveTab] = useState(
-    Number(searchParams.get("activeTab"))
-  );
+  const [activeTab] = useState(Number(searchParams.get("activeTab")));
   const intl = useIntl();
 
   useEffect(() => {
@@ -327,7 +325,6 @@ const ViewPostedJobDetails = () => {
                       prev.set("activeTab", `${item}`);
                       return prev;
                     });
-                    setActiveTab(item);
                   }}
                   tabs={[
                     {
