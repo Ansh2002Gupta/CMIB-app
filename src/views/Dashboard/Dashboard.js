@@ -27,11 +27,11 @@ function DashboardView() {
   const AddIcon = images.iconAdd;
 
   const toggleSwitch = () => {
-   // setIsEnabled((previousState) => !previousState);
+    // setIsEnabled((previousState) => !previousState);
   };
 
   const handleAddDesignation = () => {
-   // setIsEnabled((previousState) => !previousState);
+    // setIsEnabled((previousState) => !previousState);
   };
 
   const handleSearchResults = (filteredData) => {};
@@ -97,25 +97,12 @@ function DashboardView() {
     });
     setSelectBoxState(updatedState);
   };
-  return (<JobProfileTab/>)
   return (
     <View style={styles.container}>
       <CommonText customTextStyle={styles.header}>
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
       <View>
-        <UploadImage
-          {...{
-            onDeleteImage,
-            errorWhileUpload,
-            fileUploadResult,
-            handleFileUpload,
-            isVideoUpload: true,
-            isUploadingImageToServer,
-            setFileUploadResult,
-            uploadPercentage,
-          }}
-        />
         <SavedJobComponent />
       </View>
       <View>
