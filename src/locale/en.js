@@ -401,6 +401,8 @@ const locale = {
   "label.yrs": "yrs",
   "label.posted": "Posted",
   "label.ago": "ago",
+  "label.viewMore": "view more",
+  "label.viewLess": "view less",
 };
 
 export default locale;

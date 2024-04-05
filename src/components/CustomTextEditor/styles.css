@@ -34,3 +34,7 @@
 .disabled > .ql-container.ql-snow > .ql-editor > ul {
   padding-left: 0;
 }
+
+.custom .ql-editor{
+  padding:0px
+}

@@ -481,3 +481,5 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+
+export const PREVIEWED_LENGTH = 100;
