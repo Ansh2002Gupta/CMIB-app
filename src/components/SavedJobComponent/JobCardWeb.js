@@ -9,13 +9,14 @@ import MultiRow from "../../core/layouts/MultiRow";
 
 import ActionPairButton from "../ActionPairButton";
 import Chip from "../Chip";
+import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
 
 import colors from "../../assets/colors";
 
-const JobCardWeb = ({ cardDetails }) => {
+const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
   const intl = useIntl();
   const {
     companyName,
@@ -23,8 +24,6 @@ const JobCardWeb = ({ cardDetails }) => {
     jobPostion,
     jobDescription,
     jobLocation,
-    handleRemove,
-    handleApply,
     vaccancies,
     minSalary,
     maxSalary,
@@ -34,11 +33,11 @@ const JobCardWeb = ({ cardDetails }) => {
   } = cardDetails;
 
   const columnConfig = (data) => {
-    return data.map((item) => {
+    return data?.map((item) => {
       return {
         content: (
           <Chip
-            label={item}
+            label={item?.name}
             textColor={colors.black}
             bgColor={colors.white}
             customContainerStyle={style.customContainerStyle}
@@ -107,11 +106,7 @@ const JobCardWeb = ({ cardDetails }) => {
             leftSection={
               <Image source={images.iconLocation} style={style.iconStyle} />
             }
-            rightSection={
-              <CommonText customTextStyle={style.normalText}>
-                {jobLocation}
-              </CommonText>
-            }
+            rightSection={<MultiColumn columns={LocationConfig(jobLocation)} />}
           />
         </View>
       ),

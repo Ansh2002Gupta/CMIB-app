@@ -129,9 +129,15 @@ import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
+import iconAddRoundGreen from "../../public/images/svg/iconAddRoundGreen.svg"
+import iconDeleteRoundRed from "../../public/images/svg/iconDeleteRoundRed.svg"
+import iconCheckBoxRound from "../../public/images/svg/iconCheckBoxRound.svg"
+import iconUnCheckBoxRound from "../../public/images/svg/iconUnCheckBoxRound.svg"
+import iconError from "../../public/images/svg/iconError.svg";
+import iconTickGreen from "../../public/images/svg/iconTickGreen.svg";
+import iconCrossRed from "../../public/images/svg/iconCrossRed.svg";
 import dotIcon from "../../public/images/dotIcon/dot.png";
 import iconDownloading from "../../public/images/downloadIcon/download.png";
-import iconError from "../../public/images/svg/iconError.svg";
 import iconTickCircle from "../../public/images/svg/tick-circle.svg";
 import iconAppliedJobs from "../../public/images/svg/iconAppliedJobs.svg";
 import iconAppliedJobsActiveJobs from "../../public/images/svg/iconAppliedJobsActiveJobs.svg";
@@ -274,9 +280,15 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  iconAddRoundGreen,
+  iconDeleteRoundRed,
+  iconCheckBoxRound,
+  iconUnCheckBoxRound,
+  iconError,
+  iconTickGreen,
+  iconCrossRed,
   dotIcon,
   iconDownloading,
-  iconError,
   iconTickCircle,
   iconAppliedJobs,
   iconAppliedJobsActiveJobs,
