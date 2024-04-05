@@ -7,6 +7,7 @@ import RouteProvider from "./route/routeProvider";
 import SignUpProvider from "./signUp/signUpProvider";
 import SideBarProvider from "./sidebar/sidebarProvider";
 import UserProfileProvider from "./userProfile/userProfileProvider";
+import AddJobProvider from "./addJob/addJobsProvider";
 
 // Import other created Providers and add them here -
 const providers = [
@@ -18,6 +19,7 @@ const providers = [
   SignUpProvider,
   SideBarProvider,
   UserProfileProvider,
+  AddJobProvider,
 ];
 
 const combineProviders = (components) => {

@@ -12,12 +12,13 @@ import styles from "./DatePickerModal.style";
 const DatePickerModal = ({
   customTextInputOuterContainer,
   customStyles = {},
-  format = "date",
+  format =  "DD/MM/YYYY",
   isError,
   minDate,
   maxDate,
   onChangeValue,
   value,
+  mode = "date"
 }) => {
   const [open, setOpen] = useState(false);
   const handleDropDown = () => {
@@ -68,7 +69,7 @@ const DatePickerModal = ({
         modal
         open={open}
         date={new Date(!value ? new Date() : value)}
-        mode={format}
+        mode={mode}
         minimumDate={minDate ? new Date(minDate) : ""}
         maximumDate={maxDate ? new Date(maxDate) : ""}
         onConfirm={(date) => {

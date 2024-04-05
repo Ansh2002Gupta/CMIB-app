@@ -13,6 +13,7 @@ import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import JobsView from "../views/JobsView/JobsView";
 import JobApplicantsView from "../views/JobApplicantsView";
+import JobProfileTab from "../views/JobProfile";
 import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
@@ -25,10 +26,13 @@ import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
 import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
+import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
+import EditJobDetails from "../views/EditJobDetails/EditJobDetails";
+import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -109,6 +113,16 @@ const config = [
       {
         viewPath: "",
         element: <CompanyProfile />,
+      },
+    ],
+  },
+  {
+    pagePath: navigations.JOB_PROFILE,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobProfileTab />,
       },
     ],
   },
@@ -221,12 +235,33 @@ const config = [
         viewPath: navigations.POSTED_JOBS,
         element: <PostedJobsView />,
       },
+
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
+        element: <AddModifyNewJobs />,
+      },
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}`,
+        element: <ViewPostedJobDetails />,
+      },
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}/${navigations.EDIT_JOB}`,
+        element: <EditJobDetails />,
+      },
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.EDIT_JOB}`,
+        element: <EditJobDetails />,
+      },
       {
         viewPath: navigations.JOB_APPLICANTS,
         element: <JobApplicantsView />,
       },
       {
         viewPath: navigations.JOB_SEEKERS,
+        element: <JobSeekersView />,
+      },
+      {
+        viewPath: navigations.SAVED_JOBS,
         element: <JobSeekersView />,
       },
       {
