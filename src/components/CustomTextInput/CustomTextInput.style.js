@@ -82,6 +82,12 @@ const style = {
     borderRadius: Platform.OS === "web" ? 12 : 8,
     flexDirection: "row",
   },
+  customToggleStyle: {
+    paddingTop: 20,
+    marginBottom: 12,
+    paddingBottom: 12,
+    marginRight: 24,
+  },
   textInputStyle: {
     fontWeight: "500",
     flex: 1,
@@ -229,6 +235,12 @@ const style = {
   },
   onlyCountLimitBox: {
     justifyContent: "flex-end",
+  },
+  CheckBoxSelection: {
+    paddingRight: 16,
+    marginTop: 4,
+    flexDirection: 'row',
+    flex: 1
   },
   marginRight10: {
     marginRight: 10,
