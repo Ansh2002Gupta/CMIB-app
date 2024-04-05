@@ -47,13 +47,12 @@ function DashboardView() {
             errorWhileUpload,
             fileUploadResult,
             handleFileUpload,
-            isVideoUpload: true,
+            isDocumentUpload: true,
             isUploadingImageToServer,
             setFileUploadResult,
             uploadPercentage,
           }}
         />
-        <SavedJobComponent />
       </View>
       <View>
         <CommonText customTextStyle={styles.header}>
