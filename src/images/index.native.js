@@ -129,10 +129,10 @@ import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
-import iconAddRoundGreen from "../../public/images/svg/iconAddRoundGreen.svg"
-import iconDeleteRoundRed from "../../public/images/svg/iconDeleteRoundRed.svg"
-import iconCheckBoxRound from "../../public/images/svg/iconCheckBoxRound.svg"
-import iconUnCheckBoxRound from "../../public/images/svg/iconUnCheckBoxRound.svg"
+import iconAddRoundGreen from "../../public/images/svg/iconAddRoundGreen.svg";
+import iconDeleteRoundRed from "../../public/images/svg/iconDeleteRoundRed.svg";
+import iconCheckBoxRound from "../../public/images/svg/iconCheckBoxRound.svg";
+import iconUnCheckBoxRound from "../../public/images/svg/iconUnCheckBoxRound.svg";
 import iconError from "../../public/images/svg/iconError.svg";
 import iconTickGreen from "../../public/images/svg/iconTickGreen.svg";
 import iconCrossRed from "../../public/images/svg/iconCrossRed.svg";
@@ -147,6 +147,7 @@ import iconSaveSlashBlue from "../../public/images/svg/iconSaveSlashBlue.svg";
 import iconBriefcase from "../../public/images/svg/iconBriefcase.svg";
 import iconLocation from "../../public/images/svg/iconLocation.svg";
 import iconRupee from "../../public/images/svg/iconRupee.svg";
+import videoPlayIcon from "../../public/images/svg/videoPlayIcon.svg";
 import pdfIcon from "../../public/images/svg/pdfIcon.svg";
 import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
 
@@ -300,6 +301,7 @@ const images = {
   iconBriefcase,
   iconLocation,
   iconRupee,
+  videoPlayIcon,
   pdfIcon,
   rightDiagonalArrow,
 };
