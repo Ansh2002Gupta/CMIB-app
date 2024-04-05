@@ -4,9 +4,9 @@ import { View } from "@unthinkable/react-core-components";
 import CommonText from "../../CommonText";
 import { styles } from "../RangeSlider.styles";
 
-const Label = ({ text, ...restProps }) => {
+const Label = ({ text }) => {
   return (
-    <View style={styles.labelStyle} {...restProps}>
+    <View style={styles.labelStyle}>
       <CommonText>{text}</CommonText>
     </View>
   );
