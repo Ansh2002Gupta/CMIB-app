@@ -20,6 +20,8 @@ import styles, {
   getContainerStyles,
   getRowStyle,
 } from "./DetailComponent.style";
+import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
+import CustomChipCard from "../CustomChipCard/CustomChipCard";
 
 const DetailComponent = ({
   customContainerStyle,
@@ -39,6 +41,10 @@ const DetailComponent = ({
   isMandatory,
   isShowSwitch,
   onPressActionButton,
+  isShowCancel,
+  handleCancel,
+  handleAddRemoveRow,
+  handleCheckBoxSelection,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -63,6 +69,19 @@ const DetailComponent = ({
       <CommonText customTextStyle={styles.labelStyle}>
         {intl.formatMessage({ id: "label.mark_as_active" })}
       </CommonText>
+    </View>
+  );
+
+  const renderCancelButton = () => (
+    <View style={[{ flex: 1 }]}>
+      <View style={styles.cancelButton}>
+        <TouchableImage
+          isSvg={isWebView}
+          onPress={handleCancel}
+          source={isWebView ? images.iconCloseDark : images.iconCross}
+          style={{ height: 24, width: 24 }}
+        />
+      </View>
     </View>
   );
 
@@ -125,6 +144,41 @@ const DetailComponent = ({
       );
     }
 
+    if (detail.isTextInputWithChip) {
+      return (
+        <View
+          style={{
+            ...styles.valueStyle,
+            ...styles.chipDataContainer,
+          }}
+        >
+          {typeof detail?.value !== "string" ? (
+            detail?.value?.map((value, index) => (
+              <CustomChipCard
+                key={index}
+                message={value}
+                isEditable={isEditable}
+              />
+            ))
+          ) : (
+            <CommonText>{detail.value}</CommonText>
+          )}
+        </View>
+      );
+    }
+
+    if (detail.isCheckBoxSelection && detail?.value !== "--") {
+      return (
+        <CheckBoxSelection
+          isEditable={isEditable}
+          checkBoxOptions={detail?.checkBoxOptions}
+          customStyle={styles.CheckBoxSelection}
+          isSingleSelection={detail?.isSingleSelection}
+          value={detail?.value}
+        />
+      );
+    }
+
     return (
       <CommonText
         customTextStyle={{
@@ -138,7 +192,7 @@ const DetailComponent = ({
     );
   };
 
-  const renderEditableContent = (detail) => {
+  const renderEditableContent = (detail, index) => {
     if (detail.isMobileNumber) {
       return (
         <MobileNumberInput
@@ -163,6 +217,7 @@ const DetailComponent = ({
           ...styles.getFieldWidth(detail.width, !isWebView),
         }}
         label={detail?.label && intl.formatMessage({ id: detail.label })}
+        showLabel={detail.showLabel}
         isDropdown={detail.isDropdown}
         isEditable={isInputDisable ? !isInputDisable : true}
         isCounterInput={detail.isCounterInput}
@@ -174,30 +229,49 @@ const DetailComponent = ({
         indexField="selectedIndex"
         options={detail.options || []}
         isMultiline={detail?.isMultiline}
+        isCheckBoxSelection={detail?.isCheckBoxSelection}
+        checkBoxOptions={detail?.checkBoxOptions}
+        handleAddRemoveRow={(isActionToAdd) =>
+          handleAddRemoveRow(isActionToAdd, index, detail?.key)
+        }
+        handleCheckBoxSelection={(id) =>
+          handleCheckBoxSelection(id, index, detail?.key)
+        }
+        isActionToAdd={detail?.isActionToAdd}
+        isSingleSelection={detail?.isSingleSelection}
         placeholder={
           detail?.placeholder && intl.formatMessage({ id: detail.placeholder })
         }
         maxLength={detail.maxLength}
         isNumeric={detail.isNumeric}
         isToggle={detail.isToggle}
+        isTextInputWithChip={detail?.isTextInputWithChip}
+        onChipUpdate={(chipData) =>
+          handleChange(detail.label, chipData, index, detail)
+        }
         valueField={detail.valueField || "label"}
         labelField={detail.labelField || "label"}
         inputKey={detail.inputKey || "value"}
         onChangeValue={(val) =>
           detail.isMultiSelect
-            ? handleMultiSelect(val)
-            : handleChange(detail.label, val)
+            ? handleMultiSelect(val, detail, index)
+            : handleChange(detail.label, val, index, detail?.key)
         }
         isMultiSelect={detail.isMultiSelect}
         onChangeText={(val) => {
           if (detail?.isNumeric) {
             if (numericValidator(val)) handleChange(detail.label, val);
           } else {
-            handleChange(detail.label, val);
+            handleChange(detail.label, val, index);
           }
         }}
         isRupee={detail?.isRupee}
+        isCalendar={detail?.isCalendar}
+        minDate={detail?.minDate}
+        maxDate={detail?.maxDate}
+        format={detail?.format}
         isSingleMutliSelect={detail.isSingleMutliSelect}
+        showMonthYearPicker={detail?.showMonthYearPicker}
       />
     );
   };
@@ -218,6 +292,7 @@ const DetailComponent = ({
           {isMandatory && (
             <CommonText customTextStyle={styles.starStyle}>{" *"}</CommonText>
           )}
+          {isShowCancel && isEditable && renderCancelButton()}
         </View>
       )}
       <View style={{ ...containerStyle, ...customContainerStyle }}>
@@ -236,7 +311,7 @@ const DetailComponent = ({
                 }}
               >
                 {Array.isArray(detail) &&
-                  detail?.map((columns, idx) => {
+                  detail?.map((columns, index) => {
                     return isEditable ? (
                       <View
                         style={{
@@ -246,7 +321,7 @@ const DetailComponent = ({
                             : getRowStyle(detail)),
                         }}
                       >
-                        {renderEditableContent(columns)}
+                        {renderEditableContent(columns, idx)}
                       </View>
                     ) : (
                       <View
@@ -328,6 +403,10 @@ DetailComponent.defaultProps = {
   isInputDisable: false,
   isShowSwitch: false,
   onPressActionButton: () => {},
+  isShowCancel: false,
+  handleCancel: () => {},
+  handleAddRemoveRow: () => {},
+  handleCheckBoxSelection: () => {},
 };
 
 DetailComponent.propTypes = {
@@ -347,6 +426,10 @@ DetailComponent.propTypes = {
   isMandatory: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
   onPressActionButton: PropTypes.func,
+  isShowCancel: PropTypes.bool,
+  handleCancel: PropTypes.func,
+  handleAddRemoveRow: PropTypes.func,
+  handleCheckBoxSelection: PropTypes.func,
 };
 
 export default DetailComponent;
