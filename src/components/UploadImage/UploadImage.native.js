@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
-import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 import DocumentPicker, { types } from "react-native-document-picker";
+import DragAndDropCard from "../DragAndDropCard/DragAndDropCard";
 import PreviewImage from "../PreviewImage/PreviewImage";
 import { FILE_MAX_SIZE } from "../../constants/constants";
 import styles from "./UploadImage.style";
