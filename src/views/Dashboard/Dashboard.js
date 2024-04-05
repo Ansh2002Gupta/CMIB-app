@@ -4,10 +4,10 @@ import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
 import RangeSlider from "../../components/RangeSlider";
-import UploadImage from "../../components/UploadImage";
-import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import styles from "./dashboard.style";
-import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
+import images from "../../images";
+import SearchView from "../../components/SearchView";
+import TouchableImage from "../../components/TouchableImage";
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
@@ -16,44 +16,87 @@ function DashboardView() {
   const intl = useIntl();
   const [range, setRange] = useState({ max: MAX_VALUE, min: MIN_VALUE });
 
-  const {
-    errorWhileUpload,
-    fileUploadResult,
-    handleFileUpload,
-    isLoading: isUploadingImageToServer,
-    setErrorWhileUpload,
-    setFileUploadResult,
-    uploadPercentage,
-  } = useSaveLogo({});
+  const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
+  const FilterIcon = images.iconFilter;
+  const MoreIcon = images.iconMore;
+  const AddIcon = images.iconAdd;
 
-  const { handleDeleteLogo } = useDeleteLogo();
-
-  const onDeleteImage = () => {
-    if (fileUploadResult?.data?.file_name) {
-      const fileName = fileUploadResult?.data?.file_name.split("/");
-      handleDeleteLogo(fileName[fileName.length - 1]);
-    }
+  const toggleSwitch = () => {
+    // setIsEnabled((previousState) => !previousState);
   };
 
+  const handleAddDesignation = () => {
+    // setIsEnabled((previousState) => !previousState);
+  };
+
+  const handleSearchResults = (filteredData) => {};
+
+  const searchData = [
+    {
+      content: <SearchView data={dataList} onSearch={handleSearchResults} />,
+      style: {},
+      isFillSpace: true,
+    },
+    {
+      content: (
+        <TouchableImage
+          source={FilterIcon}
+          parentStyle={styles.imageParentStyle}
+        />
+      ),
+      style: {},
+      isFillSpace: false,
+    },
+    {
+      content: (
+        <TouchableImage
+          source={MoreIcon}
+          disabled={false}
+          isSelector={true}
+          parentStyle={styles.imageParentStyle}
+        />
+      ),
+      style: {},
+      isFillSpace: false,
+    },
+  ];
+
+  const [selectBoxState, setSelectBoxState] = useState([
+    {
+      isSelected: false,
+      label: "Ca Jobs",
+      name: "Ca Jobs",
+      selectedIndex: null,
+      value: "Ca Jobs",
+    },
+    {
+      isSelected: false,
+      label: "Nqca",
+      name: "Nqca",
+      selectedIndex: null,
+      value: "Nqca",
+    },
+  ]);
+
+  const handleModuleSelection = (updatedSelectedItems) => {
+    const updatedState = selectBoxState.map((item) => {
+      if (item.value === updatedSelectedItems) {
+        if (item.isSelected) {
+          item.isSelected = false;
+        } else {
+          item.isSelected = true;
+        }
+        return item;
+      }
+      return item;
+    });
+    setSelectBoxState(updatedState);
+  };
   return (
     <View style={styles.container}>
       <CommonText customTextStyle={styles.header}>
         {intl.formatMessage({ id: "label.dashboard" })}
       </CommonText>
-      <View>
-        <UploadImage
-          {...{
-            onDeleteImage,
-            errorWhileUpload,
-            fileUploadResult,
-            handleFileUpload,
-            isVideoUpload: true,
-            isUploadingImageToServer,
-            setFileUploadResult,
-            uploadPercentage,
-          }}
-        />
-      </View>
       <View>
         <CommonText customTextStyle={styles.header}>
           {intl.formatMessage({ id: "label.dashboard" })}

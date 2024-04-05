@@ -57,6 +57,7 @@ const useUpdateService = (url) => {
     isSuccess,
     error,
     result,
+    setError,
   };
 };
 
