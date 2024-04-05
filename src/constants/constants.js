@@ -36,6 +36,7 @@ export const MAX_ZOOM_SCALE = 3;
 export const DEFAULT_BALANCE_CREDIT = 0;
 export const Candidate = "Candidate";
 export const Company = "Company";
+export const COMPANY = "company";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;

@@ -39,7 +39,7 @@ const UploadPhotoVideo = ({
           handleImageUploadResult={handleImageUploadResult}
           indexKey="cv_path"
           imageUrl={imageDetails?.cv_path}
-          isImageAndPDF
+          isDocumentUpload
         />
         <UploadCVPhotoUI
           isEditable={isEditable}
@@ -73,7 +73,7 @@ const UploadPhotoVideo = ({
           handleImageUploadResult={handleImageUploadResult}
           indexKey="introduction_video_path"
           imageUrl={imageDetails?.introduction_video_path}
-          isAllFormat
+          isVideoUpload
         />
       </View>
     </View>

@@ -20,8 +20,6 @@ const UploadImage = ({
   onDeleteImage,
   setFileUploadResult,
   uploadPercentage,
-  isImageAndPDF,
-  isAllFormat,
 }) => {
   const intl = useIntl();
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
@@ -91,8 +89,6 @@ const UploadImage = ({
             handleUploadClick: openImagePicker,
             isLoading: isUploadingImageToServer,
             uploadPercentage,
-            isImageAndPDF,
-            isAllFormat,
           }}
         />
       )}

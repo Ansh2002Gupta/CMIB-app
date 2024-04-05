@@ -27,8 +27,6 @@ const DragAndDropCard = ({
   isLoading,
   uploadPercentage,
   customContentContainerStyle,
-  isAllFormat,
-  isImageAndPDF,
 }) => {
   const isPlatformWeb = Platform.OS.toLowerCase() === "web";
 
@@ -50,19 +48,12 @@ const DragAndDropCard = ({
         : {}),
     };
   }
-
   const getAcceptedFiles = () => {
     if (isDocumentUpload) {
       return ".pdf";
     }
     if (isVideoUpload) {
       return ".mp4";
-    }
-    if (isAllFormat) {
-      return "image/png, image/jpeg, image/svg, image/eps, .mp4, .pdf";
-    }
-    if (isImageAndPDF) {
-      return "image/png, image/jpeg, image/svg, image/eps, .pdf";
     }
     return "image/png, image/jpeg, image/svg, image/eps";
   };
@@ -72,9 +63,6 @@ const DragAndDropCard = ({
       return intl.formatMessage({ id: "label.supported_document" });
     if (isVideoUpload)
       return intl.formatMessage({ id: "label.supported_video" });
-    if (isAllFormat) return intl.formatMessage({ id: "label.all_format" });
-    if (isImageAndPDF)
-      return intl.formatMessage({ id: "label.supported_image_pdf" });
 
     return intl.formatMessage({ id: "label.supported_type" });
   };
