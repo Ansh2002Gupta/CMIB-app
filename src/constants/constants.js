@@ -504,3 +504,15 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+
+export const STATUS_OPTIONS = {
+  INTERVIEW_SCHEDULED: "interview scheduled",
+  JOB_OFFERED: "job offered",
+  JOB_NOT_OFFERED: "job not offered",
+  NO_RESPONSE: "No response from applicant for interview",
+  OFFER_ACCEPTED: "offer accepted",
+  OFFERE_REJECTED: "offer rejected",
+  PENDING: "pending",
+  REJECTED: "rejected",
+  SHORTLISTED: "shortlisted",
+};

@@ -28,6 +28,7 @@ import {
   DEFAULT_CATEGORY_FOR_FILTER_MODAL,
   FILTER_TYPE_ENUM,
   ROWS_PER_PAGE_ARRAY,
+  STATUS_OPTIONS,
 } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 import { usePatch } from "../../../hooks/useApiRequest";
@@ -324,21 +325,30 @@ const useAppliedJobsListing = () => {
   };
 
   const onIconPress = (item) => {
-    showPopUpWithID !== item?.id
-      ? setShowPopUpWithID(item?.id)
-      : setShowPopUpWithID(-1);
-    if (!item?.status) {
-      setPopUpMessage(intl.formatMessage({ id: "label.respond_to_job_offer" }));
-      return;
-    }
-    item?.status.trim().toLowerCase() ===
-    intl.formatMessage({ id: "label.no_response_from_applicant" })
-      ? setPopUpMessage(
-          intl.formatMessage({ id: "label.select_interview_time" })
-        )
-      : setPopUpMessage(
+    if (!item?.status) return "-";
+    switch (item?.status?.trim()?.toLowerCase()) {
+      case STATUS_OPTIONS.NO_RESPONSE:
+        setShowPopUpWithID(item?.id);
+        setPopUpMessage(
           intl.formatMessage({ id: "label.respond_to_job_offer" })
         );
+        break;
+      case STATUS_OPTIONS.JOB_OFFERED:
+        setShowPopUpWithID(item?.id);
+        setPopUpMessage(
+          intl.formatMessage({ id: "label.select_interview_time" })
+        );
+        break;
+      default:
+        setPopUpMessage("-");
+    }
+  };
+
+  const renderMoreActionButton = (item) => {
+    return (
+      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.NO_RESPONSE ||
+      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.JOB_OFFERED
+    );
   };
   const handleSaveAddTicket = async (queryType, enterQuery) => {
     await handleAddTicket({ query_type: queryType, query: enterQuery });
@@ -542,14 +552,16 @@ const useAppliedJobsListing = () => {
                 />
               </View>
             )}
-            <TouchableImage
-              onPress={() => {
-                onIconPress(item);
-              }}
-              source={images.iconMore}
-              imageStyle={styles.iconTicket}
-              isSvg={true}
-            />
+            {renderMoreActionButton(item) && (
+              <TouchableImage
+                onPress={() => {
+                  onIconPress(item);
+                }}
+                source={images.iconMore}
+                imageStyle={styles.iconTicket}
+                isSvg={true}
+              />
+            )}
           </>
         ),
         style: commonStyles.columnStyle("8%"),
