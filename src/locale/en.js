@@ -406,6 +406,8 @@ const locale = {
   "label.job_seekers": "Job Seekers",
   "label.saved_candidates": "Saved Candidates",
   "label.download_profile_resume": "Download Profile Resume",
+  "label.years": "Years",
+  "label.experience": "Experience",
 };
 
 export default locale;

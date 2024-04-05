@@ -33,6 +33,7 @@ const CustomTable = ({
   currentPage,
   containerStyle,
   data,
+  formatConfig,
   filterApplyHandler,
   filterCategory,
   getColoumConfigs,
@@ -194,7 +195,8 @@ const CustomTable = ({
                       renderItem={({ item, index }) => {
                         const statusRenderText = getRenderText(
                           item,
-                          statusText
+                          statusText,
+                          formatConfig
                         );
                         return (
                           <>
@@ -214,12 +216,20 @@ const CustomTable = ({
                                         fontWeight={"600"}
                                         customTextStyle={styles.cellTextStyle()}
                                       >
-                                        {getRenderText(item, headingTexts)}
+                                        {getRenderText(
+                                          item,
+                                          headingTexts,
+                                          formatConfig
+                                        )}
                                       </CommonText>
                                       <CommonText
                                         customTextStyle={styles.tableQueryText}
                                       >
-                                        {getRenderText(item, subHeadingText)}
+                                        {getRenderText(
+                                          item,
+                                          subHeadingText,
+                                          formatConfig
+                                        )}
                                       </CommonText>
                                     </View>
                                     <View style={styles.rowsPerPageWeb}>
@@ -346,6 +356,7 @@ const CustomTable = ({
 CustomTable.defaultProps = {
   addNewTicket: false,
   containerStyle: {},
+  formatConfig: {},
   headingTexts: [],
   handleTicketModal: () => {},
   showSearchBar: true,
@@ -362,6 +373,7 @@ CustomTable.propTypes = {
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   data: PropTypes.array,
+  formatConfig: PropTypes.object,
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func.isRequired,

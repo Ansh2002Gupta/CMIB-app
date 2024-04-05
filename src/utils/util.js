@@ -20,11 +20,21 @@ export const getImageSource = (uploadedImage) => {
   return "";
 };
 
-export const getRenderText = (items, keys) => {
+export const getFormattedText = (item, key, formatConfig) => {
+  if (formatConfig[key]) {
+    const { prefix = "", suffix = "" } = formatConfig[key];
+    return `${prefix}${item[key]}${suffix}`;
+  }
+  return item[key];
+};
+
+export const getRenderText = (items, keys, formatConfig = {}) => {
   if (!keys.length) {
     return "";
   }
-  return keys.map((key) => items[key]).join(" ");
+  return keys
+    .map((key) => getFormattedText(items, key, formatConfig))
+    .join(" • ");
 };
 
 export const appendStringsInNextLine = (string) => {
