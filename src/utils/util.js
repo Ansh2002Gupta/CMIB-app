@@ -285,6 +285,7 @@ export const addKeyValuePair = (arr) => {
     return { value: item, label: item };
   });
 };
+
 export const getIndexForBoolean = (value) => {
   if (typeof value !== "boolean") {
     return value;
@@ -558,5 +559,5 @@ export const containsDuplicate = (arr) => {
     }
     seen.add(value);
   }
-  return false; // No duplicates
+  return false;
 };

@@ -41,6 +41,10 @@ import {
       flexWrap: 'wrap',
       marginTop: 16,
       marginBottom: 16,
+    },
+    badgeLabelContainer: {
+      width: 140,
+      marginBottom: 24,
     }
   });
   

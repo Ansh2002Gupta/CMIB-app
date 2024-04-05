@@ -624,7 +624,6 @@ const locale = {
   "label.gstin_validation": "Please enter a valid GSTIN",
   "label.viewPdf": "View PDF",
   "label.applyJob": "Apply job",
-  "label.urgent": "Urgent",
   "label.vacancies": "Vacancies",
   "label.lpa": "LPA",
   "label.yrs": "yrs",
