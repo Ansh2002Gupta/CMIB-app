@@ -327,13 +327,13 @@ const useAppliedJobsListing = () => {
   const onIconPress = (item) => {
     if (!item?.status) return "-";
     switch (item?.status?.trim()?.toLowerCase()) {
-      case STATUS_OPTIONS.NO_RESPONSE:
+      case STATUS_OPTIONS.JOB_OFFERED:
         setShowPopUpWithID(item?.id);
         setPopUpMessage(
           intl.formatMessage({ id: "label.respond_to_job_offer" })
         );
         break;
-      case STATUS_OPTIONS.JOB_OFFERED:
+      case STATUS_OPTIONS.NO_RESPONSE:
         setShowPopUpWithID(item?.id);
         setPopUpMessage(
           intl.formatMessage({ id: "label.select_interview_time" })
