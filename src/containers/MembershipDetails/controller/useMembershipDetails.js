@@ -11,6 +11,7 @@ const membership_detail = [
   {
     key: "membership_enrollment_date",
     isCalendar: true,
+    isMandatory: true,
     minDate: getCurrentYear() - 50, //need to confirm with B.E
     format: "DD/MM/YYYY",
     label: "label.dateOfEmrollmentAsMember",
@@ -25,6 +26,16 @@ const membership_detail = [
 
 const addValueOnField = ({ state, details, isEditable }) => {
   return details.map((item) => {
+    if (item?.isToggle) {
+      return {
+        ...item,
+        value: isEditable
+          ? Boolean(state?.[item?.key] ?? false)
+          : state?.[item?.key] === undefined
+          ? "-"
+          : booleanToYesNo(Boolean(state?.[item?.key])),
+      };
+    }
     return {
       ...item,
       defaultValue:
@@ -123,7 +134,6 @@ export const useMembershipDetails = ({ state, isEditable }) => {
         ? [
             {
               key: "practising_start_date",
-              isMandatory: true,
               isCalendar: true,
               minDate: getCurrentYear() - 50, //need to confirm with B.E
               format: "MMMM, YYYY",

@@ -22,7 +22,7 @@ const MembershipDetails = ({ isEditable, handleEdit }) => {
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? { ...data } : {}
   );
-  console.log(state, "setstate");
+
   const {
     membership_detail,
     fellow_member_detail,
@@ -49,7 +49,9 @@ const MembershipDetails = ({ isEditable, handleEdit }) => {
   };
 
   const onChangeValue = (details) => (label, value, codeValue) => {
-    const { key } = findKeyByLabel(label, details);
+    const { key, isToggle } = findKeyByLabel(label, details);
+
+    value = isToggle ? !Boolean(value) : value;
 
     if (codeValue) {
       setState((prev) => ({
@@ -66,6 +68,7 @@ const MembershipDetails = ({ isEditable, handleEdit }) => {
 
   const performSaveChanges = () => {
     const payload = getMembershipDetailsPayload();
+
     handleUpdate(payload, () => {
       // turn off the edit mode
       handleEdit(false);
@@ -74,30 +77,24 @@ const MembershipDetails = ({ isEditable, handleEdit }) => {
   };
 
   const getMembershipDetailsPayload = () => {
-    const isFellowMember = getUpdatedValue(state?.is_fellow_member);
-    const isPractising = getUpdatedValue(state?.is_practising);
+    const isFellowMember = state?.is_fellow_member;
+    const isPractising = state?.is_practising;
     const payload = {
-      membership_enrollment_date: formatDateToYYYYMMDD(
-        state?.membership_enrollment_date
-      ),
-      is_fellow_member: isFellowMember,
-      fellow_member_admission_date: isFellowMember
-        ? formatDateToYYYYMMDD(state?.fellow_member_admission_date)
+      membership_enrollment_date: state?.membership_enrollment_date
+        ? formatDateToYYYYMMDD(state?.membership_enrollment_date)
         : "",
-      is_practising: isPractising,
-      practising_start_date: isPractising
-        ? formatDateToYYYYMMDD(state?.practising_start_date)
-        : "",
+      is_fellow_member: isFellowMember ?? false,
+      fellow_member_admission_date:
+        isFellowMember && state?.fellow_member_admission_date
+          ? formatDateToYYYYMMDD(state?.fellow_member_admission_date)
+          : "",
+      is_practising: isPractising ?? false,
+      practising_start_date:
+        isPractising && state?.practising_start_date
+          ? formatDateToYYYYMMDD(state?.practising_start_date)
+          : "",
     };
     return payload;
-  };
-
-  const getUpdatedValue = (value) => {
-    if (typeof value === "boolean") {
-      return value;
-    } else {
-      return !value;
-    }
   };
 
   return (
