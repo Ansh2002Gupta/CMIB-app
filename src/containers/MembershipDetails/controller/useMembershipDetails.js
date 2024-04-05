@@ -10,7 +10,6 @@ import dayjs from "dayjs";
 const membership_detail = [
   {
     key: "membership_enrollment_date",
-    isMandatory: true,
     isCalendar: true,
     minDate: getCurrentYear() - 50, //need to confirm with B.E
     format: "DD/MM/YYYY",
@@ -77,7 +76,6 @@ export const useMembershipDetails = ({ state, isEditable }) => {
     const fellow_member_detail = [
       {
         key: "is_fellow_member",
-        isMandatory: false,
         isToggle: true,
         label: "label.areYouAFellowMember",
         placeholder: "label.areYouAFellowMember",
@@ -91,7 +89,6 @@ export const useMembershipDetails = ({ state, isEditable }) => {
         ? [
             {
               key: "fellow_member_admission_date",
-              isMandatory: true,
               isCalendar: true,
               minDate: getCurrentYear() - 50, //need to confirm with B.E
               format: "DD/MM/YYYY",
@@ -113,7 +110,6 @@ export const useMembershipDetails = ({ state, isEditable }) => {
     const practice_detail = [
       {
         key: "is_practising",
-        isMandatory: false,
         isToggle: true,
         label: "label.whetherInPractice",
         placeholder: "label.whetherInPractice",
