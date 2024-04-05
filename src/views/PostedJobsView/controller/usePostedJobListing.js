@@ -142,7 +142,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
           perPage: rowsPerPage,
           page: nextPage,
           status: filterOptions.activeorInctive,
-          queryType: filterOptions.approvedorNot,
+          approved: filterOptions.approvedorNot,
         },
       });
 
@@ -170,7 +170,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       perPage: rowsPerPage,
       page: page,
       status: filterOptions.activeorInctive,
-      queryType: filterOptions.approvedorNot,
+      approved: filterOptions.approvedorNot,
     });
   };
 
@@ -180,7 +180,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       perPage: option.value,
       page: currentPage,
       status: filterOptions.activeorInctive,
-      queryType: filterOptions.approvedorNot,
+      approved: filterOptions.approvedorNot,
     });
   };
 
@@ -192,7 +192,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         queryParamsObject: {
           search: searchedData,
           status: filterOptions.activeorInctive,
-          queryType: filterOptions.approvedorNot,
+          approved: filterOptions.approvedorNot,
         },
       });
       setCurrentRecords(newData?.records);
@@ -207,15 +207,18 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         perPage: rowsPerPage,
         page: currentPage,
         status: filterOptions.activeorInctive,
-        queryType: filterOptions.approvedorNot,
+        approved: filterOptions.approvedorNot,
       });
     }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
+    const temporaryArray = selectedQueryType.map((item) => {
+      return item - 1;
+    });
     setFilterOptions((prev) => ({
       ...prev,
-      query_type: selectedQueryType,
+      query_type: temporaryArray,
     }));
     if (isMob) {
       setLoadingMore(false);
@@ -224,7 +227,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         queryParamsObject: {
           search: filterOptions.searchData,
           status: selectedStatus,
-          queryType: selectedQueryType,
+          approved: temporaryArray,
         },
       });
       setCurrentRecords(newData?.records);
@@ -236,7 +239,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     } else {
       await updateCurrentRecords({
         status: selectedStatus,
-        queryType: selectedQueryType,
+        approved: temporaryArray,
         perPage: rowsPerPage,
         page: currentPage,
       });

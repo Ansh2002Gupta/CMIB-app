@@ -20,11 +20,14 @@ import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { useParams } from "react-router";
+import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 const EditJobDetails = ({
   jobData: intialJobData,
   questionData: intialQuestionData,
   onCancelPress,
 }) => {
+  const { isLoading, isErrorData, fetchData, isSuccess } =
+    useGetAddNewJobData();
   const { isWebView } = useIsWebView();
   const { id } = useParams();
   const [jobDetails, setJobDetails] = useState(intialJobData);
@@ -41,6 +44,9 @@ const EditJobDetails = ({
   const questionaireRef = useRef(null);
   const addJobRef = useRef(null);
   const intl = useIntl();
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (intialJobData && intialQuestionData) {
@@ -133,78 +139,85 @@ const EditJobDetails = ({
         headerText={intl.formatMessage({ id: "label.edit_jobs" })}
         isBorderVisible={false}
       />
-      {loading && <LoadingScreen />}
-      {!loading && Object.keys(jobDetails).length > 0 && questionaire && (
-        <ScrollView style={styles.container}>
-          <View style={styles.mainViewStyle}>
-            <CustomTabs
-              containerStyle={styles.backgroundWhite}
-              setSelectedTab={setSelectedTab}
-              cleanupFuntion={() => {
-                let jobData;
-                let questionnairelist;
-                if (addJobRef.current) {
-                  jobData = addJobRef.current.getChildState();
-                  setJobDetails(jobData);
-                }
-                if (questionaireRef.current) {
-                  questionnairelist = questionaireRef.current.getQuestionData();
-                  setQuestionaire(questionnairelist);
-                }
-              }}
-              tabs={[
-                {
-                  label: intl.formatMessage({
-                    id: "label.job_details",
-                  }),
-                  component: (
-                    <View style={styles.padding16}>
-                      <AddModifyJobComponent
-                        ref={addJobRef}
-                        addNewJobData={jobDetails}
-                        isExpanded={true}
-                        isWebView={isWebView}
-                        isMinimisedVisible={false}
-                      />
-                    </View>
-                  ),
-                },
-                {
-                  label: intl.formatMessage({
-                    id: "label.view_questionaire",
-                  }),
-                  component: (
-                    <View style={styles.paddingAllSide}>
-                      <AddModifyQuestionaireComponent
-                        isQuestionaire={true}
-                        addNewJobData={questionaire}
-                        isWebView={isWebView}
-                        ref={questionaireRef}
-                        isMinimisedVisible={false}
-                        headerText={"label.view_questionaire"}
-                      />
-                    </View>
-                  ),
-                },
-              ]}
-            />
-          </View>
-          <View style={styles.padding16}>
-            <FooterComponent
-              onSubmit={onSubmit}
-              isWebView={isWebView}
-              isCheckList={isChecklist}
-              setIsCheckList={setIsCheckList}
-              onCancelPress={onCancelPress}
-              submitButtonText={"label.save"}
-            />
-          </View>
-        </ScrollView>
-      )}
-      {postError && (
+      {loading || (isLoading && <LoadingScreen />)}
+      {!loading &&
+        !isLoading &&
+        isSuccess &&
+        Object.keys(jobDetails).length > 0 &&
+        questionaire && (
+          <ScrollView style={styles.container}>
+            <View style={styles.mainViewStyle}>
+              <CustomTabs
+                containerStyle={styles.backgroundWhite}
+                setSelectedTab={setSelectedTab}
+                cleanupFuntion={() => {
+                  let jobData;
+                  let questionnairelist;
+                  if (addJobRef.current) {
+                    jobData = addJobRef.current.getChildState();
+                    setJobDetails(jobData);
+                  }
+                  if (questionaireRef.current) {
+                    questionnairelist =
+                      questionaireRef.current.getQuestionData();
+                    setQuestionaire(questionnairelist);
+                  }
+                }}
+                tabs={[
+                  {
+                    label: intl.formatMessage({
+                      id: "label.job_details",
+                    }),
+                    component: (
+                      <View style={styles.padding16}>
+                        <AddModifyJobComponent
+                          ref={addJobRef}
+                          addNewJobData={jobDetails}
+                          isExpanded={true}
+                          isWebView={isWebView}
+                          isMinimisedVisible={false}
+                        />
+                      </View>
+                    ),
+                  },
+                  {
+                    label: intl.formatMessage({
+                      id: "label.view_questionaire",
+                    }),
+                    component: (
+                      <View style={styles.paddingAllSide}>
+                        <AddModifyQuestionaireComponent
+                          isQuestionaire={true}
+                          addNewJobData={questionaire}
+                          isWebView={isWebView}
+                          ref={questionaireRef}
+                          isMinimisedVisible={false}
+                          headerText={"label.view_questionaire"}
+                        />
+                      </View>
+                    ),
+                  },
+                ]}
+              />
+            </View>
+            <View style={styles.padding16}>
+              <FooterComponent
+                onSubmit={onSubmit}
+                isWebView={isWebView}
+                isCheckList={isChecklist}
+                setIsCheckList={setIsCheckList}
+                onCancelPress={onCancelPress}
+                submitButtonText={"label.save"}
+              />
+            </View>
+          </ScrollView>
+        )}
+      {(postError || isErrorData) && (
         <ErrorComponent
           errorMsg={
-            postError?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
+            isErrorData?.data?.message ||
+            postError?.data?.message ||
+            GENERIC_GET_API_FAILED_ERROR_MESSAGE
           }
         />
       )}

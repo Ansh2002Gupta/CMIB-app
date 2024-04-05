@@ -4,7 +4,6 @@ import { View } from "@unthinkable/react-core-components";
 import CustomTextEditor from "../../components/CustomTextEditor";
 import { FormTabs } from "../../components/Tab/FormTabs";
 import { CustomTabs } from "../../components/Tab";
-import useFetch from "../../hooks/useFetch";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 import ViewJobs from "../../containers/ViewPostedJobDetails/ViewJobs";
@@ -15,7 +14,6 @@ import { jobType } from "../../constants/constants";
 import { useIntl } from "react-intl";
 import { getDecryptApiData } from "../../utils/util";
 import styles from "./ViewPostedJobDetails.styles";
-import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { useSearchParams } from "../../routes";
@@ -32,20 +30,12 @@ const ViewPostedJobDetails = () => {
   const {
     isLoading: isConstantLoading,
     stateResult: apiData,
+    isSuccess: isSuccess,
     isError: apiIsError,
     error: apiError,
     getJobs: getPostedData,
   } = useGetEditJobs(id);
 
-  const {
-    isLoading,
-    isSuccess,
-    isError,
-    isErrorData,
-    fetchData,
-    fetchRemainingViewData,
-    fetchViewData,
-  } = useGetAddNewJobData();
   const [questionnaireData, setQuestionnaireData] = useState([]);
   const [appData, setAppData] = useState({});
   const [details, setDetails] = useState([]);
@@ -58,11 +48,8 @@ const ViewPostedJobDetails = () => {
   useEffect(() => {
     if (searchParams.get("mode") === "edit") {
       setIsEditable(true);
-      fetchData();
-      getPostedData();
-    } else {
-      fetchViewData();
     }
+    getPostedData();
   }, []);
   useEffect(() => {
     if (searchParams.get("mode") === "view" && isEditable) {
@@ -72,22 +59,16 @@ const ViewPostedJobDetails = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    if (apiData && isSuccess) {
-      const { obj, transformedQuestionnaire } = getDecryptApiData(
-        apiData,
-        addJobs
-      );
+    if (isSuccess && apiData) {
+      const { obj, transformedQuestionnaire } = getDecryptApiData(apiData);
       setAppData(obj);
-
       setQuestionnaireData(transformedQuestionnaire);
     }
-  }, [apiData, isSuccess]);
+  }, [isSuccess, apiData]);
   useEffect(() => {
-    if (apiData && addJobs.jobType && Object.keys(appData).length > 0) {
+    if (apiData && Object.keys(apiData).length > 0 && isSuccess) {
       setLoading(true);
-      let jobName = addJobs.jobType.find(
-        (item) => item.id == apiData.job_type_id
-      )?.name;
+      let jobName = apiData.type.name;
       let temp = [
         [
           {
@@ -136,10 +117,9 @@ const ViewPostedJobDetails = () => {
             label: "label.maximum_experience",
             value: apiData?.max_experience,
           },
-
           {
             label: "label.nationality",
-            value: apiData?.nationality ?? "-",
+            value: apiData?.nationality?.name ?? "-",
           },
         ],
         [
@@ -153,8 +133,8 @@ const ViewPostedJobDetails = () => {
             isMandatory: true,
             showBadgeLabel: true,
             customValue:
-              (Array.isArray(appData.jobLocation) &&
-                appData?.jobLocation.map((item) => item.value)) ??
+              (Array.isArray(apiData.locations) &&
+                apiData?.locations.map((item) => item.city)) ??
               "-",
             value: apiData?.locations ?? "-",
           },
@@ -166,19 +146,19 @@ const ViewPostedJobDetails = () => {
             isMandatory: true,
             showBadgeLabel: true,
             customValue:
-              (Array.isArray(appData.functionalAreas) &&
-                appData?.functionalAreas.map((item) => item.label)) ??
+              (Array.isArray(apiData.functional_areas) &&
+                apiData?.functional_areas.map((item) => item.name)) ??
               "-",
           },
         ],
         [
           {
             label: "label.gender_preference",
-            value: apiData?.gender_preference ?? "-",
+            value: apiData?.gender_preference?.label ?? "-",
           },
           {
             label: "label.category_preference",
-            value: apiData?.category_preference ?? "-",
+            value: apiData?.category_prefrence.name ?? "-",
             isMandatory: true,
           },
           {},
@@ -222,7 +202,7 @@ const ViewPostedJobDetails = () => {
         [
           {
             label: "label.mode_of_work",
-            value: apiData?.work_mode ?? "-",
+            value: apiData?.work_mode?.name ?? "-",
             isMandatory: true,
           },
           {
@@ -271,7 +251,6 @@ const ViewPostedJobDetails = () => {
               {},
             ]
           : [],
-
         [
           {
             label: "label.salary_negotiable",
@@ -296,11 +275,11 @@ const ViewPostedJobDetails = () => {
         ],
       ];
       setActive(apiData?.status === 1);
-
       setDetails(temp);
       setLoading(false);
     }
-  }, [apiData, addJobs, appData]);
+  }, [apiData]);
+
   const onCancelPress = (shouldApiBeCalled = false) => {
     if (isEditable) {
       setIsEditable(false);
@@ -315,7 +294,7 @@ const ViewPostedJobDetails = () => {
   };
   return (
     <>
-      {isConstantLoading || isLoading || loading ? (
+      {isConstantLoading || loading ? (
         <LoadingScreen />
       ) : (
         <>
@@ -354,7 +333,7 @@ const ViewPostedJobDetails = () => {
                           }}
                         >
                           <View style={{ flex: 1 }}>
-                            {!(isError || apiIsError) ? (
+                            {!apiIsError ? (
                               <View
                                 style={{
                                   ...styles.container,
@@ -367,7 +346,6 @@ const ViewPostedJobDetails = () => {
                                       prev.set("mode", "edit");
                                       return prev;
                                     });
-                                    fetchRemainingViewData();
                                   }}
                                   tabs={[
                                     {
@@ -393,16 +371,14 @@ const ViewPostedJobDetails = () => {
                             ) : null}
                           </View>
 
-                          {!(isConstantLoading || isLoading || loading) &&
-                            (isError || apiIsError) && (
-                              <ErrorComponent
-                                errorMsg={
-                                  isErrorData?.data?.message ||
-                                  apiError?.data?.message ||
-                                  GENERIC_GET_API_FAILED_ERROR_MESSAGE
-                                }
-                              />
-                            )}
+                          {!(isConstantLoading || loading) && apiIsError && (
+                            <ErrorComponent
+                              errorMsg={
+                                apiError?.data?.message ||
+                                GENERIC_GET_API_FAILED_ERROR_MESSAGE
+                              }
+                            />
+                          )}
                         </View>
                       ),
                     },
