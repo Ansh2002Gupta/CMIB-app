@@ -9,6 +9,7 @@ import MultiRow from "../../core/layouts/MultiRow";
 
 import ActionPairButton from "../ActionPairButton";
 import Chip from "../Chip";
+import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
@@ -33,7 +34,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
   } = cardDetails;
 
   const columnConfig = (data) => {
-    return data.map((item) => {
+    return data?.map((item) => {
       return {
         content: (
           <Chip
@@ -121,7 +122,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
             leftSection={
               <Image source={images.iconLocation} style={style.iconStyle} />
             }
-            rightSection={<MultiColumn columns={locationConfig(jobLocation)} />}
+            rightSection={<MultiColumn columns={LocationConfig(jobLocation)} />}
           />
         </View>
       ),
