@@ -157,14 +157,19 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
         <MultiColumn columns={multiCoulmn} style={style.mobileMargin8} />
       ),
     },
-    {
+    jobLocation?.length && {
       content: (
         <TwoColumn
           style={{ ...style.iconView, ...style.mobileMargin8 }}
           leftSection={
             <Image source={images.iconLocation} style={style.mobileIconStyle} />
           }
-          rightSection={<MultiColumn columns={LocationConfig(jobLocation)} />}
+          rightSection={
+            <MultiColumn
+              columns={LocationConfig(jobLocation)}
+              style={{ backgroundColor: "blue", paddingRight: 24 }}
+            />
+          }
         />
       ),
     },

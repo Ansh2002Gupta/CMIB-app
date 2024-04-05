@@ -1,5 +1,5 @@
 import colors from "../../assets/colors";
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
 const style = StyleSheet.create({
   mainContainer: {
@@ -99,8 +99,8 @@ const style = StyleSheet.create({
     paddingRight: 16,
   },
   mobileEvenPadding: {
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingLeft: 8,
+    paddingRight: 8,
   },
   mobileIconStyle: {
     marginRight: 8,
@@ -132,6 +132,24 @@ const style = StyleSheet.create({
   customToastStyle: {
     top: 50,
     bottom: "50%",
+  },
+  breakWordStyle: {
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+        paddingTop: 8,
+      },
+    }),
+  },
+  webJobLocation: {
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: 200,
+      },
+    }),
   },
 });
 

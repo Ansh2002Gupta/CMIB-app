@@ -48,21 +48,6 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
     });
   };
 
-  const locationConfig = (data) => {
-    return data.map((item, index) => {
-      return {
-        content: (
-          <CommonText
-            customTextStyle={[style.marginRightText, style.blackText]}
-          >
-            {item?.name}
-            {index !== data.length - 1 && "/"}
-          </CommonText>
-        ),
-      };
-    });
-  };
-
   const multiCoulmn = [
     {
       content: (
@@ -114,11 +99,11 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
         </View>
       ),
     },
-    {
+    jobLocation?.length && {
       content: (
         <View style={[style.evenPadding, style.leftBorder]}>
           <TwoColumn
-            style={style.iconView}
+            style={{ ...style.iconView, ...style.center }}
             leftSection={
               <Image source={images.iconLocation} style={style.iconStyle} />
             }
@@ -164,7 +149,13 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
         />
       ),
     },
-    { content: <CommonText>{jobDescription}</CommonText> },
+    {
+      content: (
+        <CommonText customTextStyle={style.breakWordStyle}>
+          {jobDescription}
+        </CommonText>
+      ),
+    },
     {
       content: (
         <MultiColumn
