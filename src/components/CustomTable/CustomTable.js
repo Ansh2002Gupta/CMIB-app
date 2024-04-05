@@ -299,7 +299,7 @@ const CustomTable = ({
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if (!!data && !data?.length)
+                        if ((!data || !!data) && !data?.length)
                           return (
                             <CommonText
                               customContainerStyle={styles.loadingStyleNoData}

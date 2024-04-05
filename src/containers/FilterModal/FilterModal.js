@@ -125,8 +125,12 @@ const FilterModal = ({
           key={option.id}
           item={option}
           title={option.name}
-          onChange={() => filterObj?.handler(option, category)}
-          isSelected={filterObj?.selectedOptions?.includes(option.id)}
+          onChange={() =>
+            filterObj?.handler(option, category, filterObj?.refKey)
+          }
+          isSelected={filterObj?.selectedOptions?.includes(
+            option?.[filterObj?.refKey]
+          )}
         />
       ))
     ) : (
@@ -144,7 +148,9 @@ const FilterModal = ({
           maximumValue={filterObj?.maximumSliderLimit}
           minimumValue={filterObj?.minimumSliderLimit}
           step={1}
-          onChange={(val) => filterObj?.handler({ value: val }, "Experience")}
+          onChange={(val) =>
+            filterObj?.handler({ value: val }, "Experience", "value")
+          }
           value={
             !!filterState?.selectedExperience
               ? filterState?.selectedExperience

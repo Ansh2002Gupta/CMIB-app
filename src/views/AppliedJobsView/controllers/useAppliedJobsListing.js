@@ -118,7 +118,7 @@ const useAppliedJobsListing = () => {
 
   const { data: jobTypeData } = useFetch({ url: JOB_TYPE_OPTIONS });
 
-  const experienceData = 20;
+  const experienceData = 0;
 
   const { data: locationData } = useFetch({ url: JOB_LOCATION_OPTIONS });
 
@@ -164,7 +164,7 @@ const useAppliedJobsListing = () => {
     setCandidateDecision({ decision, applicantID });
   };
 
-  const handleFilterChange = (selectedFilter, filterName) => {
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {
     setFilterState((prevState) => {
       const filterObj = customFilterInfo.find(
         (info) => info.name === filterName
@@ -175,10 +175,12 @@ const useAppliedJobsListing = () => {
       if (!!existingSelectedOptions) {
         if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
           newSelectedOptions = existingSelectedOptions?.includes(
-            selectedFilter.id
+            selectedFilter?.[keyName]
           )
-            ? existingSelectedOptions?.filter((id) => id !== selectedFilter.id)
-            : [...existingSelectedOptions, selectedFilter.id];
+            ? existingSelectedOptions?.filter(
+                (keyName) => keyName !== selectedFilter?.[keyName]
+              )
+            : [...existingSelectedOptions, selectedFilter?.[keyName]];
         } else {
           newSelectedOptions = selectedFilter.value;
         }
@@ -202,6 +204,7 @@ const useAppliedJobsListing = () => {
 
   const customFilterInfo = [
     {
+      refKey: "name",
       name: "WorkMode",
       type: FILTER_TYPE_ENUM.CHECKBOX,
       options: workModeData,
@@ -209,6 +212,7 @@ const useAppliedJobsListing = () => {
       handler: handleFilterChange,
     },
     {
+      refKey: "id",
       name: "JobType",
       type: FILTER_TYPE_ENUM.CHECKBOX,
       options: jobTypeData,
@@ -216,6 +220,7 @@ const useAppliedJobsListing = () => {
       handler: handleFilterChange,
     },
     {
+      refKey: "value",
       name: "Experience",
       type: FILTER_TYPE_ENUM.SLIDER,
       minimumSliderLimit: 0,
@@ -225,6 +230,7 @@ const useAppliedJobsListing = () => {
       handler: handleFilterChange,
     },
     {
+      refKey: "id",
       name: "Location",
       type: FILTER_TYPE_ENUM.CHECKBOX,
       options: extractLocation({ data: locationData, keyName: "country" }),
@@ -374,6 +380,7 @@ const useAppliedJobsListing = () => {
   };
 
   const filterApplyHandler = async (filterInfo) => {
+    console.log("filterInfo on filter button hit: ", filterInfo);
     const currentFilterOptions = {
       work_mode: returnSelectedFilterOption(filterInfo, "WorkMode"),
       job_type: returnSelectedFilterOption(filterInfo, "JobType"),
