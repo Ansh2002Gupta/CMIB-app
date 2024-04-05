@@ -385,6 +385,25 @@ const DetailComponent = ({
   );
 };
 
+DetailComponent.defaultProps = {
+  customContainerStyle: {},
+  details: [],
+  handleBlur: () => {},
+  handleChange: () => {},
+  handleSwitchChange: () => {},
+  headerText: "",
+  headerTextCustomStyles: {},
+  isActive: false,
+  isEditable: false,
+  isInputDisable: false,
+  isShowSwitch: false,
+  onPressActionButton: () => {},
+  isShowCancel: false,
+  handleCancel: () => {},
+  handleAddRemoveRow: () => {},
+  handleCheckBoxSelection: () => {},
+};
+
 DetailComponent.propTypes = {
   customContainerStyle: PropTypes.object,
   details: PropTypes.array,
