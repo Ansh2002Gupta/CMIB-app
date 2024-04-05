@@ -629,17 +629,16 @@ const locale = {
   "label.yrs": "yrs",
   "label.posted": "Posted",
   "label.ago": "ago",
+  "label.candidates": "Candidates",
+  "label.job_applicants": "Job Applicants",
+  "label.saved_candidates": "Saved Candidates",
+  "label.download_profile_resume": "Download Profile Resume",
   "label.postingAnyWhereRequired": "Posting anywhere in india is required",
   "label.transferableRequired": "Transferable post acceptable is required",
   "label.readyToPlaceRequired": "Ready to place india is required",
   "label.preferredRegionRequired": "Preferred region is required",
   "label.expectedAnnualSalaryRequired": "Expected annual salary is required",
   "label.removeDuplicateInputs": "Please remove duplicate values",
-  "label.candidates": "Candidates",
-  "label.job_applicants": "Job Applicants",
-  "label.job_seekers": "Job Seekers",
-  "label.saved_candidates": "Saved Candidates",
-  "label.download_profile_resume": "Download Profile Resume",
 };
 
 export default locale;
