@@ -236,6 +236,10 @@ const iconBriefcase = appendAppBaseURl("/images/svg/iconBriefcase.svg");
 const iconLocation = appendAppBaseURl("/images/svg/iconLocation.svg");
 const iconRupee = appendAppBaseURl("/images/svg/iconRupee.svg");
 const videoPlayIcon = appendAppBaseURl("/images/svg/videoPlayIcon.svg");
+const pdfIcon = appendAppBaseURl("/images/svg/pdfIcon.svg");
+const rightDiagonalArrow = appendAppBaseURl(
+  "/images/svg/rightDiagonalArrow.svg"
+);
 
 const images = {
   iconArrowUp,
@@ -405,6 +409,8 @@ const images = {
   iconLocation,
   iconRupee,
   videoPlayIcon,
+  pdfIcon,
+  rightDiagonalArrow,
 };
 
 export default images;
