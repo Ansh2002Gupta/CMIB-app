@@ -32,7 +32,6 @@ export const CustomTabs = ({
   useEffect(() => {
     setSelectedTab && setSelectedTab(activeTabIndex);
   }, [activeTabIndex]);
-
   const handleTabChange = ({ tab, index }) => {
     if (index !== activeTabIndex) {
       if (showWarningOnTabSwitch) {
