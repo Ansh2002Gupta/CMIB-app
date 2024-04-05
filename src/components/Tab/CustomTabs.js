@@ -19,10 +19,11 @@ export const CustomTabs = ({
   showWarningOnTabSwitch,
   setSelectedTab,
   tabs,
+  intialActiveTab = 0,
 }) => {
   const intl = useIntl();
 
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [activeTabIndex, setActiveTabIndex] = useState(intialActiveTab);
   const [alertOnTabSwitch, setAlertOnTabSwitch] = useState({
     showAlert: false,
     tab: {},

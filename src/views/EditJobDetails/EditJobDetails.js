@@ -21,6 +21,7 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { useParams } from "react-router";
 import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
+import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
 const EditJobDetails = ({
   jobData: intialJobData,
   questionData: intialQuestionData,
@@ -28,6 +29,7 @@ const EditJobDetails = ({
 }) => {
   const { isLoading, isErrorData, fetchData, isSuccess } =
     useGetAddNewJobData();
+  const [addJobs] = useContext(AddJobContext);
   const { isWebView } = useIsWebView();
   const { id } = useParams();
   const [jobDetails, setJobDetails] = useState(intialJobData);
@@ -143,6 +145,7 @@ const EditJobDetails = ({
       {!loading &&
         !isLoading &&
         isSuccess &&
+        addJobs?.jobLocationData &&
         Object.keys(jobDetails).length > 0 &&
         questionaire && (
           <ScrollView style={styles.container}>

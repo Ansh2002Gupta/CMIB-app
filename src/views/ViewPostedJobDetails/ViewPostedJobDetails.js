@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { View } from "@unthinkable/react-core-components";
 import CustomTextEditor from "../../components/CustomTextEditor";
 import { FormTabs } from "../../components/Tab/FormTabs";
 import { CustomTabs } from "../../components/Tab";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 import ViewJobs from "../../containers/ViewPostedJobDetails/ViewJobs";
 import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
 import LoadingScreen from "../../components/LoadingScreen";
-import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
 import { jobType } from "../../constants/constants";
 import { useIntl } from "react-intl";
 import { getDecryptApiData } from "../../utils/util";
@@ -40,7 +38,6 @@ const ViewPostedJobDetails = () => {
   const [appData, setAppData] = useState({});
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [addJobs] = useContext(AddJobContext);
   const [isActive, setActive] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   const intl = useIntl();
