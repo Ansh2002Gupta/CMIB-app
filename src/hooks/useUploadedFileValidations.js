@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import {
-  IMAGE_MAX_SIZE,
-  TOAST_TIMEOUT,
-  VIDEO_MAX_SIZE,
-} from "../constants/constants";
+import { FILE_MAX_SIZE, TOAST_TIMEOUT } from "../constants/constants";
 import {
   DOCUMENT_ACCEPTABLE_FORMAT_REGEX,
   IMAGE_ACCEPTABLE_FORMAT_REGEX,
@@ -13,7 +9,10 @@ import {
 } from "../constants/Regex";
 import { getImageSource } from "../utils/util";
 
-const useUploadedFileValidations = ({ isDocumentUpload, isVideoUpload }) => {
+const useUploadedFileValidations = ({
+  isDocumentUpload,
+  isVideoUpload,
+} = {}) => {
   const intl = useIntl();
 
   const [fileTooLargeError, setFileTooLargeError] = useState("");
@@ -59,14 +58,14 @@ const useUploadedFileValidations = ({ isDocumentUpload, isVideoUpload }) => {
         resetUploadInput && resetUploadInput();
         return;
       }
-      if (isVideoUpload && uploadedFile.size > VIDEO_MAX_SIZE) {
+      if (isVideoUpload && uploadedFile.size > FILE_MAX_SIZE) {
         setFileTooLargeError(
           intl.formatMessage({ id: "label.videoTooLargeError" })
         );
         resetUploadInput && resetUploadInput();
         return;
       }
-      if (!isVideoUpload && uploadedFile.size > IMAGE_MAX_SIZE) {
+      if (!isVideoUpload && uploadedFile.size > FILE_MAX_SIZE) {
         setFileTooLargeError(
           intl.formatMessage({ id: "label.fileTooLargeError" })
         );
