@@ -20,13 +20,13 @@ function DashboardView() {
     <View style={styles.container}>
       <TwoRow
         topSection={
-          <IconHeader
-            hasActionButton={false}
-            showInWeb={isWebView}
-            hasIconBar
-            headerText={intl.formatMessage({ id: "label.dashboard" })}
-            intl={intl}
-          />
+          isWebView && (
+            <IconHeader
+              hasIconBar
+              headerText={intl.formatMessage({ id: "label.dashboard" })}
+              intl={intl}
+            />
+          )
         }
         isBottomFillSpace
         bottomSection={
