@@ -126,6 +126,8 @@ import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
 import iconError from "../../public/images/svg/iconError.svg";
+import iconAppliedJobs from "../../public/images/svg/iconAppliedJobs.svg";
+import iconAppliedJobsActiveJobs from "../../public/images/svg/iconAppliedJobsActiveJobs.svg";
 import iconSingleSave from "../../public/images/svg/iconSingleSave.svg";
 import iconSaveSlashBlack from "../../public/images/svg/iconSaveSlashBlack.svg";
 import iconSaveSlashBlue from "../../public/images/svg/iconSaveSlashBlue.svg";
@@ -262,6 +264,8 @@ const images = {
   iconLoading,
   iconGreyCross,
   iconError,
+  iconAppliedJobs,
+  iconAppliedJobsActiveJobs,
   iconSingleSave,
   iconSaveSlashBlack,
   iconSaveSlashBlue,

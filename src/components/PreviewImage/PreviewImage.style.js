@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
     minHeight: 150,
     padding: 10,
   },
+  noPadding: {
+    padding: 0,
+  },
   selectedImageStyle: {
     minHeight: 145,
     minWidth: 150,

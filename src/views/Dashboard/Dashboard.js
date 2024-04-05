@@ -53,6 +53,7 @@ function DashboardView() {
             uploadPercentage,
           }}
         />
+        <SavedJobComponent />
       </View>
       <View>
         <CommonText customTextStyle={styles.header}>
