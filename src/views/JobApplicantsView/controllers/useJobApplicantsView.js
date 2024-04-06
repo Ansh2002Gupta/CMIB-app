@@ -66,8 +66,6 @@ const useJobApplicants = () => {
   let statusText = ["active_inactive"];
   let tableIcon = images.iconMore;
 
-  //We'll uncomment this code when API is available
-
   const {
     data: jobApplicantListing,
     isLoading: isJobApplicantListingLoading,

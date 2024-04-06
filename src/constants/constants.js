@@ -653,34 +653,3 @@ export const JOB_APPLICANTS_HEADING = {
   job_status: "Active/Inactive",
   status: "Status",
 };
-
-// export const JOB_APPLICANTS_POP_MESSAGE = {
-
-//   pending: [
-//     "label.download_profile_resume",
-//     "label.view_applicant_details",
-//     "label.shorlist_candidate",
-//     "label.reject_candidate",
-//   ],
-//   shorlisted: [
-//     "label.download_profile_resume",
-//     "label.view_applicant_details",
-//     "label.schedule_interview",
-//   ],
-//   noresponse: [
-//     "label.download_profile_resume",
-//     "label.view_applicant_details",
-//     "label.view_interview_details",
-//   ],
-//   interviewscheduled: [
-//     "label.download_profile_resume",
-//     "label.view_applicant_details",
-//     "label.view_interview_details",
-//     "label.offer_job",
-//     "label.reject_after_interview",
-//   ],
-//   offerrejected: [
-//     "label.download_profile_resume",
-//     "label.view_applicant_details",
-//   ],
-// };
