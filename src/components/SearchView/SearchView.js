@@ -56,6 +56,7 @@ const SearchView = ({
           });
         }
       }
+
       if (onSearch) {
         onSearch(filtered);
       }

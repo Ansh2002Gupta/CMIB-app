@@ -17,17 +17,17 @@ const style = {
     paddingBottom: 8,
     marginLeft: 8,
     marginRight: 8,
-    zIndex:1,
+    zIndex: 1,
   },
   textStyle: {
     color: colors.white,
     fontSize: 14,
     textAlign: "center",
     ...Platform.select({
-      web:{
-        whiteSpace: 'pre-line',
-      }
-    })
+      web: {
+        whiteSpace: "pre-line",
+      },
+    }),
   },
 };
 

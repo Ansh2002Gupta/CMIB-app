@@ -10,7 +10,6 @@
 
   /* Greys */
   --secondaryGrey: #f2f4fc;
-  --secondaryCyanBlue: #ced4da;
   --secondaryLightGrey: #f2f4fc;
   --darkGrey: #616c82;
 
@@ -47,6 +46,7 @@
   background-color: #fff;
   border: 0px solid #ced4da;
   border-radius: 0.25rem;
+  /* transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
   appearance: none;
 }
 

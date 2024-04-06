@@ -126,6 +126,7 @@ const FilterModal = ({
         />
       ));
     }
+    return null;
   };
 
   const getCheckBoxesStatus = (title) => {
@@ -137,7 +138,6 @@ const FilterModal = ({
       if (selectedStatus.length !== statusData.length) return "partial";
       return "full";
     }
-
     if (query_type) {
       if (!selectedQueryType.length) return "empty";
       if (selectedQueryType.length !== queryTypeData.length) return "partial";
@@ -147,8 +147,8 @@ const FilterModal = ({
   };
 
   const RenderCategoryButton = ({ title, onClick }) => {
-    const isActive = getCheckBoxesStatus(title) === "full" ? true : false;
-    const isPartial = getCheckBoxesStatus(title) === "partial" ? true : false;
+    const isActive = getCheckBoxesStatus(title) === "full";
+    const isPartial = getCheckBoxesStatus(title) === "partial";
 
     return (
       <CheckBox
@@ -185,7 +185,7 @@ const FilterModal = ({
         middleSection={
           <TwoColumn
             leftSection={
-              <>
+              <ScrollView>
                 {filterCategory.map((item) => {
                   return (
                     <View style={styles.renderCheckButton} {...webProps}>
@@ -208,18 +208,16 @@ const FilterModal = ({
                         }
                         isLeftFillSpace
                         rightSection={
-                          <>
-                            <CustomImage
-                              source={images.iconArrowRight}
-                              style={styles.arrowRight}
-                            />
-                          </>
+                          <CustomImage
+                            source={images.iconArrowRight}
+                            style={styles.arrowRight}
+                          />
                         }
                       />
                     </View>
                   );
                 })}
-              </>
+              </ScrollView>
             }
             leftSectionStyle={styles.leftSection}
             rightSectionStyle={styles.rightSection}
