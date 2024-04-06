@@ -63,6 +63,10 @@ const yellow = "#FABB00";
 const orange = "#D76200";
 const lightOrange = "#FFEFE5";
 
+/* Purple */
+const lightPurple = "#E3E2F5";
+const darkPurple = "#6F6AC4";
+
 const colors = {
   darkBlueShade,
   disabledBtn,
@@ -111,6 +115,8 @@ const colors = {
   skyBlueLight,
   disabledTextFieldColor,
   neutralGrey,
+  lightPurple,
+  darkPurple,
   greyFive,
   greySix,
 };
