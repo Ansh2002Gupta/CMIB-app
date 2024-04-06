@@ -240,6 +240,10 @@ const pdfIcon = appendAppBaseURl("/images/svg/pdfIcon.svg");
 const rightDiagonalArrow = appendAppBaseURl(
   "/images/svg/rightDiagonalArrow.svg"
 );
+const iconLocationWhite = appendAppBaseURl("/images/svg/iconLocationWhite.svg");
+const iconBreifcase = appendAppBaseURl("/images/svg/briefcase.svg");
+const iconRupeeSign = appendAppBaseURl("/images/svg/rupeeSign.svg");
+const iconArchiveSave = appendAppBaseURl("/images/svg/iconArchiveSave.svg");
 const iconCalendarWhite = appendAppBaseURl("/images/svg/iconCalendarWhite.svg");
 const iconSavedJob = appendAppBaseURl("/images/svg/iconSaved.svg");
 
@@ -386,7 +390,6 @@ const images = {
   iconDisabledCheck,
   iconZoomIn,
   iconZoomOut,
-  iconDeleteRed,
   iconAddBlue,
   iconEdit,
   iconLoading,
@@ -413,6 +416,10 @@ const images = {
   videoPlayIcon,
   pdfIcon,
   rightDiagonalArrow,
+  iconBreifcase,
+  iconRupeeSign,
+  iconArchiveSave,
+  iconLocationWhite,
   iconSavedJob,
   iconCalendarWhite,
 };

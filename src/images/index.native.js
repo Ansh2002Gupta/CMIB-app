@@ -150,6 +150,11 @@ import iconRupee from "../../public/images/svg/iconRupee.svg";
 import videoPlayIcon from "../../public/images/svg/videoPlayIcon.svg";
 import pdfIcon from "../../public/images/svg/pdfIcon.svg";
 import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
+
+import iconLocationWhite from "../../public/images/svg/iconLocationWhite.svg";
+import iconBreifcase from "../../public/images/svg/briefcase.svg";
+import iconRupeeSign from "../../public/images/svg/rupeeSign.svg";
+import iconArchiveSave from "../../public/images/svg/iconArchiveSave.svg";
 import iconSavedJob from "../../public/images/svg/iconSaved.svg";
 import iconCalendarWhite from "../../public/images/svg/iconCalendarWhite.svg";
 
@@ -306,6 +311,10 @@ const images = {
   videoPlayIcon,
   pdfIcon,
   rightDiagonalArrow,
+  iconLocationWhite,
+  iconBreifcase,
+  iconRupeeSign,
+  iconArchiveSave,
   iconSavedJob,
   iconCalendarWhite,
 };

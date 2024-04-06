@@ -21,10 +21,13 @@ export const navigations = {
   WOMEN_PARTTIME: "/women-placements",
 
   //sub routes
+  ALL_JOBS: "all-jobs",
   APPLICATION_FORM: "application-form",
+  APPLIED_JOBS: "applied-jobs",
   CANDIDATES: "candidates",
   JOB_APPLICANTS: "job-applicants",
   JOB_SEEKERS: "job-seekers",
+  JOBS: "jobs",
   MODULE_LANDING_PAGE: "dashboard",
   POSTED_JOBS: "posted-jobs",
   ROUND_ONE: "round-one",
