@@ -10,6 +10,7 @@ import IconHeader from "../../components/IconHeader/IconHeader";
 import { moduleKeys } from "../../constants/sideBarHelpers";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import styles from "./dashboard.style";
+import ViewInterviewDetails from "../../containers/ViewInterviewDetails";
 
 function DashboardView() {
   const intl = useIntl();

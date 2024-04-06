@@ -12,13 +12,6 @@ const styles = StyleSheet.create({
     color: colors.darkGrey,
     marginBottom: 16,
   },
-  horizontalLine: {
-    width: "100%",
-    height: 1,
-    backgroundColor: colors.lightGrey,
-    marginTop: 24,
-    marginBottom: 8,
-  },
   customLabelStyle: {},
   customToggleText: {
     fontSize: 14,
@@ -26,9 +19,9 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 14,
     paddingBottom: 16,
-    paddingTop: 16,
   },
   modalInnerContainer: {
+    overflow: "visible",
     ...Platform.select({
       ios: {
         maxHeight: deviceHeight / 1.5,
@@ -41,6 +34,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  overflowStyle: {},
   datePickerContainer: {
     justifyContent: "space-between",
   },

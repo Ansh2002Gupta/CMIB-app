@@ -284,6 +284,7 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  iconError,
   iconAddRoundGreen,
   iconDeleteRoundRed,
   iconCheckBoxRound,
