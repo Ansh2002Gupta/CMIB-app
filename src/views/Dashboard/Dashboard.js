@@ -1,19 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 import useIsWebView from "../../hooks/useIsWebView";
 
-import CommonText from "../../components/CommonText";
-import RangeSlider from "../../components/RangeSlider";
-import styles from "./dashboard.style";
-import images from "../../images";
-import SearchView from "../../components/SearchView";
-import TouchableImage from "../../components/TouchableImage";
-import IconHeader from "../../components/IconHeader/IconHeader";
 import { TwoRow } from "../../core/layouts";
+
 import CAJobsDashboard from "../CAJobsDashboard";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import IconHeader from "../../components/IconHeader/IconHeader";
 import { moduleKeys } from "../../constants/sideBarHelpers";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import styles from "./dashboard.style";
 
 function DashboardView() {
   const intl = useIntl();
@@ -24,13 +20,13 @@ function DashboardView() {
     <View style={styles.container}>
       <TwoRow
         topSection={
-          <IconHeader
-            hasActionButton={false}
-            showInWeb={isWebView}
-            hasIconBar
-            headerText={intl.formatMessage({ id: "label.dashboard" })}
-            intl={intl}
-          />
+          isWebView && (
+            <IconHeader
+              hasIconBar
+              headerText={intl.formatMessage({ id: "label.dashboard" })}
+              intl={intl}
+            />
+          )
         }
         isBottomFillSpace
         bottomSection={

@@ -8,6 +8,7 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import MultiRow from "../../core/layouts/MultiRow";
 
 import ActionPairButton from "../ActionPairButton";
+import CustomTextEditor from "../CustomTextEditor/CustomTextEditor";
 import Chip from "../Chip";
 import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo } from "../../utils/util";
@@ -20,6 +21,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
   const intl = useIntl();
   const {
     companyName,
+    company_logo,
     createdAt,
     jobPostion,
     jobDescription,
@@ -37,7 +39,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
       return {
         content: (
           <Chip
-            label={item?.name}
+            label={item?.name || item}
             textColor={colors.black}
             bgColor={colors.white}
             customContainerStyle={style.customContainerStyle}
@@ -98,11 +100,11 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
         </View>
       ),
     },
-    {
+    jobLocation?.length && {
       content: (
         <View style={[style.evenPadding, style.leftBorder]}>
           <TwoColumn
-            style={style.iconView}
+            style={{ ...style.iconView, ...style.center }}
             leftSection={
               <Image source={images.iconLocation} style={style.iconStyle} />
             }
@@ -119,7 +121,11 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
         <TwoColumn
           style={{ gap: 16 }}
           leftSection={
-            <Image source={images.companyLogo} style={style.companyLogoStyle} />
+            <Image
+              source={{ uri: company_logo || images.companyLogo }}
+              style={style.companyLogoStyle}
+              alt={"company_logo"}
+            />
           }
           rightSection={
             <ThreeRow
@@ -144,12 +150,22 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
         />
       ),
     },
-    { content: <CommonText>{jobDescription}</CommonText> },
     {
+      content: (
+        <CommonText customTextStyle={[style.breakWordStyle]}>
+          <CustomTextEditor
+            value={jobDescription}
+            disabled
+            quilStyle={style.customQuilStyle}
+          />
+        </CommonText>
+      ),
+    },
+    requirement?.length && {
       content: (
         <MultiColumn
           columns={columnConfig(changeComma(requirement, 3))}
-          style={{ gap: 8 }}
+          style={style.chipContainerStyle}
         />
       ),
     },
@@ -169,6 +185,9 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
           }
           rightSection={
             <ActionPairButton
+              displayLoaderLeft={isLoading}
+              isDisabledLeft={isLoading}
+              isDisabled={isLoading}
               onPressButtonTwo={handleApply}
               onPressButtonOne={handleRemove}
               isButtonTwoGreen

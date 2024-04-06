@@ -2,6 +2,7 @@ import React from "react";
 import { Platform } from "@unthinkable/react-core-components";
 
 import ContentLayout from "../pages/ContentLayout";
+import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
 import MyAccount from "../views/MyAccount";
 import ViewProfile from "../views/ViewProfile";
@@ -10,6 +11,7 @@ import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
+import Jobs from "../views/Jobs";
 import JobsView from "../views/JobsView/JobsView";
 import JobApplicantsView from "../views/JobApplicantsView/index";
 import JobProfileTab from "../views/JobProfile";
@@ -259,13 +261,27 @@ const config = [
         viewPath: navigations.JOB_SEEKERS,
         element: <JobSeekersView />,
       },
-      {
-        viewPath: navigations.SAVED_JOBS,
-        element: <JobSeekersView />,
-      },
+
       {
         viewPath: navigations.SAVED_CANDIDATES,
         element: <SavedCandidatesView />,
+      },
+      {
+        viewPath: navigations.SAVED_JOBS,
+        element: <SavedJobs />,
+      },
+      {
+        viewPath: navigations.ALL_JOBS,
+        element: <PostedJobsView />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <PostedJobsView />,
+      },
+
+      {
+        viewPath: navigations.JOBS,
+        element: <Jobs />,
       },
     ],
   },
