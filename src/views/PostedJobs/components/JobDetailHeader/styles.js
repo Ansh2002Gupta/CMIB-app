@@ -87,6 +87,9 @@ const styles = {
   locationTextContainerMobile: {
     marginTop: 4,
   },
+  headerDetails: {
+    flex: 1,
+  },
 };
 
 export default styles;

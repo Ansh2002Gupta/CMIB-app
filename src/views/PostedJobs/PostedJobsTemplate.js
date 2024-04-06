@@ -10,7 +10,7 @@ import CustomButton from "../../components/CustomButton";
 import { useIntl } from "react-intl";
 import images from "../../images";
 
-const PostedJobsTemplate = (props) => {
+const PostedJobsTemplate = ({ details }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const {
@@ -18,7 +18,7 @@ const PostedJobsTemplate = (props) => {
     functionalAreas,
     companyDetail,
     headerData,
-  } = props.details;
+  } = details;
 
   const otherDetails = functionalAreas?.length ? (
     <View style={styles.otherDetailsStyle}>

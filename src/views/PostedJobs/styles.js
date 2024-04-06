@@ -13,9 +13,10 @@ const styles = {
   otherDetailItemMobile: {
     marginBottom: 36,
   },
-  otherDetailsStyle: { flex: 0.5 },
+  otherDetailsStyle: { flex: 0.7, flexWrap: "wrap" },
   descriptionContainer: { flex: 1 },
   description: {
+    flex: 1,
     marginRight: 32,
   },
   jobDescriptionContainer: {
@@ -26,12 +27,13 @@ const styles = {
     padding: 24,
     backgroundColor: colors.white,
     borderRadius: 24,
-    flex: 2.5,
+    flex: 3,
     borderWidth: 1,
     borderColor: colors.lightGrey,
   },
   aboutSection: { flex: 1 },
   detailSection: {
+    flex: 1,
     backgroundColor: colors.backgroundGrey,
     flexDirection: "row",
     alignItems: "stretch",
@@ -61,8 +63,12 @@ const styles = {
     marginTop: 16,
   },
   container: { flex: 1, backgroundColor: colors.backgroundGrey },
-  scrollView: { paddingBottom: 16 },
-  actionButtons: { backgroundColor: colors.white, flexDirection: "row" },
+  scrollView: { paddingBottom: 16, flex: 1 },
+  actionButtons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    flexWrap: "wrap",
+  },
   loaderStyle: {
     flex: 1,
     justifyContent: "center",

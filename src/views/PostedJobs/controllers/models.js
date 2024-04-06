@@ -1,5 +1,5 @@
 import colors from "../../../assets/colors";
-import { about } from "./utils";
+import { about } from "./constants";
 
 export const getAboutData = (data) => {
   const { company_details, website, industryType, companyType, location } =

@@ -309,8 +309,6 @@ const images = {
   videoPlayIcon,
   pdfIcon,
   rightDiagonalArrow,
-  iconTickGreen,
-  iconCrossRed,
   iconLocationWhite,
   iconBreifcase,
   iconRupeeSign,

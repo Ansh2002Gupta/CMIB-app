@@ -11,6 +11,7 @@ import { useIntl } from "react-intl";
 const JobDetailHeader = ({ actionButtons, data }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
+
   const {
     logoUrl,
     companyName,
@@ -55,6 +56,7 @@ const JobDetailHeader = ({ actionButtons, data }) => {
         {chipData.map((value) => {
           return (
             <View
+              key={value.label}
               style={{
                 ...styles.chipView,
                 backgroundColor: value.bgColor,
@@ -146,7 +148,7 @@ const JobDetailHeader = ({ actionButtons, data }) => {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.headerDetails}>
         <View style={styles.headerTitleContainer}>
           {companyLogo}
           <View style={styles.companyInfo}>
