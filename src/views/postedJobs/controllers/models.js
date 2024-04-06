@@ -149,6 +149,7 @@ export const jobDetailModel = (data = {}, intl) => {
     max_experience,
     min_salary,
     max_salary,
+    is_contractual,
   } = data ?? {};
 
   const {
@@ -157,6 +158,7 @@ export const jobDetailModel = (data = {}, intl) => {
     company_details,
     website,
     industry,
+    company_logo: companyLogo,
   } = data?.company ?? {};
 
   const { name: industryName } = industry ?? {};
@@ -177,13 +179,12 @@ export const jobDetailModel = (data = {}, intl) => {
     website,
     companyType,
     industryType: industryName,
-    location: companyLocation,
+    location: companyLocation ? companyLocation : "--",
   });
 
   const chipData = getHeaderChipData(vacancy, isUrgent, intl);
 
   const salaryText = formatSalaryRange(min_salary, max_salary, intl);
-
   const experienceText = formatExperience(min_experience, max_experience, intl);
 
   return {
@@ -192,14 +193,13 @@ export const jobDetailModel = (data = {}, intl) => {
     },
     functionalAreas,
     companyDetail,
-    postedBy: {}, //TODO: need data from backend
     headerData: {
-      logoUrl: "logo", //TODO: need company logo form backend
+      logoUrl: companyLogo,
       location: companyLocation,
       companyName: companyName ?? "--",
       designation: designation ?? "--",
       chipData,
-      isContractual: true,
+      isContractual: is_contractual,
       salaryText: salaryText,
       experienceText: experienceText,
     },

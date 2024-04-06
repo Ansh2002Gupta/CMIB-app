@@ -20,21 +20,19 @@ const PostedJobsTemplate = (props) => {
     headerData,
   } = props.details;
 
-  const otherDetails = (
+  const otherDetails = functionalAreas?.length ? (
     <View style={styles.otherDetailsStyle}>
-      {functionalAreas?.length ? (
-        <ChipSection
-          headerText={intl.formatMessage({ id: "label.functionalAreas" })}
-          data={functionalAreas}
-          style={{
-            ...(!isWebView
-              ? styles.otherDetailItemWeb
-              : styles.otherDetailItemMobile),
-          }}
-        />
-      ) : null}
+      <ChipSection
+        headerText={intl.formatMessage({ id: "label.functionalAreas" })}
+        data={functionalAreas}
+        style={{
+          ...(!isWebView
+            ? styles.otherDetailItemWeb
+            : styles.otherDetailItemMobile),
+        }}
+      />
     </View>
-  );
+  ) : null;
 
   const aboutSection = (
     <About details={companyDetail} style={!isWebView && styles.aboutMobile} />
@@ -87,7 +85,7 @@ const PostedJobsTemplate = (props) => {
             {isWebView && otherDetails}
           </View>
           {!isWebView && (
-            <View style={styles.otherdetailMobile}>{otherDetails}</View>
+            <View style={styles.otherDetailMobile}>{otherDetails}</View>
           )}
           {isWebView && <View style={styles.aboutSection}>{aboutSection}</View>}
         </View>

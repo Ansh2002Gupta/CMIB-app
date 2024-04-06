@@ -38,7 +38,7 @@ const styles = {
   },
   locationTextMobile: { marginTop: 4 },
   headerDescription: { marginTop: 8 },
-  descriptionContent: { flexDirection: "row" },
+  descriptionContent: { flexDirection: "row", alignItems: "center" },
   textWithIcon: {
     flexDirection: "row",
     alignItems: "center",
@@ -47,7 +47,7 @@ const styles = {
     marginRight: 8,
   },
   chip: {
-    marginRight: 12,
+    marginRight: 0,
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 6,
@@ -55,9 +55,17 @@ const styles = {
     fontSize: 12,
     lineHeight: 16,
     fontWeight: "600",
-    borderRadius: 16,
   },
-  locationTextContainer: { flexDirection: "row", alignItems: "center" },
+  chipView: {
+    borderRadius: 18,
+    marginRight: 12,
+    alignSelf: "flex-start",
+    overflow: "hidden",
+  },
+  locationTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   headerChip: { marginTop: 8, flexDirection: "row" },
   headerTitleContainer: { flexDirection: "row" },
   companyName: {
@@ -75,6 +83,9 @@ const styles = {
   },
   companyInfo: {
     flex: 1,
+  },
+  locationTextContainerMobile: {
+    marginTop: 4,
   },
 };
 

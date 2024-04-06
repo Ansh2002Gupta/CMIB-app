@@ -54,38 +54,23 @@ const JobDetailHeader = ({ actionButtons, data }) => {
       <View style={styles.headerChip}>
         {chipData.map((value) => {
           return (
-            <Chip
-              label={value.label}
+            <View
               style={{
+                ...styles.chipView,
                 backgroundColor: value.bgColor,
-                color: value.textColor,
-                ...styles.chip,
               }}
-            />
+            >
+              <Chip
+                label={value.label}
+                style={{
+                  backgroundColor: value.bgColor,
+                  color: value.textColor,
+                  ...styles.chip,
+                }}
+              />
+            </View>
           );
         })}
-      </View>
-    );
-  };
-
-  const jobHeaderTitleAndDescription = () => {
-    return (
-      <View>
-        <View style={styles.headerTitleContainer}>
-          {companyLogo}
-          <View style={styles.companyInfo}>
-            <CommonText customTextStyle={styles.companyName}>
-              {companyName}
-            </CommonText>
-            <CommonText customTextStyle={styles.designation}>
-              {designation}
-            </CommonText>
-            {isWebView && jobHeaderChip()}
-            {isWebView && jobHeaderDescription()}
-          </View>
-        </View>
-        {!isWebView && jobHeaderChip()}
-        {!isWebView && jobHeaderDescription()}
       </View>
     );
   };
@@ -105,18 +90,18 @@ const JobDetailHeader = ({ actionButtons, data }) => {
     return (
       <View style={styles.headerDescription}>
         <View style={styles.descriptionContent}>
-          {salaryText && (
+          {salaryText ? (
             <>
               <TextWithIcon icon={images.iconRupeeSign} text={salaryText} />
               {(isWebView || experienceText) && (
                 <CommonText customTextStyle={styles.bar}>|</CommonText>
               )}
             </>
-          )}
-          {experienceText && (
+          ) : null}
+          {experienceText ? (
             <TextWithIcon icon={images.iconBreifcase} text={experienceText} />
-          )}
-          {isWebView && (
+          ) : null}
+          {isWebView ? (
             <View style={styles.locationTextContainer}>
               {experienceText && (locationText || contractualText) && (
                 <CommonText customTextStyle={styles.bar}>|</CommonText>
@@ -133,13 +118,18 @@ const JobDetailHeader = ({ actionButtons, data }) => {
                 {contractualText}
               </CommonText>
             </View>
-          )}
+          ) : null}
         </View>
-        {!isWebView && (
-          <View style={styles.locationTextContainer}>
-            {locationText && (
+        {!isWebView ? (
+          <View
+            style={{
+              ...styles.locationTextContainer,
+              ...styles.locationTextContainerMobile,
+            }}
+          >
+            {locationText ? (
               <TextWithIcon icon={images.iconLocation} text={locationText} />
-            )}
+            ) : null}
             <CommonText
               customTextStyle={{
                 ...styles.compensationText,
@@ -149,14 +139,30 @@ const JobDetailHeader = ({ actionButtons, data }) => {
               {contractualText}
             </CommonText>
           </View>
-        )}
+        ) : null}
       </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      {jobHeaderTitleAndDescription()}
+      <View>
+        <View style={styles.headerTitleContainer}>
+          {companyLogo}
+          <View style={styles.companyInfo}>
+            <CommonText customTextStyle={styles.companyName}>
+              {companyName}
+            </CommonText>
+            <CommonText customTextStyle={styles.designation}>
+              {designation}
+            </CommonText>
+            {isWebView && jobHeaderChip()}
+            {isWebView && jobHeaderDescription()}
+          </View>
+        </View>
+        {!isWebView && jobHeaderChip()}
+        {!isWebView && jobHeaderDescription()}
+      </View>
       {actionButtons}
     </View>
   );

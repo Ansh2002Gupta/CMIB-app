@@ -63,6 +63,13 @@ const styles = {
   container: { flex: 1, backgroundColor: colors.backgroundGrey },
   scrollView: { paddingBottom: 16 },
   actionButtons: { backgroundColor: colors.white, flexDirection: "row" },
+  loaderStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.backgroundColor,
+  },
 };
 
 export default styles;
