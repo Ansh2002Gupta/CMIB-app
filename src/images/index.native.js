@@ -151,6 +151,11 @@ import videoPlayIcon from "../../public/images/svg/videoPlayIcon.svg";
 import pdfIcon from "../../public/images/svg/pdfIcon.svg";
 import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
 
+import iconLocationWhite from "../../public/images/svg/iconLocationWhite.svg";
+import iconBreifcase from "../../public/images/svg/briefcase.svg";
+import iconRupeeSign from "../../public/images/svg/rupeeSign.svg";
+import iconArchiveSave from "../../public/images/svg/iconArchiveSave.svg";
+
 const images = {
   iconArrowUp,
   iconArrowDown,
@@ -304,6 +309,12 @@ const images = {
   videoPlayIcon,
   pdfIcon,
   rightDiagonalArrow,
+  iconTickGreen,
+  iconCrossRed,
+  iconLocationWhite,
+  iconBreifcase,
+  iconRupeeSign,
+  iconArchiveSave,
 };
 
 export default images;
