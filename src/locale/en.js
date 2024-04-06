@@ -638,6 +638,21 @@ const locale = {
   "label.preferredRegionRequired": "Preferred region is required",
   "label.expectedAnnualSalaryRequired": "Expected annual salary is required",
   "label.removeDuplicateInputs": "Please remove duplicate values",
+  "label.shortProfile": "Short Profile of the Company",
+  "label.currentIndustry": "Current Industry",
+  "label.companyType": "Company Type",
+  "label.posted_by": "Posted By",
+  "label.apply": "Apply",
+  "label.functionalAreas": "Functional Areas",
+  "label.jobDescription": "Job Description",
+  "label.formatMinSalary": `{value} LPA+`,
+  "label.formatMaxSalary": `Up to {value} LPA`,
+  "label.formatMinMaxSalary": `{minValue} - {maxValue} LPA`,
+  "label.formatVacancies": `{value} Vacancies`,
+  "label.formatMinMaxExperience": `{minValue} - {maxValue} years`,
+  "label.formatMinExperience": `{value}+ years`,
+  "label.formatMaxExperience": `Up to {value} years`,
+  "label.contractual": "Contractual",
 };
 
 export default locale;
