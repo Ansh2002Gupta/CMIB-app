@@ -639,6 +639,12 @@ const locale = {
   "label.preferredRegionRequired": "Preferred region is required",
   "label.expectedAnnualSalaryRequired": "Expected annual salary is required",
   "label.removeDuplicateInputs": "Please remove duplicate values",
+  "label.actions": "Actions",
+  "label.applicant_details": "Applicant Details",
+  "label.applicant_name": "Applicant Name",
+  "label.applicant_id": "Applicant ID",
+  "label.updated_at": "Updated At",
+  "label.save_applicant_details": "Save Applicant Details",
 };
 
 export default locale;

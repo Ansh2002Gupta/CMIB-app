@@ -150,6 +150,8 @@ import iconRupee from "../../public/images/svg/iconRupee.svg";
 import videoPlayIcon from "../../public/images/svg/videoPlayIcon.svg";
 import pdfIcon from "../../public/images/svg/pdfIcon.svg";
 import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
+import iconSavedJob from "../../public/images/svg/iconSaved.svg";
+import iconCalendarWhite from "../../public/images/svg/iconCalendarWhite.svg";
 
 const images = {
   iconArrowUp,
@@ -304,6 +306,8 @@ const images = {
   videoPlayIcon,
   pdfIcon,
   rightDiagonalArrow,
+  iconSavedJob,
+  iconCalendarWhite,
 };
 
 export default images;

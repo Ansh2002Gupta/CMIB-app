@@ -240,6 +240,8 @@ const pdfIcon = appendAppBaseURl("/images/svg/pdfIcon.svg");
 const rightDiagonalArrow = appendAppBaseURl(
   "/images/svg/rightDiagonalArrow.svg"
 );
+const iconCalendarWhite = appendAppBaseURl("/images/svg/iconCalendarWhite.svg");
+const iconSavedJob = appendAppBaseURl("/images/svg/iconSaved.svg");
 
 const images = {
   iconArrowUp,
@@ -411,6 +413,8 @@ const images = {
   videoPlayIcon,
   pdfIcon,
   rightDiagonalArrow,
+  iconSavedJob,
+  iconCalendarWhite,
 };
 
 export default images;

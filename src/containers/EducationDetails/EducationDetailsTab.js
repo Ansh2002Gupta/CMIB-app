@@ -5,7 +5,6 @@ import EducationDetailComponent from "./EducationDetails";
 import ExamsComponent from "./ExamsComponent";
 import OtherCoursesComponent from "./OtherCoursesComponent";
 import { FormTabs } from "../../components/Tab";
-import colors from "../../assets/colors";
 import style from "./Exams.style";
 
 const EducationDetailsTab = ({ isEditable, handleEdit }) => {

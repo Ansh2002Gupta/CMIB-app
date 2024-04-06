@@ -29,7 +29,6 @@ export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
 export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
-export const JOB_APPLICANTS = `${USER_TYPE_COMPANY}/applicants`;
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
@@ -39,7 +38,17 @@ export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
 export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 
 //sub routes
+export const JOB_APPLICANTS = "/applicants";
+export const JOBS = "/jobs";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const MEMBERS = "/members";
+export const PERSONAL = "/personal";
+export const ACADEMICS = "/academics";
+export const MEMBERSHIP = "/membership";
+export const WORK_EXPERIENCE = "/work-experiences";
+export const JOB_SKILLS = "/skills";
+export const ACTIVITIES = "/activities";
+export const JOB_PREFERENCES = "/job-preferences";
 
 /* API Endpoints Member CA JOB profile */
 export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
@@ -67,4 +76,3 @@ export const GET_GENDER_PREFERENCE = `${USER_TYPE_COMPANY}/genders`;
 export const GET_WORK_MODE = `${USER_TYPE_COMPANY}/workmode`;
 export const POST_JOB = `${USER_TYPE_COMPANY}/jobs`;
 export const UPDATE_JOB = `${USER_TYPE_COMPANY}/jobs/update`;
-

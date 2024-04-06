@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -6,18 +7,63 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import OtherCoursesUI from "./OtherCoursesUI";
 import useFetch from "../../hooks/useFetch";
 import { usePut } from "../../hooks/useApiRequest";
-import { MEMBER_CA_JOB_PROFILE_EDUCATION } from "../../services/apiServices/apiEndPoint";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import {
+  ACADEMICS,
+  MEMBERS,
+  MEMBER_CA_JOB_PROFILE_EDUCATION,
+  USER_TYPE_COMPANY,
+} from "../../services/apiServices/apiEndPoint";
 import { useOtherCourses } from "./Controllers/useOtherCourses";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
 const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
+  const { id } = useParams();
+  const { isCompany, currentModule } = useGetCurrentUser();
+
   const {
-    data,
+    data: applicantAcadimicsData,
+    isLoading: isGettingapplicantAcadimicsDataLoading,
+    error: errorWhileGettingapplicantAcadimicsData,
+    fetchData: fetchingApplicantAcadimicsData,
+  } = useFetch({
+    url:
+      USER_TYPE_COMPANY + `/${currentModule}` + MEMBERS + `/${id}` + ACADEMICS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  const {
+    data: educationData,
     isLoading: isGettingEducationData,
     error: errorWhileGettingEducationData,
+    fetchData: fetchingEducationData,
   } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+
+  useEffect(() => {
+    if (currentModule) {
+      if (isCompany) {
+        fetchingApplicantAcadimicsData({});
+      } else {
+        fetchingEducationData({});
+      }
+    }
+  }, [currentModule]);
+
+  const data = isCompany ? applicantAcadimicsData : educationData;
+  const isLoading = isCompany
+    ? isGettingapplicantAcadimicsDataLoading
+    : isGettingEducationData;
+  const errorWhileFetching = isCompany
+    ? errorWhileGettingapplicantAcadimicsData
+    : errorWhileGettingEducationData;
+
   const {
     makeRequest: handleUpdate,
     isLoading: isUpdatingEducationData,
@@ -93,12 +139,12 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
     });
   };
 
-  return isGettingEducationData ? (
+  return isLoading ? (
     <LoadingScreen />
-  ) : errorWhileGettingEducationData ? (
+  ) : errorWhileFetching ? (
     <ErrorComponent
       errorMsg={
-        errorWhileGettingEducationData?.data?.message ||
+        errorWhileFetching?.data?.message ||
         GENERIC_GET_API_FAILED_ERROR_MESSAGE
       }
     />
