@@ -1,5 +1,5 @@
 import colors from "../../assets/colors";
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
 const style = StyleSheet.create({
   mainContainer: {
@@ -73,6 +73,11 @@ const style = StyleSheet.create({
     fontSize: 12,
     color: colors.darkBlue,
   },
+  customButtonApplyStyle: {
+    fontSize: 12,
+    color: colors.green,
+    marginRight: 20,
+  },
   buttonContainerStyle: { alignItems: "center" },
   buttonTextStyle: { fontWeight: "500", fontSize: 14 },
   iconView: { alignItems: "center", gap: 8 },
@@ -99,8 +104,8 @@ const style = StyleSheet.create({
     paddingRight: 16,
   },
   mobileEvenPadding: {
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingLeft: 8,
+    paddingRight: 8,
   },
   mobileIconStyle: {
     marginRight: 8,
@@ -120,8 +125,9 @@ const style = StyleSheet.create({
   },
   mobileActionHandle: {
     marginTop: 16,
+    alignItems: "center",
   },
-  webContainer: { gap: 24, paddingRight: 24 },
+  webContainer: { paddingRight: 24 },
   topCurveSection: { backgroundColor: colors.darkBlue, marginRight: -1 },
   whiteCurveSection: {
     backgroundColor: colors.white,
@@ -129,6 +135,33 @@ const style = StyleSheet.create({
     flex: 1,
   },
   backgroundWhite: { backgroundColor: colors.white },
+  customToastStyle: {
+    top: 50,
+    bottom: "50%",
+  },
+  breakWordStyle: {
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+        paddingTop: 8,
+      },
+    }),
+  },
+  detailStyle: {
+    marginTop: 24,
+  },
+  webJobLocation: {
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: 200,
+      },
+    }),
+  },
+  customQuilStyle: { height: undefined, borderWidth: 0 },
+  chipContainerStyle: { gap: 8, marginBottom: 16 },
 });
 
 export default style;

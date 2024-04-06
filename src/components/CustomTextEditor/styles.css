@@ -32,5 +32,9 @@
   background-color: #ffff;
 }
 .disabled > .ql-container.ql-snow > .ql-editor > ul {
-  padding-left: 0;
+  padding-left: 0px;
+}
+
+.ql-editor{
+  padding:0px
 }
