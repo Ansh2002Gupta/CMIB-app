@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
+import useIsWebView from "../../hooks/useIsWebView";
 
-import CommonText from "../../components/CommonText";
 import CustomButton from "../../components/CustomButton";
 import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
-import RangeSlider from "../../components/RangeSlider";
-import SavedJobComponent from "../../components/SavedJobComponent/SavedJobComponent";
-import UploadImage from "../../components/UploadImage";
-import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
-import styles from "./dashboard.style";
-import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
+import { TwoRow } from "../../core/layouts";
 
-const MIN_VALUE = 0;
-const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
-// Just ignore this file as just to test custom component
+import CAJobsDashboard from "../CAJobsDashboard";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import { moduleKeys } from "../../constants/sideBarHelpers";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import styles from "./dashboard.style";
+
 function DashboardView() {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const [showScheduledInterviewModal, setShowScheduledInterviewModal] =
     useState(false);
   const [range, setRange] = useState({ max: MAX_VALUE, min: MIN_VALUE });

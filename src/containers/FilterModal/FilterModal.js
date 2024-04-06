@@ -126,6 +126,7 @@ const FilterModal = ({
         />
       ));
     }
+    return null;
   };
 
   const getCheckBoxesStatus = (title) => {
@@ -137,7 +138,6 @@ const FilterModal = ({
       if (selectedStatus.length !== statusData.length) return "partial";
       return "full";
     }
-
     if (query_type) {
       if (!selectedQueryType.length) return "empty";
       if (selectedQueryType.length !== queryTypeData.length) return "partial";
@@ -208,12 +208,10 @@ const FilterModal = ({
                         }
                         isLeftFillSpace
                         rightSection={
-                          <>
-                            <CustomImage
-                              source={images.iconArrowRight}
-                              style={styles.arrowRight}
-                            />
-                          </>
+                          <CustomImage
+                            source={images.iconArrowRight}
+                            style={styles.arrowRight}
+                          />
                         }
                       />
                     </View>

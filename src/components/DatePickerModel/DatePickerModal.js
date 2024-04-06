@@ -16,7 +16,7 @@ const accountComponentProp = classes["react_datepicker__input_container"];
 function DatePickerModal({
   customTextInputOuterContainer,
   customStyles = {},
-  format = "MMMM d, yyyy",
+  format = "MMMM D, YYYY",
   timeFormate = "h:mm aa",
   isError,
   minDate = Date.now(),
@@ -26,6 +26,7 @@ function DatePickerModal({
   onChangeValue,
   value,
   showTimeSelect,
+  showMonthYearPicker,
 }) {
   const [open, setOpen] = useState(false);
   const intl = useIntl();
@@ -34,7 +35,6 @@ function DatePickerModal({
       return !prev;
     });
   };
-
   const wrapperRef = useRef(null);
   useOutsideClick(wrapperRef, () => setOpen(false));
 
@@ -110,6 +110,7 @@ function DatePickerModal({
               showYearDropdown
               inline
               dropdownMode="select"
+              showMonthYearPicker={showMonthYearPicker}
               dateFormat={format}
             />
           )}

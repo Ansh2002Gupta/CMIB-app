@@ -9,14 +9,15 @@ import styles from "./CustomToggleComponent.style";
 
 const CustomToggleComponent = ({
   customLabelStyle,
-  containerStyle,
   customToggleStyle,
   customToggleButtonTextStyle,
   isMandatory,
+  containerStyle,
   label,
   onValueChange,
   options,
   value,
+  onValueChange,
 }) => {
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
   const { isWebView } = useIsWebView();

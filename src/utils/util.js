@@ -1,7 +1,7 @@
 import { Platform } from "@unthinkable/react-core-components";
 
 import dayjs from "dayjs";
-import { ANONYMOUS } from "../constants/constants";
+import { ANONYMOUS, jobType, questionType } from "../constants/constants";
 
 export const getQueryParamsAsAnObject = (queryParamString) => {
   const queryParams = queryParamString.substring(1).split("&");
@@ -109,8 +109,8 @@ export const capitalize = (text) => {
   return firstLetter + restLetter;
 };
 
-export const formatDate = (date) => {
-  return dayjs(date).format("DD/MM/YYYY");
+export const formatDate = (date, format = "DD/MM/YYYY") => {
+  return dayjs(date).format(format);
 };
 
 export const extractFilename = (fileUri) => {
@@ -182,13 +182,341 @@ export const getMessageInfo = (chatData, userDetails) => {
   }
   return "receiver";
 };
+export const getQuestionInitalValue = (intl, order = 0) => {
+  return {
+    typeofQuestion: intl.formatMessage({
+      id: "label.text_question",
+    }),
+    question: "",
+    id: Date.now(),
+    isMandatory: false,
+    question_options: null,
+    question_order: order + 1,
+  };
+};
+// Function to format the selected date or return the placeholder
+export const getDisplayValue = (value, intl) => {
+  if (value && value instanceof Date) {
+    // return value.toDateString();
 
+    let day = value.getDate();
+    let month = value.getMonth() + 1; // getMonth() returns 0-11
+    let year = value.getFullYear();
+
+    // Add leading zeros if day or month is less than 10
+    day = day < 10 ? "0" + day : day;
+    month = month < 10 ? "0" + month : month;
+
+    return day + "/" + month + "/" + year;
+  }
+  return intl.formatMessage({ id: "label.select" });
+};
+
+export const getFormatedData = (jobData, question, isCheckList) => {
+  let temp = {
+    summary: jobData.jobSummary,
+    detail: jobData.jobDetails,
+    job_type_id: jobData.jobType?.id,
+    is_contractual: jobData.jobType?.id == 2 ? true : false,
+    job_type_slug: jobData.jobType?.value,
+    is_urgent: jobData.isUrgentJob == 0 ? true : false,
+    is_salary_negotiable: jobData.salaryNagotiable == 0 ? true : false,
+    experience: {
+      min_experience: jobData.minimumExperience,
+      max_experience: jobData.maximumExperience,
+    },
+    location_id: jobData.jobLocation.map((object) => object.id),
+    nationality: jobData.nationality?.value ?? null,
+    designation: jobData.designation,
+    functional_area_id: jobData.functionalAreas.map((object) => object.id),
+    gender_preference: jobData.genderPreference?.value ?? null,
+    category_preference: jobData.categoryPreference?.label,
+    essential_qualification: jobData.essentialQualification,
+    desired_qualification: jobData.desiredQualification,
+    job_opening_date: dayjs(jobData.jobOpeningDate).format("YYYY-MM-DD"),
+    job_closing_date: dayjs(jobData.jobClosingDate).format("YYYY-MM-DD"),
+    min_salary: jobData.minimumSalary,
+    max_salary: jobData.maximumSalary,
+    number_of_vacancies: jobData.numberOfVacancies,
+    work_mode: jobData.modeofWork?.label,
+    flexi_hours: jobData.flexiHours == 0 ? true : false,
+    is_extended_vacancy: jobData.vacanciesCountType == 0 ? true : false,
+    service_type: jobData.fullTime == 0 ? "Full Time" : "Part Time",
+  };
+  if (isCheckList) {
+    temp.notify_company = isCheckList;
+  }
+  if (jobData.jobType?.label === jobType.CONTRACTUAL) {
+    temp.contract_period = {
+      years: jobData.contractYear,
+      months: jobData.contractMonth,
+      days: jobData.contractDay,
+    };
+  } else if (jobData.jobType?.label === jobType.SPECIALLY_ABLE) {
+    temp.disability_type = jobData.typeOfDisabilty;
+    temp.disability_percentage = jobData.disabiltyPercentage;
+  }
+  let tempQuestion = question.map((item) => {
+    return {
+      id: item.id,
+      type: questionType[item.typeofQuestion],
+      question: item.question,
+      question_options:
+        item.question_options?.map((option) => {
+          return option.value;
+        }) || null,
+      question_order: item.question_order,
+      mandatory: item.isMandatory,
+    };
+  });
+  temp.questions = tempQuestion.length ? tempQuestion : null;
+  return temp;
+};
 export const getValidUrl = (url) => {
   let link = url.toLowerCase();
   if (!/^https?:\/\//.test(link) && !/^http?:\/\//.test(link)) {
     link = `https://${link}`;
   }
   return link;
+};
+
+export const addKeyValuePair = (arr) => {
+  return arr.map((item) => {
+    return { value: item, label: item };
+  });
+};
+
+export const getIndexForBoolean = (value) => {
+  if (typeof value !== "boolean") {
+    return value;
+  }
+  return value ? 1 : 0;
+};
+
+// Converts "Yes" to true and "No" to false
+export function yesNoToBoolean(value) {
+  if (value === "Yes") {
+    return true;
+  } else if (value === "No") {
+    return false;
+  } else {
+    return value;
+  }
+}
+
+// Converts true to "Yes" and false to "No"
+export function booleanToYesNo(value) {
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
+  }
+  return value;
+}
+
+export const formatDateToYYYYMMDD = (dateInput) => {
+  const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+  if (isNaN(date)) {
+    throw new Error("Invalid date");
+  }
+  const year = date.getFullYear() ?? "--";
+  const month = (date.getMonth() + 1).toString().padStart(2, "0") ?? "--"; // Months are 0-indexed
+  const day = date.getDate().toString().padStart(2, "0") ?? "--";
+  return `${year}-${month}-${day}`;
+};
+
+export const formatDateToDDMMYYYY = (isoDateString) => {
+  const date = new Date(isoDateString);
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return "--";
+  }
+  const day = date.getUTCDate().toString().padStart(2, "0") ?? "--";
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, "0") ?? "--";
+  const year = date.getUTCFullYear() ?? "--";
+  return `${day}/${month}/${year}`;
+};
+
+export const formatDateToMonthNameYear = (isoDateString) => {
+  const date = new Date(isoDateString);
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    throw new Error("Invalid date");
+  }
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const monthIndex = date.getMonth();
+  const year = date.getFullYear();
+  return `${monthNames[monthIndex]}/${year}`;
+};
+
+export const getCurrentYear = () => {
+  return new Date().getFullYear();
+};
+export const formatCountryCode = (code, countryData) => {
+  if (!code) return code;
+  const countryOption = countryData?.find(
+    (country) => country["dial_code"] === code
+  );
+  return countryOption && Platform.OS === "web"
+    ? `${code} (${countryOption["name"]})`
+    : code;
+};
+
+export const getNameById = (data, id) => {
+  const item = data?.find((obj) => obj.id === id);
+  return item ? item.name : null;
+};
+
+export const isValueEmpty = (value) => {
+  return value === null || value === undefined || value === "";
+};
+
+export const getQuestionType = {
+  text: "Text Question",
+  "single-select": "Single-select",
+  "multi-select": "Multi-select",
+};
+export const getDecryptApiData = (apiData, addJobs) => {
+  let obj = {};
+  apiData.locations = Array.isArray(apiData.locations) ? apiData.locations : [];
+  apiData.functional_areas = Array.isArray(apiData.functional_areas)
+    ? apiData.functional_areas
+    : [];
+  apiData.contract_period =
+    typeof apiData.contract_period === "object" ? apiData.contract_period : {};
+
+  obj.jobSummary = apiData.summary;
+  obj.jobDetails = apiData.detail;
+  obj.jobType = apiData.job_type_id
+    ? addJobs.jobType
+        .map((item) => ({
+          id: item.id,
+          label: item.name,
+          value: item.slug,
+        }))
+        .find((item) => item.id === apiData.job_type_id) || {}
+    : {};
+  obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
+  obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
+  obj.minimumExperience = apiData?.min_experience;
+  obj.maximumExperience = apiData?.max_experience;
+  obj.jobLocation = apiData.locations
+    ? apiData.locations.map((item) => ({
+        id: item.id,
+        label: item.city,
+        value: item.city,
+      }))
+    : [];
+  obj.nationality = apiData.nationality
+    ? {
+        value: apiData.nationality,
+        label: apiData.nationality,
+      }
+    : "";
+
+  obj.designation = apiData.designation;
+  obj.functionalAreas =
+    apiData.functional_areas.length > 0
+      ? apiData.functional_areas.map((item) => ({
+          id: item.id,
+          label: item.name,
+          value: item.slug,
+        }))
+      : [];
+  obj.genderPreference = apiData.gender_preference
+    ? addJobs.genderPreferenceData
+        ?.filter((item) => item.name == apiData.gender_preference)
+        .map((item) => ({
+          id: item.name,
+          label: item.label,
+          value: item.name,
+        }))[0]
+    : {};
+  obj.categoryPreference = apiData.category_preference
+    ? addJobs.jobCategory
+        ?.filter((item) => {
+          if (item.name == apiData.category_preference) {
+            return item;
+          }
+        })
+        .map((item) => ({
+          id: item.id,
+          label: item.name,
+          value: item.slug,
+        }))[0]
+    : {}; //
+  obj.essentialQualification = apiData.essential_qualification;
+  obj.desiredQualification = apiData.desired_qualification;
+  obj.jobOpeningDate = apiData.opening_date;
+  obj.jobClosingDate = apiData.closing_date;
+  obj.minimumSalary = Math.trunc(apiData.min_salary);
+  obj.maximumSalary = Math.trunc(apiData.max_salary);
+  obj.numberOfVacancies = apiData.vacancy;
+  obj.modeofWork = apiData.work_mode
+    ? addJobs.workModeData
+        .filter((item) => {
+          if (item.name == apiData.work_mode) {
+            return item;
+          }
+        })
+        .map((item) => ({
+          id: item.id,
+          label: item.name,
+          value: item.slug,
+        }))[0]
+    : {}; //
+  obj.flexiHours = apiData.flexi_hours ? 0 : 1;
+  obj.vacanciesCountType = apiData.is_extended_vacancy == 1 ? 0 : 1;
+  obj.fullTime = apiData.service_type == "Full Time" ? 0 : 1;
+  obj.disabiltyPercentage = apiData?.disability_percentage ?? 0;
+  obj.typeOfDisabilty = apiData?.disability_type ?? "";
+  obj.notify_company = apiData?.notify_company
+    ? apiData?.notify_company
+    : false;
+  obj.contractYear = apiData?.contract_period
+    ? apiData.contract_period.years
+    : 0;
+  obj.contractMonth = apiData?.contract_period
+    ? apiData.contract_period.months
+    : 0;
+  obj.contractDay = apiData?.contract_period ? apiData.contract_period.days : 0;
+  const transformedQuestionnaire = apiData?.questionnaires.map((item) => {
+    item.question_options = Array.isArray(item.question_options)
+      ? item.question_options
+      : JSON.parse(item.question_options);
+    if (
+      Array.isArray(item.question_options) &&
+      item.question_options.length > 0
+    ) {
+      return {
+        ...item,
+        typeofQuestion: getQuestionType[item.type],
+        isMandatory: item.mandatory,
+        question_options: item.question_options.map((option, index) => ({
+          id: Date.now() + index,
+          value: option,
+        })),
+      };
+    } else {
+      return {
+        ...item,
+        typeofQuestion: getQuestionType[item.type],
+        isMandatory: item.mandatory,
+      };
+    }
+  });
+  return { obj, transformedQuestionnaire };
 };
 
 export const changeComma = (data, index) => {
@@ -221,6 +549,17 @@ export const timeAgo = (dateString) => {
   } else {
     return `a few seconds`;
   }
+};
+
+export const containsDuplicate = (arr) => {
+  const seen = new Set();
+  for (const value of arr) {
+    if (seen.has(value)) {
+      return true; // Duplicate found
+    }
+    seen.add(value);
+  }
+  return false;
 };
 
 export const convertToTime = ({ dateString, format24Hour = true }) => {

@@ -1,9 +1,11 @@
 /* Blacks */
 const black = "#000833";
+const blackSecond = "#0E0E0F";
 const darkBlack = "#0F0F0F";
 const darkBlackSecond = "#18181B";
 const trueBlack = "#000";
 const blackWithOneForthOpacity = "rgba(0, 0, 0, 0.25)";
+const blackWithMinorOpacity = "rgb(0, 0, 0, 0.85)";
 
 /* Blues */
 const backgroundColor = "#FBFCFF"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
@@ -61,11 +63,17 @@ const yellow = "#FABB00";
 const orange = "#D76200";
 const lightOrange = "#FFEFE5";
 
+/* Purple */
+const lightPurple = "#E3E2F5";
+const darkPurple = "#6F6AC4";
+
 const colors = {
   darkBlueShade,
   disabledBtn,
   backgroundColor,
   black,
+  blackSecond,
+  blackWithMinorOpacity,
   blackWithOneForthOpacity,
   backgroundSecondGrey,
   darkBlack,
@@ -107,6 +115,8 @@ const colors = {
   skyBlueLight,
   disabledTextFieldColor,
   neutralGrey,
+  lightPurple,
+  darkPurple,
   greyFive,
   greySix,
 };
