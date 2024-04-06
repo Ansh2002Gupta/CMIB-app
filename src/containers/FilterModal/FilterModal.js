@@ -77,12 +77,14 @@ const FilterModal = ({
     const keyName = `selected` + filterName;
     const filterObj = returnFilterObj(filterInfo, filterName);
     if (filterObj?.type?.trim()?.toLowerCase() === FILTER_TYPE_ENUM.CHECKBOX) {
-      const getFilterDataID = filterObj?.options?.map((item) => item.id);
+      const getFilterData = filterObj?.options?.map(
+        (item) => item?.[filterObj?.refKey]
+      );
       setFilterState((prev) => ({
         ...prev,
         [keyName]:
-          filterObj?.selectedOptions?.length !== getFilterDataID?.length
-            ? getFilterDataID
+          filterObj?.selectedOptions?.length !== getFilterData?.length
+            ? getFilterData
             : [],
       }));
     }
