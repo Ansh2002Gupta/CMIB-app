@@ -212,7 +212,7 @@ const useAppliedJobsListing = () => {
       handler: handleFilterChange,
     },
     {
-      refKey: "id",
+      refKey: "name",
       name: "JobType",
       type: FILTER_TYPE_ENUM.CHECKBOX,
       options: jobTypeData,
