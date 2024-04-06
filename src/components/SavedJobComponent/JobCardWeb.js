@@ -8,23 +8,24 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import MultiRow from "../../core/layouts/MultiRow";
 
 import ActionPairButton from "../ActionPairButton";
+import CustomTextEditor from "../CustomTextEditor/CustomTextEditor";
 import Chip from "../Chip";
+import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
 
 import colors from "../../assets/colors";
 
-const JobCardWeb = ({ cardDetails }) => {
+const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
   const intl = useIntl();
   const {
     companyName,
+    company_logo,
     createdAt,
     jobPostion,
     jobDescription,
     jobLocation,
-    handleRemove,
-    handleApply,
     vaccancies,
     minSalary,
     maxSalary,
@@ -34,11 +35,11 @@ const JobCardWeb = ({ cardDetails }) => {
   } = cardDetails;
 
   const columnConfig = (data) => {
-    return data.map((item) => {
+    return data?.map((item) => {
       return {
         content: (
           <Chip
-            label={item}
+            label={item?.name || item}
             textColor={colors.black}
             bgColor={colors.white}
             customContainerStyle={style.customContainerStyle}
@@ -99,19 +100,15 @@ const JobCardWeb = ({ cardDetails }) => {
         </View>
       ),
     },
-    {
+    jobLocation?.length && {
       content: (
         <View style={[style.evenPadding, style.leftBorder]}>
           <TwoColumn
-            style={style.iconView}
+            style={{ ...style.iconView, ...style.center }}
             leftSection={
               <Image source={images.iconLocation} style={style.iconStyle} />
             }
-            rightSection={
-              <CommonText customTextStyle={style.normalText}>
-                {jobLocation}
-              </CommonText>
-            }
+            rightSection={<MultiColumn columns={LocationConfig(jobLocation)} />}
           />
         </View>
       ),
@@ -124,7 +121,11 @@ const JobCardWeb = ({ cardDetails }) => {
         <TwoColumn
           style={{ gap: 16 }}
           leftSection={
-            <Image source={images.companyLogo} style={style.companyLogoStyle} />
+            <Image
+              source={{ uri: company_logo || images.companyLogo }}
+              style={style.companyLogoStyle}
+              alt={"company_logo"}
+            />
           }
           rightSection={
             <ThreeRow
@@ -149,12 +150,22 @@ const JobCardWeb = ({ cardDetails }) => {
         />
       ),
     },
-    { content: <CommonText>{jobDescription}</CommonText> },
     {
+      content: (
+        <CommonText customTextStyle={[style.breakWordStyle]}>
+          <CustomTextEditor
+            value={jobDescription}
+            disabled
+            quilStyle={style.customQuilStyle}
+          />
+        </CommonText>
+      ),
+    },
+    requirement?.length && {
       content: (
         <MultiColumn
           columns={columnConfig(changeComma(requirement, 3))}
-          style={{ gap: 8 }}
+          style={style.chipContainerStyle}
         />
       ),
     },
@@ -174,6 +185,9 @@ const JobCardWeb = ({ cardDetails }) => {
           }
           rightSection={
             <ActionPairButton
+              displayLoaderLeft={isLoading}
+              isDisabledLeft={isLoading}
+              isDisabled={isLoading}
               onPressButtonTwo={handleApply}
               onPressButtonOne={handleRemove}
               isButtonTwoGreen

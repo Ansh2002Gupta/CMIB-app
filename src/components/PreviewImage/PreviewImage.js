@@ -27,7 +27,12 @@ const PreviewImage = ({
         isEditable && styles.showImageStyle,
       ]}
     >
-      <View style={styles.imageContainer}>
+      <View
+        style={{
+          ...styles.imageContainer,
+          ...(isVideoUpload ? styles.noPadding : {}),
+        }}
+      >
         {isDocumentUpload ? (
           <PdfCard pdfUrl={fileUrl} />
         ) : isVideoUpload ? (

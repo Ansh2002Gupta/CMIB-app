@@ -24,8 +24,7 @@ export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
-export const IMAGE_MAX_SIZE = 5000000;
-export const VIDEO_MAX_SIZE = 16000000;
+export const FILE_MAX_SIZE = 5000000;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "nqca-placements";
 export const OVERSEAS_PLACEMENTS = "overseas-chapters";
@@ -35,6 +34,7 @@ export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
 export const MIN_ZOOM_SCALE = 1;
 export const MAX_ZOOM_SCALE = 3;
 export const DEFAULT_BALANCE_CREDIT = 0;
+export const COMPANY = "company";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;

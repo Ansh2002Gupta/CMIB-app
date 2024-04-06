@@ -199,7 +199,7 @@ const locale = {
   "label.left_brace": "left)",
   "label.times": "times!",
   "label.fileTooLargeError": "Uploaded file must be less than 5MB",
-  "label.videoTooLargeError": "Uploaded video must be less than 16MB",
+  "label.videoTooLargeError": "Uploaded video must be less than 5MB",
   "label.allowedFileFormatsError": "Only JPEG, PNG, SVG formats are allowed",
   "label.allowedDocumentFormatsError": "Only PDF format is allowed",
   "label.nonUploadableImageError":
@@ -393,6 +393,9 @@ const locale = {
     "Please login using your updated email and password that you have received on your updated email.",
   "label.session_has_expired": "Your session has been expired.",
   "label.your_access_has_been_revoked": "Your access has been revoked.",
+  "label.saved_jobs": "Saved Jobs",
+  "label.applied_Jobs": "Applied Jobs",
+  "label.all_Jobs": "All Jobs",
   "label.viewPdf": "View PDF",
   "label.applyJob": "Apply job",
   "label.urgent": "Urgent",

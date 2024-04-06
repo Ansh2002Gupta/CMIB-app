@@ -9,20 +9,26 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
 import Chip from "../Chip";
+import { LocationConfig } from "./SaveJobCommon";
 import { changeComma, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
 
-const JobCardMobile = ({ cardDetails }) => {
+const JobCardMobile = ({
+  cardDetails,
+  isLoading,
+  handleRemove,
+  handleApply,
+}) => {
   const intl = useIntl();
   const {
     companyName,
+    company_logo,
     createdAt,
     jobPostion,
     jobDescription,
     jobLocation,
-    handleRemove,
     vaccancies,
     minSalary,
     maxSalary,
@@ -32,17 +38,32 @@ const JobCardMobile = ({ cardDetails }) => {
   } = cardDetails;
 
   const rowConfig = (data) => {
-    return data.map((item, index) => {
+    return data?.map((item, index) => {
       return {
         content: (
           <CommonText
             customTextStyle={[
               style.marginRightText,
-              index !== data.length - 1 ? style.blackText : style.greyText,
+              index !== data?.length - 1 || data?.length <= 3
+                ? style.blackText
+                : style.greyText,
             ]}
           >
-            {item}
-            {index !== data.length - 1 && ","}
+            {item?.name || item}
+            {index !== data?.length - 1 && ","}
+          </CommonText>
+        ),
+      };
+    });
+  };
+
+  const locationConfig = (data) => {
+    return data.map((item, index) => {
+      return {
+        content: (
+          <CommonText customTextStyle={[style.blackText]}>
+            {item?.name}
+            {index !== data.length - 1 && "/"}
           </CommonText>
         ),
       };
@@ -109,7 +130,11 @@ const JobCardMobile = ({ cardDetails }) => {
   const multiRow = [
     {
       content: (
-        <Image source={images.companyLogo} style={style.mobileComponyLogo} />
+        <Image
+          source={company_logo || images.companyLogo}
+          style={style.mobileComponyLogo}
+          alt={"company_logo"}
+        />
       ),
     },
     {
@@ -137,7 +162,7 @@ const JobCardMobile = ({ cardDetails }) => {
         <MultiColumn columns={multiCoulmn} style={style.mobileMargin8} />
       ),
     },
-    {
+    jobLocation?.length && {
       content: (
         <TwoColumn
           style={{ ...style.iconView, ...style.mobileMargin8 }}
@@ -145,9 +170,10 @@ const JobCardMobile = ({ cardDetails }) => {
             <Image source={images.iconLocation} style={style.mobileIconStyle} />
           }
           rightSection={
-            <CommonText customTextStyle={style.normalText}>
-              {jobLocation}
-            </CommonText>
+            <MultiColumn
+              columns={LocationConfig(jobLocation)}
+              style={{ backgroundColor: "blue", paddingRight: 24 }}
+            />
           }
         />
       ),
@@ -175,17 +201,34 @@ const JobCardMobile = ({ cardDetails }) => {
             })}`}</CommonText>
           }
           rightSection={
-            <CustomButton
-              iconLeft={{
-                leftIconAlt: "left-saved",
-                leftIconSource: images.iconSaveSlashBlue,
-              }}
-              onPress={handleRemove}
-              customStyle={{ customTextStyle: style.customButtonTextStyle }}
-              style={style.buttonStyle}
-            >
-              {intl.formatMessage({ id: "label.remove" })}
-            </CustomButton>
+            <TwoColumn
+              leftSection={
+                <CustomButton
+                  disabled={isLoading}
+                  onPress={handleApply}
+                  customStyle={{
+                    customTextStyle: style.customButtonApplyStyle,
+                  }}
+                  style={style.buttonStyle}
+                >
+                  {intl.formatMessage({ id: "label.applyJob" })}
+                </CustomButton>
+              }
+              rightSection={
+                <CustomButton
+                  disabled={isLoading}
+                  iconLeft={{
+                    leftIconAlt: "left-saved",
+                    leftIconSource: images.iconSaveSlashBlue,
+                  }}
+                  onPress={handleRemove}
+                  customStyle={{ customTextStyle: style.customButtonTextStyle }}
+                  style={style.buttonStyle}
+                >
+                  {intl.formatMessage({ id: "label.remove" })}
+                </CustomButton>
+              }
+            />
           }
         />
       ),
