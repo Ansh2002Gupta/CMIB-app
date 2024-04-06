@@ -16,10 +16,12 @@ const PdfCard = ({ pdfUrl }) => {
     <View style={styles.container}>
       <CustomImage
         alt="Pdf"
+        height={50}
         Icon={images.pdfIcon}
         isSvg
         source={images.pdfIcon}
         style={styles.pdfImage}
+        width={50}
       />
       <CustomTouchableOpacity
         onPress={() => {

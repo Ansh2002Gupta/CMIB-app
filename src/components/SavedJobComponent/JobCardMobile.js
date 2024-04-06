@@ -15,10 +15,16 @@ import images from "../../images";
 import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
 
-const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
+const JobCardMobile = ({
+  cardDetails,
+  isLoading,
+  handleRemove,
+  handleApply,
+}) => {
   const intl = useIntl();
   const {
     companyName,
+    company_logo,
     createdAt,
     jobPostion,
     jobDescription,
@@ -43,8 +49,21 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
                 : style.greyText,
             ]}
           >
-            {item?.name}
+            {item?.name || item}
             {index !== data?.length - 1 && ","}
+          </CommonText>
+        ),
+      };
+    });
+  };
+
+  const locationConfig = (data) => {
+    return data.map((item, index) => {
+      return {
+        content: (
+          <CommonText customTextStyle={[style.blackText]}>
+            {item?.name}
+            {index !== data.length - 1 && "/"}
           </CommonText>
         ),
       };
@@ -111,7 +130,11 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
   const multiRow = [
     {
       content: (
-        <Image source={images.companyLogo} style={style.mobileComponyLogo} />
+        <Image
+          source={company_logo || images.companyLogo}
+          style={style.mobileComponyLogo}
+          alt={"company_logo"}
+        />
       ),
     },
     {
@@ -139,14 +162,19 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
         <MultiColumn columns={multiCoulmn} style={style.mobileMargin8} />
       ),
     },
-    {
+    jobLocation?.length && {
       content: (
         <TwoColumn
           style={{ ...style.iconView, ...style.mobileMargin8 }}
           leftSection={
             <Image source={images.iconLocation} style={style.mobileIconStyle} />
           }
-          rightSection={<MultiColumn columns={LocationConfig(jobLocation)} />}
+          rightSection={
+            <MultiColumn
+              columns={LocationConfig(jobLocation)}
+              style={{ backgroundColor: "blue", paddingRight: 24 }}
+            />
+          }
         />
       ),
     },
@@ -173,17 +201,34 @@ const JobCardMobile = ({ cardDetails, isLoading, handleRemove }) => {
             })}`}</CommonText>
           }
           rightSection={
-            <CustomButton
-              iconLeft={{
-                leftIconAlt: "left-saved",
-                leftIconSource: images.iconSaveSlashBlue,
-              }}
-              onPress={handleRemove}
-              customStyle={{ customTextStyle: style.customButtonTextStyle }}
-              style={style.buttonStyle}
-            >
-              {intl.formatMessage({ id: "label.remove" })}
-            </CustomButton>
+            <TwoColumn
+              leftSection={
+                <CustomButton
+                  disabled={isLoading}
+                  onPress={handleApply}
+                  customStyle={{
+                    customTextStyle: style.customButtonApplyStyle,
+                  }}
+                  style={style.buttonStyle}
+                >
+                  {intl.formatMessage({ id: "label.applyJob" })}
+                </CustomButton>
+              }
+              rightSection={
+                <CustomButton
+                  disabled={isLoading}
+                  iconLeft={{
+                    leftIconAlt: "left-saved",
+                    leftIconSource: images.iconSaveSlashBlue,
+                  }}
+                  onPress={handleRemove}
+                  customStyle={{ customTextStyle: style.customButtonTextStyle }}
+                  style={style.buttonStyle}
+                >
+                  {intl.formatMessage({ id: "label.remove" })}
+                </CustomButton>
+              }
+            />
           }
         />
       ),

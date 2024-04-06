@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderWidth: 1,
     borderRadius: 8,
+    minHeight: 240,
   },
   showImageStyle: {
     borderStyle: "solid",
