@@ -32,6 +32,7 @@ import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
 import EditJobDetails from "../views/EditJobDetails/EditJobDetails";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
+import PostedJobs from "../views/PostedJobs";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -232,7 +233,7 @@ const config = [
       },
       {
         viewPath: navigations.POSTED_JOBS,
-        element: <PostedJobsView />,
+        element: <PostedJobs />,
       },
 
       {
