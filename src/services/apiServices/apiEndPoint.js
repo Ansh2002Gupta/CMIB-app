@@ -38,7 +38,9 @@ export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
 export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 
 //sub routes
+export const APPLICANTS = "/applicants";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const INTERVIEW = "/interview";
 
 /* API Endpoints Member CA JOB profile */
 export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
@@ -66,4 +68,3 @@ export const GET_GENDER_PREFERENCE = `${USER_TYPE_COMPANY}/genders`;
 export const GET_WORK_MODE = `${USER_TYPE_COMPANY}/workmode`;
 export const POST_JOB = `${USER_TYPE_COMPANY}/jobs`;
 export const UPDATE_JOB = `${USER_TYPE_COMPANY}/jobs/update`;
-

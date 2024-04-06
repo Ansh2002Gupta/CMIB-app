@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
@@ -11,20 +11,51 @@ import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomToggleComponent from "../../components/CustomToggleComponent";
 import CustomTextInput from "../../components/CustomTextInput";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import { usePost, usePut } from "../../hooks/useApiRequest";
 import useIsWebView from "../../hooks/useIsWebView";
+import { formateDateandTime } from "../../utils/util";
 import { ADDRESS_MAX_LENGTH } from "../../constants/constants";
+import {
+  APPLICANTS,
+  INTERVIEW,
+  POST_JOB,
+} from "../../services/apiServices/apiEndPoint";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ScheduleInterviewModal.style";
 
 const radioButtonOptions = ["Face to Face ", "Telephonic", "Remote"];
 const isMob = Platform.OS.toLowerCase() !== "web";
 
+const getInterViewType = (interviewType) => {
+  const type =
+    interviewType === 0
+      ? "face_to_face"
+      : interviewType === 1
+      ? "telephonic"
+      : "remote";
+
+  return type;
+};
+
+const getAPIInterViewType = (interviewType) => {
+  const type =
+    interviewType === 0
+      ? "Face-To-Face"
+      : interviewType === 1
+      ? "Telephonic"
+      : "Remote";
+
+  return type;
+};
+
 const ScheduleInterviewModal = ({ onClose }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-  const [currentInterviewType, setCurrentInterviewType] = useState(0);
+  const [primaryInterviewType, setPrimaryInterviewType] = useState(0);
+  const [secondaryInterviewType, setSecondaryInterviewType] = useState(0);
   const [error, setError] = useState({
-    faceToFace: {
+    face_to_face: {
       address: "",
       date: "",
       time: "",
@@ -40,7 +71,7 @@ const ScheduleInterviewModal = ({ onClose }) => {
     },
   });
   const [primaryDetails, setPrimaryDetails] = useState({
-    faceToFace: {
+    face_to_face: {
       address: "",
       date: "",
       time: "",
@@ -56,7 +87,7 @@ const ScheduleInterviewModal = ({ onClose }) => {
     },
   });
   const [alternateDetails, setAlternateDetails] = useState({
-    faceToFace: {
+    face_to_face: {
       address: "",
       date: "",
       time: "",
@@ -72,7 +103,70 @@ const ScheduleInterviewModal = ({ onClose }) => {
     },
   });
 
-  const handleValueChange = (details, setDetails, fieldName, value) => {
+  // for now we use hardcoded applicant id
+
+  const applicant_id = 1;
+
+  const {
+    isLoading: isScheduleInterviewLoading,
+    makeRequest: scheduleInterviewRequest,
+    error: errorWhileSchedulingInterview,
+    setError: setErrorWhileSchedulingInterview,
+  } = usePost({
+    url: POST_JOB + APPLICANTS + INTERVIEW,
+  });
+
+  const {
+    isLoading: isUpdatingInterview,
+    makeRequest: updatatingInterview,
+    error: errorWhileUpdatingInterview,
+    setError: setErrorWhileUpdatingInterview,
+  } = usePut({
+    url: POST_JOB + APPLICANTS + INTERVIEW + `${applicant_id}`,
+  });
+
+  const handleScheduleInterview = () => {
+    const primaryType = getAPIInterViewType(primaryInterviewType);
+    const alternatePrimaryType = getAPIInterViewType(secondaryInterviewType);
+
+    const type = getInterViewType(primaryInterviewType);
+    const alternate_type = getInterViewType(secondaryInterviewType);
+
+    const primary_schedule = formateDateandTime(
+      primaryDetails[type].date,
+      primaryDetails[type].time
+    );
+
+    const alternate_schedule = formateDateandTime(
+      alternateDetails[alternate_type].date,
+      alternateDetails[alternate_type].time
+    );
+
+    scheduleInterviewRequest({
+      body: {
+        applicant_id: applicant_id,
+        type: primaryType,
+        alternate_type: alternatePrimaryType,
+        venue_address: primaryDetails[type].address,
+        alternate_venue_address: alternateDetails[alternate_type].address,
+        primary_schedule,
+        alternate_schedule,
+        remote_meeting_link: primaryDetails[type].link,
+        alternate_remote_meeting_link: alternateDetails[alternate_type].link,
+      },
+      onSuccessCallback: () => {
+        onClose();
+      },
+    });
+  };
+
+  const handleValueChange = (
+    details,
+    setDetails,
+    fieldName,
+    value,
+    isPrimary
+  ) => {
     const [interviewKey, field] = fieldName.split(".");
     setDetails((prevDetails) => ({
       ...prevDetails,
@@ -81,22 +175,24 @@ const ScheduleInterviewModal = ({ onClose }) => {
         [field]: value,
       },
     }));
-    if (value === null || value === "") {
-      setError((prevDetails) => ({
-        ...prevDetails,
-        [interviewKey]: {
-          ...prevDetails[interviewKey],
-          [field]: intl.formatMessage({ id: "label.field_cannot_be_empty" }),
-        },
-      }));
-    } else {
-      setError((prevDetails) => ({
-        ...prevDetails,
-        [interviewKey]: {
-          ...prevDetails[interviewKey],
-          [field]: "",
-        },
-      }));
+    if (isPrimary) {
+      if (value === null || value === "") {
+        setError((prevDetails) => ({
+          ...prevDetails,
+          [interviewKey]: {
+            ...prevDetails[interviewKey],
+            [field]: intl.formatMessage({ id: "label.field_cannot_be_empty" }),
+          },
+        }));
+      } else {
+        setError((prevDetails) => ({
+          ...prevDetails,
+          [interviewKey]: {
+            ...prevDetails[interviewKey],
+            [field]: "",
+          },
+        }));
+      }
     }
   };
 
@@ -153,7 +249,8 @@ const ScheduleInterviewModal = ({ onClose }) => {
                 details,
                 setDetails,
                 `${interviewKey}.date`,
-                date
+                date,
+                isPrimary
               )
             }
             isCalendar
@@ -176,7 +273,8 @@ const ScheduleInterviewModal = ({ onClose }) => {
                 details,
                 setDetails,
                 `${interviewKey}.time`,
-                time
+                time,
+                isPrimary
               )
             }
             isCalendar
@@ -194,14 +292,13 @@ const ScheduleInterviewModal = ({ onClose }) => {
     );
   };
 
-  const renderInterviewDetails = (details, setDetails, isPrimary) => {
-    const interviewKey =
-      currentInterviewType === 0
-        ? "faceToFace"
-        : currentInterviewType === 1
-        ? "telephonic"
-        : "remote";
-
+  const renderInterviewDetails = (
+    interviewType,
+    details,
+    setDetails,
+    isPrimary
+  ) => {
+    const interviewKey = getInterViewType(interviewType);
     const primaryAddressProps = isPrimary
       ? {
           isMandatory: true,
@@ -218,7 +315,7 @@ const ScheduleInterviewModal = ({ onClose }) => {
         }
       : {};
 
-    switch (currentInterviewType) {
+    switch (interviewType) {
       case 0: // Face to Face
         return (
           <>
@@ -233,7 +330,8 @@ const ScheduleInterviewModal = ({ onClose }) => {
                   details,
                   setDetails,
                   `${interviewKey}.address`,
-                  value
+                  value,
+                  isPrimary
                 );
               }}
               customHandleBlur={() => {
@@ -271,7 +369,8 @@ const ScheduleInterviewModal = ({ onClose }) => {
                   details,
                   setDetails,
                   `${interviewKey}.link`,
-                  value
+                  value,
+                  isPrimary
                 )
               }
               customHandleBlur={() => {
@@ -293,6 +392,13 @@ const ScheduleInterviewModal = ({ onClose }) => {
     }
   };
 
+  const hasErrors = () => {
+    const primaryErrorValues = Object.values(error).map((err) =>
+      Object.values(err)
+    );
+    return primaryErrorValues.some((err) => err.some((e) => e !== ""));
+  };
+
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
@@ -312,27 +418,31 @@ const ScheduleInterviewModal = ({ onClose }) => {
         showsVerticalScrollIndicator={false}
         style={{ ...styles.modalInnerContainer, ...styles.overflowStyle }}
       >
-        <CustomToggleComponent
-          isMandatory
-          label={intl.formatMessage({ id: "label.interview_type" })}
-          options={radioButtonOptions}
-          customLabelStyle={styles.toggleComponentLabelStyle}
-          onValueChange={(val) => setCurrentInterviewType(val)}
-          value={currentInterviewType}
-          customToggleButtonTextStyle={styles.customToggleText}
-        />
         {renderHorizontalLine()}
         <View>
           <TwoRow
             topSection={
-              <CommonText
-                fontWeight={"600"}
-                customTextStyle={styles.headerText}
-              >
-                {intl.formatMessage({ id: "label.primary_interview" })}
-              </CommonText>
+              <>
+                <CommonText
+                  fontWeight={"600"}
+                  customTextStyle={styles.headerText}
+                >
+                  {intl.formatMessage({ id: "label.primary_interview" })}
+                </CommonText>
+                <CustomToggleComponent
+                  isMandatory
+                  label={intl.formatMessage({ id: "label.interview_type" })}
+                  options={radioButtonOptions}
+                  customLabelStyle={styles.toggleComponentLabelStyle}
+                  onValueChange={(val) => setPrimaryInterviewType(val)}
+                  value={primaryInterviewType}
+                  customToggleButtonTextStyle={styles.customToggleText}
+                  containerStyle={styles.toggleContainerStyle}
+                />
+              </>
             }
             bottomSection={renderInterviewDetails(
+              primaryInterviewType,
               primaryDetails,
               setPrimaryDetails,
               true
@@ -340,14 +450,27 @@ const ScheduleInterviewModal = ({ onClose }) => {
           />
           <TwoRow
             topSection={
-              <CommonText
-                fontWeight={"600"}
-                customTextStyle={styles.headerText}
-              >
-                {intl.formatMessage({ id: "label.alternate_interview" })}
-              </CommonText>
+              <>
+                <CommonText
+                  fontWeight={"600"}
+                  customTextStyle={styles.headerText}
+                >
+                  {intl.formatMessage({ id: "label.alternate_interview" })}
+                </CommonText>
+                <CustomToggleComponent
+                  isMandatory
+                  label={intl.formatMessage({ id: "label.interview_type" })}
+                  options={radioButtonOptions}
+                  customLabelStyle={styles.toggleComponentLabelStyle}
+                  onValueChange={(val) => setSecondaryInterviewType(val)}
+                  value={secondaryInterviewType}
+                  customToggleButtonTextStyle={styles.customToggleText}
+                  containerStyle={styles.toggleContainerStyle}
+                />
+              </>
             }
             bottomSection={renderInterviewDetails(
+              secondaryInterviewType,
               alternateDetails,
               setAlternateDetails,
               false
@@ -365,14 +488,20 @@ const ScheduleInterviewModal = ({ onClose }) => {
               ...isWebProps,
               customContainerStyle: commonStyles.customContainerStyle,
             }}
-            // displayLoader={isLoading}
-            isDisabled={false}
+            isDisabled={hasErrors()}
+            displayLoader={isScheduleInterviewLoading}
             isButtonTwoGreen
             onPressButtonOne={onClose}
-            onPressButtonTwo={() => {}}
+            onPressButtonTwo={handleScheduleInterview}
           />
         </View>
       </View>
+      {!!errorWhileSchedulingInterview && (
+        <ToastComponent
+          toastMessage={errorWhileSchedulingInterview}
+          onDismiss={() => setErrorWhileSchedulingInterview("")}
+        />
+      )}
     </CustomModal>
   );
 };

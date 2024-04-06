@@ -568,3 +568,11 @@ export const convertToTime = ({ dateString, format24Hour = true }) => {
   const timeString = date.format(timeFormat);
   return timeString;
 };
+
+export const formateDateandTime = (date, time) => {
+  console.log("time", time);
+
+  const formattedDate = dayjs(date).format("YYYY-MM-DD");
+  const formattedTime = dayjs(time).format("HH:mm:ss");
+  return formattedDate + " " + formattedTime;
+};

@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
   customToggleText: {
     fontSize: 14,
   },
+  toggleContainerStyle: {
+    paddingBottom: 16,
+  },
   headerText: {
     fontSize: 14,
     paddingBottom: 16,

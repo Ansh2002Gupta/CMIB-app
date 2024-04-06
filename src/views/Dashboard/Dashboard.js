@@ -11,6 +11,7 @@ import { moduleKeys } from "../../constants/sideBarHelpers";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import styles from "./dashboard.style";
 import ViewInterviewDetails from "../../containers/ViewInterviewDetails";
+import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 
 function DashboardView() {
   const intl = useIntl();
@@ -38,6 +39,9 @@ function DashboardView() {
           </>
         }
       />
+      {/*  uncomment this to see modals */}
+      {/* <ViewInterviewDetails /> */}
+      {/* <ScheduleInterviewModal /> */}
     </View>
   );
 }
