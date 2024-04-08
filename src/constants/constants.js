@@ -25,6 +25,7 @@ export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
+export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const FILE_MAX_SIZE = 5000000;
 export const CA_JOBS = "ca-jobs";
@@ -662,3 +663,5 @@ export const JOB_STATUS_RESPONSE_CODE = {
   "Offer Job": 6,
   "Reject After Interview": 2,
 };
+
+export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];

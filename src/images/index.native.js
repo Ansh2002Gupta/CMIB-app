@@ -106,7 +106,7 @@ import iconCampus from "../../public/images/svg/campus.svg";
 import iconConsent from "../../public/images/svg/consent.svg";
 import iconDiscover from "../../public/images/svg/discover.svg";
 import iconApplication from "../../public/images/svg/application.svg";
-import iconCalendar from "../../public/images/calendar.png";
+import iconCalendar from "../../public/images/svg/calendar.svg";
 import iconRotate from "../../public/images/svg/iconRotate.svg";
 import iconDisabledAdd from "../../public/images/svg/iconDisabledAdd.svg";
 import iconDisabledMinus from "../../public/images/svg/iconDisabledMinus.svg";
@@ -150,6 +150,7 @@ import iconRupee from "../../public/images/svg/iconRupee.svg";
 import videoPlayIcon from "../../public/images/svg/videoPlayIcon.svg";
 import pdfIcon from "../../public/images/svg/pdfIcon.svg";
 import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
+import iconClock from "../../public/images/svg/iconClock.svg";
 
 import iconLocationWhite from "../../public/images/svg/iconLocationWhite.svg";
 import iconBreifcase from "../../public/images/svg/briefcase.svg";
@@ -293,6 +294,7 @@ const images = {
   iconDeleteRoundRed,
   iconCheckBoxRound,
   iconUnCheckBoxRound,
+  iconClock,
   iconTickGreen,
   iconCrossRed,
   dotIcon,
