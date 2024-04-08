@@ -18,7 +18,6 @@ import { CHANGE_APPLICANT_STATUS } from "../../../services/apiServices/apiEndPoi
 const ViewJobApplicants = ({ id, questionaireData }) => {
   const navigate = useNavigate();
   const onEditPress = (selectedItem, item) => {
-    console.log("ITEM", item, selectedItem);
     if (JOB_STATUS_RESPONSE_CODE[selectedItem]) {
       const request = {
         status: JOB_STATUS_RESPONSE_CODE[selectedItem],
