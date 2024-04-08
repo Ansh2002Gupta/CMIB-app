@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
       },
     }),
   }),
+  cursorStyle: { cursor: "pointer" },
   justifyContentCenter: {
     justifyContent: "center",
     paddingLeft: 15,
@@ -92,6 +93,8 @@ const styles = StyleSheet.create({
   underLineStyle: {
     width: "20%",
     color: colors.darkBlue,
+    borderBottomWidth: 1,
+    borderColor: colors.darkBlue,
   },
 });
 
