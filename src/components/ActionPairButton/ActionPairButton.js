@@ -49,20 +49,21 @@ const ActionPairButton = ({
           {buttonOneText}
         </CustomButton>
       }
-      rightSection={
-        <CustomButton
-          disabled={isDisabled}
-          customStyle={{ customTextStyle: buttonTwoTextStyle }}
-          iconRight={iconRight}
-          isLoading={displayLoader}
-          onPress={onPressButtonTwo}
-          style={buttonTwoStyle}
-          type={buttonTwoType}
-          withGreenBackground={isButtonTwoGreen}
-        >
-          {buttonTwoText}
-        </CustomButton>
-      }
+      // temporarly comented apply button as this functionality may come in near future
+      // rightSection={
+      //   <CustomButton
+      //     disabled={isDisabled}
+      //     customStyle={{ customTextStyle: buttonTwoTextStyle }}
+      //     iconRight={iconRight}
+      //     isLoading={displayLoader}
+      //     onPress={onPressButtonTwo}
+      //     style={buttonTwoStyle}
+      //     type={buttonTwoType}
+      //     withGreenBackground={isButtonTwoGreen}
+      //   >
+      //     {buttonTwoText}
+      //   </CustomButton>
+      // }
       leftSectionStyle={{ ...styles.buttonStyle, ...buttonOneContainerStyle }}
       rightSectionStyle={{
         ...styles.secondButtonStyle,

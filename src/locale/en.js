@@ -653,6 +653,8 @@ const locale = {
   "label.formatMinExperience": `{value}+ years`,
   "label.formatMaxExperience": `Up to {value} years`,
   "label.contractual": "Contractual",
+  "label.allJobSearchPlaceholder":
+    "Search functional area, designation or organizations",
 };
 
 export default locale;

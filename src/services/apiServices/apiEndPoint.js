@@ -72,4 +72,5 @@ export const UPDATE_JOB = `${USER_TYPE_COMPANY}/jobs/update`;
 
 //endpoint view job
 export const GET_JOB_DETAIL = `${USER_TYPE_COMPANY}/jobs`;
-export const SAVE_JOB_DETAIL = `${USER_TYPE_MEMBER}/jobs`
+export const SAVE_JOB_DETAIL = `${USER_TYPE_MEMBER}/jobs`;
+export const SEARCH_JOBS = `search/jobs`;

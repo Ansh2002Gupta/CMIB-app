@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 import { Platform, View } from "@unthinkable/react-core-components";
 
@@ -9,15 +9,19 @@ import JobCardMobile from "./JobCardMobile";
 import JobCardWeb from "./JobCardWeb";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./SavedJobComponent.style";
-import { useDelete, usePost } from "../../hooks/useApiRequest";
-import { MEMBER_JOB, SAVE } from "../../services/apiServices/apiEndPoint";
+import { usePost } from "../../hooks/useApiRequest";
 import ToastComponent from "../ToastComponent/ToastComponent";
+import useSaveAndRemoveJob from "../../services/apiServices/hooks/useSaveAndRemoveJob";
 
-const SavedJobComponent = ({ details }) => {
+const SavedJobComponent = ({
+  details,
+  onPress,
+  containerStyle,
+  isSaveVisible,
+}) => {
   const intl = useIntl();
-  const isWeb = Platform.OS.toLowerCase() === "web";
+
   const { isWebView } = useIsWebView();
-  const [isRemoved, setIsRemoved] = useState(false);
   const { id } = details;
 
   const cardDetails = {
@@ -35,53 +39,26 @@ const SavedJobComponent = ({ details }) => {
     company_logo: details?.company_logo,
   };
 
-  const {
-    makeRequest: deleteJob,
-    isLoading: isDeletingJob,
-    error: errorWhileDeletingJob,
-    setError: setErrorWhileDeletingJob,
-  } = useDelete({ url: MEMBER_JOB });
-
-  const {
-    makeRequest: saveJob,
-    isLoading: isSaveJobJob,
-    error: errorWhileSavingJob,
-    setError: setErrorWhileSavingJob,
-  } = usePost({ url: MEMBER_JOB });
-
-  const isLoading = isDeletingJob || isSaveJobJob;
-
-  const error = errorWhileDeletingJob || errorWhileSavingJob;
-
-  const handleRemove = () => {
-    deleteJob({
-      overrideUrl: MEMBER_JOB + `/${id}` + SAVE,
-      onSuccessCallback: () => {
-        setIsRemoved(id);
-      },
-    });
+  const handleClickOnCard = () => {
+    onPress && onPress(id);
   };
 
-  const handleSave = () => {
-    saveJob({
-      overrideUrl: MEMBER_JOB + `/${id}` + SAVE,
-      onSuccessCallback: () => {
-        setIsRemoved(null);
-      },
-    });
-  };
-
-  const handleApply = () => {};
+  const {
+    isSaveVisibleButton,
+    handleSaveAndRemove,
+    isLoading,
+    error,
+    resetError,
+  } = useSaveAndRemoveJob({ id: details.id, isSaveVisible });
 
   const handleResetError = () => {
-    setErrorWhileDeletingJob("");
-    setErrorWhileSavingJob("");
+    resetError();
   };
-
+  console.log(error, "error");
   return (
     <>
       <TwoRow
-        style={style.mainContainer}
+        style={{ ...style.mainContainer, ...containerStyle }}
         topSection={
           <TwoColumn
             style={style.topCurveSection}
@@ -105,10 +82,9 @@ const SavedJobComponent = ({ details }) => {
               {...{
                 cardDetails,
                 isLoading,
-                handleRemove,
-                handleApply,
-                handleSave,
-                isRemoved,
+                handleSaveAndRemove,
+                isSaved: isSaveVisibleButton,
+                onPress: handleClickOnCard,
               }}
             />
           ) : (
@@ -116,18 +92,17 @@ const SavedJobComponent = ({ details }) => {
               {...{
                 cardDetails,
                 isLoading,
-                handleRemove,
-                handleApply,
-                handleSave,
-                isRemoved,
+                handleSaveAndRemove,
+                isSaved: isSaveVisibleButton,
+                onPress: handleClickOnCard,
               }}
             />
           )
         }
       />
-      {!!error && (
+      {error ? (
         <ToastComponent toastMessage={error} onDismiss={handleResetError} />
-      )}
+      ) : null}
     </>
   );
 };

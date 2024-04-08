@@ -11,16 +11,17 @@ import SearchView from "../../components/SearchView";
 import Spinner from "../../components/Spinner";
 import useFetch from "../../hooks/useFetch";
 import useIsWebView from "../../hooks/useIsWebView";
-import {
-  MEMBER_SAVED_JOBS,
-} from "../../services/apiServices/apiEndPoint";
+import { MEMBER_SAVED_JOBS } from "../../services/apiServices/apiEndPoint";
 import style from "./SavedJobs.style";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import CommonText from "../../components/CommonText";
+import { useNavigate } from "react-router";
+import { navigations } from "../../constants/routeNames";
 
 const SavedJobs = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+  const navigate = useNavigate();
 
   const {
     data: savedJobsList,
@@ -37,6 +38,10 @@ const SavedJobs = () => {
         search: val,
       },
     });
+  };
+
+  const handleClickOnJobCard = (jobId) => {
+    navigate(`${navigations.CA_JOBS}/${navigations.JOB_DETAIL}/${jobId}`);
   };
 
   return (
@@ -78,7 +83,13 @@ const SavedJobs = () => {
                 {savedJobsList?.length ? (
                   <ScrollView>
                     {savedJobsList?.map((details) => {
-                      return <SavedJobComponent details={details} />;
+                      return (
+                        <SavedJobComponent
+                          details={details}
+                          onPress={handleClickOnJobCard}
+                          isSaveVisible={false} //TODO: need to check if job is saved or not
+                        />
+                      );
                     })}
                   </ScrollView>
                 ) : (

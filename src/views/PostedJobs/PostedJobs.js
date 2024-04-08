@@ -8,10 +8,16 @@ import Spinner from "../../components/Spinner";
 import { View } from "@unthinkable/react-core-components";
 import { STATUS_CODES } from "../../constants/constants";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { useParams } from "react-router";
+import { GET_JOB_DETAIL } from "../../services/apiServices/apiEndPoint";
 
 const PostedJobs = () => {
-  // TODO: need to add job detail id in endpoint
-  const { data, isLoading, error } = useFetch({ url: "company/jobs/151" });
+  let { jobId } = useParams();
+
+  const { data, isLoading, error } = useFetch({
+    url: `${GET_JOB_DETAIL}/${jobId}`,
+  });
+
   const fetchJobError = error?.data;
 
   const { jobDetail } = usePostedJobs({ state: data ?? {} });

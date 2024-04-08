@@ -1,7 +1,11 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import CommonText from "../CommonText";
-import { Image, View } from "@unthinkable/react-core-components";
+import {
+  Image,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 
 import { ThreeRow, TwoColumn } from "../../core/layouts";
 import MultiColumn from "../../core/layouts/MultiColumn";
@@ -20,11 +24,11 @@ import colors from "../../assets/colors";
 const JobCardWeb = ({
   cardDetails,
   isLoading,
-  handleRemove,
   handleApply,
-  handleSave,
-  isRemoved,
+  handleSaveAndRemove,
+  isSaved,
   isApplyLoading,
+  onPress,
 }) => {
   const intl = useIntl();
   const {
@@ -123,61 +127,66 @@ const JobCardWeb = ({
     },
   ];
 
-  const onPressButtonOne = isRemoved ? handleSave : handleRemove;
-  const buttonOneText = isRemoved ? "label.save" : "label.remove";
+  const buttonOneText = isSaved ? "label.save" : "label.remove";
 
   const mainCardMultiRow = [
     {
       content: (
-        <TwoColumn
-          style={{ gap: 16 }}
-          leftSection={
-            <Image
-              source={{ uri: company_logo || images.companyLogo }}
-              style={style.companyLogoStyle}
-              alt={"company_logo"}
-            />
-          }
-          rightSection={
-            <ThreeRow
-              style={{ gap: 2 }}
-              topSection={
-                <CommonText customTextStyle={style.companyNameStyle}>
-                  {jobPostion}
-                </CommonText>
-              }
-              middleSection={
-                <CommonText customTextStyle={style.jobPositionText}>
-                  {companyName}
-                </CommonText>
-              }
-              bottomSection={
-                <View>
-                  <MultiColumn columns={multiCoulmn} style={style.center} />
-                </View>
-              }
-            />
-          }
-        />
+        <TouchableOpacity onPress={onPress}>
+          <TwoColumn
+            style={{ gap: 16 }}
+            leftSection={
+              <Image
+                source={{ uri: company_logo || images.companyLogo }}
+                style={style.companyLogoStyle}
+                alt={"company_logo"}
+              />
+            }
+            rightSection={
+              <ThreeRow
+                style={{ gap: 2 }}
+                topSection={
+                  <CommonText customTextStyle={style.companyNameStyle}>
+                    {jobPostion}
+                  </CommonText>
+                }
+                middleSection={
+                  <CommonText customTextStyle={style.jobPositionText}>
+                    {companyName}
+                  </CommonText>
+                }
+                bottomSection={
+                  <View>
+                    <MultiColumn columns={multiCoulmn} style={style.center} />
+                  </View>
+                }
+              />
+            }
+          />
+        </TouchableOpacity>
       ),
     },
     {
       content: (
-        <CommonText customTextStyle={[style.breakWordStyle]}>
-          <CustomTextEditor
-            value={jobDescription}
-            disabled
-            quilStyle={style.customQuilStyle}
-          />
-        </CommonText>
+        <TouchableOpacity onPress={onPress}>
+          <CommonText customTextStyle={[style.breakWordStyle]}>
+            <CustomTextEditor
+              value={jobDescription}
+              disabled
+              quilStyle={style.customQuilStyle}
+            />
+          </CommonText>
+        </TouchableOpacity>
       ),
     },
     requirement?.length && {
       content: (
-        <MultiColumn
-          columns={columnConfig(changeComma(requirement, 3))}
-          style={style.chipContainerStyle}
-        />
+        <TouchableOpacity onPress={onPress}>
+          <MultiColumn
+            columns={columnConfig(changeComma(requirement, 3))}
+            style={style.chipContainerStyle}
+          />
+        </TouchableOpacity>
       ),
     },
     {
@@ -199,7 +208,7 @@ const JobCardWeb = ({
               isDisabledLeft={isLoading}
               isDisabled={isLoading}
               onPressButtonTwo={handleApply}
-              onPressButtonOne={onPressButtonOne}
+              onPressButtonOne={handleSaveAndRemove}
               isButtonTwoGreen
               iconLeft={{
                 leftIconSource: images.iconSingleSave,

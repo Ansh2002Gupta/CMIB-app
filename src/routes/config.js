@@ -35,6 +35,7 @@ import { navigations } from "../constants/routeNames";
 import EditJobDetails from "../views/EditJobDetails/EditJobDetails";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
+import AllJobs from "../views/AllJobs/AllJobs";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -273,13 +274,16 @@ const config = [
       },
       {
         viewPath: navigations.ALL_JOBS,
-        element: <PostedJobsView />,
+        element: <AllJobs />,
       },
       {
         viewPath: navigations.APPLIED_JOBS,
         element: <PostedJobsView />,
       },
-
+      {
+        viewPath: `${navigations.JOB_DETAIL}/:jobId`,
+        element: <PostedJobs />,
+      },
       {
         viewPath: navigations.JOBS,
         element: <Jobs />,

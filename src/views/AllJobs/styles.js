@@ -1,10 +1,14 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
+
+const isWeb = Platform.OS.toLowerCase() === "web";
+
+const LIST_HEIGHT = isWeb ? "60vh" : undefined;
 
 const styles = {
   container: {
     flex: 1,
     backgroundColor: colors.backgroundGrey,
-    paddingBottom: 24,
   },
   header: {
     backgroundColor: colors.white,
@@ -30,9 +34,11 @@ const styles = {
     paddingLeft: 20,
     paddingRight: 20,
   },
-  customParentStyle: {},
+  customParentStyle: {
+    width: "45%",
+  },
   topSection: {
-    width: "40%",
+    // width: "40%",
     paddingTop: 20,
     paddingLeft: 20,
     paddingRight: 20,
@@ -42,7 +48,6 @@ const styles = {
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: colors.backgroundColor,
   },
   noResultContainer: {
     flex: 1,
@@ -50,12 +55,37 @@ const styles = {
     marginTop: 20,
     alignItems: "center",
   },
-  bottomSectionStyle: {},
+  bottomSectionStyle: {
+    flex: 1,
+  },
   noResultText: {
     fontSize: 18,
     lineHeight: 24,
     color: colors.black,
     fontWeight: "600",
+  },
+  scrollStyle: {
+    height: "60vh",
+  },
+  pagination: {
+    marginLeft: 40,
+    marginRight: 40,
+    backgroundColor: colors.red,
+  },
+  listSectionContainer: {
+    marginTop: 20,
+    height: LIST_HEIGHT,
+  },
+  savedJobComponent: {
+    marginTop: undefined,
+  },
+  flatlist: {
+    height: LIST_HEIGHT,
+  },
+  webTopSection: {},
+  mobileTopSection: {},
+  listFooter: {
+    height: 30,
   },
 };
 
