@@ -1,6 +1,7 @@
 /* User Types */
 export const USER_TYPE_COMPANY = "company";
 export const USER_TYPE_MEMBER = "member";
+export const USER_TYPE_CANDIDATES = "candidates";
 export const CORE = "core";
 
 /* API Endpoints */
@@ -41,17 +42,19 @@ export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
 
 //sub routes
+export const ACADEMICS = "/academics";
+export const ACTIVITIES = "/activities";
 export const JOB_APPLICANTS = "/applicants";
 export const JOBS = "/jobs";
-export const TICKET_REPLIES_SUB_ROUTES = "replies";
-export const MEMBERS = "/members";
-export const PERSONAL = "/personal";
-export const ACADEMICS = "/academics";
-export const MEMBERSHIP = "/membership";
-export const WORK_EXPERIENCE = "/work-experiences";
 export const JOB_SKILLS = "/skills";
-export const ACTIVITIES = "/activities";
 export const JOB_PREFERENCES = "/job-preferences";
+export const MEMBERS = "/members";
+export const MEMBERSHIP = "/membership";
+export const MARK_PREFER = "/mark-prefer";
+export const PERSONAL = "/personal";
+export const STATUS = "/status";
+export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const WORK_EXPERIENCE = "/work-experiences";
 
 /* API Endpoints Member CA JOB profile */
 export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;

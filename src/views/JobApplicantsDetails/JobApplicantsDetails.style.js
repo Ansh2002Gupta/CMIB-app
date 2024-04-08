@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   },
   valueStyle: {
     fontSize: 14,
+    lineHeight: 22,
   },
   userInfoContainer: {
     padding: 5,
@@ -47,12 +48,14 @@ const styles = StyleSheet.create({
   MobButtonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
+    alignItems: "center",
     marginBottom: 5,
     backgroundColor: "transparent",
   },
   greenButtonText: {
     fontSize: 14,
     color: colors.white,
+    lineHeight: 22,
   },
   greenButton: {
     marginLeft: 24,

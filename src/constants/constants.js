@@ -647,7 +647,7 @@ export const progressData = {
 
 export const JOB_APPLICANTS_HEADING = {
   name: "Application Name",
-  application_id: "Application ID",
+  applicant_id: "Application ID",
   job_id: "Job Id",
   designation: "Designation",
   job_status: "Active/Inactive",

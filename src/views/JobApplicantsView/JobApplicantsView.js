@@ -6,9 +6,8 @@ import { TwoRow } from "../../core/layouts";
 
 import Chip from "../../components/Chip";
 import CommonText from "../../components/CommonText";
-import CustomModal from "../../components/CustomModal";
-import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import CustomTable from "../../components/CustomTable";
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
@@ -38,6 +37,8 @@ const JobApplicants = () => {
     filterApplyHandler,
     handleActions,
     filterCategory,
+    queryTypeData,
+    statusData,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
@@ -76,28 +77,16 @@ const JobApplicants = () => {
             style={styles.iconTicket}
           />
           {showCurrentPopupmessage === item?.user_id && (
-            <CustomModal
-              headerText={intl.formatMessage({ id: "label.actions" })}
-              isIconCross
-              onPressIconCross={() => setCurrentPopupMessage(-1)}
-              onBackdropPress={() => setCurrentPopupMessage(-1)}
-            >
-              {item?.action.length &&
-                item?.action.map((item, index) => {
-                  return (
-                    <CustomTouchableOpacity
-                      key={index}
-                      onPress={() => {
-                        handleActions(item);
-                      }}
-                    >
-                      <CommonText customTextStyle={styles.customMessageSTyle}>
-                        {item}
-                      </CommonText>
-                    </CustomTouchableOpacity>
-                  );
-                })}
-            </CustomModal>
+            <PopupMessage
+              popUpHeaderText={intl.formatMessage({
+                id: "label.actions",
+              })}
+              message={item?.action}
+              customStyle={styles.popupMessageStyle}
+              onPopupClick={(action) => handleActions(action, item)}
+              isPopupModal
+              onPopUpClose={() => setCurrentPopupMessage(-1)}
+            />
           )}
         </View>
       </View>
@@ -133,6 +122,8 @@ const JobApplicants = () => {
             totalcards,
             filterApplyHandler,
             filterCategory,
+            queryTypeData,
+            statusData,
             handleLoadMore,
             handlePageChange,
             handleRowPerPageChange,

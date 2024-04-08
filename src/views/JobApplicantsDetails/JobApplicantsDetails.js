@@ -5,28 +5,28 @@ import { View } from "@unthinkable/react-core-components";
 
 import { TwoColumn } from "../../core/layouts";
 
-import Activities from "../../containers/Activities";
 import CommonText from "../../components/CommonText";
 import CustomButton from "../../components/CustomButton";
-import { CustomTabs } from "../../components/Tab";
-import EducationDetails from "../../containers/EducationDetails";
-import MembershipDetails from "../../containers/MembershipDetails/MembershipDetails";
-import PersonalDetails from "../../containers/PersonalDetails";
-import WorkExperience from "../../containers/WorkExperience/WorkExperience";
-import SkillTraining from "../../containers/SkillTraining/SkillTraining";
-import JobPreference from "../../containers/JobPreference/JobPreference";
-import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
+import JobProfileTab from "../JobProfile";
 import useIsWebView from "../../hooks/useIsWebView";
 import useFetch from "../../hooks/useFetch";
+import { usePost } from "../../hooks/useApiRequest";
 import {
   JOBS,
   JOB_APPLICANTS,
+  MARK_PREFER,
+  USER_TYPE_CANDIDATES,
   USER_TYPE_COMPANY,
 } from "../../services/apiServices/apiEndPoint";
 import images from "../../images";
 import styles from "./JobApplicantsDetails.style";
 
-const buttonSection = (intl, isWebView) => {
+const buttonSection = (
+  intl,
+  isWebView,
+  onSaveClick,
+  onScheduleInterviewClick
+) => {
   return (
     <View
       style={isWebView ? styles.buttonContainer : styles.MobButtonContainer}
@@ -35,7 +35,7 @@ const buttonSection = (intl, isWebView) => {
         iconLeft={{
           leftIconSource: images.iconSavedJob,
         }}
-        onPress={() => {}}
+        onPress={onSaveClick}
       >
         <CommonText customTextStyle={styles.valueStyle}>
           {isWebView
@@ -48,7 +48,7 @@ const buttonSection = (intl, isWebView) => {
         iconLeft={{
           leftIconSource: images.iconCalendarWhite,
         }}
-        onPress={() => {}}
+        onPress={onScheduleInterviewClick}
         style={isWebView ? styles.greenButton : {}}
         isLeftIconNotSvg={false}
       >
@@ -74,48 +74,9 @@ const RenderUserInfo = ({ label, value }) => {
   );
 };
 
-const UserDetails = ({ intl, isWebView }) => {
-  return (
-    <TwoColumn
-      isLeftFillSpace
-      isRightFillSpace
-      leftSection={
-        <>
-          <View style={styles.rowStyle}>
-            <RenderUserInfo
-              label={intl.formatMessage({ id: "label.applicant_name" })}
-              value="Nikhil Sharma"
-            />
-            <View style={styles.seperator} />
-            <RenderUserInfo
-              label={intl.formatMessage({
-                id: "label.applicant_id",
-              })}
-              value="NRO01233"
-            />
-          </View>
-          <View style={styles.rowStyle}>
-            <RenderUserInfo
-              label={intl.formatMessage({ id: "label.updated_at" })}
-              value="10/11/2023"
-            />
-            <View style={styles.seperator} />
-            <RenderUserInfo
-              label={intl.formatMessage({ id: "label.status" })}
-              value="Shortlisted"
-            />
-          </View>
-        </>
-      }
-      rightSection={isWebView && buttonSection(intl, isWebView)}
-    />
-  );
-};
-
 const JobApplicantsDetails = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-  const isEditable = false;
   const { job_id, id } = useParams();
 
   // Will uncomment when we get job id from applicant list
@@ -124,54 +85,81 @@ const JobApplicantsDetails = () => {
   //     url: USER_TYPE_COMPANY + JOBS + `/${job_id}` + JOB_APPLICANTS + `/${id}`,
   //   });
 
-  return (
-    <View style={styles.containerStyle}>
-      <CustomTabs
-        renderHeader={() => (
-          <View style={isWebView ? styles.headerContainer : {}}>
-            <CommonText fontWeight={"600"} customTextStyle={styles.headerText}>
-              {intl.formatMessage({ id: "label.applicant_details" })}
-            </CommonText>
-            <UserDetails intl={intl} isWebView={isWebView} />
-          </View>
-        )}
-        renderFooter={() => !isWebView && buttonSection(intl, false)}
-        tabs={[
-          {
-            label: "Personal Details",
-            component: <PersonalDetails isEditable={isEditable} />,
-          },
-          {
-            label: "Education Details",
-            component: <EducationDetails isEditable={isEditable} />,
-          },
-          {
-            label: "Membership Details",
-            component: <MembershipDetails isEditable={isEditable} />,
-          },
-          {
-            label: "Work Experience",
-            component: <WorkExperience isEditable={isEditable} />,
-          },
-          {
-            label: "Skill Training",
-            component: <SkillTraining isEditable={isEditable} />,
-          },
-          {
-            label: "Activities",
-            component: <Activities isEditable={isEditable} />,
-          },
-          {
-            label: "Job Preference",
-            component: <JobPreference isEditable={isEditable} />,
-          },
-          {
-            label: "Questionnaire",
-            component: <ViewQuestion questionnaireData={questionArray} />,
-          },
-        ]}
+  const { makeRequest: handleSave, isLoading: isCandidateUserSaving } = usePost(
+    {
+      url: USER_TYPE_CANDIDATES + `/${id}` + MARK_PREFER,
+    }
+  );
+
+  const onSaveClick = () => {
+    //  GIVING 404
+    handleSave({
+      onSuccessCallback: () => {
+        console.log("saved");
+      },
+    });
+  };
+  const onScheduleInterviewClick = () => {};
+
+  const UserDetails = ({ intl, isWebView }) => {
+    return (
+      <TwoColumn
+        isLeftFillSpace
+        isRightFillSpace
+        leftSection={
+          <>
+            <View style={styles.rowStyle}>
+              <RenderUserInfo
+                label={intl.formatMessage({ id: "label.applicant_name" })}
+                value="Nikhil Sharma"
+              />
+              <View style={styles.seperator} />
+              <RenderUserInfo
+                label={intl.formatMessage({
+                  id: "label.applicant_id",
+                })}
+                value="NRO01233"
+              />
+            </View>
+            <View style={styles.rowStyle}>
+              <RenderUserInfo
+                label={intl.formatMessage({ id: "label.updated_at" })}
+                value="10/11/2023"
+              />
+              <View style={styles.seperator} />
+              <RenderUserInfo
+                label={intl.formatMessage({ id: "label.status" })}
+                value="Shortlisted"
+              />
+            </View>
+          </>
+        }
+        rightSection={
+          isWebView &&
+          buttonSection(intl, isWebView, onSaveClick, onScheduleInterviewClick)
+        }
       />
-    </View>
+    );
+  };
+
+  return (
+    <JobProfileTab
+      renderHeader={() => (
+        <View style={isWebView ? styles.headerContainer : {}}>
+          <CommonText fontWeight={"600"} customTextStyle={styles.headerText}>
+            {intl.formatMessage({ id: "label.applicant_details" })}
+          </CommonText>
+          <UserDetails intl={intl} isWebView={isWebView} />
+        </View>
+      )}
+      isQuestionaireRequired
+      questionaireData={questionArray}
+      renderFooter={() =>
+        !isWebView &&
+        buttonSection(intl, false, onSaveClick, onScheduleInterviewClick)
+      }
+      questionaireURL={""}
+    />
   );
 };
 

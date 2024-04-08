@@ -12,7 +12,9 @@ import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../JobApplicantsView.style";
 import {
+  JOBS,
   JOB_APPLICANTS,
+  STATUS,
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
 import useFetch from "../../../hooks/useFetch";
@@ -24,6 +26,7 @@ import {
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 import useOutsideClick from "../../../hooks/useOutsideClick";
+import { usePatch } from "../../../hooks/useApiRequest";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
@@ -65,6 +68,9 @@ const useJobApplicants = () => {
   let subHeadingText = ["status"];
   let statusText = ["active_inactive"];
   let tableIcon = images.iconMore;
+  let filterCategory = ["Status", "Query Type"];
+  const queryTypeData = [{ id: 1, name: "Pending" }];
+  const statusData = [{ id: 1, name: "Pending" }];
 
   const {
     data: jobApplicantListing,
@@ -75,6 +81,20 @@ const useJobApplicants = () => {
     otherOptions: {
       skipApiCallOnMount: true,
     },
+  });
+
+  const {
+    makeRequest: handleStatus,
+    isLoading: isUpdatingApplicantStatus,
+    error,
+    setError,
+  } = usePatch({
+    url:
+      USER_TYPE_COMPANY +
+      JOBS +
+      JOB_APPLICANTS +
+      `/${showCurrentPopupmessage}` +
+      STATUS,
   });
 
   useEffect(() => {
@@ -171,8 +191,20 @@ const useJobApplicants = () => {
         navigate(
           `/${currentModule}/${navigations.JOB_APPLICANTS}/${jobId}/applicant-details/${showCurrentPopupmessage}`
         ),
-      "Shortlist Candidate": () => {},
-      "Reject Candidate": () => {},
+      "Shortlist Candidate": () => {
+        handleStatus({
+          body: {
+            // status: 3, // we have to pass the status id to make a api call for applicant status change
+          },
+        });
+      },
+      "Reject Candidate": () => {
+        handleStatus({
+          body: {
+            // status: 4, // we have to pass the status id to make a api call for applicant status change
+          },
+        });
+      },
     };
     const action = screens[currentAction];
     if (action) {
@@ -231,7 +263,7 @@ const useJobApplicants = () => {
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item.application_id || "-"}
+            {item.applicant_id || "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -330,7 +362,6 @@ const useJobApplicants = () => {
   });
 
   const filterApplyHandler = () => {};
-  const filterCategory = [];
 
   const handlePageChange = async (page) => {
     handlePagePerChange(page);
@@ -365,6 +396,8 @@ const useJobApplicants = () => {
     allDataLoaded,
     rowsPerPage,
     currentPage,
+    queryTypeData,
+    statusData,
     getColoumConfigs,
     handleActions,
     showCurrentPopupmessage,
