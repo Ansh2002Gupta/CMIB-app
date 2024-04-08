@@ -41,3 +41,6 @@ export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
 
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const INTERVIEWS = "/interviews";
+export const INTERVIEW = "/interview";
+export const ACCEPTED = "/accepted";

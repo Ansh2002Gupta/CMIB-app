@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate, useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
@@ -7,17 +7,22 @@ import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import CustomImage from "../../../components/CustomImage";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import ToastComponent from "../../../components/ToastComponent/ToastComponent";
+import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import TouchableImage from "../../../components/TouchableImage";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
+  ACCEPTED,
   COMPANY_QUERY_TYPE_TICKET,
+  INTERVIEW,
+  INTERVIEWS,
+  JOBS,
   JOB_LOCATION_OPTIONS,
   JOB_TYPE_OPTIONS,
   MEMBER_JOBS_LISTING,
   OFFER_RESPONSE,
+  USER_TYPE_MEMBER,
   WORK_MODE_OPTIONS,
 } from "../../../services/apiServices/apiEndPoint";
 import {
@@ -49,6 +54,8 @@ const initialFilterState = {
 
 const useAppliedJobsListing = () => {
   const intl = useIntl();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const applicantID = userProfileDetails?.userDetails?.id;
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL;
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
@@ -122,15 +129,41 @@ const useAppliedJobsListing = () => {
 
   const { data: locationData } = useFetch({ url: JOB_LOCATION_OPTIONS });
 
+  const [toastMsg, setToastMsg] = useState("");
+  const [isPatching, setIsPatching] = useState(false);
+  const [isPatchingSuccess, setIsPatchingSuccess] = useState(false);
+  const [isPatchingError, setIsPatchingError] = useState(false);
+
   const {
     makeRequest: patchAcceptRejectOfferDecision,
-    error: toastMsg,
-    setError: setToastMsg,
-    isLoading: isPatching,
-    isSuccess: isPatchingSuccess,
-    isError: isPatchingError,
+    error: OfferDecisionPatchingError,
+    isLoading: isPatchingAcceptRejectOfferDecision,
+    isSuccess: isPatchingSuccessAcceptRejectOfferDecision,
+    isError: isPatchingErrorAcceptRejectOfferDecision,
   } = usePatch({
     url: OFFER_RESPONSE,
+  });
+
+  const {
+    makeRequest: saveInterviewDetails,
+    error: saveInterviewDetailsPatchingError,
+    isLoading: isPatchingSaveInterviewDetails,
+    isSuccess: isPatchingSuccessSaveInterviewDetails,
+    isError: isPatchingErrorSaveInterviewDetails,
+  } = usePatch({
+    url: USER_TYPE_MEMBER,
+  });
+
+  const {
+    data: interviewDatesData,
+    fetchData: fetchInterviewDates,
+    isLoading: isGettingDatesData,
+    isError: isErrorInDatesData,
+  } = useFetch({
+    url: USER_TYPE_MEMBER + `/${JOBS}` + `/${applicantID}` + INTERVIEWS,
+    otherOptions: {
+      skipApiCallOnMount: false,
+    },
   });
 
   const handleConfirmation = () => {
@@ -138,12 +171,14 @@ const useAppliedJobsListing = () => {
     patchAcceptRejectOfferDecision({
       overrideUrl: OFFER_RESPONSE + `/${applicantID}/status`,
       body: { status: decision },
-      onErrorCallback: (error) => {
+      onErrorCallback: () => {
         setConfirmationModal((prev) => ({
           ...prev,
           isShow: false,
         }));
         setShowJobOfferResponseModal(false);
+        setIsPatchingError(isPatchingErrorAcceptRejectOfferDecision);
+        setToastMsg(OfferDecisionPatchingError);
       },
       onSuccessCallback: () => {
         setConfirmationModal((prev) => ({
@@ -151,6 +186,35 @@ const useAppliedJobsListing = () => {
           isShow: false,
         }));
         setShowJobOfferResponseModal(false);
+        setIsPatchingSuccess(isPatchingSuccessAcceptRejectOfferDecision);
+      },
+    });
+  };
+
+  const patchSelectedInterview = (selectedInterviewDetails) => {
+    const {
+      id: interview_id,
+      isPrimary: isPrimarySchedule,
+      mode,
+    } = selectedInterviewDetails;
+    saveInterviewDetails({
+      overrideUrl:
+        USER_TYPE_MEMBER +
+        `/${JOBS}` +
+        `${INTERVIEW}` +
+        `/${interview_id}` +
+        `${ACCEPTED}`,
+      body: { accepted_schedule: isPrimarySchedule ? "primary" : "alternate" },
+      onErrorCallback: (error) => {
+        setShowInterviewTimeModal(false);
+        console.log("error|patchSelectedInterview|186:", error);
+        setIsPatchingError(isPatchingErrorSaveInterviewDetails);
+        setToastMsg(saveInterviewDetailsPatchingError);
+      },
+      onSuccessCallback: (success) => {
+        setShowInterviewTimeModal(false);
+        console.log("success|patchSelectedInterview|186:", success);
+        setIsPatchingSuccess(isPatchingSuccessSaveInterviewDetails);
       },
     });
   };
@@ -339,7 +403,7 @@ const useAppliedJobsListing = () => {
           intl.formatMessage({ id: "label.respond_to_job_offer" })
         );
         break;
-      case STATUS_OPTIONS.NO_RESPONSE:
+      case STATUS_OPTIONS.PENDING:
         setShowPopUpWithID(item?.id);
         setPopUpMessage(
           intl.formatMessage({ id: "label.select_interview_time" })
@@ -352,7 +416,7 @@ const useAppliedJobsListing = () => {
 
   const renderMoreActionButton = (item) => {
     return (
-      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.NO_RESPONSE ||
+      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.PENDING ||
       item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.JOB_OFFERED
     );
   };
@@ -409,6 +473,16 @@ const useAppliedJobsListing = () => {
       sortField: sortField,
       sortDirection: !isAscendingOrder ? "asc" : "desc",
     });
+  };
+
+  const getInterviewDates = ({ rowData }) => {
+    console.log("rowData|getInterviewDates|433:", rowData);
+    fetchInterviewDates({
+      overrideUrl:
+        USER_TYPE_MEMBER + `/${JOBS}` + `/${rowData?.job_id}` + INTERVIEWS,
+    });
+    console.log("interviewDatesData|getInterviewDates: ", interviewDatesData);
+    setModalData(interviewDatesData);
   };
 
   let headingTexts = ["id"];
@@ -552,6 +626,7 @@ const useAppliedJobsListing = () => {
                       setShowJobOfferResponseModal(true);
                       setModalData(item);
                     } else {
+                      getInterviewDates({ rowData: item });
                       setShowInterviewTimeModal((prev) => !prev);
                     }
                     setShowPopUpWithID(-1);
@@ -634,6 +709,11 @@ const useAppliedJobsListing = () => {
     showPopUpWithID,
     setModalData,
     setShowPopUpWithID,
+    patchSelectedInterview,
+    isGettingDatesData,
+    isErrorInDatesData,
+    isPatchingAcceptRejectOfferDecision,
+    isPatchingSaveInterviewDetails,
   };
 };
 

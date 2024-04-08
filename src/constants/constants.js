@@ -516,3 +516,13 @@ export const STATUS_OPTIONS = {
   REJECTED: "rejected",
   SHORTLISTED: "shortlisted",
 };
+
+export const DATA_FORMATTER_LOCALES = ["en-US"];
+
+export const DATA_FORMATTER_OPTIONS = {
+  day: "numeric",
+  month: "long",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+};

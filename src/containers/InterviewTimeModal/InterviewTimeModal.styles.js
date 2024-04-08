@@ -7,8 +7,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   dateLabelsContainer: {
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 16,
     flexWrap: "wrap",
     maxHeight: 212,
     overflow: "auto",
@@ -56,6 +59,15 @@ const styles = StyleSheet.create({
     maxHeight: Platform.OS === "web" ? 44 : "auto",
     justifyContent: "flex-end",
     gap: 10,
+  },
+  noSchedulesTextContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noSchedulesText: {
+    fontSize: 14,
+    color: colors.darkGrey,
   },
 });
 

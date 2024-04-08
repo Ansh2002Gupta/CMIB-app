@@ -69,6 +69,11 @@ const AppliedJobsView = () => {
     isPatchingSuccess,
     isPatchingError,
     setFilterState,
+    patchSelectedInterview,
+    isGettingDatesData,
+    isErrorInDatesData,
+    isPatchingAcceptRejectOfferDecision,
+    isPatchingSaveInterviewDetails,
   } = useAppliedJobsListing();
 
   const intl = useIntl();
@@ -153,7 +158,7 @@ const AppliedJobsView = () => {
                       handleAcceptRejectOffer,
                       isLoading,
                       handleConfirmation,
-                      isPatching,
+                      isPatching: isPatchingAcceptRejectOfferDecision,
                       isPatchingSuccess,
                       isPatchingError,
                     }}
@@ -162,7 +167,16 @@ const AppliedJobsView = () => {
                     setShowConfirmModal={setConfirmationModal}
                   />
                 ) : (
-                  <InterviewTimeModal />
+                  <InterviewTimeModal
+                    {...{
+                      data: modalData,
+                      setShowInterviewTimeModal,
+                      confirmSelection: patchSelectedInterview,
+                      isLoading: isGettingDatesData,
+                      isError: isErrorInDatesData,
+                      isPatching: isPatchingSaveInterviewDetails,
+                    }}
+                  />
                 )}
               </>
             }
