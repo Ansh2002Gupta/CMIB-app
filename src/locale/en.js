@@ -675,6 +675,7 @@ const locale = {
   "label.applicant_name": "Application Name",
   "label.applicant_id": "Applicant ID",
   "label.field_cannot_be_empty": "Field cannot be empty",
+  "toggle.undefined": "--",
 };
 
 export default locale;

@@ -337,7 +337,7 @@ const useJobSeekers = () => {
       case POPUP_OPTIONS[0]:
         return <></>;
       case POPUP_OPTIONS[1]:
-        navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${data?.id}`);
+        navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${data?.id || 1}`);
     }
   };
 
@@ -452,6 +452,7 @@ const useJobSeekers = () => {
         content: !isHeading && (
           <>
             <PopupMessage
+              key={item?.id || 0}
               data={item}
               message={POPUP_OPTIONS}
               onPopupClick={handlePopupItemClick}

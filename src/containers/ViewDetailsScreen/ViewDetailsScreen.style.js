@@ -57,7 +57,6 @@ const style = {
 };
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
-  console.log("currentBreakpoint:", currentBreakpoint);
   switch (str) {
     case "titleText": {
       if (currentBreakpoint === "xs") {

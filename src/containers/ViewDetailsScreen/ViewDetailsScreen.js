@@ -14,7 +14,6 @@ import { CustomTabs } from "../../components/Tab";
 import Activities from "../../containers/Activities";
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
-import CustomButton from "../../components/CustomButton";
 import CustomImage from "../../components/CustomImage";
 import EducationDetails from "../../containers/EducationDetails";
 import JobPreference from "../../containers/JobPreference/JobPreference";
@@ -112,19 +111,19 @@ const ViewDetailsScreen = () => {
             bottomSection={
               <Row style={style.candidateDetailsOuterContainer}>
                 <Row>
-                  <CommonText fontWeight={500} style={style.key}>
+                  <CommonText fontWeight={"500"} style={style.key}>
                     Candidate Name:&nbsp;
                   </CommonText>
-                  <CommonText fontWeight={600} style={style.value}>
+                  <CommonText fontWeight={"600"} style={style.value}>
                     {!!data?.candidate_name ? data?.candidate_name : "_"}
                   </CommonText>
                 </Row>
                 <View style={style.divider}></View>
                 <Row>
-                  <CommonText fontWeight={500} style={style.key}>
+                  <CommonText fontWeight={"500"} style={style.key}>
                     Candidate ID:&nbsp;
                   </CommonText>
-                  <CommonText fontWeight={600} style={style.value}>
+                  <CommonText fontWeight={"600"} style={style.value}>
                     {!!data?.candidate_id ? data?.candidate_id : "_"}
                   </CommonText>
                 </Row>
