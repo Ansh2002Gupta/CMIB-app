@@ -90,9 +90,8 @@ const useAllJobs = () => {
   };
 
   const handleSearch = async (searchText) => {
-    setIsFirstPageReceived(true);
-
     if (isMob) {
+      setIsFirstPageReceived(true);
       setCurrentPage(1);
       const newData = await fetchSavedJobList({
         queryParamsObject: { perPage: rowsPerPage, q: searchText },
