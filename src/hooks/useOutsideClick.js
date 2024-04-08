@@ -1,4 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import { Platform } from "@unthinkable/react-core-components";
+
+const isWeb = Platform.OS.toLowerCase() === "web";
 
 const useOutsideClick = (ref, callback) => {
   useEffect(() => {
@@ -7,11 +10,13 @@ const useOutsideClick = (ref, callback) => {
         callback();
       }
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
+    if (isWeb) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      if (isWeb) {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
     };
   }, [ref, callback]);
 };

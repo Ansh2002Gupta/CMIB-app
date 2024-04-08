@@ -106,9 +106,16 @@ const styles = StyleSheet.create({
     width: "33%",
   },
   cancelButton: {
-    position: 'absolute',
+    position: "absolute",
     right: 0,
   },
+  CheckBoxSelection: {
+    paddingRight: 16,
+    marginTop: 0,
+    flexDirection: 'row',
+    flex: 1
+  },
+  chipDataContainer: { flexDirection: "row" },
   getVariableContainerStyles: (detail) => {
     return {
       display: "grid",

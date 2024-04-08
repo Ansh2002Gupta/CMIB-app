@@ -64,6 +64,7 @@ const DragAndDropCard = ({
       return intl.formatMessage({ id: "label.supported_document" });
     if (isVideoUpload)
       return intl.formatMessage({ id: "label.supported_video" });
+
     return intl.formatMessage({ id: "label.supported_type" });
   };
 
@@ -154,6 +155,7 @@ DragAndDropCard.propTypes = {
   isLoading: PropTypes.bool,
   uploadPercentage: PropTypes.number,
   customContentContainerStyle: PropTypes.object,
+  accept: PropTypes.string,
 };
 
 export default DragAndDropCard;

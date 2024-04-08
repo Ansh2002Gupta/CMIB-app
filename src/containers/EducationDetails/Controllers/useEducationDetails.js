@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Education_Status_Options, YEARS } from "../../../constants/constants";
 import { useIntl } from "react-intl";
 
@@ -77,96 +77,127 @@ const higher_secondary_detail = () => [
   },
 ];
 
-const graduation_detail = () => [
-  {
-    key: "graduation",
-    label: "label.graduation",
-    placeholder: "label.graduation",
-    isToggle: true,
-  },
-  {
-    key: "graduation_examination_name",
-    label: "label.name_of_examination",
-    placeholder: "label.name_of_examination_placeholder",
-  },
-  {
-    key: "graduation_status",
-    label: "label.status",
-    placeholder: "label.status",
-    isDropdown: true,
-    options: Education_Status_Options,
-  },
-  {
-    key: "graduation_board",
-    label: "label.board_university",
-    placeholder: "label.board_university",
-  },
-  {
-    key: "graduation_year",
-    isDropdown: true,
-    label: "label.year",
-    placeholder: "label.year",
-    options: YEARS,
-  },
-  {
-    key: "graduation_mark_in_percent",
-    isNumeric: true,
-    label: "label.mark_in_percent",
-    placeholder: "label.mark_in_percent",
-  },
-  {
-    key: "graduation_rank_medal",
-    label: "label.rank_medal",
-    placeholder: "label.rank_medal",
-  },
-];
+const graduation_detail = (graduation) => {
+  const graduationFields = [
+    {
+      key: "graduation",
+      label: "label.graduation",
+      placeholder: "label.graduation",
+      isToggle: true,
+    },
+  ];
+  const commonFileds = [
+    {
+      key: "graduation_examination_name",
+      label: "label.name_of_examination",
+      placeholder: "label.name_of_examination_placeholder",
+    },
+    {
+      key: "graduation_status",
+      label: "label.status",
+      placeholder: "label.status",
+      isDropdown: true,
+      options: Education_Status_Options,
+    },
+    {
+      key: "graduation_board",
+      label: "label.board_university",
+      placeholder: "label.board_university",
+    },
+    {
+      key: "graduation_year",
+      isDropdown: true,
+      label: "label.year",
+      placeholder: "label.year",
+      options: YEARS,
+    },
+    {
+      key: "graduation_mark_in_percent",
+      isNumeric: true,
+      label: "label.mark_in_percent",
+      placeholder: "label.mark_in_percent",
+    },
+    {
+      key: "graduation_rank_medal",
+      label: "label.rank_medal",
+      placeholder: "label.rank_medal",
+    },
+  ];
 
-const post_graduation_detail = () => [
-  {
-    key: "post_graduation",
-    label: "label.post_graduation",
-    placeholder: "label.post_graduation",
-    isToggle: true,
-  },
-  {
-    key: "post_graduation_examination_name",
-    label: "label.name_of_examination",
-    placeholder: "label.name_of_examination_placeholder",
-  },
-  {
-    key: "post_graduation__status",
-    label: "label.status",
-    placeholder: "label.status",
-    isDropdown: true,
-    options: Education_Status_Options,
-  },
-  {
-    key: "post_graduation_board",
-    label: "label.board_university",
-    placeholder: "label.board_university",
-  },
-  {
-    key: "post_graduation_year",
-    isDropdown: true,
-    label: "label.year",
-    placeholder: "label.year",
-    options: YEARS,
-  },
-  {
-    key: "post_graduation_mark_in_percent",
-    isNumeric: true,
-    label: "label.mark_in_percent",
-    placeholder: "label.mark_in_percent",
-  },
-  {
-    key: "post_graduation_rank_medal",
-    label: "label.rank_medal",
-    placeholder: "label.rank_medal",
-  },
-];
+  if (!graduation) {
+    return [...graduationFields, ...commonFileds];
+  }
+  return graduationFields;
+};
 
-const addValueOnField = ({ state, details, isEditable }) => {
+const post_graduation_detail = (post_graduation) => {
+  const postGraduationFiels = [
+    {
+      key: "post_graduation",
+      label: "label.post_graduation",
+      placeholder: "label.post_graduation",
+      isToggle: true,
+    },
+  ];
+  const commonFileds = [
+    {
+      key: "post_graduation_examination_name",
+      label: "label.name_of_examination",
+      placeholder: "label.name_of_examination_placeholder",
+    },
+    {
+      key: "post_graduation__status",
+      label: "label.status",
+      placeholder: "label.status",
+      isDropdown: true,
+      options: Education_Status_Options,
+    },
+    {
+      key: "post_graduation_board",
+      label: "label.board_university",
+      placeholder: "label.board_university",
+    },
+    {
+      key: "post_graduation_year",
+      isDropdown: true,
+      label: "label.year",
+      placeholder: "label.year",
+      options: YEARS,
+    },
+    {
+      key: "post_graduation_mark_in_percent",
+      isNumeric: true,
+      label: "label.mark_in_percent",
+      placeholder: "label.mark_in_percent",
+    },
+    {
+      key: "post_graduation_rank_medal",
+      label: "label.rank_medal",
+      placeholder: "label.rank_medal",
+    },
+  ];
+
+  if (!post_graduation) {
+    return [...postGraduationFiels, ...commonFileds];
+  }
+  return postGraduationFiels;
+};
+
+const addValueOnField = ({ state, details, isEditable, intl }) => {
   return details.map((item) => {
+    if (item.isToggle) {
+      return {
+        ...item,
+        value: !isEditable
+          ? state?.[item?.key] === null
+            ? "--"
+            : intl.formatMessage({
+                id: `toggle.${Number(!state?.[item?.key])}`,
+              })
+          : Boolean(Number(!state?.[item?.key])),
+      };
+    }
+
     return {
       ...item,
       value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
@@ -199,11 +230,20 @@ export const useEducationDetails = ({ state, isEditable }) => {
     higher_secondary_detail()
   );
   const [graduationDetailState, setGraduationDetailState] = useState(
-    graduation_detail()
+    graduation_detail(state?.graduation)
   );
   const [postGraduationDetailState, setPostGraduationDetailState] = useState(
-    post_graduation_detail()
+    post_graduation_detail(state?.post_graduation)
   );
+
+  useEffect(() => {
+    setEducationalDetailState(educational_detail());
+    setHigherSecondaryDetailState(higher_secondary_detail());
+    setGraduationDetailState(graduation_detail(state?.graduation));
+    setPostGraduationDetailState(
+      post_graduation_detail(state?.post_graduation)
+    );
+  }, [state?.graduation, state?.post_graduation]);
 
   const handleEducationDetailBlur = (key, index) => {
     const updatedData = validateOnBlur({
@@ -269,21 +309,25 @@ export const useEducationDetails = ({ state, isEditable }) => {
       state,
       details: educationalDetailState,
       isEditable,
+      intl,
     }),
     higher_secondary_detail: addValueOnField({
       state,
       details: higherSecondaryDetailState,
       isEditable,
+      intl,
     }),
     graduation_detail: addValueOnField({
       state,
       details: graduationDetailState,
       isEditable,
+      intl,
     }),
     post_graduation_detail: addValueOnField({
       state,
       details: postGraduationDetailState,
       isEditable,
+      intl,
     }),
     handleEducationDetailBlur,
     handleHigherSecondaryDetailBlur,

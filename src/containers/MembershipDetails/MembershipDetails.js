@@ -1,24 +1,26 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import useFetch from "../../hooks/useFetch";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import MembershipDetailsTemplate from "./MembershipDetailsTemplate";
-import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
+import { MEMBER_CA_JOB_MEMBERSHIP_DETAILS } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { useMembershipDetails } from "./controller/useMembershipDetails";
+import { formatDateToYYYYMMDD } from "../../utils/util";
 
-const MembershipDetails = ({isEditable, handleEdit}) => {
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState || {};
-  const { data } = useFetch({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE}`,
+const MembershipDetails = ({ isEditable, handleEdit }) => {
+  const {
+    fetchData,
+    data,
+    isError: isErrorLoadingPage,
+    isLoading: isLoadingPage,
+  } = useFetch({
+    url: MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
   });
-
-  const { handleUpdate, isError, isLoading } = useUpdateService({
-    url: `${selectedModule?.key}/${MEMBER_CA_JOB_PROFILE}`,
-  });
+  const { handleUpdate, isError, isLoading, error, setError } =
+    useUpdateService(MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
   const [state, setState] = useState(
-    data !== null && Object.keys(data).length ? data : {}
+    data !== null && Object.keys(data).length ? { ...data } : {}
   );
 
   const {
@@ -36,7 +38,7 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
 
   useEffect(() => {
     if (data !== null && Object.keys(data).length) {
-      setState(data);
+      setState({ ...data });
     }
   }, [data]);
 
@@ -47,7 +49,9 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
   };
 
   const onChangeValue = (details) => (label, value, codeValue) => {
-    const { key } = findKeyByLabel(label, details);
+    const { key, isToggle } = findKeyByLabel(label, details);
+
+    value = isToggle ? !Boolean(value) : value;
 
     if (codeValue) {
       setState((prev) => ({
@@ -61,7 +65,37 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
       }));
     }
   };
-  console.log("state::", state)
+
+  const performSaveChanges = () => {
+    const payload = getMembershipDetailsPayload();
+
+    handleUpdate(payload, () => {
+      // turn off the edit mode
+      handleEdit(false);
+      fetchData();
+    });
+  };
+
+  const getMembershipDetailsPayload = () => {
+    const isFellowMember = state?.is_fellow_member;
+    const isPractising = state?.is_practising;
+    const payload = {
+      membership_enrollment_date: state?.membership_enrollment_date
+        ? formatDateToYYYYMMDD(state?.membership_enrollment_date)
+        : "",
+      is_fellow_member: isFellowMember ?? false,
+      fellow_member_admission_date:
+        isFellowMember && state?.fellow_member_admission_date
+          ? formatDateToYYYYMMDD(state?.fellow_member_admission_date)
+          : "",
+      is_practising: isPractising ?? false,
+      practising_start_date:
+        isPractising && state?.practising_start_date
+          ? formatDateToYYYYMMDD(state?.practising_start_date)
+          : "",
+    };
+    return payload;
+  };
 
   return (
     <MembershipDetailsTemplate
@@ -73,16 +107,16 @@ const MembershipDetails = ({isEditable, handleEdit}) => {
       handleFellowMemberDetailBlur={handleFellowMemberDetailBlur}
       handlePracticeDetailBlur={handlePracticeDetailBlur}
       isValidAllFields={isValidAllFields}
-      isError={isError}
       isLoading={isLoading}
+      isError={isError}
+      isLoadingPage={isLoadingPage}
+      isErrorLoadingPage={isErrorLoadingPage}
+      error={error}
+      setError={setError}
       isEditable={isEditable}
-      onClickSave={() => {
-        handleUpdate(state, () => {
-          // turn off the edit mode
-          handleEdit(false);
-        });
-      }}
+      onClickSave={performSaveChanges}
       onClickCancel={() => {
+        setState(data);
         // turn off the edit mode
         handleEdit(false);
       }}

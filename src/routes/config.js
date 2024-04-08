@@ -3,6 +3,7 @@ import { Platform } from "@unthinkable/react-core-components";
 
 import Candidates from "../views/Candidates";
 import ContentLayout from "../pages/ContentLayout";
+import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
 import MyAccount from "../views/MyAccount";
 import ViewProfile from "../views/ViewProfile";
@@ -11,8 +12,10 @@ import DefaultRoute from "./Components/DefaultRoute";
 import ForgotPassword from "../views/ForgotPassword/index";
 import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
+import Jobs from "../views/Jobs";
 import JobsView from "../views/JobsView/JobsView";
 import JobSeekers from "../views/JobSeekers";
+import JobProfileTab from "../views/JobProfile";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
@@ -24,11 +27,13 @@ import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
 import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
+import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
 import ViewDetailsScreen from "../containers/ViewDetailsScreen";
+import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -113,6 +118,16 @@ const config = [
     ],
   },
   {
+    pagePath: navigations.JOB_PROFILE,
+    element: <HomeWithPrivateAccess doesExcludeHeader />,
+    views: [
+      {
+        viewPath: "",
+        element: <JobProfileTab />,
+      },
+    ],
+  },
+  {
     pagePath: navigations.TICKETS,
     element: <HomeWithPrivateAccess doesExcludeHeader />,
     views: [
@@ -167,16 +182,16 @@ const config = [
       },
     ],
   },
-  // {
-  //   pagePath: navigations.OUT_SOURCED,
-  //   element: <DefaultRoute />,
-  //   views: [
-  //     {
-  //       viewPath: "",
-  //       element: <DefaultRoute />,
-  //     },
-  //   ],
-  // },
+  {
+    pagePath: navigations.OUT_SOURCED,
+    element: <DefaultRoute />,
+    views: [
+      {
+        viewPath: "",
+        element: <DefaultRoute />,
+      },
+    ],
+  },
   {
     pagePath: navigations.WEB_VIEW,
     element: <WebViewScreen />,
@@ -221,6 +236,16 @@ const config = [
         viewPath: navigations.POSTED_JOBS,
         element: <PostedJobsView />,
       },
+
+      {
+        viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
+        element: <AddModifyNewJobs />,
+      },
+
+      {
+        viewPath: `${navigations.DETAILS_JOBS}`,
+        element: <ViewPostedJobDetails />,
+      },
       {
         viewPath: navigations.JOB_APPLICANTS,
         element: <Candidates />,
@@ -229,6 +254,7 @@ const config = [
         viewPath: navigations.JOB_SEEKERS,
         element: <JobSeekers />,
       },
+
       {
         viewPath: navigations.JOB_SEEKERS + navigations.CANDIDATE_DETAILS,
         element: <ViewDetailsScreen />,
@@ -236,6 +262,15 @@ const config = [
       {
         viewPath: navigations.SAVED_CANDIDATES,
         element: <SavedCandidatesView />,
+      },
+      {
+        viewPath: navigations.SAVED_JOBS,
+        element: <SavedJobs />,
+      },
+
+      {
+        viewPath: navigations.JOBS,
+        element: <Jobs />,
       },
     ],
   },

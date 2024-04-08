@@ -22,6 +22,13 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  levelColor: color => ({
+    color: color, 
+    fontWeight: 'bold', 
+  }),
+  row: {
+    flexDirection: 'row',
+  },
 });
 
 export default styles;

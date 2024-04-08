@@ -25,6 +25,13 @@ const styles = StyleSheet.create({
   bottomSectionStyle: {
     zIndex: 0,
   },
+  popmessageStyle: {
+    position: "absolute",
+    right: 16,
+    top: -10,
+    zIndex: 10,
+    padding: 16,
+  },
 });
 
 export default styles;

@@ -6,7 +6,11 @@ import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton";
 import CustomButton from "../../components/CustomButton";
 import images from "../../images";
-import style from './WorkExperience.style';
+import style from "./WorkExperience.style";
+import { yesNoToBoolean } from "../../utils/util";
+import Spinner from "../../components/Spinner";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { STATUS_CODES } from "../../constants/constants";
 
 const WorkExperienceTemplate = ({
   isEditable = true,
@@ -25,44 +29,24 @@ const WorkExperienceTemplate = ({
   initailWorkExperience,
   handleAreasOfInterestSelection,
   handleCurrentSpecialisationSelection,
-  handleCurrentIndustrySpecialisationSelection
+  handleCurrentIndustrySpecialisationSelection,
+  addMoreWorkExperience,
+  handleCancelPress,
+  isPageLoading,
+  error,
 }) => {
   const intl = useIntl();
 
-  // useEffect(() => {
-  //   if (workExperiences.length > 0) {
-  //     const changeHandler = onChangeValue_workExperiences(workExperiences);
-  //     changeHandler("workExperiences", workExperiences);
-  //   }
-  // }, [workExperiences]);
-
-  const findKeyByLabel = (label, details) => {
-    return details.find((item) => {
-      return item.label === label;
-    });
-  };
-
-  function updateValueByKey(workExp, key, value) {
-    return workExp.map((item) => {
-      if (item.key === key) {
-        return { ...item, value: value };
-      }
-      return item;
-    });
+  if (isPageLoading) {
+    return (
+      <View style={style.loaderStyle}>
+        <Spinner />
+      </View>
+    );
   }
 
-  const onChangeWorkExp = (label, value, codeValue,index) => {
-     const { key } = findKeyByLabel(label, initailWorkExperience);
-     let currentState = [...workExperiences];
-     let currentIndexState = currentState[index] || {};
-     currentIndexState = updateValueByKey(currentIndexState, key, value);
-     currentState[index] = currentIndexState;
-     setWorkExperiences(currentState);
-  }
-
-  const handleCancelPress = (index) => {
-      workExperiences.splice(index, 1);
-      setWorkExperiences([...workExperiences]);
+  if (error && error?.code !== STATUS_CODES.UNAUTHORIZED_USER) {
+    return <ErrorComponent errorMsg={error.message} />;
   }
 
   return (
@@ -71,38 +55,43 @@ const WorkExperienceTemplate = ({
       style={style.contentContainerStyle}
     >
       <View style={[style.innerContainerStyle]}>
-      {workExperiences.map((experience, index) => (
-          <DetailCard
-        key={index}
-        details={experience}
-        customCardStyle={style.customCardStyle}
-        headerId={intl.formatMessage({
-          id: "label.workExperience",
+        {workExperiences.map((experience, index) => {
+          return (
+            <DetailCard
+              key={index}
+              details={experience}
+              customCardStyle={style.customCardStyle}
+              headerId={intl.formatMessage({
+                id: "label.workExperience",
+              })}
+              isEditProfile={isEditable}
+              handleChange={onChangeValue_workExperiences(
+                workExperiences,
+                index
+              )}
+              handleBlur={handleWorkExperienceDetailBlur(index)}
+              isShowCancel={
+                workExperiences.length > 1 && index > 0 ? true : false
+              }
+              handleCancel={() => handleCancelPress(index)}
+              handleMultiSelect={handleAreasOfInterestSelection(index)}
+            />
+          );
         })}
-        isEditProfile={isEditable}
-        handleChange={(label, value, codeValue) => {
-          onChangeWorkExp(label,value,codeValue,index)
-        }}
-        handleBlur={handleWorkExperienceDetailBlur}
-        isShowCancel={workExperiences.length > 1 ? true : false}
-        handleCancel={() => handleCancelPress(index)}
-        handleMultiSelect={(updatedSelectedItems) => handleAreasOfInterestSelection(updatedSelectedItems, index)}
-      />
-      ))}  
-      {isEditable &&  <CustomButton
-          onPress={() =>{
-            setWorkExperiences([...workExperiences, initailWorkExperience]);
-          }}
-          style={{ ...style.addButtonStyle }}
-          iconLeft={{
-          leftIconSource: images.iconAdd,
-          isLeftIconNotSvg: true,
-          }}
-          customStyle={{ customTextStyle: style.customTextStyle }}
-          >
-            {intl.formatMessage({ id: "label.add_more_experience" })}
-        </CustomButton> 
-        }
+        {isEditable &&
+          yesNoToBoolean(workExperiences?.[0]?.[0]?.value ?? false) && (
+            <CustomButton
+              onPress={addMoreWorkExperience}
+              style={{ ...style.addButtonStyle }}
+              iconLeft={{
+                leftIconSource: images.iconAdd,
+                isLeftIconNotSvg: true,
+              }}
+              customStyle={{ customTextStyle: style.customTextStyle }}
+            >
+              {intl.formatMessage({ id: "label.add_more_experience" })}
+            </CustomButton>
+          )}
       </View>
       <DetailCard
         details={current_status}

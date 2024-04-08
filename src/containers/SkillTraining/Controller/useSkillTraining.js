@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { LANGUAGES, SKILLS } from "../../../services/apiServices/apiEndPoint";
 import useFetch from "../../../hooks/useFetch";
-import { addKeyValuePair } from "../../../utils/util";
+import { SkillTraining_keys, getDropDownList, getSkills, updateItemToAdd, updateState } from "./utils";
 
-const languageSkill= [
+const languageSkill = [
   {
     isSelected: false,
     label: "label.speak",
@@ -28,7 +28,7 @@ const languageSkill= [
   },
 ];
 
-const skillPriority= [
+const skillLevel= [
   {
     isSelected: false,
     label: "label.high",
@@ -51,61 +51,61 @@ const skillPriority= [
     value: "Low",
   },
 ];
-const languagesKnown = (languageList) => [
+const languagesKnownField = (options) => [
   {
-    key: "languages_known",
+    key: SkillTraining_keys.LANGUAGE_KNOWN,
     label: "label.languages_known",
     placeholder: "label.languages_known_placeholder",
     isDropdown: true,
-    options: languageList,
     labelField: "name",
     valueField: "name",
+    options: options,
   },
   {
-    key: "languages_skill",
+    key: SkillTraining_keys.LANGUAGE_SKILL,
     label: "label.skills",
     isCheckBoxSelection: true,
     checkBoxOptions: languageSkill, 
     isActionToAdd: true,
   },
 ];
-const ITSkills = (skills) => [
+const ITSkillField = (options) => [
   {
-    key: "it_skills",
+    key: SkillTraining_keys.IT_SKIILS,
     label: "label.it_skills",
     placeholder: "label.it_skills_placeholder",
     isDropdown: true,
-    options: skills,
+    options: options
   },
   {
-    key: "itSkillPriority",
+    key: SkillTraining_keys.ITSKILL_LEVEL,
     label: "label.skills",
     isCheckBoxSelection: true,
-    checkBoxOptions: skillPriority, 
+    checkBoxOptions: skillLevel, 
     isActionToAdd: true,
     isSingleSelection: true,
   },
 ];
 
-const softSkills = (skills) => [
+const softSkillField = (options) => [
   {
-    key: "soft_skills",
+    key: SkillTraining_keys.SOFT_SKILLS,
     label: "label.soft_skills",
     placeholder: "label.soft_skills_placeholder",
     isDropdown: true,
-    options: skills,
+    options: options
   },
   {
-    key: "softSkillPriority",
+    key: SkillTraining_keys.SOFTSKILL_LEVEL,
     label: "label.skills",
     isCheckBoxSelection: true,
-    checkBoxOptions: skillPriority, 
+    checkBoxOptions: skillLevel, 
     isActionToAdd: true,
     isSingleSelection: true,
   },
 ];
 
-const otherSkills = (value) => [
+const otherSkillField = (value) => [
   [{
     key: "other_skills",
     placeholder: "label.other_skills_placeholder",
@@ -115,149 +115,95 @@ const otherSkills = (value) => [
   }],
 ];
 
-const addValueOnField = ({ state, details, isEditable }) => {
-  return details.map((item) => {
-    return {
-      ...item,
-      value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
-      codeValue: state.codeValue,
-    };
-  });
-};
-
-const validateOnBlur = ({ state, details, key, index, intl }) => {
-  const value = state[key];
-  const updatedData = details.map((item, i) => {
-    if (key === item.key) {
-      return {
-        ...item,
-        value,
-        error: item.validate ? item.validate(value, intl) : "",
-      };
-    }
-    return item;
-  });
-  return updatedData;
-};
-
 export const useSkillTraining = ({ state, isEditable }) => {
   const intl = useIntl();
-  const [ITSkillsState, setITSkillsState] = useState([ITSkills()]);
-  const [softSkillsState, setSoftSkillsState] = useState([softSkills()]);
-  const [otherSkillsState, setOtherSkillsState] = useState(otherSkills());
+  const [languagesKnownState, setLanguagesKnownState] = useState([languagesKnownField()]);
+  const [ITSkillsState, setITSkillsState] = useState([ITSkillField()]);
+  const [softSkillsState, setSoftSkillsState] = useState([softSkillField()]);
+  const [otherSkillsState, setOtherSkillsState] = useState(otherSkillField());
 
   const { data: languagesData } = useFetch({ url: LANGUAGES });
   const { data: skillsData } = useFetch({ url: SKILLS });
 
   useEffect(() => {
     if (languagesData !== null && languagesData.length > 0){
-      setLanguagesKnownState([languagesKnown(languagesData)])
+      setLanguagesKnownState(getDropDownList(languagesKnownState, SkillTraining_keys.LANGUAGE_KNOWN, languagesData))
     }
     if (skillsData !== null){
-      setITSkillsState([ITSkills(getSkills()[0])])
-      setSoftSkillsState([softSkills(getSkills()[1])])
+      setITSkillsState(getDropDownList(ITSkillsState, SkillTraining_keys.IT_SKIILS, getSkills(skillsData)[0]))
+      setSoftSkillsState(getDropDownList(softSkillsState, SkillTraining_keys.SOFT_SKILLS, getSkills(skillsData)[1]))
     } 
-  }, [languagesData, skillsData]);
+  }, [languagesData, skillsData,isEditable]);
 
-  const getSkills = () => {
-    if (skillsData !== null){
-      const {it_skill, soft_skill} = skillsData[0]
-      let itSkiils = addKeyValuePair(it_skill) || []
-      let softSkiils = addKeyValuePair(soft_skill) || []
-      return[itSkiils, softSkiils]
-    }
-  }
+  useEffect(() => {
+    const {languages_known, it_skills, soft_skills, other_skills} = state;
+    setLanguagesKnownState(updateState(languages_known, languagesKnownField(), SkillTraining_keys.LANGUAGE_KNOWN, SkillTraining_keys.LANGUAGE_SKILL, languageSkill))
+    setITSkillsState(updateState(it_skills, ITSkillField(), SkillTraining_keys.IT_SKIILS, SkillTraining_keys.ITSKILL_LEVEL, skillLevel))
+    setSoftSkillsState(updateState(soft_skills, softSkillField(), SkillTraining_keys.SOFT_SKILLS, SkillTraining_keys.SOFTSKILL_LEVEL, skillLevel))
+    setOtherSkillsState(otherSkillField(other_skills));
+    }, [state]);
 
-  const [languagesKnownState, setLanguagesKnownState] = useState([languagesKnown()]);
+    const checkMandatoryFields = () => {
+      let error = false;
+      [
+        ...languagesKnownState,
+        ...ITSkillsState,
+        ...softSkillsState,
+      ].forEach((item) => {
+        item.forEach(field => { 
+          if (!field.value || field.value === "--") {
+            error = true;
+          }
+        });
+      });
+      return error;
+    };
 
-  const handleLanguagesKnownBlur = (key, index) => {
-    const updatedData = validateOnBlur({
-      state,
-      details: languagesKnownState,
-      key,
-      index,
-      intl,
-    });
-    setLanguagesKnownState(updatedData);
-  };
-
-  const handleITSkillsBlur = (key, index) => {
-    const updatedData = validateOnBlur({
-      state,
-      details: ITSkillsState,
-      key,
-      index,
-      intl,
-    });
-    setITSkillsState(updatedData);
-  };
-
-  const handleSoftSkillsBlur = (key, index) => {
-    const updatedData = validateOnBlur({
-      state,
-      details: softSkillsState,
-      key,
-      index,
-      intl,
-    });
-    setSoftSkillsState(updatedData);
-  };
-
-  const handleOtherSkillsBlur = (key, index) => {
-    const updatedData = validateOnBlur({
-      state,
-      details: otherSkillsState,
-      key,
-      index,
-      intl,
-    });
-    setOtherSkillsState(updatedData);
-  };
-
-  const checkMandatoryFields = () => {
-    let error = false;
-    [
-      ...languagesKnownState,
-      ...ITSkillsState,
-      ...softSkillsState,
-      ...otherSkillsState,
-    ].forEach((item) => {
-      if (item.isMandatory && !state[item.key]) {
-        error = true;
-      }
-    });
-    return error;
-  };
+    const isValidToAddNewRow = (lastRowData) => {
+      let isValid = true;
+      [
+        ...lastRowData,
+      ].forEach((item) => {
+        if (!item.value || item.value === "--") {
+          isValid = false;
+        }
+      });
+      return isValid;
+    }; 
 
   const performHandleAddRemoveRow = (isActionToAdd, index, type) => {
     let dataToPerformAction;
     let stateToPerformAction;
     let itemToAdd;
-    if (type === "itSkillPriority"){
+    if (type === SkillTraining_keys.ITSKILL_LEVEL){
          dataToPerformAction = ITSkillsState
          stateToPerformAction = setITSkillsState
-         itemToAdd = ITSkills(getSkills()[0])
-    }else if (type === "softSkillPriority"){
+         itemToAdd = ITSkillField(getSkills(skillsData)[0])
+    }else if (type === SkillTraining_keys.SOFTSKILL_LEVEL){
          dataToPerformAction = softSkillsState
          stateToPerformAction = setSoftSkillsState
-         itemToAdd = softSkills(getSkills()[1])
+         itemToAdd = softSkillField(getSkills(skillsData)[1])
     } else {
       dataToPerformAction = languagesKnownState
       stateToPerformAction = setLanguagesKnownState
-      itemToAdd = languagesKnown(languagesData)
+      itemToAdd = languagesKnownField(languagesData)
     }
-      const updatedState = dataToPerformAction[dataToPerformAction.length - 1].map((item) => {
-        item.isActionToAdd = isActionToAdd ? false : true
-        return item;
+
+    if (isActionToAdd) {
+      if (isValidToAddNewRow(dataToPerformAction[dataToPerformAction.length - 1])) {
+        const updatedState = dataToPerformAction[dataToPerformAction.length - 1].map((item) => {
+          return { ...item, isActionToAdd: false }; 
+        });
+        dataToPerformAction[dataToPerformAction.length - 1] = updatedState;
+        stateToPerformAction((prevState) => [...prevState, updateItemToAdd(itemToAdd)]);
+      }
+    } else {
+      stateToPerformAction((prevState) => {
+        const newState = [...prevState];
+        newState.splice(index, 1); 
+        return newState;
       });
-      dataToPerformAction[dataToPerformAction.length - 1] = updatedState
-      isActionToAdd
-      ? stateToPerformAction((prevState) => [...prevState, itemToAdd])
-      : stateToPerformAction((prevState) => {
-            const newState = [...prevState]
-            newState.splice(index, 1)
-            return newState; 
-      });
+    }
   }
   const findKeyByLabel = (label, details) => {
     return details.find((item) => {
@@ -276,15 +222,15 @@ export const useSkillTraining = ({ state, isEditable }) => {
     return skill.map((item) => {
       if (item.key === key) {
         const updatedCheckBoxOptions = item.checkBoxOptions.map((checkBoxItem) => {
-          if (checkBoxItem.name === name) {
-            return { ...checkBoxItem, isSelected: !checkBoxItem.isSelected };
+          if (checkBoxItem.value === name) {
+            return { ...checkBoxItem, isSelected: !checkBoxItem.isSelected};
           }
           if (isSingleSelection){
             return { ...checkBoxItem, isSelected: false};
           }
           return checkBoxItem;
         });
-          return { ...item, checkBoxOptions: updatedCheckBoxOptions };
+          return { ...item, value: name, checkBoxOptions: updatedCheckBoxOptions };
       }
         return item;
     });
@@ -294,18 +240,18 @@ export const useSkillTraining = ({ state, isEditable }) => {
     let dataToPerformAction;
     let stateToPerformAction;
     let itemToAdd;
-    if (type === "it_skills"){
+    if (type === SkillTraining_keys.IT_SKIILS){
          dataToPerformAction = ITSkillsState
          stateToPerformAction = setITSkillsState
-         itemToAdd = ITSkills()
-    }else if (type === "soft_skills"){
+         itemToAdd = ITSkillField()
+    }else if (type === SkillTraining_keys.SOFT_SKILLS){
          dataToPerformAction = softSkillsState
          stateToPerformAction = setSoftSkillsState
-         itemToAdd = softSkills()
+         itemToAdd = softSkillField()
     }else {
       dataToPerformAction = languagesKnownState
       stateToPerformAction = setLanguagesKnownState
-      itemToAdd = languagesKnown()
+      itemToAdd = languagesKnownField()
     }
     const { key } = findKeyByLabel(label, itemToAdd);
     let currentState = [...dataToPerformAction];
@@ -319,11 +265,11 @@ export const useSkillTraining = ({ state, isEditable }) => {
     let dataToPerformAction;
     let stateToPerformAction;
     let isSingleSelection;
-    if (type === "itSkillPriority"){
+    if (type === SkillTraining_keys.ITSKILL_LEVEL){
          dataToPerformAction = ITSkillsState
          stateToPerformAction = setITSkillsState
          isSingleSelection = true;
-    }else if (type === "softSkillPriority"){
+    }else if (type === SkillTraining_keys.SOFTSKILL_LEVEL){
          dataToPerformAction = softSkillsState
          stateToPerformAction = setSoftSkillsState
          isSingleSelection = true;
@@ -338,36 +284,8 @@ export const useSkillTraining = ({ state, isEditable }) => {
     stateToPerformAction(currentState);
   }
   const performOtherSkillsUpdate = (chips) => {
-     setOtherSkillsState(otherSkills(chips))
+     setOtherSkillsState(otherSkillField(chips))
   }
-
-  const addValueOnField = ({details, key, value }) => {
-    return details.map((item) => {
-      return {
-        ...item,
-        value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
-      };
-    });
-  };
-  
-
-  const updateGetValues = () => {
-    const {languages_known, it_skills, soft_skills, other_skills} = state;
-
-    if (languages_known?.length > 0){
-      let updateLanguages = [];
-      languages_known.map((language) => {
-           let languageField = languagesKnown()
-           languageField.map((field) => {
-            //TODO - once api works
-            //let updatedlanguageField = addValueOnField(field, language?.type, language?.skill_name);
-           })
-      })
-     }
-  }
-  // useEffect(() => {
-  //   updateGetValues()
-  // }, [state]);
 
   return {
     isValidAllFields: checkMandatoryFields(),
@@ -379,21 +297,5 @@ export const useSkillTraining = ({ state, isEditable }) => {
     handleAddRemoveRow: performHandleAddRemoveRow,
     handleCheckBoxSelection: perfromHandleCheckBoxSelection,
     handleOtherSkillsUpdate: performOtherSkillsUpdate,
-
-    // languagesKnown: addValueOnField({
-    //   state,
-    //   details: languagesKnownState,
-    //   isEditable,
-    // }),
-    
-    // otherSkills: addValueOnField({
-    //   state,
-    //   details: otherSkillsState,
-    //   isEditable,
-    // }),
-   // handleLanguagesKnownBlur,
-    //handleITSkillsBlur,
-    //handleSoftSkillsBlur,
-    //handleOtherSkillsBlur,
   };
 };

@@ -19,7 +19,7 @@ const UploadImage = ({
   openCropViewAfterImageSelection,
   setFileUploadResult,
   uploadPercentage,
-  customContentContainerStyle
+  customContentContainerStyle,
 }) => {
   const fileInputRef = useRef(null);
 
@@ -127,7 +127,7 @@ const UploadImage = ({
             isVideoUpload,
             isLoading: isUploadingImageToServer,
             uploadPercentage,
-            customContentContainerStyle: customContentContainerStyle
+            customContentContainerStyle: customContentContainerStyle,
           }}
         />
       )}
@@ -145,7 +145,9 @@ UploadImage.defaultProps = {
   openCropViewAfterImageSelection: false,
   setFileUploadResult: () => {},
   uploadPercentage: 0,
-  customContentContainerStyle: {}
+  customContentContainerStyle: {},
+  isAllFormat: false,
+  isImageAndPDF: false,
 };
 
 UploadImage.propTypes = {
@@ -159,7 +161,9 @@ UploadImage.propTypes = {
   openCropViewAfterImageSelection: PropTypes.bool,
   setFileUploadResult: PropTypes.func,
   uploadPercentage: PropTypes.number,
-  customContentContainerStyle: PropTypes.object
+  customContentContainerStyle: PropTypes.object,
+  isAllFormat: PropTypes.bool,
+  isImageAndPDF: PropTypes.bool,
 };
 
 export default UploadImage;

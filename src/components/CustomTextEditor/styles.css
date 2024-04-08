@@ -6,6 +6,7 @@
   border: 1px solid #ecdddd;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+  padding: 12px;
 }
 .error > .ql-toolbar.ql-snow {
   border: 1px solid #ff0000;
@@ -32,5 +33,9 @@
   background-color: #ffff;
 }
 .disabled > .ql-container.ql-snow > .ql-editor > ul {
-  padding-left: 0;
+  padding-left: 0px;
+}
+
+.ql-editor {
+  padding: 0px;
 }

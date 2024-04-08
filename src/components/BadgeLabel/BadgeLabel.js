@@ -20,11 +20,10 @@ const BadgeLabel = ({
     ...style.containerStyle,
     ...customContainerStyle,
   };
-
   return (
     <View style={containerStyles}>
-      {!!badgeLabels.length ? (
-        badgeLabels.map((label, index) => (
+      {!!badgeLabels?.length ? (
+        badgeLabels?.map((label, index) => (
           <CommonText
             key={index}
             customTextStyle={{ ...style.badgeStyle, ...customTextStyle }}

@@ -15,13 +15,13 @@ const PopupMessage = ({ customStyle, message, onPopupClick, data }) => {
   useOutsideClick(wrapperRef, () => setIsPopUpVisible(false));
 
   return (
-    <View>
+    <View style={styles.zIndex10}>
       {Array.isArray(message) ? (
         <View style={styles.containerStyle}>
           <View style={styles.zIndex10}>
             {isPopUpVisible && (
               <ScrollView style={styles.popUpArrayView} ref={wrapperRef}>
-                {message?.map((item) => {
+                {message.map((item) => {
                   return (
                     <CustomTouchableOpacity
                       style={{

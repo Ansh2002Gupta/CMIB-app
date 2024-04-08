@@ -11,14 +11,14 @@ import CustomModal from "../../components/CustomModal";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
+import Slider from "../../components/Slider";
 import useFilterModal from "./controller/useFilterModal";
 import classes from "../../theme/styles/CssClassProvider";
 import useIsWebView from "../../hooks/useIsWebView";
+import { FILTER_TYPE_ENUM } from "../../constants/constants";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./FilterModal.style";
-import { FILTER_TYPE_ENUM } from "../../constants/constants";
-import Slider from "../../components/Slider";
 
 const FilterModal = ({
   filterInfo,
@@ -44,7 +44,8 @@ const FilterModal = ({
     onApplyFilter,
     setFilterState,
     setShowFilterOptions,
-    defaultCategory
+    defaultCategory,
+    filterCategory
   );
 
   const isWeb = Platform.OS.toLowerCase() === "web";

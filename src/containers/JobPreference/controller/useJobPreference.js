@@ -1,238 +1,268 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-// const addValueOnField = ({ state, details, isEditable }) => {
-//   const {kindOfIndustry} = state;
-//   console.log("Before kindOfIndustry",kindOfIndustry, KIND_OF_INDUSTRY)
-//   if (kindOfIndustry.length > 0) {
-//     KIND_OF_INDUSTRY.forEach(item => {
-//       if (kindOfIndustry.some(selectedItem => selectedItem === item.value)) {
-//         item.isSelected = true;
-//       }else{
-//         item.isSelected = false;
-//       }
-//     });
-//   }else{
-//     KIND_OF_INDUSTRY.forEach(item => {
-//         item.isSelected = false;
-//       });
-//   }
-//   const selectedKindOfIndustry = kindOfIndustry.length > 0 && KIND_OF_INDUSTRY.filter(item =>
-//      kindOfIndustry.some(selectedItem => selectedItem === item.value));
-//   return details.map((item,index) => {
-//     if (item?.key === 'preferences_kindOfIndustry'){
-//         return{
-//             ...item,
-//             value: kindOfIndustry || [],
-//             selectedItems: KIND_OF_INDUSTRY,
-//             defaultValues: selectedKindOfIndustry,
-//             labelField:"name",
-//             valueField:"value",
-//             indexField:"selectedIndex",
-//             isSelected:"isSelected",
-//         }
-//     }
-//     return {
-//       ...item,
-//       value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
-//       codeValue: state.codeValue,
-//     };
-//   });
-// };
+import { JobPreferences_keys, updateDropDownOptions } from "./utils";
+import { booleanToYesNo } from "../../../utils/util";
+import { numRegex } from "../../../constants/constants";
 
-// const validateOnBlur = ({ state, details, key, index, intl }) => {
-//   const value = state[key];
-//   const updatedData = details.map((item, i) => {
-//     if (key === item.key) {
-//       return {
-//         ...item,
-//         value,
-//         error: item.validate ? item.validate(value, intl) : "",
-//       };
-//     }
-//     return item;
-//   });
-//   return updatedData;
-// };
+const preferences_details = (intl) => [
+  [
+    {
+      key: "posting_anywhere_in_india",
+      isMandatory: true,
+      isToggle: true,
+      label: "label.posting_anywhere_in_india",
+      placeholder: "label.posting_anywhere_in_india",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({
+            id: "label.postingAnyWhereRequired",
+          });
+        }
+      },
+    },
+    {
+      key: "transferable_post_acceptable",
+      isMandatory: true,
+      isToggle: true,
+      label: "label.whether_transferable_post_acceptable",
+      placeholder: "label.whether_transferable_post_acceptable",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({
+            id: "label.transferableRequired",
+          });
+        }
+      },
+    },
+  ],
+  [
+    {
+      key: "posting_outside_india",
+      isMandatory: true,
+      isToggle: true,
+      label: "label.ready_to_place_outside_india",
+      placeholder: "label.ready_to_place_outside_india",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({
+            id: "label.readyToPlaceRequired",
+          });
+        }
+      },
+    },
+    {
+      key: "preferred_region",
+      isMandatory: true,
+      label: "label.preferred_region",
+      placeholder: "label.preferred_region",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({
+            id: "label.preferredRegionRequired",
+          });
+        }
+      },
+    },
+    {
+      key: "expected_annual_salary",
+      isMandatory: true,
+      label: "label.expected_annual_salary",
+      placeholder: "label.expected_annual_salary",
+      validate: (value) => {
+        if (!value) {
+          return intl.formatMessage({
+            id: "label.expectedAnnualSalaryRequired",
+          });
+        }
+        if (value.length > 0 && !numRegex.test(String(value))) {
+          return intl.formatMessage({
+            id: "label.enterValidInput",
+          });
+        }
+      },
+    },
+  ],
+  [
+    {
+      key: "industry_preference",
+      label: "label.preferences_kind_of_industry",
+      value: [],
+      showBadgeLabel: true,
+      isMandatory: true,
+      isMultiSelect: true,
+      isDropdown: true,
+      placeholder: "label.preferences_kind_of_industry",
+      defaultValues: [],
+      options: [],
+      isSingleMutliSelect: true,
+    },
+  ],
+  [
+    {
+      key: "functional_area_preference",
+      label: "label.preference_for_area_of_work",
+      value: [],
+      isMandatory: true,
+      isMultiSelect: true,
+      isDropdown: true,
+      placeholder: "label.preference_for_area_of_work",
+      defaultValues: [],
+      options: [],
+      showBadgeLabel: true,
+      isSingleMutliSelect: true,
+    },
+  ],
+];
 
 const addValueOnField = ({ state, details, isEditable }) => {
-  return details.map((item) => {
-    return {
-      ...item,
-      value: !isEditable && !state?.[item?.key] ? "--" : state?.[item?.key],
-      codeValue: state.codeValue,
-    };
+  const updatedState = details.map((subArray) => {
+    return subArray.map((field) => {
+      if (field?.isToggle) {
+        return {
+          ...field,
+          value: isEditable
+            ? Boolean(state?.[field?.key] ?? true)
+            : state?.[field?.key] === undefined
+            ? "-"
+            : booleanToYesNo(Boolean(state?.[field?.key])),
+        };
+      }
+
+      return {
+        ...field,
+        value: isEditable
+          ? state?.[field?.key]
+          : state?.[field?.key] === null
+          ? "-"
+          : state?.[field?.key],
+      };
+    });
   });
+
+  return updatedState;
 };
 
-const validateOnBlur = ({ state, details, key, index, intl }) => {
+const validateOnBlur = ({ state, details, key, intl }) => {
   const value = state[key];
-  const updatedData = details.map((item, i) => {
-    if (key === item.key) {
-      return {
-        ...item,
-        value,
-        error: item.validate ? item.validate(value, intl) : "",
-      };
-    }
-    return item;
+  const updatedData = details.map((row, i) => {
+    return row.map((item) => {
+      if (item.isMandatory && key === item.key) {
+        return {
+          ...item,
+          value,
+          error: item.validate ? item.validate(value, intl) : "",
+        };
+      }
+      return item;
+    });
   });
   return updatedData;
 };
 
-export const useJobPreference = ({ state, isEditable}) => {
-  const intl = useIntl();
-  const [selectAreaOfInterest, setSelectAreaOfInterest] = useState([
-    {
-      isSelected: false,
-      label: "Ca Jobs",
-      name: "Ca Jobs",
-      selectedIndex: null,
-      value: "Ca Jobs",
-    },
-    {
-      isSelected: false,
-      label: "Nqca",
-      name: "Nqca",
-      selectedIndex: null,
-      value: "Nqca",
-    },
-  ]);
-  const preferences_details = [
-    [{
-        key: "postingAnywhereInIndia",
-        isMandatory: true,
-        isToggle: true,
-        label: "label.posting_anywhere_in_india",
-        placeholder: "label.posting_anywhere_in_india",
-        validate: (value) => {
-          if (!value) {
-            return "posting anywhere in india is required";
-          }
-        },
-      },
-      {
-        key: "transferablePostAcceptable",
-        isMandatory: true,
-        isToggle: true,
-        label: "label.whether_transferable_post_acceptable",
-        placeholder: "label.whether_transferable_post_acceptable",
-        validate: (value) => {
-          if (!value) {
-            return "transferable post acceptable is required";
-          }
-        },
-      }],
-      [{
-        key: "readyToPlaceOutsideIndia",
-        isMandatory: true,
-        isToggle: true,
-        label: "label.ready_to_place_outside_india",
-        placeholder: "label.ready_to_place_outside_india",
-        validate: (value) => {
-          if (!value) {
-            return "ready to place india is required";
-          }
-        },
-      },
-      {
-        key: "preferredRegion",
-        isMandatory: true,
-        label: "label.preferred_region",
-        placeholder: "label.preferred_region",
-        validate: (value) => {
-          if (!value) {
-            return "preferred region is required";
-          }
-        },
-      },
-      {
-        key: "expectedAnnualSalary",
-        isMandatory: true,
-        label: "label.expected_annual_salary",
-        placeholder: "label.expected_annual_salary",
-        validate: (value) => {
-          if (!value) {
-            return "expected annual salary is required";
-          }
-        },
-      }],
-      [{
-        key: "preferences_kindOfIndustry",
-        label: "label.preferences_kind_of_industry",
-        value:[],showBadgeLabel: true,
-        isMandatory: true,
-        isMultiSelect: true,
-        isDropdown: true,
-        placeholder: "label.preferences_kind_of_industry",
-        defaultValues: [],
-        isSingleMutliSelect: true,
-        options: selectAreaOfInterest,
-        width: 2,
-      }],
-      [{
-        key: "preferences_kindOfIndustry",
-        label: "label.preferences_kind_of_industry",
-        value:[],showBadgeLabel: true,
-        isMandatory: true,
-        isMultiSelect: true,
-        isDropdown: true,
-        placeholder: "label.preferences_kind_of_industry",
-        defaultValues: [],
-        isSingleMutliSelect: true,
-        options: selectAreaOfInterest,
-        width: 2,
-      }],
-];
-
-const handleAreasOfInterestSelection = (updatedSelectedItems) => {
-  const updatedState = selectAreaOfInterest.map((item) => {
-    if (item.value === updatedSelectedItems) {
-      if (item.isSelected) {
-        item.isSelected = false;
-      } else {
-        item.isSelected = true;
+const resetError = ({ state, details, key }) => {
+  const value = state[key];
+  const updatedData = details.map((row, i) => {
+    return row.map((item) => {
+      if (item.isMandatory && key === item.key) {
+        return {
+          ...item,
+          value,
+          error: undefined,
+        };
       }
       return item;
-    }
-    return item;
+    });
   });
-  setSelectAreaOfInterest(updatedState);
+  return updatedData;
 };
 
-  const [preferences_details_state, setPreferencesDetailsState] = useState(preferences_details);
-  const handlePreferencesDetailBlur = (key, index) => {
+export const useJobPreference = ({
+  state,
+  isEditable,
+  functionalAreas,
+  industryTypes,
+}) => {
+  const intl = useIntl();
+
+  const [preferences_details_state, setPreferencesDetailsState] = useState(
+    preferences_details(intl)
+  );
+
+  const updatedDropDownList = useMemo(() => {
+    const updatedWithIndustryType = updateDropDownOptions(
+      industryTypes,
+      preferences_details_state,
+      2,
+      JobPreferences_keys.INDUSTRY_PREFERENCE,
+      state.industry_preference
+    );
+    const updatedWithFunctionalAreas = updateDropDownOptions(
+      functionalAreas,
+      updatedWithIndustryType,
+      3,
+      JobPreferences_keys.FUNCTIONAL_AREA_PREFERENCE,
+      state.functional_area_preference
+    );
+    return updatedWithFunctionalAreas;
+  }, [industryTypes, functionalAreas, state]);
+
+  useEffect(() => {
+    setPreferencesDetailsState(updatedDropDownList);
+  }, [updatedDropDownList]);
+
+  const imageDetails = useMemo(() => {
+    return {
+      cv_path: state?.cv_path ?? "",
+      job_photo_path: state?.job_photo_path ?? "",
+      introduction_video_path: state?.introduction_video_path ?? "",
+    };
+  }, [state]);
+
+  const handlePreferencesDetailBlur = (key) => {
     setPreferencesDetailsState(
       validateOnBlur({
         state,
         details: preferences_details_state,
         key,
-        index,
         intl,
       })
     );
-  }
+  };
+
+  const handleResetError = (key) => {
+    setPreferencesDetailsState(
+      resetError({ state, details: preferences_details_state, key })
+    );
+  };
+
   const checkMandatoryFields = () => {
     let error = false;
-    [
-      ...preferences_details_state,
-    ].forEach((item) => {
-      if (item.isMandatory && !state[item.key]) {
-        error = true;
-      }
+    [...preferences_details_state].forEach((row) => {
+      row.map((item) => {
+        if (item.isMandatory && !item?.isToggle) {
+          if (
+            item?.error ||
+            !state[item.key] ||
+            (item?.isDropdown && state[item.key]?.length === 0)
+          ) {
+            error = true;
+          }
+        }
+      });
     });
     return error;
   };
 
   return {
-    // preferences_details: addValueOnField({
-    //   state,
-    //   details: preferences_details,
-    //   isEditable,
-    // }),
-    preferences_details: preferences_details,
+    preferences_details: addValueOnField({
+      state,
+      details: preferences_details_state,
+      isEditable,
+    }),
+    imageDetails,
     handlePreferencesDetailBlur,
     isValidAllFields: checkMandatoryFields(),
-    handleAreasOfInterestSelection: handleAreasOfInterestSelection
+    handleResetError,
   };
 };

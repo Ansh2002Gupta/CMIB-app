@@ -59,6 +59,8 @@ const CustomTable = ({
   isHeading,
   isTicketListingLoading,
   isFirstPageReceived,
+  isTotalCardVisible,
+  isFilterVisible = true,
   loadingMore,
   onIconPress,
   placeholder,
@@ -76,6 +78,10 @@ const CustomTable = ({
   unit,
   extraDetailsText,
   extraDetailsKey,
+  ThirdSection,
+  renderCalendar,
+  statusData,
+  queryTypeData,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -351,6 +357,19 @@ const CustomTable = ({
             setShowFilterOptions,
             onApplyFilter,
             unit,
+            statusData,
+            queryTypeData,
+            renderCalendar,
+          }}
+        />
+      )}
+      {addNewTicket && (
+        <AddTicketModal
+          queryTypeData={queryTypeData}
+          onPressButtonOne={handleTicketModal}
+          onPressButtonTwo={(queryType, enterQuery) => {
+            handleSaveAddTicket(queryType, enterQuery);
+            handleTicketModal();
           }}
         />
       )}
