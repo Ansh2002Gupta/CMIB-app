@@ -81,6 +81,10 @@ const useAppliedJobsListing = () => {
   });
   const [modalData, setModalData] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
+  const [isPatching, setIsPatching] = useState(false);
+  const [isPatchingSuccess, setIsPatchingSuccess] = useState(false);
+  const [isPatchingError, setIsPatchingError] = useState(false);
   const popUpRef = useRef(null);
 
   useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
@@ -104,8 +108,6 @@ const useAppliedJobsListing = () => {
     applicantID: null,
   });
 
-  const navigate = useNavigate();
-
   const {
     data: appliedJobsData,
     isLoading: isAppliedJobsListingLoading,
@@ -128,11 +130,6 @@ const useAppliedJobsListing = () => {
   const experienceData = 0;
 
   const { data: locationData } = useFetch({ url: JOB_LOCATION_OPTIONS });
-
-  const [toastMsg, setToastMsg] = useState("");
-  const [isPatching, setIsPatching] = useState(false);
-  const [isPatchingSuccess, setIsPatchingSuccess] = useState(false);
-  const [isPatchingError, setIsPatchingError] = useState(false);
 
   const {
     makeRequest: patchAcceptRejectOfferDecision,
@@ -207,13 +204,11 @@ const useAppliedJobsListing = () => {
       body: { accepted_schedule: isPrimarySchedule ? "primary" : "alternate" },
       onErrorCallback: (error) => {
         setShowInterviewTimeModal(false);
-        console.log("error|patchSelectedInterview|186:", error);
         setIsPatchingError(isPatchingErrorSaveInterviewDetails);
         setToastMsg(saveInterviewDetailsPatchingError);
       },
       onSuccessCallback: (success) => {
         setShowInterviewTimeModal(false);
-        console.log("success|patchSelectedInterview|186:", success);
         setIsPatchingSuccess(isPatchingSuccessSaveInterviewDetails);
       },
     });
@@ -444,7 +439,6 @@ const useAppliedJobsListing = () => {
   };
 
   const filterApplyHandler = async (filterInfo) => {
-    console.log("filterInfo on filter button hit: ", filterInfo);
     const currentFilterOptions = {
       work_mode: returnSelectedFilterOption(filterInfo, "WorkMode"),
       job_type: returnSelectedFilterOption(filterInfo, "JobType"),
@@ -476,12 +470,10 @@ const useAppliedJobsListing = () => {
   };
 
   const getInterviewDates = ({ rowData }) => {
-    console.log("rowData|getInterviewDates|433:", rowData);
     fetchInterviewDates({
       overrideUrl:
         USER_TYPE_MEMBER + `/${JOBS}` + `/${rowData?.job_id}` + INTERVIEWS,
     });
-    console.log("interviewDatesData|getInterviewDates: ", interviewDatesData);
     setModalData(interviewDatesData);
   };
 

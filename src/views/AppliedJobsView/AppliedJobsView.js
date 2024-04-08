@@ -65,7 +65,6 @@ const AppliedJobsView = () => {
     handleConfirmation,
     toastMsg,
     setToastMsg,
-    isPatching,
     isPatchingSuccess,
     isPatchingError,
     setFilterState,

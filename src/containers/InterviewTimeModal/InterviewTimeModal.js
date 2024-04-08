@@ -8,7 +8,6 @@ import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import TimeSlotLabel from "../../components/TimeSlotLabel/TimeSlotLabel";
 import Spinner from "../../components/Spinner";
-import colors from "../../assets/colors";
 import styles from "./InterviewTimeModal.styles";
 
 const isIos = Platform.OS.toLowerCase() === "ios";
