@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
-import { Platform, View } from "@unthinkable/react-core-components";
+import {
+  Platform,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
@@ -291,15 +295,16 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 {item?.job_id ?? "-"}
               </CommonText>
             ) : (
-              <CustomTouchableOpacity
+              <TouchableOpacity
                 onPress={() => {
                   navigate(navigations.JOB_PROFILE);
                 }}
+                style={styles.cursorStyle}
               >
                 <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
                   {item?.job_id ?? "-"}
                 </CommonText>
-              </CustomTouchableOpacity>
+              </TouchableOpacity>
             )}
           </>
         ),
