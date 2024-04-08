@@ -24,6 +24,10 @@ const DetailCard = ({
   isShowSwitch,
   onPressActionButton,
   otherDetails,
+  isShowCancel,
+  handleCancel,
+  handleAddRemoveRow,
+  handleCheckBoxSelection,
 }) => {
   const { isWebView } = useIsWebView();
 
@@ -49,6 +53,10 @@ const DetailCard = ({
           isActive,
           isColumnVariableWidth,
           isShowSwitch,
+          isShowCancel,
+          handleCancel,
+          handleAddRemoveRow,
+          handleCheckBoxSelection,
         }}
       />
       {!!otherDetails && (
@@ -56,6 +64,8 @@ const DetailCard = ({
           details={otherDetails}
           handleBlur={handleBlur}
           handleChange={handleChange}
+          handleAddRemoveRow={handleAddRemoveRow}
+          handleCheckBoxSelection={handleCheckBoxSelection}
           hasActionButton={!isWebView && hasActionButton}
           index={index}
           isEditable={isEditProfile}
@@ -83,6 +93,10 @@ DetailCard.defaultProps = {
   isShowSwitch: false,
   onPressActionButton: () => {},
   otherDetails: [],
+  isShowCancel: false,
+  handleCancel: () => {},
+  handleAddRemoveRow: () => {},
+  handleCheckBoxSelection: () => {},
 };
 
 DetailCard.propTypes = {
@@ -102,6 +116,10 @@ DetailCard.propTypes = {
   isShowSwitch: PropTypes.bool,
   onPressActionButton: PropTypes.func,
   otherDetails: PropTypes.array,
+  isShowCancel: PropTypes.bool,
+  handleCancel: PropTypes.func,
+  handleAddRemoveRow: PropTypes.func,
+  handleCheckBoxSelection: PropTypes.func,
 };
 
 export default DetailCard;

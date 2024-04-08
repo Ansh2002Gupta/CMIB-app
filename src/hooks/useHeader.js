@@ -29,7 +29,7 @@ export const useHeader = () => {
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
     !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
-    resetAllModules(userType.toLowerCase() !== COMPANY);
+    resetAllModules(userType?.toLowerCase() !== COMPANY);
     navigate(navigations.LOGIN, {
       state: { activeTab: userType === "Company" },
     });

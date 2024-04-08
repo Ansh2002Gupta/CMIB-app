@@ -9,6 +9,8 @@ import { TwoColumn, TwoRow } from "../../core/layouts";
 import CardComponent from "../../components/CardComponent";
 import BadgeLabel from "../../components/BadgeLabel/BadgeLabel";
 import { formatDate } from "../../utils/util";
+import Chip from "../../components/Chip";
+import colors from "../../assets/colors";
 
 function CAJobsDashboard( {packageName, description, price, validity, validityDate }) {
   const intl = useIntl();
@@ -67,7 +69,9 @@ function CAJobsDashboard( {packageName, description, price, validity, validityDa
           }
         />
         <View style={styles.borderStyle} />
-        <BadgeLabel badgeLabels={[`${intl.formatMessage({ id: "label.valid_till" })} ${validityDateFormatted}`]} />
+        <View style={styles.badgeLabelContainer}>
+          <Chip bgColor={colors.lightGreen} textColor={colors.darkSecondGreen} label={[`${intl.formatMessage({ id: "label.valid_till" })} ${validityDateFormatted}`]} />
+        </View>
       </CardComponent>
     </View>
   );

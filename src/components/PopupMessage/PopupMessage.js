@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import styles from "./PopupMessage.style";
-import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import TouchableImage from "../TouchableImage";
-import images from "../../images";
 import useOutsideClick from "../../hooks/useOutsideClick";
+import images from "../../images";
+import styles from "./PopupMessage.style";
 
 const PopupMessage = ({ customStyle, message, onPopupClick }) => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
@@ -42,7 +42,6 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
               </ScrollView>
             )}
           </View>
-
           <TouchableImage
             source={images.iconMore}
             disabled={isPopUpVisible}
@@ -67,11 +66,12 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
 
 PopupMessage.defaultProps = {
   customStyle: {},
+  message: [],
 };
 
 PopupMessage.propTypes = {
-  customStyle: PropTypes.object,
-  message: PropTypes.string.isRequired,
+  customStyle: PropTypes.func,
+  message: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   onPopupClick: PropTypes.func.isRequired,
 };
 
