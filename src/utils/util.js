@@ -24,7 +24,8 @@ export const getRenderText = (items, keys) => {
   if (!keys.length) {
     return "";
   }
-  return keys.map((key) => items[key]).join(" ");
+  const text = keys.map((key) => items[key]).join(" ");
+  return !!text ? text : "-";
 };
 
 export const appendStringsInNextLine = (string) => {

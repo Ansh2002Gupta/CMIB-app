@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingRight: 24,
     paddingLeft: 24,
-    borderBottomWidth: 1,
+    borderRadius: 15,
     borderColor: colors.greyOne,
     backgroundColor: colors.white,
   },
@@ -144,6 +144,18 @@ const styles = StyleSheet.create({
   mobilePopUpPosition: {
     top: 10,
     right: -10,
+  },
+  dot: {
+    width: 4,
+    height: 4,
+    borderRadius: "100%",
+    backgroundColor: colors.lightGrey,
+  },
+  rowStyling: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 6,
   },
 });
 
