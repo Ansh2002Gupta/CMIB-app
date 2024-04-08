@@ -545,3 +545,39 @@ export const containsDuplicate = (arr) => {
   }
   return false;
 };
+
+export const convertToTime = ({ dateString, format24Hour = true }) => {
+  const date = dayjs(dateString);
+  const timeFormat = format24Hour ? "HH:mm" : "hh:mm A";
+  const timeString = date.format(timeFormat);
+  return timeString;
+};
+
+export const formateDateandTime = (date, time) => {
+  const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
+  const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
+  return formattedDate + " " + formattedTime;
+};
+
+export const areAllValuesEmpty = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === "object") {
+      if (!areAllValuesEmpty(obj[key])) {
+        return false;
+      }
+    } else {
+      if (obj[key] !== "") {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+const isObjectFilled = (obj) => {
+  return Object.values(obj).every((value) => value !== "");
+};
+
+export const areAllValuesFilled = (objects) => {
+  return Object.values(objects).some(isObjectFilled);
+};

@@ -42,7 +42,9 @@ export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
 
 //sub routes
+export const APPLICANTS = "/applicants";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const INTERVIEW = "/interview";
 
 /* API Endpoints Member CA JOB profile */
 export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
