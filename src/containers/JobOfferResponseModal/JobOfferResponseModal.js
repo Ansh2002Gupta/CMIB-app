@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 import { Platform, View } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
@@ -7,6 +7,7 @@ import ActionPairButton from "../../components/ActionPairButton";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import FinalConfirmation from "../FinalConfirmation/FinalConfirmation";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import images from "../../images";
 import styles from "./JobOfferResponseModal.style";
 
@@ -26,6 +27,8 @@ const JobOfferResponseModal = ({
   isPatchingError,
 }) => {
   const intl = useIntl();
+  const [userProfileDetails] = useContext(UserProfileContext);
+  const applicantID = userProfileDetails?.userDetails?.id || 0;
 
   const renderModal = () => {
     if (showConfirmModal) {
@@ -85,13 +88,13 @@ const JobOfferResponseModal = ({
               onPressButtonOne={() => {
                 handleAcceptRejectOffer({
                   decision: 8,
-                  applicantID: data?.id,
+                  applicantID: applicantID,
                 });
               }}
               onPressButtonTwo={() => {
                 handleAcceptRejectOffer({
                   decision: 7,
-                  applicantID: data?.id,
+                  applicantID: applicantID,
                 });
               }}
               isButtonTwoGreen

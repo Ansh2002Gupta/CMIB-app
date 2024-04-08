@@ -398,7 +398,7 @@ const useAppliedJobsListing = () => {
           intl.formatMessage({ id: "label.respond_to_job_offer" })
         );
         break;
-      case STATUS_OPTIONS.PENDING:
+      case STATUS_OPTIONS.NO_RESPONSE:
         setShowPopUpWithID(item?.id);
         setPopUpMessage(
           intl.formatMessage({ id: "label.select_interview_time" })
@@ -411,7 +411,7 @@ const useAppliedJobsListing = () => {
 
   const renderMoreActionButton = (item) => {
     return (
-      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.PENDING ||
+      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.NO_RESPONSE ||
       item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.JOB_OFFERED
     );
   };
