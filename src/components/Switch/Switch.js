@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import { styles } from "./Switch.style";
 
 const Switch = ({ disabled, isToggled, onChange }) => {
+  const [isToggledOn, setIsToggleOn] = useState(isToggled);
   const handleChange = () => {
     if (disabled) {
       return;
     }
+    setIsToggleOn(!isToggledOn);
     onChange();
   };
 
@@ -17,14 +19,14 @@ const Switch = ({ disabled, isToggled, onChange }) => {
       <View
         style={{
           ...styles.slider,
-          ...(isToggled ? styles.sliderActive : {}),
+          ...(isToggledOn ? styles.sliderActive : {}),
           ...(disabled ? styles.disabled : {}),
         }}
       >
         <View
           style={{
             ...styles.sliderBall,
-            ...(isToggled ? styles.sliderBallActive : {}),
+            ...(isToggledOn ? styles.sliderBallActive : {}),
           }}
         ></View>
       </View>

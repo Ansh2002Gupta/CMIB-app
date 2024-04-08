@@ -68,3 +68,4 @@ export const MEMBER_CA_JOB_JOB_PREFERENCES = `${USER_TYPE_MEMBER}/profile/job-pr
 export const COMPANY_FUNCTIONAL_AREAS = `${USER_TYPE_COMPANY}/functional-areas`;
 export const UPLOAD_IMAGE = `${USER_TYPE_COMPANY}/upload-image`;
 export const CHANGE_APPLICANT_STATUS = `${USER_TYPE_COMPANY}/jobs/applicants`;
+export const CHANGE_STATUS = "/change-status";

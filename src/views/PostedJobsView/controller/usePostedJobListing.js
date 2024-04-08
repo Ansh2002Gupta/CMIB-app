@@ -21,6 +21,9 @@ import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import CustomToggleComponent from "../../../components/CustomToggleComponent";
+import Switch from "../../../components/Switch";
+import useChangeJobStatusApi from "../../../services/apiServices/useChangeJobStatusApi";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -49,7 +52,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
 
   const {
     data: postedJobData,
-    isLoading: isTicketListingLoading,
+    isLoading,
     fetchData: fetchPostedJobs,
     isError: isErrorGetPostedJob,
     error: errorGetPostedJobs,
@@ -59,6 +62,13 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       skipApiCallOnMount: true,
     },
   });
+  const {
+    handleUseChangeJob,
+    isError: ischangeJobStatusError,
+    isLoading: changeJobStatusLoading,
+    errorWhileJobChange,
+  } = useChangeJobStatusApi();
+  const isTicketListingLoading = changeJobStatusLoading || isLoading;
 
   const statusData = [
     {
@@ -100,6 +110,11 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       return {
         errorMessage: errorGetPostedJobs?.data?.message,
         onRetry: () => fetchPostedJobs({}),
+      };
+    if (ischangeJobStatusError)
+      return {
+        errorMessage: errorWhileJobChange?.data?.message,
+        onRetry: () => {},
       };
   };
 
@@ -395,12 +410,10 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 {item?.status ?? "-"}
               </CommonText>
             ) : (
-              <Chip
-                label={
-                  item.status == 1 ? statusData[0].name : statusData[1].name
-                }
-                style={{
-                  ...getStatusStyle(item.status),
+              <Switch
+                isToggled={item.status == 1}
+                onChange={() => {
+                  handleUseChangeJob(item.id);
                 }}
               />
             )}
@@ -491,6 +504,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     indexOfLastRecord,
     isHeading,
     isTicketListingLoading,
+    changeJobStatusLoading,
     isFirstPageReceived,
     loadingMore,
     queryTypeData,
