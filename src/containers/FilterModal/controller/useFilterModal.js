@@ -1,15 +1,24 @@
 import { useRef, useState } from "react";
 
 const useFilterModal = (
+  filterInfo,
   filterState,
   initialFilterState,
   onApplyFilter,
   setFilterState,
   setShowFilterOptions,
-  filterCategory
+  defaultCategory
 ) => {
-  const { selectedStatus, selectedQueryType, activeCategories } = filterState;
-  const [currentCategory, setCurrentCategory] = useState(filterCategory[0]);
+  const {
+    selectedExperience,
+    selectedCurrentSalary,
+    selectedFunctionalAreas,
+    selectedCategory,
+    activeCategories,
+  } = filterState;
+  const [currentCategory, setCurrentCategory] = useState(
+    defaultCategory || "Status"
+  );
 
   const prevFilterState = useRef(filterState);
 
@@ -22,46 +31,33 @@ const useFilterModal = (
     setCurrentCategory(category);
   };
 
-  const handleStatusChange = (status) => {
-    setFilterState((prevState) => {
-      const newSelectedStatus = prevState.selectedStatus.includes(status.id)
-        ? prevState.selectedStatus.filter((s) => s !== status.id)
-        : [...prevState.selectedStatus, status.id];
-      return { ...prevState, selectedStatus: newSelectedStatus };
-    });
-  };
-
-  const handleQueryTypeChange = (queryType) => {
-    setFilterState((prevState) => {
-      const newSelectedQueryType = prevState.selectedQueryType.includes(
-        queryType.id
-      )
-        ? prevState.selectedQueryType.filter((q) => q !== queryType.id)
-        : [...prevState.selectedQueryType, queryType.id];
-      return { ...prevState, selectedQueryType: newSelectedQueryType };
-    });
-  };
-
   const filterData = () => {
-    onApplyFilter({ selectedStatus, selectedQueryType });
+    onApplyFilter(filterInfo);
+  };
+
+  const clearFilterState = (filterInfo) => {
+    filterInfo = filterInfo?.map((filterObj) => {
+      return { ...filterObj, selectedOptions: [] };
+    });
+    return filterInfo;
   };
 
   const handleClearFilter = () => {
     setFilterState(initialFilterState);
-    onApplyFilter({ initialFilterState });
+    onApplyFilter(clearFilterState(filterInfo));
   };
 
   return {
     activeCategories,
     currentCategory,
     handleCategoryChange,
-    handleStatusChange,
-    handleQueryTypeChange,
     handleClearFilter,
     filterData,
     onCancel,
-    selectedStatus,
-    selectedQueryType,
+    selectedExperience,
+    selectedCurrentSalary,
+    selectedFunctionalAreas,
+    selectedCategory,
   };
 };
 

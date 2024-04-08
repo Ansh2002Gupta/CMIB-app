@@ -199,16 +199,21 @@ const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
 const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
-const iconAddRoundGreen = appendAppBaseURl("/images/svg/iconAddRoundGreen.svg")
-const iconDeleteRoundRed = appendAppBaseURl("/images/svg/iconDeleteRoundRed.svg")
-const iconCheckBoxRound = appendAppBaseURl("/images/svg/iconCheckBoxRound.svg")
-const iconUnCheckBoxRound = appendAppBaseURl("/images/svg/iconUnCheckBoxRound.svg")
+const iconAddRoundGreen = appendAppBaseURl("/images/svg/iconAddRoundGreen.svg");
+const iconDeleteRoundRed = appendAppBaseURl(
+  "/images/svg/iconDeleteRoundRed.svg"
+);
+const iconCheckBoxRound = appendAppBaseURl("/images/svg/iconCheckBoxRound.svg");
+const iconUnCheckBoxRound = appendAppBaseURl(
+  "/images/svg/iconUnCheckBoxRound.svg"
+);
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
 const pdfIcon = appendAppBaseURl("/images/svg/pdfIcon.svg");
 const rightDiagonalArrow = appendAppBaseURl(
   "/images/svg/rightDiagonalArrow.svg"
 );
 const videoPlayIcon = appendAppBaseURl("/images/svg/videoPlayIcon.svg");
+const iconWallet = appendAppBaseURl("/images/svg/wallet.svg");
 
 const images = {
   iconArrowUp,
@@ -360,6 +365,7 @@ const images = {
   pdfIcon,
   rightDiagonalArrow,
   videoPlayIcon,
+  iconWallet,
 };
 
 export default images;

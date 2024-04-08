@@ -28,6 +28,7 @@ import WebViewScreen from "../views/WebViewScreen/index";
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
+import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -166,16 +167,16 @@ const config = [
       },
     ],
   },
-  {
-    pagePath: navigations.OUT_SOURCED,
-    element: <DefaultRoute />,
-    views: [
-      {
-        viewPath: "",
-        element: <DefaultRoute />,
-      },
-    ],
-  },
+  // {
+  //   pagePath: navigations.OUT_SOURCED,
+  //   element: <DefaultRoute />,
+  //   views: [
+  //     {
+  //       viewPath: "",
+  //       element: <DefaultRoute />,
+  //     },
+  //   ],
+  // },
   {
     pagePath: navigations.WEB_VIEW,
     element: <WebViewScreen />,
@@ -227,6 +228,10 @@ const config = [
       {
         viewPath: navigations.JOB_SEEKERS,
         element: <JobSeekers />,
+      },
+      {
+        viewPath: navigations.JOB_SEEKERS + navigations.CANDIDATE_DETAILS,
+        element: <ViewDetailsScreen />,
       },
       {
         viewPath: navigations.SAVED_CANDIDATES,

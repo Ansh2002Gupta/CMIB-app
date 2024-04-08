@@ -478,6 +478,9 @@ const locale = {
   "label.job_applicants": "Job Applicants",
   "label.job_seekers": "Job Seekers",
   "label.saved_candidates": "Saved Candidates",
+  "label.candidate_details": "Candidate Details",
+  "label.save_candidate_details": "Save Candidate Details",
+  "label.serach_by_applicant_name_id": "Search by applicant name or ID",
 };
 
 export default locale;

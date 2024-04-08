@@ -14,9 +14,16 @@ import {
 
 const JobSeekers = () => {
   const {
+    setFilterState,
     allDataLoaded,
     currentPage,
+    currentRecords,
+    customFilterInfo,
     filterApplyHandler,
+    filterCategory,
+    filterState,
+    setCurrentRecords,
+    defaultCategory,
     getColoumConfigs,
     handleLoadMore,
     handlePageChange,
@@ -28,11 +35,12 @@ const JobSeekers = () => {
     isError,
     isFirstPageReceived,
     subHeadingText,
+    extraDetailsText,
+    extraDetailsKey,
     loadingMore,
     rowsPerPage,
     jobSeekersData,
     totalcards,
-    filterCategory,
     headingTexts,
     tableIcon,
     isHeading,
@@ -57,11 +65,17 @@ const JobSeekers = () => {
           {!isError && (
             <CustomTable
               {...{
+                customFilterInfo,
+                selectedFilterOptions: filterState,
+                setSelectedFilterOptions: setFilterState,
                 allDataLoaded,
                 currentPage,
+                currentRecords,
                 data: jobSeekersData,
                 filterApplyHandler,
                 filterCategory,
+                setCurrentRecords,
+                defaultCategory,
                 getColoumConfigs,
                 handleLoadMore,
                 handlePageChange,
@@ -75,7 +89,7 @@ const JobSeekers = () => {
                 isHeading,
                 loadingMore,
                 placeholder: intl.formatMessage({
-                  id: "label.search_by_candidate_name_or_id",
+                  id: "label.serach_by_applicant_name_id",
                 }),
                 rowsLimit,
                 rowsPerPage,
@@ -83,6 +97,8 @@ const JobSeekers = () => {
                 tableHeading,
                 totalcards,
                 tableIcon,
+                extraDetailsText,
+                extraDetailsKey,
               }}
             />
           )}

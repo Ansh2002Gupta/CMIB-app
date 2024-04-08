@@ -35,12 +35,16 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const JOBS = "jobs";
 
 /* API Endpoints Member CA JOB profile */
 export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
 export const MEMBER_CA_JOB_PROFILE_EDUCATION = `${USER_TYPE_MEMBER}/profile/education`;
 export const MEMBER_CA_JOB_PROFILE_EXAMS = `${USER_TYPE_MEMBER}/profile/exams`;
 export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/other-courses`;
-export const MEMBER_CA_JOB_PROFILE_SKILLS =  `${USER_TYPE_MEMBER}/profile/skills`;
+export const MEMBER_CA_JOB_PROFILE_SKILLS = `${USER_TYPE_MEMBER}/profile/skills`;
 export const LANGUAGES = `${CORE}/languages`;
 export const SKILLS = `${USER_TYPE_MEMBER}/ca-jobs/master/configurations`;
+
+/* API Endpoints Member CA JOB COMPANY profile */
+export const COMPANY_LISTING = `${USER_TYPE_COMPANY}/${JOBS}/seekers`;

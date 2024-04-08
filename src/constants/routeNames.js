@@ -21,6 +21,8 @@ export const navigations = {
 
   //sub routes
   APPLICATION_FORM: "application-form",
+  CANDIDATE_DETAILS_SUBROUTE: "candidate-details",
+  CANDIDATE_DETAILS: "/candidate-details/:id",
   JOB_APPLICANTS: "job-applicants",
   JOB_SEEKERS: "job-seekers",
   MODULE_LANDING_PAGE: "dashboard",

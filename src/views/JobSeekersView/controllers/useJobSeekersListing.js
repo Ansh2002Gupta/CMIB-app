@@ -40,7 +40,7 @@ const initialFilterState = {
 
 const useJobSeekersListing = () => {
   const intl = useIntl();
-  const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL;
+  const defaultCategory = "Experience";
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);

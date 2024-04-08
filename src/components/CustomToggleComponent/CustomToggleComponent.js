@@ -29,7 +29,7 @@ const CustomToggleComponent = ({
   const { isWebView } = useIsWebView();
 
   useEffect(() => {
-    (selectedToggleOption != -1 && onChange(selectedToggleOption));
+    selectedToggleOption != -1 && onValueChange(selectedToggleOption);
   }, [selectedToggleOption]);
 
   return (
