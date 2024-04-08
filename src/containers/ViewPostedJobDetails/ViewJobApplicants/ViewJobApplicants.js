@@ -5,6 +5,7 @@ import CustomTable from "../../../components/CustomTable";
 import DownloadMoreComponent from "../../PostedJobs/DownloadMoreComponent";
 import useGetApplicantList from "../../../views/ViewPostedJobDetails/controller/useGetApplicantList";
 import {
+  JOB_STATUS_RESPONSE_CODE,
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   APPLICANT_LISTING as tableHeading,
 } from "../../../constants/constants";
@@ -12,10 +13,23 @@ import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
 import { useNavigate } from "../../../routes";
 import { navigations } from "../../../constants/routeNames";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
+import Http from "../../../services/http-service";
+import { CHANGE_APPLICANT_STATUS } from "../../../services/apiServices/apiEndPoint";
 const ViewJobApplicants = ({ id, questionaireData }) => {
   const navigate = useNavigate();
-  const onEditPress = (item) => {
-    navigate(navigations.VIEW_JOB_DETAILS, { state: { questionaireData } });
+  const onEditPress = (selectedItem, item) => {
+    console.log("ITEM", item, selectedItem);
+    if (JOB_STATUS_RESPONSE_CODE[selectedItem]) {
+      const request = {
+        status: JOB_STATUS_RESPONSE_CODE[selectedItem],
+      };
+      Http.patch(`${CHANGE_APPLICANT_STATUS}/${item.id}/status`, request);
+      getAllRecords();
+
+      // CHANGE_APPLICANT_STATUS;
+    } else {
+      // navigate(navigations.VIEW_JOB_DETAILS, { state: { questionaireData } });
+    }
   };
 
   const intl = useIntl();
@@ -51,6 +65,7 @@ const ViewJobApplicants = ({ id, questionaireData }) => {
     tableIcon,
     applicantListingData,
     totalcards,
+    getAllRecords,
   } = useGetApplicantList(id, onEditPress);
 
   const getMobileView = (item, index) => {

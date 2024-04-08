@@ -2,18 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
-import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
-import TouchableImage from "../../../components/TouchableImage";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import CustomImage from "../../../components/CustomImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
-import {
-  COMPANY_TICKET_LISTING,
-  COMPANY_QUERY_TYPE_TICKET,
-  COMPANY_TICKET_STATUS,
-} from "../../../services/apiServices/apiEndPoint";
 import { formatDate } from "../../../utils/util";
 import {
   getValidCurrentPage,
@@ -21,12 +12,10 @@ import {
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
-import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
-import colors from "../../../assets/colors";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
@@ -117,6 +106,10 @@ const useGetApplicantList = (id, onEditPress) => {
     const newData = await fetchDataTicketListing({
       queryParamsObject: params,
     });
+    setCurrentRecords(newData?.records);
+  };
+  const getAllRecords = async () => {
+    const newData = await fetchDataTicketListing();
     setCurrentRecords(newData?.records);
   };
 
@@ -270,8 +263,8 @@ const useGetApplicantList = (id, onEditPress) => {
             {!isHeading && (
               <PopupMessage
                 message={item?.action}
-                onPopupClick={(item) => {
-                  onEditPress(item);
+                onPopupClick={(selectedItem) => {
+                  onEditPress(selectedItem, item);
                   // navigate(navigations.JOB_PROFILE);
                 }}
               />
@@ -289,7 +282,7 @@ const useGetApplicantList = (id, onEditPress) => {
   return {
     allDataLoaded,
     currentPage,
-    fetchDataTicketListing,
+    getAllRecords,
     filterApplyHandler,
     filterCategory,
     getColoumConfigs,
