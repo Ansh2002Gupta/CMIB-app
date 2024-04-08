@@ -12,16 +12,6 @@ import styles from "./InterviewTimeModal.styles";
 
 const isIos = Platform.OS.toLowerCase() === "ios";
 
-const apiDataForInterviewDateSlots = [
-  {
-    id: 42,
-    primary_schedule: "2024-03-30 14:53:12",
-    alternate_schedule: "2024-04-06 21:05:58",
-    type: "Face-To-Face",
-    alternate_type: "Telephonic",
-  },
-];
-
 const InterviewTimeModal = ({
   data,
   setShowInterviewTimeModal,
@@ -33,7 +23,6 @@ const InterviewTimeModal = ({
   const intl = useIntl();
   const webProps = Platform.OS === "web" ? { size: "xs" } : {};
   const [selectedDateLabel, setSelectedDateLabel] = useState(null);
-  data = apiDataForInterviewDateSlots;
 
   const handleSelection = (labelInfo) => {
     setSelectedDateLabel(labelInfo);
@@ -57,23 +46,21 @@ const InterviewTimeModal = ({
           {isLoading ? (
             <Spinner thickness={3} color={""} {...webProps} />
           ) : !!data && data.length > 0 ? (
-            data.map((dateObj) => (
-              <>
-                <TimeSlotLabel
-                  lableID={dateObj?.id}
-                  dataObj={dateObj}
-                  onSelect={handleSelection}
-                  selectedDateLabel={selectedDateLabel}
-                />
-                <TimeSlotLabel
-                  lableID={dateObj?.id}
-                  dataObj={dateObj}
-                  onSelect={handleSelection}
-                  selectedDateLabel={selectedDateLabel}
-                  showPrimary={false}
-                />
-              </>
-            ))
+            <>
+              <TimeSlotLabel
+                lableID={data[0]?.id}
+                dataObj={data[0]}
+                onSelect={handleSelection}
+                selectedDateLabel={selectedDateLabel}
+              />
+              <TimeSlotLabel
+                lableID={data[0]?.id}
+                dataObj={data[0]}
+                onSelect={handleSelection}
+                selectedDateLabel={selectedDateLabel}
+                showPrimary={false}
+              />
+            </>
           ) : (
             <View style={styles.noSchedulesTextContainer}>
               <CommonText customTextStyle={styles.noSchedulesText}>

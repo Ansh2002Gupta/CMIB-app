@@ -526,3 +526,13 @@ export const DATA_FORMATTER_OPTIONS = {
   minute: "numeric",
   hour12: true,
 };
+
+export const API_DATA_FOR_INTERVIEW_SCHEDULING = [
+  {
+    id: 42,
+    primary_schedule: "2024-03-01 14:53:12",
+    alternate_schedule: "2024-04-03 21:05:58",
+    type: "Face-To-Face",
+    alternate_type: "Telephonic",
+  },
+];

@@ -28,7 +28,26 @@ const TimeSlotLabel = ({
       DATA_FORMATTER_LOCALES[0],
       DATA_FORMATTER_OPTIONS
     ).format(date);
-    return formattedDate;
+    const dateTokens = formattedDate.split(" ");
+    const month = dateTokens[0];
+    let day = dateTokens[1];
+    const time = dateTokens[3];
+    const meridiem = dateTokens[4];
+    switch (+day) {
+      case 1:
+        day += "st";
+        break;
+      case 2:
+        day += "nd";
+        break;
+      case 3:
+        day += "rd";
+        break;
+      default:
+        day += "th";
+    }
+    const finalData = `${day} ${month}, ${time} ${meridiem}`;
+    return finalData;
   };
 
   return (
