@@ -162,10 +162,10 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
   } = addJobs;
   const locationsArray = Array.from(
     new Map(
-      [...jobData.jobLocation, ...jobLocationData].map((item) => [
-        item.id,
-        item,
-      ])
+      [
+        ...jobData?.jobLocation,
+        ...(jobLocationData ? jobLocationData : []),
+      ].map((item) => [item.id, item])
     ).values()
   );
   async function handleChange(text) {

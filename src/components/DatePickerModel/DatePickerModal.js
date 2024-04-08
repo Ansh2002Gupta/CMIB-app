@@ -25,6 +25,7 @@ function DatePickerModal({
   maxTime,
   onChangeValue,
   value,
+  datePickerViewStyle,
   showTimeSelect,
   showMonthYearPicker,
 }) {
@@ -75,7 +76,9 @@ function DatePickerModal({
         </View>
       </TouchableOpacity>
       {open && (
-        <View style={styles.datePickerContainerStyle}>
+        <View
+          style={{ ...styles.datePickerContainerStyle, ...datePickerViewStyle }}
+        >
           {showTimeSelect ? (
             <DatePicker
               selected={value}

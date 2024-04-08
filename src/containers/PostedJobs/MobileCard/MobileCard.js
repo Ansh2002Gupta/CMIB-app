@@ -69,7 +69,7 @@ const MobileCard = ({
                 }}
                 customContainerStyle={styles.contentContainer}
               >
-                {item.status === 0 ? statusData[1].name : statusData[0].name}
+                {item.status === 0 ? statusData[1]?.name : statusData[0]?.name}
               </CommonText>
             </View>
           </View>

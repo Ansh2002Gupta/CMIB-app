@@ -12,14 +12,15 @@ import styles from "./DatePickerModal.style";
 const DatePickerModal = ({
   customTextInputOuterContainer,
   customStyles = {},
-  format =  "DD/MM/YYYY",
+  format = "DD/MM/YYYY",
   isError,
   minDate,
   maxDate,
   onChangeValue,
   showTimeSelect,
   value,
-  mode = "date"
+  datePickerViewStyle,
+  mode = "date",
 }) => {
   const [open, setOpen] = useState(false);
   const handleDropDown = () => {
@@ -82,6 +83,7 @@ const DatePickerModal = ({
           setOpen(false);
           onChangeValue(date);
         }}
+        style={datePickerViewStyle}
         onCancel={() => {
           setOpen(false);
         }}

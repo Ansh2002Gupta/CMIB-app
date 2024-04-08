@@ -249,6 +249,19 @@ export const POSTED_JOB_LISTING = {
   number_of_applications: "Applicants",
   approve: "Approved/Not Approved by Admin",
 };
+export const APPLICANT_LISTING = {
+  name: "Applicant Name",
+  applicant_id: "Applicant ID",
+  status: "Status",
+};
+export const SCHEDULE_LISTING = {
+  name: "Applicant Name",
+  applicant_id: "Applicant ID",
+  type: "Interview Type",
+  primary_interview_date: "Primary Interview Date",
+  primary_interview_time: "Primary Interview Time",
+  status: "Status",
+};
 
 export const FEEDBACK_TABLE_HEADING = {
   id: "Feedback ID",

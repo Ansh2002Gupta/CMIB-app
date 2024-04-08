@@ -99,6 +99,21 @@ const styles = StyleSheet.create({
   renderOptionCatigory: {
     height: 300,
   },
+  datePickerModalView: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  datePickerStyle: {
+    minWidth: 80,
+    borderWidth: 2,
+    width: 180,
+    marginTop: 24,
+  },
+  datePickerInner: {
+    top: 50,
+    left: -30,
+  },
 });
 
 export default styles;

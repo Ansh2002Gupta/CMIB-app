@@ -128,12 +128,12 @@ const memberCaJobsMenu = [
   },
   {
     label: "Applied Jobs",
-    key: navigations.JOB_SEEKERS, // will add correct navigation acording to the screens
+    key: navigations.APPLIED_JOBS,
     icon: "iconAppliedJobs",
   },
   {
     label: "All Jobs",
-    key: navigations.POSTED_JOBS, // will add correct navigation acording to the screens
+    key: navigations.ALL_JOBS,
     icon: "iconPostedJobs",
   },
 ];

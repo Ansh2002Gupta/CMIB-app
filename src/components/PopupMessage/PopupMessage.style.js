@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   zIndex10: {
-    zIndex: 10,
+    zIndex: 100,
   },
   containerStyle: {
     flexDirection: "row",
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderRadius: 8,
     maxHeight: 150,
-    zIndex: 10,
   },
   deletetext: {
     fontSize: 14,

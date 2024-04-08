@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
@@ -7,6 +7,8 @@ import CustomButton from "../../../components/CustomButton";
 
 import { useIntl } from "react-intl";
 import styles from "./FooterComponent.styles";
+import { navigations } from "../../../constants/routeNames";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const FooterComponent = ({
   isWebView,
@@ -14,8 +16,11 @@ const FooterComponent = ({
   setIsCheckList,
   onSubmit,
   submitButtonText = "label.post",
+  onCancelPress,
 }) => {
   const navigate = useNavigate();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const intl = useIntl();
   return (
     <View style={styles.containerStyle(isWebView)}>
@@ -36,7 +41,13 @@ const FooterComponent = ({
         <View style={styles.buttonViewStyle}>
           <CustomButton
             onPress={() => {
-              navigate(-1);
+              if (onCancelPress) {
+                onCancelPress(false);
+              } else {
+                navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
+                  replace: true,
+                });
+              }
             }}
             style={styles.cancelButtonStyle(isWebView)}
           >
