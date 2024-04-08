@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { View } from "@unthinkable/react-core-components";
 
 import { styles } from "./Switch.style";
 
 const Switch = ({ disabled, isToggled, onChange }) => {
-  const [isToggledOn, setIsToggleOn] = useState(isToggled);
+  const [isToggledOn, setIsToggleOn] = useState(false);
+  useEffect(() => {
+    setIsToggleOn(isToggled);
+  }, [isToggled]);
   const handleChange = () => {
     if (disabled) {
       return;
     }
-    setIsToggleOn(!isToggledOn);
     onChange();
   };
 

@@ -85,7 +85,6 @@ const PostedJobsView = () => {
       />
     );
   };
-  console.log("error", getErrorDetails()?.errorMessage);
 
   return (
     <TwoRow
