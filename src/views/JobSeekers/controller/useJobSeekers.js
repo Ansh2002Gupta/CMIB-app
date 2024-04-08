@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
+import { Platform } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../../../components/BadgeLabel/BadgeLabel";
 import CommonText from "../../../components/CommonText";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
-import TouchableImage from "../../../components/TouchableImage";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import useFetch from "../../../hooks/useFetch";
 import usePagination from "../../../hooks/usePagination";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { JobSeekersData } from "../dummyData";
+import { COMPANY_LISTING } from "../../../services/apiServices/apiEndPoint";
 import {
   FILTER_TYPE_ENUM,
   POPUP_OPTIONS,
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
-import images from "../../../images";
-import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../JobSeekers.style";
-import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import { navigations } from "../../../constants/routeNames";
-import useFetch from "../../../hooks/useFetch";
-import { COMPANY_LISTING } from "../../../services/apiServices/apiEndPoint";
-import { Platform } from "@unthinkable/react-core-components";
+import commonStyles from "../../../theme/styles/commonStyles";
+import images from "../../../images";
+import styles from "../JobSeekers.style";
 
 const initialFilterState = {
   selectedExperience: [],
@@ -60,7 +58,6 @@ const useJobSeekers = () => {
     getValidCurrentPage(searchParams.get("page"))
   );
 
-  //TODO: API Call to get listing
   const {
     data: jobSeekersData,
     isLoading: isGeetingJobbSeekers,
@@ -228,7 +225,7 @@ const useJobSeekers = () => {
       refKey: "id",
       name: "Experience",
       type: FILTER_TYPE_ENUM.CHECKBOX,
-      options: [{ id: 1, name: "1 year" }], //experienceData
+      options: [{ id: 1, name: "1 year" }], //TODO:experienceData
       selectedOptions: filterState?.selectedExperience,
       handler: handleFilterChange,
     },

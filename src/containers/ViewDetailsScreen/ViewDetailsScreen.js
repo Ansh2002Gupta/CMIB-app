@@ -11,10 +11,10 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { TwoRow } from "../../core/layouts";
 
 import { CustomTabs } from "../../components/Tab";
-import Activities from "../../containers/Activities";
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
 import CustomImage from "../../components/CustomImage";
+import Activities from "../../containers/Activities";
 import EducationDetails from "../../containers/EducationDetails";
 import JobPreference from "../../containers/JobPreference/JobPreference";
 import MembershipDetails from "../../containers/MembershipDetails/MembershipDetails";
@@ -80,13 +80,6 @@ const ViewDetailsScreen = () => {
           <TwoRow
             topSection={
               <Col>
-                {/* <Row>
-                  <TouchableImage
-                    onPress={() => {}}
-                    source={images.iconArrowLeft}
-                    style={style.backButton}
-                  />
-                </Row> */}
                 <Row style={style.headerContainer}>
                   <Row style={style.alignCenter}>
                     <TouchableImage
