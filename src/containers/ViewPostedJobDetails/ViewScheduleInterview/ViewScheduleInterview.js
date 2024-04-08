@@ -10,6 +10,7 @@ import {
 import styles from "./ViewScheduleInterview.styles";
 import { useIntl } from "react-intl";
 import useGetScheduleList from "../../../views/ViewPostedJobDetails/controller/useGetScheduleList";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 
 const ViewScheduleInterview = ({ id }) => {
   const intl = useIntl();
@@ -33,7 +34,7 @@ const ViewScheduleInterview = ({ id }) => {
     isTicketListingLoading,
     isFirstPageReceived,
     getErrorDetails,
-    isErrorGetPostedJob,
+    isErrorGetScheduleInterview,
     loadingMore,
     onIconPress,
     queryTypeData,
@@ -43,7 +44,7 @@ const ViewScheduleInterview = ({ id }) => {
     statusText,
     subHeadingText,
     tableIcon,
-    postedJobData,
+    scheduleInterviewData,
     totalcards,
   } = useGetScheduleList(id);
 
@@ -52,7 +53,7 @@ const ViewScheduleInterview = ({ id }) => {
       <MobileCard
         item={item}
         getStatusStyle={getStatusStyle}
-        lastElement={postedJobData.length - 1 === index}
+        lastElement={scheduleInterviewData.length - 1 === index}
         statusData={statusData ? statusData : []}
         onEditPress={() => {}}
         onViewPress={() => {}}
@@ -61,51 +62,60 @@ const ViewScheduleInterview = ({ id }) => {
   };
 
   return (
-    <CustomTable
-      {...{
-        allDataLoaded,
-        currentPage,
-        currentRecords,
-        data: postedJobData,
-        filterApplyHandler,
-        filterCategory,
-        getColoumConfigs,
-        getStatusStyle,
-        handleLoadMore,
-        getErrorDetails,
-        tableHeading,
-        isErrorGetPostedJob,
-        handlePageChange,
-        handleRowPerPageChange,
-        handleSearchResults,
-        handleSaveAddTicket,
-        headingTexts,
-        indexOfFirstRecord,
-        indexOfLastRecord,
-        isHeading,
-        isTicketListingLoading,
-        isFirstPageReceived,
-        loadingMore,
-        onIconPress,
-        queryTypeData,
-        rowsLimit,
-        rowsPerPage,
-        setCurrentRecords,
-        statusData,
-        statusText,
-        subHeadingText,
-        tableIcon,
-        totalcards,
-        placeholder: intl.formatMessage({
-          id: "label.search_by_applicant_name",
-        }),
-      }}
-      mobileComponentToRender={getMobileView}
-      containerStyle={styles.customTableStyle}
-      isTotalCardVisible={false}
-      ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
-      renderCalendar={true}
-    />
+    <>
+      {!isErrorGetScheduleInterview && (
+        <CustomTable
+          {...{
+            allDataLoaded,
+            currentPage,
+            currentRecords,
+            data: scheduleInterviewData,
+            filterApplyHandler,
+            filterCategory,
+            getColoumConfigs,
+            getStatusStyle,
+            handleLoadMore,
+            getErrorDetails,
+            tableHeading,
+            handlePageChange,
+            handleRowPerPageChange,
+            handleSearchResults,
+            handleSaveAddTicket,
+            headingTexts,
+            indexOfFirstRecord,
+            indexOfLastRecord,
+            isHeading,
+            isTicketListingLoading,
+            isFirstPageReceived,
+            loadingMore,
+            onIconPress,
+            queryTypeData,
+            rowsLimit,
+            rowsPerPage,
+            setCurrentRecords,
+            statusData,
+            statusText,
+            subHeadingText,
+            tableIcon,
+            totalcards,
+            placeholder: intl.formatMessage({
+              id: "label.search_by_applicant_name",
+            }),
+          }}
+          mobileComponentToRender={getMobileView}
+          containerStyle={styles.customTableStyle}
+          isTotalCardVisible={false}
+          ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
+          renderCalendar={true}
+        />
+      )}
+      {isErrorGetScheduleInterview && !!getErrorDetails()?.errorMessage && (
+        <ErrorComponent
+          errorMsg={getErrorDetails()?.errorMessage}
+          onRetry={() => getErrorDetails()?.onRetry()}
+        />
+      )}
+    </>
   );
 };
 export default ViewScheduleInterview;

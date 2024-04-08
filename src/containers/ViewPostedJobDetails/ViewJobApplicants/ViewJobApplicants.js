@@ -11,6 +11,7 @@ import {
 import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
 import { useNavigate } from "../../../routes";
 import { navigations } from "../../../constants/routeNames";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 const ViewJobApplicants = ({ id, questionaireData }) => {
   const navigate = useNavigate();
   const onEditPress = (item) => {
@@ -38,7 +39,7 @@ const ViewJobApplicants = ({ id, questionaireData }) => {
     isTicketListingLoading,
     isFirstPageReceived,
     getErrorDetails,
-    isErrorGetPostedJob,
+    isError,
     loadingMore,
     onIconPress,
     queryTypeData,
@@ -48,66 +49,75 @@ const ViewJobApplicants = ({ id, questionaireData }) => {
     statusText,
     subHeadingText,
     tableIcon,
-    postedJobData,
+    applicantListingData,
     totalcards,
   } = useGetApplicantList(id, onEditPress);
 
   const getMobileView = (item, index) => {
     return (
       <RenderMobileItem
-        lastElement={postedJobData.length - 1 === index}
+        lastElement={applicantListingData.length - 1 === index}
         item={item}
       />
     );
   };
 
   return (
-    <CustomTable
-      {...{
-        allDataLoaded,
-        currentPage,
-        currentRecords,
-        filterApplyHandler,
-        filterCategory,
-        getColoumConfigs,
-        getStatusStyle,
-        handleLoadMore,
-        getErrorDetails,
-        tableHeading,
-        isErrorGetPostedJob,
-        handlePageChange,
-        handleRowPerPageChange,
-        handleSearchResults,
-        handleSaveAddTicket,
-        headingTexts,
-        indexOfFirstRecord,
-        indexOfLastRecord,
-        isHeading,
-        isTicketListingLoading,
-        isFirstPageReceived,
-        loadingMore,
-        onIconPress,
-        queryTypeData,
-        rowsLimit,
-        rowsPerPage,
-        setCurrentRecords,
-        statusData,
-        statusText,
-        subHeadingText,
-        tableHeading,
-        tableIcon,
-        totalcards,
-        placeholder: intl.formatMessage({
-          id: "label.search_by_applicant_name",
-        }),
-      }}
-      mobileComponentToRender={getMobileView}
-      isFilterVisible={false}
-      containerStyle={styles.innerContainerStyle}
-      isTotalCardVisible={false}
-      data={postedJobData}
-      ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
-    />
+    <>
+      {!isError && (
+        <CustomTable
+          {...{
+            allDataLoaded,
+            currentPage,
+            currentRecords,
+            filterApplyHandler,
+            filterCategory,
+            getColoumConfigs,
+            getStatusStyle,
+            handleLoadMore,
+            getErrorDetails,
+            tableHeading,
+            handlePageChange,
+            handleRowPerPageChange,
+            handleSearchResults,
+            handleSaveAddTicket,
+            headingTexts,
+            indexOfFirstRecord,
+            indexOfLastRecord,
+            isHeading,
+            isTicketListingLoading,
+            isFirstPageReceived,
+            loadingMore,
+            onIconPress,
+            queryTypeData,
+            rowsLimit,
+            rowsPerPage,
+            setCurrentRecords,
+            statusData,
+            statusText,
+            subHeadingText,
+            tableHeading,
+            tableIcon,
+            totalcards,
+            placeholder: intl.formatMessage({
+              id: "label.search_by_applicant_name",
+            }),
+          }}
+          mobileComponentToRender={getMobileView}
+          isFilterVisible={false}
+          containerStyle={styles.innerContainerStyle}
+          isTotalCardVisible={false}
+          data={applicantListingData}
+          ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
+        />
+      )}
+      {isError && !!getErrorDetails()?.errorMessage && (
+        <ErrorComponent
+          errorMsg={getErrorDetails()?.errorMessage}
+          onRetry={() => getErrorDetails()?.onRetry()}
+        />
+      )}
+    </>
   );
 };
 export default ViewJobApplicants;

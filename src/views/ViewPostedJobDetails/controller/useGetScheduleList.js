@@ -45,10 +45,10 @@ const useGetScheduleList = (id) => {
   );
 
   const {
-    data: postedJobData,
+    data: scheduleInterviewData,
     isLoading: isTicketListingLoading,
-    fetchData: fetchPostedJobs,
-    isError: isErrorGetPostedJob,
+    fetchData: fetchScheduleInterviews,
+    isError: isErrorGetScheduleInterview,
     error: errorGetPostedJobs,
   } = useFetch({
     url: `company/jobs/${id}/schedule-interview`,
@@ -70,7 +70,7 @@ const useGetScheduleList = (id) => {
     },
   ];
   const getErrorDetails = () => {
-    if (isErrorGetPostedJob) {
+    if (isErrorGetScheduleInterview) {
       let errorMessage = "";
       if (errorGetPostedJobs === GENERIC_GET_API_FAILED_ERROR_MESSAGE) {
         errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
@@ -80,14 +80,14 @@ const useGetScheduleList = (id) => {
       return {
         errorMessage,
         onRetry: () => {
-          fetchPostedJobs({});
+          fetchScheduleInterviews({});
         },
       };
     }
-    if (isErrorGetPostedJob)
+    if (isErrorGetScheduleInterview)
       return {
         errorMessage: errorGetPostedJobs?.data?.message,
-        onRetry: () => fetchPostedJobs({}),
+        onRetry: () => fetchScheduleInterviews({}),
       };
   };
 
@@ -103,7 +103,7 @@ const useGetScheduleList = (id) => {
         perPage: rowsPerPage,
         page: currentPage,
       };
-      const initialData = await fetchPostedJobs({
+      const initialData = await fetchScheduleInterviews({
         queryParamsObject: requestedParams,
       });
       if (initialData && initialData?.records?.length > 0) {
@@ -119,7 +119,7 @@ const useGetScheduleList = (id) => {
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
   const updateCurrentRecords = async (params) => {
-    const newData = await fetchPostedJobs({
+    const newData = await fetchScheduleInterviews({
       queryParamsObject: params,
     });
     setCurrentRecords(newData.records);
@@ -130,7 +130,7 @@ const useGetScheduleList = (id) => {
     setLoadingMore(true);
     const nextPage = currentPage + 1;
     try {
-      const newData = await fetchPostedJobs({
+      const newData = await fetchScheduleInterviews({
         queryParamsObject: {
           perPage: rowsPerPage,
           page: nextPage,
@@ -179,7 +179,7 @@ const useGetScheduleList = (id) => {
     setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
     if (isMob) {
       setCurrentPage(1);
-      const newData = await fetchPostedJobs({
+      const newData = await fetchScheduleInterviews({
         queryParamsObject: {
           search: searchedData,
           status: filterOptions.activeorInctive,
@@ -211,7 +211,7 @@ const useGetScheduleList = (id) => {
     if (isMob) {
       setLoadingMore(false);
       setCurrentPage(1);
-      const newData = await fetchPostedJobs({
+      const newData = await fetchScheduleInterviews({
         queryParamsObject: {
           search: filterOptions.searchData,
           status: selectedStatus,
@@ -383,7 +383,7 @@ const useGetScheduleList = (id) => {
   return {
     allDataLoaded,
     currentPage,
-    fetchPostedJobs,
+    fetchScheduleInterviews,
     filterApplyHandler,
     filterCategory,
     getColoumConfigs,
@@ -394,7 +394,7 @@ const useGetScheduleList = (id) => {
     handleSearchResults,
     headingTexts,
     getErrorDetails,
-    isErrorGetPostedJob,
+    isErrorGetScheduleInterview,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
@@ -407,8 +407,8 @@ const useGetScheduleList = (id) => {
     statusText,
     subHeadingText,
     tableIcon,
-    postedJobData: currentRecords,
-    totalcards: postedJobData?.meta?.total,
+    scheduleInterviewData: currentRecords,
+    totalcards: scheduleInterviewData?.meta?.total,
   };
 };
 

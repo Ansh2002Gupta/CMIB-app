@@ -28,6 +28,7 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
 import colors from "../../../assets/colors";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -54,27 +55,42 @@ const useGetApplicantList = (id, onEditPress) => {
   const navigate = useNavigate();
 
   const {
-    data: postedJobData,
+    data: applicantListingData,
     isLoading: isTicketListingLoading,
     fetchData: fetchDataTicketListing,
+    isError,
+    error: errorGetApplicant,
   } = useFetch({
     url: `company/jobs/${id}/applicants`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
-
-  //   const { handleAddTicket } = useAddTicket();
-
-  const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
-
-  const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
+  const queryTypeData = [];
+  const statusData = [];
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
     setCurrentPage,
     setRowPerPage,
   });
+
+  const getErrorDetails = () => {
+    if (isError) {
+      let errorMessage = "";
+      if (errorGetApplicant === GENERIC_GET_API_FAILED_ERROR_MESSAGE) {
+        errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      } else {
+        errorMessage = `${errorGetApplicant?.data?.message}`;
+      }
+      return {
+        errorMessage,
+        onRetry: () => {
+          fetchDataTicketListing({});
+        },
+      };
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -153,30 +169,6 @@ const useGetApplicantList = (id, onEditPress) => {
       status: filterOptions.status,
       queryType: filterOptions.query_type,
     });
-  };
-
-  const onIconPress = (item) => {
-    // navigate(navigations.TICKETS_VIEW_EDIT, {
-    //   state: item,
-    // });
-  };
-
-  const handleSaveAddTicket = async (queryType, enterQuery) => {
-    // await handleAddTicket({ query_type: queryType, query: enterQuery });
-    // if (isMob) {
-    //   const newData = await fetchDataTicketListing();
-    //   if (newData && newData.records.length > 0) {
-    //     setCurrentRecords((prevRecords) => [
-    //       ...prevRecords,
-    //       ...newData.records,
-    //     ]);
-    //   }
-    // } else {
-    //   await updateCurrentRecords({
-    //     perPage: rowsPerPage,
-    //     page: currentPage,
-    //   });
-    // }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
@@ -307,8 +299,8 @@ const useGetApplicantList = (id, onEditPress) => {
     handleRowPerPageChange,
     handleSearchResults,
     headingTexts,
-    // getErrorDetails,
-    // isErrorGetPostedJob,
+    isError,
+    getErrorDetails,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
@@ -321,8 +313,9 @@ const useGetApplicantList = (id, onEditPress) => {
     statusText,
     subHeadingText,
     tableIcon,
-    postedJobData: currentRecords,
-    totalcards: postedJobData?.meta?.total,
+    applicantListingData: currentRecords,
+    getErrorDetails,
+    totalcards: applicantListingData?.meta?.total,
   };
 };
 
