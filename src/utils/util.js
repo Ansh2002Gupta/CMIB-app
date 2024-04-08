@@ -570,9 +570,30 @@ export const convertToTime = ({ dateString, format24Hour = true }) => {
 };
 
 export const formateDateandTime = (date, time) => {
-  console.log("time", time);
-
-  const formattedDate = dayjs(date).format("YYYY-MM-DD");
-  const formattedTime = dayjs(time).format("HH:mm:ss");
+  const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
+  const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
   return formattedDate + " " + formattedTime;
+};
+
+export const areAllValuesEmpty = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === "object") {
+      if (!areAllValuesEmpty(obj[key])) {
+        return false;
+      }
+    } else {
+      if (obj[key] !== "") {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+const isObjectFilled = (obj) => {
+  return Object.values(obj).every((value) => value !== "");
+};
+
+export const areAllValuesFilled = (objects) => {
+  return Object.values(objects).some(isObjectFilled);
 };

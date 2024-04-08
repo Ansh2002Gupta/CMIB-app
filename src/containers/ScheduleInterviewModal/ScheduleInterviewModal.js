@@ -14,8 +14,12 @@ import CustomTextInput from "../../components/CustomTextInput";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import { usePost, usePut } from "../../hooks/useApiRequest";
 import useIsWebView from "../../hooks/useIsWebView";
-import { formateDateandTime } from "../../utils/util";
-import { ADDRESS_MAX_LENGTH } from "../../constants/constants";
+import {
+  areAllValuesEmpty,
+  areAllValuesFilled,
+  formateDateandTime,
+} from "../../utils/util";
+import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../constants/constants";
 import {
   APPLICANTS,
   INTERVIEW,
@@ -124,6 +128,9 @@ const ScheduleInterviewModal = ({ onClose }) => {
   } = usePut({
     url: POST_JOB + APPLICANTS + INTERVIEW + `${applicant_id}`,
   });
+
+  const isDisabled =
+    !areAllValuesFilled(primaryDetails) || !areAllValuesEmpty(error);
 
   const handleScheduleInterview = () => {
     const primaryType = getAPIInterViewType(primaryInterviewType);
@@ -338,7 +345,7 @@ const ScheduleInterviewModal = ({ onClose }) => {
                 handleBlur(interviewKey, "address");
               }}
               isMandatory={isPrimary}
-              maxLength={ADDRESS_MAX_LENGTH}
+              maxLength={SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH}
               value={details[interviewKey].address}
               {...primaryAddressProps}
             />
@@ -390,13 +397,6 @@ const ScheduleInterviewModal = ({ onClose }) => {
       default:
         return null;
     }
-  };
-
-  const hasErrors = () => {
-    const primaryErrorValues = Object.values(error).map((err) =>
-      Object.values(err)
-    );
-    return primaryErrorValues.some((err) => err.some((e) => e !== ""));
   };
 
   const isWebProps =
@@ -488,7 +488,7 @@ const ScheduleInterviewModal = ({ onClose }) => {
               ...isWebProps,
               customContainerStyle: commonStyles.customContainerStyle,
             }}
-            isDisabled={hasErrors()}
+            isDisabled={isDisabled}
             displayLoader={isScheduleInterviewLoading}
             isButtonTwoGreen
             onPressButtonOne={onClose}

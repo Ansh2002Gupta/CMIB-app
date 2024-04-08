@@ -3,6 +3,7 @@ export const INTERVIEW_DETAILS = {
   applicant_name: "Amulya Kohli",
   applicant_id: "NRO01234",
   type: "remote",
+  alternate_type: "remote",
   vanue_address:
     "tower b1  world tnsjk afsd kf asddsfj sadfhhs dfadsfadsf sdfas sdfafjhasd ech park",
   alternate_venue_address: "tower b1  world tech park",
@@ -10,16 +11,11 @@ export const INTERVIEW_DETAILS = {
   primary_schedule_time: "11:30 AM",
   alternate_schedule_date: "2023-12-28",
   alternate_schedule_time: "12:00 AM",
-  remote_meeting_link: "https://mail.google.com/chat/u/0/#chat/dm/6-pWQ0AAAAE",
-  alternate_remote_meeting_link:
-    "https://mail.google.com/chat/u/0/#chat/dm/6-pWQ0AAdsddsdsdsdsAAE",
+  remote_meeting_link: "https://meet.google.com/vjk-bnof-fnp",
+  alternate_remote_meeting_link: "https://meet.google.com/vjk-bnof-fnp",
 };
 
-export const INTERVIEW_DETAILS_FIELDS = (
-  applicant_name,
-  applicant_id,
-  type
-) => {
+export const INTERVIEW_DETAILS_FIELDS = (applicant_name, applicant_id) => {
   return [
     {
       id: 1,
@@ -33,16 +29,10 @@ export const INTERVIEW_DETAILS_FIELDS = (
       label: "applicant_id",
       value: applicant_id,
     },
-    {
-      id: 3,
-      headingIntl: "interview_type",
-      label: "type",
-      value: type,
-    },
   ];
 };
 
-export const FACE_TO_FACE = (address, schedule_date, schedule_time) => {
+export const FACE_TO_FACE = (address, schedule_date, schedule_time, type) => {
   return [
     {
       id: 1,
@@ -61,6 +51,12 @@ export const FACE_TO_FACE = (address, schedule_date, schedule_time) => {
       headingIntl: "time",
       label: "schedule_time",
       value: schedule_time,
+    },
+    {
+      id: 4,
+      headingIntl: "interview_type",
+      label: "type",
+      value: type,
     },
   ];
 };

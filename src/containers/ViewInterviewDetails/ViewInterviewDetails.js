@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { ScrollView, View, Linking } from "@unthinkable/react-core-components";
 
 import { TwoRow } from "../../core/layouts";
 
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
+import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import {
   FACE_TO_FACE,
   INTERVIEW_DETAILS,
@@ -14,13 +15,13 @@ import {
   REMOTE,
   TELEPHONIC,
 } from "./ViewInterviewFieldDetails";
-import styles from "./ViewInterviewDetails.style";
+import { getValidUrl } from "../../utils/util";
 import commonStyles from "../../theme/styles/commonStyles";
+import styles from "./ViewInterviewDetails.style";
 
 const interviewDetails = INTERVIEW_DETAILS_FIELDS(
   INTERVIEW_DETAILS.applicant_name,
-  INTERVIEW_DETAILS.applicant_id,
-  INTERVIEW_DETAILS.type
+  INTERVIEW_DETAILS.applicant_id
 );
 
 const primaryFaceToFace = FACE_TO_FACE(
@@ -74,28 +75,57 @@ const currentAlternateDetails =
 const ViewInterviewDetails = ({ onClose }) => {
   const intl = useIntl();
 
-  const renderInterviewDetails = (details) => {
+  const handlePressLink = (url) => {
+    Linking.openURL(getValidUrl(url), "_blank");
+  };
+
+  const renderHeadingAndValue = ({
+    heading,
+    value,
+    isMandatory,
+    label = "",
+  }) => {
+    return (
+      <TwoRow
+        style={styles.headingValueContainer}
+        topSection={
+          <View style={styles.headingContainer}>
+            <CommonText customTextStyle={styles.headerText}>
+              {heading}
+            </CommonText>
+            {isMandatory && (
+              <CommonText customTextStyle={styles.redText}>*</CommonText>
+            )}
+          </View>
+        }
+        bottomSection={
+          label === "link" ? (
+            <CustomTouchableOpacity onPress={() => handlePressLink(value)}>
+              <CommonText customTextStyle={styles.linkText}>{value}</CommonText>
+            </CustomTouchableOpacity>
+          ) : (
+            <CommonText customTextStyle={styles.formalText}>{value}</CommonText>
+          )
+        }
+      />
+    );
+  };
+
+  const renderInterviewDetails = (details, isMandatory) => {
     return (
       <View style={styles.detailsSection}>
         {details.map((item) => {
           return (
-            <TwoRow
-              topSection={
-                <CommonText
-                  customContainerStyle={styles.headingContainer}
-                  customTextStyle={styles.headerText}
-                >
-                  {intl.formatMessage({
-                    id: `label.${item.headingIntl}`,
-                  })}
-                </CommonText>
-              }
-              bottomSection={
-                <CommonText customTextStyle={styles.formalText}>
-                  {item.value}
-                </CommonText>
-              }
-            />
+            <>
+              {renderHeadingAndValue({
+                heading: intl.formatMessage({
+                  id: `label.${item.headingIntl}`,
+                }),
+                value: item.value,
+                isMandatory: isMandatory,
+                label: item.label,
+              })}
+            </>
           );
         })}
       </View>
@@ -108,6 +138,7 @@ const ViewInterviewDetails = ({ onClose }) => {
       isIconCross
       onPressIconCross={onClose}
       onBackdropPress={onClose}
+      maxWidth={"lg"}
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -116,40 +147,54 @@ const ViewInterviewDetails = ({ onClose }) => {
         <View style={styles.detailsSection}>
           {interviewDetails.map((item) => {
             return (
-              <TwoRow
-                topSection={
-                  <View style={styles.headingContainer}>
-                    <CommonText customTextStyle={styles.headerText}>
-                      {intl.formatMessage({ id: `label.${item.headingIntl}` })}
-                    </CommonText>
-                    <CommonText customTextStyle={styles.redText}>*</CommonText>
-                  </View>
-                }
-                bottomSection={
-                  <CommonText customTextStyle={styles.formalText}>
-                    {item.value}
-                  </CommonText>
-                }
-              />
+              <>
+                {renderHeadingAndValue({
+                  heading: intl.formatMessage({
+                    id: `label.${item.headingIntl}`,
+                  }),
+                  value: item.value,
+                  isMandatory: true,
+                })}
+              </>
             );
           })}
         </View>
         <View style={commonStyles.horizontalLine} />
         <TwoRow
           topSection={
-            <CommonText fontWeight={"600"} customTextStyle={styles.headingText}>
-              {intl.formatMessage({ id: "label.primary_interview" })}
-            </CommonText>
+            <View>
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={styles.headingText}
+              >
+                {intl.formatMessage({ id: "label.primary_interview" })}
+              </CommonText>
+              {renderHeadingAndValue({
+                heading: intl.formatMessage({ id: "label.interview_type" }),
+                value: INTERVIEW_DETAILS.type,
+                isMandatory: true,
+              })}
+            </View>
           }
-          bottomSection={renderInterviewDetails(currentPrimaryDetails)}
+          bottomSection={renderInterviewDetails(currentPrimaryDetails, true)}
         />
         <TwoRow
           topSection={
-            <CommonText fontWeight={"600"} customTextStyle={styles.headingText}>
-              {intl.formatMessage({ id: "label.alternate_interview" })}
-            </CommonText>
+            <View>
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={styles.headingText}
+              >
+                {intl.formatMessage({ id: "label.alternate_interview" })}
+              </CommonText>
+              {renderHeadingAndValue({
+                heading: intl.formatMessage({ id: "label.interview_type" }),
+                value: INTERVIEW_DETAILS.type,
+                isMandatory: false,
+              })}
+            </View>
           }
-          bottomSection={renderInterviewDetails(currentAlternateDetails)}
+          bottomSection={renderInterviewDetails(currentAlternateDetails, false)}
         />
       </ScrollView>
     </CustomModal>

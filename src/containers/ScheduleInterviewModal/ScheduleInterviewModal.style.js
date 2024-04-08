@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   modalInnerContainer: {
-    overflow: "visible",
     ...Platform.select({
       ios: {
         maxHeight: deviceHeight / 1.5,
