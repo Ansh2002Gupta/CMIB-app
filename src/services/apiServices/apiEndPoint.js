@@ -2,6 +2,7 @@
 export const USER_TYPE_COMPANY = "company";
 export const USER_TYPE_MEMBER = "member";
 export const CORE = "core";
+export const ADMIN = "admin";
 
 /* API Endpoints */
 export const COMPANY_RESET_PASSWORD_OTP = `${USER_TYPE_COMPANY}/reset-password/confirm`;
@@ -69,4 +70,4 @@ export const GET_GENDER_PREFERENCE = `${USER_TYPE_COMPANY}/genders`;
 export const GET_WORK_MODE = `${USER_TYPE_COMPANY}/workmode`;
 export const POST_JOB = `${USER_TYPE_COMPANY}/jobs`;
 export const UPDATE_JOB = `${USER_TYPE_COMPANY}/jobs/update`;
-
+export const GET_SCHEDULE_INTERVIEW = `/scheduled-interview`;

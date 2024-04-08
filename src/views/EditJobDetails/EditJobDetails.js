@@ -8,30 +8,30 @@ import AddModifyJobComponent from "../../containers/AddModifyNewJobs/AddModifyJo
 import FooterComponent from "../../containers/AddModifyNewJobs/FooterComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { CustomTabs } from "../../components/Tab";
-import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
-import { useLocation, useNavigate } from "../../routes";
 import LoadingScreen from "../../components/LoadingScreen";
 
-import { getDecryptApiData, getFormatedData } from "../../utils/util";
+import { getFormatedData } from "../../utils/util";
 import Http from "../../services/http-service";
 import { useIntl } from "react-intl";
 
 import { UPDATE_JOB } from "../../services/apiServices/apiEndPoint";
 import styles from "./EditJobDetails.styles";
-import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
-import useGetEditJobs from "../../services/apiServices/hooks/EditJobs/useGetEditJobs";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
-const EditJobDetails = () => {
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import { useParams } from "react-router";
+import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
+import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
+const EditJobDetails = ({
+  jobData: intialJobData,
+  questionData: intialQuestionData,
+  onCancelPress,
+}) => {
+  const { isLoading, isErrorData, fetchData, isSuccess } =
+    useGetAddNewJobData();
+  const [addJobs] = useContext(AddJobContext);
   const { isWebView } = useIsWebView();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {
-    jobData: intialJobData,
-    questionData: intialQuestionData,
-    id,
-  } = location.state;
+  const { id } = useParams();
   const [jobDetails, setJobDetails] = useState(intialJobData);
   const initialJob = useRef(intialJobData);
   const initialQuestion = useRef(intialQuestionData);
@@ -46,44 +46,18 @@ const EditJobDetails = () => {
   const questionaireRef = useRef(null);
   const addJobRef = useRef(null);
   const intl = useIntl();
-  const [addJobs] = useContext(AddJobContext);
-  const {
-    fetchData,
-    isLoading,
-    isSuccess: newJobSuccess,
-    isError,
-    isErrorData,
-  } = useGetAddNewJobData();
-  const {
-    isLoading: isGetApiLoading,
-    isSuccess: fetchApiSuccess,
-    stateResult: data,
-    getJobs: fetchApiData,
-    error: error,
-    isError: jobError,
-  } = useGetEditJobs(id);
-
   useEffect(() => {
-    if (!intialJobData) {
-      fetchApiData();
-    }
     fetchData();
   }, []);
+
   useEffect(() => {
-    if (data && fetchApiSuccess && newJobSuccess) {
-      setLoading(true);
-      const { obj, transformedQuestionnaire } = getDecryptApiData(
-        data,
-        addJobs
-      );
-      initialJob.current = obj;
-      initialQuestion.current = transformedQuestionnaire;
-      setJobDetails(obj);
-      setQuestionaire(transformedQuestionnaire);
-      setIsCheckList(obj?.notify_company === 1 ?? false);
-      setLoading(false);
+    if (intialJobData && intialQuestionData) {
+      setJobDetails(intialJobData);
+      initialJob.current = intialJobData;
+      initialQuestion.current = intialQuestionData;
+      setQuestionaire(intialQuestionData);
     }
-  }, [data, newJobSuccess, fetchApiSuccess, addJobs]);
+  }, [intialQuestionData, intialQuestionData]);
 
   const addIsDeleteKey = (updatedArray) => {
     let mainArray = initialQuestion.current;
@@ -155,7 +129,7 @@ const EditJobDetails = () => {
           setLoading(false);
         })
         .finally(() => {
-          navigate(-1);
+          onCancelPress(true);
         });
     } else {
       setSuccessMessage(intl.formatMessage({ id: "label.fill_mandatory" }));
@@ -167,9 +141,12 @@ const EditJobDetails = () => {
         headerText={intl.formatMessage({ id: "label.edit_jobs" })}
         isBorderVisible={false}
       />
-      {(isLoading || isGetApiLoading || loading) && <LoadingScreen />}
-      {!(isLoading || isGetApiLoading || loading) &&
-        jobDetails &&
+      {loading || (isLoading && <LoadingScreen />)}
+      {!loading &&
+        !isLoading &&
+        isSuccess &&
+        addJobs?.jobLocationData &&
+        Object.keys(jobDetails).length > 0 &&
         questionaire && (
           <ScrollView style={styles.container}>
             <View style={styles.mainViewStyle}>
@@ -232,16 +209,16 @@ const EditJobDetails = () => {
                 isWebView={isWebView}
                 isCheckList={isChecklist}
                 setIsCheckList={setIsCheckList}
+                onCancelPress={onCancelPress}
                 submitButtonText={"label.save"}
               />
             </View>
           </ScrollView>
         )}
-      {!isLoading && (isError || jobError || postError) && (
+      {(postError || isErrorData) && (
         <ErrorComponent
           errorMsg={
             isErrorData?.data?.message ||
-            error ||
             postError?.data?.message ||
             GENERIC_GET_API_FAILED_ERROR_MESSAGE
           }

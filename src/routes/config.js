@@ -235,24 +235,17 @@ const config = [
       },
       {
         viewPath: navigations.POSTED_JOBS,
-        element: <PostedJobs />,
+        element: <PostedJobsView />,
       },
 
       {
         viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
         element: <AddModifyNewJobs />,
       },
+
       {
-        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}`,
+        viewPath: `${navigations.DETAILS_JOBS}`,
         element: <ViewPostedJobDetails />,
-      },
-      {
-        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}/${navigations.EDIT_JOB}`,
-        element: <EditJobDetails />,
-      },
-      {
-        viewPath: `${navigations.POSTED_JOBS}/${navigations.EDIT_JOB}`,
-        element: <EditJobDetails />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,
@@ -270,14 +263,6 @@ const config = [
       {
         viewPath: navigations.SAVED_JOBS,
         element: <SavedJobs />,
-      },
-      {
-        viewPath: navigations.ALL_JOBS,
-        element: <PostedJobsView />,
-      },
-      {
-        viewPath: navigations.APPLIED_JOBS,
-        element: <PostedJobsView />,
       },
 
       {
