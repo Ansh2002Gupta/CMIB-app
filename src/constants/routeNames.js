@@ -37,4 +37,5 @@ export const navigations = {
   ADD_NEW_JOBS: "add-new-jobs",
   DETAILS_JOBS: "details-jobs",
   EDIT_JOB: "edit-job",
+  JOB_DETAIL: "job-detail",
 };

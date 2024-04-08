@@ -1,7 +1,7 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import CommonText from "../CommonText";
-import { Platform, Image, View } from "@unthinkable/react-core-components";
+import { Image, View } from "@unthinkable/react-core-components";
 
 import { ThreeRow, TwoColumn } from "../../core/layouts";
 import MultiColumn from "../../core/layouts/MultiColumn";
@@ -17,7 +17,15 @@ import style from "./SavedJobComponent.style";
 
 import colors from "../../assets/colors";
 
-const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
+const JobCardWeb = ({
+  cardDetails,
+  isLoading,
+  handleRemove,
+  handleApply,
+  handleSave,
+  isRemoved,
+  isApplyLoading,
+}) => {
   const intl = useIntl();
   const {
     companyName,
@@ -115,6 +123,9 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
     },
   ];
 
+  const onPressButtonOne = isRemoved ? handleSave : handleRemove;
+  const buttonOneText = isRemoved ? "label.save" : "label.remove";
+
   const mainCardMultiRow = [
     {
       content: (
@@ -176,9 +187,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
           isLeftFillSpace
           leftSection={
             <CommonText customTextStyle={style.greyText}>{`${intl.formatMessage(
-              {
-                id: "label.posted",
-              }
+              { id: "label.posted" }
             )} ${timeAgo(createdAt)} ${intl.formatMessage({
               id: "label.ago",
             })}`}</CommonText>
@@ -186,10 +195,11 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
           rightSection={
             <ActionPairButton
               displayLoaderLeft={isLoading}
+              displayLoader={isApplyLoading}
               isDisabledLeft={isLoading}
               isDisabled={isLoading}
               onPressButtonTwo={handleApply}
-              onPressButtonOne={handleRemove}
+              onPressButtonOne={onPressButtonOne}
               isButtonTwoGreen
               iconLeft={{
                 leftIconSource: images.iconSingleSave,
@@ -202,7 +212,7 @@ const JobCardWeb = ({ cardDetails, isLoading, handleRemove, handleApply }) => {
                 buttonTwoTextStyle: style.buttonTextStyle,
                 buttonOneTextStyle: style.buttonTextStyle,
               }}
-              buttonOneText={intl.formatMessage({ id: "label.remove" })}
+              buttonOneText={intl.formatMessage({ id: buttonOneText })}
               buttonTwoText={intl.formatMessage({ id: "label.applyJob" })}
             />
           }

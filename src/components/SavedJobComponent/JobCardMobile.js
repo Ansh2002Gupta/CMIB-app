@@ -20,6 +20,9 @@ const JobCardMobile = ({
   isLoading,
   handleRemove,
   handleApply,
+  handleSave,
+  isRemoved,
+  isApplyLoading,
 }) => {
   const intl = useIntl();
   const {
@@ -36,6 +39,9 @@ const JobCardMobile = ({
     maxExperience,
     requirement,
   } = cardDetails;
+
+  const onPressButtonOne = isRemoved ? handleSave : handleRemove;
+  const buttonOneText = isRemoved ? "label.save" : "label.remove";
 
   const rowConfig = (data) => {
     return data?.map((item, index) => {
@@ -204,7 +210,7 @@ const JobCardMobile = ({
             <TwoColumn
               leftSection={
                 <CustomButton
-                  disabled={isLoading}
+                  disabled={isApplyLoading}
                   onPress={handleApply}
                   customStyle={{
                     customTextStyle: style.customButtonApplyStyle,
@@ -221,11 +227,11 @@ const JobCardMobile = ({
                     leftIconAlt: "left-saved",
                     leftIconSource: images.iconSaveSlashBlue,
                   }}
-                  onPress={handleRemove}
+                  onPress={onPressButtonOne}
                   customStyle={{ customTextStyle: style.customButtonTextStyle }}
                   style={style.buttonStyle}
                 >
-                  {intl.formatMessage({ id: "label.remove" })}
+                  {intl.formatMessage({ id: buttonOneText })}
                 </CustomButton>
               }
             />
