@@ -17,6 +17,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./FilterModal.style";
+import DatePickerModal from "../../components/DatePickerModel";
 
 const FilterModal = ({
   filterCategory,
@@ -27,6 +28,7 @@ const FilterModal = ({
   setShowFilterOptions,
   statusData,
   queryTypeData,
+  renderCalendar = false,
 }) => {
   const {
     currentCategory,
@@ -44,7 +46,8 @@ const FilterModal = ({
     onApplyFilter,
     setFilterState,
     setShowFilterOptions,
-    filterCategory
+    filterCategory,
+    renderCalendar
   );
 
   const isWeb = Platform.OS.toLowerCase() === "web";
@@ -105,7 +108,20 @@ const FilterModal = ({
   };
 
   const renderOptionsByCategory = (category) => {
-    if (category === filterCategory[0]) {
+    if (renderCalendar && category === filterCategory[0]) {
+      {
+        return (
+          <View style={styles.datePickerModalView}>
+            <DatePickerModal
+              customStyles={styles.datePickerStyle}
+              value={filterState?.dateSelected}
+              datePickerViewStyle={styles.datePickerInner}
+              onChangeValue={(value) => handleStatusChange(value)}
+            />
+          </View>
+        );
+      }
+    } else if (category === filterCategory[0]) {
       return statusData.map((status) => (
         <RenderCheckButton
           key={status.id}
@@ -267,6 +283,7 @@ FilterModal.propTypes = {
   onApplyFilter: PropTypes.func.isRequired,
   setFilterState: PropTypes.func.isRequired,
   setShowFilterOptions: PropTypes.func.isRequired,
+  renderCalendar: PropTypes.bool,
 };
 
 export default FilterModal;

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "../../../routes";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
@@ -15,25 +15,22 @@ import usePagination from "../../../hooks/usePagination";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
-import styles from "../PostedJobsView.styles";
+import styles from "../ViewPostedJobDetails.styles";
 import colors from "../../../assets/colors";
 import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import { navigations } from "../../../constants/routeNames";
-import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const usePostedJobListing = (onViewPress, onEditPress) => {
+const useGetScheduleList = (id) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState;
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
+  const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+
   const [filterOptions, setFilterOptions] = useState({
     activeorInctive: "",
     approvedorNot: "",
@@ -54,13 +51,15 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     isError: isErrorGetPostedJob,
     error: errorGetPostedJobs,
   } = useFetch({
-    url: POST_JOB,
+    url: `company/jobs/${id}/schedule-interview`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
 
-  const statusData = [
+  const statusData = [];
+
+  const queryTypeData = [
     {
       id: 1,
       name: "Active",
@@ -68,17 +67,6 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     {
       id: 2,
       name: "InActive",
-    },
-  ];
-
-  const queryTypeData = [
-    {
-      id: 1,
-      name: "Approved",
-    },
-    {
-      id: 2,
-      name: "Not Approved",
     },
   ];
   const getErrorDetails = () => {
@@ -134,7 +122,6 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     const newData = await fetchPostedJobs({
       queryParamsObject: params,
     });
-
     setCurrentRecords(newData.records);
   };
 
@@ -148,17 +135,15 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
           perPage: rowsPerPage,
           page: nextPage,
           status: filterOptions.activeorInctive,
-          approved: filterOptions.approvedorNot,
+          queryType: filterOptions.approvedorNot,
         },
       });
-
       if (newData && newData?.records?.length > 0) {
         setCurrentRecords((prevRecords) => [
           ...prevRecords,
           ...newData.records,
         ]);
       }
-
       setCurrentPage(nextPage);
       if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
         setAllDataLoaded(true);
@@ -171,23 +156,23 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   };
 
   const handlePageChange = async (page) => {
-    handlePagePerChange(page);
-    await updateCurrentRecords({
-      perPage: rowsPerPage,
-      page: page,
-      status: filterOptions.activeorInctive,
-      approved: filterOptions.approvedorNot,
-    });
+    // handlePagePerChange(page);
+    // await updateCurrentRecords({
+    //   perPage: rowsPerPage,
+    //   page: page,
+    //   status: filterOptions.activeorInctive,
+    //   queryType: filterOptions.approvedorNot,
+    // });
   };
 
   const handleRowPerPageChange = async (option) => {
-    handleRowsPerPageChange(option.value);
-    await updateCurrentRecords({
-      perPage: option.value,
-      page: currentPage,
-      status: filterOptions.activeorInctive,
-      approved: filterOptions.approvedorNot,
-    });
+    // handleRowsPerPageChange(option.value);
+    // await updateCurrentRecords({
+    //   perPage: option.value,
+    //   page: currentPage,
+    //   status: filterOptions.activeorInctive,
+    //   queryType: filterOptions.approvedorNot,
+    // });
   };
 
   const handleSearchResults = async (searchedData) => {
@@ -198,7 +183,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         queryParamsObject: {
           search: searchedData,
           status: filterOptions.activeorInctive,
-          approved: filterOptions.approvedorNot,
+          queryType: filterOptions.approvedorNot,
         },
       });
       setCurrentRecords(newData?.records);
@@ -213,20 +198,15 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         perPage: rowsPerPage,
         page: currentPage,
         status: filterOptions.activeorInctive,
-        approved: filterOptions.approvedorNot,
+        queryType: filterOptions.approvedorNot,
       });
     }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    const temporaryArray = selectedQueryType
-      ? selectedQueryType.map((item) => {
-          return item - 1;
-        })
-      : "";
     setFilterOptions((prev) => ({
       ...prev,
-      query_type: temporaryArray,
+      query_type: selectedQueryType,
     }));
     if (isMob) {
       setLoadingMore(false);
@@ -235,7 +215,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         queryParamsObject: {
           search: filterOptions.searchData,
           status: selectedStatus,
-          approved: temporaryArray,
+          queryType: selectedQueryType,
         },
       });
       setCurrentRecords(newData?.records);
@@ -247,18 +227,27 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     } else {
       await updateCurrentRecords({
         status: selectedStatus,
-        approved: temporaryArray,
+        queryType: selectedQueryType,
         perPage: rowsPerPage,
         page: currentPage,
       });
     }
   };
+  const onDateSorting = async (sortField) => {
+    // setIsAscendingOrder((prev) => !prev);
+    // await updateCurrentRecords({
+    //   perPage: rowsPerPage,
+    //   page: currentPage,
+    //   sortField: sortField,
+    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
+    // });
+  };
 
-  let headingTexts = ["job_id"];
-  let subHeadingText = ["designation"];
+  let headingTexts = ["name"];
+  let subHeadingText = ["applicant_id"];
   let statusText = ["status"];
   let tableIcon = images.iconMore;
-  let filterCategory = ["Active/Inactive", "Approved/Not Approved"];
+  let filterCategory = ["Date", "Status"];
   let isHeading = true;
 
   function getStatusStyle(status) {
@@ -286,187 +275,106 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       {
         content: (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item?.job_id ?? "-"}
+            {item?.name ?? "-"}
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("16%"),
+          ...commonStyles.columnStyle("18%"),
           ...styles.justifyContentCenter,
+          ...{ paddingLeft: 24, paddingRight: 5 },
         }, // isFillSpace: true,
       },
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item?.designation ?? "-"}
+            {item?.applicant_id ?? "-"}
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("14%"),
+          ...commonStyles.columnStyle("17%"),
           ...styles.justifyContentCenter,
+          ...{ paddingLeft: 5, paddingRight: 5 },
         }, // isFillSpace: true,
       },
       {
         content: (
-          <>
-            {isHeading ? (
-              <CommonText
-                customTextStyle={{
-                  ...tableStyle,
-                }}
-              >
-                {item?.number_of_applications ?? "-"}
-              </CommonText>
-            ) : (
-              <CustomTouchableOpacity
-                onPress={() => {
-                  navigate(
-                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=1`
-                  );
-                }}
-                style={styles.underLineStyle}
-              >
-                <CommonText
-                  customTextStyle={{
-                    ...tableStyle,
-                    ...(!isHeading && { color: colors.darkBlue }),
-                  }}
-                  fontWeight={!isHeading && 600}
-                >
-                  {item?.number_of_applications ?? "-"}
-                </CommonText>
-              </CustomTouchableOpacity>
-            )}
-          </>
+          <CommonText
+            customTextStyle={{
+              ...tableStyle,
+            }}
+          >
+            {item?.status ?? "-"}
+          </CommonText>
         ),
         style: {
           ...commonStyles.columnStyle("13%"),
           ...styles.justifyContentCenter,
+          ...{ paddingLeft: 5, paddingRight: 5 },
         },
       },
-
       {
         content: (
-          <>
-            {isHeading ? (
-              <CommonText
-                customTextStyle={{
-                  ...tableStyle,
-                }}
-              >
-                {item?.number_of_interviews ?? "-"}
-              </CommonText>
-            ) : (
-              <CustomTouchableOpacity
-                onPress={() => {
-                  navigate(
-                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=2`
-                  );
-                }}
-                style={styles.underLineStyle}
-              >
-                <CommonText
-                  customTextStyle={{
-                    ...tableStyle,
-                    ...(!isHeading && { color: colors.darkBlue }),
-                  }}
-                  fontWeight={!isHeading && 600}
-                >
-                  {item?.number_of_interviews ?? "-"}
-                </CommonText>
-              </CustomTouchableOpacity>
-            )}
-          </>
+          <CommonText
+            customTextStyle={{
+              ...tableStyle,
+            }}
+          >
+            {item?.type ?? "-"}
+          </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("13%"),
+          ...commonStyles.columnStyle("15%"),
           ...styles.justifyContentCenter,
+          ...{ paddingLeft: 5, paddingRight: 5 },
         },
       },
-
       {
         content: (
-          <View style={styles.statusStyle}>
-            {isHeading ? (
-              <CommonText
-                customTextStyle={{
-                  ...tableStyle,
-                }}
-              >
-                {item?.status ?? "-"}
-              </CommonText>
-            ) : (
-              <Chip
-                label={
-                  item.status == 1 ? statusData[0].name : statusData[1].name
-                }
-                style={{
-                  ...getStatusStyle(item.status),
-                }}
-              />
-            )}
-          </View>
+          <CommonText
+            customTextStyle={{
+              ...tableStyle,
+            }}
+          >
+            {item?.primary_interview_date ?? "-"}
+          </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("14%"),
+          ...commonStyles.columnStyle("15%"),
           ...styles.justifyContentCenter,
+          ...{ paddingLeft: 5, paddingRight: 5 },
+        },
+      },
+      {
+        content: (
+          <CommonText
+            customTextStyle={{
+              ...tableStyle,
+            }}
+          >
+            {item?.primary_interview_time ?? "-"}
+          </CommonText>
+        ),
+        style: {
+          ...commonStyles.columnStyle("16%"),
+          ...styles.justifyContentCenter,
+          ...{ paddingLeft: 5, paddingRight: 5 },
         },
       },
 
       {
         content: (
           <View>
-            {isHeading ? (
-              <CommonText customTextStyle={tableStyle}>
-                {item?.approve ?? "-"}
-              </CommonText>
-            ) : (
-              <CommonText customTextStyle={tableStyle}>
-                {item?.approve == 0
-                  ? queryTypeData[0].name
-                  : queryTypeData[1].name ?? "-"}
-              </CommonText>
+            {!isHeading && (
+              <PopupMessage
+                message={["Download Profile and Resume", "View Details"]}
+              />
             )}
           </View>
         ),
         style: {
           ...commonStyles.columnStyle("15%"),
           ...styles.justifyContentCenter,
-        }, // isFillSpace: true,
-      },
-      {
-        content: (
-          <View>
-            {!isHeading && (
-              <TouchableImage
-                onPress={() => {
-                  onViewPress && onViewPress(item);
-                }}
-                source={images.iconEye}
-              />
-            )}
-          </View>
-        ),
-        style: {
-          ...commonStyles.columnStyle("5%"),
-          ...styles.justifyContentCenter,
-        },
-      },
-      {
-        content: (
-          <View>
-            {!isHeading && (
-              <TouchableImage
-                onPress={() => {
-                  onEditPress && onEditPress(item);
-                }}
-                source={images.iconEdit}
-              />
-            )}
-          </View>
-        ),
-        style: {
-          ...commonStyles.columnStyle("5%"),
-          ...styles.justifyContentCenter,
+          ...{ paddingLeft: 5, paddingRight: 25 },
         },
       },
     ];
@@ -504,4 +412,4 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   };
 };
 
-export default usePostedJobListing;
+export default useGetScheduleList;

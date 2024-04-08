@@ -239,17 +239,10 @@ const config = [
         viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
         element: <AddModifyNewJobs />,
       },
+
       {
-        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}`,
+        viewPath: `${navigations.DETAILS_JOBS}`,
         element: <ViewPostedJobDetails />,
-      },
-      {
-        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}/${navigations.EDIT_JOB}`,
-        element: <EditJobDetails />,
-      },
-      {
-        viewPath: `${navigations.POSTED_JOBS}/${navigations.EDIT_JOB}`,
-        element: <EditJobDetails />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,

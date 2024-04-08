@@ -18,6 +18,7 @@ const DatePickerModal = ({
   maxDate,
   onChangeValue,
   value,
+  datePickerViewStyle,
 }) => {
   const [open, setOpen] = useState(false);
   const handleDropDown = () => {
@@ -75,6 +76,7 @@ const DatePickerModal = ({
           setOpen(false);
           onChangeValue(date);
         }}
+        style={datePickerViewStyle}
         onCancel={() => {
           setOpen(false);
         }}

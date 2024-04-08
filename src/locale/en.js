@@ -509,6 +509,7 @@ const locale = {
   "label.year_month_day": "(Year/Month/Day)",
   "label.download_job_list": "Download Jobs List",
   "label.search_by_designation": "Search By Designation or Job ID",
+  "label.search_by_applicant_name": "Search By Applicant Name or ID",
   "label.posted_job": "Posted Job",
   "label.edit_jobs": "Edit Jobs",
   "label.summary_error": "Length should be greater than 10 and less than 1000",

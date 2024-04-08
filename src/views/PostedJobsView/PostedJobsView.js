@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { TwoRow } from "../../core/layouts";
@@ -15,19 +15,23 @@ import styles from "./PostedJobsView.styles";
 import usePostedJobListing from "./controller/usePostedJobListing";
 import MobileCard from "../../containers/PostedJobs/MobileCard";
 import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreComponent";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 
 const PostedJobsView = () => {
   const intl = useIntl();
-  const onEditPress = (item) => {
-    navigate(navigations.EDIT_JOB, {
-      state: item,
-    });
-  };
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const onViewPress = (item) => {
-    navigate(navigations.DETAILS_JOBS, {
-      state: item,
-    });
+    navigate(
+      `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=0`
+    );
   };
+  const onEditPress = (item) => {
+    navigate(
+      `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=edit&activeTab=0`
+    );
+  };
+
   const {
     allDataLoaded,
     currentRecords,
@@ -139,13 +143,7 @@ const PostedJobsView = () => {
           mobileComponentToRender={getMobileView}
           containerStyle={styles.customTableStyle}
           isTotalCardVisible={false}
-          ThirdSection={
-            <DownloadMoreComponent
-              onPress={() => {
-                console.log("HI I AM pressed");
-              }}
-            />
-          }
+          ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
         />
       }
     />
