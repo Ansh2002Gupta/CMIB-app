@@ -386,7 +386,7 @@ export const getQuestionType = {
   "single-select": "Single-select",
   "multi-select": "Multi-select",
 };
-export const getDecryptApiData = (apiData, addJobs) => {
+export const getDecryptApiData = (apiData) => {
   let obj = {};
   apiData.locations = Array.isArray(apiData.locations) ? apiData.locations : [];
   apiData.functional_areas = Array.isArray(apiData.functional_areas)
@@ -397,14 +397,12 @@ export const getDecryptApiData = (apiData, addJobs) => {
 
   obj.jobSummary = apiData.summary;
   obj.jobDetails = apiData.detail;
-  obj.jobType = apiData.job_type_id
-    ? addJobs.jobType
-        .map((item) => ({
-          id: item.id,
-          label: item.name,
-          value: item.slug,
-        }))
-        .find((item) => item.id === apiData.job_type_id) || {}
+  obj.jobType = apiData.type
+    ? {
+        id: apiData.type.id ?? null,
+        label: apiData.type?.name ?? "",
+        value: apiData.type.slug ?? "",
+      }
     : {};
   obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
   obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
@@ -419,8 +417,8 @@ export const getDecryptApiData = (apiData, addJobs) => {
     : [];
   obj.nationality = apiData.nationality
     ? {
-        value: apiData.nationality,
-        label: apiData.nationality,
+        value: apiData.nationality?.name,
+        label: apiData.nationality?.name,
       }
     : "";
 
@@ -429,31 +427,23 @@ export const getDecryptApiData = (apiData, addJobs) => {
     apiData.functional_areas.length > 0
       ? apiData.functional_areas.map((item) => ({
           id: item.id,
-          label: item.name,
+          label: item?.name,
           value: item.slug,
         }))
       : [];
   obj.genderPreference = apiData.gender_preference
-    ? addJobs.genderPreferenceData
-        ?.filter((item) => item.name == apiData.gender_preference)
-        .map((item) => ({
-          id: item.name,
-          label: item.label,
-          value: item.name,
-        }))[0]
+    ? {
+        value: apiData.gender_preference?.name,
+        label: apiData.gender_preference.label,
+        id: apiData.gender_preference.label,
+      }
     : {};
-  obj.categoryPreference = apiData.category_preference
-    ? addJobs.jobCategory
-        ?.filter((item) => {
-          if (item.name == apiData.category_preference) {
-            return item;
-          }
-        })
-        .map((item) => ({
-          id: item.id,
-          label: item.name,
-          value: item.slug,
-        }))[0]
+  obj.categoryPreference = apiData.category_prefrence
+    ? {
+        label: apiData.category_prefrence?.name,
+        value: apiData.category_prefrence.slug,
+        id: apiData.category_prefrence.id,
+      }
     : {}; //
   obj.essentialQualification = apiData.essential_qualification;
   obj.desiredQualification = apiData.desired_qualification;
@@ -463,17 +453,11 @@ export const getDecryptApiData = (apiData, addJobs) => {
   obj.maximumSalary = Math.trunc(apiData.max_salary);
   obj.numberOfVacancies = apiData.vacancy;
   obj.modeofWork = apiData.work_mode
-    ? addJobs.workModeData
-        .filter((item) => {
-          if (item.name == apiData.work_mode) {
-            return item;
-          }
-        })
-        .map((item) => ({
-          id: item.id,
-          label: item.name,
-          value: item.slug,
-        }))[0]
+    ? {
+        label: apiData.work_mode?.name,
+        slug: apiData.work_mode.slug,
+        id: apiData.work_mode.id,
+      }
     : {}; //
   obj.flexiHours = apiData.flexi_hours ? 0 : 1;
   obj.vacanciesCountType = apiData.is_extended_vacancy == 1 ? 0 : 1;
@@ -490,7 +474,7 @@ export const getDecryptApiData = (apiData, addJobs) => {
     ? apiData.contract_period.months
     : 0;
   obj.contractDay = apiData?.contract_period ? apiData.contract_period.days : 0;
-  const transformedQuestionnaire = apiData?.questionnaires.map((item) => {
+  const transformedQuestionnaire = apiData?.questionnaires?.map((item) => {
     item.question_options = Array.isArray(item.question_options)
       ? item.question_options
       : JSON.parse(item.question_options);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
@@ -7,6 +7,8 @@ import CustomButton from "../../../components/CustomButton";
 
 import { useIntl } from "react-intl";
 import styles from "./FooterComponent.styles";
+import { navigations } from "../../../constants/routeNames";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const FooterComponent = ({
   isWebView,
@@ -17,6 +19,8 @@ const FooterComponent = ({
   onCancelPress,
 }) => {
   const navigate = useNavigate();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const intl = useIntl();
   return (
     <View style={styles.containerStyle(isWebView)}>
@@ -40,7 +44,9 @@ const FooterComponent = ({
               if (onCancelPress) {
                 onCancelPress(false);
               } else {
-                navigate(-1);
+                navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
+                  replace: true,
+                });
               }
             }}
             style={styles.cancelButtonStyle(isWebView)}

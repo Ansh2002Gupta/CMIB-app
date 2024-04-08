@@ -20,6 +20,7 @@ import CustomImage from "../../components/CustomImage";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./JobProfile.style";
 import images from "../../images";
+import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
@@ -64,7 +65,11 @@ const EditButton = ({ isEditable, handleEdit }) => {
   );
 };
 
-const JobProfileTab = ({ isViewModeOnly = false }) => {
+const JobProfileTab = ({
+  renderHeader,
+  isQuestionaireRequired = false,
+  questionaireData,
+}) => {
   const intl = useIntl();
   const [isEditable, setIsEditable] = useState(false);
   //Todo:editable will be in query params
@@ -74,14 +79,18 @@ const JobProfileTab = ({ isViewModeOnly = false }) => {
   return (
     <View style={style.containerStyle}>
       <CustomTabs
-        renderHeader={() => (
-          <Row style={style.headerContainer}>
-            <CommonText fontWeight={"500"} customTextStyle={style.titleText}>
-              {intl.formatMessage({ id: "label.job_profile" })}
-            </CommonText>
-            <EditButton isEditable={isEditable} handleEdit={handleEdit} />
-          </Row>
-        )}
+        renderHeader={() =>
+          renderHeader ? (
+            renderHeader()
+          ) : (
+            <Row style={style.headerContainer}>
+              <CommonText fontWeight={"500"} customTextStyle={style.titleText}>
+                {intl.formatMessage({ id: "label.job_profile" })}
+              </CommonText>
+              <EditButton isEditable={isEditable} handleEdit={handleEdit} />
+            </Row>
+          )
+        }
         tabs={[
           {
             label: "Personal Details",
@@ -132,6 +141,15 @@ const JobProfileTab = ({ isViewModeOnly = false }) => {
             label: "Job Preference",
             component: (
               <JobPreference isEditable={isEditable} handleEdit={handleEdit} />
+            ),
+          },
+          isQuestionaireRequired && {
+            label: "Questionaire",
+            component: (
+              <ViewQuestion
+                isEditable={false}
+                questionnaireData={questionaireData}
+              />
             ),
           },
         ]}

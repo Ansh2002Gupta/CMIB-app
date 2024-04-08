@@ -35,4 +35,5 @@ export const navigations = {
   DETAILS_JOBS: "posted-jobs/:id",
   EDIT_JOB: "edit-job",
   JOB_PROFILE: "job-profile",
+  VIEW_JOB_DETAILS: "applicant-job-details",
 };

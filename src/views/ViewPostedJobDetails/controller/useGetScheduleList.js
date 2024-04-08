@@ -22,7 +22,7 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const useGetScheduleList = (onViewPress, onEditPress) => {
+const useGetScheduleList = (id) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -51,7 +51,7 @@ const useGetScheduleList = (onViewPress, onEditPress) => {
     isError: isErrorGetPostedJob,
     error: errorGetPostedJobs,
   } = useFetch({
-    url: "company/jobs/175/schedule-interview",
+    url: `company/jobs/${id}/schedule-interview`,
     otherOptions: {
       skipApiCallOnMount: true,
     },

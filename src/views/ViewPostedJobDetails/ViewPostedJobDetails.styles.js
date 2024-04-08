@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
   backgroundColorWhite: {
     backgroundColor: colors.white,
   },
+  innerContainer: {
+    backgroundColor: colors.backgroundGrey,
+    flex: 1,
+  },
   cellTextStyle: (fontSize = 14) => ({
     fontSize,
     ...Platform.select({
@@ -88,8 +92,8 @@ const styles = StyleSheet.create({
   addNewText: {
     color: colors.white,
   },
-  justifyContentCenter: {
-    // backgroundColor: "red",
+  flex1: {
+    flex: 1,
   },
 });
 

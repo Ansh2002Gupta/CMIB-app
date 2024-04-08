@@ -11,7 +11,7 @@ import styles from "./ViewScheduleInterview.styles";
 import { useIntl } from "react-intl";
 import useGetScheduleList from "../../../views/ViewPostedJobDetails/controller/useGetScheduleList";
 
-const ViewScheduleInterview = () => {
+const ViewScheduleInterview = ({ id }) => {
   const intl = useIntl();
   const {
     allDataLoaded,
@@ -45,7 +45,7 @@ const ViewScheduleInterview = () => {
     tableIcon,
     postedJobData,
     totalcards,
-  } = useGetScheduleList();
+  } = useGetScheduleList(id);
 
   const getMobileView = (item, index) => {
     return (
@@ -103,13 +103,7 @@ const ViewScheduleInterview = () => {
       mobileComponentToRender={getMobileView}
       containerStyle={styles.customTableStyle}
       isTotalCardVisible={false}
-      ThirdSection={
-        <DownloadMoreComponent
-          onPress={() => {
-            console.log("onClcik");
-          }}
-        />
-      }
+      ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
       renderCalendar={true}
     />
   );
