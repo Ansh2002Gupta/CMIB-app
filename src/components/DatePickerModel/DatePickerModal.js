@@ -16,13 +16,14 @@ const accountComponentProp = classes["react_datepicker__input_container"];
 function DatePickerModal({
   customTextInputOuterContainer,
   customStyles = {},
-  format = "MMMM d, yyyy",
+  format = "MMMM D, YYYY",
   isError,
   minDate = Date.now(),
   maxDate,
   onChangeValue,
   value,
   datePickerViewStyle,
+  showMonthYearPicker,
 }) {
   const [open, setOpen] = useState(false);
   const intl = useIntl();
@@ -31,7 +32,6 @@ function DatePickerModal({
       return !prev;
     });
   };
-
   const wrapperRef = useRef(null);
   useOutsideClick(wrapperRef, () => setOpen(false));
 
@@ -56,7 +56,7 @@ function DatePickerModal({
           >
             {!value
               ? intl.formatMessage({ id: "label.select" })
-              : formatDate(value)}
+              : formatDate(value, format)}
           </CommonText>
         </View>
         <View style={styles.iconContainer}>
@@ -80,6 +80,7 @@ function DatePickerModal({
             showMonthDropdown
             showYearDropdown
             inline
+            showMonthYearPicker={showMonthYearPicker}
             dropdownMode="select"
             dateFormat={format}
           />

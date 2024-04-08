@@ -27,8 +27,8 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
     url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
 
-  const getData = (data) =>
-    data && Object.keys(data).length
+  const getData = (data) => {
+    return data && Object.keys(data).length
       ? {
           has_education: data["Class 12"]?.has_education,
           examination_name: data["Class 12"]?.exam_name,
@@ -47,7 +47,7 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
           higher_secondary_mark_in_percent:
             data["Class 10"]?.passing_percentage,
 
-          graduation: data["Graduation"]?.has_education || 1,
+          graduation: data["Graduation"]?.has_education,
           graduation_examination_name: data["Graduation"]?.exam_name,
           graduation_status: data["Graduation"]?.exam_status,
           graduation_board: data["Graduation"]?.exam_board,
@@ -55,7 +55,7 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
           graduation_rank_medal: data["Graduation"]?.passing_rank,
           graduation_mark_in_percent: data["Graduation"]?.passing_percentage,
 
-          post_graduation: data["Post Graduation"]?.has_education || 1,
+          post_graduation: data["Post Graduation"]?.has_education,
           post_graduation_examination_name: data["Post Graduation"]?.exam_name,
           post_graduation__status: data["Post Graduation"]?.exam_status,
           post_graduation_board: data["Post Graduation"]?.exam_board,
@@ -65,6 +65,7 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
             data["Post Graduation"]?.passing_percentage,
         }
       : {};
+  };
 
   const [state, setState] = useState(getData(data));
 

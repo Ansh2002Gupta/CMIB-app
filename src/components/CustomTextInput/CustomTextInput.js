@@ -104,6 +104,7 @@ const CustomTextInput = (props) => {
     isSingleSelection,
     isTextInputWithChip,
     onChipUpdate,
+    showMonthYearPicker,
     ...remainingProps
   } = props;
 
@@ -260,6 +261,7 @@ const CustomTextInput = (props) => {
           maxDate={maxDate}
           minDate={minDate}
           format={format}
+          showMonthYearPicker={showMonthYearPicker}
         />
       );
     }
@@ -308,6 +310,7 @@ const CustomTextInput = (props) => {
           value={value}
           placeholderText={placeholder}
           onValueChange={onChangeValue}
+          isEditable={isEditable}
         />
       );
     }

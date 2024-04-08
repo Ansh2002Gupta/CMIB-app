@@ -69,7 +69,7 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
   const [currentStatusError, setCurrentStatusError] = useState({});
 
   const [state, setState] = useState(
-    data !== null && Object.keys(data).length ? {} : {}
+    data !== null && Object.keys(data)?.length ? {} : {}
   );
 
   const {
@@ -104,7 +104,7 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
 
   const updateFormattedData = (workExpData) => {
     let workExperienceData =
-      workExpData.work_experiences.length > 0
+      workExpData.work_experiences?.length > 0
         ? workExpData.work_experiences.map((v, index) => {
             if (index === 0) {
               if (v.has_work_experience === "false") {
@@ -118,7 +118,7 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
         : [{ ...workExperienceKeys() }];
 
     setFormFieldsError([
-      new Array(workExperienceData.length).fill(0).map(() => ({})),
+      new Array(workExperienceData?.length).fill(0).map(() => ({})),
     ]);
 
     setState({
@@ -128,7 +128,7 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
   };
 
   useEffect(() => {
-    if (data !== null && Object.keys(data).length) {
+    if (data !== null && Object.keys(data)?.length) {
       updateFormattedData(data);
     }
   }, [data]);

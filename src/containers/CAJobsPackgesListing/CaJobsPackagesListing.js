@@ -101,7 +101,7 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
                   container?.validity
                 } days`}
               </CommonText>
-              <CommonText customTextStyle={styles.descriptionText}>
+              <CommonText customTextStyle={styles.descriptionText} customTextProps={{numberOfLines: 3}}>
                 {container?.description}
               </CommonText>
             </View>

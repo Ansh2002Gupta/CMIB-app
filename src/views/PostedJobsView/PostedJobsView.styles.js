@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
       },
     }),
   }),
+  cursorStyle: { cursor: "pointer" },
   justifyContentCenter: {
     justifyContent: "center",
     paddingLeft: 15,

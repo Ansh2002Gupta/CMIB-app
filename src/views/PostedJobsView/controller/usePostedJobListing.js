@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
-import { Platform, View } from "@unthinkable/react-core-components";
+import {
+  Platform,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
@@ -69,6 +73,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     errorWhileJobChange,
   } = useChangeJobStatusApi();
   const isTicketListingLoading = changeJobStatusLoading || isLoading;
+  const isError = isErrorGetPostedJob || ischangeJobStatusError;
 
   const statusData = [
     {
@@ -113,7 +118,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       };
     if (ischangeJobStatusError)
       return {
-        errorMessage: errorWhileJobChange?.data?.message,
+        errorMessage: errorWhileJobChange,
         onRetry: () => {},
       };
   };
@@ -300,9 +305,24 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     return [
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item?.job_id ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+                {item?.job_id ?? "-"}
+              </CommonText>
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  navigate(navigations.JOB_PROFILE);
+                }}
+                style={styles.cursorStyle}
+              >
+                <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+                  {item?.job_id ?? "-"}
+                </CommonText>
+              </TouchableOpacity>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("16%"),
@@ -499,7 +519,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     handleSearchResults,
     headingTexts,
     getErrorDetails,
-    isErrorGetPostedJob,
+    isError,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,

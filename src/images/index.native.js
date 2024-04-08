@@ -129,24 +129,32 @@ import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
-import dotIcon from "../../public/images/dotIcon/dot.png";
-import iconDownloading from "../../public/images/downloadIcon/download.png";
 import iconError from "../../public/images/svg/iconError.svg";
-import iconTickCircle from "../../public/images/svg/tick-circle.svg";
-import iconAppliedJobs from "../../public/images/svg/iconAppliedJobs.svg";
-import iconAppliedJobsActiveJobs from "../../public/images/svg/iconAppliedJobsActiveJobs.svg";
 import iconAddRoundGreen from "../../public/images/svg/iconAddRoundGreen.svg";
 import iconDeleteRoundRed from "../../public/images/svg/iconDeleteRoundRed.svg";
 import iconCheckBoxRound from "../../public/images/svg/iconCheckBoxRound.svg";
 import iconUnCheckBoxRound from "../../public/images/svg/iconUnCheckBoxRound.svg";
 import iconTickGreen from "../../public/images/svg/iconTickGreen.svg";
 import iconCrossRed from "../../public/images/svg/iconCrossRed.svg";
+import dotIcon from "../../public/images/dotIcon/dot.png";
+import iconDownloading from "../../public/images/downloadIcon/download.png";
+import iconTickCircle from "../../public/images/svg/tick-circle.svg";
+import iconAppliedJobs from "../../public/images/svg/iconAppliedJobs.svg";
+import iconAppliedJobsActiveJobs from "../../public/images/svg/iconAppliedJobsActiveJobs.svg";
 import iconSingleSave from "../../public/images/svg/iconSingleSave.svg";
 import iconSaveSlashBlack from "../../public/images/svg/iconSaveSlashBlack.svg";
 import iconSaveSlashBlue from "../../public/images/svg/iconSaveSlashBlue.svg";
 import iconBriefcase from "../../public/images/svg/iconBriefcase.svg";
 import iconLocation from "../../public/images/svg/iconLocation.svg";
 import iconRupee from "../../public/images/svg/iconRupee.svg";
+import videoPlayIcon from "../../public/images/svg/videoPlayIcon.svg";
+import pdfIcon from "../../public/images/svg/pdfIcon.svg";
+import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
+
+import iconLocationWhite from "../../public/images/svg/iconLocationWhite.svg";
+import iconBreifcase from "../../public/images/svg/briefcase.svg";
+import iconRupeeSign from "../../public/images/svg/rupeeSign.svg";
+import iconArchiveSave from "../../public/images/svg/iconArchiveSave.svg";
 
 const images = {
   iconArrowUp,
@@ -280,24 +288,31 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
-  dotIcon,
-  iconDownloading,
   iconError,
-  iconTickCircle,
-  iconAppliedJobs,
-  iconAppliedJobsActiveJobs,
   iconAddRoundGreen,
   iconDeleteRoundRed,
   iconCheckBoxRound,
   iconUnCheckBoxRound,
   iconTickGreen,
   iconCrossRed,
+  dotIcon,
+  iconDownloading,
+  iconTickCircle,
+  iconAppliedJobs,
+  iconAppliedJobsActiveJobs,
   iconSingleSave,
   iconSaveSlashBlack,
   iconSaveSlashBlue,
   iconBriefcase,
   iconLocation,
   iconRupee,
+  videoPlayIcon,
+  pdfIcon,
+  rightDiagonalArrow,
+  iconLocationWhite,
+  iconBreifcase,
+  iconRupeeSign,
+  iconArchiveSave,
 };
 
 export default images;

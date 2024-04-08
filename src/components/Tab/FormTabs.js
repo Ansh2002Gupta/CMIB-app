@@ -5,7 +5,6 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
-  Image,
 } from "@unthinkable/react-core-components";
 import PropTypes from "prop-types";
 
@@ -96,7 +95,7 @@ export const FormTabs = ({
               onPress={onEditClick}
             >
               <CustomImage
-                source={images.iconEditSvg}
+                source={images.iconEdit}
                 style={styles.editIconStyle}
               />
               <CommonText customContainerStyle={styles.marginLeft8}>

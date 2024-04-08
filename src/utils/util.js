@@ -285,6 +285,7 @@ export const addKeyValuePair = (arr) => {
     return { value: item, label: item };
   });
 };
+
 export const getIndexForBoolean = (value) => {
   if (typeof value !== "boolean") {
     return value;
@@ -531,4 +532,15 @@ export const timeAgo = (dateString) => {
   } else {
     return `a few seconds`;
   }
+};
+
+export const containsDuplicate = (arr) => {
+  const seen = new Set();
+  for (const value of arr) {
+    if (seen.has(value)) {
+      return true; // Duplicate found
+    }
+    seen.add(value);
+  }
+  return false;
 };

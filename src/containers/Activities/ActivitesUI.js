@@ -5,6 +5,9 @@ import style from "../EducationDetails/OtherCourses.style";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton/SaveCancelButton";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import Spinner from "../../components/Spinner";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { STATUS_CODES } from "../../constants/constants";
 
 const ActivitiesUI = ({
   isEditable,
@@ -19,8 +22,25 @@ const ActivitiesUI = ({
   isValidAllFields,
   error,
   setError,
+  isPageLoading,
+  fetchDataError,
 }) => {
   const intl = useIntl();
+
+  if (isPageLoading) {
+    return (
+      <View style={style.loaderStyle}>
+        <Spinner />
+      </View>
+    );
+  }
+
+  if (
+    fetchDataError &&
+    fetchDataError?.code !== STATUS_CODES.UNAUTHORIZED_USER
+  ) {
+    return <ErrorComponent errorMsg={fetchDataError.message} />;
+  }
 
   return (
     <>

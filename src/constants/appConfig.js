@@ -1,6 +1,6 @@
 const appConfig = {
   ROUTER_BASE_NAME: "/app",
-  DOMAIN: ".cmib.cloudzmall.com", // If the deployed domain changes in future, remember to update this otherwise the Cookie remove method will not work.
+  DOMAIN: ".alpha.cmib.icai.org", // If the deployed domain changes in future, remember to update this otherwise the Cookie remove method will not work.
 };
 
 export default appConfig;

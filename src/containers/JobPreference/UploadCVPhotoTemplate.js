@@ -1,3 +1,4 @@
+import React from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
@@ -16,8 +17,6 @@ const UploadCVPhotoTemplate = ({
   imageUrl,
   isDocumentUpload,
   isVideoUpload,
-  isImageAndPDF,
-  isAllFormat,
 }) => {
   const intl = useIntl();
   const {
@@ -30,8 +29,14 @@ const UploadCVPhotoTemplate = ({
     uploadPercentage,
   } = useSaveLogo();
 
+  useEffect(() => {
+    return () => {
+      setFileUploadResult(null);
+    };
+  }, [isEditable]);
+
   const updatedFileUploadResult = useMemo(() => {
-    let url = imageUrl || fileUploadResult?.data?.url;
+    let url = imageUrl || (isEditable && fileUploadResult?.data?.url);
     return {
       ...(fileUploadResult ?? {}),
       data: url ? { ...(fileUploadResult?.data ?? {}), url } : null,
@@ -73,8 +78,6 @@ const UploadCVPhotoTemplate = ({
               hideIconDelete: !isEditable,
               isDocumentUpload,
               isVideoUpload,
-              isImageAndPDF,
-              isAllFormat,
             }}
           />
         </View>

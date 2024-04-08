@@ -158,6 +158,7 @@ const personal_detail = (categoryData, has_passport) => {
     isMandatory: true,
     label: "label.passport_number",
     placeholder: "label.passport_number",
+    maxLength: 10,
     validate: (value) => {
       if (!value) {
         return "Passport Number is required";

@@ -24,7 +24,7 @@ const style = {
     flex: 1,
   },
   marginLeft8: {
-    marginLeft: 8,
+    marginLeft: 4,
   },
   itemContainer: {
     height: 36,
@@ -40,7 +40,7 @@ const style = {
   editButtonViewStyle: {
     flexDirection: "row",
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     paddingRight: 12,

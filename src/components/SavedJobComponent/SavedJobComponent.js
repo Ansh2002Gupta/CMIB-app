@@ -13,32 +13,29 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
 
-const SavedJobComponent = ({ details }) => {
+const SavedJobComponent = ({
+  details,
+  handleRemove,
+  handleApply,
+  isLoading,
+}) => {
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
   const { isWebView } = useIsWebView();
 
   const cardDetails = {
-    companyName: "sdafdsf",
-    createdAt: "2024-04-01T11:23:51.000000Z",
-    jobPostion: "vsvfs",
-    jobDescription: "sjdhbsvkhdsbvjlbsdjkvbjksdbvsf",
-    jobLocation: "dfsdfsf",
-    vaccancies: 10,
-    minSalary: 5,
-    maxSalary: 7,
-    minExperience: 0,
-    maxExperience: 2,
-    requirement: [
-      "Audit",
-      "dsbdf",
-      "dfsbdsfb",
-      "dfgsdfg",
-      "dfgsg",
-      "dsfgwergw",
-      "regwerg",
-      "Rtfergwer",
-    ],
+    companyName: details?.company_name,
+    createdAt: details?.created_at,
+    jobPostion: details?.designation,
+    jobDescription: details?.detail,
+    jobLocation: details?.location,
+    vaccancies: details?.vacancy,
+    minSalary: details?.min_salary,
+    maxSalary: details?.max_salary,
+    minExperience: details?.min_experience,
+    maxExperience: details?.max_experience,
+    requirement: details?.functional_areas,
+    company_logo: details?.company_logo,
   };
 
   return (
@@ -63,9 +60,13 @@ const SavedJobComponent = ({ details }) => {
       }
       bottomSection={
         isWebView ? (
-          <JobCardWeb cardDetails={cardDetails} />
+          <JobCardWeb
+            {...{ cardDetails, isLoading, handleRemove, handleApply }}
+          />
         ) : (
-          <JobCardMobile cardDetails={cardDetails} />
+          <JobCardMobile
+            {...{ cardDetails, isLoading, handleRemove, handleApply }}
+          />
         )
       }
     />

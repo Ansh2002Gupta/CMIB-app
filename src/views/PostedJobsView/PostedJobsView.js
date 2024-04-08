@@ -16,6 +16,7 @@ import usePostedJobListing from "./controller/usePostedJobListing";
 import MobileCard from "../../containers/PostedJobs/MobileCard";
 import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreComponent";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 
 const PostedJobsView = () => {
   const intl = useIntl();
@@ -52,7 +53,7 @@ const PostedJobsView = () => {
     isTicketListingLoading,
     isFirstPageReceived,
     getErrorDetails,
-    isErrorGetPostedJob,
+    isError,
     loadingMore,
     onIconPress,
     queryTypeData,
@@ -84,6 +85,7 @@ const PostedJobsView = () => {
       />
     );
   };
+  console.log("error", getErrorDetails()?.errorMessage);
 
   return (
     <TwoRow
@@ -100,51 +102,59 @@ const PostedJobsView = () => {
       }
       isBottomFillSpace
       bottomSection={
-        <CustomTable
-          {...{
-            allDataLoaded,
-            currentPage,
-            currentRecords,
-            data: postedJobData,
-            filterApplyHandler,
-            filterCategory,
-            getColoumConfigs,
-            getStatusStyle,
-            handleTicketModal,
-            handleLoadMore,
-            getErrorDetails,
-            isErrorGetPostedJob,
-            handlePageChange,
-            handleRowPerPageChange,
-            handleSearchResults,
-            handleSaveAddTicket,
-            headingTexts,
-            indexOfFirstRecord,
-            indexOfLastRecord,
-            isHeading,
-            isTicketListingLoading,
-            isFirstPageReceived,
-            loadingMore,
-            onIconPress,
-            queryTypeData,
-            rowsLimit,
-            rowsPerPage,
-            setCurrentRecords,
-            statusData,
-            statusText,
-            subHeadingText,
-            tableHeading,
-            tableIcon,
-            totalcards,
-            placeholder: intl.formatMessage({
-              id: "label.search_by_designation",
-            }),
-          }}
-          mobileComponentToRender={getMobileView}
-          containerStyle={styles.customTableStyle}
-          isTotalCardVisible={false}
-          ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
-        />
+        <>
+          {!isError && (
+            <CustomTable
+              {...{
+                allDataLoaded,
+                currentPage,
+                currentRecords,
+                data: postedJobData,
+                filterApplyHandler,
+                filterCategory,
+                getColoumConfigs,
+                getStatusStyle,
+                handleTicketModal,
+                handleLoadMore,
+                handlePageChange,
+                handleRowPerPageChange,
+                handleSearchResults,
+                handleSaveAddTicket,
+                headingTexts,
+                indexOfFirstRecord,
+                indexOfLastRecord,
+                isHeading,
+                isTicketListingLoading,
+                isFirstPageReceived,
+                loadingMore,
+                onIconPress,
+                queryTypeData,
+                rowsLimit,
+                rowsPerPage,
+                setCurrentRecords,
+                statusData,
+                statusText,
+                subHeadingText,
+                tableHeading,
+                tableIcon,
+                totalcards,
+                placeholder: intl.formatMessage({
+                  id: "label.search_by_designation",
+                }),
+              }}
+              mobileComponentToRender={getMobileView}
+              containerStyle={styles.customTableStyle}
+              isTotalCardVisible={false}
+              ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
+            />
+          )}
+          {isError && !!getErrorDetails()?.errorMessage && (
+            <ErrorComponent
+              errorMsg={getErrorDetails()?.errorMessage}
+              onRetry={() => getErrorDetails()?.onRetry()}
+            />
+          )}
+        </>
       }
     />
   );

@@ -14,14 +14,19 @@ import { getIndexForBoolean, yesNoToBoolean } from "../../utils/util";
 const Activities = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
-  const { data } = useFetch({
+  const {
+    data,
+    fetchData,
+    isLoading: isPageLoading,
+    error: fetchDataError,
+  } = useFetch({
     url: MEMBER_CA_JOB_PROFILE_ACTIVITY,
   });
 
   const { handleUpdate, isError, isLoading, error, setError } =
     useUpdateService(MEMBER_CA_JOB_PROFILE_ACTIVITY);
   const [state, setState] = useState(
-    data !== null && Object.keys(data).length ? data : {}
+    data !== null && Object.keys(data).length ? { ...data } : {}
   );
 
   const {
@@ -37,7 +42,7 @@ const Activities = ({ isEditable = true, handleEdit }) => {
 
   useEffect(() => {
     if (data !== null && Object.keys(data).length) {
-      setState(data);
+      setState({ ...data });
     }
   }, [data]);
 
@@ -69,6 +74,7 @@ const Activities = ({ isEditable = true, handleEdit }) => {
     };
 
     handleUpdate(body, () => {
+      fetchData();
       // turn off the edit mode
       handleEdit(false);
     });
@@ -88,7 +94,10 @@ const Activities = ({ isEditable = true, handleEdit }) => {
       setError={setError}
       isValidAllFields={isValidAllFields}
       onClickSave={handleActivityUpdate}
+      fetchDataError={fetchDataError}
+      isPageLoading={isPageLoading}
       onClickCancel={() => {
+        setState({ ...data });
         // turn off the edit mode
         handleEdit(false);
       }}

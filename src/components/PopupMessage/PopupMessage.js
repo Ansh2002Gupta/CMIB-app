@@ -70,8 +70,8 @@ PopupMessage.defaultProps = {
 };
 
 PopupMessage.propTypes = {
-  customStyle: PropTypes.object,
-  message: PropTypes.string.isRequired,
+  customStyle: PropTypes.func,
+  message: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   onPopupClick: PropTypes.func.isRequired,
 };
 
