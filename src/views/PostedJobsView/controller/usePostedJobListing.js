@@ -285,9 +285,23 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     return [
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item?.job_id ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+                {item?.job_id ?? "-"}
+              </CommonText>
+            ) : (
+              <CustomTouchableOpacity
+                onPress={() => {
+                  navigate(navigations.JOB_PROFILE);
+                }}
+              >
+                <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+                  {item?.job_id ?? "-"}
+                </CommonText>
+              </CustomTouchableOpacity>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("16%"),
