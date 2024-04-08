@@ -14,7 +14,11 @@ import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
-  const { data } = useFetch({
+  const {
+    data,
+    isLoading: isGettingPersonalData,
+    isError: errorWhileGettingPersonalData,
+  } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE}`,
   });
 
