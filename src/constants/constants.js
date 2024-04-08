@@ -653,3 +653,9 @@ export const JOB_SEEKERS_TABLE_HEADING = {
   total_experience: "Total Experience",
   functional_area: "Functional Area",
 };
+export const JOB_STATUS_RESPONSE_CODE = {
+  "Shortlist Candidate": 3,
+  "Reject Candidate": 2,
+  "Offer Job": 6,
+  "Reject After Interview": 2,
+};
