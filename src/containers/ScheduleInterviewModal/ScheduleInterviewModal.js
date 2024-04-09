@@ -134,97 +134,6 @@ const ScheduleInterviewModal = ({
       fetchData();
     }
   }, []);
-  // function formatSchedule(schedule) {
-  //   return {
-  //     time: dayjs(schedule).format("HH:mm:ss"),
-  //     date: dayjs(schedule).format("YYYY-MM-DD"),
-  //   };
-  // }
-  // function useInterviewDetailsEffect(
-  //   isSuccess,
-  //   data,
-  //   setPrimaryDetails,
-  //   setSecondaryDetails,
-  //   setPrimaryInterviewType,
-  //   setSecondaryInterviewType
-  // ) {
-  //   useEffect(() => {
-  //     if (isSuccess && data) {
-  //       const primaryInterviewType = GET_INTERVIEW_TYPE[data.type];
-  //       const alternateInterviewType = GET_INTERVIEW_TYPE[data.alternate_type];
-  //       setPrimaryInterviewType(primaryInterviewType);
-  //       setSecondaryInterviewType(alternateInterviewType);
-
-  //       const updateDetails = (
-  //         schedule,
-  //         interviewType,
-  //         setDetails,
-  //         addressKey = "venue_address",
-  //         linkKey = "remote_meeting_link"
-  //       ) => {
-  //         const { time, date } = formatSchedule(data[schedule]);
-  //         let details = {};
-  //         switch (interviewType) {
-  //           case INTERVIEW_TYPES.FACE_TO_FACE:
-  //             details = {
-  //               face_to_face: {
-  //                 address: data[addressKey],
-  //                 time,
-  //                 date,
-  //               },
-  //             };
-  //             break;
-  //           case INTERVIEW_TYPES.TELEPHONIC:
-  //             details = {
-  //               telephonic: { time, date },
-  //             };
-  //             break;
-  //           case INTERVIEW_TYPES.REMOTE:
-  //             details = {
-  //               remote: {
-  //                 link: data[linkKey],
-  //                 time,
-  //                 date,
-  //               },
-  //             };
-  //             break;
-  //           default:
-  //             // Handle unknown interview type if necessary
-  //             break;
-  //         }
-  //         setDetails((prev) => ({ ...prev, ...details }));
-  //       };
-
-  //       updateDetails(
-  //         "primary_schedule",
-  //         primaryInterviewType,
-  //         setPrimaryDetails
-  //       );
-  //       updateDetails(
-  //         "alternate_schedule",
-  //         alternateInterviewType,
-  //         setAlternateDetails,
-  //         "alternate_venue_address",
-  //         "alternate_remote_meeting_link"
-  //       );
-  //     }
-  //   }, [
-  //     isSuccess,
-  //     data,
-  //     setPrimaryDetails,
-  //     setSecondaryDetails,
-  //     setPrimaryInterviewType,
-  //     setSecondaryInterviewType,
-  //   ]);
-  // }
-  // useInterviewDetailsEffect(
-  //   isSuccess,
-  //   data,
-  //   setPrimaryDetails,
-  //   setAlternateDetails,
-  //   setPrimaryInterviewType,
-  //   setSecondaryInterviewType
-  // );
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -238,7 +147,7 @@ const ScheduleInterviewModal = ({
             ...prev,
             face_to_face: {
               address: data.venue_address,
-              time: data.primary_schedule,
+              time: new Date(data.primary_schedule),
               date: data.primary_schedule,
             },
           };
@@ -250,7 +159,7 @@ const ScheduleInterviewModal = ({
             ...prev,
             face_to_face: {
               address: data.alternate_venue_address,
-              time: data.alternate_schedule,
+              time: new Date(data.alternate_schedule),
               date: data.alternate_schedule,
             },
           };
@@ -261,7 +170,7 @@ const ScheduleInterviewModal = ({
           return {
             ...prev,
             telephonic: {
-              time: data.primary_schedule,
+              time: new Date(data.primary_schedule),
               date: data.primary_schedule,
             },
           };
@@ -272,7 +181,7 @@ const ScheduleInterviewModal = ({
           return {
             ...prev,
             telephonic: {
-              time: data.alternate_schedule,
+              time: new Date(data.alternate_schedule),
               date: data.alternate_schedule,
             },
           };
@@ -284,7 +193,7 @@ const ScheduleInterviewModal = ({
             ...prev,
             remote: {
               link: data.remote_meeting_link,
-              time: data.primary_schedule,
+              time: new Date(data.primary_schedule),
               date: data.primary_schedule,
             },
           };
@@ -296,7 +205,7 @@ const ScheduleInterviewModal = ({
             ...prev,
             remote: {
               link: data.alternate_remote_meeting_link,
-              time: data.alternate_schedule,
+              time: new Date(data.alternate_schedule),
               date: data.alternate_schedule,
             },
           };
@@ -320,9 +229,10 @@ const ScheduleInterviewModal = ({
     isLoading: isUpdatingInterview,
     makeRequest: updatatingInterview,
     error: errorWhileUpdatingInterview,
+    isError: isErrorWhileUpdatingInterview,
     setError: setErrorWhileUpdatingInterview,
   } = usePut({
-    url: POST_JOB + APPLICANTS + INTERVIEW + `${applicant_id}`,
+    url: POST_JOB + APPLICANTS + INTERVIEW + `/${applicant_id}`,
   });
 
   const isDisabled =
@@ -344,25 +254,49 @@ const ScheduleInterviewModal = ({
       alternateDetails[alternate_type].date,
       alternateDetails[alternate_type].time
     );
-
-    scheduleInterviewRequest({
-      body: {
-        applicant_id: applicant_id,
-        type: primaryType,
-        alternate_type: alternatePrimaryType,
-        venue_address: primaryDetails[type].address,
-        alternate_venue_address: alternateDetails[alternate_type].address,
-        primary_schedule: dayjs(primary_schedule).format("YYYY-MM-DD HH:mm:ss"),
-        alternate_schedule: dayjs(alternate_schedule).format(
-          "YYYY-MM-DD HH:mm:ss"
-        ),
-        remote_meeting_link: primaryDetails[type].link,
-        alternate_remote_meeting_link: alternateDetails[alternate_type].link,
-      },
-      onSuccessCallback: () => {
-        onClose();
-      },
-    });
+    if (isEdited) {
+      updatatingInterview({
+        body: {
+          applicant_id: applicant_id,
+          type: primaryType,
+          alternate_type: alternatePrimaryType,
+          venue_address: primaryDetails[type].address,
+          alternate_venue_address: alternateDetails[alternate_type].address,
+          primary_schedule: dayjs(primary_schedule).format(
+            "YYYY-MM-DD HH:mm:ss"
+          ),
+          alternate_schedule: dayjs(alternate_schedule).format(
+            "YYYY-MM-DD HH:mm:ss"
+          ),
+          remote_meeting_link: primaryDetails[type].link,
+          alternate_remote_meeting_link: alternateDetails[alternate_type].link,
+        },
+        onSuccessCallback: () => {
+          onClose();
+        },
+      });
+    } else {
+      scheduleInterviewRequest({
+        body: {
+          applicant_id: applicant_id,
+          type: primaryType,
+          alternate_type: alternatePrimaryType,
+          venue_address: primaryDetails[type].address,
+          alternate_venue_address: alternateDetails[alternate_type].address,
+          primary_schedule: dayjs(primary_schedule).format(
+            "YYYY-MM-DD HH:mm:ss"
+          ),
+          alternate_schedule: dayjs(alternate_schedule).format(
+            "YYYY-MM-DD HH:mm:ss"
+          ),
+          remote_meeting_link: primaryDetails[type].link,
+          alternate_remote_meeting_link: alternateDetails[alternate_type].link,
+        },
+        onSuccessCallback: () => {
+          onClose();
+        },
+      });
+    }
   };
 
   const handleValueChange = (
@@ -694,10 +628,22 @@ const ScheduleInterviewModal = ({
           />
         </View>
       </View>
-      {!!errorWhileSchedulingInterview && (
+      {(!!errorWhileSchedulingInterview ||
+        !!fetchDataError ||
+        !!isErrorWhileUpdatingInterview) && (
         <ToastComponent
-          toastMessage={errorWhileSchedulingInterview}
-          onDismiss={() => setErrorWhileSchedulingInterview("")}
+          toastMessage={
+            errorWhileSchedulingInterview ||
+            fetchDataError ||
+            errorWhileUpdatingInterview
+          }
+          onDismiss={() => {
+            if (errorWhileSchedulingInterview) {
+              setErrorWhileSchedulingInterview("");
+            } else if (isErrorWhileUpdatingInterview) {
+              setErrorWhileUpdatingInterview("");
+            }
+          }}
         />
       )}
     </CustomModal>
