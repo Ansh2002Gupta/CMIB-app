@@ -50,6 +50,7 @@ const CustomTable = ({
   isTicketListingLoading,
   isFirstPageReceived,
   isTotalCardVisible,
+  isFilterVisible = true,
   loadingMore,
   mobileComponentToRender,
   onIconPress,
@@ -65,6 +66,7 @@ const CustomTable = ({
   tableIcon,
   totalcards,
   ThirdSection,
+  renderCalendar,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -110,32 +112,34 @@ const CustomTable = ({
                       placeholder={placeholder}
                       customParentStyle={styles.getParentStyle(isWebView)}
                     />
-                    <CustomTouchableOpacity
-                      onPress={handleFilterModal}
-                      style={styles.imageParentStyle}
-                      disabled={isTicketListingLoading}
-                    >
-                      <TouchableImage
-                        source={images.iconFilter}
-                        parentStyle={styles.iconTicket}
+                    {isFilterVisible && (
+                      <CustomTouchableOpacity
                         onPress={handleFilterModal}
-                      />
-                      {isWebView && (
-                        <CommonText customTextStyle={styles.filterText}>
-                          {intl.formatMessage({ id: "label.filters" })}
-                        </CommonText>
-                      )}
-                      {isFilterCount && (
-                        <CommonText
-                          customContainerStyle={styles.activeTickets}
-                          customTextStyle={styles.activeTicketsText}
-                          fontWeight={"600"}
-                        >
-                          {filterState?.selectedStatus.length +
-                            filterState?.selectedQueryType.length}
-                        </CommonText>
-                      )}
-                    </CustomTouchableOpacity>
+                        style={styles.imageParentStyle}
+                        disabled={isTicketListingLoading}
+                      >
+                        <TouchableImage
+                          source={images.iconFilter}
+                          parentStyle={styles.iconTicket}
+                          onPress={handleFilterModal}
+                        />
+                        {isWebView && (
+                          <CommonText customTextStyle={styles.filterText}>
+                            {intl.formatMessage({ id: "label.filters" })}
+                          </CommonText>
+                        )}
+                        {isFilterCount && (
+                          <CommonText
+                            customContainerStyle={styles.activeTickets}
+                            customTextStyle={styles.activeTicketsText}
+                            fontWeight={"600"}
+                          >
+                            {filterState?.selectedStatus.length +
+                              filterState?.selectedQueryType.length}
+                          </CommonText>
+                        )}
+                      </CustomTouchableOpacity>
+                    )}
                   </View>
                 }
                 rightSection={ThirdSection ? ThirdSection : <></>}
@@ -326,6 +330,7 @@ const CustomTable = ({
             onApplyFilter,
             statusData,
             queryTypeData,
+            renderCalendar,
           }}
         />
       )}

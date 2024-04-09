@@ -25,6 +25,7 @@ export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
+export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const FILE_MAX_SIZE = 5000000;
 export const CA_JOBS = "ca-jobs";
@@ -247,6 +248,19 @@ export const POSTED_JOB_LISTING = {
   number_of_interviews: "Scheduled Interview",
   number_of_applications: "Applicants",
   approve: "Approved/Not Approved by Admin",
+};
+export const APPLICANT_LISTING = {
+  name: "Applicant Name",
+  applicant_id: "Applicant ID",
+  status: "Status",
+};
+export const SCHEDULE_LISTING = {
+  name: "Applicant Name",
+  applicant_id: "Applicant ID",
+  type: "Interview Type",
+  primary_interview_date: "Primary Interview Date",
+  primary_interview_time: "Primary Interview Time",
+  status: "Status",
 };
 
 export const FEEDBACK_TABLE_HEADING = {
@@ -644,6 +658,8 @@ export const progressData = {
     textColor: colors.darkSecondGreen,
   },
 };
+
+export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];
 
 export const JOB_APPLICANTS_HEADING = {
   name: "Application Name",
