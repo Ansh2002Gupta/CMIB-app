@@ -29,6 +29,7 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePatch } from "../../../hooks/useApiRequest";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import ViewInterviewDetails from "../../../containers/ViewInterviewDetails";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -59,8 +60,8 @@ const useJobApplicants = () => {
 
   const popMessageRef = useRef(null);
   useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
-  // const companyId = userProfileDetails?.userDetails?.id;
-  const companyId = 1;
+  const companyId = userProfileDetails?.userDetails?.id;
+  // const companyId = 1;
   const currentModule = sideBarState?.selectedModule?.key;
 
   let isHeading = true;
@@ -194,16 +195,19 @@ const useJobApplicants = () => {
       "Shortlist Candidate": () => {
         handleStatus({
           body: {
-            // status: 3, // we have to pass the status id to make a api call for applicant status change
+            status: 3, // we have to pass the status id to make a api call for applicant status change
           },
         });
       },
       "Reject Candidate": () => {
         handleStatus({
           body: {
-            // status: 4, // we have to pass the status id to make a api call for applicant status change
+            status: 2, // we have to pass the status id to make a api call for applicant status change
           },
         });
+      },
+      "View Interview Details": () => {
+        return <ViewInterviewDetails userId={showCurrentPopupmessage} />;
       },
     };
     const action = screens[currentAction];
@@ -242,6 +246,13 @@ const useJobApplicants = () => {
     //   });
     // }
   };
+
+  const actionsArrau = [
+    "Download Profile & Resume",
+    "View Interview Details",
+    "Shortlist Candidate",
+    "Reject Candidate",
+  ];
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
@@ -340,7 +351,9 @@ const useJobApplicants = () => {
                   ref={popMessageRef}
                   message={item?.action}
                   customStyle={styles.popupMessageStyle}
-                  onPopupClick={(action) => handleActions(action, item)}
+                  onPopupClick={(action) =>
+                    handleActions("View Interview Details", item)
+                  }
                 />
               </View>
             )}

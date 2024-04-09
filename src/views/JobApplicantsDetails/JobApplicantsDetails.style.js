@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     paddingTop: 24,
     paddingBottom: 24,
-
     justifyContent: "space-between",
   },
   headerText: {
@@ -23,6 +22,12 @@ const styles = StyleSheet.create({
   valueStyle: {
     fontSize: 14,
     lineHeight: 22,
+    flexWrap: "wrap",
+  },
+  shortProfile: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   userInfoContainer: {
     padding: 5,
@@ -44,6 +49,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
+    flexWrap: "wrap",
   },
   MobButtonContainer: {
     flexDirection: "row",

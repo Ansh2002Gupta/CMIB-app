@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router";
 import { View } from "@unthinkable/react-core-components";
@@ -9,6 +9,7 @@ import CommonText from "../../components/CommonText";
 import CustomButton from "../../components/CustomButton";
 import JobProfileTab from "../JobProfile";
 import useIsWebView from "../../hooks/useIsWebView";
+import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 import useFetch from "../../hooks/useFetch";
 import { usePost } from "../../hooks/useApiRequest";
 import {
@@ -78,12 +79,13 @@ const JobApplicantsDetails = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const { job_id, id } = useParams();
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
 
   // Will uncomment when we get job id from applicant list
 
-  //   const { data, isLoading, fetchData } = useFetch({
-  //     url: USER_TYPE_COMPANY + JOBS + `/${job_id}` + JOB_APPLICANTS + `/${id}`,
-  //   });
+  const { data, isLoading, fetchData } = useFetch({
+    // url: USER_TYPE_COMPANY + JOBS + `/${job_id}` + JOB_APPLICANTS + `/${id}`,
+  });
 
   const { makeRequest: handleSave, isLoading: isCandidateUserSaving } = usePost(
     {
@@ -99,46 +101,49 @@ const JobApplicantsDetails = () => {
       },
     });
   };
-  const onScheduleInterviewClick = () => {};
+  const onScheduleInterviewClick = () => {
+    setShowScheduleModal(true);
+  };
 
   const UserDetails = ({ intl, isWebView }) => {
     return (
-      <TwoColumn
-        isLeftFillSpace
-        isRightFillSpace
-        leftSection={
-          <>
-            <View style={styles.rowStyle}>
-              <RenderUserInfo
-                label={intl.formatMessage({ id: "label.applicant_name" })}
-                value="Nikhil Sharma"
-              />
-              <View style={styles.seperator} />
-              <RenderUserInfo
-                label={intl.formatMessage({
-                  id: "label.applicant_id",
-                })}
-                value="NRO01233"
-              />
-            </View>
-            <View style={styles.rowStyle}>
-              <RenderUserInfo
-                label={intl.formatMessage({ id: "label.updated_at" })}
-                value="10/11/2023"
-              />
-              <View style={styles.seperator} />
-              <RenderUserInfo
-                label={intl.formatMessage({ id: "label.status" })}
-                value="Shortlisted"
-              />
-            </View>
-          </>
-        }
-        rightSection={
-          isWebView &&
-          buttonSection(intl, isWebView, onSaveClick, onScheduleInterviewClick)
-        }
-      />
+      <View style={styles.shortProfile}>
+        <View>
+          <View style={styles.rowStyle}>
+            <RenderUserInfo
+              label={intl.formatMessage({ id: "label.applicant_name" })}
+              value="Nikhil Sharma"
+            />
+            <View style={styles.seperator} />
+            <RenderUserInfo
+              label={intl.formatMessage({
+                id: "label.applicant_id",
+              })}
+              value="NRO01233"
+            />
+          </View>
+          <View style={styles.rowStyle}>
+            <RenderUserInfo
+              label={intl.formatMessage({ id: "label.updated_at" })}
+              value="10/11/2023"
+            />
+            <View style={styles.seperator} />
+            <RenderUserInfo
+              label={intl.formatMessage({ id: "label.status" })}
+              value="Shortlisted"
+            />
+          </View>
+        </View>
+        <View>
+          {isWebView &&
+            buttonSection(
+              intl,
+              isWebView,
+              onSaveClick,
+              onScheduleInterviewClick
+            )}
+        </View>
+      </View>
     );
   };
 
@@ -161,6 +166,13 @@ const JobApplicantsDetails = () => {
         }
         questionaireURL={""}
       />
+      {showScheduleModal && (
+        <ScheduleInterviewModal
+          onClose={() => {
+            setShowScheduleModal(false);
+          }}
+        />
+      )}
     </>
   );
 };

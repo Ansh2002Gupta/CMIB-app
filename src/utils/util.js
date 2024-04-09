@@ -113,6 +113,10 @@ export const formatDate = (date, format = "DD/MM/YYYY") => {
   return dayjs(date).format(format);
 };
 
+export const formatTime = (dateString, format = "hh:mm A") => {
+  return dayjs(dateString).format(format);
+};
+
 export const extractFilename = (fileUri) => {
   const parts = fileUri.split("/");
   const filename = parts.pop() || "";
