@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     marginLeft: 8,
+    fontSize: 14,
   },
   imageParentStyle: {
     flexDirection: "row",

@@ -322,7 +322,7 @@ const ViewPostedJobDetails = () => {
                 isBorderVisible={false}
                 handleSwitchChange={() => {
                   setActive(!isActive);
-                  handleUseChangeJob();
+                  handleUseChangeJob(id);
                 }}
               />
               <View style={styles.container}>

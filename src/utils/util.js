@@ -256,6 +256,10 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     temp.disability_type = jobData.typeOfDisabilty;
     temp.disability_percentage = jobData.disabiltyPercentage;
   }
+  if (jobData.status === 0 || jobData.status === 1) {
+    temp.status = jobData.status == 1 ? 0 : 1;
+  }
+
   let tempQuestion = question.map((item) => {
     return {
       id: item.id,
@@ -475,6 +479,7 @@ export const getDecryptApiData = (apiData) => {
     ? apiData.contract_period.months
     : 0;
   obj.contractDay = apiData?.contract_period ? apiData.contract_period.days : 0;
+  obj.status = apiData?.status == 0 ? 1 : 0;
   const transformedQuestionnaire = apiData?.questionnaires?.map((item) => {
     item.question_options = Array.isArray(item.question_options)
       ? item.question_options

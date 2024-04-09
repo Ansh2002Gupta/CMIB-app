@@ -65,10 +65,6 @@ const useGetScheduleList = (id, onClickAction) => {
     isError: isErrorApplicantStatusChange,
     errorWhileApplicantStatusChange,
   } = useChangeApplicantStatusApi();
-  console.log(
-    "errorWhileApplicantStatusChange",
-    errorWhileApplicantStatusChange
-  );
 
   const statusData = [
     {

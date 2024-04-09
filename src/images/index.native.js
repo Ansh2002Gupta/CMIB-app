@@ -119,7 +119,7 @@ import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
 import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
 import questionIcon from "../../public/images/question/question.png";
-import copyIcon from "../../public/images/copyIcon/copy.png";
+import copyIcon from "../../public/images/copyIcon/copy.svg";
 import redCrossIcon from "../../public/images/redCross/redClose.png";
 import editIcon from "../../public/images/editIcon/edit.png";
 import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";

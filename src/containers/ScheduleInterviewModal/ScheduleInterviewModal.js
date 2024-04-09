@@ -233,93 +233,71 @@ const ScheduleInterviewModal = ({
       setPrimaryInterviewType(primaryInterviewType);
       setSecondaryInterviewType(alternateInterviewType);
       if (primaryInterviewType == 0) {
-        const primaryAddess = data.venue_address;
-        const primarytime = dayjs(data.primary_schedule).format("HH:mm:ss");
-        const primaryDate = dayjs(data.primary_schedule).format("YYYY-MM-DD");
         setPrimaryDetails((prev) => {
           return {
             ...prev,
             face_to_face: {
-              address: primaryAddess,
-              time: primarytime,
-              date: primaryDate,
+              address: data.venue_address,
+              time: data.primary_schedule,
+              date: data.primary_schedule,
             },
           };
         });
       }
       if (alternateInterviewType == 0) {
-        const alternateAddess = data.alternate_venue_address;
-        const alternateTime = dayjs(data.alternate_schedule).format("HH:mm:ss");
-        const alternateDate = dayjs(data.alternate_schedule).format(
-          "YYYY-MM-DD"
-        );
         setAlternateDetails((prev) => {
           return {
             ...prev,
             face_to_face: {
-              address: alternateAddess,
-              time: alternateTime,
-              date: alternateDate,
+              address: data.alternate_venue_address,
+              time: data.alternate_schedule,
+              date: data.alternate_schedule,
             },
           };
         });
       }
       if (primaryInterviewType == 1) {
-        const primarytime = dayjs(data.primary_schedule).format("HH:mm:ss");
-        const primaryDate = dayjs(data.primary_schedule).format("YYYY-MM-DD");
         setPrimaryDetails((prev) => {
           return {
             ...prev,
             telephonic: {
-              time: primarytime,
-              date: primaryDate,
+              time: data.primary_schedule,
+              date: data.primary_schedule,
             },
           };
         });
       }
       if (alternateInterviewType == 1) {
-        const alternateTime = dayjs(data.alternate_schedule).format("HH:mm:ss");
-        const alternateDate = dayjs(data.alternate_schedule).format(
-          "YYYY-MM-DD"
-        );
         setAlternateDetails((prev) => {
           return {
             ...prev,
             telephonic: {
-              time: alternateTime,
-              date: alternateDate,
+              time: data.alternate_schedule,
+              date: data.alternate_schedule,
             },
           };
         });
       }
       if (primaryInterviewType == 2) {
-        const primaryLink = data.remote_meeting_link;
-        const primarytime = dayjs(data.primary_schedule).format("HH:mm:ss");
-        const primaryDate = dayjs(data.primary_schedule).format("YYYY-MM-DD");
         setPrimaryDetails((prev) => {
           return {
             ...prev,
             remote: {
-              link: primaryLink,
-              time: primarytime,
-              date: primaryDate,
+              link: data.remote_meeting_link,
+              time: data.primary_schedule,
+              date: data.primary_schedule,
             },
           };
         });
       }
       if (alternateInterviewType == 2) {
-        const alternateLink = data.alternate_remote_meeting_link;
-        const alternateTime = dayjs(data.alternate_schedule).format("HH:mm:ss");
-        const alternateDate = dayjs(data.alternate_schedule).format(
-          "YYYY-MM-DD"
-        );
         setAlternateDetails((prev) => {
           return {
             ...prev,
             remote: {
-              link: alternateLink,
-              time: alternateTime,
-              date: alternateDate,
+              link: data.alternate_remote_meeting_link,
+              time: data.alternate_schedule,
+              date: data.alternate_schedule,
             },
           };
         });

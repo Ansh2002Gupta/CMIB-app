@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   useContext,
+  useEffect,
   useImperativeHandle,
   useState,
 } from "react";
@@ -24,7 +25,6 @@ const JobDetailsComponent = forwardRef(
       jobDetails: addNewJobData?.jobDetails ?? "",
       isUrgentJob: addNewJobData?.isUrgentJob ?? -1,
     });
-
     const [error, setError] = useState({
       jobSummary: "",
       jobDetails: "",
@@ -47,7 +47,7 @@ const JobDetailsComponent = forwardRef(
         return false;
       } else if (
         field !== "jobType" &&
-        (!jobData[field] ||
+        ((!jobData[field] && field != "isUrgentJob") ||
           (field == "jobDetails" && !jobData[field]) ||
           jobData[field] == "<p><br></p>")
       ) {

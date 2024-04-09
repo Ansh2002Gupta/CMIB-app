@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import CustomModal from "../../../components/CustomModal";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
@@ -170,6 +170,10 @@ const AddModifyNewQuestionModal = ({
     }
     setNewQuestionnaireData(tempObj);
   }
+  const isMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { automaticallyAdjustKeyboardInsets: false }
+      : {};
 
   return (
     <View>
@@ -192,6 +196,8 @@ const AddModifyNewQuestionModal = ({
             <ScrollView
               showsVerticalScrollIndicator={false}
               nestedScrollEnabled={true}
+              keyboardShouldPersistTaps="handled"
+              {...isMobileProps}
             >
               <View style={styles.flexOne}>
                 {!optionData ? (
@@ -349,7 +355,7 @@ const AddModifyNewQuestionModal = ({
                       customTextStyle={styles.mandtoryTextStyle}
                     >
                       {intl.formatMessage({
-                        id: "label.fill_mandatory",
+                        id: "label.mandatory",
                       })}
                     </CommonText>
                   </View>

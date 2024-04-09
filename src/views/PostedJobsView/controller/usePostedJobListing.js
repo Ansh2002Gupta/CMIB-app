@@ -70,10 +70,22 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     handleUseChangeJob,
     isError: ischangeJobStatusError,
     isLoading: changeJobStatusLoading,
+    isSuccess,
     errorWhileJobChange,
   } = useChangeJobStatusApi();
+
   const isTicketListingLoading = changeJobStatusLoading || isLoading;
   const isError = isErrorGetPostedJob || ischangeJobStatusError;
+  useEffect(() => {
+    if (isSuccess) {
+      updateCurrentRecords({
+        perPage: rowsPerPage,
+        page: currentPage,
+        status: filterOptions.activeorInctive,
+        approved: filterOptions.approvedorNot,
+      });
+    }
+  }, [isSuccess]);
 
   const statusData = [
     {
@@ -431,6 +443,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
               </CommonText>
             ) : (
               <Switch
+                disabled={changeJobStatusLoading}
                 isToggled={item.status == 1}
                 onChange={() => {
                   handleUseChangeJob(item.id);

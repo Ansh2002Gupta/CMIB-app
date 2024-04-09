@@ -21,7 +21,16 @@ const today = new Date();
 const tomorrow = new Date(today);
 tomorrow.setDate(tomorrow.getDate() + 1);
 const BottomSection = forwardRef(
-  ({ addNewJobData, isWebView, selectedJobType }, ref) => {
+  (
+    {
+      addNewJobData,
+      isWebView,
+      selectedJobType,
+      isStatusVisible = false,
+      isInstructionVisible = true,
+    },
+    ref
+  ) => {
     const getStyle = (style, styleColumn) => (isWebView ? style : styleColumn);
     const intl = useIntl();
     const [addJobs] = useContext(AddJobContext);
@@ -44,6 +53,7 @@ const BottomSection = forwardRef(
       contractYear: addNewJobData?.contractYear ?? 0,
       contractMonth: addNewJobData?.contractMonth ?? 0,
       contractDay: addNewJobData?.contractDay ?? 0,
+      status: addNewJobData?.status ?? -1,
     });
     const [error, setError] = useState({
       jobOpeningDate: "",
@@ -83,16 +93,6 @@ const BottomSection = forwardRef(
             addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
           }
           break;
-        // case "flexiHours":
-        //   if (jobData.flexiHours === -1) {
-        //     addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
-        //   }
-        //   break;
-        // case "salaryNagotiable":
-        //   if (jobData.salaryNagotiable === -1) {
-        //     addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
-        //   }
-        //   break;
         case "fullTime":
           if (
             jobData.fullTime === -1 &&
@@ -283,6 +283,18 @@ const BottomSection = forwardRef(
                 ? 0
                 : jobData.numberOfVacancies
             }"`}
+            options={[
+              `"${
+                jobData.numberOfVacancies.length === 0
+                  ? 0
+                  : jobData.numberOfVacancies
+              }"`,
+              `"${intl.formatMessage({ id: "label.more_than" })} ${
+                jobData.numberOfVacancies.length === 0
+                  ? 0
+                  : jobData.numberOfVacancies
+              }"`,
+            ]}
             toggleTitle2={`"${intl.formatMessage({ id: "label.more_than" })} ${
               jobData.numberOfVacancies.length === 0
                 ? 0
@@ -525,13 +537,30 @@ const BottomSection = forwardRef(
               customStyle={styles.textInputStyleColumn}
             />
           </View>
-          <View>
-            <Text style={styles.noteTextStyle}>
-              {intl.formatMessage({
-                id: "label.job_instruction",
-              })}
-            </Text>
-          </View>
+          {isStatusVisible && (
+            <CustomToggleComponent
+              label={intl.formatMessage({ id: "label.job_status" })}
+              containerStyle={getStyle(
+                styles.toggleComponentContainerStyle,
+                styles.toggleComponentContainerStyleColumn
+              )}
+              value={jobData.status}
+              onValueChange={(item) => {
+                handleJobDetailsChange("status", item);
+              }}
+              customToggleStyle={{ marginTop: 16, marginBottom: 18 }}
+              customLabelStyle={styles.labelStyle}
+            />
+          )}
+          {isInstructionVisible && (
+            <View>
+              <Text style={styles.noteTextStyle}>
+                {intl.formatMessage({
+                  id: "label.job_instruction",
+                })}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     );
