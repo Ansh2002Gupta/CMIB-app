@@ -19,19 +19,19 @@ import {
 import { formatDate, formatTime, getValidUrl } from "../../utils/util";
 import useFetch from "../../hooks/useFetch";
 import {
-  APPLICANTS,
+  JOB_APPLICANTS,
   INTERVIEW,
   USER_TYPE_COMPANY,
 } from "../../services/apiServices/apiEndPoint";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ViewInterviewDetails.style";
 
-const ViewInterviewDetails = ({ onClose, userId }) => {
+const ViewInterviewDetails = ({ onClose, applicant_id }) => {
   const intl = useIntl();
 
   const [interviewData, setInterviewData] = useState();
   const { data, isLoading, fetchData, isError, error } = useFetch({
-    url: USER_TYPE_COMPANY + APPLICANTS + INTERVIEW + `/${userId}`,
+    url: USER_TYPE_COMPANY + JOB_APPLICANTS + INTERVIEW + `/${applicant_id}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },

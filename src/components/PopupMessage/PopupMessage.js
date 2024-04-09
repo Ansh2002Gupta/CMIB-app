@@ -16,6 +16,7 @@ const PopupMessage = ({
   onPopupClick,
   onPopUpClose,
   popUpHeaderText,
+  labelName,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -37,7 +38,7 @@ const PopupMessage = ({
                 onPress={() => onPopupClick(item)}
               >
                 <CommonText customTextStyle={styles.deletetext}>
-                  {item}
+                  {item?.[labelName]}
                 </CommonText>
               </CustomTouchableOpacity>
             ))}
@@ -53,7 +54,7 @@ const PopupMessage = ({
                 onPress={() => onPopupClick(item)}
               >
                 <CommonText customTextStyle={styles.deletetext}>
-                  {item}
+                  {item?.[labelName]}
                 </CommonText>
               </CustomTouchableOpacity>
             ))}
@@ -78,11 +79,13 @@ const PopupMessage = ({
 PopupMessage.defaultProps = {
   customStyle: {},
   message: [],
+  labelName: "name",
 };
 
 PopupMessage.propTypes = {
   customStyle: PropTypes.object,
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  labelName: PropTypes.string,
   onPopupClick: PropTypes.func.isRequired,
   isPopupModal: PropTypes.bool.isRequired,
   onPopUpClose: PropTypes.func,

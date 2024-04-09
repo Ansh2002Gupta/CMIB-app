@@ -663,7 +663,7 @@ export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];
 
 export const JOB_APPLICANTS_HEADING = {
   name: "Application Name",
-  applicant_id: "Application ID",
+  applicantion_id: "Applicant ID",
   job_id: "Job Id",
   designation: "Designation",
   job_status: "Active/Inactive",

@@ -10,6 +10,8 @@ import CustomTable from "../../components/CustomTable";
 import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import TouchableImage from "../../components/TouchableImage";
+import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
+import ViewInterviewDetails from "../../containers/ViewInterviewDetails";
 import useIsWebView from "../../hooks/useIsWebView";
 import useJobApplicants from "./controllers/useJobApplicantsView";
 import {
@@ -29,13 +31,15 @@ const JobApplicants = () => {
     getStatusStyle,
     headingTexts,
     isHeading,
-    isJobApplicantListingLoading,
+    isLoading,
     subHeadingText,
     statusText,
     tableIcon,
     totalcards,
     filterApplyHandler,
     handleActions,
+    setModals,
+    setModalsState,
     filterCategory,
     queryTypeData,
     statusData,
@@ -94,50 +98,74 @@ const JobApplicants = () => {
   };
 
   return (
-    <TwoRow
-      topSection={
-        isWebView && (
-          <IconHeader
-            headerText={intl.formatMessage({ id: "label.job_applicants" })}
+    <>
+      <TwoRow
+        topSection={
+          isWebView && (
+            <IconHeader
+              headerText={intl.formatMessage({ id: "label.job_applicants" })}
+            />
+          )
+        }
+        isBottomFillSpace
+        bottomSection={
+          <CustomTable
+            {...{
+              allDataLoaded,
+              currentPage,
+              getColoumConfigs,
+              data: jobApplicantListingData,
+              tableHeading: JOB_APPLICANTS_HEADING,
+              isHeading,
+              headingTexts,
+              subHeadingText,
+              statusText,
+              getStatusStyle,
+              tableIcon,
+              rowsLimit: ROWS_PER_PAGE_ARRAY,
+              isTicketListingLoading: isLoading,
+              totalcards,
+              filterApplyHandler,
+              filterCategory,
+              queryTypeData,
+              statusData,
+              handleLoadMore,
+              handlePageChange,
+              handleRowPerPageChange,
+              handleSearchResults,
+              isFirstPageReceived,
+              loadingMore,
+              onIconPress,
+              rowsPerPage,
+              isTotalCardVisible: false,
+              mobileComponentToRender: getMobileView,
+            }}
           />
-        )
-      }
-      isBottomFillSpace
-      bottomSection={
-        <CustomTable
-          {...{
-            allDataLoaded,
-            currentPage,
-            getColoumConfigs,
-            data: jobApplicantListingData,
-            tableHeading: JOB_APPLICANTS_HEADING,
-            isHeading,
-            headingTexts,
-            subHeadingText,
-            statusText,
-            getStatusStyle,
-            tableIcon,
-            rowsLimit: ROWS_PER_PAGE_ARRAY,
-            isTicketListingLoading: isJobApplicantListingLoading,
-            totalcards,
-            filterApplyHandler,
-            filterCategory,
-            queryTypeData,
-            statusData,
-            handleLoadMore,
-            handlePageChange,
-            handleRowPerPageChange,
-            handleSearchResults,
-            isFirstPageReceived,
-            loadingMore,
-            onIconPress,
-            rowsPerPage,
-            isTotalCardVisible: false,
-            mobileComponentToRender: getMobileView,
-          }}
+        }
+      />
+      {!!setModals?.interviewModal && (
+        <ViewInterviewDetails
+          applicant_id={setModals?.interviewModal}
+          onClose={() =>
+            setModalsState((prev) => ({
+              ...prev,
+              interviewModal: null,
+            }))
+          }
         />
-      }
-    />
+      )}
+      {!!setModals?.scheduleModal && (
+        <ScheduleInterviewModal
+          applicant_id={setModals?.scheduleModal}
+          onClose={() =>
+            setModalsState((prev) => ({
+              ...prev,
+              scheduleModal: null,
+            }))
+          }
+        />
+      )}
+    </>
   );
 };
 

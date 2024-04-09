@@ -43,10 +43,10 @@ export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
 
 //sub routes
-export const APPLICANTS = "/applicants";
 export const ACADEMICS = "/academics";
 export const ACTIVITIES = "/activities";
 export const JOB_APPLICANTS = "/applicants";
+export const JOB_APPLICANT = "/applicant";
 export const JOBS = "/jobs";
 export const JOB_SKILLS = "/skills";
 export const JOB_PREFERENCES = "/job-preferences";
@@ -58,6 +58,7 @@ export const STATUS = "/status";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
 export const INTERVIEW = "/interview";
 export const WORK_EXPERIENCE = "/work-experiences";
+export const QUESTIONNAIRE = "/questionnaire";
 
 /* API Endpoints Member CA JOB profile */
 export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;

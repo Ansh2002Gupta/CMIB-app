@@ -100,6 +100,18 @@ export const getTime = (isoString) => {
   return formattedTime;
 };
 
+export const getDate = (isoDateString, format = "DD-MM-YYYY") => {
+  const date = new Date(isoDateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // getMonth() returns 0-11
+  const day = date.getDate();
+
+  return format
+    .replace("YYYY", year.toString())
+    .replace("MM", month.toString().padStart(2, "0"))
+    .replace("DD", day.toString().padStart(2, "0"));
+};
+
 export const capitalize = (text) => {
   if (!text || typeof text !== "string") {
     return text;
@@ -560,7 +572,7 @@ export const convertToTime = ({ dateString, format24Hour = true }) => {
 export const formateDateandTime = (date, time) => {
   const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
   const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
-  return formattedDate + " " + formattedTime;
+  return formattedDate + formattedTime;
 };
 
 export const areAllValuesEmpty = (obj) => {
@@ -585,3 +597,26 @@ const isObjectFilled = (obj) => {
 export const areAllValuesFilled = (objects) => {
   return Object.values(objects).some(isObjectFilled);
 };
+
+export function convertToIST(dateString) {
+  const date = new Date(dateString + "Z");
+
+  const istOffset = (5 * 60 + 30) * 60 * 1000;
+  const istDate = new Date(date.getTime() + istOffset);
+
+  const options = {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  };
+
+  const formattedDate = istDate.toLocaleString("en-US", options);
+  const finalDate = `${formattedDate} GMT+0530 (India Standard Time)`;
+
+  return finalDate;
+}

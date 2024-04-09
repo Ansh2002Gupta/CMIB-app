@@ -24,6 +24,12 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     flexWrap: "wrap",
   },
+  savedButtonContainer: {
+    backgroundColor: colors.secondaryGrey,
+    borderWidth: 0,
+    opacity: 1,
+    cursor: "not-allowed",
+  },
   shortProfile: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -32,6 +38,7 @@ const styles = StyleSheet.create({
   userInfoContainer: {
     padding: 5,
     flexDirection: "row",
+    alignItems: "center",
   },
   seperator: {
     height: 20,

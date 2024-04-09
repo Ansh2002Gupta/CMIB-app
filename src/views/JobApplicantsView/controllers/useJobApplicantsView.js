@@ -29,12 +29,10 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePatch } from "../../../hooks/useApiRequest";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
-import ViewInterviewDetails from "../../../containers/ViewInterviewDetails";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useJobApplicants = () => {
-  const [userProfileDetails] = useContext(UserProfileContext);
   const [sideBarState] = useContext(SideBarContext);
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
@@ -56,16 +54,18 @@ const useJobApplicants = () => {
   });
 
   const [showCurrentPopupmessage, setCurrentPopupMessage] = useState(0);
+  const [setModals, setModalsState] = useState({
+    interviewModal: null,
+    scheduleModal: null,
+  });
   const navigate = useNavigate();
 
   const popMessageRef = useRef(null);
   useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
-  const companyId = userProfileDetails?.userDetails?.id;
-  // const companyId = 1;
   const currentModule = sideBarState?.selectedModule?.key;
 
   let isHeading = true;
-  let headingTexts = ["application_id"];
+  let headingTexts = ["applicantion_id"];
   let subHeadingText = ["status"];
   let statusText = ["active_inactive"];
   let tableIcon = images.iconMore;
@@ -78,48 +78,41 @@ const useJobApplicants = () => {
     isLoading: isJobApplicantListingLoading,
     fetchData: fetchingJobApplicantListing,
   } = useFetch({
-    url: USER_TYPE_COMPANY + `/${companyId}` + JOB_APPLICANTS,
+    url: USER_TYPE_COMPANY + JOB_APPLICANTS,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
 
-  const {
-    makeRequest: handleStatus,
-    isLoading: isUpdatingApplicantStatus,
-    error,
-    setError,
-  } = usePatch({
-    url:
-      USER_TYPE_COMPANY +
-      JOBS +
-      JOB_APPLICANTS +
-      `/${showCurrentPopupmessage}` +
-      STATUS,
-  });
+  const { makeRequest: handleStatus, isLoading: isUpdatingApplicantStatus } =
+    usePatch({
+      url:
+        USER_TYPE_COMPANY +
+        JOBS +
+        JOB_APPLICANTS +
+        `/${showCurrentPopupmessage}` +
+        STATUS,
+    });
 
   useEffect(() => {
-    if (companyId) {
-      const fetchData = async () => {
-        const requestedParams = {
-          perPage: rowsPerPage,
-          page: currentPage,
-        };
-        const initialData = await fetchingJobApplicantListing({
-          queryParamsObject: requestedParams,
-        });
-        if (initialData && initialData?.records?.length > 0) {
-          setCurrentRecords(initialData?.records);
-          if (initialData?.records?.length < rowsPerPage && isMob) {
-            setAllDataLoaded(true);
-          }
-        }
-        setIsFirstPageReceived(false);
+    const fetchData = async () => {
+      const requestedParams = {
+        perPage: rowsPerPage,
+        page: currentPage,
       };
-
-      fetchData();
-    }
-  }, [companyId]);
+      const initialData = await fetchingJobApplicantListing({
+        queryParamsObject: requestedParams,
+      });
+      if (initialData && initialData?.records?.length > 0) {
+        setCurrentRecords(initialData?.records);
+        if (initialData?.records?.length < rowsPerPage && isMob) {
+          setAllDataLoaded(true);
+        }
+      }
+      setIsFirstPageReceived(false);
+    };
+    fetchData();
+  }, []);
 
   const updateCurrentRecords = async (params) => {
     const newData = await fetchingJobApplicantListing({
@@ -147,8 +140,9 @@ const useJobApplicants = () => {
   }
 
   const onIconPress = (item) => {
-    showCurrentPopupmessage !== item?.user_id && item?.user_id !== null
-      ? setCurrentPopupMessage(item?.user_id)
+    showCurrentPopupmessage !== item?.job_applicantion_id &&
+    item?.job_applicantion_id !== null
+      ? setCurrentPopupMessage(item?.job_applicantion_id)
       : setCurrentPopupMessage(-1);
   };
 
@@ -182,35 +176,50 @@ const useJobApplicants = () => {
     }
   };
 
-  const handleActions = (currentAction, item) => {
-    // const jobId = item?.job_id;
-    const jobId = 2;
+  const handleClickActions = (id) => {
+    handleStatus({
+      body: {
+        status: id,
+      },
+      onSuccessCallback: () => {
+        fetchingJobApplicantListing({});
+      },
+    });
+  };
 
+  const handleActions = (currentAction, item) => {
     const screens = {
-      "Download Profile & Resume": () => {},
-      "View Details": () =>
+      download_profile_resume: () => {},
+      view_details: () =>
         navigate(
-          `/${currentModule}/${navigations.JOB_APPLICANTS}/${jobId}/applicant-details/${showCurrentPopupmessage}`
+          `/${currentModule}/${navigations.JOB_APPLICANTS}/${item?.company_job_id}/applicant-details/${item?.id}`
         ),
-      "Shortlist Candidate": () => {
-        handleStatus({
-          body: {
-            status: 3, // we have to pass the status id to make a api call for applicant status change
-          },
-        });
+      shortlist_candidate: () => {
+        handleClickActions(3);
       },
-      "Reject Candidate": () => {
-        handleStatus({
-          body: {
-            status: 2, // we have to pass the status id to make a api call for applicant status change
-          },
-        });
+      reject_candidate: () => {
+        handleClickActions(2);
       },
-      "View Interview Details": () => {
-        return <ViewInterviewDetails userId={showCurrentPopupmessage} />;
+      offer_job: () => {
+        handleClickActions(6);
+      },
+      reject_after_interview: () => {
+        handleClickActions(9);
+      },
+      view_interview_details: () => {
+        setModalsState((prev) => ({
+          ...prev,
+          interviewModal: item?.job_applicantion_id,
+        }));
+      },
+      schedule_interview: () => {
+        setModalsState((prev) => ({
+          ...prev,
+          scheduleModal: item?.job_applicantion_id,
+        }));
       },
     };
-    const action = screens[currentAction];
+    const action = screens[currentAction?.id];
     if (action) {
       action();
     }
@@ -218,41 +227,34 @@ const useJobApplicants = () => {
 
   //search and filter will integrate when Filter API integrated
   const handleSearchResults = async (searchedData) => {
-    // setIsFirstPageReceived(true);
-    // setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
-    // if (isMob) {
-    //   setCurrentPage(1);
-    //   const newData = await fetchingJobApplicantListing({
-    //     queryParamsObject: {
-    //       q: searchedData,
-    //       status: filterOptions.status,
-    //       queryType: filterOptions.query_type,
-    //     },
-    //   });
-    //   setIsFirstPageReceived(false);
-    //   setCurrentRecords(newData?.records);
-    //   if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
-    //     setAllDataLoaded(true);
-    //   } else {
-    //     setAllDataLoaded(false);
-    //   }
-    // } else {
-    //   await updateCurrentRecords({
-    //     q: searchedData,
-    //     perPage: rowsPerPage,
-    //     page: currentPage,
-    //     status: filterOptions.status,
-    //     queryType: filterOptions.query_type,
-    //   });
-    // }
+    setIsFirstPageReceived(true);
+    setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
+    if (isMob) {
+      setCurrentPage(1);
+      const newData = await fetchingJobApplicantListing({
+        queryParamsObject: {
+          keyword: searchedData,
+          // status: filterOptions.status,
+          // queryType: filterOptions.query_type,
+        },
+      });
+      setIsFirstPageReceived(false);
+      setCurrentRecords(newData?.records);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        keyword: searchedData,
+        perPage: rowsPerPage,
+        page: currentPage,
+        // status: filterOptions.status,
+        // queryType: filterOptions.query_type,
+      });
+    }
   };
-
-  const actionsArrau = [
-    "Download Profile & Resume",
-    "View Interview Details",
-    "Shortlist Candidate",
-    "Reject Candidate",
-  ];
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
@@ -274,7 +276,7 @@ const useJobApplicants = () => {
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item.applicant_id || "-"}
+            {item.applicantion_id || "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -345,15 +347,14 @@ const useJobApplicants = () => {
               isSvg={true}
             />
 
-            {showCurrentPopupmessage === item?.user_id && (
+            {showCurrentPopupmessage === item?.job_applicantion_id && (
               <View ref={popMessageRef}>
                 <PopupMessage
                   ref={popMessageRef}
                   message={item?.action}
+                  labelName={"name"}
                   customStyle={styles.popupMessageStyle}
-                  onPopupClick={(action) =>
-                    handleActions("View Interview Details", item)
-                  }
+                  onPopupClick={(action) => handleActions(action, item)}
                 />
               </View>
             )}
@@ -379,6 +380,7 @@ const useJobApplicants = () => {
   const handlePageChange = async (page) => {
     handlePagePerChange(page);
     await updateCurrentRecords({
+      keyword: filterOptions?.searchData,
       perPage: rowsPerPage,
       page: page,
       // status: filterOptions.status,
@@ -389,12 +391,15 @@ const useJobApplicants = () => {
   const handleRowPerPageChange = async (option) => {
     handleRowsPerPageChange(option.value);
     await updateCurrentRecords({
+      keyword: filterOptions?.searchData,
       perPage: option.value,
       page: currentPage,
       // status: filterOptions.status,
       // queryType: filterOptions.query_type,
     });
   };
+
+  const isLoading = isJobApplicantListingLoading || isUpdatingApplicantStatus;
 
   return {
     filterApplyHandler,
@@ -413,12 +418,15 @@ const useJobApplicants = () => {
     statusData,
     getColoumConfigs,
     handleActions,
+    setModals,
+    setModalsState,
+    isUpdatingApplicantStatus,
     showCurrentPopupmessage,
     setCurrentPopupMessage,
     getStatusStyle,
     headingTexts,
     isHeading,
-    isJobApplicantListingLoading,
+    isLoading,
     jobApplicantListingData: currentRecords,
     subHeadingText,
     statusText,

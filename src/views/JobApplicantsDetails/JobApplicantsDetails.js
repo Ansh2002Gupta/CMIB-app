@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router";
 import { View } from "@unthinkable/react-core-components";
@@ -7,59 +7,24 @@ import { TwoColumn } from "../../core/layouts";
 
 import CommonText from "../../components/CommonText";
 import CustomButton from "../../components/CustomButton";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import JobProfileTab from "../JobProfile";
+import LoadingScreen from "../../components/LoadingScreen";
 import useIsWebView from "../../hooks/useIsWebView";
 import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 import useFetch from "../../hooks/useFetch";
 import { usePost } from "../../hooks/useApiRequest";
 import {
   JOBS,
-  JOB_APPLICANTS,
+  JOB_APPLICANT,
   MARK_PREFER,
+  QUESTIONNAIRE,
   USER_TYPE_CANDIDATES,
   USER_TYPE_COMPANY,
 } from "../../services/apiServices/apiEndPoint";
+import { getDate } from "../../utils/util";
 import images from "../../images";
 import styles from "./JobApplicantsDetails.style";
-
-const buttonSection = (
-  intl,
-  isWebView,
-  onSaveClick,
-  onScheduleInterviewClick
-) => {
-  return (
-    <View
-      style={isWebView ? styles.buttonContainer : styles.MobButtonContainer}
-    >
-      <CustomButton
-        iconLeft={{
-          leftIconSource: images.iconSavedJob,
-        }}
-        onPress={onSaveClick}
-      >
-        <CommonText customTextStyle={styles.valueStyle}>
-          {isWebView
-            ? intl.formatMessage({ id: "label.save_applicant_details" })
-            : "Save Applicant "}
-        </CommonText>
-      </CustomButton>
-      <CustomButton
-        withGreenBackground
-        iconLeft={{
-          leftIconSource: images.iconCalendarWhite,
-        }}
-        onPress={onScheduleInterviewClick}
-        style={isWebView ? styles.greenButton : {}}
-        isLeftIconNotSvg={false}
-      >
-        <CommonText customTextStyle={styles.greenButtonText}>
-          {intl.formatMessage({ id: "label.schedule_interview" })}
-        </CommonText>
-      </CustomButton>
-    </View>
-  );
-};
 
 const RenderUserInfo = ({ label, value }) => {
   return (
@@ -80,24 +45,36 @@ const JobApplicantsDetails = () => {
   const { isWebView } = useIsWebView();
   const { job_id, id } = useParams();
   const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [profileData, setProfileData] = useState({});
 
-  // Will uncomment when we get job id from applicant list
-
-  const { data, isLoading, fetchData } = useFetch({
-    // url: USER_TYPE_COMPANY + JOBS + `/${job_id}` + JOB_APPLICANTS + `/${id}`,
+  const {
+    isLoading: isProfileDataLoading,
+    fetchData: fetchProfileData,
+    isError: isErrorWhileFetching,
+    error: errorWhileFetching,
+  } = useFetch({
+    url: USER_TYPE_COMPANY + JOBS + `/${job_id}` + JOB_APPLICANT + `/${id}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const { makeRequest: handleSave, isLoading: isCandidateUserSaving } = usePost(
     {
-      url: USER_TYPE_CANDIDATES + `/${id}` + MARK_PREFER,
+      url:
+        USER_TYPE_COMPANY + `/${USER_TYPE_CANDIDATES}` + `/${id}` + MARK_PREFER,
     }
   );
 
+  useEffect(async () => {
+    const newdata = await fetchProfileData();
+    setProfileData(newdata[0]);
+  }, []);
+
   const onSaveClick = () => {
-    //  GIVING 404
     handleSave({
       onSuccessCallback: () => {
-        console.log("saved");
+        fetchProfileData({});
       },
     });
   };
@@ -105,32 +82,81 @@ const JobApplicantsDetails = () => {
     setShowScheduleModal(true);
   };
 
-  const UserDetails = ({ intl, isWebView }) => {
+  const questionnaireURL =
+    USER_TYPE_COMPANY + JOBS + `/${job_id}` + QUESTIONNAIRE;
+
+  const buttonSection = (
+    intl,
+    isWebView,
+    onSaveClick,
+    onScheduleInterviewClick
+  ) => {
+    const isSaved = profileData?.is_saved;
+    const isEditScheduleInterview = !!profileData?.interview_id;
+    return (
+      <View
+        style={isWebView ? styles.buttonContainer : styles.MobButtonContainer}
+      >
+        <CustomButton
+          iconLeft={{
+            leftIconSource: images.iconSavedJob,
+          }}
+          onPress={onSaveClick}
+          disabled={isSaved}
+          isLoading={isCandidateUserSaving}
+          disabledStyle={styles.savedButtonContainer}
+        >
+          <CommonText customTextStyle={styles.valueStyle}>
+            {!isSaved
+              ? intl.formatMessage({ id: "label.save_applicant_details" })
+              : intl.formatMessage({ id: "label.saved_applicant" })}
+          </CommonText>
+        </CustomButton>
+        <CustomButton
+          withGreenBackground
+          iconLeft={{
+            leftIconSource: images.iconCalendarWhite,
+          }}
+          onPress={onScheduleInterviewClick}
+          style={isWebView ? styles.greenButton : {}}
+          isLeftIconNotSvg={false}
+        >
+          <CommonText customTextStyle={styles.greenButtonText}>
+            {isEditScheduleInterview
+              ? intl.formatMessage({ id: "label.edit_schedule_interview" })
+              : intl.formatMessage({ id: "label.schedule_interview" })}
+          </CommonText>
+        </CustomButton>
+      </View>
+    );
+  };
+
+  const UserDetails = ({ intl, isWebView, profileData }) => {
     return (
       <View style={styles.shortProfile}>
         <View>
           <View style={styles.rowStyle}>
             <RenderUserInfo
               label={intl.formatMessage({ id: "label.applicant_name" })}
-              value="Nikhil Sharma"
+              value={profileData?.name}
             />
             <View style={styles.seperator} />
             <RenderUserInfo
               label={intl.formatMessage({
                 id: "label.applicant_id",
               })}
-              value="NRO01233"
+              value={profileData?.applicant_id}
             />
           </View>
           <View style={styles.rowStyle}>
             <RenderUserInfo
               label={intl.formatMessage({ id: "label.updated_at" })}
-              value="10/11/2023"
+              value={getDate(profileData?.updated_at)}
             />
             <View style={styles.seperator} />
             <RenderUserInfo
               label={intl.formatMessage({ id: "label.status" })}
-              value="Shortlisted"
+              value={profileData?.status}
             />
           </View>
         </View>
@@ -149,27 +175,45 @@ const JobApplicantsDetails = () => {
 
   return (
     <>
-      <JobProfileTab
-        renderHeader={() => (
-          <View style={isWebView ? styles.headerContainer : {}}>
-            <CommonText fontWeight={"600"} customTextStyle={styles.headerText}>
-              {intl.formatMessage({ id: "label.applicant_details" })}
-            </CommonText>
-            <UserDetails intl={intl} isWebView={isWebView} />
-          </View>
-        )}
-        isQuestionaireRequired
-        questionaireData={questionArray}
-        renderFooter={() =>
-          !isWebView &&
-          buttonSection(intl, false, onSaveClick, onScheduleInterviewClick)
-        }
-        questionaireURL={""}
-      />
+      {isProfileDataLoading && !isErrorWhileFetching && <LoadingScreen />}
+      {!isProfileDataLoading && !isErrorWhileFetching && (
+        <JobProfileTab
+          renderHeader={() => (
+            <View style={isWebView ? styles.headerContainer : {}}>
+              <CommonText
+                fontWeight={"600"}
+                customTextStyle={styles.headerText}
+              >
+                {intl.formatMessage({ id: "label.applicant_details" })}
+              </CommonText>
+              <UserDetails
+                intl={intl}
+                isWebView={isWebView}
+                profileData={profileData}
+              />
+            </View>
+          )}
+          isQuestionaireRequired
+          renderFooter={() =>
+            !isWebView &&
+            buttonSection(intl, false, onSaveClick, onScheduleInterviewClick)
+          }
+          questionaireURL={questionnaireURL}
+        />
+      )}
+      {!isProfileDataLoading && isErrorWhileFetching && (
+        <ErrorComponent
+          errorMsg={errorWhileFetching?.data?.message}
+          onRetry={() => fetchProfileData({})}
+        />
+      )}
       {showScheduleModal && (
         <ScheduleInterviewModal
-          onClose={() => {
+          applicant_id={profileData?.id}
+          interviewId={profileData?.interview_id}
+          onClose={async () => {
             setShowScheduleModal(false);
+            await fetchProfileData({});
           }}
         />
       )}
@@ -178,47 +222,3 @@ const JobApplicantsDetails = () => {
 };
 
 export default JobApplicantsDetails;
-
-// TODO : will have to integrate questionnaire API
-const questionArray = [
-  {
-    id: 252,
-    question: "THis is a new question",
-    type: "text",
-    mandatory: 0,
-    company_id: 115,
-    created_at: "2024-04-04T07:40:10.000000Z",
-    updated_at: "2024-04-04T07:40:10.000000Z",
-    deleted_at: null,
-    job_id: 188,
-    question_options: null,
-    question_order: 1,
-    typeofQuestion: "Text Question",
-    isMandatory: 0,
-  },
-  {
-    id: 253,
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    type: "text",
-    mandatory: 0,
-    company_id: 115,
-    created_at: "2024-04-04T07:40:10.000000Z",
-    updated_at: "2024-04-04T07:40:10.000000Z",
-    deleted_at: null,
-    job_id: 188,
-    question_options: [
-      {
-        label: "one",
-        value: "one",
-      },
-      {
-        label: "two",
-        value: "two",
-      },
-    ],
-    question_order: 3,
-    typeofQuestion: "mulit-select-drop-down",
-    isMandatory: 0,
-  },
-];

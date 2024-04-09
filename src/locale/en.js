@@ -658,7 +658,6 @@ const locale = {
   "label.formatMinExperience": `{value}+ years`,
   "label.formatMaxExperience": `Up to {value} years`,
   "label.contractual": "Contractual",
-  "label.schedule_interview": "Schedule Interview",
   "label.interview_type": "Interview Type",
   "label.primary_interview": "Primary Interview Schedule",
   "label.alternate_interview": "Alternate Interview Schedule",
@@ -673,10 +672,11 @@ const locale = {
   "label.field_cannot_be_empty": "Field cannot be empty",
   "label.actions": "Actions",
   "label.applicant_details": "Applicant Details",
-  "label.applicant_name": "Applicant Name",
-  "label.applicant_id": "Applicant ID",
+  "label.save_applicant": "Save Applicant",
+  "label.saved_applicant": "Saved Applicant",
   "label.updated_at": "Updated At",
   "label.save_applicant_details": "Save Applicant Details",
+  "label.edit_schedule_interview": "Edit Schedule interview",
 };
 
 export default locale;
