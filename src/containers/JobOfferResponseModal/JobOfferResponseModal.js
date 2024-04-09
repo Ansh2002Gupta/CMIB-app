@@ -8,6 +8,7 @@ import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import FinalConfirmation from "../FinalConfirmation/FinalConfirmation";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { KEYS } from "../../constants/constants";
 import images from "../../images";
 import styles from "./JobOfferResponseModal.style";
 
@@ -87,13 +88,13 @@ const JobOfferResponseModal = ({
               displayLoader={isLoading}
               onPressButtonOne={() => {
                 handleAcceptRejectOffer({
-                  decision: 8,
+                  decision: KEYS.OFFERE_REJECTED,
                   applicantID: applicantID,
                 });
               }}
               onPressButtonTwo={() => {
                 handleAcceptRejectOffer({
-                  decision: 7,
+                  decision: KEYS.OFFER_ACCEPTED,
                   applicantID: applicantID,
                 });
               }}

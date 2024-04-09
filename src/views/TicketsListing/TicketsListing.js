@@ -22,6 +22,9 @@ const TicketsListing = () => {
     allDataLoaded,
     currentRecords,
     currentPage,
+    customFilterInfo,
+    filterState,
+    setFilterState,
     filterApplyHandler,
     filterCategory,
     getColoumConfigs,
@@ -87,6 +90,9 @@ const TicketsListing = () => {
           {!isError && (
             <CustomTable
               {...{
+                customFilterInfo,
+                selectedFilterOptions: filterState,
+                setSelectedFilterOptions: setFilterState,
                 addNewTicket,
                 allDataLoaded,
                 currentPage,

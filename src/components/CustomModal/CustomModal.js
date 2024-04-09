@@ -20,22 +20,22 @@ const CustomModal = ({
   containerStyle,
   customHeaderStyle,
   customInnerContainerStyle,
-  headerText,
-  headerTextStyle,
-  isSuccess,
-  isIconCross,
-  maxWidth,
-  onPress,
-  onPressIconCross,
-  secondaryText,
-  onBackdropPress,
-  showActionButtonOnSuccess,
-  imageOnSuccess,
   customStyles,
   handleButtonOnePress,
   handleButtonTwoPress,
-  isLoading,
+  headerText,
+  headerTextStyle,
   isButtonOneDisabled,
+  isSuccess,
+  isIconCross,
+  isLoading,
+  imageOnSuccess,
+  maxWidth,
+  onPress,
+  onPressIconCross,
+  onBackdropPress,
+  secondaryText,
+  showActionButtonOnSuccess,
 }) => {
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
@@ -58,8 +58,8 @@ const CustomModal = ({
           <>
             <CustomImage
               alt={"Success Icon"}
-              source={imageOnSuccess}
-              Icon={imageOnSuccess}
+              source={images.iconSuccess || imageOnSuccess}
+              Icon={images.iconSuccess || imageOnSuccess}
               isSvg
               style={style.iconStyle}
             />
@@ -128,10 +128,16 @@ CustomModal.defaultProps = {
   containerStyle: {},
   customHeaderStyle: {},
   customInnerContainerStyle: {},
+  customStyles: {},
+  handleButtonOnePress: () => {},
+  handleButtonTwoPress: () => {},
   headerText: "",
   headerTextStyle: {},
+  isButtonOneDisabled: false,
   isIconCross: false,
+  isLoading: false,
   isSuccess: false,
+  imageOnSuccess: "",
   maxWidth: "sm",
   onPress: () => {},
   onPressIconCross: () => {},
@@ -146,10 +152,17 @@ CustomModal.propTypes = {
   containerStyle: PropTypes.object,
   customHeaderStyle: PropTypes.object,
   customInnerContainerStyle: PropTypes.object,
+  customStyles: PropTypes.object,
+  handleButtonOnePress: PropTypes.func,
+  handleButtonTwoPress: PropTypes.func,
   headerText: PropTypes.string,
   headerTextStyle: PropTypes.object,
+  isButtonOneDisabled: PropTypes.bool,
+  isIconCross: PropTypes.string,
+  isLoading: PropTypes.bool,
   isSuccess: PropTypes.bool,
   isIconCross: PropTypes.bool,
+  imageOnSuccess: PropTypes.string,
   maxWidth: PropTypes.string,
   onPress: PropTypes.func,
   onPressIconCross: PropTypes.func,

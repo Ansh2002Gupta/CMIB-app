@@ -45,7 +45,7 @@ const InterviewTimeModal = ({
         <View style={styles.dateLabelsContainer}>
           {isLoading ? (
             <Spinner thickness={3} color={""} {...webProps} />
-          ) : !!data && data.length > 0 ? (
+          ) : !!data?.length ? (
             <>
               <TimeSlotLabel
                 lableID={data[0]?.id}
@@ -64,12 +64,14 @@ const InterviewTimeModal = ({
           ) : (
             <View style={styles.noSchedulesTextContainer}>
               <CommonText customTextStyle={styles.noSchedulesText}>
-                {isError ? "Some Error Occured!!" : "No Schedules Found!!"}
+                {isError
+                  ? intl.formatMessage({ id: "label.some_error_occured" })
+                  : intl.formatMessage({ id: "label.no_schedule_found" })}
               </CommonText>
             </View>
           )}
         </View>
-        {!!data && data.length > 0 ? (
+        {!!data?.length > 0 ? (
           <ActionPairButton
             onPressButtonOne={() => setShowInterviewTimeModal(false)}
             onPressButtonTwo={() => {

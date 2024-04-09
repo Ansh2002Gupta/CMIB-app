@@ -399,6 +399,7 @@ const locale = {
   "label.select_interview_time_slot": "Select Interview Time Slot",
   "label.confirm": "Confirm",
   "label.some_error_occured": "Some error occured",
+  "label.no_schedule_found": "No Schedules Found",
   "label.success.acceptOffer": "Congratulations on Offer Acception!",
   "label.active": "Active",
   "label.inactive": "Inactive",

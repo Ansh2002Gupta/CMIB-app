@@ -19,6 +19,10 @@ const FeedbackView = () => {
     allDataLoaded,
     currentRecords,
     currentPage,
+    customFilterInfo,
+    filterState,
+    setFilterState,
+    defaultCategory,
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
@@ -59,11 +63,15 @@ const FeedbackView = () => {
       bottomSection={
         <CustomTable
           {...{
+            selectedFilterOptions: filterState,
+            setSelectedFilterOptions: setFilterState,
             allDataLoaded,
             currentPage,
             currentRecords,
+            customFilterInfo,
             data: feedbackData,
             filterCategory,
+            defaultCategory,
             getColoumConfigs,
             getStatusStyle,
             handlePageChange,

@@ -87,9 +87,9 @@ const CustomTable = ({
   useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
   const [showFilterOptions, setShowFilterOptions] = useState(false);
 
-  const isFilterCount = Object.values(selectedFilterOptions).find(
-    (state) => !!state.length
-  );
+  const isFilterCount = !!selectedFilterOptions
+    ? Object.values(selectedFilterOptions).find((state) => !!state.length)
+    : 0;
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
@@ -299,7 +299,7 @@ const CustomTable = ({
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if ((!data || !!data) && !data?.length)
+                        if (!data?.length)
                           return (
                             <CommonText
                               customContainerStyle={styles.loadingStyleNoData}
@@ -422,7 +422,7 @@ CustomTable.propTypes = {
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   loadingMore: PropTypes.bool.isRequired,
-  onIconPress: PropTypes.func.isRequired,
+  onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,

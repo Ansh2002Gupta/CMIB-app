@@ -17,15 +17,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./FilterModal.style";
-import {
-  FILTER_TYPE_ENUM,
-  MAXIMUM_EXPERIENCE_LIMIT,
-  MAXIMUM_FRESHNESS_LIMIT,
-  MAXIMUM_SALARY_LIMIT,
-  MINIMUM_EXPERIENCE_LIMIT,
-  MINIMUM_FRESHNESS_LIMIT,
-  MINIMUM_SALARY_LIMIT,
-} from "../../constants/constants";
+import { FILTER_TYPE_ENUM } from "../../constants/constants";
 import Slider from "../../components/Slider";
 
 const FilterModal = ({
@@ -147,6 +139,7 @@ const FilterModal = ({
           </CommonText>
         </View>
         <Slider
+          isTrackBgGreen
           maximumValue={filterObj?.maximumSliderLimit}
           minimumValue={filterObj?.minimumSliderLimit}
           step={1}

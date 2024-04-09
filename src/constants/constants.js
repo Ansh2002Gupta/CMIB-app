@@ -10,7 +10,7 @@ export const urlRegex =
   /^(?:https?:\/\/)?www\.[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&=]*)/;
 
 export const TOAST_TIMEOUT = 5000;
-export const API_VERSION_NUMBER = "v1";
+export const API_VERSION_NUMBER = "v1.0.0";
 export const FIELD_MIN_LENGTH = 6;
 export const DEFAULT_INPUT_MAX_LENGTH = 100;
 export const CODE_MIN_LENGTH = 2;
@@ -536,3 +536,8 @@ export const API_DATA_FOR_INTERVIEW_SCHEDULING = [
     alternate_type: "Telephonic",
   },
 ];
+
+export const KEYS = {
+  OFFER_ACCEPTED: 7,
+  OFFERE_REJECTED: 8,
+};

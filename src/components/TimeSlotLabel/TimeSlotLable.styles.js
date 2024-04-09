@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.darkGrey,
   },
+  fixedWidthHeight: { height: 24, width: 24 },
 });
 
 export default styles;

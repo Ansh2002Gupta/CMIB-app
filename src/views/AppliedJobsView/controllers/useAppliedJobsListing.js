@@ -14,7 +14,6 @@ import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
   ACCEPTED,
-  COMPANY_QUERY_TYPE_TICKET,
   INTERVIEW,
   INTERVIEWS,
   JOBS,
@@ -118,8 +117,6 @@ const useAppliedJobsListing = () => {
       skipApiCallOnMount: true,
     },
   });
-
-  const { handleAddTicket } = useAddTicket();
 
   const { data: workModeData } = useFetch({
     url: WORK_MODE_OPTIONS,
@@ -364,6 +361,12 @@ const useAppliedJobsListing = () => {
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: page,
+      multiFacet: 1,
+      work_mode: filterOptions.work_mode,
+      job_type: filterOptions.job_type,
+      experience: filterOptions.experience,
+      location: filterOptions.location,
+      department: filterOptions.department,
     });
   };
 
@@ -372,14 +375,6 @@ const useAppliedJobsListing = () => {
     await updateCurrentRecords({
       perPage: option.value,
       page: currentPage,
-    });
-  };
-
-  const handleSearchResults = async (searchedData) => {
-    await updateCurrentRecords({
-      search: searchedData,
-      perPage: rowsPerPage,
-      page: currentPage,
       multiFacet: 1,
       work_mode: filterOptions.work_mode,
       job_type: filterOptions.job_type,
@@ -387,6 +382,44 @@ const useAppliedJobsListing = () => {
       location: filterOptions.location,
       department: filterOptions.department,
     });
+  };
+
+  const handleSearchResults = async (searchedData) => {
+    setIsFirstPageReceived(true);
+    setFilterOptions((prev) => ({ ...prev, q: searchedData }));
+    if (isMob) {
+      setCurrentPage(1);
+      const newData = await fetchDataAppliedJobs({
+        queryParamsObject: {
+          search: searchedData,
+          multiFacet: 1,
+          work_mode: filterOptions.work_mode,
+          job_type: filterOptions.job_type,
+          experience: filterOptions.experience,
+          location: filterOptions.location,
+          department: filterOptions.department,
+        },
+      });
+      setIsFirstPageReceived(false);
+      setCurrentRecords(newData?.records);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        search: searchedData,
+        perPage: rowsPerPage,
+        page: currentPage,
+        multiFacet: 1,
+        work_mode: filterOptions.work_mode,
+        job_type: filterOptions.job_type,
+        experience: filterOptions.experience,
+        location: filterOptions.location,
+        department: filterOptions.department,
+      });
+    }
   };
 
   const onIconPress = (item) => {
@@ -414,23 +447,6 @@ const useAppliedJobsListing = () => {
       item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.NO_RESPONSE ||
       item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.JOB_OFFERED
     );
-  };
-  const handleSaveAddTicket = async (queryType, enterQuery) => {
-    await handleAddTicket({ query_type: queryType, query: enterQuery });
-    if (isMob) {
-      const newData = await fetchDataAppliedJobs();
-      if (newData && newData.records.length > 0) {
-        setCurrentRecords((prevRecords) => [
-          ...prevRecords,
-          ...newData.records,
-        ]);
-      }
-    } else {
-      await updateCurrentRecords({
-        perPage: rowsPerPage,
-        page: currentPage,
-      });
-    }
   };
 
   const returnSelectedFilterOption = (filterInfo, filterName) => {
@@ -649,7 +665,6 @@ const useAppliedJobsListing = () => {
     confirmationModal,
     currentPage,
     customFilterInfo,
-    fetchDataAppliedJobs,
     filterApplyHandler,
     filterCategory,
     filterState,
@@ -660,7 +675,6 @@ const useAppliedJobsListing = () => {
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
-    handleSaveAddTicket,
     headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
@@ -672,15 +686,10 @@ const useAppliedJobsListing = () => {
     isPatchingError,
     loadingMore,
     onIconPress,
-    queryTypeUrl: COMPANY_QUERY_TYPE_TICKET,
     rowsPerPage,
     defaultCategory,
     showPopUpWithID,
     popUpMessage,
-    workModeData,
-    jobTypeData,
-    experienceData,
-    locationData,
     statusText,
     subHeadingText,
     tableIcon,

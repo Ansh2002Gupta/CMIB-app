@@ -11,11 +11,19 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import {
+  FILTER_TYPE_ENUM,
+  ROWS_PER_PAGE_ARRAY,
+} from "../../../constants/constants";
 import { feedbackData } from "../constant";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../FeedbackView.style";
+
+const initialFilterState = {
+  selectedStatus: [],
+  selectedRole: [],
+};
 
 const useFeedbackView = () => {
   const { isWebView } = useIsWebView();
@@ -26,6 +34,12 @@ const useFeedbackView = () => {
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
   );
+  const [filterState, setFilterState] = useState(initialFilterState);
+  const [filterOptions, setFilterOptions] = useState({
+    status: "",
+    role: "",
+  });
+  const defaultCategory = "Status";
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(searchParams.get("page"))
   );
@@ -45,6 +59,27 @@ const useFeedbackView = () => {
 
   //TODO: We use this hook when we implementing API
   // const { data, error, fetchData, isError, isLoading, isSuccess } = useFetch();
+
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {};
+
+  const customFilterInfo = [
+    {
+      refKey: "id",
+      name: "Status",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: [],
+      selectedOptions: filterState?.selectedStatus,
+      handler: handleFilterChange,
+    },
+    {
+      refKey: "id",
+      name: "Role",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: [],
+      selectedOptions: filterState?.selectedRole,
+      handler: handleFilterChange,
+    },
+  ];
 
   const handleLoadMore = () => {
     if (loadingMore || allDataLoaded) return;
@@ -162,6 +197,10 @@ const useFeedbackView = () => {
 
   return {
     allDataLoaded,
+    customFilterInfo,
+    filterState,
+    setFilterState,
+    defaultCategory,
     currentRecords,
     currentPage,
     getColoumConfigs,

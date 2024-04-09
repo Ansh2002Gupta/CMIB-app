@@ -39,7 +39,6 @@ const AppliedJobsView = () => {
     indexOfLastRecord,
     isHeading,
     isAppliedJobsListingLoading,
-    fetchDataAppliedJobs,
     isFirstPageReceived,
     loadingMore,
     onIconPress,

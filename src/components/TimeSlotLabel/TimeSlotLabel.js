@@ -14,7 +14,7 @@ import images from "../../images";
 import styles from "./TimeSlotLable.styles";
 
 const TimeSlotLabel = ({
-  lableID,
+  labelId,
   dataObj,
   onSelect,
   selectedDateLabel,
@@ -54,7 +54,7 @@ const TimeSlotLabel = ({
     <CustomTouchableOpacity
       onPress={() =>
         onSelect({
-          id: lableID,
+          id: labelId,
           isPrimary: showPrimary,
           mode: showPrimary ? dataObj?.type : dataObj?.alternate_type,
         })
@@ -74,7 +74,7 @@ const TimeSlotLabel = ({
             isSvg={true}
             onPress={() =>
               onSelect({
-                id: lableID,
+                id: labelId,
                 isPrimary: showPrimary,
                 mode: showPrimary ? dataObj?.type : dataObj?.alternate_type,
               })
@@ -85,7 +85,7 @@ const TimeSlotLabel = ({
                 ? images.iconSelectedSolidCircle
                 : images.iconSelectCircle
             }
-            style={{ height: 24, width: 24 }}
+            style={styles.fixedWidthHeight}
           />
         }
         rightSection={

@@ -2,6 +2,7 @@ import React from "react";
 
 import CustomModal from "../../components/CustomModal";
 import { useIntl } from "react-intl";
+import { KEYS } from "../../constants/constants";
 import images from "../../images";
 import styles from "./FinalConfirmation.style";
 
@@ -16,12 +17,12 @@ const FinalConfirmation = ({
     <CustomModal
       isSuccess
       headerText={
-        modalDetails?.decision === 7
+        modalDetails?.decision === KEYS.OFFER_ACCEPTED
           ? intl.formatMessage({ id: "label.message_acception" })
           : intl.formatMessage({ id: "label.message_rejection" })
       }
       secondaryText={
-        modalDetails?.decision === 7
+        modalDetails?.decision === KEYS.OFFER_ACCEPTED
           ? intl.formatMessage({
               id: "label.acception_description",
             })
@@ -29,12 +30,19 @@ const FinalConfirmation = ({
       }
       showActionButtonOnSuccess
       imageOnSuccess={
-        modalDetails?.decision === 7 ? images.iconSuccess : images.iconError
+        modalDetails?.decision === KEYS.OFFER_ACCEPTED
+          ? images.iconSuccess
+          : images.iconError
       }
       customStyles={{
         buttonTwoTextStyle:
-          modalDetails?.decision !== 7 ? styles.buttonTwoText : {},
-        buttonTwoStyle: modalDetails?.decision !== 7 ? styles.buttonTwo : {},
+          modalDetails?.decision !== KEYS.OFFER_ACCEPTED
+            ? styles.buttonTwoText
+            : {},
+        buttonTwoStyle:
+          modalDetails?.decision !== KEYS.OFFER_ACCEPTED
+            ? styles.buttonTwo
+            : {},
       }}
       handleButtonOnePress={() => setShowModal((prev) => !prev)}
       handleButtonTwoPress={() => handleConfirmation()}
