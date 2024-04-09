@@ -17,6 +17,7 @@ import Http from "../../../services/http-service";
 import { CHANGE_APPLICANT_STATUS } from "../../../services/apiServices/apiEndPoint";
 import ScheduleInterviewModal from "../../ScheduleInterviewModal/ScheduleInterviewModal";
 import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
+import ViewInterviewDetails from "../../ViewInterviewDetails";
 const ViewJobApplicants = ({ id }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {
@@ -37,8 +38,7 @@ const ViewJobApplicants = ({ id }) => {
       getAllRecords();
     } else {
       activeUserId.current = item.id;
-      setIsModalVisible(true);
-      // navigate(navigations.VIEW_JOB_DETAILS, { state: { questionaireData } });
+      setIsModalVisible(selectedItem);
     }
   };
 
@@ -136,15 +136,26 @@ const ViewJobApplicants = ({ id }) => {
           ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
         />
       )}
-      {isModalVisible && (
-        <ScheduleInterviewModal
-          applicant_id={activeUserId.current}
-          onClose={() => {
-            setIsModalVisible(false);
-            activeUserId.current = null;
-          }}
-        />
-      )}
+      {isModalVisible &&
+        isModalVisible ===
+          intl.formatMessage({ id: "label.schedule_interview" }) && (
+          <ScheduleInterviewModal
+            applicant_id={activeUserId.current}
+            onClose={() => {
+              setIsModalVisible(null);
+              activeUserId.current = null;
+            }}
+          />
+        )}
+      {isModalVisible &&
+        isModalVisible ===
+          intl.formatMessage({ id: "label.view_interview_details" }) && (
+          <ViewInterviewDetails
+            onClose={() => {
+              setIsModalVisible(null);
+            }}
+          />
+        )}
       {(isError || isErrorApplicantStatusChange) &&
         (!!getErrorDetails()?.errorMessage ||
           errorWhileApplicantStatusChange) && (

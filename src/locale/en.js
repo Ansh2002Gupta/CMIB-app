@@ -695,6 +695,7 @@ const locale = {
   "label.offer_job": "Offer Job",
   "label.view_interview_details": "View Interview Details",
   "label.edit_interview_details": "Edit Interview Details",
+  "label.schedule_interview": "Schedule Interview",
 };
 
 export default locale;
