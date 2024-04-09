@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styles from "./ViewJobApplicants.styles";
 import { useIntl } from "react-intl";
 import CustomTable from "../../../components/CustomTable";
@@ -15,18 +15,29 @@ import { navigations } from "../../../constants/routeNames";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import Http from "../../../services/http-service";
 import { CHANGE_APPLICANT_STATUS } from "../../../services/apiServices/apiEndPoint";
-const ViewJobApplicants = ({ id, questionaireData }) => {
+import ScheduleInterviewModal from "../../ScheduleInterviewModal/ScheduleInterviewModal";
+import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
+const ViewJobApplicants = ({ id }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {
+    handleUseApplicantStatus,
+    isLoading,
+    isError: isErrorApplicantStatusChange,
+    errorWhileApplicantStatusChange,
+  } = useChangeApplicantStatusApi();
+  const activeUserId = useRef();
+
   const navigate = useNavigate();
   const onEditPress = (selectedItem, item) => {
     if (JOB_STATUS_RESPONSE_CODE[selectedItem]) {
       const request = {
         status: JOB_STATUS_RESPONSE_CODE[selectedItem],
       };
-      Http.patch(`${CHANGE_APPLICANT_STATUS}/${item.id}/status`, request);
+      handleUseApplicantStatus(item.id, request);
       getAllRecords();
-
-      // CHANGE_APPLICANT_STATUS;
     } else {
+      activeUserId.current = item.id;
+      setIsModalVisible(true);
       // navigate(navigations.VIEW_JOB_DETAILS, { state: { questionaireData } });
     }
   };
@@ -78,7 +89,7 @@ const ViewJobApplicants = ({ id, questionaireData }) => {
 
   return (
     <>
-      {!isError && (
+      {!isError && !isErrorApplicantStatusChange && (
         <CustomTable
           {...{
             allDataLoaded,
@@ -99,7 +110,6 @@ const ViewJobApplicants = ({ id, questionaireData }) => {
             indexOfFirstRecord,
             indexOfLastRecord,
             isHeading,
-            isTicketListingLoading,
             isFirstPageReceived,
             loadingMore,
             onIconPress,
@@ -117,6 +127,7 @@ const ViewJobApplicants = ({ id, questionaireData }) => {
               id: "label.search_by_applicant_name",
             }),
           }}
+          isTicketListingLoading={isTicketListingLoading || isLoading}
           mobileComponentToRender={getMobileView}
           isFilterVisible={false}
           containerStyle={styles.innerContainerStyle}
@@ -125,12 +136,25 @@ const ViewJobApplicants = ({ id, questionaireData }) => {
           ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
         />
       )}
-      {isError && !!getErrorDetails()?.errorMessage && (
-        <ErrorComponent
-          errorMsg={getErrorDetails()?.errorMessage}
-          onRetry={() => getErrorDetails()?.onRetry()}
+      {isModalVisible && (
+        <ScheduleInterviewModal
+          applicant_id={activeUserId.current}
+          onClose={() => {
+            setIsModalVisible(false);
+            activeUserId.current = null;
+          }}
         />
       )}
+      {(isError || isErrorApplicantStatusChange) &&
+        (!!getErrorDetails()?.errorMessage ||
+          errorWhileApplicantStatusChange) && (
+          <ErrorComponent
+            errorMsg={
+              getErrorDetails()?.errorMessage || errorWhileApplicantStatusChange
+            }
+            onRetry={() => getErrorDetails()?.onRetry()}
+          />
+        )}
     </>
   );
 };

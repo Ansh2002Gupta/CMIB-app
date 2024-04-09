@@ -27,7 +27,7 @@ import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import CustomToggleComponent from "../../../components/CustomToggleComponent";
 import Switch from "../../../components/Switch";
-import useChangeJobStatusApi from "../../../services/apiServices/useChangeJobStatusApi";
+import useChangeJobStatusApi from "../../../services/apiServices/hooks/useChangeJobStatusApi";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 

@@ -74,3 +74,4 @@ export const COMPANY_FUNCTIONAL_AREAS = `${USER_TYPE_COMPANY}/functional-areas`;
 export const UPLOAD_IMAGE = `${USER_TYPE_COMPANY}/upload-image`;
 export const CHANGE_APPLICANT_STATUS = `${USER_TYPE_COMPANY}/jobs/applicants`;
 export const CHANGE_STATUS = "/change-status";
+export const STATUS = "status";

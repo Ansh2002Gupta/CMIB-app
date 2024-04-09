@@ -692,6 +692,8 @@ const locale = {
   "label.applicant_name": "Application Name",
   "label.applicant_id": "Applicant ID",
   "label.field_cannot_be_empty": "Field cannot be empty",
+  "label.offer_job": "Offer Job",
+  "label.view_interview_details": "View Interview Details",
 };
 
 export default locale;

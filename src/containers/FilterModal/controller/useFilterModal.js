@@ -24,29 +24,29 @@ const useFilterModal = (
   };
 
   const handleStatusChange = (status) => {
-    if (renderCalendar) {
-      setFilterState((prevState) => {
-        return { ...prevState, dateSelected: status };
-      });
-    } else {
-      setFilterState((prevState) => {
-        const newSelectedStatus = prevState.selectedStatus.includes(status.id)
-          ? prevState.selectedStatus.filter((s) => s !== status.id)
-          : [...prevState.selectedStatus, status.id];
-        return { ...prevState, selectedStatus: newSelectedStatus };
-      });
-    }
+    setFilterState((prevState) => {
+      const newSelectedStatus = prevState.selectedStatus.includes(status.id)
+        ? prevState.selectedStatus.filter((s) => s !== status.id)
+        : [...prevState.selectedStatus, status.id];
+      return { ...prevState, selectedStatus: newSelectedStatus };
+    });
   };
 
   const handleQueryTypeChange = (queryType) => {
-    setFilterState((prevState) => {
-      const newSelectedQueryType = prevState.selectedQueryType.includes(
-        queryType.id
-      )
-        ? prevState.selectedQueryType.filter((q) => q !== queryType.id)
-        : [...prevState.selectedQueryType, queryType.id];
-      return { ...prevState, selectedQueryType: newSelectedQueryType };
-    });
+    if (renderCalendar) {
+      setFilterState((prevState) => {
+        return { ...prevState, selectedQueryType: [queryType] };
+      });
+    } else {
+      setFilterState((prevState) => {
+        const newSelectedQueryType = prevState.selectedQueryType.includes(
+          queryType.id
+        )
+          ? prevState.selectedQueryType.filter((q) => q !== queryType.id)
+          : [...prevState.selectedQueryType, queryType.id];
+        return { ...prevState, selectedQueryType: newSelectedQueryType };
+      });
+    }
   };
 
   const filterData = () => {

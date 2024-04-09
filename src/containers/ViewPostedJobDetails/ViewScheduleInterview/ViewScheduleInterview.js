@@ -34,7 +34,7 @@ const ViewScheduleInterview = ({ id }) => {
     isTicketListingLoading,
     isFirstPageReceived,
     getErrorDetails,
-    isErrorGetScheduleInterview,
+    isError,
     loadingMore,
     onIconPress,
     queryTypeData,
@@ -63,7 +63,7 @@ const ViewScheduleInterview = ({ id }) => {
 
   return (
     <>
-      {!isErrorGetScheduleInterview && (
+      {!isError && (
         <CustomTable
           {...{
             allDataLoaded,
@@ -109,7 +109,7 @@ const ViewScheduleInterview = ({ id }) => {
           renderCalendar={true}
         />
       )}
-      {isErrorGetScheduleInterview && !!getErrorDetails()?.errorMessage && (
+      {isError && !!getErrorDetails()?.errorMessage && (
         <ErrorComponent
           errorMsg={getErrorDetails()?.errorMessage}
           onRetry={() => getErrorDetails()?.onRetry()}

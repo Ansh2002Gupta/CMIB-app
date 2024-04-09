@@ -662,6 +662,9 @@ export const JOB_STATUS_RESPONSE_CODE = {
   "Reject Candidate": 2,
   "Offer Job": 6,
   "Reject After Interview": 2,
+  "Offer Accepted": 7,
+  "Offer Rejected": 8,
+  "Job Not Offered": 9,
 };
 
 export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];

@@ -27,6 +27,7 @@ import {
 } from "../../services/apiServices/apiEndPoint";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ScheduleInterviewModal.style";
+import dayjs from "dayjs";
 
 const radioButtonOptions = ["Face to Face ", "Telephonic", "Remote"];
 const isMob = Platform.OS.toLowerCase() !== "web";
@@ -53,7 +54,7 @@ const getAPIInterViewType = (interviewType) => {
   return type;
 };
 
-const ScheduleInterviewModal = ({ onClose }) => {
+const ScheduleInterviewModal = ({ onClose, applicant_id = 1 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const [primaryInterviewType, setPrimaryInterviewType] = useState(0);
@@ -109,8 +110,6 @@ const ScheduleInterviewModal = ({ onClose }) => {
 
   // for now we use hardcoded applicant id
 
-  const applicant_id = 1;
-
   const {
     isLoading: isScheduleInterviewLoading,
     makeRequest: scheduleInterviewRequest,
@@ -156,8 +155,10 @@ const ScheduleInterviewModal = ({ onClose }) => {
         alternate_type: alternatePrimaryType,
         venue_address: primaryDetails[type].address,
         alternate_venue_address: alternateDetails[alternate_type].address,
-        primary_schedule,
-        alternate_schedule,
+        primary_schedule: dayjs(primary_schedule).format("YYYY-MM-DD HH:mm:ss"),
+        alternate_schedule: dayjs(alternate_schedule).format(
+          "YYYY-MM-DD HH:mm:ss"
+        ),
         remote_meeting_link: primaryDetails[type].link,
         alternate_remote_meeting_link: alternateDetails[alternate_type].link,
       },

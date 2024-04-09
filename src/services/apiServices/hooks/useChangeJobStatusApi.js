@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import useHttpService from "../hooks/useHttpService";
-import { API_STATUS, STATUS_CODES } from "../../constants/constants";
-import { CHANGE_STATUS, POST_JOB } from "./apiEndPoint";
-import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import useHttpService from "../../hooks/useHttpService";
+import { API_STATUS, STATUS_CODES } from "../../../constants/constants";
+import { CHANGE_STATUS, POST_JOB } from "../apiEndPoint";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const useChangeJobStatusApi = () => {
   const [changeJobStatus, setChangeJobStatus] = useState(API_STATUS.IDLE);
