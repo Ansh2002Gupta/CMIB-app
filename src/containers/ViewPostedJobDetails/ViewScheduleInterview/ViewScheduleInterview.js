@@ -1,5 +1,5 @@
 import { View } from "@unthinkable/react-core-components";
-import React from "react";
+import React, { useRef, useState } from "react";
 import MobileCard from "../../PostedJobs/MobileCard";
 import CustomTable from "../../../components/CustomTable";
 import DownloadMoreComponent from "../../PostedJobs/DownloadMoreComponent";
@@ -11,9 +11,18 @@ import styles from "./ViewScheduleInterview.styles";
 import { useIntl } from "react-intl";
 import useGetScheduleList from "../../../views/ViewPostedJobDetails/controller/useGetScheduleList";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
+import ViewInterviewDetails from "../../ViewInterviewDetails";
+import ScheduleInterviewModal from "../../ScheduleInterviewModal/ScheduleInterviewModal";
 
 const ViewScheduleInterview = ({ id }) => {
+  const [isModalVisible, setIsModalVisible] = useState(null);
+  const selectedApplicant = useRef(null);
   const intl = useIntl();
+
+  const onClickAction = (selectedItem, item) => {
+    selectedApplicant.current = item.id;
+    setIsModalVisible(selectedItem);
+  };
   const {
     allDataLoaded,
     currentRecords,
@@ -46,7 +55,7 @@ const ViewScheduleInterview = ({ id }) => {
     tableIcon,
     scheduleInterviewData,
     totalcards,
-  } = useGetScheduleList(id);
+  } = useGetScheduleList(id, onClickAction);
 
   const getMobileView = (item, index) => {
     return (
@@ -109,6 +118,26 @@ const ViewScheduleInterview = ({ id }) => {
           renderCalendar={true}
         />
       )}
+      {isModalVisible &&
+        isModalVisible ===
+          intl.formatMessage({ id: "label.view_interview_details" }) && (
+          <ViewInterviewDetails
+            onClose={() => {
+              setIsModalVisible(null);
+            }}
+          />
+        )}
+      {isModalVisible &&
+        isModalVisible ===
+          intl.formatMessage({ id: "label.edit_interview_details" }) && (
+          <ScheduleInterviewModal
+            onClose={() => {
+              setIsModalVisible(null);
+            }}
+            isEdited
+            applicant_id={selectedApplicant.current}
+          />
+        )}
       {isError && !!getErrorDetails()?.errorMessage && (
         <ErrorComponent
           errorMsg={getErrorDetails()?.errorMessage}

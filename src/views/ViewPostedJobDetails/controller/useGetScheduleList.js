@@ -24,7 +24,7 @@ import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/use
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const useGetScheduleList = (id) => {
+const useGetScheduleList = (id, onClickAction) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -274,7 +274,7 @@ const useGetScheduleList = (id) => {
   let subHeadingText = ["applicant_id"];
   let statusText = ["status"];
   let tableIcon = images.iconMore;
-  let filterCategory = ["Status", "Date"];
+  let filterCategory = ["Date"];
   let isHeading = true;
 
   function getStatusStyle(status) {
@@ -306,7 +306,7 @@ const useGetScheduleList = (id) => {
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("18%"),
+          ...commonStyles.columnStyle("25%"),
           ...styles.justifyContentCenter,
           ...{ paddingLeft: 24, paddingRight: 5 },
         }, // isFillSpace: true,
@@ -318,27 +318,12 @@ const useGetScheduleList = (id) => {
           </CommonText>
         ),
         style: {
-          ...commonStyles.columnStyle("17%"),
+          ...commonStyles.columnStyle("25%"),
           ...styles.justifyContentCenter,
           ...{ paddingLeft: 5, paddingRight: 5 },
         }, // isFillSpace: true,
       },
-      {
-        content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-            }}
-          >
-            {item?.status ?? "-"}
-          </CommonText>
-        ),
-        style: {
-          ...commonStyles.columnStyle("13%"),
-          ...styles.justifyContentCenter,
-          ...{ paddingLeft: 5, paddingRight: 5 },
-        },
-      },
+
       {
         content: (
           <CommonText
@@ -395,6 +380,8 @@ const useGetScheduleList = (id) => {
               <PopupMessage
                 message={[
                   intl.formatMessage({ id: "label.view_interview_details" }),
+                  intl.formatMessage({ id: "label.edit_interview_details" }),
+
                   intl.formatMessage({ id: "label.offer_job" }),
                 ]}
                 onPopupClick={(selectedItem) => {
@@ -406,6 +393,8 @@ const useGetScheduleList = (id) => {
                       status: JOB_STATUS_RESPONSE_CODE[selectedItem],
                     };
                     handleUseApplicantStatus(item.id, request);
+                  } else {
+                    onClickAction(selectedItem, item);
                   }
                 }}
               />

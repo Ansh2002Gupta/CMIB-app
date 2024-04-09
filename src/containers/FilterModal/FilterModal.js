@@ -108,7 +108,7 @@ const FilterModal = ({
   };
 
   const renderOptionsByCategory = (category) => {
-    if (renderCalendar && category === filterCategory[1]) {
+    if (renderCalendar) {
       {
         return (
           <View style={styles.datePickerModalView}>

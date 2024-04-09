@@ -262,7 +262,7 @@ const useGetApplicantList = (id, onEditPress) => {
           <View>
             {!isHeading && (
               <PopupMessage
-                message={item?.action}
+                message={item?.action.map((item) => item.name)}
                 onPopupClick={(selectedItem) => {
                   onEditPress(selectedItem, item);
                   // navigate(navigations.JOB_PROFILE);

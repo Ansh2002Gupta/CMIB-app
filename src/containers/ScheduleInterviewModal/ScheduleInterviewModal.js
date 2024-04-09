@@ -19,15 +19,20 @@ import {
   areAllValuesFilled,
   formateDateandTime,
 } from "../../utils/util";
-import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../constants/constants";
+import {
+  GET_INTERVIEW_TYPE,
+  SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH,
+} from "../../constants/constants";
 import {
   APPLICANTS,
+  GET_INTERVIEW_DETAILS,
   INTERVIEW,
   POST_JOB,
 } from "../../services/apiServices/apiEndPoint";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./ScheduleInterviewModal.style";
 import dayjs from "dayjs";
+import useFetch from "../../hooks/useFetch";
 
 const radioButtonOptions = ["Face to Face ", "Telephonic", "Remote"];
 const isMob = Platform.OS.toLowerCase() !== "web";
@@ -54,7 +59,11 @@ const getAPIInterViewType = (interviewType) => {
   return type;
 };
 
-const ScheduleInterviewModal = ({ onClose, applicant_id = 1 }) => {
+const ScheduleInterviewModal = ({
+  onClose,
+  applicant_id = 1,
+  isEdited = false,
+}) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const [primaryInterviewType, setPrimaryInterviewType] = useState(0);
@@ -107,6 +116,216 @@ const ScheduleInterviewModal = ({ onClose, applicant_id = 1 }) => {
       time: "",
     },
   });
+  const {
+    data,
+    fetchData,
+    isLoading,
+    isSuccess,
+    error: fetchDataError,
+  } = useFetch({
+    url: `${GET_INTERVIEW_DETAILS}/${applicant_id}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  useEffect(() => {
+    if (isEdited) {
+      fetchData();
+    }
+  }, []);
+  // function formatSchedule(schedule) {
+  //   return {
+  //     time: dayjs(schedule).format("HH:mm:ss"),
+  //     date: dayjs(schedule).format("YYYY-MM-DD"),
+  //   };
+  // }
+  // function useInterviewDetailsEffect(
+  //   isSuccess,
+  //   data,
+  //   setPrimaryDetails,
+  //   setSecondaryDetails,
+  //   setPrimaryInterviewType,
+  //   setSecondaryInterviewType
+  // ) {
+  //   useEffect(() => {
+  //     if (isSuccess && data) {
+  //       const primaryInterviewType = GET_INTERVIEW_TYPE[data.type];
+  //       const alternateInterviewType = GET_INTERVIEW_TYPE[data.alternate_type];
+  //       setPrimaryInterviewType(primaryInterviewType);
+  //       setSecondaryInterviewType(alternateInterviewType);
+
+  //       const updateDetails = (
+  //         schedule,
+  //         interviewType,
+  //         setDetails,
+  //         addressKey = "venue_address",
+  //         linkKey = "remote_meeting_link"
+  //       ) => {
+  //         const { time, date } = formatSchedule(data[schedule]);
+  //         let details = {};
+  //         switch (interviewType) {
+  //           case INTERVIEW_TYPES.FACE_TO_FACE:
+  //             details = {
+  //               face_to_face: {
+  //                 address: data[addressKey],
+  //                 time,
+  //                 date,
+  //               },
+  //             };
+  //             break;
+  //           case INTERVIEW_TYPES.TELEPHONIC:
+  //             details = {
+  //               telephonic: { time, date },
+  //             };
+  //             break;
+  //           case INTERVIEW_TYPES.REMOTE:
+  //             details = {
+  //               remote: {
+  //                 link: data[linkKey],
+  //                 time,
+  //                 date,
+  //               },
+  //             };
+  //             break;
+  //           default:
+  //             // Handle unknown interview type if necessary
+  //             break;
+  //         }
+  //         setDetails((prev) => ({ ...prev, ...details }));
+  //       };
+
+  //       updateDetails(
+  //         "primary_schedule",
+  //         primaryInterviewType,
+  //         setPrimaryDetails
+  //       );
+  //       updateDetails(
+  //         "alternate_schedule",
+  //         alternateInterviewType,
+  //         setAlternateDetails,
+  //         "alternate_venue_address",
+  //         "alternate_remote_meeting_link"
+  //       );
+  //     }
+  //   }, [
+  //     isSuccess,
+  //     data,
+  //     setPrimaryDetails,
+  //     setSecondaryDetails,
+  //     setPrimaryInterviewType,
+  //     setSecondaryInterviewType,
+  //   ]);
+  // }
+  // useInterviewDetailsEffect(
+  //   isSuccess,
+  //   data,
+  //   setPrimaryDetails,
+  //   setAlternateDetails,
+  //   setPrimaryInterviewType,
+  //   setSecondaryInterviewType
+  // );
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      const primaryInterviewType = GET_INTERVIEW_TYPE[data.type];
+      const alternateInterviewType = GET_INTERVIEW_TYPE[data.alternate_type];
+      setPrimaryInterviewType(primaryInterviewType);
+      setSecondaryInterviewType(alternateInterviewType);
+      if (primaryInterviewType == 0) {
+        const primaryAddess = data.venue_address;
+        const primarytime = dayjs(data.primary_schedule).format("HH:mm:ss");
+        const primaryDate = dayjs(data.primary_schedule).format("YYYY-MM-DD");
+        setPrimaryDetails((prev) => {
+          return {
+            ...prev,
+            face_to_face: {
+              address: primaryAddess,
+              time: primarytime,
+              date: primaryDate,
+            },
+          };
+        });
+      }
+      if (alternateInterviewType == 0) {
+        const alternateAddess = data.alternate_venue_address;
+        const alternateTime = dayjs(data.alternate_schedule).format("HH:mm:ss");
+        const alternateDate = dayjs(data.alternate_schedule).format(
+          "YYYY-MM-DD"
+        );
+        setAlternateDetails((prev) => {
+          return {
+            ...prev,
+            face_to_face: {
+              address: alternateAddess,
+              time: alternateTime,
+              date: alternateDate,
+            },
+          };
+        });
+      }
+      if (primaryInterviewType == 1) {
+        const primarytime = dayjs(data.primary_schedule).format("HH:mm:ss");
+        const primaryDate = dayjs(data.primary_schedule).format("YYYY-MM-DD");
+        setPrimaryDetails((prev) => {
+          return {
+            ...prev,
+            telephonic: {
+              time: primarytime,
+              date: primaryDate,
+            },
+          };
+        });
+      }
+      if (alternateInterviewType == 1) {
+        const alternateTime = dayjs(data.alternate_schedule).format("HH:mm:ss");
+        const alternateDate = dayjs(data.alternate_schedule).format(
+          "YYYY-MM-DD"
+        );
+        setAlternateDetails((prev) => {
+          return {
+            ...prev,
+            telephonic: {
+              time: alternateTime,
+              date: alternateDate,
+            },
+          };
+        });
+      }
+      if (primaryInterviewType == 2) {
+        const primaryLink = data.remote_meeting_link;
+        const primarytime = dayjs(data.primary_schedule).format("HH:mm:ss");
+        const primaryDate = dayjs(data.primary_schedule).format("YYYY-MM-DD");
+        setPrimaryDetails((prev) => {
+          return {
+            ...prev,
+            remote: {
+              link: primaryLink,
+              time: primarytime,
+              date: primaryDate,
+            },
+          };
+        });
+      }
+      if (alternateInterviewType == 2) {
+        const alternateLink = data.alternate_remote_meeting_link;
+        const alternateTime = dayjs(data.alternate_schedule).format("HH:mm:ss");
+        const alternateDate = dayjs(data.alternate_schedule).format(
+          "YYYY-MM-DD"
+        );
+        setAlternateDetails((prev) => {
+          return {
+            ...prev,
+            remote: {
+              link: alternateLink,
+              time: alternateTime,
+              date: alternateDate,
+            },
+          };
+        });
+      }
+    }
+  }, [isSuccess, data]);
 
   // for now we use hardcoded applicant id
 
@@ -490,7 +709,7 @@ const ScheduleInterviewModal = ({ onClose, applicant_id = 1 }) => {
               customContainerStyle: commonStyles.customContainerStyle,
             }}
             isDisabled={isDisabled}
-            displayLoader={isScheduleInterviewLoading}
+            displayLoader={isScheduleInterviewLoading || isLoading}
             isButtonTwoGreen
             onPressButtonOne={onClose}
             onPressButtonTwo={handleScheduleInterview}
