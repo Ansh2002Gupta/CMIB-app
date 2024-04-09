@@ -3,6 +3,7 @@ export const USER_TYPE_COMPANY = "company";
 export const USER_TYPE_MEMBER = "member";
 export const USER_TYPE_CANDIDATES = "candidates";
 export const CORE = "core";
+export const ADMIN = "admin";
 
 /* API Endpoints */
 export const COMPANY_RESET_PASSWORD_OTP = `${USER_TYPE_COMPANY}/reset-password/confirm`;
@@ -42,6 +43,7 @@ export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
 
 //sub routes
+export const APPLICANTS = "/applicants";
 export const ACADEMICS = "/academics";
 export const ACTIVITIES = "/activities";
 export const JOB_APPLICANTS = "/applicants";
@@ -54,6 +56,7 @@ export const MARK_PREFER = "/mark-prefer";
 export const PERSONAL = "/personal";
 export const STATUS = "/status";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const INTERVIEW = "/interview";
 export const WORK_EXPERIENCE = "/work-experiences";
 
 /* API Endpoints Member CA JOB profile */
@@ -82,3 +85,4 @@ export const GET_GENDER_PREFERENCE = `${USER_TYPE_COMPANY}/genders`;
 export const GET_WORK_MODE = `${USER_TYPE_COMPANY}/workmode`;
 export const POST_JOB = `${USER_TYPE_COMPANY}/jobs`;
 export const UPDATE_JOB = `${USER_TYPE_COMPANY}/jobs/update`;
+export const GET_SCHEDULE_INTERVIEW = `/scheduled-interview`;

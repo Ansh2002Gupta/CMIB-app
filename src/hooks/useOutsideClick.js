@@ -12,7 +12,13 @@ const useOutsideClick = (ref, callback) => {
     if (isWeb) {
       document.addEventListener("mousedown", handleClickOutside);
     }
+    if (isWeb) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
     return () => {
+      if (isWeb) {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
       if (isWeb) {
         document.removeEventListener("mousedown", handleClickOutside);
       }

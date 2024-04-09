@@ -182,7 +182,7 @@ const iconCampus = appendAppBaseURl("/images/svg/campus.svg");
 const iconConsent = appendAppBaseURl("/images/svg/consent.svg");
 const iconDiscover = appendAppBaseURl("/images/svg/discover.svg");
 const iconApplication = appendAppBaseURl("/images/svg/application.svg");
-const iconCalendar = appendAppBaseURl("/images/calendar.png");
+const iconCalendar = appendAppBaseURl("/images/svg/calendar.svg");
 const iconRotate = appendAppBaseURl("/images/svg/iconRotate.svg");
 const iconDisabledAdd = appendAppBaseURl("/images/svg/iconDisabledAdd.svg");
 const iconDisabledMinus = appendAppBaseURl("/images/svg/iconDisabledMinus.svg");
@@ -246,6 +246,7 @@ const iconRupeeSign = appendAppBaseURl("/images/svg/rupeeSign.svg");
 const iconArchiveSave = appendAppBaseURl("/images/svg/iconArchiveSave.svg");
 const iconCalendarWhite = appendAppBaseURl("/images/svg/iconCalendarWhite.svg");
 const iconSavedJob = appendAppBaseURl("/images/svg/iconSaved.svg");
+const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
 
 const images = {
   iconArrowUp,
@@ -422,6 +423,7 @@ const images = {
   iconLocationWhite,
   iconSavedJob,
   iconCalendarWhite,
+  iconClock,
 };
 
 export default images;

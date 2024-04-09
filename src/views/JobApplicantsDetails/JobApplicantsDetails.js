@@ -143,23 +143,25 @@ const JobApplicantsDetails = () => {
   };
 
   return (
-    <JobProfileTab
-      renderHeader={() => (
-        <View style={isWebView ? styles.headerContainer : {}}>
-          <CommonText fontWeight={"600"} customTextStyle={styles.headerText}>
-            {intl.formatMessage({ id: "label.applicant_details" })}
-          </CommonText>
-          <UserDetails intl={intl} isWebView={isWebView} />
-        </View>
-      )}
-      isQuestionaireRequired
-      questionaireData={questionArray}
-      renderFooter={() =>
-        !isWebView &&
-        buttonSection(intl, false, onSaveClick, onScheduleInterviewClick)
-      }
-      questionaireURL={""}
-    />
+    <>
+      <JobProfileTab
+        renderHeader={() => (
+          <View style={isWebView ? styles.headerContainer : {}}>
+            <CommonText fontWeight={"600"} customTextStyle={styles.headerText}>
+              {intl.formatMessage({ id: "label.applicant_details" })}
+            </CommonText>
+            <UserDetails intl={intl} isWebView={isWebView} />
+          </View>
+        )}
+        isQuestionaireRequired
+        questionaireData={questionArray}
+        renderFooter={() =>
+          !isWebView &&
+          buttonSection(intl, false, onSaveClick, onScheduleInterviewClick)
+        }
+        questionaireURL={""}
+      />
+    </>
   );
 };
 

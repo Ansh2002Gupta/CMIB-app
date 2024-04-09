@@ -59,8 +59,8 @@ const useJobApplicants = () => {
 
   const popMessageRef = useRef(null);
   useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
-  const companyId = userProfileDetails?.userDetails?.id;
-  // const companyId = 1;
+  // const companyId = userProfileDetails?.userDetails?.id;
+  const companyId = 1;
   const currentModule = sideBarState?.selectedModule?.key;
 
   let isHeading = true;

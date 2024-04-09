@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   zIndex10: {
-    zIndex: 10,
+    zIndex: 100,
   },
   containerStyle: {
     flexDirection: "row",

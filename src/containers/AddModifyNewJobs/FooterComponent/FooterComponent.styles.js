@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
       flex: 1,
       marginLeft: 12,
       height: isWebView ? 44 : 60,
+      width: isWebView ? undefined : 350,
     });
   },
   emailDisableTextStyle: {
