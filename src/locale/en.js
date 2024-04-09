@@ -623,6 +623,30 @@ const locale = {
   "label.final_amt": "Final Amount",
   "label.credit_score": "Credit Score",
   "label.amount_to_be_paid": "Amount to be Paid",
+  "label.dateOfEmrollmentAsMemberRequired": " Date of Enrollment is required",
+  "label.areYouAFellowMemberRequired": "Fellow member is required",
+  "label.fellowMemberDateOfAdmissionRequired":
+    "Fellow member date of admission is required",
+  "label.whetherInPracticeRequired": "Whether in practice is required",
+  "label.sinceWhenHaveYouBeenPracticingRequired":
+    "since when have you been practicing is required",
+  "label.organizationRequired": "Organization is required",
+  "label.designationRequired": "Designation is required",
+  "label.locationRequired": "Location is required",
+  "label.fromDateRequired": "From date is required",
+  "label.toDateRequired": "To date is required",
+  "label.enterValidInput": "Enter valid input",
+  "label.areaOfWorkRequired": "Areas of work is required",
+  "label.workExperienceRequired": "Work experience is required",
+  "label.currentSpecialisationRequired": "Current specialisation is required",
+  "label.currentIndustrySpecialisationRequired":
+    "Current industry specialisation is required",
+  "label.sinceWhenHaveYouBeenPracticingRequired":
+    "since when have you been practicing is required",
+  "label.preference_for_area_of_work": "Preference for Area of Work",
+  "label.viewPdf": "View PDF",
+  "label.applyJob": "Apply job",
+  "label.urgent": "Urgent",
   "label.pay": "Pay",
   "label.pan_validation": "Please enter a valid PAN",
   "label.gstin_validation": "Please enter a valid GSTIN",
@@ -638,6 +662,7 @@ const locale = {
   "label.readyToPlaceRequired": "Ready to place india is required",
   "label.preferredRegionRequired": "Preferred region is required",
   "label.expectedAnnualSalaryRequired": "Expected annual salary is required",
+  "label.schedule_interview": "Schedule Interview",
   "label.removeDuplicateInputs": "Please remove duplicate values",
   "label.shortProfile": "Short Profile of the Company",
   "label.currentIndustry": "Current Industry",
@@ -667,6 +692,9 @@ const locale = {
   "label.applicant_name": "Application Name",
   "label.applicant_id": "Applicant ID",
   "label.field_cannot_be_empty": "Field cannot be empty",
+  "label.offer_job": "Offer Job",
+  "label.view_interview_details": "View Interview Details",
+  "label.edit_interview_details": "Edit Interview Details",
 };
 
 export default locale;

@@ -209,6 +209,7 @@ const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
 const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
+const iconError = appendAppBaseURl("/images/svg/iconError.svg");
 const iconAddRoundGreen = appendAppBaseURl("/images/svg/iconAddRoundGreen.svg");
 const iconDeleteRoundRed = appendAppBaseURl(
   "/images/svg/iconDeleteRoundRed.svg"
@@ -217,7 +218,6 @@ const iconCheckBoxRound = appendAppBaseURl("/images/svg/iconCheckBoxRound.svg");
 const iconUnCheckBoxRound = appendAppBaseURl(
   "/images/svg/iconUnCheckBoxRound.svg"
 );
-const iconError = appendAppBaseURl("/images/svg/iconError.svg");
 const iconTickGreen = appendAppBaseURl("/images/svg/iconTickGreen.svg");
 const iconCrossRed = appendAppBaseURl("/images/svg/iconCrossRed.svg");
 const iconDownloading = appendAppBaseURl("/images/downloadIcon/download.png");
@@ -393,19 +393,19 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  dotIcon,
+  iconDownloading,
+  iconError,
+  iconTickCircle,
+  iconAppliedJobs,
+  iconAppliedJobsActiveJobs,
   iconAddRoundGreen,
   iconDeleteRoundRed,
   iconCheckBoxRound,
   iconUnCheckBoxRound,
-  iconError,
   iconTickGreen,
   iconCrossRed,
-  dotIcon,
-  iconDownloading,
-  iconTickCircle,
   iconLineArrowDown,
-  iconAppliedJobs,
-  iconAppliedJobsActiveJobs,
   iconSingleSave,
   iconSaveSlashBlack,
   iconSaveSlashBlue,

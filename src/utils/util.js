@@ -502,7 +502,6 @@ export const getDecryptApiData = (apiData) => {
   });
   return { obj, transformedQuestionnaire };
 };
-
 export const changeComma = (data, index) => {
   if (index < data.length) {
     return [...data.slice(0, index), "+" + (data.length - index) + " more"];
