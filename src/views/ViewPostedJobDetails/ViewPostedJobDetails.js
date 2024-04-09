@@ -214,7 +214,7 @@ const ViewPostedJobDetails = () => {
             label: "label.flexi_hours",
             value: apiData?.flexi_hours == 1 ? "Yes" : "No" ?? "-",
           },
-          !jobName === jobType.CONTRACTUAL
+          jobName === jobType.REGULAR || jobName === jobType.RETIRED
             ? {
                 label: "label.fullorPartTime",
                 value: apiData?.service_type ?? "-",
