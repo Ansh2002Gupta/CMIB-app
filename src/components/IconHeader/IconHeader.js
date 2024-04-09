@@ -89,9 +89,13 @@ const IconHeader = ({
         >
           <View style={styles.headingContainer}>
             <CommonText
-              customTextStyle={
-                !isWebView ? styles.formHeaderStyle : styles.formHeaderStyleWeb
-              }
+              customTextStyle={{
+                ...(!isWebView
+                  ? styles.formHeaderStyle
+                  : styles.formHeaderStyleWeb),
+              }}
+              customContainerStyle={styles.width100}
+              customTextProps={styles.iconTextStyle}
               fontWeight="600"
             >
               {headerText}

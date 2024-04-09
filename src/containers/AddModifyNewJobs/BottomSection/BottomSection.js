@@ -32,13 +32,13 @@ const BottomSection = forwardRef(
       jobOpeningDate: addNewJobData?.jobOpeningDate ?? today,
       jobClosingDate: addNewJobData?.jobClosingDate ?? tomorrow,
       numberOfVacancies: addNewJobData?.numberOfVacancies ?? 0,
-      vacanciesCountType: addNewJobData?.vacanciesCountType ?? 0,
+      vacanciesCountType: addNewJobData?.vacanciesCountType ?? -1,
       modeofWork: addNewJobData?.modeofWork ?? {},
-      flexiHours: addNewJobData?.flexiHours ?? 0,
-      fullTime: addNewJobData?.fullTime ?? 0,
+      flexiHours: addNewJobData?.flexiHours ?? -1,
+      fullTime: addNewJobData?.fullTime ?? -1,
       typeOfDisabilty: addNewJobData?.typeOfDisabilty ?? "",
       disabiltyPercentage: addNewJobData?.disabiltyPercentage ?? 0,
-      salaryNagotiable: addNewJobData?.salaryNagotiable ?? 0,
+      salaryNagotiable: addNewJobData?.salaryNagotiable ?? -1,
       minimumSalary: addNewJobData?.minimumSalary ?? 0,
       maximumSalary: addNewJobData?.maximumSalary ?? 0,
       contractYear: addNewJobData?.contractYear ?? 0,
@@ -57,6 +57,10 @@ const BottomSection = forwardRef(
       contractYear: "",
       contractMonth: "",
       contractDay: "",
+      vacanciesCountType: "",
+      flexiHours: "",
+      salaryNagotiable: "",
+      fullTime: "",
     });
 
     const validateInput = (field) => {
@@ -71,12 +75,36 @@ const BottomSection = forwardRef(
             addError(field, "Should be greater than 0");
           }
           if (jobData.numberOfVacancies.length == 0) {
-            addError(field, intl.formatMessage({ id: "label.mandatory" }));
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
+          }
+          break;
+        case "vacanciesCountType":
+          if (jobData.vacanciesCountType === -1) {
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
+          }
+          break;
+        // case "flexiHours":
+        //   if (jobData.flexiHours === -1) {
+        //     addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
+        //   }
+        //   break;
+        // case "salaryNagotiable":
+        //   if (jobData.salaryNagotiable === -1) {
+        //     addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
+        //   }
+        //   break;
+        case "fullTime":
+          if (
+            jobData.fullTime === -1 &&
+            (selectedJobType?.label === jobType.REGULAR ||
+              selectedJobType?.label === jobType.RETIRED)
+          ) {
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
           }
           break;
         case "modeofWork":
           if (Object.values(jobData.modeofWork).length === 0) {
-            addError(field, intl.formatMessage({ id: "label.mandatory" }));
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
           }
           break;
         case "typeOfDisabilty":
@@ -84,7 +112,7 @@ const BottomSection = forwardRef(
             selectedJobType?.label === jobType.SPECIALLY_ABLE &&
             !jobData.typeOfDisabilty
           ) {
-            addError(field, intl.formatMessage({ id: "label.mandatory" }));
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
           }
           break;
         case "disabiltyPercentage":
@@ -92,16 +120,16 @@ const BottomSection = forwardRef(
             selectedJobType?.label === jobType.SPECIALLY_ABLE &&
             !jobData.disabiltyPercentage
           ) {
-            addError(field, intl.formatMessage({ id: "label.mandatory" }));
+            addError(field, intl.formatMessage({ id: "label.fill_mandatory" }));
           }
           break;
         case "maximumSalary":
           if (jobData.minimumSalary > jobData.maximumSalary) {
-            addError("maximumSalary", "Invalid Salary");
-            addError("minimumSalary", "Invalid Salary");
+            addError("maximumSalary", "Please fill valid Amount");
+            addError("minimumSalary", "Please fill valid Amount");
           } else if (jobData.maximumSalary == 0 || jobData.maximumSalary == 0) {
-            addError("maximumSalary", "Invalid Salary");
-            addError("minimumSalary", "Invalid Salary");
+            addError("maximumSalary", "Please fill valid Amount");
+            addError("minimumSalary", "Please fill valid Amount");
           }
           break;
         case "contractYear":
@@ -265,6 +293,7 @@ const BottomSection = forwardRef(
             onValueChange={(item) => {
               handleJobDetailsChange("vacanciesCountType", item);
             }}
+            errorMessage={(error && error.vacanciesCountType) || ""}
             containerStyle={getStyle(
               styles.toggleComponentContainerStyle,
               styles.toggleComponentContainerStyleColumn
@@ -334,6 +363,7 @@ const BottomSection = forwardRef(
               label={intl.formatMessage({ id: "label.fullorPartTime" })}
               isMandatory
               value={jobData.fullTime}
+              errorMessage={(error && error.fullTime) || ""}
               onValueChange={(item) => {
                 handleJobDetailsChange("fullTime", item);
               }}

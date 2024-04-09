@@ -59,6 +59,17 @@ const style = {
     color: colors.black,
   },
   starStyle: { color: colors.errorRed },
+  errorMsg: {
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+      },
+    }),
+    color: colors.errorRed,
+    lineHeight: 18,
+    marginTop: -20,
+    marginBottom: 10,
+  },
 };
 
 export default style;

@@ -22,13 +22,14 @@ const JobDetailsComponent = forwardRef(
     const [jobData, setJobData] = useState({
       jobSummary: addNewJobData?.jobSummary ?? "",
       jobDetails: addNewJobData?.jobDetails ?? "",
-      isUrgentJob: addNewJobData?.isUrgentJob ?? 0,
+      isUrgentJob: addNewJobData?.isUrgentJob ?? -1,
     });
 
     const [error, setError] = useState({
       jobSummary: "",
       jobDetails: "",
       jobType: "",
+      isUrgentJob: "",
     });
 
     const getJobDetailsState = () => {
@@ -40,7 +41,7 @@ const JobDetailsComponent = forwardRef(
         setError((prev) => {
           return {
             ...prev,
-            [field]: intl.formatMessage({ id: "label.mandatory" }),
+            [field]: intl.formatMessage({ id: "label.fill_mandatory" }),
           };
         });
         return false;
@@ -53,7 +54,7 @@ const JobDetailsComponent = forwardRef(
         setError((prev) => {
           return {
             ...prev,
-            [field]: intl.formatMessage({ id: "label.mandatory" }),
+            [field]: intl.formatMessage({ id: "label.fill_mandatory" }),
           };
         });
 
@@ -82,6 +83,13 @@ const JobDetailsComponent = forwardRef(
         });
 
         return false;
+      } else if (field == "isUrgentJob" && jobData[field] == -1) {
+        setError((prev) => {
+          return {
+            ...prev,
+            [field]: intl.formatMessage({ id: "label.fill_mandatory" }),
+          };
+        });
       }
       return true;
     };
@@ -187,6 +195,7 @@ const JobDetailsComponent = forwardRef(
             onValueChange={(item) => {
               handleJobDetailsChange("isUrgentJob", item);
             }}
+            errorMessage={(error && error.isUrgentJob) || ""}
             containerStyle={styles.customToggleContainerStyle(isWebView)}
             customToggleStyle={styles.customToggleStyle}
             customLabelStyle={styles.customLabelStyle}

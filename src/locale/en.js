@@ -411,7 +411,7 @@ const locale = {
   "label.essential_qualification_placeholder": "Enter Essential Qualification",
   "label.desired_qualification": "Desired Qualification",
   "label.desired_qualification_placeholder": "Enter Desired Qualification",
-  "label.add_new_jobs": "Add New Jobs",
+  "label.add_new_jobs": "Add New Job",
   "label.posted_jobs": "Posted Jobs",
   "label.questionnaire": "Questionnaire (optional)",
   "label.questionaire_subHeading":
@@ -419,7 +419,7 @@ const locale = {
   "label.add_question": "+ Add Question",
   "label.do_not_send_email":
     "Do not send me notifying E-mails of applicants applying for this job.",
-  "label.post": "Post",
+  "label.post": "Post Job",
   "label.text_question": "Text Question",
   "label.single_select": "Single-select",
   "label.multiple_select": "Multi-select",
