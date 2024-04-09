@@ -63,6 +63,7 @@ const AddModifyNewJobs = () => {
             e.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
           );
           setSuccessMessage(`${GENERIC_GET_API_FAILED_ERROR_MESSAGE}, ${e}`);
+          navigate(-1);
         });
     } else {
       setSuccessMessage(intl.formatMessage({ id: "label.fill_mandatory" }));

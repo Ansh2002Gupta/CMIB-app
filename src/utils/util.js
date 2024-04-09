@@ -220,7 +220,6 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     is_contractual: jobData.jobType?.id == 2 ? true : false,
     job_type_slug: jobData.jobType?.value,
     is_urgent: jobData.isUrgentJob == 0 ? true : false,
-    is_salary_negotiable: jobData.salaryNagotiable == 0 ? true : false,
     experience: {
       min_experience: jobData.minimumExperience,
       max_experience: jobData.maximumExperience,
@@ -230,7 +229,7 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     designation: jobData.designation,
     functional_area_id: jobData.functionalAreas.map((object) => object.id),
     gender_preference: jobData.genderPreference?.value ?? null,
-    category_preference: jobData.categoryPreference?.label,
+    category_preference: jobData.categoryPreference?.label ?? null,
     essential_qualification: jobData.essentialQualification,
     desired_qualification: jobData.desiredQualification,
     job_opening_date: dayjs(jobData.jobOpeningDate).format("YYYY-MM-DD"),
@@ -239,12 +238,21 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     max_salary: jobData.maximumSalary,
     number_of_vacancies: jobData.numberOfVacancies,
     work_mode: jobData.modeofWork?.label,
-    flexi_hours: jobData.flexiHours == 0 ? true : false,
     is_extended_vacancy: jobData.vacanciesCountType == 0 ? true : false,
     service_type: jobData.fullTime == 0 ? "Full Time" : "Part Time",
   };
   if (isCheckList) {
     temp.notify_company = isCheckList;
+  }
+  if (jobData.salaryNagotiable != -1) {
+    temp.is_salary_negotiable = jobData.salaryNagotiable == 0 ? true : false;
+  } else {
+    temp.is_salary_negotiable = null;
+  }
+  if (jobData.flexiHours != -1) {
+    temp.flexi_hours = jobData.flexiHours == 0 ? true : false;
+  } else {
+    temp.flexi_hours = null;
   }
   if (jobData.jobType?.label === jobType.CONTRACTUAL) {
     temp.contract_period = {

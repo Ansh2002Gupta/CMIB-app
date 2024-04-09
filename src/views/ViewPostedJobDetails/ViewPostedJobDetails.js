@@ -115,12 +115,12 @@ const ViewPostedJobDetails = () => {
         [
           {
             label: "label.minimum_experience",
-            value: apiData?.min_experience,
+            value: apiData?.min_experience ?? "-",
             isMandatory: true,
           },
           {
             label: "label.maximum_experience",
-            value: apiData?.max_experience,
+            value: apiData?.max_experience ?? "-",
           },
           {
             label: "label.nationality",
@@ -163,7 +163,7 @@ const ViewPostedJobDetails = () => {
           },
           {
             label: "label.category_preference",
-            value: apiData?.category_prefrence.name ?? "-",
+            value: apiData?.category_prefrence?.name ?? "-",
             isMandatory: true,
           },
           {},
