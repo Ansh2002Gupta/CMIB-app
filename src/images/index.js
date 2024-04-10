@@ -182,7 +182,7 @@ const iconCampus = appendAppBaseURl("/images/svg/campus.svg");
 const iconConsent = appendAppBaseURl("/images/svg/consent.svg");
 const iconDiscover = appendAppBaseURl("/images/svg/discover.svg");
 const iconApplication = appendAppBaseURl("/images/svg/application.svg");
-const iconCalendar = appendAppBaseURl("/images/calendar.png");
+const iconCalendar = appendAppBaseURl("/images/svg/calendar.svg");
 const iconRotate = appendAppBaseURl("/images/svg/iconRotate.svg");
 const iconDisabledAdd = appendAppBaseURl("/images/svg/iconDisabledAdd.svg");
 const iconDisabledMinus = appendAppBaseURl("/images/svg/iconDisabledMinus.svg");
@@ -199,7 +199,7 @@ const iconArrowUpSorting = appendAppBaseURl(
 const iconPartial = appendAppBaseURl("/images/svg/iconPartial.svg");
 const iconDeleteRed = appendAppBaseURl("/images/svg/iconDeleteRed.svg");
 const questionIcon = appendAppBaseURl("/images/question/question.png");
-const copyIcon = appendAppBaseURl("/images/copyIcon/copy.png");
+const copyIcon = appendAppBaseURl("/images/copyIcon/copy.svg");
 const redCrossIcon = appendAppBaseURl("/images/redCross/redClose.png");
 const editIcon = appendAppBaseURl("/images/editIcon/edit.png");
 const iconDisabledCheck = appendAppBaseURl("/images/svg/iconDisabledCheck.svg");
@@ -209,6 +209,7 @@ const iconAddBlue = appendAppBaseURl("/images/svg/iconAddBlue.svg");
 const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
+const iconError = appendAppBaseURl("/images/svg/iconError.svg");
 const iconAddRoundGreen = appendAppBaseURl("/images/svg/iconAddRoundGreen.svg");
 const iconDeleteRoundRed = appendAppBaseURl(
   "/images/svg/iconDeleteRoundRed.svg"
@@ -217,7 +218,6 @@ const iconCheckBoxRound = appendAppBaseURl("/images/svg/iconCheckBoxRound.svg");
 const iconUnCheckBoxRound = appendAppBaseURl(
   "/images/svg/iconUnCheckBoxRound.svg"
 );
-const iconError = appendAppBaseURl("/images/svg/iconError.svg");
 const iconTickGreen = appendAppBaseURl("/images/svg/iconTickGreen.svg");
 const iconCrossRed = appendAppBaseURl("/images/svg/iconCrossRed.svg");
 const iconDownloading = appendAppBaseURl("/images/downloadIcon/download.png");
@@ -244,6 +244,7 @@ const iconLocationWhite = appendAppBaseURl("/images/svg/iconLocationWhite.svg");
 const iconBreifcase = appendAppBaseURl("/images/svg/briefcase.svg");
 const iconRupeeSign = appendAppBaseURl("/images/svg/rupeeSign.svg");
 const iconArchiveSave = appendAppBaseURl("/images/svg/iconArchiveSave.svg");
+const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
 
 const images = {
   iconArrowUp,
@@ -392,19 +393,19 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  dotIcon,
+  iconDownloading,
+  iconError,
+  iconTickCircle,
+  iconAppliedJobs,
+  iconAppliedJobsActiveJobs,
   iconAddRoundGreen,
   iconDeleteRoundRed,
   iconCheckBoxRound,
   iconUnCheckBoxRound,
-  iconError,
   iconTickGreen,
   iconCrossRed,
-  dotIcon,
-  iconDownloading,
-  iconTickCircle,
   iconLineArrowDown,
-  iconAppliedJobs,
-  iconAppliedJobsActiveJobs,
   iconSingleSave,
   iconSaveSlashBlack,
   iconSaveSlashBlue,
@@ -418,6 +419,7 @@ const images = {
   iconRupeeSign,
   iconArchiveSave,
   iconLocationWhite,
+  iconClock,
 };
 
 export default images;

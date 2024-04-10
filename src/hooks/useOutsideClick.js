@@ -1,21 +1,23 @@
-import { Platform } from "@unthinkable/react-core-components";
 import { useEffect } from "react";
+import { Platform } from "@unthinkable/react-core-components";
+
+const isWeb = Platform.OS.toLowerCase() === "web";
 
 const useOutsideClick = (ref, callback) => {
   useEffect(() => {
-    if (Platform.OS === "web") {
-      const handleClickOutside = (event) => {
-        if (ref.current && !ref.current.contains(event.target)) {
-          callback();
-        }
-      };
-
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        callback();
+      }
+    };
+    if (isWeb) {
       document.addEventListener("mousedown", handleClickOutside);
-
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
     }
+    return () => {
+      if (isWeb) {
+        document.removeEventListener("mousedown", handleClickOutside);
+      }
+    };
   }, [ref, callback]);
 };
 

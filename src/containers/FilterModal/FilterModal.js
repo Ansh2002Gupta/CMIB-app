@@ -108,15 +108,19 @@ const FilterModal = ({
   };
 
   const renderOptionsByCategory = (category) => {
-    if (renderCalendar && category === filterCategory[0]) {
+    if (renderCalendar) {
       {
         return (
           <View style={styles.datePickerModalView}>
             <DatePickerModal
               customStyles={styles.datePickerStyle}
-              value={filterState?.dateSelected}
+              value={
+                Array.isArray(filterState?.selectedQueryType)
+                  ? filterState?.selectedQueryType[0]
+                  : ""
+              }
               datePickerViewStyle={styles.datePickerInner}
-              onChangeValue={(value) => handleStatusChange(value)}
+              onChangeValue={(value) => handleQueryTypeChange(value)}
             />
           </View>
         );

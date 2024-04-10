@@ -179,6 +179,8 @@ const EditJobDetails = ({
                           isExpanded={true}
                           isWebView={isWebView}
                           isMinimisedVisible={false}
+                          isStatusVisible={true}
+                          isInstructionVisible={false}
                         />
                       </View>
                     ),

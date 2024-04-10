@@ -25,6 +25,7 @@ export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
+export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const FILE_MAX_SIZE = 5000000;
 export const CA_JOBS = "ca-jobs";
@@ -529,13 +530,6 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
-export const JOB_SEEKERS_TABLE_HEADING = {
-  company_name: "Company Name",
-  candidate_id: "Candidate ID",
-  total_experience: "Total Experience",
-  functional_area: "Functional Area",
-};
-
 export const color = [
   "#000000",
   "#e60000",
@@ -656,4 +650,26 @@ export const progressData = {
     text: "Form Complete!",
     textColor: colors.darkSecondGreen,
   },
+};
+export const JOB_SEEKERS_TABLE_HEADING = {
+  company_name: "Company Name",
+  candidate_id: "Candidate ID",
+  total_experience: "Total Experience",
+  functional_area: "Functional Area",
+};
+export const JOB_STATUS_RESPONSE_CODE = {
+  "Shortlist Candidate": 3,
+  "Reject Candidate": 2,
+  "Offer Job": 6,
+  "Reject After Interview": 2,
+  "Offer Accepted": 7,
+  "Offer Rejected": 8,
+  "Job Not Offered": 9,
+};
+
+export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];
+export const GET_INTERVIEW_TYPE = {
+  "Face-To-Face": 0,
+  Telephonic: 1,
+  Remote: 2,
 };

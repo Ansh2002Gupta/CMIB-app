@@ -106,7 +106,7 @@ import iconCampus from "../../public/images/svg/campus.svg";
 import iconConsent from "../../public/images/svg/consent.svg";
 import iconDiscover from "../../public/images/svg/discover.svg";
 import iconApplication from "../../public/images/svg/application.svg";
-import iconCalendar from "../../public/images/calendar.png";
+import iconCalendar from "../../public/images/svg/calendar.svg";
 import iconRotate from "../../public/images/svg/iconRotate.svg";
 import iconDisabledAdd from "../../public/images/svg/iconDisabledAdd.svg";
 import iconDisabledMinus from "../../public/images/svg/iconDisabledMinus.svg";
@@ -119,7 +119,7 @@ import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
 import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
 import questionIcon from "../../public/images/question/question.png";
-import copyIcon from "../../public/images/copyIcon/copy.png";
+import copyIcon from "../../public/images/copyIcon/copy.svg";
 import redCrossIcon from "../../public/images/redCross/redClose.png";
 import editIcon from "../../public/images/editIcon/edit.png";
 import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
@@ -129,11 +129,11 @@ import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
+import iconError from "../../public/images/svg/iconError.svg";
 import iconAddRoundGreen from "../../public/images/svg/iconAddRoundGreen.svg";
 import iconDeleteRoundRed from "../../public/images/svg/iconDeleteRoundRed.svg";
 import iconCheckBoxRound from "../../public/images/svg/iconCheckBoxRound.svg";
 import iconUnCheckBoxRound from "../../public/images/svg/iconUnCheckBoxRound.svg";
-import iconError from "../../public/images/svg/iconError.svg";
 import iconTickGreen from "../../public/images/svg/iconTickGreen.svg";
 import iconCrossRed from "../../public/images/svg/iconCrossRed.svg";
 import dotIcon from "../../public/images/dotIcon/dot.png";
@@ -150,6 +150,7 @@ import iconRupee from "../../public/images/svg/iconRupee.svg";
 import videoPlayIcon from "../../public/images/svg/videoPlayIcon.svg";
 import pdfIcon from "../../public/images/svg/pdfIcon.svg";
 import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
+import iconClock from "../../public/images/svg/iconClock.svg";
 
 import iconLocationWhite from "../../public/images/svg/iconLocationWhite.svg";
 import iconBreifcase from "../../public/images/svg/briefcase.svg";
@@ -288,11 +289,12 @@ const images = {
   iconEdit,
   iconLoading,
   iconGreyCross,
+  iconError,
   iconAddRoundGreen,
   iconDeleteRoundRed,
   iconCheckBoxRound,
   iconUnCheckBoxRound,
-  iconError,
+  iconClock,
   iconTickGreen,
   iconCrossRed,
   dotIcon,

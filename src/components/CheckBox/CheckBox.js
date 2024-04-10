@@ -18,6 +18,7 @@ const CheckBox = ({
   title,
   iconCheck,
   iconUnCheck,
+  style,
 }) => {
   const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
@@ -64,7 +65,13 @@ const CheckBox = ({
     },
   ];
 
-  return <MultiColumn columns={rowCheckBox} columnStyle={styles.columnStyle} />;
+  return (
+    <MultiColumn
+      columns={rowCheckBox}
+      columnStyle={styles.columnStyle}
+      style={style}
+    />
+  );
 };
 
 CheckBox.defaultProps = {
@@ -74,6 +81,7 @@ CheckBox.defaultProps = {
   isSelected: false,
   iconCheck: Images.iconCheckbox,
   iconUnCheck: Images.iconUnCheckbox,
+  style: {},
 };
 
 CheckBox.propTypes = {
@@ -86,6 +94,7 @@ CheckBox.propTypes = {
   title: PropTypes.string.isRequired,
   iconCheck: PropTypes.node,
   iconUnCheck: PropTypes.node,
+  style: PropTypes.object,
 };
 
 export default CheckBox;
