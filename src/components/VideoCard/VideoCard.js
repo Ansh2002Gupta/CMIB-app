@@ -15,7 +15,7 @@ const VideoCard = ({ url }) => {
         Linking.openURL(getValidUrl(url), "_blank");
       }}
     >
-      <View style={styles.playIconBoxStyles}>
+      <View>
         <CustomImage
           alt="Play icon"
           isSvg
