@@ -1,30 +1,33 @@
 import React from "react";
-import styles from "./DownloadMoreComponent.styles";
-import { View } from "@unthinkable/react-core-components";
-import TouchableImage from "../../../components/TouchableImage";
-import images from "../../../images";
-import CommonText from "../../../components/CommonText";
-import useIsWebView from "../../../hooks/useIsWebView";
 import { useIntl } from "react-intl";
-const DownloadMoreComponent = ({ onPress }) => {
+import { View } from "@unthinkable/react-core-components";
+
+import CustomImage from "../../../components/CustomImage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import CommonText from "../../../components/CommonText";
+import TouchableImage from "../../../components/TouchableImage";
+import useIsWebView from "../../../hooks/useIsWebView";
+import images from "../../../images";
+import styles from "./DownloadMoreComponent.styles";
+
+const DownloadMoreComponent = ({ onPress, message = "Download Jobs List" }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   return (
     <View style={isWebView ? styles.container : styles.mobileContainer}>
       {isWebView ? (
-        <View style={styles.innerContainer}>
-          <TouchableImage
+        <CustomTouchableOpacity onPress={onPress} style={styles.innerContainer}>
+          <CustomImage
             source={images.iconDownloading}
             style={styles.iconstyle}
-            onPress={onPress}
           />
           <CommonText
             customContainerStyle={styles.marginLeft8}
             customTextStyle={styles.fontSize14}
           >
-            {intl.formatMessage({ id: "label.download_job_list" })}
+            {message}
           </CommonText>
-        </View>
+        </CustomTouchableOpacity>
       ) : (
         <TouchableImage
           source={images.iconMore}

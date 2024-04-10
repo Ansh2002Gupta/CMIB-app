@@ -11,6 +11,8 @@ import {
   ROWS_PER_PAGE_ARRAY,
   SAVED_CANDIDATES_TABLE_HEADING,
 } from "../../constants/constants";
+import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreComponent";
+import images from "../../images";
 
 const SavedCandidatesView = () => {
   const intl = useIntl();
@@ -20,9 +22,21 @@ const SavedCandidatesView = () => {
     data,
     formatConfig,
     getStatusStyle,
+    filterCategory,
     getColoumConfigs,
     headingTexts,
+    queryTypeData,
+    statusData,
+    isFirstPageReceived,
+    handleLoadMore,
+    handleRowPerPageChange,
+    handlePageChange,
+    isSavedCadidatesDataLoading,
+    handleSearchResults,
+    filterApplyHandler,
     subHeadingText,
+    allDataLoaded,
+    loadingMore,
     statusText,
     tableIcon,
   } = useSavedCandidates();
@@ -39,17 +53,42 @@ const SavedCandidatesView = () => {
       isBottomFillSpace
       bottomSection={
         <CustomTable
-          getColoumConfigs={getColoumConfigs}
-          data={data?.records}
-          tableHeading={SAVED_CANDIDATES_TABLE_HEADING}
-          isHeading
-          headingTexts={headingTexts}
-          subHeadingText={subHeadingText}
-          statusText={statusText}
-          getStatusStyle={getStatusStyle}
-          tableIcon={tableIcon}
-          rowsLimit={ROWS_PER_PAGE_ARRAY}
-          formatConfig={formatConfig}
+          {...{
+            getColoumConfigs,
+            data,
+            tableHeading: SAVED_CANDIDATES_TABLE_HEADING,
+            isHeading: true,
+            headingTexts,
+            subHeadingText,
+            statusText,
+            filterCategory,
+            queryTypeData,
+            statusData,
+            allDataLoaded,
+            loadingMore,
+            getStatusStyle,
+            tableIcon,
+            rowsLimit: ROWS_PER_PAGE_ARRAY,
+            isTicketListingLoading: isSavedCadidatesDataLoading,
+            isFirstPageReceived,
+            handleLoadMore,
+            handleRowPerPageChange,
+            handlePageChange,
+            handleSearchResults,
+            filterApplyHandler,
+            formatConfig,
+            isTotalCardVisible: false,
+          }}
+          ThirdSection={
+            <DownloadMoreComponent
+              onPress={() => {
+                console.log("HI I AM pressed");
+              }}
+              message={intl.formatMessage({
+                id: "label.download_candidates_list",
+              })}
+            />
+          }
         />
       }
     />

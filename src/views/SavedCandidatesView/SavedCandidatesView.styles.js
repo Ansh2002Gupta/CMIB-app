@@ -27,6 +27,22 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  iconTicketColoum: {
+    backgroundColor: colors.white,
+  },
+  sortingIcon: {
+    height: 16,
+    width: 16,
+    marginLeft: 5,
+  },
+  popupMessageStyle: {
+    position: "absolute",
+    top: 0,
+    right: 50,
+    height: "auto",
+    width: "auto",
+    minWidth: 250,
+  },
 });
 
 export default styles;
