@@ -10,16 +10,19 @@ import CustomTextInput from "../CustomTextInput";
 import CustomModal from "../CustomModal";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import LoadingScreen from "../LoadingScreen";
+import ToastComponent from "../ToastComponent/ToastComponent";
 import useFetch from "../../hooks/useFetch";
+import { usePost } from "../../hooks/useApiRequest";
 import useIsWebView from "../../hooks/useIsWebView";
 import { convertJSONStringArrayToIntArray } from "../../utils/util";
 import { POST_JOB, QUESTIONAIRE } from "../../services/apiServices/apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { isValueEmpty } from "../../utils/util";
+import { APPLY_JOB } from "../../services/apiServices/apiEndPoint";
 import styles from "./QuestionaireModal.style";
 import style from "../CommonText/CommonText.style";
 
-const QuestionaireModal = ({ handleCancelButton, handleSaveButton, jobId }) => {
+const QuestionaireModal = ({ handleCloseModal, jobId }) => {
   const intl = useIntl();
   const [questions, setQuestions] = useState();
   const { isWebView } = useIsWebView();
@@ -40,6 +43,39 @@ const QuestionaireModal = ({ handleCancelButton, handleSaveButton, jobId }) => {
   } = useFetch({
     url: POST_JOB + `/${jobId}` + QUESTIONAIRE,
   });
+
+  const {
+    makeRequest: handleApplyJob,
+    isLoading: isjobAppling,
+    error: errorWhileApplyingJobs,
+    setError: setErrorWhileApplyingJob,
+  } = usePost({
+    url: APPLY_JOB,
+  });
+
+  const handleSaveButton = (data) => {
+    let payload;
+    payload = {
+      job_id: jobId,
+      answers: data.map((item) => {
+        return {
+          question_id: item?.id,
+          answer: Array.isArray(item?.value) ? item?.value : [item?.value],
+        };
+      }),
+    };
+
+    handleApplyJob({
+      body: payload,
+      onSuccessCallback: () => {
+        handleCloseModal();
+      },
+    });
+  };
+
+  const handleCancelButton = () => {
+    handleCloseModal();
+  };
 
   const isDisabled = (data) => {
     let count = 0;
@@ -104,6 +140,11 @@ const QuestionaireModal = ({ handleCancelButton, handleSaveButton, jobId }) => {
       })
     );
   };
+
+  const handleResetError = () => {
+    setErrorWhileApplyingJob("");
+  };
+
   useEffect(() => {
     if (questionaireData) {
       setQuestions(addValueOnField({ data: questionaireData }));
@@ -112,6 +153,12 @@ const QuestionaireModal = ({ handleCancelButton, handleSaveButton, jobId }) => {
 
   return (
     <>
+      {errorWhileApplyingJobs && (
+        <ToastComponent
+          toastMessage={errorWhileApplyingJobs}
+          onDismiss={handleResetError}
+        />
+      )}
       <CustomModal
         headerText={intl.formatMessage({ id: "label.questionnaire" })}
         isIconCross

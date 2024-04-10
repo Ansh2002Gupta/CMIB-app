@@ -26,15 +26,6 @@ const PostedJobs = () => {
     url: `${GET_JOB_DETAIL}/${jobId}`,
   });
 
-  const {
-    makeRequest: handleApplyJob,
-    isLoading: isjobAppling,
-    error: errorWhileApplyingJobs,
-    setError: setErrorWhileApplyingJob,
-  } = usePost({
-    url: APPLY_JOB,
-  });
-
   const fetchJobError = error?.data;
 
   const { jobDetail } = usePostedJobs({ state: data ?? {} });
@@ -51,37 +42,14 @@ const PostedJobs = () => {
     return <ErrorComponent errorMsg={fetchJobError?.message} />;
   }
 
-  const handleCancelButton = () => {
+  const handleCloseModal = () => {
     setApplyJobModal(false);
-  };
-
-  const handleSaveButton = (data) => {
-    let payload;
-    payload = {
-      job_id: jobId,
-      answers: data.map((item) => {
-        return {
-          question_id: item?.id,
-          answer: Array.isArray(item?.value) ? item?.value : [item?.value],
-        };
-      }),
-    };
-    handleApplyJob({
-      body: payload,
-      onSuccessCallback: () => {
-        setApplyJobModal(false);
-      },
-    });
   };
 
   return (
     <Base style={styles.containerViewStyle}>
       {applyJobModal && (
-        <QuestionaireModal
-          jobId={jobId}
-          handleCancelButton={handleCancelButton}
-          handleSaveButton={handleSaveButton}
-        />
+        <QuestionaireModal jobId={jobId} handleCloseModal={handleCloseModal} />
       )}
       <PostedJobsTemplate
         details={jobDetail}
