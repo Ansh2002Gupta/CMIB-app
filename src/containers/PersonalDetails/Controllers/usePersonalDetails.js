@@ -17,6 +17,7 @@ import {
   isValueEmpty,
   formatCountryCode,
   getNameById,
+  booleanToYesNo,
 } from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 
@@ -166,7 +167,7 @@ const personal_detail = (categoryData, has_passport) => {
     },
   };
 
-  if (!has_passport) {
+  if (has_passport) {
     return [...commonFields, passportField];
   } else {
     return commonFields;
@@ -390,11 +391,11 @@ const addValueOnField = ({
     if (item.isToggle) {
       return {
         ...item,
-        value: !isEditable
-          ? state?.[item?.key] === null
-            ? "--"
-            : intl.formatMessage({ id: `toggle.${state?.[item?.key]}` })
-          : state?.[item?.key],
+        value: isEditable
+          ? Boolean(state?.[item?.key] ?? false)
+          : state?.[item?.key] === undefined
+          ? "-"
+          : booleanToYesNo(Boolean(state?.[item?.key])),
       };
     }
     if (item?.key === "category_id") {

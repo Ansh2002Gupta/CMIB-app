@@ -15,6 +15,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     data,
     isLoading: isGettingPersonalData,
     error: errorWhileGettingPersonalData,
+    fetchData,
   } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE}`,
   });
@@ -95,7 +96,9 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   };
 
   const onChangeValue = (details) => (label, value, codeValue) => {
-    const { key } = findKeyByLabel(label, details);
+    const { key, isToggle } = findKeyByLabel(label, details);
+
+    value = isToggle ? !Boolean(value) : value;
 
     if (codeValue) {
       setState((prev) => ({
@@ -121,7 +124,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
       dob: state?.dob,
       email: state?.email,
       has_passport: state?.has_passport,
-      passport_number: state?.passport_number,
+      passport_number: state?.has_passport ? state?.passport_number : "",
       category_id: state?.category_id,
       mobile_country_code: state?.mobile_country_code.split(" ")?.[0],
       mobile_number: state?.mobile_number,
@@ -158,6 +161,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     handleUpdate({
       body: payload,
       onSuccessCallback: () => {
+        fetchData();
         handleEdit(false);
       },
     });
