@@ -25,6 +25,8 @@ import {
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import CustomImage from "../../../components/CustomImage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import usePagination from "../../../hooks/usePagination";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePatch } from "../../../hooks/useApiRequest";
@@ -41,6 +43,7 @@ const useJobApplicants = () => {
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
+  const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -68,9 +71,9 @@ const useJobApplicants = () => {
   let isHeading = true;
   let headingTexts = ["applicantion_id"];
   let subHeadingText = ["status"];
-  let statusText = ["active_inactive"];
+  let filterCategory = ["Functional Areas", "Gender", "Marital Status", "Age"];
   let tableIcon = images.iconMore;
-  const queryTypeData = [{ id: 1, name: "Pending" }];
+  const queryTypeData = [{ id: "male", name: "Male" }];
   const statusData = [{ id: 1, name: "Pending" }];
 
   const {
@@ -94,8 +97,6 @@ const useJobApplicants = () => {
       skipApiCallOnMount: true,
     },
   });
-
-  const filterCategory = filterData?.map((item) => item.name) || [];
 
   const { makeRequest: handleStatus, isLoading: isUpdatingApplicantStatus } =
     usePatch({
@@ -124,8 +125,8 @@ const useJobApplicants = () => {
       }
       setIsFirstPageReceived(false);
     };
-    // fetchData();
-    fetchFilters();
+    fetchData();
+    // fetchFiltersData();
   }, []);
 
   const updateCurrentRecords = async (params) => {
@@ -270,6 +271,16 @@ const useJobApplicants = () => {
     }
   };
 
+  const onNameSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortBy: sortField,
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
+    });
+  };
+
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? commonStyles.customTableHeading
@@ -279,7 +290,19 @@ const useJobApplicants = () => {
 
     return [
       {
-        content: (
+        content: isHeading ? (
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+            <CommonText customTextStyle={tableStyle}>{item.name}</CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
             {item.name || "-"}
           </CommonText>
@@ -389,7 +412,10 @@ const useJobApplicants = () => {
     setRowPerPage,
   });
 
-  const filterApplyHandler = () => {};
+  const filterApplyHandler = async ({
+    selectedStatus,
+    selectedQueryType,
+  }) => {};
 
   const handlePageChange = async (page) => {
     handlePagePerChange(page);
@@ -428,8 +454,8 @@ const useJobApplicants = () => {
     allDataLoaded,
     rowsPerPage,
     currentPage,
-    queryTypeData,
-    statusData,
+    queryTypeData: queryTypeData,
+    statusData: statusData,
     getColoumConfigs,
     handleActions,
     setModals,
@@ -443,7 +469,6 @@ const useJobApplicants = () => {
     isLoading,
     jobApplicantListingData: currentRecords,
     subHeadingText,
-    statusText,
     tableIcon,
     totalcards: jobApplicantListing?.meta?.total,
   };

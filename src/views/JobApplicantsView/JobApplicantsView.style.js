@@ -15,6 +15,11 @@ const styles = StyleSheet.create({
       },
     }),
   }),
+  sortingIcon: {
+    height: 16,
+    width: 16,
+    marginLeft: 2,
+  },
   inactive: {
     ...baseChipStyle,
     color: colors.black,
