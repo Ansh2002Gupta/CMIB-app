@@ -220,7 +220,6 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     is_contractual: jobData.jobType?.id == 2 ? true : false,
     job_type_slug: jobData.jobType?.value,
     is_urgent: jobData.isUrgentJob == 0 ? true : false,
-    is_salary_negotiable: jobData.salaryNagotiable == 0 ? true : false,
     experience: {
       min_experience: jobData.minimumExperience,
       max_experience: jobData.maximumExperience,
@@ -230,7 +229,7 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     designation: jobData.designation,
     functional_area_id: jobData.functionalAreas.map((object) => object.id),
     gender_preference: jobData.genderPreference?.value ?? null,
-    category_preference: jobData.categoryPreference?.label,
+    category_preference: jobData.categoryPreference?.label ?? null,
     essential_qualification: jobData.essentialQualification,
     desired_qualification: jobData.desiredQualification,
     job_opening_date: dayjs(jobData.jobOpeningDate).format("YYYY-MM-DD"),
@@ -239,12 +238,21 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     max_salary: jobData.maximumSalary,
     number_of_vacancies: jobData.numberOfVacancies,
     work_mode: jobData.modeofWork?.label,
-    flexi_hours: jobData.flexiHours == 0 ? true : false,
     is_extended_vacancy: jobData.vacanciesCountType == 0 ? true : false,
     service_type: jobData.fullTime == 0 ? "Full Time" : "Part Time",
   };
   if (isCheckList) {
     temp.notify_company = isCheckList;
+  }
+  if (jobData.salaryNagotiable != -1) {
+    temp.is_salary_negotiable = jobData.salaryNagotiable == 0 ? true : false;
+  } else {
+    temp.is_salary_negotiable = null;
+  }
+  if (jobData.flexiHours != -1) {
+    temp.flexi_hours = jobData.flexiHours == 0 ? true : false;
+  } else {
+    temp.flexi_hours = null;
   }
   if (jobData.jobType?.label === jobType.CONTRACTUAL) {
     temp.contract_period = {
@@ -256,6 +264,10 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     temp.disability_type = jobData.typeOfDisabilty;
     temp.disability_percentage = jobData.disabiltyPercentage;
   }
+  if (jobData.status === 0 || jobData.status === 1) {
+    temp.status = jobData.status == 1 ? 0 : 1;
+  }
+
   let tempQuestion = question.map((item) => {
     return {
       id: item.id,
@@ -475,6 +487,7 @@ export const getDecryptApiData = (apiData) => {
     ? apiData.contract_period.months
     : 0;
   obj.contractDay = apiData?.contract_period ? apiData.contract_period.days : 0;
+  obj.status = apiData?.status == 0 ? 1 : 0;
   const transformedQuestionnaire = apiData?.questionnaires?.map((item) => {
     item.question_options = Array.isArray(item.question_options)
       ? item.question_options
@@ -502,7 +515,6 @@ export const getDecryptApiData = (apiData) => {
   });
   return { obj, transformedQuestionnaire };
 };
-
 export const changeComma = (data, index) => {
   if (index < data.length) {
     return [...data.slice(0, index), "+" + (data.length - index) + " more"];
@@ -544,4 +556,40 @@ export const containsDuplicate = (arr) => {
     seen.add(value);
   }
   return false;
+};
+
+export const convertToTime = ({ dateString, format24Hour = true }) => {
+  const date = dayjs(dateString);
+  const timeFormat = format24Hour ? "HH:mm" : "hh:mm A";
+  const timeString = date.format(timeFormat);
+  return timeString;
+};
+
+export const formateDateandTime = (date, time) => {
+  const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
+  const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
+  return formattedDate + " " + formattedTime;
+};
+
+export const areAllValuesEmpty = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === "object") {
+      if (!areAllValuesEmpty(obj[key])) {
+        return false;
+      }
+    } else {
+      if (obj[key] !== "") {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+const isObjectFilled = (obj) => {
+  return Object.values(obj).every((value) => value !== "");
+};
+
+export const areAllValuesFilled = (objects) => {
+  return Object.values(objects).some(isObjectFilled);
 };

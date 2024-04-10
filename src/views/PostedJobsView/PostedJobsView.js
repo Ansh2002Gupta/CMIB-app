@@ -53,7 +53,7 @@ const PostedJobsView = () => {
     isTicketListingLoading,
     isFirstPageReceived,
     getErrorDetails,
-    isErrorGetPostedJob,
+    isError,
     loadingMore,
     onIconPress,
     queryTypeData,
@@ -102,7 +102,7 @@ const PostedJobsView = () => {
       isBottomFillSpace
       bottomSection={
         <>
-          {!isErrorGetPostedJob && (
+          {!isError && (
             <CustomTable
               {...{
                 allDataLoaded,
@@ -147,7 +147,7 @@ const PostedJobsView = () => {
               ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
             />
           )}
-          {isErrorGetPostedJob && !!getErrorDetails()?.errorMessage && (
+          {isError && !!getErrorDetails()?.errorMessage && (
             <ErrorComponent
               errorMsg={getErrorDetails()?.errorMessage}
               onRetry={() => getErrorDetails()?.onRetry()}

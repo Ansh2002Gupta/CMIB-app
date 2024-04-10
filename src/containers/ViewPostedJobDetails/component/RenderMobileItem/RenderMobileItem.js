@@ -34,7 +34,7 @@ const RenderMobileItem = ({ item, lastItem }) => {
           </CommonText>
         </View>
       </View>
-      <PopupMessage message={item?.action} />
+      <PopupMessage message={item?.action.map((item) => item.name)} />
     </View>
   );
 };
