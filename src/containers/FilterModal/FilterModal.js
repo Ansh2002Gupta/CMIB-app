@@ -118,6 +118,7 @@ const FilterModal = ({
   const renderOptionsByCategory = (category) => {
     category = getFilterName(category);
     const filterObj = returnFilterObj(filterInfo, category);
+
     if (renderCalendar) {
       {
         return (
@@ -130,7 +131,7 @@ const FilterModal = ({
                   : ""
               }
               datePickerViewStyle={styles.datePickerInner}
-              onChangeValue={(value) => filterObj?.handler(value)} //handleQueryTypeChange(value)}
+              onChangeValue={(value) => filterObj?.handler(value)}
             />
           </View>
         );
@@ -138,19 +139,21 @@ const FilterModal = ({
     }
     return filterObj?.type?.trim().toLowerCase() ===
       FILTER_TYPE_ENUM.CHECKBOX ? (
-      filterObj?.options.map((option) => (
-        <RenderCheckButton
-          key={option.id}
-          item={option}
-          title={option.name}
-          onChange={() =>
-            filterObj?.handler(option, category, filterObj?.refKey)
-          }
-          isSelected={filterObj?.selectedOptions?.includes(
-            option?.[filterObj?.refKey]
-          )}
-        />
-      ))
+      filterObj?.options.map((option) => {
+        return (
+          <RenderCheckButton
+            key={option.id}
+            item={option}
+            title={option.name}
+            onChange={() =>
+              filterObj?.handler(option, category, filterObj?.refKey)
+            }
+            isSelected={filterObj?.selectedOptions?.includes(
+              option?.[filterObj?.refKey]
+            )}
+          />
+        );
+      })
     ) : (
       <View style={styles.slider}>
         <View style={styles.customExperienceContainer}>
