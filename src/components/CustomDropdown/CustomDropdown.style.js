@@ -5,7 +5,7 @@ import colors from "../../assets/colors";
 const styles = StyleSheet.create({
   container: {
     position: "relative",
-    zIndex: 1,
+    zIndex: 10,
   },
   dropdownButton: {
     paddingLeft: 12,

@@ -34,6 +34,7 @@ import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import ApplicantJobDetails from "../views/ApplicantJobDetails";
+import AppliedJobsView from "../views/AppliedJobsView";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -249,6 +250,10 @@ const config = [
       {
         viewPath: `${navigations.DETAILS_JOBS}/${navigations.VIEW_JOB_DETAILS}`,
         element: <ApplicantJobDetails />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <AppliedJobsView />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,
