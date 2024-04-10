@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   zIndex10: {
-    zIndex: 10,
+    zIndex: 100,
   },
   containerStyle: {
     flexDirection: "row",
@@ -30,15 +30,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.lightGrey,
     borderRadius: 8,
-    maxHeight: 150,
-    zIndex: 10,
+    zIndex: 20,
+    backgroundColor: colors.white,
   },
   deletetext: {
     fontSize: 14,
   },
   popUpComponentStyle: {
     backgroundColor: colors.white,
-    zIndex: 10,
+    // zIndex: 10,
     padding: 16,
     width: 240,
     height: 54,

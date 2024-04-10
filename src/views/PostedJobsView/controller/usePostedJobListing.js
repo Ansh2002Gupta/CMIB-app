@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "../../../routes";
-import { Platform, View } from "@unthinkable/react-core-components";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "../../../routes";
+import {
+  Platform,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
@@ -18,12 +22,18 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../PostedJobsView.styles";
 import colors from "../../../assets/colors";
 import { POST_JOB } from "../../../services/apiServices/apiEndPoint";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import { navigations } from "../../../constants/routeNames";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const usePostedJobListing = (onViewPress, onEditPress) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -142,7 +152,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
           perPage: rowsPerPage,
           page: nextPage,
           status: filterOptions.activeorInctive,
-          queryType: filterOptions.approvedorNot,
+          approved: filterOptions.approvedorNot,
         },
       });
 
@@ -170,7 +180,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       perPage: rowsPerPage,
       page: page,
       status: filterOptions.activeorInctive,
-      queryType: filterOptions.approvedorNot,
+      approved: filterOptions.approvedorNot,
     });
   };
 
@@ -180,7 +190,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       perPage: option.value,
       page: currentPage,
       status: filterOptions.activeorInctive,
-      queryType: filterOptions.approvedorNot,
+      approved: filterOptions.approvedorNot,
     });
   };
 
@@ -192,7 +202,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         queryParamsObject: {
           search: searchedData,
           status: filterOptions.activeorInctive,
-          queryType: filterOptions.approvedorNot,
+          approved: filterOptions.approvedorNot,
         },
       });
       setCurrentRecords(newData?.records);
@@ -207,15 +217,20 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         perPage: rowsPerPage,
         page: currentPage,
         status: filterOptions.activeorInctive,
-        queryType: filterOptions.approvedorNot,
+        approved: filterOptions.approvedorNot,
       });
     }
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
+    const temporaryArray = selectedQueryType
+      ? selectedQueryType.map((item) => {
+          return item - 1;
+        })
+      : "";
     setFilterOptions((prev) => ({
       ...prev,
-      query_type: selectedQueryType,
+      query_type: temporaryArray,
     }));
     if (isMob) {
       setLoadingMore(false);
@@ -224,7 +239,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         queryParamsObject: {
           search: filterOptions.searchData,
           status: selectedStatus,
-          queryType: selectedQueryType,
+          approved: temporaryArray,
         },
       });
       setCurrentRecords(newData?.records);
@@ -236,7 +251,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     } else {
       await updateCurrentRecords({
         status: selectedStatus,
-        queryType: selectedQueryType,
+        approved: temporaryArray,
         perPage: rowsPerPage,
         page: currentPage,
       });
@@ -274,9 +289,24 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     return [
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.job_id}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+                {item?.job_id ?? "-"}
+              </CommonText>
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  navigate(navigations.JOB_PROFILE);
+                }}
+                style={styles.cursorStyle}
+              >
+                <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+                  {item?.job_id ?? "-"}
+                </CommonText>
+              </TouchableOpacity>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("16%"),
@@ -286,7 +316,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item.designation}
+            {item?.designation ?? "-"}
           </CommonText>
         ),
         style: {
@@ -296,17 +326,36 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-              ...(!isHeading && { color: colors.darkBlue }),
-            }}
-            isunderLine={!isHeading}
-            fontWeight={!isHeading && 600}
-            underLineStyle={styles.underLineStyle}
-          >
-            {item.number_of_applications ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.number_of_applications ?? "-"}
+              </CommonText>
+            ) : (
+              <CustomTouchableOpacity
+                onPress={() => {
+                  navigate(
+                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=1`
+                  );
+                }}
+                style={styles.underLineStyle}
+              >
+                <CommonText
+                  customTextStyle={{
+                    ...tableStyle,
+                    ...(!isHeading && { color: colors.darkBlue }),
+                  }}
+                  fontWeight={!isHeading && 600}
+                >
+                  {item?.number_of_applications ?? "-"}
+                </CommonText>
+              </CustomTouchableOpacity>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("13%"),
@@ -316,17 +365,36 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
 
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-              ...(!isHeading && { color: colors.darkBlue }),
-            }}
-            isunderLine={!isHeading}
-            fontWeight={!isHeading && 600}
-            underLineStyle={styles.underLineStyle}
-          >
-            {item?.number_of_interviews ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.number_of_interviews ?? "-"}
+              </CommonText>
+            ) : (
+              <CustomTouchableOpacity
+                onPress={() => {
+                  navigate(
+                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=2`
+                  );
+                }}
+                style={styles.underLineStyle}
+              >
+                <CommonText
+                  customTextStyle={{
+                    ...tableStyle,
+                    ...(!isHeading && { color: colors.darkBlue }),
+                  }}
+                  fontWeight={!isHeading && 600}
+                >
+                  {item?.number_of_interviews ?? "-"}
+                </CommonText>
+              </CustomTouchableOpacity>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("13%"),
@@ -343,7 +411,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                   ...tableStyle,
                 }}
               >
-                {item.status}
+                {item?.status ?? "-"}
               </CommonText>
             ) : (
               <Chip
@@ -368,7 +436,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
           <View>
             {isHeading ? (
               <CommonText customTextStyle={tableStyle}>
-                {item.approve}
+                {item?.approve ?? "-"}
               </CommonText>
             ) : (
               <CommonText customTextStyle={tableStyle}>

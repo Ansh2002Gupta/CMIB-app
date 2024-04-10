@@ -22,7 +22,7 @@ import {
 } from "../../../../globalContext/addJob/addJobActions";
 const useGetAddNewJobData = () => {
   const [, addJobsDispatch] = useContext(AddJobContext);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
@@ -51,6 +51,7 @@ const useGetAddNewJobData = () => {
       setLoading(false);
     }
   };
+
   const fetchSearch = async (data) => {
     setLoading(true);
     return Http.get(`${GET_JOB_LOCATION}?city=${data ? data : ""}`)

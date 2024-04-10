@@ -9,6 +9,7 @@ import TouchableImage from "../../../components/TouchableImage";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
 import styles from "./DownloadMoreComponent.styles";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 
 const DownloadMoreComponent = ({ onPress, message = "Download Jobs List" }) => {
   const { isWebView } = useIsWebView();
@@ -29,11 +30,7 @@ const DownloadMoreComponent = ({ onPress, message = "Download Jobs List" }) => {
           </CommonText>
         </CustomTouchableOpacity>
       ) : (
-        <TouchableImage
-          source={images.iconMore}
-          style={styles.iconstyle}
-          onPress={onPress}
-        />
+        <PopupMessage message={["Download More"]} />
       )}
     </View>
   );

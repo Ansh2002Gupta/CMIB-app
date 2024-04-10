@@ -182,7 +182,7 @@ const iconCampus = appendAppBaseURl("/images/svg/campus.svg");
 const iconConsent = appendAppBaseURl("/images/svg/consent.svg");
 const iconDiscover = appendAppBaseURl("/images/svg/discover.svg");
 const iconApplication = appendAppBaseURl("/images/svg/application.svg");
-const iconCalendar = appendAppBaseURl("/images/calendar.png");
+const iconCalendar = appendAppBaseURl("/images/svg/calendar.svg");
 const iconRotate = appendAppBaseURl("/images/svg/iconRotate.svg");
 const iconDisabledAdd = appendAppBaseURl("/images/svg/iconDisabledAdd.svg");
 const iconDisabledMinus = appendAppBaseURl("/images/svg/iconDisabledMinus.svg");
@@ -236,6 +236,17 @@ const iconBriefcase = appendAppBaseURl("/images/svg/iconBriefcase.svg");
 const iconLocation = appendAppBaseURl("/images/svg/iconLocation.svg");
 const iconRupee = appendAppBaseURl("/images/svg/iconRupee.svg");
 const videoPlayIcon = appendAppBaseURl("/images/svg/videoPlayIcon.svg");
+const pdfIcon = appendAppBaseURl("/images/svg/pdfIcon.svg");
+const rightDiagonalArrow = appendAppBaseURl(
+  "/images/svg/rightDiagonalArrow.svg"
+);
+const iconLocationWhite = appendAppBaseURl("/images/svg/iconLocationWhite.svg");
+const iconBreifcase = appendAppBaseURl("/images/svg/briefcase.svg");
+const iconRupeeSign = appendAppBaseURl("/images/svg/rupeeSign.svg");
+const iconArchiveSave = appendAppBaseURl("/images/svg/iconArchiveSave.svg");
+const iconCalendarWhite = appendAppBaseURl("/images/svg/iconCalendarWhite.svg");
+const iconSavedJob = appendAppBaseURl("/images/svg/iconSaved.svg");
+const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
 
 const images = {
   iconArrowUp,
@@ -380,7 +391,6 @@ const images = {
   iconDisabledCheck,
   iconZoomIn,
   iconZoomOut,
-  iconDeleteRed,
   iconAddBlue,
   iconEdit,
   iconLoading,
@@ -405,6 +415,15 @@ const images = {
   iconLocation,
   iconRupee,
   videoPlayIcon,
+  pdfIcon,
+  rightDiagonalArrow,
+  iconBreifcase,
+  iconRupeeSign,
+  iconArchiveSave,
+  iconLocationWhite,
+  iconSavedJob,
+  iconCalendarWhite,
+  iconClock,
 };
 
 export default images;

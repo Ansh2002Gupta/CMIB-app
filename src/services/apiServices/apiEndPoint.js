@@ -1,7 +1,9 @@
 /* User Types */
 export const USER_TYPE_COMPANY = "company";
 export const USER_TYPE_MEMBER = "member";
+export const USER_TYPE_CANDIDATES = "candidates";
 export const CORE = "core";
+export const ADMIN = "admin";
 
 /* API Endpoints */
 export const COMPANY_RESET_PASSWORD_OTP = `${USER_TYPE_COMPANY}/reset-password/confirm`;
@@ -29,7 +31,6 @@ export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
 export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
-export const JOB_APPLICANTS = `${USER_TYPE_COMPANY}/applicants`;
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
@@ -37,9 +38,28 @@ export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;
 export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/otp/verify`;
 export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
 export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
+export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
+export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
+export const SAVE = `/save`;
 
 //sub routes
+export const ACADEMICS = "/academics";
+export const ACTIVITIES = "/activities";
+export const FILTERS = "/filters";
+export const JOB_APPLICANTS = "/applicants";
+export const JOB_APPLICANT = "/applicant";
+export const JOBS = "/jobs";
+export const JOB_SKILLS = "/skills";
+export const JOB_PREFERENCES = "/job-preferences";
+export const MEMBERS = "/members";
+export const MEMBERSHIP = "/membership";
+export const MARK_PREFER = "/mark-prefer";
+export const PERSONAL = "/personal";
+export const STATUS = "/status";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const INTERVIEW = "/interview";
+export const WORK_EXPERIENCE = "/work-experiences";
+export const QUESTIONNAIRE = "/questionnaire";
 
 export const PREFERRED = "/preferred";
 export const CANDIDATES = "/candidates";
@@ -71,3 +91,4 @@ export const GET_GENDER_PREFERENCE = `${USER_TYPE_COMPANY}/genders`;
 export const GET_WORK_MODE = `${USER_TYPE_COMPANY}/workmode`;
 export const POST_JOB = `${USER_TYPE_COMPANY}/jobs`;
 export const UPDATE_JOB = `${USER_TYPE_COMPANY}/jobs/update`;
+export const GET_SCHEDULE_INTERVIEW = `/scheduled-interview`;

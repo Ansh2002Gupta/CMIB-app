@@ -21,10 +21,13 @@ export const navigations = {
   WOMEN_PARTTIME: "/women-placements",
 
   //sub routes
+  ALL_JOBS: "all-jobs",
   APPLICATION_FORM: "application-form",
+  APPLIED_JOBS: "applied-jobs",
   CANDIDATES: "candidates",
   JOB_APPLICANTS: "job-applicants",
   JOB_SEEKERS: "job-seekers",
+  JOBS: "jobs",
   MODULE_LANDING_PAGE: "dashboard",
   POSTED_JOBS: "posted-jobs",
   ROUND_ONE: "round-one",
@@ -33,6 +36,7 @@ export const navigations = {
   SAVED_JOBS: "saved-jobs",
   TICKETS_VIEW_EDIT: "ticket-details",
   ADD_NEW_JOBS: "add-new-jobs",
-  DETAILS_JOBS: "details-jobs",
+  DETAILS_JOBS: "posted-jobs/:id",
   EDIT_JOB: "edit-job",
+  APPLICANT_DETAILS: ":job_id/applicant-details/:id",
 };

@@ -51,6 +51,7 @@ const CustomTable = ({
   isTicketListingLoading,
   isFirstPageReceived,
   isTotalCardVisible,
+  isFilterVisible = true,
   loadingMore,
   mobileComponentToRender,
   onIconPress,
@@ -66,6 +67,7 @@ const CustomTable = ({
   tableIcon,
   totalcards,
   ThirdSection,
+  renderCalendar,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -111,32 +113,34 @@ const CustomTable = ({
                       placeholder={placeholder}
                       customParentStyle={styles.getParentStyle(isWebView)}
                     />
-                    <CustomTouchableOpacity
-                      onPress={handleFilterModal}
-                      style={styles.imageParentStyle}
-                      disabled={isTicketListingLoading}
-                    >
-                      <TouchableImage
-                        source={images.iconFilter}
-                        parentStyle={styles.iconTicket}
+                    {isFilterVisible && (
+                      <CustomTouchableOpacity
                         onPress={handleFilterModal}
-                      />
-                      {isWebView && (
-                        <CommonText customTextStyle={styles.filterText}>
-                          {intl.formatMessage({ id: "label.filters" })}
-                        </CommonText>
-                      )}
-                      {isFilterCount && (
-                        <CommonText
-                          customContainerStyle={styles.activeTickets}
-                          customTextStyle={styles.activeTicketsText}
-                          fontWeight={"600"}
-                        >
-                          {filterState?.selectedStatus.length +
-                            filterState?.selectedQueryType.length}
-                        </CommonText>
-                      )}
-                    </CustomTouchableOpacity>
+                        style={styles.imageParentStyle}
+                        disabled={isTicketListingLoading}
+                      >
+                        <TouchableImage
+                          source={images.iconFilter}
+                          parentStyle={styles.iconTicket}
+                          onPress={handleFilterModal}
+                        />
+                        {isWebView && (
+                          <CommonText customTextStyle={styles.filterText}>
+                            {intl.formatMessage({ id: "label.filters" })}
+                          </CommonText>
+                        )}
+                        {isFilterCount && (
+                          <CommonText
+                            customContainerStyle={styles.activeTickets}
+                            customTextStyle={styles.activeTicketsText}
+                            fontWeight={"600"}
+                          >
+                            {filterState?.selectedStatus.length +
+                              filterState?.selectedQueryType.length}
+                          </CommonText>
+                        )}
+                      </CustomTouchableOpacity>
+                    )}
                   </View>
                 }
                 rightSection={ThirdSection ? ThirdSection : <></>}
@@ -340,6 +344,7 @@ const CustomTable = ({
             onApplyFilter,
             statusData,
             queryTypeData,
+            renderCalendar,
           }}
         />
       )}
@@ -369,6 +374,8 @@ CustomTable.defaultProps = {
   totalcards: 0,
   placeholder: "Search",
   isTotalCardVisible: true,
+  indexOfFirstRecord: 0,
+  indexOfLastRecord: 0,
 };
 
 CustomTable.propTypes = {
@@ -391,8 +398,8 @@ CustomTable.propTypes = {
   mobileComponentToRender: PropTypes.func,
   isHeading: PropTypes.bool.isRequired,
   isTicketListingLoading: PropTypes.bool,
-  indexOfFirstRecord: PropTypes.number.isRequired,
-  indexOfLastRecord: PropTypes.number.isRequired,
+  indexOfFirstRecord: PropTypes.number,
+  indexOfLastRecord: PropTypes.number,
   loadingMore: PropTypes.bool.isRequired,
   onIconPress: PropTypes.func.isRequired,
   queryTypeData: PropTypes.array,
