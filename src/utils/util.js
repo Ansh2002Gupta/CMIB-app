@@ -404,6 +404,8 @@ export const getQuestionType = {
 };
 export const getDecryptApiData = (apiData) => {
   let obj = {};
+  const startDate = new Date(apiData.opening_date.toString().split(" ")[0]);
+  const endDate = new Date(apiData.closing_date.toString().split(" ")[0]);
   apiData.locations = Array.isArray(apiData.locations) ? apiData.locations : [];
   apiData.functional_areas = Array.isArray(apiData.functional_areas)
     ? apiData.functional_areas
@@ -463,8 +465,8 @@ export const getDecryptApiData = (apiData) => {
     : {}; //
   obj.essentialQualification = apiData.essential_qualification;
   obj.desiredQualification = apiData.desired_qualification;
-  obj.jobOpeningDate = apiData.opening_date;
-  obj.jobClosingDate = apiData.closing_date;
+  obj.jobOpeningDate = startDate;
+  obj.jobClosingDate = endDate;
   obj.minimumSalary = Math.trunc(apiData.min_salary);
   obj.maximumSalary = Math.trunc(apiData.max_salary);
   obj.numberOfVacancies = apiData.vacancy;

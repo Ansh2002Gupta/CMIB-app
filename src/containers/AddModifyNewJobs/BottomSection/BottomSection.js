@@ -214,6 +214,7 @@ const BottomSection = forwardRef(
             value={jobData.jobOpeningDate}
             isError={(error && error.jobOpeningDate && true) || false}
             errorMessage={(error && error.jobOpeningDate) || ""}
+            minDate={new Date()}
             onChangeValue={(val) => {
               const date1 = dayjs(val);
               const date2 = dayjs(jobData.jobClosingDate);

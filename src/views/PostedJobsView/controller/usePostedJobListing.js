@@ -281,7 +281,6 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   let tableIcon = images.iconMore;
   let filterCategory = ["Active/Inactive", "Approved/Not Approved"];
   let isHeading = true;
-  console.log("curent", currentRecords);
 
   function getStatusStyle(status) {
     switch (status) {
