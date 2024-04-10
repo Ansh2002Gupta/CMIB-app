@@ -111,6 +111,7 @@ const CustomTextInput = (props) => {
     onChipUpdate,
     showMonthYearPicker,
     datePickerContainer,
+    checkBoxTextStyle,
     ...remainingProps
   } = props;
 
@@ -272,7 +273,8 @@ const CustomTextInput = (props) => {
             showTimeSelect,
             showMonthYearPicker,
             timeFormate: timeFormat,
-            format: dateFormate,
+            format,
+            dateFormate,
             minTime,
             maxTime,
           }}
@@ -315,6 +317,7 @@ const CustomTextInput = (props) => {
           isActionToAdd={isActionToAdd}
           handleCheckBoxSelection={(id) => handleCheckBoxSelection(id)}
           isSingleSelection={isSingleSelection}
+          checkBoxTextStyle={checkBoxTextStyle}
         />
       );
     }

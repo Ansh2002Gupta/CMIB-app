@@ -176,6 +176,7 @@ const DetailComponent = ({
           customStyle={styles.CheckBoxSelection}
           isSingleSelection={detail?.isSingleSelection}
           value={detail?.value}
+          checkBoxTextStyle={detail?.checkBoxTextStyle}
         />
       );
     }
@@ -208,6 +209,7 @@ const DetailComponent = ({
         />
       );
     }
+
     return (
       <CustomTextInput
         errorMessage={detail.error}
@@ -274,6 +276,7 @@ const DetailComponent = ({
         format={detail?.format}
         isSingleMutliSelect={detail.isSingleMutliSelect}
         showMonthYearPicker={detail?.showMonthYearPicker}
+        checkBoxTextStyle={detail?.checkBoxTextStyle}
       />
     );
   };

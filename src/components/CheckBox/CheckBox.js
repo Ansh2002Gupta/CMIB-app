@@ -18,6 +18,7 @@ const CheckBox = ({
   title,
   iconCheck,
   iconUnCheck,
+  checkBoxTextStyle,
 }) => {
   const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
@@ -55,6 +56,7 @@ const CheckBox = ({
               ...styles.titleStyle,
               ...(isDisabled ? styles.disabledText : {}),
               ...customTextStyle,
+              ...checkBoxTextStyle,
             }}
           >
             {title}

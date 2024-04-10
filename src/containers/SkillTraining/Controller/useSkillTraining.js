@@ -9,6 +9,7 @@ import {
   updateItemToAdd,
   updateState,
 } from "./utils";
+import styles from "../SkillTraining.style";
 
 const languageSkill = [
   {
@@ -73,6 +74,7 @@ const languagesKnownField = (options) => [
     isCheckBoxSelection: true,
     checkBoxOptions: languageSkill,
     isActionToAdd: true,
+    checkBoxTextStyle: styles.checkBoxItem,
   },
 ];
 const ITSkillField = (options) => [
@@ -90,6 +92,7 @@ const ITSkillField = (options) => [
     checkBoxOptions: skillLevel,
     isActionToAdd: true,
     isSingleSelection: true,
+    checkBoxTextStyle: styles.checkBoxItem,
   },
 ];
 
@@ -108,6 +111,7 @@ const softSkillField = (options) => [
     checkBoxOptions: skillLevel,
     isActionToAdd: true,
     isSingleSelection: true,
+    checkBoxTextStyle: styles.checkBoxItem,
   },
 ];
 

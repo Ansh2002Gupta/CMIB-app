@@ -474,7 +474,7 @@ const locale = {
   "label.from": "From",
   "label.to": "To",
   "label.empStrength": "Emp. Strength",
-  "label.grossSalary": "Gross Salary Drawn (pa)",
+  "label.grossSalary": "Gross Salary Drawn (p.a.)",
   "label.areasOfWork": "Area(s) of Work",
   "label.name_of_examination": "Name of Examination",
   "label.name_of_examination_placeholder": "10th/Metric/S.S",
@@ -668,7 +668,6 @@ const locale = {
   "label.applicant_id": "Applicant ID",
   "label.field_cannot_be_empty": "Field cannot be empty",
   "label.proficiency": "Proficiency",
-
 };
 
 export default locale;
