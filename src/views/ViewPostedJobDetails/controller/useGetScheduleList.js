@@ -66,20 +66,7 @@ const useGetScheduleList = (id, onClickAction) => {
     errorWhileApplicantStatusChange,
   } = useChangeApplicantStatusApi();
 
-  const statusData = [
-    {
-      id: 1,
-      name: "Pending",
-    },
-    {
-      id: 2,
-      name: "Rejected",
-    },
-    {
-      id: 3,
-      name: "Shortlisted",
-    },
-  ];
+  const statusData = [];
 
   const queryTypeData = [];
   const getErrorDetails = () => {
