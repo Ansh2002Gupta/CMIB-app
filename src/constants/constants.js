@@ -372,6 +372,10 @@ export const MARITAL_STATUS = [
     label: "Single",
     value: "Single",
   },
+  {
+    label: "Other",
+    value: "Other",
+  },
 ];
 export const MONTHS = [
   {
