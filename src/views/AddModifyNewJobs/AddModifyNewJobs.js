@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "../../routes";
 import LoadingScreen from "../../components/LoadingScreen";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
@@ -11,11 +11,15 @@ import { POST_JOB } from "../../services/apiServices/apiEndPoint";
 import AddModifyNewJobsUi from "./AddModifyNewJobsUi";
 import { useIntl } from "react-intl";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import { navigations } from "../../constants/routeNames";
 
 const AddModifyNewJobs = () => {
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
     useGetAddNewJobData();
   const navigate = useNavigate();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const addComponentRef = useRef();
   const addQuestionRef = useRef();
   const [isCheckList, setIsCheckList] = useState(false);
@@ -56,14 +60,18 @@ const AddModifyNewJobs = () => {
           setSuccessMessage(
             intl.formatMessage({ id: "label.job_saved_successfully" })
           );
-          navigate(-1);
+          navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
+            replace: true,
+          });
         })
         .catch((e) => {
           setError(
             e.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
           );
           setSuccessMessage(`${GENERIC_GET_API_FAILED_ERROR_MESSAGE}, ${e}`);
-          navigate(-1);
+          navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
+            replace: true,
+          });
         });
     } else {
       setSuccessMessage(intl.formatMessage({ id: "label.fill_mandatory" }));
