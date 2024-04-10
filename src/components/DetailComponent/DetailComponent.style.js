@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
   CheckBoxSelection: {
     paddingRight: 16,
     marginTop: 0,
-    flexDirection: 'row',
-    flex: 1
+    flexDirection: "row",
+    flex: 1,
   },
   chipDataContainer: { flexDirection: "row" },
   getVariableContainerStyles: (detail) => {

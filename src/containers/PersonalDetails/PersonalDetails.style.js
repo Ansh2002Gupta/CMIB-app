@@ -93,6 +93,9 @@ const style = {
     gridTemplateColumns: columnCount || "1fr 1fr 1fr",
     paddingBottom: 8,
   }),
+  datePickerContainer: {
+    paddingBottom: 0,
+  },
 };
 
 export default style;

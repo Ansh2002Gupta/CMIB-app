@@ -42,6 +42,9 @@ const style = {
     alignItems: "center",
     backgroundColor: colors.backgroundColor,
   },
+  datePickerContainer: {
+    paddingBottom: 0,
+  },
 };
 
 export default style;

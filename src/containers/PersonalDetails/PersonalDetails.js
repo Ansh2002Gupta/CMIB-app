@@ -9,6 +9,7 @@ import PersonalDetailsUI from "./PersonalDetailsUI";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
 import { usePersonalDetails } from "./Controllers/usePersonalDetails";
+import { formatDate } from "../../utils/util";
 
 const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   const {
@@ -98,7 +99,12 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   const onChangeValue = (details) => (label, value, codeValue) => {
     const { key, isToggle } = findKeyByLabel(label, details);
 
-    value = isToggle ? !Boolean(value) : value;
+    if (isToggle) {
+      value = !Boolean(value);
+    } else if (key === "passport_number") {
+      //make passport uppercase
+      value = value.toUpperCase();
+    }
 
     if (codeValue) {
       setState((prev) => ({
@@ -121,7 +127,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     let payload = {
       gender: state?.gender,
       marital_status: state?.marital_status,
-      dob: state?.dob,
+      dob: formatDate(state?.dob, "YYYY-MM-DD"),
       email: state?.email,
       has_passport: state?.has_passport,
       passport_number: state?.has_passport ? state?.passport_number : "",

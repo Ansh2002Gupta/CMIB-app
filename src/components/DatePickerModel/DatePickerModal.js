@@ -28,6 +28,7 @@ function DatePickerModal({
   datePickerViewStyle,
   showTimeSelect,
   showMonthYearPicker,
+  datePickerContainer,
 }) {
   const [open, setOpen] = useState(false);
   const intl = useIntl();
@@ -48,6 +49,7 @@ function DatePickerModal({
         open ? styles.focusedStyle : {},
         errorStyle,
         customStyles,
+        datePickerContainer,
       ]}
       ref={wrapperRef}
     >

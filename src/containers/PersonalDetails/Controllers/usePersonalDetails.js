@@ -20,6 +20,7 @@ import {
   booleanToYesNo,
 } from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
+import dayjs from "dayjs";
 
 const accessibility_information = (has_disability) => {
   const commonFields = [
@@ -100,6 +101,9 @@ const personal_detail = (categoryData, has_passport) => {
       key: "dob",
       isMandatory: true,
       isDate: true,
+      format: "DD/MM/YYYY",
+      isCalendar: true,
+      maxDate: Date.now(),
       label: "label.date_of_birth",
       placeholder: "label.date_of_birth",
       validate: (value) => {
@@ -270,18 +274,6 @@ const correspondence_address = (countryData) => [
     },
   },
   {
-    key: "phone_number",
-    isMandatory: true,
-    isNumeric: true,
-    label: "label.telephone_no",
-    placeholder: "label.telephone_no",
-    validate: (value) => {
-      if (!value) {
-        return "phone number is required";
-      }
-    },
-  },
-  {
     key: "nationality",
     isMandatory: true,
     label: "label.nationality",
@@ -388,6 +380,18 @@ const addValueOnField = ({
         codeValue: formatCountryCode(state?.mobile_country_code, countryData),
       };
     }
+
+    if (item.key === "dob") {
+      return {
+        ...item,
+        value: isEditable
+          ? state?.[item?.key]
+          : state?.[item?.key] === null
+          ? "--"
+          : dayjs(state?.[item?.key]).format(item?.format),
+      };
+    }
+    
     if (item.isToggle) {
       return {
         ...item,

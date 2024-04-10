@@ -110,6 +110,7 @@ const CustomTextInput = (props) => {
     isTextInputWithChip,
     onChipUpdate,
     showMonthYearPicker,
+    datePickerContainer,
     ...remainingProps
   } = props;
 
@@ -261,7 +262,9 @@ const CustomTextInput = (props) => {
       return (
         <DatePickerModal
           {...{
+            // Commenting this line as
             customStyles: customStyle,
+            datePickerContainer,
             value,
             onChangeValue,
             maxDate,

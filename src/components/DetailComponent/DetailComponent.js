@@ -45,6 +45,7 @@ const DetailComponent = ({
   handleCancel,
   handleAddRemoveRow,
   handleCheckBoxSelection,
+  datePickerContainer,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -216,6 +217,7 @@ const DetailComponent = ({
           ...styles.inputStyle,
           ...styles.getFieldWidth(detail.width, !isWebView),
         }}
+        datePickerContainer={datePickerContainer}
         label={detail?.label && intl.formatMessage({ id: detail.label })}
         showLabel={detail.showLabel}
         isDropdown={detail.isDropdown}
