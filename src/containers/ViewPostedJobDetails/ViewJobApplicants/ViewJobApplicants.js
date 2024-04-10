@@ -141,7 +141,6 @@ const ViewJobApplicants = ({ id }) => {
           intl.formatMessage({ id: "label.schedule_interview" }) && (
           <ScheduleInterviewModal
             applicant_id={activeUserId.current}
-            interviewId={activeUserId.current}
             onClose={() => {
               setIsModalVisible(null);
               activeUserId.current = null;
@@ -154,7 +153,9 @@ const ViewJobApplicants = ({ id }) => {
           <ViewInterviewDetails
             onClose={() => {
               setIsModalVisible(null);
+              activeUserId.current = null;
             }}
+            applicant_id={activeUserId.current}
           />
         )}
       {(isError || isErrorApplicantStatusChange) &&
