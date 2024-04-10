@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { ScrollView, View } from "@unthinkable/react-core-components";
 
@@ -9,6 +9,7 @@ import IconHeader from "../../components/IconHeader/IconHeader";
 import SavedJobComponent from "../../components/SavedJobComponent";
 import SearchView from "../../components/SearchView";
 import Spinner from "../../components/Spinner";
+import QuestionaireModal from "../../components/QuestionaireModal";
 import useFetch from "../../hooks/useFetch";
 import useIsWebView from "../../hooks/useIsWebView";
 import { MEMBER_SAVED_JOBS } from "../../services/apiServices/apiEndPoint";
@@ -20,6 +21,8 @@ import { navigations } from "../../constants/routeNames";
 
 const SavedJobs = () => {
   const intl = useIntl();
+  const [applyJobModal, setApplyJobModal] = useState(false);
+  const [jobId, setJobId] = useState(null);
   const { isWebView } = useIsWebView();
   const navigate = useNavigate();
 
@@ -28,6 +31,7 @@ const SavedJobs = () => {
     isLoading: isGettingSavedJob,
     fetchData: fetchSavedJobList,
     error: errorWhileGettingSavedJob,
+    setData,
   } = useFetch({
     url: `${MEMBER_SAVED_JOBS}`,
   });
@@ -40,76 +44,106 @@ const SavedJobs = () => {
     });
   };
 
+  const handleCloseModal = () => {
+    setApplyJobModal(false);
+  };
+
+  console.log(savedJobsList, "savedJobsList..");
+
+  const handleOpenModal = (jobId) => {
+    setApplyJobModal(true);
+    setJobId(jobId);
+  };
+
+  const handleSuccessApply = (id) => {
+    setData((prevData) =>
+      prevData.map((item) =>
+        item?.id === id ? { ...item, is_applied: 1 } : item
+      )
+    );
+  };
+
   const handleClickOnJobCard = (jobId) => {
     navigate(`${navigations.CA_JOBS}/${navigations.JOB_DETAIL}/${jobId}`);
   };
 
   return (
-    <TwoRow
-      topSection={
-        isWebView && (
-          <IconHeader
-            headerText={intl.formatMessage({ id: "label.saved_jobs" })}
-          />
-        )
-      }
-      bottomSection={
-        <TwoRow
-          style={style.innerContainer}
-          topSection={
-            <SearchView
-              customParentStyle={isWebView && style.customParentStyle}
-              customSearchCriteria={handleSearch}
-            />
-          }
-          bottomSection={
-            isGettingSavedJob ? (
-              <View style={style.loaderStyle}>
-                <Spinner />
-              </View>
-            ) : errorWhileGettingSavedJob ? (
-              <ErrorComponent
-                errorMsg={
-                  errorWhileGettingSavedJob?.message ||
-                  GENERIC_GET_API_FAILED_ERROR_MESSAGE
-                }
-                onRetry={() => {
-                  fetchSavedJobList({});
-                }}
-                disableRetryBtn={isGettingSavedJob}
-              />
-            ) : (
-              <View style={style.scrollstyle}>
-                {savedJobsList?.length ? (
-                  <ScrollView>
-                    {savedJobsList?.map((details) => {
-                      return (
-                        <SavedJobComponent
-                          details={details}
-                          onPress={handleClickOnJobCard}
-                          isSaveVisible={false}
-                        />
-                      );
-                    })}
-                  </ScrollView>
-                ) : (
-                  <View style={style.noResultContainer}>
-                    <CommonText
-                      customTextStyle={style.noResultText}
-                      fontWeight={"600"}
-                    >
-                      {intl.formatMessage({ id: "label.no_result_found" })}
-                    </CommonText>
-                  </View>
-                )}
-              </View>
-            )
-          }
-          bottomSectionStyle={style.bottomSectionStyle}
+    <>
+      {applyJobModal && (
+        <QuestionaireModal
+          jobId={jobId}
+          handleCloseModal={handleCloseModal}
+          handleSuccessApply={handleSuccessApply}
         />
-      }
-      isBottomFillSpace
-    />
+      )}
+      <TwoRow
+        topSection={
+          isWebView && (
+            <IconHeader
+              headerText={intl.formatMessage({ id: "label.saved_jobs" })}
+            />
+          )
+        }
+        bottomSection={
+          <TwoRow
+            style={style.innerContainer}
+            topSection={
+              <SearchView
+                customParentStyle={isWebView && style.customParentStyle}
+                customSearchCriteria={handleSearch}
+              />
+            }
+            bottomSection={
+              isGettingSavedJob ? (
+                <View style={style.loaderStyle}>
+                  <Spinner />
+                </View>
+              ) : errorWhileGettingSavedJob ? (
+                <ErrorComponent
+                  errorMsg={
+                    errorWhileGettingSavedJob?.message ||
+                    GENERIC_GET_API_FAILED_ERROR_MESSAGE
+                  }
+                  onRetry={() => {
+                    fetchSavedJobList({});
+                  }}
+                  disableRetryBtn={isGettingSavedJob}
+                />
+              ) : (
+                <View style={style.scrollstyle}>
+                  {savedJobsList?.length ? (
+                    <ScrollView>
+                      {savedJobsList?.map((details) => {
+                        return (
+                          <SavedJobComponent
+                            details={details}
+                            onPress={handleClickOnJobCard}
+                            isSaveVisible={false}
+                            isApplyVisible={!details?.is_applied}
+                            handleOpenModal={handleOpenModal}
+                          />
+                        );
+                      })}
+                    </ScrollView>
+                  ) : (
+                    <View style={style.noResultContainer}>
+                      <CommonText
+                        customTextStyle={style.noResultText}
+                        fontWeight={"600"}
+                      >
+                        {intl.formatMessage({ id: "label.no_result_found" })}
+                      </CommonText>
+                    </View>
+                  )}
+                </View>
+              )
+            }
+            bottomSectionStyle={style.bottomSectionStyle}
+          />
+        }
+        isBottomFillSpace
+      />
+    </>
   );
 };
 
