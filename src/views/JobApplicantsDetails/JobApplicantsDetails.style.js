@@ -40,6 +40,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  userInfoContainerMob: {
+    padding: 5,
+    marginRight: 10,
+    flexDirection: "column",
+  },
+  detailsSection: {
+    marginBottom: 20,
+  },
   seperator: {
     height: 20,
     width: 1,
@@ -51,7 +59,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    flexWrap: "wrap",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -69,6 +76,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.white,
     lineHeight: 22,
+    flexWrap: "wrap",
+    wordBreak: "break-word",
+    overFlow: "hidden",
+    whiteSpace: "break-space",
   },
   greenButton: {
     marginLeft: 24,

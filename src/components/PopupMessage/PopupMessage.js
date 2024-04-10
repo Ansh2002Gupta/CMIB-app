@@ -80,6 +80,7 @@ PopupMessage.defaultProps = {
   customStyle: {},
   message: [],
   labelName: "name",
+  isPopupModal: false,
 };
 
 PopupMessage.propTypes = {
@@ -87,7 +88,7 @@ PopupMessage.propTypes = {
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   labelName: PropTypes.string,
   onPopupClick: PropTypes.func.isRequired,
-  isPopupModal: PropTypes.bool.isRequired,
+  isPopupModal: PropTypes.bool,
   onPopUpClose: PropTypes.func,
 };
 

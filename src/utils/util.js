@@ -597,26 +597,3 @@ const isObjectFilled = (obj) => {
 export const areAllValuesFilled = (objects) => {
   return Object.values(objects).some(isObjectFilled);
 };
-
-export function convertToIST(dateString) {
-  const date = new Date(dateString + "Z");
-
-  const istOffset = (5 * 60 + 30) * 60 * 1000;
-  const istDate = new Date(date.getTime() + istOffset);
-
-  const options = {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  };
-
-  const formattedDate = istDate.toLocaleString("en-US", options);
-  const finalDate = `${formattedDate} GMT+0530 (India Standard Time)`;
-
-  return finalDate;
-}

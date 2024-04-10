@@ -19,7 +19,6 @@ import useIsWebView from "../../hooks/useIsWebView";
 import {
   areAllValuesEmpty,
   areAllValuesFilled,
-  convertToIST,
   formateDateandTime,
 } from "../../utils/util";
 import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../constants/constants";
@@ -131,16 +130,16 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
       ...prev,
       remote: {
         link: newData?.remote_meeting_link || "-",
-        date: convertToIST(newData?.primary_schedule) || "-",
-        time: convertToIST(newData?.primary_schedule) || "-",
+        date: new Date(newData?.primary_schedule) || "-",
+        time: new Date(newData?.primary_schedule) || "-",
       },
     }));
     setAlternateDetails((prev) => ({
       ...prev,
       remote: {
         link: newData?.alternate_remote_meeting_link || "-",
-        date: convertToIST(newData?.alternate_schedule) || "-",
-        time: convertToIST(newData?.alternate_schedule) || "-",
+        date: new Date(newData?.alternate_schedule) || "-",
+        time: new Date(newData?.alternate_schedule) || "-",
       },
     }));
   };
@@ -150,15 +149,15 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
     setPrimaryDetails((prev) => ({
       ...prev,
       telephonic: {
-        date: convertToIST(newData?.primary_schedule) || "-",
-        time: convertToIST(newData?.primary_schedule) || "-",
+        date: new Date(newData?.primary_schedule) || "-",
+        time: new Date(newData?.primary_schedule) || "-",
       },
     }));
     setAlternateDetails((prev) => ({
       ...prev,
       telephonic: {
-        date: convertToIST(newData?.alternate_schedule) || "-",
-        time: convertToIST(newData?.alternate_schedule) || "-",
+        date: new Date(newData?.alternate_schedule) || "-",
+        time: new Date(newData?.alternate_schedule) || "-",
       },
     }));
   };
@@ -169,29 +168,31 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
       ...prev,
       face_to_face: {
         address: newData?.venue_address || "-",
-        date: convertToIST(newData?.primary_schedule) || "-",
-        time: convertToIST(newData?.primary_schedule) || "-",
+        date: new Date(newData?.primary_schedule) || "-",
+        time: new Date(newData?.primary_schedule) || "-",
       },
     }));
     setAlternateDetails((prev) => ({
       ...prev,
       face_to_face: {
         address: newData?.alternate_venue_address || "-",
-        date: convertToIST(newData?.alternate_schedule) || "-",
-        time: convertToIST(newData?.alternate_schedule) || "-",
+        date: new Date(newData?.alternate_schedule) || "-",
+        time: new Date(newData?.alternate_schedule) || "-",
       },
     }));
   };
 
   useEffect(async () => {
-    const newData = await fetchData();
-    const currentType = newData?.type.toLowerCase();
-    if (currentType === "remote") {
-      getRemoteInterviewDetails(newData);
-    } else if (currentType === "telephonic") {
-      getTelephonicInterviewDetails(newData);
-    } else {
-      getFaceToFaceInterviewDetails(newData);
+    if (interviewId) {
+      const newData = await fetchData();
+      const currentType = newData?.type.toLowerCase();
+      if (currentType === "remote") {
+        getRemoteInterviewDetails(newData);
+      } else if (currentType === "telephonic") {
+        getTelephonicInterviewDetails(newData);
+      } else {
+        getFaceToFaceInterviewDetails(newData);
+      }
     }
   }, []);
 
@@ -210,7 +211,7 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
     error: errorWhileUpdatingInterview,
     setError: setErrorWhileUpdatingInterview,
   } = usePut({
-    url: POST_JOB + JOB_APPLICANTS + INTERVIEW + `${applicant_id}`,
+    url: POST_JOB + JOB_APPLICANTS + INTERVIEW + `/${data?.id}`,
   });
 
   const apiErrors = interviewId
@@ -262,8 +263,8 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
     } else {
       updatatingInterview({
         body: payload,
-        onSuccessCallback: () => {
-          onClose();
+        onSuccessCallback: (data) => {
+          onClose(data);
         },
       });
     }
@@ -392,7 +393,7 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
             }}
             showTimeSelect
             dateFormate={isMob && "time"}
-            value={details.time}
+            value={details?.time}
             customStyle={datePickerStyle}
             {...primaryTimeProps}
           />

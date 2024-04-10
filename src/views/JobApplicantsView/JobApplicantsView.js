@@ -57,7 +57,6 @@ const JobApplicants = () => {
 
   const getMobileView = (item, index) => {
     const currentStatus = item?.job_status === 1 ? "Active" : "Inactive";
-
     return (
       <View style={styles.mobileContainer} key={index}>
         <View>
@@ -80,7 +79,7 @@ const JobApplicants = () => {
             source={tableIcon}
             style={styles.iconTicket}
           />
-          {showCurrentPopupmessage === item?.user_id && (
+          {showCurrentPopupmessage === item?.job_applicantion_id && (
             <PopupMessage
               popUpHeaderText={intl.formatMessage({
                 id: "label.actions",

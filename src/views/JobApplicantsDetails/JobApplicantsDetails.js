@@ -26,13 +26,14 @@ import { getDate } from "../../utils/util";
 import images from "../../images";
 import styles from "./JobApplicantsDetails.style";
 
-const RenderUserInfo = ({ label, value }) => {
+const RenderUserInfo = ({ label, value, isWebView }) => {
   return (
-    <View style={styles.userInfoContainer}>
+    <View
+      style={isWebView ? styles.userInfoContainer : styles.userInfoContainerMob}
+    >
       <CommonText customTextStyle={styles.keyHeading}>
         {label}&nbsp;&#58;&nbsp;
       </CommonText>
-
       <CommonText fontWeight={"600"} customTextStyle={styles.valueStyle}>
         {value}
       </CommonText>
@@ -74,7 +75,10 @@ const JobApplicantsDetails = () => {
   const onSaveClick = () => {
     handleSave({
       onSuccessCallback: () => {
-        fetchProfileData({});
+        setProfileData((prev) => ({
+          ...prev,
+          is_saved: true,
+        }));
       },
     });
   };
@@ -99,7 +103,7 @@ const JobApplicantsDetails = () => {
       >
         <CustomButton
           iconLeft={{
-            leftIconSource: images.iconSavedJob,
+            leftIconSource: isWebView && images.iconSavedJob,
           }}
           onPress={onSaveClick}
           disabled={isSaved}
@@ -115,7 +119,7 @@ const JobApplicantsDetails = () => {
         <CustomButton
           withGreenBackground
           iconLeft={{
-            leftIconSource: images.iconCalendarWhite,
+            leftIconSource: isWebView && images.iconCalendarWhite,
           }}
           onPress={onScheduleInterviewClick}
           style={isWebView ? styles.greenButton : {}}
@@ -134,29 +138,33 @@ const JobApplicantsDetails = () => {
   const UserDetails = ({ intl, isWebView, profileData }) => {
     return (
       <View style={styles.shortProfile}>
-        <View>
+        <View style={styles.detailsSection}>
           <View style={styles.rowStyle}>
             <RenderUserInfo
               label={intl.formatMessage({ id: "label.applicant_name" })}
               value={profileData?.name}
+              isWebView={isWebView}
             />
-            <View style={styles.seperator} />
+            {isWebView && <View style={styles.seperator} />}
             <RenderUserInfo
               label={intl.formatMessage({
                 id: "label.applicant_id",
               })}
               value={profileData?.applicant_id}
+              isWebView={isWebView}
             />
           </View>
           <View style={styles.rowStyle}>
             <RenderUserInfo
               label={intl.formatMessage({ id: "label.updated_at" })}
               value={getDate(profileData?.updated_at)}
+              isWebView={isWebView}
             />
-            <View style={styles.seperator} />
+            {isWebView && <View style={styles.seperator} />}
             <RenderUserInfo
               label={intl.formatMessage({ id: "label.status" })}
               value={profileData?.status}
+              isWebView={isWebView}
             />
           </View>
         </View>
@@ -211,9 +219,8 @@ const JobApplicantsDetails = () => {
         <ScheduleInterviewModal
           applicant_id={profileData?.id}
           interviewId={profileData?.interview_id}
-          onClose={async () => {
+          onClose={() => {
             setShowScheduleModal(false);
-            await fetchProfileData({});
           }}
         />
       )}

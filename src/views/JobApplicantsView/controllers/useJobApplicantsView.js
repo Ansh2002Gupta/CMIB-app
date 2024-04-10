@@ -12,6 +12,7 @@ import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../JobApplicantsView.style";
 import {
+  FILTERS,
   JOBS,
   JOB_APPLICANTS,
   STATUS,
@@ -69,7 +70,6 @@ const useJobApplicants = () => {
   let subHeadingText = ["status"];
   let statusText = ["active_inactive"];
   let tableIcon = images.iconMore;
-  let filterCategory = ["Status", "Query Type"];
   const queryTypeData = [{ id: 1, name: "Pending" }];
   const statusData = [{ id: 1, name: "Pending" }];
 
@@ -83,6 +83,19 @@ const useJobApplicants = () => {
       skipApiCallOnMount: true,
     },
   });
+
+  const {
+    data: filterData,
+    isLoading: isFilterLoading,
+    fetchData: fetchFilters,
+  } = useFetch({
+    url: USER_TYPE_COMPANY + JOBS + JOB_APPLICANTS + FILTERS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  const filterCategory = filterData?.map((item) => item.name) || [];
 
   const { makeRequest: handleStatus, isLoading: isUpdatingApplicantStatus } =
     usePatch({
@@ -111,7 +124,8 @@ const useJobApplicants = () => {
       }
       setIsFirstPageReceived(false);
     };
-    fetchData();
+    // fetchData();
+    fetchFilters();
   }, []);
 
   const updateCurrentRecords = async (params) => {

@@ -45,6 +45,7 @@ export const SAVE = `/save`;
 //sub routes
 export const ACADEMICS = "/academics";
 export const ACTIVITIES = "/activities";
+export const FILTERS = "/filters";
 export const JOB_APPLICANTS = "/applicants";
 export const JOB_APPLICANT = "/applicant";
 export const JOBS = "/jobs";
