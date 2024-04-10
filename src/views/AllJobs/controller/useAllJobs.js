@@ -135,6 +135,7 @@ const useAllJobs = () => {
   return {
     currentPage,
     data: currentRecords,
+    setData: setCurrentRecords,
     isJobListLoading,
     totalPages: jobData?.meta?.total,
     handleLoadMore,

@@ -83,7 +83,7 @@ const SavedJobComponent = ({
               {...{
                 cardDetails,
                 handleApply: () => {
-                  handleOpenModal(cardDetails?.id);
+                  handleOpenModal(id);
                 },
                 isLoading,
                 handleSaveAndRemove,
@@ -97,7 +97,7 @@ const SavedJobComponent = ({
               {...{
                 cardDetails,
                 handleApply: () => {
-                  handleOpenModal(cardDetails?.id);
+                  handleOpenModal(id);
                 },
                 isLoading,
                 handleSaveAndRemove,

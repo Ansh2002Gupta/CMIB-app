@@ -7,6 +7,7 @@ const AllJobs = () => {
   const {
     handleLoadMore,
     data: savedJobsList,
+    setData: setSavedJobsList,
     currentPage,
     totalPages,
     handleSearch,
@@ -23,6 +24,7 @@ const AllJobs = () => {
     <Base>
       <AllJobsTemplate
         data={savedJobsList}
+        setData={setSavedJobsList}
         error={allJobsError?.data}
         handleRowPerPageChange={handleRowPerPageChange}
         {...{

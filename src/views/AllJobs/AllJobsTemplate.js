@@ -20,6 +20,7 @@ import { navigations } from "../../constants/routeNames";
 
 const AllJobsTemplate = ({
   data,
+  setData,
   handleSearch,
   handleLoadMore,
   error,
@@ -36,7 +37,7 @@ const AllJobsTemplate = ({
   const isWeb = Platform.OS.toLowerCase() === "web";
   const navigate = useNavigate();
   const [applyJobModal, setApplyJobModal] = useState(false);
-  const [jobId, setJobId] = useState();
+  const [jobId, setJobId] = useState(null);
 
   const keyExtractor = (item) => item.id;
 
@@ -51,6 +52,14 @@ const AllJobsTemplate = ({
   const handleOpenModal = (jobId) => {
     setApplyJobModal(true);
     setJobId(jobId);
+  };
+
+  const handleSuccessApply = (id) => {
+    setData((prevData) =>
+      prevData.map((item) =>
+        item?.id === id ? { ...item, is_applied: 1 } : item
+      )
+    );
   };
 
   const renderJobCard = ({ item, index }) => {
@@ -114,7 +123,11 @@ const AllJobsTemplate = ({
   return (
     <View style={styles.container}>
       {applyJobModal && (
-        <QuestionaireModal jobId={jobId} handleCloseModal={handleCloseModal} />
+        <QuestionaireModal
+          jobId={jobId}
+          handleCloseModal={handleCloseModal}
+          handleSuccessApply={handleSuccessApply}
+        />
       )}
       <TwoRow
         topSection={

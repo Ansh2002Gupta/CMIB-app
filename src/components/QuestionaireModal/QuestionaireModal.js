@@ -22,7 +22,7 @@ import { APPLY_JOB } from "../../services/apiServices/apiEndPoint";
 import styles from "./QuestionaireModal.style";
 import style from "../CommonText/CommonText.style";
 
-const QuestionaireModal = ({ handleCloseModal, jobId }) => {
+const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
   const intl = useIntl();
   const [questions, setQuestions] = useState();
   const { isWebView } = useIsWebView();
@@ -68,6 +68,7 @@ const QuestionaireModal = ({ handleCloseModal, jobId }) => {
     handleApplyJob({
       body: payload,
       onSuccessCallback: () => {
+        handleSuccessApply(jobId);
         handleCloseModal();
       },
     });
