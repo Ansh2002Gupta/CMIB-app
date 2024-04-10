@@ -41,3 +41,5 @@ src/.DS_Store
 ios/.DS_Store
 Gemfile.lock
 .DS_Store
+
+appConfig
