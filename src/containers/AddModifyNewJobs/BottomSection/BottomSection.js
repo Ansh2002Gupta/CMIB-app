@@ -548,6 +548,10 @@ const BottomSection = forwardRef(
               onValueChange={(item) => {
                 handleJobDetailsChange("status", item);
               }}
+              options={[
+                intl.formatMessage({ id: "label.active" }),
+                intl.formatMessage({ id: "label.inactive" }),
+              ]}
               customToggleStyle={{ marginTop: 16, marginBottom: 18 }}
               customLabelStyle={styles.labelStyle}
             />
