@@ -590,7 +590,7 @@ export const API_DATA_FOR_INTERVIEW_SCHEDULING = [
 export const KEYS = {
   OFFER_ACCEPTED: 7,
   OFFERE_REJECTED: 8,
-},
+};
 export const color = [
   "#000000",
   "#e60000",
