@@ -8,6 +8,7 @@ import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useFetch from "../../../hooks/useFetch";
+
 import usePagination from "../../../hooks/usePagination";
 import {
   getValidCurrentPage,
@@ -15,6 +16,7 @@ import {
 } from "../../../utils/queryParamsHelpers";
 import { COMPANY_LISTING } from "../../../services/apiServices/apiEndPoint";
 import {
+  COMPANY,
   FILTER_TYPE_ENUM,
   POPUP_OPTIONS,
   ROWS_PER_PAGE_ARRAY,
@@ -349,7 +351,7 @@ const useJobSeekers = () => {
   };
 
   const refineColumnData = (data) => {
-    if (!data || data.length === 0) return "-";
+    if (!data || data.length === 0) return ["-"];
     if (data.length <= 2) return data;
     const extraItems = data.length - 2;
     const newData = [data[0], data[1], `+${extraItems}`];
@@ -381,7 +383,7 @@ const useJobSeekers = () => {
             {!!item.name ? item.name : "-"}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("25%"),
+        style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {

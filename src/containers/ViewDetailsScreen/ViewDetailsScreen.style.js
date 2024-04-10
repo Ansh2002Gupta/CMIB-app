@@ -11,19 +11,18 @@ const style = {
     color: colors.black,
   },
   editContainer: {
+    padding: 12,
+    borderRadius: 8,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     cursor: "pointer",
+    backgroundColor: colors.white,
   },
   textStyle: {
     paddingRight: 8,
     paddingLeft: 8,
     fontSize: 14,
-  },
-  cardContainer: {
-    paddingTop: 14,
-    paddingBottom: 14,
   },
   containerStyle: {
     flex: 1,

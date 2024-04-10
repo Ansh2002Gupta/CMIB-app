@@ -451,6 +451,7 @@ const locale = {
   "label.particular_person_get_particlular_module":
     "* Note - A particular module can be assigned to a single contact person only.",
   "label.error": "Error",
+  "label.some_error_occurred": "Some Error Occured!",
   "label.login_with_new_email":
     "Please login using your updated email and password that you have received on your updated email.",
   "label.session_has_expired": "Your session has been expired.",
@@ -676,6 +677,9 @@ const locale = {
   "label.applicant_id": "Applicant ID",
   "label.field_cannot_be_empty": "Field cannot be empty",
   "toggle.undefined": "--",
+  "label.unsave_candidate_details": "Mark Unsave",
+  "label.successful_save": "Saves Details Successfully!",
+  "label.successful_unsave": "Unsaved Details Successfully!",
 };
 
 export default locale;

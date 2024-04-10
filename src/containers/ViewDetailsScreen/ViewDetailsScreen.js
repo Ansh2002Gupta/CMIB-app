@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import {
   Col,
+  Platform,
   Row,
   TouchableOpacity,
   View,
@@ -11,35 +13,85 @@ import { MediaQueryContext } from "@unthinkable/react-theme";
 import { TwoRow } from "../../core/layouts";
 
 import { CustomTabs } from "../../components/Tab";
-import CardComponent from "../../components/CardComponent";
-import CommonText from "../../components/CommonText";
-import CustomImage from "../../components/CustomImage";
 import Activities from "../../containers/Activities";
+import CommonText from "../../components/CommonText";
+import CustomButton from "../../components/CustomButton";
 import EducationDetails from "../../containers/EducationDetails";
+import CustomImage from "../../components/CustomImage";
 import JobPreference from "../../containers/JobPreference/JobPreference";
 import MembershipDetails from "../../containers/MembershipDetails/MembershipDetails";
 import PersonalDetails from "../../containers/PersonalDetails";
 import SkillTraining from "../../containers/SkillTraining/SkillTraining";
+import Spinner from "../../components/Spinner";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import TouchableImage from "../../components/TouchableImage";
 import WorkExperience from "../../containers/WorkExperience/WorkExperience";
 import useIsWebView from "../../hooks/useIsWebView";
-import { useNavigate, useParams } from "react-router";
+import useFetch from "../../hooks/useFetch";
+import { usePost } from "../../hooks/useApiRequest";
+import {
+  ADMIN,
+  CANDIDATES,
+  DETAIL,
+  MARK_PREFER,
+  UNMARK_PREFER,
+} from "../../services/apiServices/apiEndPoint";
 import { navigations } from "../../constants/routeNames";
+import { COMPANY } from "../../constants/constants";
+import colors from "../../assets/colors";
 import images from "../../images";
 import style, { getResponsiveStyles } from "./ViewDetailsScreen.style";
 
-const EditButton = ({ isEditable, handleEdit }) => {
+const SaveButton = ({
+  errorInSaving,
+  errorInUnSaving,
+  id,
+  isSaving,
+  isUnsaving,
+  onSave,
+  onUnSave,
+  setToastMsg,
+}) => {
   const intl = useIntl();
   const isWebView = useIsWebView();
+  const isMob = Platform.OS.toLowerCase() !== "web";
+  const webProps = !isMob ? { size: "xs" } : {};
+  const [isSaveButton, setIsSaveButton] = useState(true);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
-  if (isEditable) return null;
+
+  const handleSavingUnsaving = () => {
+    if (isSaveButton) {
+      onSave({
+        overrideUrl: COMPANY + CANDIDATES + `/${id}` + MARK_PREFER,
+        onErrorCallback: (error) => {
+          setToastMsg(errorInSaving);
+        },
+        onSuccessCallback: (success) => {
+          setIsSaveButton(false);
+          setToastMsg(intl.formatMessage({ id: "label.successful_save" }));
+        },
+      });
+    } else {
+      onUnSave({
+        overrideUrl: COMPANY + CANDIDATES + `/${id}` + UNMARK_PREFER,
+        onErrorCallback: (error) => {
+          setToastMsg(errorInUnSaving);
+        },
+        onSuccessCallback: (success) => {
+          setIsSaveButton(true);
+          setToastMsg(intl.formatMessage({ id: "label.successful_unsave" }));
+        },
+      });
+    }
+  };
+
   if (isWebView) {
     return (
-      <CardComponent customStyle={style.cardContainer}>
-        <TouchableOpacity
-          style={style.editContainer}
-          onPress={() => handleEdit(true)}
-        >
+      <TouchableOpacity
+        style={style.editContainer}
+        onPress={() => handleSavingUnsaving()}
+      >
+        {!(isSaving || isUnsaving) ? (
           <CustomImage
             source={images.iconWallet}
             Icon={images.iconWallet}
@@ -48,13 +100,19 @@ const EditButton = ({ isEditable, handleEdit }) => {
             height={20}
             width={20}
           />
-          {(currentBreakpoint === "md" || currentBreakpoint === "lg") && (
-            <CommonText customTextStyle={style.textStyle} fontWeight="600">
-              {intl.formatMessage({ id: "label.save_candidate_details" })}
-            </CommonText>
-          )}
-        </TouchableOpacity>
-      </CardComponent>
+        ) : (
+          <Spinner color={colors.lightGrey} thickness={1} {...webProps} />
+        )}
+        {(currentBreakpoint === "md" || currentBreakpoint === "lg") && (
+          <CommonText customTextStyle={style.textStyle} fontWeight="600">
+            {intl.formatMessage({
+              id: isSaveButton
+                ? "label.save_candidate_details"
+                : "label.unsave_candidate_details",
+            })}
+          </CommonText>
+        )}
+      </TouchableOpacity>
     );
   }
   return null;
@@ -63,16 +121,44 @@ const EditButton = ({ isEditable, handleEdit }) => {
 const ViewDetailsScreen = () => {
   const intl = useIntl();
   const [isEditable, setIsEditable] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const navigate = useNavigate();
   const params = useParams();
-  const data = {};
+
+  const { data: candidateDetails } = useFetch({
+    url: COMPANY + CANDIDATES + DETAIL + `/${params?.id},`,
+  });
+
+  const {
+    makeRequest: saveCandidateDetails,
+    error: errorInSavingCandidateDetails,
+    isLoading: isSavingCandidateDetails,
+  } = usePost({
+    url: COMPANY + CANDIDATES,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  const {
+    makeRequest: unSaveCandidateDetails,
+    error: errorInUnSavingCandidateDetails,
+    isLoading: isUnSavingCandidateDetails,
+  } = usePost({
+    url: COMPANY + CANDIDATES,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
   const handleEdit = (value) => {
     setIsEditable(value);
   };
   const handleBackPress = () => {
     navigate(`${navigations.CA_JOBS}/${navigations.JOB_SEEKERS}`);
   };
+
   return (
     <View style={style.containerStyle}>
       <CustomTabs
@@ -97,7 +183,16 @@ const ViewDetailsScreen = () => {
                       {intl.formatMessage({ id: "label.candidate_details" })}
                     </CommonText>
                   </Row>
-                  <EditButton isEditable={isEditable} handleEdit={handleEdit} />
+                  <SaveButton
+                    id={params?.id}
+                    onSave={saveCandidateDetails}
+                    onUnSave={unSaveCandidateDetails}
+                    isSaving={isSavingCandidateDetails}
+                    isUnsaving={isUnSavingCandidateDetails}
+                    errorInSaving={errorInSavingCandidateDetails}
+                    errorInUnSaving={errorInUnSavingCandidateDetails}
+                    {...{ setToastMsg }}
+                  />
                 </Row>
               </Col>
             }
@@ -108,7 +203,7 @@ const ViewDetailsScreen = () => {
                     Candidate Name:&nbsp;
                   </CommonText>
                   <CommonText fontWeight={"600"} style={style.value}>
-                    {!!data?.candidate_name ? data?.candidate_name : "_"}
+                    {!!candidateDetails?.name ? candidateDetails?.name : "_"}
                   </CommonText>
                 </Row>
                 <View style={style.divider}></View>
@@ -117,7 +212,9 @@ const ViewDetailsScreen = () => {
                     Candidate ID:&nbsp;
                   </CommonText>
                   <CommonText fontWeight={"600"} style={style.value}>
-                    {!!data?.candidate_id ? data?.candidate_id : "_"}
+                    {!!candidateDetails?.member_id
+                      ? candidateDetails?.member_id
+                      : "_"}
                   </CommonText>
                 </Row>
               </Row>
@@ -178,6 +275,18 @@ const ViewDetailsScreen = () => {
           },
         ]}
       />
+      {!!toastMsg && (
+        <ToastComponent
+          toastMessage={
+            errorInSavingCandidateDetails ||
+            errorInUnSavingCandidateDetails ||
+            !!toastMsg
+              ? toastMsg
+              : intl.formatMessage({ id: "label.some_error_occurred" })
+          }
+          onDismiss={() => setToastMsg("")}
+        />
+      )}
     </View>
   );
 };
