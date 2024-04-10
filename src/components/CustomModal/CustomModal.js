@@ -1,8 +1,8 @@
 import React from "react";
 import { useIntl } from "react-intl";
+import PropTypes from "prop-types";
 import { Platform, View } from "@unthinkable/react-core-components";
 import { KeyboardAvoidingView } from "@unthinkable/react-core-components/src/Keyboard";
-import PropTypes from "prop-types";
 
 import ActionPairButton from "../ActionPairButton";
 import CommonText from "../CommonText";

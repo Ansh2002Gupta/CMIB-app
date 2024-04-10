@@ -11,15 +11,15 @@ import CustomModal from "../../components/CustomModal";
 import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
+import DatePickerModal from "../../components/DatePickerModel";
+import Slider from "../../components/Slider";
 import useFilterModal from "./controller/useFilterModal";
+import { FILTER_TYPE_ENUM } from "../../constants/constants";
 import classes from "../../theme/styles/CssClassProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./FilterModal.style";
-import DatePickerModal from "../../components/DatePickerModel";
-import { FILTER_TYPE_ENUM } from "../../constants/constants";
-import Slider from "../../components/Slider";
 
 const FilterModal = ({
   defaultCategory,
@@ -136,7 +136,6 @@ const FilterModal = ({
         );
       }
     }
-
     return filterObj?.type?.trim().toLowerCase() ===
       FILTER_TYPE_ENUM.CHECKBOX ? (
       filterObj?.options.map((option) => (

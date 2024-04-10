@@ -5,7 +5,7 @@ const darkBlack = "#0F0F0F";
 const darkBlackSecond = "#18181B";
 const trueBlack = "#000";
 const blackWithOneForthOpacity = "rgba(0, 0, 0, 0.25)";
-const blackWithMinorOpacity = "rgb(0, 0, 0, 0.85)";
+const blackWithMinorOpacity = "rgba(0, 0, 0, 0.85)";
 
 /* Blues */
 const backgroundColor = "#FBFCFF"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
@@ -118,12 +118,12 @@ const colors = {
   skyBlueLight,
   disabledTextFieldColor,
   neutralGrey,
+  lightGreen2,
   lightPurple,
   darkPurple,
   greyFive,
   greySix,
   lightOrangeSecond,
   skyBlueLightSecond,
-  lightGreen2,
 };
 export default colors;
