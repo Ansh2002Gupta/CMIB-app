@@ -133,9 +133,9 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
           newSelectedOptions = existingSelectedOptions?.includes(
             selectedFilter?.[keyName]
           )
-            ? existingSelectedOptions?.filter(
-                (keyName) => keyName !== selectedFilter?.[keyName]
-              )
+            ? existingSelectedOptions?.filter((item) => {
+                return item !== selectedFilter?.[keyName];
+              })
             : [...existingSelectedOptions, selectedFilter?.[keyName]];
         } else {
           newSelectedOptions = selectedFilter.value;
