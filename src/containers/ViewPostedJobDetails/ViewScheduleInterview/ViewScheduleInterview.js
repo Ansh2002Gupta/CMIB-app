@@ -125,6 +125,7 @@ const ViewScheduleInterview = ({ id }) => {
             onClose={() => {
               setIsModalVisible(null);
             }}
+            applicant_id={selectedApplicant.current}
           />
         )}
       {isModalVisible &&

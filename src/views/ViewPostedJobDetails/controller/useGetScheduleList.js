@@ -300,6 +300,16 @@ const useGetScheduleList = (id, onClickAction) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
+    const optionArray = [
+      intl.formatMessage({ id: "label.view_interview_details" }),
+      intl.formatMessage({ id: "label.edit_interview_details" }),
+    ];
+    if (
+      item.is_primary_schedule_accepted ||
+      item.is_alternate_schedule_accepted
+    ) {
+      optionArray.push(intl.formatMessage({ id: "label.offer_job" }));
+    }
     return [
       {
         content: isHeading ? (
@@ -423,12 +433,7 @@ const useGetScheduleList = (id, onClickAction) => {
           <View>
             {!isHeading && (
               <PopupMessage
-                message={[
-                  intl.formatMessage({ id: "label.view_interview_details" }),
-                  intl.formatMessage({ id: "label.edit_interview_details" }),
-
-                  intl.formatMessage({ id: "label.offer_job" }),
-                ]}
+                message={optionArray}
                 onPopupClick={(selectedItem) => {
                   if (
                     selectedItem ===
