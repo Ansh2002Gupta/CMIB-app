@@ -29,7 +29,7 @@ const ViewJobApplicants = ({ id }) => {
   const activeUserId = useRef();
 
   const navigate = useNavigate();
-  const onEditPress = (selectedItem, item) => {
+  const onClick = (selectedItem, item) => {
     if (JOB_STATUS_RESPONSE_CODE[selectedItem]) {
       const request = {
         status: JOB_STATUS_RESPONSE_CODE[selectedItem],
@@ -76,13 +76,14 @@ const ViewJobApplicants = ({ id }) => {
     applicantListingData,
     totalcards,
     getAllRecords,
-  } = useGetApplicantList(id, onEditPress);
+  } = useGetApplicantList(id, onClick);
 
   const getMobileView = (item, index) => {
     return (
       <RenderMobileItem
         lastElement={applicantListingData.length - 1 === index}
         item={item}
+        onPress={onClick}
       />
     );
   };

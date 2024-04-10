@@ -13,6 +13,7 @@ import useGetScheduleList from "../../../views/ViewPostedJobDetails/controller/u
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import ViewInterviewDetails from "../../ViewInterviewDetails";
 import ScheduleInterviewModal from "../../ScheduleInterviewModal/ScheduleInterviewModal";
+import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
 
 const ViewScheduleInterview = ({ id }) => {
   const [isModalVisible, setIsModalVisible] = useState(null);
@@ -59,13 +60,10 @@ const ViewScheduleInterview = ({ id }) => {
 
   const getMobileView = (item, index) => {
     return (
-      <MobileCard
-        item={item}
-        getStatusStyle={getStatusStyle}
+      <RenderMobileItem
         lastElement={scheduleInterviewData.length - 1 === index}
-        statusData={statusData ? statusData : []}
-        onEditPress={() => {}}
-        onViewPress={() => {}}
+        item={item}
+        onPress={onClickAction}
       />
     );
   };
