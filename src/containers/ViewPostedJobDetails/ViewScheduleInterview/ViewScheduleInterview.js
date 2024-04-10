@@ -134,8 +134,8 @@ const ViewScheduleInterview = ({ id }) => {
             onClose={() => {
               setIsModalVisible(null);
             }}
-            isEdited
             applicant_id={selectedApplicant.current}
+            interviewId={selectedApplicant.current}
           />
         )}
       {isError && !!getErrorDetails()?.errorMessage && (

@@ -568,7 +568,7 @@ export const convertToTime = ({ dateString, format24Hour = true }) => {
 export const formateDateandTime = (date, time) => {
   const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
   const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
-  return formattedDate + " " + formattedTime;
+  return formattedDate + "" + formattedTime;
 };
 
 export const areAllValuesEmpty = (obj) => {
