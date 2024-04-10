@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import useHttpService from "../../../hooks/useHttpService";
@@ -15,14 +15,18 @@ import {
   setSelectedSession,
 } from "../../../../globalContext/sidebar/sidebarActions";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
-import { moduleKeys, modules } from "../../../../constants/sideBarHelpers";
+import {
+  moduleKeys,
+  getAppModules,
+} from "../../../../constants/sideBarHelpers";
 import { CORE_USERS_PERMISSION } from "../../apiEndPoint";
 import { navigations } from "../../../../constants/routeNames";
-import { STATUS_CODES } from "../../../../constants/constants";
+import { COMPANY, STATUS_CODES } from "../../../../constants/constants";
 
 const useGetUserDetails = () => {
   const [, sideBarDispatch] = useContext(SideBarContext);
   const [, userProfileDispatch] = useContext(UserProfileContext);
+
   const { onLogout } = useHeader();
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,6 +36,7 @@ const useGetUserDetails = () => {
   const getSelectedModule = ({
     firstAccessibleModuleName,
     accessibleModuleKeys,
+    currentModules,
   }) => {
     const path = location.pathname.split("/");
     const moduleValues = Object.values(accessibleModuleKeys);
@@ -39,7 +44,7 @@ const useGetUserDetails = () => {
     if (path.length > 1 && moduleValues.includes(path[1])) {
       return {
         isTriedToAccessProtectedModule,
-        moduleDetails: modules.find(
+        moduleDetails: currentModules.find(
           (module) => module.key?.toLowerCase() === path[1]
         ),
       };
@@ -47,7 +52,7 @@ const useGetUserDetails = () => {
     if (!moduleValues.includes(path?.[1])) {
       isTriedToAccessProtectedModule = true;
     }
-    const moduleDetails = modules.find(
+    const moduleDetails = currentModules.find(
       (module) =>
         module.key?.toLowerCase() === firstAccessibleModuleName?.toLowerCase()
     );
@@ -65,7 +70,8 @@ const useGetUserDetails = () => {
         res.code === STATUS_CODES.SUCCESS_STATUS
       ) {
         userProfileDispatch(setUserDetails(res.data));
-
+        const isMemberOrCandidate =
+          res?.data?.user_type?.toLowerCase() !== COMPANY;
         // Setting the first accessible module
         const accessibleModuleKeys = Object.keys(res.data?.menu_items || {});
         const firstAccessibleModuleName = accessibleModuleKeys?.[0] || "";
@@ -73,6 +79,7 @@ const useGetUserDetails = () => {
           getSelectedModule({
             firstAccessibleModuleName,
             accessibleModuleKeys,
+            currentModules: getAppModules({ isMember: isMemberOrCandidate }),
           });
         sideBarDispatch(setSelectedModule(moduleDetails));
         sideBarDispatch(setSelectedSession(moduleDetails?.session?.[0]));

@@ -59,7 +59,10 @@ const useTicketDetails = (location) => {
     invalidFormatError,
     initiateFileUpload,
     nonUploadableImageError,
-  } = useUploadedFileValidations();
+  } = useUploadedFileValidations({
+    isDocumentUpload: false,
+    isVideoUpload: false,
+  });
 
   const fileUploadError =
     fileTooLargeError || invalidFormatError || nonUploadableImageError;

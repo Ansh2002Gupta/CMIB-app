@@ -30,6 +30,7 @@ const FilterModal = ({
   setShowFilterOptions,
   defaultCategory,
   unit,
+  renderCalendar = false,
 }) => {
   const {
     currentCategory,
@@ -44,7 +45,9 @@ const FilterModal = ({
     onApplyFilter,
     setFilterState,
     setShowFilterOptions,
-    defaultCategory
+    defaultCategory,
+    filterCategory,
+    renderCalendar
   );
 
   const isWeb = Platform.OS.toLowerCase() === "web";
@@ -112,6 +115,24 @@ const FilterModal = ({
   const renderOptionsByCategory = (category) => {
     category = getFilterName(category);
     const filterObj = returnFilterObj(filterInfo, category);
+    if (renderCalendar) {
+      {
+        return (
+          <View style={styles.datePickerModalView}>
+            <DatePickerModal
+              customStyles={styles.datePickerStyle}
+              value={
+                Array.isArray(filterState?.selectedQueryType)
+                  ? filterState?.selectedQueryType[0]
+                  : ""
+              }
+              datePickerViewStyle={styles.datePickerInner}
+              onChangeValue={(value) => handleQueryTypeChange(value)}
+            />
+          </View>
+        );
+      }
+    }
     return filterObj?.type?.trim().toLowerCase() ===
       FILTER_TYPE_ENUM.CHECKBOX ? (
       filterObj?.options.map((option) => (
@@ -247,12 +268,10 @@ const FilterModal = ({
                         }
                         isLeftFillSpace
                         rightSection={
-                          <>
-                            <CustomImage
-                              source={images.iconArrowRight}
-                              style={styles.arrowRight}
-                            />
-                          </>
+                          <CustomImage
+                            source={images.iconArrowRight}
+                            style={styles.arrowRight}
+                          />
                         }
                       />
                     </View>
@@ -307,6 +326,7 @@ FilterModal.propTypes = {
   setFilterState: PropTypes.func.isRequired,
   setShowFilterOptions: PropTypes.func.isRequired,
   unit: PropTypes.string,
+  renderCalendar: PropTypes.bool,
 };
 
 export default FilterModal;

@@ -12,9 +12,6 @@ const style = {
     gap: 4,
   },
   dropdown: {
-    paddingTop: 6,
-    paddingBottom: 6,
-    paddingLeft: 14,
     paddingRight: 16,
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
@@ -83,6 +80,12 @@ const style = {
     marginTop: 4,
     borderRadius: Platform.OS === "web" ? 12 : 8,
     flexDirection: "row",
+  },
+  customToggleStyle: {
+    paddingTop: 20,
+    marginBottom: 12,
+    paddingBottom: 12,
+    marginRight: 24,
   },
   textInputStyle: {
     fontWeight: "500",
@@ -213,6 +216,11 @@ const style = {
     borderRadius: 10,
     marginLeft: 5,
   },
+  innerLabelContainer: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+  },
   disabledStyle: {
     backgroundColor: colors.disabledTextFieldColor,
   },
@@ -226,6 +234,15 @@ const style = {
   },
   onlyCountLimitBox: {
     justifyContent: "flex-end",
+  },
+  CheckBoxSelection: {
+    paddingRight: 16,
+    marginTop: 4,
+    flexDirection: "row",
+    flex: 1,
+  },
+  marginRight10: {
+    marginRight: 10,
   },
 };
 

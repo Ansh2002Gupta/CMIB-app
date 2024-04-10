@@ -7,6 +7,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundGrey,
     padding: 24,
   },
+  flexDirectionRow: {
+    flexDirection: "row",
+  },
+  getParentStyle: (isWebView) => ({
+    flex: isWebView ? 0.4 : 1,
+  }),
   mobileMainContainer: {
     flex: 1,
     backgroundColor: colors.backgroundGrey,
@@ -74,6 +80,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     marginLeft: 8,
+    fontSize: 14,
   },
   imageParentStyle: {
     flexDirection: "row",
@@ -99,7 +106,6 @@ const styles = StyleSheet.create({
   },
   filterTopSection: (isWebView) => ({
     marginBottom: 16,
-    width: isWebView ? "40%" : "100%",
   }),
   tableTopSection: {
     flex: 1,

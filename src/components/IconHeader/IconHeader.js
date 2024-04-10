@@ -8,6 +8,7 @@ import Chip from "../Chip";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import Switch from "../Switch";
 import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
 import images from "../../images";
@@ -22,9 +23,13 @@ const IconHeader = ({
   hasActionButton,
   hasIconBar,
   headerText,
+  handleSwitchChange,
   iconLeft,
   iconRight,
   iconStyle,
+  isActive,
+  isSwitchVisible,
+  isBorderVisible,
   mobActionButton,
   onPressLeftIcon,
   onPressRightIcon,
@@ -84,9 +89,13 @@ const IconHeader = ({
         >
           <View style={styles.headingContainer}>
             <CommonText
-              customTextStyle={
-                !isWebView ? styles.formHeaderStyle : styles.formHeaderStyleWeb
-              }
+              customTextStyle={{
+                ...(!isWebView
+                  ? styles.formHeaderStyle
+                  : styles.formHeaderStyleWeb),
+              }}
+              customContainerStyle={styles.width100}
+              customTextProps={styles.iconTextStyle}
               fontWeight="600"
             >
               {headerText}
@@ -140,9 +149,19 @@ const IconHeader = ({
               </CardComponent>
             </CustomTouchableOpacity>
           )}
+          {isSwitchVisible && (
+            <View>
+              <Switch
+                isToggled={isActive}
+                onChange={() => {
+                  handleSwitchChange && handleSwitchChange();
+                }}
+              />
+            </View>
+          )}
         </View>
       </>
-      <View style={styles.borderStyle} />
+      {isBorderVisible && <View style={styles.borderStyle} />}
     </View>
   );
 };
@@ -154,11 +173,15 @@ IconHeader.defaultProps = {
   customActionButtonText: {},
   handleButtonClick: () => {},
   hasActionButton: false,
+  handleSwitchChange: () => {},
   hasIconBar: false,
   headerText: "",
   iconLeft: images.iconBack,
   iconRight: images.iconNotification,
   iconStyle: {},
+  isSwitchVisible: false,
+  isActive: false,
+  isBorderVisible: true,
   mobActionButton: "",
   onPressLeftIcon: () => {},
   onPressRightIcon: () => {},
@@ -174,9 +197,13 @@ IconHeader.propTypes = {
   hasActionButton: PropTypes.bool,
   hasIconBar: PropTypes.bool,
   headerText: PropTypes.string,
-  iconLeft: PropTypes.string,
-  iconRight: PropTypes.string,
+  handleSwitchChange: PropTypes.func,
+  iconLeft: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  iconRight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   iconStyle: PropTypes.object,
+  isSwitchVisible: PropTypes.bool,
+  isActive: PropTypes.bool,
+  isBorderVisible: PropTypes.bool,
   mobActionButton: PropTypes.node,
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,
