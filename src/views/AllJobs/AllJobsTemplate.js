@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./styles";
 import useIsWebView from "../../hooks/useIsWebView";
 import CommonText from "../../components/CommonText";
 import { TwoRow } from "../../core/layouts";
 import SearchView from "../../components/SearchView";
 import SavedJobComponent from "../../components/SavedJobComponent";
+import QuestionaireModal from "../../components/QuestionaireModal";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
 import Spinner from "../../components/Spinner";
@@ -34,11 +35,22 @@ const AllJobsTemplate = ({
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
   const navigate = useNavigate();
+  const [applyJobModal, setApplyJobModal] = useState(false);
+  const [jobId, setJobId] = useState();
 
   const keyExtractor = (item) => item.id;
 
   const handleClickOnJobCard = (jobId) => {
     navigate(`${navigations.CA_JOBS}/${navigations.JOB_DETAIL}/${jobId}`);
+  };
+
+  const handleCloseModal = () => {
+    setApplyJobModal(false);
+  };
+
+  const handleOpenModal = (jobId) => {
+    setApplyJobModal(true);
+    setJobId(jobId);
   };
 
   const renderJobCard = ({ item, index }) => {
@@ -47,8 +59,10 @@ const AllJobsTemplate = ({
         <SavedJobComponent
           details={item}
           onPress={handleClickOnJobCard}
+          isApplyVisible={!item?.is_applied}
           isSaveVisible={!item?.is_saved}
           containerStyle={{ ...(index === 0 ? styles.savedJobComponent : {}) }}
+          handleOpenModal={handleOpenModal}
         />
       </View>
     );
@@ -99,6 +113,9 @@ const AllJobsTemplate = ({
 
   return (
     <View style={styles.container}>
+      {applyJobModal && (
+        <QuestionaireModal jobId={jobId} handleCloseModal={handleCloseModal} />
+      )}
       <TwoRow
         topSection={
           isWeb && (

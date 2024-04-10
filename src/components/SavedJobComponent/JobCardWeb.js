@@ -26,6 +26,7 @@ const JobCardWeb = ({
   isLoading,
   handleApply,
   handleSaveAndRemove,
+  isApplyVisible,
   isSaved,
   isApplyLoading,
   onPress,
@@ -128,6 +129,7 @@ const JobCardWeb = ({
   ];
 
   const buttonOneText = isSaved ? "label.save" : "label.remove";
+  const buttonTwoText = isApplyVisible ? "label.applyJob" : "label.applied";
 
   const mainCardMultiRow = [
     {
@@ -203,26 +205,31 @@ const JobCardWeb = ({
           }
           rightSection={
             <ActionPairButton
+              disableRightStyle={style.disabledStyle}
               displayLoaderLeft={isLoading}
               displayLoader={isApplyLoading}
               isDisabledLeft={isLoading}
-              isDisabled={isLoading}
+              isDisabled={isLoading || !isApplyVisible}
               onPressButtonTwo={handleApply}
               onPressButtonOne={handleSaveAndRemove}
-              isButtonTwoGreen
+              isButtonTwoGreen={isApplyVisible}
               iconLeft={{
-                leftIconSource: images.iconSingleSave,
+                leftIconSource: isSaved
+                  ? images.iconArchiveSave
+                  : images.iconSingleSave,
               }}
               customStyles={{
                 buttonOneStyle: style.actionPairButtonStyle,
-                buttonTwoStyle: style.actionPairButtonStyle,
+                buttonTwoStyle: isApplyVisible
+                  ? style.actionPairButtonStyle
+                  : style.disableActionPairButton,
                 buttonOneContainerStyle: style.actionPairButtonStyle,
                 buttonTwoContainerStyle: style.actionPairButtonStyle,
                 buttonTwoTextStyle: style.buttonTextStyle,
                 buttonOneTextStyle: style.buttonTextStyle,
               }}
               buttonOneText={intl.formatMessage({ id: buttonOneText })}
-              buttonTwoText={intl.formatMessage({ id: "label.applyJob" })}
+              buttonTwoText={intl.formatMessage({ id: buttonTwoText })}
             />
           }
         />

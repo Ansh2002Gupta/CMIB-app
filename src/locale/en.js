@@ -656,6 +656,7 @@ const locale = {
   "label.allJobSearchPlaceholder":
     "Search functional area, designation or organizations",
   "label.questionnaire": "Questionnaire",
+  "label.applied": "Applied",
 };
 
 export default locale;

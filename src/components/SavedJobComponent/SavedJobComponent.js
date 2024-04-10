@@ -18,6 +18,8 @@ const SavedJobComponent = ({
   onPress,
   containerStyle,
   isSaveVisible,
+  isApplyVisible,
+  handleOpenModal,
 }) => {
   const intl = useIntl();
 
@@ -80,8 +82,12 @@ const SavedJobComponent = ({
             <JobCardWeb
               {...{
                 cardDetails,
+                handleApply: () => {
+                  handleOpenModal(cardDetails?.id);
+                },
                 isLoading,
                 handleSaveAndRemove,
+                isApplyVisible: isApplyVisible,
                 isSaved: isSaveVisibleButton,
                 onPress: handleClickOnCard,
               }}
@@ -90,8 +96,12 @@ const SavedJobComponent = ({
             <JobCardMobile
               {...{
                 cardDetails,
+                handleApply: () => {
+                  handleOpenModal(cardDetails?.id);
+                },
                 isLoading,
                 handleSaveAndRemove,
+                isApplyVisible: isApplyVisible,
                 isSaved: isSaveVisibleButton,
                 onPress: handleClickOnCard,
               }}

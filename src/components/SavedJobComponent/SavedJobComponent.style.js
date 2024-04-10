@@ -69,6 +69,11 @@ const style = StyleSheet.create({
     maxHeight: 44,
     maxWidth: 96,
   },
+  disableActionPairButton: {
+    maxHeight: 44,
+    maxWidth: 96,
+    backgroundColor: colors.secondaryGrey,
+  },
   customButtonTextStyle: {
     fontSize: 12,
     color: colors.darkBlue,
@@ -162,6 +167,8 @@ const style = StyleSheet.create({
   },
   customQuilStyle: { height: undefined, borderWidth: 0 },
   chipContainerStyle: { gap: 8, marginBottom: 16 },
+  disabledStyle: { backgroundColor: colors.white },
+  disableButtonText: { fontSize: 12, color: colors.black, marginRight: 20 },
 });
 
 export default style;

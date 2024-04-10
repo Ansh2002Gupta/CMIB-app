@@ -22,6 +22,7 @@ import colors from "../../assets/colors";
 const JobCardMobile = ({
   cardDetails,
   isLoading,
+  isApplyVisible,
   isSaved,
   isApplyLoading,
   handleApply,
@@ -45,6 +46,7 @@ const JobCardMobile = ({
   } = cardDetails;
 
   const buttonOneText = isSaved ? "label.save" : "label.remove";
+  const buttonTwoText = isApplyVisible ? "label.apply" : "label.applied";
 
   const rowConfig = (data) => {
     return data?.map((item, index) => {
@@ -200,18 +202,22 @@ const JobCardMobile = ({
             <TwoColumn
               leftSection={
                 <CustomButton
-                  disabled={isApplyLoading}
+                  disabledStyle={style.disabledStyle}
+                  disabled={isApplyLoading || !isApplyVisible}
                   onPress={handleApply}
                   customStyle={{
-                    customTextStyle: style.customButtonApplyStyle,
+                    customTextStyle: isApplyVisible
+                      ? style.customButtonApplyStyle
+                      : style.disableButtonText,
                   }}
                   style={style.buttonStyle}
                 >
-                  {intl.formatMessage({ id: "label.applyJob" })}
+                  {intl.formatMessage({ id: buttonTwoText })}
                 </CustomButton>
               }
               rightSection={
                 <CustomButton
+                  disabledStyle={style.disabledStyle}
                   disabled={isLoading}
                   iconLeft={{
                     leftIconAlt: "left-saved",

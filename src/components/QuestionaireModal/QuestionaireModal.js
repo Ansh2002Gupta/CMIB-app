@@ -259,8 +259,8 @@ const QuestionaireModal = ({ handleCloseModal, jobId }) => {
                         ...isWebProps,
                         customContainerStyle: styles.customContainerStyle,
                       }}
-                      displayLoader={false}
-                      isDisabled={isDisabled(questions)}
+                      displayLoader={isjobAppling}
+                      isDisabled={isDisabled(questions) || isjobAppling}
                       isButtonTwoGreen
                       onPressButtonOne={handleCancelButton}
                       onPressButtonTwo={() => handleSaveButton(questions)}
