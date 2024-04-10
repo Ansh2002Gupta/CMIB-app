@@ -164,7 +164,6 @@ const ViewPostedJobDetails = () => {
           {
             label: "label.category_preference",
             value: apiData?.category_prefrence?.name ?? "-",
-            isMandatory: true,
           },
           {},
         ],
@@ -267,9 +266,7 @@ const ViewPostedJobDetails = () => {
           },
           {
             label: "label.maximum_salary",
-            value: apiData?.max_experience
-              ? Math.trunc(apiData?.max_experience)
-              : "-",
+            value: apiData?.max_salary ? Math.trunc(apiData?.max_salary) : "-",
           },
         ],
         [
