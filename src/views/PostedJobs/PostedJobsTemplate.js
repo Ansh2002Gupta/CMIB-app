@@ -10,7 +10,7 @@ import CustomButton from "../../components/CustomButton";
 import { useIntl } from "react-intl";
 import images from "../../images";
 
-const PostedJobsTemplate = ({ details }) => {
+const PostedJobsTemplate = ({ details, handleOpenModal }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const {
@@ -54,7 +54,7 @@ const PostedJobsTemplate = ({ details }) => {
       </CustomButton>
       <CustomButton
         // isLoading={isCroppingImage || isLoading}
-        // onPress={cropImage}
+        onPress={handleOpenModal}
         style={{
           ...(isWebView ? styles.buttonStyleWeb : styles.buttonStyleMobile),
         }}

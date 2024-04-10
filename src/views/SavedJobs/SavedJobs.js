@@ -87,7 +87,7 @@ const SavedJobs = () => {
                         <SavedJobComponent
                           details={details}
                           onPress={handleClickOnJobCard}
-                          isSaveVisible={false} //TODO: need to check if job is saved or not
+                          isSaveVisible={false}
                         />
                       );
                     })}

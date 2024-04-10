@@ -54,7 +54,6 @@ const SavedJobComponent = ({
   const handleResetError = () => {
     resetError();
   };
-  console.log(error, "error");
   return (
     <>
       <TwoRow

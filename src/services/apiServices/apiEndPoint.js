@@ -39,6 +39,7 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
 export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
+export const APPLY_JOB = `${USER_TYPE_MEMBER}/jobs/apply`;
 
 //sub routes
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
@@ -59,6 +60,7 @@ export const MEMBER_CA_JOB_MEMBERSHIP_DETAILS = `${USER_TYPE_MEMBER}/profile/mem
 export const MEMBER_CA_JOB_JOB_PREFERENCES = `${USER_TYPE_MEMBER}/profile/job-preferences`;
 export const COMPANY_FUNCTIONAL_AREAS = `${USER_TYPE_COMPANY}/functional-areas`;
 export const UPLOAD_IMAGE = `${USER_TYPE_COMPANY}/upload-image`;
+export const QUESTIONAIRE = `/questionnaire`;
 
 //endpoint add Job
 export const GET_FUNCTIONAL_TYPE = `${USER_TYPE_COMPANY}/functional-areas`;

@@ -47,7 +47,7 @@ const AllJobsTemplate = ({
         <SavedJobComponent
           details={item}
           onPress={handleClickOnJobCard}
-          isSaveVisible={true} //TODO: need to check if job is saved or not
+          isSaveVisible={!item?.is_saved}
           containerStyle={{ ...(index === 0 ? styles.savedJobComponent : {}) }}
         />
       </View>

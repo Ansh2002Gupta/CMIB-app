@@ -561,3 +561,26 @@ export const containsDuplicate = (arr) => {
   }
   return false;
 };
+
+export const convertJSONStringArrayToIntArray = (
+  jsonStringArray,
+  isMultiSelect
+) => {
+  try {
+    const stringArray = JSON.parse(jsonStringArray);
+    const labelValueArray = stringArray.map((str) =>
+      isMultiSelect
+        ? {
+            label: str,
+            value: str,
+            isSelected: false,
+          }
+        : { label: str, value: str }
+    );
+
+    return labelValueArray;
+  } catch (error) {
+    console.error("Error converting JSON string array to int array:", error);
+    return null;
+  }
+};

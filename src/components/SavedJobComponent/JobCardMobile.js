@@ -66,19 +66,6 @@ const JobCardMobile = ({
     });
   };
 
-  const locationConfig = (data) => {
-    return data.map((item, index) => {
-      return {
-        content: (
-          <CommonText customTextStyle={[style.blackText]}>
-            {item?.name}
-            {index !== data.length - 1 && "/"}
-          </CommonText>
-        ),
-      };
-    });
-  };
-
   const multiCoulmn = [
     {
       content: (
@@ -181,7 +168,7 @@ const JobCardMobile = ({
           rightSection={
             <MultiColumn
               columns={LocationConfig(jobLocation)}
-              style={{ backgroundColor: "blue", paddingRight: 24 }}
+              style={{ paddingRight: 24 }}
             />
           }
         />
@@ -211,18 +198,18 @@ const JobCardMobile = ({
           }
           rightSection={
             <TwoColumn
-              // leftSection={
-              //   <CustomButton
-              //     disabled={isApplyLoading}
-              //     onPress={handleApply}
-              //     customStyle={{
-              //       customTextStyle: style.customButtonApplyStyle,
-              //     }}
-              //     style={style.buttonStyle}
-              //   >
-              //     {intl.formatMessage({ id: "label.applyJob" })}
-              //   </CustomButton>
-              // }
+              leftSection={
+                <CustomButton
+                  disabled={isApplyLoading}
+                  onPress={handleApply}
+                  customStyle={{
+                    customTextStyle: style.customButtonApplyStyle,
+                  }}
+                  style={style.buttonStyle}
+                >
+                  {intl.formatMessage({ id: "label.applyJob" })}
+                </CustomButton>
+              }
               rightSection={
                 <CustomButton
                   disabled={isLoading}
