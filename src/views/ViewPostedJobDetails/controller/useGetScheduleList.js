@@ -21,6 +21,8 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import CustomImage from "../../../components/CustomImage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -243,14 +245,14 @@ const useGetScheduleList = (id, onClickAction) => {
       });
     }
   };
-  const onDateSorting = async (sortField) => {
-    // setIsAscendingOrder((prev) => !prev);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   sortField: sortField,
-    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
-    // });
+  const onNameSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortField: sortField,
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
+    });
   };
 
   let headingTexts = ["name"];
@@ -300,11 +302,26 @@ const useGetScheduleList = (id, onClickAction) => {
       : styles.cellTextStyle();
     return [
       {
-        content: (
+        content: isHeading ? (
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {item?.name ?? "-"}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
             {item?.name ?? "-"}
           </CommonText>
         ),
+
         style: {
           ...commonStyles.columnStyle("25%"),
           ...styles.justifyContentCenter,
