@@ -127,7 +127,7 @@ const ViewDetailsScreen = () => {
   const params = useParams();
 
   const { data: candidateDetails } = useFetch({
-    url: COMPANY + CANDIDATES + DETAIL + `/${params?.id},`,
+    url: COMPANY + CANDIDATES + DETAIL + `/${params?.id}`,
   });
 
   const {
