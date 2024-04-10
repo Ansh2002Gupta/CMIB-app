@@ -46,10 +46,16 @@ const PostedJobs = () => {
     setApplyJobModal(false);
   };
 
+  const handleSuccessApply = () => {};
+
   return (
     <Base style={styles.containerViewStyle}>
       {applyJobModal && (
-        <QuestionaireModal jobId={jobId} handleCloseModal={handleCloseModal} />
+        <QuestionaireModal
+          jobId={jobId}
+          handleCloseModal={handleCloseModal}
+          handleSuccessApply={handleSuccessApply}
+        />
       )}
       <PostedJobsTemplate
         details={jobDetail}

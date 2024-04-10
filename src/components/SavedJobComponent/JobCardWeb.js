@@ -205,7 +205,7 @@ const JobCardWeb = ({
           }
           rightSection={
             <ActionPairButton
-              disableRightStyle={style.disabledStyle}
+              disableRightStyle={style.disableRightStyle}
               displayLoaderLeft={isLoading}
               displayLoader={isApplyLoading}
               isDisabledLeft={isLoading}

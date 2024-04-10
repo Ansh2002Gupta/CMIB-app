@@ -10,7 +10,7 @@ import CustomButton from "../../components/CustomButton";
 import { useIntl } from "react-intl";
 import images from "../../images";
 
-const PostedJobsTemplate = ({ details, handleOpenModal }) => {
+const PostedJobsTemplate = ({ details, handleOpenModal, handleSaveRemove }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const {
@@ -19,6 +19,9 @@ const PostedJobsTemplate = ({ details, handleOpenModal }) => {
     companyDetail,
     headerData,
   } = details;
+
+  const is_applied = true;
+  const is_saved = true;
 
   const otherDetails = functionalAreas?.length ? (
     <View style={styles.otherDetailsStyle}>
@@ -41,26 +44,37 @@ const PostedJobsTemplate = ({ details, handleOpenModal }) => {
   const actionButtons = (
     <View style={styles.actionButtons}>
       <CustomButton
-        isLeftIconNotSvg={true}
-        iconLeft={{ leftIconSource: images.iconArchiveSave }}
-        // isLoading={isCroppingImage || isLoading}
-        // onPress={cropImage}
+        iconLeft={{
+          leftIconSource: !is_saved
+            ? images.iconArchiveSave
+            : images.iconSingleSave,
+        }}
+        onPress={handleSaveRemove}
         style={{
           ...(isWebView ? styles.buttonStyleWeb : styles.buttonStyleMobile),
           ...styles.saveButtonStyle,
         }}
       >
-        <Text>{intl.formatMessage({ id: "label.save" })}</Text>
+        <Text>
+          {intl.formatMessage({
+            id: !is_saved ? "label.save" : "label.remove",
+          })}
+        </Text>
       </CustomButton>
       <CustomButton
-        // isLoading={isCroppingImage || isLoading}
+        disabled={is_applied}
+        disabledStyle={styles.disabledStyle}
         onPress={handleOpenModal}
         style={{
           ...(isWebView ? styles.buttonStyleWeb : styles.buttonStyleMobile),
         }}
-        withGreenBackground
+        withGreenBackground={!is_applied}
       >
-        <Text>{intl.formatMessage({ id: "label.apply" })}</Text>
+        <Text>
+          {intl.formatMessage({
+            id: !is_applied ? "label.apply" : "label.applied",
+          })}
+        </Text>
       </CustomButton>
     </View>
   );

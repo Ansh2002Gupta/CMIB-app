@@ -165,6 +165,7 @@ const style = StyleSheet.create({
       },
     }),
   },
+  disableRightStyle: { backgroundColor: colors.secondaryGrey },
   customQuilStyle: { height: undefined, borderWidth: 0 },
   chipContainerStyle: { gap: 8, marginBottom: 16 },
   disabledStyle: { backgroundColor: colors.white },
