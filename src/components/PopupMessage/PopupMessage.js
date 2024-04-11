@@ -11,7 +11,7 @@ import styles from "./PopupMessage.style";
 import useIsWebView from "../../hooks/useIsWebView";
 import CustomModal from "../CustomModal";
 
-const PopupMessage = ({ customStyle, message, onPopupClick }) => {
+const PopupMessage = ({ customStyle, message, onPopupClick, itemSelected }) => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const wrapperRef = useRef(null);
   const { isWebView } = useIsWebView();
@@ -34,7 +34,7 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
                             ...customStyle,
                           }}
                           onPress={() => {
-                            onPopupClick && onPopupClick(item);
+                            onPopupClick && onPopupClick(item, itemSelected);
                             setIsPopUpVisible(false);
                           }}
                         >
@@ -58,7 +58,10 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
                       <CustomTouchableOpacity
                         key={index}
                         style={styles.popUpComponentStyle}
-                        onPress={() => onPopupClick(item)}
+                        onPress={() => {
+                          setIsPopUpVisible(false);
+                          onPopupClick && onPopupClick(item, itemSelected);
+                        }}
                       >
                         <CommonText customTextStyle={styles.deletetext}>
                           {item}

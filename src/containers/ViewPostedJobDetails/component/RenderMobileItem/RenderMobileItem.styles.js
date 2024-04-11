@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   },
   flex1: {
     flex: 1,
+    backgroundColor: colors.white,
   },
   font14: {
     fontSize: 14,

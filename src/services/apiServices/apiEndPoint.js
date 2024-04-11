@@ -85,3 +85,4 @@ export const CHANGE_STATUS = "/change-status";
 export const STATUS = "status";
 export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${APPLICANTS}${INTERVIEW}`;
 export const ACCEPTED = "/accepted";
+export const JOB_APPLICANTS = `/applicants`;
