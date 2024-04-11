@@ -12,7 +12,6 @@ const style = {
     gap: 4,
   },
   dropdown: {
-    paddingBottom: 6,
     paddingRight: 16,
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,

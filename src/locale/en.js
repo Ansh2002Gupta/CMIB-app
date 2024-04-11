@@ -201,7 +201,7 @@ const locale = {
   "label.left_brace": "left)",
   "label.times": "times!",
   "label.fileTooLargeError": "Uploaded file must be less than 5MB",
-  "label.videoTooLargeError": "Uploaded video must be less than 5MB",
+  "label.videoTooLargeError": "Uploaded video must be less than 50MB",
   "label.allowedFileFormatsError": "Only JPEG, PNG, SVG formats are allowed",
   "label.allowedDocumentFormatsError": "Only PDF format is allowed",
   "label.nonUploadableImageError":

@@ -21,6 +21,7 @@ const DatePickerModal = ({
   value,
   datePickerViewStyle,
   mode = "date",
+  datePickerContainer,
 }) => {
   const [open, setOpen] = useState(false);
   const handleDropDown = () => {
@@ -34,8 +35,9 @@ const DatePickerModal = ({
         style={[
           styles.container,
           open ? styles.focusedStyle : {},
-          customStyles,
           errorStyle,
+          customStyles,
+          datePickerContainer,
         ]}
       >
         <TouchableOpacity
