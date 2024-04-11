@@ -50,12 +50,16 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
-  const [filterState, setFilterState] = useState(initialFilterState);
+  const [filterState, setFilterState] = useState({
+    ["selectedActive/Inactive"]: [],
+    ["selectedApproved/NotApproved"]: [],
+  });
   const [filterOptions, setFilterOptions] = useState({
     ["Active/Inactive"]: "",
     ["Approved/NotApproved"]: "",
     searchData: "",
   });
+
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -108,7 +112,6 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       name: "Not Approved",
     },
   ];
-
   const handleFilterChange = (selectedFilter, filterName, keyName) => {
     setFilterState((prevState) => {
       const filterObj = customFilterInfo.find(
