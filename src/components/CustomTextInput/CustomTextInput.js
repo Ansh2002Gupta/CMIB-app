@@ -112,7 +112,6 @@ const CustomTextInput = (props) => {
     showMonthYearPicker,
     datePickerContainer,
     checkBoxTextStyle,
-    isEmptyField,
     ...remainingProps
   } = props;
 
@@ -483,9 +482,6 @@ const CustomTextInput = (props) => {
       </View>
     );
   };
-
-  //return empty space if isEmptyField is true
-  if (isEmptyField) return <></>;
 
   return (
     <View

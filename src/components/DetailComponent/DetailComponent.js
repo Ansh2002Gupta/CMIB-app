@@ -114,6 +114,8 @@ const DetailComponent = ({
   );
 
   const renderDetailContent = (detail) => {
+    if (detail?.isEmptyField) return <></>;
+    
     if (detail.showBadgeLabel) {
       return (
         <BadgeLabel
@@ -195,6 +197,8 @@ const DetailComponent = ({
   };
 
   const renderEditableContent = (detail, index) => {
+    if (detail?.isEmptyField) return <></>;
+
     if (detail.isMobileNumber) {
       return (
         <MobileNumberInput
