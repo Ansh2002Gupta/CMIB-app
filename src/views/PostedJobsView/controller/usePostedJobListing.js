@@ -194,6 +194,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   const handlePageChange = async (page) => {
     handlePagePerChange(page);
     await updateCurrentRecords({
+      search: filterOptions.searchData,
       perPage: rowsPerPage,
       page: page,
       status: filterOptions.activeorInctive,
@@ -208,6 +209,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       page: currentPage,
       status: filterOptions.activeorInctive,
       approved: filterOptions.approvedorNot,
+      search: filterOptions.searchData,
     });
   };
 
@@ -262,6 +264,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       }
     } else {
       await updateCurrentRecords({
+        search: filterOptions.searchData,
         status: selectedStatus,
         approved: selectedQueryType,
         perPage: rowsPerPage,

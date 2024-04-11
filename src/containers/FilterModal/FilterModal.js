@@ -18,6 +18,7 @@ import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./FilterModal.style";
 import DatePickerModal from "../../components/DatePickerModel";
+import TouchableImage from "../../components/TouchableImage";
 
 const FilterModal = ({
   filterCategory,
@@ -226,11 +227,15 @@ const FilterModal = ({
                             />
                           </CustomTouchableOpacity>
                         }
+                        style={styles.alignflexStart}
                         isLeftFillSpace
                         rightSection={
-                          <CustomImage
+                          <TouchableImage
                             source={images.iconArrowRight}
                             style={styles.arrowRight}
+                            onPress={() => {
+                              handleCategoryChange(item);
+                            }}
                           />
                         }
                       />

@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
-import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
 import styles from "./CheckBox.style";
+import { View } from "@unthinkable/react-core-components";
+import TouchableImage from "../TouchableImage";
 
 const CheckBox = ({
   customTextStyle,
@@ -41,15 +41,14 @@ const CheckBox = ({
   const rowCheckBox = [
     {
       content: (
-        <CustomTouchableOpacity
-          disabled={isDisabled}
-          onPress={() => handleCheckbox(id)}
-        >
-          <CustomImage
+        <View style={styles.containerStyle}>
+          <TouchableImage
             Icon={getCheckBoxIcon()}
             style={styles.iconStyle}
             source={getCheckBoxIcon()}
             isSvg
+            disabled={isDisabled}
+            onPress={() => handleCheckbox(id)}
           />
           <CommonText
             customTextStyle={{
@@ -57,10 +56,11 @@ const CheckBox = ({
               ...(isDisabled ? styles.disabledText : {}),
               ...customTextStyle,
             }}
+            customContainerStyle={styles.alignJustifyCenter}
           >
             {title}
           </CommonText>
-        </CustomTouchableOpacity>
+        </View>
       ),
     },
   ];
