@@ -204,6 +204,7 @@ const locale = {
   "label.videoTooLargeError": "Uploaded video must be less than 50MB",
   "label.allowedFileFormatsError": "Only JPEG, PNG, SVG formats are allowed",
   "label.allowedDocumentFormatsError": "Only PDF format is allowed",
+  "label.allowedVideoFormatsError": "Only MP4 format is allowed",
   "label.nonUploadableImageError":
     "Failed to upload this file, please try uploading a different image",
   "label.description": "Description",
@@ -474,7 +475,7 @@ const locale = {
   "label.from": "From",
   "label.to": "To",
   "label.empStrength": "Emp. Strength",
-  "label.grossSalary": "Gross Salary Drawn (p.a.)",
+  "label.grossSalary": "Gross Salary Drawn (p.a. in INR)",
   "label.areasOfWork": "Area(s) of Work",
   "label.name_of_examination": "Name of Examination",
   "label.name_of_examination_placeholder": "10th/Metric/S.S",
@@ -509,7 +510,7 @@ const locale = {
   "label.ready_to_place_outside_india":
     "Are you ready to be placed outside India",
   "label.preferred_region": "Preferred Region",
-  "label.expected_annual_salary": "Expected Annual Salary (Min : 750000)",
+  "label.expected_annual_salary": "Expected Annual Salary (Min : 750000 INR)",
   "label.preferences_kind_of_industry": "Preference for the Kind of Industry",
   "label.cv_photo": "CV & Photo",
   "label.cv_curriculum_vitae": "CV(Curriculum Vitae)",
