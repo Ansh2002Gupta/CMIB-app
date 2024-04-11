@@ -23,7 +23,6 @@ const UploadImage = ({
   onDeleteImage,
   setFileUploadResult,
   uploadPercentage,
-  isVideoUpload,
 }) => {
   const intl = useIntl();
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
