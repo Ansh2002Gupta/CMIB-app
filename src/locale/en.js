@@ -672,6 +672,7 @@ const locale = {
   "label.applicant_id": "Applicant ID",
   "label.field_cannot_be_empty": "Field cannot be empty",
   "label.proficiency": "Proficiency",
+  "label.nonEmptyField": "Please fill this field",
 };
 
 export default locale;

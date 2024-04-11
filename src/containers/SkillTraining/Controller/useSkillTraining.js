@@ -166,7 +166,6 @@ export const useSkillTraining = ({ state, isEditable }) => {
       );
     }
   }, [languagesData, skillsData, isEditable]);
-
   useEffect(() => {
     const { languages_known, it_skills, soft_skills, other_skills } = state;
     setLanguagesKnownState(
@@ -248,13 +247,34 @@ export const useSkillTraining = ({ state, isEditable }) => {
         const updatedState = dataToPerformAction[
           dataToPerformAction.length - 1
         ].map((item) => {
-          return { ...item, isActionToAdd: false };
+          return {
+            ...item,
+            isActionToAdd: false,
+            error: !item?.value
+              ? intl.formatMessage({ id: "label.nonEmptyField" })
+              : "",
+          };
         });
+
         dataToPerformAction[dataToPerformAction.length - 1] = updatedState;
         stateToPerformAction((prevState) => [
           ...prevState,
           updateItemToAdd(itemToAdd),
         ]);
+      } else {
+        const updatedState = dataToPerformAction[
+          dataToPerformAction.length - 1
+        ].map((item) => {
+          return {
+            ...item,
+            error: !item?.value
+              ? intl.formatMessage({ id: "label.nonEmptyField" })
+              : "",
+          };
+        });
+        dataToPerformAction[dataToPerformAction.length - 1] = updatedState;
+
+        stateToPerformAction([...dataToPerformAction]);
       }
     } else {
       stateToPerformAction((prevState) => {
@@ -272,7 +292,7 @@ export const useSkillTraining = ({ state, isEditable }) => {
   function updateValueByKey(skill, key, value) {
     return skill.map((item) => {
       if (item.key === key) {
-        return { ...item, value: value };
+        return { ...item, value: value, error: "" };
       }
       return item;
     });
@@ -294,6 +314,7 @@ export const useSkillTraining = ({ state, isEditable }) => {
         return {
           ...item,
           value: name,
+          error: "",
           checkBoxOptions: updatedCheckBoxOptions,
         };
       }

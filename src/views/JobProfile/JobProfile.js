@@ -76,7 +76,7 @@ const JobProfileTab = () => {
       <CustomTabs
         renderHeader={() => (
           <Row style={style.headerContainer}>
-            <CommonText fontWeight={"600"} customTextStyle={style.titleText}>
+            <CommonText fontWeight="600" customTextStyle={style.titleText}>
               {intl.formatMessage({ id: "label.job_profile" })}
             </CommonText>
             <EditButton isEditable={isEditable} handleEdit={handleEdit} />
