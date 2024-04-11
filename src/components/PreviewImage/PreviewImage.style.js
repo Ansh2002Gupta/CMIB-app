@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     minHeight: 150,
     padding: 10,
   },
-  noPadding: {
+  videoContainer: {
     padding: 0,
   },
   selectedImageStyle: {
