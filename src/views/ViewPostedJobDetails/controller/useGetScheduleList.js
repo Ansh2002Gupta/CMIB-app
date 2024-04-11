@@ -21,6 +21,8 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import CustomImage from "../../../components/CustomImage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -66,20 +68,7 @@ const useGetScheduleList = (id, onClickAction) => {
     errorWhileApplicantStatusChange,
   } = useChangeApplicantStatusApi();
 
-  const statusData = [
-    {
-      id: 1,
-      name: "Pending",
-    },
-    {
-      id: 2,
-      name: "Rejected",
-    },
-    {
-      id: 3,
-      name: "Shortlisted",
-    },
-  ];
+  const statusData = [];
 
   const queryTypeData = [];
   const getErrorDetails = () => {
@@ -256,14 +245,14 @@ const useGetScheduleList = (id, onClickAction) => {
       });
     }
   };
-  const onDateSorting = async (sortField) => {
-    // setIsAscendingOrder((prev) => !prev);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   sortField: sortField,
-    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
-    // });
+  const onNameSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortField: sortField,
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
+    });
   };
 
   let headingTexts = ["name"];
@@ -289,18 +278,60 @@ const useGetScheduleList = (id, onClickAction) => {
         return styles.cellTextStyle(12);
     }
   }
+  function tConvert(time) {
+    // Check correct time format and split into components
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      // If time format correct
+      time = time.slice(1); // Remove full string match value
+      time[5] = +time[0] < 12 ? " AM" : " PM"; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(""); // return adjusted time or original string
+  }
+  function convertDateFormat(dateStr) {
+    return dateStr.split(".").join("/");
+  }
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
+    const optionArray = [
+      intl.formatMessage({ id: "label.view_interview_details" }),
+      intl.formatMessage({ id: "label.edit_interview_details" }),
+    ];
+    if (
+      item.is_primary_schedule_accepted ||
+      item.is_alternate_schedule_accepted
+    ) {
+      optionArray.push(intl.formatMessage({ id: "label.offer_job" }));
+    }
     return [
       {
-        content: (
+        content: isHeading ? (
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {item?.name ?? "-"}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
             {item?.name ?? "-"}
           </CommonText>
         ),
+
         style: {
           ...commonStyles.columnStyle("25%"),
           ...styles.justifyContentCenter,
@@ -338,13 +369,27 @@ const useGetScheduleList = (id, onClickAction) => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-            }}
-          >
-            {item?.primary_interview_date ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_date ?? "-"}
+              </CommonText>
+            ) : (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_date
+                  ? convertDateFormat(item?.primary_interview_date)
+                  : "-"}
+              </CommonText>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("15%"),
@@ -354,13 +399,27 @@ const useGetScheduleList = (id, onClickAction) => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-            }}
-          >
-            {item?.primary_interview_time ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_time ?? "-"}
+              </CommonText>
+            ) : (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_time
+                  ? tConvert(item?.primary_interview_time)
+                  : "-"}
+              </CommonText>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("16%"),
@@ -374,12 +433,7 @@ const useGetScheduleList = (id, onClickAction) => {
           <View>
             {!isHeading && (
               <PopupMessage
-                message={[
-                  intl.formatMessage({ id: "label.view_interview_details" }),
-                  intl.formatMessage({ id: "label.edit_interview_details" }),
-
-                  intl.formatMessage({ id: "label.offer_job" }),
-                ]}
+                message={optionArray}
                 onPopupClick={(selectedItem) => {
                   if (
                     selectedItem ===

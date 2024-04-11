@@ -113,6 +113,9 @@ export const formatDate = (date, format = "DD/MM/YYYY") => {
   return dayjs(date).format(format);
 };
 
+export const formatTime = (dateString, format = "hh:mm A") => {
+  return dayjs(dateString).format(format);
+};
 export const extractFilename = (fileUri) => {
   const parts = fileUri.split("/");
   const filename = parts.pop() || "";
@@ -401,6 +404,8 @@ export const getQuestionType = {
 };
 export const getDecryptApiData = (apiData) => {
   let obj = {};
+  const startDate = new Date(apiData.opening_date.toString().split(" ")[0]);
+  const endDate = new Date(apiData.closing_date.toString().split(" ")[0]);
   apiData.locations = Array.isArray(apiData.locations) ? apiData.locations : [];
   apiData.functional_areas = Array.isArray(apiData.functional_areas)
     ? apiData.functional_areas
@@ -460,8 +465,8 @@ export const getDecryptApiData = (apiData) => {
     : {}; //
   obj.essentialQualification = apiData.essential_qualification;
   obj.desiredQualification = apiData.desired_qualification;
-  obj.jobOpeningDate = apiData.opening_date;
-  obj.jobClosingDate = apiData.closing_date;
+  obj.jobOpeningDate = startDate;
+  obj.jobClosingDate = endDate;
   obj.minimumSalary = Math.trunc(apiData.min_salary);
   obj.maximumSalary = Math.trunc(apiData.max_salary);
   obj.numberOfVacancies = apiData.vacancy;
@@ -568,7 +573,7 @@ export const convertToTime = ({ dateString, format24Hour = true }) => {
 export const formateDateandTime = (date, time) => {
   const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
   const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
-  return formattedDate + " " + formattedTime;
+  return formattedDate + "" + formattedTime;
 };
 
 export const areAllValuesEmpty = (obj) => {

@@ -76,17 +76,6 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
 
   const isTicketListingLoading = changeJobStatusLoading || isLoading;
   const isError = isErrorGetPostedJob || ischangeJobStatusError;
-  useEffect(() => {
-    if (isSuccess) {
-      updateCurrentRecords({
-        perPage: rowsPerPage,
-        page: currentPage,
-        status: filterOptions.activeorInctive,
-        approved: filterOptions.approvedorNot,
-      });
-    }
-  }, [isSuccess]);
-
   const statusData = [
     {
       id: 1,
@@ -325,7 +314,9 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
             ) : (
               <TouchableOpacity
                 onPress={() => {
-                  navigate(navigations.JOB_PROFILE);
+                  navigate(
+                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=0`
+                  );
                 }}
                 style={styles.cursorStyle}
               >
@@ -447,6 +438,13 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 isToggled={item.status == 1}
                 onChange={() => {
                   handleUseChangeJob(item.id);
+                  let temp = currentRecords.map((items) => {
+                    if (items.id === item.id) {
+                      return { ...items, status: item.status == 0 ? 1 : 0 };
+                    }
+                    return items;
+                  });
+                  setCurrentRecords(temp);
                 }}
               />
             )}
