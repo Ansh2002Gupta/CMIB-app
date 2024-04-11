@@ -100,15 +100,19 @@ const useJobApplicants = () => {
     },
   });
 
-  const { makeRequest: handleStatus, isLoading: isUpdatingApplicantStatus } =
-    usePatch({
-      url:
-        USER_TYPE_COMPANY +
-        JOBS +
-        JOB_APPLICANTS +
-        `/${showCurrentPopupmessage}` +
-        STATUS,
-    });
+  const {
+    makeRequest: handleStatus,
+    isLoading: isUpdatingApplicantStatus,
+    error: errorWhileUpdatingStatus,
+    setError: setErrorStatus,
+  } = usePatch({
+    url:
+      USER_TYPE_COMPANY +
+      JOBS +
+      JOB_APPLICANTS +
+      `/${showCurrentPopupmessage}` +
+      STATUS,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -460,6 +464,8 @@ const useJobApplicants = () => {
     allDataLoaded,
     currentPage,
     error: errorWhileFetchingJobApplicantListing,
+    errorWhileUpdatingStatus,
+    setErrorStatus,
     fetchingJobApplicantListing,
     filterApplyHandler,
     filterCategory,

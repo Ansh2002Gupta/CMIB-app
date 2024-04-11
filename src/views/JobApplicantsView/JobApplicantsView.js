@@ -20,6 +20,7 @@ import {
   ROWS_PER_PAGE_ARRAY,
 } from "../../constants/constants";
 import styles from "./JobApplicantsView.style";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const JobApplicants = () => {
   const intl = useIntl();
@@ -28,6 +29,8 @@ const JobApplicants = () => {
     allDataLoaded,
     currentPage,
     error,
+    errorWhileUpdatingStatus,
+    setErrorStatus,
     fetchingJobApplicantListing,
     filterApplyHandler,
     filterCategory,
@@ -151,6 +154,12 @@ const JobApplicants = () => {
               <ErrorComponent
                 errorMsg={error.data.message}
                 onRetry={() => fetchingJobApplicantListing()}
+              />
+            )}
+            {!!errorWhileUpdatingStatus && (
+              <ToastComponent
+                toastMessage={errorWhileUpdatingStatus}
+                onDismiss={() => setErrorStatus("")}
               />
             )}
           </>
