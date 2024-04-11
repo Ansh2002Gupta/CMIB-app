@@ -72,6 +72,7 @@ const preferences_details = (intl) => [
       isMandatory: true,
       label: "label.expected_annual_salary",
       placeholder: "label.expected_annual_salary",
+      isNumeric: true,
       validate: (value) => {
         if (!value) {
           return intl.formatMessage({
