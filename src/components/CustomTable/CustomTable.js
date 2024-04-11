@@ -22,12 +22,6 @@ import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
 
-// const initialFilterState = {
-//   selectedStatus: [],
-//   selectedQueryType: [],
-//   activeCategories: [],
-// };
-
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,

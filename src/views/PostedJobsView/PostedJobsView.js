@@ -110,7 +110,6 @@ const PostedJobsView = () => {
             <CustomTable
               {...{
                 customFilterInfo,
-
                 allDataLoaded,
                 currentPage,
                 currentRecords,
