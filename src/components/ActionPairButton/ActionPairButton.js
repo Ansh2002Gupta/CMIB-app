@@ -18,6 +18,8 @@ const ActionPairButton = ({
   isButtonTwoGreen,
   isDisabled,
   isDisabledLeft,
+  isButtonOneDisabled,
+  isDisabled: isButtonTwoDisabled,
   onPressButtonOne,
   onPressButtonTwo,
 }) => {
@@ -37,7 +39,7 @@ const ActionPairButton = ({
       style={{ ...styles.containerStyle, ...customContainerStyle }}
       leftSection={
         <CustomButton
-          disabled={isDisabledLeft}
+          disabled={isButtonOneDisabled || isDisabledLeft}
           isLoading={displayLoaderLeft}
           iconLeft={iconLeft}
           onPress={onPressButtonOne}
@@ -51,7 +53,7 @@ const ActionPairButton = ({
       }
       rightSection={
         <CustomButton
-          disabled={isDisabled}
+          disabled={isButtonTwoDisabled}
           customStyle={{ customTextStyle: buttonTwoTextStyle }}
           iconRight={iconRight}
           isLoading={displayLoader}

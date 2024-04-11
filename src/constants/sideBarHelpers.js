@@ -99,6 +99,11 @@ const caJobsMenu = [
     icon: "iconPostedJobs",
   },
   {
+    label: "Applied Jobs",
+    key: navigations.APPLIED_JOBS,
+    icon: "iconJobSeekers",
+  },
+  {
     label: "Job Applicants",
     key: navigations.JOB_APPLICANTS,
     icon: "iconJobApplicants",
