@@ -231,6 +231,7 @@ const DetailComponent = ({
         indexNumber={index}
         isSelected="isSelected"
         indexField="selectedIndex"
+        isEmptyField={detail?.isEmptyField ?? false}
         options={detail.options || []}
         isMultiline={detail?.isMultiline}
         isCheckBoxSelection={detail?.isCheckBoxSelection}

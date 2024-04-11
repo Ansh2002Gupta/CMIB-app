@@ -37,6 +37,7 @@ const preferences_details = (intl) => [
         }
       },
     },
+    { isEmptyField: true },
   ],
   [
     {
@@ -247,7 +248,7 @@ export const useJobPreference = ({
     let error = false;
     [...preferences_details_state].forEach((row) => {
       row.map((item) => {
-        if (item.isMandatory && !item?.isToggle) {
+        if (item?.isMandatory && !item?.isToggle) {
           if (
             item?.error ||
             !state[item.key] ||
