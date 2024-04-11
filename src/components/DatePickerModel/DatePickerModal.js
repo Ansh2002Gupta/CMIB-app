@@ -29,7 +29,7 @@ function DatePickerModal({
   showTimeSelect,
   showMonthYearPicker,
   datePickerContainer,
-  dateFormate
+  dateFormate,
 }) {
   const [open, setOpen] = useState(false);
   const intl = useIntl();
