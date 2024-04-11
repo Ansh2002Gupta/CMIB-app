@@ -36,8 +36,8 @@ import useChangeJobStatusApi from "../../../services/apiServices/hooks/useChange
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const initialFilterState = {
-  selectedActiveInactive: [],
-  selectedapprovedNotapproved: [],
+  ["selectedActive/Inactive"]: [],
+  ["selectedApproved/NotApproved"]: [],
 };
 
 const usePostedJobListing = (onViewPress, onEditPress) => {
@@ -52,8 +52,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [filterState, setFilterState] = useState(initialFilterState);
   const [filterOptions, setFilterOptions] = useState({
-    ActiveInactive: "",
-    approvedNotapproved: "",
+    ["Active/Inactive"]: "",
+    ["Approved/NotApproved"]: "",
     searchData: "",
   });
   const [rowsPerPage, setRowPerPage] = useState(
@@ -92,8 +92,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       updateCurrentRecords({
         perPage: rowsPerPage,
         page: currentPage,
-        status: filterOptions.ActiveInactive,
-        approved: filterOptions.approvedNotapproved,
+        status: filterOptions["Active/Inactive"],
+        approved: filterOptions["Approved/NotApproved"],
       });
     }
   }, [isSuccess]);
@@ -152,18 +152,18 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   const customFilterInfo = [
     {
       refKey: "id",
-      name: "ActiveInactive",
+      name: "Active/Inactive",
       type: FILTER_TYPE_ENUM.CHECKBOX,
       options: statusData,
-      selectedOptions: filterState?.selectedActiveInactive,
+      selectedOptions: filterState?.["selectedActive/Inactive"],
       handler: handleFilterChange,
     },
     {
       refKey: "id",
-      name: "ApprovedNotapproved",
+      name: "Approved/NotApproved",
       type: FILTER_TYPE_ENUM.CHECKBOX,
       options: queryTypeData,
-      selectedOptions: filterState?.selectedApprovedNotapproved,
+      selectedOptions: filterState?.["selectedApproved/NotApproved"],
       handler: handleFilterChange,
     },
   ];
@@ -239,8 +239,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         queryParamsObject: {
           perPage: rowsPerPage,
           page: nextPage,
-          status: filterOptions.ActiveInactive,
-          approved: filterOptions.approvedNotapproved,
+          status: filterOptions["Active/Inactive"],
+          approved: filterOptions["Approved/NotApproved"],
         },
       });
 
@@ -267,8 +267,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: page,
-      status: filterOptions.ActiveInactive,
-      approved: filterOptions.approvedNotapproved,
+      status: filterOptions["Active/Inactive"],
+      approved: filterOptions["Approved/NotApproved"],
     });
   };
 
@@ -277,8 +277,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     await updateCurrentRecords({
       perPage: option.value,
       page: currentPage,
-      status: filterOptions.ActiveInactive,
-      approved: filterOptions.approvedNotapproved,
+      status: filterOptions["Active/Inactive"],
+      approved: filterOptions["Approved/NotApproved"],
     });
   };
 
@@ -289,8 +289,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       const newData = await fetchPostedJobs({
         queryParamsObject: {
           search: searchedData,
-          status: filterOptions.ActiveInactive,
-          approved: filterOptions.approvedNotapproved,
+          status: filterOptions["Active/Inactive"],
+          approved: filterOptions["Approved/NotApproved"],
         },
       });
       setCurrentRecords(newData?.records);
@@ -304,8 +304,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         search: searchedData,
         perPage: rowsPerPage,
         page: currentPage,
-        status: filterOptions.ActiveInactive,
-        approved: filterOptions.approvedNotapproved,
+        status: filterOptions["Active/Inactive"],
+        approved: filterOptions["Approved/NotApproved"],
       });
     }
   };
@@ -317,10 +317,10 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
 
   const filterApplyHandler = async (filterInfo) => {
     const currentFilterOptions = {
-      ActiveInactive: returnSelectedFilterOption(filterInfo, "ActiveInactive"),
-      approvedNotapproved: returnSelectedFilterOption(
+      ActiveInactive: returnSelectedFilterOption(filterInfo, "Active/Inactive"),
+      ApprovedNotApproved: returnSelectedFilterOption(
         filterInfo,
-        "approvedNotapproved"
+        "Approved/NotApproved"
       ),
     };
     setFilterOptions(currentFilterOptions);
@@ -330,8 +330,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       const newData = await fetchPostedJobs({
         queryParamsObject: {
           search: filterOptions.searchData,
-          status: currentFilterOptions.ActiveInactive,
-          approved: currentFilterOptions.approvedNotapproved,
+          status: currentFilterOptions["Active/Inactive"],
+          approved: currentFilterOptions["Approved/NotApproved"],
         },
       });
       setCurrentRecords(newData?.records);
@@ -342,8 +342,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       }
     } else {
       await updateCurrentRecords({
-        status: currentFilterOptions.ActiveInactive,
-        approved: currentFilterOptions.approvedNotapproved,
+        status: currentFilterOptions["Active/Inactive"],
+        approved: currentFilterOptions["Approved/NotApproved"],
         perPage: rowsPerPage,
         page: currentPage,
       });
@@ -354,7 +354,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   let subHeadingText = ["designation"];
   let statusText = ["status"];
   let tableIcon = images.iconMore;
-  let filterCategory = ["Active Inactive", "Approved Notapproved"];
+  let filterCategory = ["Active/Inactive", "Approved/Not Approved"];
   let isHeading = true;
 
   function getStatusStyle(status) {
