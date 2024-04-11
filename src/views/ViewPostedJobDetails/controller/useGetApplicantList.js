@@ -220,6 +220,19 @@ const useGetApplicantList = (id, onEditPress) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
+
+    if (
+      item.is_primary_accepted === null &&
+      item.is_alternate_accepted === null
+    ) {
+      const offerJobIndex = item.action.findIndex(
+        (action) => action.id === "offer_job"
+      );
+      if (offerJobIndex !== -1) {
+        item.action.splice(offerJobIndex, 1);
+      }
+    }
+
     return [
       {
         content: isHeading ? (
@@ -282,7 +295,6 @@ const useGetApplicantList = (id, onEditPress) => {
                 message={item?.action.map((item) => item.name)}
                 onPopupClick={(selectedItem) => {
                   onEditPress(selectedItem, item);
-                  // navigate(navigations.JOB_PROFILE);
                 }}
               />
             )}
