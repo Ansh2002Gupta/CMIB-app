@@ -212,7 +212,7 @@ const JobCardWeb = ({
               isDisabled={isLoading || !isApplyVisible}
               onPressButtonTwo={handleApply}
               onPressButtonOne={handleSaveAndRemove}
-              isButtonTwoGreen={isApplyVisible}
+              isButtonTwoGreen={isApplyVisible && !isLoading}
               iconLeft={{
                 leftIconSource: isSaved
                   ? images.iconArchiveSave

@@ -203,7 +203,7 @@ const JobCardMobile = ({
               leftSection={
                 <CustomButton
                   disabledStyle={style.disabledStyle}
-                  disabled={isApplyLoading || !isApplyVisible}
+                  disabled={isApplyLoading || !isApplyVisible || isLoading}
                   onPress={handleApply}
                   customStyle={{
                     customTextStyle: isApplyVisible
@@ -221,7 +221,9 @@ const JobCardMobile = ({
                   disabled={isLoading}
                   iconLeft={{
                     leftIconAlt: "left-saved",
-                    leftIconSource: images.iconSaveSlashBlue,
+                    leftIconSource: isSaved
+                      ? images.iconArchiveSaveMobile
+                      : images.iconSaveSlashBlue,
                   }}
                   onPress={handleSaveAndRemove}
                   customStyle={{ customTextStyle: style.customButtonTextStyle }}

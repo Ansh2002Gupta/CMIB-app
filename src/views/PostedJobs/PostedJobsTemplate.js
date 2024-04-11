@@ -20,7 +20,7 @@ const PostedJobsTemplate = ({ details, handleOpenModal, handleSaveRemove }) => {
     headerData,
   } = details;
 
-  const is_applied = true;
+  const is_applied = false;
   const is_saved = true;
 
   const otherDetails = functionalAreas?.length ? (
@@ -81,7 +81,7 @@ const PostedJobsTemplate = ({ details, handleOpenModal, handleSaveRemove }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView style={styles.scrollView}>
         <JobDetailHeader
           actionButtons={isWebView && actionButtons}
           data={headerData}
