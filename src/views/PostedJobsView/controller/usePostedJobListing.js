@@ -242,7 +242,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
     setFilterOptions((prev) => ({
       ...prev,
-      query_type: selectedQueryType,
+      approvedorNot: selectedQueryType,
     }));
     if (isMob) {
       setLoadingMore(false);
