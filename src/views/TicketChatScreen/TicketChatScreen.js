@@ -16,6 +16,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import useTicketDetails from "./controllers/useTicketDetails";
 import images from "../../images";
 import styles from "./TicketChatScreen.style";
+import CustomPopUpMessage from "../../components/CustomPopUpMessage/CustomPopUpMessage";
 
 const TicketChatScreen = () => {
   const location = useLocation();
@@ -114,11 +115,11 @@ const TicketChatScreen = () => {
                   }}
                 />
                 {showPopup && !isDetailsScreen && (
-                  <PopupMessage
+                  <CustomPopUpMessage
                     message={intl.formatMessage({
                       id: "label.view_ticket_details",
                     })}
-                    customStyle={styles.popmessageStyle}
+                    customStyle={styles.PopupMessageStyle}
                     onPopupClick={() => {
                       setIsDetailScreen(true);
                       handlePopup();

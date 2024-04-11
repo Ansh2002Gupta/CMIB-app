@@ -43,6 +43,10 @@ const styles = StyleSheet.create({
         maxWidth: "120px",
       },
     }),
+    flexWrap: "wrap",
+    wordBreak: "break-word",
+    overFlow: "hidden",
+    whiteSpace: "break-space",
   }),
   tableHeadingText: {
     color: colors.darkGrey,

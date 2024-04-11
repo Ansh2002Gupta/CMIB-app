@@ -1,23 +1,68 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import LoadingScreen from "../../components/LoadingScreen";
+import PersonalDetailsUI from "./PersonalDetailsUI";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useFetch from "../../hooks/useFetch";
 import { usePut } from "../../hooks/useApiRequest";
-import PersonalDetailsUI from "./PersonalDetailsUI";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
+import {
+  MEMBERS,
+  MEMBER_CA_JOB_PROFILE,
+  PERSONAL,
+  USER_TYPE_COMPANY,
+} from "../../services/apiServices/apiEndPoint";
 import { usePersonalDetails } from "./Controllers/usePersonalDetails";
 
 const PersonalDetails = ({ isEditable = true, handleEdit }) => {
+  const { id } = useParams();
+  const { isCompany, currentModule } = useGetCurrentUser();
+
   const {
-    data,
+    data: applicantPersonalData,
+    isLoading: isGettingapplicantPersonalDataLoading,
+    error: errorWhileGettingApplicantPersonalData,
+    fetchData: fetchingApplicantData,
+  } = useFetch({
+    url:
+      USER_TYPE_COMPANY + `/${currentModule}` + MEMBERS + `/${id}` + PERSONAL,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  const {
+    data: memberPersonalData,
     isLoading: isGettingPersonalData,
     error: errorWhileGettingPersonalData,
+    fetchData: fetchingMembersPersonalData,
   } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+
+  useEffect(() => {
+    if (currentModule) {
+      if (isCompany) {
+        fetchingApplicantData({});
+      } else {
+        fetchingMembersPersonalData({});
+      }
+    }
+  }, [currentModule]);
+
+  const data = isCompany ? applicantPersonalData : memberPersonalData;
+  const isLoading = isCompany
+    ? isGettingapplicantPersonalDataLoading
+    : isGettingPersonalData;
+  const errorWhileFetching = isCompany
+    ? errorWhileGettingApplicantPersonalData
+    : errorWhileGettingPersonalData;
 
   const {
     makeRequest: handleUpdate,
@@ -163,12 +208,12 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     });
   };
 
-  return isGettingPersonalData || isGettingDropdownData ? (
+  return isLoading || isGettingDropdownData ? (
     <LoadingScreen />
-  ) : errorWhileGettingPersonalData ? (
+  ) : errorWhileFetching ? (
     <ErrorComponent
       errorMsg={
-        errorWhileGettingPersonalData?.data?.message ||
+        errorWhileFetching?.data?.message ||
         GENERIC_GET_API_FAILED_ERROR_MESSAGE
       }
     />

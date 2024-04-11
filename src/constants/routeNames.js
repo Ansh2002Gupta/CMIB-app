@@ -24,6 +24,7 @@ export const navigations = {
   ALL_JOBS: "all-jobs",
   APPLICATION_FORM: "application-form",
   APPLIED_JOBS: "applied-jobs",
+  CANDIDATES: "candidates",
   JOB_APPLICANTS: "job-applicants",
   JOB_SEEKERS: "job-seekers",
   JOBS: "jobs",
@@ -38,5 +39,5 @@ export const navigations = {
   DETAILS_JOBS: "posted-jobs/:id",
   EDIT_JOB: "edit-job",
   JOB_PROFILE: "job-profile",
-  VIEW_JOB_DETAILS: "applicant-job-details",
+  APPLICANT_DETAILS: ":job_id/applicant-details/:id",
 };

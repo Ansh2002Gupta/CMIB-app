@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 
@@ -21,6 +21,11 @@ const CustomToggleComponent = ({
   value,
 }) => {
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
+  useEffect(() => {
+    if (typeof value !== "undefined") {
+      setSelectedToggleOption(value);
+    }
+  }, [value]);
   const { isWebView } = useIsWebView();
 
   const handleOptionSelect = (option) => {

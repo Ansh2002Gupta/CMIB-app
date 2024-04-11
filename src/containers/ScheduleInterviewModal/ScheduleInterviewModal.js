@@ -123,8 +123,10 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
       skipApiCallOnMount: true,
     },
   });
+  console.log("world", primaryInterviewType);
 
   const getRemoteInterviewDetails = (newData) => {
+    console.log("DATA", newData);
     setPrimaryInterviewType(2);
     setPrimaryDetails((prev) => ({
       ...prev,
@@ -186,6 +188,7 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
     if (interviewId) {
       const newData = await fetchData();
       const currentType = newData?.type.toLowerCase();
+      console.log("HELLO", currentType);
       if (currentType === "remote") {
         getRemoteInterviewDetails(newData);
       } else if (currentType === "telephonic") {
@@ -263,8 +266,8 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
     } else {
       updatatingInterview({
         body: payload,
-        onSuccessCallback: () => {
-          onClose();
+        onSuccessCallback: (data) => {
+          onClose(data);
         },
       });
     }

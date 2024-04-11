@@ -3,6 +3,7 @@ import { Platform } from "@unthinkable/react-core-components";
 
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
+import Candidates from "../views/Candidates/index";
 import DashboardView from "../views/Dashboard";
 import MyAccount from "../views/MyAccount";
 import ViewProfile from "../views/ViewProfile";
@@ -13,9 +14,10 @@ import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import Jobs from "../views/Jobs";
 import JobsView from "../views/JobsView/JobsView";
-import JobApplicantsView from "../views/JobApplicantsView/index";
+import JobApplicantsView from "../views/JobApplicantsView";
 import JobProfileTab from "../views/JobProfile";
 import JobSeekersView from "../views/JobSeekersView/index";
+import JobApplicantsDetails from "../views/JobApplicantsDetails";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
@@ -33,7 +35,6 @@ import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
-import ApplicantJobDetails from "../views/ApplicantJobDetails";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -247,18 +248,21 @@ const config = [
         element: <ViewPostedJobDetails />,
       },
       {
-        viewPath: `${navigations.DETAILS_JOBS}/${navigations.VIEW_JOB_DETAILS}`,
-        element: <ApplicantJobDetails />,
+        viewPath: `${navigations.JOBS}/${navigations.APPLICANT_DETAILS}`,
+        element: <JobApplicantsDetails />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,
         element: <JobApplicantsView />,
       },
       {
+        viewPath: `${navigations.JOB_APPLICANTS}/${navigations.APPLICANT_DETAILS}`,
+        element: <JobApplicantsDetails />,
+      },
+      {
         viewPath: navigations.JOB_SEEKERS,
         element: <JobSeekersView />,
       },
-
       {
         viewPath: navigations.SAVED_CANDIDATES,
         element: <SavedCandidatesView />,
@@ -271,6 +275,10 @@ const config = [
       {
         viewPath: navigations.JOBS,
         element: <Jobs />,
+      },
+      {
+        viewPath: navigations.CANDIDATES,
+        element: <Candidates />,
       },
     ],
   },

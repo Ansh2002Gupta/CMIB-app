@@ -574,7 +574,6 @@ const locale = {
   "label.contractual_period_month": "Contractual Period(Months)",
   "label.contractual_period_day": "Contractual Period(Days)",
   "label.applicants": "Applicants",
-  "label.schedule_interview": "Scheduled Interview",
   "label.view_questionaire": "Questionaire",
   "label.select_nationality": "Select Nationality",
   "label.select_job_type": "Select Job Type",
@@ -657,6 +656,10 @@ const locale = {
   "label.yrs": "yrs",
   "label.posted": "Posted",
   "label.ago": "ago",
+  "label.candidates": "Candidates",
+  "label.job_applicants": "Job Applicants",
+  "label.saved_candidates": "Saved Candidates",
+  "label.download_profile_resume": "Download Profile Resume",
   "label.postingAnyWhereRequired": "Posting anywhere in india is required",
   "label.transferableRequired": "Transferable post acceptable is required",
   "label.readyToPlaceRequired": "Ready to place india is required",
@@ -696,6 +699,13 @@ const locale = {
   "label.view_interview_details": "View Interview Details",
   "label.edit_interview_details": "Edit Interview Details",
   "label.schedule_interview": "Schedule Interview",
+  "label.actions": "Actions",
+  "label.applicant_details": "Applicant Details",
+  "label.save_applicant": "Save Applicant",
+  "label.saved_applicant": "Saved Applicant",
+  "label.updated_at": "Updated At",
+  "label.save_applicant_details": "Save Applicant Details",
+  "label.edit_schedule_interview": "Edit Schedule interview",
 };
 
 export default locale;

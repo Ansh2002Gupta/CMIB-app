@@ -18,10 +18,12 @@ import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
 const ViewScheduleInterview = ({ id }) => {
   const [isModalVisible, setIsModalVisible] = useState(null);
   const selectedApplicant = useRef(null);
+  const applicantId = useRef(null);
   const intl = useIntl();
 
   const onClickAction = (selectedItem, item) => {
-    selectedApplicant.current = item.id;
+    applicantId.current = item.id;
+    selectedApplicant.current = item.interview_id;
     setIsModalVisible(selectedItem);
   };
   const {
@@ -132,8 +134,10 @@ const ViewScheduleInterview = ({ id }) => {
           <ScheduleInterviewModal
             onClose={() => {
               setIsModalVisible(null);
+              selectedApplicant.current = null;
+              applicantId.current = null;
             }}
-            applicant_id={selectedApplicant.current}
+            applicant_id={applicantId.current}
             interviewId={selectedApplicant.current}
           />
         )}

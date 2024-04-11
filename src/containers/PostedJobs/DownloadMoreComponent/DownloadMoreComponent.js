@@ -27,7 +27,7 @@ const DownloadMoreComponent = ({ onPress }) => {
           </CommonText>
         </View>
       ) : (
-        <PopupMessage message={["Download More"]} />
+        <PopupMessage message={["Download More"]} isPopupModal />
       )}
     </View>
   );

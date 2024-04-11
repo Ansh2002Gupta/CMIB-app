@@ -673,3 +673,11 @@ export const GET_INTERVIEW_TYPE = {
   Telephonic: 1,
   Remote: 2,
 };
+export const JOB_APPLICANTS_HEADING = {
+  name: "Application Name",
+  applicantion_id: "Applicant ID",
+  job_id: "Job Id",
+  designation: "Designation",
+  job_status: "Active/Inactive",
+  status: "Status",
+};
