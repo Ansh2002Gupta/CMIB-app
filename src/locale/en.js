@@ -677,6 +677,7 @@ const locale = {
   "label.updated_at": "Updated At",
   "label.save_applicant_details": "Save Applicant Details",
   "label.edit_schedule_interview": "Edit Schedule interview",
+  "label.interview_id_not_found": "Interview ID not found",
 };
 
 export default locale;

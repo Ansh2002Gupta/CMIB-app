@@ -64,6 +64,8 @@ const useJobApplicants = () => {
   });
   const navigate = useNavigate();
 
+  const intl = useIntl();
+
   const popMessageRef = useRef(null);
   useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
   const currentModule = sideBarState?.selectedModule?.key;
@@ -242,14 +244,22 @@ const useJobApplicants = () => {
         setCurrentPopupMessage(-1);
         setModalsState((prev) => ({
           ...prev,
-          interviewModal: item?.interview_id,
+          interviewModal: !!item?.interview_id
+            ? item.interview_id
+            : setErrorStatus(
+                intl.formatMessage({ id: "label.interview_id_not_found" })
+              ),
         }));
       },
       schedule_interview: () => {
         setCurrentPopupMessage(-1);
         setModalsState((prev) => ({
           ...prev,
-          scheduleModal: item?.interview_id,
+          scheduleModal: !!item?.interview_id
+            ? item.interview_id
+            : setErrorStatus(
+                intl.formatMessage({ id: "label.interview_id_not_found" })
+              ),
         }));
       },
     };
