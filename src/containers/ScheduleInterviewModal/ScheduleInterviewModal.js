@@ -516,14 +516,15 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
       isIconCross
       onPressIconCross={onClose}
       onBackdropPress={onClose}
+      containerStyle={isLoading ? styles.modalContainer : {}}
     >
-      <ScrollView
-        showsVerticalScrollIndicator={isWebView}
-        style={{ ...styles.modalInnerContainer, ...styles.overflowStyle }}
-      >
-        {isLoading && !isErrorWhilefetching && <LoadingScreen />}
-        {!isLoading && !isErrorWhilefetching && (
-          <>
+      {isLoading && !isErrorWhilefetching && <LoadingScreen />}
+      {!isLoading && !isErrorWhilefetching && (
+        <>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ ...styles.modalInnerContainer, ...styles.overflowStyle }}
+          >
             {renderHorizontalLine()}
             <View>
               <TwoRow
@@ -583,34 +584,34 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
                 )}
               />
             </View>
-            <View style={isWebView ? styles.buttonWebStyle : {}}>
-              <View style={isWebView ? styles.subContainerStyle : {}}>
-                <ActionPairButton
-                  buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                  buttonTwoText={intl.formatMessage({ id: "label.schedule" })}
-                  customStyles={{
-                    ...isWebProps,
-                    customContainerStyle: commonStyles.customContainerStyle,
-                  }}
-                  isDisabled={isDisabled}
-                  displayLoader={
-                    isScheduleInterviewLoading || isUpdatingInterview
-                  }
-                  isButtonTwoGreen
-                  onPressButtonOne={onClose}
-                  onPressButtonTwo={handleScheduleInterview}
-                />
-              </View>
-            </View>
-            {!!apiErrors && (
-              <ToastComponent
-                toastMessage={apiErrors}
-                onDismiss={() => setApiError("")}
+          </ScrollView>
+          <View style={isWebView ? styles.buttonWebStyle : {}}>
+            <View style={isWebView ? styles.subContainerStyle : {}}>
+              <ActionPairButton
+                buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+                buttonTwoText={intl.formatMessage({ id: "label.schedule" })}
+                customStyles={{
+                  ...isWebProps,
+                  customContainerStyle: commonStyles.customContainerStyle,
+                }}
+                isDisabled={isDisabled}
+                displayLoader={
+                  isScheduleInterviewLoading || isUpdatingInterview
+                }
+                isButtonTwoGreen
+                onPressButtonOne={onClose}
+                onPressButtonTwo={handleScheduleInterview}
               />
-            )}
-          </>
-        )}
-      </ScrollView>
+            </View>
+          </View>
+          {!!apiErrors && (
+            <ToastComponent
+              toastMessage={apiErrors}
+              onDismiss={() => setApiError("")}
+            />
+          )}
+        </>
+      )}
       {isErrorWhilefetching && (
         <ErrorComponent
           errorMsg={errorMessageWhileFetching?.data?.message}
