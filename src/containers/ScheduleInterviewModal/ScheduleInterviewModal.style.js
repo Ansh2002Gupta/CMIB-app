@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingBottom: 16,
   },
+  modalContainer: {
+    height: deviceHeight * 0.5,
+  },
   modalInnerContainer: {
     ...Platform.select({
       ios: {

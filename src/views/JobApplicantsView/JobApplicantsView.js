@@ -7,6 +7,7 @@ import { TwoRow } from "../../core/layouts";
 import Chip from "../../components/Chip";
 import CommonText from "../../components/CommonText";
 import CustomTable from "../../components/CustomTable";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import TouchableImage from "../../components/TouchableImage";
@@ -26,33 +27,36 @@ const JobApplicants = () => {
   const {
     allDataLoaded,
     currentPage,
-    jobApplicantListingData,
+    error,
+    fetchingJobApplicantListing,
+    filterApplyHandler,
+    filterCategory,
     getColoumConfigs,
     getStatusStyle,
-    headingTexts,
-    isHeading,
-    isLoading,
-    subHeadingText,
-    statusText,
-    tableIcon,
-    totalcards,
-    filterApplyHandler,
     handleActions,
-    setModals,
-    setModalsState,
-    filterCategory,
-    queryTypeData,
-    statusData,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    headingTexts,
+    isError,
     isFirstPageReceived,
+    isLoading,
+    isHeading,
+    jobApplicantListingData,
     loadingMore,
     onIconPress,
-    showCurrentPopupmessage,
-    setCurrentPopupMessage,
+    queryTypeData,
     rowsPerPage,
+    setModals,
+    setModalsState,
+    setCurrentPopupMessage,
+    showCurrentPopupmessage,
+    statusData,
+    statusText,
+    subHeadingText,
+    tableIcon,
+    totalcards,
   } = useJobApplicants();
 
   const getMobileView = (item, index) => {
@@ -108,38 +112,48 @@ const JobApplicants = () => {
         }
         isBottomFillSpace
         bottomSection={
-          <CustomTable
-            {...{
-              allDataLoaded,
-              currentPage,
-              getColoumConfigs,
-              data: jobApplicantListingData,
-              tableHeading: JOB_APPLICANTS_HEADING,
-              isHeading,
-              headingTexts,
-              subHeadingText,
-              statusText,
-              getStatusStyle,
-              tableIcon,
-              rowsLimit: ROWS_PER_PAGE_ARRAY,
-              isTicketListingLoading: isLoading,
-              totalcards,
-              filterApplyHandler,
-              filterCategory,
-              queryTypeData,
-              statusData,
-              handleLoadMore,
-              handlePageChange,
-              handleRowPerPageChange,
-              handleSearchResults,
-              isFirstPageReceived,
-              loadingMore,
-              onIconPress,
-              rowsPerPage,
-              isTotalCardVisible: false,
-              mobileComponentToRender: getMobileView,
-            }}
-          />
+          <>
+            {!isError && (
+              <CustomTable
+                {...{
+                  allDataLoaded,
+                  currentPage,
+                  data: jobApplicantListingData,
+                  filterApplyHandler,
+                  filterCategory,
+                  getColoumConfigs,
+                  getStatusStyle,
+                  handleLoadMore,
+                  handlePageChange,
+                  handleRowPerPageChange,
+                  handleSearchResults,
+                  headingTexts,
+                  isHeading,
+                  isFirstPageReceived,
+                  isTicketListingLoading: isLoading,
+                  isTotalCardVisible: false,
+                  loadingMore,
+                  mobileComponentToRender: getMobileView,
+                  onIconPress,
+                  subHeadingText,
+                  statusText,
+                  statusData,
+                  totalcards,
+                  tableIcon,
+                  tableHeading: JOB_APPLICANTS_HEADING,
+                  rowsLimit: ROWS_PER_PAGE_ARRAY,
+                  rowsPerPage,
+                  queryTypeData,
+                }}
+              />
+            )}
+            {isError && (
+              <ErrorComponent
+                errorMsg={error.data.message}
+                onRetry={() => fetchingJobApplicantListing()}
+              />
+            )}
+          </>
         }
       />
       {!!setModals?.interviewModal && (

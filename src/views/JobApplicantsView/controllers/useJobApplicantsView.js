@@ -80,6 +80,8 @@ const useJobApplicants = () => {
     data: jobApplicantListing,
     isLoading: isJobApplicantListingLoading,
     fetchData: fetchingJobApplicantListing,
+    error: errorWhileFetchingJobApplicantListing,
+    isError: isErrorWhileFetchingJobApplicantListing,
   } = useFetch({
     url: USER_TYPE_COMPANY + JOB_APPLICANTS,
     otherOptions: {
@@ -125,8 +127,19 @@ const useJobApplicants = () => {
       }
       setIsFirstPageReceived(false);
     };
+
+    const fetchFilterData = async () => {
+      const requestedParams = {
+        level_1: "gender",
+      };
+
+      const newFilters = await fetchFilters({
+        queryParamsObject: requestedParams,
+      });
+    };
+
     fetchData();
-    // fetchFiltersData();
+    fetchFilterData();
   }, []);
 
   const updateCurrentRecords = async (params) => {
@@ -222,15 +235,17 @@ const useJobApplicants = () => {
         handleClickActions(9);
       },
       view_interview_details: () => {
+        setCurrentPopupMessage(-1);
         setModalsState((prev) => ({
           ...prev,
-          interviewModal: item?.job_applicantion_id,
+          interviewModal: item?.interview_id,
         }));
       },
       schedule_interview: () => {
+        setCurrentPopupMessage(-1);
         setModalsState((prev) => ({
           ...prev,
-          scheduleModal: item?.job_applicantion_id,
+          scheduleModal: item?.interview_id,
         }));
       },
     };
@@ -277,7 +292,7 @@ const useJobApplicants = () => {
       perPage: rowsPerPage,
       page: currentPage,
       sortBy: sortField,
-      sortDirection: !isAscendingOrder ? "asc" : "desc",
+      sortOrder: !isAscendingOrder ? "asc" : "desc",
     });
   };
 
@@ -442,32 +457,35 @@ const useJobApplicants = () => {
   const isLoading = isJobApplicantListingLoading || isUpdatingApplicantStatus;
 
   return {
+    allDataLoaded,
+    currentPage,
+    error: errorWhileFetchingJobApplicantListing,
+    fetchingJobApplicantListing,
     filterApplyHandler,
     filterCategory,
+    getColoumConfigs,
+    handleActions,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    headingTexts,
     isFirstPageReceived,
+    isError: isErrorWhileFetchingJobApplicantListing,
+    isLoading,
+    isHeading,
+    isUpdatingApplicantStatus,
+    jobApplicantListingData: currentRecords,
     loadingMore,
     onIconPress,
-    allDataLoaded,
-    rowsPerPage,
-    currentPage,
     queryTypeData: queryTypeData,
-    statusData: statusData,
-    getColoumConfigs,
-    handleActions,
+    rowsPerPage,
+    setCurrentPopupMessage,
     setModals,
     setModalsState,
-    isUpdatingApplicantStatus,
     showCurrentPopupmessage,
-    setCurrentPopupMessage,
     getStatusStyle,
-    headingTexts,
-    isHeading,
-    isLoading,
-    jobApplicantListingData: currentRecords,
+    statusData: statusData,
     subHeadingText,
     tableIcon,
     totalcards: jobApplicantListing?.meta?.total,
