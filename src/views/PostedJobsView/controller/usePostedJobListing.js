@@ -82,7 +82,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       name: "Active",
     },
     {
-      id: 2,
+      id: 0,
       name: "InActive",
     },
   ];
