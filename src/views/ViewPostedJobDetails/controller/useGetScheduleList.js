@@ -9,6 +9,8 @@ import {
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import {
+  DEFAULT_CATEGORY_FOR_FILTER_MODAL,
+  FILTER_TYPE_ENUM,
   JOB_STATUS_RESPONSE_CODE,
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
@@ -26,12 +28,17 @@ import CustomImage from "../../../components/CustomImage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
+const initialFilterState = {
+  selectedDate: [],
+};
+
 const useGetScheduleList = (id, onClickAction) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
+  const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.GetSchedule;
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const intl = useIntl();
@@ -41,6 +48,7 @@ const useGetScheduleList = (id, onClickAction) => {
     date: "",
     searchData: "",
   });
+  const [filterState, setFilterState] = useState(initialFilterState);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -127,6 +135,46 @@ const useGetScheduleList = (id, onClickAction) => {
   const indexOfLastRecord = currentPage * rowsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {
+    setFilterState((prevState) => {
+      const filterObj = customFilterInfo.find(
+        (info) => info.name === filterName
+      );
+      const filterKey = `selected${filterObj?.name}`;
+      const existingSelectedOptions = prevState[filterKey];
+      let newSelectedOptions = [];
+      if (!!existingSelectedOptions) {
+        if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
+          newSelectedOptions = existingSelectedOptions?.includes(
+            selectedFilter?.[keyName]
+          )
+            ? existingSelectedOptions?.filter((item) => {
+                return item !== selectedFilter?.[keyName];
+              })
+            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+        } else {
+          newSelectedOptions = selectedFilter.value;
+        }
+      }
+
+      return {
+        ...prevState,
+        [filterKey]: newSelectedOptions,
+      };
+    });
+  };
+
+  const customFilterInfo = [
+    {
+      refKey: "id",
+      name: "Date",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: statusData,
+      selectedOptions: filterState?.selectedDate,
+      handler: handleFilterChange,
+    },
+  ];
+
   const updateCurrentRecords = async (params) => {
     const newData = await fetchScheduleInterviews({
       queryParamsObject: params,
@@ -212,22 +260,27 @@ const useGetScheduleList = (id, onClickAction) => {
     }
   };
 
-  const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    const tempDate = Array.isArray(selectedQueryType)
-      ? dayjs(selectedQueryType[0]).format("YYYY-MM-DD")
-      : "";
-    setFilterOptions((prev) => ({
-      ...prev,
-      date: tempDate,
-    }));
+  const returnSelectedFilterOption = (filterInfo, filterName) => {
+    const filterObj = filterInfo?.find((obj) => obj.name === filterName);
+    return filterObj?.selectedOptions;
+  };
+
+  const filterApplyHandler = async (filterInfo) => {
+    const currentFilterOptions = {
+      date: returnSelectedFilterOption(filterInfo, "Date"),
+    };
+    setFilterOptions((prev) => {
+      return {
+        ...prev,
+        ...currentFilterOptions,
+      };
+    });
     if (isMob) {
       setLoadingMore(false);
       setCurrentPage(1);
       const newData = await fetchScheduleInterviews({
         queryParamsObject: {
-          search: filterOptions.searchData,
-          status: selectedStatus,
-          date: tempDate,
+          date: currentFilterOptions.date,
         },
       });
       setCurrentRecords(newData?.records);
@@ -238,13 +291,24 @@ const useGetScheduleList = (id, onClickAction) => {
       }
     } else {
       await updateCurrentRecords({
-        status: selectedStatus,
-        date: tempDate,
+        date: currentFilterOptions.date,
         perPage: rowsPerPage,
         page: currentPage,
       });
     }
   };
+
+  const onDateSorting = async (sortField) => {
+    //TODO: required in future.
+    // setIsAscendingOrder((prev) => !prev);
+    // await updateCurrentRecords({
+    //   perPage: rowsPerPage,
+    //   page: currentPage,
+    //   sortField: sortField,
+    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
+    // });
+  };
+
   const onNameSorting = async (sortField) => {
     setIsAscendingOrder((prev) => !prev);
     await updateCurrentRecords({
@@ -463,9 +527,12 @@ const useGetScheduleList = (id, onClickAction) => {
   return {
     allDataLoaded,
     currentPage,
+    customFilterInfo,
+    defaultCategory,
     fetchScheduleInterviews,
     filterApplyHandler,
     filterCategory,
+    filterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,
@@ -483,6 +550,8 @@ const useGetScheduleList = (id, onClickAction) => {
     loadingMore,
     queryTypeData,
     rowsPerPage,
+
+    setFilterState,
     statusData,
     statusText,
     subHeadingText,
