@@ -5,6 +5,8 @@ import { JobPreferences_keys, updateDropDownOptions } from "./utils";
 import { booleanToYesNo } from "../../../utils/util";
 import { numRegex } from "../../../constants/constants";
 
+const EXPECTED_MIN_SALARY = 750000;
+
 const preferences_details = (intl) => [
   [
     {
@@ -78,6 +80,11 @@ const preferences_details = (intl) => [
         if (value.length > 0 && !numRegex.test(String(value))) {
           return intl.formatMessage({
             id: "label.enterValidInput",
+          });
+        }
+        if (value.length > 0 && Number(value) < EXPECTED_MIN_SALARY) {
+          return intl.formatMessage({
+            id: "label.minExpectedSalary",
           });
         }
       },

@@ -79,7 +79,7 @@ const DropDownModal = ({
     const selectedIndex = data?.findIndex((item) => item.value === value);
     if (
       selectedIndex > -1 &&
-      selectedIndex < selectedOption.length &&
+      selectedIndex < selectedOption?.length &&
       flatListRef.current
     ) {
       const timer = setTimeout(() => {
@@ -154,7 +154,7 @@ const DropDownModal = ({
   };
 
   const scrollToIndex = (info) => {
-    if (flatListRef.current && selectedOption.length > info.index) {
+    if (flatListRef.current && selectedOption?.length > info.index) {
       scrollAnimation(info.index);
     }
   };

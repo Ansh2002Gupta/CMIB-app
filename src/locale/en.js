@@ -512,7 +512,9 @@ const locale = {
   "label.expected_annual_salary": "Expected Annual Salary (Min : 750000)",
   "label.preferences_kind_of_industry": "Preference for the Kind of Industry",
   "label.cv_photo": "CV & Photo",
+  "label.cv_curriculum_vitae": "CV(Curriculum Vitae)",
   "label.job_preferences": "Job Preferences",
+  "label.preferences_regarging_job": "Preference Regarding the Job",
   "label.photo": "Photo",
   "label.intro_video_upload":
     "Introduction Video Upload: Showcase Your Personality for Recruiters",
@@ -557,6 +559,7 @@ const locale = {
   "label.fromDateRequired": "From date is required",
   "label.toDateRequired": "To date is required",
   "label.enterValidInput": "Enter valid input",
+  "label.minExpectedSalary": "Min expected salary is 750000",
   "label.areaOfWorkRequired": "Areas of work is required",
   "label.workExperienceRequired": "Work experience is required",
   "label.currentSpecialisationRequired": "Current specialisation is required",
