@@ -26,6 +26,10 @@ const getFontFamily = (fontWeight) => {
 
 const style = {
   container: {
+    flexWrap: "wrap",
+    wordBreak: "break-word",
+    overFlow: "hidden",
+    whiteSpace: "break-space",
     ...Platform.select({
       web: {
         flexShrink: "unset",
