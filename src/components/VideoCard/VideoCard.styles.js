@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     position: "relative",
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: 8,
   },
   playIconBoxStyles: {},
   playIconStyles: {

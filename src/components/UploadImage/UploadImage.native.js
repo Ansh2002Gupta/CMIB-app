@@ -19,6 +19,7 @@ const UploadImage = ({
   hideIconDelete,
   isDocumentUpload,
   isUploadingImageToServer,
+  isVideoUpload,
   onDeleteImage,
   setFileUploadResult,
   uploadPercentage,
@@ -27,6 +28,12 @@ const UploadImage = ({
   const intl = useIntl();
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
   const imageUploadedToServer = fileUploadResult?.data;
+
+  const isVideoUploadProps = isVideoUpload
+    ? {
+        formatAsMp4: true,
+      }
+    : {};
 
   const onClickDeleteImage = () => {
     setFileUploadResult(null);
@@ -69,10 +76,11 @@ const UploadImage = ({
 
   const openImagePicker = () => {
     const options = {
-      mediaType: "photo",
+      mediaType: isVideoUpload ? "video" : "photo",
       includeBase64: false,
       maxHeight: 2000,
       maxWidth: 2000,
+      ...isVideoUploadProps,
     };
 
     launchImageLibrary(options, (response) => {
@@ -88,9 +96,9 @@ const UploadImage = ({
           intl.formatMessage({ id: "label.fileTooLargeError" })
         );
       } else {
-        let imageUri = response.uri || response.assets?.[0]?.uri;
-        let fileName = response.fileName || response.assets?.[0]?.fileName;
-        let type = response.type || response.assets?.[0]?.type;
+        let imageUri = response?.uri || response.assets?.[0]?.uri;
+        let fileName = response?.fileName || response.assets?.[0]?.fileName;
+        let type = response?.type || response.assets?.[0]?.type;
         const formData = createFormData(imageUri, fileName, type);
         handleFileUpload({
           file: formData,
@@ -110,6 +118,7 @@ const UploadImage = ({
             isEditable: !!imageUrl,
             hideIconDelete,
             isDocumentUpload,
+            isVideoUpload,
             onRemoveImage: onClickDeleteImage,
             source: {
               uri: imageUploadedToServer?.url || imageUrl || "",
@@ -125,6 +134,7 @@ const UploadImage = ({
               ? handleDocumentUpload
               : openImagePicker,
             isDocumentUpload,
+            isVideoUpload,
             isLoading: isUploadingImageToServer,
             uploadPercentage,
             isVideoUpload,
@@ -154,6 +164,7 @@ UploadImage.propTypes = {
   hideIconDelete: PropTypes.bool,
   isDocumentUpload: PropTypes.bool,
   isUploadingImageToServer: PropTypes.bool,
+  isVideoUpload: PropTypes.bool,
   onDeleteImage: PropTypes.func,
   setFileUploadResult: PropTypes.func,
   uploadPercentage: PropTypes.string,

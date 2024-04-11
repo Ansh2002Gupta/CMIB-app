@@ -22,15 +22,15 @@ const PreviewImage = ({
 }) => {
   return (
     <View
-      style={[
-        styles.selectedImageContainer,
-        isEditable && styles.showImageStyle,
-      ]}
+      style={{
+        ...styles.selectedImageContainer,
+        ...(isEditable ? styles.showImageStyle : {}),
+      }}
     >
       <View
         style={{
           ...styles.imageContainer,
-          ...(isVideoUpload ? styles.noPadding : {}),
+          ...(isVideoUpload ? styles.videoContainer : {}),
         }}
       >
         {isDocumentUpload ? (
