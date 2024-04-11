@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { FlatList, Platform, View } from "@unthinkable/react-core-components";
@@ -6,35 +6,40 @@ import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import AddTicketModal from "../AddTicketModal/AddTicketModal";
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
+import PopupMessage from "../PopupMessage/PopupMessage";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import useOutsideClick from "../../hooks/useOutsideClick";
 import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
 
-const initialFilterState = {
-  selectedStatus: [],
-  selectedQueryType: [],
-  activeCategories: [],
-};
+// const initialFilterState = {
+//   selectedStatus: [],
+//   selectedQueryType: [],
+//   activeCategories: [],
+// };
 
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
-  currentPage,
   containerStyle,
+  currentPage,
+  customFilterInfo,
+  customModal,
   data,
+  defaultCategory,
   filterApplyHandler,
   filterCategory,
+  initialFilterState = {},
   getColoumConfigs,
   getStatusStyle,
   handleLoadMore,
@@ -49,42 +54,55 @@ const CustomTable = ({
   isHeading,
   isTicketListingLoading,
   isFirstPageReceived,
-  isTotalCardVisible,
   isFilterVisible = true,
+  isTotalCardVisible,
+  isStatusTextBoolean,
   loadingMore,
   mobileComponentToRender,
   onIconPress,
   placeholder,
-  queryTypeData,
+  popUpMessage,
   rowsLimit,
   rowsPerPage,
-  statusData,
+  renderCalendar,
+  selectedFilterOptions,
+  setSelectedFilterOptions,
   showSearchBar,
+  showJobOfferResponseModal,
+  showInterviewTimeModal,
   statusText,
   subHeadingText,
+  statusLabels,
+  showPopUpWithID,
+  setShowPopUpWithID,
+  setModalData,
+  setShowJobOfferResponseModal,
+  setShowInterviewTimeModal,
   tableHeading,
   tableIcon,
   totalcards,
   ThirdSection,
-  renderCalendar,
+  unit,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWeb = Platform.OS.toLowerCase() === "web";
 
-  const [showFilterOptions, setShowFilterOptions] = useState(false);
-  const [filterState, setFilterState] = useState(initialFilterState);
+  const popUpRef = useRef(null);
 
-  const isFilterCount =
-    !!filterState?.selectedStatus.length ||
-    !!filterState?.selectedQueryType.length;
+  useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
+  const [showFilterOptions, setShowFilterOptions] = useState(false);
+
+  const isFilterCount = !!selectedFilterOptions
+    ? Object.values(selectedFilterOptions).find((state) => !!state.length)
+    : 0;
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
   };
 
-  const onApplyFilter = ({ selectedStatus, selectedQueryType }) => {
-    filterApplyHandler({ selectedStatus, selectedQueryType });
+  const onApplyFilter = (customFilterInfo) => {
+    filterApplyHandler(customFilterInfo);
     handleFilterModal();
   };
 
@@ -96,6 +114,17 @@ const CustomTable = ({
       };
 
   const webProps = isWeb ? { size: "xs" } : {};
+
+  const getFilterCount = () => {
+    const selectedValue = Object.values(selectedFilterOptions);
+    let filterCount = 0;
+    for (let key in selectedValue) {
+      filterCount += Array.isArray(selectedValue[key])
+        ? selectedValue[key].length
+        : 0;
+    }
+    return filterCount;
+  };
 
   return (
     <View style={isWebView ? styles.container : styles.mobileMainContainer}>
@@ -134,8 +163,7 @@ const CustomTable = ({
                             customTextStyle={styles.activeTicketsText}
                             fontWeight={"600"}
                           >
-                            {filterState?.selectedStatus.length +
-                              filterState?.selectedQueryType.length}
+                            {getFilterCount()}
                           </CommonText>
                         )}
                       </CustomTouchableOpacity>
@@ -185,7 +213,7 @@ const CustomTable = ({
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
                         style={
-                          data.length
+                          !!data
                             ? styles.columnHeaderStyle
                             : styles.columnHeaderStyleWithBorder
                         }
@@ -204,47 +232,83 @@ const CustomTable = ({
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
-                              <>
-                                {mobileComponentToRender ? (
-                                  mobileComponentToRender(item, index)
-                                ) : (
-                                  <View style={styles.mobileContainer}>
-                                    <View>
-                                      <CommonText
-                                        fontWeight={"600"}
-                                        customTextStyle={styles.cellTextStyle()}
-                                      >
-                                        {getRenderText(item, headingTexts)}
-                                      </CommonText>
-                                      <CommonText
-                                        customTextStyle={styles.tableQueryText}
-                                      >
-                                        {getRenderText(item, subHeadingText)}
-                                      </CommonText>
-                                    </View>
-                                    <View style={styles.rowsPerPageWeb}>
-                                      <Chip
-                                        label={getRenderText(item, statusText)}
-                                        style={getStatusStyle(item.status)}
-                                      />
-                                      <TouchableImage
-                                        onPress={() => {
-                                          onIconPress(item);
+                              <View style={styles.mobileContainer}>
+                                <View>
+                                  <CommonText
+                                    fontWeight={"600"}
+                                    customTextStyle={styles.cellTextStyle()}
+                                  >
+                                    {getRenderText(item, headingTexts)}
+                                  </CommonText>
+                                  <CommonText
+                                    customTextStyle={styles.tableQueryText}
+                                  >
+                                    {getRenderText(item, subHeadingText)}
+                                  </CommonText>
+                                </View>
+                                <View style={styles.rowsPerPageWeb}>
+                                  <Chip
+                                    label={
+                                      isStatusTextBoolean
+                                        ? getRenderText(item, statusText) ===
+                                          "1"
+                                          ? statusLabels[1]
+                                          : statusLabels[0]
+                                        : getRenderText(item, statusText)
+                                    }
+                                    style={
+                                      isStatusTextBoolean
+                                        ? getStatusStyle(
+                                            getRenderText(item, statusText) ===
+                                              "1"
+                                              ? statusLabels[1].toLowerCase()
+                                              : statusLabels[0].toLowerCase()
+                                          )
+                                        : getStatusStyle(item?.status)
+                                    }
+                                  />
+                                  {showPopUpWithID === item?.id && (
+                                    <View ref={popUpRef}>
+                                      <PopupMessage
+                                        message={popUpMessage}
+                                        customStyle={styles.mobilePopUpPosition}
+                                        onPopupClick={() => {
+                                          if (
+                                            popUpMessage ===
+                                            intl.formatMessage({
+                                              id: "label.respond_to_job_offer",
+                                            })
+                                          ) {
+                                            setShowJobOfferResponseModal(
+                                              (prev) => !prev
+                                            );
+                                            setModalData(item);
+                                          } else {
+                                            setShowInterviewTimeModal(
+                                              (prev) => !prev
+                                            );
+                                          }
+                                          setShowPopUpWithID(-1);
                                         }}
-                                        source={tableIcon}
-                                        style={styles.iconTicket}
                                       />
                                     </View>
-                                  </View>
-                                )}
-                              </>
+                                  )}
+                                  <TouchableImage
+                                    onPress={() => {
+                                      onIconPress(item);
+                                    }}
+                                    source={tableIcon}
+                                    style={styles.iconTicket}
+                                  />
+                                </View>
+                              </View>
                             )}
                           </>
                         );
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if (!data.length)
+                        if (!data?.length)
                           return (
                             <CommonText
                               customContainerStyle={styles.loadingStyleNoData}
@@ -317,29 +381,20 @@ const CustomTable = ({
       {showFilterOptions && (
         <FilterModal
           {...{
-            data,
+            defaultCategory,
+            filterInfo: customFilterInfo,
             filterCategory,
-            filterState,
+            filterState: selectedFilterOptions,
             initialFilterState,
-            setFilterState,
-            setShowFilterOptions,
             onApplyFilter,
-            statusData,
-            queryTypeData,
-            renderCalendar,
+            setFilterState: setSelectedFilterOptions,
+            setShowFilterOptions,
+            unit,
           }}
         />
       )}
-      {addNewTicket && (
-        <AddTicketModal
-          queryTypeData={queryTypeData}
-          onPressButtonOne={handleTicketModal}
-          onPressButtonTwo={(queryType, enterQuery) => {
-            handleSaveAddTicket(queryType, enterQuery);
-            handleTicketModal();
-          }}
-        />
-      )}
+      {(addNewTicket || showJobOfferResponseModal || showInterviewTimeModal) &&
+        customModal}
     </View>
   );
 };
@@ -379,12 +434,22 @@ CustomTable.propTypes = {
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   loadingMore: PropTypes.bool.isRequired,
-  onIconPress: PropTypes.func.isRequired,
+  onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
   rowsLimit: PropTypes.array.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   showSearchBar: PropTypes.bool,
   statusData: PropTypes.array,
+  workModeData: PropTypes.array,
+  jobTypeData: PropTypes.array,
+  experienceData: PropTypes.array,
+  locationData: PropTypes.array,
+  educationData: PropTypes.array,
+  salaryData: PropTypes.array,
+  departmentData: PropTypes.array,
+  freshnessData: PropTypes.array,
+  companyData: PropTypes.array,
+  industryData: PropTypes.array,
   statusText: PropTypes.array,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,

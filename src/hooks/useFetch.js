@@ -35,9 +35,9 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
 
   const { skipApiCallOnMount } = otherOptions || {};
 
-  const fetchData = async ({ queryParamsObject } = {}) => {
+  const fetchData = async ({ overrideUrl, queryParamsObject } = {}) => {
     try {
-      let modifiedURL = url;
+      let modifiedURL = overrideUrl || url; // Use overrideUrl if provided, otherwise use the default url
       if (queryParamsObject && objectToQueryString(queryParamsObject)) {
         modifiedURL = `${url}?${objectToQueryString(queryParamsObject)}`;
       }
