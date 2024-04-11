@@ -61,7 +61,13 @@ export const MINIMUM_SALARY_LIMIT = 0;
 export const MAXIMUM_SALARY_LIMIT = 100;
 export const MINIMUM_FRESHNESS_LIMIT = 0;
 export const MAXIMUM_FRESHNESS_LIMIT = 100;
-export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = "WorkMode";
+export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = {
+  AppliedJobs: "Work Mode",
+  TicketListing: "Status",
+  PostedJobs: "Active Inactive",
+  Feedback: "Status",
+  GetSchedule: "Date",
+};
 
 export const FILTER_TYPE_ENUM = { CHECKBOX: "checkbox", SLIDER: "slider" };
 
@@ -555,42 +561,6 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
-export const STATUS_OPTIONS = {
-  INTERVIEW_SCHEDULED: "interview scheduled",
-  JOB_OFFERED: "job offered",
-  JOB_NOT_OFFERED: "job not offered",
-  NO_RESPONSE: "No response from applicant for interview",
-  OFFER_ACCEPTED: "offer accepted",
-  OFFERE_REJECTED: "offer rejected",
-  PENDING: "pending",
-  REJECTED: "rejected",
-  SHORTLISTED: "shortlisted",
-};
-
-export const DATA_FORMATTER_LOCALES = ["en-US"];
-
-export const DATA_FORMATTER_OPTIONS = {
-  day: "numeric",
-  month: "long",
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-};
-
-export const API_DATA_FOR_INTERVIEW_SCHEDULING = [
-  {
-    id: 42,
-    primary_schedule: "2024-03-01 14:53:12",
-    alternate_schedule: "2024-04-03 21:05:58",
-    type: "Face-To-Face",
-    alternate_type: "Telephonic",
-  },
-];
-
-export const KEYS = {
-  OFFER_ACCEPTED: 7,
-  OFFERE_REJECTED: 8,
-};
 export const color = [
   "#000000",
   "#e60000",
@@ -733,4 +703,40 @@ export const GET_INTERVIEW_TYPE = {
   "Face-To-Face": 0,
   Telephonic: 1,
   Remote: 2,
+};
+export const STATUS_OPTIONS = {
+  INTERVIEW_SCHEDULED: "interview scheduled",
+  JOB_OFFERED: "job offered",
+  JOB_NOT_OFFERED: "job not offered",
+  NO_RESPONSE: "No response from applicant for interview",
+  OFFER_ACCEPTED: "offer accepted",
+  OFFERE_REJECTED: "offer rejected",
+  PENDING: "pending",
+  REJECTED: "rejected",
+  SHORTLISTED: "shortlisted",
+};
+
+export const DATA_FORMATTER_LOCALES = ["en-US"];
+
+export const DATA_FORMATTER_OPTIONS = {
+  day: "numeric",
+  month: "long",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+};
+
+export const API_DATA_FOR_INTERVIEW_SCHEDULING = [
+  {
+    id: 42,
+    primary_schedule: "2024-03-01 14:53:12",
+    alternate_schedule: "2024-04-03 21:05:58",
+    type: "Face-To-Face",
+    alternate_type: "Telephonic",
+  },
+];
+
+export const KEYS = {
+  OFFER_ACCEPTED: 7,
+  OFFERE_REJECTED: 8,
 };

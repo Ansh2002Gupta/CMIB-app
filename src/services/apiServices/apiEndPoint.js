@@ -27,11 +27,11 @@ export const COMPANY_DELETE_USER = `${USER_TYPE_COMPANY}/user`;
 export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
-export const JOBS = "jobs";
 export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`;
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
 export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
+export const JOBS = "jobs";
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
@@ -39,21 +39,20 @@ export const MEMBER_LOGIN = `${USER_TYPE_MEMBER}/login`;
 export const MEMBER_VERIFY_OTP = `${USER_TYPE_MEMBER}/otp/verify`;
 export const MEMBER_PERSONAL_DETAILS = `${USER_TYPE_MEMBER}/profile`;
 export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
+export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
+export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
+export const SAVE = `/save`;
 export const MEMBER_JOBS_LISTING = `${USER_TYPE_MEMBER}/${JOBS}/apply`;
 export const OFFER_RESPONSE = `${USER_TYPE_ADMIN}/job/applicants`;
 export const JOB_LOCATION_OPTIONS = `${USER_TYPE_COMPANY}/job/locations`;
 export const JOB_TYPE_OPTIONS = `${USER_TYPE_COMPANY}/job-type`;
 export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
-export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
-export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
-export const SAVE = `/save`;
 
 //sub routes
 export const APPLICANTS = "/applicants";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
 export const INTERVIEWS = "/interviews";
 export const INTERVIEW = "/interview";
-export const ACCEPTED = "/accepted";
 
 /* API Endpoints Member CA JOB profile */
 export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
@@ -85,3 +84,4 @@ export const CHANGE_APPLICANT_STATUS = `${USER_TYPE_COMPANY}/jobs/applicants`;
 export const CHANGE_STATUS = "/change-status";
 export const STATUS = "status";
 export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${APPLICANTS}${INTERVIEW}`;
+export const ACCEPTED = "/accepted";

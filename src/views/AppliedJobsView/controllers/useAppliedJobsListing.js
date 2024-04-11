@@ -55,7 +55,7 @@ const useAppliedJobsListing = () => {
   const intl = useIntl();
   const [userProfileDetails] = useContext(UserProfileContext);
   const applicantID = userProfileDetails?.userDetails?.id;
-  const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL;
+  const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.AppliedJobs;
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -67,16 +67,10 @@ const useAppliedJobsListing = () => {
   const [popUpMessage, setPopUpMessage] = useState("");
   const [filterState, setFilterState] = useState(initialFilterState);
   const [filterOptions, setFilterOptions] = useState({
-    status: "",
     work_mode: "",
     job_type: "",
     experience: 0,
     location: "",
-    salary: 0,
-    department: "",
-    freshness: 0,
-    company: "",
-    industry: "",
   });
   const [modalData, setModalData] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -233,15 +227,14 @@ const useAppliedJobsListing = () => {
           newSelectedOptions = existingSelectedOptions?.includes(
             selectedFilter?.[keyName]
           )
-            ? existingSelectedOptions?.filter(
-                (keyName) => keyName !== selectedFilter?.[keyName]
-              )
+            ? existingSelectedOptions?.filter((item) => {
+                return item !== selectedFilter?.[keyName];
+              })
             : [...existingSelectedOptions, selectedFilter?.[keyName]];
         } else {
           newSelectedOptions = selectedFilter.value;
         }
       }
-
       return {
         ...prevState,
         [filterKey]: newSelectedOptions,

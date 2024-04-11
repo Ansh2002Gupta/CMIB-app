@@ -14,7 +14,11 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import {
+  DEFAULT_CATEGORY_FOR_FILTER_MODAL,
+  FILTER_TYPE_ENUM,
+  ROWS_PER_PAGE_ARRAY,
+} from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import images from "../../../images";
@@ -31,6 +35,11 @@ import useChangeJobStatusApi from "../../../services/apiServices/hooks/useChange
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
+const initialFilterState = {
+  selectedActiveInactive: [],
+  selectedapprovedNotapproved: [],
+};
+
 const usePostedJobListing = (onViewPress, onEditPress) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
@@ -41,9 +50,10 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
+  const [filterState, setFilterState] = useState(initialFilterState);
   const [filterOptions, setFilterOptions] = useState({
-    activeorInctive: "",
-    approvedorNot: "",
+    ActiveInactive: "",
+    approvedNotapproved: "",
     searchData: "",
   });
   const [rowsPerPage, setRowPerPage] = useState(
@@ -53,6 +63,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(searchParams.get("page"))
   );
+  const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.PostedJobs;
 
   const {
     data: postedJobData,
@@ -81,8 +92,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       updateCurrentRecords({
         perPage: rowsPerPage,
         page: currentPage,
-        status: filterOptions.activeorInctive,
-        approved: filterOptions.approvedorNot,
+        status: filterOptions.ActiveInactive,
+        approved: filterOptions.approvedNotapproved,
       });
     }
   }, [isSuccess]);
@@ -108,6 +119,55 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       name: "Not Approved",
     },
   ];
+
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {
+    setFilterState((prevState) => {
+      const filterObj = customFilterInfo.find(
+        (info) => info.name === filterName
+      );
+      const filterKey = `selected${filterObj?.name}`;
+      const existingSelectedOptions = prevState[filterKey];
+      let newSelectedOptions = [];
+      if (!!existingSelectedOptions) {
+        if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
+          newSelectedOptions = existingSelectedOptions?.includes(
+            selectedFilter?.[keyName]
+          )
+            ? existingSelectedOptions?.filter((item) => {
+                return item !== selectedFilter?.[keyName];
+              })
+            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+        } else {
+          newSelectedOptions = selectedFilter.value;
+        }
+      }
+
+      return {
+        ...prevState,
+        [filterKey]: newSelectedOptions,
+      };
+    });
+  };
+
+  const customFilterInfo = [
+    {
+      refKey: "id",
+      name: "ActiveInactive",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: statusData,
+      selectedOptions: filterState?.selectedActiveInactive,
+      handler: handleFilterChange,
+    },
+    {
+      refKey: "id",
+      name: "ApprovedNotapproved",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: queryTypeData,
+      selectedOptions: filterState?.selectedApprovedNotapproved,
+      handler: handleFilterChange,
+    },
+  ];
+
   const getErrorDetails = () => {
     if (isErrorGetPostedJob) {
       let errorMessage = "";
@@ -179,8 +239,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         queryParamsObject: {
           perPage: rowsPerPage,
           page: nextPage,
-          status: filterOptions.activeorInctive,
-          approved: filterOptions.approvedorNot,
+          status: filterOptions.ActiveInactive,
+          approved: filterOptions.approvedNotapproved,
         },
       });
 
@@ -207,8 +267,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: page,
-      status: filterOptions.activeorInctive,
-      approved: filterOptions.approvedorNot,
+      status: filterOptions.ActiveInactive,
+      approved: filterOptions.approvedNotapproved,
     });
   };
 
@@ -217,8 +277,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     await updateCurrentRecords({
       perPage: option.value,
       page: currentPage,
-      status: filterOptions.activeorInctive,
-      approved: filterOptions.approvedorNot,
+      status: filterOptions.ActiveInactive,
+      approved: filterOptions.approvedNotapproved,
     });
   };
 
@@ -229,8 +289,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       const newData = await fetchPostedJobs({
         queryParamsObject: {
           search: searchedData,
-          status: filterOptions.activeorInctive,
-          approved: filterOptions.approvedorNot,
+          status: filterOptions.ActiveInactive,
+          approved: filterOptions.approvedNotapproved,
         },
       });
       setCurrentRecords(newData?.records);
@@ -244,30 +304,34 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         search: searchedData,
         perPage: rowsPerPage,
         page: currentPage,
-        status: filterOptions.activeorInctive,
-        approved: filterOptions.approvedorNot,
+        status: filterOptions.ActiveInactive,
+        approved: filterOptions.approvedNotapproved,
       });
     }
   };
 
-  const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    const temporaryArray = selectedQueryType
-      ? selectedQueryType.map((item) => {
-          return item - 1;
-        })
-      : "";
-    setFilterOptions((prev) => ({
-      ...prev,
-      query_type: temporaryArray,
-    }));
+  const returnSelectedFilterOption = (filterInfo, filterName) => {
+    const filterObj = filterInfo?.find((obj) => obj.name === filterName);
+    return filterObj?.selectedOptions;
+  };
+
+  const filterApplyHandler = async (filterInfo) => {
+    const currentFilterOptions = {
+      ActiveInactive: returnSelectedFilterOption(filterInfo, "ActiveInactive"),
+      approvedNotapproved: returnSelectedFilterOption(
+        filterInfo,
+        "approvedNotapproved"
+      ),
+    };
+    setFilterOptions(currentFilterOptions);
     if (isMob) {
       setLoadingMore(false);
       setCurrentPage(1);
       const newData = await fetchPostedJobs({
         queryParamsObject: {
           search: filterOptions.searchData,
-          status: selectedStatus,
-          approved: temporaryArray,
+          status: currentFilterOptions.ActiveInactive,
+          approved: currentFilterOptions.approvedNotapproved,
         },
       });
       setCurrentRecords(newData?.records);
@@ -278,8 +342,8 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       }
     } else {
       await updateCurrentRecords({
-        status: selectedStatus,
-        approved: temporaryArray,
+        status: currentFilterOptions.ActiveInactive,
+        approved: currentFilterOptions.approvedNotapproved,
         perPage: rowsPerPage,
         page: currentPage,
       });
@@ -290,7 +354,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   let subHeadingText = ["designation"];
   let statusText = ["status"];
   let tableIcon = images.iconMore;
-  let filterCategory = ["Active/Inactive", "Approved/Not Approved"];
+  let filterCategory = ["Active Inactive", "Approved Notapproved"];
   let isHeading = true;
 
   function getStatusStyle(status) {
@@ -521,9 +585,12 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   return {
     allDataLoaded,
     currentPage,
+    customFilterInfo,
+    defaultCategory,
     fetchPostedJobs,
     filterApplyHandler,
     filterCategory,
+    filterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,
@@ -544,6 +611,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     rowsPerPage,
     statusData,
     statusText,
+    setFilterState,
     subHeadingText,
     tableIcon,
     postedJobData: currentRecords,

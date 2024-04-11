@@ -12,6 +12,7 @@ import {
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import {
+  DEFAULT_CATEGORY_FOR_FILTER_MODAL,
   FILTER_TYPE_ENUM,
   ROWS_PER_PAGE_ARRAY,
 } from "../../../constants/constants";
@@ -39,7 +40,7 @@ const useFeedbackView = () => {
     status: "",
     role: "",
   });
-  const defaultCategory = "Status";
+  const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.Feedback;
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(searchParams.get("page"))
   );

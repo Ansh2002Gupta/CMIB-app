@@ -1,6 +1,9 @@
 import React from "react";
 import { Platform } from "@unthinkable/react-core-components";
 
+import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
+import ApplicantJobDetails from "../views/ApplicantJobDetails";
+import AppliedJobsView from "../views/AppliedJobsView";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
@@ -27,14 +30,11 @@ import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
 import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
-import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
+import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
-import AppliedJobsView from "../views/AppliedJobsView";
-import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
-import ApplicantJobDetails from "../views/ApplicantJobDetails";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;

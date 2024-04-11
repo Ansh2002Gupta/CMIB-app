@@ -210,15 +210,6 @@ const iconEdit = appendAppBaseURl("/images/svg/icon_edit.svg");
 const iconLoading = appendAppBaseURl("/images/IconLoading/iconLoading.png");
 const iconGreyCross = appendAppBaseURl("/images/svg/iconGreyCross.svg");
 const iconError = appendAppBaseURl("/images/svg/iconError.svg");
-const iconTickInsideCircle = appendAppBaseURl(
-  "/images/svg/iconTickInsideCircle.svg"
-);
-const iconCrossInsideCircle = appendAppBaseURl("/images/close-circle.png");
-const iconSelectCircle = appendAppBaseURl("/images/svg/selectCircle.svg");
-const iconSelectedSolidCircle = appendAppBaseURl(
-  "/images/svg/selectedCircle.svg"
-);
-const iconCircleCross = appendAppBaseURl("/images/svg/close-circle.svg");
 const iconAddRoundGreen = appendAppBaseURl("/images/svg/iconAddRoundGreen.svg");
 const iconDeleteRoundRed = appendAppBaseURl(
   "/images/svg/iconDeleteRoundRed.svg"
@@ -254,6 +245,15 @@ const iconBreifcase = appendAppBaseURl("/images/svg/briefcase.svg");
 const iconRupeeSign = appendAppBaseURl("/images/svg/rupeeSign.svg");
 const iconArchiveSave = appendAppBaseURl("/images/svg/iconArchiveSave.svg");
 const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
+const iconTickInsideCircle = appendAppBaseURl(
+  "/images/svg/iconTickInsideCircle.svg"
+);
+const iconCrossInsideCircle = appendAppBaseURl("/images/close-circle.png");
+const iconSelectCircle = appendAppBaseURl("/images/svg/selectCircle.svg");
+const iconSelectedSolidCircle = appendAppBaseURl(
+  "/images/svg/selectedCircle.svg"
+);
+const iconCircleCross = appendAppBaseURl("/images/svg/close-circle.svg");
 
 const images = {
   iconArrowUp,
@@ -405,11 +405,6 @@ const images = {
   dotIcon,
   iconDownloading,
   iconError,
-  iconTickInsideCircle,
-  iconCrossInsideCircle,
-  iconSelectCircle,
-  iconSelectedSolidCircle,
-  iconCircleCross,
   iconTickCircle,
   iconAppliedJobs,
   iconAppliedJobsActiveJobs,
@@ -434,6 +429,11 @@ const images = {
   iconArchiveSave,
   iconLocationWhite,
   iconClock,
+  iconTickInsideCircle,
+  iconCrossInsideCircle,
+  iconSelectCircle,
+  iconSelectedSolidCircle,
+  iconCircleCross,
 };
 
 export default images;

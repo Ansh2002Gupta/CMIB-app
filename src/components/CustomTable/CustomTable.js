@@ -6,7 +6,6 @@ import { FlatList, Platform, View } from "@unthinkable/react-core-components";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import AddTicketModal from "../AddTicketModal/AddTicketModal";
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
@@ -23,25 +22,24 @@ import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
 
-const initialFilterState = {
-  selectedStatus: [],
-  selectedQueryType: [],
-  activeCategories: [],
-};
+// const initialFilterState = {
+//   selectedStatus: [],
+//   selectedQueryType: [],
+//   activeCategories: [],
+// };
 
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
+  containerStyle,
   currentPage,
   customFilterInfo,
   customModal,
-  containerStyle,
   data,
   defaultCategory,
-  selectedFilterOptions,
-  setSelectedFilterOptions,
   filterApplyHandler,
   filterCategory,
+  initialFilterState = {},
   getColoumConfigs,
   getStatusStyle,
   handleLoadMore,
@@ -56,33 +54,35 @@ const CustomTable = ({
   isHeading,
   isTicketListingLoading,
   isFirstPageReceived,
-  isStatusTextBoolean,
-  isTotalCardVisible,
   isFilterVisible = true,
+  isTotalCardVisible,
+  isStatusTextBoolean,
   loadingMore,
   mobileComponentToRender,
   onIconPress,
   placeholder,
+  popUpMessage,
   rowsLimit,
   rowsPerPage,
+  renderCalendar,
+  selectedFilterOptions,
+  setSelectedFilterOptions,
   showSearchBar,
   showJobOfferResponseModal,
   showInterviewTimeModal,
   statusText,
   subHeadingText,
-  tableHeading,
-  tableIcon,
-  totalcards,
   statusLabels,
   showPopUpWithID,
   setShowPopUpWithID,
-  popUpMessage,
   setModalData,
   setShowJobOfferResponseModal,
   setShowInterviewTimeModal,
-  unit,
+  tableHeading,
+  tableIcon,
+  totalcards,
   ThirdSection,
-  renderCalendar,
+  unit,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -381,15 +381,14 @@ const CustomTable = ({
       {showFilterOptions && (
         <FilterModal
           {...{
-            filterInfo: customFilterInfo,
-            data,
             defaultCategory,
+            filterInfo: customFilterInfo,
             filterCategory,
             filterState: selectedFilterOptions,
             initialFilterState,
+            onApplyFilter,
             setFilterState: setSelectedFilterOptions,
             setShowFilterOptions,
-            onApplyFilter,
             unit,
           }}
         />
