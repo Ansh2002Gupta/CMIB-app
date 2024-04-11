@@ -37,8 +37,11 @@ const PostedJobsView = () => {
     allDataLoaded,
     currentRecords,
     currentPage,
+    customFilterInfo,
+    defaultCategory,
     filterApplyHandler,
     filterCategory,
+    filterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,
@@ -59,6 +62,7 @@ const PostedJobsView = () => {
     queryTypeData,
     rowsPerPage,
     setCurrentRecords,
+    setFilterState,
     statusData,
     statusText,
     subHeadingText,
@@ -105,10 +109,13 @@ const PostedJobsView = () => {
           {!isError && (
             <CustomTable
               {...{
+                customFilterInfo,
+
                 allDataLoaded,
                 currentPage,
                 currentRecords,
                 data: postedJobData,
+                defaultCategory,
                 filterApplyHandler,
                 filterCategory,
                 getColoumConfigs,
@@ -131,6 +138,8 @@ const PostedJobsView = () => {
                 rowsLimit,
                 rowsPerPage,
                 setCurrentRecords,
+                selectedFilterOptions: filterState,
+                setSelectedFilterOptions: setFilterState,
                 statusData,
                 statusText,
                 subHeadingText,
