@@ -76,17 +76,6 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
 
   const isTicketListingLoading = changeJobStatusLoading || isLoading;
   const isError = isErrorGetPostedJob || ischangeJobStatusError;
-  useEffect(() => {
-    if (isSuccess) {
-      updateCurrentRecords({
-        perPage: rowsPerPage,
-        page: currentPage,
-        status: filterOptions.activeorInctive,
-        approved: filterOptions.approvedorNot,
-      });
-    }
-  }, [isSuccess]);
-
   const statusData = [
     {
       id: 1,
@@ -104,7 +93,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
       name: "Approved",
     },
     {
-      id: 2,
+      id: 0,
       name: "Not Approved",
     },
   ];
@@ -251,14 +240,9 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   };
 
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    const temporaryArray = selectedQueryType
-      ? selectedQueryType.map((item) => {
-          return item - 1;
-        })
-      : "";
     setFilterOptions((prev) => ({
       ...prev,
-      query_type: temporaryArray,
+      approvedorNot: selectedQueryType,
     }));
     if (isMob) {
       setLoadingMore(false);
@@ -267,7 +251,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
         queryParamsObject: {
           search: filterOptions.searchData,
           status: selectedStatus,
-          approved: temporaryArray,
+          approved: selectedQueryType,
         },
       });
       setCurrentRecords(newData?.records);
@@ -279,7 +263,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     } else {
       await updateCurrentRecords({
         status: selectedStatus,
-        approved: temporaryArray,
+        approved: selectedQueryType,
         perPage: rowsPerPage,
         page: currentPage,
       });
@@ -325,7 +309,9 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
             ) : (
               <TouchableOpacity
                 onPress={() => {
-                  navigate(navigations.JOB_PROFILE);
+                  navigate(
+                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=0`
+                  );
                 }}
                 style={styles.cursorStyle}
               >
@@ -447,6 +433,13 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 isToggled={item.status == 1}
                 onChange={() => {
                   handleUseChangeJob(item.id);
+                  let temp = currentRecords.map((items) => {
+                    if (items.id === item.id) {
+                      return { ...items, status: item.status == 0 ? 1 : 0 };
+                    }
+                    return items;
+                  });
+                  setCurrentRecords(temp);
                 }}
               />
             )}
@@ -467,7 +460,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
               </CommonText>
             ) : (
               <CommonText customTextStyle={tableStyle}>
-                {item?.approve == 0
+                {item?.approve == 1
                   ? queryTypeData[0].name
                   : queryTypeData[1].name ?? "-"}
               </CommonText>

@@ -214,6 +214,7 @@ const BottomSection = forwardRef(
             value={jobData.jobOpeningDate}
             isError={(error && error.jobOpeningDate && true) || false}
             errorMessage={(error && error.jobOpeningDate) || ""}
+            minDate={new Date()}
             onChangeValue={(val) => {
               const date1 = dayjs(val);
               const date2 = dayjs(jobData.jobClosingDate);
@@ -548,6 +549,10 @@ const BottomSection = forwardRef(
               onValueChange={(item) => {
                 handleJobDetailsChange("status", item);
               }}
+              options={[
+                intl.formatMessage({ id: "label.active" }),
+                intl.formatMessage({ id: "label.inactive" }),
+              ]}
               customToggleStyle={{ marginTop: 16, marginBottom: 18 }}
               customLabelStyle={styles.labelStyle}
             />
