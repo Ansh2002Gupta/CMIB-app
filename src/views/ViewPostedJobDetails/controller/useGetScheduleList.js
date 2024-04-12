@@ -269,7 +269,12 @@ const useGetScheduleList = (id, onClickAction) => {
     const currentFilterOptions = {
       date: returnSelectedFilterOption(filterInfo, "Date"),
     };
-    setFilterOptions(currentFilterOptions);
+    setFilterOptions((prev) => {
+      return {
+        ...prev,
+        ...currentFilterOptions,
+      };
+    });
     if (isMob) {
       setLoadingMore(false);
       setCurrentPage(1);

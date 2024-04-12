@@ -114,6 +114,9 @@ const styles = StyleSheet.create({
     top: 50,
     left: -30,
   },
+  alignflexStart: {
+    alignItems: "flex-start",
+  },
   slider: {
     flex: 1,
     marginTop: 38,

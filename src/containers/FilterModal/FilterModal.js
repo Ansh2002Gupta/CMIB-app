@@ -203,9 +203,10 @@ const FilterModal = ({
   };
 
   const RenderCategoryButton = ({ title, onClick }) => {
-    title = getFilterName(title);
-    const isActive = getCheckBoxesStatus(title) === "full" ? true : false;
-    const isPartial = getCheckBoxesStatus(title) === "partial" ? true : false;
+    const newTitle = getFilterName(title);
+    const isActive = getCheckBoxesStatus(newTitle) === "full" ? true : false;
+    const isPartial =
+      getCheckBoxesStatus(newTitle) === "partial" ? true : false;
 
     return (
       <CheckBox

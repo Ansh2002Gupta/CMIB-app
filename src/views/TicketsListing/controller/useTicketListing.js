@@ -357,7 +357,12 @@ const useTicketListing = () => {
       status: returnSelectedFilterOption(filterInfo, "Status"),
       query_type: returnSelectedFilterOption(filterInfo, "QueryType"),
     };
-    setFilterOptions(currentFilterOptions);
+    setFilterOptions((prev) => {
+      return {
+        ...prev,
+        ...currentFilterOptions,
+      };
+    });
     if (isMob) {
       setLoadingMore(false);
       setCurrentPage(1);

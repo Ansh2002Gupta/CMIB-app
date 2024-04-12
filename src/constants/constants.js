@@ -64,12 +64,17 @@ export const MAXIMUM_FRESHNESS_LIMIT = 100;
 export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = {
   AppliedJobs: "Work Mode",
   TicketListing: "Status",
-  PostedJobs: "Active Inactive",
+  PostedJobs: "Active/Inactive",
   Feedback: "Status",
   GetSchedule: "Date",
 };
 
 export const FILTER_TYPE_ENUM = { CHECKBOX: "checkbox", SLIDER: "slider" };
+
+export const POSTED_JOB_LISTING_ENUM = {
+  activeorInactive: "Active/Inactive",
+  approvedNotApproved: "Approved/NotApproved",
+};
 
 export const API_STATUS = {
   IDLE: "idle",
