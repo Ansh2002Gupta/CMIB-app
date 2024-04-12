@@ -21,10 +21,10 @@ export const getImageSource = (uploadedImage) => {
 };
 
 export const getRenderText = (items, keys) => {
-  if (!keys.length) {
+  if (!keys?.length) {
     return "";
   }
-  const texts = keys.map((key) => items[key]).join(" ");
+  const texts = keys?.map((key) => items[key]).join(" ");
   return !!texts ? texts : "_";
 };
 

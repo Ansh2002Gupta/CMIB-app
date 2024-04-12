@@ -67,6 +67,14 @@ export const POSTED_JOB_LISTING_ENUM = {
   approvedNotApproved: "Approved/NotApproved",
 };
 
+export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = {
+  AppliedJobs: "Work Mode",
+  TicketListing: "Status",
+  PostedJobs: "Active/Inactive",
+  Feedback: "Status",
+  GetSchedule: "Date",
+};
+
 export const API_STATUS = {
   IDLE: "idle",
   LOADING: "loading",
@@ -557,7 +565,6 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
-export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = "WorkMode";
 export const COMPANY_QUERY_TYPE_TICKET = "/";
 
 export const POPUP_OPTIONS = ["Download Profile & Resume", "View Details"];
