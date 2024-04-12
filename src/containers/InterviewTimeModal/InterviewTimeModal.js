@@ -20,9 +20,16 @@ const InterviewTimeModal = ({
   isError,
   isPatching,
 }) => {
+  data = !!data ? data : [];
   const intl = useIntl();
   const webProps = Platform.OS === "web" ? { size: "xs" } : {};
-  const [selectedDateLabel, setSelectedDateLabel] = useState(null);
+  const [selectedDateLabel, setSelectedDateLabel] = useState(
+    data[0]?.primary?.is_accepted
+      ? { id: data[0]?.id, isPrimary: true, mode: data[0]?.primary?.type }
+      : data[0]?.alternate?.is_accepted
+      ? { id: data[0]?.id, isPrimary: false, mode: data[0]?.alternate?.type }
+      : null
+  );
 
   const handleSelection = (labelInfo) => {
     setSelectedDateLabel(labelInfo);
@@ -48,18 +55,20 @@ const InterviewTimeModal = ({
           ) : !!data?.length ? (
             <>
               <TimeSlotLabel
-                lableID={data[0]?.id}
+                labelId={data[0]?.id}
                 dataObj={data[0]}
                 onSelect={handleSelection}
                 selectedDateLabel={selectedDateLabel}
               />
-              <TimeSlotLabel
-                lableID={data[0]?.id}
-                dataObj={data[0]}
-                onSelect={handleSelection}
-                selectedDateLabel={selectedDateLabel}
-                showPrimary={false}
-              />
+              {!!data[0]?.alternate && (
+                <TimeSlotLabel
+                  labelId={data[0]?.id}
+                  dataObj={data[0]}
+                  onSelect={handleSelection}
+                  selectedDateLabel={selectedDateLabel}
+                  showPrimary={false}
+                />
+              )}
             </>
           ) : (
             <View style={styles.noSchedulesTextContainer}>
@@ -78,7 +87,12 @@ const InterviewTimeModal = ({
               confirmSelection(selectedDateLabel);
             }}
             isButtonTwoGreen
-            isDisabled={!selectedDateLabel || isPatching}
+            isDisabled={
+              !!selectedDateLabel
+                ? !selectedDateLabel || isPatching
+                : !data[0].primary?.is_accepted &&
+                  !data[0].alternate?.is_accepted
+            }
             buttonOneText={intl.formatMessage({ id: "label.cancel" })}
             buttonTwoText={intl.formatMessage({ id: "label.confirm" })}
             customStyles={{

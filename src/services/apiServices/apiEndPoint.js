@@ -45,13 +45,14 @@ export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
 export const APPLY_JOB = `${USER_TYPE_MEMBER}/jobs/apply`;
 export const MEMBER_JOBS_LISTING = `${USER_TYPE_MEMBER}/${JOBS}/apply`;
-export const OFFER_RESPONSE = `${USER_TYPE_ADMIN}/job/applicants`;
+export const OFFER_RESPONSE = `${USER_TYPE_MEMBER}/${JOBS}/applicants`;
 export const JOB_LOCATION_OPTIONS = `${USER_TYPE_COMPANY}/job/locations`;
 export const JOB_TYPE_OPTIONS = `${USER_TYPE_COMPANY}/job-type`;
 export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
 
 //sub routes
 export const APPLICANTS = "/applicants";
+export const APPLICANT = "/applicant";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
 export const INTERVIEWS = "/interviews";
 export const INTERVIEW = "/interview";
