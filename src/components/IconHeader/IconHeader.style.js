@@ -88,7 +88,7 @@ const style = {
     flexDirection: "row",
     alignItems: "center",
   },
-  marginLft8: {
+  marginLeft8: {
     marginLeft: 8,
   },
 };

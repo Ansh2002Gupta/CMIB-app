@@ -159,7 +159,7 @@ const IconHeader = ({
                   handleSwitchChange && handleSwitchChange();
                 }}
               />
-              <CommonText customContainerStyle={styles.marginLft8}>
+              <CommonText customContainerStyle={styles.marginLeft8}>
                 {isActive
                   ? intl.formatMessage({ id: "label.active" })
                   : intl.formatMessage({ id: "label.inactive" })}
