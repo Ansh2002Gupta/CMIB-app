@@ -564,6 +564,29 @@ export const containsDuplicate = (arr) => {
   return false;
 };
 
+export const convertJSONStringArrayToIntArray = (
+  jsonStringArray,
+  isMultiSelect
+) => {
+  try {
+    const stringArray = JSON.parse(jsonStringArray);
+    const labelValueArray = stringArray.map((str) =>
+      isMultiSelect
+        ? {
+            label: str,
+            value: str,
+            isSelected: false,
+          }
+        : { label: str, value: str }
+    );
+
+    return labelValueArray;
+  } catch (error) {
+    console.error("Error converting JSON string array to int array:", error);
+    return null;
+  }
+};
+
 export const convertToTime = ({ dateString, format24Hour = true }) => {
   const date = dayjs(dateString);
   const timeFormat = format24Hour ? "HH:mm" : "hh:mm A";
