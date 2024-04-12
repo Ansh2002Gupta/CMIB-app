@@ -11,8 +11,11 @@ import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
+import DatePickerModal from "../../components/DatePickerModel";
 import Slider from "../../components/Slider";
 import useFilterModal from "./controller/useFilterModal";
+import { FILTER_TYPE_ENUM } from "../../constants/constants";
+import classes from "../../theme/styles/CssClassProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import { FILTER_TYPE_ENUM } from "../../constants/constants";
 import classes from "../../theme/styles/CssClassProvider";
@@ -21,32 +24,36 @@ import images from "../../images";
 import styles from "./FilterModal.style";
 
 const FilterModal = ({
-  filterInfo,
+  defaultCategory,
   filterCategory,
+  filterInfo,
   filterState,
   initialFilterState,
   onApplyFilter,
+  renderCalendar = false,
   setFilterState,
   setShowFilterOptions,
-  defaultCategory,
   unit,
 }) => {
   const {
     currentCategory,
-    filterData,
     handleCategoryChange,
     handleClearFilter,
+    filterData,
     onCancel,
-  } = useFilterModal(
-    filterInfo,
-    filterState,
-    initialFilterState,
-    onApplyFilter,
-    setFilterState,
-    setShowFilterOptions,
-    defaultCategory,
-    filterCategory
-  );
+  } = useFilterModal({
+    ...{
+      defaultCategory,
+      filterCategory,
+      filterInfo,
+      filterState,
+      initialFilterState,
+      onApplyFilter,
+      setFilterState,
+      setShowFilterOptions,
+      renderCalendar,
+    },
+  });
 
   const isWeb = Platform.OS.toLowerCase() === "web";
   const intl = useIntl();
@@ -111,48 +118,66 @@ const FilterModal = ({
   };
 
   const renderOptionsByCategory = (category) => {
-    console.log("currentCategory: ", currentCategory);
-    console.log("category|renderOptionsByCategory:", category);
-    console.log("filterInfo:", filterInfo);
     category = getFilterName(category);
-    console.log("category|getFilterName:", category);
     const filterObj = returnFilterObj(filterInfo, category);
+
+    if (renderCalendar) {
+      {
+        return (
+          <View style={styles.datePickerModalView}>
+            <DatePickerModal
+              customStyles={styles.datePickerStyle}
+              value={
+                Array.isArray(filterState?.selectedQueryType)
+                  ? filterState?.selectedQueryType[0]
+                  : ""
+              }
+              datePickerViewStyle={styles.datePickerInner}
+              onChangeValue={(value) => filterObj?.handler(value)}
+            />
+          </View>
+        );
+      }
+    }
     return filterObj?.type?.trim().toLowerCase() ===
       FILTER_TYPE_ENUM.CHECKBOX ? (
-      filterObj?.options.map((option) => (
-        <RenderCheckButton
-          key={option.id}
-          item={option}
-          title={option.name}
-          onChange={() =>
-            filterObj?.handler(option, category, filterObj?.refKey)
-          }
-          isSelected={filterObj?.selectedOptions?.includes(
-            option?.[filterObj?.refKey]
-          )}
-        />
-      ))
+      filterObj?.options.map((option) => {
+        return (
+          <RenderCheckButton
+            key={option.id}
+            item={option}
+            title={option.name}
+            onChange={() =>
+              filterObj?.handler(option, category, filterObj?.refKey)
+            }
+            isSelected={filterObj?.selectedOptions?.includes(
+              option?.[filterObj?.refKey]
+            )}
+          />
+        );
+      })
     ) : (
       <View style={styles.slider}>
         <View style={styles.customExperienceContainer}>
           <CommonText customTextStyle={styles.customExperience}>
             {`${
-              !!filterState?.selectedCurrentSalary
-                ? filterState?.selectedCurrentSalary
+              !!filterState?.selectedExperience
+                ? filterState?.selectedExperience
                 : 0
             } ${unit}`}
           </CommonText>
         </View>
         <Slider
+          isTrackBgGreen
           maximumValue={filterObj?.maximumSliderLimit}
           minimumValue={filterObj?.minimumSliderLimit}
           step={1}
           onChange={(val) =>
-            filterObj?.handler({ value: val }, "CurrentSalary", "value")
+            filterObj?.handler({ value: val }, "Experience", "value")
           }
           value={
-            !!filterState?.selectedCurrentSalary
-              ? filterState?.selectedCurrentSalary
+            !!filterState?.selectedExperience
+              ? filterState?.selectedExperience
               : 0
           }
         />
@@ -180,9 +205,10 @@ const FilterModal = ({
   };
 
   const RenderCategoryButton = ({ title, onClick }) => {
-    title = getFilterName(title);
-    const isActive = getCheckBoxesStatus(title) === "full" ? true : false;
-    const isPartial = getCheckBoxesStatus(title) === "partial" ? true : false;
+    const newTitle = getFilterName(title);
+    const isActive = getCheckBoxesStatus(newTitle) === "full" ? true : false;
+    const isPartial =
+      getCheckBoxesStatus(newTitle) === "partial" ? true : false;
 
     return (
       <CheckBox
@@ -199,12 +225,12 @@ const FilterModal = ({
   const SHOW_RESULT_TEXT = intl.formatMessage({ id: "label.show_result" });
 
   const getFilterName = (item) => {
-    const words = item.split(" ");
-    let filterName = "";
-    if (words.length > 1) {
-      for (let i = 0; i < words.length; i++) filterName += words[i];
-    } else filterName = words[0];
-    return filterName;
+    if (typeof item === "string") {
+      const words = item.split(" ");
+      return words.join("");
+    } else {
+      return "";
+    }
   };
 
   return (
@@ -229,39 +255,38 @@ const FilterModal = ({
           <TwoColumn
             leftSection={
               <>
-                {filterCategory?.map((item) => {
-                  return (
-                    <View style={styles.renderCheckButton} {...webProps}>
-                      <TwoColumn
-                        leftSection={
-                          <CustomTouchableOpacity
-                            onPress={() => {
-                              handleCategoryChange(getFilterName(item));
-                            }}
-                          >
-                            <RenderCategoryButton
-                              key={item}
-                              title={item}
-                              onClick={(item) => {
-                                handleAllcategorySet(getFilterName(item));
+                {filterCategory &&
+                  filterCategory?.map((item) => {
+                    return (
+                      <View style={styles.renderCheckButton} {...webProps}>
+                        <TwoColumn
+                          leftSection={
+                            <CustomTouchableOpacity
+                              onPress={() => {
                                 handleCategoryChange(getFilterName(item));
                               }}
-                            />
-                          </CustomTouchableOpacity>
-                        }
-                        isLeftFillSpace
-                        rightSection={
-                          <>
+                            >
+                              <RenderCategoryButton
+                                key={item}
+                                title={item}
+                                onClick={(item) => {
+                                  handleAllcategorySet(getFilterName(item));
+                                  handleCategoryChange(getFilterName(item));
+                                }}
+                              />
+                            </CustomTouchableOpacity>
+                          }
+                          isLeftFillSpace
+                          rightSection={
                             <CustomImage
                               source={images.iconArrowRight}
                               style={styles.arrowRight}
                             />
-                          </>
-                        }
-                      />
-                    </View>
-                  );
-                })}
+                          }
+                        />
+                      </View>
+                    );
+                  })}
               </>
             }
             leftSectionStyle={styles.leftSection}
@@ -304,12 +329,12 @@ const FilterModal = ({
 };
 
 FilterModal.propTypes = {
-  data: PropTypes.array.isRequired,
   filterState: PropTypes.object.isRequired,
   initialFilterState: PropTypes.object.isRequired,
   onApplyFilter: PropTypes.func.isRequired,
   setFilterState: PropTypes.func.isRequired,
   setShowFilterOptions: PropTypes.func.isRequired,
+  renderCalendar: PropTypes.bool,
   unit: PropTypes.string,
 };
 

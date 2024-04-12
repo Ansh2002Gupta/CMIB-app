@@ -1,25 +1,17 @@
 import { useRef, useState } from "react";
 
-const useFilterModal = (
+const useFilterModal = ({
+  defaultCategory,
   filterInfo,
   filterState,
   initialFilterState,
   onApplyFilter,
   setFilterState,
   setShowFilterOptions,
-  defaultCategory
-) => {
-  const {
-    selectedExperience,
-    selectedCurrentSalary,
-    selectedFunctionalAreas,
-    selectedCategory,
-    activeCategories,
-  } = filterState;
+}) => {
   const [currentCategory, setCurrentCategory] = useState(
     defaultCategory || "Status"
   );
-
   const prevFilterState = useRef(filterState);
 
   const onCancel = () => {
@@ -28,7 +20,7 @@ const useFilterModal = (
   };
 
   const handleCategoryChange = (category) => {
-    setCurrentCategory(category);
+    setCurrentCategory(String(category));
   };
 
   const filterData = () => {
@@ -48,16 +40,11 @@ const useFilterModal = (
   };
 
   return {
-    activeCategories,
     currentCategory,
+    filterData,
     handleCategoryChange,
     handleClearFilter,
-    filterData,
     onCancel,
-    selectedExperience,
-    selectedCurrentSalary,
-    selectedFunctionalAreas,
-    selectedCategory,
   };
 };
 

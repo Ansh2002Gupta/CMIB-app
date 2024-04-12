@@ -2,6 +2,9 @@ import React from "react";
 import { Platform } from "@unthinkable/react-core-components";
 
 import Candidates from "../views/Candidates";
+import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
+import ApplicantJobDetails from "../views/ApplicantJobDetails";
+import AppliedJobsView from "../views/AppliedJobsView";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
@@ -27,13 +30,14 @@ import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
 import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
-import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
 import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
+import PostedJobs from "../views/PostedJobs";
+import AllJobs from "../views/AllJobs/AllJobs";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -247,6 +251,14 @@ const config = [
         element: <ViewPostedJobDetails />,
       },
       {
+        viewPath: `${navigations.DETAILS_JOBS}/${navigations.VIEW_JOB_DETAILS}`,
+        element: <ApplicantJobDetails />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <AppliedJobsView />,
+      },
+      {
         viewPath: navigations.JOB_APPLICANTS,
         element: <Candidates />,
       },
@@ -267,7 +279,18 @@ const config = [
         viewPath: navigations.SAVED_JOBS,
         element: <SavedJobs />,
       },
-
+      {
+        viewPath: navigations.ALL_JOBS,
+        element: <AllJobs />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <PostedJobsView />,
+      },
+      {
+        viewPath: `${navigations.JOB_DETAIL}/:jobId`,
+        element: <PostedJobs />,
+      },
       {
         viewPath: navigations.JOBS,
         element: <Jobs />,

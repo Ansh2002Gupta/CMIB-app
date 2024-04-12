@@ -24,11 +24,7 @@ const AddNewJobsUi = ({
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.flexGrow}>
         <IconHeader
-          headerText={
-            isWebView
-              ? intl.formatMessage({ id: "label.add_new_jobs" })
-              : intl.formatMessage({ id: "label.posted_jobs" })
-          }
+          headerText={intl.formatMessage({ id: "label.add_new_jobs" })}
         />
         <TwoRow
           topSection={

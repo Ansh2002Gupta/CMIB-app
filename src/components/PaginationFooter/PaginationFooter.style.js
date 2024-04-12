@@ -16,6 +16,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     borderColor: colors.lightGrey,
     backgroundColor: colors.white,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
   },
   paginationFooter: {
     paddingTop: 12,

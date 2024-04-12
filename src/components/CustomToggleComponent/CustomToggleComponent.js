@@ -11,7 +11,9 @@ const CustomToggleComponent = ({
   customLabelStyle,
   customToggleStyle,
   customToggleButtonTextStyle,
+  customErrorStyle,
   isMandatory,
+  errorMessage,
   containerStyle,
   label,
   onValueChange,
@@ -87,6 +89,14 @@ const CustomToggleComponent = ({
             </>
           ))}
       </View>
+      {!!errorMessage && (
+        <CommonText
+          customTextStyle={[styles.errorMsg, customErrorStyle]}
+          fontWeight={customErrorStyle?.fontWeight || "600"}
+        >
+          {errorMessage}
+        </CommonText>
+      )}
     </View>
   );
 };

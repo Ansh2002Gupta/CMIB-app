@@ -23,52 +23,32 @@ function DashboardView() {
   const { isWebView } = useIsWebView();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
-
-  const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
-  const FilterIcon = images.iconFilter;
-  const MoreIcon = images.iconMore;
-  const AddIcon = images.iconAdd;
-
-  const toggleSwitch = () => {
-    setIsEnabled((previousState) => !previousState);
-  };
-
-  const handleAddDesignation = () => {
-    setIsEnabled((previousState) => !previousState);
-  };
-
-  const handleSearchResults = (filteredData) => {};
-
-  const searchData = [
-    {
-      content: <SearchView data={dataList} onSearch={handleSearchResults} />,
-      style: {},
-      isFillSpace: true,
-    },
-    {
-      content: (
-        <TouchableImage
-          source={FilterIcon}
-          parentStyle={styles.imageParentStyle}
-        />
-      ),
-      style: {},
-      isFillSpace: false,
-    },
-    {
-      content: (
-        <TouchableImage
-          source={MoreIcon}
-          disabled={false}
-          isSelector={true}
-          parentStyle={styles.imageParentStyle}
-        />
-      ),
-      style: {},
-      isFillSpace: false,
-    },
-  ];
-  return <JobProfileTab />;
+  return (
+    <View style={styles.container}>
+      <TwoRow
+        topSection={
+          isWebView && (
+            <IconHeader
+              hasIconBar
+              headerText={intl.formatMessage({ id: "label.dashboard" })}
+              intl={intl}
+            />
+          )
+        }
+        isBottomFillSpace
+        bottomSection={
+          <>
+            {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
+              <CAJobsDashboard />
+            ) : null}
+          </>
+        }
+      />
+      {/*  uncomment this to see modals */}
+      {/* <ViewInterviewDetails /> */}
+      {/* <ScheduleInterviewModal /> */}
+    </View>
+  );
 }
 
 export default DashboardView;

@@ -11,13 +11,13 @@ import {
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
-import AddTicketModal from "../AddTicketModal/AddTicketModal";
 import Chip from "../Chip";
 import CommonText from "../../components/CommonText";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import FilterModal from "../../containers/FilterModal";
 import LoadingScreen from "../LoadingScreen";
 import PaginationFooter from "../PaginationFooter";
+import PopupMessage from "../PopupMessage/PopupMessage";
 import SearchView from "../../components/SearchView";
 import Spinner from "../Spinner";
 import TouchableImage from "../../components/TouchableImage";
@@ -27,24 +27,18 @@ import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
 
-const initialFilterState = {
-  selectedStatus: [],
-  selectedQueryType: [],
-  activeCategories: [],
-};
-
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
+  containerStyle,
   currentPage,
   customFilterInfo,
   customModal,
   data,
   defaultCategory,
-  selectedFilterOptions,
-  setSelectedFilterOptions,
   filterApplyHandler,
   filterCategory,
+  initialFilterState = {},
   getColoumConfigs,
   getStatusStyle,
   handleLoadMore,
@@ -59,26 +53,34 @@ const CustomTable = ({
   isHeading,
   isTicketListingLoading,
   isFirstPageReceived,
+  isFilterVisible = true,
+  isTotalCardVisible,
+  isStatusTextBoolean,
   loadingMore,
   onIconPress,
   placeholder,
+  popUpMessage,
   rowsLimit,
   rowsPerPage,
+  renderCalendar,
+  selectedFilterOptions,
+  setSelectedFilterOptions,
   showSearchBar,
   showJobOfferResponseModal,
   showInterviewTimeModal,
   statusText,
   subHeadingText,
+  statusLabels,
+  showPopUpWithID,
+  setShowPopUpWithID,
+  setModalData,
+  setShowJobOfferResponseModal,
+  setShowInterviewTimeModal,
   tableHeading,
   tableIcon,
   totalcards,
-  setShowPopUpWithID,
+  ThirdSection,
   unit,
-  extraDetailsText,
-  extraDetailsKey,
-  renderCalendar,
-  statusData,
-  queryTypeData,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -89,9 +91,9 @@ const CustomTable = ({
   useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
   const [showFilterOptions, setShowFilterOptions] = useState(false);
 
-  const isFilterCount = Object.values(selectedFilterOptions).find(
-    (state) => !!state.length
-  );
+  const isFilterCount = !!selectedFilterOptions
+    ? Object.values(selectedFilterOptions).find((state) => !!state.length)
+    : 0;
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
@@ -130,39 +132,41 @@ const CustomTable = ({
             {showSearchBar && (
               <TwoColumn
                 leftSection={
-                  <SearchView
-                    data={data?.records}
-                    customSearchCriteria={handleSearchResults}
-                    placeholder={placeholder}
-                  />
-                }
-                isLeftFillSpace
-                rightSection={
-                  <CustomTouchableOpacity
-                    onPress={handleFilterModal}
-                    style={styles.imageParentStyle}
-                    disabled={isTicketListingLoading}
-                  >
-                    <TouchableImage
-                      source={images.iconFilter}
-                      parentStyle={styles.iconTicket}
-                      onPress={handleFilterModal}
+                  <View style={styles.flexDirectionRow}>
+                    <SearchView
+                      data={data?.records}
+                      customSearchCriteria={handleSearchResults}
+                      placeholder={placeholder}
+                      customParentStyle={styles.getParentStyle(isWebView)}
                     />
-                    {isWebView && (
-                      <CommonText customTextStyle={styles.filterText}>
-                        {intl.formatMessage({ id: "label.filters" })}
-                      </CommonText>
-                    )}
-                    {isFilterCount && (
-                      <CommonText
-                        customContainerStyle={styles.activeTickets}
-                        customTextStyle={styles.activeTicketsText}
-                        fontWeight={"600"}
+                    {isFilterVisible && (
+                      <CustomTouchableOpacity
+                        onPress={handleFilterModal}
+                        style={styles.imageParentStyle}
+                        disabled={isTicketListingLoading}
                       >
-                        {getFilterCount()}
-                      </CommonText>
+                        <TouchableImage
+                          source={images.iconFilter}
+                          parentStyle={styles.iconTicket}
+                          onPress={handleFilterModal}
+                        />
+                        {isWebView && (
+                          <CommonText customTextStyle={styles.filterText}>
+                            {intl.formatMessage({ id: "label.filters" })}
+                          </CommonText>
+                        )}
+                        {isFilterCount && (
+                          <CommonText
+                            customContainerStyle={styles.activeTickets}
+                            customTextStyle={styles.activeTicketsText}
+                            fontWeight={"600"}
+                          >
+                            {getFilterCount()}
+                          </CommonText>
+                        )}
+                      </CustomTouchableOpacity>
                     )}
-                  </CustomTouchableOpacity>
+                  </View>
                 }
                 style={styles.filterTopSection(isWebView)}
               />
@@ -271,7 +275,7 @@ const CustomTable = ({
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if ((!data || !!data) && !data?.length)
+                        if (!data?.length)
                           return (
                             <CommonText
                               customContainerStyle={styles.loadingStyleNoData}
@@ -344,29 +348,15 @@ const CustomTable = ({
       {showFilterOptions && (
         <FilterModal
           {...{
-            filterInfo: customFilterInfo,
-            data,
             defaultCategory,
+            filterInfo: customFilterInfo,
             filterCategory,
             filterState: selectedFilterOptions,
             initialFilterState,
+            onApplyFilter,
             setFilterState: setSelectedFilterOptions,
             setShowFilterOptions,
-            onApplyFilter,
             unit,
-            statusData,
-            queryTypeData,
-            renderCalendar,
-          }}
-        />
-      )}
-      {addNewTicket && (
-        <AddTicketModal
-          queryTypeData={queryTypeData}
-          onPressButtonOne={handleTicketModal}
-          onPressButtonTwo={(queryType, enterQuery) => {
-            handleSaveAddTicket(queryType, enterQuery);
-            handleTicketModal();
           }}
         />
       )}
@@ -424,7 +414,7 @@ CustomTable.propTypes = {
   freshnessData: PropTypes.array,
   companyData: PropTypes.array,
   industryData: PropTypes.array,
-  statusText: PropTypes.string,
+  statusText: PropTypes.array,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,

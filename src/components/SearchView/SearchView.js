@@ -40,12 +40,10 @@ const SearchView = ({
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
-    debounceTimeout.current = setTimeout(() => {
+    debounceTimeout.current = setTimeout(async () => {
       let filtered = data;
       if (onChangeDropDownText) {
-        onChangeDropDownText(text).then((response) => {
-          filtered = response;
-        });
+        onChangeDropDownText(text);
       } else {
         const formattedQuery = text?.toLowerCase();
         if (customSearchCriteria) {

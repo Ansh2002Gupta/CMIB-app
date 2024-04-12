@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import CustomModal from "../../../components/CustomModal";
 import CommonText from "../../../components/CommonText";
 import CustomTextInput from "../../../components/CustomTextInput";
@@ -33,7 +33,7 @@ const AddModifyNewQuestionModal = ({
     let data = optionData ? optionData : newQuestionnaireData;
 
     if (!data.question.trim()) {
-      error.questionError = intl.formatMessage({ id: "label.mandatory" });
+      error.questionError = intl.formatMessage({ id: "label.fill_mandatory" });
     }
     if (
       data.typeofQuestion !== intl.formatMessage({ id: "label.text_question" })
@@ -42,13 +42,13 @@ const AddModifyNewQuestionModal = ({
         data.question_options.map((item, index) => {
           if (!item.value.trim()) {
             error[`option${index + 1}`] = intl.formatMessage({
-              id: "label.mandatory",
+              id: "label.fill_mandatory",
             });
           }
         });
       }
       if (!data?.value && optionData) {
-        error.optionValue = intl.formatMessage({ id: "label.mandatory" });
+        error.optionValue = intl.formatMessage({ id: "label.fill_mandatory" });
       }
     }
     return error;
@@ -170,6 +170,10 @@ const AddModifyNewQuestionModal = ({
     }
     setNewQuestionnaireData(tempObj);
   }
+  const isMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { automaticallyAdjustKeyboardInsets: false }
+      : {};
 
   return (
     <View>
@@ -192,6 +196,8 @@ const AddModifyNewQuestionModal = ({
             <ScrollView
               showsVerticalScrollIndicator={false}
               nestedScrollEnabled={true}
+              keyboardShouldPersistTaps="handled"
+              {...isMobileProps}
             >
               <View style={styles.flexOne}>
                 {!optionData ? (

@@ -9,6 +9,7 @@ import { Row, View } from "@unthinkable/react-core-components";
 import SavedJobs from "../SavedJobs";
 import useIsWebView from "../../hooks/useIsWebView";
 import { navigations } from "../../constants/routeNames";
+import AllJobs from "../AllJobs/AllJobs";
 
 const Jobs = () => {
   const intl = useIntl();
@@ -43,11 +44,7 @@ const Jobs = () => {
 
         {
           label: intl.formatMessage({ id: "label.all_Jobs" }),
-          component: (
-            <CommonText>
-              {intl.formatMessage({ id: "label.all_Jobs" })}
-            </CommonText>
-          ),
+          component: <AllJobs />,
         },
       ]}
     />
