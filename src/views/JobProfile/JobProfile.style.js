@@ -31,7 +31,6 @@ const style = {
     backgroundColor: colors.white,
   },
   mobileEditContainer: {
-    backgroundColor: colors.secondaryGrey,
     padding: 4,
     borderRadius: 4,
     justifyContent: "center",

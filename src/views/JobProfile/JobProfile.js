@@ -40,7 +40,7 @@ const EditButton = ({ isEditable, handleEdit }) => {
             height={20}
             width={20}
           />
-          <CommonText customTextStyle={style.textStyle} fontWeight="600">
+          <CommonText customTextStyle={style.textStyle} fontWeight="500">
             {intl.formatMessage({ id: "label.edit_job_profile" })}
           </CommonText>
         </TouchableOpacity>
@@ -76,7 +76,7 @@ const JobProfileTab = () => {
       <CustomTabs
         renderHeader={() => (
           <Row style={style.headerContainer}>
-            <CommonText fontWeight={"500"} customTextStyle={style.titleText}>
+            <CommonText fontWeight="600" customTextStyle={style.titleText}>
               {intl.formatMessage({ id: "label.job_profile" })}
             </CommonText>
             <EditButton isEditable={isEditable} handleEdit={handleEdit} />

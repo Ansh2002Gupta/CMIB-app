@@ -9,12 +9,14 @@ import PersonalDetailsUI from "./PersonalDetailsUI";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
 import { usePersonalDetails } from "./Controllers/usePersonalDetails";
+import { formatDate } from "../../utils/util";
 
 const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   const {
     data,
     isLoading: isGettingPersonalData,
     error: errorWhileGettingPersonalData,
+    fetchData,
   } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE}`,
   });
@@ -95,7 +97,14 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   };
 
   const onChangeValue = (details) => (label, value, codeValue) => {
-    const { key } = findKeyByLabel(label, details);
+    const { key, isToggle } = findKeyByLabel(label, details);
+
+    if (isToggle) {
+      value = !Boolean(value);
+    } else if (key === "passport_number") {
+      //make passport uppercase
+      value = value.toUpperCase();
+    }
 
     if (codeValue) {
       setState((prev) => ({
@@ -118,18 +127,22 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     let payload = {
       gender: state?.gender,
       marital_status: state?.marital_status,
-      dob: state?.dob,
+      dob: formatDate(state?.dob, "YYYY-MM-DD"),
       email: state?.email,
       has_passport: state?.has_passport,
-      passport_number: state?.passport_number,
+      passport_number: state?.has_passport ? state?.passport_number : "",
       category_id: state?.category_id,
       mobile_country_code: state?.mobile_country_code.split(" ")?.[0],
       mobile_number: state?.mobile_number,
       phone_number: state?.phone_number,
       nationality: state?.nationality,
       has_disability: state?.has_disability,
-      handicap_description: state?.handicap_description,
-      handicap_percentage: state?.handicap_percentage,
+      handicap_description: state?.has_disability
+        ? state?.handicap_description
+        : "",
+      handicap_percentage: state?.has_disability
+        ? state?.handicap_percentage
+        : 0,
       addresses: [
         {
           id: state?.address_id ? state?.address_id : null,
@@ -158,6 +171,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     handleUpdate({
       body: payload,
       onSuccessCallback: () => {
+        fetchData();
         handleEdit(false);
       },
     });
@@ -174,8 +188,10 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     />
   ) : (
     <>
-      {error && (
+      {error ? (
         <ToastComponent toastMessage={error} onDismiss={handleDismissToast} />
+      ) : (
+        <></>
       )}
       <PersonalDetailsUI
         accessibility_information={accessibility_information}

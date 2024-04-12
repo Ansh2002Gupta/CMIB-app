@@ -4,7 +4,7 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton";
-import style from './MembershipDetails.style';
+import style from "./MembershipDetails.style";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import Spinner from "../../components/Spinner";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
@@ -26,12 +26,11 @@ const MembershipDetailsTemplate = ({
   error,
   setError,
   isLoadingPage,
-  isErrorLoadingPage
+  isErrorLoadingPage,
 }) => {
   const intl = useIntl();
 
-  if (
-    isLoadingPage) {
+  if (isLoadingPage) {
     return (
       <View style={style.loaderStyle}>
         <Spinner />
@@ -39,50 +38,56 @@ const MembershipDetailsTemplate = ({
     );
   }
 
-  if (isErrorLoadingPage && isErrorLoadingPage?.code !== STATUS_CODES.UNAUTHORIZED_USER) {
+  if (
+    isErrorLoadingPage &&
+    isErrorLoadingPage?.code !== STATUS_CODES.UNAUTHORIZED_USER
+  ) {
     return <ErrorComponent errorMsg={isErrorLoadingPage.message} />;
   }
 
   return (
     <>
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={style.contentContainerStyle}
-    >
-      <View style={style.innerContainerStyle}>
-        <DetailCard
-          details={membership_detail}
-          headerId={intl.formatMessage({
-            id: "label.membershipDetail",
-          })}
-          isEditProfile={isEditable}
-          handleChange={onChangeValue(membership_detail)}
-          handleBlur={handleMembershipDetailBlur}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={style.contentContainerStyle}
+      >
+        <View style={style.innerContainerStyle}>
+          <DetailCard
+            details={membership_detail}
+            headerId={intl.formatMessage({
+              id: "label.membershipDetail",
+            })}
+            isEditProfile={isEditable}
+            handleChange={onChangeValue(membership_detail)}
+            handleBlur={handleMembershipDetailBlur}
+            datePickerContainer={style.datePickerContainer}
+          />
+          <DetailCard
+            details={fellow_member_detail}
+            isEditProfile={isEditable}
+            handleChange={onChangeValue(fellow_member_detail)}
+            handleBlur={handleFellowMemberDetailBlur}
+            datePickerContainer={style.datePickerContainer}
+          />
+          <DetailCard
+            details={practice_detail}
+            isEditProfile={isEditable}
+            handleChange={onChangeValue(practice_detail)}
+            handleBlur={handlePracticeDetailBlur}
+            datePickerContainer={style.datePickerContainer}
+          />
+        </View>
+        <SaveCancelButton
+          isEditable={isEditable}
+          isLoading={isLoading}
+          onClickSave={onClickSave}
+          onClickCancel={onClickCancel}
+          isValidAllFields={isValidAllFields}
         />
-        <DetailCard
-          details={fellow_member_detail}
-          isEditProfile={isEditable}
-          handleChange={onChangeValue(fellow_member_detail)}
-          handleBlur={handleFellowMemberDetailBlur}
-        />
-         <DetailCard
-          details={practice_detail}
-          isEditProfile={isEditable}
-          handleChange={onChangeValue(practice_detail)}
-          handleBlur={handlePracticeDetailBlur}
-        />
-      </View>
-      <SaveCancelButton
-        isEditable={isEditable}
-        isLoading={isLoading}
-        onClickSave={onClickSave}
-        onClickCancel={onClickCancel}
-        isValidAllFields={isValidAllFields}
-      />
-    </ScrollView>
-     {!!error && (
-      <ToastComponent toastMessage={error} onDismiss={() => setError("")} />
-    )}
+      </ScrollView>
+      {!!error && (
+        <ToastComponent toastMessage={error} onDismiss={() => setError("")} />
+      )}
     </>
   );
 };

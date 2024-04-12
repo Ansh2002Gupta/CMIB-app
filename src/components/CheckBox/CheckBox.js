@@ -8,6 +8,8 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
 import styles from "./CheckBox.style";
 
+const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
+
 const CheckBox = ({
   customTextStyle,
   handleCheckbox,
@@ -18,6 +20,7 @@ const CheckBox = ({
   title,
   iconCheck,
   iconUnCheck,
+  checkBoxTextStyle,
 }) => {
   const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
@@ -43,6 +46,8 @@ const CheckBox = ({
         <CustomTouchableOpacity
           disabled={isDisabled}
           onPress={() => handleCheckbox(id)}
+          style={{ ...styles.customTouchableOpacity, ...customTextStyle }}
+          hitSlop={hitSlop}
         >
           <CustomImage
             Icon={getCheckBoxIcon()}
@@ -54,7 +59,7 @@ const CheckBox = ({
             customTextStyle={{
               ...styles.titleStyle,
               ...(isDisabled ? styles.disabledText : {}),
-              ...customTextStyle,
+              ...checkBoxTextStyle,
             }}
           >
             {title}
