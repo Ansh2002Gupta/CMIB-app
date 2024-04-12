@@ -330,9 +330,9 @@ const useJobSeekers = () => {
 
   const handlePopupItemClick = (data) => {
     switch (data?.trim().toLowerCase()) {
-      case POPUP_OPTIONS[0]:
+      case POPUP_OPTIONS?.[0]:
         return <></>;
-      case POPUP_OPTIONS[1].trim().toLowerCase():
+      case POPUP_OPTIONS?.[1].trim().toLowerCase():
         navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${data?.id || 1}`);
     }
   };
