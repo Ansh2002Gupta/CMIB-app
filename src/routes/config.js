@@ -1,6 +1,9 @@
 import React from "react";
 import { Platform } from "@unthinkable/react-core-components";
 
+import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
+import ApplicantJobDetails from "../views/ApplicantJobDetails";
+import AppliedJobsView from "../views/AppliedJobsView";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
@@ -27,7 +30,7 @@ import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
 import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
-import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
+import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
@@ -236,24 +239,25 @@ const config = [
       },
       {
         viewPath: navigations.POSTED_JOBS,
-        element: <PostedJobs />,
+        element: <PostedJobsView />,
       },
 
       {
         viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
         element: <AddModifyNewJobs />,
       },
+
       {
-        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}`,
+        viewPath: `${navigations.DETAILS_JOBS}`,
         element: <ViewPostedJobDetails />,
       },
       {
-        viewPath: `${navigations.POSTED_JOBS}/${navigations.DETAILS_JOBS}/${navigations.EDIT_JOB}`,
-        element: <EditJobDetails />,
+        viewPath: `${navigations.DETAILS_JOBS}/${navigations.VIEW_JOB_DETAILS}`,
+        element: <ApplicantJobDetails />,
       },
       {
-        viewPath: `${navigations.POSTED_JOBS}/${navigations.EDIT_JOB}`,
-        element: <EditJobDetails />,
+        viewPath: navigations.APPLIED_JOBS,
+        element: <AppliedJobsView />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,

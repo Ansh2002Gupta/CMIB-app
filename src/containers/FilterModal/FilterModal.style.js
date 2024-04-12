@@ -99,6 +99,56 @@ const styles = StyleSheet.create({
   renderOptionCatigory: {
     height: 300,
   },
+  datePickerModalView: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  datePickerStyle: {
+    minWidth: 80,
+    borderWidth: 2,
+    width: 180,
+    marginTop: 24,
+  },
+  datePickerInner: {
+    top: 50,
+    left: -30,
+  },
+  alignflexStart: {
+    alignItems: "flex-start",
+  },
+  slider: {
+    flex: 1,
+    marginTop: 38,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+  limitsContainer: {
+    width: "100%",
+    marginTop: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  sliderLimitLabel: {
+    color: colors.mediumGray,
+    fontSize: 14,
+  },
+  popUp: {
+    position: "absolute",
+    top: 0,
+    width: 32,
+    height: 20,
+  },
+  customExperience: {
+    fontSize: 14,
+  },
+  customExperienceContainer: {
+    position: "relative",
+    left: 8,
+    bottom: 4,
+  },
 });
 
 export default styles;

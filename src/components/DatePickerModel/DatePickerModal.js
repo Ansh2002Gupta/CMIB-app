@@ -8,7 +8,7 @@ import CustomImage from "../CustomImage";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import images from "../../images";
 import { useIntl } from "react-intl";
-import { formatDate } from "../../utils/util";
+import { convertToTime, formatDate } from "../../utils/util";
 import classes from "../../theme/styles/CssClassProvider";
 import styles from "./DatePickerModal.style";
 
@@ -17,11 +17,16 @@ function DatePickerModal({
   customTextInputOuterContainer,
   customStyles = {},
   format = "MMMM D, YYYY",
+  timeFormate = "h:mm aa",
   isError,
   minDate = Date.now(),
   maxDate,
+  minTime,
+  maxTime,
   onChangeValue,
   value,
+  datePickerViewStyle,
+  showTimeSelect,
   showMonthYearPicker,
 }) {
   const [open, setOpen] = useState(false);
@@ -55,32 +60,63 @@ function DatePickerModal({
           >
             {!value
               ? intl.formatMessage({ id: "label.select" })
-              : formatDate(value, format)}
+              : showTimeSelect
+              ? convertToTime({
+                  dateString: value,
+                  format24Hour: false,
+                })
+              : formatDate(value)}
           </CommonText>
         </View>
         <View style={styles.iconContainer}>
-          <CustomImage source={images.iconCalendar} style={styles.iconArrow} />
+          <CustomImage
+            source={showTimeSelect ? images.iconClock : images.iconCalendar}
+            style={styles.iconArrow}
+          />
         </View>
       </TouchableOpacity>
       {open && (
-        <View style={styles.datePickerContainerStyle}>
-          <DatePicker
-            selected={value}
-            minDate={minDate}
-            maxDate={maxDate}
-            portalId="my-popper"
-            className={accountComponentProp}
-            onChange={(date) => {
-              onChangeValue(new Date(date));
-              setOpen(false);
-            }}
-            showMonthDropdown
-            showYearDropdown
-            inline
-            showMonthYearPicker={showMonthYearPicker}
-            dropdownMode="select"
-            dateFormat={format}
-          />
+        <View
+          style={{ ...styles.datePickerContainerStyle, ...datePickerViewStyle }}
+        >
+          {showTimeSelect ? (
+            <DatePicker
+              selected={value}
+              minTime={minTime}
+              maxTime={maxTime}
+              portalId="my-popper"
+              className={accountComponentProp}
+              onChange={(date) => {
+                onChangeValue(new Date(date));
+                setOpen(false);
+              }}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="Time"
+              inline
+              dropdownMode="select"
+              dateFormat={timeFormate}
+            />
+          ) : (
+            <DatePicker
+              selected={value}
+              minDate={minDate}
+              maxDate={maxDate}
+              portalId="my-popper"
+              className={accountComponentProp}
+              onChange={(date) => {
+                onChangeValue(new Date(date));
+                setOpen(false);
+              }}
+              showMonthDropdown
+              showYearDropdown
+              inline
+              dropdownMode="select"
+              showMonthYearPicker={showMonthYearPicker}
+              dateFormat={format}
+            />
+          )}
         </View>
       )}
     </View>

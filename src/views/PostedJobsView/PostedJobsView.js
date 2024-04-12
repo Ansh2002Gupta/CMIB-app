@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { TwoRow } from "../../core/layouts";
@@ -15,25 +15,33 @@ import styles from "./PostedJobsView.styles";
 import usePostedJobListing from "./controller/usePostedJobListing";
 import MobileCard from "../../containers/PostedJobs/MobileCard";
 import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreComponent";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 
 const PostedJobsView = () => {
   const intl = useIntl();
-  const onEditPress = (item) => {
-    navigate(navigations.EDIT_JOB, {
-      state: item,
-    });
-  };
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const onViewPress = (item) => {
-    navigate(navigations.DETAILS_JOBS, {
-      state: item,
-    });
+    navigate(
+      `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=0`
+    );
   };
+  const onEditPress = (item) => {
+    navigate(
+      `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=edit&activeTab=0`
+    );
+  };
+
   const {
     allDataLoaded,
     currentRecords,
     currentPage,
+    customFilterInfo,
+    defaultCategory,
     filterApplyHandler,
     filterCategory,
+    filterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,
@@ -48,18 +56,20 @@ const PostedJobsView = () => {
     isTicketListingLoading,
     isFirstPageReceived,
     getErrorDetails,
-    isErrorGetPostedJob,
+    isError,
     loadingMore,
     onIconPress,
     queryTypeData,
     rowsPerPage,
     setCurrentRecords,
+    setFilterState,
     statusData,
     statusText,
     subHeadingText,
     tableIcon,
     postedJobData,
     totalcards,
+    initialFilterState,
   } = usePostedJobListing(onViewPress, onEditPress);
 
   const navigate = useNavigate();
@@ -96,57 +106,64 @@ const PostedJobsView = () => {
       }
       isBottomFillSpace
       bottomSection={
-        <CustomTable
-          {...{
-            allDataLoaded,
-            currentPage,
-            currentRecords,
-            data: postedJobData,
-            filterApplyHandler,
-            filterCategory,
-            getColoumConfigs,
-            getStatusStyle,
-            handleTicketModal,
-            handleLoadMore,
-            getErrorDetails,
-            isErrorGetPostedJob,
-            handlePageChange,
-            handleRowPerPageChange,
-            handleSearchResults,
-            handleSaveAddTicket,
-            headingTexts,
-            indexOfFirstRecord,
-            indexOfLastRecord,
-            isHeading,
-            isTicketListingLoading,
-            isFirstPageReceived,
-            loadingMore,
-            onIconPress,
-            queryTypeData,
-            rowsLimit,
-            rowsPerPage,
-            setCurrentRecords,
-            statusData,
-            statusText,
-            subHeadingText,
-            tableHeading,
-            tableIcon,
-            totalcards,
-            placeholder: intl.formatMessage({
-              id: "label.search_by_designation",
-            }),
-          }}
-          mobileComponentToRender={getMobileView}
-          containerStyle={styles.customTableStyle}
-          isTotalCardVisible={false}
-          ThirdSection={
-            <DownloadMoreComponent
-              onPress={() => {
-                console.log("HI I AM pressed");
+        <>
+          {!isError && (
+            <CustomTable
+              {...{
+                customFilterInfo,
+                allDataLoaded,
+                currentPage,
+                currentRecords,
+                data: postedJobData,
+                defaultCategory,
+                filterApplyHandler,
+                filterCategory,
+                getColoumConfigs,
+                getStatusStyle,
+                handleTicketModal,
+                handleLoadMore,
+                handlePageChange,
+                handleRowPerPageChange,
+                handleSearchResults,
+                handleSaveAddTicket,
+                headingTexts,
+                indexOfFirstRecord,
+                indexOfLastRecord,
+                isHeading,
+                isTicketListingLoading,
+                isFirstPageReceived,
+                initialFilterState,
+                loadingMore,
+                onIconPress,
+                queryTypeData,
+                rowsLimit,
+                rowsPerPage,
+                setCurrentRecords,
+                selectedFilterOptions: filterState,
+                setSelectedFilterOptions: setFilterState,
+                statusData,
+                statusText,
+                subHeadingText,
+                tableHeading,
+                tableIcon,
+                totalcards,
+                placeholder: intl.formatMessage({
+                  id: "label.search_by_designation",
+                }),
               }}
+              mobileComponentToRender={getMobileView}
+              containerStyle={styles.customTableStyle}
+              isTotalCardVisible={false}
+              ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
             />
-          }
-        />
+          )}
+          {isError && !!getErrorDetails()?.errorMessage && (
+            <ErrorComponent
+              errorMsg={getErrorDetails()?.errorMessage}
+              onRetry={() => getErrorDetails()?.onRetry()}
+            />
+          )}
+        </>
       }
     />
   );

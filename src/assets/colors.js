@@ -5,7 +5,7 @@ const darkBlack = "#0F0F0F";
 const darkBlackSecond = "#18181B";
 const trueBlack = "#000";
 const blackWithOneForthOpacity = "rgba(0, 0, 0, 0.25)";
-const blackWithMinorOpacity = "rgb(0, 0, 0, 0.85)";
+const blackWithMinorOpacity = "rgba(0, 0, 0, 0.85)";
 
 /* Blues */
 const backgroundColor = "#FBFCFF"; // TODO : Rename this style to appropriate name and stop using this convention for defining the color names
@@ -20,8 +20,9 @@ const skyBlueLightSecond = "#E7EAFC";
 const darkGreen = "#00873E";
 const green = "#04AF55";
 const greenOne = "#04af55";
-const lightGreen = "#DFFFDC";
 const darkSecondGreen = "#258B01";
+const lightGreen = "#E6F9EF";
+const lightGreen2 = "#DFFFDC";
 
 /* Greys */
 const backgroundGrey = "#F6F8F9";
@@ -117,6 +118,7 @@ const colors = {
   skyBlueLight,
   disabledTextFieldColor,
   neutralGrey,
+  lightGreen2,
   lightPurple,
   darkPurple,
   greyFive,

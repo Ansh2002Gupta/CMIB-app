@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
   },
   columnHeaderStyle: {
     backgroundColor: colors.white,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
   columnHeaderStyleWithBorder: {
     backgroundColor: colors.white,
@@ -71,7 +73,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: colors.lightGrey,
     borderRadius: 16,
-    overflow: "hidden",
   },
   iconTicket: {
     height: 20,
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     marginLeft: 8,
+    fontSize: 14,
   },
   imageParentStyle: {
     flexDirection: "row",
@@ -144,6 +146,10 @@ const styles = StyleSheet.create({
   },
   activeTicketsText: {
     color: colors.white,
+  },
+  mobilePopUpPosition: {
+    top: 10,
+    right: -10,
   },
 });
 
