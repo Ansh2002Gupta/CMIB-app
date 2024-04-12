@@ -17,8 +17,6 @@ import useFilterModal from "./controller/useFilterModal";
 import { FILTER_TYPE_ENUM } from "../../constants/constants";
 import classes from "../../theme/styles/CssClassProvider";
 import useIsWebView from "../../hooks/useIsWebView";
-import { FILTER_TYPE_ENUM } from "../../constants/constants";
-import classes from "../../theme/styles/CssClassProvider";
 import commonStyles from "../../theme/styles/commonStyles";
 import images from "../../images";
 import styles from "./FilterModal.style";

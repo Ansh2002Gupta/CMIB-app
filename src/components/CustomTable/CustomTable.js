@@ -36,6 +36,8 @@ const CustomTable = ({
   customModal,
   data,
   defaultCategory,
+  extraDetailsText,
+  extraDetailsKey,
   filterApplyHandler,
   filterCategory,
   initialFilterState = {},
@@ -79,7 +81,6 @@ const CustomTable = ({
   tableHeading,
   tableIcon,
   totalcards,
-  ThirdSection,
   unit,
 }) => {
   const { isWebView } = useIsWebView();
