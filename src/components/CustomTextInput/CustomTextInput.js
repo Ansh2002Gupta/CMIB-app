@@ -250,6 +250,7 @@ const CustomTextInput = (props) => {
             onChangeDropDownText,
             isEditable,
           }}
+          {...remainingProps}
           dropdownStyle={{
             ...style.dropdown,
             ...(isFocused ? style.focusedStyle : {},
