@@ -36,8 +36,8 @@ import useChangeJobStatusApi from "../../../services/apiServices/hooks/useChange
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const initialFilterState = {
-  ["selectedActive/Inactive"]: [],
-  ["selectedApproved/NotApproved"]: [],
+  "selectedActive/Inactive": [],
+  "selectedApproved/NotApproved": [],
 };
 
 const usePostedJobListing = (onViewPress, onEditPress) => {
@@ -50,10 +50,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
-  const [filterState, setFilterState] = useState({
-    ["selectedActive/Inactive"]: [],
-    ["selectedApproved/NotApproved"]: [],
-  });
+  const [filterState, setFilterState] = useState(initialFilterState);
   const [filterOptions, setFilterOptions] = useState({
     ["Active/Inactive"]: "",
     ["Approved/NotApproved"]: "",
@@ -628,6 +625,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
     tableIcon,
     postedJobData: currentRecords,
     totalcards: postedJobData?.meta?.total,
+    initialFilterState,
   };
 };
 
