@@ -42,6 +42,7 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
 export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
+export const APPLY_JOB = `${USER_TYPE_MEMBER}/jobs/apply`;
 export const MEMBER_JOBS_LISTING = `${USER_TYPE_MEMBER}/${JOBS}/apply`;
 export const OFFER_RESPONSE = `${USER_TYPE_ADMIN}/job/applicants`;
 export const JOB_LOCATION_OPTIONS = `${USER_TYPE_COMPANY}/job/locations`;
@@ -80,6 +81,12 @@ export const MEMBER_CA_JOB_MEMBERSHIP_DETAILS = `${USER_TYPE_MEMBER}/profile/mem
 export const MEMBER_CA_JOB_JOB_PREFERENCES = `${USER_TYPE_MEMBER}/profile/job-preferences`;
 export const COMPANY_FUNCTIONAL_AREAS = `${USER_TYPE_COMPANY}/functional-areas`;
 export const UPLOAD_IMAGE = `${USER_TYPE_COMPANY}/upload-image`;
+export const QUESTIONAIRE = `/questionnaire`;
+
+//endpoint view job
+export const GET_JOB_DETAIL = `${USER_TYPE_COMPANY}/jobs`;
+export const SAVE_JOB_DETAIL = `${USER_TYPE_MEMBER}/jobs`;
+export const SEARCH_JOBS = `search/jobs`;
 export const CHANGE_APPLICANT_STATUS = `${USER_TYPE_COMPANY}/jobs/applicants`;
 export const CHANGE_STATUS = "/change-status";
 export const STATUS = "status";

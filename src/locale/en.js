@@ -679,6 +679,10 @@ const locale = {
   "label.formatMinExperience": `{value}+ years`,
   "label.formatMaxExperience": `Up to {value} years`,
   "label.contractual": "Contractual",
+  "label.allJobSearchPlaceholder":
+    "Search functional area, designation or organizations",
+  "label.questionnaire": "Questionnaire",
+  "label.applied": "Applied",
   "label.schedule_interview": "Schedule Interview",
   "label.interview_type": "Interview Type",
   "label.primary_interview": "Primary Interview Schedule",
@@ -727,6 +731,7 @@ const locale = {
     "Still deciding? Take your time, but remember, the clock is ticking. Your future awaits your response!",
   "label.shortlisted_congratulations":
     "Congratulations on being shortlisted! Select a suitable interview time from the options below:",
+  "label.giveAnswer": "Give Answer",
 };
 
 export default locale;
