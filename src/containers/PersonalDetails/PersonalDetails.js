@@ -188,8 +188,10 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     />
   ) : (
     <>
-      {error && (
+      {error ? (
         <ToastComponent toastMessage={error} onDismiss={handleDismissToast} />
+      ) : (
+        <></>
       )}
       <PersonalDetailsUI
         accessibility_information={accessibility_information}

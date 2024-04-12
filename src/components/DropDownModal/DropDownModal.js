@@ -218,10 +218,16 @@ const DropDownModal = ({
       <>
         <TouchableOpacity
           onPress={handleDropDown}
-          style={{ ...styles.textButton(isEditable), ...dropdownStyle }}
+          style={{
+            ...styles.textButton(isEditable),
+            ...dropdownStyle,
+          }}
         >
           <CommonText
-            customTextStyle={value ? styles.valueText : styles.placeHolderText}
+            customTextStyle={{
+              ...(value ? styles.valueText : styles.placeHolderText),
+            }}
+            customContainerStyle={styles.customContainerStyle}
           >
             {placeholder}
           </CommonText>

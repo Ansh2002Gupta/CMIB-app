@@ -46,7 +46,7 @@ const CheckBox = ({
         <CustomTouchableOpacity
           disabled={isDisabled}
           onPress={() => handleCheckbox(id)}
-          style={styles.customTouchableOpacity}
+          style={{ ...styles.customTouchableOpacity, ...customTextStyle }}
           hitSlop={hitSlop}
         >
           <CustomImage
@@ -59,7 +59,6 @@ const CheckBox = ({
             customTextStyle={{
               ...styles.titleStyle,
               ...(isDisabled ? styles.disabledText : {}),
-              ...customTextStyle,
               ...checkBoxTextStyle,
             }}
           >

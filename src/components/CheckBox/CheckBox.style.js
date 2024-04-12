@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     marginLeft: 8,
-    marginBottom: 16,
     fontSize: 14,
     lineHeight: 20,
   },
