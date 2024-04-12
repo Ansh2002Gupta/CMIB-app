@@ -30,14 +30,13 @@ import styles from "./CustomTable.style";
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
-  containerStyle,
   currentPage,
   customFilterInfo,
   customModal,
   data,
   defaultCategory,
-  extraDetailsText,
-  extraDetailsKey,
+  selectedFilterOptions,
+  setSelectedFilterOptions,
   filterApplyHandler,
   filterCategory,
   initialFilterState = {},
@@ -55,18 +54,11 @@ const CustomTable = ({
   isHeading,
   isTicketListingLoading,
   isFirstPageReceived,
-  isFilterVisible = true,
-  isTotalCardVisible,
-  isStatusTextBoolean,
   loadingMore,
   onIconPress,
   placeholder,
-  popUpMessage,
   rowsLimit,
   rowsPerPage,
-  renderCalendar,
-  selectedFilterOptions,
-  setSelectedFilterOptions,
   showSearchBar,
   showJobOfferResponseModal,
   showInterviewTimeModal,
@@ -82,6 +74,11 @@ const CustomTable = ({
   tableIcon,
   totalcards,
   unit,
+  extraDetailsText,
+  extraDetailsKey,
+  renderCalendar,
+  statusData,
+  queryTypeData,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -92,9 +89,9 @@ const CustomTable = ({
   useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
   const [showFilterOptions, setShowFilterOptions] = useState(false);
 
-  const isFilterCount = !!selectedFilterOptions
-    ? Object.values(selectedFilterOptions).find((state) => !!state.length)
-    : 0;
+  const isFilterCount = Object.values(selectedFilterOptions).find(
+    (state) => !!state.length
+  );
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
@@ -133,41 +130,39 @@ const CustomTable = ({
             {showSearchBar && (
               <TwoColumn
                 leftSection={
-                  <View style={styles.flexDirectionRow}>
-                    <SearchView
-                      data={data?.records}
-                      customSearchCriteria={handleSearchResults}
-                      placeholder={placeholder}
-                      customParentStyle={styles.getParentStyle(isWebView)}
+                  <SearchView
+                    data={data?.records}
+                    customSearchCriteria={handleSearchResults}
+                    placeholder={placeholder}
+                  />
+                }
+                isLeftFillSpace
+                rightSection={
+                  <CustomTouchableOpacity
+                    onPress={handleFilterModal}
+                    style={styles.imageParentStyle}
+                    disabled={isTicketListingLoading}
+                  >
+                    <TouchableImage
+                      source={images.iconFilter}
+                      parentStyle={styles.iconTicket}
+                      onPress={handleFilterModal}
                     />
-                    {isFilterVisible && (
-                      <CustomTouchableOpacity
-                        onPress={handleFilterModal}
-                        style={styles.imageParentStyle}
-                        disabled={isTicketListingLoading}
-                      >
-                        <TouchableImage
-                          source={images.iconFilter}
-                          parentStyle={styles.iconTicket}
-                          onPress={handleFilterModal}
-                        />
-                        {isWebView && (
-                          <CommonText customTextStyle={styles.filterText}>
-                            {intl.formatMessage({ id: "label.filters" })}
-                          </CommonText>
-                        )}
-                        {isFilterCount && (
-                          <CommonText
-                            customContainerStyle={styles.activeTickets}
-                            customTextStyle={styles.activeTicketsText}
-                            fontWeight={"600"}
-                          >
-                            {getFilterCount()}
-                          </CommonText>
-                        )}
-                      </CustomTouchableOpacity>
+                    {isWebView && (
+                      <CommonText customTextStyle={styles.filterText}>
+                        {intl.formatMessage({ id: "label.filters" })}
+                      </CommonText>
                     )}
-                  </View>
+                    {isFilterCount && (
+                      <CommonText
+                        customContainerStyle={styles.activeTickets}
+                        customTextStyle={styles.activeTicketsText}
+                        fontWeight={"600"}
+                      >
+                        {getFilterCount()}
+                      </CommonText>
+                    )}
+                  </CustomTouchableOpacity>
                 }
                 style={styles.filterTopSection(isWebView)}
               />
@@ -276,7 +271,7 @@ const CustomTable = ({
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if (!data?.length)
+                        if ((!data || !!data) && !data?.length)
                           return (
                             <CommonText
                               customContainerStyle={styles.loadingStyleNoData}
@@ -415,7 +410,7 @@ CustomTable.propTypes = {
   freshnessData: PropTypes.array,
   companyData: PropTypes.array,
   industryData: PropTypes.array,
-  statusText: PropTypes.array,
+  statusText: PropTypes.string,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,

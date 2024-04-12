@@ -32,6 +32,7 @@ export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
 export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
 export const DETAIL = `/detail`;
+export const JOBS = "jobs";
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
@@ -52,7 +53,6 @@ export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
 //sub routes
 export const APPLICANTS = "/applicants";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
-export const JOBS = "jobs";
 export const INTERVIEWS = "/interviews";
 export const INTERVIEW = "/interview";
 export const MARK_PREFER = "/mark-prefer";
