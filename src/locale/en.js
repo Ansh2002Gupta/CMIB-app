@@ -731,6 +731,7 @@ const locale = {
     "Still deciding? Take your time, but remember, the clock is ticking. Your future awaits your response!",
   "label.shortlisted_congratulations":
     "Congratulations on being shortlisted! Select a suitable interview time from the options below:",
+  "label.giveAnswer": "Give Answer",
 };
 
 export default locale;

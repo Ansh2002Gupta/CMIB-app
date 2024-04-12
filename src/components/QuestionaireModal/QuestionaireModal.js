@@ -231,11 +231,18 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
                               item?.type === "single-select" ||
                               item?.type === "multi-select"
                             }
+                            placeholder={
+                              item?.type === "text" &&
+                              intl.formatMessage({
+                                id: "label.giveAnswer",
+                              })
+                            }
                             isMultiSelect={item?.type === "multi-select"}
                             options={item?.question_options}
                             labelField={"label"}
                             valueField={"value"}
                             isSelected={"isSelected"}
+                            isSingleMutliSelect={item?.type === "multi-select"}
                             onChangeValue={(val) => {
                               item?.type === "multi-select"
                                 ? handleMultiSelectChange(item?.id, val)
