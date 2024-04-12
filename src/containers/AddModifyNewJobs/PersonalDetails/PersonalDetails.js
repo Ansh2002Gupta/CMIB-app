@@ -6,15 +6,13 @@ import React, {
   useState,
 } from "react";
 import { Platform, View } from "@unthinkable/react-core-components";
+import { useIntl } from "react-intl";
 
 import CustomTextInput from "../../../components/CustomTextInput";
-
-import useGetAddNewJobData from "../../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 import { AddJobContext } from "../../../globalContext/addJob/addJobsProvider";
-
-import { useIntl } from "react-intl";
-import styles from "./PersonalDetails.styles";
+import useGetAddNewJobData from "../../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 import { DEBOUNCE_TIME } from "../../../constants/constants";
+import styles from "./PersonalDetails.styles";
 
 const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
   const intl = useIntl();

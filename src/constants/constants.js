@@ -61,6 +61,12 @@ export const MINIMUM_SALARY_LIMIT = 0;
 export const MAXIMUM_SALARY_LIMIT = 100;
 export const MINIMUM_FRESHNESS_LIMIT = 0;
 export const MAXIMUM_FRESHNESS_LIMIT = 100;
+
+export const POSTED_JOB_LISTING_ENUM = {
+  activeorInactive: "Active/Inactive",
+  approvedNotApproved: "Approved/NotApproved",
+};
+
 export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = {
   AppliedJobs: "Work Mode",
   TicketListing: "Status",
@@ -68,8 +74,6 @@ export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = {
   Feedback: "Status",
   GetSchedule: "Date",
 };
-
-export const FILTER_TYPE_ENUM = { CHECKBOX: "checkbox", SLIDER: "slider" };
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -561,6 +565,10 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
+export const COMPANY_QUERY_TYPE_TICKET = "/";
+
+export const POPUP_OPTIONS = ["Download Profile & Resume", "View Details"];
+export const FILTER_TYPE_ENUM = { CHECKBOX: "checkbox", SLIDER: "slider" };
 export const color = [
   "#000000",
   "#e60000",

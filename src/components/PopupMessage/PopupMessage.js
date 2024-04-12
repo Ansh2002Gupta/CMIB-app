@@ -98,12 +98,14 @@ const PopupMessage = ({ customStyle, message, onPopupClick, itemSelected }) => {
 PopupMessage.defaultProps = {
   customStyle: {},
   message: [],
+  data: {},
 };
 
 PopupMessage.propTypes = {
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   customStyle: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   onPopupClick: PropTypes.func.isRequired,
+  data: PropTypes.object,
 };
 
 export default PopupMessage;
