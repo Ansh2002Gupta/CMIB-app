@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -9,12 +9,15 @@ import PersonalDetailsUI from "./PersonalDetailsUI";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
 import { usePersonalDetails } from "./Controllers/usePersonalDetails";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 
 const PersonalDetails = ({ isEditable = true, handleEdit }) => {
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState || {};
   const {
     data,
     isLoading: isGettingPersonalData,
-    error: errorWhileGettingPersonalData,
+    isError: errorWhileGettingPersonalData,
   } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE}`,
   });

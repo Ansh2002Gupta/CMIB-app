@@ -236,14 +236,14 @@ const style = {
   onlyCountLimitBox: {
     justifyContent: "flex-end",
   },
+  marginRight10: {
+    marginRight: 10,
+  },
   CheckBoxSelection: {
     paddingRight: 16,
     marginTop: 4,
-    flexDirection: 'row',
-    flex: 1
-  },
-  marginRight10: {
-    marginRight: 10,
+    flexDirection: "row",
+    flex: 1,
   },
 };
 

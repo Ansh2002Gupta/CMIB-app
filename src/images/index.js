@@ -240,6 +240,7 @@ const pdfIcon = appendAppBaseURl("/images/svg/pdfIcon.svg");
 const rightDiagonalArrow = appendAppBaseURl(
   "/images/svg/rightDiagonalArrow.svg"
 );
+const iconWallet = appendAppBaseURl("/images/svg/wallet.svg");
 const iconLocationWhite = appendAppBaseURl("/images/svg/iconLocationWhite.svg");
 const iconBreifcase = appendAppBaseURl("/images/svg/briefcase.svg");
 const iconRupeeSign = appendAppBaseURl("/images/svg/rupeeSign.svg");
@@ -415,6 +416,8 @@ const images = {
   videoPlayIcon,
   pdfIcon,
   rightDiagonalArrow,
+  videoPlayIcon,
+  iconWallet,
   iconBreifcase,
   iconRupeeSign,
   iconArchiveSave,

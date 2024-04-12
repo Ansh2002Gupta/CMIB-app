@@ -9,7 +9,7 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 import images from "../../images";
 import styles from "./PopupMessage.style";
 
-const PopupMessage = ({ customStyle, message, onPopupClick }) => {
+const PopupMessage = ({ customStyle, message, onPopupClick, data }) => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const wrapperRef = useRef(null);
   useOutsideClick(wrapperRef, () => setIsPopUpVisible(false));
@@ -29,7 +29,10 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
                         ...customStyle,
                       }}
                       onPress={() => {
-                        onPopupClick && onPopupClick(item);
+                        onPopupClick &&
+                          onPopupClick(
+                            !!data ? { ...data, option: item } : item
+                          );
                         setIsPopUpVisible(false);
                       }}
                     >
@@ -67,12 +70,14 @@ const PopupMessage = ({ customStyle, message, onPopupClick }) => {
 PopupMessage.defaultProps = {
   customStyle: {},
   message: [],
+  data: {},
 };
 
 PopupMessage.propTypes = {
-  customStyle: PropTypes.func,
+  customStyle: PropTypes.object,
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   onPopupClick: PropTypes.func.isRequired,
+  data: PropTypes.object,
 };
 
 export default PopupMessage;

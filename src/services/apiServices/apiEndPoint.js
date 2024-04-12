@@ -30,6 +30,7 @@ export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
 export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
+export const DETAIL = `/detail`;
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
@@ -44,7 +45,11 @@ export const SAVE = `/save`;
 //sub routes
 export const APPLICANTS = "/applicants";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
+export const JOBS = "jobs";
 export const INTERVIEW = "/interview";
+export const MARK_PREFER = "/mark-prefer";
+export const UNMARK_PREFER = "/unmark-prefer";
+export const CANDIDATES = "/candidates";
 
 /* API Endpoints Member CA JOB profile */
 export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
@@ -54,6 +59,9 @@ export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/
 export const MEMBER_CA_JOB_PROFILE_SKILLS = `${USER_TYPE_MEMBER}/profile/skills`;
 export const LANGUAGES = `${CORE}/languages`;
 export const SKILLS = `${USER_TYPE_MEMBER}/ca-jobs/master/configurations`;
+
+/* API Endpoints Member CA JOB COMPANY profile */
+export const COMPANY_LISTING = `${USER_TYPE_COMPANY}/${JOBS}/seekers`;
 export const MEMBER_CA_JOB_PROFILE_ACTIVITY = `${USER_TYPE_MEMBER}/profile/activities`;
 export const MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE = `${USER_TYPE_MEMBER}/profile/work-experiences`;
 export const FUNCTION_AREAS = `${USER_TYPE_COMPANY}/functional-areas`;

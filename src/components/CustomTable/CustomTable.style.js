@@ -7,12 +7,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundGrey,
     padding: 24,
   },
-  flexDirectionRow: {
-    flexDirection: "row",
-  },
-  getParentStyle: (isWebView) => ({
-    flex: isWebView ? 0.4 : 1,
-  }),
   mobileMainContainer: {
     flex: 1,
     backgroundColor: colors.backgroundGrey,
@@ -28,7 +22,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingRight: 24,
     paddingLeft: 24,
-    borderBottomWidth: 1,
+    borderRadius: 15,
     borderColor: colors.greyOne,
     backgroundColor: colors.white,
   },
@@ -58,6 +52,8 @@ const styles = StyleSheet.create({
   },
   columnHeaderStyle: {
     backgroundColor: colors.white,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
   columnHeaderStyleWithBorder: {
     backgroundColor: colors.white,
@@ -71,7 +67,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: colors.lightGrey,
     borderRadius: 16,
-    overflow: "hidden",
   },
   iconTicket: {
     height: 20,
@@ -104,6 +99,7 @@ const styles = StyleSheet.create({
   },
   filterTopSection: (isWebView) => ({
     marginBottom: 16,
+    width: isWebView ? "40%" : "100%",
   }),
   tableTopSection: {
     flex: 1,
@@ -144,6 +140,22 @@ const styles = StyleSheet.create({
   },
   activeTicketsText: {
     color: colors.white,
+  },
+  mobilePopUpPosition: {
+    top: 10,
+    right: -10,
+  },
+  dot: {
+    width: 4,
+    height: 4,
+    borderRadius: "100%",
+    backgroundColor: colors.lightGrey,
+  },
+  rowStyling: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 6,
   },
 });
 

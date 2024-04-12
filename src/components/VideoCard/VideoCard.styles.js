@@ -8,12 +8,9 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     position: "relative",
-  },
-  playIconBoxStyles: {
-    position: "absolute",
-    left: "50%",
-    top: "35%",
-    right: "50%",
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
   },
   playIconStyles: {
     width: 50,
