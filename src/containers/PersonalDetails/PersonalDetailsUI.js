@@ -35,6 +35,7 @@ const PersonalDetailsUI = ({
           headerId={intl.formatMessage({
             id: "label.personal_details",
           })}
+          datePickerContainer={style.datePickerContainer}
           isEditProfile={isEditable}
           handleChange={onChangeValue(personal_detail)}
           handleBlur={handlePersonalDetailBlur}

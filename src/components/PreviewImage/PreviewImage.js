@@ -44,7 +44,7 @@ const PreviewImage = ({
       {!hideIconDelete && (
         <View style={styles.innerContainer}>
           <TouchableOpacity onPress={onRemoveImage}>
-            <Image source={images.iconTrash} style={styles.deleteIcon} />
+            <Image source={images.iconTrashSVG} style={styles.deleteIcon} />
           </TouchableOpacity>
         </View>
       )}

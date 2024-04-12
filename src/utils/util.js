@@ -21,10 +21,13 @@ export const getImageSource = (uploadedImage) => {
 };
 
 export const getRenderText = (items, keys) => {
-  if (!keys.length) {
+  if (!keys?.length) {
     return "";
   }
-  const texts = keys.map((key) => items[key]).join(" ");
+  if (keys?.[0].trim().toLowerCase() === "active") {
+    return items[keys?.[0]] ? "Active" : "Inactive";
+  }
+  const texts = keys?.map((key) => items[key]).join(" ");
   return !!texts ? texts : "_";
 };
 

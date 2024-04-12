@@ -249,6 +249,7 @@ const iconArchiveSaveMobile = appendAppBaseURl(
   "/images/svg/iconArchiveSaveMobile.svg"
 );
 const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
+const iconTrashSVG = appendAppBaseURl("/images/svg/iconTrash.svg");
 const iconTickInsideCircle = appendAppBaseURl(
   "/images/svg/iconTickInsideCircle.svg"
 );
@@ -436,6 +437,7 @@ const images = {
   iconLocationWhite,
   iconArchiveSaveMobile,
   iconClock,
+  iconTrashSVG,
   iconTickInsideCircle,
   iconCrossInsideCircle,
   iconSelectCircle,

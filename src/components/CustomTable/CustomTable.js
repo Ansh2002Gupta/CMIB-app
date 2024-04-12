@@ -241,21 +241,34 @@ const CustomTable = ({
                                     >
                                       {getRenderText(item, subHeadingText)}
                                     </CommonText>
-                                    <View style={styles.dot}></View>
-                                    <CommonText
-                                      customTextStyle={styles.tableQueryText}
-                                    >
-                                      {extraDetailsText +
-                                        ": " +
-                                        getRenderText(item, extraDetailsKey)}
-                                    </CommonText>
+                                    {!!extraDetailsText && (
+                                      <>
+                                        <View style={styles.dot}></View>
+                                        <CommonText
+                                          customTextStyle={
+                                            styles.tableQueryText
+                                          }
+                                        >
+                                          {extraDetailsText +
+                                            ": " +
+                                            getRenderText(
+                                              item,
+                                              extraDetailsKey
+                                            )}
+                                        </CommonText>
+                                      </>
+                                    )}
                                   </Row>
                                 </View>
                                 <View style={styles.rowsPerPageWeb}>
                                   {!!item.status && (
                                     <Chip
                                       label={getRenderText(item, statusText)}
-                                      style={getStatusStyle(item.status)}
+                                      style={getStatusStyle(
+                                        !!item?.active
+                                          ? item.active
+                                          : item.status
+                                      )}
                                     />
                                   )}
                                   <TouchableImage

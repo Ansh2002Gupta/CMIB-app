@@ -55,6 +55,10 @@ const useUploadedFileValidations = ({
             ? intl.formatMessage({
                 id: "label.allowedDocumentFormatsError",
               })
+            : isVideoUpload
+            ? intl.formatMessage({
+                id: "label.allowedVideoFormatsError",
+              })
             : intl.formatMessage({
                 id: "label.allowedFileFormatsError",
               })

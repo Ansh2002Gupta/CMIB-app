@@ -22,6 +22,12 @@ const CustomToggleComponent = ({
 }) => {
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
 
+  useEffect(() => {
+    if (selectedToggleOption !== value) {
+      setSelectedToggleOption(value);
+    }
+  }, [value]);
+  
   const handleOptionSelect = (option) => {
     if (onValueChange) {
       onValueChange(option);

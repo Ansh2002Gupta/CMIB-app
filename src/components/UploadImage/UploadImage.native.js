@@ -136,6 +136,7 @@ const UploadImage = ({
             isVideoUpload,
             isLoading: isUploadingImageToServer,
             uploadPercentage,
+            isVideoUpload,
           }}
         />
       )}
