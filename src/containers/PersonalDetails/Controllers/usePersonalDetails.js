@@ -63,7 +63,7 @@ const accessibility_information = (has_disability) => {
       },
     },
   ];
-  if (!has_disability) {
+  if (has_disability) {
     return [...commonFields, ...otherFileds];
   } else {
     return commonFields;

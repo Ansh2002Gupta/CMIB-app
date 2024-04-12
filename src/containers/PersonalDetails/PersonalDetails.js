@@ -137,8 +137,12 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
       phone_number: state?.phone_number,
       nationality: state?.nationality,
       has_disability: state?.has_disability,
-      handicap_description: state?.handicap_description,
-      handicap_percentage: state?.handicap_percentage,
+      handicap_description: state?.has_disability
+        ? state?.handicap_description
+        : "",
+      handicap_percentage: state?.has_disability
+        ? state?.handicap_percentage
+        : 0,
       addresses: [
         {
           id: state?.address_id ? state?.address_id : null,
