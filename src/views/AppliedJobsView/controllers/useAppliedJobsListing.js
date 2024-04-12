@@ -506,8 +506,19 @@ const useAppliedJobsListing = () => {
   let isHeading = true;
 
   function getStatusStyle(status) {
+    if (typeof status === "number") {
+      return status
+        ? {
+            ...(!isWebView ? styles.active : styles.activeWeb),
+            ...styles.cellTextStyle(12),
+          }
+        : {
+            ...(!isWebView ? styles.close : styles.closeWeb),
+            ...styles.cellTextStyle(12),
+          };
+    }
     status = !!status ? status?.toLowerCase() : '-"';
-    switch (status) {
+    switch (status.trim().toLowerCase()) {
       case "pending":
         return {
           ...(!isWebView ? styles.pending : styles.pendingWeb),
