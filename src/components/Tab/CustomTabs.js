@@ -130,5 +130,6 @@ CustomTabs.propTypes = {
   ).isRequired,
   setSelectedTab: PropTypes.func,
   cleanupFuntion: PropTypes.func,
+  renderHeader: PropTypes.func,
   intialActiveTab: PropTypes.number,
 };
