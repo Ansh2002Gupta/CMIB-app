@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: "center",
     padding: 30,
+    borderRadius: 16,
   },
   textSize: {
     fontSize: 14,

@@ -24,6 +24,9 @@ export const getRenderText = (items, keys) => {
   if (!keys?.length) {
     return "";
   }
+  if (keys?.[0].trim().toLowerCase() === "active") {
+    return items[keys?.[0]] ? "Active" : "Inactive";
+  }
   const texts = keys?.map((key) => items[key]).join(" ");
   return !!texts ? texts : "_";
 };
