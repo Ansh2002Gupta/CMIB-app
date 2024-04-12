@@ -10,6 +10,7 @@ import {
   CANDIDATES,
   MARKED_PREFER,
   PREFERRED,
+  UNMARKED_PREFER,
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
@@ -27,6 +28,7 @@ import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
+import { usePost } from "../../../hooks/useApiRequest";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -83,6 +85,14 @@ const useSavedCandidates = () => {
     otherOptions: {
       skipApiCallOnMount: true,
     },
+  });
+  const {
+    isLoading: markedSavedJobLoading,
+    makeRequest: markJob,
+    error: errorWhileMarkJob,
+    setError: setMarkedSavedJobError,
+  } = usePost({
+    url: USER_TYPE_COMPANY + CANDIDATES + UNMARKED_PREFER,
   });
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
@@ -239,7 +249,14 @@ const useSavedCandidates = () => {
       : setCurrentPopupMessage(-1);
   };
 
-  const handleActions = (actions) => {};
+  const handleActions = (actions, id) => {
+    markJob({
+      body: {
+        candidate_id: id,
+      },
+      overrideUrl: `${USER_TYPE_COMPANY}${CANDIDATES}/${id}${UNMARKED_PREFER}`,
+    });
+  };
 
   const onNameSorting = async (sortField) => {
     setIsAscendingOrder((prev) => !prev);
@@ -392,7 +409,9 @@ const useSavedCandidates = () => {
                     id: "label.removed_from_saved_candidates",
                   })}
                   customStyle={styles.popupMessageStyle}
-                  onPopupClick={() => handleActions(index)}
+                  onPopupClick={() =>
+                    handleActions(index, Number(item?.candidate_id))
+                  }
                 />
               </View>
             )}

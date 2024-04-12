@@ -64,6 +64,7 @@ export const QUESTIONNAIRE = "/questionnaire";
 export const PREFERRED = "/preferred";
 export const CANDIDATES = "/candidates";
 export const MARKED_PREFER = "/marked-prefer";
+export const UNMARKED_PREFER = "/unmark-prefer";
 
 /* API Endpoints Member CA JOB profile */
 export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
