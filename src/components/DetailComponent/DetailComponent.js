@@ -115,7 +115,7 @@ const DetailComponent = ({
 
   const renderDetailContent = (detail) => {
     if (detail?.isEmptyField) return <></>;
-    
+
     if (detail.showBadgeLabel) {
       return (
         <BadgeLabel
@@ -355,12 +355,42 @@ const DetailComponent = ({
                             </CommonText>
                           )}
                         </View>
+                        {renderDetailContent(columns)}
                       </View>
                     );
                   })}
               </View>
             );
           }
+
+          return (
+            <View
+              key={idx}
+              style={isWebView ? styles.webContainer : getRowStyle(detail)}
+            >
+              {isEditable ? (
+                renderEditableContent(detail)
+              ) : (
+                <>
+                  <View style={styles.titleContainer}>
+                    {detail.label ? (
+                      <CommonText customTextStyle={styles.titleStyle}>
+                        {intl.formatMessage({ id: detail.label })}
+                      </CommonText>
+                    ) : (
+                      void 0
+                    )}
+                    {detail?.isMandatory && (
+                      <CommonText customTextStyle={styles.starStyle}>
+                        {" *"}
+                      </CommonText>
+                    )}
+                  </View>
+                  {renderDetailContent(detail)}
+                </>
+              )}
+            </View>
+          );
         })}
         {isShowSwitch && isWebView && isEditable && renderSwitch()}
         {hasActionButton && isEditable && isWebView && renderWebActionButton()}
