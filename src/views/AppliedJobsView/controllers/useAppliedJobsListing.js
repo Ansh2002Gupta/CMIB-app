@@ -14,6 +14,7 @@ import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
   ACCEPTED,
+  APPLICANT,
   INTERVIEW,
   INTERVIEWS,
   JOBS,
@@ -150,7 +151,7 @@ const useAppliedJobsListing = () => {
   } = useFetch({
     url: USER_TYPE_MEMBER + `/${JOBS}` + `/${applicantID}` + INTERVIEWS,
     otherOptions: {
-      skipApiCallOnMount: false,
+      skipApiCallOnMount: true,
     },
   });
 
@@ -481,7 +482,12 @@ const useAppliedJobsListing = () => {
   const getInterviewDates = ({ rowData }) => {
     fetchInterviewDates({
       overrideUrl:
-        USER_TYPE_MEMBER + `/${JOBS}` + `/${rowData?.job_id}` + INTERVIEWS,
+        USER_TYPE_MEMBER +
+        `/${JOBS}` +
+        `/${rowData?.related_job_id}` +
+        `${APPLICANT}` +
+        `/${rowData?.id}` +
+        INTERVIEWS,
     });
     setModalData(interviewDatesData);
   };
