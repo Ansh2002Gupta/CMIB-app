@@ -232,76 +232,88 @@ const CustomTable = ({
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
-                              <View style={styles.mobileContainer}>
-                                <View>
-                                  <CommonText
-                                    fontWeight={"600"}
-                                    customTextStyle={styles.cellTextStyle()}
-                                  >
-                                    {getRenderText(item, headingTexts)}
-                                  </CommonText>
-                                  <CommonText
-                                    customTextStyle={styles.tableQueryText}
-                                  >
-                                    {getRenderText(item, subHeadingText)}
-                                  </CommonText>
-                                </View>
-                                <View style={styles.rowsPerPageWeb}>
-                                  <Chip
-                                    label={
-                                      isStatusTextBoolean
-                                        ? getRenderText(item, statusText) ===
-                                          "1"
-                                          ? statusLabels[1]
-                                          : statusLabels[0]
-                                        : getRenderText(item, statusText)
-                                    }
-                                    style={
-                                      isStatusTextBoolean
-                                        ? getStatusStyle(
-                                            getRenderText(item, statusText) ===
-                                              "1"
-                                              ? statusLabels[1].toLowerCase()
-                                              : statusLabels[0].toLowerCase()
-                                          )
-                                        : getStatusStyle(item?.status)
-                                    }
-                                  />
-                                  {showPopUpWithID === item?.id && (
-                                    <View ref={popUpRef}>
-                                      <PopupMessage
-                                        message={popUpMessage}
-                                        customStyle={styles.mobilePopUpPosition}
-                                        onPopupClick={() => {
-                                          if (
-                                            popUpMessage ===
-                                            intl.formatMessage({
-                                              id: "label.respond_to_job_offer",
-                                            })
-                                          ) {
-                                            setShowJobOfferResponseModal(
-                                              (prev) => !prev
-                                            );
-                                            setModalData(item);
-                                          } else {
-                                            setShowInterviewTimeModal(
-                                              (prev) => !prev
-                                            );
-                                          }
-                                          setShowPopUpWithID(-1);
+                              <>
+                                {mobileComponentToRender ? (
+                                  mobileComponentToRender(item, index)
+                                ) : (
+                                  <View style={styles.mobileContainer}>
+                                    <View>
+                                      <CommonText
+                                        fontWeight={"600"}
+                                        customTextStyle={styles.cellTextStyle()}
+                                      >
+                                        {getRenderText(item, headingTexts)}
+                                      </CommonText>
+                                      <CommonText
+                                        customTextStyle={styles.tableQueryText}
+                                      >
+                                        {getRenderText(item, subHeadingText)}
+                                      </CommonText>
+                                    </View>
+                                    <View style={styles.rowsPerPageWeb}>
+                                      <Chip
+                                        label={
+                                          isStatusTextBoolean
+                                            ? getRenderText(
+                                                item,
+                                                statusText
+                                              ) === "1"
+                                              ? statusLabels[1]
+                                              : statusLabels[0]
+                                            : getRenderText(item, statusText)
+                                        }
+                                        style={
+                                          isStatusTextBoolean
+                                            ? getStatusStyle(
+                                                getRenderText(
+                                                  item,
+                                                  statusText
+                                                ) === "1"
+                                                  ? statusLabels[1].toLowerCase()
+                                                  : statusLabels[0].toLowerCase()
+                                              )
+                                            : getStatusStyle(item?.status)
+                                        }
+                                      />
+                                      {showPopUpWithID === item?.id && (
+                                        <View ref={popUpRef}>
+                                          <PopupMessage
+                                            message={popUpMessage}
+                                            customStyle={
+                                              styles.mobilePopUpPosition
+                                            }
+                                            onPopupClick={() => {
+                                              if (
+                                                popUpMessage ===
+                                                intl.formatMessage({
+                                                  id: "label.respond_to_job_offer",
+                                                })
+                                              ) {
+                                                setShowJobOfferResponseModal(
+                                                  (prev) => !prev
+                                                );
+                                                setModalData(item);
+                                              } else {
+                                                setShowInterviewTimeModal(
+                                                  (prev) => !prev
+                                                );
+                                              }
+                                              setShowPopUpWithID(-1);
+                                            }}
+                                          />
+                                        </View>
+                                      )}
+                                      <TouchableImage
+                                        onPress={() => {
+                                          onIconPress(item);
                                         }}
+                                        source={tableIcon}
+                                        style={styles.iconTicket}
                                       />
                                     </View>
-                                  )}
-                                  <TouchableImage
-                                    onPress={() => {
-                                      onIconPress(item);
-                                    }}
-                                    source={tableIcon}
-                                    style={styles.iconTicket}
-                                  />
-                                </View>
-                              </View>
+                                  </View>
+                                )}
+                              </>
                             )}
                           </>
                         );
