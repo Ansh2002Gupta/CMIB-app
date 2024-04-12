@@ -158,7 +158,7 @@ const useAppliedJobsListing = () => {
   const handleConfirmation = () => {
     const { decision, applicantID } = candidateDecision;
     patchAcceptRejectOfferDecision({
-      overrideUrl: OFFER_RESPONSE + `/${applicantID}/status`,
+      overrideUrl: OFFER_RESPONSE + `/${applicantID}`,
       body: { status: decision },
       onErrorCallback: () => {
         setConfirmationModal((prev) => ({
