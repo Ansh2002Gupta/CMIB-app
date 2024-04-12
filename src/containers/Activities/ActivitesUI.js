@@ -8,6 +8,7 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import Spinner from "../../components/Spinner";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { STATUS_CODES } from "../../constants/constants";
+import KeyboardAwareScrollView from "../../components/KeyboardAwareScrollView";
 
 const ActivitiesUI = ({
   isEditable,
@@ -44,7 +45,7 @@ const ActivitiesUI = ({
 
   return (
     <>
-      <ScrollView
+      <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         style={style.contentContainerStyle}
       >
@@ -75,7 +76,7 @@ const ActivitiesUI = ({
           onClickCancel={onClickCancel}
           isValidAllFields={isValidAllFields}
         />
-      </ScrollView>
+      </KeyboardAwareScrollView>
       {!!error && (
         <ToastComponent toastMessage={error} onDismiss={() => setError("")} />
       )}

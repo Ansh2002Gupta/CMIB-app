@@ -28,7 +28,7 @@ const UploadPhotoVideo = ({
         </CommonText>
         <UploadCVPhotoUI
           isEditable={isEditable}
-          headerText={"label.cv_photo"}
+          headerText={"label.cv_curriculum_vitae"}
           onDeleteImage={onDeleteImage}
           errorWhileUpload={errorWhileUpload}
           updatedFileUploadResult={updatedFileUploadResult}

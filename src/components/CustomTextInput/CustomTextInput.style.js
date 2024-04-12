@@ -243,6 +243,7 @@ const style = {
     marginTop: 4,
     flexDirection: "row",
     flex: 1,
+    marginBottom: 10,
   },
   marginRight10: {
     marginRight: 10,

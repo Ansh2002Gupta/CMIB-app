@@ -18,52 +18,71 @@ const CheckBoxSelection = ({
   handleCheckBoxSelection,
   isSingleSelection,
   value,
+  checkBoxTextStyle,
 }) => {
   const { isWebView } = useIsWebView();
-  const iconCheck = isEditable ? (isSingleSelection ? images.iconCheckBoxRound : images.iconCheckbox) : images.iconTickGreen
-  const iconUnCheck = isEditable ? (isSingleSelection ? images.iconUnCheckBoxRound : images.iconUnCheckbox) : images.iconCrossRed
+  const iconCheck = isEditable
+    ? isSingleSelection
+      ? images.iconCheckBoxRound
+      : images.iconCheckbox
+    : images.iconTickGreen;
+  const iconUnCheck = isEditable
+    ? isSingleSelection
+      ? images.iconUnCheckBoxRound
+      : images.iconUnCheckbox
+    : images.iconCrossRed;
 
   const renderAdd_Remove_Button = () => (
-    <View style={[{flex: 1}]}>
-      <View style={{position: 'absolute', marginTop: 10,}}>
-      <TouchableImage
-                  isSvg={isWebView}
-                  onPress={() => handleAddRemoveRow(isActionToAdd)}
-                  source={isActionToAdd ? images.iconAddRoundGreen : images.iconDeleteRoundRed}
-                  style={{ height: 24, width: 24}}
-                />
+    <View style={[{ flex: 1 }]}>
+      <View style={{ position: "absolute", marginTop: 10 }}>
+        <TouchableImage
+          isSvg={isWebView}
+          onPress={() => handleAddRemoveRow(isActionToAdd)}
+          source={
+            isActionToAdd ? images.iconAddRoundGreen : images.iconDeleteRoundRed
+          }
+          style={{ height: 24, width: 24 }}
+        />
       </View>
-   </View>
+    </View>
   );
 
   const getLevelValueAndColor = (value) => {
     let color;
     let text;
-      switch (value.toLowerCase()) { 
-        case "high":
-          text = "!!!";
-          color = "#2CA900";
-          break;
-        case "medium":
-          text = "!!";
-          color = "#DDAF39";
-          break;
-        default:
-          text = "!";
-          color = "#2FA5CB";
-          break;
-      }
-      return { text, color }; 
+    switch (value.toLowerCase()) {
+      case "high":
+        text = "!!!";
+        color = "#2CA900";
+        break;
+      case "medium":
+        text = "!!";
+        color = "#DDAF39";
+        break;
+      default:
+        text = "!";
+        color = "#2FA5CB";
+        break;
+    }
+    return { text, color };
   };
-  const levelInfo = !isEditable && isSingleSelection ? getLevelValueAndColor(value) : "";  
+  const levelInfo =
+    !isEditable && isSingleSelection ? getLevelValueAndColor(value) : "";
 
   return (
-    
-    <View style={[customStyle, { flexDirection: "row" }]}>
+    <View style={[customStyle, { flexDirection: "row", marginBottom: 20 }]}>
       {isEditable ? (
         <>
           {checkBoxOptions.map((checkBox, index) => (
-            <View key={index} style={{ flexDirection: "row", alignItems: 'center', marginTop: 10, paddingRight: 24 }}>
+            <View
+              key={index}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: 10,
+                paddingRight: 24,
+              }}
+            >
               <CheckBox
                 title={checkBox.value}
                 isSelected={checkBox.isSelected}
@@ -71,36 +90,41 @@ const CheckBoxSelection = ({
                 id={checkBox.value}
                 iconCheck={iconCheck}
                 iconUnCheck={iconUnCheck}
+                checkBoxTextStyle={checkBoxTextStyle}
               />
             </View>
           ))}
           {renderAdd_Remove_Button()}
         </>
+      ) : isSingleSelection ? (
+        <View style={styles.row}>
+          <Text style={styles.levelColor(levelInfo?.color)}>
+            {levelInfo?.text}
+          </Text>
+          <CommonText>{Array.isArray(value) ? value[0] : value}</CommonText>
+        </View>
       ) : (
-        isSingleSelection ? (
-               <View style={styles.row}>
-                 <Text style={styles.levelColor(levelInfo?.color)}>
-                 {levelInfo?.text}
-                </Text>
-               <CommonText>
-                {Array.isArray(value) ? value[0]: value}
-               </CommonText>
+        <>
+          {checkBoxOptions.map((checkBox, index) => (
+            <View
+              key={index}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                paddingRight: 24,
+              }}
+            >
+              <CheckBox
+                title={checkBox.value}
+                isSelected={checkBox.isSelected}
+                iconCheck={iconCheck}
+                iconUnCheck={iconUnCheck}
+                handleCheckbox={() => {}}
+                checkBoxTextStyle={checkBoxTextStyle}
+              />
             </View>
-        ) : (
-          <>
-            {checkBoxOptions.map((checkBox, index) => (
-              <View key={index} style={{ flexDirection: "row", alignItems: 'center', paddingRight: 24 }}>
-                <CheckBox
-                  title={checkBox.value}
-                  isSelected={checkBox.isSelected}
-                  iconCheck={iconCheck}
-                  iconUnCheck={iconUnCheck}
-                  handleCheckbox={() => {}}
-                />
-              </View>
-            ))}
-          </>
-        )
+          ))}
+        </>
       )}
     </View>
   );
@@ -112,7 +136,7 @@ CheckBoxSelection.defaultProps = {
   handleAddRemoveRow: () => {},
   isActionToAdd: true,
   isSingleSelection: false,
-  value: ""
+  value: "",
 };
 
 CheckBoxSelection.propTypes = {
@@ -121,7 +145,7 @@ CheckBoxSelection.propTypes = {
   handleAddRemoveRow: PropTypes.func,
   isActionToAdd: PropTypes.bool,
   isSingleSelection: PropTypes.bool,
-  value: PropTypes.string
+  value: PropTypes.string,
 };
 
 export default CheckBoxSelection;
