@@ -518,7 +518,7 @@ const useAppliedJobsListing = () => {
           };
     }
     status = !!status ? status?.toLowerCase() : '-"';
-    switch (status.trim().toLowerCase()) {
+    switch (status?.trim().toLowerCase()) {
       case "pending":
         return {
           ...(!isWebView ? styles.pending : styles.pendingWeb),
