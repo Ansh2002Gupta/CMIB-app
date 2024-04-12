@@ -456,7 +456,12 @@ const useAppliedJobsListing = () => {
       location: returnSelectedFilterOption(filterInfo, "Location"),
       education: returnSelectedFilterOption(filterInfo, "Education"),
     };
-    setFilterOptions(currentFilterOptions);
+    setFilterOptions((prev) => {
+      return {
+        ...prev,
+        ...currentFilterOptions,
+      };
+    });
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: currentPage,
@@ -466,6 +471,7 @@ const useAppliedJobsListing = () => {
       experience: currentFilterOptions.experience,
       location: currentFilterOptions.location,
       department: currentFilterOptions.department,
+      search: filterOptions?.q ?? "",
     });
   };
 

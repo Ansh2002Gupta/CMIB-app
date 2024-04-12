@@ -18,10 +18,12 @@ const VideoCard = ({ url }) => {
       <View>
         <CustomImage
           alt="Play icon"
+          height={50}
           isSvg
           Icon={images.videoPlayIcon}
           source={images.videoPlayIcon}
           style={styles.playIconStyles}
+          width={50}
         />
       </View>
     </CustomTouchableOpacity>

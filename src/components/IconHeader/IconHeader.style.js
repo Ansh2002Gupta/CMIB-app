@@ -84,6 +84,13 @@ const style = {
     height: 20,
     width: 20,
   },
+  flexRowAlignCenter: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  marginLeft8: {
+    marginLeft: 8,
+  },
 };
 
 export default style;

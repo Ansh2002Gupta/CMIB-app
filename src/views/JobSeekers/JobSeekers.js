@@ -6,6 +6,7 @@ import CustomTable from "../../components/CustomTable";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import useJobSeekers from "./controller/useJobSeekers";
+import useIsWebView from "../../hooks/useIsWebView";
 import {
   ROWS_PER_PAGE_ARRAY as rowsLimit,
   JOB_SEEKERS_TABLE_HEADING as tableHeading,
@@ -13,9 +14,16 @@ import {
 
 const JobSeekers = () => {
   const {
+    setFilterState,
     allDataLoaded,
     currentPage,
+    currentRecords,
+    customFilterInfo,
     filterApplyHandler,
+    filterCategory,
+    filterState,
+    setCurrentRecords,
+    defaultCategory,
     getColoumConfigs,
     handleLoadMore,
     handlePageChange,
@@ -26,25 +34,30 @@ const JobSeekers = () => {
     indexOfLastRecord,
     isError,
     isFirstPageReceived,
+    subHeadingText,
+    extraDetailsText,
+    extraDetailsKey,
     loadingMore,
     rowsPerPage,
     jobSeekersData,
     totalcards,
-    filterCategory,
     headingTexts,
     tableIcon,
     isHeading,
   } = useJobSeekers();
 
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
 
   return (
     <TwoRow
       topSection={
-        <IconHeader
-          hasIconBar
-          headerText={intl.formatMessage({ id: "label.job_seekers" })}
-        />
+        isWebView ? (
+          <IconHeader
+            hasIconBar
+            headerText={intl.formatMessage({ id: "label.job_seekers" })}
+          />
+        ) : null
       }
       isBottomFillSpace
       bottomSection={
@@ -52,30 +65,40 @@ const JobSeekers = () => {
           {!isError && (
             <CustomTable
               {...{
+                customFilterInfo,
+                selectedFilterOptions: filterState,
+                setSelectedFilterOptions: setFilterState,
                 allDataLoaded,
                 currentPage,
+                currentRecords,
                 data: jobSeekersData,
                 filterApplyHandler,
+                filterCategory,
+                setCurrentRecords,
+                defaultCategory,
                 getColoumConfigs,
                 handleLoadMore,
                 handlePageChange,
                 handleRowPerPageChange,
                 handleSearchResults,
+                headingTexts,
+                hideTotalCount: true,
                 indexOfFirstRecord,
                 indexOfLastRecord,
                 isFirstPageReceived,
+                isHeading,
                 loadingMore,
+                placeholder: intl.formatMessage({
+                  id: "label.serach_by_applicant_name_id",
+                }),
                 rowsLimit,
                 rowsPerPage,
+                subHeadingText,
                 tableHeading,
                 totalcards,
-                filterCategory,
-                headingTexts,
                 tableIcon,
-                isHeading,
-                placeholder: intl.formatMessage({
-                  id: "label.search_by_candidate_name_or_id",
-                }),
+                extraDetailsText,
+                extraDetailsKey,
               }}
             />
           )}
