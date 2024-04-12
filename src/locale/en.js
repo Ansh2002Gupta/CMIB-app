@@ -451,10 +451,13 @@ const locale = {
   "label.particular_person_get_particlular_module":
     "* Note - A particular module can be assigned to a single contact person only.",
   "label.error": "Error",
+  "label.some_error_occurred": "Some Error Occured!",
   "label.login_with_new_email":
     "Please login using your updated email and password that you have received on your updated email.",
   "label.session_has_expired": "Your session has been expired.",
   "label.your_access_has_been_revoked": "Your access has been revoked.",
+  "label.viewPdf": "View PDF",
+  "label.job_seekers": "Job Seekers",
   "label.saved_jobs": "Saved Jobs",
   "label.applied_Jobs": "Applied Jobs",
   "label.all_Jobs": "All Jobs",
@@ -537,6 +540,12 @@ const locale = {
   "label.job_profile": "Job Profile",
   "label.job_seekers": "Job Seekers",
   "label.search_by_candidate_name_or_id": "Search by candidate name or ID",
+  "label.candidates": "Candidates",
+  "label.job_applicants": "Job Applicants",
+  "label.saved_candidates": "Saved Candidates",
+  "label.candidate_details": "Candidate Details",
+  "label.save_candidate_details": "Save Candidate Details",
+  "label.serach_by_applicant_name_id": "Search by applicant name or ID",
   "label.category": "Category",
   "label.accessibility_information": "Accessibility Information",
   "label.has_disability": "Do you have any physical impairment?",
@@ -588,7 +597,7 @@ const locale = {
   "label.search_by_designation": "Search By Designation or Job ID",
   "label.search_by_applicant_name": "Search By Applicant Name or ID",
   "label.posted_job": "Posted Job",
-  "label.edit_jobs": "Edit Jobs",
+  "label.edit_jobs": "Edit Job",
   "label.summary_error": "Length should be greater than 10 and less than 1000",
   "label.details_error": "Length should be greater than 50 and less than 65535",
   "label.fill_mandatory": "Please fill mandatory field",
@@ -679,6 +688,10 @@ const locale = {
   "label.formatMinExperience": `{value}+ years`,
   "label.formatMaxExperience": `Up to {value} years`,
   "label.contractual": "Contractual",
+  "label.allJobSearchPlaceholder":
+    "Search functional area, designation or organizations",
+  "label.questionnaire": "Questionnaire",
+  "label.applied": "Applied",
   "label.schedule_interview": "Schedule Interview",
   "label.interview_type": "Interview Type",
   "label.primary_interview": "Primary Interview Schedule",
@@ -692,6 +705,10 @@ const locale = {
   "label.applicant_name": "Application Name",
   "label.applicant_id": "Applicant ID",
   "label.field_cannot_be_empty": "Field cannot be empty",
+  "toggle.undefined": "--",
+  "label.unsave_candidate_details": "Mark Unsave",
+  "label.successful_save": "Saves Details Successfully!",
+  "label.successful_unsave": "Unsaved Details Successfully!",
   "label.offer_job": "Offer Job",
   "label.view_interview_details": "View Interview Details",
   "label.edit_interview_details": "Edit Interview Details",
@@ -727,6 +744,7 @@ const locale = {
     "Still deciding? Take your time, but remember, the clock is ticking. Your future awaits your response!",
   "label.shortlisted_congratulations":
     "Congratulations on being shortlisted! Select a suitable interview time from the options below:",
+  "label.giveAnswer": "Give Answer",
 };
 
 export default locale;

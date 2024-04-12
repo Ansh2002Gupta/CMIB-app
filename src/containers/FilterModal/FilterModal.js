@@ -6,9 +6,9 @@ import { View, ScrollView, Platform } from "@unthinkable/react-core-components";
 import { ThreeRow, TwoColumn } from "../../core/layouts";
 
 import ActionPairButton from "../../components/ActionPairButton";
+import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
-import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import DatePickerModal from "../../components/DatePickerModel";
@@ -17,8 +17,8 @@ import useFilterModal from "./controller/useFilterModal";
 import { FILTER_TYPE_ENUM } from "../../constants/constants";
 import classes from "../../theme/styles/CssClassProvider";
 import useIsWebView from "../../hooks/useIsWebView";
-import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
+import images from "../../images";
 import styles from "./FilterModal.style";
 
 const FilterModal = ({
