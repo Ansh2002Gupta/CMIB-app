@@ -4,15 +4,8 @@ export const JobPreferences_keys = {
 };
 
 const createModuleOptions = (module, contact) => {
-  console.log("module", module, "contact", contact);
-  console.log({
-    label: module.name,
-    name: module.name,
-    value: module.name,
-    isSelected: contact?.includes(module.name) ?? false,
-    selectedIndex: null,
-  });
   return {
+    id: module.id || 0,
     label: module.name,
     name: module.name,
     value: module.name,
@@ -50,7 +43,8 @@ export const updateDropDownOptions = (
 export const formatJobPreferenceData = (data) => {
   return {
     posting_anywhere_in_india: data?.posting_anywhere_in_india ?? undefined,
-    transferable_post_acceptable: data?.transferable_post_acceptable ?? undefined,
+    transferable_post_acceptable:
+      data?.transferable_post_acceptable ?? undefined,
     posting_outside_india: data?.posting_outside_india ?? undefined,
     preferred_region: data?.preferred_region ?? null,
     expected_annual_salary: data?.expected_annual_salary ?? null,
