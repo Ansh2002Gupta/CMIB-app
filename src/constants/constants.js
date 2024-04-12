@@ -28,6 +28,7 @@ export const ADDRESS_MAX_LENGTH = 500;
 export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
 export const FILE_MAX_SIZE = 5000000;
+export const VIDEO_FILE_MAX_SIZE = 50000000;
 export const VIDEO_MAX_SIZE = 50000000;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "nqca-placements";
@@ -401,6 +402,10 @@ export const MARITAL_STATUS = [
   {
     label: "Single",
     value: "Single",
+  },
+  {
+    label: "Other",
+    value: "Other",
   },
 ];
 export const MONTHS = [

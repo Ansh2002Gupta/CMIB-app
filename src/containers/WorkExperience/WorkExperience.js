@@ -162,9 +162,8 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
     setFormFieldsError([...formFieldsError]);
 
     let toDate = state.work_experiences[index]?.to_date;
-
     //if from_date is greater then to_date then remove to_date
-    if (toDate && key === "from_date" && value > toDate) {
+    if (toDate && key === "from_date" && new Date(value) > new Date(toDate)) {
       state.work_experiences[index] = {
         ...state.work_experiences[index],
         to_date: "",

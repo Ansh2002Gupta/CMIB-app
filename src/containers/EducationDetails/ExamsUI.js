@@ -21,10 +21,7 @@ const ExamsUI = ({
   const intl = useIntl();
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={style.contentContainerStyle}
-    >
+    <View style={style.contentContainerStyle}>
       <View style={style.innerContainerStyle}>
         <DetailCard
           details={ca_foundation}
@@ -61,7 +58,7 @@ const ExamsUI = ({
         onClickCancel={onClickCancel}
         isValidAllFields={isValidAllFields}
       />
-    </ScrollView>
+    </View>
   );
 };
 
