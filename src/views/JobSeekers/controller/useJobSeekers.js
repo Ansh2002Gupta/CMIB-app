@@ -234,10 +234,8 @@ const useJobSeekers = () => {
     {
       refKey: "value",
       name: "CurrentSalary",
-      type: FILTER_TYPE_ENUM.SLIDER,
-      minimumSliderLimit: 0,
-      maximumSliderLimit: 40,
-      options: 0,
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: [],
       selectedOptions: filterState?.selectedCurrentSalary,
       handler: handleFilterChange,
     },
@@ -327,15 +325,14 @@ const useJobSeekers = () => {
     "Experience",
     "Current Salary",
     "Functional Areas",
-    "Education",
     "Category",
   ];
 
   const handlePopupItemClick = (data) => {
-    switch (data?.option) {
+    switch (data?.trim().toLowerCase()) {
       case POPUP_OPTIONS[0]:
         return <></>;
-      case POPUP_OPTIONS[1]:
+      case POPUP_OPTIONS[1].trim().toLowerCase():
         navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${data?.id || 1}`);
     }
   };
@@ -388,7 +385,7 @@ const useJobSeekers = () => {
       },
       {
         content: isHeading ? (
-          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+          <CustomTouchableOpacity onPress={() => onNameSorting("candidate_id")}>
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.candidate_id ? item.candidate_id : "-"}
             </CommonText>
@@ -411,7 +408,9 @@ const useJobSeekers = () => {
       },
       {
         content: isHeading ? (
-          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+          <CustomTouchableOpacity
+            onPress={() => onNameSorting("total_experience")}
+          >
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.total_experience ? item.total_experience : "0"}
             </CommonText>
@@ -489,6 +488,7 @@ const useJobSeekers = () => {
     indexOfFirstRecord,
     indexOfLastRecord,
     isFirstPageReceived,
+    isGeetingJobbSeekers,
     isHeading,
     jobSeekersData: jobSeekersData?.records,
     loadingMore,
