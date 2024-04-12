@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { View, Platform } from "@unthinkable/react-core-components";
 
@@ -26,6 +26,8 @@ import TouchableImage from "../../../components/TouchableImage";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import useOutsideClick from "../../../hooks/useOutsideClick";
+import { usePost } from "../../../hooks/useApiRequest";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -38,7 +40,7 @@ const useSavedCandidates = () => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
-  const [showCurrentPopupmessage, setCurrentPopupMessage] = useState(0);
+  const [showCurrentPopupmessage, setCurrentPopupMessage] = useState(-1);
   const [filterOptions, setFilterOptions] = useState({
     status: "",
     query_type: "",
@@ -55,6 +57,9 @@ const useSavedCandidates = () => {
   const navigate = useNavigate();
 
   const getStatusStyle = () => {};
+  const popMessageRef = useRef(null);
+  useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
+
   const headingTexts = ["candidate_name"];
   const subHeadingText = ["candidate_id", "experience"];
   let filterCategory = ["Status", "Query Type"];
@@ -235,9 +240,7 @@ const useSavedCandidates = () => {
       : setCurrentPopupMessage(-1);
   };
 
-  const handleActions = (actions) => {
-    console.log("handleActions", actions);
-  };
+  const handleActions = (actions) => {};
 
   const onNameSorting = async (sortField) => {
     setIsAscendingOrder((prev) => !prev);
@@ -384,13 +387,15 @@ const useSavedCandidates = () => {
               isSvg={true}
             />
             {showCurrentPopupmessage === index && (
-              <PopupMessage
-                message={intl.formatMessage({
-                  id: "label.removed_from_saved_candidates",
-                })}
-                customStyle={styles.popupMessageStyle}
-                onPopupClick={() => handleActions(index)}
-              />
+              <View ref={popMessageRef}>
+                <PopupMessage
+                  message={intl.formatMessage({
+                    id: "label.removed_from_saved_candidates",
+                  })}
+                  customStyle={styles.popupMessageStyle}
+                  onPopupClick={() => handleActions(index)}
+                />
+              </View>
             )}
           </View>
         ),

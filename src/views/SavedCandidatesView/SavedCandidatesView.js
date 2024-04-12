@@ -81,9 +81,7 @@ const SavedCandidatesView = () => {
           }}
           ThirdSection={
             <DownloadMoreComponent
-              onPress={() => {
-                console.log("HI I AM pressed");
-              }}
+              onPress={() => {}}
               message={intl.formatMessage({
                 id: "label.download_candidates_list",
               })}
