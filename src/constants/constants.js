@@ -696,7 +696,7 @@ export const progressData = {
   },
 };
 export const JOB_SEEKERS_TABLE_HEADING = {
-  company_name: "Company Name",
+  name: "Name",
   candidate_id: "Candidate ID",
   total_experience: "Total Experience",
   functional_area: "Functional Area",
