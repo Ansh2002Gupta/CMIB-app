@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -10,8 +10,11 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessa
 import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
 import { usePersonalDetails } from "./Controllers/usePersonalDetails";
 import { formatDate } from "../../utils/util";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 
 const PersonalDetails = ({ isEditable = true, handleEdit }) => {
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState || {};
   const {
     data,
     isLoading: isGettingPersonalData,

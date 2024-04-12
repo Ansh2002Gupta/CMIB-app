@@ -37,8 +37,11 @@ const PostedJobsView = () => {
     allDataLoaded,
     currentRecords,
     currentPage,
+    customFilterInfo,
+    defaultCategory,
     filterApplyHandler,
     filterCategory,
+    filterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,
@@ -53,18 +56,20 @@ const PostedJobsView = () => {
     isTicketListingLoading,
     isFirstPageReceived,
     getErrorDetails,
-    isErrorGetPostedJob,
+    isError,
     loadingMore,
     onIconPress,
     queryTypeData,
     rowsPerPage,
     setCurrentRecords,
+    setFilterState,
     statusData,
     statusText,
     subHeadingText,
     tableIcon,
     postedJobData,
     totalcards,
+    initialFilterState,
   } = usePostedJobListing(onViewPress, onEditPress);
 
   const navigate = useNavigate();
@@ -102,13 +107,15 @@ const PostedJobsView = () => {
       isBottomFillSpace
       bottomSection={
         <>
-          {!isErrorGetPostedJob && (
+          {!isError && (
             <CustomTable
               {...{
+                customFilterInfo,
                 allDataLoaded,
                 currentPage,
                 currentRecords,
                 data: postedJobData,
+                defaultCategory,
                 filterApplyHandler,
                 filterCategory,
                 getColoumConfigs,
@@ -125,12 +132,15 @@ const PostedJobsView = () => {
                 isHeading,
                 isTicketListingLoading,
                 isFirstPageReceived,
+                initialFilterState,
                 loadingMore,
                 onIconPress,
                 queryTypeData,
                 rowsLimit,
                 rowsPerPage,
                 setCurrentRecords,
+                selectedFilterOptions: filterState,
+                setSelectedFilterOptions: setFilterState,
                 statusData,
                 statusText,
                 subHeadingText,
@@ -147,7 +157,7 @@ const PostedJobsView = () => {
               ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
             />
           )}
-          {isErrorGetPostedJob && !!getErrorDetails()?.errorMessage && (
+          {isError && !!getErrorDetails()?.errorMessage && (
             <ErrorComponent
               errorMsg={getErrorDetails()?.errorMessage}
               onRetry={() => getErrorDetails()?.onRetry()}

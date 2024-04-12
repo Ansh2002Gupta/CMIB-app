@@ -11,7 +11,9 @@ const CustomToggleComponent = ({
   customLabelStyle,
   customToggleStyle,
   customToggleButtonTextStyle,
+  customErrorStyle,
   isMandatory,
+  errorMessage,
   containerStyle,
   label,
   onValueChange,
@@ -19,7 +21,6 @@ const CustomToggleComponent = ({
   value,
 }) => {
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
-  const { isWebView } = useIsWebView();
 
   useEffect(() => {
     if (selectedToggleOption !== value) {
@@ -33,6 +34,11 @@ const CustomToggleComponent = ({
     }
     setSelectedToggleOption(option);
   };
+  const { isWebView } = useIsWebView();
+
+  useEffect(() => {
+    selectedToggleOption != -1 && onValueChange(selectedToggleOption);
+  }, [selectedToggleOption]);
 
   return (
     <View style={containerStyle}>
@@ -89,6 +95,14 @@ const CustomToggleComponent = ({
             </>
           ))}
       </View>
+      {!!errorMessage && (
+        <CommonText
+          customTextStyle={[styles.errorMsg, customErrorStyle]}
+          fontWeight={customErrorStyle?.fontWeight || "600"}
+        >
+          {errorMessage}
+        </CommonText>
+      )}
     </View>
   );
 };

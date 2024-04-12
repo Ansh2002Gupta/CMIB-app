@@ -1,6 +1,10 @@
 import React from "react";
 import { Platform } from "@unthinkable/react-core-components";
 
+import Candidates from "../views/Candidates";
+import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
+import ApplicantJobDetails from "../views/ApplicantJobDetails";
+import AppliedJobsView from "../views/AppliedJobsView";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
@@ -13,9 +17,8 @@ import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import Jobs from "../views/Jobs";
 import JobsView from "../views/JobsView/JobsView";
-import JobApplicantsView from "../views/JobApplicantsView/index";
+import JobSeekers from "../views/JobSeekers";
 import JobProfileTab from "../views/JobProfile";
-import JobSeekersView from "../views/JobSeekersView/index";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
@@ -27,14 +30,14 @@ import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
 import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
-import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
-import EditJobDetails from "../views/EditJobDetails/EditJobDetails";
+import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
+import AllJobs from "../views/AllJobs/AllJobs";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -248,14 +251,26 @@ const config = [
         element: <ViewPostedJobDetails />,
       },
       {
+        viewPath: `${navigations.DETAILS_JOBS}/${navigations.VIEW_JOB_DETAILS}`,
+        element: <ApplicantJobDetails />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <AppliedJobsView />,
+      },
+      {
         viewPath: navigations.JOB_APPLICANTS,
-        element: <JobApplicantsView />,
+        element: <Candidates />,
       },
       {
         viewPath: navigations.JOB_SEEKERS,
-        element: <JobSeekersView />,
+        element: <JobSeekers />,
       },
 
+      {
+        viewPath: navigations.JOB_SEEKERS + navigations.CANDIDATE_DETAILS,
+        element: <ViewDetailsScreen />,
+      },
       {
         viewPath: navigations.SAVED_CANDIDATES,
         element: <SavedCandidatesView />,
@@ -264,7 +279,18 @@ const config = [
         viewPath: navigations.SAVED_JOBS,
         element: <SavedJobs />,
       },
-
+      {
+        viewPath: navigations.ALL_JOBS,
+        element: <AllJobs />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <PostedJobsView />,
+      },
+      {
+        viewPath: `${navigations.JOB_DETAIL}/:jobId`,
+        element: <PostedJobs />,
+      },
       {
         viewPath: navigations.JOBS,
         element: <Jobs />,

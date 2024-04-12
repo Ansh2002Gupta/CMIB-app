@@ -56,6 +56,25 @@ export const ANONYMOUS = "Anonymous";
 export const USER_TYPE_CANDIDATE = "candidate";
 export const EDIT = "edit";
 export const HYPHEN = "-";
+export const MINIMUM_EXPERIENCE_LIMIT = 0;
+export const MAXIMUM_EXPERIENCE_LIMIT = 40;
+export const MINIMUM_SALARY_LIMIT = 0;
+export const MAXIMUM_SALARY_LIMIT = 100;
+export const MINIMUM_FRESHNESS_LIMIT = 0;
+export const MAXIMUM_FRESHNESS_LIMIT = 100;
+
+export const POSTED_JOB_LISTING_ENUM = {
+  activeorInactive: "Active/Inactive",
+  approvedNotApproved: "Approved/NotApproved",
+};
+
+export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = {
+  AppliedJobs: "Work Mode",
+  TicketListing: "Status",
+  PostedJobs: "Active/Inactive",
+  Feedback: "Status",
+  GetSchedule: "Date",
+};
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -232,6 +251,16 @@ export const ROWS_PER_PAGE_ARRAY = [
   { value: 30, label: "30" },
   { value: 40, label: "40" },
 ];
+
+export const APPLIED_JOBS_TABLE_HEADING = {
+  readable_id: "Job Id",
+  company_name: "Company Name",
+  designation: "Designation",
+  vacancy: "Vacancies",
+  status: "Status",
+  active_status: "Active/Inactive",
+  created_at: "Created On",
+};
 
 export const TICKET_TABLE_HEADING = {
   readable_id: "Ticket ID",
@@ -519,6 +548,11 @@ export const FORMAT = [
   "align",
   "size",
 ];
+
+export const UNITS = {
+  YRS: "Yrs",
+};
+
 export const TEXT_FORMATS = [
   "bold",
   "italic",
@@ -536,13 +570,10 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
-export const JOB_SEEKERS_TABLE_HEADING = {
-  company_name: "Company Name",
-  candidate_id: "Candidate ID",
-  total_experience: "Total Experience",
-  functional_area: "Functional Area",
-};
+export const COMPANY_QUERY_TYPE_TICKET = "/";
 
+export const POPUP_OPTIONS = ["Download Profile & Resume", "View Details"];
+export const FILTER_TYPE_ENUM = { CHECKBOX: "checkbox", SLIDER: "slider" };
 export const color = [
   "#000000",
   "#e60000",
@@ -664,5 +695,61 @@ export const progressData = {
     textColor: colors.darkSecondGreen,
   },
 };
+export const JOB_SEEKERS_TABLE_HEADING = {
+  company_name: "Company Name",
+  candidate_id: "Candidate ID",
+  total_experience: "Total Experience",
+  functional_area: "Functional Area",
+};
+export const JOB_STATUS_RESPONSE_CODE = {
+  "Shortlist Candidate": 3,
+  "Reject Candidate": 2,
+  "Offer Job": 6,
+  "Reject After Interview": 2,
+  "Offer Accepted": 7,
+  "Offer Rejected": 8,
+  "Job Not Offered": 9,
+};
 
 export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];
+export const GET_INTERVIEW_TYPE = {
+  "Face-To-Face": 0,
+  Telephonic: 1,
+  Remote: 2,
+};
+export const STATUS_OPTIONS = {
+  INTERVIEW_SCHEDULED: "interview scheduled",
+  JOB_OFFERED: "job offered",
+  JOB_NOT_OFFERED: "job not offered",
+  NO_RESPONSE: "No response from applicant for interview",
+  OFFER_ACCEPTED: "offer accepted",
+  OFFERE_REJECTED: "offer rejected",
+  PENDING: "pending",
+  REJECTED: "rejected",
+  SHORTLISTED: "shortlisted",
+};
+
+export const DATA_FORMATTER_LOCALES = ["en-US"];
+
+export const DATA_FORMATTER_OPTIONS = {
+  day: "numeric",
+  month: "long",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+};
+
+export const API_DATA_FOR_INTERVIEW_SCHEDULING = [
+  {
+    id: 42,
+    primary_schedule: "2024-03-01 14:53:12",
+    alternate_schedule: "2024-04-03 21:05:58",
+    type: "Face-To-Face",
+    alternate_type: "Telephonic",
+  },
+];
+
+export const KEYS = {
+  OFFER_ACCEPTED: 7,
+  OFFERE_REJECTED: 8,
+};

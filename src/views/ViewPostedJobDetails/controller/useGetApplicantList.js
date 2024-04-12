@@ -2,18 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
-import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
-import TouchableImage from "../../../components/TouchableImage";
-import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
-import CustomImage from "../../../components/CustomImage";
 import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
-import {
-  COMPANY_TICKET_LISTING,
-  COMPANY_QUERY_TYPE_TICKET,
-  COMPANY_TICKET_STATUS,
-} from "../../../services/apiServices/apiEndPoint";
 import { formatDate } from "../../../utils/util";
 import {
   getValidCurrentPage,
@@ -21,17 +12,18 @@ import {
 } from "../../../utils/queryParamsHelpers";
 import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
-import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
-import colors from "../../../assets/colors";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import CustomImage from "../../../components/CustomImage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
-const useGetApplicantList = (id) => {
+const useGetApplicantList = (id, onEditPress) => {
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
@@ -54,27 +46,42 @@ const useGetApplicantList = (id) => {
   const navigate = useNavigate();
 
   const {
-    data: postedJobData,
+    data: applicantListingData,
     isLoading: isTicketListingLoading,
     fetchData: fetchDataTicketListing,
+    isError,
+    error: errorGetApplicant,
   } = useFetch({
     url: `company/jobs/${id}/applicants`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
   });
-
-  //   const { handleAddTicket } = useAddTicket();
-
-  const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
-
-  const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
+  const queryTypeData = [];
+  const statusData = [];
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
     setCurrentPage,
     setRowPerPage,
   });
+
+  const getErrorDetails = () => {
+    if (isError) {
+      let errorMessage = "";
+      if (errorGetApplicant === GENERIC_GET_API_FAILED_ERROR_MESSAGE) {
+        errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      } else {
+        errorMessage = `${errorGetApplicant?.data?.message}`;
+      }
+      return {
+        errorMessage,
+        onRetry: () => {
+          fetchDataTicketListing({});
+        },
+      };
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,6 +108,10 @@ const useGetApplicantList = (id) => {
     const newData = await fetchDataTicketListing({
       queryParamsObject: params,
     });
+    setCurrentRecords(newData?.records);
+  };
+  const getAllRecords = async () => {
+    const newData = await fetchDataTicketListing();
     setCurrentRecords(newData?.records);
   };
 
@@ -155,30 +166,6 @@ const useGetApplicantList = (id) => {
     });
   };
 
-  const onIconPress = (item) => {
-    // navigate(navigations.TICKETS_VIEW_EDIT, {
-    //   state: item,
-    // });
-  };
-
-  const handleSaveAddTicket = async (queryType, enterQuery) => {
-    // await handleAddTicket({ query_type: queryType, query: enterQuery });
-    // if (isMob) {
-    //   const newData = await fetchDataTicketListing();
-    //   if (newData && newData.records.length > 0) {
-    //     setCurrentRecords((prevRecords) => [
-    //       ...prevRecords,
-    //       ...newData.records,
-    //     ]);
-    //   }
-    // } else {
-    //   await updateCurrentRecords({
-    //     perPage: rowsPerPage,
-    //     page: currentPage,
-    //   });
-    // }
-  };
-
   const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
     // setFilterOptions({ status: selectedStatus, query_type: selectedQueryType });
     // await updateCurrentRecords({
@@ -189,14 +176,14 @@ const useGetApplicantList = (id) => {
     // });
   };
 
-  const onDateSorting = async (sortField) => {
-    // setIsAscendingOrder((prev) => !prev);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   sortField: sortField,
-    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
-    // });
+  const onNameSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortField: sortField,
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
+    });
   };
 
   let headingTexts = ["name"];
@@ -235,11 +222,26 @@ const useGetApplicantList = (id) => {
       : styles.cellTextStyle();
     return [
       {
-        content: (
+        content: isHeading ? (
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {item?.name ?? "-"}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
             {item?.name ?? "-"}
           </CommonText>
         ),
+
         style: {
           ...commonStyles.columnStyle("40%"),
           ...styles.justifyContentCenter,
@@ -274,7 +276,17 @@ const useGetApplicantList = (id) => {
 
       {
         content: (
-          <View>{!isHeading && <PopupMessage message={item?.action} />}</View>
+          <View>
+            {!isHeading && (
+              <PopupMessage
+                message={item?.action.map((item) => item.name)}
+                onPopupClick={(selectedItem) => {
+                  onEditPress(selectedItem, item);
+                  // navigate(navigations.JOB_PROFILE);
+                }}
+              />
+            )}
+          </View>
         ),
         style: {
           ...commonStyles.columnStyle("20%"),
@@ -287,7 +299,7 @@ const useGetApplicantList = (id) => {
   return {
     allDataLoaded,
     currentPage,
-    fetchDataTicketListing,
+    getAllRecords,
     filterApplyHandler,
     filterCategory,
     getColoumConfigs,
@@ -297,8 +309,8 @@ const useGetApplicantList = (id) => {
     handleRowPerPageChange,
     handleSearchResults,
     headingTexts,
-    // getErrorDetails,
-    // isErrorGetPostedJob,
+    isError,
+    getErrorDetails,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
@@ -311,8 +323,9 @@ const useGetApplicantList = (id) => {
     statusText,
     subHeadingText,
     tableIcon,
-    postedJobData: currentRecords,
-    totalcards: postedJobData?.meta?.total,
+    applicantListingData: currentRecords,
+    getErrorDetails,
+    totalcards: applicantListingData?.meta?.total,
   };
 };
 
