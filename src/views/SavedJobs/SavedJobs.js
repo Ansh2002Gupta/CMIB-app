@@ -31,7 +31,7 @@ const SavedJobs = () => {
     isLoading: isGettingSavedJob,
     fetchData: fetchSavedJobList,
     error: errorWhileGettingSavedJob,
-    setData,
+    setData: setSavedJobsList,
   } = useFetch({
     url: `${MEMBER_SAVED_JOBS}`,
   });
@@ -56,11 +56,14 @@ const SavedJobs = () => {
   };
 
   const handleSuccessApply = (id) => {
-    setData((prevData) =>
-      prevData.map((item) =>
-        item?.id === id ? { ...item, is_applied: 1 } : item
-      )
-    );
+    setSavedJobsList((prevData) => {
+      return prevData.map((item) => {
+        if (item.id === id) {
+          return { ...item, is_applied: 1 };
+        }
+        return item;
+      });
+    });
   };
 
   const handleClickOnJobCard = (jobId) => {

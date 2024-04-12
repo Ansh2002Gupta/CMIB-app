@@ -10,7 +10,14 @@ import CustomButton from "../../components/CustomButton";
 import { useIntl } from "react-intl";
 import images from "../../images";
 
-const PostedJobsTemplate = ({ details, handleOpenModal, handleSaveRemove }) => {
+const PostedJobsTemplate = ({
+  isApplyVisible,
+  isSaveVisibleButton,
+  isSavingRemoving,
+  details,
+  handleOpenModal,
+  handleSaveAndRemove,
+}) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const {
@@ -19,9 +26,6 @@ const PostedJobsTemplate = ({ details, handleOpenModal, handleSaveRemove }) => {
     companyDetail,
     headerData,
   } = details;
-
-  const is_applied = false;
-  const is_saved = true;
 
   const otherDetails = functionalAreas?.length ? (
     <View style={styles.otherDetailsStyle}>
@@ -44,12 +48,15 @@ const PostedJobsTemplate = ({ details, handleOpenModal, handleSaveRemove }) => {
   const actionButtons = (
     <View style={styles.actionButtons}>
       <CustomButton
+        isLoading={isSavingRemoving}
+        disabled={isSavingRemoving}
+        disabledStyle={styles.disabledStyle}
         iconLeft={{
-          leftIconSource: !is_saved
+          leftIconSource: isSaveVisibleButton
             ? images.iconArchiveSave
             : images.iconSingleSave,
         }}
-        onPress={handleSaveRemove}
+        onPress={handleSaveAndRemove}
         style={{
           ...(isWebView ? styles.buttonStyleWeb : styles.buttonStyleMobile),
           ...styles.saveButtonStyle,
@@ -57,22 +64,22 @@ const PostedJobsTemplate = ({ details, handleOpenModal, handleSaveRemove }) => {
       >
         <Text>
           {intl.formatMessage({
-            id: !is_saved ? "label.save" : "label.remove",
+            id: isSaveVisibleButton ? "label.save" : "label.remove",
           })}
         </Text>
       </CustomButton>
       <CustomButton
-        disabled={is_applied}
+        disabled={!isApplyVisible || isSavingRemoving}
         disabledStyle={styles.disabledStyle}
         onPress={handleOpenModal}
         style={{
           ...(isWebView ? styles.buttonStyleWeb : styles.buttonStyleMobile),
         }}
-        withGreenBackground={!is_applied}
+        withGreenBackground={isApplyVisible && !isSavingRemoving}
       >
         <Text>
           {intl.formatMessage({
-            id: !is_applied ? "label.apply" : "label.applied",
+            id: isApplyVisible ? "label.apply" : "label.applied",
           })}
         </Text>
       </CustomButton>

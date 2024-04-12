@@ -71,6 +71,7 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
         handleSuccessApply(jobId);
         handleCloseModal();
       },
+      onErrorCallback: (errrMessage) => {},
     });
   };
 
