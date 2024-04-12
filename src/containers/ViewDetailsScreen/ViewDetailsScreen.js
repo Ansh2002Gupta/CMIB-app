@@ -64,7 +64,7 @@ const SaveButton = ({
       onSave({
         overrideUrl: COMPANY + CANDIDATES + `/${id}` + MARK_PREFER,
         onErrorCallback: (error) => {
-          setToastMsg(errorInSaving);
+          setToastMsg(errorInSaving || error);
         },
         onSuccessCallback: (success) => {
           setIsSaveButton(false);

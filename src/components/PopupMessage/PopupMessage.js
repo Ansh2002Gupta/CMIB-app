@@ -18,10 +18,10 @@ const PopupMessage = ({ customStyle, message, onPopupClick, itemSelected }) => {
   useOutsideClick(wrapperRef, () => setIsPopUpVisible(false));
 
   return (
-    <View style={styles.zIndex10}>
+    <View style={styles.zIndexOuter}>
       {Array.isArray(message) ? (
         <View style={styles.containerStyle}>
-          <View style={styles.zIndex10}>
+          <View style={styles.zIndexInner}>
             {isPopUpVisible && (
               <>
                 {isWebView ? (
