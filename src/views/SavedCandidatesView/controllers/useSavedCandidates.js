@@ -27,7 +27,6 @@ import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
-import { usePost } from "../../../hooks/useApiRequest";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
