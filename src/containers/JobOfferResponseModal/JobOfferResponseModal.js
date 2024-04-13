@@ -28,8 +28,6 @@ const JobOfferResponseModal = ({
   isPatchingError,
 }) => {
   const intl = useIntl();
-  const [userProfileDetails] = useContext(UserProfileContext);
-  const applicantID = userProfileDetails?.userDetails?.id || 0;
 
   const renderModal = () => {
     if (showConfirmModal) {
@@ -89,13 +87,13 @@ const JobOfferResponseModal = ({
               onPressButtonOne={() => {
                 handleAcceptRejectOffer({
                   decision: KEYS.OFFERE_REJECTED,
-                  applicantID: applicantID,
+                  applicantID: data?.id,
                 });
               }}
               onPressButtonTwo={() => {
                 handleAcceptRejectOffer({
                   decision: KEYS.OFFER_ACCEPTED,
-                  applicantID: applicantID,
+                  applicantID: data?.id,
                 });
               }}
               isButtonTwoGreen

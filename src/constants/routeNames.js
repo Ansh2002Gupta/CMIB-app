@@ -23,6 +23,8 @@ export const navigations = {
   //sub routes
   ALL_JOBS: "all-jobs",
   APPLICATION_FORM: "application-form",
+  CANDIDATE_DETAILS_SUBROUTE: "candidate-details",
+  CANDIDATE_DETAILS: "/candidate-details/:id",
   APPLIED_JOBS: "applied-jobs",
   JOB_APPLICANTS: "job-applicants",
   JOB_SEEKERS: "job-seekers",
@@ -38,6 +40,7 @@ export const navigations = {
   ADD_NEW_JOBS: "add-new-jobs",
   DETAILS_JOBS: "posted-jobs/:id",
   EDIT_JOB: "edit-job",
+  JOB_DETAIL: "job-detail",
   JOB_PROFILE: "job-profile",
   VIEW_JOB_DETAILS: "applicant-job-details",
 };

@@ -79,7 +79,7 @@ const DropDownModal = ({
     const selectedIndex = data?.findIndex((item) => item.value === value);
     if (
       selectedIndex > -1 &&
-      selectedIndex < selectedOption.length &&
+      selectedIndex < selectedOption?.length &&
       flatListRef.current
     ) {
       const timer = setTimeout(() => {
@@ -154,7 +154,7 @@ const DropDownModal = ({
   };
 
   const scrollToIndex = (info) => {
-    if (flatListRef.current && selectedOption.length > info.index) {
+    if (flatListRef.current && selectedOption?.length > info.index) {
       scrollAnimation(info.index);
     }
   };
@@ -218,10 +218,16 @@ const DropDownModal = ({
       <>
         <TouchableOpacity
           onPress={handleDropDown}
-          style={{ ...styles.textButton(isEditable), ...dropdownStyle }}
+          style={{
+            ...styles.textButton(isEditable),
+            ...dropdownStyle,
+          }}
         >
           <CommonText
-            customTextStyle={value ? styles.valueText : styles.placeHolderText}
+            customTextStyle={{
+              ...(value ? styles.valueText : styles.placeHolderText),
+            }}
+            customContainerStyle={styles.customContainerStyle}
           >
             {placeholder}
           </CommonText>
@@ -295,7 +301,7 @@ const DropDownModal = ({
                         item?.isSelected ||
                         (item.index && item.index !== null) ||
                         (!isSelected &&
-                          selectedItems.findIndex(
+                          selectedItems?.findIndex(
                             (items) => items.id === item.id
                           ) !== -1)
                       }

@@ -23,6 +23,7 @@ function OtpView({
   sendOtpResult,
   setSendOtpResult,
   verifyOtpParams,
+  onLoginForMembers,
 }) {
   const intl = useIntl();
 
@@ -78,7 +79,7 @@ function OtpView({
       setMinutes(OTP_TIMER_MIN_MINUTES);
       setSeconds(OTP_TIMER_SECOND);
       setIsCounter(true);
-      handleSendOtpAPI({ payload: { email } });
+      onLoginForMembers(); //call login api again
     }
   };
 

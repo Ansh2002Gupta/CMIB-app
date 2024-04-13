@@ -157,6 +157,8 @@ import iconBreifcase from "../../public/images/svg/briefcase.svg";
 import iconRupeeSign from "../../public/images/svg/rupeeSign.svg";
 import iconArchiveSave from "../../public/images/svg/iconArchiveSave.svg";
 import iconView from "../../public/images/svg/eyeview.svg";
+import iconTrashSVG from "../../public/images/svg/iconTrash.svg";
+import iconArchiveSaveMobile from "../../public/images/svg/iconArchiveSaveMobile.svg";
 
 const images = {
   iconArrowUp,
@@ -317,6 +319,8 @@ const images = {
   iconRupeeSign,
   iconArchiveSave,
   iconView,
+  iconTrashSVG,
+  iconArchiveSaveMobile,
 };
 
 export default images;

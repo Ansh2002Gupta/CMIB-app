@@ -145,6 +145,8 @@ const useFeedbackView = () => {
     }
   }
 
+  const filterApplyHandler = () => {};
+
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
@@ -207,6 +209,7 @@ const useFeedbackView = () => {
     getColoumConfigs,
     getStatusStyle,
     filterCategory,
+    filterApplyHandler,
     headingTexts,
     handlePageChange,
     handleRowPerPageChange,

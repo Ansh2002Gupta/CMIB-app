@@ -36,8 +36,8 @@ import useChangeJobStatusApi from "../../../services/apiServices/hooks/useChange
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const initialFilterState = {
-  "selectedActive/Inactive": [],
-  "selectedApproved/NotApproved": [],
+  ["selectedActive/Inactive"]: [],
+  ["selectedApproved/NotApproved"]: [],
 };
 
 const usePostedJobListing = (onViewPress, onEditPress) => {

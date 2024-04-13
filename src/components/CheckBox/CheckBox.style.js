@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  customTouchableOpacity: { alignItems: "center" },
 });
 
 export default styles;

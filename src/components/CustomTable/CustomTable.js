@@ -1,7 +1,12 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { FlatList, Platform, View } from "@unthinkable/react-core-components";
+import {
+  FlatList,
+  Platform,
+  Row,
+  View,
+} from "@unthinkable/react-core-components";
 
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -22,21 +27,16 @@ import { getRenderText } from "../../utils/util";
 import images from "../../images";
 import styles from "./CustomTable.style";
 
-// const initialFilterState = {
-//   selectedStatus: [],
-//   selectedQueryType: [],
-//   activeCategories: [],
-// };
-
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
-  containerStyle,
   currentPage,
   customFilterInfo,
   customModal,
   data,
   defaultCategory,
+  selectedFilterOptions,
+  setSelectedFilterOptions,
   filterApplyHandler,
   filterCategory,
   initialFilterState = {},
@@ -53,20 +53,13 @@ const CustomTable = ({
   indexOfLastRecord,
   isHeading,
   isTicketListingLoading,
+  isGeetingJobbSeekers,
   isFirstPageReceived,
-  isFilterVisible = true,
-  isTotalCardVisible,
-  isStatusTextBoolean,
   loadingMore,
-  mobileComponentToRender,
   onIconPress,
   placeholder,
-  popUpMessage,
   rowsLimit,
   rowsPerPage,
-  renderCalendar,
-  selectedFilterOptions,
-  setSelectedFilterOptions,
   showSearchBar,
   showJobOfferResponseModal,
   showInterviewTimeModal,
@@ -81,8 +74,12 @@ const CustomTable = ({
   tableHeading,
   tableIcon,
   totalcards,
-  ThirdSection,
   unit,
+  extraDetailsText,
+  extraDetailsKey,
+  renderCalendar,
+  statusData,
+  queryTypeData,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -93,9 +90,9 @@ const CustomTable = ({
   useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
   const [showFilterOptions, setShowFilterOptions] = useState(false);
 
-  const isFilterCount = !!selectedFilterOptions
-    ? Object.values(selectedFilterOptions).find((state) => !!state.length)
-    : 0;
+  const isFilterCount = Object.values(selectedFilterOptions).find(
+    (state) => !!state.length
+  );
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
@@ -134,48 +131,44 @@ const CustomTable = ({
             {showSearchBar && (
               <TwoColumn
                 leftSection={
-                  <View style={styles.flexDirectionRow}>
-                    <SearchView
-                      data={data?.records}
-                      customSearchCriteria={handleSearchResults}
-                      placeholder={placeholder}
-                      customParentStyle={styles.getParentStyle(isWebView)}
-                    />
-                    {isFilterVisible && (
-                      <CustomTouchableOpacity
-                        onPress={handleFilterModal}
-                        style={styles.imageParentStyle}
-                        disabled={isTicketListingLoading}
-                      >
-                        <TouchableImage
-                          source={images.iconFilter}
-                          parentStyle={styles.iconTicket}
-                          onPress={handleFilterModal}
-                        />
-                        {isWebView && (
-                          <CommonText customTextStyle={styles.filterText}>
-                            {intl.formatMessage({ id: "label.filters" })}
-                          </CommonText>
-                        )}
-                        {isFilterCount && (
-                          <CommonText
-                            customContainerStyle={styles.activeTickets}
-                            customTextStyle={styles.activeTicketsText}
-                            fontWeight={"600"}
-                          >
-                            {getFilterCount()}
-                          </CommonText>
-                        )}
-                      </CustomTouchableOpacity>
-                    )}
-                  </View>
+                  <SearchView
+                    data={data?.records}
+                    customSearchCriteria={handleSearchResults}
+                    placeholder={placeholder}
+                  />
                 }
-                rightSection={ThirdSection ? ThirdSection : <></>}
-                isLeftFillSpace={true}
+                isLeftFillSpace
+                rightSection={
+                  <CustomTouchableOpacity
+                    onPress={handleFilterModal}
+                    style={styles.imageParentStyle}
+                    disabled={isTicketListingLoading || isGeetingJobbSeekers}
+                  >
+                    <TouchableImage
+                      source={images.iconFilter}
+                      parentStyle={styles.iconTicket}
+                      onPress={handleFilterModal}
+                    />
+                    {isWebView && (
+                      <CommonText customTextStyle={styles.filterText}>
+                        {intl.formatMessage({ id: "label.filters" })}
+                      </CommonText>
+                    )}
+                    {isFilterCount && (
+                      <CommonText
+                        customContainerStyle={styles.activeTickets}
+                        customTextStyle={styles.activeTicketsText}
+                        fontWeight={"600"}
+                      >
+                        {getFilterCount()}
+                      </CommonText>
+                    )}
+                  </CustomTouchableOpacity>
+                }
                 style={styles.filterTopSection(isWebView)}
               />
             )}
-            {!isWeb && isTotalCardVisible && (
+            {!isWeb && (
               <View style={styles.ticketTotals}>
                 <CommonText
                   fontWeight={"500"}
@@ -184,7 +177,8 @@ const CustomTable = ({
                     ...styles.textSize,
                   }}
                 >
-                  {intl.formatMessage({ id: "label.tickets" })}&nbsp;&#58;&nbsp;
+                  {intl.formatMessage({ id: "label.tickets" })}
+                  &nbsp;&#58;&nbsp;
                 </CommonText>
 
                 <CommonText
@@ -205,10 +199,11 @@ const CustomTable = ({
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
-                {isTicketListingLoading && (isWeb || isFirstPageReceived) ? (
+                {isTicketListingLoading ||
+                (isGeetingJobbSeekers && (isWeb || isFirstPageReceived)) ? (
                   <LoadingScreen />
                 ) : (
-                  <View style={{ ...styles.tableSection, ...containerStyle }}>
+                  <View style={styles.tableSection}>
                     {isWebView && (
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
@@ -220,9 +215,9 @@ const CustomTable = ({
                       />
                     )}
                     <FlatList
-                      data={data}
+                      data={data || []}
                       showsVerticalScrollIndicator={false}
-                      keyExtractor={(item, index) => index.toString()}
+                      keyExtractor={(item, index) => index?.toString()}
                       renderItem={({ item, index }) => {
                         return (
                           <>
@@ -232,95 +227,66 @@ const CustomTable = ({
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
-                              <>
-                                {mobileComponentToRender ? (
-                                  mobileComponentToRender(item, index)
-                                ) : (
-                                  <View style={styles.mobileContainer}>
-                                    <View>
-                                      <CommonText
-                                        fontWeight={"600"}
-                                        customTextStyle={styles.cellTextStyle()}
-                                      >
-                                        {getRenderText(item, headingTexts)}
-                                      </CommonText>
-                                      <CommonText
-                                        customTextStyle={styles.tableQueryText}
-                                      >
-                                        {getRenderText(item, subHeadingText)}
-                                      </CommonText>
-                                    </View>
-                                    <View style={styles.rowsPerPageWeb}>
-                                      <Chip
-                                        label={
-                                          isStatusTextBoolean
-                                            ? getRenderText(
-                                                item,
-                                                statusText
-                                              ) === "1"
-                                              ? statusLabels[1]
-                                              : statusLabels[0]
-                                            : getRenderText(item, statusText)
-                                        }
-                                        style={
-                                          isStatusTextBoolean
-                                            ? getStatusStyle(
-                                                getRenderText(
-                                                  item,
-                                                  statusText
-                                                ) === "1"
-                                                  ? statusLabels[1].toLowerCase()
-                                                  : statusLabels[0].toLowerCase()
-                                              )
-                                            : getStatusStyle(item?.status)
-                                        }
-                                      />
-                                      {showPopUpWithID === item?.id && (
-                                        <View ref={popUpRef}>
-                                          <PopupMessage
-                                            message={popUpMessage}
-                                            customStyle={
-                                              styles.mobilePopUpPosition
-                                            }
-                                            onPopupClick={() => {
-                                              if (
-                                                popUpMessage ===
-                                                intl.formatMessage({
-                                                  id: "label.respond_to_job_offer",
-                                                })
-                                              ) {
-                                                setShowJobOfferResponseModal(
-                                                  (prev) => !prev
-                                                );
-                                                setModalData(item);
-                                              } else {
-                                                setShowInterviewTimeModal(
-                                                  (prev) => !prev
-                                                );
-                                              }
-                                              setShowPopUpWithID(-1);
-                                            }}
-                                          />
-                                        </View>
+                              <View style={styles.mobileContainer}>
+                                <View>
+                                  <CommonText
+                                    fontWeight={"600"}
+                                    customTextStyle={styles.cellTextStyle()}
+                                  >
+                                    {getRenderText(item, headingTexts)}
+                                  </CommonText>
+                                  <Row style={styles.rowStyling}>
+                                    <CommonText
+                                      customTextStyle={styles.tableQueryText}
+                                    >
+                                      {getRenderText(item, subHeadingText)}
+                                    </CommonText>
+                                    {!!extraDetailsText && (
+                                      <>
+                                        <View style={styles.dot}></View>
+                                        <CommonText
+                                          customTextStyle={
+                                            styles.tableQueryText
+                                          }
+                                        >
+                                          {extraDetailsText +
+                                            ": " +
+                                            getRenderText(
+                                              item,
+                                              extraDetailsKey
+                                            )}
+                                        </CommonText>
+                                      </>
+                                    )}
+                                  </Row>
+                                </View>
+                                <View style={styles.rowsPerPageWeb}>
+                                  {!!item.status && (
+                                    <Chip
+                                      label={getRenderText(item, statusText)}
+                                      style={getStatusStyle(
+                                        !!item?.active
+                                          ? item.active
+                                          : item.status
                                       )}
-                                      <TouchableImage
-                                        onPress={() => {
-                                          onIconPress(item);
-                                        }}
-                                        source={tableIcon}
-                                        style={styles.iconTicket}
-                                      />
-                                    </View>
-                                  </View>
-                                )}
-                              </>
+                                    />
+                                  )}
+                                  <TouchableImage
+                                    onPress={() => {
+                                      onIconPress(item);
+                                    }}
+                                    source={tableIcon}
+                                    style={styles.iconTicket}
+                                  />
+                                </View>
+                              </View>
                             )}
                           </>
                         );
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if (!data?.length)
+                        if ((!data || !!data) && !data?.length)
                           return (
                             <CommonText
                               customContainerStyle={styles.loadingStyleNoData}
@@ -413,26 +379,24 @@ const CustomTable = ({
 
 CustomTable.defaultProps = {
   addNewTicket: false,
-  containerStyle: {},
   headingTexts: [],
   handleTicketModal: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
   totalcards: 0,
+  onIconPress: () => {},
   placeholder: "Search",
-  isTotalCardVisible: true,
 };
 
 CustomTable.propTypes = {
   addNewTicket: PropTypes.bool,
-  containerStyle: PropTypes.object,
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   data: PropTypes.array,
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
-  getStatusStyle: PropTypes.func.isRequired,
+  getStatusStyle: PropTypes.func,
   filterApplyHandler: PropTypes.func,
   handlePageChange: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,
@@ -440,9 +404,9 @@ CustomTable.propTypes = {
   handleLoadMore: PropTypes.func.isRequired,
   handleTicketModal: PropTypes.func,
   headingTexts: PropTypes.array,
-  mobileComponentToRender: PropTypes.func,
   isHeading: PropTypes.bool.isRequired,
   isTicketListingLoading: PropTypes.bool,
+  isGeetingJobbSeekers: PropTypes.bool,
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   loadingMore: PropTypes.bool.isRequired,
@@ -462,14 +426,12 @@ CustomTable.propTypes = {
   freshnessData: PropTypes.array,
   companyData: PropTypes.array,
   industryData: PropTypes.array,
-  statusText: PropTypes.array,
+  statusText: PropTypes.string,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,
   totalcards: PropTypes.number,
-  ThirdSection: PropTypes.elementType,
   placeholder: PropTypes.string,
-  isTotalCardVisible: PropTypes.bool,
 };
 
 export default CustomTable;
