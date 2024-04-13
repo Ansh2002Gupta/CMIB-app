@@ -36,8 +36,8 @@ import useChangeJobStatusApi from "../../../services/apiServices/hooks/useChange
 const isMob = Platform.OS.toLowerCase() !== "web";
 
 const initialFilterState = {
-  "selectedActive/Inactive": [],
-  "selectedApproved/NotApproved": [],
+  ["selectedActive/Inactive"]: [],
+  ["selectedApproved/NotApproved"]: [],
 };
 
 const usePostedJobListing = (onViewPress, onEditPress) => {
@@ -478,7 +478,10 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
               <CustomTouchableOpacity
                 onPress={() => {
                   navigate(
-                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=2`
+                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=2`,
+                    {
+                      replace: true,
+                    }
                   );
                 }}
                 style={styles.underLineStyle}
@@ -566,7 +569,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 onPress={() => {
                   onViewPress && onViewPress(item);
                 }}
-                source={images.iconEye}
+                source={images.iconView}
               />
             )}
           </View>

@@ -53,7 +53,7 @@ const JobPreferenceTemplate = ({
           isColumnVariableWidth
           details={preferences_details}
           headerId={intl.formatMessage({
-            id: "label.job_preferences",
+            id: "label.preferences_regarging_job",
           })}
           isEditProfile={isEditable}
           handleChange={onChangeValue(preferences_details)}

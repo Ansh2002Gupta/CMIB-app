@@ -14,6 +14,7 @@ import useFetch from "../../../hooks/useFetch";
 import useIsWebView from "../../../hooks/useIsWebView";
 import {
   ACCEPTED,
+  APPLICANT,
   INTERVIEW,
   INTERVIEWS,
   JOBS,
@@ -150,14 +151,14 @@ const useAppliedJobsListing = () => {
   } = useFetch({
     url: USER_TYPE_MEMBER + `/${JOBS}` + `/${applicantID}` + INTERVIEWS,
     otherOptions: {
-      skipApiCallOnMount: false,
+      skipApiCallOnMount: true,
     },
   });
 
   const handleConfirmation = () => {
     const { decision, applicantID } = candidateDecision;
     patchAcceptRejectOfferDecision({
-      overrideUrl: OFFER_RESPONSE + `/${applicantID}/status`,
+      overrideUrl: OFFER_RESPONSE + `/${applicantID}`,
       body: { status: decision },
       onErrorCallback: () => {
         setConfirmationModal((prev) => ({
@@ -487,7 +488,12 @@ const useAppliedJobsListing = () => {
   const getInterviewDates = ({ rowData }) => {
     fetchInterviewDates({
       overrideUrl:
-        USER_TYPE_MEMBER + `/${JOBS}` + `/${rowData?.job_id}` + INTERVIEWS,
+        USER_TYPE_MEMBER +
+        `/${JOBS}` +
+        `/${rowData?.related_job_id}` +
+        `${APPLICANT}` +
+        `/${rowData?.id}` +
+        INTERVIEWS,
     });
     setModalData(interviewDatesData);
   };
@@ -500,8 +506,19 @@ const useAppliedJobsListing = () => {
   let isHeading = true;
 
   function getStatusStyle(status) {
+    if (typeof status === "number") {
+      return status
+        ? {
+            ...(!isWebView ? styles.active : styles.activeWeb),
+            ...styles.cellTextStyle(12),
+          }
+        : {
+            ...(!isWebView ? styles.close : styles.closeWeb),
+            ...styles.cellTextStyle(12),
+          };
+    }
     status = !!status ? status?.toLowerCase() : '-"';
-    switch (status) {
+    switch (status?.trim().toLowerCase()) {
       case "pending":
         return {
           ...(!isWebView ? styles.pending : styles.pendingWeb),

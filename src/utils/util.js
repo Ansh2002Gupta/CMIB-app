@@ -21,10 +21,13 @@ export const getImageSource = (uploadedImage) => {
 };
 
 export const getRenderText = (items, keys) => {
-  if (!keys.length) {
+  if (!keys?.length) {
     return "";
   }
-  const texts = keys.map((key) => items[key]).join(" ");
+  if (keys?.[0].trim().toLowerCase() === "active") {
+    return items[keys?.[0]] ? "Active" : "Inactive";
+  }
+  const texts = keys?.map((key) => items[key]).join(" ");
   return !!texts ? texts : "_";
 };
 
@@ -425,8 +428,8 @@ export const getDecryptApiData = (apiData) => {
     : {};
   obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
   obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
-  obj.minimumExperience = apiData?.min_experience;
-  obj.maximumExperience = apiData?.max_experience;
+  obj.minimumExperience = apiData?.min_experience ?? "";
+  obj.maximumExperience = apiData?.max_experience ?? "";
   obj.jobLocation = apiData.locations
     ? apiData.locations.map((item) => ({
         id: item.id,
@@ -468,8 +471,14 @@ export const getDecryptApiData = (apiData) => {
   obj.desiredQualification = apiData.desired_qualification;
   obj.jobOpeningDate = startDate;
   obj.jobClosingDate = endDate;
-  obj.minimumSalary = Math.trunc(apiData.min_salary);
-  obj.maximumSalary = Math.trunc(apiData.max_salary);
+  obj.minimumSalary =
+    apiData.min_salary && apiData.min_salary?.length
+      ? Math.trunc(apiData.min_salary)
+      : "";
+  obj.maximumSalary =
+    apiData.max_salary && apiData.max_salary.length
+      ? Math.trunc(apiData.max_salary)
+      : "";
   obj.numberOfVacancies = apiData.vacancy;
   obj.modeofWork = apiData.work_mode
     ? {
@@ -562,6 +571,29 @@ export const containsDuplicate = (arr) => {
     seen.add(value);
   }
   return false;
+};
+
+export const convertJSONStringArrayToIntArray = (
+  jsonStringArray,
+  isMultiSelect
+) => {
+  try {
+    const stringArray = JSON.parse(jsonStringArray);
+    const labelValueArray = stringArray.map((str) =>
+      isMultiSelect
+        ? {
+            label: str,
+            value: str,
+            isSelected: false,
+          }
+        : { label: str, value: str }
+    );
+
+    return labelValueArray;
+  } catch (error) {
+    console.error("Error converting JSON string array to int array:", error);
+    return null;
+  }
 };
 
 export const convertToTime = ({ dateString, format24Hour = true }) => {

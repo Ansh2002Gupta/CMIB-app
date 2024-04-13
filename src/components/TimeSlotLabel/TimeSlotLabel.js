@@ -56,14 +56,22 @@ const TimeSlotLabel = ({
         onSelect({
           id: labelId,
           isPrimary: showPrimary,
-          mode: showPrimary ? dataObj?.type : dataObj?.alternate_type,
+          mode: showPrimary ? dataObj?.primary?.type : dataObj?.alternate?.type,
         })
       }
       disabled={false}
       style={[
         styles.outerContainer,
-        selectedDateLabel?.id === dataObj?.id &&
-        selectedDateLabel?.isPrimary === showPrimary
+        !!selectedDateLabel
+          ? selectedDateLabel?.id === dataObj?.id &&
+            selectedDateLabel?.isPrimary === showPrimary
+            ? styles.selectedOuterContainer
+            : {}
+          : (
+              showPrimary
+                ? !!dataObj?.primary?.is_accepted === showPrimary
+                : !!dataObj?.alternate?.is_accepted === !showPrimary
+            )
           ? styles.selectedOuterContainer
           : {},
       ]}
@@ -76,12 +84,22 @@ const TimeSlotLabel = ({
               onSelect({
                 id: labelId,
                 isPrimary: showPrimary,
-                mode: showPrimary ? dataObj?.type : dataObj?.alternate_type,
+                mode: showPrimary
+                  ? dataObj?.primary?.type
+                  : dataObj?.alternate?.type,
               })
             }
             source={
-              selectedDateLabel?.id === dataObj?.id &&
-              selectedDateLabel?.isPrimary === showPrimary
+              !!selectedDateLabel
+                ? selectedDateLabel?.id === dataObj?.id &&
+                  selectedDateLabel?.isPrimary === showPrimary
+                  ? images.iconSelectedSolidCircle
+                  : images.iconSelectCircle
+                : (
+                    showPrimary
+                      ? !!dataObj?.primary?.is_accepted === showPrimary
+                      : !!dataObj?.alternate?.is_accepted === !showPrimary
+                  )
                 ? images.iconSelectedSolidCircle
                 : images.iconSelectCircle
             }
@@ -96,20 +114,20 @@ const TimeSlotLabel = ({
               fontWeight="500"
             >
               {showPrimary
-                ? !!dataObj?.primary_schedule
-                  ? getData(dataObj?.primary_schedule)
+                ? !!dataObj?.primary?.schedule
+                  ? getData(dataObj?.primary?.schedule)
                   : "-"
-                : !!dataObj?.alternate_schedule
-                ? getData(dataObj?.alternate_schedule)
+                : !!dataObj?.alternate?.schedule
+                ? getData(dataObj?.alternate?.schedule)
                 : "-"}
             </CommonText>
             <CommonText customTextStyle={styles.modeStyling}>
               {showPrimary
-                ? !!dataObj?.type
-                  ? dataObj?.type
+                ? !!dataObj?.primary?.type
+                  ? dataObj?.primary?.type
                   : "-"
-                : !!dataObj?.alternate_type
-                ? dataObj?.alternate_type
+                : !!dataObj?.alternate?.type
+                ? dataObj?.alternate?.type
                 : "-"}
             </CommonText>
           </View>

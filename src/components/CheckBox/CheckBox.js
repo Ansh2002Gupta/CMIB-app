@@ -8,6 +8,8 @@ import styles from "./CheckBox.style";
 import { View } from "@unthinkable/react-core-components";
 import TouchableImage from "../TouchableImage";
 
+const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
+
 const CheckBox = ({
   customTextStyle,
   handleCheckbox,
@@ -18,6 +20,7 @@ const CheckBox = ({
   title,
   iconCheck,
   iconUnCheck,
+  checkBoxTextStyle,
   style,
 }) => {
   const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
@@ -41,8 +44,9 @@ const CheckBox = ({
   const rowCheckBox = [
     {
       content: (
-        <View style={styles.containerStyle}>
+        <View style={{...styles.containerStyle,...customTextStyle }}>
           <TouchableImage
+          hitSlop={hitSlop}
             Icon={getCheckBoxIcon()}
             style={styles.iconStyle}
             source={getCheckBoxIcon()}
@@ -54,7 +58,7 @@ const CheckBox = ({
             customTextStyle={{
               ...styles.titleStyle,
               ...(isDisabled ? styles.disabledText : {}),
-              ...customTextStyle,
+              ...checkBoxTextStyle,
             }}
             customContainerStyle={styles.alignJustifyCenter}
           >

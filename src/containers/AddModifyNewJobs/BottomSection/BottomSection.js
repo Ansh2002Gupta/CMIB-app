@@ -48,8 +48,8 @@ const BottomSection = forwardRef(
       typeOfDisabilty: addNewJobData?.typeOfDisabilty ?? "",
       disabiltyPercentage: addNewJobData?.disabiltyPercentage ?? 0,
       salaryNagotiable: addNewJobData?.salaryNagotiable ?? -1,
-      minimumSalary: addNewJobData?.minimumSalary ?? 0,
-      maximumSalary: addNewJobData?.maximumSalary ?? 0,
+      minimumSalary: addNewJobData?.minimumSalary ?? "",
+      maximumSalary: addNewJobData?.maximumSalary ?? "",
       contractYear: addNewJobData?.contractYear ?? 0,
       contractMonth: addNewJobData?.contractMonth ?? 0,
       contractDay: addNewJobData?.contractDay ?? 0,
@@ -72,7 +72,6 @@ const BottomSection = forwardRef(
       salaryNagotiable: "",
       fullTime: "",
     });
-
     const validateInput = (field) => {
       let hasError = false;
       const addError = (field, message) => {
@@ -124,11 +123,25 @@ const BottomSection = forwardRef(
           }
           break;
         case "maximumSalary":
-          if (jobData.minimumSalary > jobData.maximumSalary) {
+          if (
+            String(jobData.maximumSalary).length &&
+            String(jobData.minimumSalary).length &&
+            jobData.minimumSalary > jobData.maximumSalary
+          ) {
             addError("maximumSalary", "Please fill valid Amount");
             addError("minimumSalary", "Please fill valid Amount");
-          } else if (jobData.maximumSalary == 0 || jobData.maximumSalary == 0) {
+          } else if (
+            String(jobData.maximumSalary).length &&
+            jobData.maximumSalary == 0
+          ) {
             addError("maximumSalary", "Please fill valid Amount");
+          }
+          break;
+        case "minimumSalary":
+          if (
+            String(jobData.minimumSalary).length &&
+            jobData.minimumSalary == 0
+          ) {
             addError("minimumSalary", "Please fill valid Amount");
           }
           break;
@@ -390,11 +403,9 @@ const BottomSection = forwardRef(
           <View style={styles.contractualPeriodViewStyle}>
             <View>
               <CustomLabelView
-                label={`${intl.formatMessage({
-                  id: "label.contractual_period",
-                })} ${intl.formatMessage({
-                  id: "label.year_month_day",
-                })}`}
+                label={intl.formatMessage({
+                  id: "label.contractual_label_heading",
+                })}
                 isMandatory
               />
             </View>
@@ -554,6 +565,7 @@ const BottomSection = forwardRef(
                 intl.formatMessage({ id: "label.inactive" }),
               ]}
               customToggleStyle={{ marginTop: 16, marginBottom: 18 }}
+              customToggleButtonTextStyle={styles.fontSize14}
               customLabelStyle={styles.labelStyle}
             />
           )}
