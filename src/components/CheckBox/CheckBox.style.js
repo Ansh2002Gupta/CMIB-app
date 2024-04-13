@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
-    width: "100%",
   },
   alignJustifyCenter: {
     alignItems: "center",
     justifyContent: "center",
+    maxWidth: "90%",
   },
   columnStyle: {
     maxWidth: "100%",

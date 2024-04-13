@@ -478,7 +478,10 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
               <CustomTouchableOpacity
                 onPress={() => {
                   navigate(
-                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=2`
+                    `/${selectedModule.key}/${navigations.POSTED_JOBS}/${item.id}?mode=view&activeTab=2`,
+                    {
+                      replace: true,
+                    }
                   );
                 }}
                 style={styles.underLineStyle}
@@ -566,7 +569,7 @@ const usePostedJobListing = (onViewPress, onEditPress) => {
                 onPress={() => {
                   onViewPress && onViewPress(item);
                 }}
-                source={images.iconEye}
+                source={images.iconView}
               />
             )}
           </View>

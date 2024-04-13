@@ -163,7 +163,7 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
           label={`${intl.formatMessage({
             id: "label.minimum_experience",
           })} (${intl.formatMessage({
-            id: "label.year",
+            id: "label.years",
           })})`}
           isMandatory
           isError={(error && error.minimumExperience && true) || false}
@@ -184,7 +184,7 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
           label={`${intl.formatMessage({
             id: "label.maximum_experience",
           })} (${intl.formatMessage({
-            id: "label.year",
+            id: "label.years",
           })})`}
           customHandleBlur={() => {
             validateField("maximumExperience");

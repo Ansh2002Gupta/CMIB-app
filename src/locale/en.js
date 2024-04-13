@@ -389,8 +389,8 @@ const locale = {
   "label.type_of_disability": "Type of Disabilty",
   "label.disability_percentage": "Disabilty %",
   "label.salary_negotiable": "Salary Negotiable",
-  "label.minimum_salary": "Minimum Salary(Annual CTC)",
-  "label.maximum_salary": "Maximum Salary",
+  "label.minimum_salary": "Minimum Salary ( Annual CTC in INR)",
+  "label.maximum_salary": "Maximum Salary (INR)",
   "label.job_instruction":
     "*Provide either the Salary Negotiability, the Minimum & Maximum Salary, or both.",
   "label.job_summary": "Job Summary",
@@ -575,7 +575,7 @@ const locale = {
   "label.contractual_period_day": "Contractual Period(Days)",
   "label.applicants": "Applicants",
   "label.schedule_interview": "Scheduled Interview",
-  "label.view_questionaire": "Questionaire",
+  "label.view_questionaire": "Questionnaire",
   "label.select_nationality": "Select Nationality",
   "label.select_job_type": "Select Job Type",
   "label.search_job_location": "Search Job Location",
@@ -727,6 +727,9 @@ const locale = {
     "Still deciding? Take your time, but remember, the clock is ticking. Your future awaits your response!",
   "label.shortlisted_congratulations":
     "Congratulations on being shortlisted! Select a suitable interview time from the options below:",
+  "label.contractual_label_heading":
+    "Contractual Period Year(s)/ Month(s)/ Day(s)",
+  "label.years": "Years(s)",
 };
 
 export default locale;
