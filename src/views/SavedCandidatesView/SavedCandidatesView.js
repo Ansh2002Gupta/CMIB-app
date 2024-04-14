@@ -13,6 +13,8 @@ import {
 } from "../../constants/constants";
 import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreComponent";
 import images from "../../images";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 
 const SavedCandidatesView = () => {
   const intl = useIntl();
@@ -39,6 +41,10 @@ const SavedCandidatesView = () => {
     loadingMore,
     statusText,
     tableIcon,
+    errorWhileMarkJob,
+    errorWhileFetchingCandidatesData,
+    setMarkedSavedJobError,
+    fetchingCandidatesData,
   } = useSavedCandidates();
 
   return (
@@ -52,42 +58,58 @@ const SavedCandidatesView = () => {
       }
       isBottomFillSpace
       bottomSection={
-        <CustomTable
-          {...{
-            getColoumConfigs,
-            data,
-            tableHeading: SAVED_CANDIDATES_TABLE_HEADING,
-            isHeading: true,
-            headingTexts,
-            subHeadingText,
-            statusText,
-            filterCategory,
-            queryTypeData,
-            statusData,
-            allDataLoaded,
-            loadingMore,
-            getStatusStyle,
-            tableIcon,
-            rowsLimit: ROWS_PER_PAGE_ARRAY,
-            isTicketListingLoading: isSavedCadidatesDataLoading,
-            isFirstPageReceived,
-            handleLoadMore,
-            handleRowPerPageChange,
-            handlePageChange,
-            handleSearchResults,
-            filterApplyHandler,
-            formatConfig,
-            isTotalCardVisible: false,
-          }}
-          ThirdSection={
-            <DownloadMoreComponent
-              onPress={() => {}}
-              message={intl.formatMessage({
-                id: "label.download_candidates_list",
-              })}
+        <>
+          {!errorWhileFetchingCandidatesData && (
+            <CustomTable
+              {...{
+                getColoumConfigs,
+                data,
+                tableHeading: SAVED_CANDIDATES_TABLE_HEADING,
+                isHeading: true,
+                headingTexts,
+                subHeadingText,
+                statusText,
+                filterCategory,
+                queryTypeData,
+                statusData,
+                allDataLoaded,
+                loadingMore,
+                getStatusStyle,
+                tableIcon,
+                rowsLimit: ROWS_PER_PAGE_ARRAY,
+                isTicketListingLoading: isSavedCadidatesDataLoading,
+                isFirstPageReceived,
+                handleLoadMore,
+                handleRowPerPageChange,
+                handlePageChange,
+                handleSearchResults,
+                filterApplyHandler,
+                formatConfig,
+                isTotalCardVisible: false,
+              }}
+              ThirdSection={
+                <DownloadMoreComponent
+                  onPress={() => {}}
+                  message={intl.formatMessage({
+                    id: "label.download_candidates_list",
+                  })}
+                />
+              }
             />
-          }
-        />
+          )}
+          {errorWhileFetchingCandidatesData && (
+            <ErrorComponent
+              errorMsg={errorWhileFetchingCandidatesData?.data.message}
+              onRetry={() => fetchingCandidatesData()}
+            />
+          )}
+          {!!errorWhileMarkJob && (
+            <ToastComponent
+              toastMessage={errorWhileMarkJob}
+              onDismiss={() => setMarkedSavedJobError("")}
+            />
+          )}
+        </>
       }
     />
   );

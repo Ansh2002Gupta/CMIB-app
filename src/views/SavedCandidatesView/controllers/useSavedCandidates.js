@@ -250,6 +250,7 @@ const useSavedCandidates = () => {
   };
 
   const handleActions = (actions, id) => {
+    setCurrentPopupMessage(-1);
     markJob({
       body: {
         candidate_id: id,
@@ -430,6 +431,9 @@ const useSavedCandidates = () => {
     filterCategory,
     queryTypeData,
     statusData,
+    errorWhileMarkJob,
+    errorWhileFetchingCandidatesData,
+    setMarkedSavedJobError,
     getColoumConfigs,
     getStatusStyle,
     headingTexts,
@@ -446,6 +450,7 @@ const useSavedCandidates = () => {
     subHeadingText,
     statusText: [],
     tableIcon,
+    fetchingCandidatesData,
   };
 };
 
