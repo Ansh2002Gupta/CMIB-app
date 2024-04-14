@@ -4,10 +4,16 @@ const style = {
   headerContainer: {
     paddingBottom: 24,
     justifyContent: "space-between",
+    alignItems: "center",
   },
   titleText: {
     fontSize: 32,
     lineHeight: 40,
+    color: colors.black,
+  },
+  titleTextMobile: {
+    fontSize: 20,
+    lineHeight: 28,
     color: colors.black,
   },
   editContainer: {
@@ -74,6 +80,20 @@ const style = {
   },
   completionValueMobileTextStyle: {
     marginRight: 3,
+  },
+  addNewButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.green,
+    borderRadius: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 12,
+    paddingBottom: 12,
+    borderWidth: 1,
+  },
+  addNewText: {
+    color: colors.white,
   },
 };
 

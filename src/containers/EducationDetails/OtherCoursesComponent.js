@@ -10,7 +10,11 @@ import { MEMBER_CA_JOB_PROFILE_EDUCATION } from "../../services/apiServices/apiE
 import { useOtherCourses } from "./Controllers/useOtherCourses";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
-const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
+const OtherCoursesComponent = ({
+  isEditable = true,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
   const {
     data,
     isLoading: isGettingEducationData,
@@ -88,6 +92,7 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
     handleUpdate({
       body: payload,
       onSuccessCallback: () => {
+        onSaveSuccessfull && onSaveSuccessfull();
         handleEdit(false);
       },
     });

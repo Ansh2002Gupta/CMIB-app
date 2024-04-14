@@ -12,7 +12,11 @@ import { usePersonalDetails } from "./Controllers/usePersonalDetails";
 import { formatDate } from "../../utils/util";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 
-const PersonalDetails = ({ isEditable = true, handleEdit }) => {
+const PersonalDetails = ({
+  isEditable = true,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const {
@@ -208,6 +212,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
       body: payload,
       onSuccessCallback: () => {
         fetchData();
+        onSaveSuccessfull && onSaveSuccessfull();
         handleEdit(false);
       },
     });

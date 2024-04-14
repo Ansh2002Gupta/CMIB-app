@@ -13,7 +13,7 @@ import { useJobPreference } from "./controller/useJobPreference";
 import { formatJobPreferenceData } from "./controller/utils";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
-const JobPreference = ({ isEditable, handleEdit }) => {
+const JobPreference = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
 
@@ -120,6 +120,7 @@ const JobPreference = ({ isEditable, handleEdit }) => {
       introduction_video_path: state?.introduction_video_path,
     };
     handleUpdate(payload, () => {
+      onSaveSuccessfull && onSaveSuccessfull();
       fetchData();
       handleEdit(false);
     });

@@ -33,7 +33,7 @@ const workExperienceKeys = () => ({
   areas_of_work: [],
 });
 
-const WorkExperience = ({ isEditable, handleEdit }) => {
+const WorkExperience = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
 
@@ -235,6 +235,7 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
       }
 
       handleUpdate(body, () => {
+        onSaveSuccessfull && onSaveSuccessfull();
         // turn off the edit mode
         handleEdit(false);
         fetchData();
