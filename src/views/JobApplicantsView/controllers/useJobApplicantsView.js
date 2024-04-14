@@ -229,15 +229,23 @@ const useJobApplicants = () => {
           `/${currentModule}/${navigations.JOB_APPLICANTS}/${item?.company_job_id}/applicant-details/${item?.id}`
         ),
       shortlist_candidate: () => {
+        setCurrentPopupMessage(-1);
+
         handleClickActions(3);
       },
       reject_candidate: () => {
+        setCurrentPopupMessage(-1);
+
         handleClickActions(2);
       },
       offer_job: () => {
+        setCurrentPopupMessage(-1);
+
         handleClickActions(6);
       },
       reject_after_interview: () => {
+        setCurrentPopupMessage(-1);
+
         handleClickActions(9);
       },
       view_interview_details: () => {
@@ -255,8 +263,8 @@ const useJobApplicants = () => {
         setCurrentPopupMessage(-1);
         setModalsState((prev) => ({
           ...prev,
-          scheduleModal: !!item?.interview_id
-            ? item.interview_id
+          scheduleModal: !!item?.job_applicantion_id
+            ? item.job_applicantion_id
             : setErrorStatus(
                 intl.formatMessage({ id: "label.interview_id_not_found" })
               ),

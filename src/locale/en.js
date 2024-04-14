@@ -593,7 +593,7 @@ const locale = {
   "label.fill_mandatory": "Please fill mandatory field",
   "label.job_saved_successfully": "Job Saved Successfully",
   "label.job_updated_successfully": "Job Updated Successfully",
-  "label.no_question_available": "No Question Available",
+  "label.no_question_available": "No Questionnaire are Found",
   "label.subscribe_to_get_started": "Subscribe to Get Started!",
   "label.unlock_benefits_features_of_packages":
     "Unlock the following benefits and features by subscribing to one of our packages, starting at just ₹2000.",

@@ -43,7 +43,7 @@ const ViewQuestion = ({ questionnaireData, url = "" }) => {
             <View style={styles.noDataContainer}>
               <CardComponent customStyle={styles.cardStyle}>
                 <CommonText
-                  fontWeight="600"
+                  fontWeight="500"
                   customTextStyle={styles.fontSize16}
                 >
                   {intl.formatMessage({ id: "label.no_question_available" })}

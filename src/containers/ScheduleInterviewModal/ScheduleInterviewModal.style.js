@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
   modalContainer: {
     height: deviceHeight * 0.5,
   },
+  loaderViewStyle: {
+    height: deviceHeight * 0.4,
+  },
   modalInnerContainer: {
     ...Platform.select({
       ios: {
