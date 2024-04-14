@@ -103,7 +103,6 @@ const CompletionPercent = ({ value }) => {
         ...style.completionPercentContainer,
       }}
     >
-      <CircularProgress size={200} strokeWidth={15} progress={0.3} />
       <Text
         style={{
           ...style.completionTextStyle,
