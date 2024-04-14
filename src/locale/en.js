@@ -751,6 +751,9 @@ const locale = {
   "label.shortlisted_congratulations":
     "Congratulations on being shortlisted! Select a suitable interview time from the options below:",
   "label.giveAnswer": "Give Answer",
+  "label.memberCompletionProfilePercentWeb":
+    "Complete your job profile! its at ",
+  "label.complete": "Complete",
 };
 
 export default locale;

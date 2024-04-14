@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Row,
+  Text,
   TouchableOpacity,
   View,
 } from "@unthinkable/react-core-components";
@@ -21,6 +22,9 @@ import useIsWebView from "../../hooks/useIsWebView";
 import style from "./JobProfile.style";
 import images from "../../images";
 import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
+import useFetch from "../../hooks/useFetch";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { GET_MEMBER_COMPLETION } from "../../services/apiServices/apiEndPoint";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
@@ -65,6 +69,59 @@ const EditButton = ({ isEditable, handleEdit }) => {
   );
 };
 
+const CompletionPercent = ({ value }) => {
+  const intl = useIntl();
+  const { isWebView } = useIsWebView();
+  
+  return isWebView ? (
+    <View
+      style={{
+        ...style.completionPercentContainer,
+      }}
+    >
+      <CommonText
+        customTextStyle={[style.completionTextStyle]}
+        customContainerStyle={{}}
+      >
+        {`${intl.formatMessage({
+          id: "label.memberCompletionProfilePercentWeb",
+        })}`}
+      </CommonText>
+      <Text
+        style={{
+          ...style.completionTextStyle,
+          ...style.completionTextBoldStyle,
+          ...style.completionValueWebTextStyle,
+        }}
+      >
+        ${value ?? 0}%
+      </Text>
+    </View>
+  ) : (
+    <View
+      style={{
+        ...style.completionPercentContainer,
+      }}
+    >
+      <CircularProgress size={200} strokeWidth={15} progress={0.3} />
+      <Text
+        style={{
+          ...style.completionTextStyle,
+          ...style.completionTextBoldStyle,
+          ...style.completionValueMobileTextStyle,
+        }}
+      >
+        ${value ?? 0}%
+      </Text>
+      <CommonText customTextStyle={[style.completionTextStyle]}>
+        {`${intl.formatMessage({
+          id: "label.complete",
+        })}`}
+      </CommonText>
+    </View>
+  );
+};
+
 const JobProfileTab = ({
   renderHeader,
   isQuestionaireRequired = false,
@@ -72,10 +129,15 @@ const JobProfileTab = ({
 }) => {
   const intl = useIntl();
   const [isEditable, setIsEditable] = useState(false);
+  const { data: completionPercentData } = useFetch({
+    url: GET_MEMBER_COMPLETION,
+  });
+
   //Todo:editable will be in query params
   const handleEdit = (value) => {
     setIsEditable(value);
   };
+
   return (
     <View style={style.containerStyle}>
       <CustomTabs
@@ -87,7 +149,12 @@ const JobProfileTab = ({
               <CommonText fontWeight={"500"} customTextStyle={style.titleText}>
                 {intl.formatMessage({ id: "label.job_profile" })}
               </CommonText>
-              <EditButton isEditable={isEditable} handleEdit={handleEdit} />
+              <View style={style.rightHeader}>
+                <CompletionPercent
+                  value={completionPercentData?.profile_completion_percentage}
+                />
+                <EditButton isEditable={isEditable} handleEdit={handleEdit} />
+              </View>
             </Row>
           )
         }
