@@ -38,4 +38,5 @@ export const navigations = {
   ADD_NEW_JOBS: "add-new-jobs",
   DETAILS_JOBS: "posted-jobs/:id",
   EDIT_JOB: "edit-job",
+  APPLICANT_DETAILS: ":job_id/applicant-details/:id",
 };

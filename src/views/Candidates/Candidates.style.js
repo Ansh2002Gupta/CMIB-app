@@ -1,4 +1,5 @@
 import { StyleSheet } from "@unthinkable/react-core-components";
+import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -6,6 +7,9 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 20,
+  },
+  customTabsStyle: {
+    backgroundColor: colors.white,
   },
 });
 

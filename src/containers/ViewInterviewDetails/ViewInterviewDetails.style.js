@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   modalInnerContainer: {
-    maxHeight: deviceHeight * 0.6,
+    height: deviceHeight * 0.6,
   },
   linkText: {
     ...basetextStyle,

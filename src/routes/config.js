@@ -17,6 +17,7 @@ import JobsView from "../views/JobsView/JobsView";
 import JobApplicantsView from "../views/JobApplicantsView";
 import JobProfileTab from "../views/JobProfile";
 import JobSeekersView from "../views/JobSeekersView/index";
+import JobApplicantsDetails from "../views/JobApplicantsDetails";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
@@ -251,6 +252,10 @@ const config = [
       {
         viewPath: navigations.JOB_APPLICANTS,
         element: <JobApplicantsView />,
+      },
+      {
+        viewPath: `${navigations.JOB_APPLICANTS}/${navigations.APPLICANT_DETAILS}`,
+        element: <JobApplicantsDetails />,
       },
       {
         viewPath: navigations.JOB_SEEKERS,

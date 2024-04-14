@@ -196,10 +196,8 @@ const CustomTable = ({
                       showsVerticalScrollIndicator={false}
                       keyExtractor={(item, index) => index.toString()}
                       renderItem={({ item, index }) => {
-                        const statusRenderText = getRenderText(
-                          item,
-                          statusText
-                        );
+                        const statusRenderText =
+                          getRenderText(item, statusText) || "-";
                         return (
                           <>
                             {isWebView ? (
@@ -218,12 +216,14 @@ const CustomTable = ({
                                         fontWeight={"600"}
                                         customTextStyle={styles.cellTextStyle()}
                                       >
-                                        {getRenderText(item, headingTexts)}
+                                        {getRenderText(item, headingTexts) ||
+                                          "-"}
                                       </CommonText>
                                       <CommonText
                                         customTextStyle={styles.tableQueryText}
                                       >
-                                        {getRenderText(item, subHeadingText)}
+                                        {getRenderText(item, subHeadingText) ||
+                                          "-"}
                                       </CommonText>
                                     </View>
                                     <View style={styles.rowsPerPageWeb}>
@@ -359,6 +359,8 @@ CustomTable.defaultProps = {
   totalcards: 0,
   placeholder: "Search",
   isTotalCardVisible: true,
+  indexOfFirstRecord: 0,
+  indexOfLastRecord: 0,
 };
 
 CustomTable.propTypes = {
@@ -380,8 +382,8 @@ CustomTable.propTypes = {
   mobileComponentToRender: PropTypes.func,
   isHeading: PropTypes.bool.isRequired,
   isTicketListingLoading: PropTypes.bool,
-  indexOfFirstRecord: PropTypes.number.isRequired,
-  indexOfLastRecord: PropTypes.number.isRequired,
+  indexOfFirstRecord: PropTypes.number,
+  indexOfLastRecord: PropTypes.number,
   loadingMore: PropTypes.bool.isRequired,
   onIconPress: PropTypes.func.isRequired,
   queryTypeData: PropTypes.array,
