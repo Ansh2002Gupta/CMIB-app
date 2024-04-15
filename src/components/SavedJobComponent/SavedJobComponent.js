@@ -59,23 +59,31 @@ const SavedJobComponent = ({
   return (
     <>
       <TwoRow
-        style={{ ...style.mainContainer, ...containerStyle }}
+        style={{
+          ...style.mainContainer,
+          ...containerStyle,
+          ...(details?.is_urgent ? style.borderTop : style.paddingTop),
+        }}
         topSection={
-          <TwoColumn
-            style={style.topCurveSection}
-            isLeftFillSpace
-            leftSection={<View style={style.whiteCurveSection} />}
-            rightSection={
-              <CommonText
-                customContainerStyle={style.urgentText}
-                customTextStyle={style.urgentTextStyles}
-                fontWeight="600"
-              >
-                {intl.formatMessage({ id: "label.urgent" })}
-              </CommonText>
-            }
-            rightSectionStyle={style.backgroundWhite}
-          />
+          details?.is_urgent ? (
+            <TwoColumn
+              style={style.topCurveSection}
+              isLeftFillSpace
+              leftSection={<View style={style.whiteCurveSection} />}
+              rightSection={
+                <CommonText
+                  customContainerStyle={style.urgentText}
+                  customTextStyle={style.urgentTextStyles}
+                  fontWeight="600"
+                >
+                  {intl.formatMessage({ id: "label.urgent" })}
+                </CommonText>
+              }
+              rightSectionStyle={style.backgroundWhite}
+            />
+          ) : (
+            <View />
+          )
         }
         bottomSection={
           isWebView ? (

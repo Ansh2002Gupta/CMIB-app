@@ -11,10 +11,10 @@ const style = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: colors.lightGrey,
-    borderTopWidth: 10,
-    borderTopColor: colors.darkBlue,
     cursor: "pointer",
   },
+  borderTop: { borderTopWidth: 10, borderTopColor: colors.darkBlue },
+  paddingTop: { paddingTop: 24 },
   customSaveButtonContainer: { marginBottom: 16 },
   buttonTwoTextStyle: { fontSize: 14, fontWeight: 500 },
   urgentText: {
