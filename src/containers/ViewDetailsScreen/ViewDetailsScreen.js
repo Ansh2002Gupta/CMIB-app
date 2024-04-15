@@ -32,7 +32,6 @@ import { usePost } from "../../hooks/useApiRequest";
 import {
   CANDIDATES,
   COMPANY_CA_JOB_PROFILE,
-  DETAIL,
   MARK_PREFER,
   MEMBER_CA_JOB_PROFILE,
   UNMARK_PREFER,
@@ -140,10 +139,6 @@ const ViewDetailsScreen = () => {
         return `${MEMBER_CA_JOB_PROFILE}`;
     }
   };
-
-  const { data: candidateDetails } = useFetch({
-    url: COMPANY + CANDIDATES + DETAIL + `/${params?.id}`,
-  });
 
   const {
     makeRequest: saveCandidateDetails,
