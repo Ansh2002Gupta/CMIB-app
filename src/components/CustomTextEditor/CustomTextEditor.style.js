@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flexDirection: "row",
-    marginBottom: 8,
   },
   label: {
     color: colors.darkGrey,
