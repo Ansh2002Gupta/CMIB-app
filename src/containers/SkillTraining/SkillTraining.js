@@ -8,7 +8,7 @@ import { MEMBER_CA_JOB_PROFILE_SKILLS } from "../../services/apiServices/apiEndP
 import { SkillTraining_keys, isDuplicateExist } from "./Controller/utils";
 import { useIntl } from "react-intl";
 
-const SkillTraining = ({ isEditable = true, handleEdit }) => {
+const SkillTraining = ({ isEditable = true, handleEdit, customUrl }) => {
   const intl = useIntl();
   const {
     data,
@@ -16,11 +16,11 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
     isLoading: isLoadingPage,
     fetchData,
   } = useFetch({
-    url: `${MEMBER_CA_JOB_PROFILE_SKILLS}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_SKILLS}`,
   });
   const [toastError, setToastError] = useState(null);
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_PROFILE_SKILLS);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_PROFILE_SKILLS);
 
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? { ...data } : {}

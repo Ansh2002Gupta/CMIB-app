@@ -60,11 +60,16 @@ export const MARK_PREFER = "/mark-prefer";
 export const UNMARK_PREFER = "/unmark-prefer";
 export const CANDIDATES = "/candidates";
 
-/* API Endpoints Member CA JOB profile */
-export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
+/* API Endpoints COMPANY CA JOB profile */
+export const COMPANY_CA_JOB_PROFILE = `${USER_TYPE_COMPANY}/ca-jobs/members`;
+
+/* API Endpoints MEMBER CA JOB profile */
+export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile`;
+export const MEMBER_CA_JOB_PROFILE_PERSONAL = `${USER_TYPE_MEMBER}/profile/personal`;
 export const MEMBER_CA_JOB_PROFILE_EDUCATION = `${USER_TYPE_MEMBER}/profile/academics`;
 export const MEMBER_CA_JOB_PROFILE_EXAMS = `${USER_TYPE_MEMBER}/profile/exams`;
 export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/other-courses`;
+
 //endpoint add Job
 export const GET_FUNCTIONAL_TYPE = `${USER_TYPE_COMPANY}/functional-areas`;
 export const GET_JOB_LOCATION = `${USER_TYPE_COMPANY}/job/locations`;

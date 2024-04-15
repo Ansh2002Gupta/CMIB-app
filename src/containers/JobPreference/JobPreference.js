@@ -8,15 +8,11 @@ import {
   CORE_INDUSTRY_TYPE,
   MEMBER_CA_JOB_JOB_PREFERENCES,
 } from "../../services/apiServices/apiEndPoint";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { useJobPreference } from "./controller/useJobPreference";
 import { formatJobPreferenceData } from "./controller/utils";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
-const JobPreference = ({ isEditable, handleEdit }) => {
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState || {};
-
+const JobPreference = ({ isEditable, handleEdit, customUrl }) => {
   const {
     data: functionalAreas,
     isLoading: functionalAreasIsLoading,
@@ -39,11 +35,11 @@ const JobPreference = ({ isEditable, handleEdit }) => {
     isLoading: isLoadingJobPreferences,
     fetchData,
   } = useFetch({
-    url: MEMBER_CA_JOB_JOB_PREFERENCES,
+    url: customUrl ?? MEMBER_CA_JOB_JOB_PREFERENCES,
   });
 
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_JOB_PREFERENCES);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_JOB_PREFERENCES);
 
   const formattedJobPreference = useMemo(() => {
     return formatJobPreferenceData(data);

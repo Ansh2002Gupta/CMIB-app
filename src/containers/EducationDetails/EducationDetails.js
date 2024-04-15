@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -10,13 +10,13 @@ import { MEMBER_CA_JOB_PROFILE_EDUCATION } from "../../services/apiServices/apiE
 import { useEducationDetails } from "./Controllers/useEducationDetails";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
-const EducationDetails = ({ isEditable = true, handleEdit }) => {
+const EducationDetails = ({ isEditable = true, handleEdit, customUrl }) => {
   const {
     data,
     isLoading: isGettingEducationData,
     error: errorWhileGettingEducationData,
   } = useFetch({
-    url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
   const {
     makeRequest: handleUpdate,
@@ -24,7 +24,7 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
     error,
     setError,
   } = usePut({
-    url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
 
   const getData = (data) => {

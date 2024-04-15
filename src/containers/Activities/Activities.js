@@ -3,15 +3,12 @@ import ActivitiesUI from "./ActivitesUI";
 import { useContext, useEffect, useState } from "react";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useFetch from "../../hooks/useFetch";
-import {
-  MEMBER_CA_JOB_PROFILE_ACTIVITY,
-  MEMBER_CA_JOB_PROFILE_OTHER_COURSES,
-} from "../../services/apiServices/apiEndPoint";
+import { MEMBER_CA_JOB_PROFILE_ACTIVITY } from "../../services/apiServices/apiEndPoint";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useActivities } from "./Controllers/useActivities";
 import { getIndexForBoolean, yesNoToBoolean } from "../../utils/util";
 
-const Activities = ({ isEditable = true, handleEdit }) => {
+const Activities = ({ isEditable = true, handleEdit, customUrl }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const {
@@ -20,11 +17,11 @@ const Activities = ({ isEditable = true, handleEdit }) => {
     isLoading: isPageLoading,
     error: fetchDataError,
   } = useFetch({
-    url: MEMBER_CA_JOB_PROFILE_ACTIVITY,
+    url: customUrl || MEMBER_CA_JOB_PROFILE_ACTIVITY,
   });
 
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_PROFILE_ACTIVITY);
+    useUpdateService(customUrl || MEMBER_CA_JOB_PROFILE_ACTIVITY);
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? { ...data } : {}
   );

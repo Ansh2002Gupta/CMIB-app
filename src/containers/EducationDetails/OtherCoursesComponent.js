@@ -10,13 +10,17 @@ import { MEMBER_CA_JOB_PROFILE_EDUCATION } from "../../services/apiServices/apiE
 import { useOtherCourses } from "./Controllers/useOtherCourses";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
-const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
+const OtherCoursesComponent = ({
+  isEditable = true,
+  handleEdit,
+  customUrl,
+}) => {
   const {
     data,
     isLoading: isGettingEducationData,
     error: errorWhileGettingEducationData,
   } = useFetch({
-    url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
   const {
     makeRequest: handleUpdate,
@@ -24,7 +28,7 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
     error,
     setError,
   } = usePut({
-    url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
 
   const getData = (data) =>

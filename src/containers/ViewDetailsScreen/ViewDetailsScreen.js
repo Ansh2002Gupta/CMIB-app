@@ -15,7 +15,6 @@ import { TwoRow } from "../../core/layouts";
 import { CustomTabs } from "../../components/Tab";
 import Activities from "../../containers/Activities";
 import CommonText from "../../components/CommonText";
-import CustomButton from "../../components/CustomButton";
 import EducationDetails from "../../containers/EducationDetails";
 import CustomImage from "../../components/CustomImage";
 import JobPreference from "../../containers/JobPreference/JobPreference";
@@ -26,18 +25,20 @@ import Spinner from "../../components/Spinner";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import TouchableImage from "../../components/TouchableImage";
 import WorkExperience from "../../containers/WorkExperience/WorkExperience";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useIsWebView from "../../hooks/useIsWebView";
 import useFetch from "../../hooks/useFetch";
 import { usePost } from "../../hooks/useApiRequest";
 import {
-  ADMIN,
   CANDIDATES,
+  COMPANY_CA_JOB_PROFILE,
   DETAIL,
   MARK_PREFER,
+  MEMBER_CA_JOB_PROFILE,
   UNMARK_PREFER,
 } from "../../services/apiServices/apiEndPoint";
 import { navigations } from "../../constants/routeNames";
-import { COMPANY } from "../../constants/constants";
+import { COMPANY, MODULES } from "../../constants/constants";
 import colors from "../../assets/colors";
 import images from "../../images";
 import style, { getResponsiveStyles } from "./ViewDetailsScreen.style";
@@ -66,7 +67,7 @@ const SaveButton = ({
         onErrorCallback: (error) => {
           setToastMsg(errorInSaving || error);
         },
-        onSuccessCallback: (success) => {
+        onSuccessCallback: () => {
           setIsSaveButton(false);
           setToastMsg(intl.formatMessage({ id: "label.successful_save" }));
         },
@@ -77,7 +78,7 @@ const SaveButton = ({
         onErrorCallback: (error) => {
           setToastMsg(errorInUnSaving || error);
         },
-        onSuccessCallback: (success) => {
+        onSuccessCallback: () => {
           setIsSaveButton(true);
           setToastMsg(intl.formatMessage({ id: "label.successful_unsave" }));
         },
@@ -125,6 +126,19 @@ const ViewDetailsScreen = () => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const navigate = useNavigate();
   const params = useParams();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState || {};
+
+  const returnModuleWiseUrl = (module) => {
+    switch (module) {
+      case MODULES.CA_JOBS:
+        return `${COMPANY_CA_JOB_PROFILE}/${params?.id}`;
+      case MODULES.MEMBER:
+        return `${MEMBER_CA_JOB_PROFILE}`;
+      default:
+        return `${MEMBER_CA_JOB_PROFILE}`;
+    }
+  };
 
   const { data: candidateDetails } = useFetch({
     url: COMPANY + CANDIDATES + DETAIL + `/${params?.id}`,
@@ -228,6 +242,9 @@ const ViewDetailsScreen = () => {
               <PersonalDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/personal"
+                }
               />
             ),
           },
@@ -237,6 +254,7 @@ const ViewDetailsScreen = () => {
               <EducationDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={returnModuleWiseUrl(selectedModule?.key)}
               />
             ),
           },
@@ -246,31 +264,56 @@ const ViewDetailsScreen = () => {
               <MembershipDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/membership"
+                }
               />
             ),
           },
           {
             label: "Work Experience",
             component: (
-              <WorkExperience isEditable={isEditable} handleEdit={handleEdit} />
+              <WorkExperience
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/work-experiences"
+                }
+              />
             ),
           },
           {
             label: "Skill Training",
             component: (
-              <SkillTraining isEditable={isEditable} handleEdit={handleEdit} />
+              <SkillTraining
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={returnModuleWiseUrl(selectedModule?.key) + "/skills"}
+              />
             ),
           },
           {
             label: "Activities",
             component: (
-              <Activities isEditable={isEditable} handleEdit={handleEdit} />
+              <Activities
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/activities"
+                }
+              />
             ),
           },
           {
             label: "Job Preference",
             component: (
-              <JobPreference isEditable={isEditable} handleEdit={handleEdit} />
+              <JobPreference
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/job-preferences"
+                }
+              />
             ),
           },
         ]}

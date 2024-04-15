@@ -753,3 +753,8 @@ export const KEYS = {
   OFFER_ACCEPTED: 7,
   OFFERE_REJECTED: 8,
 };
+
+export const MODULES = {
+  CA_JOBS: "ca-jobs",
+  MEMBER: "member",
+};

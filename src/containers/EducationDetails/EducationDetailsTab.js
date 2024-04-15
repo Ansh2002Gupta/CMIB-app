@@ -8,7 +8,7 @@ import { FormTabs } from "../../components/Tab";
 import colors from "../../assets/colors";
 import style from "./Exams.style";
 
-const EducationDetailsTab = ({ isEditable, handleEdit }) => {
+const EducationDetailsTab = ({ isEditable, handleEdit, customUrl }) => {
   return (
     <View style={style.tabContainer}>
       <FormTabs
@@ -20,13 +20,18 @@ const EducationDetailsTab = ({ isEditable, handleEdit }) => {
               <EducationDetailComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={!!customUrl ? customUrl + "/academics" : null}
               />
             ),
           },
           {
             label: "Exams",
             component: (
-              <ExamsComponent isEditable={isEditable} handleEdit={handleEdit} />
+              <ExamsComponent
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={!!customUrl ? customUrl + "/academics" : null}
+              />
             ),
           },
           {
@@ -35,6 +40,7 @@ const EducationDetailsTab = ({ isEditable, handleEdit }) => {
               <OtherCoursesComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={!!customUrl ? customUrl + "/academics" : null}
               />
             ),
           },
