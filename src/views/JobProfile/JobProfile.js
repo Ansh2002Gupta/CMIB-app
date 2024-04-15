@@ -193,8 +193,12 @@ const JobProfileTab = ({
               </CommonText>
               <View style={style.rightHeader}>
                 <CompletionPercent
-                  value={completionPercentData?.profile_completion_percentage.toFixed(
-                    0
+                  value={parseInt(
+                    completionPercentData?.profile_completion_percentage
+                      ? `${completionPercentData?.profile_completion_percentage}`.split(
+                          "."
+                        )?.[0] ?? 0
+                      : 0
                   )}
                 />
                 <EditButton isEditable={isEditable} handleEdit={handleEdit} />
