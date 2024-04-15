@@ -35,12 +35,16 @@ const CustomTextEditor = ({
   return (
     <View style={styles.componentView}>
       <View style={styles.labelContainer}>
-        <CommonText
-          customTextStyle={[styles.label, customLabelStyle]}
-          fontWeight={customLabelStyle?.fontWeight}
-        >
-          {label}
-        </CommonText>
+        <View>
+          {!!label && (
+            <CommonText
+              customTextStyle={[styles.label, customLabelStyle]}
+              fontWeight={customLabelStyle?.fontWeight}
+            >
+              {label}
+            </CommonText>
+          )}
+        </View>
         {isMandatory && (
           <CommonText customTextStyle={[styles.label, styles.starStyle]}>
             {"*"}
