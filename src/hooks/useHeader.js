@@ -12,6 +12,7 @@ import { resetAllModules } from "../constants/sideBarHelpers";
 import { resetUserDetails } from "../globalContext/userProfile/userProfileActions";
 import { setLogoutToast } from "../globalContext/logout/logoutActions";
 import { navigations } from "../constants/routeNames";
+import { COMPANY } from "../constants/constants";
 
 export const useHeader = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export const useHeader = () => {
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
     !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
-    resetAllModules();
+    resetAllModules(userType?.toLowerCase() !== COMPANY);
     navigate(navigations.LOGIN, {
       state: { activeTab: userType === "Company" },
     });

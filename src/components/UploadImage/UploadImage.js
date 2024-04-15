@@ -12,11 +12,14 @@ const UploadImage = ({
   fileUploadResult,
   handleFileUpload,
   hideIconDelete,
+  isDocumentUpload,
+  isVideoUpload,
   isUploadingImageToServer,
   onDeleteImage,
   openCropViewAfterImageSelection,
   setFileUploadResult,
   uploadPercentage,
+  customContentContainerStyle,
 }) => {
   const fileInputRef = useRef(null);
 
@@ -28,7 +31,7 @@ const UploadImage = ({
     fileTooLargeError,
     initiateFileUpload,
     invalidFormatError,
-  } = useUploadedFileValidations();
+  } = useUploadedFileValidations({ isDocumentUpload, isVideoUpload });
 
   const imageUploadedToServer = fileUploadResult?.data;
 
@@ -99,6 +102,9 @@ const UploadImage = ({
             {...{
               fileName: imageUploadedToServer?.["file_name"] || "",
               hideIconDelete,
+              fileUrl: imageUploadedToServer?.["url"] || "",
+              isDocumentUpload,
+              isVideoUpload,
               onRemoveImage: handleDeleteImage,
               source: imageUploadedToServer?.url || "",
             }}
@@ -117,8 +123,11 @@ const UploadImage = ({
             handleDragOver,
             handleDrop,
             handleUploadClick,
+            isDocumentUpload,
+            isVideoUpload,
             isLoading: isUploadingImageToServer,
             uploadPercentage,
+            customContentContainerStyle: customContentContainerStyle,
           }}
         />
       )}
@@ -130,11 +139,15 @@ UploadImage.defaultProps = {
   errorWhileUpload: "",
   fileUploadResult: {},
   handleFileUpload: () => {},
+  isDocumentUpload: false,
   isUploadingImageToServer: false,
   onDeleteImage: () => {},
   openCropViewAfterImageSelection: false,
   setFileUploadResult: () => {},
   uploadPercentage: 0,
+  customContentContainerStyle: {},
+  isAllFormat: false,
+  isImageAndPDF: false,
 };
 
 UploadImage.propTypes = {
@@ -142,11 +155,15 @@ UploadImage.propTypes = {
   fileUploadResult: PropTypes.object,
   handleFileUpload: PropTypes.func,
   hideIconDelete: PropTypes.bool,
+  isDocumentUpload: PropTypes.bool,
   isUploadingImageToServer: PropTypes.bool,
   onDeleteImage: PropTypes.func,
   openCropViewAfterImageSelection: PropTypes.bool,
   setFileUploadResult: PropTypes.func,
   uploadPercentage: PropTypes.number,
+  customContentContainerStyle: PropTypes.object,
+  isAllFormat: PropTypes.bool,
+  isImageAndPDF: PropTypes.bool,
 };
 
 export default UploadImage;

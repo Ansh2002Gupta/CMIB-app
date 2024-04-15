@@ -76,6 +76,7 @@ const useApiRequest = ({ method, url, apiOptions = {}, otherOptions = {} }) => {
     isLoading,
     isSuccess,
     setData,
+    setError,
   };
 };
 
@@ -85,3 +86,5 @@ export const usePut = ({ url, apiOptions, otherOptions }) =>
   useApiRequest({ method: "put", url, apiOptions, otherOptions });
 export const usePatch = ({ url, apiOptions, otherOptions }) =>
   useApiRequest({ method: "patch", url, apiOptions, otherOptions });
+export const useDelete = ({ url, apiOptions, otherOptions }) =>
+  useApiRequest({ method: "delete", url, apiOptions, otherOptions });

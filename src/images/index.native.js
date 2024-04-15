@@ -1,4 +1,5 @@
 import avatar from "../../public/images/Avatar.svg";
+import companyLogo from "../../public/images/svg/companyLogo.svg";
 import iconCmibDark from "../../public/images/svg/iconCmibDark.svg";
 import iconCmibLight from "../../public/images/svg/iconCmibLight.svg";
 import logo from "../../public/images/logo.png";
@@ -105,7 +106,7 @@ import iconCampus from "../../public/images/svg/campus.svg";
 import iconConsent from "../../public/images/svg/consent.svg";
 import iconDiscover from "../../public/images/svg/discover.svg";
 import iconApplication from "../../public/images/svg/application.svg";
-import iconCalendar from "../../public/images/calendar.png";
+import iconCalendar from "../../public/images/svg/calendar.svg";
 import iconRotate from "../../public/images/svg/iconRotate.svg";
 import iconDisabledAdd from "../../public/images/svg/iconDisabledAdd.svg";
 import iconDisabledMinus from "../../public/images/svg/iconDisabledMinus.svg";
@@ -116,15 +117,46 @@ import iconAvatar from "../../public/images/svg/iconAvatar.svg";
 import iconArrowDownSorting from "../../public/images/svg/iconArrowDownSorting.svg";
 import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
-import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
 import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
+import questionIcon from "../../public/images/question/question.png";
+import copyIcon from "../../public/images/copyIcon/copy.png";
+import redCrossIcon from "../../public/images/redCross/redClose.png";
+import editIcon from "../../public/images/editIcon/edit.png";
+import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
 import iconZoomIn from "../../public/images/svg/iconZoomIn.svg";
 import iconZoomOut from "../../public/images/svg/iconZoomOut.svg";
 import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
+import iconAddRoundGreen from "../../public/images/svg/iconAddRoundGreen.svg";
+import iconDeleteRoundRed from "../../public/images/svg/iconDeleteRoundRed.svg";
+import iconCheckBoxRound from "../../public/images/svg/iconCheckBoxRound.svg";
+import iconUnCheckBoxRound from "../../public/images/svg/iconUnCheckBoxRound.svg";
 import iconError from "../../public/images/svg/iconError.svg";
+import iconTickGreen from "../../public/images/svg/iconTickGreen.svg";
+import iconCrossRed from "../../public/images/svg/iconCrossRed.svg";
+import dotIcon from "../../public/images/dotIcon/dot.png";
+import iconDownloading from "../../public/images/downloadIcon/download.png";
+import iconTickCircle from "../../public/images/svg/tick-circle.svg";
+import iconAppliedJobs from "../../public/images/svg/iconAppliedJobs.svg";
+import iconAppliedJobsActiveJobs from "../../public/images/svg/iconAppliedJobsActiveJobs.svg";
+import iconSingleSave from "../../public/images/svg/iconSingleSave.svg";
+import iconSaveSlashBlack from "../../public/images/svg/iconSaveSlashBlack.svg";
+import iconSaveSlashBlue from "../../public/images/svg/iconSaveSlashBlue.svg";
+import iconBriefcase from "../../public/images/svg/iconBriefcase.svg";
+import iconLocation from "../../public/images/svg/iconLocation.svg";
+import iconRupee from "../../public/images/svg/iconRupee.svg";
+import videoPlayIcon from "../../public/images/svg/videoPlayIcon.svg";
+import pdfIcon from "../../public/images/svg/pdfIcon.svg";
+import rightDiagonalArrow from "../../public/images/svg/rightDiagonalArrow.svg";
+import iconClock from "../../public/images/svg/iconClock.svg";
+
+import iconLocationWhite from "../../public/images/svg/iconLocationWhite.svg";
+import iconBreifcase from "../../public/images/svg/briefcase.svg";
+import iconRupeeSign from "../../public/images/svg/rupeeSign.svg";
+import iconArchiveSave from "../../public/images/svg/iconArchiveSave.svg";
+import iconTrashSVG from "../../public/images/svg/iconTrash.svg";
 import iconDefaultLogo from "../../public/images/svg/iconDefaultLogo.svg";
 
 const images = {
@@ -132,6 +164,7 @@ const images = {
   iconArrowDown,
   iconArrowDown2,
   avatar,
+  companyLogo,
   logo,
   iconCmibDark,
   iconCmibLight,
@@ -246,8 +279,12 @@ const images = {
   iconAddBlack,
   iconPartial,
   iconSendDisabled,
-  iconDisabledCheck,
   iconDeleteRed,
+  questionIcon,
+  copyIcon,
+  redCrossIcon,
+  editIcon,
+  iconDisabledCheck,
   iconZoomIn,
   iconZoomOut,
   iconAddBlue,
@@ -255,6 +292,32 @@ const images = {
   iconLoading,
   iconGreyCross,
   iconError,
+  iconAddRoundGreen,
+  iconDeleteRoundRed,
+  iconCheckBoxRound,
+  iconUnCheckBoxRound,
+  iconClock,
+  iconTickGreen,
+  iconCrossRed,
+  dotIcon,
+  iconDownloading,
+  iconTickCircle,
+  iconAppliedJobs,
+  iconAppliedJobsActiveJobs,
+  iconSingleSave,
+  iconSaveSlashBlack,
+  iconSaveSlashBlue,
+  iconBriefcase,
+  iconLocation,
+  iconRupee,
+  videoPlayIcon,
+  pdfIcon,
+  rightDiagonalArrow,
+  iconLocationWhite,
+  iconBreifcase,
+  iconRupeeSign,
+  iconArchiveSave,
+  iconTrashSVG,
   iconDefaultLogo,
 };
 

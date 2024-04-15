@@ -1,8 +1,10 @@
-import { navigations } from "./routeNames";
+import colors from "../assets/colors";
 
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
+export const VALID_PAN = "Not a valid PAN, Please enter again";
+export const VALID_GSTIN = "Not a valid GSTIN, Please enter again";
 
 export const numRegex = /^\d+$/;
 export const alphaNumericRegex = /^[a-zA-Z0-9]+$/;
@@ -10,7 +12,7 @@ export const urlRegex =
   /^(?:https?:\/\/)?www\.[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&=]*)/;
 
 export const TOAST_TIMEOUT = 5000;
-export const API_VERSION_NUMBER = "v1";
+export const API_VERSION_NUMBER = "1.0.0";
 export const FIELD_MIN_LENGTH = 6;
 export const DEFAULT_INPUT_MAX_LENGTH = 100;
 export const CODE_MIN_LENGTH = 2;
@@ -23,8 +25,11 @@ export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
+export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
-export const IMAGE_MAX_SIZE = 5000000;
+export const FILE_MAX_SIZE = 5000000;
+export const VIDEO_FILE_MAX_SIZE = 50000000;
+export const VIDEO_MAX_SIZE = 50000000;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "nqca-placements";
 export const OVERSEAS_PLACEMENTS = "overseas-chapters";
@@ -34,6 +39,11 @@ export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
 export const MIN_ZOOM_SCALE = 1;
 export const MAX_ZOOM_SCALE = 3;
 export const DEFAULT_BALANCE_CREDIT = 0;
+export const GSTIN_MAX_LENGTH = 15;
+export const PAN_MAX_LENGTH = 10;
+export const COMPANY = "company";
+export const Candidate = "Candidate";
+export const Company = "Company";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
@@ -233,6 +243,27 @@ export const TICKET_TABLE_HEADING = {
   },
   created_at: "Created On",
 };
+export const POSTED_JOB_LISTING = {
+  job_id: "Job ID",
+  designation: "Designation",
+  status: "Active / Inactive",
+  number_of_interviews: "Scheduled Interview",
+  number_of_applications: "Applicants",
+  approve: "Approved/Not Approved by Admin",
+};
+export const APPLICANT_LISTING = {
+  name: "Applicant Name",
+  applicant_id: "Applicant ID",
+  status: "Status",
+};
+export const SCHEDULE_LISTING = {
+  name: "Applicant Name",
+  applicant_id: "Applicant ID",
+  type: "Interview Type",
+  primary_interview_date: "Primary Interview Date",
+  primary_interview_time: "Primary Interview Time",
+  status: "Status",
+};
 
 export const FEEDBACK_TABLE_HEADING = {
   id: "Feedback ID",
@@ -343,8 +374,11 @@ export const MARITAL_STATUS = [
     label: "Single",
     value: "Single",
   },
+  {
+    label: "Other",
+    value: "Other",
+  },
 ];
-
 export const MONTHS = [
   {
     label: "January",
@@ -406,6 +440,27 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   value: `${x + 1995}`,
 }));
 
+export const Education_Status_Options = [
+  {
+    label: "Regular",
+    value: "regular",
+  },
+  {
+    label: "Correspondence",
+    value: "correspondence",
+  },
+];
+
+export const BOOLEAN_OPTION = [
+  {
+    label: "Yes",
+    value: true,
+  },
+  {
+    label: "No",
+    value: false,
+  },
+];
 export const COLOR = [
   "#000000",
   "#e60000",
@@ -480,3 +535,134 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+
+export const JOB_SEEKERS_TABLE_HEADING = {
+  company_name: "Company Name",
+  candidate_id: "Candidate ID",
+  total_experience: "Total Experience",
+  functional_area: "Functional Area",
+};
+
+export const color = [
+  "#000000",
+  "#e60000",
+  "#ff9900",
+  "#ffff00",
+  "#008a00",
+  "#0066cc",
+  "#9933ff",
+  "#ffffff",
+  "#facccc",
+  "#ffebcc",
+  "#ffffcc",
+  "#cce8cc",
+  "#cce0f5",
+  "#ebd6ff",
+  "#bbbbbb",
+  "#f06666",
+  "#ffc266",
+  "#ffff66",
+  "#66b966",
+  "#66a3e0",
+  "#c285ff",
+  "#888888",
+  "#a10000",
+  "#b26b00",
+  "#b2b200",
+  "#006100",
+  "#0047b2",
+  "#6b24b2",
+  "#444444",
+  "#5c0000",
+  "#663d00",
+  "#666600",
+  "#003700",
+  "#002966",
+  "#3d1466",
+  "custom-color",
+];
+
+export const size = ["small", false, "large", "huge"];
+
+export const format = [
+  "header",
+  "height",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "color",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "align",
+  "size",
+];
+export const textFormats = [
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+];
+export const listType = [{ list: "ordered" }, { list: "bullet" }];
+export const attachmentType = ["link", "image"];
+export const listOptions = [
+  { list: "ordered" },
+  { list: "bullet" },
+  { indent: "-1" },
+  { indent: "+1" },
+  { align: [] },
+];
+export const questionaireType = [
+  {
+    value: "label.text_question",
+    label: "label.text_question",
+  },
+  {
+    value: "label.single_select",
+    label: "label.single_select",
+  },
+  {
+    value: "label.multiple_select",
+    label: "label.multiple_select",
+  },
+];
+export const jobType = {
+  SPECIALLY_ABLE: "For Specially Abled Persons",
+  CONTRACTUAL: "Contractual",
+  REGULAR: "Regular",
+  RETIRED: "For Retired Persons",
+};
+export const questionType = {
+  "Text Question": "text",
+  "Single-select": "single-select",
+  "Multi-select": "multi-select",
+};
+export const progressData = {
+  0: {
+    backgroundColor: colors.greyOne,
+    text: "Form In Progress...",
+    textColor: colors.black,
+  },
+  1: {
+    backgroundColor: colors.skyBlueLight,
+    text: "Form Half Filled...",
+    textColor: colors.skyBlueDark,
+  },
+  2: {
+    backgroundColor: colors.lightPurple,
+    text: "Form Almost Done!",
+    textColor: colors.darkPurple,
+  },
+  3: {
+    backgroundColor: colors.lightGreen,
+    text: "Form Complete!",
+    textColor: colors.darkSecondGreen,
+  },
+};
+
+export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];

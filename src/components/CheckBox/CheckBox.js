@@ -8,6 +8,8 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
 import styles from "./CheckBox.style";
 
+const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
+
 const CheckBox = ({
   customTextStyle,
   handleCheckbox,
@@ -16,9 +18,12 @@ const CheckBox = ({
   isPartial,
   isSelected,
   title,
+  iconCheck,
+  iconUnCheck,
+  checkBoxTextStyle,
 }) => {
-  const CheckIcon = Images.iconCheckbox;
-  const UncheckIcon = Images.iconUnCheckbox;
+  const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
+  const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
   const PartialIcon = Images.iconPartial;
   const DisabledCheckBoxIcon = Images.iconDisabledCheck;
 
@@ -41,6 +46,8 @@ const CheckBox = ({
         <CustomTouchableOpacity
           disabled={isDisabled}
           onPress={() => handleCheckbox(id)}
+          style={{ ...styles.customTouchableOpacity, ...customTextStyle }}
+          hitSlop={hitSlop}
         >
           <CustomImage
             Icon={getCheckBoxIcon()}
@@ -52,7 +59,7 @@ const CheckBox = ({
             customTextStyle={{
               ...styles.titleStyle,
               ...(isDisabled ? styles.disabledText : {}),
-              ...customTextStyle,
+              ...checkBoxTextStyle,
             }}
           >
             {title}
@@ -70,6 +77,8 @@ CheckBox.defaultProps = {
   isDisabled: false,
   isPartial: false,
   isSelected: false,
+  iconCheck: Images.iconCheckbox,
+  iconUnCheck: Images.iconUnCheckbox,
 };
 
 CheckBox.propTypes = {
@@ -80,6 +89,8 @@ CheckBox.propTypes = {
   isPartial: PropTypes.bool,
   isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,
+  iconCheck: PropTypes.node,
+  iconUnCheck: PropTypes.node,
 };
 
 export default CheckBox;

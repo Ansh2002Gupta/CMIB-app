@@ -17,6 +17,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
 import styles from "./FilterModal.style";
+import DatePickerModal from "../../components/DatePickerModel";
 
 const FilterModal = ({
   filterCategory,
@@ -27,6 +28,7 @@ const FilterModal = ({
   setShowFilterOptions,
   statusData,
   queryTypeData,
+  renderCalendar = false,
 }) => {
   const {
     currentCategory,
@@ -43,7 +45,9 @@ const FilterModal = ({
     initialFilterState,
     onApplyFilter,
     setFilterState,
-    setShowFilterOptions
+    setShowFilterOptions,
+    filterCategory,
+    renderCalendar
   );
 
   const isWeb = Platform.OS.toLowerCase() === "web";
@@ -65,8 +69,8 @@ const FilterModal = ({
       : {};
 
   const handleAllcategorySet = (item) => {
-    const status = item === "Status";
-    const query_type = item === "Query Type";
+    const status = item === filterCategory[0];
+    const query_type = item === filterCategory[1];
 
     if (status) {
       const getStatusDataId = statusData.map((item) => item.id);
@@ -104,7 +108,20 @@ const FilterModal = ({
   };
 
   const renderOptionsByCategory = (category) => {
-    if (category === "Status") {
+    if (renderCalendar && category === filterCategory[0]) {
+      {
+        return (
+          <View style={styles.datePickerModalView}>
+            <DatePickerModal
+              customStyles={styles.datePickerStyle}
+              value={filterState?.dateSelected}
+              datePickerViewStyle={styles.datePickerInner}
+              onChangeValue={(value) => handleStatusChange(value)}
+            />
+          </View>
+        );
+      }
+    } else if (category === filterCategory[0]) {
       return statusData.map((status) => (
         <RenderCheckButton
           key={status.id}
@@ -114,7 +131,7 @@ const FilterModal = ({
           isSelected={selectedStatus.includes(status.id)}
         />
       ));
-    } else if (category === "Query Type") {
+    } else if (category === filterCategory[1]) {
       return queryTypeData.map((queryType) => (
         <RenderCheckButton
           key={queryType.id}
@@ -125,18 +142,18 @@ const FilterModal = ({
         />
       ));
     }
+    return null;
   };
 
   const getCheckBoxesStatus = (title) => {
-    const status = title === "Status";
-    const query_type = title === "Query Type";
+    const status = title === filterCategory[0];
+    const query_type = title === filterCategory[1];
 
     if (status) {
       if (!selectedStatus.length) return "empty";
       if (selectedStatus.length !== statusData.length) return "partial";
       return "full";
     }
-
     if (query_type) {
       if (!selectedQueryType.length) return "empty";
       if (selectedQueryType.length !== queryTypeData.length) return "partial";
@@ -146,8 +163,8 @@ const FilterModal = ({
   };
 
   const RenderCategoryButton = ({ title, onClick }) => {
-    const isActive = getCheckBoxesStatus(title) === "full" ? true : false;
-    const isPartial = getCheckBoxesStatus(title) === "partial" ? true : false;
+    const isActive = getCheckBoxesStatus(title) === "full";
+    const isPartial = getCheckBoxesStatus(title) === "partial";
 
     return (
       <CheckBox
@@ -184,7 +201,7 @@ const FilterModal = ({
         middleSection={
           <TwoColumn
             leftSection={
-              <>
+              <ScrollView>
                 {filterCategory.map((item) => {
                   return (
                     <View style={styles.renderCheckButton} {...webProps}>
@@ -207,18 +224,16 @@ const FilterModal = ({
                         }
                         isLeftFillSpace
                         rightSection={
-                          <>
-                            <CustomImage
-                              source={images.iconArrowRight}
-                              style={styles.arrowRight}
-                            />
-                          </>
+                          <CustomImage
+                            source={images.iconArrowRight}
+                            style={styles.arrowRight}
+                          />
                         }
                       />
                     </View>
                   );
                 })}
-              </>
+              </ScrollView>
             }
             leftSectionStyle={styles.leftSection}
             rightSectionStyle={styles.rightSection}
@@ -266,6 +281,7 @@ FilterModal.propTypes = {
   onApplyFilter: PropTypes.func.isRequired,
   setFilterState: PropTypes.func.isRequired,
   setShowFilterOptions: PropTypes.func.isRequired,
+  renderCalendar: PropTypes.bool,
 };
 
 export default FilterModal;

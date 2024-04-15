@@ -36,6 +36,9 @@ function ThreeRow({
 ThreeRow.defaultProps = {
   style: {},
   topSectionStyle: {},
+  isTopFillSpace: false,
+  isMiddleFillSpace: false,
+  isBottomFillSpace: false,
   middleSectionStyle: {},
   bottomSectionStyle: {},
 };

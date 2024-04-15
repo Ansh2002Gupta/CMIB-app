@@ -6,13 +6,21 @@ import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
 import styles from "./Chip.style";
 
-const Chip = ({ bgColor, label, style, textColor }) => {
+const Chip = ({
+  bgColor,
+  label,
+  style,
+  textColor,
+  customContainerStyle,
+  isBackground,
+}) => {
   const { isWebView } = useIsWebView();
 
   return (
     <CommonText
+      customContainerStyle={customContainerStyle}
       customTextStyle={{
-        ...(isWebView
+        ...(isWebView || isBackground
           ? styles.chipStyleWeb(textColor, bgColor)
           : styles.chipStyle(textColor)),
         ...style,
@@ -24,16 +32,20 @@ const Chip = ({ bgColor, label, style, textColor }) => {
 };
 
 Chip.defaultProps = {
-    bgColor: colors.lightOrange,
-    style: {},
-    textColor: colors.orange,
-  };
+  bgColor: colors.lightOrange,
+  style: {},
+  textColor: colors.orange,
+  customContainerStyle: {},
+  isBackground: false,
+};
 
 Chip.propTypes = {
-    bgColor: PropTypes.string,
-    label: PropTypes.string.isRequired,
-    style: PropTypes.object,
-    textColor: PropTypes.string,
-  };
-  
+  bgColor: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  style: PropTypes.object,
+  textColor: PropTypes.string,
+  customContainerStyle: PropTypes.object,
+  isBackground: PropTypes.bool,
+};
+
 export default Chip;
