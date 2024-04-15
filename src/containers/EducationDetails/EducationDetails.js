@@ -17,7 +17,11 @@ import {
 import { useEducationDetails } from "./Controllers/useEducationDetails";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
-const EducationDetails = ({ isEditable = true, handleEdit }) => {
+const EducationDetails = ({
+  isEditable = true,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
 
@@ -198,6 +202,7 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
     handleUpdate({
       body: payload,
       onSuccessCallback: () => {
+        onSaveSuccessfull && onSaveSuccessfull();
         handleEdit(false);
       },
     });

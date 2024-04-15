@@ -14,7 +14,7 @@ import {
 import { useMembershipDetails } from "./controller/useMembershipDetails";
 import { formatDateToYYYYMMDD } from "../../utils/util";
 
-const MembershipDetails = ({ isEditable, handleEdit }) => {
+const MembershipDetails = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
 
@@ -114,6 +114,7 @@ const MembershipDetails = ({ isEditable, handleEdit }) => {
     const payload = getMembershipDetailsPayload();
 
     handleUpdate(payload, () => {
+      onSaveSuccessfull && onSaveSuccessfull();
       // turn off the edit mode
       handleEdit(false);
       fetchData();

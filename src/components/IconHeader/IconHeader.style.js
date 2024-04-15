@@ -90,6 +90,7 @@ const style = {
   },
   marginLeft8: {
     marginLeft: 8,
+    width: 50,
   },
 };
 

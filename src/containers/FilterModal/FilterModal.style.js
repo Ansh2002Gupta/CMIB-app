@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingLeft: 16,
     justifyContent: "center",
+    width: "100%",
   },
   renderOptionCatigory: {
     height: 300,

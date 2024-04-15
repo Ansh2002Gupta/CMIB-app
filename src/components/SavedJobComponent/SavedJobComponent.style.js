@@ -13,6 +13,7 @@ const style = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderTopWidth: 10,
     borderTopColor: colors.darkBlue,
+    cursor: "pointer",
   },
   customSaveButtonContainer: { marginBottom: 16 },
   buttonTwoTextStyle: { fontSize: 14, fontWeight: 500 },

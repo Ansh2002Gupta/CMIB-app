@@ -36,7 +36,7 @@ const workExperienceKeys = () => ({
   areas_of_work: [],
 });
 
-const WorkExperience = ({ isEditable, handleEdit }) => {
+const WorkExperience = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
 
@@ -286,6 +286,7 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
       }
 
       handleUpdate(body, () => {
+        onSaveSuccessfull && onSaveSuccessfull();
         // turn off the edit mode
         handleEdit(false);
         fetchData();
