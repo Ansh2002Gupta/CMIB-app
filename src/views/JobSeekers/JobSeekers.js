@@ -34,6 +34,7 @@ const JobSeekers = () => {
     indexOfLastRecord,
     isError,
     isFirstPageReceived,
+    isGeetingJobbSeekers,
     subHeadingText,
     extraDetailsText,
     extraDetailsKey,
@@ -86,6 +87,7 @@ const JobSeekers = () => {
                 indexOfFirstRecord,
                 indexOfLastRecord,
                 isFirstPageReceived,
+                isGeetingJobbSeekers,
                 isHeading,
                 loadingMore,
                 placeholder: intl.formatMessage({

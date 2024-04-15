@@ -15,7 +15,10 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderRadius: 8,
   },
-  zIndex10: {
+  zIndexOuter: {
+    zIndex: 5,
+  },
+  zIndexInner: {
     zIndex: 100,
   },
   containerStyle: {

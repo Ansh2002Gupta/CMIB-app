@@ -53,6 +53,7 @@ const CustomTable = ({
   indexOfLastRecord,
   isHeading,
   isTicketListingLoading,
+  isGeetingJobbSeekers,
   isFirstPageReceived,
   loadingMore,
   onIconPress,
@@ -141,7 +142,7 @@ const CustomTable = ({
                   <CustomTouchableOpacity
                     onPress={handleFilterModal}
                     style={styles.imageParentStyle}
-                    disabled={isTicketListingLoading}
+                    disabled={isTicketListingLoading || isGeetingJobbSeekers}
                   >
                     <TouchableImage
                       source={images.iconFilter}
@@ -198,7 +199,8 @@ const CustomTable = ({
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
-                {isTicketListingLoading && (isWeb || isFirstPageReceived) ? (
+                {isTicketListingLoading ||
+                (isGeetingJobbSeekers && (isWeb || isFirstPageReceived)) ? (
                   <LoadingScreen />
                 ) : (
                   <View style={styles.tableSection}>
@@ -239,21 +241,34 @@ const CustomTable = ({
                                     >
                                       {getRenderText(item, subHeadingText)}
                                     </CommonText>
-                                    <View style={styles.dot}></View>
-                                    <CommonText
-                                      customTextStyle={styles.tableQueryText}
-                                    >
-                                      {extraDetailsText +
-                                        ": " +
-                                        getRenderText(item, extraDetailsKey)}
-                                    </CommonText>
+                                    {!!extraDetailsText && (
+                                      <>
+                                        <View style={styles.dot}></View>
+                                        <CommonText
+                                          customTextStyle={
+                                            styles.tableQueryText
+                                          }
+                                        >
+                                          {extraDetailsText +
+                                            ": " +
+                                            getRenderText(
+                                              item,
+                                              extraDetailsKey
+                                            )}
+                                        </CommonText>
+                                      </>
+                                    )}
                                   </Row>
                                 </View>
                                 <View style={styles.rowsPerPageWeb}>
                                   {!!item.status && (
                                     <Chip
                                       label={getRenderText(item, statusText)}
-                                      style={getStatusStyle(item.status)}
+                                      style={getStatusStyle(
+                                        !!item?.active
+                                          ? item.active
+                                          : item.status
+                                      )}
                                     />
                                   )}
                                   <TouchableImage
@@ -391,6 +406,7 @@ CustomTable.propTypes = {
   headingTexts: PropTypes.array,
   isHeading: PropTypes.bool.isRequired,
   isTicketListingLoading: PropTypes.bool,
+  isGeetingJobbSeekers: PropTypes.bool,
   indexOfFirstRecord: PropTypes.number.isRequired,
   indexOfLastRecord: PropTypes.number.isRequired,
   loadingMore: PropTypes.bool.isRequired,
