@@ -1,5 +1,4 @@
 import colors from "../../assets/colors";
-import { Platform } from "@unthinkable/react-core-components";
 
 const styles = {
   otherDetailItemWeb: {
@@ -18,11 +17,7 @@ const styles = {
   descriptionContainer: { flex: 1 },
   description: {
     flex: 1,
-    ...Platform.select({
-      web: {
-        marginRight: 32,
-      },
-    }),
+    marginRight: 32,
   },
   jobDescriptionContainer: {
     flexDirection: "row",
