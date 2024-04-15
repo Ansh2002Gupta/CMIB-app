@@ -54,15 +54,6 @@ const PersonalDetails = ({
   });
 
   useEffect(() => {
-    if (!!data) {
-      callBack({
-        candidate_name: data?.name?.[0]?.name,
-        candidate_id: data?.member_id,
-      });
-    }
-  }, [data]);
-
-  useEffect(() => {
     if (currentModule) {
       if (isCompany) {
         fetchingApplicantData({});
@@ -146,6 +137,15 @@ const PersonalDetails = ({
   useEffect(() => {
     if (data !== null && Object.keys(data)?.length) {
       setState(getData(data));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!!data) {
+      callBack({
+        candidate_name: data?.name?.[0]?.name,
+        candidate_id: data?.member_id,
+      });
     }
   }, [data]);
 
