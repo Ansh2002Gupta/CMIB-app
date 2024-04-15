@@ -14,7 +14,12 @@ import {
 import { useMembershipDetails } from "./controller/useMembershipDetails";
 import { formatDateToYYYYMMDD } from "../../utils/util";
 
-const MembershipDetails = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
+const MembershipDetails = ({
+  customUrl,
+  isEditable,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
 
@@ -37,7 +42,7 @@ const MembershipDetails = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
     isLoading: isLoadingPageMemberShip,
     fetchData,
   } = useFetch({
-    url: MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
+    url: customUrl ?? MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -62,7 +67,7 @@ const MembershipDetails = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
     : isErrorLoadingPage;
 
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? { ...data } : {}
   );

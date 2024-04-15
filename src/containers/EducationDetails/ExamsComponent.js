@@ -19,6 +19,7 @@ import { useExams } from "./Controllers/useExams";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
 const ExamsComponent = ({
+  customUrl,
   isEditable = true,
   handleEdit,
   onSaveSuccessfull,
@@ -45,7 +46,7 @@ const ExamsComponent = ({
     error: errorWhileGettingEducationData,
     fetchData: fetchingEducationData,
   } = useFetch({
-    url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -75,7 +76,7 @@ const ExamsComponent = ({
     error,
     setError,
   } = usePut({
-    url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
   });
 
   const getData = (data) =>

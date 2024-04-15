@@ -18,6 +18,10 @@ const style = {
     alignItems: "center",
     cursor: "pointer",
     backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    maxWidth: 250,
+    maxHeight: 44,
   },
   textStyle: {
     paddingRight: 8,
@@ -26,10 +30,11 @@ const style = {
   },
   containerStyle: {
     flex: 1,
+    backgroundColor: colors.white,
     overflow: "hidden",
   },
   candidateDetailsOuterContainer: {
-    width: "30%",
+    width: "104%",
     gap: 16,
     justifyContent: "space-between",
     marginBottom: 24,
@@ -53,6 +58,21 @@ const style = {
     justifyContent: "center",
     gap: 4,
   },
+  saveButtonContainer: {
+    flex: 1,
+    alignItems: "flex-end",
+    marginRight: 40,
+  },
+  shortProfileOuterContainer: {
+    flex: 1,
+    alignItems: "flex-start",
+  },
+  shortProfileInnerContainer: {
+    flex: 1,
+    gap: 12,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
 };
 
 export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
@@ -67,7 +87,7 @@ export const getResponsiveStyles = ({ str, currentBreakpoint }) => {
       if (currentBreakpoint === "lg") {
         return {
           ...style.titleText,
-          fontSize: 32,
+          fontSize: 20,
         };
       }
       if (currentBreakpoint === "md" || currentBreakpoint === "sm") {

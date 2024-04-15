@@ -5,9 +5,15 @@ import EducationDetailComponent from "./EducationDetails";
 import ExamsComponent from "./ExamsComponent";
 import OtherCoursesComponent from "./OtherCoursesComponent";
 import { FormTabs } from "../../components/Tab";
+import { ACADEMICS } from "../../services/apiServices/apiEndPoint";
 import style from "./Exams.style";
 
-const EducationDetailsTab = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
+const EducationDetailsTab = ({
+  isEditable,
+  handleEdit,
+  customUrl,
+  onSaveSuccessfull,
+}) => {
   return (
     <View style={style.tabContainer}>
       <FormTabs
@@ -19,6 +25,7 @@ const EducationDetailsTab = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
               <EducationDetailComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={!!customUrl ? customUrl + ACADEMICS : null}
                 onSaveSuccessfull={onSaveSuccessfull}
               />
             ),
@@ -29,6 +36,7 @@ const EducationDetailsTab = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
               <ExamsComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={!!customUrl ? customUrl + ACADEMICS : null}
                 onSaveSuccessfull={onSaveSuccessfull}
               />
             ),
@@ -39,6 +47,7 @@ const EducationDetailsTab = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
               <OtherCoursesComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={!!customUrl ? customUrl + ACADEMICS : null}
                 onSaveSuccessfull={onSaveSuccessfull}
               />
             ),
