@@ -3,7 +3,7 @@ import React from "react";
 import MainContainerTemplate from "./MainContainerTemplate";
 import useMainContainerTabs from "./controllers/useMainContainerTabs";
 
-const MainContainer = () => {
+const MainContainer = ({ cardsData }) => {
   const { onPressCard, roundOneTabs, selectedTab } = useMainContainerTabs();
 
   return (

@@ -49,9 +49,12 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
       setSideBarSubMenu(SideBarContentEnum.NONE);
     }
   }, [isWebView, sideBarContent]);
+
   useEffect(async () => {
-    await getGlobalSessionList(selectedModule.key);
-  }, []);
+    if (selectedModule.key) {
+      await getGlobalSessionList(selectedModule.key);
+    }
+  }, [selectedModule.key]);
 
   const handleOnSelectModuleItem = (item) => {
     setActiveMenuItem(item?.children?.[0]?.key);

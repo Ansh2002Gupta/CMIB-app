@@ -26,7 +26,7 @@ export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
 export const ROUND_ONE_DASHBOARD = `/dashboard`;
-export const ROUNDS = `/round`;
+export const ROUNDS = `/rounds`;
 export const GLOBAL_SESSIONS = `/sessions`;
 
 /* API Endpoints Members*/
