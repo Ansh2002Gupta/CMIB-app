@@ -48,7 +48,7 @@ const MembershipDetailsTemplate = ({
     isErrorLoadingPage &&
     isErrorLoadingPage?.code !== STATUS_CODES.UNAUTHORIZED_USER
   ) {
-    return <ErrorComponent errorMsg={isErrorLoadingPage.message} />;
+    return <ErrorComponent errorMsg={isErrorLoadingPage?.data?.message} />;
   }
 
   return (
@@ -66,21 +66,18 @@ const MembershipDetailsTemplate = ({
             isEditProfile={isEditable}
             handleChange={onChangeValue(membership_detail)}
             handleBlur={handleMembershipDetailBlur}
-            datePickerContainer={style.datePickerContainer}
           />
           <DetailCard
             details={fellow_member_detail}
             isEditProfile={isEditable}
             handleChange={onChangeValue(fellow_member_detail)}
             handleBlur={handleFellowMemberDetailBlur}
-            datePickerContainer={style.datePickerContainer}
           />
           <DetailCard
             details={practice_detail}
             isEditProfile={isEditable}
             handleChange={onChangeValue(practice_detail)}
             handleBlur={handlePracticeDetailBlur}
-            datePickerContainer={style.datePickerContainer}
           />
         </View>
         <SaveCancelButton

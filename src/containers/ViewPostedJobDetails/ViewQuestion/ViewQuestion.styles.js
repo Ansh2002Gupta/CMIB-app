@@ -16,13 +16,14 @@ const styles = StyleSheet.create({
   noDataContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    marginTop: 8,
   },
   fontSize16: {
-    fontSize: 16,
+    fontSize: 14,
   },
   cardStyle: {
-    alignItems: "center",
+    width: "100%",
+    height: 40,
     justifyContent: "center",
     paddingBottom: 24,
   },

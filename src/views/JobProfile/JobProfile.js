@@ -19,10 +19,10 @@ import JobPreference from "../../containers/JobPreference/JobPreference";
 import CommonText from "../../components/CommonText";
 import CardComponent from "../../components/CardComponent";
 import CustomImage from "../../components/CustomImage";
+import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./JobProfile.style";
 import images from "../../images";
-import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
 import useFetch from "../../hooks/useFetch";
 import { GET_MEMBER_COMPLETION } from "../../services/apiServices/apiEndPoint";
 import IconHeader from "../../components/IconHeader/IconHeader";
@@ -140,8 +140,10 @@ const CompletionPercent = ({ value }) => {
 
 const JobProfileTab = ({
   renderHeader,
+  renderFooter,
   isQuestionaireRequired = false,
   questionaireData,
+  questionaireURL,
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
@@ -179,7 +181,7 @@ const JobProfileTab = ({
       />
       <CustomTabs
         renderHeader={() =>
-          renderHeader ? (
+          !!renderHeader ? (
             renderHeader()
           ) : (
             <Row style={style.headerContainer}>
@@ -208,6 +210,7 @@ const JobProfileTab = ({
             </Row>
           )
         }
+        renderFooter={() => !!renderFooter && renderFooter()}
         tabs={[
           {
             label: "Personal Details",
@@ -280,11 +283,12 @@ const JobProfileTab = ({
             ),
           },
           isQuestionaireRequired && {
-            label: "Questionaire",
+            label: "Questionnaire",
             component: (
               <ViewQuestion
                 isEditable={false}
                 questionnaireData={questionaireData}
+                url={questionaireURL}
               />
             ),
           },

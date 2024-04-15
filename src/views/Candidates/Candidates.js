@@ -1,41 +1,49 @@
 import React from "react";
-import { Row, View } from "@unthinkable/react-core-components";
 import { useIntl } from "react-intl";
+import { Row } from "@unthinkable/react-core-components";
 
-import { CustomTabs } from "../../components/Tab";
+import { CustomTabs } from "../../components/Tab/CustomTabs";
 import CommonText from "../../components/CommonText";
-import style from "./Candidates.style";
-import JobSeekers from "../JobSeekers";
+import JobApplicants from "../JobApplicantsView/JobApplicantsView";
+import styles from "./Candidates.style";
 
 const Candidates = () => {
   const intl = useIntl();
 
   return (
-    <View style={style.containerStyle}>
-      <CustomTabs
-        renderHeader={() => (
-          <Row style={style.headerContainer}>
-            <CommonText fontWeight={"600"} customTextStyle={style.titleText}>
-              {intl.formatMessage({ id: "label.candidates" })}
+    <CustomTabs
+      containerStyle={styles.customTabsStyle}
+      renderHeader={() => (
+        <Row style={styles.headerContainer}>
+          <CommonText fontWeight={"600"} customTextStyle={styles.titleText}>
+            {intl.formatMessage({ id: "label.candidates" })}
+          </CommonText>
+        </Row>
+      )}
+      tabs={[
+        {
+          label: intl.formatMessage({ id: "label.job_applicants" }),
+          component: <JobApplicants />,
+        },
+        {
+          label: intl.formatMessage({ id: "label.job_seekers" }),
+          component: (
+            <CommonText>
+              {intl.formatMessage({ id: "label.job_seekers" })}
             </CommonText>
-          </Row>
-        )}
-        tabs={[
-          {
-            label: intl.formatMessage({ id: "label.job_applicants" }),
-            component: <></>,
-          },
-          {
-            label: intl.formatMessage({ id: "label.job_seekers" }),
-            component: <JobSeekers />,
-          },
-          {
-            label: intl.formatMessage({ id: "label.saved_candidates" }),
-            component: <></>,
-          },
-        ]}
-      />
-    </View>
+          ),
+        },
+
+        {
+          label: intl.formatMessage({ id: "label.saved_candidates" }),
+          component: (
+            <CommonText>
+              {intl.formatMessage({ id: "label.saved_candidates" })}
+            </CommonText>
+          ),
+        },
+      ]}
+    />
   );
 };
 
