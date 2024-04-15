@@ -130,16 +130,27 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
       ...prev,
       remote: {
         link: newData?.remote_meeting_link || "-",
-        date: new Date(newData?.primary_schedule) || "-",
-        time: new Date(newData?.primary_schedule) || "-",
+        date: newData.primary_schedule
+          ? new Date(newData?.primary_schedule)
+          : "",
+        time: newData.primary_schedule
+          ? new Date(newData?.primary_schedule)
+          : "",
       },
     }));
+  };
+  const getAlternateRemoteInterviewDetails = (newData) => {
+    setSecondaryInterviewType(2);
     setAlternateDetails((prev) => ({
       ...prev,
       remote: {
         link: newData?.alternate_remote_meeting_link || "-",
-        date: new Date(newData?.alternate_schedule) || "-",
-        time: new Date(newData?.alternate_schedule) || "-",
+        date: newData.alternate_schedule
+          ? new Date(newData?.alternate_schedule)
+          : "",
+        time: newData.alternate_schedule
+          ? new Date(newData?.alternate_schedule)
+          : "",
       },
     }));
   };
@@ -149,15 +160,26 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
     setPrimaryDetails((prev) => ({
       ...prev,
       telephonic: {
-        date: new Date(newData?.primary_schedule) || "-",
-        time: new Date(newData?.primary_schedule) || "-",
+        date: newData.primary_schedule
+          ? new Date(newData?.primary_schedule)
+          : "",
+        time: newData.primary_schedule
+          ? new Date(newData?.primary_schedule)
+          : "",
       },
     }));
+  };
+  const getAlternateTelephonicInterviewDetails = (newData) => {
+    setSecondaryInterviewType(1);
     setAlternateDetails((prev) => ({
       ...prev,
       telephonic: {
-        date: new Date(newData?.alternate_schedule) || "-",
-        time: new Date(newData?.alternate_schedule) || "-",
+        date: newData.alternate_schedule
+          ? new Date(newData?.alternate_schedule)
+          : "",
+        time: newData.alternate_schedule
+          ? new Date(newData?.alternate_schedule)
+          : "",
       },
     }));
   };
@@ -168,16 +190,27 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
       ...prev,
       face_to_face: {
         address: newData?.venue_address || "-",
-        date: new Date(newData?.primary_schedule) || "-",
-        time: new Date(newData?.primary_schedule) || "-",
+        date: newData.primary_schedule
+          ? new Date(newData?.primary_schedule)
+          : "",
+        time: newData.primary_schedule
+          ? new Date(newData?.primary_schedule)
+          : "",
       },
     }));
+  };
+  const getAlternateFaceToFaceInterviewDetails = (newData) => {
+    setSecondaryInterviewType(0);
     setAlternateDetails((prev) => ({
       ...prev,
       face_to_face: {
         address: newData?.alternate_venue_address || "-",
-        date: new Date(newData?.alternate_schedule) || "-",
-        time: new Date(newData?.alternate_schedule) || "-",
+        date: newData.alternate_schedule
+          ? new Date(newData?.alternate_schedule)
+          : "",
+        time: newData.alternate_schedule
+          ? new Date(newData?.alternate_schedule)
+          : "",
       },
     }));
   };
@@ -186,12 +219,20 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
     if (interviewId) {
       const newData = await fetchData();
       const currentType = newData?.type.toLowerCase();
+      const secondaryType = newData?.alternate_type.toLowerCase();
       if (currentType === "remote") {
         getRemoteInterviewDetails(newData);
       } else if (currentType === "telephonic") {
         getTelephonicInterviewDetails(newData);
       } else {
         getFaceToFaceInterviewDetails(newData);
+      }
+      if (secondaryType === "remote") {
+        getAlternateRemoteInterviewDetails(newData);
+      } else if (secondaryType === "telephonic") {
+        getAlternateTelephonicInterviewDetails(newData);
+      } else {
+        getAlternateFaceToFaceInterviewDetails(newData);
       }
     }
   }, []);
@@ -263,8 +304,8 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
     } else {
       updatatingInterview({
         body: payload,
-        onSuccessCallback: () => {
-          onClose();
+        onSuccessCallback: (data) => {
+          onClose(data);
         },
       });
     }
@@ -516,9 +557,13 @@ const ScheduleInterviewModal = ({ onClose, applicant_id, interviewId }) => {
       isIconCross
       onPressIconCross={onClose}
       onBackdropPress={onClose}
+      containerStyle={isLoading ? styles.modalContainer : {}}
     >
-      {isLoading && !isErrorWhilefetching && <LoadingScreen />}
-
+      {isLoading && !isErrorWhilefetching && (
+        <View style={styles.loaderViewStyle}>
+          <LoadingScreen />
+        </View>
+      )}
       {!isLoading && !isErrorWhilefetching && (
         <>
           <ScrollView

@@ -315,6 +315,7 @@ const locale = {
     "Please enter the one time password that you have received on your registered mobile number",
   "label.application": "Application",
   "label.download_id": "Download Id",
+  "label.download_id_and_print_id": "Download Id & Print Id",
   "label.centre_wise_company_detail": "Centre wise Company Detail",
   "label.consent_marking_management": "Consent Marking Management",
   "label.campus_interview_management": "Campus Interview Management",
@@ -390,8 +391,8 @@ const locale = {
   "label.type_of_disability": "Type of Disabilty",
   "label.disability_percentage": "Disabilty %",
   "label.salary_negotiable": "Salary Negotiable",
-  "label.minimum_salary": "Minimum Salary(Annual CTC)",
-  "label.maximum_salary": "Maximum Salary",
+  "label.minimum_salary": "Minimum Salary ( Annual CTC in INR)",
+  "label.maximum_salary": "Maximum Salary (INR)",
   "label.job_instruction":
     "*Provide either the Salary Negotiability, the Minimum & Maximum Salary, or both.",
   "label.job_summary": "Job Summary",
@@ -587,8 +588,7 @@ const locale = {
   "label.contractual_period_month": "Contractual Period(Months)",
   "label.contractual_period_day": "Contractual Period(Days)",
   "label.applicants": "Applicants",
-  "label.schedule_interview": "Scheduled Interview",
-  "label.view_questionaire": "Questionaire",
+  "label.view_questionaire": "Questionnaire",
   "label.select_nationality": "Select Nationality",
   "label.select_job_type": "Select Job Type",
   "label.search_job_location": "Search Job Location",
@@ -607,7 +607,7 @@ const locale = {
   "label.fill_mandatory": "Please fill mandatory field",
   "label.job_saved_successfully": "Job Saved Successfully",
   "label.job_updated_successfully": "Job Updated Successfully",
-  "label.no_question_available": "No Question Available",
+  "label.no_question_available": "No Questionnaire are Found",
   "label.subscribe_to_get_started": "Subscribe to Get Started!",
   "label.unlock_benefits_features_of_packages":
     "Unlock the following benefits and features by subscribing to one of our packages, starting at just ₹2000.",
@@ -670,6 +670,10 @@ const locale = {
   "label.yrs": "yrs",
   "label.posted": "Posted",
   "label.ago": "ago",
+  "label.candidates": "Candidates",
+  "label.job_applicants": "Job Applicants",
+  "label.saved_candidates": "Saved Candidates",
+  "label.download_profile_resume": "Download Profile Resume",
   "label.postingAnyWhereRequired": "Posting anywhere in india is required",
   "label.transferableRequired": "Transferable post acceptable is required",
   "label.readyToPlaceRequired": "Ready to place india is required",
@@ -709,6 +713,14 @@ const locale = {
   "label.applicant_name": "Application Name",
   "label.applicant_id": "Applicant ID",
   "label.field_cannot_be_empty": "Field cannot be empty",
+  "label.actions": "Actions",
+  "label.applicant_details": "Applicant Details",
+  "label.save_applicant": "Save Applicant",
+  "label.saved_applicant": "Saved Applicant",
+  "label.updated_at": "Updated At",
+  "label.save_applicant_details": "Save Applicant Details",
+  "label.edit_schedule_interview": "Edit Schedule interview",
+  "label.interview_id_not_found": "Interview ID not found",
   "label.proficiency": "Proficiency",
   "label.nonEmptyField": "Please fill this field",
   "toggle.undefined": "--",
@@ -750,7 +762,13 @@ const locale = {
     "Still deciding? Take your time, but remember, the clock is ticking. Your future awaits your response!",
   "label.shortlisted_congratulations":
     "Congratulations on being shortlisted! Select a suitable interview time from the options below:",
+  "label.contractual_label_heading":
+    "Contractual Period Year(s)/ Month(s)/ Day(s)",
+  "label.years": "Years(s)",
   "label.giveAnswer": "Give Answer",
+  "label.memberCompletionProfilePercentWeb":
+    "Complete your job profile! its at ",
+  "label.complete": "Complete",
 };
 
 export default locale;

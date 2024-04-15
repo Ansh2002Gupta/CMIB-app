@@ -119,6 +119,7 @@ const TicketChatScreen = () => {
                       id: "label.view_ticket_details",
                     })}
                     customStyle={styles.popmessageStyle}
+                    customStyle={styles.PopupMessageStyle}
                     onPopupClick={() => {
                       setIsDetailScreen(true);
                       handlePopup();

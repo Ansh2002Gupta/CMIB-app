@@ -1,23 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+import { useParams } from "react-router";
+
 import SkillTrainingUI from "./SkillTrainingUI";
-import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import { useSkillTraining } from "././Controller/useSkillTraining";
-import { MEMBER_CA_JOB_PROFILE_SKILLS } from "../../services/apiServices/apiEndPoint";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import {
+  JOB_SKILLS,
+  MEMBERS,
+  MEMBER_CA_JOB_PROFILE_SKILLS,
+  USER_TYPE_COMPANY,
+} from "../../services/apiServices/apiEndPoint";
 import { SkillTraining_keys, isDuplicateExist } from "./Controller/utils";
-import { useIntl } from "react-intl";
 
-const SkillTraining = ({ isEditable = true, handleEdit, customUrl }) => {
+const SkillTraining = ({
+  customUrl,
+  isEditable = true,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
   const intl = useIntl();
+  const { id } = useParams();
+  const { isCompany, currentModule } = useGetCurrentUser();
+
   const {
-    data,
-    isError: isErrorLoadingPage,
-    isLoading: isLoadingPage,
+    data: applicatSkillsData,
+    isLoading: isGettingApplicatSkillsDataLoading,
+    error: errorWhileGettingApplicatSkillsData,
+    fetchData: fetchingApplicatSkillsData,
+  } = useFetch({
+    url:
+      USER_TYPE_COMPANY + `/${currentModule}` + MEMBERS + `/${id}` + JOB_SKILLS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  const {
+    data: skillsData,
+    error: gettinSkillsError,
+    isLoading: isSkillsLoadingPage,
     fetchData,
   } = useFetch({
     url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_SKILLS}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+
+  useEffect(() => {
+    if (currentModule) {
+      if (isCompany) {
+        fetchingApplicatSkillsData({});
+      } else {
+        fetchData({});
+      }
+    }
+  }, [currentModule]);
+
+  const data = isCompany ? applicatSkillsData : skillsData;
+  const isLoadingPage = isCompany
+    ? isGettingApplicatSkillsDataLoading
+    : isSkillsLoadingPage;
+  const isErrorLoadingPage = isCompany
+    ? errorWhileGettingApplicatSkillsData
+    : gettinSkillsError;
+
   const [toastError, setToastError] = useState(null);
   const { handleUpdate, isError, isLoading, error, setError } =
     useUpdateService(customUrl ?? MEMBER_CA_JOB_PROFILE_SKILLS);
@@ -55,6 +105,7 @@ const SkillTraining = ({ isEditable = true, handleEdit, customUrl }) => {
     const isDuplicatedDataExist = isDuplicateExist(payload);
     if (!isDuplicatedDataExist) {
       handleUpdate(payload, () => {
+        onSaveSuccessfull && onSaveSuccessfull();
         handleEdit(false);
         fetchData();
       });
