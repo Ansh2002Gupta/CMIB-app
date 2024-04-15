@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 import CommonText from "../../../components/CommonText";
@@ -23,6 +23,8 @@ import { useIntl } from "react-intl";
 import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
+import TouchableImage from "../../../components/TouchableImage";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -34,6 +36,10 @@ const useGetScheduleList = (id, onClickAction) => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+  const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
+  const popupRef = useRef(null);
+  useOutsideClick(popupRef, () => setCurrentPopupMessage(-1));
+
   const intl = useIntl();
 
   const [filterOptions, setFilterOptions] = useState({
@@ -295,20 +301,32 @@ const useGetScheduleList = (id, onClickAction) => {
   function convertDateFormat(dateStr) {
     return dateStr.split(".").join("/");
   }
+  const onIconPress = (item) => {
+    setCurrentPopupMessage(item.id);
+  };
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
     const optionArray = [
-      intl.formatMessage({ id: "label.view_interview_details" }),
-      intl.formatMessage({ id: "label.edit_interview_details" }),
+      {
+        name: intl.formatMessage({ id: "label.view_interview_details" }),
+        id: item.id,
+      },
+      {
+        name: intl.formatMessage({ id: "label.edit_interview_details" }),
+        id: item.id,
+      },
     ];
     if (
       item.is_primary_schedule_accepted ||
       item.is_alternate_schedule_accepted
     ) {
-      optionArray.push(intl.formatMessage({ id: "label.offer_job" }));
+      optionArray.push({
+        name: intl.formatMessage({ id: "label.offer_job" }),
+        id: item.id,
+      });
     }
     return [
       {
@@ -422,7 +440,7 @@ const useGetScheduleList = (id, onClickAction) => {
           </>
         ),
         style: {
-          ...commonStyles.columnStyle("16%"),
+          ...commonStyles.columnStyle("15%"),
           ...styles.justifyContentCenter,
           ...{ paddingLeft: 5, paddingRight: 5 },
         },
@@ -430,24 +448,44 @@ const useGetScheduleList = (id, onClickAction) => {
 
       {
         content: (
-          <View>
+          <View ref={popupRef}>
             {!isHeading && (
-              <PopupMessage
-                message={optionArray}
-                onPopupClick={(selectedItem) => {
-                  if (
-                    selectedItem ===
-                    intl.formatMessage({ id: "label.offer_job" })
-                  ) {
-                    const request = {
-                      status: JOB_STATUS_RESPONSE_CODE[selectedItem],
-                    };
-                    handleUseApplicantStatus(item.id, request);
-                  } else {
-                    onClickAction(selectedItem, item);
-                  }
-                }}
-              />
+              <>
+                <TouchableImage
+                  onPress={() => {
+                    onIconPress(item);
+                  }}
+                  source={images.iconMore}
+                  imageStyle={{ height: 20, width: 20 }}
+                  isSvg={true}
+                />
+                {currentPopUpMessage == item.id && (
+                  <PopupMessage
+                    message={optionArray}
+                    onPopupClick={(selectedItem) => {
+                      setCurrentPopupMessage(-1);
+                      if (
+                        selectedItem.name ===
+                        intl.formatMessage({ id: "label.offer_job" })
+                      ) {
+                        const request = {
+                          status: JOB_STATUS_RESPONSE_CODE[selectedItem.name],
+                        };
+                        handleUseApplicantStatus(item.id, request);
+                      } else {
+                        onClickAction(selectedItem.name, item);
+                      }
+                    }}
+                    labelName={"name"}
+                    customStyle={{
+                      ...styles.popupContainer,
+                      ...{ right: 130 },
+                    }}
+                    isPopupModal
+                    onPopUpClose={() => setCurrentPopupMessage(-1)}
+                  />
+                )}
+              </>
             )}
           </View>
         ),

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
@@ -20,6 +20,8 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
+import TouchableImage from "../../../components/TouchableImage";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -31,10 +33,14 @@ const useGetApplicantList = (id, onEditPress) => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+  const popupRef = useRef(null);
   const [filterOptions, setFilterOptions] = useState({
     status: "",
     query_type: "",
   });
+  useOutsideClick(popupRef, () => setCurrentPopupMessage(-1));
+
+  const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -215,6 +221,9 @@ const useGetApplicantList = (id, onEditPress) => {
         return styles.cellTextStyle(12);
     }
   }
+  const onIconPress = (item) => {
+    setCurrentPopupMessage(item.id);
+  };
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
@@ -289,14 +298,30 @@ const useGetApplicantList = (id, onEditPress) => {
 
       {
         content: (
-          <View>
+          <View ref={popupRef}>
             {!isHeading && (
-              <PopupMessage
-                message={item?.action.map((item) => item.name)}
-                onPopupClick={(selectedItem) => {
-                  onEditPress(selectedItem, item);
-                }}
-              />
+              <>
+                <TouchableImage
+                  onPress={() => {
+                    onIconPress(item);
+                  }}
+                  source={images.iconMore}
+                  imageStyle={{ height: 20, width: 20 }}
+                  isSvg={true}
+                />
+                {currentPopUpMessage === item.id && (
+                  <PopupMessage
+                    message={item?.action}
+                    onPopupClick={(selectedItem) => {
+                      onEditPress(selectedItem.name, item);
+                    }}
+                    labelName={"name"}
+                    customStyle={styles.popupContainer}
+                    isPopupModal
+                    onPopUpClose={() => setCurrentPopupMessage(-1)}
+                  />
+                )}
+              </>
             )}
           </View>
         ),

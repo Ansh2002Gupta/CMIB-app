@@ -1,109 +1,95 @@
-import React, { useRef, useState } from "react";
+import React from "react";
+import { useIntl } from "react-intl";
 import PropTypes from "prop-types";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
-import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import TouchableImage from "../TouchableImage";
-import useOutsideClick from "../../hooks/useOutsideClick";
-import images from "../../images";
-import styles from "./PopupMessage.style";
-import useIsWebView from "../../hooks/useIsWebView";
 import CustomModal from "../CustomModal";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import useIsWebView from "../../hooks/useIsWebView";
+import styles from "./PopupMessage.style";
 
-const PopupMessage = ({ customStyle, message, onPopupClick, itemSelected }) => {
-  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
-  const wrapperRef = useRef(null);
+const PopupMessage = ({
+  customStyle,
+  message,
+  isPopupModal,
+  onPopupClick,
+  onPopUpClose,
+  popUpHeaderText,
+  labelName,
+}) => {
   const { isWebView } = useIsWebView();
-  useOutsideClick(wrapperRef, () => setIsPopUpVisible(false));
+  const intl = useIntl();
 
-  return (
-    <View style={styles.zIndex10}>
-      {Array.isArray(message) ? (
-        <View style={styles.containerStyle}>
-          <View style={styles.zIndex10}>
-            {isPopUpVisible && (
-              <>
-                {isWebView ? (
-                  <ScrollView style={styles.popUpArrayView} ref={wrapperRef}>
-                    {message.map((item) => {
-                      return (
-                        <CustomTouchableOpacity
-                          style={{
-                            ...styles.popUpComponentStyle,
-                            ...customStyle,
-                          }}
-                          onPress={() => {
-                            onPopupClick && onPopupClick(item, itemSelected);
-                            setIsPopUpVisible(false);
-                          }}
-                        >
-                          <CommonText customTextStyle={styles.deletetext}>
-                            {item}
-                          </CommonText>
-                        </CustomTouchableOpacity>
-                      );
-                    })}
-                  </ScrollView>
-                ) : (
-                  <CustomModal
-                    onPressIconCross={() => {
-                      setIsPopUpVisible(false);
-                    }}
-                    onBackdropPress={() => {
-                      setIsPopUpVisible(false);
-                    }}
-                  >
-                    {message.map((item, index) => (
-                      <CustomTouchableOpacity
-                        key={index}
-                        style={styles.popUpComponentStyle}
-                        onPress={() => {
-                          setIsPopUpVisible(false);
-                          onPopupClick && onPopupClick(item, itemSelected);
-                        }}
-                      >
-                        <CommonText customTextStyle={styles.deletetext}>
-                          {item}
-                        </CommonText>
-                      </CustomTouchableOpacity>
-                    ))}
-                  </CustomModal>
-                )}
-              </>
-            )}
+  const renderPopupContent = () => {
+    if (Array.isArray(message)) {
+      if (isPopupModal && !isWebView) {
+        return (
+          <CustomModal
+            headerText={popUpHeaderText}
+            isIconCross
+            onPressIconCross={onPopUpClose}
+            onBackdropPress={onPopUpClose}
+          >
+            {message.map((item, index) => (
+              <CustomTouchableOpacity
+                key={index}
+                style={styles.popUpComponentStyle}
+                onPress={() => onPopupClick(item)}
+              >
+                <CommonText customTextStyle={styles.deletetext}>
+                  {item?.[labelName]}
+                </CommonText>
+              </CustomTouchableOpacity>
+            ))}
+          </CustomModal>
+        );
+      } else {
+        return (
+          <View style={{ ...styles.popUpArrayView, ...customStyle }}>
+            {message.map((item, index) => (
+              <CustomTouchableOpacity
+                key={index}
+                style={styles.popUpComponentStyle}
+                onPress={() => onPopupClick(item)}
+              >
+                <CommonText customTextStyle={styles.deletetext}>
+                  {item?.[labelName]}
+                </CommonText>
+              </CustomTouchableOpacity>
+            ))}
           </View>
-          <TouchableImage
-            source={images.iconMore}
-            disabled={isPopUpVisible}
-            onPress={() => {
-              if (!isPopUpVisible) {
-                setIsPopUpVisible(!isPopUpVisible);
-              }
-            }}
-          />
-        </View>
-      ) : (
+        );
+      }
+    } else {
+      return (
         <CustomTouchableOpacity
           style={{ ...styles.deletetextContainer, ...customStyle }}
-          onPress={onPopupClick}
+          onPress={() => onPopupClick(message)}
         >
           <CommonText customTextStyle={styles.deletetext}>{message}</CommonText>
         </CustomTouchableOpacity>
-      )}
-    </View>
-  );
+      );
+    }
+  };
+
+  return <View>{renderPopupContent()}</View>;
 };
 
 PopupMessage.defaultProps = {
   customStyle: {},
   message: [],
+  labelName: "name",
+  isPopupModal: false,
 };
 
 PopupMessage.propTypes = {
-  customStyle: PropTypes.func,
+  customStyle: PropTypes.object,
   message: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  labelName: PropTypes.string,
   onPopupClick: PropTypes.func.isRequired,
+  isPopupModal: PropTypes.bool,
+  onPopUpClose: PropTypes.func,
 };
 
 export default PopupMessage;
