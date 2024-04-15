@@ -21,7 +21,15 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
 
-  questionText: { color: colors.black, fontSize: 14 },
+  questionText: {
+    color: colors.black,
+    fontSize: 14,
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+      },
+    }),
+  },
   questionAnswer: { marginBottom: 24 },
   questionView: {
     alignItems: "center",
@@ -54,6 +62,10 @@ const styles = StyleSheet.create({
         maxHeight: deviceHeight * 0.5,
       },
     }),
+  },
+  mandotaryView: {
+    flex: 1,
+    flexDirection: "row",
   },
 });
 

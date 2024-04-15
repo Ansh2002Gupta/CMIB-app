@@ -27,7 +27,7 @@ const SavedJobComponent = ({
   const { id } = details;
 
   const cardDetails = {
-    companyName: details?.company_name,
+    companyName: details?.company_name || details?.company?.name,
     createdAt: details?.created_at,
     jobPostion: details?.designation,
     jobDescription: details?.detail,

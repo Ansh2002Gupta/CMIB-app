@@ -14,7 +14,7 @@ import CommonText from "../CommonText";
 import CustomButton from "../CustomButton/CustomButton";
 import Chip from "../Chip";
 import { LocationConfig } from "./SaveJobCommon";
-import { changeComma, timeAgo } from "../../utils/util";
+import { changeComma, formatSalaryRange, timeAgo } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
 import colors from "../../assets/colors";
@@ -91,11 +91,9 @@ const JobCardMobile = ({
               <Image source={images.iconRupee} style={style.mobileIconStyle} />
             }
             rightSection={
-              <CommonText
-                customTextStyle={style.normalText}
-              >{`${minSalary}-${maxSalary} ${intl.formatMessage({
-                id: "label.lpa",
-              })}`}</CommonText>
+              <CommonText customTextStyle={style.normalText}>
+                {formatSalaryRange(minSalary, maxSalary)}
+              </CommonText>
             }
           />
         </View>

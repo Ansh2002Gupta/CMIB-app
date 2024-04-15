@@ -625,3 +625,19 @@ const isObjectFilled = (obj) => {
 export const areAllValuesFilled = (objects) => {
   return Object.values(objects).some(isObjectFilled);
 };
+
+export const formatSalaryRange = (minSalary, maxSalary) => {
+  const minSalaryInLpa = (minSalary / 100000).toFixed(2);
+  const maxSalaryInLpa = (maxSalary / 100000).toFixed(2);
+  let formattedSalaryRange = `${minSalaryInLpa}-${maxSalaryInLpa} LPA`;
+  if (
+    parseFloat(minSalaryInLpa) > 99.99 ||
+    parseFloat(maxSalaryInLpa) > 99.99
+  ) {
+    const minSalaryInCRA = (minSalary / 10000000).toFixed(2);
+    const maxSalaryInCRA = (maxSalary / 10000000).toFixed(2);
+    formattedSalaryRange = `${minSalaryInCRA}-${maxSalaryInCRA} CRA`;
+  }
+
+  return formattedSalaryRange;
+};
