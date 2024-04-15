@@ -51,6 +51,7 @@ export const JOB_TYPE_OPTIONS = `${USER_TYPE_COMPANY}/job-type`;
 export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
 
 //sub routes
+export const ACADEMICS = "/academics";
 export const APPLICANTS = "/applicants";
 export const APPLICANT = "/applicant";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";

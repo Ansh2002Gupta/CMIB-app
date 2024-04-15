@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, TouchableOpacity } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../../../components/BadgeLabel/BadgeLabel";
 import CommonText from "../../../components/CommonText";
@@ -330,7 +330,7 @@ const useJobSeekers = () => {
 
   const handlePopupItemClick = ({ option, item }) => {
     switch (option?.trim().toLowerCase()) {
-      case POPUP_OPTIONS?.[0]:
+      case POPUP_OPTIONS?.[0].trim().toLowerCase():
         return <></>;
       case POPUP_OPTIONS?.[1].trim().toLowerCase():
         navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${item?.id || 1}`);
@@ -355,6 +355,15 @@ const useJobSeekers = () => {
     return newData;
   };
 
+  const capitalize = (sentence) => {
+    if (!sentence.length) return "-";
+    const words = sentence.split(" ");
+    const new_sentence = words
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+    return new_sentence;
+  };
+
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
@@ -363,7 +372,7 @@ const useJobSeekers = () => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
-            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            <CommonText customTextStyle={tableStyle}>
               {!!item.name ? item.name : "-"}
             </CommonText>
             <CustomImage
@@ -376,9 +385,18 @@ const useJobSeekers = () => {
             />
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {!!item.name ? item.name : "-"}
-          </CommonText>
+          <TouchableOpacity
+            onPress={() => {
+              navigate(
+                `${navigations.CANDIDATE_DETAILS_SUBROUTE}/${item?.id || 1}`
+              );
+            }}
+            style={styles.cursorStyle}
+          >
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {!!item.name ? capitalize(item.name) : "-"}
+            </CommonText>
+          </TouchableOpacity>
         ),
         style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
@@ -399,7 +417,7 @@ const useJobSeekers = () => {
             />
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {!!item.candidate_id ? item.candidate_id : "-"}
           </CommonText>
         ),
@@ -424,7 +442,7 @@ const useJobSeekers = () => {
             />
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {!!item.total_experience ? item.total_experience : "0"}
           </CommonText>
         ),
@@ -453,9 +471,9 @@ const useJobSeekers = () => {
               key={item?.id || 0}
               data={item}
               message={POPUP_OPTIONS}
-              onPopupClick={() =>
-                handlePopupItemClick({ option: "View Details", item: item })
-              }
+              onPopupClick={(option) => {
+                handlePopupItemClick({ option: option, item: item });
+              }}
             />
           </>
         ),

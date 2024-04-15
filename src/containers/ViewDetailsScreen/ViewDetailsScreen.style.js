@@ -34,7 +34,7 @@ const style = {
     overflow: "hidden",
   },
   candidateDetailsOuterContainer: {
-    width: "30%",
+    width: "104%",
     gap: 16,
     justifyContent: "space-between",
     marginBottom: 24,
@@ -61,12 +61,11 @@ const style = {
   saveButtonContainer: {
     flex: 1,
     alignItems: "flex-end",
-    width: "40vw",
+    marginRight: 40,
   },
   shortProfileOuterContainer: {
     flex: 1,
     alignItems: "flex-start",
-    width: "37vw",
   },
   shortProfileInnerContainer: {
     flex: 1,

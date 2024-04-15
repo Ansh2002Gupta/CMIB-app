@@ -5,7 +5,7 @@ import EducationDetailComponent from "./EducationDetails";
 import ExamsComponent from "./ExamsComponent";
 import OtherCoursesComponent from "./OtherCoursesComponent";
 import { FormTabs } from "../../components/Tab";
-import colors from "../../assets/colors";
+import { ACADEMICS } from "../../services/apiServices/apiEndPoint";
 import style from "./Exams.style";
 
 const EducationDetailsTab = ({ isEditable, handleEdit, customUrl }) => {
@@ -20,7 +20,7 @@ const EducationDetailsTab = ({ isEditable, handleEdit, customUrl }) => {
               <EducationDetailComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
-                customUrl={!!customUrl ? customUrl + "/academics" : null}
+                customUrl={!!customUrl ? customUrl + ACADEMICS : null}
               />
             ),
           },
@@ -30,7 +30,7 @@ const EducationDetailsTab = ({ isEditable, handleEdit, customUrl }) => {
               <ExamsComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
-                customUrl={!!customUrl ? customUrl + "/academics" : null}
+                customUrl={!!customUrl ? customUrl + ACADEMICS : null}
               />
             ),
           },
@@ -40,7 +40,7 @@ const EducationDetailsTab = ({ isEditable, handleEdit, customUrl }) => {
               <OtherCoursesComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
-                customUrl={!!customUrl ? customUrl + "/academics" : null}
+                customUrl={!!customUrl ? customUrl + ACADEMICS : null}
               />
             ),
           },
