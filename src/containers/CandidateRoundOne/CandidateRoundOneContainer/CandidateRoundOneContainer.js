@@ -4,7 +4,7 @@ import CandidateRoundOneContainerTemplate from "./CandidateRoundOneContainerTemp
 import useCandidateRoundOneCards from "./controllers/useCandidateRoundOneCards";
 
 const CandidateRoundOneContainer = ({ hasRoundone }) => {
-  let { roundCards, onPressCard } = useCandidateRoundOneCards({
+  const { roundCards, onPressCard } = useCandidateRoundOneCards({
     hasRoundone,
   });
 

@@ -21,7 +21,7 @@ const useCandidateRoundOneCards = ({ hasRoundone }) => {
   const onPressCard = (id) => {
     switch (id) {
       case 1:
-        navigate(navigations.APPLICATION_FORM);
+        navigate(`/${navigations.APPLICATION_FORM}`);
         break;
       case 2:
         break;
