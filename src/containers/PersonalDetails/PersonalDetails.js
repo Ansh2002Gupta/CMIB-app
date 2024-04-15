@@ -11,15 +11,16 @@ import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 import {
   MEMBERS,
-  MEMBER_CA_JOB_PROFILE,
+  MEMBER_CA_JOB_PROFILE_PERSONAL,
   PERSONAL,
   USER_TYPE_COMPANY,
 } from "../../services/apiServices/apiEndPoint";
 import { usePersonalDetails } from "./Controllers/usePersonalDetails";
 import { formatDate } from "../../utils/util";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 
 const PersonalDetails = ({
+  callBack,
+  customUrl,
   isEditable = true,
   handleEdit,
   onSaveSuccessfull,
@@ -46,7 +47,7 @@ const PersonalDetails = ({
     error: errorWhileGettingPersonalData,
     fetchData: fetchingMembersPersonalData,
   } = useFetch({
-    url: `${MEMBER_CA_JOB_PROFILE}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_PERSONAL}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -76,7 +77,7 @@ const PersonalDetails = ({
     error,
     setError,
   } = usePut({
-    url: `${MEMBER_CA_JOB_PROFILE}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_PERSONAL}`,
   });
 
   const getData = (data) =>
@@ -136,6 +137,15 @@ const PersonalDetails = ({
   useEffect(() => {
     if (data !== null && Object.keys(data)?.length) {
       setState(getData(data));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!!data) {
+      callBack({
+        candidate_name: data?.name?.[0]?.name,
+        candidate_id: data?.member_id,
+      });
     }
   }, [data]);
 

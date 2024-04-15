@@ -56,6 +56,7 @@ export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
 export const CANDIDATES = "/candidates";
+export const APPLICANTS = "/applicants";
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
@@ -73,11 +74,16 @@ export const JOB_LOCATION_OPTIONS = `${USER_TYPE_COMPANY}/job/locations`;
 export const JOB_TYPE_OPTIONS = `${USER_TYPE_COMPANY}/job-type`;
 export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
 
-/* API Endpoints Member CA JOB profile */
-export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
+/* API Endpoints COMPANY CA JOB profile */
+export const COMPANY_CA_JOB_PROFILE = `${USER_TYPE_COMPANY}/ca-jobs/members`;
+
+/* API Endpoints MEMBER CA JOB profile */
+export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile`;
+export const MEMBER_CA_JOB_PROFILE_PERSONAL = `${USER_TYPE_MEMBER}/profile/personal`;
 export const MEMBER_CA_JOB_PROFILE_EDUCATION = `${USER_TYPE_MEMBER}/profile/academics`;
 export const MEMBER_CA_JOB_PROFILE_EXAMS = `${USER_TYPE_MEMBER}/profile/exams`;
 export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/other-courses`;
+
 //endpoint add Job
 export const GET_FUNCTIONAL_TYPE = `${USER_TYPE_COMPANY}/functional-areas`;
 export const GET_JOB_LOCATION = `${USER_TYPE_COMPANY}/job/locations`;

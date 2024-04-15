@@ -549,7 +549,7 @@ const locale = {
   "label.saved_candidates": "Saved Candidates",
   "label.candidate_details": "Candidate Details",
   "label.save_candidate_details": "Save Candidate Details",
-  "label.serach_by_applicant_name_id": "Search by applicant name or ID",
+  "label.serach_by_candidate_name_id": "Search by candidate name or ID",
   "label.category": "Category",
   "label.accessibility_information": "Accessibility Information",
   "label.has_disability": "Do you have any Physical Impairment?",
