@@ -394,7 +394,6 @@ const CompanyProfileComponent = () => {
   const handleCompanyDetailChange = (fieldName, value) => {
     if (fieldName === "label.entity") {
       let updatedCompanyDetail = [...profileData.companyDetail];
-      console.log(updatedCompanyDetail, "updatedCompanyDetail..");
       const entityIndex = updatedCompanyDetail.findIndex(
         (detail) => detail.label === "label.entity"
       );
