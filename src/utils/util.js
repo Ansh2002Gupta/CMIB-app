@@ -625,3 +625,12 @@ const isObjectFilled = (obj) => {
 export const areAllValuesFilled = (objects) => {
   return Object.values(objects).some(isObjectFilled);
 };
+
+export const capitalizePhrase = (sentence) => {
+  if (!sentence.length) return "-";
+  const words = sentence.split(" ");
+  const new_sentence = words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+  return new_sentence;
+};

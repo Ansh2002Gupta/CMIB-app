@@ -27,12 +27,11 @@ import TouchableImage from "../../components/TouchableImage";
 import WorkExperience from "../../containers/WorkExperience/WorkExperience";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useIsWebView from "../../hooks/useIsWebView";
-import useFetch from "../../hooks/useFetch";
 import { usePost } from "../../hooks/useApiRequest";
+import { capitalizePhrase } from "../../utils/util";
 import {
   CANDIDATES,
   COMPANY_CA_JOB_PROFILE,
-  DETAIL,
   MARK_PREFER,
   MEMBER_CA_JOB_PROFILE,
   UNMARK_PREFER,
@@ -121,13 +120,14 @@ const SaveButton = ({
 
 const ViewDetailsScreen = () => {
   const intl = useIntl();
-  const [isEditable, setIsEditable] = useState(false);
-  const [toastMsg, setToastMsg] = useState("");
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const navigate = useNavigate();
   const params = useParams();
   const [sideBarState] = useContext(SideBarContext);
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { selectedModule } = sideBarState || {};
+  const [isEditable, setIsEditable] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
+  const [candidateProfile, setCandidateProfile] = useState();
 
   const returnModuleWiseUrl = (module) => {
     switch (module) {
@@ -139,10 +139,6 @@ const ViewDetailsScreen = () => {
         return `${MEMBER_CA_JOB_PROFILE}`;
     }
   };
-
-  const { data: candidateDetails } = useFetch({
-    url: COMPANY + CANDIDATES + DETAIL + `/${params?.id}`,
-  });
 
   const {
     makeRequest: saveCandidateDetails,
@@ -171,6 +167,11 @@ const ViewDetailsScreen = () => {
   };
   const handleBackPress = () => {
     navigate(`${navigations.CA_JOBS}/${navigations.JOB_SEEKERS}`);
+  };
+
+  const getShortProfileDetails = ({ candidate_name, candidate_id }) => {
+    candidate_name = capitalizePhrase(candidate_name);
+    setCandidateProfile({ name: candidate_name, id: candidate_id });
   };
 
   return (
@@ -210,8 +211,8 @@ const ViewDetailsScreen = () => {
                           Candidate Name:&nbsp;
                         </CommonText>
                         <CommonText fontWeight={"600"} style={style.value}>
-                          {!!candidateDetails?.name
-                            ? candidateDetails?.name
+                          {!!candidateProfile?.name
+                            ? candidateProfile?.name
                             : "_"}
                         </CommonText>
                       </Row>
@@ -221,9 +222,7 @@ const ViewDetailsScreen = () => {
                           Candidate ID:&nbsp;
                         </CommonText>
                         <CommonText fontWeight={"600"} style={style.value}>
-                          {!!candidateDetails?.member_id
-                            ? candidateDetails?.member_id
-                            : "_"}
+                          {!!candidateProfile?.id ? candidateProfile?.id : "_"}
                         </CommonText>
                       </Row>
                     </Row>
@@ -257,6 +256,7 @@ const ViewDetailsScreen = () => {
                 customUrl={
                   returnModuleWiseUrl(selectedModule?.key) + "/personal"
                 }
+                callBack={getShortProfileDetails}
               />
             ),
           },

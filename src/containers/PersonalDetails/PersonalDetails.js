@@ -10,11 +10,13 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessa
 import { MEMBER_CA_JOB_PROFILE_PERSONAL } from "../../services/apiServices/apiEndPoint";
 import { usePersonalDetails } from "./Controllers/usePersonalDetails";
 import { formatDate } from "../../utils/util";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 
-const PersonalDetails = ({ isEditable = true, handleEdit, customUrl }) => {
-  const [sideBarState] = useContext(SideBarContext);
-
+const PersonalDetails = ({
+  isEditable = true,
+  handleEdit,
+  customUrl,
+  callBack,
+}) => {
   const {
     data,
     isLoading: isGettingPersonalData,
@@ -23,6 +25,15 @@ const PersonalDetails = ({ isEditable = true, handleEdit, customUrl }) => {
   } = useFetch({
     url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_PERSONAL}`,
   });
+
+  useEffect(() => {
+    if (!!data) {
+      callBack({
+        candidate_name: data?.name?.[0]?.name,
+        candidate_id: data?.member_id,
+      });
+    }
+  }, [data]);
 
   const {
     makeRequest: handleUpdate,
