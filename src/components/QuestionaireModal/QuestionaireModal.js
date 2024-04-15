@@ -151,6 +151,18 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
     if (questionaireData) {
       setQuestions(addValueOnField({ data: questionaireData }));
     }
+    if (questionaireData && !questionaireData?.length) {
+      let payload = {
+        job_id: jobId,
+      };
+      handleApplyJob({
+        body: payload,
+        onSuccessCallback: () => {
+          handleSuccessApply(jobId);
+          handleCloseModal();
+        },
+      });
+    }
   }, [questionaireData]);
 
   return (
@@ -161,127 +173,133 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
           onDismiss={handleResetError}
         />
       )}
-      <CustomModal
-        headerText={intl.formatMessage({ id: "label.questionnaire" })}
-        isIconCross
-        onPressIconCross={handleCancelButton}
-      >
-        {isGettingQuestions ? (
-          <LoadingScreen />
-        ) : errorWhileGettingQuestions ? (
-          <ErrorComponent
-            errorMsg={
-              errorWhileGettingQuestions?.data?.message ||
-              GENERIC_GET_API_FAILED_ERROR_MESSAGE
-            }
-          />
-        ) : (
-          !!questionaireData &&
-          !isGettingQuestions &&
-          !errorWhileGettingQuestions && (
-            <TwoRow
-              style={styles.mainSectionStyle}
-              topSection={
-                <ScrollView
-                  style={styles.modalContainerStyle}
-                  showsVerticalScrollIndicator={false}
-                >
-                  {questions?.map((item, index) => {
-                    return (
-                      <TwoRow
-                        key={index}
-                        style={styles.questionAnswer}
-                        topSection={
-                          <TwoColumn
-                            style={styles.questionView}
-                            leftSection={
-                              <CommonText
-                                customContainerStyle={
-                                  isWebView && styles.questionTextView
-                                }
-                                customTextStyle={styles.questionText}
-                              >
-                                {`Q${item?.question_order}${
-                                  !isWebView ? "." : ""
-                                }`}
-                              </CommonText>
-                            }
-                            rightSection={
-                              <View style={style.mandotaryView}>
+      {!!questionaireData?.length && (
+        <CustomModal
+          headerText={intl.formatMessage({ id: "label.questionnaire" })}
+          isIconCross
+          onPressIconCross={handleCancelButton}
+        >
+          {isGettingQuestions ? (
+            <LoadingScreen />
+          ) : errorWhileGettingQuestions ? (
+            <ErrorComponent
+              errorMsg={
+                errorWhileGettingQuestions?.data?.message ||
+                GENERIC_GET_API_FAILED_ERROR_MESSAGE
+              }
+            />
+          ) : (
+            !!questionaireData &&
+            !isGettingQuestions &&
+            !errorWhileGettingQuestions && (
+              <TwoRow
+                style={styles.mainSectionStyle}
+                topSection={
+                  <ScrollView
+                    style={styles.modalContainerStyle}
+                    showsVerticalScrollIndicator={false}
+                  >
+                    {questions?.map((item, index) => {
+                      return (
+                        <TwoRow
+                          key={index}
+                          style={styles.questionAnswer}
+                          topSection={
+                            <TwoColumn
+                              style={styles.questionView}
+                              leftSection={
                                 <CommonText
+                                  customContainerStyle={
+                                    isWebView && styles.questionTextView
+                                  }
                                   customTextStyle={styles.questionText}
                                 >
-                                  {item?.question}
+                                  {`Q${item?.question_order}${
+                                    !isWebView ? "." : ""
+                                  }`}
                                 </CommonText>
-                                {!!item?.mandatory && (
+                              }
+                              rightSection={
+                                <View style={style.mandotaryView}>
                                   <CommonText
-                                    customTextStyle={styles.starStyle}
+                                    customTextStyle={styles.questionText}
                                   >
-                                    {"*"}
+                                    {item?.question}
                                   </CommonText>
-                                )}
-                              </View>
-                            }
-                          />
-                        }
-                        bottomSection={
-                          <CustomTextInput
-                            value={item?.value}
-                            isDropdown={
-                              item?.type === "single-select" ||
-                              item?.type === "multi-select"
-                            }
-                            placeholder={
-                              item?.type === "text" &&
-                              intl.formatMessage({
-                                id: "label.giveAnswer",
-                              })
-                            }
-                            isMultiSelect={item?.type === "multi-select"}
-                            options={item?.question_options}
-                            labelField={"label"}
-                            valueField={"value"}
-                            isSelected={"isSelected"}
-                            isSingleMutliSelect={item?.type === "multi-select"}
-                            onChangeValue={(val) => {
-                              item?.type === "multi-select"
-                                ? handleMultiSelectChange(item?.id, val)
-                                : handleValueChange(item?.id, val);
-                            }}
-                            onChangeText={(val) => {
-                              handleValueChange(item?.id, val);
-                            }}
-                          />
-                        }
+                                  {!!item?.mandatory && (
+                                    <CommonText
+                                      customTextStyle={styles.starStyle}
+                                    >
+                                      {"*"}
+                                    </CommonText>
+                                  )}
+                                </View>
+                              }
+                            />
+                          }
+                          bottomSection={
+                            <CustomTextInput
+                              value={item?.value}
+                              isDropdown={
+                                item?.type === "single-select" ||
+                                item?.type === "multi-select"
+                              }
+                              placeholder={
+                                item?.type === "text" &&
+                                intl.formatMessage({
+                                  id: "label.giveAnswer",
+                                })
+                              }
+                              isMultiSelect={item?.type === "multi-select"}
+                              options={item?.question_options}
+                              labelField={"label"}
+                              valueField={"value"}
+                              isSelected={"isSelected"}
+                              isSingleMutliSelect={
+                                item?.type === "multi-select"
+                              }
+                              onChangeValue={(val) => {
+                                item?.type === "multi-select"
+                                  ? handleMultiSelectChange(item?.id, val)
+                                  : handleValueChange(item?.id, val);
+                              }}
+                              onChangeText={(val) => {
+                                handleValueChange(item?.id, val);
+                              }}
+                            />
+                          }
+                        />
+                      );
+                    })}
+                  </ScrollView>
+                }
+                bottomSection={
+                  <View style={isWebView ? styles.buttonWebStyle : {}}>
+                    <View style={isWebView ? styles.subContainerStyle : {}}>
+                      <ActionPairButton
+                        buttonOneText={intl.formatMessage({
+                          id: "label.cancel",
+                        })}
+                        buttonTwoText={intl.formatMessage({ id: "label.save" })}
+                        customStyles={{
+                          ...isWebProps,
+                          customContainerStyle: styles.customContainerStyle,
+                        }}
+                        displayLoader={isjobAppling}
+                        isDisabled={isDisabled(questions) || isjobAppling}
+                        isButtonTwoGreen
+                        onPressButtonOne={handleCancelButton}
+                        onPressButtonTwo={() => handleSaveButton(questions)}
                       />
-                    );
-                  })}
-                </ScrollView>
-              }
-              bottomSection={
-                <View style={isWebView ? styles.buttonWebStyle : {}}>
-                  <View style={isWebView ? styles.subContainerStyle : {}}>
-                    <ActionPairButton
-                      buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-                      buttonTwoText={intl.formatMessage({ id: "label.save" })}
-                      customStyles={{
-                        ...isWebProps,
-                        customContainerStyle: styles.customContainerStyle,
-                      }}
-                      displayLoader={isjobAppling}
-                      isDisabled={isDisabled(questions) || isjobAppling}
-                      isButtonTwoGreen
-                      onPressButtonOne={handleCancelButton}
-                      onPressButtonTwo={() => handleSaveButton(questions)}
-                    />
+                    </View>
                   </View>
-                </View>
-              }
-              bottomSectionStyle={styles.bottomSectionStyle}
-            />
-          )
-        )}
-      </CustomModal>
+                }
+                bottomSectionStyle={styles.bottomSectionStyle}
+              />
+            )
+          )}
+        </CustomModal>
+      )}
     </>
   );
 };
