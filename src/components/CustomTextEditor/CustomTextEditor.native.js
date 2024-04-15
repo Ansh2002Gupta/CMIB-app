@@ -55,23 +55,26 @@ const CustomTextEditor = ({
         ]}
       >
         <View>
-          <RichToolbar
-            editor={richText}
-            actions={[
-              actions.setBold,
-              actions.setItalic,
-              actions.setUnderline,
-              actions.heading1,
-              actions.insertBulletsList,
-              actions.insertLink,
-              actions.checkboxList,
-              actions.undo,
-              actions.redo,
-            ]}
-            iconMap={{ [actions.heading1]: handleHead }}
-          />
+          {!disabled && (
+            <RichToolbar
+              editor={richText}
+              actions={[
+                actions.setBold,
+                actions.setItalic,
+                actions.setUnderline,
+                actions.heading1,
+                actions.insertBulletsList,
+                actions.insertLink,
+                actions.checkboxList,
+                actions.undo,
+                actions.redo,
+              ]}
+              iconMap={{ [actions.heading1]: handleHead }}
+            />
+          )}
           <ScrollView>
             <RichEditor
+              readOnly={true}
               ref={richText}
               onBlur={customHandleBlur}
               initialContentHTML={value}
