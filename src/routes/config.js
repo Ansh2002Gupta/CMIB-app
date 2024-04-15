@@ -26,6 +26,7 @@ import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
 import RoundOne from "../views/RoundOneView";
 import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
+import RoundTwoApplicationForm from "../views/RoundTwoApplicationForm/index";
 import RoundTwo from "../views/RoundTwoView";
 import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
@@ -223,6 +224,10 @@ const config = [
       {
         viewPath: `${navigations.ROUND_ONE}/${navigations.APPLICATION_FORM}`,
         element: <RoundOneApplicationForm />,
+      },
+      {
+        viewPath: `${navigations.ROUND_TWO}/${navigations.APPLICATION_FORM}`,
+        element: <RoundTwoApplicationForm />,
       },
       {
         viewPath: navigations.ROUND_TWO,
