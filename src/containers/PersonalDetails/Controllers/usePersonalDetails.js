@@ -184,7 +184,19 @@ const personal_detail = (categoryData, has_passport, isWebView) => {
   }
 };
 
-const correspondence_address = (countryData) => [
+const commonAddressToggleButton = [
+  {
+    key: "isCommonPermanentAddress",
+    isToggle: true,
+    label: "Is Permanent Address same as Correspondence Address?",
+    placeholder: "label.address1",
+  },
+  { isEmptyField: true },
+];
+
+const correspondence_address = (countryData, isEditable) => [
+  //only show this toggle button in edit mode
+  ...(isEditable ? commonAddressToggleButton : []),
   {
     key: "address1",
     isMandatory: true,
@@ -458,7 +470,7 @@ export const usePersonalDetails = ({ state, isEditable }) => {
     personal_detail(categoryData, state?.has_passport, isWebView)
   );
   const [correspondence_address_state, setCorrespondenceAddressState] =
-    useState(correspondence_address(countryData));
+    useState(correspondence_address(countryData, isEditable));
   const [permanent_address_state, setPermanentAddressState] =
     useState(permanent_address);
 
@@ -467,9 +479,11 @@ export const usePersonalDetails = ({ state, isEditable }) => {
       accessibility_information(state?.has_disability)
     );
     setPersonalDetailState(personal_detail(categoryData, state?.has_passport));
-    setCorrespondenceAddressState(correspondence_address(countryData));
+    setCorrespondenceAddressState(
+      correspondence_address(countryData, isEditable)
+    );
     setPermanentAddressState(permanent_address);
-  }, [countryData, categoryData, state]);
+  }, [countryData, categoryData, state, isEditable]);
 
   const handlePersonalDetailBlur = (key, index) => {
     setPersonalDetailState(
