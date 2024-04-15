@@ -74,7 +74,6 @@ const CustomTextEditor = ({
           )}
           <ScrollView>
             <RichEditor
-              readOnly={true}
               ref={richText}
               onBlur={customHandleBlur}
               initialContentHTML={value}
