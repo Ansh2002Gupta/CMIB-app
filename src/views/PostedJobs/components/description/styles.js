@@ -37,6 +37,6 @@ const styles = {
     marginTop: 16,
   },
   quilStyle: { height: "auto", borderWidth: 0 },
-  quillContainerStyle: { borderWidth: 0, backgroundColor: "blue" },
+  quillContainerStyle: { borderWidth: 0 },
 };
 export default styles;
