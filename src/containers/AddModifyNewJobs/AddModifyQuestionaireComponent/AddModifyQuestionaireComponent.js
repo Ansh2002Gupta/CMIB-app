@@ -27,6 +27,7 @@ const AddModifyQuestionaireComponent = forwardRef(
       isMinimisedVisible = true,
       headerText = "label.questionnaire",
       cleanUpFunction,
+      cardStyle,
     },
     ref
   ) => {
@@ -251,7 +252,10 @@ const AddModifyQuestionaireComponent = forwardRef(
 
     return (
       <CardComponent
-        customStyle={styles.questionnaireExtendedViewStyle(isQuestionaire)}
+        customStyle={{
+          ...styles.questionnaireExtendedViewStyle(isQuestionaire),
+          ...cardStyle,
+        }}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderComponent

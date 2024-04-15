@@ -35,7 +35,7 @@ const CustomTable = ({
   customModal,
   data,
   defaultCategory,
-  selectedFilterOptions,
+  selectedFilterOptions = {},
   setSelectedFilterOptions,
   filterApplyHandler,
   filterCategory,
@@ -79,6 +79,9 @@ const CustomTable = ({
   extraDetailsText,
   extraDetailsKey,
   renderCalendar,
+  containerStyle,
+  isTotalCardVisible = true,
+  isFilterVisible = true,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -138,36 +141,42 @@ const CustomTable = ({
                 }
                 isLeftFillSpace
                 rightSection={
-                  <CustomTouchableOpacity
-                    onPress={handleFilterModal}
-                    style={styles.imageParentStyle}
-                    disabled={isTicketListingLoading || isGeetingJobbSeekers}
-                  >
-                    <TouchableImage
-                      source={images.iconFilter}
-                      parentStyle={styles.iconTicket}
-                      onPress={handleFilterModal}
-                    />
-                    {isWebView && (
-                      <CommonText customTextStyle={styles.filterText}>
-                        {intl.formatMessage({ id: "label.filters" })}
-                      </CommonText>
-                    )}
-                    {isFilterCount && (
-                      <CommonText
-                        customContainerStyle={styles.activeTickets}
-                        customTextStyle={styles.activeTicketsText}
-                        fontWeight={"600"}
+                  <>
+                    {isFilterVisible ? (
+                      <CustomTouchableOpacity
+                        onPress={handleFilterModal}
+                        style={styles.imageParentStyle}
+                        disabled={
+                          isTicketListingLoading || isGeetingJobbSeekers
+                        }
                       >
-                        {getFilterCount()}
-                      </CommonText>
-                    )}
-                  </CustomTouchableOpacity>
+                        <TouchableImage
+                          source={images.iconFilter}
+                          parentStyle={styles.iconTicket}
+                          onPress={handleFilterModal}
+                        />
+                        {isWebView && (
+                          <CommonText customTextStyle={styles.filterText}>
+                            {intl.formatMessage({ id: "label.filters" })}
+                          </CommonText>
+                        )}
+                        {isFilterCount && (
+                          <CommonText
+                            customContainerStyle={styles.activeTickets}
+                            customTextStyle={styles.activeTicketsText}
+                            fontWeight={"600"}
+                          >
+                            {getFilterCount()}
+                          </CommonText>
+                        )}
+                      </CustomTouchableOpacity>
+                    ) : null}
+                  </>
                 }
                 style={styles.filterTopSection(isWebView)}
               />
             )}
-            {!isWeb && (
+            {!isWeb && isTotalCardVisible && (
               <View style={styles.ticketTotals}>
                 <CommonText
                   fontWeight={"500"}
@@ -202,7 +211,12 @@ const CustomTable = ({
                 (isGeetingJobbSeekers && (isWeb || isFirstPageReceived)) ? (
                   <LoadingScreen />
                 ) : (
-                  <View style={styles.tableSection}>
+                  <View
+                    style={{
+                      ...styles.tableSection,
+                      ...containerStyle,
+                    }}
+                  >
                     {isWebView && (
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
@@ -380,6 +394,7 @@ const CustomTable = ({
             setFilterState: setSelectedFilterOptions,
             setShowFilterOptions,
             unit,
+            renderCalendar,
           }}
         />
       )}
