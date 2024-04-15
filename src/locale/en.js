@@ -754,6 +754,9 @@ const locale = {
     "Contractual Period Year(s)/ Month(s)/ Day(s)",
   "label.years": "Years(s)",
   "label.giveAnswer": "Give Answer",
+  "label.memberCompletionProfilePercentWeb":
+    "Complete your job profile! its at ",
+  "label.complete": "Complete",
 };
 
 export default locale;

@@ -11,7 +11,7 @@ import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpd
 import { useActivities } from "./Controllers/useActivities";
 import { getIndexForBoolean, yesNoToBoolean } from "../../utils/util";
 
-const Activities = ({ isEditable = true, handleEdit }) => {
+const Activities = ({ isEditable = true, handleEdit, onSaveSuccessfull }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
   const {
@@ -74,6 +74,7 @@ const Activities = ({ isEditable = true, handleEdit }) => {
     };
 
     handleUpdate(body, () => {
+      onSaveSuccessfull && onSaveSuccessfull();
       fetchData();
       // turn off the edit mode
       handleEdit(false);
