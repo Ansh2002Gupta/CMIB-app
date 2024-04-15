@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   optionStyle: {
-    fontSize: 12,
+    fontSize: 14,
     color: colors.black,
   },
   optionViewStyle: {

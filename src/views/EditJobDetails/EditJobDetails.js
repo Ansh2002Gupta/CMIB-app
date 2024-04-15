@@ -193,6 +193,7 @@ const EditJobDetails = ({
                           ref={questionaireRef}
                           isMinimisedVisible={false}
                           headerText={"label.view_questionaire"}
+                          cardStyle={styles.cardStyle}
                         />
                       </View>
                     ),
