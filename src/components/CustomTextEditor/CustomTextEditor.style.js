@@ -2,6 +2,7 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
+  componentView: {},
   quillContainer: {
     marginBottom: 60,
   },
@@ -15,7 +16,6 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flexDirection: "row",
-    marginBottom: 8,
   },
   label: {
     color: colors.darkGrey,

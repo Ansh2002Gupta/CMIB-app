@@ -41,6 +41,7 @@ const Description = ({ data, title, description, style }) => {
         value={description}
         disabled
         quilStyle={styles.quilStyle}
+        quillContainerStyle={styles.quillContainerStyle}
       />
       {data?.map((item) => renderContent(item))}
     </View>
