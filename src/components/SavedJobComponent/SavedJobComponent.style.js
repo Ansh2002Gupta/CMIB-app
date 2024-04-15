@@ -171,6 +171,18 @@ const style = StyleSheet.create({
   chipContainerStyle: { gap: 8, marginBottom: 16 },
   disabledStyle: { backgroundColor: colors.white },
   disableButtonText: { fontSize: 12, color: colors.black, marginRight: 20 },
+  ellipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    maxWidth: 200,
+  },
+  mobileEllipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    maxWidth: 320,
+  },
 });
 
 export default style;

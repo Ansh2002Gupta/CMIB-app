@@ -166,10 +166,9 @@ const JobCardMobile = ({
             <Image source={images.iconLocation} style={style.mobileIconStyle} />
           }
           rightSection={
-            <MultiColumn
-              columns={LocationConfig(jobLocation)}
-              style={{ paddingRight: 24 }}
-            />
+            <CommonText customTextStyle={style.mobileEllipsis}>
+              {LocationConfig(jobLocation)}
+            </CommonText>
           }
         />
       ),
