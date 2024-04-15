@@ -10,13 +10,13 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useFetch from "../../../hooks/useFetch";
 
 import usePagination from "../../../hooks/usePagination";
+import { capitalizePhrase } from "../../../utils/util";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import { COMPANY_LISTING } from "../../../services/apiServices/apiEndPoint";
 import {
-  COMPANY,
   FILTER_TYPE_ENUM,
   POPUP_OPTIONS,
   ROWS_PER_PAGE_ARRAY,
@@ -355,15 +355,6 @@ const useJobSeekers = () => {
     return newData;
   };
 
-  const capitalize = (sentence) => {
-    if (!sentence.length) return "-";
-    const words = sentence.split(" ");
-    const new_sentence = words
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-    return new_sentence;
-  };
-
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
@@ -394,7 +385,7 @@ const useJobSeekers = () => {
             style={styles.cursorStyle}
           >
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-              {!!item.name ? capitalize(item.name) : "-"}
+              {!!item.name ? capitalizePhrase(item.name) : "-"}
             </CommonText>
           </TouchableOpacity>
         ),

@@ -27,8 +27,8 @@ import TouchableImage from "../../components/TouchableImage";
 import WorkExperience from "../../containers/WorkExperience/WorkExperience";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useIsWebView from "../../hooks/useIsWebView";
-import useFetch from "../../hooks/useFetch";
 import { usePost } from "../../hooks/useApiRequest";
+import { capitalizePhrase } from "../../utils/util";
 import {
   CANDIDATES,
   COMPANY_CA_JOB_PROFILE,
@@ -169,17 +169,8 @@ const ViewDetailsScreen = () => {
     navigate(`${navigations.CA_JOBS}/${navigations.JOB_SEEKERS}`);
   };
 
-  const capitalize = (sentence) => {
-    if (!sentence.length) return "-";
-    const words = sentence.split(" ");
-    const new_sentence = words
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-    return new_sentence;
-  };
-
   const getShortProfileDetails = ({ candidate_name, candidate_id }) => {
-    candidate_name = capitalize(candidate_name);
+    candidate_name = capitalizePhrase(candidate_name);
     setCandidateProfile({ name: candidate_name, id: candidate_id });
   };
 
