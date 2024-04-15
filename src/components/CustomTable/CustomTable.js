@@ -79,8 +79,6 @@ const CustomTable = ({
   extraDetailsText,
   extraDetailsKey,
   renderCalendar,
-  statusData,
-  queryTypeData,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
