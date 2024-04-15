@@ -328,12 +328,12 @@ const useJobSeekers = () => {
     "Category",
   ];
 
-  const handlePopupItemClick = (data) => {
-    switch (data?.trim().toLowerCase()) {
+  const handlePopupItemClick = ({ option, item }) => {
+    switch (option?.trim().toLowerCase()) {
       case POPUP_OPTIONS?.[0]:
         return <></>;
       case POPUP_OPTIONS?.[1].trim().toLowerCase():
-        navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${data?.id || 1}`);
+        navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${item?.id || 1}`);
     }
   };
 
@@ -453,7 +453,9 @@ const useJobSeekers = () => {
               key={item?.id || 0}
               data={item}
               message={POPUP_OPTIONS}
-              onPopupClick={handlePopupItemClick}
+              onPopupClick={() =>
+                handlePopupItemClick({ option: "View Details", item: item })
+              }
             />
           </>
         ),

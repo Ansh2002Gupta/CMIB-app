@@ -75,7 +75,7 @@ const SaveButton = ({
       onUnSave({
         overrideUrl: COMPANY + CANDIDATES + `/${id}` + UNMARK_PREFER,
         onErrorCallback: (error) => {
-          setToastMsg(errorInUnSaving);
+          setToastMsg(errorInUnSaving || error);
         },
         onSuccessCallback: (success) => {
           setIsSaveButton(true);
