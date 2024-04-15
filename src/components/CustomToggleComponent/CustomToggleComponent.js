@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 
@@ -11,7 +11,9 @@ const CustomToggleComponent = ({
   customLabelStyle,
   customToggleStyle,
   customToggleButtonTextStyle,
+  customErrorStyle,
   isMandatory,
+  errorMessage,
   containerStyle,
   label,
   onValueChange,
@@ -19,7 +21,18 @@ const CustomToggleComponent = ({
   value,
 }) => {
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
+  useEffect(() => {
+    if (typeof value !== "undefined") {
+      setSelectedToggleOption(value);
+    }
+  }, [value]);
   const { isWebView } = useIsWebView();
+
+  useEffect(() => {
+    if (selectedToggleOption !== value) {
+      setSelectedToggleOption(value);
+    }
+  }, [value]);
 
   const handleOptionSelect = (option) => {
     if (onValueChange) {
@@ -27,6 +40,10 @@ const CustomToggleComponent = ({
     }
     setSelectedToggleOption(option);
   };
+
+  useEffect(() => {
+    selectedToggleOption != -1 && onValueChange(selectedToggleOption);
+  }, [selectedToggleOption]);
 
   return (
     <View style={containerStyle}>
@@ -83,6 +100,14 @@ const CustomToggleComponent = ({
             </>
           ))}
       </View>
+      {!!errorMessage && (
+        <CommonText
+          customTextStyle={[styles.errorMsg, customErrorStyle]}
+          fontWeight={customErrorStyle?.fontWeight || "600"}
+        >
+          {errorMessage}
+        </CommonText>
+      )}
     </View>
   );
 };

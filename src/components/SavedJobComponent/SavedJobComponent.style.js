@@ -13,6 +13,7 @@ const style = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderTopWidth: 10,
     borderTopColor: colors.darkBlue,
+    cursor: "pointer",
   },
   customSaveButtonContainer: { marginBottom: 16 },
   buttonTwoTextStyle: { fontSize: 14, fontWeight: 500 },
@@ -68,6 +69,11 @@ const style = StyleSheet.create({
   actionPairButtonStyle: {
     maxHeight: 44,
     maxWidth: 96,
+  },
+  disableActionPairButton: {
+    maxHeight: 44,
+    maxWidth: 96,
+    backgroundColor: colors.secondaryGrey,
   },
   customButtonTextStyle: {
     fontSize: 12,
@@ -160,8 +166,11 @@ const style = StyleSheet.create({
       },
     }),
   },
+  disableRightStyle: { backgroundColor: colors.secondaryGrey },
   customQuilStyle: { height: undefined, borderWidth: 0 },
   chipContainerStyle: { gap: 8, marginBottom: 16 },
+  disabledStyle: { backgroundColor: colors.white },
+  disableButtonText: { fontSize: 12, color: colors.black, marginRight: 20 },
 });
 
 export default style;

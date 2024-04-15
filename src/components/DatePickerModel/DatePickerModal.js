@@ -28,6 +28,8 @@ function DatePickerModal({
   datePickerViewStyle,
   showTimeSelect,
   showMonthYearPicker,
+  datePickerContainer,
+  dateFormate,
 }) {
   const [open, setOpen] = useState(false);
   const intl = useIntl();
@@ -48,6 +50,7 @@ function DatePickerModal({
         open ? styles.focusedStyle : {},
         errorStyle,
         customStyles,
+        datePickerContainer,
       ]}
       ref={wrapperRef}
     >
@@ -65,7 +68,7 @@ function DatePickerModal({
                   dateString: value,
                   format24Hour: false,
                 })
-              : formatDate(value)}
+              : formatDate(value, format)}
           </CommonText>
         </View>
         <View style={styles.iconContainer}>
@@ -114,7 +117,7 @@ function DatePickerModal({
               inline
               dropdownMode="select"
               showMonthYearPicker={showMonthYearPicker}
-              dateFormat={format}
+              dateFormat={dateFormate}
             />
           )}
         </View>

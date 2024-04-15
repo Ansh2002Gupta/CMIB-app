@@ -1,12 +1,3 @@
-import React from 'react'
-import {View,Text} from '@unthinkable/react-core-components'
+import JobApplicantsView from "./JobApplicantsView";
 
-const JobApplicants = () => {
-  return (
-    <View>
-      <Text>JobApplicants</Text>
-    </View>
-  )
-}
-
-export default JobApplicants
+export default JobApplicantsView;

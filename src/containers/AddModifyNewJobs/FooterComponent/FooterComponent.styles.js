@@ -12,11 +12,17 @@ const styles = StyleSheet.create({
   firstViewStyles: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     flex: 1,
   },
   checkBoxViewStyle: {
     justifyContent: "flex-start",
     flex: 1,
+  },
+  get checkBoxHeight() {
+    return (isWebView) => ({
+      height: isWebView ? 20 : undefined,
+    });
   },
   buttonViewStyle: {
     flexDirection: "row",

@@ -34,7 +34,7 @@ const MobileCard = ({
             ...designationTextStyle,
           }}
         >
-          {item.designation}
+          {item?.designation ?? "-"}
         </CommonText>
         <View style={styles.detailsContainer}>
           <View style={styles.flexOneRow}>
@@ -44,7 +44,9 @@ const MobileCard = ({
                   ...styles.numberTextStyle,
                   ...detailTextStyle,
                 }}
-              >{`${item.number_of_applications} Applicants`}</CommonText>
+              >{`${
+                item?.number_of_applications ?? "-"
+              } Applicants`}</CommonText>
             </View>
             <View style={styles.detailRow}>
               <CustomImage
@@ -57,19 +59,23 @@ const MobileCard = ({
                   ...styles.numberTextStyle,
                   ...detailTextStyle,
                 }}
-              >{`${item.number_of_interviews} interviews`}</CommonText>
+              >{`${item?.number_of_interviews ?? "-"} Interviews`}</CommonText>
             </View>
             <View style={styles.detailRow}>
               <CustomImage style={styles.iconTicket} source={images.dotIcon} />
 
               <CommonText
                 customTextStyle={{
-                  ...getStatusStyle(item.status),
+                  ...getStatusStyle(item?.status),
                   ...styles.textAlign,
                 }}
                 customContainerStyle={styles.contentContainer}
               >
-                {item.status === 0 ? statusData[1]?.name : statusData[0]?.name}
+                {item?.status
+                  ? item.status === 0
+                    ? statusData[1]?.name
+                    : statusData[0]?.name
+                  : "-"}
               </CommonText>
             </View>
           </View>
