@@ -1,46 +1,98 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router";
 
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import JobPreferenceTemplate from "./JobPreferenceTemplate";
 import useFetch from "../../hooks/useFetch";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import {
   COMPANY_FUNCTIONAL_AREAS,
   CORE_INDUSTRY_TYPE,
+  JOB_PREFERENCES,
+  MEMBERS,
   MEMBER_CA_JOB_JOB_PREFERENCES,
+  USER_TYPE_COMPANY,
 } from "../../services/apiServices/apiEndPoint";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { useJobPreference } from "./controller/useJobPreference";
 import { formatJobPreferenceData } from "./controller/utils";
-import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
-const JobPreference = ({ isEditable, handleEdit }) => {
-  const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState || {};
+const JobPreference = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
+  const { id } = useParams();
+  const { isCompany, currentModule } = useGetCurrentUser();
+
+  const {
+    data: applicantJobPreferenceData,
+    isLoading: isGettingApplicantJobPreferenceDataLoading,
+    error: errorWhileGettingApplicantJobPreferenceData,
+    fetchData: fetchingApplicantJobPreferenceData,
+  } = useFetch({
+    url:
+      USER_TYPE_COMPANY +
+      `/${currentModule}` +
+      MEMBERS +
+      `/${id}` +
+      JOB_PREFERENCES,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
 
   const {
     data: functionalAreas,
     isLoading: functionalAreasIsLoading,
     error: functionalAreasError,
+    fetchData: fetchingFunctionalAreas,
   } = useFetch({
     url: COMPANY_FUNCTIONAL_AREAS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const {
     data: industryTypes,
     isLoading: industryTypesIsLoading,
     error: industryTypesError,
+    fetchData: fetchingIndustryTypes,
   } = useFetch({
     url: CORE_INDUSTRY_TYPE,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const {
-    data,
-    isError: isErrorJobPreferences,
-    isLoading: isLoadingJobPreferences,
+    data: memberJobPreferenceData,
+    error: errorWhileGettingMemberJobPreferenceData,
+    isLoading: isLoadingMemberJobPreferences,
     fetchData,
   } = useFetch({
     url: MEMBER_CA_JOB_JOB_PREFERENCES,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+
+  useEffect(async () => {
+    if (currentModule) {
+      if (isCompany) {
+        await fetchingApplicantJobPreferenceData({});
+      } else {
+        await fetchingFunctionalAreas();
+        await fetchingIndustryTypes();
+        await fetchData({});
+      }
+    }
+  }, [currentModule]);
+
+  const data = isCompany ? applicantJobPreferenceData : memberJobPreferenceData;
+  const isLoadingJobPreferences = isCompany
+    ? isGettingApplicantJobPreferenceDataLoading
+    : isLoadingMemberJobPreferences;
+  const isErrorJobPreferences = isCompany
+    ? errorWhileGettingApplicantJobPreferenceData
+    : errorWhileGettingMemberJobPreferenceData;
 
   const { handleUpdate, isError, isLoading, error, setError } =
     useUpdateService(MEMBER_CA_JOB_JOB_PREFERENCES);
@@ -120,6 +172,7 @@ const JobPreference = ({ isEditable, handleEdit }) => {
       introduction_video_path: state?.introduction_video_path,
     };
     handleUpdate(payload, () => {
+      onSaveSuccessfull && onSaveSuccessfull();
       fetchData();
       handleEdit(false);
     });

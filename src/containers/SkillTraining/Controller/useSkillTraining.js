@@ -140,63 +140,54 @@ export const useSkillTraining = ({ state, isEditable }) => {
   const { data: skillsData } = useFetch({ url: SKILLS });
 
   useEffect(() => {
-    if (languagesData !== null && languagesData.length > 0) {
+    if (
+      languagesData !== null &&
+      languagesData.length > 0 &&
+      skillsData !== null
+    ) {
+      const { languages_known, it_skills, soft_skills, other_skills } = state;
       setLanguagesKnownState(
-        getDropDownList(
-          languagesKnownState,
+        updateState(
+          languages_known,
+          getDropDownList(
+            [languagesKnownField()],
+            SkillTraining_keys.LANGUAGE_KNOWN,
+            languagesData
+          )[0],
           SkillTraining_keys.LANGUAGE_KNOWN,
-          languagesData
+          SkillTraining_keys.LANGUAGE_SKILL,
+          languageSkill
         )
       );
-    }
-    if (skillsData !== null) {
       setITSkillsState(
-        getDropDownList(
-          ITSkillsState,
+        updateState(
+          it_skills,
+          getDropDownList(
+            [ITSkillField()],
+            SkillTraining_keys.IT_SKIILS,
+            getSkills(skillsData)[0]
+          )[0],
           SkillTraining_keys.IT_SKIILS,
-          getSkills(skillsData)[0]
+          SkillTraining_keys.ITSKILL_LEVEL,
+          skillLevel
         )
       );
       setSoftSkillsState(
-        getDropDownList(
-          softSkillsState,
+        updateState(
+          soft_skills,
+          getDropDownList(
+            [softSkillField()],
+            SkillTraining_keys.SOFT_SKILLS,
+            getSkills(skillsData)[1]
+          )[0],
           SkillTraining_keys.SOFT_SKILLS,
-          getSkills(skillsData)[1]
+          SkillTraining_keys.SOFTSKILL_LEVEL,
+          skillLevel
         )
       );
+      setOtherSkillsState(otherSkillField(other_skills));
     }
-  }, [languagesData, skillsData, isEditable]);
-  useEffect(() => {
-    const { languages_known, it_skills, soft_skills, other_skills } = state;
-    setLanguagesKnownState(
-      updateState(
-        languages_known,
-        languagesKnownField(),
-        SkillTraining_keys.LANGUAGE_KNOWN,
-        SkillTraining_keys.LANGUAGE_SKILL,
-        languageSkill
-      )
-    );
-    setITSkillsState(
-      updateState(
-        it_skills,
-        ITSkillField(),
-        SkillTraining_keys.IT_SKIILS,
-        SkillTraining_keys.ITSKILL_LEVEL,
-        skillLevel
-      )
-    );
-    setSoftSkillsState(
-      updateState(
-        soft_skills,
-        softSkillField(),
-        SkillTraining_keys.SOFT_SKILLS,
-        SkillTraining_keys.SOFTSKILL_LEVEL,
-        skillLevel
-      )
-    );
-    setOtherSkillsState(otherSkillField(other_skills));
-  }, [state]);
+  }, [state, languagesData, skillsData, isEditable]);
 
   const checkMandatoryFields = () => {
     let error = false;

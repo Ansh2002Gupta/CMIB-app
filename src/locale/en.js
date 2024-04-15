@@ -587,7 +587,6 @@ const locale = {
   "label.contractual_period_month": "Contractual Period(Months)",
   "label.contractual_period_day": "Contractual Period(Days)",
   "label.applicants": "Applicants",
-  "label.schedule_interview": "Scheduled Interview",
   "label.view_questionaire": "Questionnaire",
   "label.select_nationality": "Select Nationality",
   "label.select_job_type": "Select Job Type",
@@ -607,7 +606,7 @@ const locale = {
   "label.fill_mandatory": "Please fill mandatory field",
   "label.job_saved_successfully": "Job Saved Successfully",
   "label.job_updated_successfully": "Job Updated Successfully",
-  "label.no_question_available": "No Question Available",
+  "label.no_question_available": "No Questionnaire are Found",
   "label.subscribe_to_get_started": "Subscribe to Get Started!",
   "label.unlock_benefits_features_of_packages":
     "Unlock the following benefits and features by subscribing to one of our packages, starting at just ₹2000.",
@@ -670,6 +669,10 @@ const locale = {
   "label.yrs": "yrs",
   "label.posted": "Posted",
   "label.ago": "ago",
+  "label.candidates": "Candidates",
+  "label.job_applicants": "Job Applicants",
+  "label.saved_candidates": "Saved Candidates",
+  "label.download_profile_resume": "Download Profile Resume",
   "label.postingAnyWhereRequired": "Posting anywhere in india is required",
   "label.transferableRequired": "Transferable post acceptable is required",
   "label.readyToPlaceRequired": "Ready to place india is required",
@@ -709,6 +712,14 @@ const locale = {
   "label.applicant_name": "Application Name",
   "label.applicant_id": "Applicant ID",
   "label.field_cannot_be_empty": "Field cannot be empty",
+  "label.actions": "Actions",
+  "label.applicant_details": "Applicant Details",
+  "label.save_applicant": "Save Applicant",
+  "label.saved_applicant": "Saved Applicant",
+  "label.updated_at": "Updated At",
+  "label.save_applicant_details": "Save Applicant Details",
+  "label.edit_schedule_interview": "Edit Schedule interview",
+  "label.interview_id_not_found": "Interview ID not found",
   "label.proficiency": "Proficiency",
   "label.nonEmptyField": "Please fill this field",
   "toggle.undefined": "--",
@@ -754,6 +765,9 @@ const locale = {
     "Contractual Period Year(s)/ Month(s)/ Day(s)",
   "label.years": "Years(s)",
   "label.giveAnswer": "Give Answer",
+  "label.memberCompletionProfilePercentWeb":
+    "Complete your job profile! its at ",
+  "label.complete": "Complete",
 };
 
 export default locale;

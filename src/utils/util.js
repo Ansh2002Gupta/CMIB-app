@@ -104,6 +104,18 @@ export const getTime = (isoString) => {
   return formattedTime;
 };
 
+export const getDate = (isoDateString, format = "DD-MM-YYYY") => {
+  const date = new Date(isoDateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // getMonth() returns 0-11
+  const day = date.getDate();
+
+  return format
+    .replace("YYYY", year.toString())
+    .replace("MM", month.toString().padStart(2, "0"))
+    .replace("DD", day.toString().padStart(2, "0"));
+};
+
 export const capitalize = (text) => {
   if (!text || typeof text !== "string") {
     return text;
@@ -114,12 +126,13 @@ export const capitalize = (text) => {
 };
 
 export const formatDate = (date, format = "DD/MM/YYYY") => {
-  return dayjs(date).format(format);
+  return !!date ? dayjs(date).format(format) : "-";
 };
 
 export const formatTime = (dateString, format = "hh:mm A") => {
-  return dayjs(dateString).format(format);
+  return !!dateString ? dayjs(dateString).format(format) : "-";
 };
+
 export const extractFilename = (fileUri) => {
   const parts = fileUri.split("/");
   const filename = parts.pop() || "";
@@ -606,7 +619,7 @@ export const convertToTime = ({ dateString, format24Hour = true }) => {
 export const formateDateandTime = (date, time) => {
   const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
   const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
-  return formattedDate + "" + formattedTime;
+  return formattedDate + formattedTime;
 };
 
 export const areAllValuesEmpty = (obj) => {

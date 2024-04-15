@@ -21,20 +21,25 @@ const CustomToggleComponent = ({
   value,
 }) => {
   const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
+  useEffect(() => {
+    if (typeof value !== "undefined") {
+      setSelectedToggleOption(value);
+    }
+  }, [value]);
+  const { isWebView } = useIsWebView();
 
   useEffect(() => {
     if (selectedToggleOption !== value) {
       setSelectedToggleOption(value);
     }
   }, [value]);
-  
+
   const handleOptionSelect = (option) => {
     if (onValueChange) {
       onValueChange(option);
     }
     setSelectedToggleOption(option);
   };
-  const { isWebView } = useIsWebView();
 
   useEffect(() => {
     selectedToggleOption != -1 && onValueChange(selectedToggleOption);
