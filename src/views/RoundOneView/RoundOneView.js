@@ -6,7 +6,7 @@ import RoundOneContainer from "../../containers/RoundOne/MainContainer";
 import styles from "./RoundOneView.style";
 import CandidateRoundOneContainer from "../../containers/CandidateRoundOne/CandidateRoundOneContainer";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
-import { USER_TYPE_CANDIDATE } from "../../constants/constants";
+import { API_STATUS, USER_TYPE_CANDIDATE } from "../../constants/constants";
 import useFetch from "../../hooks/useFetch";
 import {
   CORE,
@@ -18,11 +18,16 @@ import {
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { setRoundsData } from "../../globalContext/sidebar/sidebarActions";
 import { isObjectFilled } from "../../utils/util";
+import LoadingScreen from "../../components/LoadingScreen";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 
 const RoundOneView = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
-  const [roundOneId, setRoundId] = useState();
+  const savedRoundId = !!sideBarState?.roundsData?.rounds
+    ? sideBarState?.roundsData?.rounds[0]?.id
+    : null;
+  const [roundOneId, setRoundId] = useState(savedRoundId);
   const selectedModule = sideBarState?.selectedModule?.key;
   const sessionId = sideBarState?.selectedSession?.value;
   const savedRoundsData = sideBarState?.roundsData;
@@ -34,7 +39,14 @@ const RoundOneView = () => {
     },
   });
 
-  const { data: cardsData, fetchData: fetchCardsDetails } = useFetch({
+  const {
+    apiStatus: cardsApiStatus,
+    data: cardsData,
+    fetchData: fetchCardsDetails,
+    isLoading: isCardsDataLoading,
+    isError: isErrorOnCardsData,
+    error: errorWhileOnCardsData,
+  } = useFetch({
     url:
       USER_TYPE_COMPANY +
       `/${selectedModule}` +
@@ -73,7 +85,6 @@ const RoundOneView = () => {
         await fetchCardsDetails();
       }
     };
-
     fetchCards();
   }, [roundOneId]);
 
@@ -83,7 +94,20 @@ const RoundOneView = () => {
       USER_TYPE_CANDIDATE ? (
         <CandidateRoundOneContainer hasRoundone />
       ) : (
-        <RoundOneContainer cardsData={cardsData} />
+        <>
+          {(isCardsDataLoading || cardsApiStatus === API_STATUS.IDLE) && (
+            <LoadingScreen />
+          )}
+          {!isCardsDataLoading && !isErrorOnCardsData && !!cardsData && (
+            <RoundOneContainer cardsData={cardsData} hasRoundone />
+          )}
+          {isErrorOnCardsData && (
+            <ErrorComponent
+              errorMsg={errorWhileOnCardsData?.data?.message}
+              onRetry={() => fetchCardsDetails()}
+            />
+          )}
+        </>
       )}
     </Base>
   );

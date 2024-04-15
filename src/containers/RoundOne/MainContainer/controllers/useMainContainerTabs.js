@@ -1,25 +1,22 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import { useLocation, useNavigate } from "../../../../routes";
 
-import useFetch from "../../../../hooks/useFetch";
-import { SideBarContext } from "../../../../globalContext/sidebar/sidebarProvider";
 import images from "../../../../images";
-import {
-  ROUNDS,
-  ROUND_ONE_DASHBOARD,
-  USER_TYPE_COMPANY,
-} from "../../../../services/apiServices/apiEndPoint";
 import { navigations } from "../../../../constants/routeNames";
-import { ROUND_ONE_CARD } from "../../../../constants/constants";
+import {
+  ROUND_ONE_CARD,
+  getCompanyRoundCards,
+} from "../../../../constants/constants";
 
-const useMainContainerTabs = () => {
+const useMainContainerTabs = ({ cardsData }) => {
   const intl = useIntl();
+  const { is_editable, is_filled } = cardsData;
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedTab, setSelectedTab] = useState(null);
 
-  const roundOneTabs = ROUND_ONE_CARD.map((card) => ({
+  const roundOneTabs = getCompanyRoundCards({ is_filled }).map((card) => ({
     title: intl.formatMessage({ id: card.title }),
     id: card.id,
     image: images[card.image],
