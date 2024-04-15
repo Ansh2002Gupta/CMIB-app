@@ -19,7 +19,6 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
 import useFetch from "../../../hooks/useFetch";
-import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import {
   getValidCurrentPage,
   getValidRowPerPage,

@@ -152,7 +152,7 @@ const JobApplicants = () => {
             )}
             {isError && (
               <ErrorComponent
-                errorMsg={error.data.message}
+                errorMsg={error?.data?.message}
                 onRetry={() => fetchingJobApplicantListing()}
               />
             )}
