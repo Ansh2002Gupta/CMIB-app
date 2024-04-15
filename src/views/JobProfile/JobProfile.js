@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import {
+  Platform,
   Row,
   Text,
   TouchableOpacity,
@@ -27,6 +28,7 @@ import { GET_MEMBER_COMPLETION } from "../../services/apiServices/apiEndPoint";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { useNavigate } from "react-router";
 import { navigations } from "../../constants/routeNames";
+import CircularProgress from "../../components/CircularProgress";
 
 const EditButton = ({ isEditable, handleEdit }) => {
   const intl = useIntl();
@@ -81,6 +83,14 @@ const CompletionPercent = ({ value }) => {
         ...style.completionPercentContainer,
       }}
     >
+      {Platform.OS === "web" && (
+        <CircularProgress
+          size={24}
+          strokeWidth={3}
+          progress={value / 100 ?? 0}
+          containerStyle={style.progressBar}
+        />
+      )}
       <CommonText
         fontWeight="500"
         customTextStyle={[style.completionTextStyle]}

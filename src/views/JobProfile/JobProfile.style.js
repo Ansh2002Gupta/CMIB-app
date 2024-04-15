@@ -59,6 +59,7 @@ const style = {
     flexDirection: "row",
     paddingRight: 12,
     borderRadius: 8,
+    alignItems: "center",
   },
   completionTextBoldStyle: {
     fontWeight: "700",
@@ -94,6 +95,9 @@ const style = {
   },
   addNewText: {
     color: colors.white,
+  },
+  progressBar: {
+    marginRight: 8,
   },
 };
 
