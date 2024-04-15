@@ -315,6 +315,7 @@ const locale = {
     "Please enter the one time password that you have received on your registered mobile number",
   "label.application": "Application",
   "label.download_id": "Download Id",
+  "label.download_id_and_print_id": "Download Id & Print Id",
   "label.centre_wise_company_detail": "Centre wise Company Detail",
   "label.consent_marking_management": "Consent Marking Management",
   "label.campus_interview_management": "Campus Interview Management",
