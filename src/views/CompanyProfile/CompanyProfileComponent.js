@@ -21,6 +21,7 @@ import {
 } from "../../constants/constants";
 import {
   CORE_INDUSTRY_TYPE,
+  CORE_STATE,
   COUNTRY_CODE,
 } from "../../services/apiServices/apiEndPoint";
 import { mapApiDataToUI } from "./mappedData";
@@ -59,6 +60,7 @@ const CompanyProfileComponent = () => {
   const { errorWhileGettingResult, onGetProfile, profileResult, isLoading } =
     useGetCompanyProfileAPI();
   const { data: industryOptions } = useFetch({ url: CORE_INDUSTRY_TYPE });
+  const { data: stateOptions } = useFetch({ url: CORE_STATE });
   const {
     errorWhileUpload,
     fileUploadResult,
@@ -88,6 +90,7 @@ const CompanyProfileComponent = () => {
         mapApiDataToUI({
           apiData: profileResult,
           industryOptions: industryOptions,
+          stateOptions: stateOptions,
           intl,
           countryCodes,
           isEditMode: isEditProfile,
@@ -153,6 +156,9 @@ const CompanyProfileComponent = () => {
             break;
           case "telephoneNo":
             acc.telephone_number = detail.value;
+            break;
+          case "state":
+            acc.state_code = detail.value;
             break;
           case "registrationNo":
             acc.frn_number = detail.value;
@@ -388,6 +394,7 @@ const CompanyProfileComponent = () => {
   const handleCompanyDetailChange = (fieldName, value) => {
     if (fieldName === "label.entity") {
       let updatedCompanyDetail = [...profileData.companyDetail];
+      console.log(updatedCompanyDetail, "updatedCompanyDetail..");
       const entityIndex = updatedCompanyDetail.findIndex(
         (detail) => detail.label === "label.entity"
       );
