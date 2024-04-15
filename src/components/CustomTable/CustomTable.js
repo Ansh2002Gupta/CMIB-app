@@ -55,6 +55,7 @@ const CustomTable = ({
   isTicketListingLoading,
   isGeetingJobbSeekers,
   isFirstPageReceived,
+  mobileComponentToRender,
   loadingMore,
   onIconPress,
   placeholder,
@@ -78,8 +79,6 @@ const CustomTable = ({
   extraDetailsText,
   extraDetailsKey,
   renderCalendar,
-  statusData,
-  queryTypeData,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -91,7 +90,7 @@ const CustomTable = ({
   const [showFilterOptions, setShowFilterOptions] = useState(false);
 
   const isFilterCount = Object.values(selectedFilterOptions).find(
-    (state) => !!state.length
+    (state) => !!state?.length
   );
 
   const handleFilterModal = () => {
@@ -219,6 +218,8 @@ const CustomTable = ({
                       showsVerticalScrollIndicator={false}
                       keyExtractor={(item, index) => index?.toString()}
                       renderItem={({ item, index }) => {
+                        const statusRenderText =
+                          getRenderText(item, statusText) || "-";
                         return (
                           <>
                             {isWebView ? (
@@ -227,59 +228,70 @@ const CustomTable = ({
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
-                              <View style={styles.mobileContainer}>
-                                <View>
-                                  <CommonText
-                                    fontWeight={"600"}
-                                    customTextStyle={styles.cellTextStyle()}
-                                  >
-                                    {getRenderText(item, headingTexts)}
-                                  </CommonText>
-                                  <Row style={styles.rowStyling}>
-                                    <CommonText
-                                      customTextStyle={styles.tableQueryText}
-                                    >
-                                      {getRenderText(item, subHeadingText)}
-                                    </CommonText>
-                                    {!!extraDetailsText && (
-                                      <>
-                                        <View style={styles.dot}></View>
+                              <>
+                                {mobileComponentToRender ? (
+                                  mobileComponentToRender(item, index)
+                                ) : (
+                                  <View style={styles.mobileContainer}>
+                                    <View>
+                                      <CommonText
+                                        fontWeight={"600"}
+                                        customTextStyle={styles.cellTextStyle()}
+                                      >
+                                        {getRenderText(item, headingTexts)}
+                                      </CommonText>
+                                      <Row style={styles.rowStyling}>
                                         <CommonText
                                           customTextStyle={
                                             styles.tableQueryText
                                           }
                                         >
-                                          {extraDetailsText +
-                                            ": " +
-                                            getRenderText(
-                                              item,
-                                              extraDetailsKey
-                                            )}
+                                          {getRenderText(item, subHeadingText)}
                                         </CommonText>
-                                      </>
-                                    )}
-                                  </Row>
-                                </View>
-                                <View style={styles.rowsPerPageWeb}>
-                                  {!!item.status && (
-                                    <Chip
-                                      label={getRenderText(item, statusText)}
-                                      style={getStatusStyle(
-                                        !!item?.active
-                                          ? item.active
-                                          : item.status
+                                        {!!extraDetailsText && (
+                                          <>
+                                            <View style={styles.dot} />
+                                            <CommonText
+                                              customTextStyle={
+                                                styles.tableQueryText
+                                              }
+                                            >
+                                              {extraDetailsText +
+                                                ": " +
+                                                getRenderText(
+                                                  item,
+                                                  extraDetailsKey
+                                                )}
+                                            </CommonText>
+                                          </>
+                                        )}
+                                      </Row>
+                                    </View>
+                                    <View style={styles.rowsPerPageWeb}>
+                                      {!!item.status && (
+                                        <Chip
+                                          label={getRenderText(
+                                            item,
+                                            statusText
+                                          )}
+                                          style={getStatusStyle(
+                                            !!item?.active
+                                              ? item.active
+                                              : item.status
+                                          )}
+                                        />
                                       )}
-                                    />
-                                  )}
-                                  <TouchableImage
-                                    onPress={() => {
-                                      onIconPress(item);
-                                    }}
-                                    source={tableIcon}
-                                    style={styles.iconTicket}
-                                  />
-                                </View>
-                              </View>
+                                      <TouchableImage
+                                        onPress={() => {
+                                          onIconPress(item);
+                                        }}
+                                        source={tableIcon}
+                                        style={styles.iconTicket}
+                                      />
+                                    </View>
+                                  </View>
+                                )}
+                              </>
                             )}
                           </>
                         );
@@ -379,14 +391,19 @@ const CustomTable = ({
 
 CustomTable.defaultProps = {
   addNewTicket: false,
+  data: [],
   headingTexts: [],
   handleTicketModal: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
+  selectedFilterOptions: [],
   totalcards: 0,
   onIconPress: () => {},
   placeholder: "Search",
+  isTotalCardVisible: true,
+  indexOfFirstRecord: 0,
+  indexOfLastRecord: 0,
 };
 
 CustomTable.propTypes = {
@@ -407,8 +424,8 @@ CustomTable.propTypes = {
   isHeading: PropTypes.bool.isRequired,
   isTicketListingLoading: PropTypes.bool,
   isGeetingJobbSeekers: PropTypes.bool,
-  indexOfFirstRecord: PropTypes.number.isRequired,
-  indexOfLastRecord: PropTypes.number.isRequired,
+  indexOfFirstRecord: PropTypes.number,
+  indexOfLastRecord: PropTypes.number,
   loadingMore: PropTypes.bool.isRequired,
   onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
@@ -427,6 +444,7 @@ CustomTable.propTypes = {
   companyData: PropTypes.array,
   industryData: PropTypes.array,
   statusText: PropTypes.string,
+  selectedFilterOptions: PropTypes.array,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,

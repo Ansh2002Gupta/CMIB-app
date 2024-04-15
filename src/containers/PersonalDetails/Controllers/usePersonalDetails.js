@@ -1,4 +1,18 @@
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+
+import {
+  COUNTRY_CODE,
+  MEMBER_CATEGORY,
+} from "../../../services/apiServices/apiEndPoint";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import {
+  isValueEmpty,
+  formatCountryCode,
+  getNameById,
+  booleanToYesNo,
+} from "../../../utils/util";
+import useFetch from "../../../hooks/useFetch";
 import {
   ADDRESS_MAX_LENGTH,
   GENDER,
@@ -7,18 +21,6 @@ import {
   NUMBER_MIN_LENGTH,
   numRegex,
 } from "../../../constants/constants";
-import useFetch from "../../../hooks/useFetch";
-import {
-  COUNTRY_CODE,
-  MEMBER_CATEGORY,
-} from "../../../services/apiServices/apiEndPoint";
-import { useIntl } from "react-intl";
-import {
-  isValueEmpty,
-  formatCountryCode,
-  getNameById,
-  booleanToYesNo,
-} from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
 import dayjs from "dayjs";
 import useIsWebView from "../../../hooks/useIsWebView";
@@ -457,11 +459,26 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
 export const usePersonalDetails = ({ state, isEditable }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-  const { data: countryData, isLoading: countryLoading } = useFetch({
+  const { isCompany, currentModule } = useGetCurrentUser();
+  const {
+    data: countryData,
+    isLoading: countryLoading,
+    fetchData: fetchingCountryCode,
+  } = useFetch({
     url: COUNTRY_CODE,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
-  const { data: categoryData, isLoading: categoryLoading } = useFetch({
+  const {
+    data: categoryData,
+    isLoading: categoryLoading,
+    fetchData: fetchingCategories,
+  } = useFetch({
     url: MEMBER_CATEGORY,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const [accessibility_information_state, setAccessibility_information_state] =
@@ -473,6 +490,15 @@ export const usePersonalDetails = ({ state, isEditable }) => {
     useState(correspondence_address(countryData, isEditable));
   const [permanent_address_state, setPermanentAddressState] =
     useState(permanent_address);
+
+  useEffect(async () => {
+    if (currentModule) {
+      if (!isCompany) {
+        await fetchingCategories();
+        await fetchingCountryCode();
+      }
+    }
+  }, [currentModule]);
 
   useEffect(() => {
     setAccessibility_information_state(
