@@ -124,7 +124,6 @@ const EditJobDetails = ({
         })
         .catch((e) => {
           setPostError(e?.data?.message);
-          setSuccessMessage(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
           setLoading(false);
         });
     } else {

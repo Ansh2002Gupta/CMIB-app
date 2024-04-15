@@ -232,6 +232,7 @@ const PersonalDetails = forwardRef(({ addNewJobData, isWebView }, ref) => {
           customHandleBlur={() => {
             validateField("designation");
           }}
+          maxLength={100}
           value={jobData.designation}
           isError={(error && error.designation && true) || false}
           errorMessage={(error && error.designation) || ""}

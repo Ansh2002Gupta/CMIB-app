@@ -9,18 +9,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   questionTextStyles: {
-    fontSize: 12,
+    fontSize: 14,
     color: colors.darkGrey,
   },
   marginLeft4: {
     marginLeft: 4,
   },
   questionTypeStyle: {
-    fontSize: 12,
+    fontSize: 14,
     color: colors.darkGrey,
   },
   mandatory: {
-    fontSize: 12,
+    fontSize: 14,
     color: colors.red,
   },
   marginTop8: {
