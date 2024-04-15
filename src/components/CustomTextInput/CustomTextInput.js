@@ -13,6 +13,7 @@ import CounterInput from "../CounterInput";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import DatePickerModal from "../DatePickerModel";
 import DropDownModal from "../DropDownModal";
 import Dropdown from "../Dropdown/index";
 import Spinner from "../Spinner";
@@ -20,11 +21,14 @@ import TriggerFileUpload from "../TriggerFileUpload";
 import TextArea from "../TextArea";
 import TextInput from "../TextInput";
 import useIsWebView from "../../hooks/useIsWebView";
-import { getImageSource } from "../../utils/util";
+import { getImageSource, yesNoToBoolean } from "../../utils/util";
 import images from "../../images";
 import colors from "../../assets/colors";
 import classes from "../../theme/styles/CssClassProvider";
 import style from "./CustomTextInput.style";
+import CustomToggleComponent from "../CustomToggleComponent/CustomToggleComponent";
+import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
+import TextInputWithChip from "../TextInputWithChip/TextInputWithChip";
 
 const CustomTextInput = (props) => {
   const {
@@ -39,6 +43,7 @@ const CustomTextInput = (props) => {
     countValue,
     codeValue,
     dropdownStyle,
+    dateFormate,
     errorMessage,
     eyeImage,
     file,
@@ -47,6 +52,7 @@ const CustomTextInput = (props) => {
     inputKey,
     isCounterInput,
     isDropdown,
+    isCalendar,
     isEditable,
     isError,
     isMandatory,
@@ -58,30 +64,54 @@ const CustomTextInput = (props) => {
     isPaddingNotRequired,
     isPassword,
     isRupee,
+    isToggle,
     isSendButton,
     isLoading,
     isSelected,
     indexField,
     indexNumber,
     initiateFileUpload,
+    includeAllKeys,
     label,
+    showLabel,
+    label2,
     maxCount,
     maxLength,
     minCount,
+    menuOptions,
+    minDate,
+    minTime,
+    maxDate,
+    maxTime,
     options,
     onChangeValue,
     onClickAttachement,
     onClickSend,
     onIconClose,
+    onChangeDropDownText,
     placeholder,
+    showTimeSelect,
     step,
     selectedItems,
     setFile,
+    selectAllField,
+    timeFormat,
     value,
     labelField,
     valueField,
     urlField,
-    menuOptions,
+    format,
+    isCheckBoxSelection,
+    checkBoxOptions,
+    handleAddRemoveRow,
+    isActionToAdd,
+    handleCheckBoxSelection,
+    isSingleSelection,
+    isTextInputWithChip,
+    onChipUpdate,
+    showMonthYearPicker,
+    datePickerContainer,
+    checkBoxTextStyle,
     ...remainingProps
   } = props;
 
@@ -159,12 +189,16 @@ const CustomTextInput = (props) => {
             search
             searchPlaceholder={intl.formatMessage({ id: "label.search" })}
             inputSearchStyle={style.searchStyle}
-            style={[
-              style.dropdown,
-              isFocused && style.focusedStyle,
-              isError && style.invalidInput,
-              dropdownStyle,
-            ]}
+            includeAllKeys={includeAllKeys}
+            customHandleBlur={customHandleBlur}
+            selectAllField={selectAllField}
+            onChangeDropDownText={onChangeDropDownText}
+            dropdownStyle={{
+              ...style.dropdown,
+              ...(isFocused ? style.focusedStyle : {},
+              isError ? style.invalidInput : {}),
+              ...dropdownStyle,
+            }}
             selectedTextStyle={style.valueStyle}
             renderRightIcon={() => <Image source={images.iconDownArrow} />}
             placeholderStyle={style.placeholderStyle}
@@ -174,7 +208,7 @@ const CustomTextInput = (props) => {
             handleMultiSelect={handleMultiSelect}
             labelField={labelField}
             valueField={valueField}
-            placeholder={placeholder || ""}
+            placeholder={placeholder || "Select"}
             value={value}
             isMultiSelect={isMultiSelect}
             isSelected={isSelected}
@@ -204,13 +238,46 @@ const CustomTextInput = (props) => {
             labelField,
             onChangeValue,
             handleMultiSelect,
+            customHandleBlur,
             options,
+            includeAllKeys,
+            selectAllField,
             placeholder,
             selectedItems,
             urlField,
             value,
             valueField,
+            onChangeDropDownText,
             isEditable,
+          }}
+          {...remainingProps}
+          dropdownStyle={{
+            ...style.dropdown,
+            ...(isFocused ? style.focusedStyle : {},
+            isError ? style.invalidInput : {}),
+            ...dropdownStyle,
+          }}
+        />
+      );
+    }
+    if (isCalendar) {
+      return (
+        <DatePickerModal
+          {...{
+            // Commenting this line as
+            customStyles: customStyle,
+            datePickerContainer,
+            value,
+            onChangeValue,
+            maxDate,
+            minDate,
+            showTimeSelect,
+            showMonthYearPicker,
+            timeFormate: timeFormat,
+            format,
+            dateFormate,
+            minTime,
+            maxTime,
           }}
         />
       );
@@ -223,6 +290,45 @@ const CustomTextInput = (props) => {
           maxCount={maxCount}
           onCountChange={handleCountChange}
           step={step}
+          style={isError ? style.invalidInput : {}}
+        />
+      );
+    }
+    if (isToggle) {
+      return (
+        <CustomToggleComponent
+          isMandatory={isMandatory}
+          customToggleStyle={style.customToggleStyle}
+          onValueChange={(item) => {
+            onChangeValue(item);
+          }}
+          value={typeof value === "boolean" && value === true ? 0 : 1}
+        />
+      );
+    }
+    if (isCheckBoxSelection) {
+      return (
+        <CheckBoxSelection
+          isEditable={isEditable}
+          checkBoxOptions={checkBoxOptions}
+          customStyle={style.CheckBoxSelection}
+          handleAddRemoveRow={(isActionToAdd) =>
+            handleAddRemoveRow(isActionToAdd)
+          }
+          isActionToAdd={isActionToAdd}
+          handleCheckBoxSelection={(id) => handleCheckBoxSelection(id)}
+          isSingleSelection={isSingleSelection}
+          checkBoxTextStyle={checkBoxTextStyle}
+        />
+      );
+    }
+    if (isTextInputWithChip) {
+      return (
+        <TextInputWithChip
+          value={value}
+          placeholderText={placeholder}
+          onValueChange={onChangeValue}
+          isEditable={isEditable}
         />
       );
     }
@@ -357,6 +463,7 @@ const CustomTextInput = (props) => {
             placeholder={placeholder}
             secureTextEntry={isPassword && !isTextVisible}
             ref={fieldRef}
+            type={isNumeric ? "number" : "text"}
             {...platformSpecificProps}
             {...(isNumeric ? mobileProps : {})}
             {...remainingProps}
@@ -384,7 +491,16 @@ const CustomTextInput = (props) => {
         ...customStyle,
       }}
     >
-      {!!label && <CustomLabelView label={label} isMandatory={isMandatory} />}
+      {!!label && showLabel && (
+        <View style={style.innerLabelContainer}>
+          <CustomLabelView label={label} isMandatory={isMandatory} />
+          {!!label2 && (
+            <CommonText customContainerStyle={style.marginRight10}>
+              {label2}
+            </CommonText>
+          )}
+        </View>
+      )}
       {renderTextInput()}
       {(isError || isMultiline) && (
         <View
@@ -402,9 +518,9 @@ const CustomTextInput = (props) => {
             </CommonText>
           )}
           {isMultiline && (
-            <CommonText
-              customTextStyle={style.limitStyle}
-            >{`${value.length}/${maxLength}`}</CommonText>
+            <CommonText customTextStyle={style.limitStyle}>{`${
+              value?.length ?? 0
+            }/${maxLength}`}</CommonText>
           )}
         </View>
       )}
@@ -439,11 +555,17 @@ CustomTextInput.defaultProps = {
   isPaddingNotRequired: false,
   isPassword: false,
   isSendButton: false,
+  includeAllKeys: false,
   initiateFileUpload: () => {},
   label: "",
+  label2: "",
   labelField: "label",
   maxCount: 100,
   minCount: 0,
+  minDate: "",
+  minTime: "",
+  maxDate: "",
+  maxTime: "",
   options: [],
   onChangeValue: () => {},
   onClickAttachement: () => {},
@@ -451,9 +573,29 @@ CustomTextInput.defaultProps = {
   onIconClose: () => {},
   placeholder: "",
   step: 1,
+  showTimeSelect: false,
+  timeFormat: "",
   value: "",
   valueField: "value",
   urlField: "url",
+  isCheckBoxSelection: false,
+  checkBoxOptions: [],
+  handleAddRemoveRow: () => {},
+  isActionToAdd: true,
+  handleCheckBoxSelection: () => {},
+  isSingleSelection: false,
+  isTextInputWithChip: false,
+  showLabel: true,
+  onChipUpdate: () => {},
+};
+
+const datePropType = (props, propName, componentName) => {
+  if (props[propName] && !(props[propName] instanceof Date)) {
+    return new Error(
+      `Invalid prop \`${propName}\` supplied to` +
+        ` \`${componentName}\`. Validation failed. It needs to be a Date object.`
+    );
+  }
 };
 
 CustomTextInput.propTypes = {
@@ -484,13 +626,19 @@ CustomTextInput.propTypes = {
   isPaddingNotRequired: PropTypes.bool,
   isPassword: PropTypes.bool,
   isSendButton: PropTypes.bool,
+  includeAllKeys: PropTypes.bool,
   initiateFileUpload: PropTypes.func,
   label: PropTypes.string,
+  label2: PropTypes.string,
   labelField: PropTypes.string,
   maxCount: PropTypes.number,
   maxLength: PropTypes.number,
   menuOptions: PropTypes.array,
   minCount: PropTypes.number,
+  minDate: PropTypes.string,
+  minTime: PropTypes.string,
+  maxDate: PropTypes.string,
+  maxTime: PropTypes.string,
   onChangeValue: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.object),
   onClickAttachement: PropTypes.func,
@@ -501,10 +649,22 @@ CustomTextInput.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    datePropType,
     PropTypes.array,
   ]),
   valueField: PropTypes.string,
+  showTimeSelect: PropTypes.bool,
+  timeFormat: PropTypes.string,
   urlField: PropTypes.string,
+  CheckBoxSelection: PropTypes.bool,
+  checkBoxOptions: PropTypes.array,
+  handleAddRemoveRow: PropTypes.func,
+  isActionToAdd: PropTypes.bool,
+  handleCheckBoxSelection: PropTypes.func,
+  isSingleSelection: PropTypes.bool,
+  isTextInputWithChip: PropTypes.bool,
+  showLabel: PropTypes.bool,
+  onChipUpdate: PropTypes.func,
 };
 
 export default CustomTextInput;

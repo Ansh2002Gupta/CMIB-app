@@ -3,13 +3,16 @@ import React from "react";
 import CandidateRoundOneContainerTemplate from "./CandidateRoundOneContainerTemplate";
 import useCandidateRoundOneCards from "./controllers/useCandidateRoundOneCards";
 
-const CandidateRoundOneContainer = () => {
-  let { roundOneCards, onPressCard } = useCandidateRoundOneCards();
+const CandidateRoundOneContainer = ({ hasRoundone }) => {
+  const { roundCards, onPressCard } = useCandidateRoundOneCards({
+    hasRoundone,
+  });
 
   return (
     <CandidateRoundOneContainerTemplate
-      roundOneCards={roundOneCards}
+      cardsData={roundCards}
       onPressCard={onPressCard}
+      hasRoundone={hasRoundone}
     />
   );
 };

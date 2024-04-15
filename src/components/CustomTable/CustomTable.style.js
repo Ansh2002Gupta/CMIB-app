@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingRight: 24,
     paddingLeft: 24,
-    borderBottomWidth: 1,
+    borderRadius: 15,
     borderColor: colors.greyOne,
     backgroundColor: colors.white,
   },
@@ -37,6 +37,10 @@ const styles = StyleSheet.create({
         maxWidth: "120px",
       },
     }),
+    flexWrap: "wrap",
+    wordBreak: "break-word",
+    overFlow: "hidden",
+    whiteSpace: "break-space",
   }),
   tableHeadingText: {
     color: colors.darkGrey,
@@ -52,6 +56,8 @@ const styles = StyleSheet.create({
   },
   columnHeaderStyle: {
     backgroundColor: colors.white,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
   columnHeaderStyleWithBorder: {
     backgroundColor: colors.white,
@@ -65,7 +71,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: colors.lightGrey,
     borderRadius: 16,
-    overflow: "hidden",
   },
   iconTicket: {
     height: 20,
@@ -73,6 +78,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     marginLeft: 8,
+    fontSize: 14,
   },
   imageParentStyle: {
     flexDirection: "row",
@@ -119,6 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: "center",
     padding: 30,
+    borderRadius: 16,
   },
   textSize: {
     fontSize: 14,
@@ -139,6 +146,22 @@ const styles = StyleSheet.create({
   },
   activeTicketsText: {
     color: colors.white,
+  },
+  mobilePopUpPosition: {
+    top: 10,
+    right: -10,
+  },
+  dot: {
+    width: 4,
+    height: 4,
+    borderRadius: "100%",
+    backgroundColor: colors.lightGrey,
+  },
+  rowStyling: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 6,
   },
 });
 

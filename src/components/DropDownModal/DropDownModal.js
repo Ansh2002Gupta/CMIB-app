@@ -30,6 +30,7 @@ const DropDownModal = ({
   isSelected,
   indexNumber,
   indexField,
+  isSingleMutliSelect,
   labelField,
   onChangeValue,
   menuOptions,
@@ -39,10 +40,26 @@ const DropDownModal = ({
   value,
   valueField,
   urlField,
+  selectAllField,
+  includeAllKeys,
+  onChangeDropDownText,
+  dropdownStyle,
+  customHandleBlur,
 }) => {
   const intl = useIntl();
   const flatListRef = useRef();
+  const isFirstTimeRef = useRef(true);
   const [modalStyle, setModalStyle] = useState({});
+
+  const getAllKeys = (option) => {
+    let finalObj = {};
+    Object.keys(option).forEach((key) => {
+      if (key !== valueField && key !== labelField) {
+        finalObj = { ...finalObj, [key]: option[key] };
+      }
+    });
+    return finalObj;
+  };
 
   const defaultOptions = options?.map((option) => ({
     value: String(option[valueField]),
@@ -50,6 +67,7 @@ const DropDownModal = ({
     url: String(option[urlField]),
     index: option[indexField],
     isSelected: option[isSelected],
+    ...(includeAllKeys ? { ...getAllKeys(option) } : {}),
   }));
 
   const data = menuOptions?.length ? menuOptions : defaultOptions;
@@ -61,7 +79,7 @@ const DropDownModal = ({
     const selectedIndex = data?.findIndex((item) => item.value === value);
     if (
       selectedIndex > -1 &&
-      selectedIndex < selectedOption.length &&
+      selectedIndex < selectedOption?.length &&
       flatListRef.current
     ) {
       const timer = setTimeout(() => {
@@ -70,9 +88,16 @@ const DropDownModal = ({
       return () => clearTimeout(timer);
     }
   }, [selectedOption, isDropDownOpen]);
+  useEffect(() => {
+    if (!isDropDownOpen && !isFirstTimeRef.current) {
+      customHandleBlur && customHandleBlur();
+    } else {
+      isFirstTimeRef.current = false;
+    }
+  }, [isDropDownOpen]);
 
   const handleValueChange = (selectedOption) => {
-    onChangeValue(selectedOption.value);
+    onChangeValue(selectAllField ? selectedOption : selectedOption.value);
   };
 
   const keyboardDidHideCallback = () => {
@@ -98,10 +123,10 @@ const DropDownModal = ({
   const onSearch = (filteredData) => {
     setSelectedOption(filteredData);
   };
-
   const handleDropDown = () => {
     if (isEditable) {
       Keyboard.dismiss();
+      onChangeDropDownText && onChangeDropDownText("");
       setIsDropDownOpen((prev) => !prev);
     }
   };
@@ -129,7 +154,7 @@ const DropDownModal = ({
   };
 
   const scrollToIndex = (info) => {
-    if (flatListRef.current && selectedOption.length > info.index) {
+    if (flatListRef.current && selectedOption?.length > info.index) {
       scrollAnimation(info.index);
     }
   };
@@ -139,7 +164,11 @@ const DropDownModal = ({
       <TouchableOpacity
         key={index}
         onPress={() => {
-          onChangeValue(item.value);
+          if (selectAllField) {
+            onChangeValue(item);
+          } else {
+            onChangeValue(item.value);
+          }
           handleDropDown();
         }}
         style={styles.optionContainer}
@@ -173,7 +202,7 @@ const DropDownModal = ({
   const renderFlatList = () => {
     return (
       <FlatList
-        data={selectedOption}
+        data={!!onChangeDropDownText ? data : selectedOption}
         getItemLayout={getItemLayout}
         initialNumToRender={10}
         keyExtractor={(item, index) => index.toString()}
@@ -184,30 +213,46 @@ const DropDownModal = ({
       />
     );
   };
-
   if (isMultiSelect) {
     return (
       <>
         <TouchableOpacity
           onPress={handleDropDown}
-          style={styles.textButton(isEditable)}
+          style={{
+            ...styles.textButton(isEditable),
+            ...dropdownStyle,
+          }}
         >
           <CommonText
-            customTextStyle={value ? styles.valueText : styles.placeHolderText}
+            customTextStyle={{
+              ...(value ? styles.valueText : styles.placeHolderText),
+            }}
+            customContainerStyle={styles.customContainerStyle}
           >
             {placeholder}
           </CommonText>
           <CustomImage source={images.iconDownArrow} style={styles.iconArrow} />
         </TouchableOpacity>
-        {!!selectedItems.length && (
+        {isSingleMutliSelect ? (
           <View style={styles.multiSelectOptions}>
-            {selectedItems.map((item, index) => (
-              <>
+            {options
+              ?.filter((item) => item.isSelected)
+              ?.map((item, index) => (
                 <CustomChipCard
-                  message={item?.name}
+                  key={index}
+                  message={item?.name || item?.label}
                   onPress={() => handleValueChange(item)}
                 />
-              </>
+              ))}
+          </View>
+        ) : (
+          <View style={styles.multiSelectOptions}>
+            {selectedItems?.map((item, index) => (
+              <CustomChipCard
+                key={index}
+                message={item?.name ?? item.value}
+                onPress={() => handleValueChange(item)}
+              />
             ))}
           </View>
         )}
@@ -221,6 +266,15 @@ const DropDownModal = ({
             }}
             onBackdropPress={handleDropDown}
           >
+            {(data?.length >= 20 || onChangeDropDownText) && (
+              <SearchView
+                data={data}
+                onSearch={onSearch}
+                customSearchCriteria={handleSearch}
+                customParentStyle={styles.searchView}
+                onChangeDropDownText={onChangeDropDownText}
+              />
+            )}
             <FlatList
               data={data}
               style={styles.modalContainer}
@@ -243,7 +297,14 @@ const DropDownModal = ({
                       customTextStyle={styles.checkBoxTextStyle}
                       handleCheckbox={() => handleValueChange(item)}
                       id={item.value}
-                      isSelected={item?.isSelected || item.index !== null}
+                      isSelected={
+                        item?.isSelected ||
+                        (item.index && item.index !== null) ||
+                        (!isSelected &&
+                          selectedItems?.findIndex(
+                            (items) => items.id === item.id
+                          ) !== -1)
+                      }
                       title={item?.label}
                       isDisabled={isDisabled}
                     />
@@ -279,7 +340,7 @@ const DropDownModal = ({
       ) : (
         <TouchableOpacity
           onPress={handleDropDown}
-          style={styles.textButton(isEditable)}
+          style={{ ...styles.textButton(isEditable), ...dropdownStyle }}
         >
           <CommonText
             customTextStyle={value ? styles.valueText : styles.placeHolderText}
@@ -299,13 +360,13 @@ const DropDownModal = ({
           }}
           onBackdropPress={handleDropDown}
         >
-          {/* If the list items greater than 20 then we have to implement search */}
-          {data?.length >= 20 && (
+          {(data?.length >= 20 || onChangeDropDownText) && (
             <SearchView
               data={data}
               onSearch={onSearch}
               customSearchCriteria={handleSearch}
               customParentStyle={styles.searchView}
+              onChangeDropDownText={onChangeDropDownText}
             />
           )}
           {renderFlatList()}
@@ -317,30 +378,42 @@ const DropDownModal = ({
 
 DropDownModal.defaultProps = {
   customHeading: "",
+  dropdownStyle: {},
   isEditable: true,
   labelField: "label",
+  includeAllKeys: false,
   isMobileNumber: false,
+  isSingleMutliSelect: false,
   onChangeValue: () => {},
+  selectAllField: false,
   menuOptions: {},
   options: [],
   placeholder: "",
   value: "",
   valueField: "value",
   urlField: "url",
+  selectAllField: false,
 };
 
 DropDownModal.propTypes = {
   customHeading: PropTypes.string,
+  customHandleBlur: PropTypes.func,
+  dropdownStyle: PropTypes.object,
   isEditable: PropTypes.bool,
   labelField: PropTypes.string,
   isMobileNumber: PropTypes.bool,
+  isSingleMutliSelect: PropTypes.bool,
+  includeAllKeys: PropTypes.bool,
   onChangeValue: PropTypes.func,
+  onChangeDropDownText: PropTypes.func,
   menuOptions: PropTypes.object,
+  selectAllField: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.object),
   placeholder: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  selectAllField: PropTypes.bool,
 };
 
 export default DropDownModal;

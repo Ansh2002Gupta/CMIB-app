@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   counterInputText: {
-    flex: 1,
     color: colors.black,
     justifyContent: "center",
     alignItems: "center",
     fontSize: 14,
     padding: 0,
+    height: 30,
   },
   counterUp: {
     height: 14,

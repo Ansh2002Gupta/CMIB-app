@@ -19,15 +19,24 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import {
+  FILTER_TYPE_ENUM,
+  ROWS_PER_PAGE_ARRAY,
+} from "../../../constants/constants";
 import usePagination from "../../../hooks/usePagination";
 import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
 import images from "../../../images";
 import { navigations } from "../../../constants/routeNames";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../TicketsListing.style";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
+
+const initialFilterState = {
+  selectedStatus: [],
+  selectedQuery: [],
+};
 
 const useTicketListing = () => {
   const { isWebView } = useIsWebView();
@@ -40,7 +49,9 @@ const useTicketListing = () => {
   const [filterOptions, setFilterOptions] = useState({
     status: "",
     query_type: "",
+    searchData: "",
   });
+  const [filterState, setFilterState] = useState(initialFilterState);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -55,6 +66,8 @@ const useTicketListing = () => {
     data: ticketListingData,
     isLoading: isTicketListingLoading,
     fetchData: fetchDataTicketListing,
+    isError: isErrorTicketListing,
+    error: errorTicketListing,
   } = useFetch({
     url: COMPANY_TICKET_LISTING,
     otherOptions: {
@@ -62,17 +75,122 @@ const useTicketListing = () => {
     },
   });
 
-  const { handleAddTicket } = useAddTicket();
+  const { handleAddTicket, updationError, setUpdationError } = useAddTicket();
 
-  const { data: queryTypeData } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
+  const {
+    data: queryTypeData,
+    fetchData: fetchQueryType,
+    isError: isErrorQueryType,
+    error: errorQueryType,
+  } = useFetch({ url: COMPANY_QUERY_TYPE_TICKET });
 
-  const { data: statusData } = useFetch({ url: COMPANY_TICKET_STATUS });
+  const {
+    data: statusData,
+    fetchData: fetchStatus,
+    isError: isErrorStatus,
+    error: errorStatus,
+  } = useFetch({
+    url: COMPANY_TICKET_STATUS,
+  });
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
     setCurrentPage,
     setRowPerPage,
   });
+
+  const isError = isErrorTicketListing || isErrorStatus || isErrorQueryType;
+
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {
+    setFilterState((prevState) => {
+      const filterObj = customFilterInfo.find(
+        (info) => info.name === filterName
+      );
+      const filterKey = `selected${filterObj?.name}`;
+      const existingSelectedOptions = prevState[filterKey];
+      let newSelectedOptions = [];
+      if (!!existingSelectedOptions) {
+        if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
+          newSelectedOptions = existingSelectedOptions?.includes(
+            selectedFilter?.[keyName]
+          )
+            ? existingSelectedOptions?.filter((item) => {
+                return item !== selectedFilter?.[keyName];
+              })
+            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+        } else {
+          newSelectedOptions = selectedFilter.value;
+        }
+      }
+
+      return {
+        ...prevState,
+        [filterKey]: newSelectedOptions,
+      };
+    });
+  };
+
+  const customFilterInfo = [
+    {
+      refKey: "id",
+      name: "Status",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: statusData,
+      selectedOptions: filterState?.selectedStatus,
+      handler: handleFilterChange,
+    },
+    {
+      refKey: "id",
+      name: "QueryType",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: queryTypeData,
+      selectedOptions: filterState?.selectedQueryType,
+      handler: handleFilterChange,
+    },
+  ];
+
+  const getErrorDetails = () => {
+    if (isErrorTicketListing && isErrorStatus && isErrorQueryType) {
+      let errorMessage = "";
+      if (
+        errorTicketListing === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
+        errorStatus === GENERIC_GET_API_FAILED_ERROR_MESSAGE &&
+        errorQueryType === GENERIC_GET_API_FAILED_ERROR_MESSAGE
+      ) {
+        errorMessage = GENERIC_GET_API_FAILED_ERROR_MESSAGE;
+      } else {
+        errorMessage = `${errorTicketListing?.data?.message} , ${errorStatus?.data?.message}, ${errorQueryType?.data?.message}`;
+      }
+      return {
+        errorMessage,
+        onRetry: () => {
+          fetchDataTicketListing({});
+          fetchQueryType();
+          fetchStatus();
+        },
+      };
+    }
+    if (isErrorTicketListing)
+      return {
+        errorMessage: errorTicketListing?.data?.message,
+        onRetry: () => fetchDataTicketListing({}),
+      };
+    if (isErrorStatus)
+      return {
+        errorMessage: errorStatus?.data?.message,
+        onRetry: () => fetchStatus(),
+      };
+    if (isErrorQueryType)
+      return {
+        errorMessage: errorQueryType?.data?.message,
+        onRetry: () => fetchQueryType(),
+      };
+
+    return {
+      errorMessage: "",
+      onRetry: () => {},
+    };
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,6 +203,9 @@ const useTicketListing = () => {
       });
       if (initialData && initialData?.records?.length > 0) {
         setCurrentRecords(initialData?.records);
+        if (initialData?.records?.length < rowsPerPage && isMob) {
+          setAllDataLoaded(true);
+        }
       }
       setIsFirstPageReceived(false);
     };
@@ -108,16 +229,19 @@ const useTicketListing = () => {
     const nextPage = currentPage + 1;
     try {
       const newData = await fetchDataTicketListing({
-        queryParamsObject: { perPage: rowsPerPage, page: nextPage },
+        queryParamsObject: {
+          perPage: rowsPerPage,
+          page: nextPage,
+          status: filterOptions.status,
+          queryType: filterOptions.query_type,
+        },
       });
-
       if (newData && newData?.records?.length > 0) {
         setCurrentRecords((prevRecords) => [
           ...prevRecords,
           ...newData.records,
         ]);
       }
-
       setCurrentPage(nextPage);
       if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
         setAllDataLoaded(true);
@@ -134,6 +258,8 @@ const useTicketListing = () => {
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: page,
+      status: filterOptions.status,
+      queryType: filterOptions.query_type,
     });
   };
 
@@ -142,17 +268,39 @@ const useTicketListing = () => {
     await updateCurrentRecords({
       perPage: option.value,
       page: currentPage,
+      status: filterOptions.status,
+      queryType: filterOptions.query_type,
     });
   };
 
   const handleSearchResults = async (searchedData) => {
-    await updateCurrentRecords({
-      q: searchedData,
-      perPage: rowsPerPage,
-      page: currentPage,
-      status: filterOptions.status,
-      queryType: filterOptions.query_type,
-    });
+    setIsFirstPageReceived(true);
+    setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
+    if (isMob) {
+      setCurrentPage(1);
+      const newData = await fetchDataTicketListing({
+        queryParamsObject: {
+          q: searchedData,
+          status: filterOptions.status,
+          queryType: filterOptions.query_type,
+        },
+      });
+      setIsFirstPageReceived(false);
+      setCurrentRecords(newData?.records);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        q: searchedData,
+        perPage: rowsPerPage,
+        page: currentPage,
+        status: filterOptions.status,
+        queryType: filterOptions.query_type,
+      });
+    }
   };
 
   const onIconPress = (item) => {
@@ -162,31 +310,86 @@ const useTicketListing = () => {
   };
 
   const handleSaveAddTicket = async (queryType, enterQuery) => {
-    await handleAddTicket({ query_type: queryType, query: enterQuery });
+    setIsFirstPageReceived(true);
+    handleAddTicket({
+      payload: {
+        query_type: queryType,
+        query: enterQuery,
+      },
+      onSuccessCallback: async () => {
+        if (isMob) {
+          setCurrentPage(1);
+          const newData = await fetchDataTicketListing({
+            queryParamsObject: {
+              status: filterOptions.status,
+              queryType: filterOptions.query_type,
+              perPage: rowsPerPage,
+              page: 1,
+            },
+          });
+          if (newData && newData?.records.length > 0) {
+            setCurrentRecords(newData?.records);
+            setIsFirstPageReceived(false);
+          }
+          if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+            setAllDataLoaded(true);
+          } else {
+            setAllDataLoaded(false);
+          }
+        } else {
+          await updateCurrentRecords({
+            perPage: rowsPerPage,
+            page: currentPage,
+          });
+        }
+      },
+    });
+  };
+
+  const returnSelectedFilterOption = (filterInfo, filterName) => {
+    const filterObj = filterInfo?.find((obj) => obj.name === filterName);
+    return filterObj?.selectedOptions;
+  };
+
+  const filterApplyHandler = async (filterInfo) => {
+    setIsFirstPageReceived(true);
+    const currentFilterOptions = {
+      status: returnSelectedFilterOption(filterInfo, "Status"),
+      query_type: returnSelectedFilterOption(filterInfo, "QueryType"),
+    };
+    setFilterOptions((prev) => {
+      return {
+        ...prev,
+        ...currentFilterOptions,
+      };
+    });
     if (isMob) {
-      const newData = await fetchDataTicketListing();
-      if (newData && newData.records.length > 0) {
-        setCurrentRecords((prevRecords) => [
-          ...prevRecords,
-          ...newData.records,
-        ]);
+      setLoadingMore(false);
+      setCurrentPage(1);
+      const newData = await fetchDataTicketListing({
+        queryParamsObject: {
+          q: filterOptions.searchData,
+          multiFacet: 1,
+          status: currentFilterOptions.status,
+          queryType: currentFilterOptions.query_type,
+        },
+      });
+      setCurrentRecords(newData?.records);
+      setIsFirstPageReceived(false);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
       }
     } else {
       await updateCurrentRecords({
         perPage: rowsPerPage,
         page: currentPage,
+        multiFacet: 1,
+        status: currentFilterOptions.status,
+        queryType: currentFilterOptions.query_type,
       });
     }
-  };
-
-  const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
-    setFilterOptions({ status: selectedStatus, query_type: selectedQueryType });
-    await updateCurrentRecords({
-      status: selectedStatus,
-      queryType: selectedQueryType,
-      perPage: rowsPerPage,
-      page: currentPage,
-    });
   };
 
   const onDateSorting = async (sortField) => {
@@ -322,9 +525,12 @@ const useTicketListing = () => {
   return {
     allDataLoaded,
     currentPage,
+    customFilterInfo,
     fetchDataTicketListing,
     filterApplyHandler,
     filterCategory,
+    filterState,
+    setFilterState,
     getColoumConfigs,
     getStatusStyle,
     handleLoadMore,
@@ -333,6 +539,8 @@ const useTicketListing = () => {
     handleSearchResults,
     handleSaveAddTicket,
     headingTexts,
+    getErrorDetails,
+    isError,
     indexOfFirstRecord,
     indexOfLastRecord,
     isHeading,
@@ -343,12 +551,14 @@ const useTicketListing = () => {
     queryTypeData,
     queryTypeUrl: COMPANY_QUERY_TYPE_TICKET,
     rowsPerPage,
+    setUpdationError,
     statusData,
     statusText,
     subHeadingText,
     tableIcon,
     ticketListingData: currentRecords,
     totalcards: ticketListingData?.meta?.total,
+    updationError,
   };
 };
 

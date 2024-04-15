@@ -18,6 +18,7 @@ const useAxiosInstance = () => {
 
   axiosInstance.interceptors.request.use(async (request) => {
     request.headers["api-version"] = API_VERSION_NUMBER;
+    request.headers["ngrok-skip-browser-warning"] = true;
     const token = (await CookieAndStorageService.get({ key: "auth" })) || null;
     if (token) {
       request.headers.Authorization = `Bearer ${token}`;
@@ -33,7 +34,7 @@ const useAxiosInstance = () => {
         (response?.data?.message ===
           intl.formatMessage({ id: "label.login_with_new_email" }) ||
           response?.data?.message ===
-            intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
+          intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
       ) {
         onLogout({
           message: response?.data?.message,
@@ -58,7 +59,7 @@ const useAxiosInstance = () => {
         (error.response?.data?.message ===
           intl.formatMessage({ id: "label.login_with_new_email" }) ||
           error.response?.data?.message ===
-            intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
+          intl.formatMessage({ id: "label.your_access_has_been_revoked" }))
       ) {
         onLogout({
           message: error.response?.data?.message,

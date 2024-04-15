@@ -1,4 +1,4 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
@@ -44,7 +44,11 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   buttonMobileStyle: {
-    marginBottom: 30,
+    ...Platform.select({
+      ios: {
+        marginBottom: 30,
+      },
+    }),
   },
   middleSectionWeb: {
     minHeight: 278,
@@ -62,9 +66,77 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingLeft: 16,
     justifyContent: "center",
+    width: "100%",
   },
   renderOptionCatigory: {
     height: 300,
+  },
+  slider: {
+    flex: 1,
+    marginTop: 38,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+  limitsContainer: {
+    width: "100%",
+    marginTop: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  sliderLimitLabel: {
+    color: colors.mediumGray,
+    fontSize: 14,
+  },
+  popUp: {
+    position: "absolute",
+    top: 0,
+    width: 32,
+    height: 20,
+  },
+  customExperience: {
+    fontSize: 14,
+  },
+  customExperienceContainer: {
+    position: "relative",
+    left: 8,
+    bottom: 4,
+  },
+  alignflexStart: {
+    alignItems: "flex-start",
+  },
+  slider: {
+    flex: 1,
+    marginTop: 38,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 12,
+    paddingBottom: 12,
+  },
+  limitsContainer: {
+    width: "100%",
+    marginTop: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  sliderLimitLabel: {
+    color: colors.mediumGray,
+    fontSize: 14,
+  },
+  popUp: {
+    position: "absolute",
+    top: 0,
+    width: 32,
+    height: 20,
+  },
+  customExperience: {
+    fontSize: 14,
+  },
+  customExperienceContainer: {
+    position: "relative",
+    left: 8,
+    bottom: 4,
   },
 });
 

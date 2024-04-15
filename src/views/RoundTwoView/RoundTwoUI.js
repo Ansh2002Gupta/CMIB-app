@@ -3,6 +3,9 @@ import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../../components/CommonText";
+import CandidateRoundOneContainer from "../../containers/CandidateRoundOne/CandidateRoundOneContainer";
+import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
+import { USER_TYPE_CANDIDATE } from "../../constants/constants";
 import styles from "./RoundTwo.style";
 import { setRoundsData } from "../../globalContext/sidebar/sidebarActions";
 import useFetch from "../../hooks/useFetch";
@@ -11,6 +14,8 @@ import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { isObjectFilled } from "../../utils/util";
 
 function RoundTwoUI(props) {
+  const [userProfileDetails] = useContext(UserProfileContext);
+
   const intl = useIntl();
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const selectedModule = sideBarState?.selectedModule?.key;
@@ -38,9 +43,12 @@ function RoundTwoUI(props) {
 
   return (
     <View style={styles.container}>
-      <CommonText customTextStyle={styles.header}>
-        {intl.formatMessage({ id: "label.round2" })}
-      </CommonText>
+      {userProfileDetails?.userDetails?.user_type?.toLowerCase() ===
+      USER_TYPE_CANDIDATE ? (
+        <CandidateRoundOneContainer hasRoundone={false} />
+      ) : (
+        <CommonText>Company</CommonText>
+      )}
     </View>
   );
 }

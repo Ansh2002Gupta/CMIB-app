@@ -32,19 +32,30 @@ const style = {
     borderColor: colors.lightGrey,
     zIndex: 0,
     height: 92,
+    width: "100%",
+  },
+  width100: {
+    width: "100%",
+  },
+  iconTextStyle: {
+    numberOfLines: 1,
+    ellipsizeMode: "tail",
   },
   formHeaderStyle: {
     color: colors.black,
     fontSize: 20,
     marginRight: 16,
+    width: "100%",
   },
   formHeaderStyleWeb: {
     fontSize: 32,
     marginRight: 16,
+    width: "100%",
   },
   headingContainer: {
     flexDirection: "row",
     alignItems: "center",
+    width: "50%",
   },
   borderStyle: {
     borderWidth: 1,
@@ -52,7 +63,6 @@ const style = {
   },
   cardContainer: {
     height: 44,
-    width: 88,
     paddingTop: 12,
     paddingBottom: 12,
     paddingRight: 16,
@@ -73,6 +83,14 @@ const style = {
   iconStyle: {
     height: 20,
     width: 20,
+  },
+  flexRowAlignCenter: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  marginLeft8: {
+    marginLeft: 8,
+    width: 50,
   },
 };
 

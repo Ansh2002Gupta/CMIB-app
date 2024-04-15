@@ -15,8 +15,38 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderRadius: 8,
   },
+  zIndexOuter: {
+    zIndex: 5,
+  },
+  zIndexInner: {
+    zIndex: 100,
+  },
+  containerStyle: {
+    flexDirection: "row",
+    height: 20,
+    width: 20,
+  },
+  popUpArrayView: {
+    position: "absolute",
+    right: 8,
+    top: 0,
+    borderWidth: 1,
+    borderColor: colors.lightGrey,
+    borderRadius: 8,
+    zIndex: 20,
+    backgroundColor: colors.white,
+  },
   deletetext: {
     fontSize: 14,
+  },
+  popUpComponentStyle: {
+    backgroundColor: colors.white,
+    // zIndex: 10,
+    padding: 16,
+    width: 240,
+    height: 54,
+    borderColor: colors.lightGrey,
+    borderRadius: 8,
   },
 });
 

@@ -1,15 +1,17 @@
 import { useRef, useState } from "react";
 
-const useFilterModal = (
+const useFilterModal = ({
+  defaultCategory,
+  filterInfo,
   filterState,
   initialFilterState,
   onApplyFilter,
   setFilterState,
-  setShowFilterOptions
-) => {
-  const { selectedStatus, selectedQueryType, activeCategories } = filterState;
-  const [currentCategory, setCurrentCategory] = useState("Status");
-
+  setShowFilterOptions,
+}) => {
+  const [currentCategory, setCurrentCategory] = useState(
+    defaultCategory || "Status"
+  );
   const prevFilterState = useRef(filterState);
 
   const onCancel = () => {
@@ -18,49 +20,31 @@ const useFilterModal = (
   };
 
   const handleCategoryChange = (category) => {
-    setCurrentCategory(category);
-  };
-
-  const handleStatusChange = (status) => {
-    setFilterState((prevState) => {
-      const newSelectedStatus = prevState.selectedStatus.includes(status.id)
-        ? prevState.selectedStatus.filter((s) => s !== status.id)
-        : [...prevState.selectedStatus, status.id];
-      return { ...prevState, selectedStatus: newSelectedStatus };
-    });
-  };
-
-  const handleQueryTypeChange = (queryType) => {
-    setFilterState((prevState) => {
-      const newSelectedQueryType = prevState.selectedQueryType.includes(
-        queryType.id
-      )
-        ? prevState.selectedQueryType.filter((q) => q !== queryType.id)
-        : [...prevState.selectedQueryType, queryType.id];
-      return { ...prevState, selectedQueryType: newSelectedQueryType };
-    });
+    setCurrentCategory(String(category));
   };
 
   const filterData = () => {
-    onApplyFilter({ selectedStatus, selectedQueryType });
+    onApplyFilter(filterInfo);
+  };
+
+  const clearFilterState = (filterInfo) => {
+    filterInfo = filterInfo?.map((filterObj) => {
+      return { ...filterObj, selectedOptions: [] };
+    });
+    return filterInfo;
   };
 
   const handleClearFilter = () => {
     setFilterState(initialFilterState);
-    onApplyFilter({ initialFilterState });
+    onApplyFilter(clearFilterState(filterInfo));
   };
 
   return {
-    activeCategories,
     currentCategory,
-    handleCategoryChange,
-    handleStatusChange,
-    handleQueryTypeChange,
-    handleClearFilter,
     filterData,
+    handleCategoryChange,
+    handleClearFilter,
     onCancel,
-    selectedStatus,
-    selectedQueryType,
   };
 };
 

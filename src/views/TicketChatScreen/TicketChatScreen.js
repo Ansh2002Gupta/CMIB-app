@@ -27,6 +27,7 @@ const TicketChatScreen = () => {
     ErrorChatData,
     erroticketViewDetails,
     errorWhileSendingMessage,
+    fetchChatData,
     handleFileUpload,
     handleLoadMore,
     handlePopup,
@@ -93,77 +94,84 @@ const TicketChatScreen = () => {
       {isLoading ? (
         <LoadingScreen />
       ) : (
-        <TwoRow
-          style={styles.mainContainer}
-          topSection={
-            <>
-              <IconHeader
-                headerText={
-                  isDetailsScreen
-                    ? intl.formatMessage({ id: "label.view_ticket_details" })
-                    : ticketViewDetails?.readable_id
-                }
-                subHeading={ticketViewDetails?.status}
-                onPressLeftIcon={onGoBack}
-                hasIconBar
-                mobActionButton={images.iconMore}
-                handleButtonClick={() => {
-                  handlePopup();
-                }}
-              />
-              {showPopup && !isDetailsScreen && (
-                <PopupMessage
-                  message={intl.formatMessage({
-                    id: "label.view_ticket_details",
-                  })}
-                  onPopupClick={() => {
-                    setIsDetailScreen(true);
+        !isErrorChatData && (
+          <TwoRow
+            style={styles.mainContainer}
+            topSection={
+              <>
+                <IconHeader
+                  headerText={
+                    isDetailsScreen
+                      ? intl.formatMessage({ id: "label.view_ticket_details" })
+                      : ticketViewDetails?.readable_id
+                  }
+                  subHeading={ticketViewDetails?.status}
+                  onPressLeftIcon={onGoBack}
+                  hasIconBar
+                  mobActionButton={images.iconMore}
+                  handleButtonClick={() => {
                     handlePopup();
                   }}
                 />
-              )}
-            </>
-          }
-          isBottomFillSpace
-          topSectionStyle={styles.topSectionStyle}
-          bottomSectionStyle={styles.bottomSectionStyle}
-          bottomSection={
-            isWebView ? (
-              <TwoColumn
-                leftSectionStyle={
-                  isWebView
-                    ? styles.chatScreenSectionWeb(midOrSmall)
-                    : styles.chatScreenSection
-                }
-                rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
-                leftSection={!!chatRecords.length && renderChatSection()}
-                rightSection={
-                  <>
-                    {!isErrorticketViewDetails && (
-                      <TicketDetails details={ticketViewDetails} />
-                    )}
-                    {isErrorticketViewDetails && (
-                      <ErrorComponent
-                        errorMsg={erroticketViewDetails?.data?.message}
-                      />
-                    )}
-                  </>
-                }
-              />
-            ) : (
-              <>
-                {isDetailsScreen ? (
-                  <TicketDetails details={ticketViewDetails} />
-                ) : (
-                  !!chatRecords.length && renderChatSection()
+                {showPopup && !isDetailsScreen && (
+                  <PopupMessage
+                    message={intl.formatMessage({
+                      id: "label.view_ticket_details",
+                    })}
+                    customStyle={styles.popmessageStyle}
+                    customStyle={styles.PopupMessageStyle}
+                    onPopupClick={() => {
+                      setIsDetailScreen(true);
+                      handlePopup();
+                    }}
+                  />
                 )}
               </>
-            )
-          }
-        />
+            }
+            isBottomFillSpace
+            topSectionStyle={styles.topSectionStyle}
+            bottomSectionStyle={styles.bottomSectionStyle}
+            bottomSection={
+              isWebView ? (
+                <TwoColumn
+                  leftSectionStyle={
+                    isWebView
+                      ? styles.chatScreenSectionWeb(midOrSmall)
+                      : styles.chatScreenSection
+                  }
+                  rightSectionStyle={styles.ticketDetailsStyles(midOrSmall)}
+                  leftSection={!!chatRecords.length && renderChatSection()}
+                  rightSection={
+                    <>
+                      {!isErrorticketViewDetails && (
+                        <TicketDetails details={ticketViewDetails} />
+                      )}
+                      {isErrorticketViewDetails && (
+                        <ErrorComponent
+                          errorMsg={erroticketViewDetails?.data?.message}
+                        />
+                      )}
+                    </>
+                  }
+                />
+              ) : (
+                <>
+                  {isDetailsScreen ? (
+                    <TicketDetails details={ticketViewDetails} />
+                  ) : (
+                    !!chatRecords.length && renderChatSection()
+                  )}
+                </>
+              )
+            }
+          />
+        )
       )}
       {isErrorChatData && (
-        <ErrorComponent errorMsg={ErrorChatData?.data?.message} />
+        <ErrorComponent
+          errorMsg={ErrorChatData?.data?.message}
+          onRetry={() => fetchChatData({})}
+        />
       )}
     </>
   );

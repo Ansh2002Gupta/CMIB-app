@@ -47,6 +47,29 @@ const caJobsMenu = [
   },
 ];
 
+const memberCaJobsMenu = [
+  {
+    label: "Dashboard",
+    key: navigations.MODULE_LANDING_PAGE,
+    icon: "iconDashboard",
+  },
+  {
+    label: "Saved Jobs",
+    key: navigations.SAVED_JOBS,
+    icon: "iconSaved",
+  },
+  {
+    label: "Applied Jobs",
+    key: navigations.APPLIED_JOBS,
+    icon: "iconAppliedJobs",
+  },
+  {
+    label: "All Jobs",
+    key: navigations.ALL_JOBS,
+    icon: "iconPostedJobs",
+  },
+];
+
 const experiencedMembersMenu = [
   {
     label: "Dashboard",
@@ -69,59 +92,67 @@ export const moduleKeys = {
   OVERSEAS_CHAPTERS_KEY: "overseas-chapters",
 };
 
-export const modules = [
-  {
-    label: "Newly Qualified Placements",
-    key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
-    children: newlyQualifiedPlacementsMenu,
-    visible: false,
-    image: images.iconNewlyQualified,
-    isExperiencedMember: false,
-  },
-  {
-    label: "CA Jobs",
-    key: moduleKeys.CA_JOBS_KEY,
-    children: caJobsMenu,
-    visible: false,
-    image: images.iconCAJobs,
-    isExperiencedMember: false,
-  },
-  {
-    label: "Experienced Members",
-    key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
-    visible: false,
-    sectionHeading: true,
-  },
-  {
-    label: "Career Ascent",
-    key: moduleKeys.CARRER_ASCENT_KEY,
-    children: experiencedMembersMenu,
-    visible: false,
-    isSubMenu: true,
-    image: images.iconCareerAscent,
-    isExperiencedMember: true,
-  },
-  {
-    label: "Women PartTime",
-    key: moduleKeys.WOMEN_PARTTIME_KEY,
-    children: experiencedMembersMenu,
-    visible: false,
-    isSubMenu: true,
-    image: images.iconWomanPartTime,
-    isExperiencedMember: true,
-  },
-  {
-    label: "Overseas Chapters",
-    key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
-    children: experiencedMembersMenu,
-    visible: false,
-    isSubMenu: true,
-    image: images.iconOverseasChapters,
-    isExperiencedMember: true,
-  },
-];
+export const getAppModules = ({ isMember }) => {
+  return [
+    {
+      label: "Newly Qualified Placements",
+      key: moduleKeys.NEWLY_QUALIFIED_PLACEMENTS_KEY,
+      children: newlyQualifiedPlacementsMenu,
+      session: items,
+      visible: false,
+      image: images.iconNewlyQualified,
+      isExperiencedMember: false,
+    },
+    {
+      label: "CA Jobs",
+      key: moduleKeys.CA_JOBS_KEY,
+      children: isMember ? memberCaJobsMenu : caJobsMenu,
+      session: items,
+      visible: false,
+      image: images.iconCAJobs,
+      isExperiencedMember: false,
+    },
+    {
+      label: "Experienced Members",
+      key: moduleKeys.EXPERIENCED_MEMBERS_KEY,
+      visible: false,
+      sectionHeading: true,
+    },
+    {
+      label: "Career Ascent",
+      key: moduleKeys.CARRER_ASCENT_KEY,
+      children: experiencedMembersMenu,
+      session: items,
+      visible: false,
+      isSubMenu: true,
+      image: images.iconCareerAscent,
+      isExperiencedMember: true,
+    },
+    {
+      label: "Women PartTime",
+      key: moduleKeys.WOMEN_PARTTIME_KEY,
+      children: experiencedMembersMenu,
+      session: items,
+      visible: false,
+      isSubMenu: true,
+      image: images.iconWomanPartTime,
+      isExperiencedMember: true,
+    },
+    {
+      label: "Overseas Chapters",
+      key: moduleKeys.OVERSEAS_CHAPTERS_KEY,
+      children: experiencedMembersMenu,
+      session: items,
+      visible: false,
+      isSubMenu: true,
+      image: images.iconOverseasChapters,
+      isExperiencedMember: true,
+    },
+  ];
+};
 
-export const resetAllModules = () => {
+export const resetAllModules = (isMember) => {
+  const modules = getAppModules({ isMember });
   modules.forEach((module) => {
     module.visible = false;
   });
@@ -190,6 +221,10 @@ export const getIconImages = (iconName) => {
     iconCandidates: {
       activeImage: images.iconActiveCandidates,
       inactiveImage: images.iconCandidates,
+    },
+    iconAppliedJobs: {
+      activeImage: images.iconAppliedJobsActiveJobs,
+      webInactiveImage: images.iconAppliedJobs,
     },
     // ... other icon mappings
   };
