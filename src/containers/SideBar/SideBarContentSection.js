@@ -56,10 +56,13 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     }
   }, [isWebView, sideBarContent]);
 
-  useEffect(async () => {
-    if (selectedModule.key) {
-      await getGlobalSessionList(selectedModule.key);
-    }
+  useEffect(() => {
+    const getSessions = async () => {
+      if (selectedModule.key) {
+        await getGlobalSessionList(selectedModule.key);
+      }
+    };
+    getSessions();
   }, [selectedModule.key]);
 
   const handleOnSelectModuleItem = (item) => {

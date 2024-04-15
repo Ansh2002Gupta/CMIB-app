@@ -40,7 +40,7 @@ const useGlobalSessionListApi = () => {
             );
           }
         } else {
-          if (res?.data?.records?.length > 0) {
+          if (res?.data?.records?.length) {
             const firstSession = res.data.records[0];
             sideBarDispatch(
               setSelectedSession({
