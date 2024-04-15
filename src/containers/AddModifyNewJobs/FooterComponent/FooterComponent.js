@@ -33,6 +33,7 @@ const FooterComponent = ({
             }}
             id={`isCheckList${isCheckList}`}
             isSelected={isCheckList}
+            style={styles.checkBoxHeight(isWebView)}
           />
         </View>
       </View>
@@ -49,6 +50,12 @@ const FooterComponent = ({
                 });
               }
             }}
+            customStyle={{
+              textFontWeight: "500",
+              customTextStyle: {
+                fontSize: 14,
+              },
+            }}
             style={styles.cancelButtonStyle(isWebView)}
           >
             {intl.formatMessage({ id: "label.cancel" })}
@@ -57,6 +64,12 @@ const FooterComponent = ({
             onPress={() => onSubmit()}
             style={styles.postButtonStyle(isWebView)}
             withGreenBackground
+            customStyle={{
+              textFontWeight: "500",
+              customTextStyle: {
+                fontSize: 14,
+              },
+            }}
             disabledContainerStyle={{ opacity: 0.5 }}
           >
             {intl.formatMessage({ id: submitButtonText })}

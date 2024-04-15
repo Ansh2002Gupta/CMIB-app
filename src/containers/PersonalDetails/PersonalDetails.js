@@ -17,6 +17,7 @@ import {
 } from "../../services/apiServices/apiEndPoint";
 import { usePersonalDetails } from "./Controllers/usePersonalDetails";
 import { formatDate } from "../../utils/util";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 
 const PersonalDetails = ({ isEditable = true, handleEdit }) => {
   const { id } = useParams();

@@ -119,7 +119,7 @@ import iconArrowUpSorting from "../../public/images/svg/iconArrowUpSorting.svg";
 import iconPartial from "../../public/images/svg/iconPartial.svg";
 import iconDeleteRed from "../../public/images/svg/iconDeleteRed.svg";
 import questionIcon from "../../public/images/question/question.png";
-import copyIcon from "../../public/images/copyIcon/copy.png";
+import copyIcon from "../../public/images/copyIcon/copy.svg";
 import redCrossIcon from "../../public/images/redCross/redClose.png";
 import editIcon from "../../public/images/editIcon/edit.png";
 import iconDisabledCheck from "../../public/images/svg/iconDisabledCheck.svg";
@@ -129,11 +129,11 @@ import iconAddBlue from "../../public/images/svg/iconAddBlue.svg";
 import iconEdit from "../../public/images/svg/icon_edit.svg";
 import iconLoading from "../../public/images/IconLoading/iconLoading.png";
 import iconGreyCross from "../../public/images/svg/iconGreyCross.svg";
+import iconError from "../../public/images/svg/iconError.svg";
 import iconAddRoundGreen from "../../public/images/svg/iconAddRoundGreen.svg";
 import iconDeleteRoundRed from "../../public/images/svg/iconDeleteRoundRed.svg";
 import iconCheckBoxRound from "../../public/images/svg/iconCheckBoxRound.svg";
 import iconUnCheckBoxRound from "../../public/images/svg/iconUnCheckBoxRound.svg";
-import iconError from "../../public/images/svg/iconError.svg";
 import iconTickGreen from "../../public/images/svg/iconTickGreen.svg";
 import iconCrossRed from "../../public/images/svg/iconCrossRed.svg";
 import dotIcon from "../../public/images/dotIcon/dot.png";
@@ -159,6 +159,7 @@ import iconArchiveSave from "../../public/images/svg/iconArchiveSave.svg";
 import iconSavedJob from "../../public/images/svg/iconSaved.svg";
 import iconCalendarWhite from "../../public/images/svg/iconCalendarWhite.svg";
 import iconTrashSVG from "../../public/images/svg/iconTrash.svg";
+import iconArchiveSaveMobile from "../../public/images/svg/iconArchiveSaveMobile.svg";
 
 const images = {
   iconArrowUp,
@@ -321,6 +322,7 @@ const images = {
   iconSavedJob,
   iconCalendarWhite,
   iconTrashSVG,
+  iconArchiveSaveMobile,
 };
 
 export default images;

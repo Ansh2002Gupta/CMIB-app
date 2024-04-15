@@ -498,7 +498,7 @@ const useJobApplicants = () => {
     isLoading,
     isHeading,
     isUpdatingApplicantStatus,
-    jobApplicantListingData: currentRecords,
+    jobApplicantListingData: [],
     loadingMore,
     onIconPress,
     queryTypeData: queryTypeData,
