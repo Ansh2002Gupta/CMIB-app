@@ -173,7 +173,7 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
           onDismiss={handleResetError}
         />
       )}
-      <View>
+      <>
         {!!questionaireData?.length && (
           <CustomModal
             containerStyle={styles.containerStyle}
@@ -222,7 +222,7 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
                                   </CommonText>
                                 }
                                 rightSection={
-                                  <View style={styles.mandotaryView}>
+                                  <View style={styles.mandatoryView}>
                                     <CommonText
                                       customTextStyle={styles.questionText}
                                     >
@@ -309,7 +309,7 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
             )}
           </CustomModal>
         )}
-      </View>
+      </>
     </>
   );
 };

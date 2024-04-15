@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  mandotaryView: {
+  mandatoryView: {
     flexDirection: "row",
     marginBottom: 4,
     gap: 4,

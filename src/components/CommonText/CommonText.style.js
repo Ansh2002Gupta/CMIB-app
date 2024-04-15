@@ -48,10 +48,6 @@ const style = {
     width: "100%",
     color,
   }),
-  mandotaryView: {
-    flex: 1,
-    flexDirection: "row",
-  },
 };
 
 export default style;
