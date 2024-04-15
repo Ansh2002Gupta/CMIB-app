@@ -17,6 +17,7 @@ const FooterComponent = ({
   onSubmit,
   submitButtonText = "label.post",
   onCancelPress,
+  disabled = false,
 }) => {
   const navigate = useNavigate();
   const [sideBarState] = useContext(SideBarContext);
@@ -63,6 +64,7 @@ const FooterComponent = ({
           <CustomButton
             onPress={() => onSubmit()}
             style={styles.postButtonStyle(isWebView)}
+            disabled={disabled}
             withGreenBackground
             customStyle={{
               textFontWeight: "500",
