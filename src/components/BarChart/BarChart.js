@@ -17,7 +17,6 @@ const BarChart = ({ barColor, data, label }) => {
           {label}
         </CommonText>
       }
-      topSectionStyle={style.topSectionStyle}
       bottomSection={
         <VictoryChart domainPadding={20} height={200} style={{ padding: 0 }}>
           <VictoryAxis

@@ -8,9 +8,7 @@ const style = {
     borderWidth: 1,
     borderColor: colors.lightGrey,
   },
-  topSectionStyle: {
-    marginBottom: 44,
-  },
+
   headerText: {
     fontSize: 16,
     color: colors.black,
