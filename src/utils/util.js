@@ -637,7 +637,7 @@ export const areAllValuesEmpty = (obj) => {
   return true;
 };
 
-const isObjectFilled = (obj) => {
+export const isObjectFilled = (obj) => {
   return Object.values(obj).every((value) => value !== "");
 };
 

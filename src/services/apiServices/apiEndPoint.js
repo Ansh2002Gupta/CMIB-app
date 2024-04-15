@@ -56,6 +56,9 @@ export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
 export const CANDIDATES = "/candidates";
+export const ROUND_ONE_DASHBOARD = `/dashboard`;
+export const ROUNDS = `/rounds`;
+export const GLOBAL_SESSIONS = `/sessions`;
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
