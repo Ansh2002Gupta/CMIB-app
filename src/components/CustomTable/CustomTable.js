@@ -80,6 +80,9 @@ const CustomTable = ({
   renderCalendar,
   statusData,
   queryTypeData,
+  mobileComponentToRender,
+  containerStyle,
+  isTotalCardVisible = true,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -168,7 +171,7 @@ const CustomTable = ({
                 style={styles.filterTopSection(isWebView)}
               />
             )}
-            {!isWeb && (
+            {!isWeb && isTotalCardVisible && (
               <View style={styles.ticketTotals}>
                 <CommonText
                   fontWeight={"500"}
@@ -203,7 +206,12 @@ const CustomTable = ({
                 (isGeetingJobbSeekers && (isWeb || isFirstPageReceived)) ? (
                   <LoadingScreen />
                 ) : (
-                  <View style={styles.tableSection}>
+                  <View
+                    style={{
+                      ...styles.tableSection,
+                      ...containerStyle,
+                    }}
+                  >
                     {isWebView && (
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
@@ -227,59 +235,70 @@ const CustomTable = ({
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
-                              <View style={styles.mobileContainer}>
-                                <View>
-                                  <CommonText
-                                    fontWeight={"600"}
-                                    customTextStyle={styles.cellTextStyle()}
-                                  >
-                                    {getRenderText(item, headingTexts)}
-                                  </CommonText>
-                                  <Row style={styles.rowStyling}>
-                                    <CommonText
-                                      customTextStyle={styles.tableQueryText}
-                                    >
-                                      {getRenderText(item, subHeadingText)}
-                                    </CommonText>
-                                    {!!extraDetailsText && (
-                                      <>
-                                        <View style={styles.dot}></View>
+                              <>
+                                {mobileComponentToRender ? (
+                                  mobileComponentToRender(item, index)
+                                ) : (
+                                  <View style={styles.mobileContainer}>
+                                    <View>
+                                      <CommonText
+                                        fontWeight={"600"}
+                                        customTextStyle={styles.cellTextStyle()}
+                                      >
+                                        {getRenderText(item, headingTexts)}
+                                      </CommonText>
+                                      <Row style={styles.rowStyling}>
                                         <CommonText
                                           customTextStyle={
                                             styles.tableQueryText
                                           }
                                         >
-                                          {extraDetailsText +
-                                            ": " +
-                                            getRenderText(
-                                              item,
-                                              extraDetailsKey
-                                            )}
+                                          {getRenderText(item, subHeadingText)}
                                         </CommonText>
-                                      </>
-                                    )}
-                                  </Row>
-                                </View>
-                                <View style={styles.rowsPerPageWeb}>
-                                  {!!item.status && (
-                                    <Chip
-                                      label={getRenderText(item, statusText)}
-                                      style={getStatusStyle(
-                                        !!item?.active
-                                          ? item.active
-                                          : item.status
+                                        {!!extraDetailsText && (
+                                          <>
+                                            <View style={styles.dot}></View>
+                                            <CommonText
+                                              customTextStyle={
+                                                styles.tableQueryText
+                                              }
+                                            >
+                                              {extraDetailsText +
+                                                ": " +
+                                                getRenderText(
+                                                  item,
+                                                  extraDetailsKey
+                                                )}
+                                            </CommonText>
+                                          </>
+                                        )}
+                                      </Row>
+                                    </View>
+                                    <View style={styles.rowsPerPageWeb}>
+                                      {!!item.status && (
+                                        <Chip
+                                          label={getRenderText(
+                                            item,
+                                            statusText
+                                          )}
+                                          style={getStatusStyle(
+                                            !!item?.active
+                                              ? item.active
+                                              : item.status
+                                          )}
+                                        />
                                       )}
-                                    />
-                                  )}
-                                  <TouchableImage
-                                    onPress={() => {
-                                      onIconPress(item);
-                                    }}
-                                    source={tableIcon}
-                                    style={styles.iconTicket}
-                                  />
-                                </View>
-                              </View>
+                                      <TouchableImage
+                                        onPress={() => {
+                                          onIconPress(item);
+                                        }}
+                                        source={tableIcon}
+                                        style={styles.iconTicket}
+                                      />
+                                    </View>
+                                  </View>
+                                )}
+                              </>
                             )}
                           </>
                         );

@@ -19,13 +19,15 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   fontSize16: {
-    fontSize: 16,
+    fontSize: 14,
   },
   cardStyle: {
     width: "100%",
     height: 40,
     justifyContent: "center",
     paddingBottom: 24,
+    paddingTop: 0,
+    paddingBottom: 0,
   },
 });
 export default styles;
