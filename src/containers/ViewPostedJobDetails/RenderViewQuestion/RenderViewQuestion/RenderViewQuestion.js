@@ -1,8 +1,11 @@
-import { View } from "@unthinkable/react-core-components";
 import React from "react";
+import { View } from "@unthinkable/react-core-components";
+
 import CardComponent from "../../../../components/CardComponent";
 import CommonText from "../../../../components/CommonText";
 import styles from "./RenderViewQuestion.styles";
+import { getQuestionType } from "../../../../utils/util";
+
 const RenderViewQuestion = ({ item, index }) => {
   return (
     <View style={styles.container}>
@@ -14,7 +17,9 @@ const RenderViewQuestion = ({ item, index }) => {
           <CommonText
             customContainerStyle={styles.marginLeft4}
             customTextStyle={styles.questionTypeStyle}
-          >{`(${item.typeofQuestion})`}</CommonText>
+          >
+            {`(${item?.typeofQuestion || getQuestionType[item?.type]}) `}
+          </CommonText>
           {item.mandatory == 1 && (
             <CommonText
               customContainerStyle={styles.marginLeft4}

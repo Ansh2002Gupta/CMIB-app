@@ -6,6 +6,8 @@ import { CustomTabs } from "../../components/Tab/CustomTabs";
 import styles from "./Jobs.styles";
 import CommonText from "../../components/CommonText";
 import { Row, View } from "@unthinkable/react-core-components";
+import AllJobs from "../AllJobs/AllJobs";
+import AppliedJobsView from "../AppliedJobsView";
 import SavedJobs from "../SavedJobs";
 import useIsWebView from "../../hooks/useIsWebView";
 import { navigations } from "../../constants/routeNames";
@@ -34,20 +36,12 @@ const Jobs = () => {
         },
         {
           label: intl.formatMessage({ id: "label.applied_Jobs" }),
-          component: (
-            <CommonText>
-              {intl.formatMessage({ id: "label.applied_Jobs" })}
-            </CommonText>
-          ),
+          component: <AppliedJobsView />,
         },
 
         {
           label: intl.formatMessage({ id: "label.all_Jobs" }),
-          component: (
-            <CommonText>
-              {intl.formatMessage({ id: "label.all_Jobs" })}
-            </CommonText>
-          ),
+          component: <AllJobs />,
         },
       ]}
     />

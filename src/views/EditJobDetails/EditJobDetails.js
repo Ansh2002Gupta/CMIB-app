@@ -22,6 +22,7 @@ import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessa
 import { useParams } from "react-router";
 import useGetAddNewJobData from "../../services/apiServices/hooks/AddNewJobs/useGetAddNewJobData";
 import { AddJobContext } from "../../globalContext/addJob/addJobsProvider";
+import CustomModal from "../../components/CustomModal";
 const EditJobDetails = ({
   jobData: intialJobData,
   questionData: intialQuestionData,
@@ -118,21 +119,15 @@ const EditJobDetails = ({
 
       Http.put(`${UPDATE_JOB}/${id}`, formattedData)
         .then((res) => {
-          setSuccessMessage(
-            intl.formatMessage({ id: "label.job_updated_successfully" })
-          );
           setLoading(false);
+          setSuccessMessage(true);
         })
         .catch((e) => {
-          setPostError(e);
-          setSuccessMessage(GENERIC_GET_API_FAILED_ERROR_MESSAGE);
+          setPostError(e?.data?.message);
           setLoading(false);
-        })
-        .finally(() => {
-          onCancelPress(true);
         });
     } else {
-      setSuccessMessage(intl.formatMessage({ id: "label.fill_mandatory" }));
+      setPostError(intl.formatMessage({ id: "label.fill_mandatory" }));
     }
   };
   return (
@@ -141,9 +136,8 @@ const EditJobDetails = ({
         headerText={intl.formatMessage({ id: "label.edit_jobs" })}
         isBorderVisible={false}
       />
-      {loading || (isLoading && <LoadingScreen />)}
-      {!loading &&
-        !isLoading &&
+      {isLoading && <LoadingScreen />}
+      {!isLoading &&
         isSuccess &&
         addJobs?.jobLocationData &&
         Object.keys(jobDetails).length > 0 &&
@@ -179,6 +173,8 @@ const EditJobDetails = ({
                           isExpanded={true}
                           isWebView={isWebView}
                           isMinimisedVisible={false}
+                          isStatusVisible={true}
+                          isInstructionVisible={false}
                         />
                       </View>
                     ),
@@ -196,6 +192,7 @@ const EditJobDetails = ({
                           ref={questionaireRef}
                           isMinimisedVisible={false}
                           headerText={"label.view_questionaire"}
+                          cardStyle={styles.cardStyle}
                         />
                       </View>
                     ),
@@ -211,24 +208,36 @@ const EditJobDetails = ({
                 setIsCheckList={setIsCheckList}
                 onCancelPress={onCancelPress}
                 submitButtonText={"label.save"}
+                disabled={loading}
               />
             </View>
           </ScrollView>
         )}
-      {(postError || isErrorData) && (
+      {isErrorData && (
         <ErrorComponent
           errorMsg={
-            isErrorData?.data?.message ||
-            postError?.data?.message ||
-            GENERIC_GET_API_FAILED_ERROR_MESSAGE
+            isErrorData?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
           }
         />
       )}
-      {successMessage && (
+      {postError && (
         <ToastComponent
-          toastMessage={successMessage}
+          toastMessage={postError}
           onDismiss={() => {
-            setSuccessMessage(null);
+            setPostError(null);
+          }}
+        />
+      )}
+      {successMessage && (
+        <CustomModal
+          isSuccess
+          headerText={intl.formatMessage({
+            id: "label.job_updated_successfully",
+          })}
+          buttonTitle={intl.formatMessage({ id: "label.okay" })}
+          onPress={() => {
+            setSuccessMessage(false);
+            onCancelPress(true);
           }}
         />
       )}

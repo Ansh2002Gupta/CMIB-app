@@ -5,7 +5,19 @@ import TouchableImage from "../../../../components/TouchableImage";
 import images from "../../../../images";
 import styles from "./RenderMobileItem.styles";
 import PopupMessage from "../../../../components/PopupMessage/PopupMessage";
-const RenderMobileItem = ({ item, lastItem }) => {
+import { useIntl } from "react-intl";
+const RenderMobileItem = ({ item, lastItem, onPress }) => {
+  const intl = useIntl();
+  const optionArray = [
+    intl.formatMessage({ id: "label.view_interview_details" }),
+    intl.formatMessage({ id: "label.edit_interview_details" }),
+  ];
+  if (
+    item.is_primary_schedule_accepted ||
+    item.is_alternate_schedule_accepted
+  ) {
+    optionArray.push(intl.formatMessage({ id: "label.offer_job" }));
+  }
   return (
     <View
       style={{
@@ -34,7 +46,13 @@ const RenderMobileItem = ({ item, lastItem }) => {
           </CommonText>
         </View>
       </View>
-      <PopupMessage message={item?.action} />
+      <PopupMessage
+        message={
+          item?.action ? item?.action.map((item) => item.name) : optionArray
+        }
+        onPopupClick={onPress}
+        itemSelected={item}
+      />
     </View>
   );
 };
