@@ -796,7 +796,7 @@ export const JOB_APPLICANTS_POP_MESSAGE = {
 export const SAVED_CANDIDATES_TABLE_HEADING = {
   candidate_id: "Candidate ID",
   candidate_name: "Candidate Name",
-  total_experience: "Total Experience",
-  funtional_area: ["Functional Area"],
+  experience: "Total Experience",
+  functional_areas: ["Functional Area"],
   designation_applied_for: ["Designation Applied For"],
 };

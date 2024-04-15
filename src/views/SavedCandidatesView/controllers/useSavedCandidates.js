@@ -1,36 +1,300 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
-import { View } from "@unthinkable/react-core-components";
+import { View, Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import commonStyles from "../../../theme/styles/commonStyles";
 import images from "../../../images";
 import styles from "../SavedCandidatesView.styles";
+import {
+  CANDIDATES,
+  MARKED_PREFER,
+  PREFERRED,
+  UNMARKED_PREFER,
+  USER_TYPE_COMPANY,
+} from "../../../services/apiServices/apiEndPoint";
+import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import useIsWebView from "../../../hooks/useIsWebView";
+import { useNavigate, useSearchParams } from "../../../routes";
+import {
+  getValidCurrentPage,
+  getValidRowPerPage,
+} from "../../../utils/queryParamsHelpers";
+import useFetch from "../../../hooks/useFetch";
+import usePagination from "../../../hooks/usePagination";
+import { navigations } from "../../../constants/routeNames";
+import TouchableImage from "../../../components/TouchableImage";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import CustomImage from "../../../components/CustomImage";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import useOutsideClick from "../../../hooks/useOutsideClick";
+import { usePost } from "../../../hooks/useApiRequest";
+
+const isMob = Platform.OS.toLowerCase() !== "web";
 
 const useSavedCandidates = () => {
   const intl = useIntl();
+  const { isWebView } = useIsWebView();
+  const [searchParams] = useSearchParams();
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [allDataLoaded, setAllDataLoaded] = useState(false);
+  const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
+  const [currentRecords, setCurrentRecords] = useState([]);
+  const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+  const [showCurrentPopupmessage, setCurrentPopupMessage] = useState(-1);
+  const [filterOptions, setFilterOptions] = useState({
+    status: "",
+    query_type: "",
+    searchData: "",
+  });
+  const [rowsPerPage, setRowPerPage] = useState(
+    getValidRowPerPage(searchParams.get("rowsPerPage")) ||
+      ROWS_PER_PAGE_ARRAY[0].value
+  );
+  const [currentPage, setCurrentPage] = useState(
+    getValidCurrentPage(searchParams.get("page"))
+  );
+
+  const navigate = useNavigate();
+
   const getStatusStyle = () => {};
+  const popMessageRef = useRef(null);
+  useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
+
   const headingTexts = ["candidate_name"];
-  const subHeadingText = ["candidate_id", "total_experience"];
+  const subHeadingText = ["candidate_id", "experience"];
+  let filterCategory = ["Status", "Query Type"];
+  const statusData = [{ id: 1, name: "pending" }];
+  const queryTypeData = [{ id: 1, name: "pending" }];
   const tableIcon = images.iconMore;
   const formatConfig = {
-    total_experience: {
+    experience: {
       prefix: `${intl.formatMessage({ id: "label.experience" })}${" : "}`,
       suffix: `${" "}${intl.formatMessage({ id: "label.years" })}`,
     },
   };
 
-  const getColoumConfigs = (item, isHeading) => {
+  const {
+    data: savedCandidatesDaya,
+    isLoading: isSavedCadidatesDataLoading,
+    error: errorWhileFetchingCandidatesData,
+    isError: isErrorWhileFetchingCandidatesData,
+    fetchData: fetchingCandidatesData,
+  } = useFetch({
+    url: USER_TYPE_COMPANY + CANDIDATES + MARKED_PREFER,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+  const {
+    isLoading: markedSavedJobLoading,
+    makeRequest: markJob,
+    error: errorWhileMarkJob,
+    setError: setMarkedSavedJobError,
+  } = usePost({
+    url: USER_TYPE_COMPANY + CANDIDATES + UNMARKED_PREFER,
+  });
+
+  const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
+    shouldSetQueryParamsOnMount: true,
+    setCurrentPage,
+    setRowPerPage,
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const requestedParams = {
+        perPage: rowsPerPage,
+        page: currentPage,
+      };
+      const initialData = await fetchingCandidatesData({
+        queryParamsObject: requestedParams,
+      });
+      if (initialData && initialData?.records?.length > 0) {
+        setCurrentRecords(initialData?.records);
+        if (initialData?.records?.length < rowsPerPage && isMob) {
+          setAllDataLoaded(true);
+        }
+      }
+      setIsFirstPageReceived(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const updateCurrentRecords = async (params) => {
+    const newData = await fetchingCandidatesData({
+      queryParamsObject: params,
+    });
+    setCurrentRecords(newData?.records);
+  };
+
+  const handleLoadMore = async () => {
+    if (loadingMore || allDataLoaded) return;
+    setLoadingMore(true);
+    const nextPage = currentPage + 1;
+    try {
+      const newData = await fetchingCandidatesData({
+        queryParamsObject: {
+          perPage: rowsPerPage,
+          page: nextPage,
+          // status: filterOptions.status,
+          // queryType: filterOptions.query_type,
+        },
+      });
+      if (newData && newData?.records?.length > 0) {
+        setCurrentRecords((prevRecords) => [
+          ...prevRecords,
+          ...newData.records,
+        ]);
+      }
+      setCurrentPage(nextPage);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      }
+    } catch (error) {
+      console.error("Error fetching tickets on load more:", error);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
+
+  const handlePageChange = async (page) => {
+    handlePagePerChange(page);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: page,
+      // status: filterOptions.status,
+      // queryType: filterOptions.query_type,
+    });
+  };
+
+  const handleRowPerPageChange = async (option) => {
+    handleRowsPerPageChange(option.value);
+    await updateCurrentRecords({
+      perPage: option.value,
+      page: currentPage,
+      // status: filterOptions.status,
+      // queryType: filterOptions.query_type,
+    });
+  };
+
+  const handleSearchResults = async (searchedData) => {
+    setIsFirstPageReceived(true);
+    setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
+    if (isMob) {
+      setCurrentPage(1);
+      const newData = await fetchingCandidatesData({
+        queryParamsObject: {
+          keywords: searchedData,
+          // status: filterOptions.status,
+          // queryType: filterOptions.query_type,
+        },
+      });
+      setIsFirstPageReceived(false);
+      setCurrentRecords(newData?.records);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        keywords: searchedData,
+        perPage: rowsPerPage,
+        page: currentPage,
+        // status: filterOptions.status,
+        // queryType: filterOptions.query_type,
+      });
+    }
+  };
+
+  const filterApplyHandler = async ({ selectedStatus, selectedQueryType }) => {
+    setIsFirstPageReceived(true);
+    setFilterOptions((prev) => ({
+      ...prev,
+      status: selectedStatus,
+      query_type: selectedQueryType,
+    }));
+    if (isMob) {
+      setLoadingMore(false);
+      setCurrentPage(1);
+      const newData = await fetchingCandidatesData({
+        queryParamsObject: {
+          q: filterOptions.searchData,
+          status: selectedStatus,
+          queryType: selectedQueryType,
+        },
+      });
+      setCurrentRecords(newData?.records);
+      setIsFirstPageReceived(false);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        status: selectedStatus,
+        queryType: selectedQueryType,
+        perPage: rowsPerPage,
+        page: currentPage,
+      });
+    }
+  };
+
+  const onIconPress = (index) => {
+    showCurrentPopupmessage !== index
+      ? setCurrentPopupMessage(index)
+      : setCurrentPopupMessage(-1);
+  };
+
+  const handleActions = (actions, id) => {
+    setCurrentPopupMessage(-1);
+    markJob({
+      body: {
+        candidate_id: id,
+      },
+      overrideUrl: `${USER_TYPE_COMPANY}${CANDIDATES}/${id}${UNMARKED_PREFER}`,
+    });
+  };
+
+  const onNameSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortBy: sortField,
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
+    });
+  };
+
+  const getColoumConfigs = (item, isHeading, index) => {
     const tableStyle = isHeading
       ? commonStyles.customTableHeading
       : commonStyles.cellTextStyle(14);
-    console.log("getColoumConfigs", item?.funtional_area);
 
     return [
       {
-        content: (
+        content: isHeading ? (
+          <CustomTouchableOpacity
+            onPress={() => onNameSorting("candidate_name")}
+          >
+            <CommonText customTextStyle={tableStyle}>
+              {item.candidate_name}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.candidate_name}
+            {item?.candidate_name}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -48,7 +312,7 @@ const useSavedCandidates = () => {
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item.total_experience} {intl.formatMessage({ id: "label.years" })}
+            {item?.experience} {intl.formatMessage({ id: "label.years" })}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),
@@ -57,8 +321,8 @@ const useSavedCandidates = () => {
       {
         content: (
           <View style={styles.flexRow}>
-            {item.funtional_area.map((functionalAreaItem, index) => {
-              const remainingNoOfItems = item.funtional_area.length - 2;
+            {item.functional_areas.map((functionalAreaItem, index) => {
+              const remainingNoOfItems = item.functional_areas.length - 2;
 
               if (isHeading || index < 2) {
                 return (
@@ -86,140 +350,108 @@ const useSavedCandidates = () => {
             })}
           </View>
         ),
-        style: commonStyles.columnStyle("20%"),
+        style: commonStyles.columnStyle("25%"),
         isFillSpace: true,
       },
-      {
-        content: (
-          <View style={styles.flexRow}>
-            {item.designation_applied_for.map((functionalAreaItem, index) => {
-              const remainingNoOfItems =
-                item.designation_applied_for.length - 2;
+      // {
+      //   content: (
+      //     <View style={styles.flexRow}>
+      //       {item.designation_applied_for.map((functionalAreaItem, index) => {
+      //         const remainingNoOfItems =
+      //           item.designation_applied_for.length - 2;
 
-              if (isHeading || index < 2) {
-                return (
-                  <CommonText
-                    key={index}
-                    customContainerStyle={!isHeading ? styles.arrayStyle : {}}
-                    customTextStyle={{ ...tableStyle, ...styles.chipText }}
-                  >
-                    {functionalAreaItem}
-                  </CommonText>
-                );
-              } else if (index === 2) {
-                return (
-                  <CommonText
-                    key={index}
-                    customContainerStyle={!isHeading ? styles.arrayStyle : {}}
-                    customTextStyle={tableStyle}
-                  >
-                    {`+${remainingNoOfItems}`}
-                  </CommonText>
-                );
-              } else {
-                return null;
-              }
-            })}
+      //         if (isHeading || index < 2) {
+      //           return (
+      //             <CommonText
+      //               key={index}
+      //               customContainerStyle={!isHeading ? styles.arrayStyle : {}}
+      //               customTextStyle={{ ...tableStyle, ...styles.chipText }}
+      //             >
+      //               {functionalAreaItem}
+      //             </CommonText>
+      //           );
+      //         } else if (index === 2) {
+      //           return (
+      //             <CommonText
+      //               key={index}
+      //               customContainerStyle={!isHeading ? styles.arrayStyle : {}}
+      //               customTextStyle={tableStyle}
+      //             >
+      //               {`+${remainingNoOfItems}`}
+      //             </CommonText>
+      //           );
+      //         } else {
+      //           return null;
+      //         }
+      //       })}
+      //     </View>
+      //   ),
+      //   style: {
+      //     ...commonStyles.columnStyle("20%"),
+      //     ...styles.iconTicketColoum,
+      //   },
+      //   isFillSpace: true,
+      // },
+      {
+        content: !isHeading && (
+          <View>
+            <TouchableImage
+              onPress={() => {
+                onIconPress(index);
+              }}
+              source={images.iconMore}
+              imageStyle={styles.iconTicket}
+              isSvg={true}
+            />
+            {showCurrentPopupmessage === index && (
+              <View ref={popMessageRef}>
+                <PopupMessage
+                  message={intl.formatMessage({
+                    id: "label.removed_from_saved_candidates",
+                  })}
+                  customStyle={styles.popupMessageStyle}
+                  onPopupClick={() =>
+                    handleActions(index, Number(item?.candidate_id))
+                  }
+                />
+              </View>
+            )}
           </View>
         ),
-        style: commonStyles.columnStyle("20%"),
+        style: {
+          ...commonStyles.columnStyle("2%"),
+          ...styles.iconTicketColoum,
+        },
         isFillSpace: true,
       },
     ];
   };
   return {
-    data,
     formatConfig,
+    filterCategory,
+    queryTypeData,
+    statusData,
+    errorWhileMarkJob,
+    errorWhileFetchingCandidatesData,
+    setMarkedSavedJobError,
     getColoumConfigs,
     getStatusStyle,
     headingTexts,
+    handleLoadMore,
+    handleRowPerPageChange,
+    handlePageChange,
+    handleSearchResults,
+    isFirstPageReceived,
+    allDataLoaded,
+    loadingMore,
+    filterApplyHandler,
+    data: currentRecords,
+    isSavedCadidatesDataLoading,
     subHeadingText,
     statusText: [],
     tableIcon,
+    fetchingCandidatesData,
   };
 };
 
 export default useSavedCandidates;
-
-const data = {
-  meta: {
-    total: 28,
-    perPage: 10,
-    currentPage: 1,
-    lastPage: 3,
-    from: 1,
-    to: 10,
-  },
-  records: [
-    {
-      id: 198,
-      candidate_id: "T0000198",
-      candidate_name: "NQCA Placement",
-      total_experience: "4",
-      funtional_area: ["Area", "Audit", "Designation", "CA"],
-      designation_applied_for: ["Designation", "CA"],
-    },
-    {
-      id: 197,
-      candidate_id: "T0000197",
-      candidate_name: "Women Placement",
-      total_experience: "6",
-      funtional_area: [
-        "Area",
-        "Auaksfjnkasjksadkfsjdkfkjadsnfkdit",
-        "Audit",
-        "Designation",
-        "CA",
-        "Audit",
-        "Designation",
-        "CA",
-      ],
-      designation_applied_for: ["Designation"],
-    },
-    {
-      id: 196,
-      candidate_id: "T0000196",
-      candidate_name: "NQCA Placement",
-      total_experience: "6",
-      funtional_area: ["Area", "Audit", "Audit", "Designation", "CA"],
-      designation_applied_for: ["Designation"],
-    },
-    {
-      id: 195,
-      candidate_id: "T0000195",
-      candidate_name: "NQCA Placement",
-      total_experience: "6",
-      funtional_area: ["Area", "Audit"],
-      designation_applied_for: ["Designation"],
-    },
-    {
-      id: 194,
-      candidate_id: "T0000193",
-      candidate_name: "NQCA Placement",
-      total_experience: "4",
-      funtional_area: ["Area", "Audit"],
-      designation_applied_for: [
-        "Designation",
-        "Designation",
-        "Designation",
-        "Designation",
-      ],
-    },
-    {
-      id: 193,
-      candidate_id: "T0000193",
-      candidate_name: "NQCA Placement",
-      total_experience: "6",
-      funtional_area: ["Area", "Audit"],
-      designation_applied_for: ["Designation"],
-    },
-    {
-      id: 192,
-      candidate_id: "T0000192",
-      candidate_name: "Career Ascent",
-      total_experience: "4",
-      funtional_area: ["Area", "Audit"],
-      designation_applied_for: ["Designation"],
-    },
-  ],
-};

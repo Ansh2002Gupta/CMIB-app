@@ -32,15 +32,11 @@ const styles = StyleSheet.create({
     ...Platform.select({
       web: {
         textOverflow: "ellipsis",
-        redSpace: "nowrap",
+        whiteSpace: "nowrap",
         overflow: "hidden",
-        maxWidth: "120px",
       },
     }),
-    flexWrap: "wrap",
-    wordBreak: "break-word",
-    overFlow: "hidden",
-    whiteSpace: "break-space",
+    maxWidth: "140px",
   }),
   tableHeadingText: {
     color: colors.darkGrey,

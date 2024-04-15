@@ -395,14 +395,10 @@ const locale = {
     "*Provide either the Salary Negotiability, the Minimum & Maximum Salary, or both.",
   "label.job_summary": "Job Summary",
   "label.job_summary_placeHolder": "Enter Job Summary",
-  "label.job_details": "Job Details",
   "label.job_type": "Job Type",
   "label.urgent": "Urgent Job",
   "label.minimum_experience": "Minimum Experience",
   "label.maximum_experience": "Maximum Experience",
-  "label.nationality": "Nationality",
-  "label.designation": "Designation",
-  "label.designation_placeholder": "Enter the Designation",
   "label.job_location": "Job Location",
   "label.functional_areas": "Functional Areas",
   "label.gender_preference": "Gender Preference",
@@ -428,8 +424,6 @@ const locale = {
   "label.enter_option": "Enter Option",
   "label.add_options": "+ Add options",
   "label.mandatory": "Mandatory",
-  "label.year": "Years",
-  "label.month": "Month",
   "label.day": "Days",
   "label.question": "Question",
   "label.question_type": "Question Type",
@@ -472,7 +466,6 @@ const locale = {
   "label.haveAnyWorkExperience": "Do you have any Work Experience?",
   "label.workExperience": "Work Experience",
   "label.organizationName": "Name of the Organization",
-  "label.designation": "Designation",
   "label.location": "Location",
   "label.from": "From",
   "label.to": "To",
@@ -725,6 +718,10 @@ const locale = {
   "label.shortlisted_congratulations":
     "Congratulations on being shortlisted! Select a suitable interview time from the options below:",
   "label.giveAnswer": "Give Answer",
+  "label.years": "Years",
+  "label.experience": "Experience",
+  "label.removed_from_saved_candidates": "Remove from saved candidates",
+  "label.download_candidates_list": "Download candidates List",
 };
 
 export default locale;
