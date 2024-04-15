@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     marginLeft: 8,
-    marginBottom: 16,
     fontSize: 14,
     lineHeight: 20,
   },
@@ -22,6 +21,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  customTouchableOpacity: { alignItems: "center" },
 });
 
 export default styles;

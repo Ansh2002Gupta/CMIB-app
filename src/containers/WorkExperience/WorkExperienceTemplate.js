@@ -73,6 +73,7 @@ const WorkExperienceTemplate = ({
               isShowCancel={
                 workExperiences.length > 1 && index > 0 ? true : false
               }
+              datePickerContainer={style.datePickerContainer}
               handleCancel={() => handleCancelPress(index)}
               handleMultiSelect={handleAreasOfInterestSelection(index)}
             />

@@ -41,7 +41,7 @@ const EditButton = ({ isEditable, handleEdit }) => {
             height={20}
             width={20}
           />
-          <CommonText customTextStyle={style.textStyle} fontWeight="600">
+          <CommonText customTextStyle={style.textStyle} fontWeight="500">
             {intl.formatMessage({ id: "label.edit_job_profile" })}
           </CommonText>
         </TouchableOpacity>

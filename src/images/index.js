@@ -247,6 +247,7 @@ const iconArchiveSave = appendAppBaseURl("/images/svg/iconArchiveSave.svg");
 const iconCalendarWhite = appendAppBaseURl("/images/svg/iconCalendarWhite.svg");
 const iconSavedJob = appendAppBaseURl("/images/svg/iconSaved.svg");
 const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
+const iconTrashSVG = appendAppBaseURl("/images/svg/iconTrash.svg");
 
 const images = {
   iconArrowUp,
@@ -424,6 +425,7 @@ const images = {
   iconSavedJob,
   iconCalendarWhite,
   iconClock,
+  iconTrashSVG,
 };
 
 export default images;
