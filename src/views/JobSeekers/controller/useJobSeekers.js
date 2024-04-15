@@ -174,7 +174,7 @@ const useJobSeekers = () => {
       setCurrentPage(1);
       const newData = await fetchJobSeekers({
         queryParamsObject: {
-          q: searchedData,
+          keyword: searchedData,
         },
       });
       setIsFirstPageReceived(false);
@@ -186,7 +186,7 @@ const useJobSeekers = () => {
       }
     } else {
       await updateCurrentRecords({
-        q: searchedData,
+        keyword: searchedData,
         perPage: rowsPerPage,
         page: currentPage,
       });
@@ -297,7 +297,7 @@ const useJobSeekers = () => {
   //   setCurrentPage(1);
   //   const newData = await fetchJobSeekers({
   //     queryParamsObject: {
-  //       q: filterOptions.searchData,
+  //       keyword: filterOptions.searchData,
   //     },
   //   });
   //   setCurrentRecords(newData?.records);
@@ -337,13 +337,13 @@ const useJobSeekers = () => {
     }
   };
 
-  const onNameSorting = async (sortField) => {
+  const onNameSorting = async (sortBy) => {
     setIsAscendingOrder((prev) => !prev);
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: currentPage,
-      sortField: sortField,
-      sortDirection: !isAscendingOrder ? "asc" : "desc",
+      sortBy: sortBy,
+      sortOrder: !isAscendingOrder ? "asc" : "desc",
     });
   };
 

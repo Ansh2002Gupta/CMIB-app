@@ -10,7 +10,7 @@ import {
 import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import { TwoRow } from "../../core/layouts";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import { CustomTabs } from "../../components/Tab";
 import Activities from "../../containers/Activities";
@@ -197,40 +197,52 @@ const ViewDetailsScreen = () => {
                       {intl.formatMessage({ id: "label.candidate_details" })}
                     </CommonText>
                   </Row>
-                  <SaveButton
-                    id={params?.id}
-                    onSave={saveCandidateDetails}
-                    onUnSave={unSaveCandidateDetails}
-                    isSaving={isSavingCandidateDetails}
-                    isUnsaving={isUnSavingCandidateDetails}
-                    errorInSaving={errorInSavingCandidateDetails}
-                    errorInUnSaving={errorInUnSavingCandidateDetails}
-                    {...{ setToastMsg }}
-                  />
                 </Row>
               </Col>
             }
             bottomSection={
               <Row style={style.candidateDetailsOuterContainer}>
-                <Row>
-                  <CommonText fontWeight={"500"} style={style.key}>
-                    Candidate Name:&nbsp;
-                  </CommonText>
-                  <CommonText fontWeight={"600"} style={style.value}>
-                    {!!candidateDetails?.name ? candidateDetails?.name : "_"}
-                  </CommonText>
-                </Row>
-                <View style={style.divider}></View>
-                <Row>
-                  <CommonText fontWeight={"500"} style={style.key}>
-                    Candidate ID:&nbsp;
-                  </CommonText>
-                  <CommonText fontWeight={"600"} style={style.value}>
-                    {!!candidateDetails?.member_id
-                      ? candidateDetails?.member_id
-                      : "_"}
-                  </CommonText>
-                </Row>
+                <TwoColumn
+                  leftSection={
+                    <Row style={style.shortProfileInnerContainer}>
+                      <Row>
+                        <CommonText fontWeight={"500"} style={style.key}>
+                          Candidate Name:&nbsp;
+                        </CommonText>
+                        <CommonText fontWeight={"600"} style={style.value}>
+                          {!!candidateDetails?.name
+                            ? candidateDetails?.name
+                            : "_"}
+                        </CommonText>
+                      </Row>
+                      <View style={style.divider}></View>
+                      <Row>
+                        <CommonText fontWeight={"500"} style={style.key}>
+                          Candidate ID:&nbsp;
+                        </CommonText>
+                        <CommonText fontWeight={"600"} style={style.value}>
+                          {!!candidateDetails?.member_id
+                            ? candidateDetails?.member_id
+                            : "_"}
+                        </CommonText>
+                      </Row>
+                    </Row>
+                  }
+                  leftSectionStyle={style.shortProfileOuterContainer}
+                  rightSection={
+                    <SaveButton
+                      id={params?.id}
+                      onSave={saveCandidateDetails}
+                      onUnSave={unSaveCandidateDetails}
+                      isSaving={isSavingCandidateDetails}
+                      isUnsaving={isUnSavingCandidateDetails}
+                      errorInSaving={errorInSavingCandidateDetails}
+                      errorInUnSaving={errorInUnSavingCandidateDetails}
+                      {...{ setToastMsg }}
+                    />
+                  }
+                  rightSectionStyle={style.saveButtonContainer}
+                ></TwoColumn>
               </Row>
             }
           />
