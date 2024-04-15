@@ -116,3 +116,4 @@ export const CHANGE_APPLICANT_STATUS = `${USER_TYPE_COMPANY}/jobs/applicants`;
 export const CHANGE_STATUS = "/change-status";
 export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${JOB_APPLICANTS}${INTERVIEW}`;
 export const ACCEPTED = "/accepted";
+export const GET_MEMBER_COMPLETION = `${USER_TYPE_MEMBER}/profile/percentage`;

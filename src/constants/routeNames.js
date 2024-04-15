@@ -42,7 +42,7 @@ export const navigations = {
   DETAILS_JOBS: "posted-jobs/:id",
   EDIT_JOB: "edit-job",
   JOB_DETAIL: "job-detail",
-  JOB_PROFILE: "job-profile",
+  JOB_PROFILE: "/job-profile",
   VIEW_JOB_DETAILS: "applicant-job-details",
   APPLICANT_DETAILS: ":job_id/applicant-details/:id",
 };

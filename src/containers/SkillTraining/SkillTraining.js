@@ -15,7 +15,11 @@ import {
 } from "../../services/apiServices/apiEndPoint";
 import { SkillTraining_keys, isDuplicateExist } from "./Controller/utils";
 
-const SkillTraining = ({ isEditable = true, handleEdit }) => {
+const SkillTraining = ({
+  isEditable = true,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
   const intl = useIntl();
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
@@ -100,6 +104,7 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
     const isDuplicatedDataExist = isDuplicateExist(payload);
     if (!isDuplicatedDataExist) {
       handleUpdate(payload, () => {
+        onSaveSuccessfull && onSaveSuccessfull();
         handleEdit(false);
         fetchData();
       });

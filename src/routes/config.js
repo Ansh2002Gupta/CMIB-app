@@ -302,10 +302,6 @@ const config = [
         element: <Jobs />,
       },
       {
-        viewPath: navigations.JOB_PROFILE,
-        element: <JobProfileTab />,
-      },
-      {
         viewPath: navigations.CANDIDATES,
         element: <Candidates />,
       },

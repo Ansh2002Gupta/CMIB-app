@@ -449,8 +449,8 @@ export const getDecryptApiData = (apiData) => {
     : {};
   obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
   obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
-  obj.minimumExperience = apiData?.min_experience;
-  obj.maximumExperience = apiData?.max_experience;
+  obj.minimumExperience = apiData?.min_experience ?? "";
+  obj.maximumExperience = apiData?.max_experience ?? "";
   obj.jobLocation = apiData.locations
     ? apiData.locations.map((item) => ({
         id: item.id,
@@ -492,8 +492,14 @@ export const getDecryptApiData = (apiData) => {
   obj.desiredQualification = apiData.desired_qualification;
   obj.jobOpeningDate = startDate;
   obj.jobClosingDate = endDate;
-  obj.minimumSalary = Math.trunc(apiData.min_salary);
-  obj.maximumSalary = Math.trunc(apiData.max_salary);
+  obj.minimumSalary =
+    apiData.min_salary && apiData.min_salary?.length
+      ? Math.trunc(apiData.min_salary)
+      : "";
+  obj.maximumSalary =
+    apiData.max_salary && apiData.max_salary.length
+      ? Math.trunc(apiData.max_salary)
+      : "";
   obj.numberOfVacancies = apiData.vacancy;
   obj.modeofWork = apiData.work_mode
     ? {
