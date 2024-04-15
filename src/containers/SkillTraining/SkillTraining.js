@@ -8,7 +8,11 @@ import { MEMBER_CA_JOB_PROFILE_SKILLS } from "../../services/apiServices/apiEndP
 import { SkillTraining_keys, isDuplicateExist } from "./Controller/utils";
 import { useIntl } from "react-intl";
 
-const SkillTraining = ({ isEditable = true, handleEdit }) => {
+const SkillTraining = ({
+  isEditable = true,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
   const intl = useIntl();
   const {
     data,
@@ -55,6 +59,7 @@ const SkillTraining = ({ isEditable = true, handleEdit }) => {
     const isDuplicatedDataExist = isDuplicateExist(payload);
     if (!isDuplicatedDataExist) {
       handleUpdate(payload, () => {
+        onSaveSuccessfull && onSaveSuccessfull();
         handleEdit(false);
         fetchData();
       });

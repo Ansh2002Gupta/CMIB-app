@@ -8,7 +8,7 @@ import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { useMembershipDetails } from "./controller/useMembershipDetails";
 import { formatDateToYYYYMMDD } from "../../utils/util";
 
-const MembershipDetails = ({ isEditable, handleEdit }) => {
+const MembershipDetails = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
   const {
     fetchData,
     data,
@@ -70,6 +70,7 @@ const MembershipDetails = ({ isEditable, handleEdit }) => {
     const payload = getMembershipDetailsPayload();
 
     handleUpdate(payload, () => {
+      onSaveSuccessfull && onSaveSuccessfull();
       // turn off the edit mode
       handleEdit(false);
       fetchData();
