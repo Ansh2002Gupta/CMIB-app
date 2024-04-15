@@ -25,6 +25,7 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
   const intl = useIntl();
   const [questions, setQuestions] = useState();
   const { isWebView } = useIsWebView();
+  const isWeb = Platform.OS.toLowerCase() === "web";
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
       ? {
@@ -175,6 +176,7 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
       <View>
         {!!questionaireData?.length && (
           <CustomModal
+            containerStyle={styles.containerStyle}
             headerText={intl.formatMessage({ id: "label.questionnaire" })}
             isIconCross
             onPressIconCross={handleCancelButton}
@@ -225,15 +227,19 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
                                       customTextStyle={styles.questionText}
                                     >
                                       {item?.question}
+                                      {isWeb && (
+                                        <span style={styles.starStyle}>
+                                          {"*"}
+                                        </span>
+                                      )}
+                                      {!!item?.mandatory && !isWeb && (
+                                        <CommonText
+                                          customTextStyle={styles.starStyle}
+                                        >
+                                          {"*"}
+                                        </CommonText>
+                                      )}
                                     </CommonText>
-
-                                    {!!item?.mandatory && (
-                                      <CommonText
-                                        customTextStyle={styles.starStyle}
-                                      >
-                                        {"*"}
-                                      </CommonText>
-                                    )}
                                   </View>
                                 }
                               />
