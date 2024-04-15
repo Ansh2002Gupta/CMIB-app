@@ -6,12 +6,12 @@ import CommonText from "../../components/CommonText";
 import CandidateRoundOneContainer from "../../containers/CandidateRoundOne/CandidateRoundOneContainer";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { USER_TYPE_CANDIDATE } from "../../constants/constants";
-import styles from "./RoundTwo.style";
 import { setRoundsData } from "../../globalContext/sidebar/sidebarActions";
 import useFetch from "../../hooks/useFetch";
 import { CORE, GLOBAL_SESSIONS } from "../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { isObjectFilled } from "../../utils/util";
+import styles from "./RoundTwo.style";
 
 function RoundTwoUI(props) {
   const [userProfileDetails] = useContext(UserProfileContext);

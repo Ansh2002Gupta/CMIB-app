@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { Base } from "../../core/layouts";
 
-import RoundOneContainer from "../../containers/RoundOne/MainContainer";
-import styles from "./RoundOneView.style";
 import CandidateRoundOneContainer from "../../containers/CandidateRoundOne/CandidateRoundOneContainer";
+import RoundOneContainer from "../../containers/RoundOne/MainContainer";
+import LoadingScreen from "../../components/LoadingScreen";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { API_STATUS, USER_TYPE_CANDIDATE } from "../../constants/constants";
 import useFetch from "../../hooks/useFetch";
@@ -18,8 +19,7 @@ import {
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { setRoundsData } from "../../globalContext/sidebar/sidebarActions";
 import { isObjectFilled } from "../../utils/util";
-import LoadingScreen from "../../components/LoadingScreen";
-import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import styles from "./RoundOneView.style";
 
 const RoundOneView = () => {
   const [userProfileDetails] = useContext(UserProfileContext);
