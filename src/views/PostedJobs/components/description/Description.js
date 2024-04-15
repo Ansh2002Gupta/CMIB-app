@@ -36,7 +36,9 @@ const Description = ({ data, title, description, style }) => {
 
   return (
     <View style={[styles.container, style]}>
-      <CommonText customTextStyle={styles.headerTextStyle}>{title}</CommonText>
+      <CommonText customTextStyle={styles.headerTextStyle} fontWeight={"600"}>
+        {title}
+      </CommonText>
       <CustomTextEditor
         value={description}
         disabled

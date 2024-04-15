@@ -2,18 +2,31 @@ import colors from "../../assets/colors";
 
 const styles = {
   otherDetailItemWeb: {
+    marginBottom: 36,
+  },
+  otherDetailItemMobile: {
+    flex: 1,
+    width: "100%",
     padding: 24,
-    marginLeft: 16,
-    marginRight: 16,
     marginBottom: 16,
     borderWidth: 1,
     borderColor: colors.lightGrey,
     borderRadius: 16,
   },
-  otherDetailItemMobile: {
-    marginBottom: 36,
+  otherDetailsStyle: {
+    flex: 0.7,
+    flexWrap: "wrap",
+    ...Platform.select({
+      android: {
+        paddingRight: 16,
+        paddingLeft: 16,
+      },
+      ios: {
+        paddingRight: 16,
+        paddingLeft: 16,
+      },
+    }),
   },
-  otherDetailsStyle: { flex: 0.7, flexWrap: "wrap" },
   descriptionContainer: { flex: 1 },
   description: {
     flex: 1,
@@ -64,6 +77,7 @@ const styles = {
   otherDetailMobile: {
     width: "100%",
     marginTop: 16,
+    marginBottom: 16,
   },
   container: { flex: 1, backgroundColor: colors.backgroundGrey },
   scrollView: { paddingBottom: 16, flex: 1 },

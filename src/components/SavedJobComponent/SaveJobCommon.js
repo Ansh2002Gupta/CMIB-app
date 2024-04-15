@@ -8,7 +8,7 @@ export const LocationConfig = (data) => {
     return {
       content: (
         <CommonText customTextStyle={[style.blackText, style.webJobLocation]}>
-          {item?.name}
+          {item?.city}
           {index !== data?.length - 1 && "/"}
         </CommonText>
       ),
