@@ -60,6 +60,7 @@
     "react-select": "^5.8.0",
     "react-zoom-pan-pinch": "^3.4.3",
     "rn-range-slider": "2.2.2",
+    "victory": "^37.0.2",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
