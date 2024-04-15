@@ -7,21 +7,21 @@ import useFetch from "../../hooks/useFetch";
 import { usePut } from "../../hooks/useApiRequest";
 import PersonalDetailsUI from "./PersonalDetailsUI";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
-import { MEMBER_CA_JOB_PROFILE } from "../../services/apiServices/apiEndPoint";
+import { MEMBER_CA_JOB_PROFILE_PERSONAL } from "../../services/apiServices/apiEndPoint";
 import { usePersonalDetails } from "./Controllers/usePersonalDetails";
 import { formatDate } from "../../utils/util";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 
-const PersonalDetails = ({ isEditable = true, handleEdit }) => {
+const PersonalDetails = ({ isEditable = true, handleEdit, customUrl }) => {
   const [sideBarState] = useContext(SideBarContext);
-  const { selectedModule } = sideBarState || {};
+
   const {
     data,
     isLoading: isGettingPersonalData,
     error: errorWhileGettingPersonalData,
     fetchData,
   } = useFetch({
-    url: `${MEMBER_CA_JOB_PROFILE}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_PERSONAL}`,
   });
 
   const {
@@ -30,7 +30,7 @@ const PersonalDetails = ({ isEditable = true, handleEdit }) => {
     error,
     setError,
   } = usePut({
-    url: `${MEMBER_CA_JOB_PROFILE}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_PERSONAL}`,
   });
 
   const getData = (data) =>

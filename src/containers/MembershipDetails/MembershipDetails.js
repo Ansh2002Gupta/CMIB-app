@@ -4,21 +4,20 @@ import useFetch from "../../hooks/useFetch";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import MembershipDetailsTemplate from "./MembershipDetailsTemplate";
 import { MEMBER_CA_JOB_MEMBERSHIP_DETAILS } from "../../services/apiServices/apiEndPoint";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { useMembershipDetails } from "./controller/useMembershipDetails";
 import { formatDateToYYYYMMDD } from "../../utils/util";
 
-const MembershipDetails = ({ isEditable, handleEdit }) => {
+const MembershipDetails = ({ isEditable, handleEdit, customUrl }) => {
   const {
     fetchData,
     data,
     isError: isErrorLoadingPage,
     isLoading: isLoadingPage,
   } = useFetch({
-    url: MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
+    url: customUrl ?? MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
   });
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? { ...data } : {}
   );

@@ -33,7 +33,7 @@ const workExperienceKeys = () => ({
   areas_of_work: [],
 });
 
-const WorkExperience = ({ isEditable, handleEdit }) => {
+const WorkExperience = ({ isEditable, handleEdit, customUrl }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState || {};
 
@@ -43,7 +43,7 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
     isLoading: workExperienceIsLoading,
     error: workExperienceError,
   } = useFetch({
-    url: MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE,
+    url: customUrl ?? MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE,
   });
 
   const {
@@ -63,7 +63,7 @@ const WorkExperience = ({ isEditable, handleEdit }) => {
   });
 
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE);
 
   const [formFieldsError, setFormFieldsError] = useState([]);
   const [currentStatusError, setCurrentStatusError] = useState({});
