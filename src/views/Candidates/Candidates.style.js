@@ -1,16 +1,19 @@
-import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const styles = StyleSheet.create({
+const style = {
+  containerStyle: {
+    flex: 1,
+    overflow: "hidden",
+  },
   headerContainer: {
-    paddingBottom: 8,
+    paddingBottom: 16,
+    justifyContent: "space-between",
   },
   titleText: {
     fontSize: 20,
+    lineHeight: 40,
+    color: colors.black,
   },
-  customTabsStyle: {
-    backgroundColor: colors.white,
-  },
-});
+};
 
-export default styles;
+export default style;

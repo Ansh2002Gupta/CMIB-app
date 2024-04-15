@@ -101,6 +101,9 @@ const styles = StyleSheet.create({
   modalContainer: {
     marginBottom: 30,
   },
+  customContainerStyle: {
+    flex: 1,
+  },
 });
 
 export default styles;

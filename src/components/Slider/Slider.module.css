@@ -25,9 +25,13 @@
 /***** Chrome, Safari, Opera and Edge Chromium styles *****/
 /* slider track */
 .range::-webkit-slider-runnable-track {
-  background-color: var(--black);
+  background-color: #04af55;
   border-radius: 0.5rem;
   height: 0.4rem;
+}
+
+.greenTrack::-webkit-slider-runnable-track {
+  background-color: var(--green);
 }
 
 /* slider thumb */

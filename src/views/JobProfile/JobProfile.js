@@ -17,6 +17,7 @@ import JobPreference from "../../containers/JobPreference/JobPreference";
 import CommonText from "../../components/CommonText";
 import CardComponent from "../../components/CardComponent";
 import CustomImage from "../../components/CustomImage";
+import ViewQuestion from "../../containers/ViewPostedJobDetails/ViewQuestion";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./JobProfile.style";
 import images from "../../images";
@@ -40,7 +41,7 @@ const EditButton = ({ isEditable, handleEdit }) => {
             height={20}
             width={20}
           />
-          <CommonText customTextStyle={style.textStyle} fontWeight="600">
+          <CommonText customTextStyle={style.textStyle} fontWeight="500">
             {intl.formatMessage({ id: "label.edit_job_profile" })}
           </CommonText>
         </TouchableOpacity>
@@ -64,7 +65,13 @@ const EditButton = ({ isEditable, handleEdit }) => {
   );
 };
 
-const JobProfileTab = () => {
+const JobProfileTab = ({
+  renderHeader,
+  renderFooter,
+  isQuestionaireRequired = false,
+  questionaireData,
+  questionaireURL,
+}) => {
   const intl = useIntl();
   const [isEditable, setIsEditable] = useState(false);
   //Todo:editable will be in query params
@@ -74,14 +81,19 @@ const JobProfileTab = () => {
   return (
     <View style={style.containerStyle}>
       <CustomTabs
-        renderHeader={() => (
-          <Row style={style.headerContainer}>
-            <CommonText fontWeight={"500"} customTextStyle={style.titleText}>
-              {intl.formatMessage({ id: "label.job_profile" })}
-            </CommonText>
-            <EditButton isEditable={isEditable} handleEdit={handleEdit} />
-          </Row>
-        )}
+        renderHeader={() =>
+          !!renderHeader ? (
+            renderHeader()
+          ) : (
+            <Row style={style.headerContainer}>
+              <CommonText fontWeight={"500"} customTextStyle={style.titleText}>
+                {intl.formatMessage({ id: "label.job_profile" })}
+              </CommonText>
+              <EditButton isEditable={isEditable} handleEdit={handleEdit} />
+            </Row>
+          )
+        }
+        renderFooter={() => !!renderFooter && renderFooter()}
         tabs={[
           {
             label: "Personal Details",
@@ -132,6 +144,16 @@ const JobProfileTab = () => {
             label: "Job Preference",
             component: (
               <JobPreference isEditable={isEditable} handleEdit={handleEdit} />
+            ),
+          },
+          isQuestionaireRequired && {
+            label: "Questionnaire",
+            component: (
+              <ViewQuestion
+                isEditable={false}
+                questionnaireData={questionaireData}
+                url={questionaireURL}
+              />
             ),
           },
         ]}

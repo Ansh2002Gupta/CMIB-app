@@ -160,6 +160,7 @@ export const useWorkExperience = ({
           key: "emp_strength",
           label: "label.empStrength",
           placeholder: "label.empStrength",
+          isNumeric: true,
           validate: (value) => {
             if (value.length > 0 && !numRegex.test(String(value))) {
               return intl.formatMessage({
@@ -172,6 +173,7 @@ export const useWorkExperience = ({
           key: "gross_salary_drawn",
           label: "label.grossSalary",
           placeholder: "label.grossSalary",
+          isNumeric: true,
           validate: (value) => {
             if (value.length > 0 && !numRegex.test(String(value))) {
               return intl.formatMessage({

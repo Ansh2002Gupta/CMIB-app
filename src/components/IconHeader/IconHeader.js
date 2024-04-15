@@ -13,6 +13,7 @@ import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
 import images from "../../images";
 import styles from "./IconHeader.style";
+import { useIntl } from "react-intl";
 
 const IconHeader = ({
   actionButtonIcon,
@@ -37,6 +38,7 @@ const IconHeader = ({
   showInWeb,
 }) => {
   const { isWebView } = useIsWebView();
+  const intl = useIntl();
   const navigate = useNavigate();
 
   const onGoBack = () => {
@@ -89,9 +91,13 @@ const IconHeader = ({
         >
           <View style={styles.headingContainer}>
             <CommonText
-              customTextStyle={
-                !isWebView ? styles.formHeaderStyle : styles.formHeaderStyleWeb
-              }
+              customTextStyle={{
+                ...(!isWebView
+                  ? styles.formHeaderStyle
+                  : styles.formHeaderStyleWeb),
+              }}
+              customContainerStyle={styles.width100}
+              customTextProps={styles.iconTextStyle}
               fontWeight="600"
             >
               {headerText}
@@ -146,13 +152,18 @@ const IconHeader = ({
             </CustomTouchableOpacity>
           )}
           {isSwitchVisible && (
-            <View>
+            <View style={styles.flexRowAlignCenter}>
               <Switch
                 isToggled={isActive}
                 onChange={() => {
                   handleSwitchChange && handleSwitchChange();
                 }}
               />
+              <CommonText customContainerStyle={styles.marginLeft8}>
+                {isActive
+                  ? intl.formatMessage({ id: "label.active" })
+                  : intl.formatMessage({ id: "label.inactive" })}
+              </CommonText>
             </View>
           )}
         </View>

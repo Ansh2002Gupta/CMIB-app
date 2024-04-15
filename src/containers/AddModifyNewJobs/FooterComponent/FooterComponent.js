@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "../../../routes";
 import { View } from "@unthinkable/react-core-components";
 
@@ -7,6 +7,8 @@ import CustomButton from "../../../components/CustomButton";
 
 import { useIntl } from "react-intl";
 import styles from "./FooterComponent.styles";
+import { navigations } from "../../../constants/routeNames";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const FooterComponent = ({
   isWebView,
@@ -14,8 +16,11 @@ const FooterComponent = ({
   setIsCheckList,
   onSubmit,
   submitButtonText = "label.post",
+  onCancelPress,
 }) => {
   const navigate = useNavigate();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const intl = useIntl();
   return (
     <View style={styles.containerStyle(isWebView)}>
@@ -28,6 +33,7 @@ const FooterComponent = ({
             }}
             id={`isCheckList${isCheckList}`}
             isSelected={isCheckList}
+            style={styles.checkBoxHeight(isWebView)}
           />
         </View>
       </View>
@@ -36,7 +42,19 @@ const FooterComponent = ({
         <View style={styles.buttonViewStyle}>
           <CustomButton
             onPress={() => {
-              navigate(-1);
+              if (onCancelPress) {
+                onCancelPress(false);
+              } else {
+                navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
+                  replace: true,
+                });
+              }
+            }}
+            customStyle={{
+              textFontWeight: "500",
+              customTextStyle: {
+                fontSize: 14,
+              },
             }}
             style={styles.cancelButtonStyle(isWebView)}
           >
@@ -46,6 +64,12 @@ const FooterComponent = ({
             onPress={() => onSubmit()}
             style={styles.postButtonStyle(isWebView)}
             withGreenBackground
+            customStyle={{
+              textFontWeight: "500",
+              customTextStyle: {
+                fontSize: 14,
+              },
+            }}
             disabledContainerStyle={{ opacity: 0.5 }}
           >
             {intl.formatMessage({ id: submitButtonText })}

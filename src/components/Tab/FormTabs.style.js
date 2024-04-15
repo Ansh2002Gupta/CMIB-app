@@ -1,9 +1,15 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
   container: {
     flex: 1,
     overflow: "hidden",
+    ...Platform.select({
+      web: {
+        marginBottom: 20,
+      },
+    }),
   },
   innerContainer: {
     flexDirection: "row",
@@ -18,7 +24,7 @@ const style = {
     flex: 1,
   },
   marginLeft8: {
-    marginLeft: 8,
+    marginLeft: 4,
   },
   itemContainer: {
     height: 36,
@@ -34,7 +40,7 @@ const style = {
   editButtonViewStyle: {
     flexDirection: "row",
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     paddingRight: 12,
@@ -59,6 +65,9 @@ const style = {
   },
   activeItemText: {
     color: colors.white,
+  },
+  flex1: {
+    flex: 1,
   },
 };
 

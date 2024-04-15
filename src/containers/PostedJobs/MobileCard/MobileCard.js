@@ -57,7 +57,7 @@ const MobileCard = ({
                   ...styles.numberTextStyle,
                   ...detailTextStyle,
                 }}
-              >{`${item.number_of_interviews} interviews`}</CommonText>
+              >{`${item.number_of_interviews} Interviews`}</CommonText>
             </View>
             <View style={styles.detailRow}>
               <CustomImage style={styles.iconTicket} source={images.dotIcon} />
@@ -69,7 +69,7 @@ const MobileCard = ({
                 }}
                 customContainerStyle={styles.contentContainer}
               >
-                {item.status === 0 ? statusData[1].name : statusData[0].name}
+                {item.status === 0 ? statusData[1]?.name : statusData[0]?.name}
               </CommonText>
             </View>
           </View>

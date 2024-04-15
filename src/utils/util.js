@@ -29,12 +29,14 @@ export const getFormattedText = (item, key, formatConfig) => {
 };
 
 export const getRenderText = (items, keys, formatConfig = {}) => {
-  if (!keys.length) {
+  if (!keys?.length) {
     return "";
   }
-  return keys
-    .map((key) => getFormattedText(items, key, formatConfig))
-    .join(" • ");
+  if (keys?.[0].trim().toLowerCase() === "active") {
+    return items[keys?.[0]] ? "Active" : "Inactive";
+  }
+  const texts = keys?.map((key) => items[key]).join(" ");
+  return !!texts ? texts : "_";
 };
 
 export const appendStringsInNextLine = (string) => {
@@ -110,6 +112,18 @@ export const getTime = (isoString) => {
   return formattedTime;
 };
 
+export const getDate = (isoDateString, format = "DD-MM-YYYY") => {
+  const date = new Date(isoDateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // getMonth() returns 0-11
+  const day = date.getDate();
+
+  return format
+    .replace("YYYY", year.toString())
+    .replace("MM", month.toString().padStart(2, "0"))
+    .replace("DD", day.toString().padStart(2, "0"));
+};
+
 export const capitalize = (text) => {
   if (!text || typeof text !== "string") {
     return text;
@@ -120,7 +134,11 @@ export const capitalize = (text) => {
 };
 
 export const formatDate = (date, format = "DD/MM/YYYY") => {
-  return dayjs(date).format(format);
+  return !!date ? dayjs(date).format(format) : "-";
+};
+
+export const formatTime = (dateString, format = "hh:mm A") => {
+  return !!dateString ? dayjs(dateString).format(format) : "-";
 };
 
 export const extractFilename = (fileUri) => {
@@ -230,7 +248,6 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     is_contractual: jobData.jobType?.id == 2 ? true : false,
     job_type_slug: jobData.jobType?.value,
     is_urgent: jobData.isUrgentJob == 0 ? true : false,
-    is_salary_negotiable: jobData.salaryNagotiable == 0 ? true : false,
     experience: {
       min_experience: jobData.minimumExperience,
       max_experience: jobData.maximumExperience,
@@ -240,7 +257,7 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     designation: jobData.designation,
     functional_area_id: jobData.functionalAreas.map((object) => object.id),
     gender_preference: jobData.genderPreference?.value ?? null,
-    category_preference: jobData.categoryPreference?.label,
+    category_preference: jobData.categoryPreference?.label ?? null,
     essential_qualification: jobData.essentialQualification,
     desired_qualification: jobData.desiredQualification,
     job_opening_date: dayjs(jobData.jobOpeningDate).format("YYYY-MM-DD"),
@@ -249,12 +266,21 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     max_salary: jobData.maximumSalary,
     number_of_vacancies: jobData.numberOfVacancies,
     work_mode: jobData.modeofWork?.label,
-    flexi_hours: jobData.flexiHours == 0 ? true : false,
     is_extended_vacancy: jobData.vacanciesCountType == 0 ? true : false,
     service_type: jobData.fullTime == 0 ? "Full Time" : "Part Time",
   };
   if (isCheckList) {
     temp.notify_company = isCheckList;
+  }
+  if (jobData.salaryNagotiable != -1) {
+    temp.is_salary_negotiable = jobData.salaryNagotiable == 0 ? true : false;
+  } else {
+    temp.is_salary_negotiable = null;
+  }
+  if (jobData.flexiHours != -1) {
+    temp.flexi_hours = jobData.flexiHours == 0 ? true : false;
+  } else {
+    temp.flexi_hours = null;
   }
   if (jobData.jobType?.label === jobType.CONTRACTUAL) {
     temp.contract_period = {
@@ -266,6 +292,10 @@ export const getFormatedData = (jobData, question, isCheckList) => {
     temp.disability_type = jobData.typeOfDisabilty;
     temp.disability_percentage = jobData.disabiltyPercentage;
   }
+  if (jobData.status === 0 || jobData.status === 1) {
+    temp.status = jobData.status == 1 ? 0 : 1;
+  }
+
   let tempQuestion = question.map((item) => {
     return {
       id: item.id,
@@ -397,8 +427,10 @@ export const getQuestionType = {
   "single-select": "Single-select",
   "multi-select": "Multi-select",
 };
-export const getDecryptApiData = (apiData, addJobs) => {
+export const getDecryptApiData = (apiData) => {
   let obj = {};
+  const startDate = new Date(apiData.opening_date.toString().split(" ")[0]);
+  const endDate = new Date(apiData.closing_date.toString().split(" ")[0]);
   apiData.locations = Array.isArray(apiData.locations) ? apiData.locations : [];
   apiData.functional_areas = Array.isArray(apiData.functional_areas)
     ? apiData.functional_areas
@@ -408,14 +440,12 @@ export const getDecryptApiData = (apiData, addJobs) => {
 
   obj.jobSummary = apiData.summary;
   obj.jobDetails = apiData.detail;
-  obj.jobType = apiData.job_type_id
-    ? addJobs.jobType
-        .map((item) => ({
-          id: item.id,
-          label: item.name,
-          value: item.slug,
-        }))
-        .find((item) => item.id === apiData.job_type_id) || {}
+  obj.jobType = apiData.type
+    ? {
+        id: apiData.type.id ?? null,
+        label: apiData.type?.name ?? "",
+        value: apiData.type.slug ?? "",
+      }
     : {};
   obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
   obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
@@ -430,8 +460,8 @@ export const getDecryptApiData = (apiData, addJobs) => {
     : [];
   obj.nationality = apiData.nationality
     ? {
-        value: apiData.nationality,
-        label: apiData.nationality,
+        value: apiData.nationality?.name,
+        label: apiData.nationality?.name,
       }
     : "";
 
@@ -440,51 +470,37 @@ export const getDecryptApiData = (apiData, addJobs) => {
     apiData.functional_areas.length > 0
       ? apiData.functional_areas.map((item) => ({
           id: item.id,
-          label: item.name,
+          label: item?.name,
           value: item.slug,
         }))
       : [];
   obj.genderPreference = apiData.gender_preference
-    ? addJobs.genderPreferenceData
-        ?.filter((item) => item.name == apiData.gender_preference)
-        .map((item) => ({
-          id: item.name,
-          label: item.label,
-          value: item.name,
-        }))[0]
+    ? {
+        value: apiData.gender_preference?.name,
+        label: apiData.gender_preference.label,
+        id: apiData.gender_preference.label,
+      }
     : {};
-  obj.categoryPreference = apiData.category_preference
-    ? addJobs.jobCategory
-        ?.filter((item) => {
-          if (item.name == apiData.category_preference) {
-            return item;
-          }
-        })
-        .map((item) => ({
-          id: item.id,
-          label: item.name,
-          value: item.slug,
-        }))[0]
+  obj.categoryPreference = apiData.category_prefrence
+    ? {
+        label: apiData.category_prefrence?.name,
+        value: apiData.category_prefrence.slug,
+        id: apiData.category_prefrence.id,
+      }
     : {}; //
   obj.essentialQualification = apiData.essential_qualification;
   obj.desiredQualification = apiData.desired_qualification;
-  obj.jobOpeningDate = apiData.opening_date;
-  obj.jobClosingDate = apiData.closing_date;
+  obj.jobOpeningDate = startDate;
+  obj.jobClosingDate = endDate;
   obj.minimumSalary = Math.trunc(apiData.min_salary);
   obj.maximumSalary = Math.trunc(apiData.max_salary);
   obj.numberOfVacancies = apiData.vacancy;
   obj.modeofWork = apiData.work_mode
-    ? addJobs.workModeData
-        .filter((item) => {
-          if (item.name == apiData.work_mode) {
-            return item;
-          }
-        })
-        .map((item) => ({
-          id: item.id,
-          label: item.name,
-          value: item.slug,
-        }))[0]
+    ? {
+        label: apiData.work_mode?.name,
+        slug: apiData.work_mode.slug,
+        id: apiData.work_mode.id,
+      }
     : {}; //
   obj.flexiHours = apiData.flexi_hours ? 0 : 1;
   obj.vacanciesCountType = apiData.is_extended_vacancy == 1 ? 0 : 1;
@@ -501,7 +517,8 @@ export const getDecryptApiData = (apiData, addJobs) => {
     ? apiData.contract_period.months
     : 0;
   obj.contractDay = apiData?.contract_period ? apiData.contract_period.days : 0;
-  const transformedQuestionnaire = apiData?.questionnaires.map((item) => {
+  obj.status = apiData?.status == 0 ? 1 : 0;
+  const transformedQuestionnaire = apiData?.questionnaires?.map((item) => {
     item.question_options = Array.isArray(item.question_options)
       ? item.question_options
       : JSON.parse(item.question_options);
@@ -528,7 +545,6 @@ export const getDecryptApiData = (apiData, addJobs) => {
   });
   return { obj, transformedQuestionnaire };
 };
-
 export const changeComma = (data, index) => {
   if (index < data.length) {
     return [...data.slice(0, index), "+" + (data.length - index) + " more"];
@@ -570,4 +586,63 @@ export const containsDuplicate = (arr) => {
     seen.add(value);
   }
   return false;
+};
+
+export const convertJSONStringArrayToIntArray = (
+  jsonStringArray,
+  isMultiSelect
+) => {
+  try {
+    const stringArray = JSON.parse(jsonStringArray);
+    const labelValueArray = stringArray.map((str) =>
+      isMultiSelect
+        ? {
+            label: str,
+            value: str,
+            isSelected: false,
+          }
+        : { label: str, value: str }
+    );
+
+    return labelValueArray;
+  } catch (error) {
+    console.error("Error converting JSON string array to int array:", error);
+    return null;
+  }
+};
+
+export const convertToTime = ({ dateString, format24Hour = true }) => {
+  const date = dayjs(dateString);
+  const timeFormat = format24Hour ? "HH:mm" : "hh:mm A";
+  const timeString = date.format(timeFormat);
+  return timeString;
+};
+
+export const formateDateandTime = (date, time) => {
+  const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
+  const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
+  return formattedDate + formattedTime;
+};
+
+export const areAllValuesEmpty = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === "object") {
+      if (!areAllValuesEmpty(obj[key])) {
+        return false;
+      }
+    } else {
+      if (obj[key] !== "") {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
+const isObjectFilled = (obj) => {
+  return Object.values(obj).every((value) => value !== "");
+};
+
+export const areAllValuesFilled = (objects) => {
+  return Object.values(objects).some(isObjectFilled);
 };

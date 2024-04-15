@@ -12,7 +12,8 @@ import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
 import styles from "./FormTabs.style.js";
 import images from "../../images";
-import TouchableImage from "../TouchableImage";
+import CustomTouchableOpacity from "../CustomTouchableOpacity/CustomTouchableOpacity.js";
+import CustomImage from "../CustomImage/CustomImage.js";
 
 export const FormTabs = ({
   isEditButtonVisible,
@@ -53,7 +54,7 @@ export const FormTabs = ({
 
   return (
     <>
-      <View style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.flex1}>
         <View style={styles.innerContainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Row gap={12} style={styles.tabContainer}>
@@ -89,20 +90,22 @@ export const FormTabs = ({
             </Row>
           </ScrollView>
           {isEditButtonVisible && (
-            <View style={styles.editButtonViewStyle}>
-              <TouchableImage
-                source={images.iconEditSvg}
-                onPress={onEditClick}
+            <CustomTouchableOpacity
+              style={styles.editButtonViewStyle}
+              onPress={onEditClick}
+            >
+              <CustomImage
+                source={images.iconEdit}
                 style={styles.editIconStyle}
               />
               <CommonText customContainerStyle={styles.marginLeft8}>
                 {intl.formatMessage({ id: "label.edit" })}
               </CommonText>
-            </View>
+            </CustomTouchableOpacity>
           )}
         </View>
         {tabs[activeTabIndex].component}
-      </View>
+      </ScrollView>
       {alertOnTabSwitch?.showAlert && (
         <ConfirmationModal
           headingText={intl.formatMessage({

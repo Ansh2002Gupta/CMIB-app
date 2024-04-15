@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -6,18 +7,63 @@ import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import EducationDetailsUI from "./EducationDetailsUI";
 import useFetch from "../../hooks/useFetch";
 import { usePut } from "../../hooks/useApiRequest";
-import { MEMBER_CA_JOB_PROFILE_EDUCATION } from "../../services/apiServices/apiEndPoint";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import {
+  ACADEMICS,
+  MEMBERS,
+  MEMBER_CA_JOB_PROFILE_EDUCATION,
+  USER_TYPE_COMPANY,
+} from "../../services/apiServices/apiEndPoint";
 import { useEducationDetails } from "./Controllers/useEducationDetails";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
 const EducationDetails = ({ isEditable = true, handleEdit }) => {
+  const { id } = useParams();
+  const { isCompany, currentModule } = useGetCurrentUser();
+
   const {
-    data,
+    data: applicantAcadimicsData,
+    isLoading: isGettingapplicantAcadimicsDataLoading,
+    error: errorWhileGettingapplicantAcadimicsData,
+    fetchData: fetchingApplicantAcadimicsData,
+  } = useFetch({
+    url:
+      USER_TYPE_COMPANY + `/${currentModule}` + MEMBERS + `/${id}` + ACADEMICS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  const {
+    data: educationData,
     isLoading: isGettingEducationData,
     error: errorWhileGettingEducationData,
+    fetchData: fetchingEducationData,
   } = useFetch({
     url: `${MEMBER_CA_JOB_PROFILE_EDUCATION}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+
+  useEffect(() => {
+    if (currentModule) {
+      if (isCompany) {
+        fetchingApplicantAcadimicsData({});
+      } else {
+        fetchingEducationData({});
+      }
+    }
+  }, [currentModule]);
+
+  const data = isCompany ? applicantAcadimicsData : educationData;
+  const isLoading = isCompany
+    ? isGettingapplicantAcadimicsDataLoading
+    : isGettingEducationData;
+  const errorWhileFetching = isCompany
+    ? errorWhileGettingapplicantAcadimicsData
+    : errorWhileGettingEducationData;
+
   const {
     makeRequest: handleUpdate,
     isLoading: isUpdatingEducationData,
@@ -112,42 +158,43 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
   const handleSave = () => {
     let payload = {
       "Class 10": {
-        has_education: state?.higher_secondary_has_education,
-        exam_board: state?.higher_board,
-        exam_name: state?.higher_secondary,
-        passing_percentage: state?.higher_secondary_mark_in_percent,
-        passing_rank: state?.higher_secondary_rank_medal,
-        passing_year: state?.higher_secondary_year,
-        exam_status: state?.higher_secondary_status,
+        has_education: state?.higher_secondary_has_education ?? null,
+        exam_board: state?.higher_board ?? null,
+        exam_name: state?.higher_secondary ?? null,
+        passing_percentage: state?.higher_secondary_mark_in_percent ?? null,
+        passing_rank: state?.higher_secondary_rank_medal ?? null,
+        passing_year: state?.higher_secondary_year ?? null,
+        exam_status: state?.higher_secondary_status ?? null,
       },
       "Class 12": {
-        has_education: state?.has_education,
-        exam_board: state?.board,
-        exam_name: state?.examination_name,
-        passing_percentage: state?.mark_in_percent,
-        passing_rank: state?.rank_medal,
-        passing_year: state?.year,
-        exam_status: state?.status,
+        has_education: state?.has_education ?? null,
+        exam_board: state?.board ?? null,
+        exam_name: state?.examination_name ?? null,
+        passing_percentage: state?.mark_in_percent ?? null,
+        passing_rank: state?.rank_medal ?? null,
+        passing_year: state?.year ?? null,
+        exam_status: state?.status ?? null,
       },
       Graduation: {
-        has_education: state?.graduation,
-        exam_board: state?.graduation_board,
-        exam_name: state?.graduation_examination_name,
-        passing_percentage: state?.graduation_mark_in_percent,
-        passing_rank: state?.graduation_rank_medal,
-        passing_year: state?.graduation_year,
-        exam_status: state?.graduation_status,
+        has_education: state?.graduation ?? null,
+        exam_board: state?.graduation_board ?? null,
+        exam_name: state?.graduation_examination_name ?? null,
+        passing_percentage: state?.graduation_mark_in_percent ?? null,
+        passing_rank: state?.graduation_rank_medal ?? null,
+        passing_year: state?.graduation_year ?? null,
+        exam_status: state?.graduation_status ?? null,
       },
       "Post Graduation": {
-        has_education: state?.post_graduation,
-        exam_board: state?.post_graduation_board,
-        exam_name: state?.post_graduation_examination_name,
-        passing_percentage: state?.post_graduation_mark_in_percent,
-        passing_rank: state?.post_graduation_rank_medal,
-        passing_year: state?.post_graduation_year,
-        exam_status: state?.post_graduation__status,
+        has_education: state?.post_graduation ?? null,
+        exam_board: state?.post_graduation_board ?? null,
+        exam_name: state?.post_graduation_examination_name ?? null,
+        passing_percentage: state?.post_graduation_mark_in_percent ?? null,
+        passing_rank: state?.post_graduation_rank_medal ?? null,
+        passing_year: state?.post_graduation_year ?? null,
+        exam_status: state?.post_graduation__status ?? null,
       },
     };
+
     handleUpdate({
       body: payload,
       onSuccessCallback: () => {
@@ -156,12 +203,12 @@ const EducationDetails = ({ isEditable = true, handleEdit }) => {
     });
   };
 
-  return isGettingEducationData ? (
+  return isLoading ? (
     <LoadingScreen />
-  ) : errorWhileGettingEducationData ? (
+  ) : errorWhileFetching ? (
     <ErrorComponent
       errorMsg={
-        errorWhileGettingEducationData?.data?.message ||
+        errorWhileFetching?.data?.message ||
         GENERIC_GET_API_FAILED_ERROR_MESSAGE
       }
     />

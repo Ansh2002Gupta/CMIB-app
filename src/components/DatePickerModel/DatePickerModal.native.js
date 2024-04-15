@@ -6,19 +6,22 @@ import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import images from "../../images";
 import { useIntl } from "react-intl";
-import { formatDate } from "../../utils/util";
+import { convertToTime, formatDate } from "../../utils/util";
 import styles from "./DatePickerModal.style";
 
 const DatePickerModal = ({
   customTextInputOuterContainer,
   customStyles = {},
-  format =  "DD/MM/YYYY",
+  format = "DD/MM/YYYY",
   isError,
   minDate,
   maxDate,
   onChangeValue,
+  showTimeSelect,
   value,
-  mode = "date"
+  datePickerViewStyle,
+  mode = "date",
+  datePickerContainer,
 }) => {
   const [open, setOpen] = useState(false);
   const handleDropDown = () => {
@@ -32,34 +35,37 @@ const DatePickerModal = ({
         style={[
           styles.container,
           open ? styles.focusedStyle : {},
-          customStyles,
           errorStyle,
+          customStyles,
+          datePickerContainer,
         ]}
       >
         <TouchableOpacity
           onPress={handleDropDown}
-          style={styles.mobileTouchableStyle}
+          style={{
+            ...styles.mobileTouchableStyle,
+            ...styles.textViewStyles,
+            ...customTextInputOuterContainer,
+          }}
         >
-          <View
-            style={{
-              ...styles.textViewStyles,
-              ...customTextInputOuterContainer,
-            }}
+          <CommonText
+            customContainerStyle={styles.mobileTextStyle}
+            customTextStyle={
+              !value ? styles.placeholderTextStyle : styles.valueStyle
+            }
           >
-            <CommonText
-              customContainerStyle={styles.mobileTextStyle}
-              customTextStyle={
-                !value ? styles.placeholderTextStyle : styles.valueStyle
-              }
-            >
-              {!value
-                ? intl.formatMessage({ id: "label.select" })
-                : formatDate(value)}
-            </CommonText>
-          </View>
+            {!value
+              ? intl.formatMessage({ id: "label.select" })
+              : showTimeSelect
+              ? convertToTime({
+                  dateString: value,
+                  format24Hour: false,
+                })
+              : formatDate(value, format)}
+          </CommonText>
           <View style={styles.imageContainer}>
             <CustomImage
-              source={images.iconCalendar}
+              source={showTimeSelect ? images.iconClock : images.iconCalendar}
               style={styles.iconArrow}
             />
           </View>
@@ -76,6 +82,7 @@ const DatePickerModal = ({
           setOpen(false);
           onChangeValue(date);
         }}
+        style={datePickerViewStyle}
         onCancel={() => {
           setOpen(false);
         }}

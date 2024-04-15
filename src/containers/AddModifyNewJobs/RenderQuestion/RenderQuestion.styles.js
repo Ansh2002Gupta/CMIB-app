@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     flex: 0.74,
     marginLeft: 24,
     flexDirection: "row",
+    height: 54,
   },
   copyIconStyle: {
     height: 24,
