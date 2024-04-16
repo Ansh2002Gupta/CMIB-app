@@ -247,6 +247,7 @@ const iconRupeeSign = appendAppBaseURl("/images/svg/rupeeSign.svg");
 const iconArchiveSave = appendAppBaseURl("/images/svg/iconArchiveSave.svg");
 const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
 const iconTrashSVG = appendAppBaseURl("/images/svg/iconTrash.svg");
+const iconTrashBlack = appendAppBaseURl("/images/svg/iconTrashBlack.svg");
 
 const images = {
   iconArrowUp,
@@ -424,6 +425,7 @@ const images = {
   iconLocationWhite,
   iconClock,
   iconTrashSVG,
+  iconTrashBlack,
 };
 
 export default images;

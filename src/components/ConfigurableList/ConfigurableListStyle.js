@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingLeft: 25,
-    backgroundColor: "#F6F8F9",
+    backgroundColor: colors.backgroundGrey,
   },
 
   outerSearchInputBox: {
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     padding: 0,
     marginTop: 0,
-    backgroundColor: "#F6F8F9",
+    backgroundColor: colors.backgroundGrey,
   },
 
   searchInput: {
@@ -133,6 +133,18 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     color: colors.darkGrey,
     marginTop: 20,
+  },
+  selectedBackground: {
+    backgroundColor: colors.shallowGreen,
+  },
+  unselectedBackground: {
+    backgroundColor: colors.white,
+  },
+  selectedTextColor: {
+    color: colors.black,
+  },
+  unselectedTextColor: {
+    color: colors.lightGrey,
   },
 });
 

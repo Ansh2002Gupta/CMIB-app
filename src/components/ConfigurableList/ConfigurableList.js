@@ -10,9 +10,9 @@ import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
 import styles from "./ConfigurableListStyle";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
-import colors from "../../assets/colors";
 
 const ConfigurableList = ({
+  onAdd,
   onDelete,
   onPress,
   items,
@@ -58,7 +58,7 @@ const ConfigurableList = ({
         <View style={styles.header}>
           <CommonText customTextStyle={styles.titleStyles}>{title}</CommonText>
           <TouchableImage
-            onPress={undefined}
+            onPress={onAdd}
             parentStyle={styles.iconAdd}
             source={images.iconAdd}
           />
@@ -79,21 +79,25 @@ const ConfigurableList = ({
             {!!menuOptions?.length > 0 &&
               menuOptions.map((item) => (
                 <CustomTouchableOpacity
-                  className={`${classes["configurableList__item--green"]}`}
+                  className={
+                    selectedOptions.includes(item.id)
+                      ? `${classes["configurableList__item--green"]}`
+                      : ``
+                  }
                   onPress={() => onPress(item.id)}
                   style={[
                     styles.itemContainer,
-                    selectedOptions.includes(item.id) && {
-                      backgroundColor: colors.shallowGreen,
-                    },
+                    selectedOptions.includes(item.id)
+                      ? styles.selectedBackground
+                      : styles.unselectedBackground,
                   ]}
                 >
                   <CommonText
                     customTextStyle={[
                       styles.item,
-                      selectedOptions.includes(item.id) && {
-                        color: colors.black,
-                      },
+                      selectedOptions.includes(item.id)
+                        ? styles.selectedTextColor
+                        : styles.unselectedTextColor,
                     ]}
                     customTextProps={{ className: classes["item--black"] }}
                   >
@@ -103,7 +107,7 @@ const ConfigurableList = ({
                     <TouchableImage
                       className={classes["iconTrash"]}
                       onPress={() => onDelete(item.id)}
-                      source={images.iconTrashSvg}
+                      source={images.iconTrashBlack}
                       style={styles.iconTrash}
                     />
                   )}
@@ -122,6 +126,7 @@ const ConfigurableList = ({
 };
 
 ConfigurableList.defaultProps = {
+  onAdd: () => {},
   onDelete: () => {},
   onPress: () => {},
   items: [],
@@ -136,6 +141,7 @@ ConfigurableList.defaultProps = {
 };
 
 ConfigurableList.protoTypes = {
+  onAdd: PropTypes.func,
   onDelete: PropTypes.func,
   onPress: PropTypes.func,
   items: PropTypes.array,

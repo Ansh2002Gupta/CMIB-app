@@ -16,9 +16,9 @@ import { TwoRow } from "../../core/layouts";
 
 import CAJobsDashboard from "../CAJobsDashboard";
 import IconHeader from "../../components/IconHeader/IconHeader";
+import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 import { moduleKeys } from "../../constants/sideBarHelpers";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 import styles from "./dashboard.style";
 
 const dummyDataItems1 = [
@@ -153,9 +153,14 @@ function DashboardView() {
   };
 
   const handlePress = (selectedItemID) => {
-    isMultiSelect
-      ? setSelectedOptions((prev) => [...prev, selectedItemID])
-      : setSelectedOptions([selectedItemID]);
+    if (isMultiSelect) {
+      if (selectedOptions.includes(selectedItemID)) {
+        const newSelectedOptions = selectedOptions.filter(
+          (id) => id !== selectedItemID
+        );
+        setSelectedOptions(newSelectedOptions);
+      } else setSelectedOptions((prev) => [...prev, selectedItemID]);
+    } else setSelectedOptions([selectedItemID]);
   };
 
   const searchData = [
