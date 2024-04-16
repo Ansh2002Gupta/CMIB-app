@@ -230,6 +230,7 @@ const CustomTable = ({
                     <FlatList
                       data={data || []}
                       showsVerticalScrollIndicator={false}
+                      style={styles.flatListStyle}
                       keyExtractor={(item, index) => index?.toString()}
                       renderItem={({ item, index }) => {
                         const statusRenderText =

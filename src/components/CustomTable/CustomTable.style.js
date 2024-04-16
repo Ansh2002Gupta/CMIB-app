@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
     borderColor: colors.greyOne,
     backgroundColor: colors.white,
   },
+  flatListStyle: {
+    overflow: "unset",
+  },
   cellTextStyle: (fontSize = 14, fontWeight = "500") => ({
     fontSize: fontSize,
     fontWeight: fontWeight,

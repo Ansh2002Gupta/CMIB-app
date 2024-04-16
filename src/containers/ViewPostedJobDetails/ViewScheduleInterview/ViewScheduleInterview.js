@@ -22,7 +22,7 @@ const ViewScheduleInterview = ({ id }) => {
   const intl = useIntl();
 
   const onClickAction = (selectedItem, item) => {
-    applicantId.current = item.id;
+    applicantId.current = item.application_id;
     selectedApplicant.current = item.interview_id;
     setIsModalVisible(selectedItem);
   };
@@ -62,6 +62,7 @@ const ViewScheduleInterview = ({ id }) => {
     tableIcon,
     scheduleInterviewData,
     totalcards,
+    initialFilterState,
   } = useGetScheduleList(id, onClickAction);
 
   const getMobileView = (item, index) => {
@@ -115,6 +116,7 @@ const ViewScheduleInterview = ({ id }) => {
             subHeadingText,
             tableIcon,
             totalcards,
+            initialFilterState,
             placeholder: intl.formatMessage({
               id: "label.search_by_applicant_name",
             }),

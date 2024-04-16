@@ -157,7 +157,7 @@ const useGetScheduleList = (id, onClickAction) => {
             ? existingSelectedOptions?.filter((item) => {
                 return item !== selectedFilter?.[keyName];
               })
-            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+            : [selectedFilter?.[keyName]];
         } else {
           newSelectedOptions = selectedFilter.value;
         }
@@ -273,7 +273,11 @@ const useGetScheduleList = (id, onClickAction) => {
 
   const filterApplyHandler = async (filterInfo) => {
     const currentFilterOptions = {
-      date: returnSelectedFilterOption(filterInfo, "Date"),
+      date: returnSelectedFilterOption(filterInfo, "Date").length
+        ? dayjs(returnSelectedFilterOption(filterInfo, "Date")[0]).format(
+            "YYYY-MM-DD"
+          )
+        : [],
     };
     setFilterOptions((prev) => {
       return {
@@ -302,17 +306,6 @@ const useGetScheduleList = (id, onClickAction) => {
         page: currentPage,
       });
     }
-  };
-
-  const onDateSorting = async (sortField) => {
-    //TODO: required in future.
-    // setIsAscendingOrder((prev) => !prev);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   sortField: sortField,
-    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
-    // });
   };
 
   const onNameSorting = async (sortField) => {
@@ -590,7 +583,7 @@ const useGetScheduleList = (id, onClickAction) => {
     loadingMore,
     queryTypeData,
     rowsPerPage,
-
+    initialFilterState,
     setFilterState,
     statusData,
     statusText,
