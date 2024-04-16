@@ -3,6 +3,7 @@ import colors from "../../assets/colors";
 import { baseChipStyle } from "../../theme/styles/commonStyles";
 
 const styles = StyleSheet.create({
+  cursorStyle: { cursor: "pointer" },
   cellTextStyle: (fontSize = 14) => ({
     fontSize,
     ...Platform.select({

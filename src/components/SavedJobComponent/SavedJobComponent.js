@@ -38,7 +38,7 @@ const SavedJobComponent = ({
     minExperience: details?.min_experience,
     maxExperience: details?.max_experience,
     requirement: details?.functional_areas,
-    company_logo: details?.company_logo,
+    company_logo: details?.company_logo || details?.company?.company_logo,
   };
 
   const handleClickOnCard = () => {

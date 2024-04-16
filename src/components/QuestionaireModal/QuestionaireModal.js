@@ -169,6 +169,7 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
     <>
       {errorWhileApplyingJobs && (
         <ToastComponent
+          customToastStyle={styles.customToastStyle}
           toastMessage={errorWhileApplyingJobs}
           onDismiss={handleResetError}
         />

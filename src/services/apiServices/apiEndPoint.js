@@ -73,6 +73,8 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
 export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
+
+//sub routes
 export const APPLY_JOB = `${USER_TYPE_MEMBER}/jobs/apply`;
 export const MEMBER_JOBS_LISTING = `${USER_TYPE_MEMBER}/${JOBS}/apply`;
 export const OFFER_RESPONSE = `${USER_TYPE_MEMBER}/${JOBS}/applicants`;
@@ -122,6 +124,6 @@ export const SAVE_JOB_DETAIL = `${USER_TYPE_MEMBER}/jobs`;
 export const SEARCH_JOBS = `search/jobs`;
 export const CHANGE_APPLICANT_STATUS = `${USER_TYPE_COMPANY}/jobs/applicants`;
 export const CHANGE_STATUS = "/change-status";
-export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${JOB_APPLICANTS}${INTERVIEW}`;
+export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${APPLICANTS}${INTERVIEW}`;
 export const ACCEPTED = "/accepted";
 export const GET_MEMBER_COMPLETION = `${USER_TYPE_MEMBER}/profile/percentage`;

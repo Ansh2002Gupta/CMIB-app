@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./DownloadMoreComponent.styles";
 import { View } from "@unthinkable/react-core-components";
 import TouchableImage from "../../../components/TouchableImage";
@@ -9,7 +9,9 @@ import { useIntl } from "react-intl";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 const DownloadMoreComponent = ({ onPress }) => {
   const { isWebView } = useIsWebView();
+  const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
   const intl = useIntl();
+
   return (
     <View style={isWebView ? styles.container : styles.mobileContainer}>
       {isWebView ? (
@@ -27,7 +29,11 @@ const DownloadMoreComponent = ({ onPress }) => {
           </CommonText>
         </View>
       ) : (
-        <PopupMessage message={["Download More"]} />
+        <PopupMessage
+          message={["Download More"]}
+          isPopupModal
+          onPopUpClose={() => setCurrentPopupMessage(-1)}
+        />
       )}
     </View>
   );

@@ -263,6 +263,7 @@ const iconSelectedSolidCircle = appendAppBaseURl(
   "/images/svg/selectedCircle.svg"
 );
 const iconCircleCross = appendAppBaseURl("/images/svg/close-circle.svg");
+const handShakeIcon = appendAppBaseURl("/images/svg/handShakeIcon.svg");
 const iconDefaultLogo = appendAppBaseURl("/images/svg/iconDefaultLogo.svg");
 const iconEditBlue = appendAppBaseURl("/images/svg/iconEditBlue.svg");
 
@@ -451,6 +452,7 @@ const images = {
   iconSelectCircle,
   iconSelectedSolidCircle,
   iconCircleCross,
+  handShakeIcon,
   iconView,
   iconDefaultLogo,
   iconEditBlue,
