@@ -166,7 +166,7 @@ const ViewDetailsScreen = () => {
     setIsEditable(value);
   };
   const handleBackPress = () => {
-    navigate(`${navigations.CA_JOBS}/${navigations.JOB_SEEKERS}`);
+    navigate(-1);
   };
 
   const getShortProfileDetails = ({ candidate_name, candidate_id }) => {

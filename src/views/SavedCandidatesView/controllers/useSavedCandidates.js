@@ -272,8 +272,10 @@ const useSavedCandidates = () => {
     });
   };
 
-  const openCandidateDetail = (candidateId) => {
-    navigate(`/${selectedModule?.key}/${navigations.CANDIDATE_DETAIL}`);
+  const openCandidateDetail = (candidateData) => {
+    navigate(
+      `/${selectedModule?.key}/${navigations.CANDIDATE_DETAIL}/${candidateData?.user_id}`
+    );
   };
 
   const popupOptions = [
@@ -427,7 +429,7 @@ const useSavedCandidates = () => {
                   message={popupOptions}
                   customStyle={styles.popupMessageStyle}
                   onPopupClick={(configData) => {
-                    configData?.popupAction(item?.candidate_id);
+                    configData?.popupAction(item);
                   }}
                   labelName="label"
                 />
