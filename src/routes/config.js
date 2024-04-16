@@ -35,6 +35,7 @@ import { navigations } from "../constants/routeNames";
 import EditJobDetails from "../views/EditJobDetails/EditJobDetails";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
+import Dummy from "../views/Dummy.js/Dummy";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -264,10 +265,13 @@ const config = [
         viewPath: navigations.SAVED_JOBS,
         element: <SavedJobs />,
       },
-
       {
         viewPath: navigations.JOBS,
         element: <Jobs />,
+      },
+      {
+        viewPath: navigations.CONFIGURABLE_LIST,
+        element: <Dummy />,
       },
     ],
   },
