@@ -22,6 +22,7 @@ export const navigations = {
 
   //sub routes
   ALL_JOBS: "all-jobs",
+  APPLIED_JOBS_REDIRECT: "/ca-jobs/job-detail",
   APPLICATION_FORM: "application-form",
   CANDIDATE_DETAILS_SUBROUTE: "candidate-details",
   CANDIDATE_DETAILS: "/candidate-details/:id",
