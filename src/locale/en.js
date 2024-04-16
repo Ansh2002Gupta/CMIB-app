@@ -671,6 +671,8 @@ const locale = {
   "label.yrs": "yrs",
   "label.posted": "Posted",
   "label.ago": "ago",
+  "label.viewMore": "View more",
+  "label.viewLess": "Show less",
   "label.candidates": "Candidates",
   "label.job_applicants": "Job Applicants",
   "label.saved_candidates": "Saved Candidates",

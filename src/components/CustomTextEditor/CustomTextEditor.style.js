@@ -57,6 +57,16 @@ const styles = StyleSheet.create({
     color: colors.errorRed,
     lineHeight: 18,
   },
+  customButtonTextStyle: {
+    fontSize: 14,
+    color: colors.black,
+    fontWeight: "600",
+  },
+  buttonStyle: {
+    borderWidth: 0,
+    padding: 0,
+    justifyContent: "flex-end",
+  },
 });
 
 export default styles;
