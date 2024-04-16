@@ -142,10 +142,11 @@ const PersonalDetails = ({
 
   useEffect(() => {
     if (!!data) {
-      callBack({
-        candidate_name: data?.name?.[0]?.name,
-        candidate_id: data?.member_id,
-      });
+      callBack &&
+        callBack({
+          candidate_name: data?.name?.[0]?.name,
+          candidate_id: data?.member_id,
+        });
     }
   }, [data]);
 
