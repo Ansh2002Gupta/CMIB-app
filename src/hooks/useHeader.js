@@ -26,10 +26,11 @@ export const useHeader = () => {
   const onLogout = async (logoutToastData, omitApiCall) => {
     !omitApiCall && (await handleUserLogout({}));
     await CookieAndStorageService.remove({ key: "auth" });
+    await CookieAndStorageService.remove({ key: "sessionKey" });
     authDispatch(clearAuthAndLogout());
     userProfileDispatch(resetUserDetails());
     !!logoutToastData && setLogoutDispatch(setLogoutToast(logoutToastData));
-    resetAllModules(userType.toLowerCase() !== COMPANY);
+    resetAllModules(userType?.toLowerCase() !== COMPANY);
     navigate(navigations.LOGIN, {
       state: { activeTab: userType === "Company" },
     });

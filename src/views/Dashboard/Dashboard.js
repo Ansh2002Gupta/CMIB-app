@@ -1,74 +1,48 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
+import { TwoRow } from "../../core/layouts";
 
-import CommonText from "../../components/CommonText";
-import RangeSlider from "../../components/RangeSlider";
-import UploadImage from "../../components/UploadImage";
+import CAJobsDashboard from "../CAJobsDashboard";
+import JobProfileTab from "../JobProfile";
+import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import TouchableImage from "../../components/TouchableImage";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
-import styles from "./dashboard.style";
 import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
+import { moduleKeys } from "../../constants/sideBarHelpers";
+import images from "../../images";
+import styles from "./dashboard.style";
+import useIsWebView from "../../hooks/useIsWebView";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import SearchView from "../../components/SearchView";
 
-const MIN_VALUE = 0;
-const MAX_VALUE = 100; // Created for demo purposes , therefore not defining them in the constant.js file
-// Just ignore this file as just to test custom component
 function DashboardView() {
   const intl = useIntl();
-  const [range, setRange] = useState({ max: MAX_VALUE, min: MIN_VALUE });
-
-  const {
-    errorWhileUpload,
-    fileUploadResult,
-    handleFileUpload,
-    isLoading: isUploadingImageToServer,
-    setErrorWhileUpload,
-    setFileUploadResult,
-    uploadPercentage,
-  } = useSaveLogo({});
-
-  const { handleDeleteLogo } = useDeleteLogo();
-
-  const onDeleteImage = () => {
-    if (fileUploadResult?.data?.file_name) {
-      const fileName = fileUploadResult?.data?.file_name.split("/");
-      handleDeleteLogo(fileName[fileName.length - 1]);
-    }
-  };
-
+  const [isEnabled, setIsEnabled] = useState(false);
+  const { isWebView } = useIsWebView();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   return (
     <View style={styles.container}>
-      <CommonText customTextStyle={styles.header}>
-        {intl.formatMessage({ id: "label.dashboard" })}
-      </CommonText>
-      <View>
-        <UploadImage
-          {...{
-            onDeleteImage,
-            errorWhileUpload,
-            fileUploadResult,
-            handleFileUpload,
-            isVideoUpload: true,
-            isUploadingImageToServer,
-            setFileUploadResult,
-            uploadPercentage,
-          }}
-        />
-        <SavedJobComponent />
-      </View>
-      <View>
-        <CommonText customTextStyle={styles.header}>
-          {intl.formatMessage({ id: "label.dashboard" })}
-        </CommonText>
-      </View>
-      <RangeSlider
-        label="Yrs"
-        max={MAX_VALUE}
-        min={MIN_VALUE}
-        onChange={(obj) => {
-          console.log(obj);
-        }}
-        step={5}
-        {...{ range, setRange }}
+      <TwoRow
+        topSection={
+          isWebView && (
+            <IconHeader
+              hasIconBar
+              headerText={intl.formatMessage({ id: "label.dashboard" })}
+              intl={intl}
+            />
+          )
+        }
+        isBottomFillSpace
+        bottomSection={
+          <>
+            {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
+              <CAJobsDashboard />
+            ) : null}
+          </>
+        }
       />
     </View>
   );

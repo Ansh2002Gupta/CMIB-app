@@ -1,5 +1,5 @@
 import colors from "../../assets/colors";
-import { StyleSheet } from "@unthinkable/react-core-components";
+import { StyleSheet, Platform } from "@unthinkable/react-core-components";
 
 const style = StyleSheet.create({
   mainContainer: {
@@ -11,9 +11,10 @@ const style = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: colors.lightGrey,
-    borderTopWidth: 10,
-    borderTopColor: colors.darkBlue,
+    cursor: "pointer",
   },
+  borderTop: { borderTopWidth: 10, borderTopColor: colors.darkBlue },
+  paddingTop: { paddingTop: 24 },
   customSaveButtonContainer: { marginBottom: 16 },
   buttonTwoTextStyle: { fontSize: 14, fontWeight: 500 },
   urgentText: {
@@ -69,9 +70,19 @@ const style = StyleSheet.create({
     maxHeight: 44,
     maxWidth: 96,
   },
+  disableActionPairButton: {
+    maxHeight: 44,
+    maxWidth: 96,
+    backgroundColor: colors.secondaryGrey,
+  },
   customButtonTextStyle: {
     fontSize: 12,
     color: colors.darkBlue,
+  },
+  customButtonApplyStyle: {
+    fontSize: 12,
+    color: colors.green,
+    marginRight: 20,
   },
   buttonContainerStyle: { alignItems: "center" },
   buttonTextStyle: { fontWeight: "500", fontSize: 14 },
@@ -99,8 +110,8 @@ const style = StyleSheet.create({
     paddingRight: 16,
   },
   mobileEvenPadding: {
-    paddingLeft: 12,
-    paddingRight: 12,
+    paddingLeft: 8,
+    paddingRight: 8,
   },
   mobileIconStyle: {
     marginRight: 8,
@@ -120,8 +131,9 @@ const style = StyleSheet.create({
   },
   mobileActionHandle: {
     marginTop: 16,
+    alignItems: "center",
   },
-  webContainer: { gap: 24, paddingRight: 24 },
+  webContainer: { paddingRight: 24 },
   topCurveSection: { backgroundColor: colors.darkBlue, marginRight: -1 },
   whiteCurveSection: {
     backgroundColor: colors.white,
@@ -129,6 +141,48 @@ const style = StyleSheet.create({
     flex: 1,
   },
   backgroundWhite: { backgroundColor: colors.white },
+  customToastStyle: {
+    top: 50,
+    bottom: "50%",
+  },
+  breakWordStyle: {
+    ...Platform.select({
+      web: {
+        wordBreak: "break-word",
+        paddingTop: 8,
+      },
+    }),
+  },
+  detailStyle: {
+    marginTop: 24,
+  },
+  webJobLocation: {
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: 200,
+      },
+    }),
+  },
+  disableRightStyle: { backgroundColor: colors.secondaryGrey },
+  customQuilStyle: { height: undefined, borderWidth: 0 },
+  chipContainerStyle: { gap: 8, marginBottom: 16 },
+  disabledStyle: { backgroundColor: colors.white },
+  disableButtonText: { fontSize: 12, color: colors.black, marginRight: 20 },
+  ellipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    maxWidth: 200,
+  },
+  mobileEllipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    maxWidth: 320,
+  },
 });
 
 export default style;

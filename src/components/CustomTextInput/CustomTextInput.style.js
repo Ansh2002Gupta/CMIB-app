@@ -12,7 +12,6 @@ const style = {
     gap: 4,
   },
   dropdown: {
-    paddingBottom: 6,
     paddingRight: 16,
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
@@ -81,6 +80,12 @@ const style = {
     marginTop: 4,
     borderRadius: Platform.OS === "web" ? 12 : 8,
     flexDirection: "row",
+  },
+  customToggleStyle: {
+    paddingTop: 20,
+    marginBottom: 12,
+    paddingBottom: 12,
+    marginRight: 24,
   },
   textInputStyle: {
     fontWeight: "500",
@@ -229,6 +234,16 @@ const style = {
   },
   onlyCountLimitBox: {
     justifyContent: "flex-end",
+  },
+  marginRight10: {
+    marginRight: 10,
+  },
+  CheckBoxSelection: {
+    paddingRight: 16,
+    marginTop: 4,
+    flexDirection: "row",
+    flex: 1,
+    marginBottom: 10,
   },
   marginRight10: {
     marginRight: 10,

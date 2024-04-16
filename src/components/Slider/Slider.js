@@ -4,7 +4,14 @@ import { View } from "@unthinkable/react-core-components";
 
 import styles from "./Slider.module.css";
 
-const Slider = ({ maximumValue, minimumValue, onChange, step, value }) => {
+const Slider = ({
+  isTrackBgGreen,
+  maximumValue,
+  minimumValue,
+  onChange,
+  step,
+  value,
+}) => {
   return (
     <View className={styles["controls"]}>
       <input
@@ -17,13 +24,16 @@ const Slider = ({ maximumValue, minimumValue, onChange, step, value }) => {
         onChange={(e) => {
           onChange(+e.target.value);
         }}
-        className={styles["range"]}
+        className={`${isTrackBgGreen ? styles.greenTrack : ""} ${
+          styles["range"]
+        }`}
       />
     </View>
   );
 };
 
 Slider.defaultProps = {
+  isTrackBgGreen: false,
   maximumValue: 3,
   minimumValue: 1,
   onChange: () => {},
@@ -32,6 +42,7 @@ Slider.defaultProps = {
 };
 
 Slider.propTypes = {
+  isTrackBgGreen: PropTypes.bool,
   maximumValue: PropTypes.number,
   minimumValue: PropTypes.number,
   onChange: PropTypes.func,

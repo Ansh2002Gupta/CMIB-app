@@ -16,9 +16,11 @@ export const CustomTabs = ({
   containerStyle,
   cleanupFuntion,
   renderHeader,
+  renderFooter,
   showWarningOnTabSwitch,
   setSelectedTab,
   tabs,
+  intialActiveTab = 0,
 }) => {
   const intl = useIntl();
 
@@ -28,11 +30,12 @@ export const CustomTabs = ({
     tab: {},
     tabIndex: -1,
   });
-
+  useEffect(() => {
+    setActiveTabIndex(intialActiveTab);
+  }, [intialActiveTab]);
   useEffect(() => {
     setSelectedTab && setSelectedTab(activeTabIndex);
   }, [activeTabIndex]);
-
   const handleTabChange = ({ tab, index }) => {
     if (index !== activeTabIndex) {
       if (showWarningOnTabSwitch) {
@@ -92,7 +95,7 @@ export const CustomTabs = ({
             </Row>
           </ScrollView>
         </View>
-        {tabs[activeTabIndex].component}
+        {tabs[activeTabIndex]?.component}
       </View>
       {alertOnTabSwitch?.showAlert && (
         <ConfirmationModal
@@ -112,6 +115,7 @@ export const CustomTabs = ({
           }}
         />
       )}
+      {!!renderFooter && renderFooter()}
     </>
   );
 };
@@ -119,6 +123,7 @@ export const CustomTabs = ({
 CustomTabs.propTypes = {
   containerStyle: PropTypes.object,
   renderHeader: PropTypes.func,
+  renderFooter: PropTypes.func,
   showWarningOnTabSwitch: PropTypes.bool,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
@@ -128,4 +133,6 @@ CustomTabs.propTypes = {
   ).isRequired,
   setSelectedTab: PropTypes.func,
   cleanupFuntion: PropTypes.func,
+  renderHeader: PropTypes.func,
+  intialActiveTab: PropTypes.number,
 };

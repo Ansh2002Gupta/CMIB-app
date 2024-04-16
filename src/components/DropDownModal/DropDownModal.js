@@ -79,7 +79,7 @@ const DropDownModal = ({
     const selectedIndex = data?.findIndex((item) => item.value === value);
     if (
       selectedIndex > -1 &&
-      selectedIndex < selectedOption.length &&
+      selectedIndex < selectedOption?.length &&
       flatListRef.current
     ) {
       const timer = setTimeout(() => {
@@ -123,7 +123,6 @@ const DropDownModal = ({
   const onSearch = (filteredData) => {
     setSelectedOption(filteredData);
   };
-
   const handleDropDown = () => {
     if (isEditable) {
       Keyboard.dismiss();
@@ -155,7 +154,7 @@ const DropDownModal = ({
   };
 
   const scrollToIndex = (info) => {
-    if (flatListRef.current && selectedOption.length > info.index) {
+    if (flatListRef.current && selectedOption?.length > info.index) {
       scrollAnimation(info.index);
     }
   };
@@ -214,16 +213,21 @@ const DropDownModal = ({
       />
     );
   };
-
   if (isMultiSelect) {
     return (
       <>
         <TouchableOpacity
           onPress={handleDropDown}
-          style={{ ...styles.textButton(isEditable), ...dropdownStyle }}
+          style={{
+            ...styles.textButton(isEditable),
+            ...dropdownStyle,
+          }}
         >
           <CommonText
-            customTextStyle={value ? styles.valueText : styles.placeHolderText}
+            customTextStyle={{
+              ...(value ? styles.valueText : styles.placeHolderText),
+            }}
+            customContainerStyle={styles.customContainerStyle}
           >
             {placeholder}
           </CommonText>
@@ -262,7 +266,7 @@ const DropDownModal = ({
             }}
             onBackdropPress={handleDropDown}
           >
-            {data?.length >= 20 && onChangeDropDownText && (
+            {(data?.length >= 20 || onChangeDropDownText) && (
               <SearchView
                 data={data}
                 onSearch={onSearch}
@@ -297,7 +301,7 @@ const DropDownModal = ({
                         item?.isSelected ||
                         (item.index && item.index !== null) ||
                         (!isSelected &&
-                          selectedItems.findIndex(
+                          selectedItems?.findIndex(
                             (items) => items.id === item.id
                           ) !== -1)
                       }
@@ -388,6 +392,7 @@ DropDownModal.defaultProps = {
   value: "",
   valueField: "value",
   urlField: "url",
+  selectAllField: false,
 };
 
 DropDownModal.propTypes = {
@@ -408,6 +413,7 @@ DropDownModal.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   valueField: PropTypes.string,
   urlField: PropTypes.string,
+  selectAllField: PropTypes.bool,
 };
 
 export default DropDownModal;

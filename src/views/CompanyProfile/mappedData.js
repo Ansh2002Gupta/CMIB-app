@@ -16,6 +16,7 @@ import {
 
 export const mapApiDataToUI = ({
   apiData,
+  stateOptions,
   industryOptions,
   intl,
   countryCodes,
@@ -30,6 +31,7 @@ export const mapApiDataToUI = ({
     industry_type,
     std_country_code,
     telephone_number,
+    state,
     address,
     email,
     type,
@@ -73,15 +75,19 @@ export const mapApiDataToUI = ({
     name: formatModuleOptions(moduleId, intl),
   });
 
-  const createModuleOptions = (moduleId, contact, intl, contactDetails) => ({
-    value: formatModuleOptions(moduleId, intl),
-    label: formatModuleOptions(moduleId, intl),
-    name: moduleId,
-    isSelected: contact?.modules.includes(moduleId),
-    selectedIndex: contactDetails.findIndex(
+  const createModuleOptions = (moduleId, contact, intl, contactDetails) => {
+    const index = contactDetails.findIndex(
       (c) => c.modules && c.modules.includes(moduleId)
-    ),
-  });
+    );
+
+    return {
+      value: formatModuleOptions(moduleId, intl),
+      label: formatModuleOptions(moduleId, intl),
+      name: moduleId,
+      isSelected: contact?.modules?.includes(moduleId),
+      selectedIndex: index !== -1 ? index : null,
+    };
+  };
 
   const mapContactDetails = (contactDetails) => {
     return contactDetails?.map((contact) => {
@@ -282,6 +288,20 @@ export const mapApiDataToUI = ({
         maxLength: NUMBER_MAX_LENGTH,
         placeholder: "label.enter_telephone_no",
         isMandatory: true,
+      },
+      {
+        key: "state",
+        label: "label.state",
+        value: checkValue(state?.code),
+        defaultValue: checkValue(state?.name),
+        isMajor: true,
+        placeholder: "label.state",
+        isMandatory: true,
+        isDropdown: true,
+        options: stateOptions,
+        labelField: "name",
+        valueField: "state_code",
+        inputKey: "name",
       },
     ],
     contactPersonInfo: mapContactDetails(contact_details),

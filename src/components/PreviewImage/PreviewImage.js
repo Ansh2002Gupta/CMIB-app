@@ -22,15 +22,15 @@ const PreviewImage = ({
 }) => {
   return (
     <View
-      style={[
-        styles.selectedImageContainer,
-        isEditable && styles.showImageStyle,
-      ]}
+      style={{
+        ...styles.selectedImageContainer,
+        ...(isEditable ? styles.showImageStyle : {}),
+      }}
     >
       <View
         style={{
           ...styles.imageContainer,
-          ...(isVideoUpload ? styles.noPadding : {}),
+          ...(isVideoUpload ? styles.videoContainer : {}),
         }}
       >
         {isDocumentUpload ? (
@@ -44,7 +44,7 @@ const PreviewImage = ({
       {!hideIconDelete && (
         <View style={styles.innerContainer}>
           <TouchableOpacity onPress={onRemoveImage}>
-            <Image source={images.iconTrash} style={styles.deleteIcon} />
+            <Image source={images.iconTrashSVG} style={styles.deleteIcon} />
           </TouchableOpacity>
         </View>
       )}

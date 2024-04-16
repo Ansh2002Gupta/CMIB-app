@@ -132,6 +132,8 @@ function BottomBar() {
       navigations.JOB_SEEKERS,
       navigations.SAVED_CANDIDATES,
       navigations.SAVED_JOBS,
+      navigations.ALL_JOBS,
+      navigations.APPLIED_JOBS,
     ]);
     const hasCandidates = menuItems.some((item) => candidateKeys.has(item.key));
 
@@ -146,12 +148,20 @@ function BottomBar() {
     // Create and add the "Candidates" tab to the filtered menu
     const candidatesTab = {
       label: "Candidates",
-      key: navigations.JOB_APPLICANTS,
+      key: navigations.CANDIDATES,
       icon: "iconCandidates",
+    };
+
+    const jobTab = {
+      label: "Jobs",
+      key: navigations.JOBS,
+      icon: "iconPostedJobs",
     };
 
     if (!isMemberOrCandidate) {
       filteredMenu.push(candidatesTab);
+    } else {
+      filteredMenu.push(jobTab);
     }
 
     return filteredMenu;
