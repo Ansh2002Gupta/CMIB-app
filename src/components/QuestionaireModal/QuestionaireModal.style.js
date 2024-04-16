@@ -6,7 +6,7 @@ import {
 
 import colors from "../../assets/colors";
 
-const { height: deviceHeight } = Dimensions.get("window");
+const { height: deviceHeight, width: deviceWidth } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   bottomSectionStyle: { marginTop: 32 },
@@ -21,7 +21,10 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
 
-  questionText: { color: colors.black, fontSize: 14 },
+  questionText: {
+    color: colors.black,
+    fontSize: 14,
+  },
   questionAnswer: { marginBottom: 24 },
   questionView: {
     alignItems: "center",
@@ -41,6 +44,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   starStyle: { color: colors.errorRed, marginLeft: 4 },
+  containerStyle: { maxWidth: deviceWidth * 0.8 },
   modalContainerStyle: {
     padding: 2,
     ...Platform.select({
@@ -52,6 +56,16 @@ const styles = StyleSheet.create({
       },
       web: {
         maxHeight: deviceHeight * 0.5,
+      },
+    }),
+  },
+  mandatoryView: {
+    flexDirection: "row",
+    marginBottom: 4,
+    gap: 4,
+    ...Platform.select({
+      web: {
+        maxWidth: deviceWidth * 0.6,
       },
     }),
   },
