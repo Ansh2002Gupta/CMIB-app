@@ -23,7 +23,10 @@ import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import {
+  FILTER_TYPE_ENUM,
+  ROWS_PER_PAGE_ARRAY,
+} from "../../../constants/constants";
 import CustomImage from "../../../components/CustomImage";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import usePagination from "../../../hooks/usePagination";
@@ -33,6 +36,10 @@ import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
+
+const initialFilterState = {
+  selectedStatus: [],
+};
 
 const useJobApplicants = () => {
   const [sideBarState] = useContext(SideBarContext);
@@ -55,6 +62,7 @@ const useJobApplicants = () => {
     query_type: "",
     searchData: "",
   });
+  const [filterState, setFilterState] = useState(initialFilterState);
 
   const [showCurrentPopupmessage, setCurrentPopupMessage] = useState(0);
   const [setModals, setModalsState] = useState({
@@ -77,6 +85,45 @@ const useJobApplicants = () => {
   const queryTypeData = [{ id: "male", name: "Male" }];
   const statusData = [{ id: 1, name: "Pending" }];
 
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {
+    setFilterState((prevState) => {
+      const filterObj = customFilterInfo.find(
+        (info) => info.name === filterName
+      );
+      const filterKey = `selected${filterObj?.name}`;
+      const existingSelectedOptions = prevState[filterKey];
+      let newSelectedOptions = [];
+      if (!!existingSelectedOptions) {
+        if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
+          newSelectedOptions = existingSelectedOptions?.includes(
+            selectedFilter?.[keyName]
+          )
+            ? existingSelectedOptions?.filter((item) => {
+                return item !== selectedFilter?.[keyName];
+              })
+            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+        } else {
+          newSelectedOptions = selectedFilter.value;
+        }
+      }
+      return {
+        ...prevState,
+        [filterKey]: newSelectedOptions,
+      };
+    });
+  };
+
+  const customFilterInfo = [
+    {
+      refKey: "id",
+      name: "Status",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: statusData,
+      selectedOptions: filterState?.selectedWorkMode,
+      handler: handleFilterChange,
+    },
+  ];
+
   const {
     data: jobApplicantListing,
     isLoading: isJobApplicantListingLoading,
@@ -95,7 +142,7 @@ const useJobApplicants = () => {
     isLoading: isFilterLoading,
     fetchData: fetchFilters,
   } = useFetch({
-    url: USER_TYPE_COMPANY + JOBS + JOB_APPLICANTS + FILTERS,
+    url: USER_TYPE_COMPANY + `/${JOBS}` + JOB_APPLICANTS + FILTERS,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -109,7 +156,7 @@ const useJobApplicants = () => {
   } = usePatch({
     url:
       USER_TYPE_COMPANY +
-      JOBS +
+      `/${JOBS}` +
       JOB_APPLICANTS +
       `/${showCurrentPopupmessage}` +
       STATUS,
@@ -239,7 +286,6 @@ const useJobApplicants = () => {
       },
       offer_job: () => {
         setCurrentPopupMessage(-1);
-
         handleClickActions(6);
       },
       reject_after_interview: () => {
@@ -317,6 +363,12 @@ const useJobApplicants = () => {
     });
   };
 
+  const onClickJobId = (item) => {
+    navigate(
+      `/${currentModule}/${navigations.POSTED_JOBS}/${item.company_job_id}?mode=view&activeTab=0`
+    );
+  };
+
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? commonStyles.customTableHeading
@@ -375,30 +427,37 @@ const useJobApplicants = () => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-              ...(!isHeading ? styles.underLineText : {}),
-            }}
-          >
-            {item?.job_id || "-"}
-          </CommonText>
+          <CustomTouchableOpacity onPress={() => onClickJobId(item)}>
+            <CommonText
+              customTextStyle={{
+                ...tableStyle,
+                ...(!isHeading ? styles.underLineText : {}),
+              }}
+            >
+              {item?.job_id || "-"}
+            </CommonText>
+          </CustomTouchableOpacity>
         ),
         style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-              ...(!isHeading ? styles.underLineText : {}),
-            }}
-          >
-            {item?.designation || "-"}
-          </CommonText>
+          <CustomTouchableOpacity onPress={() => onClickJobId(item)}>
+            <CommonText
+              customTextStyle={{
+                ...tableStyle,
+                ...(!isHeading ? styles.underLineText : {}),
+              }}
+            >
+              {item?.designation || "-"}
+            </CommonText>
+          </CustomTouchableOpacity>
         ),
-        style: commonStyles.columnStyle("15%"),
+        style: {
+          ...commonStyles.columnStyle("15%"),
+          ...styles.designationViewStyle,
+        },
         isFillSpace: true,
       },
       {
@@ -480,6 +539,7 @@ const useJobApplicants = () => {
   return {
     allDataLoaded,
     currentPage,
+    customFilterInfo,
     error: errorWhileFetchingJobApplicantListing,
     errorWhileUpdatingStatus,
     setErrorStatus,
@@ -493,6 +553,9 @@ const useJobApplicants = () => {
     handleRowPerPageChange,
     handleSearchResults,
     headingTexts,
+    handleFilterChange,
+    filterState,
+    setFilterState,
     isFirstPageReceived,
     isError: isErrorWhileFetchingJobApplicantListing,
     isLoading,
@@ -501,14 +564,12 @@ const useJobApplicants = () => {
     jobApplicantListingData: currentRecords,
     loadingMore,
     onIconPress,
-    queryTypeData: queryTypeData,
     rowsPerPage,
     setCurrentPopupMessage,
     setModals,
     setModalsState,
     showCurrentPopupmessage,
     getStatusStyle,
-    statusData: statusData,
     subHeadingText,
     tableIcon,
     totalcards: jobApplicantListing?.meta?.total,

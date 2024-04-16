@@ -48,8 +48,6 @@ const SavedJobs = () => {
     setApplyJobModal(false);
   };
 
-  console.log(savedJobsList, "savedJobsList..");
-
   const handleOpenModal = (jobId) => {
     setApplyJobModal(true);
     setJobId(jobId);

@@ -26,6 +26,13 @@ const styles = StyleSheet.create({
     borderColor: colors.greyOne,
     backgroundColor: colors.white,
   },
+  flatListStyle: {
+    ...Platform.select({
+      web: {
+        overflow: "unset",
+      },
+    }),
+  },
   cellTextStyle: (fontSize = 14, fontWeight = "500") => ({
     fontSize: fontSize,
     fontWeight: fontWeight,

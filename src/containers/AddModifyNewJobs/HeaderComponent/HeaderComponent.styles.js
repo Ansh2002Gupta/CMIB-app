@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
   subTextViewStyle: {
     marginBottom: 24,
-    marginTop: -12,
+    marginTop: -24,
   },
   innerContainer: {
     flexDirection: "row",

@@ -40,7 +40,7 @@ export const ACTIVITIES = "/activities";
 export const FILTERS = "/filters";
 export const JOB_APPLICANTS = "/applicants";
 export const JOB_APPLICANT = "/applicant";
-export const JOBS = "/jobs";
+export const JOBS = "jobs";
 export const JOB_SKILLS = "/skills";
 export const JOB_PREFERENCES = "/job-preferences";
 export const MEMBERS = "/members";
@@ -55,6 +55,10 @@ export const INTERVIEW = "/interview";
 export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
+export const ROUND_ONE_DASHBOARD = `/dashboard`;
+export const ROUNDS = `/rounds`;
+export const GLOBAL_SESSIONS = `/sessions`;
+export const APPLICANTS = "/applicants";
 
 /* API Endpoints Members*/
 export const MEMBER_CATEGORY = `${USER_TYPE_COMPANY}/job/category`;
@@ -65,6 +69,8 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
 export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
+
+//sub routes
 export const APPLY_JOB = `${USER_TYPE_MEMBER}/jobs/apply`;
 export const MEMBER_JOBS_LISTING = `${USER_TYPE_MEMBER}/${JOBS}/apply`;
 export const OFFER_RESPONSE = `${USER_TYPE_MEMBER}/${JOBS}/applicants`;
@@ -77,11 +83,16 @@ export const CANDIDATES = "/candidates";
 export const MARKED_PREFER = "/marked-prefer";
 export const UNMARKED_PREFER = "/unmark-prefer";
 
-/* API Endpoints Member CA JOB profile */
-export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile/personal`;
+/* API Endpoints COMPANY CA JOB profile */
+export const COMPANY_CA_JOB_PROFILE = `${USER_TYPE_COMPANY}/ca-jobs/members`;
+
+/* API Endpoints MEMBER CA JOB profile */
+export const MEMBER_CA_JOB_PROFILE = `${USER_TYPE_MEMBER}/profile`;
+export const MEMBER_CA_JOB_PROFILE_PERSONAL = `${USER_TYPE_MEMBER}/profile/personal`;
 export const MEMBER_CA_JOB_PROFILE_EDUCATION = `${USER_TYPE_MEMBER}/profile/academics`;
 export const MEMBER_CA_JOB_PROFILE_EXAMS = `${USER_TYPE_MEMBER}/profile/exams`;
 export const MEMBER_CA_JOB_PROFILE_OTHER_COURSES = `${USER_TYPE_MEMBER}/profile/other-courses`;
+
 //endpoint add Job
 export const GET_FUNCTIONAL_TYPE = `${USER_TYPE_COMPANY}/functional-areas`;
 export const GET_JOB_LOCATION = `${USER_TYPE_COMPANY}/job/locations`;
@@ -114,6 +125,6 @@ export const SAVE_JOB_DETAIL = `${USER_TYPE_MEMBER}/jobs`;
 export const SEARCH_JOBS = `search/jobs`;
 export const CHANGE_APPLICANT_STATUS = `${USER_TYPE_COMPANY}/jobs/applicants`;
 export const CHANGE_STATUS = "/change-status";
-export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${JOB_APPLICANTS}${INTERVIEW}`;
+export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${APPLICANTS}${INTERVIEW}`;
 export const ACCEPTED = "/accepted";
 export const GET_MEMBER_COMPLETION = `${USER_TYPE_MEMBER}/profile/percentage`;

@@ -26,7 +26,7 @@ const useChangeApplicantStatusApi = () => {
       setChangeApplicantStatus(API_STATUS.LOADING);
       errorWhileApplicantStatusChange && setErrorWhileApplicantStatusChange("");
       const res = await Http.patch(
-        `${CHANGE_APPLICANT_STATUS}/${id}/${STATUS}`,
+        `${CHANGE_APPLICANT_STATUS}/${id}${STATUS}`,
         payload
       );
       if (

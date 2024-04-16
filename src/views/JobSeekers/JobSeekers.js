@@ -91,7 +91,7 @@ const JobSeekers = () => {
                 isHeading,
                 loadingMore,
                 placeholder: intl.formatMessage({
-                  id: "label.serach_by_applicant_name_id",
+                  id: "label.serach_by_candidate_name_id",
                 }),
                 rowsLimit,
                 rowsPerPage,
