@@ -72,7 +72,6 @@ export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
 
 //sub routes
-export const APPLICANTS = "/applicants";
 export const APPLY_JOB = `${USER_TYPE_MEMBER}/jobs/apply`;
 export const MEMBER_JOBS_LISTING = `${USER_TYPE_MEMBER}/${JOBS}/apply`;
 export const OFFER_RESPONSE = `${USER_TYPE_MEMBER}/${JOBS}/applicants`;

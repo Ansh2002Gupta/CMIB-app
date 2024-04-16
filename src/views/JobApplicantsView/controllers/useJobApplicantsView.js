@@ -454,7 +454,10 @@ const useJobApplicants = () => {
             </CommonText>
           </CustomTouchableOpacity>
         ),
-        style: commonStyles.columnStyle("15%"),
+        style: {
+          ...commonStyles.columnStyle("15%"),
+          ...styles.designationViewStyle,
+        },
         isFillSpace: true,
       },
       {
