@@ -1,8 +1,10 @@
-import { navigations } from "./routeNames";
+import colors from "../assets/colors";
 
 export const API_URL = "https://api.cmib.cloudzmall.com/api/";
 export const VALID_EMAIL = "Not a valid email, Please enter again";
 export const VALID_OTP = "Not a valid otp, please enter again";
+export const VALID_PAN = "Not a valid PAN, Please enter again";
+export const VALID_GSTIN = "Not a valid GSTIN, Please enter again";
 
 export const numRegex = /^\d+$/;
 export const alphaNumericRegex = /^[a-zA-Z0-9]+$/;
@@ -10,7 +12,7 @@ export const urlRegex =
   /^(?:https?:\/\/)?www\.[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&=]*)/;
 
 export const TOAST_TIMEOUT = 5000;
-export const API_VERSION_NUMBER = "v1";
+export const API_VERSION_NUMBER = "1.0.0";
 export const FIELD_MIN_LENGTH = 6;
 export const DEFAULT_INPUT_MAX_LENGTH = 100;
 export const CODE_MIN_LENGTH = 2;
@@ -23,8 +25,11 @@ export const MOBILE_NUMBER_MAX_LENGTH = 13;
 export const MESSAGE_MAX_LENGTH = 5000;
 export const FIRM_REGISTRATION_NO_LENGTH = 30;
 export const ADDRESS_MAX_LENGTH = 500;
+export const SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH = 250;
 export const COMPANY_DETAIL_MAX_LENGTH = 2000;
-export const IMAGE_MAX_SIZE = 5000000;
+export const FILE_MAX_SIZE = 5000000;
+export const VIDEO_FILE_MAX_SIZE = 50000000;
+export const VIDEO_MAX_SIZE = 50000000;
 export const CA_JOBS = "ca-jobs";
 export const NEWLY_QUALIFIED = "nqca-placements";
 export const OVERSEAS_PLACEMENTS = "overseas-chapters";
@@ -34,6 +39,12 @@ export const FIRM_OF_CHARTERED_ACCOUNTANTS = "Firm of chartered accountants";
 export const MIN_ZOOM_SCALE = 1;
 export const MAX_ZOOM_SCALE = 3;
 export const DEFAULT_BALANCE_CREDIT = 0;
+export const GSTIN_MAX_LENGTH = 15;
+export const PAN_MAX_LENGTH = 10;
+export const COMPANY = "company";
+export const Candidate = "Candidate";
+export const Company = "Company";
+export const SESSION_KEY = "sessionKey";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
@@ -46,6 +57,25 @@ export const ANONYMOUS = "Anonymous";
 export const USER_TYPE_CANDIDATE = "candidate";
 export const EDIT = "edit";
 export const HYPHEN = "-";
+export const MINIMUM_EXPERIENCE_LIMIT = 0;
+export const MAXIMUM_EXPERIENCE_LIMIT = 40;
+export const MINIMUM_SALARY_LIMIT = 0;
+export const MAXIMUM_SALARY_LIMIT = 100;
+export const MINIMUM_FRESHNESS_LIMIT = 0;
+export const MAXIMUM_FRESHNESS_LIMIT = 100;
+
+export const POSTED_JOB_LISTING_ENUM = {
+  activeorInactive: "Active/Inactive",
+  approvedNotApproved: "Approved/NotApproved",
+};
+
+export const DEFAULT_CATEGORY_FOR_FILTER_MODAL = {
+  AppliedJobs: "Work Mode",
+  TicketListing: "Status",
+  PostedJobs: "Active/Inactive",
+  Feedback: "Status",
+  GetSchedule: "Date",
+};
 
 export const API_STATUS = {
   IDLE: "idle",
@@ -132,26 +162,31 @@ export const MODULE_OPTIONS = [
 ];
 
 export const COLOR_MODES = ["light", "dark"];
-export const ROUND_ONE_CARD = [
-  {
-    title: "label.add_application_form_text",
-    id: 1,
-    image: "iconAddApplicationForm",
-    subTitle: "label.add_application_form_description_text",
-  },
-  {
-    title: "label.hiring_process_text",
-    id: 2,
-    image: "iconHiringProcess",
-    subTitle: "label.hiring_process_description",
-  },
-  {
-    title: "label.download_details_text",
-    id: 3,
-    image: "iconDownloadDetails",
-    subTitle: "label.download_details_description",
-  },
-];
+
+export const getCompanyRoundCards = ({ is_filled }) => {
+  return [
+    {
+      title: !is_filled
+        ? "label.add_application_form_text"
+        : "label.edit_application_form_text",
+      id: 1,
+      image: "iconAddApplicationForm",
+      subTitle: "label.add_application_form_description_text",
+    },
+    {
+      title: "label.hiring_process_text",
+      id: 2,
+      image: "iconHiringProcess",
+      subTitle: "label.hiring_process_description",
+    },
+    {
+      title: "label.download_details_text",
+      id: 3,
+      image: "iconDownloadDetails",
+      subTitle: "label.download_details_description",
+    },
+  ];
+};
 
 export const VALIDATION_TYPE = [
   { key: "length", id: "label.char_length_validation" },
@@ -223,6 +258,16 @@ export const ROWS_PER_PAGE_ARRAY = [
   { value: 40, label: "40" },
 ];
 
+export const APPLIED_JOBS_TABLE_HEADING = {
+  readable_id: "Job Id",
+  company_name: "Company Name",
+  designation: "Designation",
+  vacancy: "Vacancies",
+  status: "Status",
+  active_status: "Active/Inactive",
+  created_at: "Created On",
+};
+
 export const TICKET_TABLE_HEADING = {
   readable_id: "Ticket ID",
   query_type: "Query Type",
@@ -233,6 +278,27 @@ export const TICKET_TABLE_HEADING = {
   },
   created_at: "Created On",
 };
+export const POSTED_JOB_LISTING = {
+  job_id: "Job ID",
+  designation: "Designation",
+  status: "Active / Inactive",
+  number_of_interviews: "Scheduled Interview",
+  number_of_applications: "Applicants",
+  approve: "Approved/Not Approved by Admin",
+};
+export const APPLICANT_LISTING = {
+  name: "Applicant Name",
+  applicant_id: "Applicant ID",
+  status: "Status",
+};
+export const SCHEDULE_LISTING = {
+  name: "Applicant Name",
+  applicant_id: "Applicant ID",
+  type: "Interview Type",
+  primary_interview_date: "Primary Interview Date",
+  primary_interview_time: "Primary Interview Time",
+  status: "Status",
+};
 
 export const FEEDBACK_TABLE_HEADING = {
   id: "Feedback ID",
@@ -240,38 +306,42 @@ export const FEEDBACK_TABLE_HEADING = {
   created_at: "Created On",
 };
 
-export const CANDIDATE_ROUND_ONE_CARDS = [
-  {
-    title: "label.application",
-    id: 1,
-    image: "iconApplication",
-    subTitle: "label.application_description",
-  },
-  {
-    title: "label.download_id",
-    id: 2,
-    image: "iconDownload",
-    subTitle: "label.download_id_description",
-  },
-  {
-    title: "label.centre_wise_company_detail",
-    id: 3,
-    image: "iconDiscover",
-    subTitle: "label.centre_wise_company_detail_description",
-  },
-  {
-    title: "label.consent_marking_management",
-    id: 4,
-    image: "iconConsent",
-    subTitle: "label.consent_marking_management_description",
-  },
-  {
-    title: "label.campus_interview_management",
-    id: 5,
-    image: "iconCampus",
-    subTitle: "label.campus_interview_management_description",
-  },
-];
+export const getCandidatesRoundCards = ({ hasRoundone }) => {
+  return [
+    {
+      title: "label.application",
+      id: 1,
+      image: "iconApplication",
+      subTitle: "label.application_description",
+    },
+    {
+      title: hasRoundone
+        ? "label.download_id"
+        : "label.download_id_and_print_id",
+      id: 2,
+      image: "iconDownload",
+      subTitle: "label.download_id_description",
+    },
+    {
+      title: "label.centre_wise_company_detail",
+      id: 3,
+      image: "iconDiscover",
+      subTitle: "label.centre_wise_company_detail_description",
+    },
+    {
+      title: "label.consent_marking_management",
+      id: 4,
+      image: "iconConsent",
+      subTitle: "label.consent_marking_management_description",
+    },
+    {
+      title: "label.campus_interview_management",
+      id: 5,
+      image: "iconCampus",
+      subTitle: "label.campus_interview_management_description",
+    },
+  ];
+};
 
 export const ADD_APPLICATION_STEPPER = [
   {
@@ -343,8 +413,11 @@ export const MARITAL_STATUS = [
     label: "Single",
     value: "Single",
   },
+  {
+    label: "Other",
+    value: "Other",
+  },
 ];
-
 export const MONTHS = [
   {
     label: "January",
@@ -406,6 +479,27 @@ export const YEARS = Array.from({ length: 30 }, (_, x) => ({
   value: `${x + 1995}`,
 }));
 
+export const Education_Status_Options = [
+  {
+    label: "Regular",
+    value: "regular",
+  },
+  {
+    label: "Correspondence",
+    value: "correspondence",
+  },
+];
+
+export const BOOLEAN_OPTION = [
+  {
+    label: "Yes",
+    value: true,
+  },
+  {
+    label: "No",
+    value: false,
+  },
+];
 export const COLOR = [
   "#000000",
   "#e60000",
@@ -464,6 +558,11 @@ export const FORMAT = [
   "align",
   "size",
 ];
+
+export const UNITS = {
+  YRS: "Yrs",
+};
+
 export const TEXT_FORMATS = [
   "bold",
   "italic",
@@ -480,3 +579,205 @@ export const LIST_OPTION = [
   { indent: "+1" },
   { align: [] },
 ];
+
+export const PREVIEWED_LENGTH = 100;
+export const COMPANY_QUERY_TYPE_TICKET = "/";
+
+export const POPUP_OPTIONS = [
+  { name: "Download Profile & Resume", id: 1 },
+  { name: "View Details", id: 2 },
+];
+export const FILTER_TYPE_ENUM = { CHECKBOX: "checkbox", SLIDER: "slider" };
+export const color = [
+  "#000000",
+  "#e60000",
+  "#ff9900",
+  "#ffff00",
+  "#008a00",
+  "#0066cc",
+  "#9933ff",
+  "#ffffff",
+  "#facccc",
+  "#ffebcc",
+  "#ffffcc",
+  "#cce8cc",
+  "#cce0f5",
+  "#ebd6ff",
+  "#bbbbbb",
+  "#f06666",
+  "#ffc266",
+  "#ffff66",
+  "#66b966",
+  "#66a3e0",
+  "#c285ff",
+  "#888888",
+  "#a10000",
+  "#b26b00",
+  "#b2b200",
+  "#006100",
+  "#0047b2",
+  "#6b24b2",
+  "#444444",
+  "#5c0000",
+  "#663d00",
+  "#666600",
+  "#003700",
+  "#002966",
+  "#3d1466",
+  "custom-color",
+];
+
+export const size = ["small", false, "large", "huge"];
+
+export const format = [
+  "header",
+  "height",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "color",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "align",
+  "size",
+];
+export const textFormats = [
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+];
+export const listType = [{ list: "ordered" }, { list: "bullet" }];
+export const attachmentType = ["link", "image"];
+export const listOptions = [
+  { list: "ordered" },
+  { list: "bullet" },
+  { indent: "-1" },
+  { indent: "+1" },
+  { align: [] },
+];
+export const questionaireType = [
+  {
+    value: "label.text_question",
+    label: "label.text_question",
+  },
+  {
+    value: "label.single_select",
+    label: "label.single_select",
+  },
+  {
+    value: "label.multiple_select",
+    label: "label.multiple_select",
+  },
+];
+export const jobType = {
+  SPECIALLY_ABLE: "For Specially Abled Persons",
+  CONTRACTUAL: "Contractual",
+  REGULAR: "Regular",
+  RETIRED: "For Retired Persons",
+};
+export const questionType = {
+  "Text Question": "text",
+  "Single-select": "single-select",
+  "Multi-select": "multi-select",
+};
+export const progressData = {
+  0: {
+    backgroundColor: colors.greyOne,
+    text: "Form In Progress...",
+    textColor: colors.black,
+  },
+  1: {
+    backgroundColor: colors.skyBlueLight,
+    text: "Form Half Filled...",
+    textColor: colors.skyBlueDark,
+  },
+  2: {
+    backgroundColor: colors.lightPurple,
+    text: "Form Almost Done!",
+    textColor: colors.darkPurple,
+  },
+  3: {
+    backgroundColor: colors.lightGreen,
+    text: "Form Complete!",
+    textColor: colors.darkSecondGreen,
+  },
+};
+export const JOB_SEEKERS_TABLE_HEADING = {
+  name: "Candidate Name",
+  candidate_id: "Candidate ID",
+  total_experience: "Total Experience",
+  functional_area: "Functional Area",
+};
+export const JOB_STATUS_RESPONSE_CODE = {
+  "Shortlist Candidate": 3,
+  "Reject Candidate": 2,
+  "Offer Job": 6,
+  "Reject After Interview": 2,
+  "Offer Accepted": 7,
+  "Offer Rejected": 8,
+  "Job Not Offered": 9,
+};
+
+export const RADIO_BUTTON_OPTIONS = ["Yes", "No"];
+export const GET_INTERVIEW_TYPE = {
+  "Face-To-Face": 0,
+  Telephonic: 1,
+  Remote: 2,
+};
+export const STATUS_OPTIONS = {
+  INTERVIEW_SCHEDULED: "interview scheduled",
+  JOB_OFFERED: "job offered",
+  JOB_NOT_OFFERED: "job not offered",
+  NO_RESPONSE: "No Response From Applicant For Interview",
+  OFFER_ACCEPTED: "offer accepted",
+  OFFERE_REJECTED: "offer rejected",
+  PENDING: "pending",
+  REJECTED: "rejected",
+  SHORTLISTED: "shortlisted",
+};
+
+export const DATA_FORMATTER_LOCALES = ["en-US"];
+
+export const DATA_FORMATTER_OPTIONS = {
+  day: "numeric",
+  month: "long",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+};
+
+export const API_DATA_FOR_INTERVIEW_SCHEDULING = [
+  {
+    id: 42,
+    primary_schedule: "2024-03-01 14:53:12",
+    alternate_schedule: "2024-04-03 21:05:58",
+    type: "Face-To-Face",
+    alternate_type: "Telephonic",
+  },
+];
+
+export const KEYS = {
+  OFFER_ACCEPTED: 7,
+  OFFERE_REJECTED: 8,
+};
+
+export const MODULES = {
+  CA_JOBS: "ca-jobs",
+  MEMBER: "member",
+};
+
+export const JOB_APPLICANTS_HEADING = {
+  name: "Application Name",
+  applicantion_id: "Applicant ID",
+  job_id: "Job Id",
+  designation: "Designation",
+  job_status: "Active/Inactive",
+  status: "Status",
+};

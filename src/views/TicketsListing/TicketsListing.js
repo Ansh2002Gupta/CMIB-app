@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "../../routes";
 import { TwoRow } from "../../core/layouts";
 
+import AddTicketModal from "../../components/AddTicketModal/AddTicketModal";
 import CustomTable from "../../components/CustomTable";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import IconHeader from "../../components/IconHeader/IconHeader";
@@ -21,6 +22,9 @@ const TicketsListing = () => {
     allDataLoaded,
     currentRecords,
     currentPage,
+    customFilterInfo,
+    filterState,
+    setFilterState,
     filterApplyHandler,
     filterCategory,
     getColoumConfigs,
@@ -86,6 +90,9 @@ const TicketsListing = () => {
           {!isError && (
             <CustomTable
               {...{
+                customFilterInfo,
+                selectedFilterOptions: filterState,
+                setSelectedFilterOptions: setFilterState,
                 addNewTicket,
                 allDataLoaded,
                 currentPage,
@@ -123,6 +130,16 @@ const TicketsListing = () => {
                   id: "label.search_by_ticket",
                 }),
               }}
+              customModal={
+                <AddTicketModal
+                  queryTypeData={queryTypeData}
+                  onPressButtonOne={handleTicketModal}
+                  onPressButtonTwo={(queryType, enterQuery) => {
+                    handleSaveAddTicket(queryType, enterQuery);
+                    handleTicketModal();
+                  }}
+                />
+              }
             />
           )}
           {isError && !!getErrorDetails()?.errorMessage && (

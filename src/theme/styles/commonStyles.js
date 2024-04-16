@@ -1,6 +1,8 @@
-import { Platform } from "@unthinkable/react-core-components";
+import { Dimensions, Platform } from "@unthinkable/react-core-components";
 
 import colors from "../../assets/colors";
+
+const { height: deviceHeight } = Dimensions.get("window");
 
 const commonStyles = {
   webViewContainer: {
@@ -22,6 +24,10 @@ const commonStyles = {
   },
   middleContainer: {
     flex: 1,
+  },
+  customTableHeading: {
+    fontWeight: "600",
+    color: colors.darkGrey,
   },
   commonWebContainer: {
     borderRadius: 24,
@@ -51,6 +57,26 @@ const commonStyles = {
     maxHeight: keyboardHeight * 2.2,
   }),
   buttonStyle: { maxHeight: 44 },
+  modalInnerContainer: {
+    ...Platform.select({
+      ios: {
+        maxHeight: deviceHeight / 1.5,
+      },
+      android: {
+        maxHeight: deviceHeight / 2,
+      },
+      web: {
+        height: deviceHeight * 0.7,
+      },
+    }),
+  },
+  horizontalLine: {
+    width: "100%",
+    height: 1,
+    backgroundColor: colors.lightGrey,
+    marginTop: 24,
+    marginBottom: 24,
+  },
   customContainerStyle: {
     paddingBottom: Platform.OS === "android" ? 0 : 22,
     maxHeight: Platform.OS === "web" ? 44 : "auto",

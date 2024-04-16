@@ -3,7 +3,7 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   quillContainer: {
-    marginBottom: 78,
+    marginBottom: 60,
   },
   quillStyling: {
     height: "508px",
@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     flexDirection: "row",
-    marginBottom: 8,
   },
   label: {
     color: colors.darkGrey,
@@ -57,6 +56,16 @@ const styles = StyleSheet.create({
   errorMsg: {
     color: colors.errorRed,
     lineHeight: 18,
+  },
+  customButtonTextStyle: {
+    fontSize: 14,
+    color: colors.black,
+    fontWeight: "600",
+  },
+  buttonStyle: {
+    borderWidth: 0,
+    padding: 0,
+    justifyContent: "flex-end",
   },
 });
 

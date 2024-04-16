@@ -1,28 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useIntl } from "react-intl";
 import { View, TouchableOpacity } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
+import { RADIO_BUTTON_OPTIONS } from "../../constants/constants";
 import styles from "./CustomToggleComponent.style";
 
 const CustomToggleComponent = ({
   customLabelStyle,
   customToggleStyle,
+  customToggleButtonTextStyle,
+  customErrorStyle,
   isMandatory,
+  errorMessage,
+  containerStyle,
   label,
-  onChange,
+  onValueChange,
+  options,
   value,
 }) => {
-  const intl = useIntl();
-  const handleOptionSelect = (option) => {
-    onChange(option);
-  };
+  const [selectedToggleOption, setSelectedToggleOption] = useState(value ?? -1);
+  useEffect(() => {
+    if (typeof value !== "undefined") {
+      setSelectedToggleOption(value);
+    }
+  }, [value]);
   const { isWebView } = useIsWebView();
 
+  useEffect(() => {
+    if (selectedToggleOption !== value) {
+      setSelectedToggleOption(value);
+    }
+  }, [value]);
+
+  const handleOptionSelect = (option) => {
+    if (onValueChange) {
+      onValueChange(option);
+    }
+    setSelectedToggleOption(option);
+  };
+
+  useEffect(() => {
+    selectedToggleOption != -1 && onValueChange(selectedToggleOption);
+  }, [selectedToggleOption]);
+
   return (
-    <View>
+    <View style={containerStyle}>
       {label && (
         <View style={styles.labelContainer}>
           <CommonText
@@ -42,55 +66,66 @@ const CustomToggleComponent = ({
         </View>
       )}
       <View style={[styles.mainView, customToggleStyle]}>
-        <TouchableOpacity
-          style={{
-            ...styles.yesButtonStyle,
-            ...(value === 1 ? styles.activeButtonStyle : null),
-          }}
-          onPress={() => handleOptionSelect(1)}
-        >
-          <View
-            style={{
-              ...styles.buttonViewStyle,
-              ...(value === 1 ? styles.activeButtonViewStyle : null),
-            }}
-          />
-        </TouchableOpacity>
-        <CommonText customTextStyle={styles.textStyle}>
-          {intl.formatMessage({ id: "label.yes" })}
-        </CommonText>
-        <TouchableOpacity
-          style={{
-            ...styles.noButtonStyle,
-            ...(value === 0 ? styles.activeButtonStyle : null),
-          }}
-          onPress={() => handleOptionSelect(0)}
-        >
-          <View
-            style={{
-              ...styles.buttonViewStyle,
-              ...(value === 0 ? styles.activeButtonViewStyle : null),
-            }}
-          />
-        </TouchableOpacity>
-        <CommonText customTextStyle={styles.textStyle}>
-          {intl.formatMessage({ id: "label.no" })}
-        </CommonText>
+        {!!options.length &&
+          options.map((option, index) => (
+            <>
+              <TouchableOpacity
+                key={index}
+                style={{
+                  ...styles.yesButtonStyle,
+                  ...(selectedToggleOption === index
+                    ? styles.activeButtonStyle
+                    : null),
+                }}
+                onPress={() => handleOptionSelect(index)}
+              >
+                <View
+                  style={{
+                    ...styles.buttonViewStyle,
+                    ...(selectedToggleOption === index
+                      ? styles.activeButtonViewStyle
+                      : null),
+                  }}
+                />
+              </TouchableOpacity>
+              <CommonText
+                customTextStyle={[
+                  styles.textStyle,
+                  selectedToggleOption === index,
+                  customToggleButtonTextStyle,
+                ]}
+              >
+                {option}
+              </CommonText>
+            </>
+          ))}
       </View>
+      {!!errorMessage && (
+        <CommonText
+          customTextStyle={[styles.errorMsg, customErrorStyle]}
+          fontWeight={customErrorStyle?.fontWeight || "600"}
+        >
+          {errorMessage}
+        </CommonText>
+      )}
     </View>
   );
 };
 
 CustomToggleComponent.defaultProps = {
-  value: 1,
-  onChange: () => {},
+  onValueChange: () => {},
+  customToggleButtonTextStyle: {},
+  options: RADIO_BUTTON_OPTIONS,
 };
 
 CustomToggleComponent.propTypes = {
   customLabelStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
+  customToggleButtonTextStyle: PropTypes.object,
   isMandatory: PropTypes.bool,
   label: PropTypes.string,
-  onChange: PropTypes.func,
+  onValueChange: PropTypes.func,
+  options: PropTypes.array,
   value: PropTypes.number,
 };
 

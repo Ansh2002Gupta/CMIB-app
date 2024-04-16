@@ -1,5 +1,4 @@
 import {
-  Dimensions,
   StyleSheet,
   Platform,
 } from "@unthinkable/react-core-components";

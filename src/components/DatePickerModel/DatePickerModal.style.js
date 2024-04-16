@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
     height: 48,
     flex: 1,
     zindex: 1,
-    padding: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   datePickerContainer: {
     flex: 1,
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     alignItems: "center",
-    flex: 0.1,
   },
   datePickerStyle: {
     backgroundColor: colors.white,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   datePickerContainerStyle: {
     position: "absolute",
-    bottom: 48,
+    bottom: 0,
     zIndex: 2,
   },
   mobileTouchableStyle: {
@@ -77,19 +77,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textViewStyles: {
-    flex: 0.83,
+    flex: 1,
     height: 48,
     justifyContent: "center",
     padding: 16,
   },
   mobileTextStyle: {
-    flex: 0.9,
+    flex: 1,
     justifyContent: "center",
     height: 48,
   },
   imageContainer: {
     flexDirection: "row",
-    flex: 0.1,
     alignItems: "center",
   },
   invalidInput: {

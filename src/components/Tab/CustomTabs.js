@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import {
   Row,
@@ -12,7 +12,16 @@ import CommonText from "../CommonText";
 import ConfirmationModal from "../../containers/ConfirmationModal";
 import styles from "./CustomTabs.style.js";
 
-export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
+export const CustomTabs = ({
+  containerStyle,
+  cleanupFuntion,
+  renderHeader,
+  renderFooter,
+  showWarningOnTabSwitch,
+  setSelectedTab,
+  tabs,
+  intialActiveTab = 0,
+}) => {
   const intl = useIntl();
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -21,7 +30,12 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
     tab: {},
     tabIndex: -1,
   });
-
+  useEffect(() => {
+    setActiveTabIndex(intialActiveTab);
+  }, [intialActiveTab]);
+  useEffect(() => {
+    setSelectedTab && setSelectedTab(activeTabIndex);
+  }, [activeTabIndex]);
   const handleTabChange = ({ tab, index }) => {
     if (index !== activeTabIndex) {
       if (showWarningOnTabSwitch) {
@@ -32,6 +46,7 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
         });
         return;
       }
+      cleanupFuntion && cleanupFuntion();
       setActiveTabIndex(index);
     }
   };
@@ -47,7 +62,7 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.headerContainer}>
+        <View style={{ ...styles.headerContainer, ...containerStyle }}>
           {renderHeader && renderHeader()}
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <Row gap={24} style={styles.tabsContainer}>
@@ -80,7 +95,7 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
             </Row>
           </ScrollView>
         </View>
-        {tabs[activeTabIndex].component}
+        {tabs[activeTabIndex]?.component}
       </View>
       {alertOnTabSwitch?.showAlert && (
         <ConfirmationModal
@@ -100,12 +115,15 @@ export const CustomTabs = ({ renderHeader, showWarningOnTabSwitch, tabs }) => {
           }}
         />
       )}
+      {!!renderFooter && renderFooter()}
     </>
   );
 };
 
 CustomTabs.propTypes = {
+  containerStyle: PropTypes.object,
   renderHeader: PropTypes.func,
+  renderFooter: PropTypes.func,
   showWarningOnTabSwitch: PropTypes.bool,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
@@ -113,4 +131,8 @@ CustomTabs.propTypes = {
       component: PropTypes.element.isRequired,
     })
   ).isRequired,
+  setSelectedTab: PropTypes.func,
+  cleanupFuntion: PropTypes.func,
+  renderHeader: PropTypes.func,
+  intialActiveTab: PropTypes.number,
 };

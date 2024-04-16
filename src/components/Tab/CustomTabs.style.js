@@ -1,3 +1,4 @@
+import { Platform } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const style = {
@@ -8,13 +9,16 @@ const style = {
   headerContainer: {
     borderBottomColor: colors.lightGray,
     borderBottomWidth: 1,
-    borderTopColor: colors.lightGray,
-    borderTopWidth: 1,
-    paddingTop: 24,
+    ...Platform.select({
+      web: {
+        borderTopColor: colors.lightGray,
+        borderTopWidth: 1,
+        paddingTop: 24,
+      },
+    }),
     paddingLeft: 24,
     paddingRight: 24,
   },
-  tabsContainer: {},
   itemContainer: {
     height: 38,
     borderBottomWidth: 1,
