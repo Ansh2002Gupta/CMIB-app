@@ -97,7 +97,7 @@ const CustomModal = ({
           </>
         ) : (
           <>
-            {topLeftIcon && (
+            {!!topLeftIcon && (
               <View style={style.topIconContianer}>
                 {isIconCross && (
                   <TouchableImage
