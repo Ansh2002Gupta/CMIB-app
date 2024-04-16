@@ -6,6 +6,8 @@ const styles = {
     padding: 24,
     flexDirection: "row",
     justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderColor: colors.lightGrey,
   },
   webProfileImageStyle: {
     height: 108,

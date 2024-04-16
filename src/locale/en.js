@@ -769,6 +769,7 @@ const locale = {
   "label.memberCompletionProfilePercentWeb":
     "Complete your job profile! its at ",
   "label.complete": "Complete",
+  "label.selectOption": "Select option",
 };
 
 export default locale;

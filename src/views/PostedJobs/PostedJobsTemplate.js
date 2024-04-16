@@ -33,7 +33,7 @@ const PostedJobsTemplate = ({
         headerText={intl.formatMessage({ id: "label.functionalAreas" })}
         data={functionalAreas}
         style={{
-          ...(!isWebView
+          ...(isWebView
             ? styles.otherDetailItemWeb
             : styles.otherDetailItemMobile),
         }}
