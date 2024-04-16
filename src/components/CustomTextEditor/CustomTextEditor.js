@@ -51,7 +51,7 @@ const CustomTextEditor = (props) => {
     onChangeText && onChangeText(content);
   };
 
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(!isViewMore);
   const getPreviewContent = (val) => {
     const previewDelta = val.slice(0, PREVIEWED_LENGTH);
     return previewDelta;
@@ -82,7 +82,7 @@ const CustomTextEditor = (props) => {
         )}
       </View>
       <View style={{ ...styles.quillContainer, ...quillContainerStyle }}>
-        <View style={{ flexDirection: "column" }}>
+        <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
           <ReactQuill
             theme="snow"
             value={isExpanded ? value : getPreviewContent(value)}
