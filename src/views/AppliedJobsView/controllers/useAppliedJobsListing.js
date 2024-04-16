@@ -419,13 +419,13 @@ const useAppliedJobsListing = () => {
   const onIconPress = (item) => {
     if (!item?.status) return "-";
     switch (item?.status?.trim()?.toLowerCase()) {
-      case STATUS_OPTIONS.JOB_OFFERED:
+      case STATUS_OPTIONS.JOB_OFFERED?.trim()?.toLowerCase():
         setShowPopUpWithID(item?.id);
         setPopUpMessage(
           intl.formatMessage({ id: "label.respond_to_job_offer" })
         );
         break;
-      case STATUS_OPTIONS.NO_RESPONSE:
+      case STATUS_OPTIONS.NO_RESPONSE?.trim()?.toLowerCase():
         setShowPopUpWithID(item?.id);
         setPopUpMessage(
           intl.formatMessage({ id: "label.select_interview_time" })
@@ -438,8 +438,10 @@ const useAppliedJobsListing = () => {
 
   const renderMoreActionButton = (item) => {
     return (
-      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.NO_RESPONSE ||
-      item?.status?.trim()?.toLowerCase() === STATUS_OPTIONS.JOB_OFFERED
+      item?.status?.trim()?.toLowerCase() ===
+        STATUS_OPTIONS.NO_RESPONSE?.trim().toLowerCase() ||
+      item?.status?.trim()?.toLowerCase() ===
+        STATUS_OPTIONS.JOB_OFFERED?.trim().toLowerCase()
     );
   };
 
