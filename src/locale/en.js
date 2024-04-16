@@ -770,6 +770,11 @@ const locale = {
   "label.memberCompletionProfilePercentWeb":
     "Complete your job profile! its at ",
   "label.complete": "Complete",
+  "label.topCompaniesHighestJobsOffered":
+    "Top 10 Companies with Highest Number of Jobs Offered",
+  "label.topCompaniesHighestCTCs": "Top 10 Companies with Highest CTCs",
+  "label.selectedFunctionalAreas": "Selected Functional Areas",
+  "label.urgentJobs": "Urgent Jobs",
   "label.selectOption": "Select option",
 };
 
