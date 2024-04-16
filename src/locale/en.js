@@ -731,7 +731,7 @@ const locale = {
   "label.offer_job": "Offer Job",
   "label.view_interview_details": "View Interview Details",
   "label.edit_interview_details": "Edit Interview Details",
-  "label.schedule_interview": "Schedule Interview",
+  "label.schedule_interview": "Scheduled Interviews",
   "label.search_applied_jobs": "Search Applied Jobs",
   "label.select_interview_time": "Select Interview Time",
   "label.respond_to_job_offer": "Respond to Job Offer",

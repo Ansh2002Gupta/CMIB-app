@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   },
   borderBottom0: {
     borderBottomWidth: 0,
+    paddingBottom: 4,
   },
   flex1: {
     flex: 1,

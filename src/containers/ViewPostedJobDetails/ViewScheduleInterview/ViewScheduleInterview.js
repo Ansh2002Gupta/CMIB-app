@@ -77,7 +77,6 @@ const ViewScheduleInterview = ({ id }) => {
       />
     );
   };
-
   return (
     <>
       {!isError && (
