@@ -45,7 +45,6 @@ const ViewPostedJobDetails = () => {
   const {
     handleUseChangeJob,
     isError: ischangeJobStatusError,
-    isLoading: changeJobStatusLoading,
     errorWhileJobChange,
   } = useChangeJobStatusApi();
   const intl = useIntl();
@@ -296,7 +295,7 @@ const ViewPostedJobDetails = () => {
   };
   return (
     <>
-      {isConstantLoading || loading || changeJobStatusLoading ? (
+      {isConstantLoading || loading ? (
         <LoadingScreen />
       ) : (
         <>
@@ -375,11 +374,7 @@ const ViewPostedJobDetails = () => {
                             ) : null}
                           </View>
 
-                          {!(
-                            isConstantLoading ||
-                            loading ||
-                            changeJobStatusLoading
-                          ) &&
+                          {!(isConstantLoading || loading) &&
                             (apiIsError || ischangeJobStatusError) && (
                               <ErrorComponent
                                 errorMsg={

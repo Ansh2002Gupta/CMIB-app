@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
-import { Platform } from "@unthinkable/react-core-components";
+import { Platform, TouchableOpacity } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../../../components/BadgeLabel/BadgeLabel";
 import CommonText from "../../../components/CommonText";
@@ -10,13 +10,13 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useFetch from "../../../hooks/useFetch";
 
 import usePagination from "../../../hooks/usePagination";
+import { capitalizePhrase } from "../../../utils/util";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
 import { COMPANY_LISTING } from "../../../services/apiServices/apiEndPoint";
 import {
-  COMPANY,
   FILTER_TYPE_ENUM,
   POPUP_OPTIONS,
   ROWS_PER_PAGE_ARRAY,
@@ -174,7 +174,7 @@ const useJobSeekers = () => {
       setCurrentPage(1);
       const newData = await fetchJobSeekers({
         queryParamsObject: {
-          q: searchedData,
+          keyword: searchedData,
         },
       });
       setIsFirstPageReceived(false);
@@ -186,7 +186,7 @@ const useJobSeekers = () => {
       }
     } else {
       await updateCurrentRecords({
-        q: searchedData,
+        keyword: searchedData,
         perPage: rowsPerPage,
         page: currentPage,
       });
@@ -234,10 +234,8 @@ const useJobSeekers = () => {
     {
       refKey: "value",
       name: "CurrentSalary",
-      type: FILTER_TYPE_ENUM.SLIDER,
-      minimumSliderLimit: 0,
-      maximumSliderLimit: 40,
-      options: 0,
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: [],
       selectedOptions: filterState?.selectedCurrentSalary,
       handler: handleFilterChange,
     },
@@ -299,7 +297,7 @@ const useJobSeekers = () => {
   //   setCurrentPage(1);
   //   const newData = await fetchJobSeekers({
   //     queryParamsObject: {
-  //       q: filterOptions.searchData,
+  //       keyword: filterOptions.searchData,
   //     },
   //   });
   //   setCurrentRecords(newData?.records);
@@ -327,26 +325,25 @@ const useJobSeekers = () => {
     "Experience",
     "Current Salary",
     "Functional Areas",
-    "Education",
     "Category",
   ];
 
-  const handlePopupItemClick = (data) => {
-    switch (data?.option) {
-      case POPUP_OPTIONS[0]:
+  const handlePopupItemClick = ({ option, item }) => {
+    switch (option?.trim().toLowerCase()) {
+      case POPUP_OPTIONS?.[0].trim().toLowerCase():
         return <></>;
-      case POPUP_OPTIONS[1]:
-        navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${data?.id || 1}`);
+      case POPUP_OPTIONS?.[1].trim().toLowerCase():
+        navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${item?.id || 1}`);
     }
   };
 
-  const onNameSorting = async (sortField) => {
+  const onNameSorting = async (sortBy) => {
     setIsAscendingOrder((prev) => !prev);
     await updateCurrentRecords({
       perPage: rowsPerPage,
       page: currentPage,
-      sortField: sortField,
-      sortDirection: !isAscendingOrder ? "asc" : "desc",
+      sortBy: sortBy,
+      sortOrder: !isAscendingOrder ? "asc" : "desc",
     });
   };
 
@@ -366,7 +363,7 @@ const useJobSeekers = () => {
       {
         content: isHeading ? (
           <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
-            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            <CommonText customTextStyle={tableStyle}>
               {!!item.name ? item.name : "-"}
             </CommonText>
             <CustomImage
@@ -379,16 +376,25 @@ const useJobSeekers = () => {
             />
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {!!item.name ? item.name : "-"}
-          </CommonText>
+          <TouchableOpacity
+            onPress={() => {
+              navigate(
+                `${navigations.CANDIDATE_DETAILS_SUBROUTE}/${item?.id || 1}`
+              );
+            }}
+            style={styles.cursorStyle}
+          >
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {!!item.name ? capitalizePhrase(item.name) : "-"}
+            </CommonText>
+          </TouchableOpacity>
         ),
         style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
         content: isHeading ? (
-          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+          <CustomTouchableOpacity onPress={() => onNameSorting("candidate_id")}>
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.candidate_id ? item.candidate_id : "-"}
             </CommonText>
@@ -402,7 +408,7 @@ const useJobSeekers = () => {
             />
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {!!item.candidate_id ? item.candidate_id : "-"}
           </CommonText>
         ),
@@ -411,7 +417,9 @@ const useJobSeekers = () => {
       },
       {
         content: isHeading ? (
-          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+          <CustomTouchableOpacity
+            onPress={() => onNameSorting("total_experience")}
+          >
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.total_experience ? item.total_experience : "0"}
             </CommonText>
@@ -425,7 +433,7 @@ const useJobSeekers = () => {
             />
           </CustomTouchableOpacity>
         ) : (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+          <CommonText customTextStyle={tableStyle}>
             {!!item.total_experience ? item.total_experience : "0"}
           </CommonText>
         ),
@@ -454,7 +462,9 @@ const useJobSeekers = () => {
               key={item?.id || 0}
               data={item}
               message={POPUP_OPTIONS}
-              onPopupClick={handlePopupItemClick}
+              onPopupClick={(option) => {
+                handlePopupItemClick({ option: option, item: item });
+              }}
             />
           </>
         ),
@@ -489,6 +499,7 @@ const useJobSeekers = () => {
     indexOfFirstRecord,
     indexOfLastRecord,
     isFirstPageReceived,
+    isGeetingJobbSeekers,
     isHeading,
     jobSeekersData: jobSeekersData?.records,
     loadingMore,

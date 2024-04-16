@@ -45,6 +45,7 @@ const DetailComponent = ({
   handleCancel,
   handleAddRemoveRow,
   handleCheckBoxSelection,
+  datePickerContainer,
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -113,6 +114,8 @@ const DetailComponent = ({
   );
 
   const renderDetailContent = (detail) => {
+    if (detail?.isEmptyField) return <></>;
+
     if (detail.showBadgeLabel) {
       return (
         <BadgeLabel
@@ -175,6 +178,7 @@ const DetailComponent = ({
           customStyle={styles.CheckBoxSelection}
           isSingleSelection={detail?.isSingleSelection}
           value={detail?.value}
+          checkBoxTextStyle={detail?.checkBoxTextStyle}
         />
       );
     }
@@ -193,6 +197,8 @@ const DetailComponent = ({
   };
 
   const renderEditableContent = (detail, index) => {
+    if (detail?.isEmptyField) return <></>;
+
     if (detail.isMobileNumber) {
       return (
         <MobileNumberInput
@@ -207,6 +213,7 @@ const DetailComponent = ({
         />
       );
     }
+
     return (
       <CustomTextInput
         errorMessage={detail.error}
@@ -216,6 +223,7 @@ const DetailComponent = ({
           ...styles.inputStyle,
           ...styles.getFieldWidth(detail.width, !isWebView),
         }}
+        datePickerContainer={datePickerContainer}
         label={detail?.label && intl.formatMessage({ id: detail.label })}
         showLabel={detail.showLabel}
         isDropdown={detail.isDropdown}
@@ -227,6 +235,7 @@ const DetailComponent = ({
         indexNumber={index}
         isSelected="isSelected"
         indexField="selectedIndex"
+        isEmptyField={detail?.isEmptyField ?? false}
         options={detail.options || []}
         isMultiline={detail?.isMultiline}
         isCheckBoxSelection={detail?.isCheckBoxSelection}
@@ -272,6 +281,7 @@ const DetailComponent = ({
         format={detail?.format}
         isSingleMutliSelect={detail.isSingleMutliSelect}
         showMonthYearPicker={detail?.showMonthYearPicker}
+        checkBoxTextStyle={detail?.checkBoxTextStyle}
       />
     );
   };
@@ -345,12 +355,42 @@ const DetailComponent = ({
                             </CommonText>
                           )}
                         </View>
+                        {renderDetailContent(columns)}
                       </View>
                     );
                   })}
               </View>
             );
           }
+
+          return (
+            <View
+              key={idx}
+              style={isWebView ? styles.webContainer : getRowStyle(detail)}
+            >
+              {isEditable ? (
+                renderEditableContent(detail)
+              ) : (
+                <>
+                  <View style={styles.titleContainer}>
+                    {detail.label ? (
+                      <CommonText customTextStyle={styles.titleStyle}>
+                        {intl.formatMessage({ id: detail.label })}
+                      </CommonText>
+                    ) : (
+                      void 0
+                    )}
+                    {detail?.isMandatory && (
+                      <CommonText customTextStyle={styles.starStyle}>
+                        {" *"}
+                      </CommonText>
+                    )}
+                  </View>
+                  {renderDetailContent(detail)}
+                </>
+              )}
+            </View>
+          );
         })}
         {isShowSwitch && isWebView && isEditable && renderSwitch()}
         {hasActionButton && isEditable && isWebView && renderWebActionButton()}

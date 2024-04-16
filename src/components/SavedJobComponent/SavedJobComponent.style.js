@@ -11,9 +11,10 @@ const style = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: colors.lightGrey,
-    borderTopWidth: 10,
-    borderTopColor: colors.darkBlue,
+    cursor: "pointer",
   },
+  borderTop: { borderTopWidth: 10, borderTopColor: colors.darkBlue },
+  paddingTop: { paddingTop: 24 },
   customSaveButtonContainer: { marginBottom: 16 },
   buttonTwoTextStyle: { fontSize: 14, fontWeight: 500 },
   urgentText: {
@@ -170,6 +171,18 @@ const style = StyleSheet.create({
   chipContainerStyle: { gap: 8, marginBottom: 16 },
   disabledStyle: { backgroundColor: colors.white },
   disableButtonText: { fontSize: 12, color: colors.black, marginRight: 20 },
+  ellipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    maxWidth: 200,
+  },
+  mobileEllipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    maxWidth: 320,
+  },
 });
 
 export default style;

@@ -110,6 +110,8 @@ const CustomTextInput = (props) => {
     isTextInputWithChip,
     onChipUpdate,
     showMonthYearPicker,
+    datePickerContainer,
+    checkBoxTextStyle,
     ...remainingProps
   } = props;
 
@@ -248,6 +250,7 @@ const CustomTextInput = (props) => {
             onChangeDropDownText,
             isEditable,
           }}
+          {...remainingProps}
           dropdownStyle={{
             ...style.dropdown,
             ...(isFocused ? style.focusedStyle : {},
@@ -261,7 +264,9 @@ const CustomTextInput = (props) => {
       return (
         <DatePickerModal
           {...{
+            // Commenting this line as
             customStyles: customStyle,
+            datePickerContainer,
             value,
             onChangeValue,
             maxDate,
@@ -269,7 +274,8 @@ const CustomTextInput = (props) => {
             showTimeSelect,
             showMonthYearPicker,
             timeFormate: timeFormat,
-            format: dateFormate,
+            format,
+            dateFormate,
             minTime,
             maxTime,
           }}
@@ -312,6 +318,7 @@ const CustomTextInput = (props) => {
           isActionToAdd={isActionToAdd}
           handleCheckBoxSelection={(id) => handleCheckBoxSelection(id)}
           isSingleSelection={isSingleSelection}
+          checkBoxTextStyle={checkBoxTextStyle}
         />
       );
     }
@@ -511,9 +518,9 @@ const CustomTextInput = (props) => {
             </CommonText>
           )}
           {isMultiline && (
-            <CommonText
-              customTextStyle={style.limitStyle}
-            >{`${value?.length}/${maxLength}`}</CommonText>
+            <CommonText customTextStyle={style.limitStyle}>{`${
+              value?.length ?? 0
+            }/${maxLength}`}</CommonText>
           )}
         </View>
       )}

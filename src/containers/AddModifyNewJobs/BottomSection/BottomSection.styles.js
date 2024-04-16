@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 8,
   },
+  fontSize14: {
+    fontSize: 14,
+  },
   flexDirectionRow: {
     flexDirection: "row",
   },
