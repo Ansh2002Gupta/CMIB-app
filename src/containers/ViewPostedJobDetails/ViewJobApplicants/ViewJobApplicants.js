@@ -104,7 +104,7 @@ const ViewJobApplicants = ({ id }) => {
   return (
     <>
       {!isError && (
-        <View>
+        <View style={styles.flex1}>
           <CustomTable
             {...{
               allDataLoaded,
@@ -180,7 +180,7 @@ const ViewJobApplicants = ({ id }) => {
           onRetry={() => getErrorDetails()?.onRetry()}
         />
       )}
-      {errorWhileApplicantStatusChange && (
+      {!!errorWhileApplicantStatusChange && (
         <View style={styles.zIndex2}>
           <ToastComponent
             toastMessage={errorWhileApplicantStatusChange}

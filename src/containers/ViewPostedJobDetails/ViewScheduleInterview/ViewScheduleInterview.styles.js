@@ -8,5 +8,8 @@ const styles = StyleSheet.create({
   zIndex2: {
     zIndex: 2,
   },
+  flex1: {
+    flex: 1,
+  },
 });
 export default styles;
