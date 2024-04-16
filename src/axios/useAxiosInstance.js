@@ -18,7 +18,6 @@ const useAxiosInstance = () => {
 
   axiosInstance.interceptors.request.use(async (request) => {
     request.headers["api-version"] = API_VERSION_NUMBER;
-    request.headers["Content-Type"] = "application/json";
     request.headers["ngrok-skip-browser-warning"] = true;
     const token = (await CookieAndStorageService.get({ key: "auth" })) || null;
     if (token) {

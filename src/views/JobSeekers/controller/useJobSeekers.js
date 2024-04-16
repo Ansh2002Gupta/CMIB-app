@@ -71,9 +71,6 @@ const useJobSeekers = () => {
     otherOptions: {
       skipApiCallOnMount: true,
     },
-    apiOptions: {
-      headers: { "Content-Type": "application/json", testDummy: "test" },
-    },
   });
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
