@@ -16,6 +16,7 @@ import {
 import { SkillTraining_keys, isDuplicateExist } from "./Controller/utils";
 
 const SkillTraining = ({
+  customUrl,
   isEditable = true,
   handleEdit,
   onSaveSuccessfull,
@@ -43,7 +44,7 @@ const SkillTraining = ({
     isLoading: isSkillsLoadingPage,
     fetchData,
   } = useFetch({
-    url: `${MEMBER_CA_JOB_PROFILE_SKILLS}`,
+    url: customUrl ?? `${MEMBER_CA_JOB_PROFILE_SKILLS}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -69,7 +70,7 @@ const SkillTraining = ({
 
   const [toastError, setToastError] = useState(null);
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_PROFILE_SKILLS);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_PROFILE_SKILLS);
 
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? { ...data } : {}

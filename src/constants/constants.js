@@ -706,7 +706,7 @@ export const progressData = {
   },
 };
 export const JOB_SEEKERS_TABLE_HEADING = {
-  name: "Name",
+  name: "Candidate Name",
   candidate_id: "Candidate ID",
   total_experience: "Total Experience",
   functional_area: "Functional Area",
@@ -762,6 +762,11 @@ export const API_DATA_FOR_INTERVIEW_SCHEDULING = [
 export const KEYS = {
   OFFER_ACCEPTED: 7,
   OFFERE_REJECTED: 8,
+};
+
+export const MODULES = {
+  CA_JOBS: "ca-jobs",
+  MEMBER: "member",
 };
 
 export const JOB_APPLICANTS_HEADING = {
