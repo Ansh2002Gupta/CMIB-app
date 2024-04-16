@@ -4,6 +4,8 @@ import * as types from "./types";
 const initialState = {
   selectedModule: {},
   selectedSession: {},
+  globalSessionList: [],
+  roundsData: {},
 };
 
 const sideBarReducer = (state, action) => {
@@ -13,10 +15,20 @@ const sideBarReducer = (state, action) => {
         ...state,
         selectedModule: { ...action.payload },
       };
-    case types.SESSION_LIST:
+    case types.SELECTED_SESSION:
       return {
         ...state,
         selectedSession: { ...action.payload },
+      };
+    case types.SET_GLOBAL_SESSION_LIST:
+      return {
+        ...state,
+        globalSessionList: action.payload,
+      };
+    case types.SET_ROUNDS_DATA:
+      return {
+        ...state,
+        roundsData: { ...action.payload },
       };
     default:
       return state;
