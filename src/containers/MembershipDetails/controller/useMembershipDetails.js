@@ -11,7 +11,6 @@ const membership_detail = [
   {
     key: "membership_enrollment_date",
     isCalendar: true,
-    isMandatory: true,
     minDate: getCurrentYear() - 50, //need to confirm with B.E
     format: "DD/MM/YYYY",
     label: "label.dateOfEmrollmentAsMember",

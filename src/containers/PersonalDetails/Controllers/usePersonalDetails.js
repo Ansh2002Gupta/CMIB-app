@@ -1,4 +1,18 @@
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+
+import {
+  COUNTRY_CODE,
+  MEMBER_CATEGORY,
+} from "../../../services/apiServices/apiEndPoint";
+import useGetCurrentUser from "../../../hooks/useGetCurrentUser";
+import {
+  isValueEmpty,
+  formatCountryCode,
+  getNameById,
+  booleanToYesNo,
+} from "../../../utils/util";
+import useFetch from "../../../hooks/useFetch";
 import {
   ADDRESS_MAX_LENGTH,
   GENDER,
@@ -7,18 +21,9 @@ import {
   NUMBER_MIN_LENGTH,
   numRegex,
 } from "../../../constants/constants";
-import useFetch from "../../../hooks/useFetch";
-import {
-  COUNTRY_CODE,
-  MEMBER_CATEGORY,
-} from "../../../services/apiServices/apiEndPoint";
-import { useIntl } from "react-intl";
-import {
-  isValueEmpty,
-  formatCountryCode,
-  getNameById,
-} from "../../../utils/util";
 import { validateEmail } from "../../../utils/validation";
+import dayjs from "dayjs";
+import useIsWebView from "../../../hooks/useIsWebView";
 
 const accessibility_information = (has_disability) => {
   const commonFields = [
@@ -60,14 +65,14 @@ const accessibility_information = (has_disability) => {
       },
     },
   ];
-  if (!has_disability) {
+  if (has_disability) {
     return [...commonFields, ...otherFileds];
   } else {
     return commonFields;
   }
 };
 
-const personal_detail = (categoryData, has_passport) => {
+const personal_detail = (categoryData, has_passport, isWebView) => {
   const commonFields = [
     {
       key: "gender",
@@ -99,6 +104,9 @@ const personal_detail = (categoryData, has_passport) => {
       key: "dob",
       isMandatory: true,
       isDate: true,
+      format: "DD/MM/YYYY",
+      isCalendar: true,
+      maxDate: Date.now(),
       label: "label.date_of_birth",
       placeholder: "label.date_of_birth",
       validate: (value) => {
@@ -135,23 +143,23 @@ const personal_detail = (categoryData, has_passport) => {
         }
       },
     },
-    {
-      key: "category_id",
-      isMandatory: true,
-      isDropdown: true,
-      labelField: "name",
-      valueField: "id",
-      inputKey: "id",
-      options: categoryData,
-      label: "label.category",
-      placeholder: "label.category",
-      validate: (value) => {
-        if (!value) {
-          return "Category is required";
-        }
-      },
-    },
   ];
+  const categoryId = {
+    key: "category_id",
+    isMandatory: true,
+    isDropdown: true,
+    labelField: "name",
+    valueField: "id",
+    inputKey: "id",
+    options: categoryData,
+    label: "label.category",
+    placeholder: "label.category",
+    validate: (value) => {
+      if (!value) {
+        return "Category is required";
+      }
+    },
+  };
 
   const passportField = {
     key: "passport_number",
@@ -166,13 +174,31 @@ const personal_detail = (categoryData, has_passport) => {
     },
   };
 
-  if (!has_passport) {
-    return [...commonFields, passportField];
+  if (has_passport) {
+    return [
+      ...commonFields,
+      ...(isWebView
+        ? [categoryId, passportField]
+        : [passportField, categoryId]),
+    ];
   } else {
-    return commonFields;
+    return [...commonFields, categoryId];
   }
 };
-const correspondence_address = (countryData) => [
+
+const commonAddressToggleButton = [
+  {
+    key: "isCommonPermanentAddress",
+    isToggle: true,
+    label: "Is Permanent Address same as Correspondence Address?",
+    placeholder: "label.address1",
+  },
+  { isEmptyField: true },
+];
+
+const correspondence_address = (countryData, isEditable) => [
+  //only show this toggle button in edit mode
+  ...(isEditable ? commonAddressToggleButton : []),
   {
     key: "address1",
     isMandatory: true,
@@ -265,18 +291,6 @@ const correspondence_address = (countryData) => [
         return intl.formatMessage({
           id: "label.telephone_no_validation",
         });
-      }
-    },
-  },
-  {
-    key: "phone_number",
-    isMandatory: true,
-    isNumeric: true,
-    label: "label.telephone_no",
-    placeholder: "label.telephone_no",
-    validate: (value) => {
-      if (!value) {
-        return "phone number is required";
       }
     },
   },
@@ -387,14 +401,26 @@ const addValueOnField = ({
         codeValue: formatCountryCode(state?.mobile_country_code, countryData),
       };
     }
+
+    if (item.key === "dob") {
+      return {
+        ...item,
+        value: isEditable
+          ? state?.[item?.key]
+          : state?.[item?.key] === null
+          ? "--"
+          : dayjs(state?.[item?.key]).format(item?.format),
+      };
+    }
+
     if (item.isToggle) {
       return {
         ...item,
-        value: !isEditable
-          ? state?.[item?.key] === null
-            ? "--"
-            : intl.formatMessage({ id: `toggle.${state?.[item?.key]}` })
-          : state?.[item?.key],
+        value: isEditable
+          ? Boolean(state?.[item?.key] ?? false)
+          : state?.[item?.key] === undefined
+          ? "-"
+          : booleanToYesNo(Boolean(state?.[item?.key])),
       };
     }
     if (item?.key === "category_id") {
@@ -432,30 +458,58 @@ const validateOnBlur = ({ state, details, key, index, intl }) => {
 
 export const usePersonalDetails = ({ state, isEditable }) => {
   const intl = useIntl();
-  const { data: countryData, isLoading: countryLoading } = useFetch({
+  const { isWebView } = useIsWebView();
+  const { isCompany, currentModule } = useGetCurrentUser();
+  const {
+    data: countryData,
+    isLoading: countryLoading,
+    fetchData: fetchingCountryCode,
+  } = useFetch({
     url: COUNTRY_CODE,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
-  const { data: categoryData, isLoading: categoryLoading } = useFetch({
+  const {
+    data: categoryData,
+    isLoading: categoryLoading,
+    fetchData: fetchingCategories,
+  } = useFetch({
     url: MEMBER_CATEGORY,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+
   const [accessibility_information_state, setAccessibility_information_state] =
     useState(accessibility_information(state?.has_disability));
   const [personal_detail_state, setPersonalDetailState] = useState(
-    personal_detail(categoryData, state?.has_passport)
+    personal_detail(categoryData, state?.has_passport, isWebView)
   );
   const [correspondence_address_state, setCorrespondenceAddressState] =
-    useState(correspondence_address(countryData));
+    useState(correspondence_address(countryData, isEditable));
   const [permanent_address_state, setPermanentAddressState] =
     useState(permanent_address);
+
+  useEffect(async () => {
+    if (currentModule) {
+      if (!isCompany) {
+        await fetchingCategories();
+        await fetchingCountryCode();
+      }
+    }
+  }, [currentModule]);
 
   useEffect(() => {
     setAccessibility_information_state(
       accessibility_information(state?.has_disability)
     );
     setPersonalDetailState(personal_detail(categoryData, state?.has_passport));
-    setCorrespondenceAddressState(correspondence_address(countryData));
+    setCorrespondenceAddressState(
+      correspondence_address(countryData, isEditable)
+    );
     setPermanentAddressState(permanent_address);
-  }, [countryData, state]);
+  }, [countryData, categoryData, state, isEditable]);
 
   const handlePersonalDetailBlur = (key, index) => {
     setPersonalDetailState(

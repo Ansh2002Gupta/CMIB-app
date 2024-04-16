@@ -1,24 +1,73 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 import useFetch from "../../hooks/useFetch";
 import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpdateService";
 import MembershipDetailsTemplate from "./MembershipDetailsTemplate";
-import { MEMBER_CA_JOB_MEMBERSHIP_DETAILS } from "../../services/apiServices/apiEndPoint";
-import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
+import {
+  MEMBERS,
+  MEMBERSHIP,
+  MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
+  USER_TYPE_COMPANY,
+} from "../../services/apiServices/apiEndPoint";
 import { useMembershipDetails } from "./controller/useMembershipDetails";
 import { formatDateToYYYYMMDD } from "../../utils/util";
 
-const MembershipDetails = ({ isEditable, handleEdit }) => {
+const MembershipDetails = ({
+  customUrl,
+  isEditable,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
+  const { id } = useParams();
+  const { isCompany, currentModule } = useGetCurrentUser();
+
   const {
-    fetchData,
-    data,
-    isError: isErrorLoadingPage,
-    isLoading: isLoadingPage,
+    data: applicantMemberShipData,
+    isLoading: isGettingapplicantMemberShipDataLoading,
+    error: errorWhileGettingapplicantMemberShipDataData,
+    fetchData: fetchingapplicantMemberShipData,
   } = useFetch({
-    url: MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
+    url:
+      USER_TYPE_COMPANY + `/${currentModule}` + MEMBERS + `/${id}` + MEMBERSHIP,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
+
+  const {
+    data: memberShipData,
+    error: isErrorLoadingPage,
+    isLoading: isLoadingPageMemberShip,
+    fetchData,
+  } = useFetch({
+    url: customUrl ?? MEMBER_CA_JOB_MEMBERSHIP_DETAILS,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
+
+  useEffect(() => {
+    if (currentModule) {
+      if (isCompany) {
+        fetchingapplicantMemberShipData({});
+      } else {
+        fetchData({});
+      }
+    }
+  }, [currentModule]);
+
+  const data = isCompany ? applicantMemberShipData : memberShipData;
+  const isLoadingPage = isCompany
+    ? isGettingapplicantMemberShipDataLoading
+    : isLoadingPageMemberShip;
+  const errorWhileFetching = isCompany
+    ? errorWhileGettingapplicantMemberShipDataData
+    : isErrorLoadingPage;
+
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_MEMBERSHIP_DETAILS);
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? { ...data } : {}
   );
@@ -70,6 +119,7 @@ const MembershipDetails = ({ isEditable, handleEdit }) => {
     const payload = getMembershipDetailsPayload();
 
     handleUpdate(payload, () => {
+      onSaveSuccessfull && onSaveSuccessfull();
       // turn off the edit mode
       handleEdit(false);
       fetchData();
@@ -110,7 +160,7 @@ const MembershipDetails = ({ isEditable, handleEdit }) => {
       isLoading={isLoading}
       isError={isError}
       isLoadingPage={isLoadingPage}
-      isErrorLoadingPage={isErrorLoadingPage}
+      isErrorLoadingPage={errorWhileFetching}
       error={error}
       setError={setError}
       isEditable={isEditable}

@@ -5,6 +5,8 @@ import { JobPreferences_keys, updateDropDownOptions } from "./utils";
 import { booleanToYesNo } from "../../../utils/util";
 import { numRegex } from "../../../constants/constants";
 
+const EXPECTED_MIN_SALARY = 750000;
+
 const preferences_details = (intl) => [
   [
     {
@@ -35,6 +37,7 @@ const preferences_details = (intl) => [
         }
       },
     },
+    { isEmptyField: true },
   ],
   [
     {
@@ -69,6 +72,7 @@ const preferences_details = (intl) => [
       isMandatory: true,
       label: "label.expected_annual_salary",
       placeholder: "label.expected_annual_salary",
+      isNumeric: true,
       validate: (value) => {
         if (!value) {
           return intl.formatMessage({
@@ -78,6 +82,11 @@ const preferences_details = (intl) => [
         if (value.length > 0 && !numRegex.test(String(value))) {
           return intl.formatMessage({
             id: "label.enterValidInput",
+          });
+        }
+        if (value.length > 0 && Number(value) < EXPECTED_MIN_SALARY) {
+          return intl.formatMessage({
+            id: "label.minExpectedSalary",
           });
         }
       },
@@ -240,7 +249,7 @@ export const useJobPreference = ({
     let error = false;
     [...preferences_details_state].forEach((row) => {
       row.map((item) => {
-        if (item.isMandatory && !item?.isToggle) {
+        if (item?.isMandatory && !item?.isToggle) {
           if (
             item?.error ||
             !state[item.key] ||

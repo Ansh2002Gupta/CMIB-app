@@ -18,12 +18,15 @@ import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import Jobs from "../views/Jobs";
 import JobsView from "../views/JobsView/JobsView";
 import JobSeekers from "../views/JobSeekers";
+import JobApplicantsView from "../views/JobApplicantsView";
 import JobProfileTab from "../views/JobProfile";
+import JobApplicantsDetails from "../views/JobApplicantsDetails";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
 import RoundOne from "../views/RoundOneView";
 import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
+import RoundTwoApplicationForm from "../views/RoundTwoApplicationForm/index";
 import RoundTwo from "../views/RoundTwoView";
 import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
@@ -223,6 +226,10 @@ const config = [
         element: <RoundOneApplicationForm />,
       },
       {
+        viewPath: `${navigations.ROUND_TWO}/${navigations.APPLICATION_FORM}`,
+        element: <RoundTwoApplicationForm />,
+      },
+      {
         viewPath: navigations.ROUND_TWO,
         element: <RoundTwo />,
       },
@@ -240,12 +247,10 @@ const config = [
         viewPath: navigations.POSTED_JOBS,
         element: <PostedJobsView />,
       },
-
       {
         viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
         element: <AddModifyNewJobs />,
       },
-
       {
         viewPath: `${navigations.DETAILS_JOBS}`,
         element: <ViewPostedJobDetails />,
@@ -260,7 +265,11 @@ const config = [
       },
       {
         viewPath: navigations.JOB_APPLICANTS,
-        element: <Candidates />,
+        element: <JobApplicantsView />,
+      },
+      {
+        viewPath: `${navigations.JOB_APPLICANTS}/${navigations.APPLICANT_DETAILS}`,
+        element: <JobApplicantsDetails />,
       },
       {
         viewPath: navigations.JOB_SEEKERS,
@@ -294,6 +303,10 @@ const config = [
       {
         viewPath: navigations.JOBS,
         element: <Jobs />,
+      },
+      {
+        viewPath: navigations.CANDIDATES,
+        element: <Candidates />,
       },
     ],
   },

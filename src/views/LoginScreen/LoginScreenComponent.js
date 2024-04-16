@@ -103,7 +103,8 @@ function LoginScreenComponent() {
     setSrnNumber(val);
     setErrorMessageForMemberLogin("");
   };
-
+  
+  //use this function to resend otp
   const onLoginForMembers = () => {
     handleSendOtpAPI({
       payload: { srn: srn },
@@ -135,6 +136,7 @@ function LoginScreenComponent() {
           otpVerifyEndPoint={MEMBER_VERIFY_OTP}
           confirmOtpHanlder={(result) => confirmOtpHanlder(result)}
           isMemberLogin
+          onLoginForMembers={onLoginForMembers}
         />
       ) : (
         <LoginScreenUI

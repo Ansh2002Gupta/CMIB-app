@@ -15,6 +15,9 @@ const style = {
     alignItems: "center",
     backgroundColor: colors.backgroundColor,
   },
+  checkBoxItem: {
+    marginBottom: 0,
+  },
 };
 
 export default style;

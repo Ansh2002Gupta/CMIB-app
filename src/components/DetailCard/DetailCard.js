@@ -28,6 +28,8 @@ const DetailCard = ({
   handleCancel,
   handleAddRemoveRow,
   handleCheckBoxSelection,
+  datePickerContainer,
+  checkBoxTextStyle,
 }) => {
   const { isWebView } = useIsWebView();
 
@@ -57,6 +59,8 @@ const DetailCard = ({
           handleCancel,
           handleAddRemoveRow,
           handleCheckBoxSelection,
+          datePickerContainer,
+          checkBoxTextStyle,
         }}
       />
       {!!otherDetails && (
