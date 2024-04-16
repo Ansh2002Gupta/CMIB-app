@@ -39,7 +39,7 @@ import { navigations } from "../constants/routeNames";
 import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
-import Dummy from "../views/Dummy.js/Dummy";
+import Dummy from "../views/Dummy/Dummy";
 import AllJobs from "../views/AllJobs/AllJobs";
 
 const signUpHeader =
