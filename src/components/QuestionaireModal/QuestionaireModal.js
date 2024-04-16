@@ -174,7 +174,6 @@ const QuestionaireModal = ({ handleCloseModal, handleSuccessApply, jobId }) => {
           onDismiss={handleResetError}
         />
       )}
-
       <>
         {!!questionaireData?.length && (
           <CustomModal

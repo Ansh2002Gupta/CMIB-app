@@ -580,6 +580,7 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
+export const PREVIEWED_LENGTH = 100;
 export const COMPANY_QUERY_TYPE_TICKET = "/";
 
 export const POPUP_OPTIONS = ["Download Profile & Resume", "View Details"];
@@ -731,7 +732,7 @@ export const STATUS_OPTIONS = {
   INTERVIEW_SCHEDULED: "interview scheduled",
   JOB_OFFERED: "job offered",
   JOB_NOT_OFFERED: "job not offered",
-  NO_RESPONSE: "No response from applicant for interview",
+  NO_RESPONSE: "No Response From Applicant For Interview",
   OFFER_ACCEPTED: "offer accepted",
   OFFERE_REJECTED: "offer rejected",
   PENDING: "pending",
