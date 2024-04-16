@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
   addApplicationFormText: {
     fontSize: 24,
     color: colors.black,
+    flexWrap: "wrap",
+    wordBreak: "break-word",
+    overFlow: "hidden",
+    whiteSpace: "break-space",
   },
   componentStyle: {
     marginTop: 24,

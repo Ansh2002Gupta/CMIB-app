@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Keyboard, Platform, View } from "@unthinkable/react-core-components";
+import { Keyboard, Platform, TouchableOpacity, View } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
@@ -14,7 +14,7 @@ import commonStyles from "../../theme/styles/commonStyles";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { useIntl } from "react-intl";
 
-const MainContainerTemplate = ({ subscriptionListingData }) => {
+const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
@@ -89,6 +89,7 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
             >
               <CommonText
                 customTextStyle={styles.addApplicationFormText}
+                customTextProps={{ numberOfLines: 1 }}
                 fontWeight={"600"}
               >
                 {container?.name}
@@ -101,9 +102,13 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
                   container?.validity
                 } days`}
               </CommonText>
-              <CommonText customTextStyle={styles.descriptionText} customTextProps={{numberOfLines: 3}}>
-                {container?.description}
+              <CommonText
+                customTextStyle={styles.descriptionText}
+                // customTextProps={{ numberOfLines: 3 }}
+              >
+                {container?.description?.length> 80 ? (container?.description?.substr(0,  80).trim() + '...') : container?.description}
               </CommonText>
+              {container?.description?.length > 80 ? <TouchableOpacity><CommonText>View more</CommonText></TouchableOpacity> : null}
             </View>
             <View style={styles.borderStyle} />
             <TwoColumn
@@ -114,21 +119,25 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
                 </CommonText>
               }
               rightSection={
-                <CustomTouchableOpacity
-                  style={styles.subscribePackagesButton}
-                  onPress={() => {
-                    setShowPaymentInitiateModal(true);
-                    setModalData({
-                      ...modalData,
-                      amount: container?.price,
-                      subscriptionId: container.id,
-                    });
-                  }}
-                >
-                  <CommonText customTextStyle={styles.viewPackageText}>
-                    {intl.formatMessage({ id: "label.subscribe" })}
-                  </CommonText>
-                </CustomTouchableOpacity>
+                <>
+                  {isSubscribe ? (
+                    <CustomTouchableOpacity
+                      style={styles.subscribePackagesButton}
+                      onPress={() => {
+                        setShowPaymentInitiateModal(true);
+                        setModalData({
+                          ...modalData,
+                          amount: container?.price,
+                          subscriptionId: container.id,
+                        });
+                      }}
+                    >
+                      <CommonText customTextStyle={styles.viewPackageText}>
+                        {intl.formatMessage({ id: "label.subscribe" })}
+                      </CommonText>
+                    </CustomTouchableOpacity>
+                  ) : null}
+                </>
               }
             />
           </CardComponent>
@@ -139,8 +148,13 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
   );
 };
 
-MainContainerTemplate.propTypes = {
-  subscriptionListingData: PropTypes.array.isRequired,
+CaJobsPackagesListing.defaultProps = {
+  isSubscribe: false,
 };
 
-export default MainContainerTemplate;
+CaJobsPackagesListing.propTypes = {
+  subscriptionListingData: PropTypes.array.isRequired,
+  isSubscribe: PropTypes.bool,
+};
+
+export default CaJobsPackagesListing;

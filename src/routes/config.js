@@ -41,6 +41,8 @@ import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
 import AllJobs from "../views/AllJobs/AllJobs";
+import PreviousSubscriptionDetail from "../views/PreviousSubscriptionDetails";
+import OtherPackages from "../containers/OtherPackages";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -242,6 +244,14 @@ const config = [
       {
         viewPath: navigations.MODULE_LANDING_PAGE,
         element: <DashboardView />,
+      },
+      {
+        viewPath: `${navigations.MODULE_LANDING_PAGE}/${navigations.PREVIOUS_SUBSCRIPTION_DETAILS}/:subscriptionId`,
+        element: <PreviousSubscriptionDetail />,
+      },
+      {
+        viewPath: `${navigations.MODULE_LANDING_PAGE}/${navigations.OTHER_PACKAGES}`,
+        element: <OtherPackages />
       },
       {
         viewPath: navigations.POSTED_JOBS,

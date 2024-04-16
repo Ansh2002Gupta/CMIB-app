@@ -74,6 +74,8 @@ function CAJobsDashboard() {
             price={subscribedPackageData?.price}
             validity={subscribedPackageData?.validity}
             validityDate={subscribedPackageData?.validity_date}
+            status={subscribedPackageData?.status}
+            subscriptionId={subscribedPackageData?.subscription_id}
           />
         ) : (
           <>
@@ -198,6 +200,7 @@ function CAJobsDashboard() {
             />
             <CAJobsPackagesListing
               subscriptionListingData={subscriptionListingData}
+              isSubscribe={true}
             />
           </>
         )}
