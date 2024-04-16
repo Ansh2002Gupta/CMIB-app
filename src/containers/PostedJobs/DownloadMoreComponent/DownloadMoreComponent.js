@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import styles from "./DownloadMoreComponent.styles";
-import { View } from "@unthinkable/react-core-components";
-import TouchableImage from "../../../components/TouchableImage";
-import images from "../../../images";
-import CommonText from "../../../components/CommonText";
-import useIsWebView from "../../../hooks/useIsWebView";
+
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
 
