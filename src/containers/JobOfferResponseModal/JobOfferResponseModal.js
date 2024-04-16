@@ -45,6 +45,7 @@ const JobOfferResponseModal = ({
           headerText={intl.formatMessage({ id: "label.job_offer_response" })}
           isIconCross
           onPressIconCross={() => setShowJobOfferResponseModal((prev) => !prev)}
+          topLeftIcon={images.handShakeIcon}
         >
           <View style={isIos ? styles.mobContainer : {}}>
             <View>
