@@ -580,6 +580,7 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
+export const PREVIEWED_LENGTH = 100;
 export const COMPANY_QUERY_TYPE_TICKET = "/";
 
 export const POPUP_OPTIONS = ["Download Profile & Resume", "View Details"];
