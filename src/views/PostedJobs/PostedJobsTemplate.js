@@ -10,7 +10,14 @@ import CustomButton from "../../components/CustomButton";
 import { useIntl } from "react-intl";
 import images from "../../images";
 
-const PostedJobsTemplate = ({ details }) => {
+const PostedJobsTemplate = ({
+  isApplyVisible,
+  isSaveVisibleButton,
+  isSavingRemoving,
+  details,
+  handleOpenModal,
+  handleSaveAndRemove,
+}) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const {
@@ -26,7 +33,7 @@ const PostedJobsTemplate = ({ details }) => {
         headerText={intl.formatMessage({ id: "label.functionalAreas" })}
         data={functionalAreas}
         style={{
-          ...(!isWebView
+          ...(isWebView
             ? styles.otherDetailItemWeb
             : styles.otherDetailItemMobile),
         }}
@@ -41,33 +48,47 @@ const PostedJobsTemplate = ({ details }) => {
   const actionButtons = (
     <View style={styles.actionButtons}>
       <CustomButton
-        isLeftIconNotSvg={true}
-        iconLeft={{ leftIconSource: images.iconArchiveSave }}
-        // isLoading={isCroppingImage || isLoading}
-        // onPress={cropImage}
+        isLoading={isSavingRemoving}
+        disabled={isSavingRemoving}
+        disabledStyle={styles.disabledStyle}
+        iconLeft={{
+          leftIconSource: isSaveVisibleButton
+            ? images.iconArchiveSave
+            : images.iconSingleSave,
+        }}
+        onPress={handleSaveAndRemove}
         style={{
           ...(isWebView ? styles.buttonStyleWeb : styles.buttonStyleMobile),
           ...styles.saveButtonStyle,
         }}
       >
-        <Text>{intl.formatMessage({ id: "label.save" })}</Text>
+        <Text>
+          {intl.formatMessage({
+            id: isSaveVisibleButton ? "label.save" : "label.remove",
+          })}
+        </Text>
       </CustomButton>
       <CustomButton
-        // isLoading={isCroppingImage || isLoading}
-        // onPress={cropImage}
+        disabled={!isApplyVisible || isSavingRemoving}
+        disabledStyle={styles.disabledStyle}
+        onPress={handleOpenModal}
         style={{
           ...(isWebView ? styles.buttonStyleWeb : styles.buttonStyleMobile),
         }}
-        withGreenBackground
+        withGreenBackground={isApplyVisible && !isSavingRemoving}
       >
-        <Text>{intl.formatMessage({ id: "label.apply" })}</Text>
+        <Text>
+          {intl.formatMessage({
+            id: isApplyVisible ? "label.apply" : "label.applied",
+          })}
+        </Text>
       </CustomButton>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView style={styles.scrollView}>
         <JobDetailHeader
           actionButtons={isWebView && actionButtons}
           data={headerData}

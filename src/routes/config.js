@@ -1,6 +1,9 @@
 import React from "react";
 import { Platform } from "@unthinkable/react-core-components";
 
+import Candidates from "../views/Candidates";
+import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
+import AppliedJobsView from "../views/AppliedJobsView";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
 import DashboardView from "../views/Dashboard";
@@ -13,29 +16,31 @@ import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import Jobs from "../views/Jobs";
 import JobsView from "../views/JobsView/JobsView";
-import JobApplicantsView from "../views/JobApplicantsView/index";
+import JobApplicantsView from "../views/JobApplicantsView";
+import JobSeekers from "../views/JobSeekers";
 import JobProfileTab from "../views/JobProfile";
-import JobSeekersView from "../views/JobSeekersView/index";
+import JobApplicantsDetails from "../views/JobApplicantsDetails";
 import LoginScreen from "../views/LoginScreen/index";
 import PostedJobsView from "../views/PostedJobsView/index";
 import RedirectToAccessedModule from "../routes/Components/RedirectToAccessedModule";
 import RoundOne from "../views/RoundOneView";
 import RoundOneApplicationForm from "../views/RoundOneApplicationForm";
+import RoundTwoApplicationForm from "../views/RoundTwoApplicationForm/index";
 import RoundTwo from "../views/RoundTwoView";
 import SavedCandidatesView from "../views/SavedCandidatesView/index";
 import SignUpScreen from "../views/SignUpView/index";
 import TicketListing from "../views/TicketsListing/index";
 import TicketChatScreen from "../views/TicketChatScreen";
 import WebViewScreen from "../views/WebViewScreen/index";
-import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
 
 import withPrivateAccess from "../hocs/withPrivateAccess";
 import withPublicAccess from "../hocs/withPublicAccess";
 import { navigations } from "../constants/routeNames";
-import EditJobDetails from "../views/EditJobDetails/EditJobDetails";
+import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
 import Dummy from "../views/Dummy.js/Dummy";
+import AllJobs from "../views/AllJobs/AllJobs";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -221,6 +226,10 @@ const config = [
         element: <RoundOneApplicationForm />,
       },
       {
+        viewPath: `${navigations.ROUND_TWO}/${navigations.APPLICATION_FORM}`,
+        element: <RoundTwoApplicationForm />,
+      },
+      {
         viewPath: navigations.ROUND_TWO,
         element: <RoundTwo />,
       },
@@ -238,25 +247,38 @@ const config = [
         viewPath: navigations.POSTED_JOBS,
         element: <PostedJobsView />,
       },
-
       {
         viewPath: `${navigations.POSTED_JOBS}/${navigations.ADD_NEW_JOBS}`,
         element: <AddModifyNewJobs />,
       },
-
       {
         viewPath: `${navigations.DETAILS_JOBS}`,
         element: <ViewPostedJobDetails />,
+      },
+      {
+        viewPath: `${navigations.JOBS}/${navigations.APPLICANT_DETAILS}`,
+        element: <JobApplicantsDetails />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <AppliedJobsView />,
       },
       {
         viewPath: navigations.JOB_APPLICANTS,
         element: <JobApplicantsView />,
       },
       {
-        viewPath: navigations.JOB_SEEKERS,
-        element: <JobSeekersView />,
+        viewPath: `${navigations.JOB_APPLICANTS}/${navigations.APPLICANT_DETAILS}`,
+        element: <JobApplicantsDetails />,
       },
-
+      {
+        viewPath: navigations.JOB_SEEKERS,
+        element: <JobSeekers />,
+      },
+      {
+        viewPath: navigations.JOB_SEEKERS + navigations.CANDIDATE_DETAILS,
+        element: <ViewDetailsScreen />,
+      },
       {
         viewPath: navigations.SAVED_CANDIDATES,
         element: <SavedCandidatesView />,
@@ -266,8 +288,24 @@ const config = [
         element: <SavedJobs />,
       },
       {
+        viewPath: navigations.ALL_JOBS,
+        element: <AllJobs />,
+      },
+      {
+        viewPath: navigations.APPLIED_JOBS,
+        element: <PostedJobsView />,
+      },
+      {
+        viewPath: `${navigations.JOB_DETAIL}/:jobId`,
+        element: <PostedJobs />,
+      },
+      {
         viewPath: navigations.JOBS,
         element: <Jobs />,
+      },
+      {
+        viewPath: navigations.CANDIDATES,
+        element: <Candidates />,
       },
       {
         viewPath: navigations.CONFIGURABLE_LIST,

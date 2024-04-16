@@ -42,7 +42,7 @@ const useApiRequest = ({ method, url, apiOptions = {}, otherOptions = {} }) => {
     } catch (err) {
       setApiStatus(API_STATUS.ERROR);
 
-      if (err.response?.data?.message) {
+      if (!!err.response?.data?.message) {
         setError(err.response?.data?.message);
         if (
           err.response?.data?.data &&

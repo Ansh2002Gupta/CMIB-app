@@ -1,4 +1,7 @@
+import { Dimensions, Platform } from "@unthinkable/react-core-components";
 import colors from "../../../../assets/colors";
+
+const { width: deviceWidth } = Dimensions.get("window");
 
 const styles = {
   container: {
@@ -6,6 +9,8 @@ const styles = {
     padding: 24,
     flexDirection: "row",
     justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderColor: colors.lightGrey,
   },
   webProfileImageStyle: {
     height: 108,
@@ -32,6 +37,19 @@ const styles = {
     lineHeight: 20,
     fontWeight: "500",
     color: colors.black,
+    ...Platform.select({
+      web: {
+        flexShrink: "unset",
+        flexWrap: "wrap",
+        wordBreak: "break-word",
+        maxWidth:
+          deviceWidth > 1100
+            ? deviceWidth * 0.4
+            : deviceWidth > 590
+            ? deviceWidth * 0.3
+            : deviceWidth * 0.8,
+      },
+    }),
   },
   contractText: {
     marginLeft: 4,

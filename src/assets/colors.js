@@ -23,6 +23,7 @@ const greenOne = "#04af55";
 const lightGreen = "#DFFFDC";
 const shallowGreen = "#CDEFDD";
 const darkSecondGreen = "#258B01";
+const lightGreen2 = "#E6F9EF";
 
 /* Greys */
 const backgroundGrey = "#F6F8F9";
@@ -119,6 +120,7 @@ const colors = {
   skyBlueLight,
   disabledTextFieldColor,
   neutralGrey,
+  lightGreen2,
   lightPurple,
   darkPurple,
   greyFive,

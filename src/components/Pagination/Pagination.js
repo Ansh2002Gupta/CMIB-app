@@ -22,6 +22,7 @@ function Pagination(props) {
     prevNextBtnstyles,
     siblingCount,
     totalcards,
+    containerStyle,
   } = props;
   const intl = useIntl();
   const windowDimensions = useWindowDimensions();
@@ -84,7 +85,7 @@ function Pagination(props) {
     return <></>;
   }
   return (
-    <View style={styles.pagination}>
+    <View style={{ ...styles.pagination, ...containerStyle }}>
       <CustomButton
         style={prevNextBtnstyles}
         onPress={previousPageHandler}

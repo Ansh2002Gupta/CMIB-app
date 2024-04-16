@@ -301,7 +301,7 @@ const DropDownModal = ({
                         item?.isSelected ||
                         (item.index && item.index !== null) ||
                         (!isSelected &&
-                          selectedItems.findIndex(
+                          selectedItems?.findIndex(
                             (items) => items.id === item.id
                           ) !== -1)
                       }

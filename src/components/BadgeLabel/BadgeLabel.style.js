@@ -13,6 +13,7 @@ const style = {
     justifyContent: "center",
     borderRadius: 16,
     alignSelf: "flex-start",
+    marginBottom: 4,
   },
   webInnerContainer: {
     marginRight: 8,

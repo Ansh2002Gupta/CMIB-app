@@ -5,10 +5,15 @@ import EducationDetailComponent from "./EducationDetails";
 import ExamsComponent from "./ExamsComponent";
 import OtherCoursesComponent from "./OtherCoursesComponent";
 import { FormTabs } from "../../components/Tab";
-import colors from "../../assets/colors";
+import { ACADEMICS } from "../../services/apiServices/apiEndPoint";
 import style from "./Exams.style";
 
-const EducationDetailsTab = ({ isEditable, handleEdit }) => {
+const EducationDetailsTab = ({
+  isEditable,
+  handleEdit,
+  customUrl,
+  onSaveSuccessfull,
+}) => {
   return (
     <View style={style.tabContainer}>
       <FormTabs
@@ -20,13 +25,20 @@ const EducationDetailsTab = ({ isEditable, handleEdit }) => {
               <EducationDetailComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={!!customUrl ? customUrl + ACADEMICS : null}
+                onSaveSuccessfull={onSaveSuccessfull}
               />
             ),
           },
           {
             label: "Exams",
             component: (
-              <ExamsComponent isEditable={isEditable} handleEdit={handleEdit} />
+              <ExamsComponent
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={!!customUrl ? customUrl + ACADEMICS : null}
+                onSaveSuccessfull={onSaveSuccessfull}
+              />
             ),
           },
           {
@@ -35,6 +47,8 @@ const EducationDetailsTab = ({ isEditable, handleEdit }) => {
               <OtherCoursesComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={!!customUrl ? customUrl + ACADEMICS : null}
+                onSaveSuccessfull={onSaveSuccessfull}
               />
             ),
           },
