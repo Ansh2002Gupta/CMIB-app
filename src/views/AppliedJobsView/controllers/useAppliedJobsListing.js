@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate, useSearchParams } from "../../../routes";
-import { Platform, View } from "@unthinkable/react-core-components";
+import {
+  Platform,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 
 import Chip from "../../../components/Chip";
 import CommonText from "../../../components/CommonText";
@@ -38,7 +42,7 @@ import {
 import usePagination from "../../../hooks/usePagination";
 import { usePatch } from "../../../hooks/useApiRequest";
 import useOutsideClick from "../../../hooks/useOutsideClick";
-import useAddTicket from "../../../services/apiServices/hooks/Ticket/useAddTicketAPI";
+import { navigations } from "../../../constants/routeNames";
 import images from "../../../images";
 import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../AppliedJobsView.style";
@@ -54,6 +58,7 @@ const initialFilterState = {
 
 const useAppliedJobsListing = () => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const [userProfileDetails] = useContext(UserProfileContext);
   const applicantID = userProfileDetails?.userDetails?.id;
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.AppliedJobs;
@@ -176,6 +181,11 @@ const useAppliedJobsListing = () => {
         }));
         setShowJobOfferResponseModal(false);
         setIsPatchingSuccess(isPatchingSuccessAcceptRejectOfferDecision);
+        const requestedParams = {
+          perPage: rowsPerPage,
+          page: currentPage,
+        };
+        updateCurrentRecords(requestedParams);
       },
     });
   };
@@ -553,11 +563,20 @@ const useAppliedJobsListing = () => {
     return [
       {
         content: (
-          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.readable_id || item.job_id
-              ? item.readable_id || item.job_id
-              : "-"}
-          </CommonText>
+          <TouchableOpacity
+            onPress={() => {
+              navigate(
+                `${navigations.APPLIED_JOBS_REDIRECT}/${item.related_job_id}`
+              );
+            }}
+            style={styles.cursorStyle}
+          >
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {item.readable_id || item.job_id
+                ? item.readable_id || item.job_id
+                : "-"}
+            </CommonText>
+          </TouchableOpacity>
         ),
         style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
