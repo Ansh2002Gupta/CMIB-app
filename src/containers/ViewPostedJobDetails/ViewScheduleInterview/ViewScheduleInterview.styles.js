@@ -5,5 +5,8 @@ const styles = StyleSheet.create({
   customTableStyle: {
     backgroundColor: colors.white,
   },
+  zIndex2: {
+    zIndex: 2,
+  },
 });
 export default styles;

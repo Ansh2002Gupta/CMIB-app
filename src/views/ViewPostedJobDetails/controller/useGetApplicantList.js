@@ -314,6 +314,7 @@ const useGetApplicantList = (id, onEditPress) => {
                     <PopupMessage
                       message={item?.action}
                       onPopupClick={(selectedItem) => {
+                        setCurrentPopupMessage(-1);
                         onEditPress(selectedItem.name, item);
                       }}
                       labelName={"name"}

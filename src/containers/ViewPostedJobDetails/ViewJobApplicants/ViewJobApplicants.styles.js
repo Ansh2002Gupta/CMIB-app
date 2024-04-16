@@ -12,5 +12,8 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     zIndex: 2,
   },
+  zIndex2: {
+    zIndex: 2,
+  },
 });
 export default styles;

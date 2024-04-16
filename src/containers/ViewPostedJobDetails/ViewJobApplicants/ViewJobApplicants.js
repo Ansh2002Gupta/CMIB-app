@@ -13,15 +13,12 @@ import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
 import { useNavigate } from "../../../routes";
 import { navigations } from "../../../constants/routeNames";
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
-import Http from "../../../services/http-service";
-import {
-  CHANGE_APPLICANT_STATUS,
-  JOBS,
-} from "../../../services/apiServices/apiEndPoint";
 import ScheduleInterviewModal from "../../ScheduleInterviewModal/ScheduleInterviewModal";
 import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
 import ViewInterviewDetails from "../../ViewInterviewDetails";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
+import { View } from "@unthinkable/react-core-components";
 const ViewJobApplicants = ({ id }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const {
@@ -30,6 +27,7 @@ const ViewJobApplicants = ({ id }) => {
     isSuccess,
     isError: isErrorApplicantStatusChange,
     errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
   } = useChangeApplicantStatusApi();
   const activeUserId = useRef();
   useEffect(() => {
@@ -42,7 +40,6 @@ const ViewJobApplicants = ({ id }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const onClick = (selectedItem, item) => {
-    console.log("ITEM", selectedItem, item);
     if (JOB_STATUS_RESPONSE_CODE[selectedItem]) {
       const request = {
         status: JOB_STATUS_RESPONSE_CODE[selectedItem],
@@ -106,52 +103,54 @@ const ViewJobApplicants = ({ id }) => {
 
   return (
     <>
-      {!isError && !isErrorApplicantStatusChange && (
-        <CustomTable
-          {...{
-            allDataLoaded,
-            currentPage,
-            currentRecords,
-            filterApplyHandler,
-            filterCategory,
-            getColoumConfigs,
-            getStatusStyle,
-            handleLoadMore,
-            getErrorDetails,
-            tableHeading,
-            handlePageChange,
-            handleRowPerPageChange,
-            handleSearchResults,
-            handleSaveAddTicket,
-            headingTexts,
-            indexOfFirstRecord,
-            indexOfLastRecord,
-            isHeading,
-            isFirstPageReceived,
-            loadingMore,
-            onIconPress,
-            queryTypeData,
-            rowsLimit,
-            rowsPerPage,
-            setCurrentRecords,
-            statusData,
-            statusText,
-            subHeadingText,
-            tableHeading,
-            tableIcon,
-            totalcards,
-            placeholder: intl.formatMessage({
-              id: "label.search_by_applicant_name",
-            }),
-          }}
-          isTicketListingLoading={isTicketListingLoading || isLoading}
-          mobileComponentToRender={getMobileView}
-          isFilterVisible={false}
-          containerStyle={styles.innerContainerStyle}
-          isTotalCardVisible={false}
-          data={applicantListingData}
-          ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
-        />
+      {!isError && (
+        <View>
+          <CustomTable
+            {...{
+              allDataLoaded,
+              currentPage,
+              currentRecords,
+              filterApplyHandler,
+              filterCategory,
+              getColoumConfigs,
+              getStatusStyle,
+              handleLoadMore,
+              getErrorDetails,
+              tableHeading,
+              handlePageChange,
+              handleRowPerPageChange,
+              handleSearchResults,
+              handleSaveAddTicket,
+              headingTexts,
+              indexOfFirstRecord,
+              indexOfLastRecord,
+              isHeading,
+              isFirstPageReceived,
+              loadingMore,
+              onIconPress,
+              queryTypeData,
+              rowsLimit,
+              rowsPerPage,
+              setCurrentRecords,
+              statusData,
+              statusText,
+              subHeadingText,
+              tableHeading,
+              tableIcon,
+              totalcards,
+              placeholder: intl.formatMessage({
+                id: "label.search_by_applicant_name",
+              }),
+            }}
+            isTicketListingLoading={isTicketListingLoading}
+            mobileComponentToRender={getMobileView}
+            isFilterVisible={false}
+            containerStyle={styles.innerContainerStyle}
+            isTotalCardVisible={false}
+            data={applicantListingData}
+            ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
+          />
+        </View>
       )}
       {isModalVisible &&
         isModalVisible ===
@@ -175,16 +174,22 @@ const ViewJobApplicants = ({ id }) => {
             applicant_id={activeUserId.current}
           />
         )}
-      {(isError || isErrorApplicantStatusChange) &&
-        (!!getErrorDetails()?.errorMessage ||
-          errorWhileApplicantStatusChange) && (
-          <ErrorComponent
-            errorMsg={
-              getErrorDetails()?.errorMessage || errorWhileApplicantStatusChange
-            }
-            onRetry={() => getErrorDetails()?.onRetry()}
+      {isError && !!getErrorDetails()?.errorMessage && (
+        <ErrorComponent
+          errorMsg={getErrorDetails()?.errorMessage}
+          onRetry={() => getErrorDetails()?.onRetry()}
+        />
+      )}
+      {errorWhileApplicantStatusChange && (
+        <View style={styles.zIndex2}>
+          <ToastComponent
+            toastMessage={errorWhileApplicantStatusChange}
+            onDismiss={() => {
+              setErrorWhileApplicantStatusChange(null);
+            }}
           />
-        )}
+        </View>
+      )}
     </>
   );
 };

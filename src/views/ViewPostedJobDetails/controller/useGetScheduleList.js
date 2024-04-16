@@ -80,6 +80,7 @@ const useGetScheduleList = (id, onClickAction) => {
     isLoading,
     isError: isErrorApplicantStatusChange,
     errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
   } = useChangeApplicantStatusApi();
 
   const statusData = [];
@@ -105,14 +106,9 @@ const useGetScheduleList = (id, onClickAction) => {
         errorMessage: errorGetPostedJobs?.data?.message,
         onRetry: () => fetchScheduleInterviews({}),
       };
-    if (isErrorApplicantStatusChange)
-      return {
-        errorMessage: errorWhileApplicantStatusChange,
-        onRetry: () => {},
-      };
   };
-  const isTicketListingLoading = isLoading || isScheduleInterviewLoading;
-  const isError = isErrorGetScheduleInterview || isErrorApplicantStatusChange;
+  const isTicketListingLoading = isScheduleInterviewLoading;
+  const isError = isErrorGetScheduleInterview;
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -342,18 +338,16 @@ const useGetScheduleList = (id, onClickAction) => {
     }
   }
   function tConvert(time) {
-    // Check correct time format and split into components
     time = time
       .toString()
       .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
     if (time.length > 1) {
-      // If time format correct
-      time = time.slice(1); // Remove full string match value
-      time[5] = +time[0] < 12 ? " AM" : " PM"; // Set AM/PM
-      time[0] = +time[0] % 12 || 12; // Adjust hours
+      time = time.slice(1);
+      time[5] = +time[0] < 12 ? " AM" : " PM";
+      time[0] = +time[0] % 12 || 12;
     }
-    return time.join(""); // return adjusted time or original string
+    return time.join("");
   }
   function convertDateFormat(dateStr) {
     return dateStr.split(".").join("/");
@@ -382,7 +376,7 @@ const useGetScheduleList = (id, onClickAction) => {
     ) {
       optionArray.push({
         name: intl.formatMessage({ id: "label.offer_job" }),
-        id: item.id,
+        id: item.application_id,
       });
     }
     return [
@@ -529,7 +523,10 @@ const useGetScheduleList = (id, onClickAction) => {
                           const request = {
                             status: JOB_STATUS_RESPONSE_CODE[selectedItem.name],
                           };
-                          handleUseApplicantStatus(item.id, request);
+                          handleUseApplicantStatus(
+                            item.application_id,
+                            request
+                          );
                         } else {
                           onClickAction(selectedItem.name, item);
                         }
@@ -588,6 +585,8 @@ const useGetScheduleList = (id, onClickAction) => {
     statusData,
     statusText,
     subHeadingText,
+    errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
     tableIcon,
     scheduleInterviewData: currentRecords,
     totalcards: scheduleInterviewData?.meta?.total,
