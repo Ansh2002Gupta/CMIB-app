@@ -111,7 +111,6 @@ const dummyDataItems2 = [
 function DashboardView() {
   const intl = useIntl();
   let isMultiSelect = true;
-  const menuOptionsPrevState = useRef([]);
   const [isEnabled, setIsEnabled] = useState(false);
   const [menuOptions, setMenuOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -129,14 +128,10 @@ function DashboardView() {
     setIsEnabled((previousState) => !previousState);
   };
 
-  const handleAddDesignation = () => {
-    setIsEnabled((previousState) => !previousState);
-  };
-
   const handleSearchResults = (filteredData) => {};
 
-  const handleDelete = (itemToBeDeletedId) => {
-    menuOptionsPrevState.current = menuOptionsPrevState.current.filter(
+  const handleDelete = ({ itemToBeDeletedId, prevState }) => {
+    prevState.current = prevState.current.filter(
       (item) => item.id !== itemToBeDeletedId
     );
     setSelectedOptions((prev) => [
@@ -148,7 +143,7 @@ function DashboardView() {
       );
       setMenuOptions([...queryList]);
     } else {
-      setMenuOptions([...menuOptionsPrevState.current]);
+      setMenuOptions([...prevState.current]);
     }
   };
 
@@ -162,6 +157,8 @@ function DashboardView() {
       } else setSelectedOptions((prev) => [...prev, selectedItemID]);
     } else setSelectedOptions([selectedItemID]);
   };
+
+  const handleAdd = () => {};
 
   const searchData = [
     {
@@ -200,16 +197,17 @@ function DashboardView() {
       </CommonText>
       <MultiColumn columns={searchData} />
       <ConfirgurableList
+        onAdd={handleAdd}
         onDelete={handleDelete}
         onPress={handlePress}
         items={dummyDataItems2}
-        toogleMultiSelect={isMultiSelect}
-        menuOptions={menuOptions}
-        menuOptionsPrevState={menuOptionsPrevState}
-        searchQuery={searchQuery}
-        selectedOptions={selectedOptions}
-        setMenuOptions={setMenuOptions}
-        setSearchQuery={setSearchQuery}
+        {...{
+          menuOptions,
+          searchQuery,
+          selectedOptions,
+          setMenuOptions,
+          setSearchQuery,
+        }}
         title="Centres"
       />
       <CustomCell

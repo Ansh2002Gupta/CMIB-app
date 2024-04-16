@@ -12,12 +12,11 @@ import images from "../../images";
 import styles from "./ConfigurableListStyle";
 
 const ConfigurableList = ({
+  items,
+  menuOptions,
   onAdd,
   onDelete,
   onPress,
-  items,
-  menuOptionsPrevState,
-  menuOptions,
   searchQuery,
   selectedOptions,
   setMenuOptions,
@@ -25,6 +24,7 @@ const ConfigurableList = ({
   title,
 }) => {
   const intl = useIntl();
+  const menuOptionsPrevState = useRef([]);
 
   useEffect(() => {
     menuOptionsPrevState.current = items;
@@ -76,7 +76,7 @@ const ConfigurableList = ({
 
         <View style={styles.section}>
           <View style={styles.itemsWrapper}>
-            {!!menuOptions?.length > 0 &&
+            {menuOptions?.length > 0 &&
               menuOptions.map((item) => (
                 <CustomTouchableOpacity
                   className={
@@ -106,7 +106,12 @@ const ConfigurableList = ({
                   {selectedOptions.includes(item.id) && (
                     <TouchableImage
                       className={classes["iconTrash"]}
-                      onPress={() => onDelete(item.id)}
+                      onPress={() =>
+                        onDelete({
+                          itemToBeDeletedId: item.id,
+                          prevState: menuOptionsPrevState,
+                        })
+                      }
                       source={images.iconTrashBlack}
                       style={styles.iconTrash}
                     />
