@@ -17,7 +17,12 @@ import {
 import { useJobPreference } from "./controller/useJobPreference";
 import { formatJobPreferenceData } from "./controller/utils";
 
-const JobPreference = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
+const JobPreference = ({
+  isEditable,
+  handleEdit,
+  customUrl,
+  onSaveSuccessfull,
+}) => {
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
 
@@ -68,7 +73,7 @@ const JobPreference = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
     isLoading: isLoadingMemberJobPreferences,
     fetchData,
   } = useFetch({
-    url: MEMBER_CA_JOB_JOB_PREFERENCES,
+    url: customUrl ?? MEMBER_CA_JOB_JOB_PREFERENCES,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -95,7 +100,7 @@ const JobPreference = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
     : errorWhileGettingMemberJobPreferenceData;
 
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_JOB_PREFERENCES);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_JOB_PREFERENCES);
 
   const formattedJobPreference = useMemo(() => {
     return formatJobPreferenceData(data);

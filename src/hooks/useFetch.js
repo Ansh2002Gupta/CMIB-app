@@ -80,6 +80,7 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
   const isError = apiStatus === API_STATUS.ERROR;
 
   return {
+    apiStatus,
     data,
     error,
     fetchData,

@@ -637,10 +637,35 @@ export const areAllValuesEmpty = (obj) => {
   return true;
 };
 
-const isObjectFilled = (obj) => {
+export const isObjectFilled = (obj) => {
   return Object.values(obj).every((value) => value !== "");
 };
 
 export const areAllValuesFilled = (objects) => {
   return Object.values(objects).some(isObjectFilled);
+};
+
+export const capitalizePhrase = (sentence) => {
+  if (!sentence.length) return "-";
+  const words = sentence.split(" ");
+  const new_sentence = words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+  return new_sentence;
+};
+
+export const formatSalaryRange = (minSalary, maxSalary) => {
+  const minSalaryInLpa = (minSalary / 100000).toFixed(2);
+  const maxSalaryInLpa = (maxSalary / 100000).toFixed(2);
+  let formattedSalaryRange = `${minSalaryInLpa}-${maxSalaryInLpa} LPA`;
+  if (
+    parseFloat(minSalaryInLpa) > 99.99 ||
+    parseFloat(maxSalaryInLpa) > 99.99
+  ) {
+    const minSalaryInCRA = (minSalary / 10000000).toFixed(2);
+    const maxSalaryInCRA = (maxSalary / 10000000).toFixed(2);
+    formattedSalaryRange = `${minSalaryInCRA}-${maxSalaryInCRA} CRA`;
+  }
+
+  return formattedSalaryRange;
 };

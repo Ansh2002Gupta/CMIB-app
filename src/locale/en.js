@@ -146,7 +146,8 @@ const locale = {
   "label.feedback": "Feedback",
   "label.round1": "Round 1",
   "label.round2": "Round 2",
-  "label.add_application_form_text": "Add / View Application form",
+  "label.add_application_form_text": "Add Application form",
+  "label.edit_application_form_text": "Edit / View Application form",
   "label.add_application_form_description_text":
     "Streamlined application form designed for quick and easy submission.",
   "label.hiring_process_text": "Shortlisting, Consent Marking & Interviews",
@@ -315,6 +316,7 @@ const locale = {
     "Please enter the one time password that you have received on your registered mobile number",
   "label.application": "Application",
   "label.download_id": "Download Id",
+  "label.download_id_and_print_id": "Download Id & Print Id",
   "label.centre_wise_company_detail": "Centre wise Company Detail",
   "label.consent_marking_management": "Consent Marking Management",
   "label.campus_interview_management": "Campus Interview Management",
@@ -548,7 +550,7 @@ const locale = {
   "label.saved_candidates": "Saved Candidates",
   "label.candidate_details": "Candidate Details",
   "label.save_candidate_details": "Save Candidate Details",
-  "label.serach_by_applicant_name_id": "Search by applicant name or ID",
+  "label.serach_by_candidate_name_id": "Search by candidate name or ID",
   "label.category": "Category",
   "label.accessibility_information": "Accessibility Information",
   "label.has_disability": "Do you have any Physical Impairment?",
@@ -767,6 +769,7 @@ const locale = {
   "label.memberCompletionProfilePercentWeb":
     "Complete your job profile! its at ",
   "label.complete": "Complete",
+  "label.selectOption": "Select option",
 };
 
 export default locale;
