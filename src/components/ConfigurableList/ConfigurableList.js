@@ -24,10 +24,10 @@ const ConfigurableList = ({
   title,
 }) => {
   const intl = useIntl();
-  const menuOptionsPrevState = useRef([]);
+  const allOptions = useRef([]);
 
   useEffect(() => {
-    menuOptionsPrevState.current = items;
+    allOptions.current = items;
     setMenuOptions(items);
   }, []);
 
@@ -41,12 +41,12 @@ const ConfigurableList = ({
     if (newText?.length > 0) {
       handleSearch(newText, "name");
     } else {
-      setMenuOptions([...menuOptionsPrevState.current]);
+      setMenuOptions([...allOptions.current]);
     }
   };
 
   const fetchData = (query, keyName) => {
-    const list = menuOptionsPrevState.current.filter((item) =>
+    const list = allOptions.current.filter((item) =>
       item?.[keyName].trim().toLowerCase().includes(query?.trim().toLowerCase())
     );
     return list;
@@ -109,7 +109,7 @@ const ConfigurableList = ({
                       onPress={() =>
                         onDelete({
                           itemToBeDeletedId: item.id,
-                          prevState: menuOptionsPrevState,
+                          prevState: allOptions,
                         })
                       }
                       source={images.iconTrashBlack}
@@ -135,7 +135,7 @@ ConfigurableList.defaultProps = {
   onDelete: () => {},
   onPress: () => {},
   items: [],
-  menuOptionsPrevState: [],
+  allOptions: [],
   menuOptions: [],
   searchQuery: [],
   selectedOptions: [],
@@ -150,7 +150,7 @@ ConfigurableList.protoTypes = {
   onDelete: PropTypes.func,
   onPress: PropTypes.func,
   items: PropTypes.array,
-  menuOptionsPrevState: PropTypes.array,
+  allOptions: PropTypes.array,
   menuOptions: PropTypes.array,
   searchQuery: PropTypes.array,
   selectedOptions: PropTypes.array,
