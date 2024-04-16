@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   unselectedTextColor: {
-    color: colors.lightGrey,
+    color: colors.darkGrey,
   },
 });
 

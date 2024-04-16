@@ -5,11 +5,11 @@ import { View } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 import CustomImage from "../CustomImage";
 import CustomTextInput from "../CustomTextInput";
+import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import TouchableImage from "../TouchableImage";
 import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
 import styles from "./ConfigurableListStyle";
-import CustomTouchableOpacity from "../CustomTouchableOpacity";
 
 const ConfigurableList = ({
   onAdd,
