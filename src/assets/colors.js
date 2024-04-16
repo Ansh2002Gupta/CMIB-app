@@ -21,6 +21,7 @@ const darkGreen = "#00873E";
 const green = "#04AF55";
 const greenOne = "#04af55";
 const darkSecondGreen = "#258B01";
+const shallowGreen = "#CDEFDD";
 const lightGreen = "#E6F9EF";
 const lightGreen2 = "#DFFFDC";
 
@@ -111,6 +112,7 @@ const colors = {
   yellow,
   backgroundGrey,
   orange,
+  shallowGreen,
   lightOrange,
   lightGreen,
   darkSecondGreen,

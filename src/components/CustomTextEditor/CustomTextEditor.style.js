@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: colors.darkGrey,
+    marginBottom: 4,
   },
   starStyle: {
     color: colors.errorRed,

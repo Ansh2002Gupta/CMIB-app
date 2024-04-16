@@ -23,6 +23,7 @@ import { gridStyles } from "../../../../theme/styles/commonStyles";
 import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
+import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../../../constants/constants";
 
 const JobDetailsTemplate = ({
   addDesignation,
@@ -101,7 +102,6 @@ const JobDetailsTemplate = ({
             isMandatory
             value={designationName}
             onChangeText={(val) => handleDesignationName(val)}
-            isNumeric
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -111,12 +111,9 @@ const JobDetailsTemplate = ({
                 id: "label.enter_compensation",
               })}
               isMandatory
-              value={compensation}
-              onChangeText={(val) =>
-                numericValidator(val) && handleCompensation(val)
-              }
-              maxLength={9}
               isRupee
+              value={compensation}
+              onChangeText={(val) => handleCompensation(val)}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -126,12 +123,9 @@ const JobDetailsTemplate = ({
                 id: "label.enter_starting_salary_including_perks",
               })}
               isMandatory
-              value={startingSalary}
-              onChangeText={(val) =>
-                numericValidator(val) && handleStartingSalary(val)
-              }
-              maxLength={9}
               isRupee
+              value={startingSalary}
+              onChangeText={(val) => handleStartingSalary(val)}
             />
           </View>
           <CustomTextEditor
@@ -148,6 +142,8 @@ const JobDetailsTemplate = ({
             placeholder={intl.formatMessage({
               id: "label.enter_details_of_ctc",
             })}
+            isMultiline
+            maxLength={SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH}
             isMandatory
             value={CTCDetail}
             onChangeText={(val) => handleCTCDetail(val)}
@@ -159,14 +155,14 @@ const JobDetailsTemplate = ({
       content: (
         <View style={styles.bottomMargin}>
           <DetailCard
-            headerId="label.monthly"
+            headerId={intl.formatMessage({ id: "label.monthly" })}
             details={jobDetailData?.monthly}
             handleChange={handleMonthlyData}
             isEditProfile
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
-            headerId="label.yearly"
+            headerId={intl.formatMessage({ id: "label.yearly" })}
             details={jobDetailData?.yearly}
             handleChange={handleYearlyData}
             isEditProfile

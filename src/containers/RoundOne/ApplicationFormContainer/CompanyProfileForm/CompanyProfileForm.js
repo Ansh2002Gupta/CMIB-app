@@ -16,16 +16,25 @@ import useCompanyProfile from "./controllers/useCompanyProfileForm";
 import { DEFAULT_BALANCE_CREDIT } from "../../../../constants/constants";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./CompanyProfileForm.style";
+import CustomButton from "../../../../components/CustomButton";
+import { useNavigate } from "../../../../routes";
+import { navigations } from "../../../../constants/routeNames";
+import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 
 const CompanyProfileForm = ({ tabHandler }) => {
   const {
     columnCount,
     countryCodes,
     errorWhileUpload,
+    errorWhileUpdating,
+    setErrorWhileUpdating,
+    isProfileUpdating,
+    isErrorWhileUpdating,
     formDetails,
     getErrorDetails,
     handleBlur,
     handleInputChange,
+    handleSaveAndNext,
     handleContactPersonInfo,
     handleCompanyProfile,
     handleToggle,
@@ -35,10 +44,10 @@ const CompanyProfileForm = ({ tabHandler }) => {
     onDeleteImage,
     options,
     uploadImageToServerUtils,
-  } = useCompanyProfile();
+  } = useCompanyProfile({ tabHandler });
   const intl = useIntl();
   const { isWebView } = useIsWebView();
-
+  const navigate = useNavigate();
   const {
     fileUploadResult,
     handleFileUpload,
@@ -188,10 +197,11 @@ const CompanyProfileForm = ({ tabHandler }) => {
             <ActionPairButton
               buttonOneText={intl.formatMessage({ id: "label.cancel" })}
               buttonTwoText={intl.formatMessage({ id: "label.save" })}
-              onPressButtonOne={() => tabHandler("prev")}
+              onPressButtonOne={() => navigate(-1)}
               onPressButtonTwo={() => {
-                tabHandler("next");
+                handleSaveAndNext();
               }}
+              displayLoader={isProfileUpdating}
               customStyles={{
                 ...isWebProps,
                 customContainerStyle: commonStyles.customContainerStyle,
@@ -206,6 +216,14 @@ const CompanyProfileForm = ({ tabHandler }) => {
           errorHeading={intl.formatMessage({ id: "label.error" })}
           errorMsg={getErrorDetails().errorMessage}
           onRetry={getErrorDetails().onRetry}
+        />
+      )}
+      {isErrorWhileUpdating && !!errorWhileUpdating && (
+        <ToastComponent
+          toastMessage={errorWhileUpdating}
+          onDismiss={() => {
+            setErrorWhileUpdating("");
+          }}
         />
       )}
     </View>

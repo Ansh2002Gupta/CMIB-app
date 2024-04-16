@@ -269,7 +269,8 @@ const locale = {
   "label.basic": "Basic",
   "label.hra": "HRA",
   "label.others": "Others",
-  "label.grossSalary": "Gross Salary",
+  "label.gross_Salary": "Gross Salary",
+  "label.enter_gross_Salary": "Enter Gross Salary",
   "label.fixedPay": "Fixed Pay",
   "label.variablePay": "Variable Pay",
   "label.semiVariable": "Semi Variable",
@@ -771,6 +772,7 @@ const locale = {
     "Complete your job profile! its at ",
   "label.complete": "Complete",
   "label.selectOption": "Select option",
+  "label.noResultFound": "No results found",
 };
 
 export default locale;

@@ -53,7 +53,7 @@ const CustomTextEditor = ({
       <View
         style={[
           styles.mainView,
-          !!eerrorMessage ? styles.invalidInput : {},
+          !!errorMessage ? styles.invalidInput : {},
           quillContainerStyle,
         ]}
       >

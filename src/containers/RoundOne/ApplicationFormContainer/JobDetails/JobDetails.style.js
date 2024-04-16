@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   scrollViewStyle: {
     backgroundColor: colors.backgroundColor,
-    marginTop: 16,
+    paddingTop: 16,
   },
 });
 
