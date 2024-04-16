@@ -15,13 +15,15 @@ const VideoCard = ({ url }) => {
         Linking.openURL(getValidUrl(url), "_blank");
       }}
     >
-      <View style={styles.playIconBoxStyles}>
+      <View>
         <CustomImage
           alt="Play icon"
+          height={50}
           isSvg
           Icon={images.videoPlayIcon}
           source={images.videoPlayIcon}
           style={styles.playIconStyles}
+          width={50}
         />
       </View>
     </CustomTouchableOpacity>

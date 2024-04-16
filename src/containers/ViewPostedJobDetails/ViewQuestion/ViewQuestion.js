@@ -5,14 +5,15 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 import RenderViewQuestion from "../RenderViewQuestion/RenderViewQuestion/RenderViewQuestion";
 import CommonText from "../../../components/CommonText";
 import CardComponent from "../../../components/CardComponent";
+import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
+import LoadingScreen from "../../../components/LoadingScreen";
 import useFetch from "../../../hooks/useFetch";
 import styles from "./ViewQuestion.styles";
-import LoadingScreen from "../../../components/LoadingScreen";
 
 const ViewQuestion = ({ questionnaireData, url = "" }) => {
   const intl = useIntl();
 
-  const { data, isLoading, fetchData } = useFetch({
+  const { data, isLoading, fetchData, isError, error } = useFetch({
     url: url,
     otherOptions: {
       skipApiCallOnMount: true,
@@ -29,7 +30,8 @@ const ViewQuestion = ({ questionnaireData, url = "" }) => {
 
   return (
     <View style={styles.container}>
-      {questionsData || !isLoading ? (
+      {isLoading && !isError && <LoadingScreen />}
+      {!isLoading && !isError && (
         <ScrollView style={styles.flex1}>
           {Array.isArray(questionsData) && questionsData.length > 0 ? (
             questionsData?.map((item, index) => {
@@ -41,7 +43,7 @@ const ViewQuestion = ({ questionnaireData, url = "" }) => {
             <View style={styles.noDataContainer}>
               <CardComponent customStyle={styles.cardStyle}>
                 <CommonText
-                  fontWeight="600"
+                  fontWeight="500"
                   customTextStyle={styles.fontSize16}
                 >
                   {intl.formatMessage({ id: "label.no_question_available" })}
@@ -50,8 +52,14 @@ const ViewQuestion = ({ questionnaireData, url = "" }) => {
             </View>
           )}
         </ScrollView>
-      ) : (
-        <LoadingScreen />
+      )}
+      {isError && !!error && (
+        <ErrorComponent
+          errorMsg={error?.data?.message}
+          onRetry={() => {
+            fetchData();
+          }}
+        />
       )}
     </View>
   );

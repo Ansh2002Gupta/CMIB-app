@@ -42,6 +42,7 @@ const ViewJobApplicants = ({ id }) => {
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
   const onClick = (selectedItem, item) => {
+    console.log("ITEM", selectedItem, item);
     if (JOB_STATUS_RESPONSE_CODE[selectedItem]) {
       const request = {
         status: JOB_STATUS_RESPONSE_CODE[selectedItem],

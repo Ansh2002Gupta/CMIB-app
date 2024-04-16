@@ -190,6 +190,8 @@ const iconSendGreen = appendAppBaseURl("/images/svg/iconSend.svg");
 const iconSendDisabled = appendAppBaseURl("/images/svg/iconSendDisabled.svg");
 const iconAttachement = appendAppBaseURl("/images/svg/iconAttachement.svg");
 const iconAvatar = appendAppBaseURl("/images/svg/iconAvatar.svg");
+const iconView = appendAppBaseURl("/images/svg/eyeview.svg");
+
 const iconArrowDownSorting = appendAppBaseURl(
   "/images/svg/iconArrowDownSorting.svg"
 );
@@ -240,13 +242,27 @@ const pdfIcon = appendAppBaseURl("/images/svg/pdfIcon.svg");
 const rightDiagonalArrow = appendAppBaseURl(
   "/images/svg/rightDiagonalArrow.svg"
 );
+const iconWallet = appendAppBaseURl("/images/svg/wallet.svg");
 const iconLocationWhite = appendAppBaseURl("/images/svg/iconLocationWhite.svg");
 const iconBreifcase = appendAppBaseURl("/images/svg/briefcase.svg");
 const iconRupeeSign = appendAppBaseURl("/images/svg/rupeeSign.svg");
 const iconArchiveSave = appendAppBaseURl("/images/svg/iconArchiveSave.svg");
 const iconCalendarWhite = appendAppBaseURl("/images/svg/iconCalendarWhite.svg");
 const iconSavedJob = appendAppBaseURl("/images/svg/iconSaved.svg");
+const iconArchiveSaveMobile = appendAppBaseURl(
+  "/images/svg/iconArchiveSaveMobile.svg"
+);
 const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
+const iconTrashSVG = appendAppBaseURl("/images/svg/iconTrash.svg");
+const iconTickInsideCircle = appendAppBaseURl(
+  "/images/svg/iconTickInsideCircle.svg"
+);
+const iconCrossInsideCircle = appendAppBaseURl("/images/close-circle.png");
+const iconSelectCircle = appendAppBaseURl("/images/svg/selectCircle.svg");
+const iconSelectedSolidCircle = appendAppBaseURl(
+  "/images/svg/selectedCircle.svg"
+);
+const iconCircleCross = appendAppBaseURl("/images/svg/close-circle.svg");
 
 const images = {
   iconArrowUp,
@@ -417,13 +433,23 @@ const images = {
   videoPlayIcon,
   pdfIcon,
   rightDiagonalArrow,
+  videoPlayIcon,
+  iconWallet,
   iconBreifcase,
   iconRupeeSign,
   iconArchiveSave,
   iconLocationWhite,
   iconSavedJob,
   iconCalendarWhite,
+  iconArchiveSaveMobile,
   iconClock,
+  iconTrashSVG,
+  iconTickInsideCircle,
+  iconCrossInsideCircle,
+  iconSelectCircle,
+  iconSelectedSolidCircle,
+  iconCircleCross,
+  iconView,
 };
 
 export default images;

@@ -23,7 +23,7 @@ const EducationDetailsUI = ({
   const intl = useIntl();
 
   return (
-    <ScrollView
+    <View
       showsVerticalScrollIndicator={false}
       style={style.contentContainerStyle}
     >
@@ -72,7 +72,7 @@ const EducationDetailsUI = ({
         onClickCancel={onClickCancel}
         isValidAllFields={isValidAllFields}
       />
-    </ScrollView>
+    </View>
   );
 };
 

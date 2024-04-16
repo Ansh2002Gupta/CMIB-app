@@ -157,7 +157,10 @@ import iconBreifcase from "../../public/images/svg/briefcase.svg";
 import iconRupeeSign from "../../public/images/svg/rupeeSign.svg";
 import iconArchiveSave from "../../public/images/svg/iconArchiveSave.svg";
 import iconSavedJob from "../../public/images/svg/iconSaved.svg";
+import iconView from "../../public/images/svg/eyeview.svg";
 import iconCalendarWhite from "../../public/images/svg/iconCalendarWhite.svg";
+import iconTrashSVG from "../../public/images/svg/iconTrash.svg";
+import iconArchiveSaveMobile from "../../public/images/svg/iconArchiveSaveMobile.svg";
 
 const images = {
   iconArrowUp,
@@ -319,6 +322,9 @@ const images = {
   iconArchiveSave,
   iconSavedJob,
   iconCalendarWhite,
+  iconView,
+  iconTrashSVG,
+  iconArchiveSaveMobile,
 };
 
 export default images;

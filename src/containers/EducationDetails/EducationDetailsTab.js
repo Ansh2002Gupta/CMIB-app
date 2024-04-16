@@ -7,7 +7,7 @@ import OtherCoursesComponent from "./OtherCoursesComponent";
 import { FormTabs } from "../../components/Tab";
 import style from "./Exams.style";
 
-const EducationDetailsTab = ({ isEditable, handleEdit }) => {
+const EducationDetailsTab = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
   return (
     <View style={style.tabContainer}>
       <FormTabs
@@ -19,13 +19,18 @@ const EducationDetailsTab = ({ isEditable, handleEdit }) => {
               <EducationDetailComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                onSaveSuccessfull={onSaveSuccessfull}
               />
             ),
           },
           {
             label: "Exams",
             component: (
-              <ExamsComponent isEditable={isEditable} handleEdit={handleEdit} />
+              <ExamsComponent
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                onSaveSuccessfull={onSaveSuccessfull}
+              />
             ),
           },
           {
@@ -34,6 +39,7 @@ const EducationDetailsTab = ({ isEditable, handleEdit }) => {
               <OtherCoursesComponent
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                onSaveSuccessfull={onSaveSuccessfull}
               />
             ),
           },

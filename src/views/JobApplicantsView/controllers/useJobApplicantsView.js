@@ -5,6 +5,7 @@ import { View, Platform } from "@unthinkable/react-core-components";
 
 import CommonText from "../../../components/CommonText";
 import TouchableImage from "../../../components/TouchableImage";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import Chip from "../../../components/Chip";
 import useIsWebView from "../../../hooks/useIsWebView";
 import images from "../../../images";
@@ -18,12 +19,14 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
 import useFetch from "../../../hooks/useFetch";
-import { UserProfileContext } from "../../../globalContext/userProfile/userProfileProvider";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
+import {
+  FILTER_TYPE_ENUM,
+  ROWS_PER_PAGE_ARRAY,
+} from "../../../constants/constants";
 import CustomImage from "../../../components/CustomImage";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import usePagination from "../../../hooks/usePagination";
@@ -31,9 +34,12 @@ import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePatch } from "../../../hooks/useApiRequest";
 import { navigations } from "../../../constants/routeNames";
 import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
-import CustomPopUpMessage from "../../../components/CustomPopUpMessage/CustomPopUpMessage";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
+
+const initialFilterState = {
+  selectedStatus: [],
+};
 
 const useJobApplicants = () => {
   const [sideBarState] = useContext(SideBarContext);
@@ -56,6 +62,7 @@ const useJobApplicants = () => {
     query_type: "",
     searchData: "",
   });
+  const [filterState, setFilterState] = useState(initialFilterState);
 
   const [showCurrentPopupmessage, setCurrentPopupMessage] = useState(0);
   const [setModals, setModalsState] = useState({
@@ -63,6 +70,8 @@ const useJobApplicants = () => {
     scheduleModal: null,
   });
   const navigate = useNavigate();
+
+  const intl = useIntl();
 
   const popMessageRef = useRef(null);
   useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
@@ -76,10 +85,51 @@ const useJobApplicants = () => {
   const queryTypeData = [{ id: "male", name: "Male" }];
   const statusData = [{ id: 1, name: "Pending" }];
 
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {
+    setFilterState((prevState) => {
+      const filterObj = customFilterInfo.find(
+        (info) => info.name === filterName
+      );
+      const filterKey = `selected${filterObj?.name}`;
+      const existingSelectedOptions = prevState[filterKey];
+      let newSelectedOptions = [];
+      if (!!existingSelectedOptions) {
+        if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
+          newSelectedOptions = existingSelectedOptions?.includes(
+            selectedFilter?.[keyName]
+          )
+            ? existingSelectedOptions?.filter((item) => {
+                return item !== selectedFilter?.[keyName];
+              })
+            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+        } else {
+          newSelectedOptions = selectedFilter.value;
+        }
+      }
+      return {
+        ...prevState,
+        [filterKey]: newSelectedOptions,
+      };
+    });
+  };
+
+  const customFilterInfo = [
+    {
+      refKey: "id",
+      name: "Status",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: statusData,
+      selectedOptions: filterState?.selectedWorkMode,
+      handler: handleFilterChange,
+    },
+  ];
+
   const {
     data: jobApplicantListing,
     isLoading: isJobApplicantListingLoading,
     fetchData: fetchingJobApplicantListing,
+    error: errorWhileFetchingJobApplicantListing,
+    isError: isErrorWhileFetchingJobApplicantListing,
   } = useFetch({
     url: USER_TYPE_COMPANY + JOB_APPLICANTS,
     otherOptions: {
@@ -98,15 +148,19 @@ const useJobApplicants = () => {
     },
   });
 
-  const { makeRequest: handleStatus, isLoading: isUpdatingApplicantStatus } =
-    usePatch({
-      url:
-        USER_TYPE_COMPANY +
-        JOBS +
-        JOB_APPLICANTS +
-        `/${showCurrentPopupmessage}` +
-        STATUS,
-    });
+  const {
+    makeRequest: handleStatus,
+    isLoading: isUpdatingApplicantStatus,
+    error: errorWhileUpdatingStatus,
+    setError: setErrorStatus,
+  } = usePatch({
+    url:
+      USER_TYPE_COMPANY +
+      JOBS +
+      JOB_APPLICANTS +
+      `/${showCurrentPopupmessage}` +
+      STATUS,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -125,8 +179,19 @@ const useJobApplicants = () => {
       }
       setIsFirstPageReceived(false);
     };
+
+    const fetchFilterData = async () => {
+      const requestedParams = {
+        level_1: "gender",
+      };
+
+      const newFilters = await fetchFilters({
+        queryParamsObject: requestedParams,
+      });
+    };
+
     fetchData();
-    // fetchFiltersData();
+    fetchFilterData();
   }, []);
 
   const updateCurrentRecords = async (params) => {
@@ -210,27 +275,44 @@ const useJobApplicants = () => {
           `/${currentModule}/${navigations.JOB_APPLICANTS}/${item?.company_job_id}/applicant-details/${item?.id}`
         ),
       shortlist_candidate: () => {
+        setCurrentPopupMessage(-1);
+
         handleClickActions(3);
       },
       reject_candidate: () => {
+        setCurrentPopupMessage(-1);
+
         handleClickActions(2);
       },
       offer_job: () => {
+        setCurrentPopupMessage(-1);
         handleClickActions(6);
       },
       reject_after_interview: () => {
+        setCurrentPopupMessage(-1);
+
         handleClickActions(9);
       },
       view_interview_details: () => {
+        setCurrentPopupMessage(-1);
         setModalsState((prev) => ({
           ...prev,
-          interviewModal: item?.job_applicantion_id,
+          interviewModal: !!item?.interview_id
+            ? item.interview_id
+            : setErrorStatus(
+                intl.formatMessage({ id: "label.interview_id_not_found" })
+              ),
         }));
       },
       schedule_interview: () => {
+        setCurrentPopupMessage(-1);
         setModalsState((prev) => ({
           ...prev,
-          scheduleModal: item?.job_applicantion_id,
+          scheduleModal: !!item?.job_applicantion_id
+            ? item.job_applicantion_id
+            : setErrorStatus(
+                intl.formatMessage({ id: "label.interview_id_not_found" })
+              ),
         }));
       },
     };
@@ -277,8 +359,14 @@ const useJobApplicants = () => {
       perPage: rowsPerPage,
       page: currentPage,
       sortBy: sortField,
-      sortDirection: !isAscendingOrder ? "asc" : "desc",
+      sortOrder: !isAscendingOrder ? "asc" : "desc",
     });
+  };
+
+  const onClickJobId = (item) => {
+    navigate(
+      `/${currentModule}/${navigations.POSTED_JOBS}/${item.company_job_id}?mode=view&activeTab=0`
+    );
   };
 
   const getColoumConfigs = (item, isHeading) => {
@@ -339,28 +427,32 @@ const useJobApplicants = () => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-              ...(!isHeading ? styles.underLineText : {}),
-            }}
-          >
-            {item?.job_id || "-"}
-          </CommonText>
+          <CustomTouchableOpacity onPress={() => onClickJobId(item)}>
+            <CommonText
+              customTextStyle={{
+                ...tableStyle,
+                ...(!isHeading ? styles.underLineText : {}),
+              }}
+            >
+              {item?.job_id || "-"}
+            </CommonText>
+          </CustomTouchableOpacity>
         ),
         style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-              ...(!isHeading ? styles.underLineText : {}),
-            }}
-          >
-            {item?.designation || "-"}
-          </CommonText>
+          <CustomTouchableOpacity onPress={() => onClickJobId(item)}>
+            <CommonText
+              customTextStyle={{
+                ...tableStyle,
+                ...(!isHeading ? styles.underLineText : {}),
+              }}
+            >
+              {item?.designation || "-"}
+            </CommonText>
+          </CustomTouchableOpacity>
         ),
         style: commonStyles.columnStyle("15%"),
         isFillSpace: true,
@@ -386,7 +478,7 @@ const useJobApplicants = () => {
 
             {showCurrentPopupmessage === item?.job_applicantion_id && (
               <View ref={popMessageRef}>
-                <CustomPopUpMessage
+                <PopupMessage
                   ref={popMessageRef}
                   message={item?.action}
                   labelName={"name"}
@@ -442,32 +534,39 @@ const useJobApplicants = () => {
   const isLoading = isJobApplicantListingLoading || isUpdatingApplicantStatus;
 
   return {
+    allDataLoaded,
+    currentPage,
+    customFilterInfo,
+    error: errorWhileFetchingJobApplicantListing,
+    errorWhileUpdatingStatus,
+    setErrorStatus,
+    fetchingJobApplicantListing,
     filterApplyHandler,
     filterCategory,
+    getColoumConfigs,
+    handleActions,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    headingTexts,
+    handleFilterChange,
+    filterState,
+    setFilterState,
     isFirstPageReceived,
+    isError: isErrorWhileFetchingJobApplicantListing,
+    isLoading,
+    isHeading,
+    isUpdatingApplicantStatus,
+    jobApplicantListingData: currentRecords,
     loadingMore,
     onIconPress,
-    allDataLoaded,
     rowsPerPage,
-    currentPage,
-    queryTypeData: queryTypeData,
-    statusData: statusData,
-    getColoumConfigs,
-    handleActions,
+    setCurrentPopupMessage,
     setModals,
     setModalsState,
-    isUpdatingApplicantStatus,
     showCurrentPopupmessage,
-    setCurrentPopupMessage,
     getStatusStyle,
-    headingTexts,
-    isHeading,
-    isLoading,
-    jobApplicantListingData: currentRecords,
     subHeadingText,
     tableIcon,
     totalcards: jobApplicantListing?.meta?.total,

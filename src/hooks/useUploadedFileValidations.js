@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { FILE_MAX_SIZE, TOAST_TIMEOUT } from "../constants/constants";
+import {
+  FILE_MAX_SIZE,
+  TOAST_TIMEOUT,
+  VIDEO_MAX_SIZE,
+} from "../constants/constants";
 import {
   DOCUMENT_ACCEPTABLE_FORMAT_REGEX,
   IMAGE_ACCEPTABLE_FORMAT_REGEX,
@@ -51,6 +55,10 @@ const useUploadedFileValidations = ({
             ? intl.formatMessage({
                 id: "label.allowedDocumentFormatsError",
               })
+            : isVideoUpload
+            ? intl.formatMessage({
+                id: "label.allowedVideoFormatsError",
+              })
             : intl.formatMessage({
                 id: "label.allowedFileFormatsError",
               })
@@ -58,7 +66,7 @@ const useUploadedFileValidations = ({
         resetUploadInput && resetUploadInput();
         return;
       }
-      if (isVideoUpload && uploadedFile.size > FILE_MAX_SIZE) {
+      if (isVideoUpload && uploadedFile.size > VIDEO_MAX_SIZE) {
         setFileTooLargeError(
           intl.formatMessage({ id: "label.videoTooLargeError" })
         );

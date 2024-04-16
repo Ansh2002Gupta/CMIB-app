@@ -298,7 +298,7 @@ const useGetApplicantList = (id, onEditPress) => {
 
       {
         content: (
-          <View ref={popupRef}>
+          <View>
             {!isHeading && (
               <>
                 <TouchableImage
@@ -310,16 +310,18 @@ const useGetApplicantList = (id, onEditPress) => {
                   isSvg={true}
                 />
                 {currentPopUpMessage === item.id && (
-                  <PopupMessage
-                    message={item?.action}
-                    onPopupClick={(selectedItem) => {
-                      onEditPress(selectedItem.name, item);
-                    }}
-                    labelName={"name"}
-                    customStyle={styles.popupContainer}
-                    isPopupModal
-                    onPopUpClose={() => setCurrentPopupMessage(-1)}
-                  />
+                  <View ref={popupRef}>
+                    <PopupMessage
+                      message={item?.action}
+                      onPopupClick={(selectedItem) => {
+                        onEditPress(selectedItem.name, item);
+                      }}
+                      labelName={"name"}
+                      customStyle={styles.popupContainer}
+                      isPopupModal
+                      onPopUpClose={() => setCurrentPopupMessage(-1)}
+                    />
+                  </View>
                 )}
               </>
             )}

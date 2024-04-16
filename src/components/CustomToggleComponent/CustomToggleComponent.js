@@ -28,12 +28,22 @@ const CustomToggleComponent = ({
   }, [value]);
   const { isWebView } = useIsWebView();
 
+  useEffect(() => {
+    if (selectedToggleOption !== value) {
+      setSelectedToggleOption(value);
+    }
+  }, [value]);
+
   const handleOptionSelect = (option) => {
     if (onValueChange) {
       onValueChange(option);
     }
     setSelectedToggleOption(option);
   };
+
+  useEffect(() => {
+    selectedToggleOption != -1 && onValueChange(selectedToggleOption);
+  }, [selectedToggleOption]);
 
   return (
     <View style={containerStyle}>

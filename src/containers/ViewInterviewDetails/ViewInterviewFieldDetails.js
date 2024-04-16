@@ -15,7 +15,7 @@ export const INTERVIEW_DETAILS_FIELDS = (applicant_name, applicant_id) => {
   ];
 };
 
-export const FACE_TO_FACE = (address, schedule_date, schedule_time, type) => {
+export const FACE_TO_FACE = (address, schedule_date, schedule_time) => {
   return [
     {
       id: 1,
@@ -34,12 +34,6 @@ export const FACE_TO_FACE = (address, schedule_date, schedule_time, type) => {
       headingIntl: "time",
       label: "schedule_time",
       value: schedule_time,
-    },
-    {
-      id: 4,
-      headingIntl: "interview_type",
-      label: "type",
-      value: type,
     },
   ];
 };

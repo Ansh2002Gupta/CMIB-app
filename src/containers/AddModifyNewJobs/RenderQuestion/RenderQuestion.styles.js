@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderRadius: 8,
     justifyContent: "center",
+    backgroundColor: colors.white,
   },
   questionViewStyle: {
     alignItems: "center",

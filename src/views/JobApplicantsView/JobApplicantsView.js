@@ -7,6 +7,8 @@ import { TwoRow } from "../../core/layouts";
 import Chip from "../../components/Chip";
 import CommonText from "../../components/CommonText";
 import CustomTable from "../../components/CustomTable";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import TouchableImage from "../../components/TouchableImage";
 import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
@@ -18,7 +20,7 @@ import {
   ROWS_PER_PAGE_ARRAY,
 } from "../../constants/constants";
 import styles from "./JobApplicantsView.style";
-import CustomPopUpMessage from "../../components/CustomPopUpMessage/CustomPopUpMessage";
+import ToastComponent from "../../components/ToastComponent/ToastComponent";
 
 const JobApplicants = () => {
   const intl = useIntl();
@@ -26,33 +28,40 @@ const JobApplicants = () => {
   const {
     allDataLoaded,
     currentPage,
-    jobApplicantListingData,
+    customFilterInfo,
+    error,
+    errorWhileUpdatingStatus,
+    setErrorStatus,
+    fetchingJobApplicantListing,
+    filterApplyHandler,
+    filterCategory,
     getColoumConfigs,
     getStatusStyle,
-    headingTexts,
-    isHeading,
-    isLoading,
-    subHeadingText,
-    statusText,
-    tableIcon,
-    totalcards,
-    filterApplyHandler,
     handleActions,
-    setModals,
-    setModalsState,
-    filterCategory,
-    queryTypeData,
-    statusData,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
+    headingTexts,
+    handleFilterChange,
+    filterState,
+    setFilterState,
+    isError,
     isFirstPageReceived,
+    isLoading,
+    isHeading,
+    jobApplicantListingData,
     loadingMore,
     onIconPress,
-    showCurrentPopupmessage,
-    setCurrentPopupMessage,
     rowsPerPage,
+    setModals,
+    setModalsState,
+    setCurrentPopupMessage,
+    showCurrentPopupmessage,
+    statusText,
+    subHeadingText,
+    tableIcon,
+    totalcards,
   } = useJobApplicants();
 
   const getMobileView = (item, index) => {
@@ -80,7 +89,7 @@ const JobApplicants = () => {
             style={styles.iconTicket}
           />
           {showCurrentPopupmessage === item?.job_applicantion_id && (
-            <CustomPopUpMessage
+            <PopupMessage
               popUpHeaderText={intl.formatMessage({
                 id: "label.actions",
               })}
@@ -108,38 +117,56 @@ const JobApplicants = () => {
         }
         isBottomFillSpace
         bottomSection={
-          <CustomTable
-            {...{
-              allDataLoaded,
-              currentPage,
-              getColoumConfigs,
-              data: jobApplicantListingData,
-              tableHeading: JOB_APPLICANTS_HEADING,
-              isHeading,
-              headingTexts,
-              subHeadingText,
-              statusText,
-              getStatusStyle,
-              tableIcon,
-              rowsLimit: ROWS_PER_PAGE_ARRAY,
-              isTicketListingLoading: isLoading,
-              totalcards,
-              filterApplyHandler,
-              filterCategory,
-              queryTypeData,
-              statusData,
-              handleLoadMore,
-              handlePageChange,
-              handleRowPerPageChange,
-              handleSearchResults,
-              isFirstPageReceived,
-              loadingMore,
-              onIconPress,
-              rowsPerPage,
-              isTotalCardVisible: false,
-              mobileComponentToRender: getMobileView,
-            }}
-          />
+          <>
+            {!isError && (
+              <CustomTable
+                {...{
+                  allDataLoaded,
+                  currentPage,
+                  customFilterInfo,
+                  handleFilterChange,
+                  data: jobApplicantListingData,
+                  filterApplyHandler,
+                  filterCategory,
+                  getColoumConfigs,
+                  getStatusStyle,
+                  handleLoadMore,
+                  handlePageChange,
+                  handleRowPerPageChange,
+                  handleSearchResults,
+                  headingTexts,
+                  selectedFilterOptions: filterState,
+                  setSelectedFilterOptions: setFilterState,
+                  isHeading,
+                  isFirstPageReceived,
+                  isTicketListingLoading: isLoading,
+                  isTotalCardVisible: false,
+                  loadingMore,
+                  mobileComponentToRender: getMobileView,
+                  onIconPress,
+                  subHeadingText,
+                  statusText,
+                  totalcards,
+                  tableIcon,
+                  tableHeading: JOB_APPLICANTS_HEADING,
+                  rowsLimit: ROWS_PER_PAGE_ARRAY,
+                  rowsPerPage,
+                }}
+              />
+            )}
+            {isError && (
+              <ErrorComponent
+                errorMsg={error?.data?.message}
+                onRetry={() => fetchingJobApplicantListing()}
+              />
+            )}
+            {!!errorWhileUpdatingStatus && (
+              <ToastComponent
+                toastMessage={errorWhileUpdatingStatus}
+                onDismiss={() => setErrorStatus("")}
+              />
+            )}
+          </>
         }
       />
       {!!setModals?.interviewModal && (

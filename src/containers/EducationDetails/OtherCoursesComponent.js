@@ -17,7 +17,11 @@ import {
 import { useOtherCourses } from "./Controllers/useOtherCourses";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
 
-const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
+const OtherCoursesComponent = ({
+  isEditable = true,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
 
@@ -134,6 +138,7 @@ const OtherCoursesComponent = ({ isEditable = true, handleEdit }) => {
     handleUpdate({
       body: payload,
       onSuccessCallback: () => {
+        onSaveSuccessfull && onSaveSuccessfull();
         handleEdit(false);
       },
     });

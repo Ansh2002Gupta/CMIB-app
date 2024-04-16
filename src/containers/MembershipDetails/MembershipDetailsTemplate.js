@@ -1,7 +1,8 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, View } from "@unthinkable/react-core-components";
 
+import CustomScrollView from "../../components/CustomScrollView";
 import DetailCard from "../../components/DetailCard";
 import SaveCancelButton from "../../components/SaveCancelButton";
 import style from "./MembershipDetails.style";
@@ -30,6 +31,11 @@ const MembershipDetailsTemplate = ({
 }) => {
   const intl = useIntl();
 
+  const scrollViewMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { showsVerticalScrollIndicator: false }
+      : {};
+
   if (isLoadingPage) {
     return (
       <View style={style.loaderStyle}>
@@ -47,8 +53,8 @@ const MembershipDetailsTemplate = ({
 
   return (
     <>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
+      <CustomScrollView
+        {...scrollViewMobileProps}
         style={style.contentContainerStyle}
       >
         <View style={style.innerContainerStyle}>
@@ -81,7 +87,7 @@ const MembershipDetailsTemplate = ({
           onClickCancel={onClickCancel}
           isValidAllFields={isValidAllFields}
         />
-      </ScrollView>
+      </CustomScrollView>
       {!!error && (
         <ToastComponent toastMessage={error} onDismiss={() => setError("")} />
       )}
