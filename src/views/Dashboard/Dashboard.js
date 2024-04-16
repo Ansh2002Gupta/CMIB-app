@@ -33,7 +33,6 @@ function DashboardView() {
   const { data: chartData } = useFetch({
     url: USER_TYPE_MEMBER + ROUND_ONE_DASHBOARD,
   });
-  console.log(chartData, "chartData..");
   const { selectedModule } = sideBarState;
   const DATA = [
     { x: "Google", y: 35 },
