@@ -99,8 +99,9 @@ const CustomTextEditor = (props) => {
           />
           {isViewMore && value.length > PREVIEWED_LENGTH && (
             <CustomButton
-              onPress={() => {
+              onPress={(event) => {
                 setIsExpanded(!isExpanded);
+                event.stopPropagation();
               }}
               customStyle={{ customTextStyle: styles.customButtonTextStyle }}
               style={styles.buttonStyle}
