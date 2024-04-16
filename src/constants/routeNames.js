@@ -45,4 +45,5 @@ export const navigations = {
   JOB_PROFILE: "/job-profile",
   VIEW_JOB_DETAILS: "applicant-job-details",
   APPLICANT_DETAILS: ":job_id/applicant-details/:id",
+  CANDIDATE_DETAIL: "candidate-details",
 };

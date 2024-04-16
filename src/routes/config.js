@@ -40,6 +40,7 @@ import ViewDetailsScreen from "../containers/ViewDetailsScreen";
 import ViewPostedJobDetails from "../views/ViewPostedJobDetails/ViewPostedJobDetails";
 import PostedJobs from "../views/PostedJobs";
 import AllJobs from "../views/AllJobs/AllJobs";
+import CandidateDetail from "../views/CandidateDetail";
 
 const signUpHeader =
   Platform.OS === "web" ? HeaderWithContentLayout : ContentLayout;
@@ -304,6 +305,10 @@ const config = [
       {
         viewPath: navigations.CANDIDATES,
         element: <Candidates />,
+      },
+      {
+        viewPath: navigations.CANDIDATE_DETAIL,
+        element: <CandidateDetail />,
       },
     ],
   },

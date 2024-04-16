@@ -86,6 +86,7 @@ const SavedCandidatesView = () => {
                 filterApplyHandler,
                 formatConfig,
                 isTotalCardVisible: false,
+                showFliter: false,
               }}
               ThirdSection={
                 <DownloadMoreComponent

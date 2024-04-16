@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { View, Platform } from "@unthinkable/react-core-components";
 
@@ -29,6 +29,7 @@ import CustomImage from "../../../components/CustomImage";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import { usePost } from "../../../hooks/useApiRequest";
+import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -36,6 +37,8 @@ const useSavedCandidates = () => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const [searchParams] = useSearchParams();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
@@ -186,7 +189,7 @@ const useSavedCandidates = () => {
       setCurrentPage(1);
       const newData = await fetchingCandidatesData({
         queryParamsObject: {
-          keywords: searchedData,
+          keyword: searchedData,
           // status: filterOptions.status,
           // queryType: filterOptions.query_type,
         },
@@ -200,7 +203,7 @@ const useSavedCandidates = () => {
       }
     } else {
       await updateCurrentRecords({
-        keywords: searchedData,
+        keyword: searchedData,
         perPage: rowsPerPage,
         page: currentPage,
         // status: filterOptions.status,
@@ -249,13 +252,13 @@ const useSavedCandidates = () => {
       : setCurrentPopupMessage(-1);
   };
 
-  const handleActions = (actions, id) => {
+  const handleActions = (candidateId) => {
     setCurrentPopupMessage(-1);
     markJob({
       body: {
-        candidate_id: id,
+        candidate_id: candidateId,
       },
-      overrideUrl: `${USER_TYPE_COMPANY}${CANDIDATES}/${id}${UNMARKED_PREFER}`,
+      overrideUrl: `${USER_TYPE_COMPANY}${CANDIDATES}/${candidateId}${UNMARKED_PREFER}`,
     });
   };
 
@@ -268,6 +271,21 @@ const useSavedCandidates = () => {
       sortDirection: !isAscendingOrder ? "asc" : "desc",
     });
   };
+
+  const openCandidateDetail = (candidateId) => {
+    navigate(`/${selectedModule?.key}/${navigations.CANDIDATE_DETAIL}`);
+  };
+
+  const popupOptions = [
+    {
+      label: intl.formatMessage({ id: "label.removed_from_saved_candidates" }),
+      popupAction: handleActions,
+    },
+    {
+      label: intl.formatMessage({ id: "label.view_candidate_details" }),
+      popupAction: openCandidateDetail,
+    },
+  ];
 
   const getColoumConfigs = (item, isHeading, index) => {
     const tableStyle = isHeading
@@ -321,7 +339,7 @@ const useSavedCandidates = () => {
       {
         content: (
           <View style={styles.flexRow}>
-            {item.functional_areas.map((functionalAreaItem, index) => {
+            {item?.functional_areas?.map((functionalAreaItem, index) => {
               const remainingNoOfItems = item.functional_areas.length - 2;
 
               if (isHeading || index < 2) {
@@ -406,13 +424,12 @@ const useSavedCandidates = () => {
             {showCurrentPopupmessage === index && (
               <View ref={popMessageRef}>
                 <PopupMessage
-                  message={intl.formatMessage({
-                    id: "label.removed_from_saved_candidates",
-                  })}
+                  message={popupOptions}
                   customStyle={styles.popupMessageStyle}
-                  onPopupClick={() =>
-                    handleActions(index, Number(item?.candidate_id))
-                  }
+                  onPopupClick={(configData) => {
+                    configData?.popupAction(item?.candidate_id);
+                  }}
+                  labelName="label"
                 />
               </View>
             )}

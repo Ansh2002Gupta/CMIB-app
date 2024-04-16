@@ -82,6 +82,7 @@ const CustomTable = ({
   renderCalendar,
   statusData,
   queryTypeData,
+  showFliter
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -141,31 +142,33 @@ const CustomTable = ({
                 }
                 isLeftFillSpace
                 rightSection={
-                  <CustomTouchableOpacity
-                    onPress={handleFilterModal}
-                    style={styles.imageParentStyle}
-                    disabled={isTicketListingLoading || isGeetingJobbSeekers}
-                  >
-                    <TouchableImage
-                      source={images.iconFilter}
-                      parentStyle={styles.iconTicket}
+                  showFliter && (
+                    <CustomTouchableOpacity
                       onPress={handleFilterModal}
-                    />
-                    {isWebView && (
-                      <CommonText customTextStyle={styles.filterText}>
-                        {intl.formatMessage({ id: "label.filters" })}
-                      </CommonText>
-                    )}
-                    {isFilterCount && (
-                      <CommonText
-                        customContainerStyle={styles.activeTickets}
-                        customTextStyle={styles.activeTicketsText}
-                        fontWeight={"600"}
-                      >
-                        {getFilterCount()}
-                      </CommonText>
-                    )}
-                  </CustomTouchableOpacity>
+                      style={styles.imageParentStyle}
+                      disabled={isTicketListingLoading || isGeetingJobbSeekers}
+                    >
+                      <TouchableImage
+                        source={images.iconFilter}
+                        parentStyle={styles.iconTicket}
+                        onPress={handleFilterModal}
+                      />
+                      {isWebView && (
+                        <CommonText customTextStyle={styles.filterText}>
+                          {intl.formatMessage({ id: "label.filters" })}
+                        </CommonText>
+                      )}
+                      {isFilterCount && (
+                        <CommonText
+                          customContainerStyle={styles.activeTickets}
+                          customTextStyle={styles.activeTicketsText}
+                          fontWeight={"600"}
+                        >
+                          {getFilterCount()}
+                        </CommonText>
+                      )}
+                    </CustomTouchableOpacity>
+                  )
                 }
                 style={styles.filterTopSection(isWebView)}
               />

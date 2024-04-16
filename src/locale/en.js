@@ -728,6 +728,7 @@ const locale = {
   "label.experience": "Experience",
   "label.removed_from_saved_candidates": "Remove from saved candidates",
   "label.download_candidates_list": "Download candidates List",
+  "label.view_candidate_details": "View Candidate Details",
 };
 
 export default locale;
