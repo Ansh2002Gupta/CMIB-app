@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDelete, usePost } from "../../../hooks/useApiRequest";
 import { MEMBER_JOB, SAVE } from "../apiEndPoint";
 
@@ -22,6 +22,10 @@ const useSaveAndRemoveJob = ({ id, isSaveVisible }) => {
     setErrorWhileDeletingJob("");
     setErrorWhileSavingJob("");
   };
+
+  useEffect(() => {
+    setIsSaveVisibleButton(isSaveVisible);
+  }, [isSaveVisible]);
 
   const handleSaveAndRemove = () => {
     if (isSaveVisibleButton) {

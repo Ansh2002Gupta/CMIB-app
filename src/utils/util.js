@@ -104,6 +104,18 @@ export const getTime = (isoString) => {
   return formattedTime;
 };
 
+export const getDate = (isoDateString, format = "DD-MM-YYYY") => {
+  const date = new Date(isoDateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // getMonth() returns 0-11
+  const day = date.getDate();
+
+  return format
+    .replace("YYYY", year.toString())
+    .replace("MM", month.toString().padStart(2, "0"))
+    .replace("DD", day.toString().padStart(2, "0"));
+};
+
 export const capitalize = (text) => {
   if (!text || typeof text !== "string") {
     return text;
@@ -114,12 +126,13 @@ export const capitalize = (text) => {
 };
 
 export const formatDate = (date, format = "DD/MM/YYYY") => {
-  return dayjs(date).format(format);
+  return !!date ? dayjs(date).format(format) : "-";
 };
 
 export const formatTime = (dateString, format = "hh:mm A") => {
-  return dayjs(dateString).format(format);
+  return !!dateString ? dayjs(dateString).format(format) : "-";
 };
+
 export const extractFilename = (fileUri) => {
   const parts = fileUri.split("/");
   const filename = parts.pop() || "";
@@ -428,8 +441,8 @@ export const getDecryptApiData = (apiData) => {
     : {};
   obj.isUrgentJob = apiData.is_urgent ? 0 : 1;
   obj.salaryNagotiable = apiData.is_salary_negotiable == 1 ? 0 : 1 ?? 0;
-  obj.minimumExperience = apiData?.min_experience;
-  obj.maximumExperience = apiData?.max_experience;
+  obj.minimumExperience = apiData?.min_experience ?? "";
+  obj.maximumExperience = apiData?.max_experience ?? "";
   obj.jobLocation = apiData.locations
     ? apiData.locations.map((item) => ({
         id: item.id,
@@ -471,8 +484,14 @@ export const getDecryptApiData = (apiData) => {
   obj.desiredQualification = apiData.desired_qualification;
   obj.jobOpeningDate = startDate;
   obj.jobClosingDate = endDate;
-  obj.minimumSalary = Math.trunc(apiData.min_salary);
-  obj.maximumSalary = Math.trunc(apiData.max_salary);
+  obj.minimumSalary =
+    apiData.min_salary && apiData.min_salary?.length
+      ? Math.trunc(apiData.min_salary)
+      : "";
+  obj.maximumSalary =
+    apiData.max_salary && apiData.max_salary.length
+      ? Math.trunc(apiData.max_salary)
+      : "";
   obj.numberOfVacancies = apiData.vacancy;
   obj.modeofWork = apiData.work_mode
     ? {
@@ -600,7 +619,7 @@ export const convertToTime = ({ dateString, format24Hour = true }) => {
 export const formateDateandTime = (date, time) => {
   const formattedDate = date ? dayjs(date).format("YYYY-MM-DD") : "";
   const formattedTime = time ? ` ${dayjs(time).format("HH:mm:ss")}` : "";
-  return formattedDate + "" + formattedTime;
+  return formattedDate + formattedTime;
 };
 
 export const areAllValuesEmpty = (obj) => {
@@ -618,7 +637,7 @@ export const areAllValuesEmpty = (obj) => {
   return true;
 };
 
-const isObjectFilled = (obj) => {
+export const isObjectFilled = (obj) => {
   return Object.values(obj).every((value) => value !== "");
 };
 
@@ -633,4 +652,20 @@ export const capitalizePhrase = (sentence) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
   return new_sentence;
+};
+
+export const formatSalaryRange = (minSalary, maxSalary) => {
+  const minSalaryInLpa = (minSalary / 100000).toFixed(2);
+  const maxSalaryInLpa = (maxSalary / 100000).toFixed(2);
+  let formattedSalaryRange = `${minSalaryInLpa}-${maxSalaryInLpa} LPA`;
+  if (
+    parseFloat(minSalaryInLpa) > 99.99 ||
+    parseFloat(maxSalaryInLpa) > 99.99
+  ) {
+    const minSalaryInCRA = (minSalary / 10000000).toFixed(2);
+    const maxSalaryInCRA = (maxSalary / 10000000).toFixed(2);
+    formattedSalaryRange = `${minSalaryInCRA}-${maxSalaryInCRA} CRA`;
+  }
+
+  return formattedSalaryRange;
 };

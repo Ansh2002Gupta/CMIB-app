@@ -190,6 +190,8 @@ const iconSendGreen = appendAppBaseURl("/images/svg/iconSend.svg");
 const iconSendDisabled = appendAppBaseURl("/images/svg/iconSendDisabled.svg");
 const iconAttachement = appendAppBaseURl("/images/svg/iconAttachement.svg");
 const iconAvatar = appendAppBaseURl("/images/svg/iconAvatar.svg");
+const iconView = appendAppBaseURl("/images/svg/eyeview.svg");
+
 const iconArrowDownSorting = appendAppBaseURl(
   "/images/svg/iconArrowDownSorting.svg"
 );
@@ -245,6 +247,8 @@ const iconLocationWhite = appendAppBaseURl("/images/svg/iconLocationWhite.svg");
 const iconBreifcase = appendAppBaseURl("/images/svg/briefcase.svg");
 const iconRupeeSign = appendAppBaseURl("/images/svg/rupeeSign.svg");
 const iconArchiveSave = appendAppBaseURl("/images/svg/iconArchiveSave.svg");
+const iconCalendarWhite = appendAppBaseURl("/images/svg/iconCalendarWhite.svg");
+const iconSavedJob = appendAppBaseURl("/images/svg/iconSaved.svg");
 const iconArchiveSaveMobile = appendAppBaseURl(
   "/images/svg/iconArchiveSaveMobile.svg"
 );
@@ -435,6 +439,8 @@ const images = {
   iconRupeeSign,
   iconArchiveSave,
   iconLocationWhite,
+  iconSavedJob,
+  iconCalendarWhite,
   iconArchiveSaveMobile,
   iconClock,
   iconTrashSVG,
@@ -443,6 +449,7 @@ const images = {
   iconSelectCircle,
   iconSelectedSolidCircle,
   iconCircleCross,
+  iconView,
 };
 
 export default images;

@@ -1,8 +1,9 @@
+import colors from "../../assets/colors";
+
 const style = {
   container: {
     flex: 1,
-    justifyContent: "center",
-    padding: 16,
+    backgroundColor: colors.backgroundColor,
   },
   header: {
     fontSize: 24,

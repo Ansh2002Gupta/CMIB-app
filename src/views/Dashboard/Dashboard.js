@@ -44,9 +44,6 @@ function DashboardView() {
           </>
         }
       />
-      {/*  uncomment this to see modals */}
-      {/* <ViewInterviewDetails /> */}
-      {/* <ScheduleInterviewModal /> */}
     </View>
   );
 }
