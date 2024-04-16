@@ -1,6 +1,7 @@
+import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
-const style = {
+const styles = StyleSheet.create({
   pieChartContainer: {
     backgroundColor: colors.white,
     borderRadius: 16,
@@ -12,6 +13,6 @@ const style = {
     fontSize: 16,
     color: colors.black,
   },
-};
+});
 
-export default style;
+export default styles;

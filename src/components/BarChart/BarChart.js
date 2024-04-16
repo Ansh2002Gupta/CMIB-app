@@ -5,15 +5,15 @@ import { VictoryBar, VictoryChart, VictoryAxis, VictoryLine } from "victory";
 import { TwoRow } from "../../core/layouts";
 
 import colors from "../../assets/colors";
-import style from "./BarChart.style";
+import styles from "./BarChart.style";
 import CommonText from "../CommonText";
 
 const BarChart = ({ barColor, data, label }) => {
   return (
     <TwoRow
-      style={style.barChartContainer}
+      style={styles.barChartContainer}
       topSection={
-        <CommonText customTextStyle={style.headerText} fontWeight="600">
+        <CommonText customTextStyle={styles.headerText} fontWeight="600">
           {label}
         </CommonText>
       }

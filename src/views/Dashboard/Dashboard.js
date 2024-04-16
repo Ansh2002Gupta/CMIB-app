@@ -7,6 +7,7 @@ import CAJobsDashboard from "../CAJobsDashboard";
 import JobProfileTab from "../JobProfile";
 import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 import BarChart from "../../components/BarChart";
+import DonutChart from "../../components/DonutChart/DonutChart";
 import PieChart from "../../components/PieChart/PieChart";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import TouchableImage from "../../components/TouchableImage";
@@ -49,10 +50,20 @@ function DashboardView() {
     { x: "HighTech", y: 2 },
   ];
   const PIE_ONE_DATA = [
+    { x: "Interviews Pending", y: 6 },
+    { x: "Interviews Given", y: 8 },
+  ];
+  const PIE_TWO_DATA = [
+    { x: "Regular", y: 25 },
+    { x: "Construtural", y: 25 },
+    { x: "Post Retirement", y: 25 },
+    { x: "For Specially Added", y: 25 },
+  ];
+  const PIE_THREE_DATA = [
     { x: "Urgent", y: 33 },
     { x: "Others", y: 67 },
   ];
-  const PIE_TWO_DATA = [
+  const PIE_FOUR_DATA = [
     { x: "Functional Area (1)", y: 8 },
     { x: "Functional Area (2)", y: 13 },
     { x: "Functional Area (3)", y: 13 },
@@ -64,12 +75,7 @@ function DashboardView() {
     { x: "Functional Area (9)", y: 8 },
     { x: "Functional Area (10)", y: 13 },
   ];
-  const PIE_THREE_DATA = [
-    { x: "Regular", y: 25 },
-    { x: "Construtural", y: 25 },
-    { x: "Post Retirement", y: 25 },
-    { x: "For Specially Added", y: 25 },
-  ];
+
   return (
     <View style={styles.container}>
       <TwoRow
@@ -84,19 +90,21 @@ function DashboardView() {
         }
         isBottomFillSpace
         bottomSection={
-          <>
+          <View style={{ gap: 24 }}>
             {/* {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
               <CAJobsDashboard />
             ) : null} */}
             <TwoColumn
+              style={{ gap: 24 }}
               isLeftFillSpace
               leftSection={
-                <PieChart
+                <DonutChart
                   label={intl.formatMessage({
-                    id: "label.selectedFunctionalAreas",
+                    id: "label.interviewsScheduled",
                   })}
                   data={PIE_ONE_DATA}
-                  colorScale={[colors.errorRed, colors.grassGreen]}
+                  colorScale={[colors.disabledGrey, colors.purple]}
+                  height={200}
                   labelRadius={42}
                   labelColor={colors.white}
                 />
@@ -104,39 +112,38 @@ function DashboardView() {
               rightSection={
                 <PieChart
                   label={intl.formatMessage({
-                    id: "label.urgentJobs",
+                    id: "label.jobTypes",
                   })}
-                  data={PIE_THREE_DATA}
+                  data={PIE_TWO_DATA}
                   colorScale={[
                     colors.greenBlue,
                     colors.green,
                     colors.babyPink,
                     colors.purple,
                   ]}
+                  height={248}
                   labelRadius={120}
                   labelColor={colors.darkGrey}
                 />
               }
             />
             <TwoColumn
+              style={{ gap: 24 }}
               isRightFillSpace
               leftSection={
                 <PieChart
+                  colorScale={[colors.errorRed, colors.grassGreen]}
+                  data={PIE_THREE_DATA}
+                  height={248}
                   label={intl.formatMessage({
                     id: "label.selectedFunctionalAreas",
                   })}
-                  data={PIE_ONE_DATA}
-                  colorScale={[colors.errorRed, colors.grassGreen]}
                   labelRadius={42}
                   labelColor={colors.white}
                 />
               }
               rightSection={
                 <PieChart
-                  label={intl.formatMessage({
-                    id: "label.urgentJobs",
-                  })}
-                  data={PIE_TWO_DATA}
                   colorScale={[
                     colors.mustardYellow,
                     colors.graphiteGray,
@@ -149,6 +156,11 @@ function DashboardView() {
                     colors.greenBlue,
                     colors.darkOrange,
                   ]}
+                  data={PIE_FOUR_DATA}
+                  height={248}
+                  label={intl.formatMessage({
+                    id: "label.urgentJobs",
+                  })}
                   labelRadius={120}
                   labelColor={colors.darkGrey}
                 />
@@ -168,7 +180,7 @@ function DashboardView() {
               barColor={colors.green}
               data={DATA}
             />
-          </>
+          </View>
         }
         bottomSectionStyle={{ padding: 24 }}
       />

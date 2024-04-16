@@ -776,6 +776,8 @@ const locale = {
   "label.selectedFunctionalAreas": "Selected Functional Areas",
   "label.urgentJobs": "Urgent Jobs",
   "label.selectOption": "Select option",
+  "label.interviewsScheduled": "Interviews Scheduled",
+  "label.jobTypes": "Job Types",
 };
 
 export default locale;

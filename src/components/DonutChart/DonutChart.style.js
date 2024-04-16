@@ -2,7 +2,7 @@ import { StyleSheet } from "@unthinkable/react-core-components";
 import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
-  barChartContainer: {
+  donutChartContainer: {
     backgroundColor: colors.white,
     borderRadius: 16,
     padding: 24,

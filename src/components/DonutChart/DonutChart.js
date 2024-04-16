@@ -4,19 +4,19 @@ import CommonText from "../CommonText";
 
 import { TwoRow } from "../../core/layouts";
 
-import styles from "./PieChart.style";
+import styles from "./DonutChart.style";
 
-const PieChart = ({
+const DonutChart = ({
   colorScale,
   data,
   height,
   label,
-  labelRadius,
   labelColor,
+  labelRadius,
 }) => {
   return (
     <TwoRow
-      style={styles.pieChartContainer}
+      style={styles.donutChartContainer}
       topSection={
         <CommonText customTextStyle={styles.headerText} fontWeight="600">
           {label}
@@ -26,6 +26,7 @@ const PieChart = ({
         <VictoryPie
           height={height}
           data={data}
+          innerRadius={100}
           colorScale={colorScale}
           labelRadius={({ innerRadius }) => innerRadius + labelRadius}
           style={{
@@ -37,4 +38,4 @@ const PieChart = ({
   );
 };
 
-export default PieChart;
+export default DonutChart;
