@@ -11,20 +11,17 @@ import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent
 import RenderSourceOfInfo from "../../../../components/RenderSourceOfInfo/RenderSourceOfInfo";
 import LoadingScreen from "../../../../components/LoadingScreen";
 import UploadImage from "../../../../components/UploadImage";
+import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 import useIsWebView from "../../../../hooks/useIsWebView";
 import useCompanyProfile from "./controllers/useCompanyProfileForm";
 import { DEFAULT_BALANCE_CREDIT } from "../../../../constants/constants";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./CompanyProfileForm.style";
-import CustomButton from "../../../../components/CustomButton";
 import { useNavigate } from "../../../../routes";
-import { navigations } from "../../../../constants/routeNames";
-import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
 
 const CompanyProfileForm = ({ tabHandler }) => {
   const {
     columnCount,
-    countryCodes,
     errorWhileUpload,
     errorWhileUpdating,
     setErrorWhileUpdating,
@@ -38,7 +35,6 @@ const CompanyProfileForm = ({ tabHandler }) => {
     handleContactPersonInfo,
     handleCompanyProfile,
     handleToggle,
-    industryOptions,
     isLoading,
     isEditProfile,
     onDeleteImage,

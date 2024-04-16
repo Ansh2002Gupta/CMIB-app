@@ -19,7 +19,7 @@ import { usePersonalDetails } from "./Controllers/usePersonalDetails";
 import { formatDate } from "../../utils/util";
 
 const PersonalDetails = ({
-  callBack,
+  // callBack,
   customUrl,
   isEditable = true,
   handleEdit,
@@ -140,14 +140,14 @@ const PersonalDetails = ({
     }
   }, [data]);
 
-  useEffect(() => {
-    if (!!data) {
-      callBack({
-        candidate_name: data?.name?.[0]?.name,
-        candidate_id: data?.member_id,
-      });
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (!!data) {
+  //     callBack({
+  //       candidate_name: data?.name?.[0]?.name,
+  //       candidate_id: data?.member_id,
+  //     });
+  //   }
+  // }, [data]);
 
   const findKeyByLabel = (label, details) => {
     return details.find((item) => {

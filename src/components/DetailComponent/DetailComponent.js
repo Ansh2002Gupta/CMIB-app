@@ -22,12 +22,17 @@ import styles, {
 } from "./DetailComponent.style";
 import CheckBoxSelection from "../CheckBoxSelection/CheckBoxSelection";
 import CustomChipCard from "../CustomChipCard/CustomChipCard";
+import colors from "../../assets/colors";
 
 const DetailComponent = ({
   customContainerStyle,
   details,
+  footerText,
   handleBlur,
   handleChange,
+  onAdd,
+  onDelete,
+  tableHeaderList,
   handleSwitchChange,
   handleMultiSelect,
   hasActionButton,
@@ -213,76 +218,96 @@ const DetailComponent = ({
         />
       );
     }
+    if (detail?.isButton) {
+      return (
+        <TouchableImage
+          onPress={() =>
+            detail.isAdd ? onAdd(detail.cellID) : onDelete(detail.cellID)
+          }
+          source={
+            detail.isAdd ? images.iconAddRoundGreen : images.iconDeleteRoundRed
+          }
+        />
+      );
+    }
 
     return (
-      <CustomTextInput
-        errorMessage={detail.error}
-        value={detail.value}
-        customHandleBlur={() => handleBlur(detail.key, index)}
-        customStyle={{
-          ...styles.inputStyle,
-          ...styles.getFieldWidth(detail.width, !isWebView),
-        }}
-        datePickerContainer={datePickerContainer}
-        label={detail?.label && intl.formatMessage({ id: detail.label })}
-        showLabel={detail.showLabel}
-        isDropdown={detail.isDropdown}
-        isEditable={detail.isEditable}
-        isCounterInput={detail.isCounterInput}
-        isError={!!detail.error}
-        isMandatory={detail.isMandatory}
-        selectedItems={detail.defaultValues}
-        indexNumber={index}
-        isSelected="isSelected"
-        indexField="selectedIndex"
-        isEmptyField={detail?.isEmptyField ?? false}
-        options={detail.options || []}
-        isMultiline={detail?.isMultiline}
-        isCheckBoxSelection={detail?.isCheckBoxSelection}
-        checkBoxOptions={detail?.checkBoxOptions}
-        handleAddRemoveRow={(isActionToAdd) =>
-          handleAddRemoveRow(isActionToAdd, index, detail?.key)
-        }
-        handleCheckBoxSelection={(id) =>
-          handleCheckBoxSelection(id, index, detail?.key)
-        }
-        isActionToAdd={detail?.isActionToAdd}
-        isSingleSelection={detail?.isSingleSelection}
-        placeholder={
-          detail?.placeholder && intl.formatMessage({ id: detail.placeholder })
-        }
-        maxLength={detail.maxLength}
-        isNumeric={detail.isNumeric}
-        isToggle={detail.isToggle}
-        isTextInputWithChip={detail?.isTextInputWithChip}
-        onChipUpdate={(chipData) =>
-          handleChange(detail.label, chipData, index, detail)
-        }
-        valueField={detail.valueField || "label"}
-        labelField={detail.labelField || "label"}
-        inputKey={detail.inputKey || "value"}
-        onChangeValue={(val) =>
-          detail.isMultiSelect
-            ? handleMultiSelect(val, detail, index)
-            : handleChange(detail.label, val, index, detail?.key)
-        }
-        isMultiSelect={detail.isMultiSelect}
-        onChangeText={(val) => {
-          if (detail?.isNumeric) {
-            if (numericValidator(val)) handleChange(detail.label, val);
-          } else {
-            handleChange(detail.label, val, index);
+      <>
+        <CustomTextInput
+          errorMessage={detail.error}
+          value={detail.value}
+          customHandleBlur={() => handleBlur(detail.key, index)}
+          customStyle={{
+            ...styles.inputStyle,
+            ...styles.getFieldWidth(detail.width, !isWebView),
+          }}
+          datePickerContainer={datePickerContainer}
+          label={detail?.label && intl.formatMessage({ id: detail.label })}
+          showLabel={detail.showLabel}
+          isDropdown={detail.isDropdown}
+          isEditable={detail.isEditable}
+          isCounterInput={detail.isCounterInput}
+          isError={!!detail.error}
+          isMandatory={detail.isMandatory}
+          selectedItems={detail.defaultValues}
+          indexNumber={index}
+          isSelected="isSelected"
+          indexField="selectedIndex"
+          isEmptyField={detail?.isEmptyField ?? false}
+          options={detail.options || []}
+          isMultiline={detail?.isMultiline}
+          isCheckBoxSelection={detail?.isCheckBoxSelection}
+          checkBoxOptions={detail?.checkBoxOptions}
+          handleAddRemoveRow={(isActionToAdd) =>
+            handleAddRemoveRow(isActionToAdd, index, detail?.key)
           }
-        }}
-        isRupee={detail?.isRupee}
-        isCalendar={detail?.isCalendar}
-        minDate={detail?.minDate}
-        maxDate={detail?.maxDate}
-        format={detail?.format}
-        isSingleMutliSelect={detail.isSingleMutliSelect}
-        showMonthYearPicker={detail?.showMonthYearPicker}
-        checkBoxTextStyle={detail?.checkBoxTextStyle}
-      />
+          handleCheckBoxSelection={(id) =>
+            handleCheckBoxSelection(id, index, detail?.key)
+          }
+          isActionToAdd={detail?.isActionToAdd}
+          isSingleSelection={detail?.isSingleSelection}
+          placeholder={
+            detail?.placeholder &&
+            intl.formatMessage({ id: detail.placeholder })
+          }
+          maxLength={detail.maxLength}
+          isNumeric={detail.isNumeric}
+          isToggle={detail.isToggle}
+          isTextInputWithChip={detail?.isTextInputWithChip}
+          onChipUpdate={(chipData) =>
+            handleChange(detail.label, chipData, index, detail)
+          }
+          valueField={detail.valueField || "label"}
+          labelField={detail.labelField || "label"}
+          inputKey={detail.inputKey || "value"}
+          onChangeValue={(val) =>
+            detail.isMultiSelect
+              ? handleMultiSelect(val, detail, index)
+              : handleChange(detail.label, val, index, detail?.key)
+          }
+          isMultiSelect={detail.isMultiSelect}
+          onChangeText={(val) => {
+            if (detail?.isNumeric) {
+              if (numericValidator(val)) handleChange(detail.label, val);
+            } else {
+              handleChange(detail.label, val, index);
+            }
+          }}
+          isRupee={detail?.isRupee}
+          isCalendar={detail?.isCalendar}
+          minDate={detail?.minDate}
+          maxDate={detail?.maxDate}
+          format={detail?.format}
+          isSingleMutliSelect={detail.isSingleMutliSelect}
+          showMonthYearPicker={detail?.showMonthYearPicker}
+          checkBoxTextStyle={detail?.checkBoxTextStyle}
+        />
+        {!!footerText && (
+          <CommonText customTextStyle={styles.footerText} fontWeight="500">
+            {footerText}
+          </CommonText>
+        )}
+      </>
     );
   };
 
@@ -305,7 +330,26 @@ const DetailComponent = ({
           {isShowCancel && isEditable && renderCancelButton()}
         </View>
       )}
-      <View style={{ ...containerStyle, ...customContainerStyle }}>
+      <View
+        style={{
+          ...containerStyle,
+          ...customContainerStyle,
+        }}
+      >
+        {!!tableHeaderList?.length &&
+          tableHeaderList.map((headerObj) => (
+            <CommonText
+              customTextStyle={{
+                ...styles.containerStyle,
+                color: colors.darkGrey,
+                fontSize: 12,
+              }}
+              fontWeight={500}
+            >
+              {!!headerObj.headerLabel &&
+                intl.formatMessage({ id: headerObj.headerLabel })}
+            </CommonText>
+          ))}
         {isShowSwitch && isEditable && !isWebView && renderSwitch()}
         {details?.map((detail, idx) => {
           if (isEditable && detail.viewOnlyField) {

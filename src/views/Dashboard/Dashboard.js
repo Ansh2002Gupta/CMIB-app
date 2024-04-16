@@ -16,6 +16,8 @@ import styles from "./dashboard.style";
 import useIsWebView from "../../hooks/useIsWebView";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import SearchView from "../../components/SearchView";
+import JobDetails from "../../containers/RoundOne/ApplicationFormContainer/JobDetails";
+import CompanyProfileForm from "../../containers/RoundOne/ApplicationFormContainer/CompanyProfileForm/CompanyProfileForm";
 
 function DashboardView() {
   const intl = useIntl();

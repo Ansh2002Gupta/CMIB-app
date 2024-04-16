@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
+  Platform,
 } from "@unthinkable/react-core-components";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
@@ -19,13 +20,18 @@ import DetailCard from "../../../../components/DetailCard";
 import MultiRow from "../../../../core/layouts/MultiRow";
 import TwoColumn from "../../../../core/layouts/TwoColumn/TwoColumn";
 import useIsWebView from "../../../../hooks/useIsWebView";
-import { gridStyles } from "../../../../theme/styles/commonStyles";
+import commonStyles, {
+  gridStyles,
+} from "../../../../theme/styles/commonStyles";
 import { numericValidator } from "../../../../utils/validation";
 import images from "../../../../images";
 import styles from "./JobDetails.style";
 import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../../../constants/constants";
+import AddDocument from "../../../../components/AddDocument";
+import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
 
 const JobDetailsTemplate = ({
+  addDocumentField,
   addDesignation,
   bondPeriod,
   compensation,
@@ -38,8 +44,14 @@ const JobDetailsTemplate = ({
   handleDesignationName,
   handleExitAmount,
   handleMonthlyData,
+  handleTextEditorValue,
   handleStartingSalary,
   handleYearlyData,
+  handleSaveAndNext,
+  requiredDocumentDetails,
+  setRequiredDocumentDetails,
+  requiredPostingPlaceDetail,
+  setRequiredPostingPlaceDetail,
   handleToggle,
   jobDetailData,
   onClickAddDesignation,
@@ -133,6 +145,9 @@ const JobDetailsTemplate = ({
               id: "label.roles_and_responsibility",
             })}
             isMandatory
+            onChangeText={(val) => {
+              handleTextEditorValue(val);
+            }}
           />
           <CustomTextInput
             customStyle={styles.ctcTextInputStyle}
@@ -159,6 +174,7 @@ const JobDetailsTemplate = ({
             details={jobDetailData?.monthly}
             handleChange={handleMonthlyData}
             isEditProfile
+            cols={isWebView ? 3 : 1}
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
@@ -166,9 +182,17 @@ const JobDetailsTemplate = ({
             details={jobDetailData?.yearly}
             handleChange={handleYearlyData}
             isEditProfile
+            cols={isWebView ? 3 : 1}
             customCardStyle={styles.yearlyCustomCardStyle}
           />
         </View>
+      ),
+    },
+    {
+      content: (
+        <AddDocument
+          {...{ setRequiredDocumentDetails, requiredDocumentDetails }}
+        />
       ),
     },
     {
@@ -237,6 +261,17 @@ const JobDetailsTemplate = ({
           </CommonText>
           {renderSelectionProcess()}
         </CardComponent>
+      ),
+    },
+    {
+      content: (
+        <AddPlaceOfPosting
+          {...{
+            jobDetailData,
+            requiredPostingPlaceDetail,
+            setRequiredPostingPlaceDetail,
+          }}
+        />
       ),
     },
   ];

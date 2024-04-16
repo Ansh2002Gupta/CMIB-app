@@ -13,9 +13,9 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const intl = useIntl();
 
   let tabConfig = [
-    // {
-    //   component: CompanyProfile,
-    // },
+    {
+      component: CompanyProfile,
+    },
     {
       component: JobDetails,
     },

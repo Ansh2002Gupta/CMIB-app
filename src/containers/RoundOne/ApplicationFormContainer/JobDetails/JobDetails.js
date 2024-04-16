@@ -1,11 +1,19 @@
 import React from "react";
+import { useIntl } from "react-intl";
+import { View, Platform } from "@unthinkable/react-core-components";
 
-import ConfigurableList from "../../../../components/ConfigurableList/ConfigurableList";
+import { TwoRow } from "../../../../core/layouts";
+
 import JobDetailsTemplate from "./JobDetailsTemplate";
 import useJobDetailForm from "./controllers/useJobDetailForm";
+import ActionPairButton from "../../../../components/ActionPairButton";
+import { useNavigate } from "../../../../routes";
+import commonStyles from "../../../../theme/styles/commonStyles";
+import styles from "./JobDetails.style";
 
-const JobDetails = () => {
+const JobDetails = ({ tabHandler }) => {
   const {
+    addDocumentField,
     addDesignation,
     bondPeriod,
     compensation,
@@ -14,6 +22,7 @@ const JobDetails = () => {
     exitAmount,
     handleBondPeriod,
     handleCompensation,
+    handleTextEditorValue,
     handleCTCDetail,
     handleDesignationName,
     handleExitAmount,
@@ -21,65 +30,83 @@ const JobDetails = () => {
     handleStartingSalary,
     handleYearlyData,
     handleToggle,
+    requiredDocumentDetails,
+    setRequiredDocumentDetails,
+    requiredPostingPlaceDetail,
+    setRequiredPostingPlaceDetail,
     jobDetailData,
+    handleSaveAndNext,
     onClickAddDesignation,
     selectionProcess,
     startingSalary,
   } = useJobDetailForm();
 
-  const dummyDataItems2 = [
-    {
-      id: 0,
-      name: "Allahabad",
-    },
-    {
-      id: 1,
-      name: "Bombay",
-    },
-    {
-      id: 2,
-      name: "Chennai",
-    },
-    {
-      id: 3,
-      name: "Delhi",
-    },
-    {
-      id: 4,
-      name: "Etawah",
-    },
-    {
-      id: 5,
-      name: "Gandhinagar",
-    },
-  ];
+  const isWebProps =
+    Platform.OS.toLowerCase() === "web"
+      ? {
+          buttonOneStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonStyle,
+          buttonOneContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonStyle,
+        }
+      : {};
+
+  const navigate = useNavigate();
+  const intl = useIntl();
 
   return (
-    <>
-      <JobDetailsTemplate
-        {...{
-          addDesignation,
-          bondPeriod,
-          compensation,
-          CTCDetail,
-          designationName,
-          exitAmount,
-          handleBondPeriod,
-          handleCompensation,
-          handleCTCDetail,
-          handleDesignationName,
-          handleExitAmount,
-          handleMonthlyData,
-          handleStartingSalary,
-          handleYearlyData,
-          handleToggle,
-          jobDetailData,
-          onClickAddDesignation,
-          selectionProcess,
-          startingSalary,
-        }}
-      />
-    </>
+    <TwoRow
+      topSection={
+        <JobDetailsTemplate
+          {...{
+            addDocumentField,
+            addDesignation,
+            bondPeriod,
+            compensation,
+            CTCDetail,
+            designationName,
+            exitAmount,
+            handleBondPeriod,
+            handleCompensation,
+            handleCTCDetail,
+            handleDesignationName,
+            handleExitAmount,
+            handleMonthlyData,
+            handleStartingSalary,
+            handleYearlyData,
+            handleToggle,
+            requiredDocumentDetails,
+            handleTextEditorValue,
+            setRequiredDocumentDetails,
+            requiredPostingPlaceDetail,
+            setRequiredPostingPlaceDetail,
+            jobDetailData,
+            onClickAddDesignation,
+            selectionProcess,
+            startingSalary,
+          }}
+        />
+      }
+      isTopFillSpace
+      bottomSection={
+        <View style={styles.actionBtnContainer}>
+          <ActionPairButton
+            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+            buttonTwoText={intl.formatMessage({ id: "label.save" })}
+            onPressButtonOne={() => navigate(-1)}
+            onPressButtonTwo={() => {
+              handleSaveAndNext();
+            }}
+            displayLoader={false}
+            customStyles={{
+              ...isWebProps,
+              customContainerStyle: commonStyles.customContainerStyle,
+            }}
+            isButtonTwoGreen
+          />
+        </View>
+      }
+    />
   );
 };
 

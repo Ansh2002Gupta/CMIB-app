@@ -204,6 +204,29 @@ export const STEPPER_STATE = {
   INACTIVE: "inActive",
 };
 
+export const DOCUMENT_TYPE = [
+  { label: "Photocopies", value: "Photocopies" },
+  { label: "Original", value: "Original" },
+  {
+    label: "Both",
+    value: "Both",
+  },
+];
+
+export const ADD_DOCUMENT = {
+  BOTH: "Both",
+  PHOTOCOPIES: "Photocopies",
+  DOCUMENT_NAME: "documentName",
+  DOCUMENT_TYPE: "documentType",
+  COPIESNUMBER: "copiesNumber",
+  ORIGINAL: "Original",
+};
+
+export const PLACE_OF_POSTING = {
+  TOTAL: "total",
+  POSTING_PLACE: "postingPlace",
+};
+
 export const SIGN_UP_STEPPER_OPTION = [
   {
     title: "label.welcome_to_sign_up",
@@ -218,6 +241,18 @@ export const SIGN_UP_STEPPER_OPTION = [
     title: "label.other_details",
   },
 ];
+
+export const document_keys = {
+  DOCUMENT_NAME: "document_name",
+  DOCUMENT_TYPE: "document_type",
+  NUMBER_OF_COPIES: "no_of_copies",
+};
+
+export const document_keys_with_label = {
+  "label.document_name": "documentName",
+  "label.document_type": "documentType",
+  "label.no_of_copies": "copiesNumber",
+};
 
 export const ZOOM_CONSTANT = {
   MAX_ZOOM: 3,

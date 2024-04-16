@@ -93,6 +93,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundColor,
     paddingTop: 16,
   },
+  actionBtnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 16,
+    padding: 24,
+    backgroundColor: colors.backgroundGrey,
+  },
+  buttonStyle: { maxHeight: 44, maxWidth: 80 },
 });
 
 export default styles;

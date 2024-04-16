@@ -1,14 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Platform } from "@unthinkable/react-core-components";
 
 import CardComponent from "../../components/CardComponent/CardComponent";
 import DetailComponent from "../../components/DetailComponent";
 import useIsWebView from "../../hooks/useIsWebView";
 import style from "./DetailCard.style";
 
+const isWeb = Platform.OS.toLowerCase() === "web";
+
 const DetailCard = ({
   customCardStyle,
   customContainerStyle,
+  cols,
   details,
   handleBlur,
   handleChange,
@@ -24,7 +28,11 @@ const DetailCard = ({
   isShowSwitch,
   onPressActionButton,
   otherDetails,
+  onAdd,
+  onDelete,
   isShowCancel,
+  footerId,
+  tableHeaderList,
   handleCancel,
   handleAddRemoveRow,
   handleCheckBoxSelection,
@@ -37,13 +45,25 @@ const DetailCard = ({
     <CardComponent customStyle={{ ...style.cardStyle, ...customCardStyle }}>
       <DetailComponent
         customContainerStyle={{
-          ...(isRow ? style.customStyle : {}),
+          ...(isRow
+            ? style.customStyle
+            : isWeb && isWebView
+            ? {
+                display: "grid",
+                gridTemplateColumns: Array(cols).fill("1fr").join(" "),
+                overflow: "auto",
+                alignItems: "center",
+              }
+            : {}),
           ...customContainerStyle,
         }}
         hasActionButton={isWebView && hasActionButton}
         headerText={headerId}
         index={index}
         isEditable={isEditProfile}
+        onAdd={onAdd}
+        onDelete={onDelete}
+        tableHeaderList={tableHeaderList}
         isInputDisable={isShowSwitch && !isActive}
         onPressActionButton={onPressActionButton}
         {...{
@@ -83,10 +103,12 @@ const DetailCard = ({
 };
 
 DetailCard.defaultProps = {
+  cols: 1,
   customCardStyle: {},
   customContainerStyle: {},
   details: [],
   handleBlur: () => {},
+  footerId: "",
   handleChange: () => {},
   handleSwitchChange: () => {},
   hasActionButton: false,
@@ -101,13 +123,16 @@ DetailCard.defaultProps = {
   handleCancel: () => {},
   handleAddRemoveRow: () => {},
   handleCheckBoxSelection: () => {},
+  tableHeaderList: [],
 };
 
 DetailCard.propTypes = {
+  cols: PropTypes.number,
   customCardStyle: PropTypes.object,
   customContainerStyle: PropTypes.object,
   details: PropTypes.array,
   handleBlur: PropTypes.func,
+  footerId: PropTypes.string,
   handleChange: PropTypes.func,
   handleSwitchChange: PropTypes.func,
   hasActionButton: PropTypes.bool,
@@ -118,12 +143,15 @@ DetailCard.propTypes = {
   isEditProfile: PropTypes.bool,
   isRow: PropTypes.bool,
   isShowSwitch: PropTypes.bool,
+  onAdd: PropTypes.func,
+  onDelete: PropTypes.func,
   onPressActionButton: PropTypes.func,
   otherDetails: PropTypes.array,
   isShowCancel: PropTypes.bool,
   handleCancel: PropTypes.func,
   handleAddRemoveRow: PropTypes.func,
   handleCheckBoxSelection: PropTypes.func,
+  tableHeaderList: PropTypes.array,
 };
 
 export default DetailCard;

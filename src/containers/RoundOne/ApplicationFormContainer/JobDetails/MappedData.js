@@ -127,5 +127,37 @@ export const mapApiDataToUI = () => {
         isNumeric: true,
       },
     ],
+    Posting_Place: [
+      {
+        key: "others",
+        label: "label.others",
+        value: "",
+      },
+      {
+        key: "obc",
+        label: "label.OBC",
+        value: "",
+      },
+      {
+        key: "sc",
+        label: "label.SC",
+        value: "",
+      },
+      {
+        key: "st",
+        label: "label.ST",
+        value: "",
+      },
+      {
+        key: "ph",
+        label: "label.PH",
+        value: "",
+      },
+      {
+        key: "general",
+        label: "label.general",
+        value: "",
+      },
+    ],
   };
 };

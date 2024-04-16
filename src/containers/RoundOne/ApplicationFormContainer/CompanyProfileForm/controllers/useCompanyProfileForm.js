@@ -10,9 +10,7 @@ import useSaveLogo from "../../../../../services/apiServices/hooks/CompanyLogo/u
 import useDeleteLogo from "../../../../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import {
   APPLICATION,
-  CORE,
   CORE_INDUSTRY_TYPE,
-  CORE_STATE,
   COUNTRY_CODE,
   PROFILE,
   ROUNDS,
@@ -25,7 +23,6 @@ import {
 } from "../../../../../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
 import { gridStyles } from "../../../../../theme/styles/commonStyles";
-import { UserProfileContext } from "../../../../../globalContext/userProfile/userProfileProvider";
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
 import { useParams } from "react-router";
 import { usePatch } from "../../../../../hooks/useApiRequest";

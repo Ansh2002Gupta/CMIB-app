@@ -162,6 +162,7 @@ import iconCalendarWhite from "../../public/images/svg/iconCalendarWhite.svg";
 import iconTrashSVG from "../../public/images/svg/iconTrash.svg";
 import iconArchiveSaveMobile from "../../public/images/svg/iconArchiveSaveMobile.svg";
 import iconDefaultLogo from "../../public/images/svg/iconDefaultLogo.svg";
+import iconEditBlue from "../../public/images/svg/iconEditBlue.svg";
 
 const images = {
   iconArrowUp,
@@ -327,6 +328,7 @@ const images = {
   iconTrashSVG,
   iconArchiveSaveMobile,
   iconDefaultLogo,
+  iconEditBlue,
 };
 
 export default images;

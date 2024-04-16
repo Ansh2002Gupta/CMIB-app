@@ -55,6 +55,7 @@ export const PERSONAL = "/personal";
 export const PROFILE = "/profile";
 export const ROUNDS = "/rounds";
 export const STATUS = "/status";
+export const JOB_DETAILS = "/job-detail";
 export const TICKET_REPLIES_SUB_ROUTES = "replies";
 export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
