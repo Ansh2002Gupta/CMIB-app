@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     borderWidth: 1,
     borderRadius: 8,
+    minHeight: 240,
   },
   showImageStyle: {
     borderStyle: "solid",
@@ -24,6 +25,9 @@ const styles = StyleSheet.create({
     minHeight: 150,
     padding: 10,
   },
+  videoContainer: {
+    padding: 0,
+  },
   selectedImageStyle: {
     minHeight: 145,
     minWidth: 150,
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
     width: "100%",
     backgroundColor: colors.white,
@@ -47,18 +51,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 8,
     paddingTop: 16,
     paddingBottom: 16,
-  },
-  textContainerBox: {
-    ...Platform.select({
-      web: {
-        flexShrink: "unset",
-      },
-    }),
-  },
-  nameStyle: {
-    color: colors.darkBlue,
-    fontSize: 14,
-    lineHeight: 24,
   },
   deleteIcon: {
     ...Platform.select({

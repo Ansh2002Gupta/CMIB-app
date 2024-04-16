@@ -6,7 +6,9 @@ import { Image, View } from "@unthinkable/react-core-components";
 import CardComponent from "../CardComponent/CardComponent";
 import Chip from "../Chip";
 import CommonText from "../CommonText";
+import CustomImage from "../CustomImage";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
+import Switch from "../Switch";
 import useIsWebView from "../../hooks/useIsWebView";
 import colors from "../../assets/colors";
 import images from "../../images";
@@ -21,9 +23,13 @@ const IconHeader = ({
   hasActionButton,
   hasIconBar,
   headerText,
+  handleSwitchChange,
   iconLeft,
   iconRight,
   iconStyle,
+  isActive,
+  isSwitchVisible,
+  isBorderVisible,
   mobActionButton,
   onPressLeftIcon,
   onPressRightIcon,
@@ -112,28 +118,46 @@ const IconHeader = ({
             </CustomTouchableOpacity>
           )}
           {hasActionButton && showInWeb && (
-            <CardComponent
-              customStyle={{
-                ...styles.cardContainer,
-                ...customActionButtonStyle,
-              }}
-            >
-              <CustomTouchableOpacity onPress={handleButtonClick}>
-                <Image source={actionButtonIcon} />
-                <CommonText
-                  customTextStyle={{
-                    ...styles.textStyle,
-                    ...customActionButtonText,
-                  }}
-                >
-                  {buttonTitle}
-                </CommonText>
-              </CustomTouchableOpacity>
-            </CardComponent>
+            <CustomTouchableOpacity onPress={handleButtonClick}>
+              <CardComponent
+                customStyle={{
+                  ...styles.cardContainer,
+                  ...customActionButtonStyle,
+                }}
+              >
+                <View style={styles.editContainer}>
+                  <CustomImage
+                    style={styles.iconStyle}
+                    source={actionButtonIcon}
+                    Icon={actionButtonIcon}
+                    isSvg
+                    alt={"edit icon"}
+                  />
+                  <CommonText
+                    customTextStyle={{
+                      ...styles.textStyle,
+                      ...customActionButtonText,
+                    }}
+                  >
+                    {buttonTitle}
+                  </CommonText>
+                </View>
+              </CardComponent>
+            </CustomTouchableOpacity>
+          )}
+          {isSwitchVisible && (
+            <View>
+              <Switch
+                isToggled={isActive}
+                onChange={() => {
+                  handleSwitchChange && handleSwitchChange();
+                }}
+              />
+            </View>
           )}
         </View>
       </>
-      <View style={styles.borderStyle} />
+      {isBorderVisible && <View style={styles.borderStyle} />}
     </View>
   );
 };
@@ -145,11 +169,15 @@ IconHeader.defaultProps = {
   customActionButtonText: {},
   handleButtonClick: () => {},
   hasActionButton: false,
+  handleSwitchChange: () => {},
   hasIconBar: false,
   headerText: "",
   iconLeft: images.iconBack,
   iconRight: images.iconNotification,
   iconStyle: {},
+  isSwitchVisible: false,
+  isActive: false,
+  isBorderVisible: true,
   mobActionButton: "",
   onPressLeftIcon: () => {},
   onPressRightIcon: () => {},
@@ -165,9 +193,13 @@ IconHeader.propTypes = {
   hasActionButton: PropTypes.bool,
   hasIconBar: PropTypes.bool,
   headerText: PropTypes.string,
-  iconLeft: PropTypes.string,
-  iconRight: PropTypes.string,
+  handleSwitchChange: PropTypes.func,
+  iconLeft: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  iconRight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   iconStyle: PropTypes.object,
+  isSwitchVisible: PropTypes.bool,
+  isActive: PropTypes.bool,
+  isBorderVisible: PropTypes.bool,
   mobActionButton: PropTypes.node,
   onPressLeftIcon: PropTypes.func,
   onPressRightIcon: PropTypes.func,

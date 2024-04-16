@@ -5,10 +5,12 @@ const useFilterModal = (
   initialFilterState,
   onApplyFilter,
   setFilterState,
-  setShowFilterOptions
+  setShowFilterOptions,
+  filterCategory,
+  renderCalendar
 ) => {
   const { selectedStatus, selectedQueryType, activeCategories } = filterState;
-  const [currentCategory, setCurrentCategory] = useState("Status");
+  const [currentCategory, setCurrentCategory] = useState(filterCategory[0]);
 
   const prevFilterState = useRef(filterState);
 
@@ -22,12 +24,18 @@ const useFilterModal = (
   };
 
   const handleStatusChange = (status) => {
-    setFilterState((prevState) => {
-      const newSelectedStatus = prevState.selectedStatus.includes(status.id)
-        ? prevState.selectedStatus.filter((s) => s !== status.id)
-        : [...prevState.selectedStatus, status.id];
-      return { ...prevState, selectedStatus: newSelectedStatus };
-    });
+    if (renderCalendar) {
+      setFilterState((prevState) => {
+        return { ...prevState, dateSelected: status };
+      });
+    } else {
+      setFilterState((prevState) => {
+        const newSelectedStatus = prevState.selectedStatus.includes(status.id)
+          ? prevState.selectedStatus.filter((s) => s !== status.id)
+          : [...prevState.selectedStatus, status.id];
+        return { ...prevState, selectedStatus: newSelectedStatus };
+      });
+    }
   };
 
   const handleQueryTypeChange = (queryType) => {

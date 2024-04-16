@@ -1,15 +1,17 @@
 import { useState } from "react";
 
-import Http from "../../../http-service";
+import useHttpService from "../../../hooks/useHttpService";
 import { API_STATUS, STATUS_CODES } from "../../../../constants/constants";
-import { COMPANY_LOGO } from "../../apiEndPoint";
+import { COMPANY_LOGO, DOCUMENT_UPLOAD } from "../../apiEndPoint";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../../constants/errorMessages";
 
-const useSaveLogo = () => {
+const useSaveLogo = ({ isDocumentUpload } = {}) => {
   const [uploadStatus, setUploadStatus] = useState(API_STATUS.IDLE);
   const [fileUploadResult, setFileUploadResult] = useState(null);
   const [errorWhileUpload, setErrorWhileUpload] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
+
+  const { Http } = useHttpService();
 
   const handleFileUpload = async ({ file, successCallback, errorCallback }) => {
     try {
@@ -27,7 +29,14 @@ const useSaveLogo = () => {
           }
         },
       };
-      const res = await Http.post(COMPANY_LOGO, file, headers, otherOptions);
+      const res = await Http.post(
+        isDocumentUpload ? DOCUMENT_UPLOAD : COMPANY_LOGO,
+        file,
+        headers,
+        otherOptions,
+        () => {},
+        true
+      );
       if (
         res.code === STATUS_CODES.SUCCESS_STATUS ||
         res.status === STATUS_CODES.SUCCESS_STATUS

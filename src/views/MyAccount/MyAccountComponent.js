@@ -20,11 +20,11 @@ const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
   const [userProfileDetails, userProfileDispatch] =
     useContext(UserProfileContext);
 
+  const accessibleModules = userProfileDetails.userDetails?.menu_items;
+
   const handleOptionClick = (option) => {
     setShowAccountSection && setShowAccountSection(false);
-    const shouldNavigate = isWebView
-      ? !option?.preventWebNavigation
-      : !!option?.preventWebNavigation || true;
+    const shouldNavigate = isWebView ? !option?.preventWebNavigation : true;
     if (option?.navigateTo && shouldNavigate) {
       navigate(option?.navigateTo);
       return;
@@ -47,10 +47,13 @@ const MyAccountComponent = ({ omitArrowIcon, setShowAccountSection }) => {
 
   return (
     <MyAccountUI
-      handleOptionClick={handleOptionClick}
-      intl={intl}
-      options={options}
-      omitArrowIcon={omitArrowIcon}
+      {...{
+        accessibleModules,
+        handleOptionClick,
+        intl,
+        omitArrowIcon,
+        options,
+      }}
       userProfileDetails={userProfileDetails?.userDetails}
     />
   );

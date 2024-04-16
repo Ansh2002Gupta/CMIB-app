@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
+
 import AddDesignation from "../../containers/AddDesignation/AddDesignation";
 import CommonText from "../../components/CommonText";
 import ConfirgurableList from "../../components/ConfigurableList";
@@ -9,6 +10,15 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import SearchView from "../../components/SearchView";
 import TouchableImage from "../../components/TouchableImage";
 import images from "../../images";
+import useIsWebView from "../../hooks/useIsWebView";
+
+import { TwoRow } from "../../core/layouts";
+
+import CAJobsDashboard from "../CAJobsDashboard";
+import IconHeader from "../../components/IconHeader/IconHeader";
+import { moduleKeys } from "../../constants/sideBarHelpers";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 import styles from "./dashboard.style";
 
 const dummyDataItems1 = [
@@ -106,6 +116,9 @@ function DashboardView() {
   const [menuOptions, setMenuOptions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const { isWebView } = useIsWebView();
+  const [sideBarState] = useContext(SideBarContext);
+  const { selectedModule } = sideBarState;
 
   const dataList = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape"];
   const FilterIcon = images.iconFilter;
@@ -203,7 +216,30 @@ function DashboardView() {
         style={styles.customCellStyle}
         textStyle={styles.customCellTextStyle}
       />
-      {isEnabled && <AddDesignation resultCallback={handleAddDesignation} />}
+      <View style={styles.container}>
+        <TwoRow
+          topSection={
+            isWebView && (
+              <IconHeader
+                hasIconBar
+                headerText={intl.formatMessage({ id: "label.dashboard" })}
+                intl={intl}
+              />
+            )
+          }
+          isBottomFillSpace
+          bottomSection={
+            <>
+              {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
+                <CAJobsDashboard />
+              ) : null}
+            </>
+          }
+        ></TwoRow>
+      </View>
+      {/*  uncomment this to see modals */}
+      {/* <ViewInterviewDetails /> */}
+      {/* <ScheduleInterviewModal /> */}
     </View>
   );
 }

@@ -4,43 +4,56 @@ import { View } from "@unthinkable/react-core-components";
 
 import CommonText from "../CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
+import { HYPHEN } from "../../constants/constants";
 import style from "./BadgeLabel.style";
 
-const BadgeLabel = ({ badgeLabels, customContainerStyle, customTextStyle }) => {
+const BadgeLabel = ({
+  badgeLabels,
+  customContainerStyle,
+  customTextContainerStyle,
+  customTextStyle,
+}) => {
   const { isWebView } = useIsWebView();
 
+  const containerStyles = {
+    ...((isWebView && style.webContainerStyle) || {}),
+    ...style.containerStyle,
+    ...customContainerStyle,
+  };
   return (
-    <View
-      style={[
-        isWebView && style.webContainerStyle,
-        style.containerStyle,
-        customContainerStyle,
-      ]}
-    >
-      {badgeLabels.map((label) => (
-        <CommonText
-          customTextStyle={style.badgeStyle}
-          customContainerStyle={{
-            ...(isWebView && style.webInnerContainer),
-            ...style.innerContainerStyle,
-            ...customTextStyle,
-          }}
-        >
-          {label}
-        </CommonText>
-      ))}
+    <View style={containerStyles}>
+      {!!badgeLabels?.length ? (
+        badgeLabels?.map((label, index) => (
+          <CommonText
+            key={index}
+            customTextStyle={{ ...style.badgeStyle, ...customTextStyle }}
+            customContainerStyle={{
+              ...(isWebView && style.webInnerContainer),
+              ...style.innerContainerStyle,
+              ...customTextContainerStyle,
+            }}
+          >
+            {label}
+          </CommonText>
+        ))
+      ) : (
+        <CommonText>{HYPHEN}</CommonText>
+      )}
     </View>
   );
 };
 
 BadgeLabel.defaultProps = {
+  badgeLabels: [],
   customContainerStyle: {},
+  customTextContainerStyle: {},
   customTextStyle: {},
 };
 
 BadgeLabel.propTypes = {
-  badgeLabels: PropTypes.array.isRequired,
+  badgeLabels: PropTypes.array,
   customContainerStyle: PropTypes.object,
+  customTextContainerStyle: PropTypes.object,
   customTextStyle: PropTypes.object,
 };
 

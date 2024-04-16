@@ -7,6 +7,7 @@ export const navigations = {
   FEEDBACK: "/feedback",
   FORGOT_PASSWORD: "/forgot-password",
   JOBS: "/jobs",
+  JOB_PROFILE: "/job-profile",
   LOGIN: "/login",
   NQCA: "/nqca-placements",
   OUT_SOURCED: "*",
@@ -20,13 +21,20 @@ export const navigations = {
   WOMEN_PARTTIME: "/women-placements",
 
   //sub routes
+  ALL_JOBS: "all-jobs",
   APPLICATION_FORM: "application-form",
+  APPLIED_JOBS: "applied-jobs",
   JOB_APPLICANTS: "job-applicants",
   JOB_SEEKERS: "job-seekers",
+  JOBS: "jobs",
   MODULE_LANDING_PAGE: "dashboard",
   POSTED_JOBS: "posted-jobs",
   ROUND_ONE: "round-one",
   ROUND_TWO: "round-two",
   SAVED_CANDIDATES: "saved-candidates",
+  SAVED_JOBS: "saved-jobs",
   TICKETS_VIEW_EDIT: "ticket-details",
+  ADD_NEW_JOBS: "add-new-jobs",
+  DETAILS_JOBS: "posted-jobs/:id",
+  EDIT_JOB: "edit-job",
 };

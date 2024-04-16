@@ -31,6 +31,7 @@ const style = {
     borderRightWidth: 0,
     borderColor: colors.lightGrey,
     zIndex: 0,
+    height: 92,
   },
   formHeaderStyle: {
     color: colors.black,
@@ -50,8 +51,11 @@ const style = {
     borderColor: colors.lightGrey,
   },
   cardContainer: {
-    paddingTop: 14,
-    paddingBottom: 14,
+    height: 44,
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingRight: 16,
+    paddingLeft: 16,
     zIndex: 0,
     cursor: "pointer",
   },
@@ -64,6 +68,10 @@ const style = {
     paddingRight: 8,
     paddingLeft: 8,
     fontSize: 14,
+  },
+  iconStyle: {
+    height: 20,
+    width: 20,
   },
 };
 

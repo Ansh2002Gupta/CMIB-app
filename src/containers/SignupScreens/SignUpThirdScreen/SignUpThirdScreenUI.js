@@ -326,9 +326,9 @@ const SignUpThirdScreenUI = ({
                   onDismiss={handleDismissToast}
                 />
               )}
-
               {!!unselectedModules.length && showConfirmationModal && (
                 <ConfirmationModal
+                  severity={"warning"}
                   subHeading={
                     intl.formatMessage({
                       id: "label.you_have_not_provided",
@@ -336,7 +336,7 @@ const SignUpThirdScreenUI = ({
                     unselectedModules.map((module) => module).join(", ") +
                     " " +
                     intl.formatMessage({
-                      id: "label.to_any_contact_person",
+                      id: "label.module_occupancy_warning",
                     })
                   }
                   buttonTwoText={intl.formatMessage({

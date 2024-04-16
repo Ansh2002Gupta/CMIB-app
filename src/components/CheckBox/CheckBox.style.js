@@ -1,4 +1,5 @@
 import { Platform, StyleSheet } from "@unthinkable/react-core-components";
+import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   iconStyle: {
@@ -7,9 +8,11 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     marginLeft: 8,
-    marginBottom: 16,
     fontSize: 14,
     lineHeight: 20,
+  },
+  disabledText: {
+    color: colors.disabledGrey,
   },
   columnStyle: {
     ...Platform.select({
@@ -18,6 +21,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  customTouchableOpacity: { alignItems: "center" },
 });
 
 export default styles;

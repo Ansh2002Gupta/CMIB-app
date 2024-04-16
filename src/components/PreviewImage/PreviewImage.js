@@ -6,45 +6,64 @@ import {
   View,
 } from "@unthinkable/react-core-components";
 
-import CommonText from "../CommonText";
+import PdfCard from "../PdfCard/PdfCard";
+import VideoCard from "../VideoCard/VideoCard";
 import images from "../../images";
 import styles from "./PreviewImage.style";
 
-const PreviewImage = ({ fileName, isEditable, onRemoveImage, source }) => {
+const PreviewImage = ({
+  hideIconDelete,
+  fileUrl,
+  isDocumentUpload,
+  isVideoUpload,
+  isEditable,
+  onRemoveImage,
+  source,
+}) => {
   return (
     <View
-      style={[
-        styles.selectedImageContainer,
-        isEditable && styles.showImageStyle,
-      ]}
+      style={{
+        ...styles.selectedImageContainer,
+        ...(isEditable ? styles.showImageStyle : {}),
+      }}
     >
-      <View style={styles.imageContainer}>
-        <Image source={source} style={styles.selectedImageStyle} />
+      <View
+        style={{
+          ...styles.imageContainer,
+          ...(isVideoUpload ? styles.videoContainer : {}),
+        }}
+      >
+        {isDocumentUpload ? (
+          <PdfCard pdfUrl={fileUrl} />
+        ) : isVideoUpload ? (
+          <VideoCard url={fileUrl} />
+        ) : (
+          <Image source={source} style={styles.selectedImageStyle} />
+        )}
       </View>
-      <View style={styles.innerContainer}>
-        <CommonText
-          customContainerStyle={styles.textContainerBox}
-          customTextStyle={styles.nameStyle}
-        >
-          {fileName}
-        </CommonText>
-        <TouchableOpacity onPress={onRemoveImage}>
-          <Image source={images.iconTrash} style={styles.deleteIcon} />
-        </TouchableOpacity>
-      </View>
+      {!hideIconDelete && (
+        <View style={styles.innerContainer}>
+          <TouchableOpacity onPress={onRemoveImage}>
+            <Image source={images.iconTrashSVG} style={styles.deleteIcon} />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
 
 PreviewImage.defaultProps = {
-  fileName: "",
+  hideIconDelete: false,
   isEditable: false,
   onRemoveImage: () => {},
   source: "",
 };
 
 PreviewImage.propTypes = {
-  fileName: PropTypes.string,
+  hideIconDelete: PropTypes.bool,
+  fileUrl: PropTypes.string,
+  isDocumentUpload: PropTypes.bool,
+  isVideoUpload: PropTypes.bool,
   isEditable: PropTypes.bool,
   onRemoveImage: PropTypes.func,
   source: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Http from "../services/http-service";
+import useHttpService from "../services/hooks/useHttpService";
 import { objectToQueryString } from "../utils/queryParamsHelpers";
 import { API_STATUS, STATUS_CODES } from "../constants/constants";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../constants/errorMessages";
@@ -30,6 +30,8 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
   const [data, setData] = useState(null);
   const [apiStatus, setApiStatus] = useState(API_STATUS.IDLE);
   const [error, setError] = useState(null);
+
+  const { Http } = useHttpService();
 
   const { skipApiCallOnMount } = otherOptions || {};
 
@@ -77,7 +79,7 @@ const useFetch = ({ url, apiOptions = {}, otherOptions = {} }) => {
   const isSuccess = apiStatus === API_STATUS.SUCCESS;
   const isError = apiStatus === API_STATUS.ERROR;
 
-  return { data, error, fetchData, isError, isLoading, isSuccess };
+  return { data, error, fetchData, isError, isLoading, isSuccess, setError };
 };
 
 export default useFetch;

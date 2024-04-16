@@ -31,6 +31,7 @@ const CustomTable = ({
   addNewTicket,
   allDataLoaded,
   currentPage,
+  containerStyle,
   data,
   filterApplyHandler,
   filterCategory,
@@ -48,7 +49,10 @@ const CustomTable = ({
   isHeading,
   isTicketListingLoading,
   isFirstPageReceived,
+  isTotalCardVisible,
+  isFilterVisible = true,
   loadingMore,
+  mobileComponentToRender,
   onIconPress,
   placeholder,
   queryTypeData,
@@ -61,6 +65,8 @@ const CustomTable = ({
   tableHeading,
   tableIcon,
   totalcards,
+  ThirdSection,
+  renderCalendar,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -99,44 +105,49 @@ const CustomTable = ({
             {showSearchBar && (
               <TwoColumn
                 leftSection={
-                  <SearchView
-                    data={data?.records}
-                    customSearchCriteria={handleSearchResults}
-                    placeholder={placeholder}
-                  />
-                }
-                isLeftFillSpace
-                rightSection={
-                  <CustomTouchableOpacity
-                    onPress={handleFilterModal}
-                    style={styles.imageParentStyle}
-                  >
-                    <TouchableImage
-                      source={images.iconFilter}
-                      parentStyle={styles.iconTicket}
-                      onPress={handleFilterModal}
+                  <View style={styles.flexDirectionRow}>
+                    <SearchView
+                      data={data?.records}
+                      customSearchCriteria={handleSearchResults}
+                      placeholder={placeholder}
+                      customParentStyle={styles.getParentStyle(isWebView)}
                     />
-                    {isWebView && (
-                      <CommonText customTextStyle={styles.filterText}>
-                        {intl.formatMessage({ id: "label.filters" })}
-                      </CommonText>
-                    )}
-                    {isFilterCount && (
-                      <CommonText
-                        customContainerStyle={styles.activeTickets}
-                        customTextStyle={styles.activeTicketsText}
-                        fontWeight={"600"}
+                    {isFilterVisible && (
+                      <CustomTouchableOpacity
+                        onPress={handleFilterModal}
+                        style={styles.imageParentStyle}
+                        disabled={isTicketListingLoading}
                       >
-                        {filterState?.selectedStatus.length +
-                          filterState?.selectedQueryType.length}
-                      </CommonText>
+                        <TouchableImage
+                          source={images.iconFilter}
+                          parentStyle={styles.iconTicket}
+                          onPress={handleFilterModal}
+                        />
+                        {isWebView && (
+                          <CommonText customTextStyle={styles.filterText}>
+                            {intl.formatMessage({ id: "label.filters" })}
+                          </CommonText>
+                        )}
+                        {isFilterCount && (
+                          <CommonText
+                            customContainerStyle={styles.activeTickets}
+                            customTextStyle={styles.activeTicketsText}
+                            fontWeight={"600"}
+                          >
+                            {filterState?.selectedStatus.length +
+                              filterState?.selectedQueryType.length}
+                          </CommonText>
+                        )}
+                      </CustomTouchableOpacity>
                     )}
-                  </CustomTouchableOpacity>
+                  </View>
                 }
+                rightSection={ThirdSection ? ThirdSection : <></>}
+                isLeftFillSpace={true}
                 style={styles.filterTopSection(isWebView)}
               />
             )}
-            {!isWeb && (
+            {!isWeb && isTotalCardVisible && (
               <View style={styles.ticketTotals}>
                 <CommonText
                   fontWeight={"500"}
@@ -169,7 +180,7 @@ const CustomTable = ({
                 {isTicketListingLoading && (isWeb || isFirstPageReceived) ? (
                   <LoadingScreen />
                 ) : (
-                  <View style={styles.tableSection}>
+                  <View style={{ ...styles.tableSection, ...containerStyle }}>
                     {isWebView && (
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
@@ -184,7 +195,7 @@ const CustomTable = ({
                       data={data}
                       showsVerticalScrollIndicator={false}
                       keyExtractor={(item, index) => index.toString()}
-                      renderItem={({ item }) => {
+                      renderItem={({ item, index }) => {
                         return (
                           <>
                             {isWebView ? (
@@ -193,34 +204,40 @@ const CustomTable = ({
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
-                              <View style={styles.mobileContainer}>
-                                <View>
-                                  <CommonText
-                                    fontWeight={"600"}
-                                    customTextStyle={styles.cellTextStyle()}
-                                  >
-                                    {getRenderText(item, headingTexts)}
-                                  </CommonText>
-                                  <CommonText
-                                    customTextStyle={styles.tableQueryText}
-                                  >
-                                    {getRenderText(item, subHeadingText)}
-                                  </CommonText>
-                                </View>
-                                <View style={styles.rowsPerPageWeb}>
-                                  <Chip
-                                    label={getRenderText(item, statusText)}
-                                    style={getStatusStyle(item.status)}
-                                  />
-                                  <TouchableImage
-                                    onPress={() => {
-                                      onIconPress(item);
-                                    }}
-                                    source={tableIcon}
-                                    style={styles.iconTicket}
-                                  />
-                                </View>
-                              </View>
+                              <>
+                                {mobileComponentToRender ? (
+                                  mobileComponentToRender(item, index)
+                                ) : (
+                                  <View style={styles.mobileContainer}>
+                                    <View>
+                                      <CommonText
+                                        fontWeight={"600"}
+                                        customTextStyle={styles.cellTextStyle()}
+                                      >
+                                        {getRenderText(item, headingTexts)}
+                                      </CommonText>
+                                      <CommonText
+                                        customTextStyle={styles.tableQueryText}
+                                      >
+                                        {getRenderText(item, subHeadingText)}
+                                      </CommonText>
+                                    </View>
+                                    <View style={styles.rowsPerPageWeb}>
+                                      <Chip
+                                        label={getRenderText(item, statusText)}
+                                        style={getStatusStyle(item.status)}
+                                      />
+                                      <TouchableImage
+                                        onPress={() => {
+                                          onIconPress(item);
+                                        }}
+                                        source={tableIcon}
+                                        style={styles.iconTicket}
+                                      />
+                                    </View>
+                                  </View>
+                                )}
+                              </>
                             )}
                           </>
                         );
@@ -309,6 +326,7 @@ const CustomTable = ({
             onApplyFilter,
             statusData,
             queryTypeData,
+            renderCalendar,
           }}
         />
       )}
@@ -328,6 +346,7 @@ const CustomTable = ({
 
 CustomTable.defaultProps = {
   addNewTicket: false,
+  containerStyle: {},
   headingTexts: [],
   handleTicketModal: () => {},
   showSearchBar: true,
@@ -335,10 +354,12 @@ CustomTable.defaultProps = {
   subHeadingText: "",
   totalcards: 0,
   placeholder: "Search",
+  isTotalCardVisible: true,
 };
 
 CustomTable.propTypes = {
   addNewTicket: PropTypes.bool,
+  containerStyle: PropTypes.object,
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   data: PropTypes.array,
@@ -352,6 +373,7 @@ CustomTable.propTypes = {
   handleLoadMore: PropTypes.func.isRequired,
   handleTicketModal: PropTypes.func,
   headingTexts: PropTypes.array,
+  mobileComponentToRender: PropTypes.func,
   isHeading: PropTypes.bool.isRequired,
   isTicketListingLoading: PropTypes.bool,
   indexOfFirstRecord: PropTypes.number.isRequired,
@@ -368,7 +390,9 @@ CustomTable.propTypes = {
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,
   totalcards: PropTypes.number,
+  ThirdSection: PropTypes.elementType,
   placeholder: PropTypes.string,
+  isTotalCardVisible: PropTypes.bool,
 };
 
 export default CustomTable;

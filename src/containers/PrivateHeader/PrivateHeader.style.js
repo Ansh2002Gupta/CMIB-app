@@ -38,7 +38,7 @@ const styles = {
   iconNotification: {
     width: 24,
     height: 24,
-    marginLeft:10,
+    marginLeft: 10,
   },
   overView: {
     color: colors.darkGreySecond,
@@ -53,11 +53,6 @@ const styles = {
   notficationIconView: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  profileView: {
-    flexDirection: "row",
-    marginLeft: 10,
-    cursor:"pointer"
   },
   profileNameSection: {
     flexDirection: "row",

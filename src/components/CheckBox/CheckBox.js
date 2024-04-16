@@ -8,6 +8,8 @@ import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
 import styles from "./CheckBox.style";
 
+const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
+
 const CheckBox = ({
   customTextStyle,
   handleCheckbox,
@@ -16,10 +18,27 @@ const CheckBox = ({
   isPartial,
   isSelected,
   title,
+  iconCheck,
+  iconUnCheck,
+  checkBoxTextStyle,
 }) => {
-  const CheckIcon = Images.iconCheckbox;
-  const UncheckIcon = Images.iconUnCheckbox;
-  const PartilalIcon = Images.iconPartial;
+  const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
+  const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
+  const PartialIcon = Images.iconPartial;
+  const DisabledCheckBoxIcon = Images.iconDisabledCheck;
+
+  const getCheckBoxIcon = () => {
+    if (isDisabled) {
+      return DisabledCheckBoxIcon;
+    }
+    if (isPartial) {
+      return PartialIcon;
+    }
+    if (isSelected) {
+      return CheckIcon;
+    }
+    return UncheckIcon;
+  };
 
   const rowCheckBox = [
     {
@@ -27,19 +46,21 @@ const CheckBox = ({
         <CustomTouchableOpacity
           disabled={isDisabled}
           onPress={() => handleCheckbox(id)}
+          style={{ ...styles.customTouchableOpacity, ...customTextStyle }}
+          hitSlop={hitSlop}
         >
           <CustomImage
-            Icon={
-              isPartial ? PartilalIcon : isSelected ? CheckIcon : UncheckIcon
-            }
+            Icon={getCheckBoxIcon()}
             style={styles.iconStyle}
-            source={
-              isPartial ? PartilalIcon : isSelected ? CheckIcon : UncheckIcon
-            }
+            source={getCheckBoxIcon()}
             isSvg
           />
           <CommonText
-            customTextStyle={{ ...styles.titleStyle, ...customTextStyle }}
+            customTextStyle={{
+              ...styles.titleStyle,
+              ...(isDisabled ? styles.disabledText : {}),
+              ...checkBoxTextStyle,
+            }}
           >
             {title}
           </CommonText>
@@ -56,6 +77,8 @@ CheckBox.defaultProps = {
   isDisabled: false,
   isPartial: false,
   isSelected: false,
+  iconCheck: Images.iconCheckbox,
+  iconUnCheck: Images.iconUnCheckbox,
 };
 
 CheckBox.propTypes = {
@@ -66,6 +89,8 @@ CheckBox.propTypes = {
   isPartial: PropTypes.bool,
   isSelected: PropTypes.bool,
   title: PropTypes.string.isRequired,
+  iconCheck: PropTypes.node,
+  iconUnCheck: PropTypes.node,
 };
 
 export default CheckBox;
