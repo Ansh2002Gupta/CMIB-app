@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   customButtonTextStyle: {
-    fontSize: 12,
+    fontSize: 14,
     color: colors.black,
     fontWeight: "600",
   },
