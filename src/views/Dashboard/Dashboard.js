@@ -10,6 +10,7 @@ import BarChart from "../../components/BarChart";
 import PieChart from "../../components/PieChart/PieChart";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import TouchableImage from "../../components/TouchableImage";
+import useFetch from "../../hooks/useFetch";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import { moduleKeys } from "../../constants/sideBarHelpers";
@@ -17,6 +18,10 @@ import images from "../../images";
 import styles from "./dashboard.style";
 import useIsWebView from "../../hooks/useIsWebView";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import {
+  ROUND_ONE_DASHBOARD,
+  USER_TYPE_MEMBER,
+} from "../../services/apiServices/apiEndPoint";
 import SearchView from "../../components/SearchView";
 import colors from "../../assets/colors";
 
@@ -25,6 +30,10 @@ function DashboardView() {
   const [isEnabled, setIsEnabled] = useState(false);
   const { isWebView } = useIsWebView();
   const [sideBarState] = useContext(SideBarContext);
+  const { data: chartData } = useFetch({
+    url: USER_TYPE_MEMBER + ROUND_ONE_DASHBOARD,
+  });
+  console.log(chartData, "chartData..");
   const { selectedModule } = sideBarState;
   const DATA = [
     { x: "Google", y: 35 },
