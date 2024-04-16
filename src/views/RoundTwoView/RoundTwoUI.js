@@ -30,15 +30,19 @@ function RoundTwoUI(props) {
   });
 
   const hasRoundsData = isObjectFilled(savedRoundsData);
-  useEffect(async () => {
-    if (
-      selectedModule &&
-      sessionId &&
-      (!hasRoundsData || +sessionId !== savedRoundsData?.id)
-    ) {
-      const roundsData = await fetchData();
-      sideBarDispatch(setRoundsData(roundsData));
-    }
+
+  useEffect(() => {
+    const fetchRoundsDetails = async () => {
+      if (
+        selectedModule &&
+        sessionId &&
+        (!hasRoundsData || +sessionId !== savedRoundsData?.id)
+      ) {
+        const roundsData = await fetchData();
+        sideBarDispatch(setRoundsData(roundsData));
+      }
+    };
+    fetchRoundsDetails();
   }, [selectedModule, sessionId, hasRoundsData]);
 
   return (
