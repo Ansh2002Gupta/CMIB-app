@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   tableContent: {
     height: "90%",
   },
+  cursorStyle: { cursor: "pointer" },
 });
 
 export default styles;

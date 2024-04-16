@@ -17,13 +17,11 @@ import SideBarContentEnum from "./sideBarContentEnum";
 import SideBarItemView from "../../components/SideBarItemView/SideBarItemView";
 import TouchableImage from "../../components/TouchableImage";
 import useIsWebView from "../../hooks/useIsWebView";
+import useGlobalSessionListApi from "../../services/apiServices/hooks/useGlobalSessionList";
 import useNavigateScreen from "../../services/hooks/useNavigateScreen";
 import { UserProfileContext } from "../../globalContext/userProfile/userProfileProvider";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
-import {
-  setSelectedModule,
-  setSelectedSession,
-} from "../../globalContext/sidebar/sidebarActions";
+import { setSelectedModule } from "../../globalContext/sidebar/sidebarActions";
 import { navigations } from "../../constants/routeNames";
 import { getIconImages, getAppModules } from "../../constants/sideBarHelpers";
 import { COMPANY } from "../../constants/constants";
@@ -34,6 +32,7 @@ import styles from "./SideBar.style";
 const SideBarContentSection = ({ onClose, showCloseIcon }) => {
   const [sideBarState, sideBarDispatch] = useContext(SideBarContext);
   const [userProfileDetails] = useContext(UserProfileContext);
+  const { getGlobalSessionList } = useGlobalSessionListApi();
   const { selectedModule, selectedSession } = sideBarState;
   const { navigateScreen } = useNavigateScreen();
   const navigate = useNavigate();
@@ -57,18 +56,25 @@ const SideBarContentSection = ({ onClose, showCloseIcon }) => {
     }
   }, [isWebView, sideBarContent]);
 
+  useEffect(() => {
+    const getSessions = async () => {
+      if (selectedModule.key) {
+        await getGlobalSessionList(selectedModule.key);
+      }
+    };
+    getSessions();
+  }, [selectedModule.key]);
+
   const handleOnSelectModuleItem = (item) => {
     setActiveMenuItem(item?.children?.[0]?.key);
     navigateScreen(`/${item.key}/${item?.children?.[0]?.key}`);
     if (item.key !== selectedModule.key) {
-      sideBarDispatch(setSelectedSession(item?.session?.[0]));
       sideBarDispatch(setSelectedModule(item));
     }
     setSideBarSubMenu(SideBarContentEnum.NONE);
   };
 
   const handleOnSelectSessionItem = (item) => {
-    sideBarDispatch(setSelectedSession(item));
     setSideBarSubMenu(SideBarContentEnum.NONE);
   };
 

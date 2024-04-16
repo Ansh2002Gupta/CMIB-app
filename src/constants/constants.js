@@ -44,6 +44,7 @@ export const PAN_MAX_LENGTH = 10;
 export const COMPANY = "company";
 export const Candidate = "Candidate";
 export const Company = "Company";
+export const SESSION_KEY = "sessionKey";
 
 export const OTP_TRY_COUNT = 5;
 export const OTP_TIMER_SECOND = 0;
@@ -161,26 +162,31 @@ export const MODULE_OPTIONS = [
 ];
 
 export const COLOR_MODES = ["light", "dark"];
-export const ROUND_ONE_CARD = [
-  {
-    title: "label.add_application_form_text",
-    id: 1,
-    image: "iconAddApplicationForm",
-    subTitle: "label.add_application_form_description_text",
-  },
-  {
-    title: "label.hiring_process_text",
-    id: 2,
-    image: "iconHiringProcess",
-    subTitle: "label.hiring_process_description",
-  },
-  {
-    title: "label.download_details_text",
-    id: 3,
-    image: "iconDownloadDetails",
-    subTitle: "label.download_details_description",
-  },
-];
+
+export const getCompanyRoundCards = ({ is_filled }) => {
+  return [
+    {
+      title: !is_filled
+        ? "label.add_application_form_text"
+        : "label.edit_application_form_text",
+      id: 1,
+      image: "iconAddApplicationForm",
+      subTitle: "label.add_application_form_description_text",
+    },
+    {
+      title: "label.hiring_process_text",
+      id: 2,
+      image: "iconHiringProcess",
+      subTitle: "label.hiring_process_description",
+    },
+    {
+      title: "label.download_details_text",
+      id: 3,
+      image: "iconDownloadDetails",
+      subTitle: "label.download_details_description",
+    },
+  ];
+};
 
 export const VALIDATION_TYPE = [
   { key: "length", id: "label.char_length_validation" },
@@ -700,7 +706,7 @@ export const progressData = {
   },
 };
 export const JOB_SEEKERS_TABLE_HEADING = {
-  name: "Name",
+  name: "Candidate Name",
   candidate_id: "Candidate ID",
   total_experience: "Total Experience",
   functional_area: "Functional Area",
@@ -756,6 +762,11 @@ export const API_DATA_FOR_INTERVIEW_SCHEDULING = [
 export const KEYS = {
   OFFER_ACCEPTED: 7,
   OFFERE_REJECTED: 8,
+};
+
+export const MODULES = {
+  CA_JOBS: "ca-jobs",
+  MEMBER: "member",
 };
 
 export const JOB_APPLICANTS_HEADING = {
