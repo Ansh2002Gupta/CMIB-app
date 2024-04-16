@@ -86,6 +86,10 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
+  designationViewStyle: {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
 });
 
 export default styles;

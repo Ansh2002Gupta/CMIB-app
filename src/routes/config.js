@@ -3,7 +3,6 @@ import { Platform } from "@unthinkable/react-core-components";
 
 import Candidates from "../views/Candidates";
 import AddModifyNewJobs from "../views/AddModifyNewJobs/index";
-import ApplicantJobDetails from "../views/ApplicantJobDetails";
 import AppliedJobsView from "../views/AppliedJobsView";
 import ContentLayout from "../pages/ContentLayout";
 import SavedJobs from "../views/SavedJobs";
@@ -17,8 +16,8 @@ import FeedbackView from "../views/FeedbackView";
 import HeaderWithContentLayout from "../pages/HeaderWithContentLayout";
 import Jobs from "../views/Jobs";
 import JobsView from "../views/JobsView/JobsView";
-import JobSeekers from "../views/JobSeekers";
 import JobApplicantsView from "../views/JobApplicantsView";
+import JobSeekers from "../views/JobSeekers";
 import JobProfileTab from "../views/JobProfile";
 import JobApplicantsDetails from "../views/JobApplicantsDetails";
 import LoginScreen from "../views/LoginScreen/index";
@@ -256,8 +255,8 @@ const config = [
         element: <ViewPostedJobDetails />,
       },
       {
-        viewPath: `${navigations.DETAILS_JOBS}/${navigations.VIEW_JOB_DETAILS}`,
-        element: <ApplicantJobDetails />,
+        viewPath: `${navigations.JOBS}/${navigations.APPLICANT_DETAILS}`,
+        element: <JobApplicantsDetails />,
       },
       {
         viewPath: navigations.APPLIED_JOBS,
@@ -275,7 +274,6 @@ const config = [
         viewPath: navigations.JOB_SEEKERS,
         element: <JobSeekers />,
       },
-
       {
         viewPath: navigations.JOB_SEEKERS + navigations.CANDIDATE_DETAILS,
         element: <ViewDetailsScreen />,
