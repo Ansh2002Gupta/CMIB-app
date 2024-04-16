@@ -36,11 +36,14 @@ const Description = ({ data, title, description, style }) => {
 
   return (
     <View style={[styles.container, style]}>
-      <CommonText customTextStyle={styles.headerTextStyle}>{title}</CommonText>
+      <CommonText customTextStyle={styles.headerTextStyle} fontWeight={"600"}>
+        {title}
+      </CommonText>
       <CustomTextEditor
         value={description}
         disabled
         quilStyle={styles.quilStyle}
+        quillContainerStyle={styles.quillContainerStyle}
       />
       {data?.map((item) => renderContent(item))}
     </View>
