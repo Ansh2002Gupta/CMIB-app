@@ -39,7 +39,6 @@ export const ACADEMICS = "/academics";
 export const ACTIVITIES = "/activities";
 export const APPLICANT = "/applicant";
 export const APPLICATION = "/application";
-export const CANDIDATES = "/candidates";
 export const FILTERS = "/filters";
 export const INTERVIEWS = "/interviews";
 export const INTERVIEW = "/interview";
