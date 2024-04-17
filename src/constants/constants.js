@@ -580,9 +580,13 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
+export const PREVIEWED_LENGTH = 100;
 export const COMPANY_QUERY_TYPE_TICKET = "/";
 
-export const POPUP_OPTIONS = ["Download Profile & Resume", "View Details"];
+export const POPUP_OPTIONS = [
+  { name: "Download Profile & Resume", id: 1 },
+  { name: "View Details", id: 2 },
+];
 export const FILTER_TYPE_ENUM = { CHECKBOX: "checkbox", SLIDER: "slider" };
 export const color = [
   "#000000",

@@ -230,6 +230,7 @@ const CustomTable = ({
                     <FlatList
                       data={data || []}
                       showsVerticalScrollIndicator={false}
+                      style={styles.flatListStyle}
                       keyExtractor={(item, index) => index?.toString()}
                       renderItem={({ item, index }) => {
                         const statusRenderText =
@@ -252,7 +253,8 @@ const CustomTable = ({
                                         fontWeight={"600"}
                                         customTextStyle={styles.cellTextStyle()}
                                       >
-                                        {getRenderText(item, headingTexts)}
+                                        {getRenderText(item, headingTexts) ||
+                                          "-"}
                                       </CommonText>
                                       <Row style={styles.rowStyling}>
                                         <CommonText

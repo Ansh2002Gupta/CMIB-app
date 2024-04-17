@@ -175,6 +175,7 @@ const JobCardWeb = ({
         <TouchableOpacity onPress={onPress}>
           <CommonText customTextStyle={[style.breakWordStyle]}>
             <CustomTextEditor
+              isViewMore
               value={jobDescription}
               disabled
               quilStyle={style.customQuilStyle}

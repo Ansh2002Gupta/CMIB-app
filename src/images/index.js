@@ -36,6 +36,7 @@ const iconWalkthroughSignUpLast = appendAppBaseURl(
 const iconDivider = appendAppBaseURl("/images/iconDivider/iconDivider.png");
 const iconUpload = appendAppBaseURl("/images/iconUpload/iconUpload.png");
 const iconTrash = appendAppBaseURl("/images/iconTrash/iconTrash.png");
+const iconTrashSvg = appendAppBaseURl("/images/svg/iconTrash.svg");
 const iconEye = appendAppBaseURl("/images/iconEye/iconEye.png");
 const iconFacebook = appendAppBaseURl("/images/iconFacebook/iconFacebook.png");
 const iconInstagram = appendAppBaseURl(
@@ -254,6 +255,7 @@ const iconArchiveSaveMobile = appendAppBaseURl(
 );
 const iconClock = appendAppBaseURl("/images/svg/iconClock.svg");
 const iconTrashSVG = appendAppBaseURl("/images/svg/iconTrash.svg");
+const iconTrashBlack = appendAppBaseURl("/images/svg/iconTrashBlack.svg");
 const iconTickInsideCircle = appendAppBaseURl(
   "/images/svg/iconTickInsideCircle.svg"
 );
@@ -299,6 +301,7 @@ const images = {
   iconDivider,
   iconUpload,
   iconTrash,
+  iconTrashSvg,
   iconSuccess,
   iconMenu,
   iconProfile,
@@ -445,6 +448,7 @@ const images = {
   iconArchiveSaveMobile,
   iconClock,
   iconTrashSVG,
+  iconTrashBlack,
   iconTickInsideCircle,
   iconCrossInsideCircle,
   iconSelectCircle,

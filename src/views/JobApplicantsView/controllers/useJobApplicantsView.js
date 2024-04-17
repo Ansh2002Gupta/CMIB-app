@@ -142,7 +142,7 @@ const useJobApplicants = () => {
     isLoading: isFilterLoading,
     fetchData: fetchFilters,
   } = useFetch({
-    url: USER_TYPE_COMPANY + JOBS + JOB_APPLICANTS + FILTERS,
+    url: USER_TYPE_COMPANY + `/${JOBS}` + JOB_APPLICANTS + FILTERS,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -156,7 +156,7 @@ const useJobApplicants = () => {
   } = usePatch({
     url:
       USER_TYPE_COMPANY +
-      JOBS +
+      `/${JOBS}` +
       JOB_APPLICANTS +
       `/${showCurrentPopupmessage}` +
       STATUS,
@@ -454,7 +454,10 @@ const useJobApplicants = () => {
             </CommonText>
           </CustomTouchableOpacity>
         ),
-        style: commonStyles.columnStyle("15%"),
+        style: {
+          ...commonStyles.columnStyle("15%"),
+          ...styles.designationViewStyle,
+        },
         isFillSpace: true,
       },
       {
