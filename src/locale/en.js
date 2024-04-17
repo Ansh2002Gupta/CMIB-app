@@ -718,7 +718,7 @@ const locale = {
   "label.saved_applicant": "Saved Applicant",
   "label.updated_at": "Updated At",
   "label.save_applicant_details": "Save Applicant Details",
-  "label.edit_schedule_interview": "Edit Schedule interview",
+  "label.edit_schedule_interview": "Edit Scheduled interview",
   "label.interview_id_not_found": "Interview ID not found",
   "label.proficiency": "Proficiency",
   "label.nonEmptyField": "Please fill this field",
