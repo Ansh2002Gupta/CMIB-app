@@ -4,6 +4,7 @@ import AddDocumentTemplate from "./AddDocumentTemplate.js";
 import useAddDocument from "./controllers/useAddDocument.js";
 
 const AddDocument = ({
+  handleInputChange,
   requiredDocumentDetails,
   setRequiredDocumentDetails,
 }) => {
@@ -22,7 +23,11 @@ const AddDocument = ({
     onClickAddDocumentSaveButton,
     onClickDeleteDocument,
     onCLickEditDocument,
-  } = useAddDocument({ requiredDocumentDetails, setRequiredDocumentDetails });
+  } = useAddDocument({
+    handleInputChange,
+    requiredDocumentDetails,
+    setRequiredDocumentDetails,
+  });
 
   return (
     <AddDocumentTemplate

@@ -1,5 +1,76 @@
 import { useEffect, useState } from "react";
 
+const addDocumentField = [
+  {
+    cellID: 1,
+    key: "place_of_posting",
+    label: "label.place_of_posting",
+    placeholder: "label.select_place_of_posting",
+    value: "",
+  },
+  {
+    cellID: 1,
+    key: "general",
+    label: "label.general",
+    placeholder: "label.obc",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "obc",
+    label: "label.obc",
+    placeholder: "label.obc",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "sc",
+    label: "label.sc",
+    placeholder: "label.sc",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "st",
+    label: "label.st",
+    placeholder: "label.st",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "ph",
+    label: "label.ph",
+    placeholder: "label.ph",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "others",
+    label: "label.others",
+    placeholder: "label.others",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "total",
+    label: "label.total",
+    placeholder: "label.total",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    isButton: true,
+    isAdd: true,
+  },
+];
+
 const useAddPlaceOfPosting = ({
   setRequiredPostingPlaceDetail,
   requiredPostingPlaceDetail,
@@ -18,6 +89,10 @@ const useAddPlaceOfPosting = ({
     others: null,
     total: null,
   });
+
+  const [multiAddDocument, setMuliAddDocument] = useState([
+    ...addDocumentField,
+  ]);
 
   useEffect(() => {
     validateForm();

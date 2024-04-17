@@ -54,6 +54,8 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginRight: 0,
     marginTop: 0,
+    justifyContent: "space-between",
+    flexWrap: "wrap",
   },
   yearlyCustomCardStyle: {
     marginLeft: 0,

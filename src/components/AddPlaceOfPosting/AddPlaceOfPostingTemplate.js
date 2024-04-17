@@ -16,6 +16,8 @@ import { PLACE_OF_POSTING } from "../../constants/constants";
 import styles from "./AddPlaceOfPosting.style";
 
 const AddPlaceOfPostingTemplate = ({
+  renderJobDetails,
+  handleInputChange,
   addPlaceModal,
   editPlaceModal,
   handlePostingPlaceChange,
@@ -41,6 +43,10 @@ const AddPlaceOfPostingTemplate = ({
           })}
           customToggleStyle={styles.companyRequireToggleStyle}
           customLabelViewStyle={styles.toggleLabelViewStyle}
+          value={renderJobDetails?.specific_performa_required}
+          onValueChange={(val) => {
+            handleInputChange("specific_performa_required", val);
+          }}
         />
         <CommonText
           fontWeight="600"

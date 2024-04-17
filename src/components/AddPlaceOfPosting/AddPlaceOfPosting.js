@@ -7,6 +7,8 @@ const AddPlaceOfPosting = ({
   jobDetailData,
   requiredPostingPlaceDetail,
   setRequiredPostingPlaceDetail,
+  renderJobDetails,
+  handleInputChange,
 }) => {
   const {
     addPlaceModal,
@@ -26,6 +28,8 @@ const AddPlaceOfPosting = ({
   return (
     <AddPlaceOfPostingTemplate
       {...{
+        renderJobDetails,
+        handleInputChange,
         addPlaceModal,
         editPlaceModal,
         handlePostingPlaceChange,

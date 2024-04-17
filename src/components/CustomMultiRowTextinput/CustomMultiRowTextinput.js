@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import DetailCard from "../DetailCard/DetailCard";
+import styles from "./CustomMultiRowTextinput.style";
 
 const CustomMultiRowTextInput = ({
   customCardStyle,
@@ -13,8 +14,13 @@ const CustomMultiRowTextInput = ({
   handleValueChange,
   numColsInARow = 4,
 }) => {
-  const handleChange = (_, inputValue, changedCellID) => {
-    handleValueChange(_, inputValue, changedCellID);
+  const handleChange = (label, inputValue, index, id, changedCellID) => {
+    handleValueChange({
+      propertyName: label,
+      value: inputValue,
+      id,
+      cellID: changedCellID,
+    });
   };
 
   const handleAddNewRow = (cellID) => {
@@ -47,10 +53,13 @@ const CustomMultiRowTextInput = ({
       footerId={"label.mandatory"}
       handleChange={handleChange}
       headerId={headerId}
+      isRow={false}
       isEditProfile={true}
       onAdd={handleAddNewRow}
       onDelete={handleDeleteRow}
       tableHeaderList={startRowHeaderList}
+      customContainerStyle={{ flexDirection: "row" }}
+      customWebContainerStyle={styles.customWebContainerStyle}
     />
   );
 };

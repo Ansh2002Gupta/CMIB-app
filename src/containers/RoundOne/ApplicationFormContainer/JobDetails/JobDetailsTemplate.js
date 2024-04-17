@@ -31,6 +31,9 @@ import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
 
 const JobDetailsTemplate = ({
+  renderJobDetails,
+  handleInputChange,
+  setRenderJobDetails,
   addDocumentField,
   addDesignation,
   bondPeriod,
@@ -62,6 +65,8 @@ const JobDetailsTemplate = ({
   const { isWebView } = useIsWebView();
   const intl = useIntl();
 
+  console.log("renderJobDetails", renderJobDetails);
+
   const columnCount = isWebView && gridStyles[currentBreakpoint];
   const containerStyle = isWebView
     ? styles.containerGridStyle(columnCount)
@@ -70,7 +75,7 @@ const JobDetailsTemplate = ({
   const renderSelectionProcess = () => {
     return (
       <View style={styles.checkBoxStyle}>
-        {selectionProcess.map((item, index) => (
+        {renderJobDetails?.selectionProcess?.map((item, index) => (
           <CheckBox
             key={item.id}
             id={item.id}
@@ -112,8 +117,9 @@ const JobDetailsTemplate = ({
               id: "label.enter_designationName",
             })}
             isMandatory
-            value={designationName}
-            onChangeText={(val) => handleDesignationName(val)}
+            value={renderJobDetails?.designation}
+            onChangeText={(val) => handleInputChange("designation", val)}
+            customHandleBlur={(val) => console.log("val", val)}
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -124,8 +130,8 @@ const JobDetailsTemplate = ({
               })}
               isMandatory
               isRupee
-              value={compensation}
-              onChangeText={(val) => handleCompensation(val)}
+              value={renderJobDetails?.compensation}
+              onChangeText={(val) => handleInputChange("compensation", val)}
             />
             <CustomTextInput
               label={intl.formatMessage({
@@ -136,18 +142,19 @@ const JobDetailsTemplate = ({
               })}
               isMandatory
               isRupee
-              value={startingSalary}
-              onChangeText={(val) => handleStartingSalary(val)}
+              value={renderJobDetails?.starting_salary}
+              onChangeText={(val) => handleInputChange("starting_salary", val)}
             />
           </View>
           <CustomTextEditor
             label={intl.formatMessage({
               id: "label.roles_and_responsibility",
             })}
+            value={renderJobDetails?.role_responsibility}
             isMandatory
-            onChangeText={(val) => {
-              handleTextEditorValue(val);
-            }}
+            onChangeText={(val) =>
+              handleInputChange("role_responsibility", val)
+            }
           />
           <CustomTextInput
             customStyle={styles.ctcTextInputStyle}
@@ -160,8 +167,8 @@ const JobDetailsTemplate = ({
             isMultiline
             maxLength={SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH}
             isMandatory
-            value={CTCDetail}
-            onChangeText={(val) => handleCTCDetail(val)}
+            value={renderJobDetails?.ctc_details}
+            onChangeText={(val) => handleInputChange("ctc_details", val)}
           />
         </CardComponent>
       ),
@@ -171,18 +178,18 @@ const JobDetailsTemplate = ({
         <View style={styles.bottomMargin}>
           <DetailCard
             headerId={intl.formatMessage({ id: "label.monthly" })}
-            details={jobDetailData?.monthly}
+            details={renderJobDetails?.monthly}
             handleChange={handleMonthlyData}
             isEditProfile
-            cols={isWebView ? 3 : 1}
+            // cols={isWebView ? 3 : 1}
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
             headerId={intl.formatMessage({ id: "label.yearly" })}
-            details={jobDetailData?.yearly}
+            details={renderJobDetails?.yearly}
             handleChange={handleYearlyData}
             isEditProfile
-            cols={isWebView ? 3 : 1}
+            // cols={isWebView ? 3 : 1}
             customCardStyle={styles.yearlyCustomCardStyle}
           />
         </View>
@@ -191,7 +198,11 @@ const JobDetailsTemplate = ({
     {
       content: (
         <AddDocument
-          {...{ setRequiredDocumentDetails, requiredDocumentDetails }}
+          {...{
+            handleInputChange,
+            requiredDocumentDetails,
+            setRequiredDocumentDetails,
+          }}
         />
       ),
     },
@@ -210,6 +221,10 @@ const JobDetailsTemplate = ({
               label={intl.formatMessage({
                 id: "label.bond_required",
               })}
+              value={renderJobDetails?.bond_details?.is_bond_included}
+              onValueChange={(val) => {
+                handleInputChange("bond_details", val, "is_bond_included");
+              }}
               isMandatory
               customToggleStyle={styles.customToggleStyle}
               customLabelStyle={styles.customLabelStyle}
@@ -222,10 +237,13 @@ const JobDetailsTemplate = ({
               placeholder={intl.formatMessage({
                 id: "label.enter_months_bond_period",
               })}
-              isMandatory
-              value={bondPeriod}
+              isMandatory={
+                renderJobDetails?.bond_details?.is_bond_included === 0
+              }
+              value={renderJobDetails?.bond_details?.bond_period_in_mm}
               onChangeText={(val) =>
-                numericValidator(val) && handleBondPeriod(val)
+                numericValidator(val) &&
+                handleInputChange("bond_details", val, "bond_period_in_mm")
               }
             />
             <CustomTextInput
@@ -236,10 +254,13 @@ const JobDetailsTemplate = ({
               placeholder={intl.formatMessage({
                 id: "label.enter_exit_amount",
               })}
-              isMandatory
-              value={exitAmount}
+              isMandatory={
+                renderJobDetails?.bond_details?.is_bond_included === 0
+              }
+              value={renderJobDetails?.bond_details?.exit_amount}
               onChangeText={(val) =>
-                numericValidator(val) && handleExitAmount(val)
+                numericValidator(val) &&
+                handleInputChange("bond_details", val, "exit_amount")
               }
               isRupee
             />
@@ -267,9 +288,11 @@ const JobDetailsTemplate = ({
       content: (
         <AddPlaceOfPosting
           {...{
-            jobDetailData,
+            jobDetailData: renderJobDetails?.posting_details,
             requiredPostingPlaceDetail,
             setRequiredPostingPlaceDetail,
+            renderJobDetails,
+            handleInputChange,
           }}
         />
       ),

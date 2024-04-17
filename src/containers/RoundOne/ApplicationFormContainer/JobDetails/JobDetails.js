@@ -13,6 +13,9 @@ import styles from "./JobDetails.style";
 
 const JobDetails = ({ tabHandler }) => {
   const {
+    setRenderJobDetails,
+    renderJobDetails,
+    handleInputChange,
     addDocumentField,
     addDesignation,
     bondPeriod,
@@ -59,6 +62,9 @@ const JobDetails = ({ tabHandler }) => {
       topSection={
         <JobDetailsTemplate
           {...{
+            setRenderJobDetails,
+            renderJobDetails,
+            handleInputChange,
             addDocumentField,
             addDesignation,
             bondPeriod,
