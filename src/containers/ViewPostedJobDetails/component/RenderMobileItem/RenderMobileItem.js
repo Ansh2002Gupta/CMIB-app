@@ -73,7 +73,6 @@ const RenderMobileItem = ({ item, lastElement, onPress }) => {
             message={item?.action ? item?.action : optionArray}
             labelName={"name"}
             onPopupClick={(items) => {
-              console.log("1", items);
               setCurrentPopupMessage(-1);
               onPress(items.name, item);
             }}

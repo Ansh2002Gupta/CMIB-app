@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import {
   Keyboard,
   Platform,
-  TouchableOpacity,
+  ScrollView,
   View,
 } from "@unthinkable/react-core-components";
 
-import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./PackageDetailModal.style";
@@ -19,10 +18,9 @@ import commonStyles from "../../theme/styles/commonStyles";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { useIntl } from "react-intl";
 
-const PackageInitiateModal = ({ packageDetailData, isSubscribe }) => {
+const PackageDetailModal = ({ packageDetailData, isSubscribe, handleSubscribeFromDetailmodal }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
-  const isWebPlatform = Platform.OS.toLowerCase() === "web";
   const [showPaymentInitiateModal, setShowPaymentInitiateModal] = useState();
   const [modalData, setModalData] = useState({ amount: 0, subscriptionId: "" });
   const [modalStyle, setModalStyle] = useState({});
@@ -33,6 +31,11 @@ const PackageInitiateModal = ({ packageDetailData, isSubscribe }) => {
       setModalStyle({ ...styles.modalInnerContainer });
     }
   };
+
+  const isMobileProps =
+    Platform.OS.toLowerCase() !== "web"
+      ? { automaticallyAdjustKeyboardInsets: false }
+      : {};
 
   const keyboardDidShowCallback = (e) => {
     const keyboardHeight = e?.endCoordinates?.height;
@@ -73,6 +76,14 @@ const PackageInitiateModal = ({ packageDetailData, isSubscribe }) => {
 
   return (
     <View style={styles.buttonStyle}>
+      <ScrollView
+        contentContainerStyle={{
+          ...styles.contentContainerStyle,
+          ...(isWebView ? styles.webContentContainerStyle : {}),
+        }}
+        keyboardShouldPersistTaps="handled"
+        {...isMobileProps}
+      >
         <View
           style={{
             ...styles.addApplicationView,
@@ -115,12 +126,13 @@ const PackageInitiateModal = ({ packageDetailData, isSubscribe }) => {
                 <CustomTouchableOpacity
                   style={styles.subscribePackagesButton}
                   onPress={() => {
-                    setShowPaymentInitiateModal(true);
-                    setModalData({
-                      ...modalData,
-                      amount: packageDetailData?.price,
-                      subscriptionId: packageDetailData?.id,
-                    });
+                    handleSubscribeFromDetailmodal(packageDetailData?.price, packageDetailData?.id)
+                    // setShowPaymentInitiateModal(true);
+                    // setModalData({
+                    //   ...modalData,
+                    //   amount: packageDetailData?.price,
+                    //   subscriptionId: packageDetailData?.id,
+                    // });
                   }}
                 >
                   <CommonText customTextStyle={styles.viewPackageText}>
@@ -131,17 +143,18 @@ const PackageInitiateModal = ({ packageDetailData, isSubscribe }) => {
             </>
           }
         />
+        </ScrollView>
       {showPaymentInitiateModal && renderPaymentInitiateModal()}
     </View>
   );
 };
 
-PackageInitiateModal.defaultProps = {
+PackageDetailModal.defaultProps = {
   isSubscribe: false,
 };
 
-PackageInitiateModal.propTypes = {
+PackageDetailModal.propTypes = {
   isSubscribe: PropTypes.bool,
 };
 
-export default PackageInitiateModal;
+export default PackageDetailModal;

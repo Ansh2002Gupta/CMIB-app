@@ -29,6 +29,7 @@ export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
 export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`;
+export const GET_PAYMENTS_STATUS = `${CORE}/payments`;
 export const COMPANY_INACTIVE_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/inactive-subscription`;
 export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;

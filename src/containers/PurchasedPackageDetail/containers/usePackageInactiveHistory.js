@@ -71,6 +71,9 @@ const usePackageInactiveHistory = (onViewPress) => {
     fetchData: fetchInactivePackage,
   } = useFetch({
     url: `${COMPANY_INACTIVE_SUBSCRIPTION_LISTING}`,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
   });
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
@@ -144,7 +147,7 @@ const usePackageInactiveHistory = (onViewPress) => {
         setAllDataLoaded(true);
       }
     } catch (error) {
-      console.error("Error fetching job seekers on load more:", error);
+      console.error("Error fetching Package Subscription History on load more:", error);
     } finally {
       setLoadingMore(false);
     }
@@ -506,7 +509,7 @@ const usePackageInactiveHistory = (onViewPress) => {
     isFirstPageReceived,
     isInactiveSubscriptionListLoading,
     isHeading,
-    jobSeekersData: inactiveSubscriptionListData?.records,
+    inactiveSubscriptionListData: currentRecords,
     loadingMore,
     rowsPerPage,
     subHeadingText,

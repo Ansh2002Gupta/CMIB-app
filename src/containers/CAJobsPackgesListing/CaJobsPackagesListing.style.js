@@ -108,6 +108,16 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  modalWebViewContainer: {
+    ...Platform.select({
+      ios: {
+        height: HEIGHT,
+      },
+      android: {
+        height: HEIGHT,
+      },
+    }),
+  },
   viewPackageText: {
     fontSize: 16,
     color: colors.backgroundColor,

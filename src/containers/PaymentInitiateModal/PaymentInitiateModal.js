@@ -23,7 +23,7 @@ import {
 } from "../../constants/constants";
 import { validateGSTIN, validatePAN } from "../../utils/validation";
 
-const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
+const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId, setCcAvenueUrl }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
   const [errors, setErrors] = useState({
@@ -35,7 +35,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
   const [gstNumber, setGstNumber] = useState("");
   const [PONumber, setPONumber] = useState("");
   const [address, setAddress] = useState("");
-  const [ccAvenueUrl, setCcAvenueUrl] = useState("");
+  
 
   const {
     isLoading: isPaymentInitializedLoading,
@@ -125,7 +125,7 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
             window.location.reload();
           }
         } else {
-          if (data?.data) {
+          if (data?.data && data?.data?.url) {
             setCcAvenueUrl(data?.data?.url);
           }
         }
@@ -282,14 +282,6 @@ const PaymentInitiateModal = ({ onPressCancel, amount, subscriptionId }) => {
           />
         )}
       </View>
-      {/* <WebView
-        source={{uri: ccAvenueUrl}}
-        onNavigationStateChange={(ele) => {
-          // if (ele.url?.includes(Config.CCAVENUE_CANCEL_REDIRECT_URL)) {
-          //   setCcAvenueUrl(null);
-          // }
-        }}
-      /> */}
     </>
   );
 };

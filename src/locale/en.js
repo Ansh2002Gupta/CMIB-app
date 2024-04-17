@@ -784,6 +784,7 @@ const locale = {
   "Complete your job profile! its at ",
   "label.complete": "Complete",
   "label.selectOption": "Select option",
+  "label.manageSubscription": "Manage Subscriptions",
 };
 
 export default locale;

@@ -19,6 +19,7 @@ import {
       }),
     }),
     container: {
+       flex:1,
        marginTop: 24,
     },
     borderStyle: {

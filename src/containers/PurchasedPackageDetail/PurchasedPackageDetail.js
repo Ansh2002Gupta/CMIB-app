@@ -26,6 +26,7 @@ import CustomModal from "../../components/CustomModal";
 import PaymentInitiateModal from "../PaymentInitiateModal";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import commonStyles from "../../theme/styles/commonStyles";
+import RenderMobileItem from "./Component/RenderMobileItems";
 
 function PurchasedPackageDetail({
   packageName,
@@ -65,7 +66,7 @@ function PurchasedPackageDetail({
   const validityDateFormatted = formatDate(new Date(validityDate));
 
   const onViewPress = (item) => {
-    navigate(`${navigations.PREVIOUS_SUBSCRIPTION_DETAILS}/${item.id}`);
+    navigate(`${navigations.PREVIOUS_SUBSCRIPTION_DETAILS}/${item.subscription_id}`);
   };
 
   const {
@@ -90,12 +91,13 @@ function PurchasedPackageDetail({
     extraDetailsKey,
     loadingMore,
     rowsPerPage,
-    jobSeekersData,
+    inactiveSubscriptionListData,
     totalcards,
     headingTexts,
     tableIcon,
     isHeading,
   } = usePackageInactiveHistory(onViewPress);
+
 
   const handleOnPress = () => {
     navigate(`${navigations.OTHER_PACKAGES}`);
@@ -132,8 +134,8 @@ function PurchasedPackageDetail({
     );
   };
 
-  const renderMobileComponent = (item) => {
-    return <CommonText>Hello</CommonText>;
+  const renderMobileComponent = (item, index) => {
+    return <RenderMobileItem item={item} lastElement={inactiveSubscriptionListData.length -1 === index} onPress={(item)=> {onViewPress(item)}} />;
   };
 
   return (
@@ -150,6 +152,8 @@ function PurchasedPackageDetail({
         <TwoRow
           topSection={
             <TwoColumn
+              leftSectionStyle={{width: '80%'}}
+              rightSectionStyle={{width: '20%'}}
               leftSection={
                 <>
                   <View>
@@ -275,14 +279,14 @@ function PurchasedPackageDetail({
             </CommonText>
           }
           bottomSection={
-            <View>
+            <View style={{flex: 1}}>
               {!isError && (
                 <CustomTable
                   {...{
                     allDataLoaded,
                     currentPage,
                     currentRecords,
-                    data: jobSeekersData,
+                    data: inactiveSubscriptionListData,
                     setCurrentRecords,
                     defaultCategory,
                     getColoumConfigs,
@@ -291,7 +295,7 @@ function PurchasedPackageDetail({
                     handleRowPerPageChange,
                     handleSearchResults,
                     headingTexts,
-                    hideTotalCount: true,
+                    hideTotalCount: false,
                     indexOfFirstRecord,
                     indexOfLastRecord,
                     isFirstPageReceived,
@@ -305,13 +309,14 @@ function PurchasedPackageDetail({
                     rowsPerPage,
                     subHeadingText,
                     tableHeading,
-                    totalcards,
                     tableIcon,
                     extraDetailsText,
                     extraDetailsKey,
                     showSearchBar: false,
+                    totalcards
                   }}
-                  mobileComponentToRender={() => renderMobileComponent()}
+                  containerStyle={{flex: 1, backgroundColor: 'white'}}
+                  mobileComponentToRender={(item, index) => renderMobileComponent(item, index)}
                 />
               )}
               {isError && !!getErrorDetails()?.errorMessage && (
