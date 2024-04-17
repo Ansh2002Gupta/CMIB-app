@@ -76,7 +76,7 @@ const useSavedCandidates = () => {
   const formatConfig = {
     experience: {
       prefix: `${intl.formatMessage({ id: "label.experience" })}${" : "}`,
-      suffix: `${" "}${intl.formatMessage({ id: "label.years" })}`,
+      suffix: `${" "}${intl.formatMessage({ id: "label.year" })}`,
     },
   };
   const {
@@ -364,7 +364,7 @@ const useSavedCandidates = () => {
       {
         content: (
           <CommonText customTextStyle={tableStyle}>
-            {item?.experience} {intl.formatMessage({ id: "label.years" })}
+            {item?.experience} {intl.formatMessage({ id: "label.year" })}
           </CommonText>
         ),
         style: commonStyles.columnStyle("15%"),

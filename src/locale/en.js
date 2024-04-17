@@ -147,6 +147,7 @@ const locale = {
   "label.round1": "Round 1",
   "label.round2": "Round 2",
   "label.add_application_form_text": "Add Application form",
+  "label.job_details": "Job Details",
   "label.edit_application_form_text": "Edit / View Application form",
   "label.add_application_form_description_text":
     "Streamlined application form designed for quick and easy submission.",
@@ -219,6 +220,7 @@ const locale = {
   "label.duplicate_mobileNo_validation": "Mobile Number must be unique",
   "label.logout_message": "Are you sure you want to logout of the portal?",
   "label.add_designation": "Add Designation",
+  "label.designation": "Designation",
   "label.designation_placeholder": "Select Designation",
   "label.no_of_vacancy": "No. of. Vacancy",
   "label.error_password": "Password doesn't match",
@@ -347,8 +349,11 @@ const locale = {
   "label.country": "Country",
   "label.city": "City",
   "label.pincode": "Pin Code",
+  "label.nationality": "Nationality",
   "label.permanent_address": "Permanent Address",
   "label.ca_foundation": "CA Foundation/PE-I/CPT",
+  "label.month": "Month",
+  "label.year": "Year",
   "label.mark_in_percent": "Mark (in %)",
   "label.rank_medal": "Rank/Medal",
   "label.attempt": "Attempt",
@@ -679,7 +684,7 @@ const locale = {
   "label.saved_applicant": "Saved Applicant",
   "label.updated_at": "Updated At",
   "label.save_applicant_details": "Save Applicant Details",
-  "label.edit_schedule_interview": "Edit Schedule interview",
+  "label.edit_schedule_interview": "Edit Scheduled interview",
   "label.interview_id_not_found": "Interview ID not found",
   "label.proficiency": "Proficiency",
   "label.nonEmptyField": "Please fill this field",
@@ -740,7 +745,7 @@ const locale = {
   "label.memberCompletionProfilePercentWeb":
   "Complete your job profile! its at ",
   "label.complete": "Complete",
-  "label.years": "Years",
+  "label.year": "Years",
   "label.experience": "Experience",
   "label.removed_from_saved_candidates": "Remove from saved candidates",
   "label.add_to_saved_candidates": "Add to saved candidates",
@@ -748,6 +753,7 @@ const locale = {
   "label.view_candidate_details": "View Candidate Details",
   "label.selectOption": "Select option",
   "label.manageSubscription": "Manage Subscriptions",
+  "label.job_details": "Job Details",
 };
 
 export default locale;

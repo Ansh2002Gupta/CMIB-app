@@ -50,7 +50,4 @@ export const navigations = {
   OTHER_PACKAGES: "other-packages",
   MANAGE_SUBSCRIPTION: "manage-subscriptions",
   CANDIDATE_DETAIL: "candidate-details",
-
-  //dummy routes
-  CONFIGURABLE_LIST: "dummy/configurable-list",
 };
