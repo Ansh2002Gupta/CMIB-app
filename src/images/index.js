@@ -97,6 +97,7 @@ const iconUpArrow = appendAppBaseURl("/images/iconUpArrow/iconUpArrow.png");
 const iconFilter = appendAppBaseURl("/images/svg/iconFilter.svg");
 const iconSearch = appendAppBaseURl("/images/svg/iconSearch.svg");
 const iconMore = appendAppBaseURl("/images/svg/iconMore.svg");
+const iconEyeSvg = appendAppBaseURl("/images/svg/iconEyeSvg.svg")
 const iconFooter = appendAppBaseURl("/images/svg/iconFooter.svg");
 const iconArrowDown = appendAppBaseURl("/images/svg/iconArrowDown.svg");
 const iconArrowUp = appendAppBaseURl("/images/svg/iconArrowUp.svg");
@@ -346,6 +347,7 @@ const images = {
   iconFilter,
   iconSearch,
   iconMore,
+  iconEyeSvg,
   iconFooter,
   iconAdd,
   iconStepperDone,
