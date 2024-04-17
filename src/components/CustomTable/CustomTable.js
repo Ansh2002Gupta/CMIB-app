@@ -1,7 +1,12 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-import { FlatList, Platform, View } from "@unthinkable/react-core-components";
+import {
+  FlatList,
+  Platform,
+  Row,
+  View,
+} from "@unthinkable/react-core-components";
 
 import MultiColumn from "../../core/layouts/MultiColumn";
 import { TwoColumn, TwoRow } from "../../core/layouts";
@@ -25,12 +30,14 @@ import styles from "./CustomTable.style";
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
-  containerStyle,
   currentPage,
   customFilterInfo,
   customModal,
   data,
   defaultCategory,
+  selectedFilterOptions = {},
+  setSelectedFilterOptions,
+  formatConfig,
   filterApplyHandler,
   filterCategory,
   initialFilterState = {},
@@ -47,20 +54,14 @@ const CustomTable = ({
   indexOfLastRecord,
   isHeading,
   isTicketListingLoading,
+  isGeetingJobbSeekers,
   isFirstPageReceived,
-  isFilterVisible = true,
-  isTotalCardVisible,
-  isStatusTextBoolean,
-  loadingMore,
   mobileComponentToRender,
+  loadingMore,
   onIconPress,
   placeholder,
-  popUpMessage,
   rowsLimit,
   rowsPerPage,
-  renderCalendar,
-  selectedFilterOptions,
-  setSelectedFilterOptions,
   showSearchBar,
   showJobOfferResponseModal,
   showInterviewTimeModal,
@@ -75,8 +76,15 @@ const CustomTable = ({
   tableHeading,
   tableIcon,
   totalcards,
-  ThirdSection,
   unit,
+  extraDetailsText,
+  extraDetailsKey,
+  renderCalendar,
+  statusData,
+  queryTypeData,
+  containerStyle,
+  isTotalCardVisible = true,
+  isFilterVisible = true,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -87,9 +95,9 @@ const CustomTable = ({
   useOutsideClick(popUpRef, () => setShowPopUpWithID(-1));
   const [showFilterOptions, setShowFilterOptions] = useState(false);
 
-  const isFilterCount = !!selectedFilterOptions
-    ? Object.values(selectedFilterOptions).find((state) => !!state.length)
-    : 0;
+  const isFilterCount = Object.values(selectedFilterOptions).find(
+    (state) => !!state?.length
+  );
 
   const handleFilterModal = () => {
     setShowFilterOptions((prev) => !prev);
@@ -128,18 +136,22 @@ const CustomTable = ({
             {showSearchBar && (
               <TwoColumn
                 leftSection={
-                  <View style={styles.flexDirectionRow}>
-                    <SearchView
-                      data={data?.records}
-                      customSearchCriteria={handleSearchResults}
-                      placeholder={placeholder}
-                      customParentStyle={styles.getParentStyle(isWebView)}
-                    />
-                    {isFilterVisible && (
+                  <SearchView
+                    data={data?.records}
+                    customSearchCriteria={handleSearchResults}
+                    placeholder={placeholder}
+                  />
+                }
+                isLeftFillSpace
+                rightSection={
+                  <>
+                    {isFilterVisible ? (
                       <CustomTouchableOpacity
                         onPress={handleFilterModal}
                         style={styles.imageParentStyle}
-                        disabled={isTicketListingLoading}
+                        disabled={
+                          isTicketListingLoading || isGeetingJobbSeekers
+                        }
                       >
                         <TouchableImage
                           source={images.iconFilter}
@@ -161,11 +173,9 @@ const CustomTable = ({
                           </CommonText>
                         )}
                       </CustomTouchableOpacity>
-                    )}
-                  </View>
+                    ) : null}
+                  </>
                 }
-                rightSection={ThirdSection ? ThirdSection : <></>}
-                isLeftFillSpace={true}
                 style={styles.filterTopSection(isWebView)}
               />
             )}
@@ -178,7 +188,8 @@ const CustomTable = ({
                     ...styles.textSize,
                   }}
                 >
-                  {intl.formatMessage({ id: "label.tickets" })}&nbsp;&#58;&nbsp;
+                  {intl.formatMessage({ id: "label.tickets" })}
+                  &nbsp;&#58;&nbsp;
                 </CommonText>
 
                 <CommonText
@@ -199,10 +210,16 @@ const CustomTable = ({
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
-                {isTicketListingLoading && (isWeb || isFirstPageReceived) ? (
+                {(isTicketListingLoading || isGeetingJobbSeekers) &&
+                (isWeb || isFirstPageReceived) ? (
                   <LoadingScreen />
                 ) : (
-                  <View style={{ ...styles.tableSection, ...containerStyle }}>
+                  <View
+                    style={{
+                      ...styles.tableSection,
+                      ...containerStyle,
+                    }}
+                  >
                     {isWebView && (
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
@@ -214,95 +231,104 @@ const CustomTable = ({
                       />
                     )}
                     <FlatList
-                      data={data}
+                      data={data || []}
                       showsVerticalScrollIndicator={false}
-                      keyExtractor={(item, index) => index.toString()}
+                      style={styles.flatListStyle}
+                      keyExtractor={(item, index) => index?.toString()}
                       renderItem={({ item, index }) => {
+                        const statusRenderText = getRenderText(
+                          item,
+                          statusText,
+                          formatConfig
+                        );
                         return (
                           <>
                             {isWebView ? (
                               <MultiColumn
-                                columns={getColoumConfigs(item)}
+                                columns={getColoumConfigs(
+                                  item,
+                                  !isHeading,
+                                  index
+                                )}
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
-                              <View style={styles.mobileContainer}>
-                                <View>
-                                  <CommonText
-                                    fontWeight={"600"}
-                                    customTextStyle={styles.cellTextStyle()}
-                                  >
-                                    {getRenderText(item, headingTexts)}
-                                  </CommonText>
-                                  <CommonText
-                                    customTextStyle={styles.tableQueryText}
-                                  >
-                                    {getRenderText(item, subHeadingText)}
-                                  </CommonText>
-                                </View>
-                                <View style={styles.rowsPerPageWeb}>
-                                  <Chip
-                                    label={
-                                      isStatusTextBoolean
-                                        ? getRenderText(item, statusText) ===
-                                          "1"
-                                          ? statusLabels[1]
-                                          : statusLabels[0]
-                                        : getRenderText(item, statusText)
-                                    }
-                                    style={
-                                      isStatusTextBoolean
-                                        ? getStatusStyle(
-                                            getRenderText(item, statusText) ===
-                                              "1"
-                                              ? statusLabels[1].toLowerCase()
-                                              : statusLabels[0].toLowerCase()
-                                          )
-                                        : getStatusStyle(item?.status)
-                                    }
-                                  />
-                                  {showPopUpWithID === item?.id && (
-                                    <View ref={popUpRef}>
-                                      <PopupMessage
-                                        message={popUpMessage}
-                                        customStyle={styles.mobilePopUpPosition}
-                                        onPopupClick={() => {
-                                          if (
-                                            popUpMessage ===
-                                            intl.formatMessage({
-                                              id: "label.respond_to_job_offer",
-                                            })
-                                          ) {
-                                            setShowJobOfferResponseModal(
-                                              (prev) => !prev
-                                            );
-                                            setModalData(item);
-                                          } else {
-                                            setShowInterviewTimeModal(
-                                              (prev) => !prev
-                                            );
+                              <>
+                                {mobileComponentToRender ? (
+                                  mobileComponentToRender(item, index)
+                                ) : (
+                                  <View style={styles.mobileContainer}>
+                                    <View style={styles.mobileDetailRow}>
+                                      <CommonText
+                                        fontWeight={"600"}
+                                        customTextStyle={styles.cellTextStyle()}
+                                      >
+                                        {getRenderText(item, headingTexts) ||
+                                          "-"}
+                                      </CommonText>
+                                      <Row style={styles.rowStyling}>
+                                        <CommonText
+                                          customTextStyle={
+                                            styles.tableQueryText
                                           }
-                                          setShowPopUpWithID(-1);
+                                        >
+                                          {getRenderText(
+                                            item,
+                                            subHeadingText,
+                                            formatConfig
+                                          )}
+                                        </CommonText>
+                                        {!!extraDetailsText && (
+                                          <>
+                                            <View style={styles.dot} />
+                                            <CommonText
+                                              customTextStyle={
+                                                styles.tableQueryText
+                                              }
+                                            >
+                                              {extraDetailsText +
+                                                ": " +
+                                                getRenderText(
+                                                  item,
+                                                  extraDetailsKey
+                                                )}
+                                            </CommonText>
+                                          </>
+                                        )}
+                                      </Row>
+                                    </View>
+                                    <View style={styles.rowsPerPageWeb}>
+                                      {!!item.status && (
+                                        <Chip
+                                          label={getRenderText(
+                                            item,
+                                            statusText
+                                          )}
+                                          style={getStatusStyle(
+                                            !!item?.active
+                                              ? item.active
+                                              : item.status
+                                          )}
+                                        />
+                                      )}
+                                      <TouchableImage
+                                        onPress={() => {
+                                          onIconPress(item);
                                         }}
+                                        source={tableIcon}
+                                        style={styles.iconTicket}
                                       />
                                     </View>
-                                  )}
-                                  <TouchableImage
-                                    onPress={() => {
-                                      onIconPress(item);
-                                    }}
-                                    source={tableIcon}
-                                    style={styles.iconTicket}
-                                  />
-                                </View>
-                              </View>
+                                  </View>
+                                )}
+                              </>
                             )}
                           </>
                         );
                       }}
                       {...flatlistProps}
                       ListFooterComponent={() => {
-                        if (!data?.length)
+                        if ((!data || !!data) && !data?.length)
                           return (
                             <CommonText
                               customContainerStyle={styles.loadingStyleNoData}
@@ -384,6 +410,7 @@ const CustomTable = ({
             setFilterState: setSelectedFilterOptions,
             setShowFilterOptions,
             unit,
+            renderCalendar,
           }}
         />
       )}
@@ -395,26 +422,31 @@ const CustomTable = ({
 
 CustomTable.defaultProps = {
   addNewTicket: false,
-  containerStyle: {},
+  data: [],
+  formatConfig: {},
   headingTexts: [],
   handleTicketModal: () => {},
   showSearchBar: true,
   statusText: "",
   subHeadingText: "",
+  selectedFilterOptions: [],
   totalcards: 0,
+  onIconPress: () => {},
   placeholder: "Search",
   isTotalCardVisible: true,
+  indexOfFirstRecord: 0,
+  indexOfLastRecord: 0,
 };
 
 CustomTable.propTypes = {
   addNewTicket: PropTypes.bool,
-  containerStyle: PropTypes.object,
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   data: PropTypes.array,
+  formatConfig: PropTypes.object,
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
-  getStatusStyle: PropTypes.func.isRequired,
+  getStatusStyle: PropTypes.func,
   filterApplyHandler: PropTypes.func,
   handlePageChange: PropTypes.func.isRequired,
   handleRowPerPageChange: PropTypes.func.isRequired,
@@ -422,11 +454,11 @@ CustomTable.propTypes = {
   handleLoadMore: PropTypes.func.isRequired,
   handleTicketModal: PropTypes.func,
   headingTexts: PropTypes.array,
-  mobileComponentToRender: PropTypes.func,
   isHeading: PropTypes.bool.isRequired,
   isTicketListingLoading: PropTypes.bool,
-  indexOfFirstRecord: PropTypes.number.isRequired,
-  indexOfLastRecord: PropTypes.number.isRequired,
+  isGeetingJobbSeekers: PropTypes.bool,
+  indexOfFirstRecord: PropTypes.number,
+  indexOfLastRecord: PropTypes.number,
   loadingMore: PropTypes.bool.isRequired,
   onIconPress: PropTypes.func,
   queryTypeData: PropTypes.array,
@@ -444,14 +476,13 @@ CustomTable.propTypes = {
   freshnessData: PropTypes.array,
   companyData: PropTypes.array,
   industryData: PropTypes.array,
-  statusText: PropTypes.array,
+  statusText: PropTypes.string,
+  selectedFilterOptions: PropTypes.array,
   subHeadingText: PropTypes.array,
   tableHeading: PropTypes.object.isRequired,
   tableIcon: PropTypes.any.isRequired,
   totalcards: PropTypes.number,
-  ThirdSection: PropTypes.elementType,
   placeholder: PropTypes.string,
-  isTotalCardVisible: PropTypes.bool,
 };
 
 export default CustomTable;

@@ -1,9 +1,7 @@
 import colors from "../../assets/colors";
 
 const style = {
-  contentContainerStyle: {
-    flex: 1,
-  },
+  contentContainerStyle: {},
 
   innerContainerStyle: {
     marginBottom: 16,

@@ -7,12 +7,14 @@ import IconHeader from "../../components/IconHeader/IconHeader";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import ProfileIcon from "../../components/ProfileIcon/ProfileIcon";
-import classes from "../../theme/styles/CssClassProvider";
 import images from "../../images";
 import { Candidate, Company } from "../../constants/constants";
+import { moduleKeys } from "../../constants/sideBarHelpers";
+import classes from "../../theme/styles/CssClassProvider";
 import style from "./MyAccount.style";
 
 const MyAccountUI = ({
+  accessibleModules,
   handleOptionClick,
   intl,
   options,
@@ -79,8 +81,14 @@ const MyAccountUI = ({
         </View>
         {omitArrowIcon && renderHorizontalLine()}
         <ScrollView style={style.profileListContainer}>
-          {options.map(
-            (option, index) =>
+          {options?.map((option, index) => {
+            if (
+              option?.title === "label.job_profile" &&
+              !accessibleModules[moduleKeys.CA_JOBS_KEY]
+            ) {
+              return <></>;
+            }
+            return (
               ((userType === Candidate && option?.isCandidate) ||
                 (userType === Company && option?.isCompany)) && (
                 <CustomTouchableOpacity
@@ -115,7 +123,8 @@ const MyAccountUI = ({
                   )}
                 </CustomTouchableOpacity>
               )
-          )}
+            );
+          })}
         </ScrollView>
       </ScrollView>
     </>
@@ -128,6 +137,7 @@ MyAccountUI.defaultProps = {
 };
 
 MyAccountUI.propTypes = {
+  accessibleModules: PropTypes.object,
   handleOptionClick: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,

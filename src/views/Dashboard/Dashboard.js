@@ -1,23 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useIntl } from "react-intl";
 import { View } from "@unthinkable/react-core-components";
-import useIsWebView from "../../hooks/useIsWebView";
 
 import { TwoRow } from "../../core/layouts";
 
 import CAJobsDashboard from "../CAJobsDashboard";
 import IconHeader from "../../components/IconHeader/IconHeader";
-import { moduleKeys } from "../../constants/sideBarHelpers";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
+import useIsWebView from "../../hooks/useIsWebView";
+import { moduleKeys } from "../../constants/sideBarHelpers";
 import styles from "./dashboard.style";
-import ViewInterviewDetails from "../../containers/ViewInterviewDetails";
-import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 
+// Just ignore this file as just to test custom component
 function DashboardView() {
   const intl = useIntl();
-  const { isWebView } = useIsWebView();
   const [sideBarState] = useContext(SideBarContext);
   const { selectedModule } = sideBarState;
+  const { isWebView } = useIsWebView();
+
   return (
     <View style={styles.container}>
       <TwoRow
@@ -38,10 +38,7 @@ function DashboardView() {
             ) : null}
           </>
         }
-      />
-      {/*  uncomment this to see modals */}
-      {/* <ViewInterviewDetails /> */}
-      {/* <ScheduleInterviewModal /> */}
+      ></TwoRow>
     </View>
   );
 }

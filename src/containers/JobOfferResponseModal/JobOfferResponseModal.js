@@ -28,8 +28,6 @@ const JobOfferResponseModal = ({
   isPatchingError,
 }) => {
   const intl = useIntl();
-  const [userProfileDetails] = useContext(UserProfileContext);
-  const applicantID = userProfileDetails?.userDetails?.id || 0;
 
   const renderModal = () => {
     if (showConfirmModal) {
@@ -47,6 +45,7 @@ const JobOfferResponseModal = ({
           headerText={intl.formatMessage({ id: "label.job_offer_response" })}
           isIconCross
           onPressIconCross={() => setShowJobOfferResponseModal((prev) => !prev)}
+          topLeftIcon={images.handShakeIcon}
         >
           <View style={isIos ? styles.mobContainer : {}}>
             <View>
@@ -89,13 +88,13 @@ const JobOfferResponseModal = ({
               onPressButtonOne={() => {
                 handleAcceptRejectOffer({
                   decision: KEYS.OFFERE_REJECTED,
-                  applicantID: applicantID,
+                  applicantID: data?.id,
                 });
               }}
               onPressButtonTwo={() => {
                 handleAcceptRejectOffer({
                   decision: KEYS.OFFER_ACCEPTED,
-                  applicantID: applicantID,
+                  applicantID: data?.id,
                 });
               }}
               isButtonTwoGreen

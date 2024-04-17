@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 
@@ -18,6 +18,10 @@ import commonStyles from "../../../theme/styles/commonStyles";
 import styles from "../ViewPostedJobDetails.styles";
 import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import CustomImage from "../../../components/CustomImage";
+import TouchableImage from "../../../components/TouchableImage";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -29,10 +33,14 @@ const useGetApplicantList = (id, onEditPress) => {
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+  const popupRef = useRef(null);
   const [filterOptions, setFilterOptions] = useState({
     status: "",
     query_type: "",
   });
+  useOutsideClick(popupRef, () => setCurrentPopupMessage(-1));
+
+  const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
       ROWS_PER_PAGE_ARRAY[0].value
@@ -174,14 +182,14 @@ const useGetApplicantList = (id, onEditPress) => {
     // });
   };
 
-  const onDateSorting = async (sortField) => {
-    // setIsAscendingOrder((prev) => !prev);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   sortField: sortField,
-    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
-    // });
+  const onNameSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortField: sortField,
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
+    });
   };
 
   let headingTexts = ["name"];
@@ -213,18 +221,49 @@ const useGetApplicantList = (id, onEditPress) => {
         return styles.cellTextStyle(12);
     }
   }
+  const onIconPress = (item) => {
+    setCurrentPopupMessage(item.id);
+  };
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
+
+    if (
+      item.is_primary_accepted === null &&
+      item.is_alternate_accepted === null
+    ) {
+      const offerJobIndex = item.action.findIndex(
+        (action) => action.id === "offer_job"
+      );
+      if (offerJobIndex !== -1) {
+        item.action.splice(offerJobIndex, 1);
+      }
+    }
+
     return [
       {
-        content: (
+        content: isHeading ? (
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {item?.name ?? "-"}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
             {item?.name ?? "-"}
           </CommonText>
         ),
+
         style: {
           ...commonStyles.columnStyle("40%"),
           ...styles.justifyContentCenter,
@@ -261,13 +300,31 @@ const useGetApplicantList = (id, onEditPress) => {
         content: (
           <View>
             {!isHeading && (
-              <PopupMessage
-                message={item?.action.map((item) => item.name)}
-                onPopupClick={(selectedItem) => {
-                  onEditPress(selectedItem, item);
-                  // navigate(navigations.JOB_PROFILE);
-                }}
-              />
+              <>
+                <TouchableImage
+                  onPress={() => {
+                    onIconPress(item);
+                  }}
+                  source={images.iconMore}
+                  imageStyle={{ height: 20, width: 20 }}
+                  isSvg={true}
+                />
+                {currentPopUpMessage === item.id && (
+                  <View ref={popupRef}>
+                    <PopupMessage
+                      message={item?.action}
+                      onPopupClick={(selectedItem) => {
+                        setCurrentPopupMessage(-1);
+                        onEditPress(selectedItem.name, item);
+                      }}
+                      labelName={"name"}
+                      customStyle={styles.popupContainer}
+                      isPopupModal
+                      onPopUpClose={() => setCurrentPopupMessage(-1)}
+                    />
+                  </View>
+                )}
+              </>
             )}
           </View>
         ),

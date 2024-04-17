@@ -13,6 +13,7 @@ import { useIntl } from "react-intl";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import { navigations } from "../../constants/routeNames";
+import CustomModal from "../../components/CustomModal";
 
 const AddModifyNewJobs = () => {
   const { isLoading, isSuccess, isError, isErrorData, fetchData } =
@@ -57,24 +58,15 @@ const AddModifyNewJobs = () => {
       );
       Http.post(POST_JOB, formattedData)
         .then((res) => {
-          setSuccessMessage(
-            intl.formatMessage({ id: "label.job_saved_successfully" })
-          );
-          navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
-            replace: true,
-          });
+          setSuccessMessage(true);
         })
         .catch((e) => {
           setError(
             e.response?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
           );
-          setSuccessMessage(`${GENERIC_GET_API_FAILED_ERROR_MESSAGE}, ${e}`);
-          navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
-            replace: true,
-          });
         });
     } else {
-      setSuccessMessage(intl.formatMessage({ id: "label.fill_mandatory" }));
+      setError(intl.formatMessage({ id: "label.fill_mandatory" }));
     }
   };
 
@@ -83,7 +75,7 @@ const AddModifyNewJobs = () => {
   return (
     <>
       {isLoading && <LoadingScreen />}
-      {!isLoading && isSuccess && !isError && !error && (
+      {!isLoading && isSuccess && !isError && (
         <AddModifyNewJobsUi
           isWebView={isWebView}
           addComponentRef={addComponentRef}
@@ -91,20 +83,36 @@ const AddModifyNewJobs = () => {
           setIsCheckList={setIsCheckList}
           isCheckList={isCheckList}
           onSubmit={onSubmit}
+          disabled={isLoading}
         />
       )}
-      {!isLoading && isError && error && (
+      {!isLoading && isError && (
         <ErrorComponent
           errorMsg={
             isErrorData?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE
           }
         />
       )}
-      {successMessage && (
+      {error && (
         <ToastComponent
-          toastMessage={successMessage}
+          toastMessage={error}
           onDismiss={() => {
-            setSuccessMessage(null);
+            setError(null);
+          }}
+        />
+      )}
+      {successMessage && (
+        <CustomModal
+          isSuccess
+          headerText={intl.formatMessage({
+            id: "label.job_saved_successfully",
+          })}
+          buttonTitle={intl.formatMessage({ id: "label.okay" })}
+          onPress={() => {
+            setSuccessMessage(false);
+            navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
+              replace: true,
+            });
           }}
         />
       )}

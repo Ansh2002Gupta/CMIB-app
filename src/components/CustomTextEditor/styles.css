@@ -39,3 +39,7 @@
 .ql-editor {
   padding: 0px;
 }
+
+.custom .ql-editor{
+  padding:0px
+}

@@ -16,6 +16,7 @@ const AddNewJobsUi = ({
   addComponentRef,
   addQuestionRef,
   addNewJobData,
+  disabled,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [isQuestionaire, setIsQuestionaire] = useState(true);
@@ -54,6 +55,7 @@ const AddNewJobsUi = ({
               isCheckList={isCheckList}
               setIsCheckList={setIsCheckList}
               onSubmit={onSubmit}
+              disabled={disabled}
             />
           }
         />

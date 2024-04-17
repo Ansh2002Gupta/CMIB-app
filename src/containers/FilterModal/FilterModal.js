@@ -6,9 +6,9 @@ import { View, ScrollView, Platform } from "@unthinkable/react-core-components";
 import { ThreeRow, TwoColumn } from "../../core/layouts";
 
 import ActionPairButton from "../../components/ActionPairButton";
+import CheckBox from "../../components/CheckBox/CheckBox";
 import CommonText from "../../components/CommonText";
 import CustomModal from "../../components/CustomModal";
-import CheckBox from "../../components/CheckBox/CheckBox";
 import CustomImage from "../../components/CustomImage";
 import CustomTouchableOpacity from "../../components/CustomTouchableOpacity";
 import DatePickerModal from "../../components/DatePickerModel";
@@ -17,8 +17,8 @@ import useFilterModal from "./controller/useFilterModal";
 import { FILTER_TYPE_ENUM } from "../../constants/constants";
 import classes from "../../theme/styles/CssClassProvider";
 import useIsWebView from "../../hooks/useIsWebView";
-import images from "../../images";
 import commonStyles from "../../theme/styles/commonStyles";
+import images from "../../images";
 import styles from "./FilterModal.style";
 
 const FilterModal = ({
@@ -114,7 +114,6 @@ const FilterModal = ({
         obj?.name?.trim().toLowerCase() === filterName?.trim().toLowerCase()
     );
   };
-
   const renderOptionsByCategory = (category) => {
     category = getFilterName(category);
     const filterObj = returnFilterObj(filterInfo, category);
@@ -126,12 +125,18 @@ const FilterModal = ({
             <DatePickerModal
               customStyles={styles.datePickerStyle}
               value={
-                Array.isArray(filterState?.selectedQueryType)
-                  ? filterState?.selectedQueryType[0]
+                Array.isArray(filterState?.selectedDate)
+                  ? filterState?.selectedDate[0]
                   : ""
               }
               datePickerViewStyle={styles.datePickerInner}
-              onChangeValue={(value) => filterObj?.handler(value)}
+              minDate={null}
+              onChangeValue={(value) => {
+                const obj = {
+                  Date: value,
+                };
+                filterObj?.handler(obj, "Date", "Date");
+              }}
             />
           </View>
         );
@@ -203,9 +208,10 @@ const FilterModal = ({
   };
 
   const RenderCategoryButton = ({ title, onClick }) => {
-    title = getFilterName(title);
-    const isActive = getCheckBoxesStatus(title) === "full" ? true : false;
-    const isPartial = getCheckBoxesStatus(title) === "partial" ? true : false;
+    const newTitle = getFilterName(title);
+    const isActive = getCheckBoxesStatus(newTitle) === "full" ? true : false;
+    const isPartial =
+      getCheckBoxesStatus(newTitle) === "partial" ? true : false;
 
     return (
       <CheckBox

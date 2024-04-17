@@ -10,8 +10,10 @@ const ActionPairButton = ({
   buttonTwoText,
   buttonsType,
   customStyles,
+  disableLeftStyle,
   displayLoader,
   displayLoaderLeft,
+  disableRightStyle,
   iconRight,
   iconLeft,
   isButtonOneGreen,
@@ -39,6 +41,7 @@ const ActionPairButton = ({
       style={{ ...styles.containerStyle, ...customContainerStyle }}
       leftSection={
         <CustomButton
+          disabledStyle={disableLeftStyle}
           disabled={isButtonOneDisabled || isDisabledLeft}
           isLoading={displayLoaderLeft}
           iconLeft={iconLeft}
@@ -51,9 +54,11 @@ const ActionPairButton = ({
           {buttonOneText}
         </CustomButton>
       }
+      // temporarly comented apply button as this functionality may come in near future
       rightSection={
         <CustomButton
-          disabled={isButtonTwoDisabled}
+          disabledStyle={disableRightStyle}
+          disabled={isDisabled || isButtonTwoDisabled}
           customStyle={{ customTextStyle: buttonTwoTextStyle }}
           iconRight={iconRight}
           isLoading={displayLoader}

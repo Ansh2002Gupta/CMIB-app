@@ -18,6 +18,14 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     fontSize: 12,
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: 50,
+      },
+    }),
   },
   tableHeadingText: {
     fontWeight: "600",
@@ -37,6 +45,7 @@ const styles = StyleSheet.create({
   tableContent: {
     height: "90%",
   },
+  cursorStyle: { cursor: "pointer" },
 });
 
 export default styles;

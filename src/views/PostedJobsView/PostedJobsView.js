@@ -69,6 +69,7 @@ const PostedJobsView = () => {
     tableIcon,
     postedJobData,
     totalcards,
+    initialFilterState,
   } = usePostedJobListing(onViewPress, onEditPress);
 
   const navigate = useNavigate();
@@ -131,6 +132,7 @@ const PostedJobsView = () => {
                 isHeading,
                 isTicketListingLoading,
                 isFirstPageReceived,
+                initialFilterState,
                 loadingMore,
                 onIconPress,
                 queryTypeData,

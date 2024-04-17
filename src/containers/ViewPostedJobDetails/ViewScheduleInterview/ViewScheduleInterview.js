@@ -13,14 +13,18 @@ import useGetScheduleList from "../../../views/ViewPostedJobDetails/controller/u
 import ErrorComponent from "../../../components/ErrorComponent/ErrorComponent";
 import ViewInterviewDetails from "../../ViewInterviewDetails";
 import ScheduleInterviewModal from "../../ScheduleInterviewModal/ScheduleInterviewModal";
+import RenderMobileItem from "../component/RenderMobileItem/RenderMobileItem";
+import ToastComponent from "../../../components/ToastComponent/ToastComponent";
 
 const ViewScheduleInterview = ({ id }) => {
   const [isModalVisible, setIsModalVisible] = useState(null);
   const selectedApplicant = useRef(null);
+  const applicantId = useRef(null);
   const intl = useIntl();
 
   const onClickAction = (selectedItem, item) => {
-    selectedApplicant.current = item.id;
+    applicantId.current = item.application_id;
+    selectedApplicant.current = item.interview_id;
     setIsModalVisible(selectedItem);
   };
   const {
@@ -59,72 +63,74 @@ const ViewScheduleInterview = ({ id }) => {
     tableIcon,
     scheduleInterviewData,
     totalcards,
+    initialFilterState,
+    errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
   } = useGetScheduleList(id, onClickAction);
 
   const getMobileView = (item, index) => {
     return (
-      <MobileCard
-        item={item}
-        getStatusStyle={getStatusStyle}
+      <RenderMobileItem
         lastElement={scheduleInterviewData.length - 1 === index}
-        statusData={statusData ? statusData : []}
-        onEditPress={() => {}}
-        onViewPress={() => {}}
+        item={item}
+        onPress={onClickAction}
       />
     );
   };
-
   return (
     <>
       {!isError && (
-        <CustomTable
-          {...{
-            allDataLoaded,
-            currentPage,
-            currentRecords,
-            customFilterInfo,
-            data: scheduleInterviewData,
-            defaultCategory,
-            filterApplyHandler,
-            filterCategory,
-            getColoumConfigs,
-            getStatusStyle,
-            handleLoadMore,
-            getErrorDetails,
-            tableHeading,
-            handlePageChange,
-            handleRowPerPageChange,
-            handleSearchResults,
-            handleSaveAddTicket,
-            headingTexts,
-            indexOfFirstRecord,
-            indexOfLastRecord,
-            isHeading,
-            isTicketListingLoading,
-            isFirstPageReceived,
-            loadingMore,
-            onIconPress,
-            queryTypeData,
-            rowsLimit,
-            rowsPerPage,
-            selectedFilterOptions: filterState,
-            setSelectedFilterOptions: setFilterState,
-            setCurrentRecords,
-            statusData,
-            statusText,
-            subHeadingText,
-            tableIcon,
-            totalcards,
-            placeholder: intl.formatMessage({
-              id: "label.search_by_applicant_name",
-            }),
-          }}
-          mobileComponentToRender={getMobileView}
-          containerStyle={styles.customTableStyle}
-          isTotalCardVisible={false}
-          ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
-          renderCalendar={true}
-        />
+        <View style={styles.flex1}>
+          <CustomTable
+            {...{
+              allDataLoaded,
+              currentPage,
+              currentRecords,
+              customFilterInfo,
+              data: scheduleInterviewData,
+              defaultCategory,
+              filterApplyHandler,
+              filterCategory,
+              getColoumConfigs,
+              getStatusStyle,
+              handleLoadMore,
+              getErrorDetails,
+              tableHeading,
+              handlePageChange,
+              handleRowPerPageChange,
+              handleSearchResults,
+              handleSaveAddTicket,
+              headingTexts,
+              indexOfFirstRecord,
+              indexOfLastRecord,
+              isHeading,
+              isTicketListingLoading,
+              isFirstPageReceived,
+              loadingMore,
+              onIconPress,
+              queryTypeData,
+              rowsLimit,
+              rowsPerPage,
+              selectedFilterOptions: filterState,
+              setSelectedFilterOptions: setFilterState,
+              setCurrentRecords,
+              statusData,
+              statusText,
+              subHeadingText,
+              tableIcon,
+              totalcards,
+              initialFilterState,
+              placeholder: intl.formatMessage({
+                id: "label.search_by_applicant_name",
+              }),
+            }}
+            mobileComponentToRender={getMobileView}
+            containerStyle={styles.customTableStyle}
+            isTotalCardVisible={false}
+            ThirdSection={<DownloadMoreComponent onPress={() => {}} />}
+            renderCalendar={true}
+          />
+        </View>
       )}
       {isModalVisible &&
         isModalVisible ===
@@ -133,6 +139,7 @@ const ViewScheduleInterview = ({ id }) => {
             onClose={() => {
               setIsModalVisible(null);
             }}
+            applicant_id={selectedApplicant.current}
           />
         )}
       {isModalVisible &&
@@ -141,9 +148,11 @@ const ViewScheduleInterview = ({ id }) => {
           <ScheduleInterviewModal
             onClose={() => {
               setIsModalVisible(null);
+              selectedApplicant.current = null;
+              applicantId.current = null;
             }}
-            isEdited
-            applicant_id={selectedApplicant.current}
+            applicant_id={applicantId.current}
+            interviewId={selectedApplicant.current}
           />
         )}
       {isError && !!getErrorDetails()?.errorMessage && (
@@ -151,6 +160,16 @@ const ViewScheduleInterview = ({ id }) => {
           errorMsg={getErrorDetails()?.errorMessage}
           onRetry={() => getErrorDetails()?.onRetry()}
         />
+      )}
+      {!!errorWhileApplicantStatusChange && (
+        <View style={styles.zIndex2}>
+          <ToastComponent
+            toastMessage={errorWhileApplicantStatusChange}
+            onDismiss={() => {
+              setErrorWhileApplicantStatusChange(null);
+            }}
+          />
+        </View>
       )}
     </>
   );

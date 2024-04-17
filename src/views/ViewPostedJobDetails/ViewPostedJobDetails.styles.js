@@ -95,6 +95,14 @@ const styles = StyleSheet.create({
   flex1: {
     flex: 1,
   },
+  popupContainer: {
+    position: "absolute",
+    top: 0,
+    right: 160,
+    height: "auto",
+    width: "auto",
+    minWidth: 233,
+  },
 });
 
 export default styles;

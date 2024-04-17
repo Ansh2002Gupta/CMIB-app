@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "../../../routes";
 import { Platform, View } from "@unthinkable/react-core-components";
 import CommonText from "../../../components/CommonText";
@@ -23,6 +23,10 @@ import PopupMessage from "../../../components/PopupMessage/PopupMessage";
 import dayjs from "dayjs";
 import { useIntl } from "react-intl";
 import useChangeApplicantStatusApi from "../../../services/apiServices/hooks/useChangeApplicantStatusApi";
+import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
+import CustomImage from "../../../components/CustomImage";
+import TouchableImage from "../../../components/TouchableImage";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 
 const isMob = Platform.OS.toLowerCase() !== "web";
 
@@ -39,6 +43,10 @@ const useGetScheduleList = (id, onClickAction) => {
   const defaultCategory = DEFAULT_CATEGORY_FOR_FILTER_MODAL.GetSchedule;
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
+  const [currentPopUpMessage, setCurrentPopupMessage] = useState(-1);
+  const popupRef = useRef(null);
+  useOutsideClick(popupRef, () => setCurrentPopupMessage(-1));
+
   const intl = useIntl();
 
   const [filterOptions, setFilterOptions] = useState({
@@ -72,22 +80,10 @@ const useGetScheduleList = (id, onClickAction) => {
     isLoading,
     isError: isErrorApplicantStatusChange,
     errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
   } = useChangeApplicantStatusApi();
 
-  const statusData = [
-    {
-      id: 1,
-      name: "Pending",
-    },
-    {
-      id: 2,
-      name: "Rejected",
-    },
-    {
-      id: 3,
-      name: "Shortlisted",
-    },
-  ];
+  const statusData = [];
 
   const queryTypeData = [];
   const getErrorDetails = () => {
@@ -110,14 +106,9 @@ const useGetScheduleList = (id, onClickAction) => {
         errorMessage: errorGetPostedJobs?.data?.message,
         onRetry: () => fetchScheduleInterviews({}),
       };
-    if (isErrorApplicantStatusChange)
-      return {
-        errorMessage: errorWhileApplicantStatusChange,
-        onRetry: () => {},
-      };
   };
-  const isTicketListingLoading = isLoading || isScheduleInterviewLoading;
-  const isError = isErrorGetScheduleInterview || isErrorApplicantStatusChange;
+  const isTicketListingLoading = isScheduleInterviewLoading;
+  const isError = isErrorGetScheduleInterview;
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -162,7 +153,7 @@ const useGetScheduleList = (id, onClickAction) => {
             ? existingSelectedOptions?.filter((item) => {
                 return item !== selectedFilter?.[keyName];
               })
-            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+            : [selectedFilter?.[keyName]];
         } else {
           newSelectedOptions = selectedFilter.value;
         }
@@ -278,9 +269,18 @@ const useGetScheduleList = (id, onClickAction) => {
 
   const filterApplyHandler = async (filterInfo) => {
     const currentFilterOptions = {
-      date: returnSelectedFilterOption(filterInfo, "Date"),
+      date: returnSelectedFilterOption(filterInfo, "Date").length
+        ? dayjs(returnSelectedFilterOption(filterInfo, "Date")[0]).format(
+            "YYYY-MM-DD"
+          )
+        : [],
     };
-    setFilterOptions(currentFilterOptions);
+    setFilterOptions((prev) => {
+      return {
+        ...prev,
+        ...currentFilterOptions,
+      };
+    });
     if (isMob) {
       setLoadingMore(false);
       setCurrentPage(1);
@@ -304,14 +304,14 @@ const useGetScheduleList = (id, onClickAction) => {
     }
   };
 
-  const onDateSorting = async (sortField) => {
-    // setIsAscendingOrder((prev) => !prev);
-    // await updateCurrentRecords({
-    //   perPage: rowsPerPage,
-    //   page: currentPage,
-    //   sortField: sortField,
-    //   sortDirection: !isAscendingOrder ? "asc" : "desc",
-    // });
+  const onNameSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortField: sortField,
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
+    });
   };
 
   let headingTexts = ["name"];
@@ -337,18 +337,70 @@ const useGetScheduleList = (id, onClickAction) => {
         return styles.cellTextStyle(12);
     }
   }
+  function tConvert(time) {
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      time = time.slice(1);
+      time[5] = +time[0] < 12 ? " AM" : " PM";
+      time[0] = +time[0] % 12 || 12;
+    }
+    return time.join("");
+  }
+  function convertDateFormat(dateStr) {
+    return dateStr.split(".").join("/");
+  }
+  const onIconPress = (item) => {
+    setCurrentPopupMessage(item.application_id);
+  };
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
       ? styles.tableHeadingText
       : styles.cellTextStyle();
+    const optionArray = [
+      {
+        name: intl.formatMessage({ id: "label.view_interview_details" }),
+        id: item.application_id,
+      },
+      {
+        name: intl.formatMessage({ id: "label.edit_interview_details" }),
+        id: item.application_id,
+      },
+    ];
+    if (
+      item.is_primary_schedule_accepted ||
+      item.is_alternate_schedule_accepted
+    ) {
+      optionArray.push({
+        name: intl.formatMessage({ id: "label.offer_job" }),
+        id: item.application_id,
+      });
+    }
     return [
       {
-        content: (
+        content: isHeading ? (
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {item?.name ?? "-"}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
             {item?.name ?? "-"}
           </CommonText>
         ),
+
         style: {
           ...commonStyles.columnStyle("25%"),
           ...styles.justifyContentCenter,
@@ -386,13 +438,27 @@ const useGetScheduleList = (id, onClickAction) => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-            }}
-          >
-            {item?.primary_interview_date ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_date ?? "-"}
+              </CommonText>
+            ) : (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_date
+                  ? convertDateFormat(item?.primary_interview_date)
+                  : "-"}
+              </CommonText>
+            )}
+          </>
         ),
         style: {
           ...commonStyles.columnStyle("15%"),
@@ -402,16 +468,30 @@ const useGetScheduleList = (id, onClickAction) => {
       },
       {
         content: (
-          <CommonText
-            customTextStyle={{
-              ...tableStyle,
-            }}
-          >
-            {item?.primary_interview_time ?? "-"}
-          </CommonText>
+          <>
+            {isHeading ? (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_time ?? "-"}
+              </CommonText>
+            ) : (
+              <CommonText
+                customTextStyle={{
+                  ...tableStyle,
+                }}
+              >
+                {item?.primary_interview_time
+                  ? tConvert(item?.primary_interview_time)
+                  : "-"}
+              </CommonText>
+            )}
+          </>
         ),
         style: {
-          ...commonStyles.columnStyle("16%"),
+          ...commonStyles.columnStyle("15%"),
           ...styles.justifyContentCenter,
           ...{ paddingLeft: 5, paddingRight: 5 },
         },
@@ -421,27 +501,47 @@ const useGetScheduleList = (id, onClickAction) => {
         content: (
           <View>
             {!isHeading && (
-              <PopupMessage
-                message={[
-                  intl.formatMessage({ id: "label.view_interview_details" }),
-                  intl.formatMessage({ id: "label.edit_interview_details" }),
-
-                  intl.formatMessage({ id: "label.offer_job" }),
-                ]}
-                onPopupClick={(selectedItem) => {
-                  if (
-                    selectedItem ===
-                    intl.formatMessage({ id: "label.offer_job" })
-                  ) {
-                    const request = {
-                      status: JOB_STATUS_RESPONSE_CODE[selectedItem],
-                    };
-                    handleUseApplicantStatus(item.id, request);
-                  } else {
-                    onClickAction(selectedItem, item);
-                  }
-                }}
-              />
+              <>
+                <TouchableImage
+                  onPress={() => {
+                    onIconPress(item);
+                  }}
+                  source={images.iconMore}
+                  imageStyle={{ height: 20, width: 20 }}
+                  isSvg={true}
+                />
+                {currentPopUpMessage == item.application_id && (
+                  <View ref={popupRef}>
+                    <PopupMessage
+                      message={optionArray}
+                      onPopupClick={(selectedItem) => {
+                        setCurrentPopupMessage(-1);
+                        if (
+                          selectedItem.name ===
+                          intl.formatMessage({ id: "label.offer_job" })
+                        ) {
+                          const request = {
+                            status: JOB_STATUS_RESPONSE_CODE[selectedItem.name],
+                          };
+                          handleUseApplicantStatus(
+                            item.application_id,
+                            request
+                          );
+                        } else {
+                          onClickAction(selectedItem.name, item);
+                        }
+                      }}
+                      labelName={"name"}
+                      customStyle={{
+                        ...styles.popupContainer,
+                        ...{ right: 130 },
+                      }}
+                      isPopupModal
+                      onPopUpClose={() => setCurrentPopupMessage(-1)}
+                    />
+                  </View>
+                )}
+              </>
             )}
           </View>
         ),
@@ -480,11 +580,13 @@ const useGetScheduleList = (id, onClickAction) => {
     loadingMore,
     queryTypeData,
     rowsPerPage,
-
+    initialFilterState,
     setFilterState,
     statusData,
     statusText,
     subHeadingText,
+    errorWhileApplicantStatusChange,
+    setErrorWhileApplicantStatusChange,
     tableIcon,
     scheduleInterviewData: currentRecords,
     totalcards: scheduleInterviewData?.meta?.total,
