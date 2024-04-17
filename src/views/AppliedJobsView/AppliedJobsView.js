@@ -85,7 +85,7 @@ const AppliedJobsView = () => {
     <TwoRow
       topSection={
         <IconHeader
-          headerText={intl.formatMessage({ id: "label.applied_jobs" })}
+          headerText={intl.formatMessage({ id: "label.applied_Jobs" })}
         />
       }
       isBottomFillSpace

@@ -20,9 +20,10 @@ const skyBlueLightSecond = "#E7EAFC";
 const darkGreen = "#00873E";
 const green = "#04AF55";
 const greenOne = "#04af55";
+const lightGreen = "#DFFFDC";
+const shallowGreen = "#CDEFDD";
 const darkSecondGreen = "#258B01";
-const lightGreen = "#E6F9EF";
-const lightGreen2 = "#DFFFDC";
+const lightGreen2 = "#E6F9EF";
 
 /* Greys */
 const backgroundGrey = "#F6F8F9";
@@ -102,6 +103,7 @@ const colors = {
   offWhite,
   red,
   secondaryGrey,
+  shallowGreen,
   silver,
   slateGray,
   subHeadingGray,
