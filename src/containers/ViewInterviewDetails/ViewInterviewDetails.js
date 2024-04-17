@@ -85,19 +85,20 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
     interviewData?.alternate_remote_meeting_link || "-"
   );
 
-  const currentType = data?.type.toLowerCase();
+  const currentPrimaryType = data?.type.toLowerCase();
+  const currentAlternateType = data?.alternate_type.toLowerCase();
 
   const currentPrimaryDetails =
-    currentType === "face-to-face"
+    currentPrimaryType === "face-to-face"
       ? primaryFaceToFace
-      : currentType === "remote"
+      : currentPrimaryType === "remote"
       ? primaryRemoteDetails
       : primaryTelephonicDetails;
 
   const currentAlternateDetails =
-    currentType === "face-to-face"
+    currentAlternateType === "face-to-face"
       ? alternateFaceToFace
-      : currentType === "remote"
+      : currentAlternateType === "remote"
       ? alternateRemoteDetails
       : alternateTelephonicDetails;
 
@@ -198,7 +199,7 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
                     heading: intl.formatMessage({
                       id: "label.interview_type",
                     }),
-                    value: currentType,
+                    value: currentPrimaryType,
                     isMandatory: true,
                   })}
                 </View>
@@ -221,7 +222,7 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
                     heading: intl.formatMessage({
                       id: "label.interview_type",
                     }),
-                    value: currentType,
+                    value: currentAlternateType,
                     isMandatory: false,
                   })}
                 </View>
