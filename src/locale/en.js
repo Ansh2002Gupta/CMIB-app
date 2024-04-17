@@ -735,6 +735,7 @@ const locale = {
   "label.download_candidates_list": "Download candidates List",
   "label.view_candidate_details": "View Candidate Details",
   "label.selectOption": "Select option",
+  "label.job_details": "Job Details",
 };
 
 export default locale;
