@@ -306,6 +306,10 @@ const config = [
         viewPath: navigations.CANDIDATES,
         element: <Candidates />,
       },
+      {
+        viewPath: `${navigations.CANDIDATE_DETAIL}/:id`,
+        element: <ViewDetailsScreen />,
+      },
     ],
   },
   {
