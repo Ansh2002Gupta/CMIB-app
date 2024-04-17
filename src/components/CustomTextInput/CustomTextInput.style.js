@@ -12,7 +12,6 @@ const style = {
     gap: 4,
   },
   dropdown: {
-    paddingBottom: 6,
     paddingRight: 16,
     backgroundColor: colors.white,
     borderColor: colors.lightGrey,
@@ -236,11 +235,15 @@ const style = {
   onlyCountLimitBox: {
     justifyContent: "flex-end",
   },
+  marginRight10: {
+    marginRight: 10,
+  },
   CheckBoxSelection: {
     paddingRight: 16,
     marginTop: 4,
-    flexDirection: 'row',
-    flex: 1
+    flexDirection: "row",
+    flex: 1,
+    marginBottom: 10,
   },
   marginRight10: {
     marginRight: 10,

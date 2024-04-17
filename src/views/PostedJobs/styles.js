@@ -50,10 +50,13 @@ const styles = {
     marginBottom: 16,
   },
   buttonStyleWeb: {
-    width: 93,
+    maxHeight: 44,
+    maxWidth: 96,
   },
   saveButtonStyle: {
     marginRight: 16,
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   aboutMobile: {
     marginTop: 0,
@@ -76,6 +79,7 @@ const styles = {
     alignItems: "center",
     backgroundColor: colors.backgroundColor,
   },
+  disabledStyle: { backgroundColor: colors.secondaryGrey },
 };
 
 export default styles;

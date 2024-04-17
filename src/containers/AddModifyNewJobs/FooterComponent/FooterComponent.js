@@ -17,6 +17,7 @@ const FooterComponent = ({
   onSubmit,
   submitButtonText = "label.post",
   onCancelPress,
+  disabled = false,
 }) => {
   const navigate = useNavigate();
   const [sideBarState] = useContext(SideBarContext);
@@ -33,6 +34,7 @@ const FooterComponent = ({
             }}
             id={`isCheckList${isCheckList}`}
             isSelected={isCheckList}
+            style={styles.checkBoxHeight(isWebView)}
           />
         </View>
       </View>
@@ -49,6 +51,12 @@ const FooterComponent = ({
                 });
               }
             }}
+            customStyle={{
+              textFontWeight: "500",
+              customTextStyle: {
+                fontSize: 14,
+              },
+            }}
             style={styles.cancelButtonStyle(isWebView)}
           >
             {intl.formatMessage({ id: "label.cancel" })}
@@ -56,7 +64,14 @@ const FooterComponent = ({
           <CustomButton
             onPress={() => onSubmit()}
             style={styles.postButtonStyle(isWebView)}
+            disabled={disabled}
             withGreenBackground
+            customStyle={{
+              textFontWeight: "500",
+              customTextStyle: {
+                fontSize: 14,
+              },
+            }}
             disabledContainerStyle={{ opacity: 0.5 }}
           >
             {intl.formatMessage({ id: submitButtonText })}

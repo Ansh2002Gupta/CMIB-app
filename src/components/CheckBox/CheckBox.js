@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import CustomImage from "../CustomImage";
 import CommonText from "../CommonText";
-import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import MultiColumn from "../../core/layouts/MultiColumn";
 import Images from "../../images";
 import styles from "./CheckBox.style";
+import { View } from "@unthinkable/react-core-components";
+import TouchableImage from "../TouchableImage";
+
+const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
 
 const CheckBox = ({
   customTextStyle,
@@ -18,6 +20,8 @@ const CheckBox = ({
   title,
   iconCheck,
   iconUnCheck,
+  checkBoxTextStyle,
+  style,
 }) => {
   const CheckIcon = iconCheck ? iconCheck : Images.iconCheckbox;
   const UncheckIcon = iconUnCheck ? iconUnCheck : Images.iconUnCheckbox;
@@ -40,31 +44,38 @@ const CheckBox = ({
   const rowCheckBox = [
     {
       content: (
-        <CustomTouchableOpacity
-          disabled={isDisabled}
-          onPress={() => handleCheckbox(id)}
-        >
-          <CustomImage
+        <View style={{...styles.containerStyle,...customTextStyle }}>
+          <TouchableImage
+          hitSlop={hitSlop}
             Icon={getCheckBoxIcon()}
             style={styles.iconStyle}
             source={getCheckBoxIcon()}
             isSvg
+            disabled={isDisabled}
+            onPress={() => handleCheckbox(id)}
           />
           <CommonText
             customTextStyle={{
               ...styles.titleStyle,
               ...(isDisabled ? styles.disabledText : {}),
-              ...customTextStyle,
+              ...checkBoxTextStyle,
             }}
+            customContainerStyle={styles.alignJustifyCenter}
           >
             {title}
           </CommonText>
-        </CustomTouchableOpacity>
+        </View>
       ),
     },
   ];
 
-  return <MultiColumn columns={rowCheckBox} columnStyle={styles.columnStyle} />;
+  return (
+    <MultiColumn
+      columns={rowCheckBox}
+      columnStyle={styles.columnStyle}
+      style={style}
+    />
+  );
 };
 
 CheckBox.defaultProps = {
@@ -74,6 +85,7 @@ CheckBox.defaultProps = {
   isSelected: false,
   iconCheck: Images.iconCheckbox,
   iconUnCheck: Images.iconUnCheckbox,
+  style: {},
 };
 
 CheckBox.propTypes = {
@@ -86,6 +98,7 @@ CheckBox.propTypes = {
   title: PropTypes.string.isRequired,
   iconCheck: PropTypes.node,
   iconUnCheck: PropTypes.node,
+  style: PropTypes.object,
 };
 
 export default CheckBox;

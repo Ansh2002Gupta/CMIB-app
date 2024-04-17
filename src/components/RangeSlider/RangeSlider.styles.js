@@ -31,8 +31,8 @@ export const styles = StyleSheet.create({
   },
   sliderCommon: {
     position: "absolute",
-    borderRadius: "3px",
-    height: "5px",
+    borderRadius: 3,
+    height: 5,
   },
   sliderValue: {
     position: "absolute",
@@ -42,7 +42,6 @@ export const styles = StyleSheet.create({
   sliderValueText: {
     fontSize: 14,
     lineHeight: 20,
-    fontWeight: 500,
     color: colors.darkGrey,
   },
   sliderTrack: {
@@ -59,5 +58,39 @@ export const styles = StyleSheet.create({
   },
   sliderRightValue: {
     right: -4,
+  },
+  thumbStyle: {
+    width: 20,
+    height: 20,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: colors.green,
+    backgroundColor: colors.white,
+  },
+  selectedRailStyle: {
+    height: 4,
+    backgroundColor: colors.green,
+    borderRadius: 2,
+  },
+  railStyle: {
+    flex: 1,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: colors.greyFive,
+  },
+  notchStyle: {
+    width: 8,
+    height: 8,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderTopColor: colors.green,
+    borderLeftWidth: 4,
+    borderRightWidth: 4,
+    borderTopWidth: 8,
+  },
+  labelStyle: {
+    alignItems: "center",
+    padding: 4,
+    borderRadius: 4,
   },
 });

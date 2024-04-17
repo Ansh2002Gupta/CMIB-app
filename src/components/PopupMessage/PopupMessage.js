@@ -81,6 +81,7 @@ PopupMessage.defaultProps = {
   message: [],
   labelName: "name",
   isPopupModal: false,
+  data: {},
 };
 
 PopupMessage.propTypes = {

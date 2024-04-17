@@ -29,6 +29,8 @@ const style = {
     ...Platform.select({
       web: {
         flexShrink: "unset",
+        flexWrap: "wrap",
+        wordBreak: "break-word",
       },
     }),
   },
@@ -46,6 +48,7 @@ const style = {
     width: "100%",
     color,
   }),
+  mandotaryView: { flex: 1, flexDirection: "row" },
 };
 
 export default style;

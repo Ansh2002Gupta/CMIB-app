@@ -1,45 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "../../../routes";
+import { useNavigate, useSearchParams } from "../../../routes";
+import { Platform } from "@unthinkable/react-core-components";
 
 import BadgeLabel from "../../../components/BadgeLabel/BadgeLabel";
 import CommonText from "../../../components/CommonText";
 import CustomTouchableOpacity from "../../../components/CustomTouchableOpacity";
 import CustomImage from "../../../components/CustomImage";
-import TouchableImage from "../../../components/TouchableImage";
+import PopupMessage from "../../../components/PopupMessage/PopupMessage";
+import useFetch from "../../../hooks/useFetch";
+
 import usePagination from "../../../hooks/usePagination";
 import {
   getValidCurrentPage,
   getValidRowPerPage,
 } from "../../../utils/queryParamsHelpers";
-import { JobSeekersData } from "../dummyData";
-import { ROWS_PER_PAGE_ARRAY } from "../../../constants/constants";
-import images from "../../../images";
+import { COMPANY_LISTING } from "../../../services/apiServices/apiEndPoint";
+import {
+  COMPANY,
+  FILTER_TYPE_ENUM,
+  POPUP_OPTIONS,
+  ROWS_PER_PAGE_ARRAY,
+} from "../../../constants/constants";
+import { navigations } from "../../../constants/routeNames";
 import commonStyles from "../../../theme/styles/commonStyles";
+import images from "../../../images";
 import styles from "../JobSeekers.style";
 
+const initialFilterState = {
+  selectedExperience: [],
+  selectedCurrentSalary: 0,
+  selectedFunctionalAreas: [],
+  selectedCategory: [],
+};
+
 const useJobSeekers = () => {
+  const isMob = Platform.OS.toLowerCase() !== "web";
+  const defaultCategory = "Experience";
   const [searchParams] = useSearchParams();
   const [loadingMore, setLoadingMore] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [isFirstPageReceived, setIsFirstPageReceived] = useState(true);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
-  //TODO: Update the filter options when filter is applied
-  // const [filterOptions, setFilterOptions] = useState({
-  //   experience: "",
-  //   current_salary: "",
-  //   expected_annual_salary: "",
-  //   functional_areas: "",
-  //   it_skills: "",
-  //   soft_skills: "",
-  //   education: "",
-  //   gender: "",
-  //   marital_status: "",
-  //   category: "",
-  //   age: "",
-  //   posting: "",
-  //   language: "",
-  // });
+  const navigate = useNavigate();
+  const [filterState, setFilterState] = useState(initialFilterState);
+  const [filterOptions, setFilterOptions] = useState({
+    experience: "",
+    current_salary: "",
+    functional_areas: "",
+    education: "",
+    category: "",
+  });
 
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
@@ -49,19 +60,18 @@ const useJobSeekers = () => {
     getValidCurrentPage(searchParams.get("page"))
   );
 
-  //TODO: API Call to get listing
-  // const {
-  //   data: jobSeekersData,
-  //   isLoading: isGeetingJobbSeekers,
-  //   fetchData: fetchJobSeekers,
-  //   isError: isErrorGettingJobSeekers,
-  //   error: errorGettingJobSeekers,
-  // } = useFetch({
-  //   url: '',
-  //   otherOptions: {
-  //     skipApiCallOnMount: true,
-  //   },
-  // });
+  const {
+    data: jobSeekersData,
+    isLoading: isGeetingJobbSeekers,
+    fetchData: fetchJobSeekers,
+    isError: isErrorGettingJobSeekers,
+    error: errorGettingJobSeekers,
+  } = useFetch({
+    url: COMPANY_LISTING,
+    otherOptions: {
+      skipApiCallOnMount: true,
+    },
+  });
 
   const { handlePagePerChange, handleRowsPerPageChange } = usePagination({
     shouldSetQueryParamsOnMount: true,
@@ -84,21 +94,20 @@ const useJobSeekers = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // TODO: fetch data from api
-      // const requestedParams = {
-      //   perPage: rowsPerPage,
-      //   page: currentPage,
-      // };
-      // const initialData = await fetchJobSeekers({
-      //   queryParamsObject: requestedParams,
-      // });
-      // if (initialData && initialData?.records?.length > 0) {
-      //   setCurrentRecords(initialData?.records);
-      //   if (initialData?.records?.length < rowsPerPage && isMob) {
-      //     setAllDataLoaded(true);
-      //   }
-      // }
-      // setIsFirstPageReceived(false);
+      const requestedParams = {
+        perPage: rowsPerPage,
+        page: currentPage,
+      };
+      const initialData = await fetchJobSeekers({
+        queryParamsObject: requestedParams,
+      });
+      if (initialData && initialData?.records?.length > 0) {
+        setCurrentRecords(initialData?.records);
+        if (initialData?.records?.length < rowsPerPage && isMob) {
+          setAllDataLoaded(true);
+        }
+      }
+      setIsFirstPageReceived(false);
     };
     fetchData();
   }, []);
@@ -107,40 +116,38 @@ const useJobSeekers = () => {
   const indexOfFirstRecord = indexOfLastRecord - rowsPerPage;
 
   const updateCurrentRecords = async (params) => {
-    //TODO: API call to get updated listing data
-    // const newData = await fetchDataTicketListing({
-    //   queryParamsObject: params,
-    // });
-    // setCurrentRecords(newData?.records);
+    const newData = await fetchJobSeekers({
+      queryParamsObject: params,
+    });
+    setCurrentRecords(newData?.records);
   };
 
   const handleLoadMore = async () => {
-    //TODO: Api call to get more data
-    // if (loadingMore || allDataLoaded) return;
-    // setLoadingMore(true);
-    // const nextPage = currentPage + 1;
-    // try {
-    //   const newData = await fetchJobSeekers({
-    //     queryParamsObject: {
-    //       perPage: rowsPerPage,
-    //       page: nextPage,
-    //     },
-    //   });
-    //   if (newData && newData?.records?.length > 0) {
-    //     setCurrentRecords((prevRecords) => [
-    //       ...prevRecords,
-    //       ...newData.records,
-    //     ]);
-    //   }
-    //   setCurrentPage(nextPage);
-    //   if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
-    //     setAllDataLoaded(true);
-    //   }
-    // } catch (error) {
-    //   console.error("Error fetching job seekers on load more:", error);
-    // } finally {
-    //   setLoadingMore(false);
-    // }
+    if (loadingMore || allDataLoaded) return;
+    setLoadingMore(true);
+    const nextPage = currentPage + 1;
+    try {
+      const newData = await fetchJobSeekers({
+        queryParamsObject: {
+          perPage: rowsPerPage,
+          page: nextPage,
+        },
+      });
+      if (newData && newData?.records?.length > 0) {
+        setCurrentRecords((prevRecords) => [
+          ...prevRecords,
+          ...newData.records,
+        ]);
+      }
+      setCurrentPage(nextPage);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      }
+    } catch (error) {
+      console.error("Error fetching job seekers on load more:", error);
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
   const handlePageChange = async (page) => {
@@ -160,79 +167,193 @@ const useJobSeekers = () => {
   };
 
   const handleSearchResults = async (searchedData) => {
-    //TODO: API call to get searched result
-    // setIsFirstPageReceived(true);
+    setIsFirstPageReceived(true);
+    //NOTE: check if it is correct or not
     // setFilterOptions((prev) => ({ ...prev, searchData: searchedData }));
-    // if (isMob) {
-    //   setCurrentPage(1);
-    //   const newData = await fetchJobSeekers({
-    //     queryParamsObject: {
-    //       q: searchedData,
-    //     },
-    //   });
-    //   setIsFirstPageReceived(false);
-    //   setCurrentRecords(newData?.records);
-    //   if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
-    //     setAllDataLoaded(true);
-    //   } else {
-    //     setAllDataLoaded(false);
-    //   }
-    // } else {
-    //   await updateCurrentRecords({
-    //     q: searchedData,
-    //     perPage: rowsPerPage,
-    //     page: currentPage,
-    //   });
-    // }
+    if (isMob) {
+      setCurrentPage(1);
+      const newData = await fetchJobSeekers({
+        queryParamsObject: {
+          q: searchedData,
+        },
+      });
+      setIsFirstPageReceived(false);
+      setCurrentRecords(newData?.records);
+      if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+        setAllDataLoaded(true);
+      } else {
+        setAllDataLoaded(false);
+      }
+    } else {
+      await updateCurrentRecords({
+        q: searchedData,
+        perPage: rowsPerPage,
+        page: currentPage,
+      });
+    }
   };
 
-  const filterApplyHandler = async () => {
-    //TODO: Api call on applying filter
-    // setIsFirstPageReceived(true);
-    // setFilterOptions((prev) => ({
-    //   ...prev,
-    // }));
-    // if (isMob) {
-    //   setLoadingMore(false);
-    //   setCurrentPage(1);
-    //   const newData = await fetchJobSeekers({
-    //     queryParamsObject: {
-    //       q: filterOptions.searchData,
-    //     },
-    //   });
-    //   setCurrentRecords(newData?.records);
-    //   setIsFirstPageReceived(false);
-    //   if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
-    //     setAllDataLoaded(true);
-    //   } else {
-    //     setAllDataLoaded(false);
-    //   }
-    // } else {
-    //   await updateCurrentRecords({
-    //     perPage: rowsPerPage,
-    //     page: currentPage,
-    //   });
-    // }
+  const handleFilterChange = (selectedFilter, filterName, keyName) => {
+    setFilterState((prevState) => {
+      const filterObj = customFilterInfo.find(
+        (info) => info.name === filterName
+      );
+      const filterKey = `selected${filterObj?.name}`;
+      const existingSelectedOptions = prevState[filterKey];
+      let newSelectedOptions = [];
+      if (!!existingSelectedOptions) {
+        if (filterObj?.type === FILTER_TYPE_ENUM.CHECKBOX) {
+          newSelectedOptions = existingSelectedOptions?.includes(
+            selectedFilter?.[keyName]
+          )
+            ? existingSelectedOptions?.filter(
+                (keyName) => keyName !== selectedFilter?.[keyName]
+              )
+            : [...existingSelectedOptions, selectedFilter?.[keyName]];
+        } else {
+          newSelectedOptions = selectedFilter.value;
+        }
+      }
+
+      return {
+        ...prevState,
+        [filterKey]: newSelectedOptions,
+      };
+    });
   };
 
-  let headingTexts = ["company_name"];
+  const customFilterInfo = [
+    {
+      refKey: "id",
+      name: "Experience",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: [{ id: 1, name: "1 year" }], //TODO:experienceData
+      selectedOptions: filterState?.selectedExperience,
+      handler: handleFilterChange,
+    },
+    {
+      refKey: "value",
+      name: "CurrentSalary",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: [],
+      selectedOptions: filterState?.selectedCurrentSalary,
+      handler: handleFilterChange,
+    },
+    {
+      refKey: "id",
+      name: "FunctionalAreas",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: [],
+      selectedOptions: filterState?.selectedFunctionalAreas,
+      handler: handleFilterChange,
+    },
+    {
+      refKey: "id",
+      name: "Category",
+      type: FILTER_TYPE_ENUM.CHECKBOX,
+      options: [],
+      selectedOptions: filterState?.selectedCategory,
+      handler: handleFilterChange,
+    },
+  ];
+
+  const returnSelectedFilterOption = (filterInfo, filterName) => {
+    const filterObj = filterInfo?.find((obj) => obj.name === filterName);
+    return filterObj?.selectedOptions;
+  };
+
+  const filterApplyHandler = async (filterInfo) => {
+    const currentFilterOptions = {
+      experience: returnSelectedFilterOption(filterInfo, "Experience"),
+      current_salary: returnSelectedFilterOption(filterInfo, "CurrentSalary"),
+      functional_areas: returnSelectedFilterOption(
+        filterInfo,
+        "FunctionalAreas"
+      ),
+      education: returnSelectedFilterOption(filterInfo, "Education"),
+      category: returnSelectedFilterOption(filterInfo, "Category"),
+    };
+    setFilterOptions(currentFilterOptions);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      multiFacet: 1, //TODO: remove if not needed.
+      experience: currentFilterOptions.experience,
+      current_salary: currentFilterOptions.current_salary,
+      functional_areas: currentFilterOptions.functional_areas,
+      education: currentFilterOptions.education,
+      category: currentFilterOptions.category,
+    });
+  };
+
+  // const filterApplyHandler = async () => {
+  //TODO: Api call on applying filter
+  // setIsFirstPageReceived(true);
+  // setFilterOptions((prev) => ({
+  //   ...prev,
+  // }));
+  // if (isMob) {
+  //   setLoadingMore(false);
+  //   setCurrentPage(1);
+  //   const newData = await fetchJobSeekers({
+  //     queryParamsObject: {
+  //       q: filterOptions.searchData,
+  //     },
+  //   });
+  //   setCurrentRecords(newData?.records);
+  //   setIsFirstPageReceived(false);
+  //   if (newData?.meta?.currentPage === newData?.meta?.lastPage) {
+  //     setAllDataLoaded(true);
+  //   } else {
+  //     setAllDataLoaded(false);
+  //   }
+  // } else {
+  //   await updateCurrentRecords({
+  //     perPage: rowsPerPage,
+  //     page: currentPage,
+  //   });
+  // }
+  // };
+
+  let headingTexts = ["name"];
+  let subHeadingText = ["candidate_id"];
+  let extraDetailsText = ["Experience"];
+  let extraDetailsKey = ["total_experience"];
   let tableIcon = images.iconMore;
   let isHeading = true;
   let filterCategory = [
     "Experience",
     "Current Salary",
-    "Expected Annual Salary",
-    "Functional Area",
-    "IT Skills",
-    "Soft Skills",
-    "Education",
-    "Gender",
-    "Marital Status",
+    "Functional Areas",
     "Category",
-    "Age",
-    "Posting",
-    "Language",
   ];
+
+  const handlePopupItemClick = (data) => {
+    switch (data?.trim().toLowerCase()) {
+      case POPUP_OPTIONS?.[0]:
+        return <></>;
+      case POPUP_OPTIONS?.[1].trim().toLowerCase():
+        navigate(`${navigations.CANDIDATE_DETAILS_SUBROUTE}/${data?.id || 1}`);
+    }
+  };
+
+  const onNameSorting = async (sortField) => {
+    setIsAscendingOrder((prev) => !prev);
+    await updateCurrentRecords({
+      perPage: rowsPerPage,
+      page: currentPage,
+      sortField: sortField,
+      sortDirection: !isAscendingOrder ? "asc" : "desc",
+    });
+  };
+
+  const refineColumnData = (data) => {
+    if (!data || data.length === 0) return ["-"];
+    if (data.length <= 2) return data;
+    const extraItems = data.length - 2;
+    const newData = [data[0], data[1], `+${extraItems}`];
+    return newData;
+  };
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
@@ -241,9 +362,9 @@ const useJobSeekers = () => {
     return [
       {
         content: isHeading ? (
-          <CustomTouchableOpacity onPress={() => {}}>
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-              {item.company_name}
+              {!!item.name ? item.name : "-"}
             </CommonText>
             <CustomImage
               source={
@@ -256,28 +377,58 @@ const useJobSeekers = () => {
           </CustomTouchableOpacity>
         ) : (
           <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
-            {item.company_name}
+            {!!item.name ? item.name : "-"}
+          </CommonText>
+        ),
+        style: commonStyles.columnStyle("20%"),
+        isFillSpace: true,
+      },
+      {
+        content: isHeading ? (
+          <CustomTouchableOpacity onPress={() => onNameSorting("candidate_id")}>
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {!!item.candidate_id ? item.candidate_id : "-"}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {!!item.candidate_id ? item.candidate_id : "-"}
           </CommonText>
         ),
         style: commonStyles.columnStyle("25%"),
         isFillSpace: true,
       },
       {
-        content: (
-          <CommonText customTextStyle={tableStyle}>
-            {item.candidate_id}
+        content: isHeading ? (
+          <CustomTouchableOpacity
+            onPress={() => onNameSorting("total_experience")}
+          >
+            <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+              {!!item.total_experience ? item.total_experience : "0"}
+            </CommonText>
+            <CustomImage
+              source={
+                isAscendingOrder
+                  ? images.iconArrowUpSorting
+                  : images.iconArrowDownSorting
+              }
+              style={styles.sortingIcon}
+            />
+          </CustomTouchableOpacity>
+        ) : (
+          <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
+            {!!item.total_experience ? item.total_experience : "0"}
           </CommonText>
         ),
-        style: commonStyles.columnStyle("15%"),
-        isFillSpace: true,
-      },
-      {
-        content: (
-          <CommonText customTextStyle={tableStyle}>
-            {item?.total_experience || "-"}
-          </CommonText>
-        ),
-        style: commonStyles.columnStyle("15%"),
+        style: commonStyles.columnStyle("20%"),
         isFillSpace: true,
       },
       {
@@ -287,7 +438,7 @@ const useJobSeekers = () => {
           </CommonText>
         ) : (
           <BadgeLabel
-            badgeLabels={item.functional_area}
+            badgeLabels={refineColumnData(item?.functional_area)}
             customContainerStyle={styles.badgeContainerStyle}
             customTextStyle={styles.labelStyle}
           />
@@ -297,15 +448,17 @@ const useJobSeekers = () => {
       },
       {
         content: !isHeading && (
-          <TouchableImage
-            onPress={() => {}}
-            source={images.iconMore}
-            imageStyle={styles.iconMore}
-            isSvg={true}
-          />
+          <>
+            <PopupMessage
+              key={item?.id || 0}
+              data={item}
+              message={POPUP_OPTIONS}
+              onPopupClick={handlePopupItemClick}
+            />
+          </>
         ),
         style: {
-          ...commonStyles.columnStyle("10%"),
+          ...commonStyles.columnStyle("5%"),
           ...styles.iconMoreColumn,
         },
         isFillSpace: true,
@@ -314,26 +467,37 @@ const useJobSeekers = () => {
   };
 
   return {
+    defaultCategory,
     allDataLoaded,
     currentPage,
+    currentRecords,
+    setCurrentRecords,
+    customFilterInfo,
     filterApplyHandler,
+    filterCategory,
+    filterOptions,
+    filterState,
+    setFilterState,
     getColoumConfigs,
+    getErrorDetails,
     handleLoadMore,
     handlePageChange,
     handleRowPerPageChange,
     handleSearchResults,
-    getErrorDetails,
+    headingTexts,
     indexOfFirstRecord,
     indexOfLastRecord,
     isFirstPageReceived,
+    isGeetingJobbSeekers,
+    isHeading,
+    jobSeekersData: jobSeekersData?.records,
     loadingMore,
     rowsPerPage,
-    jobSeekersData: JobSeekersData.records || currentRecords, //TODO: Remove dummy data after api integration
-    totalcards: JobSeekersData?.meta?.total,
-    filterCategory,
-    headingTexts,
+    subHeadingText,
+    extraDetailsText,
+    extraDetailsKey,
     tableIcon,
-    isHeading,
+    totalcards: jobSeekersData?.meta?.total,
   };
 };
 

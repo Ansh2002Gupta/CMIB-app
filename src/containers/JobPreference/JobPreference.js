@@ -17,7 +17,7 @@ import {
 import { useJobPreference } from "./controller/useJobPreference";
 import { formatJobPreferenceData } from "./controller/utils";
 
-const JobPreference = ({ isEditable, handleEdit }) => {
+const JobPreference = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
 
@@ -172,6 +172,7 @@ const JobPreference = ({ isEditable, handleEdit }) => {
       introduction_video_path: state?.introduction_video_path,
     };
     handleUpdate(payload, () => {
+      onSaveSuccessfull && onSaveSuccessfull();
       fetchData();
       handleEdit(false);
     });

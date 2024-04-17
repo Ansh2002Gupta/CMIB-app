@@ -17,10 +17,7 @@ const OtherCoursesUI = ({
   const intl = useIntl();
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={style.contentContainerStyle}
-    >
+    <View style={style.contentContainerStyle}>
       <View style={style.innerContainerStyle}>
         <DetailCard
           details={other_courses}
@@ -39,7 +36,7 @@ const OtherCoursesUI = ({
         onClickCancel={onClickCancel}
         isValidAllFields={isValidAllFields}
       />
-    </ScrollView>
+    </View>
   );
 };
 
