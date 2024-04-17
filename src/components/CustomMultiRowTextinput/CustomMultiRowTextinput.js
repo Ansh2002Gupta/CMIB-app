@@ -11,6 +11,7 @@ const CustomMultiRowTextInput = ({
   startRowTemplate,
   gridTemplate,
   setGridTemplate,
+  setObjectGridTemplate,
   headerId,
   handleValueChange,
   numColsInARow = 4,
@@ -37,15 +38,20 @@ const CustomMultiRowTextInput = ({
     const newGridTemplate = gridTemplate.map((cell) => {
       return cell.cellID === cellID ? { ...cell, isAdd: false } : { ...cell };
     });
-    setGridTemplate([...newGridTemplate, ...newRowTemplate]);
+    !!setObjectGridTemplate
+      ? setObjectGridTemplate([...newGridTemplate, ...newRowTemplate])
+      : setGridTemplate([...newGridTemplate, ...newRowTemplate]);
   };
 
   const handleDeleteRow = (cellID) => {
     const newGridTemplate = gridTemplate.filter(
       (cell) => cell.cellID !== cellID
     );
-    setGridTemplate([...newGridTemplate]);
+    !!setObjectGridTemplate
+      ? setObjectGridTemplate([...newGridTemplate])
+      : setGridTemplate([...newGridTemplate]);
   };
+
   return (
     <DetailCard
       customCardStyle={customCardStyle}

@@ -13,8 +13,19 @@ import styles from "./JobDetails.style";
 
 const JobDetails = ({ tabHandler }) => {
   const {
+    desginationItems,
     setRenderJobDetails,
+    configurableListQuery,
+    setConfigurableListQuery,
+    selectedOptions,
+    setSelectedOptions,
+
+    handleDelete,
     renderJobDetails,
+    menuOptions,
+    setMenuOptions,
+    handlePress,
+    handleAdd,
     handleInputChange,
     addDocumentField,
     addDesignation,
@@ -33,8 +44,6 @@ const JobDetails = ({ tabHandler }) => {
     handleStartingSalary,
     handleYearlyData,
     handleToggle,
-    requiredDocumentDetails,
-    setRequiredDocumentDetails,
     requiredPostingPlaceDetail,
     setRequiredPostingPlaceDetail,
     jobDetailData,
@@ -62,6 +71,16 @@ const JobDetails = ({ tabHandler }) => {
       topSection={
         <JobDetailsTemplate
           {...{
+            desginationItems,
+            menuOptions,
+            setMenuOptions,
+            handlePress,
+            handleAdd,
+            selectedOptions,
+            setSelectedOptions,
+            handleDelete,
+            configurableListQuery,
+            setConfigurableListQuery,
             setRenderJobDetails,
             renderJobDetails,
             handleInputChange,
@@ -81,9 +100,7 @@ const JobDetails = ({ tabHandler }) => {
             handleStartingSalary,
             handleYearlyData,
             handleToggle,
-            requiredDocumentDetails,
             handleTextEditorValue,
-            setRequiredDocumentDetails,
             requiredPostingPlaceDetail,
             setRequiredPostingPlaceDetail,
             jobDetailData,

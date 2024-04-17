@@ -1,3 +1,5 @@
+import { DOCUMENT_TYPE, document_keys } from "../../../../constants/constants";
+
 export const mapMonthyApiToUI = () => {
   return [
     {
@@ -162,6 +164,233 @@ export const mapPostedPlaceApiToUI = () => {
       key: "general",
       label: "label.general",
       value: "",
+    },
+  ];
+};
+
+export const mapDataToUI = (data) => {
+  return {
+    designation: data?.designation || "-",
+    compensation: data?.compensation || "-",
+    starting_salary: data?.starting_salary || "-",
+    role_responsibility: data?.role_responsibility || "-",
+    ctc_details: data?.ctc_details || "-",
+    monthly: [
+      {
+        key: "basic",
+        label: "label.basic",
+        value: data?.monthly?.monthly_basic || "-",
+        placeholder: "label.basic",
+        isMandatory: true,
+        isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+      {
+        key: "hra",
+        label: "label.hra",
+        value: data?.monthly?.monthly_hra || "-",
+        isMandatory: true,
+        placeholder: "label.hra",
+        isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+      {
+        key: "others",
+        label: "label.others",
+        value: data?.monthly?.monthly_other || "-",
+        isMandatory: true,
+        placeholder: "label.others",
+        isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+      {
+        key: "fixedPay",
+        label: "label.fixedPay",
+        value: data?.monthly?.monthly_fixed_pay || "-",
+        isMandatory: true,
+        placeholder: "label.fixedPay",
+        isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+      {
+        key: "variablePay",
+        label: "label.variablePay",
+        value: data?.monthly?.monthly_variable_pay || "-",
+        isMandatory: true,
+        placeholder: "label.variablePay",
+        isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+      {
+        key: "semiVariable",
+        label: "label.semiVariable",
+        value: data?.monthly?.monthly_semi_variable || "-",
+        isMandatory: true,
+        placeholder: "label.semiVariable",
+        isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+      {
+        key: "takeHome",
+        label: "label.takeHome",
+        value: data?.monthly?.monthly_take_home || "-",
+        isMandatory: true,
+        placeholder: "label.takeHome",
+        isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+      {
+        key: "grossSalary",
+        label: "label.gross_Salary",
+        value: data?.monthly?.monthly_gross_salary || "-",
+        isMandatory: true,
+        placeholder: "label.enter_gross_Salary",
+        isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isEditable: false,
+        isNumeric: true,
+      },
+    ],
+    yearly: [
+      {
+        key: "oneTimePayment",
+        label: "label.oneTimePayment",
+        value: data?.yearly?.yearly_one_time_payment || "-",
+        isMandatory: true,
+        placeholder: "label.oneTimePayment",
+        isRow: true,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+      {
+        key: "totalGrossSalary",
+        label: "label.totalGrossSalary",
+        value: data?.yearly?.yearly_total_gross_salary || "-",
+        isMandatory: true,
+        placeholder: "label.totalGrossSalary",
+        isRow: true,
+        isEditable: false,
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+      {
+        key: "ctc",
+        label: "label.ctc",
+        value: data?.yearly?.yearly_ctc || "-",
+        isMandatory: true,
+        isEditable: false,
+        placeholder: "label.ctc",
+        maxLength: 9,
+        isRupee: true,
+        isNumeric: true,
+      },
+    ],
+    required_docs: mapDocsToUI(data?.required_docs),
+    bond_details: {
+      is_bond_included:
+        data?.bond_details?.is_bond_included === "yes" ? 0 : 1 || "-",
+      bond_period_in_mm: data?.bond_details?.bond_period_in_mm || "-",
+      exit_amount: data?.bond_details?.exit_amount || "-",
+    },
+    specific_performa_required:
+      data?.specific_performa_required === "yes" ? 0 : 1 || "-",
+    posting_details: [],
+  };
+};
+
+export const mapDocsToUI = (data) => {
+  const newDocsArray = data.map((docs, index) => {
+    return [
+      {
+        cellID: index + 1,
+        key: document_keys.DOCUMENT_NAME,
+        label: "label.document_name",
+        placeholder: "label.select_document_name",
+        value: docs?.doc_name,
+      },
+      {
+        cellID: index + 1,
+        id: 1,
+        includeAllKeys: true,
+        key: document_keys.DOCUMENT_TYPE,
+        label: "label.document_type",
+        placeholder: "label.select_document_type",
+        isDropdown: true,
+        labelField: "label",
+        valueField: "value",
+        options: DOCUMENT_TYPE,
+        value: docs?.doc_type,
+      },
+      {
+        cellID: index + 1,
+        key: document_keys.NUMBER_OF_COPIES,
+        label: "label.no_of_copies",
+        placeholder: "label.select_no_of_copies",
+        value: docs?.no_of_photocopies,
+        isNumeric: true,
+      },
+      {
+        cellID: index + 1,
+        isButton: true,
+        isAdd: data.length - 1 === index,
+      },
+    ];
+  });
+
+  return newDocsArray.flat();
+};
+
+export const getDocumentField = () => {
+  return [
+    {
+      cellID: 1,
+      key: document_keys.DOCUMENT_NAME,
+      label: "label.document_name",
+      placeholder: "label.select_document_name",
+      value: "",
+    },
+    {
+      cellID: 1,
+      id: 1,
+      includeAllKeys: true,
+      key: document_keys.DOCUMENT_TYPE,
+      label: "label.document_type",
+      placeholder: "label.select_document_type",
+      isDropdown: true,
+      labelField: "label",
+      valueField: "value",
+      options: DOCUMENT_TYPE,
+      value: "",
+    },
+    {
+      cellID: 1,
+      key: document_keys.NUMBER_OF_COPIES,
+      label: "label.no_of_copies",
+      placeholder: "label.select_no_of_copies",
+      value: "",
+      isNumeric: true,
+    },
+    {
+      cellID: 1,
+      isButton: true,
+      isAdd: true,
     },
   ];
 };

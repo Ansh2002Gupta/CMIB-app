@@ -83,7 +83,6 @@ export const JOB_TYPE_OPTIONS = `${USER_TYPE_COMPANY}/job-type`;
 export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
 
 export const PREFERRED = "/preferred";
-export const CANDIDATES = "/candidates";
 export const MARKED_PREFER = "/marked-prefer";
 export const UNMARKED_PREFER = "/unmark-prefer";
 

@@ -30,30 +30,26 @@ import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../../../constants/con
 import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
 import CustomScrollView from "../../../../components/CustomScrollView";
+import ConfigurableList from "../../../../components/ConfigurableList";
 
 const JobDetailsTemplate = ({
   renderJobDetails,
   handleInputChange,
+  configurableListQuery,
+  setConfigurableListQuery,
+  menuOptions,
+  setMenuOptions,
+  handlePress,
+  handleAdd,
+  handleDelete,
+  selectedOptions,
+  desginationItems,
+  setSelectedOptions,
   setRenderJobDetails,
   addDocumentField,
   addDesignation,
-  bondPeriod,
-  compensation,
-  CTCDetail,
-  designationName,
-  exitAmount,
-  handleBondPeriod,
-  handleCompensation,
-  handleCTCDetail,
-  handleDesignationName,
-  handleExitAmount,
   handleMonthlyData,
-  handleTextEditorValue,
-  handleStartingSalary,
   handleYearlyData,
-  handleSaveAndNext,
-  requiredDocumentDetails,
-  setRequiredDocumentDetails,
   requiredPostingPlaceDetail,
   setRequiredPostingPlaceDetail,
   handleToggle,
@@ -65,8 +61,6 @@ const JobDetailsTemplate = ({
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
   const intl = useIntl();
-
-  console.log("renderJobDetails", renderJobDetails);
 
   const columnCount = isWebView && gridStyles[currentBreakpoint];
   const containerStyle = isWebView
@@ -120,7 +114,7 @@ const JobDetailsTemplate = ({
             isMandatory
             value={renderJobDetails?.designation}
             onChangeText={(val) => handleInputChange("designation", val)}
-            customHandleBlur={(val) => console.log("val", val)}
+            customHandleBlur={(val) => {}}
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -182,7 +176,6 @@ const JobDetailsTemplate = ({
             details={renderJobDetails?.monthly}
             handleChange={handleMonthlyData}
             isEditProfile
-            // cols={isWebView ? 3 : 1}
             customCardStyle={styles.monthlyCustomCardStyle}
           />
           <DetailCard
@@ -190,7 +183,6 @@ const JobDetailsTemplate = ({
             details={renderJobDetails?.yearly}
             handleChange={handleYearlyData}
             isEditProfile
-            // cols={isWebView ? 3 : 1}
             customCardStyle={styles.yearlyCustomCardStyle}
           />
         </View>
@@ -200,9 +192,8 @@ const JobDetailsTemplate = ({
       content: (
         <AddDocument
           {...{
-            handleInputChange,
-            requiredDocumentDetails,
-            setRequiredDocumentDetails,
+            requiredDocumentDetails: renderJobDetails?.required_docs,
+            setRenderJobDetails,
           }}
         />
       ),
@@ -322,11 +313,30 @@ const JobDetailsTemplate = ({
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
         <TwoColumn
-          leftSection={[]}
+          leftSection={
+            desginationItems.length && (
+              <ConfigurableList
+                title={intl.formatMessage({ id: "label.desgination" })}
+                searchQuery={configurableListQuery}
+                setSearchQuery={setConfigurableListQuery}
+                selectedOptions={selectedOptions}
+                onDelete={handleDelete}
+                onPress={handlePress}
+                onAdd={handleAdd}
+                options={desginationItems}
+                menuOptions={menuOptions}
+                setMenuOptions={setMenuOptions}
+                nameField={"designation"}
+              />
+            )
+          }
           isLeftFillSpace={false}
           isRightFillSpace
+          leftSectionStyle={{
+            width: "25%",
+          }}
           rightSectionStyle={{
-            width: "100%",
+            width: "75%",
           }}
           rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
         />

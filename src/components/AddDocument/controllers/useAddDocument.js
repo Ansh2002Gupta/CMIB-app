@@ -41,11 +41,7 @@ const addDocumentField = [
   },
 ];
 
-const useAddDocument = ({
-  handleInputChange,
-  requiredDocumentDetails,
-  setRequiredDocumentDetails,
-}) => {
+const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   const [addDocumentModal, setAddDocumentModal] = useState(false);
   const [editDocumentModal, setEditDocumentModal] = useState();
   const [editDocumentIndex, setEditDocumentIndex] = useState();
@@ -64,11 +60,11 @@ const useAddDocument = ({
         copiesNumber: documentDetail.copiesNumber,
       });
     }
+    // setRenderJobDetails((prev) => ({
+    //   ...prev,
+    //   required_docs: [...addDocumentField],
+    // }));
   }, []);
-
-  const [multiDocumentDetail, setMultiDocumentDetail] = useState([
-    ...addDocumentField,
-  ]);
 
   useEffect(() => {
     validateForm();
@@ -107,16 +103,14 @@ const useAddDocument = ({
     id,
     cellID,
   }) => {
-    setMultiDocumentDetail((prevDetail) => {
-      const updatedDetail = prevDetail.map((item) => {
+    setRenderJobDetails((prevDetail) => {
+      const updatedDetail = prevDetail?.required_docs?.map((item) => {
         if (item.label === propertyName && item.cellID === cellID) {
           return { ...item, value: value };
         }
         return item;
       });
-      setRequiredDocumentDetails([...updatedDetail]);
-      handleInputChange("required_docs", updatedDetail);
-      return updatedDetail;
+      return { ...prevDetail, required_docs: updatedDetail };
     });
   };
 
@@ -128,28 +122,28 @@ const useAddDocument = ({
   };
 
   const onClickAddDocumentSaveButton = () => {
-    if (editDocumentModal && editDocumentIndex !== -1) {
-      setRequiredDocumentDetails((prev) => {
-        const updatedList = [...prev];
-        updatedList[editDocumentIndex] = { ...documentDetail };
-        return updatedList;
-      });
-    } else {
-      setRequiredDocumentDetails((prev) => [...prev, { ...documentDetail }]);
-    }
-    setDocumentDetail({
-      documentName: "",
-      documentType: "",
-      copiesNumber: null,
-    });
-    setIsFormValid(false);
-    setEditDocumentIndex(-1);
-    setEditDocumentModal(false);
-    setAddDocumentModal(false);
+    // if (editDocumentModal && editDocumentIndex !== -1) {
+    //   setRequiredDocumentDetails((prev) => {
+    //     const updatedList = [...prev];
+    //     updatedList[editDocumentIndex] = { ...documentDetail };
+    //     return updatedList;
+    //   });
+    // } else {
+    //   setRequiredDocumentDetails((prev) => [...prev, { ...documentDetail }]);
+    // }
+    // setDocumentDetail({
+    //   documentName: "",
+    //   documentType: "",
+    //   copiesNumber: null,
+    // });
+    // setIsFormValid(false);
+    // setEditDocumentIndex(-1);
+    // setEditDocumentModal(false);
+    // setAddDocumentModal(false);
   };
 
   const onClickDeleteDocument = (index) => {
-    setRequiredDocumentDetails((prev) => prev.filter((_, i) => i !== index));
+    // setRequiredDocumentDetails((prev) => prev.filter((_, i) => i !== index));
   };
 
   const onCLickEditDocument = (index) => {
@@ -168,8 +162,6 @@ const useAddDocument = ({
   return {
     addDocumentModal,
     addDocumentField,
-    multiDocumentDetail,
-    setMultiDocumentDetail,
     documentDetail,
     editDocumentModal,
     handleMultiRowDocumentDetails,

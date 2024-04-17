@@ -205,11 +205,11 @@ export const STEPPER_STATE = {
 };
 
 export const DOCUMENT_TYPE = [
-  { label: "Photocopies", value: "Photocopies" },
-  { label: "Original", value: "Original" },
+  { label: "Photocopies", value: "photocopies" },
+  { label: "Original", value: "original" },
   {
     label: "Both",
-    value: "Both",
+    value: "both",
   },
 ];
 

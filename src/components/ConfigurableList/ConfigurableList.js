@@ -12,7 +12,7 @@ import images from "../../images";
 import styles from "./ConfigurableListStyle";
 
 const ConfigurableList = ({
-  items,
+  options,
   menuOptions,
   onAdd,
   onDelete,
@@ -22,9 +22,15 @@ const ConfigurableList = ({
   setMenuOptions,
   setSearchQuery,
   title,
+  idField = "id",
+  nameField = "name",
 }) => {
   const intl = useIntl();
   const allOptions = useRef([]);
+  const items = options?.map((option) => ({
+    id: String(option[idField]),
+    name: String(option[nameField]),
+  }));
 
   useEffect(() => {
     allOptions.current = items;
@@ -134,7 +140,7 @@ ConfigurableList.defaultProps = {
   onAdd: () => {},
   onDelete: () => {},
   onPress: () => {},
-  items: [],
+  options: [],
   allOptions: [],
   menuOptions: [],
   searchQuery: [],
@@ -142,14 +148,13 @@ ConfigurableList.defaultProps = {
   setMenuOptions: () => {},
   setSearchQuery: () => {},
   title: "DefaultTitle",
-  items: [],
 };
 
 ConfigurableList.protoTypes = {
   onAdd: PropTypes.func,
   onDelete: PropTypes.func,
   onPress: PropTypes.func,
-  items: PropTypes.array,
+  options: PropTypes.array,
   allOptions: PropTypes.array,
   menuOptions: PropTypes.array,
   searchQuery: PropTypes.array,
@@ -157,7 +162,6 @@ ConfigurableList.protoTypes = {
   setMenuOptions: PropTypes.func,
   setSearchQuery: PropTypes.func,
   title: PropTypes.string,
-  items: PropTypes.array,
 };
 
 export default ConfigurableList;

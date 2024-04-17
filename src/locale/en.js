@@ -784,6 +784,7 @@ const locale = {
   "label.sc": "SC",
   "label.st": "ST",
   "label.select_place_of_posting": "Select Place of Posting",
+  "label.desgination": "Desgination",
 };
 
 export default locale;
