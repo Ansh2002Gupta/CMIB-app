@@ -677,3 +677,14 @@ export const formatSalaryRange = (minSalary, maxSalary) => {
 
   return formattedSalaryRange;
 };
+
+export const formateErrors = (errors) => {
+  // Convert the error object into an array of strings
+  const errorMessages = Object.keys(errors).map((key) => {
+    // Assuming each key in the error object has an array of messages, we join them with a space
+    return `- ${errors[key].join(" ")}`;
+  });
+
+  // Join the array of strings into a single string, separated by line breaks
+  return errorMessages.join("\n");
+};

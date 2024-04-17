@@ -51,11 +51,6 @@ const DetailCard = ({
             : isWeb && isWebView
             ? {
                 ...customWebContainerStyle,
-                overflowX: "auto",
-                flexDirection: "row",
-                width: "100%",
-
-                // flexWrap: "wrap",
               }
             : {}),
           ...customContainerStyle,
@@ -120,6 +115,7 @@ DetailCard.defaultProps = {
   isEditProfile: false,
   isRow: false,
   isShowSwitch: false,
+  customWebContainerStyle: {},
   onPressActionButton: () => {},
   otherDetails: [],
   isShowCancel: false,
@@ -133,6 +129,7 @@ DetailCard.propTypes = {
   cols: PropTypes.number,
   customCardStyle: PropTypes.object,
   customContainerStyle: PropTypes.object,
+  customWebContainerStyle: PropTypes.object,
   details: PropTypes.array,
   handleBlur: PropTypes.func,
   footerId: PropTypes.string,

@@ -31,6 +31,7 @@ import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
 import CustomScrollView from "../../../../components/CustomScrollView";
 import ConfigurableList from "../../../../components/ConfigurableList";
+import { getDocumentField, getPlaceOfPostingDetails } from "./MappedData";
 
 const JobDetailsTemplate = ({
   renderJobDetails,
@@ -42,21 +43,14 @@ const JobDetailsTemplate = ({
   handlePress,
   handleAdd,
   handleDelete,
+  handleBlur,
   selectedOptions,
   desginationItems,
-  setSelectedOptions,
   setRenderJobDetails,
-  addDocumentField,
   addDesignation,
   handleMonthlyData,
   handleYearlyData,
-  requiredPostingPlaceDetail,
-  setRequiredPostingPlaceDetail,
-  handleToggle,
-  jobDetailData,
   onClickAddDesignation,
-  selectionProcess,
-  startingSalary,
 }) => {
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const { isWebView } = useIsWebView();
@@ -66,23 +60,6 @@ const JobDetailsTemplate = ({
   const containerStyle = isWebView
     ? styles.containerGridStyle(columnCount)
     : styles.containerStyle;
-
-  const renderSelectionProcess = () => {
-    return (
-      <View style={styles.checkBoxStyle}>
-        {renderJobDetails?.selectionProcess?.map((item, index) => (
-          <CheckBox
-            key={item.id}
-            id={item.id}
-            index={index}
-            title={item.title}
-            isSelected={item.isSelected}
-            handleCheckbox={handleToggle}
-          />
-        ))}
-      </View>
-    );
-  };
 
   const JobDetailsConfig = [
     {
@@ -114,7 +91,7 @@ const JobDetailsTemplate = ({
             isMandatory
             value={renderJobDetails?.designation}
             onChangeText={(val) => handleInputChange("designation", val)}
-            customHandleBlur={(val) => {}}
+            customHandleBlur={(val) => handleBlur("designation", val)}
           />
           <View style={containerStyle}>
             <CustomTextInput
@@ -194,6 +171,7 @@ const JobDetailsTemplate = ({
           {...{
             requiredDocumentDetails: renderJobDetails?.required_docs,
             setRenderJobDetails,
+            addDocumentField: getDocumentField(),
           }}
         />
       ),
@@ -262,29 +240,16 @@ const JobDetailsTemplate = ({
     },
     {
       content: (
-        <CardComponent customStyle={styles.bottomMargin}>
-          <CommonText
-            customContainerStyle={styles.selectionProcessTextStyle}
-            customTextStyle={styles.selectionProcessStyle}
-            fontWeight="600"
-          >
-            {intl.formatMessage({
-              id: "label.selection_process",
-            })}
-          </CommonText>
-          {renderSelectionProcess()}
-        </CardComponent>
-      ),
-    },
-    {
-      content: (
         <AddPlaceOfPosting
           {...{
-            jobDetailData: renderJobDetails?.posting_details,
-            requiredPostingPlaceDetail,
-            setRequiredPostingPlaceDetail,
-            renderJobDetails,
             handleInputChange,
+            jobDetailData: renderJobDetails?.posting_details,
+            requiredPostingPlaceDetail: renderJobDetails?.posting_details,
+            setRenderJobDetails,
+            addPostingDetailsField: getPlaceOfPostingDetails(),
+            isSpecificPerformaRequired:
+              renderJobDetails?.specific_performa_required,
+            otherInfo: renderJobDetails?.otherInfo,
           }}
         />
       ),

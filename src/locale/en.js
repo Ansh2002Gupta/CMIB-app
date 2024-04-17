@@ -785,6 +785,11 @@ const locale = {
   "label.st": "ST",
   "label.select_place_of_posting": "Select Place of Posting",
   "label.desgination": "Desgination",
+  "label.enter_your_info": "Enter your information",
+  "label.you_can_add_one_desgination":
+    "You cannot add one desgination at a time",
+  "label.designation_name": "Designation name",
+  "label.ok": "Ok",
 };
 
 export default locale;

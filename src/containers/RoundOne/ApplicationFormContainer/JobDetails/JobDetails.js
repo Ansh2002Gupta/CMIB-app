@@ -10,6 +10,12 @@ import ActionPairButton from "../../../../components/ActionPairButton";
 import { useNavigate } from "../../../../routes";
 import commonStyles from "../../../../theme/styles/commonStyles";
 import styles from "./JobDetails.style";
+import images from "../../../../images";
+import ConfirmationModal from "../../../ConfirmationModal";
+import LoadingScreen from "../../../../components/LoadingScreen";
+import ErrorComponent from "../../../../components/ErrorComponent/ErrorComponent";
+import ToastComponent from "../../../../components/ToastComponent/ToastComponent";
+import { formateErrors } from "../../../../utils/util";
 
 const JobDetails = ({ tabHandler }) => {
   const {
@@ -19,7 +25,8 @@ const JobDetails = ({ tabHandler }) => {
     setConfigurableListQuery,
     selectedOptions,
     setSelectedOptions,
-
+    modalDetails,
+    setModalDetails,
     handleDelete,
     renderJobDetails,
     menuOptions,
@@ -37,21 +44,23 @@ const JobDetails = ({ tabHandler }) => {
     handleBondPeriod,
     handleCompensation,
     handleTextEditorValue,
+    handleBlur,
     handleCTCDetail,
     handleDesignationName,
     handleExitAmount,
     handleMonthlyData,
     handleStartingSalary,
     handleYearlyData,
-    handleToggle,
-    requiredPostingPlaceDetail,
-    setRequiredPostingPlaceDetail,
+    currentError,
+    setCurrentError,
     jobDetailData,
     handleSaveAndNext,
     onClickAddDesignation,
+    isLoading,
+    error,
     selectionProcess,
     startingSalary,
-  } = useJobDetailForm();
+  } = useJobDetailForm({ tabHandler });
 
   const isWebProps =
     Platform.OS.toLowerCase() === "web"
@@ -67,69 +76,97 @@ const JobDetails = ({ tabHandler }) => {
   const intl = useIntl();
 
   return (
-    <TwoRow
-      topSection={
-        <JobDetailsTemplate
-          {...{
-            desginationItems,
-            menuOptions,
-            setMenuOptions,
-            handlePress,
-            handleAdd,
-            selectedOptions,
-            setSelectedOptions,
-            handleDelete,
-            configurableListQuery,
-            setConfigurableListQuery,
-            setRenderJobDetails,
-            renderJobDetails,
-            handleInputChange,
-            addDocumentField,
-            addDesignation,
-            bondPeriod,
-            compensation,
-            CTCDetail,
-            designationName,
-            exitAmount,
-            handleBondPeriod,
-            handleCompensation,
-            handleCTCDetail,
-            handleDesignationName,
-            handleExitAmount,
-            handleMonthlyData,
-            handleStartingSalary,
-            handleYearlyData,
-            handleToggle,
-            handleTextEditorValue,
-            requiredPostingPlaceDetail,
-            setRequiredPostingPlaceDetail,
-            jobDetailData,
-            onClickAddDesignation,
-            selectionProcess,
-            startingSalary,
-          }}
+    <>
+      {isLoading && <LoadingScreen />}
+      {!isLoading && !error && (
+        <TwoRow
+          topSection={
+            <JobDetailsTemplate
+              {...{
+                desginationItems,
+                menuOptions,
+                setMenuOptions,
+                handlePress,
+                handleAdd,
+                selectedOptions,
+                setSelectedOptions,
+                handleDelete,
+                configurableListQuery,
+                setConfigurableListQuery,
+                setRenderJobDetails,
+                renderJobDetails,
+                handleInputChange,
+                addDocumentField,
+                addDesignation,
+                bondPeriod,
+                compensation,
+                CTCDetail,
+                handleBlur,
+                designationName,
+                exitAmount,
+                handleBondPeriod,
+                handleCompensation,
+                handleCTCDetail,
+                handleDesignationName,
+                handleExitAmount,
+                handleMonthlyData,
+                handleStartingSalary,
+                handleYearlyData,
+                handleTextEditorValue,
+                jobDetailData,
+                onClickAddDesignation,
+                selectionProcess,
+                startingSalary,
+              }}
+            />
+          }
+          isTopFillSpace
+          bottomSection={
+            <View style={styles.actionBtnContainer}>
+              <ActionPairButton
+                buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+                buttonTwoText={intl.formatMessage({ id: "label.save" })}
+                onPressButtonOne={() => navigate(-1)}
+                onPressButtonTwo={() => {
+                  handleSaveAndNext();
+                }}
+                displayLoader={false}
+                customStyles={{
+                  ...isWebProps,
+                  customContainerStyle: commonStyles.customContainerStyle,
+                }}
+                isButtonTwoGreen
+              />
+            </View>
+          }
         />
-      }
-      isTopFillSpace
-      bottomSection={
-        <View style={styles.actionBtnContainer}>
-          <ActionPairButton
-            buttonOneText={intl.formatMessage({ id: "label.cancel" })}
-            buttonTwoText={intl.formatMessage({ id: "label.save" })}
-            onPressButtonOne={() => navigate(-1)}
-            onPressButtonTwo={() => {
-              handleSaveAndNext();
-            }}
-            displayLoader={false}
-            customStyles={{
-              ...isWebProps,
-              customContainerStyle: commonStyles.customContainerStyle,
-            }}
-            isButtonTwoGreen
-          />
-        </View>
-      }
-    />
+      )}
+      {!!error && !isLoading && <ErrorComponent errorMsg={error} />}
+      {!!currentError && (
+        <ToastComponent
+          toastMessage={formateErrors(currentError?.errors)}
+          onDismiss={() => setCurrentError("")}
+        />
+      )}
+
+      {modalDetails.isShown && (
+        <ConfirmationModal
+          severity={"warning"}
+          hasSingleButton
+          subHeading={modalDetails?.modalMessage}
+          buttonOneText={intl.formatMessage({
+            id: "label.ok",
+          })}
+          icon={images.iconWarning}
+          onPressButtonOne={() =>
+            setModalDetails({
+              isShown: false,
+              modalMessage: "",
+            })
+          }
+        />
+      )}
+    </>
   );
 };
 
