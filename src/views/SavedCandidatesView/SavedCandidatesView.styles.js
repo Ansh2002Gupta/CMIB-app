@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
       },
     }),
   }),
+  rowDetail: { flex: 1 },
 });
 
 export default styles;

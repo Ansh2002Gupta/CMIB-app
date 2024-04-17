@@ -210,8 +210,8 @@ const CustomTable = ({
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
-                {isTicketListingLoading ||
-                (isGeetingJobbSeekers && (isWeb || isFirstPageReceived)) ? (
+                {(isTicketListingLoading || isGeetingJobbSeekers) &&
+                (isWeb || isFirstPageReceived) ? (
                   <LoadingScreen />
                 ) : (
                   <View

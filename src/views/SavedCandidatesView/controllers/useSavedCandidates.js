@@ -446,14 +446,14 @@ const useSavedCandidates = () => {
             />
             {showCurrentPopupmessage === index && (
               <View ref={popMessageRef}>
-              <PopupMessage
-                message={popupOptions(item)}
-                customStyle={styles.popupMessageStyle}
-                onPopupClick={(configData) => {
-                  configData?.popupAction(item);
-                }}
-                labelName="label"
-              />
+                <PopupMessage
+                  message={popupOptions(item)}
+                  customStyle={styles.popupMessageStyle}
+                  onPopupClick={(configData) => {
+                    configData?.popupAction(item);
+                  }}
+                  labelName="label"
+                />
               </View>
             )}
           </View>
@@ -497,7 +497,7 @@ const useSavedCandidates = () => {
     totalPages: savedCandidatesData?.meta?.total,
     showCurrentPopupmessage,
     onIconPress,
-    popupOptions
+    popupOptions,
   };
 };
 

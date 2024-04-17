@@ -61,7 +61,7 @@ const SavedCandidatesView = () => {
   const getMobileView = (item, index) => {
     return (
       <View style={styles.mobileContainer} key={index}>
-        <View>
+        <View style={styles.rowDetail}>
           <CommonText
             fontWeight={"600"}
             customTextStyle={styles.cellTextStyle()}
@@ -96,6 +96,12 @@ const SavedCandidatesView = () => {
               customStyle={styles.popupMessageStyle}
               onPopupClick={(configData) => {
                 configData?.popupAction(item);
+              }}
+              onPopUpClose={() => {
+                onIconPress(index);
+              }}
+              onBackdropPress={() => {
+                onIconPress(index);
               }}
               labelName="label"
             />
