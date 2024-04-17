@@ -8,6 +8,7 @@ import CustomModal from "../CustomModal";
 import CustomTouchableOpacity from "../CustomTouchableOpacity";
 import useIsWebView from "../../hooks/useIsWebView";
 import styles from "./PopupMessage.style";
+import Spinner from "../Spinner";
 
 const PopupMessage = ({
   customStyle,
@@ -17,6 +18,7 @@ const PopupMessage = ({
   onPopUpClose,
   popUpHeaderText,
   labelName,
+  showLoaderAt,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -40,6 +42,11 @@ const PopupMessage = ({
                 <CommonText customTextStyle={styles.deletetext}>
                   {item?.[labelName]}
                 </CommonText>
+                {item?.key && showLoaderAt === item?.key ? (
+                  <Spinner thickness={2} customStyle={styles.spinner} />
+                ) : (
+                  <></>
+                )}
               </CustomTouchableOpacity>
             ))}
           </CustomModal>
@@ -56,6 +63,15 @@ const PopupMessage = ({
                 <CommonText customTextStyle={styles.deletetext}>
                   {item?.[labelName]}
                 </CommonText>
+                {item?.key && showLoaderAt === item?.key ? (
+                  <Spinner
+                    size="xs"
+                    thickness={2}
+                    customStyle={styles.spinner}
+                  />
+                ) : (
+                  <></>
+                )}
               </CustomTouchableOpacity>
             ))}
           </View>

@@ -46,4 +46,11 @@ export const navigations = {
   JOB_PROFILE: "/job-profile",
   VIEW_JOB_DETAILS: "applicant-job-details",
   APPLICANT_DETAILS: ":job_id/applicant-details/:id",
+  PREVIOUS_SUBSCRIPTION_DETAILS: "previous-subscription-details",
+  OTHER_PACKAGES: "other-packages",
+  MANAGE_SUBSCRIPTION: "manage-subscriptions",
+  CANDIDATE_DETAIL: "candidate-details",
+
+  //dummy routes
+  CONFIGURABLE_LIST: "dummy/configurable-list",
 };

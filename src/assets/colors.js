@@ -20,9 +20,10 @@ const skyBlueLightSecond = "#E7EAFC";
 const darkGreen = "#00873E";
 const green = "#04AF55";
 const greenOne = "#04af55";
+const lightGreen = "#DFFFDC";
+const shallowGreen = "#CDEFDD";
 const darkSecondGreen = "#258B01";
-const lightGreen = "#E6F9EF";
-const lightGreen2 = "#DFFFDC";
+const lightGreen2 = "#E6F9EF";
 
 /* Greys */
 const backgroundGrey = "#F6F8F9";
@@ -65,6 +66,7 @@ const yellow = "#FABB00";
 const orange = "#D76200";
 const lightOrange = "#FFEFE5";
 const lightOrangeSecond = "#F9DED6";
+const lightOrangeThird = "#FFF2EF";
 
 /* Purple */
 const lightPurple = "#E3E2F5";
@@ -102,6 +104,7 @@ const colors = {
   offWhite,
   red,
   secondaryGrey,
+  shallowGreen,
   silver,
   slateGray,
   subHeadingGray,
@@ -125,5 +128,6 @@ const colors = {
   greySix,
   lightOrangeSecond,
   skyBlueLightSecond,
+  lightOrangeThird,
 };
 export default colors;

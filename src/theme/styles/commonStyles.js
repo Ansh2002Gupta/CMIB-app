@@ -46,6 +46,17 @@ const commonStyles = {
     flex: 1,
     display: "flex",
   },
+  cellTextStyle: (fontSize = 14) => ({
+    fontSize,
+    ...Platform.select({
+      web: {
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        maxWidth: "100%",
+      },
+    }),
+  }),
   columnStyle: (WIDTH = "15%") => ({
     width: WIDTH,
     paddingLeft: 24,
