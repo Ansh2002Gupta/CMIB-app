@@ -14,6 +14,10 @@ const AddPlaceOfPosting = ({
     addPlaceModal,
     editPlaceModal,
     handlePostingPlaceChange,
+    handleMultiRowDocumentDetails,
+    addPlaceOfPosting,
+    multiAddPlaceOfPosting,
+    setMultiAddPlacePosting,
     isFormValid,
     onClickAddPlace,
     onClickAddPlaceCancelButton,
@@ -24,6 +28,7 @@ const AddPlaceOfPosting = ({
   } = useAddPlaceOfPosting({
     setRequiredPostingPlaceDetail,
     requiredPostingPlaceDetail,
+    handleInputChange,
   });
   return (
     <AddPlaceOfPostingTemplate
@@ -33,6 +38,10 @@ const AddPlaceOfPosting = ({
         addPlaceModal,
         editPlaceModal,
         handlePostingPlaceChange,
+        handleMultiRowDocumentDetails,
+        addPlaceOfPosting,
+        multiAddPlaceOfPosting,
+        setMultiAddPlacePosting,
         isFormValid,
         jobDetailData,
         onClickAddPlace,

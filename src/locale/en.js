@@ -811,6 +811,10 @@ const locale = {
   "label.select_document_name": "Select document name",
   "label.select_document_type": "Select document type",
   "label.select_no_of_copies": "Select no of copies",
+  "label.obc": "OBC",
+  "label.sc": "SC",
+  "label.st": "ST",
+  "label.select_place_of_posting": "Select Place of Posting",
 };
 
 export default locale;

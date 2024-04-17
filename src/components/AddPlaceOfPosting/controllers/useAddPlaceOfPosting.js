@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const addDocumentField = [
+const addPlaceOfPosting = [
   {
     cellID: 1,
     key: "place_of_posting",
@@ -12,7 +12,7 @@ const addDocumentField = [
     cellID: 1,
     key: "general",
     label: "label.general",
-    placeholder: "label.obc",
+    placeholder: "label.general",
     value: "",
     isNumeric: true,
   },
@@ -72,6 +72,7 @@ const addDocumentField = [
 ];
 
 const useAddPlaceOfPosting = ({
+  handleInputChange,
   setRequiredPostingPlaceDetail,
   requiredPostingPlaceDetail,
 }) => {
@@ -90,8 +91,8 @@ const useAddPlaceOfPosting = ({
     total: null,
   });
 
-  const [multiAddDocument, setMuliAddDocument] = useState([
-    ...addDocumentField,
+  const [multiAddPlaceOfPosting, setMultiAddPlacePosting] = useState([
+    ...addPlaceOfPosting,
   ]);
 
   useEffect(() => {
@@ -197,9 +198,32 @@ const useAddPlaceOfPosting = ({
     setEditPlaceModal(true);
   };
 
+  const handleMultiRowDocumentDetails = ({
+    propertyName,
+    value,
+    id,
+    cellID,
+  }) => {
+    setMultiAddPlacePosting((prevDetail) => {
+      const updatedDetail = prevDetail.map((item) => {
+        if (item.label === propertyName && item.cellID === cellID) {
+          return { ...item, value: value };
+        }
+        return item;
+      });
+      setRequiredPostingPlaceDetail([...updatedDetail]);
+      handleInputChange("posting_details", updatedDetail);
+      return updatedDetail;
+    });
+  };
+
   return {
     addPlaceModal,
     editPlaceModal,
+    multiAddPlaceOfPosting,
+    handleMultiRowDocumentDetails,
+    setMultiAddPlacePosting,
+    addPlaceOfPosting,
     handlePostingPlaceChange,
     isFormValid,
     onClickAddPlace,

@@ -5,6 +5,7 @@ import DetailCard from "../DetailCard/DetailCard";
 import styles from "./CustomMultiRowTextinput.style";
 
 const CustomMultiRowTextInput = ({
+  customWebContainerStyle,
   customCardStyle,
   startRowHeaderList,
   startRowTemplate,
@@ -58,8 +59,11 @@ const CustomMultiRowTextInput = ({
       onAdd={handleAddNewRow}
       onDelete={handleDeleteRow}
       tableHeaderList={startRowHeaderList}
-      customContainerStyle={{ flexDirection: "row" }}
-      customWebContainerStyle={styles.customWebContainerStyle}
+      customContainerStyle={{ flexDirection: "row", flexWrap: "unwrap" }}
+      customWebContainerStyle={{
+        ...styles.customWebContainerStyle,
+        ...customWebContainerStyle,
+      }}
     />
   );
 };

@@ -51,9 +51,11 @@ const DetailCard = ({
             : isWeb && isWebView
             ? {
                 ...customWebContainerStyle,
-                overflow: "visible",
+                overflowX: "auto",
                 flexDirection: "row",
-                flexWrap: "wrap",
+                width: "100%",
+
+                // flexWrap: "wrap",
               }
             : {}),
           ...customContainerStyle,

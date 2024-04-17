@@ -29,6 +29,7 @@ import styles from "./JobDetails.style";
 import { SCHEDULE_INTERVIEW_ADDRESS_MAX_LENGTH } from "../../../../constants/constants";
 import AddDocument from "../../../../components/AddDocument";
 import AddPlaceOfPosting from "../../../../components/AddPlaceOfPosting";
+import CustomScrollView from "../../../../components/CustomScrollView";
 
 const JobDetailsTemplate = ({
   renderJobDetails,
@@ -316,7 +317,7 @@ const JobDetailsTemplate = ({
   }
 
   return (
-    <ScrollView style={styles.scrollViewStyle}>
+    <CustomScrollView style={styles.scrollViewStyle}>
       {currentBreakpoint === "xs" ? (
         <MultiRow rows={filteredJobDetailsConfig} />
       ) : (
@@ -324,10 +325,13 @@ const JobDetailsTemplate = ({
           leftSection={[]}
           isLeftFillSpace={false}
           isRightFillSpace
+          rightSectionStyle={{
+            width: "100%",
+          }}
           rightSection={<MultiRow rows={filteredWebJobDetailsConfig} />}
         />
       )}
-    </ScrollView>
+    </CustomScrollView>
   );
 };
 
