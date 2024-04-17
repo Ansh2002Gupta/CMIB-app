@@ -3,15 +3,10 @@ import React from "react";
 import AddDocumentTemplate from "./AddDocumentTemplate.js";
 import useAddDocument from "./controllers/useAddDocument.js";
 
-const AddDocument = ({
-  requiredDocumentDetails,
-  setRequiredDocumentDetails,
-}) => {
+const AddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   const {
     addDocumentModal,
     documentDetail,
-    multiDocumentDetail,
-    setMultiDocumentDetail,
     addDocumentField,
     editDocumentModal,
     handleDocumentDetailChange,
@@ -22,15 +17,16 @@ const AddDocument = ({
     onClickAddDocumentSaveButton,
     onClickDeleteDocument,
     onCLickEditDocument,
-  } = useAddDocument({ requiredDocumentDetails, setRequiredDocumentDetails });
+  } = useAddDocument({
+    requiredDocumentDetails,
+    setRenderJobDetails,
+  });
 
   return (
     <AddDocumentTemplate
       {...{
         addDocumentModal,
         documentDetail,
-        multiDocumentDetail,
-        setMultiDocumentDetail,
         addDocumentField,
         editDocumentModal,
         handleDocumentDetailChange,
@@ -42,6 +38,7 @@ const AddDocument = ({
         onClickDeleteDocument,
         onCLickEditDocument,
         requiredDocumentDetails,
+        setRenderJobDetails,
       }}
     />
   );

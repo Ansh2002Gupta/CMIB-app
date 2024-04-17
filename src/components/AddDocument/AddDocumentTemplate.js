@@ -18,8 +18,6 @@ import styles from "./AddDocument.style";
 const AddDocumentTemplate = ({
   addDocumentModal,
   documentDetail,
-  multiDocumentDetail,
-  setMultiDocumentDetail,
   addDocumentField,
   editDocumentModal,
   handleDocumentDetailChange,
@@ -31,9 +29,17 @@ const AddDocumentTemplate = ({
   onClickDeleteDocument,
   onCLickEditDocument,
   requiredDocumentDetails,
+  setRenderJobDetails,
 }) => {
   const intl = useIntl();
   const { isWebView } = useIsWebView();
+
+  const setObjectGridTemplate = (updatedDocs) => {
+    setRenderJobDetails((prev) => ({
+      ...prev,
+      required_docs: [...updatedDocs],
+    }));
+  };
 
   return (
     <View>
@@ -49,12 +55,13 @@ const AddDocumentTemplate = ({
         {isWebView ? (
           <CustomMultiRowTextInput
             customCardStyle={styles.multiRowTextStyle}
-            startRowTemplate={addDocumentField}
-            gridTemplate={multiDocumentDetail}
-            setGridTemplate={setMultiDocumentDetail}
+            customWebContainerStyle={{ overflow: "visible" }}
+            startRowTemplate={requiredDocumentDetails}
+            gridTemplate={requiredDocumentDetails}
+            setObjectGridTemplate={setObjectGridTemplate}
             numColsInARow={4}
-            handleValueChange={(type, inputValue) => {
-              handleMultiRowDocumentDetails(type, inputValue);
+            handleValueChange={(type, inputValue, cellId) => {
+              handleMultiRowDocumentDetails(type, inputValue, cellId);
             }}
           />
         ) : (

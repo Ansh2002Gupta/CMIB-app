@@ -205,11 +205,11 @@ export const STEPPER_STATE = {
 };
 
 export const DOCUMENT_TYPE = [
-  { label: "Photocopies", value: "Photocopies" },
-  { label: "Original", value: "Original" },
+  { label: "Photocopies", value: "photocopies" },
+  { label: "Original", value: "original" },
   {
     label: "Both",
-    value: "Both",
+    value: "both",
   },
 ];
 
@@ -815,4 +815,46 @@ export const JOB_APPLICANTS_HEADING = {
   designation: "Designation",
   job_status: "Active/Inactive",
   status: "Status",
+};
+
+export const STATUS_ENUM = {
+  SHORTLISTED: "shortlisted",
+  INTERVIEW_SCHEDULED: "interview scheduled",
+};
+export const JOB_APPLICANTS_POP_MESSAGE = {
+  pending: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.shorlist_candidate",
+    "label.reject_candidate",
+  ],
+  shorlisted: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.schedule_interview",
+  ],
+  noresponse: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.view_interview_details",
+  ],
+  interviewscheduled: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.view_interview_details",
+    "label.offer_job",
+    "label.reject_after_interview",
+  ],
+  offerrejected: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+  ],
+};
+
+export const SAVED_CANDIDATES_TABLE_HEADING = {
+  candidate_id: "Candidate ID",
+  candidate_name: "Candidate Name",
+  experience: "Total Experience",
+  functional_areas: ["Functional Area"],
+  designation_applied_for: ["Designation Applied For"],
 };

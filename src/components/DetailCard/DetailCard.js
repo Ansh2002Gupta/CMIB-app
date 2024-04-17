@@ -12,6 +12,7 @@ const isWeb = Platform.OS.toLowerCase() === "web";
 const DetailCard = ({
   customCardStyle,
   customContainerStyle,
+  customWebContainerStyle,
   cols,
   details,
   handleBlur,
@@ -49,10 +50,12 @@ const DetailCard = ({
             ? style.customStyle
             : isWeb && isWebView
             ? {
-                display: "grid",
-                gridTemplateColumns: Array(cols).fill("1fr").join(" "),
-                overflow: "auto",
-                alignItems: "center",
+                ...customWebContainerStyle,
+                overflowX: "auto",
+                flexDirection: "row",
+                width: "100%",
+
+                // flexWrap: "wrap",
               }
             : {}),
           ...customContainerStyle,

@@ -15,6 +15,8 @@ const addDocumentField = [
   },
   {
     cellID: 1,
+    id: 1,
+    includeAllKeys: true,
     key: document_keys.DOCUMENT_TYPE,
     label: "label.document_type",
     placeholder: "label.select_document_type",
@@ -39,10 +41,7 @@ const addDocumentField = [
   },
 ];
 
-const useAddDocument = ({
-  requiredDocumentDetails,
-  setRequiredDocumentDetails,
-}) => {
+const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   const [addDocumentModal, setAddDocumentModal] = useState(false);
   const [editDocumentModal, setEditDocumentModal] = useState();
   const [editDocumentIndex, setEditDocumentIndex] = useState();
@@ -61,11 +60,11 @@ const useAddDocument = ({
         copiesNumber: documentDetail.copiesNumber,
       });
     }
+    // setRenderJobDetails((prev) => ({
+    //   ...prev,
+    //   required_docs: [...addDocumentField],
+    // }));
   }, []);
-
-  const [multiDocumentDetail, setMultiDocumentDetail] = useState([
-    ...addDocumentField,
-  ]);
 
   useEffect(() => {
     validateForm();
@@ -98,16 +97,20 @@ const useAddDocument = ({
     });
   };
 
-  const handleMultiRowDocumentDetails = (propertyName, value) => {
-    setMultiDocumentDetail((prevDetail) => {
-      const updatedDetail = prevDetail.map((item) => {
-        if (item.label === propertyName) {
+  const handleMultiRowDocumentDetails = ({
+    propertyName,
+    value,
+    id,
+    cellID,
+  }) => {
+    setRenderJobDetails((prevDetail) => {
+      const updatedDetail = prevDetail?.required_docs?.map((item) => {
+        if (item.label === propertyName && item.cellID === cellID) {
           return { ...item, value: value };
         }
         return item;
       });
-      setRequiredDocumentDetails([...updatedDetail]);
-      return updatedDetail;
+      return { ...prevDetail, required_docs: updatedDetail };
     });
   };
 
@@ -119,28 +122,28 @@ const useAddDocument = ({
   };
 
   const onClickAddDocumentSaveButton = () => {
-    if (editDocumentModal && editDocumentIndex !== -1) {
-      setRequiredDocumentDetails((prev) => {
-        const updatedList = [...prev];
-        updatedList[editDocumentIndex] = { ...documentDetail };
-        return updatedList;
-      });
-    } else {
-      setRequiredDocumentDetails((prev) => [...prev, { ...documentDetail }]);
-    }
-    setDocumentDetail({
-      documentName: "",
-      documentType: "",
-      copiesNumber: null,
-    });
-    setIsFormValid(false);
-    setEditDocumentIndex(-1);
-    setEditDocumentModal(false);
-    setAddDocumentModal(false);
+    // if (editDocumentModal && editDocumentIndex !== -1) {
+    //   setRequiredDocumentDetails((prev) => {
+    //     const updatedList = [...prev];
+    //     updatedList[editDocumentIndex] = { ...documentDetail };
+    //     return updatedList;
+    //   });
+    // } else {
+    //   setRequiredDocumentDetails((prev) => [...prev, { ...documentDetail }]);
+    // }
+    // setDocumentDetail({
+    //   documentName: "",
+    //   documentType: "",
+    //   copiesNumber: null,
+    // });
+    // setIsFormValid(false);
+    // setEditDocumentIndex(-1);
+    // setEditDocumentModal(false);
+    // setAddDocumentModal(false);
   };
 
   const onClickDeleteDocument = (index) => {
-    setRequiredDocumentDetails((prev) => prev.filter((_, i) => i !== index));
+    // setRequiredDocumentDetails((prev) => prev.filter((_, i) => i !== index));
   };
 
   const onCLickEditDocument = (index) => {
@@ -159,8 +162,6 @@ const useAddDocument = ({
   return {
     addDocumentModal,
     addDocumentField,
-    multiDocumentDetail,
-    setMultiDocumentDetail,
     documentDetail,
     editDocumentModal,
     handleMultiRowDocumentDetails,

@@ -8,14 +8,15 @@ import { TwoRow } from "../../../core/layouts";
 import ApplicationFormStepper from "../ApplicationFormStepper";
 import CompanyProfile from "./CompanyProfileForm/CompanyProfileForm";
 import JobDetails from "./JobDetails";
+import CustomScrollView from "../../../components/CustomScrollView";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const intl = useIntl();
 
   let tabConfig = [
-    {
-      component: CompanyProfile,
-    },
+    // {
+    //   component: CompanyProfile,
+    // },
     {
       component: JobDetails,
     },
@@ -25,7 +26,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const { component: ActiveTabComponent } = tabConfig[activeTabIndex];
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <CustomScrollView style={{ flex: 1 }}>
       <TwoRow
         topSection={
           <ApplicationFormStepper
@@ -38,7 +39,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
         bottomSection={<ActiveTabComponent tabHandler={onHandleTab} />}
         isBottomFillSpace
       />
-    </ScrollView>
+    </CustomScrollView>
   );
 };
 
