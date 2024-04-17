@@ -762,3 +762,8 @@ export const JOB_APPLICANTS_HEADING = {
   job_status: "Active/Inactive",
   status: "Status",
 };
+
+export const STATUS_ENUM = {
+  SHORTLISTED: "shortlisted",
+  INTERVIEW_SCHEDULED: "interview scheduled",
+};
