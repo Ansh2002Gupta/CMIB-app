@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import {
   Col,
   Platform,
@@ -36,7 +36,6 @@ import {
   MEMBER_CA_JOB_PROFILE,
   UNMARK_PREFER,
 } from "../../services/apiServices/apiEndPoint";
-import { navigations } from "../../constants/routeNames";
 import { COMPANY, MODULES } from "../../constants/constants";
 import colors from "../../assets/colors";
 import images from "../../images";
@@ -51,12 +50,13 @@ const SaveButton = ({
   onSave,
   onUnSave,
   setToastMsg,
+  isSaveDefault = true,
 }) => {
   const intl = useIntl();
   const isWebView = useIsWebView();
   const isMob = Platform.OS.toLowerCase() !== "web";
   const webProps = !isMob ? { size: "xs" } : {};
-  const [isSaveButton, setIsSaveButton] = useState(true);
+  const [isSaveButton, setIsSaveButton] = useState(isSaveDefault);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   const handleSavingUnsaving = () => {
@@ -129,6 +129,9 @@ const ViewDetailsScreen = () => {
   const [toastMsg, setToastMsg] = useState("");
   const [candidateProfile, setCandidateProfile] = useState();
 
+  const location = useLocation();
+  const { showSaveButton } = location.state ?? {};
+
   const returnModuleWiseUrl = (module) => {
     switch (module) {
       case MODULES.CA_JOBS:
@@ -165,8 +168,9 @@ const ViewDetailsScreen = () => {
   const handleEdit = (value) => {
     setIsEditable(value);
   };
+
   const handleBackPress = () => {
-    navigate(`${navigations.CA_JOBS}/${navigations.JOB_SEEKERS}`);
+    navigate(-1);
   };
 
   const getShortProfileDetails = ({ candidate_name, candidate_id }) => {
@@ -237,6 +241,7 @@ const ViewDetailsScreen = () => {
                       isUnsaving={isUnSavingCandidateDetails}
                       errorInSaving={errorInSavingCandidateDetails}
                       errorInUnSaving={errorInUnSavingCandidateDetails}
+                      isSaveDefault={showSaveButton}
                       {...{ setToastMsg }}
                     />
                   }

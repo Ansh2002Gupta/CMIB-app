@@ -39,21 +39,16 @@ const styles = StyleSheet.create({
     ...Platform.select({
       web: {
         textOverflow: "ellipsis",
-        redSpace: "nowrap",
+        whiteSpace: "nowrap",
         overflow: "hidden",
-        maxWidth: "120px",
+        maxWidth: "140px",
       },
     }),
-    flexWrap: "wrap",
-    wordBreak: "break-word",
-    overFlow: "hidden",
-    whiteSpace: "break-space",
   }),
   tableHeadingText: {
     color: colors.darkGrey,
   },
   tableQueryText: {
-    marginTop: 2,
     color: colors.darkGrey,
   },
   columnStyleBorder: {
@@ -161,15 +156,17 @@ const styles = StyleSheet.create({
   dot: {
     width: 4,
     height: 4,
-    borderRadius: "100%",
+    marginRight: 6,
+    marginLeft: 6,
     backgroundColor: colors.lightGrey,
   },
   rowStyling: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     gap: 6,
+    marginTop: 2,
   },
+  mobileDetailRow: { flex: 1 },
 });
 
 export default styles;
