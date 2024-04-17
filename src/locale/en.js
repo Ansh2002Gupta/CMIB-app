@@ -238,8 +238,8 @@ const locale = {
   "label.pre_interview_preferences": "Pre-Interview Preferences",
   "label.centre_details": "Centre Details",
   "label.payment": "Payment",
-  "label.designationName": "Designation Name",
-  "label.enter_designationName": "Enter Designation Name",
+  "label.designation_name": "Designation Name",
+  "label.enter_designation_name": "Enter Designation Name",
   "label.compensation": "Compensation",
   "label.enter_compensation": "Enter Compensation",
   "label.starting_salary_including_perks": "Starting Salary Including Perks",
@@ -811,6 +811,14 @@ const locale = {
   "label.select_document_name": "Select document name",
   "label.select_document_type": "Select document type",
   "label.select_no_of_copies": "Select no of copies",
+  "label.pre_interview_prefrences": "Pre-interview preferences",
+  "label.short_listing_criteria": "Short Listing Criteria",
+  "label.enter_short_listing_criteria": "Enter short listing criteria",
+  "label.any_other_information":
+    "Any other information that you wish to provide for smooth conduct of the interviews",
+  "label.enter_any_other_information":
+    "Enter any other information that you wish to provide for smooth conduct of the interviews",
+  "label.save_and_next": "Save & Next",
 };
 
 export default locale;
