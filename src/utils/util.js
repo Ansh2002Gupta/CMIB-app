@@ -20,7 +20,15 @@ export const getImageSource = (uploadedImage) => {
   return "";
 };
 
-export const getRenderText = (items, keys) => {
+export const getFormattedText = (item, key, formatConfig) => {
+  if (formatConfig[key]) {
+    const { prefix = "", suffix = "" } = formatConfig[key];
+    return `${prefix}${item[key]}${suffix}`;
+  }
+  return item[key];
+};
+
+export const getRenderText = (items, keys, formatConfig = {}) => {
   if (!keys?.length) {
     return "";
   }

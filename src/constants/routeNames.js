@@ -49,4 +49,8 @@ export const navigations = {
   PREVIOUS_SUBSCRIPTION_DETAILS: "previous-subscription-details",
   OTHER_PACKAGES: "other-packages",
   MANAGE_SUBSCRIPTION: "manage-subscriptions",
+  CANDIDATE_DETAIL: "candidate-details",
+
+  //dummy routes
+  CONFIGURABLE_LIST: "dummy/configurable-list",
 };

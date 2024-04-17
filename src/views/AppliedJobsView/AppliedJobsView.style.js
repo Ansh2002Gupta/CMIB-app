@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   activeWeb: {
     ...baseChipStyle,
-    backgroundColor: colors.lightGreen2,
+    backgroundColor: colors.lightGreen,
     color: colors.darkSecondGreen,
   },
   closeWeb: {
