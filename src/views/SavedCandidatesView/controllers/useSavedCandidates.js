@@ -297,9 +297,12 @@ const useSavedCandidates = () => {
   const openCandidateDetail = (candidateData) => {
     let isRemoved = removedCandidates.includes(candidateData?.user_id);
     navigate(
-      `/${selectedModule?.key}/${navigations.CANDIDATE_DETAIL}/${
-        candidateData?.user_id
-      }/${Number(isRemoved)}`
+      `/${selectedModule?.key}/${navigations.CANDIDATE_DETAIL}/${candidateData?.user_id}`,
+      {
+        state: {
+          showSaveButton: isRemoved,
+        },
+      }
     );
   };
 

@@ -308,7 +308,7 @@ const config = [
         element: <Candidates />,
       },
       {
-        viewPath: `${navigations.CANDIDATE_DETAIL}/:id/:showSaveButton`,
+        viewPath: `${navigations.CANDIDATE_DETAIL}/:id`,
         element: <ViewDetailsScreen />,
       },
       {

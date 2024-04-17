@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import {
   Col,
   Platform,
@@ -36,7 +36,6 @@ import {
   MEMBER_CA_JOB_PROFILE,
   UNMARK_PREFER,
 } from "../../services/apiServices/apiEndPoint";
-import { navigations } from "../../constants/routeNames";
 import { COMPANY, MODULES } from "../../constants/constants";
 import colors from "../../assets/colors";
 import images from "../../images";
@@ -130,6 +129,9 @@ const ViewDetailsScreen = () => {
   const [toastMsg, setToastMsg] = useState("");
   const [candidateProfile, setCandidateProfile] = useState();
 
+  const location = useLocation();
+  const { showSaveButton } = location.state ?? {};
+
   const returnModuleWiseUrl = (module) => {
     switch (module) {
       case MODULES.CA_JOBS:
@@ -166,6 +168,7 @@ const ViewDetailsScreen = () => {
   const handleEdit = (value) => {
     setIsEditable(value);
   };
+
   const handleBackPress = () => {
     navigate(-1);
   };
@@ -238,11 +241,7 @@ const ViewDetailsScreen = () => {
                       isUnsaving={isUnSavingCandidateDetails}
                       errorInSaving={errorInSavingCandidateDetails}
                       errorInUnSaving={errorInUnSavingCandidateDetails}
-                      isSaveDefault={
-                        params?.showSaveButton
-                          ? params?.showSaveButton === "1"
-                          : true
-                      }
+                      isSaveDefault={showSaveButton}
                       {...{ setToastMsg }}
                     />
                   }
