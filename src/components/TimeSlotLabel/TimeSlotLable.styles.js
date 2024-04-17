@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     width: "48%",
   },
   selectedOuterContainer: {
-    backgroundColor: colors.lightGreen2,
+    backgroundColor: colors.lightGreen,
     borderColor: colors.greenOne,
   },
   dateAndModePortion: {
