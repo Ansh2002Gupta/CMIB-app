@@ -94,78 +94,69 @@ function DashboardView() {
             {/* {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
               <CAJobsDashboard />
             ) : null} */}
-            <TwoColumn
-              style={{ gap: 24 }}
-              isLeftFillSpace
-              leftSection={
-                <DonutChart
-                  label={intl.formatMessage({
-                    id: "label.interviewsScheduled",
-                  })}
-                  data={PIE_ONE_DATA}
-                  colorScale={[colors.disabledGrey, colors.purple]}
-                  height={200}
-                  labelRadius={42}
-                  labelColor={colors.white}
-                />
-              }
-              rightSection={
-                <PieChart
-                  label={intl.formatMessage({
-                    id: "label.jobTypes",
-                  })}
-                  data={PIE_TWO_DATA}
-                  colorScale={[
-                    colors.greenBlue,
-                    colors.green,
-                    colors.babyPink,
-                    colors.purple,
-                  ]}
-                  height={248}
-                  labelRadius={120}
-                  labelColor={colors.darkGrey}
-                />
-              }
-            />
-            <TwoColumn
-              style={{ gap: 24 }}
-              isRightFillSpace
-              leftSection={
-                <PieChart
-                  colorScale={[colors.errorRed, colors.grassGreen]}
-                  data={PIE_THREE_DATA}
-                  height={248}
-                  label={intl.formatMessage({
-                    id: "label.selectedFunctionalAreas",
-                  })}
-                  labelRadius={42}
-                  labelColor={colors.white}
-                />
-              }
-              rightSection={
-                <PieChart
-                  colorScale={[
-                    colors.mustardYellow,
-                    colors.graphiteGray,
-                    colors.yellowGreen,
-                    colors.purple,
-                    colors.originalPurple,
-                    colors.babyPink,
-                    colors.green,
-                    colors.errorRed,
-                    colors.greenBlue,
-                    colors.darkOrange,
-                  ]}
-                  data={PIE_FOUR_DATA}
-                  height={248}
-                  label={intl.formatMessage({
-                    id: "label.urgentJobs",
-                  })}
-                  labelRadius={120}
-                  labelColor={colors.darkGrey}
-                />
-              }
-            />
+            <View style={{ gap: 24, flexDirection: "row", flexWrap: "wrap" }}>
+              <DonutChart
+                label={intl.formatMessage({
+                  id: "label.interviewsScheduled",
+                })}
+                data={PIE_ONE_DATA}
+                colorScale={[colors.disabledGrey, colors.purple]}
+                height={200}
+                width={200}
+                labelRadius={42}
+                labelColor={colors.white}
+              />
+              <PieChart
+                label={intl.formatMessage({
+                  id: "label.jobTypes",
+                })}
+                data={PIE_TWO_DATA}
+                colorScale={[
+                  colors.greenBlue,
+                  colors.green,
+                  colors.babyPink,
+                  colors.purple,
+                ]}
+                height={248}
+                labelRadius={120}
+                labelColor={colors.darkGrey}
+              />
+            </View>
+            <View style={{ gap: 24, flexDirection: "row", flexWrap: "wrap" }}>
+              <PieChart
+                colorScale={[colors.errorRed, colors.grassGreen]}
+                data={PIE_THREE_DATA}
+                height={248}
+                label={intl.formatMessage({
+                  id: "label.selectedFunctionalAreas",
+                })}
+                labelRadius={42}
+                labelColor={colors.white}
+              />
+              <PieChart
+                colorScale={[
+                  colors.mustardYellow,
+                  colors.graphiteGray,
+                  colors.yellowGreen,
+                  colors.purple,
+                  colors.originalPurple,
+                  colors.babyPink,
+                  colors.green,
+                  colors.errorRed,
+                  colors.greenBlue,
+                  colors.darkOrange,
+                ]}
+                data={PIE_FOUR_DATA}
+                width={500}
+                height={248}
+                label={intl.formatMessage({
+                  id: "label.urgentJobs",
+                })}
+                labelRadius={120}
+                labelColor={colors.darkGrey}
+              />
+            </View>
+
             <BarChart
               label={intl.formatMessage({
                 id: "label.topCompaniesHighestJobsOffered",

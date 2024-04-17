@@ -13,6 +13,7 @@ const PieChart = ({
   label,
   labelRadius,
   labelColor,
+  width,
 }) => {
   return (
     <TwoRow
@@ -25,6 +26,7 @@ const PieChart = ({
       bottomSection={
         <VictoryPie
           height={height}
+          width={width}
           data={data}
           colorScale={colorScale}
           labelRadius={({ innerRadius }) => innerRadius + labelRadius}
