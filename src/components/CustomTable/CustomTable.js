@@ -416,6 +416,7 @@ CustomTable.defaultProps = {
   totalcards: 0,
   onIconPress: () => {},
   placeholder: "Search",
+  getStatusStyle: ()=>{},
   isTotalCardVisible: true,
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,

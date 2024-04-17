@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     color: colors.white,
     lineHeight: 22,
     flexWrap: "wrap",
-    wordBreak: "break-word",
     overFlow: "hidden",
     whiteSpace: "break-space",
   },

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Keyboard, Platform, View } from "@unthinkable/react-core-components";
+import {
+  Keyboard,
+  Platform,
+  TouchableOpacity,
+  View,
+} from "@unthinkable/react-core-components";
 
 import CardComponent from "../../components/CardComponent";
 import CommonText from "../../components/CommonText";
@@ -13,12 +18,15 @@ import PaymentInitiateModal from "../PaymentInitiateModal";
 import commonStyles from "../../theme/styles/commonStyles";
 import useKeyboardShowHideListener from "../../hooks/useKeyboardShowHideListener";
 import { useIntl } from "react-intl";
+import PackageDetailModal from "../PackageDetailModal";
 
-const MainContainerTemplate = ({ subscriptionListingData }) => {
+const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
   const [showPaymentInitiateModal, setShowPaymentInitiateModal] = useState();
+  const [viewPackageDetailModal, setViewPackageDetailModal] = useState();
+  const [detailModalData, setDetailModalData] = useState({});
   const [modalData, setModalData] = useState({ amount: 0, subscriptionId: "" });
   const [modalStyle, setModalStyle] = useState({});
   const isIosPlatform = Platform.OS.toLowerCase() === "ios";
@@ -66,6 +74,29 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
     );
   };
 
+  const renderViewPackageDetailModal = () => {
+    return (
+      <CustomModal
+        headerText={detailModalData?.name}
+        isIconCross={true}
+        onPressIconCross={()=> setViewPackageDetailModal(false)}
+        customInnerContainerStyle={{
+          ...styles.modalInnerContainer,
+          ...modalStyle,
+        }}
+        headerTextStyle={styles.addApplicationFormText}
+        onBackdropPress={() => {
+          setViewPackageDetailModal(false);
+        }}
+      >
+        <PackageDetailModal
+          packageDetailData={detailModalData}
+          isSubscribe={isSubscribe}
+        />
+      </CustomModal>
+    );
+  };
+
   return (
     <View
       style={{
@@ -78,7 +109,7 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
           <CardComponent
             customStyle={{
               ...styles.componentStyle,
-              ...(isWebView ? styles.webComponentStyle : {}),
+              ...(isWebView ? styles.webComponentStyle : {flexDirection: 'column', padding: 16}),
             }}
           >
             <View
@@ -89,6 +120,7 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
             >
               <CommonText
                 customTextStyle={styles.addApplicationFormText}
+                customTextProps={{ numberOfLines: 1 }}
                 fontWeight={"600"}
               >
                 {container?.name}
@@ -101,8 +133,25 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
                   container?.validity
                 } days`}
               </CommonText>
-              <CommonText customTextStyle={styles.descriptionText} customTextProps={{numberOfLines: 3}}>
-                {container?.description}
+              <CommonText
+                customTextStyle={styles.descriptionText}
+              >
+                {container?.description?.length > 80
+                  ? container?.description?.substr(0, 80).trim() + "..."
+                  : container?.description}
+                {container?.description?.length > 80 ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      setViewPackageDetailModal(true);
+                      setDetailModalData(container)
+                    }}
+                    style={{ justifyContent: "flex-end" }}
+                  >
+                    <CommonText customTextStyle={styles.customButtonTextStyle}>
+                      View more
+                    </CommonText>
+                  </TouchableOpacity>
+                ) : null}
               </CommonText>
             </View>
             <View style={styles.borderStyle} />
@@ -114,33 +163,43 @@ const MainContainerTemplate = ({ subscriptionListingData }) => {
                 </CommonText>
               }
               rightSection={
-                <CustomTouchableOpacity
-                  style={styles.subscribePackagesButton}
-                  onPress={() => {
-                    setShowPaymentInitiateModal(true);
-                    setModalData({
-                      ...modalData,
-                      amount: container?.price,
-                      subscriptionId: container.id,
-                    });
-                  }}
-                >
-                  <CommonText customTextStyle={styles.viewPackageText}>
-                    {intl.formatMessage({ id: "label.subscribe" })}
-                  </CommonText>
-                </CustomTouchableOpacity>
+                <>
+                  {isSubscribe ? (
+                    <CustomTouchableOpacity
+                      style={isWebView ? styles.subscribePackagesButton: styles.subscribePackagesButtonMob}
+                      onPress={() => {
+                        setShowPaymentInitiateModal(true);
+                        setModalData({
+                          ...modalData,
+                          amount: container?.price,
+                          subscriptionId: container.id,
+                        });
+                      }}
+                    >
+                      <CommonText customTextStyle={isWebView ? styles.viewPackageText : styles.viewPackageTextMob} fontWeight={"600"}>
+                        {intl.formatMessage({ id: "label.subscribe" })}
+                      </CommonText>
+                    </CustomTouchableOpacity>
+                  ) : null}
+                </>
               }
             />
           </CardComponent>
         </View>
       ))}
       {showPaymentInitiateModal && renderPaymentInitiateModal()}
+      {viewPackageDetailModal && renderViewPackageDetailModal()}
     </View>
   );
 };
 
-MainContainerTemplate.propTypes = {
-  subscriptionListingData: PropTypes.array.isRequired,
+CaJobsPackagesListing.defaultProps = {
+  isSubscribe: false,
 };
 
-export default MainContainerTemplate;
+CaJobsPackagesListing.propTypes = {
+  subscriptionListingData: PropTypes.array.isRequired,
+  isSubscribe: PropTypes.bool,
+};
+
+export default CaJobsPackagesListing;

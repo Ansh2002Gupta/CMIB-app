@@ -154,7 +154,6 @@ const styles = StyleSheet.create({
   dot: {
     width: 4,
     height: 4,
-    borderRadius: "100%",
     backgroundColor: colors.lightGrey,
   },
   rowStyling: {
