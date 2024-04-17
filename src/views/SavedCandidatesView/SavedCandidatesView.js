@@ -56,6 +56,7 @@ const SavedCandidatesView = () => {
     showCurrentPopupmessage,
     onIconPress,
     popupOptions,
+    showLoaderAt,
   } = useSavedCandidates();
 
   const getMobileView = (item, index) => {
@@ -95,11 +96,12 @@ const SavedCandidatesView = () => {
               isPopupModal={true}
               customStyle={styles.popupMessageStyle}
               onPopupClick={(configData) => {
-                configData?.popupAction(item);
+                configData?.popupAction(item, configData?.key);
               }}
               onPopUpClose={() => {
                 onIconPress(index);
               }}
+              showLoaderAt={showLoaderAt}
               onBackdropPress={() => {
                 onIconPress(index);
               }}

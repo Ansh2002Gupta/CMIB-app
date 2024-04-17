@@ -254,12 +254,12 @@ const useSavedCandidates = () => {
       ? setCurrentPopupMessage(index)
       : setCurrentPopupMessage(-1);
   };
+  const [showLoaderAt, setShowLoaderAt] = useState(null);
 
-  const handleActions = (candidateData) => {
+  const handleActions = (candidateData, key) => {
     const { candidate_id, user_id } = candidateData;
-    setCurrentPopupMessage(-1);
     const removedCandidateIndex = removedCandidates.indexOf(user_id);
-
+    setShowLoaderAt(key);
     markJob({
       body: {
         candidate_id: candidate_id,
@@ -274,6 +274,12 @@ const useSavedCandidates = () => {
         } else {
           setRemovedCandidates((prev) => [...prev, user_id]);
         }
+        setShowLoaderAt(null);
+        setCurrentPopupMessage(-1);
+      },
+      onErrorCallback: () => {
+        setShowLoaderAt(null);
+        setCurrentPopupMessage(-1);
       },
     });
   };
@@ -299,6 +305,7 @@ const useSavedCandidates = () => {
 
   const popupOptions = (item) => [
     {
+      key: "saveToggle",
       label: intl.formatMessage({
         id: removedCandidates.includes(item?.user_id)
           ? "label.add_to_saved_candidates"
@@ -307,6 +314,7 @@ const useSavedCandidates = () => {
       popupAction: handleActions,
     },
     {
+      key: "viewDetail",
       label: intl.formatMessage({ id: "label.view_candidate_details" }),
       popupAction: openCandidateDetail,
     },
@@ -450,9 +458,10 @@ const useSavedCandidates = () => {
                   message={popupOptions(item)}
                   customStyle={styles.popupMessageStyle}
                   onPopupClick={(configData) => {
-                    configData?.popupAction(item);
+                    configData?.popupAction(item, configData?.key);
                   }}
                   labelName="label"
+                  showLoaderAt={showLoaderAt}
                 />
               </View>
             )}
@@ -498,6 +507,7 @@ const useSavedCandidates = () => {
     showCurrentPopupmessage,
     onIconPress,
     popupOptions,
+    showLoaderAt,
   };
 };
 
