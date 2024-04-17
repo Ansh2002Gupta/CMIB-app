@@ -373,6 +373,7 @@ const locale = {
   "label.add_new_ticket": "Add Ticket",
   "label.path.editDetails": "Edit User Details",
   "label.search_by_ticket": "Search by Ticket ID",
+  "label.noResultFound": "No results found",
   "label.20": '"20"',
   "label.more_than": "More than ",
   "label.active": "Active",
