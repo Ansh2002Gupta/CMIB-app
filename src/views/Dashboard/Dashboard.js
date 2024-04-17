@@ -91,9 +91,9 @@ function DashboardView() {
         isBottomFillSpace
         bottomSection={
           <View style={{ gap: 24 }}>
-            {/* {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
+            {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
               <CAJobsDashboard />
-            ) : null} */}
+            ) : null}
             <View style={{ gap: 24, flexDirection: "row", flexWrap: "wrap" }}>
               <DonutChart
                 label={intl.formatMessage({
