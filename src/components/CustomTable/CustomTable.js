@@ -82,7 +82,6 @@ const CustomTable = ({
   renderCalendar,
   statusData,
   queryTypeData,
-  showFliter,
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,

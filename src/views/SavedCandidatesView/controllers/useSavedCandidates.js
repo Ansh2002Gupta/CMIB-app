@@ -9,7 +9,7 @@ import styles from "../SavedCandidatesView.styles";
 import {
   CANDIDATES,
   MARKED_PREFER,
-  PREFERRED,
+  MARK_PREFER,
   UNMARKED_PREFER,
   USER_TYPE_COMPANY,
 } from "../../../services/apiServices/apiEndPoint";
@@ -57,6 +57,7 @@ const useSavedCandidates = () => {
   const [currentPage, setCurrentPage] = useState(
     getValidCurrentPage(searchParams.get("page"))
   );
+  const [removedCandidates, setRemovedCandidates] = useState([]);
 
   const navigate = useNavigate();
 
@@ -76,9 +77,8 @@ const useSavedCandidates = () => {
       suffix: `${" "}${intl.formatMessage({ id: "label.years" })}`,
     },
   };
-
   const {
-    data: savedCandidatesDaya,
+    data: savedCandidatesData,
     isLoading: isSavedCadidatesDataLoading,
     error: errorWhileFetchingCandidatesData,
     isError: isErrorWhileFetchingCandidatesData,
@@ -89,6 +89,7 @@ const useSavedCandidates = () => {
       skipApiCallOnMount: true,
     },
   });
+
   const {
     isLoading: markedSavedJobLoading,
     makeRequest: markJob,
@@ -252,13 +253,26 @@ const useSavedCandidates = () => {
       : setCurrentPopupMessage(-1);
   };
 
-  const handleActions = (candidateId) => {
+  const handleActions = (candidateData) => {
+    const { candidate_id, user_id } = candidateData;
     setCurrentPopupMessage(-1);
+    const removedCandidateIndex = removedCandidates.indexOf(user_id);
+
     markJob({
       body: {
-        candidate_id: candidateId,
+        candidate_id: candidate_id,
       },
-      overrideUrl: `${USER_TYPE_COMPANY}${CANDIDATES}/${candidateId}${UNMARKED_PREFER}`,
+      overrideUrl: `${USER_TYPE_COMPANY}${CANDIDATES}/${user_id}${
+        removedCandidateIndex >= 0 ? MARK_PREFER : UNMARKED_PREFER
+      }`,
+      onSuccessCallback: () => {
+        if (removedCandidateIndex >= 0) {
+          removedCandidates.splice(removedCandidateIndex, 1);
+          setRemovedCandidates([...removedCandidates]);
+        } else {
+          setRemovedCandidates((prev) => [...prev, user_id]);
+        }
+      },
     });
   };
 
@@ -278,18 +292,21 @@ const useSavedCandidates = () => {
     );
   };
 
-  const popupOptions = [
-    {
-      label: intl.formatMessage({ id: "label.removed_from_saved_candidates" }),
-      popupAction: handleActions,
-    },
-    {
-      label: intl.formatMessage({ id: "label.view_candidate_details" }),
-      popupAction: openCandidateDetail,
-    },
-  ];
-
   const getColoumConfigs = (item, isHeading, index) => {
+    const popupOptions = (item) => [
+      {
+        label: intl.formatMessage({
+          id: removedCandidates.includes(item?.user_id)
+            ? "label.add_to_saved_candidates"
+            : "label.removed_from_saved_candidates",
+        }),
+        popupAction: handleActions,
+      },
+      {
+        label: intl.formatMessage({ id: "label.view_candidate_details" }),
+        popupAction: openCandidateDetail,
+      },
+    ];
     const tableStyle = isHeading
       ? commonStyles.customTableHeading
       : commonStyles.cellTextStyle(14);
@@ -297,9 +314,7 @@ const useSavedCandidates = () => {
     return [
       {
         content: isHeading ? (
-          <CustomTouchableOpacity
-            onPress={() => onNameSorting("candidate_name")}
-          >
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
             <CommonText customTextStyle={tableStyle}>
               {item.candidate_name}
             </CommonText>
@@ -426,7 +441,7 @@ const useSavedCandidates = () => {
             {showCurrentPopupmessage === index && (
               <View ref={popMessageRef}>
                 <PopupMessage
-                  message={popupOptions}
+                  message={popupOptions(item)}
                   customStyle={styles.popupMessageStyle}
                   onPopupClick={(configData) => {
                     configData?.popupAction(item);
@@ -445,6 +460,7 @@ const useSavedCandidates = () => {
       },
     ];
   };
+
   return {
     formatConfig,
     filterCategory,
@@ -470,6 +486,9 @@ const useSavedCandidates = () => {
     statusText: [],
     tableIcon,
     fetchingCandidatesData,
+    rowsPerPage,
+    currentPage,
+    totalPages: savedCandidatesData?.meta?.total,
   };
 };
 

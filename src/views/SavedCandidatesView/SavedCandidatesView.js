@@ -43,8 +43,11 @@ const SavedCandidatesView = () => {
     tableIcon,
     errorWhileMarkJob,
     errorWhileFetchingCandidatesData,
+    rowsPerPage,
     setMarkedSavedJobError,
     fetchingCandidatesData,
+    totalPages,
+    currentPage,
   } = useSavedCandidates();
 
   return (
@@ -76,6 +79,7 @@ const SavedCandidatesView = () => {
                 loadingMore,
                 getStatusStyle,
                 tableIcon,
+                rowsPerPage,
                 rowsLimit: ROWS_PER_PAGE_ARRAY,
                 isTicketListingLoading: isSavedCadidatesDataLoading,
                 isFirstPageReceived,
@@ -86,7 +90,9 @@ const SavedCandidatesView = () => {
                 filterApplyHandler,
                 formatConfig,
                 isTotalCardVisible: false,
-                showFliter: false,
+                isFilterVisible: false,
+                totalcards: totalPages,
+                currentPage,
               }}
               ThirdSection={
                 <DownloadMoreComponent

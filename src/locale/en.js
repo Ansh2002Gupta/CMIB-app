@@ -735,6 +735,7 @@ const locale = {
   "label.years": "Years",
   "label.experience": "Experience",
   "label.removed_from_saved_candidates": "Remove from saved candidates",
+  "label.add_to_saved_candidates": "Add to saved candidates",
   "label.download_candidates_list": "Download candidates List",
   "label.view_candidate_details": "View Candidate Details",
   "label.selectOption": "Select option",
