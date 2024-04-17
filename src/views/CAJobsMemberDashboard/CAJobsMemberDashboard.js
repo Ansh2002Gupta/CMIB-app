@@ -123,10 +123,14 @@ const CAJobsMemberDashboard = () => {
       }}
     />
   ) : (
+    interviewChartData &&
+    jobTypeChartData &&
     urgentChartData &&
     functionalAreaChartData &&
     highestOffetChartData &&
-    hightCtcChartData && (
+    hightCtcChartData &&
+    !isLoading &&
+    !error && (
       <ScrollView style={{ gap: 24 }}>
         <View style={styles.pieChartContiner}>
           <View style={{ flex: 1 }}>
