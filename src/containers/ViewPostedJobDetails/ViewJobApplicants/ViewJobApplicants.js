@@ -154,7 +154,7 @@ const ViewJobApplicants = ({ id }) => {
       )}
       {isModalVisible &&
         isModalVisible ===
-          intl.formatMessage({ id: "label.schedule_interview" }) && (
+          intl.formatMessage({ id: "label.schedule_interview_details" }) && (
           <ScheduleInterviewModal
             applicant_id={activeUserId.current}
             onClose={() => {
