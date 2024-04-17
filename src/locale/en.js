@@ -782,6 +782,7 @@ const locale = {
   "label.select_no_of_copies": "Select no of copies",
   "label.obc": "OBC",
   "label.sc": "SC",
+  "label.ph": "PH",
   "label.st": "ST",
   "label.select_place_of_posting": "Select Place of Posting",
   "label.desgination": "Desgination",
