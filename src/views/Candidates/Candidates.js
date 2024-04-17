@@ -7,6 +7,7 @@ import CommonText from "../../components/CommonText";
 import JobApplicants from "../JobApplicantsView/JobApplicantsView";
 import SavedCandidates from "../SavedCandidatesView";
 import styles from "./Candidates.style";
+import JobSeekers from "../JobSeekers";
 
 const Candidates = () => {
   const intl = useIntl();
@@ -28,11 +29,7 @@ const Candidates = () => {
         },
         {
           label: intl.formatMessage({ id: "label.job_seekers" }),
-          component: (
-            <CommonText>
-              {intl.formatMessage({ id: "label.job_seekers" })}
-            </CommonText>
-          ),
+          component: <JobSeekers />,
         },
 
         {

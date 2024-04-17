@@ -258,7 +258,7 @@ const CustomTable = ({
                                   mobileComponentToRender(item, index)
                                 ) : (
                                   <View style={styles.mobileContainer}>
-                                    <View>
+                                    <View style={styles.mobileDetailRow}>
                                       <CommonText
                                         fontWeight={"600"}
                                         customTextStyle={styles.cellTextStyle()}
