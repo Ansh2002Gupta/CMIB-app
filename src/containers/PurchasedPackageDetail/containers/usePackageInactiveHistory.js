@@ -224,7 +224,7 @@ const usePackageInactiveHistory = (onViewPress) => {
     return [
       {
         content: isHeading ? (
-          <CustomTouchableOpacity onPress={() => onNameSorting("package_name")}>
+          <CustomTouchableOpacity onPress={() => onNameSorting("name")}>
             <CommonText fontWeight={"600"} customTextStyle={tableStyle}>
               {!!item.package_name ? item.package_name : "-"}
             </CommonText>
