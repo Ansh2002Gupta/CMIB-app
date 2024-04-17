@@ -728,7 +728,7 @@ const locale = {
   "label.memberCompletionProfilePercentWeb":
     "Complete your job profile! its at ",
   "label.complete": "Complete",
-  "label.years": "Years",
+  "label.year": "Years",
   "label.experience": "Experience",
   "label.removed_from_saved_candidates": "Remove from saved candidates",
   "label.add_to_saved_candidates": "Add to saved candidates",

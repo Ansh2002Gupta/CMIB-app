@@ -47,7 +47,4 @@ export const navigations = {
   VIEW_JOB_DETAILS: "applicant-job-details",
   APPLICANT_DETAILS: ":job_id/applicant-details/:id",
   CANDIDATE_DETAIL: "candidate-details",
-
-  //dummy routes
-  CONFIGURABLE_LIST: "dummy/configurable-list",
 };

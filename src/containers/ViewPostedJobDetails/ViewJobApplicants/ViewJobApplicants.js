@@ -50,7 +50,17 @@ const ViewJobApplicants = ({ id }) => {
         `/${selectedModule.key}/${navigations.JOBS}/${id}/applicant-details/${item.user_id}`
       );
     } else {
-      activeUserId.current = item.interview_id;
+      if (
+        selectedItem ==
+        intl.formatMessage({ id: "label.schedule_interview_details" })
+      ) {
+        activeUserId.current = item.id;
+      } else if (
+        selectedItem ==
+        intl.formatMessage({ id: "label.view_interview_details" })
+      ) {
+        activeUserId.current = item.interview_id;
+      }
       setIsModalVisible(selectedItem);
     }
   };
@@ -160,6 +170,7 @@ const ViewJobApplicants = ({ id }) => {
             onClose={() => {
               setIsModalVisible(null);
               activeUserId.current = null;
+              getAllRecords();
             }}
           />
         )}

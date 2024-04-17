@@ -78,7 +78,7 @@ const SavedCandidatesView = () => {
               {}
               {`${intl.formatMessage({ id: "label.experience" })} ${
                 item?.experience
-              } ${intl.formatMessage({ id: "label.years" })}`}
+              } ${intl.formatMessage({ id: "label.year" })}`}
             </CommonText>
           </View>
         </View>
