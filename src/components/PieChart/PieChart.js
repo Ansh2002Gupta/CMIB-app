@@ -21,6 +21,13 @@ const PieChart = ({
   popupMessage,
   width,
 }) => {
+  const renderLabel = ({ datum }) => {
+    if (datum && datum.hasOwnProperty("x") && datum.hasOwnProperty("y")) {
+      return `${datum.x}: ${datum.y}`;
+    }
+    return "";
+  };
+
   return (
     <TwoRow
       style={styles.pieChartContainer}
@@ -56,6 +63,7 @@ const PieChart = ({
           innerRadius={1}
           colorScale={colorScale}
           labelRadius={({ innerRadius }) => innerRadius + labelRadius}
+          labels={renderLabel}
           style={{
             data: {
               stroke: colors.white,
