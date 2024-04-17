@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: "center",
     paddingBottom: 24,
+    paddingTop: 0,
+    paddingBottom: 0,
   },
 });
 export default styles;

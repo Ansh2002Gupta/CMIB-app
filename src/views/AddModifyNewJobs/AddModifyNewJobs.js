@@ -110,7 +110,6 @@ const AddModifyNewJobs = () => {
           buttonTitle={intl.formatMessage({ id: "label.okay" })}
           onPress={() => {
             setSuccessMessage(false);
-
             navigate(`/${selectedModule?.key}/${navigations.POSTED_JOBS}`, {
               replace: true,
             });

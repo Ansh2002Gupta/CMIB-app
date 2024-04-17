@@ -38,16 +38,18 @@ const styles = StyleSheet.create({
   },
   deletetext: {
     fontSize: 14,
+    marginRight: 4,
   },
   popUpComponentStyle: {
     backgroundColor: colors.white,
-    // zIndex: 10,
     padding: 16,
     width: 240,
     height: 54,
     borderColor: colors.lightGrey,
     borderRadius: 8,
+    alignItems: "center",
   },
+  spinner: {},
 });
 
 export default styles;

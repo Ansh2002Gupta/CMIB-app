@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import {
   Col,
   Platform,
@@ -10,12 +10,11 @@ import {
 import { useIntl } from "react-intl";
 import { MediaQueryContext } from "@unthinkable/react-theme";
 
-import { TwoRow } from "../../core/layouts";
+import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import { CustomTabs } from "../../components/Tab";
 import Activities from "../../containers/Activities";
 import CommonText from "../../components/CommonText";
-import CustomButton from "../../components/CustomButton";
 import EducationDetails from "../../containers/EducationDetails";
 import CustomImage from "../../components/CustomImage";
 import JobPreference from "../../containers/JobPreference/JobPreference";
@@ -26,18 +25,18 @@ import Spinner from "../../components/Spinner";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import TouchableImage from "../../components/TouchableImage";
 import WorkExperience from "../../containers/WorkExperience/WorkExperience";
+import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
 import useIsWebView from "../../hooks/useIsWebView";
-import useFetch from "../../hooks/useFetch";
 import { usePost } from "../../hooks/useApiRequest";
+import { capitalizePhrase } from "../../utils/util";
 import {
-  ADMIN,
   CANDIDATES,
-  DETAIL,
+  COMPANY_CA_JOB_PROFILE,
   MARK_PREFER,
+  MEMBER_CA_JOB_PROFILE,
   UNMARK_PREFER,
 } from "../../services/apiServices/apiEndPoint";
-import { navigations } from "../../constants/routeNames";
-import { COMPANY } from "../../constants/constants";
+import { COMPANY, MODULES } from "../../constants/constants";
 import colors from "../../assets/colors";
 import images from "../../images";
 import style, { getResponsiveStyles } from "./ViewDetailsScreen.style";
@@ -51,12 +50,13 @@ const SaveButton = ({
   onSave,
   onUnSave,
   setToastMsg,
+  isSaveDefault = true,
 }) => {
   const intl = useIntl();
   const isWebView = useIsWebView();
   const isMob = Platform.OS.toLowerCase() !== "web";
   const webProps = !isMob ? { size: "xs" } : {};
-  const [isSaveButton, setIsSaveButton] = useState(true);
+  const [isSaveButton, setIsSaveButton] = useState(isSaveDefault);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   const handleSavingUnsaving = () => {
@@ -66,7 +66,7 @@ const SaveButton = ({
         onErrorCallback: (error) => {
           setToastMsg(errorInSaving || error);
         },
-        onSuccessCallback: (success) => {
+        onSuccessCallback: () => {
           setIsSaveButton(false);
           setToastMsg(intl.formatMessage({ id: "label.successful_save" }));
         },
@@ -75,9 +75,9 @@ const SaveButton = ({
       onUnSave({
         overrideUrl: COMPANY + CANDIDATES + `/${id}` + UNMARK_PREFER,
         onErrorCallback: (error) => {
-          setToastMsg(errorInUnSaving);
+          setToastMsg(errorInUnSaving || error);
         },
-        onSuccessCallback: (success) => {
+        onSuccessCallback: () => {
           setIsSaveButton(true);
           setToastMsg(intl.formatMessage({ id: "label.successful_unsave" }));
         },
@@ -120,15 +120,28 @@ const SaveButton = ({
 
 const ViewDetailsScreen = () => {
   const intl = useIntl();
-  const [isEditable, setIsEditable] = useState(false);
-  const [toastMsg, setToastMsg] = useState("");
-  const { current: currentBreakpoint } = useContext(MediaQueryContext);
   const navigate = useNavigate();
   const params = useParams();
+  const [sideBarState] = useContext(SideBarContext);
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
+  const { selectedModule } = sideBarState || {};
+  const [isEditable, setIsEditable] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
+  const [candidateProfile, setCandidateProfile] = useState();
 
-  const { data: candidateDetails } = useFetch({
-    url: COMPANY + CANDIDATES + DETAIL + `/${params?.id}`,
-  });
+  const location = useLocation();
+  const { showSaveButton } = location.state ?? {};
+
+  const returnModuleWiseUrl = (module) => {
+    switch (module) {
+      case MODULES.CA_JOBS:
+        return `${COMPANY_CA_JOB_PROFILE}/${params?.id}`;
+      case MODULES.MEMBER:
+        return `${MEMBER_CA_JOB_PROFILE}`;
+      default:
+        return `${MEMBER_CA_JOB_PROFILE}`;
+    }
+  };
 
   const {
     makeRequest: saveCandidateDetails,
@@ -155,8 +168,14 @@ const ViewDetailsScreen = () => {
   const handleEdit = (value) => {
     setIsEditable(value);
   };
+
   const handleBackPress = () => {
-    navigate(`${navigations.CA_JOBS}/${navigations.JOB_SEEKERS}`);
+    navigate(-1);
+  };
+
+  const getShortProfileDetails = ({ candidate_name, candidate_id }) => {
+    candidate_name = capitalizePhrase(candidate_name);
+    setCandidateProfile({ name: candidate_name, id: candidate_id });
   };
 
   return (
@@ -183,40 +202,51 @@ const ViewDetailsScreen = () => {
                       {intl.formatMessage({ id: "label.candidate_details" })}
                     </CommonText>
                   </Row>
-                  <SaveButton
-                    id={params?.id}
-                    onSave={saveCandidateDetails}
-                    onUnSave={unSaveCandidateDetails}
-                    isSaving={isSavingCandidateDetails}
-                    isUnsaving={isUnSavingCandidateDetails}
-                    errorInSaving={errorInSavingCandidateDetails}
-                    errorInUnSaving={errorInUnSavingCandidateDetails}
-                    {...{ setToastMsg }}
-                  />
                 </Row>
               </Col>
             }
             bottomSection={
               <Row style={style.candidateDetailsOuterContainer}>
-                <Row>
-                  <CommonText fontWeight={"500"} style={style.key}>
-                    Candidate Name:&nbsp;
-                  </CommonText>
-                  <CommonText fontWeight={"600"} style={style.value}>
-                    {!!candidateDetails?.name ? candidateDetails?.name : "_"}
-                  </CommonText>
-                </Row>
-                <View style={style.divider}></View>
-                <Row>
-                  <CommonText fontWeight={"500"} style={style.key}>
-                    Candidate ID:&nbsp;
-                  </CommonText>
-                  <CommonText fontWeight={"600"} style={style.value}>
-                    {!!candidateDetails?.member_id
-                      ? candidateDetails?.member_id
-                      : "_"}
-                  </CommonText>
-                </Row>
+                <TwoColumn
+                  leftSection={
+                    <Row style={style.shortProfileInnerContainer}>
+                      <Row>
+                        <CommonText fontWeight={"500"} style={style.key}>
+                          Candidate Name:&nbsp;
+                        </CommonText>
+                        <CommonText fontWeight={"600"} style={style.value}>
+                          {!!candidateProfile?.name
+                            ? candidateProfile?.name
+                            : "_"}
+                        </CommonText>
+                      </Row>
+                      <View style={style.divider}></View>
+                      <Row>
+                        <CommonText fontWeight={"500"} style={style.key}>
+                          Candidate ID:&nbsp;
+                        </CommonText>
+                        <CommonText fontWeight={"600"} style={style.value}>
+                          {!!candidateProfile?.id ? candidateProfile?.id : "_"}
+                        </CommonText>
+                      </Row>
+                    </Row>
+                  }
+                  leftSectionStyle={style.shortProfileOuterContainer}
+                  rightSection={
+                    <SaveButton
+                      id={params?.id}
+                      onSave={saveCandidateDetails}
+                      onUnSave={unSaveCandidateDetails}
+                      isSaving={isSavingCandidateDetails}
+                      isUnsaving={isUnSavingCandidateDetails}
+                      errorInSaving={errorInSavingCandidateDetails}
+                      errorInUnSaving={errorInUnSavingCandidateDetails}
+                      isSaveDefault={showSaveButton}
+                      {...{ setToastMsg }}
+                    />
+                  }
+                  rightSectionStyle={style.saveButtonContainer}
+                ></TwoColumn>
               </Row>
             }
           />
@@ -228,6 +258,10 @@ const ViewDetailsScreen = () => {
               <PersonalDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/personal"
+                }
+                callBack={getShortProfileDetails}
               />
             ),
           },
@@ -237,6 +271,7 @@ const ViewDetailsScreen = () => {
               <EducationDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={returnModuleWiseUrl(selectedModule?.key)}
               />
             ),
           },
@@ -246,31 +281,56 @@ const ViewDetailsScreen = () => {
               <MembershipDetails
                 isEditable={isEditable}
                 handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/membership"
+                }
               />
             ),
           },
           {
             label: "Work Experience",
             component: (
-              <WorkExperience isEditable={isEditable} handleEdit={handleEdit} />
+              <WorkExperience
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/work-experiences"
+                }
+              />
             ),
           },
           {
             label: "Skill Training",
             component: (
-              <SkillTraining isEditable={isEditable} handleEdit={handleEdit} />
+              <SkillTraining
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={returnModuleWiseUrl(selectedModule?.key) + "/skills"}
+              />
             ),
           },
           {
             label: "Activities",
             component: (
-              <Activities isEditable={isEditable} handleEdit={handleEdit} />
+              <Activities
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/activities"
+                }
+              />
             ),
           },
           {
             label: "Job Preference",
             component: (
-              <JobPreference isEditable={isEditable} handleEdit={handleEdit} />
+              <JobPreference
+                isEditable={isEditable}
+                handleEdit={handleEdit}
+                customUrl={
+                  returnModuleWiseUrl(selectedModule?.key) + "/job-preferences"
+                }
+              />
             ),
           },
         ]}

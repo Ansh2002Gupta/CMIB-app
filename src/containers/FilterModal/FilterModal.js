@@ -114,7 +114,6 @@ const FilterModal = ({
         obj?.name?.trim().toLowerCase() === filterName?.trim().toLowerCase()
     );
   };
-
   const renderOptionsByCategory = (category) => {
     category = getFilterName(category);
     const filterObj = returnFilterObj(filterInfo, category);
@@ -126,12 +125,18 @@ const FilterModal = ({
             <DatePickerModal
               customStyles={styles.datePickerStyle}
               value={
-                Array.isArray(filterState?.selectedQueryType)
-                  ? filterState?.selectedQueryType[0]
+                Array.isArray(filterState?.selectedDate)
+                  ? filterState?.selectedDate[0]
                   : ""
               }
               datePickerViewStyle={styles.datePickerInner}
-              onChangeValue={(value) => filterObj?.handler(value)}
+              minDate={null}
+              onChangeValue={(value) => {
+                const obj = {
+                  Date: value,
+                };
+                filterObj?.handler(obj, "Date", "Date");
+              }}
             />
           </View>
         );

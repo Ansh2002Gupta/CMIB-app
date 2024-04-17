@@ -55,7 +55,12 @@ const JobApplicantsDetails = () => {
     isError: isErrorWhileFetching,
     error: errorWhileFetching,
   } = useFetch({
-    url: USER_TYPE_COMPANY + JOBS + `/${job_id}` + JOB_APPLICANT + `/${id}`,
+    url:
+      USER_TYPE_COMPANY +
+      `/${JOBS}` +
+      `/${job_id}` +
+      `${JOB_APPLICANT}` +
+      `/${id}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -88,7 +93,7 @@ const JobApplicantsDetails = () => {
   };
 
   const questionnaireURL =
-    USER_TYPE_COMPANY + JOBS + `/${job_id}` + QUESTIONNAIRE;
+    USER_TYPE_COMPANY + `/${JOBS}` + `/${job_id}` + QUESTIONNAIRE;
 
   const buttonSection = (
     intl,

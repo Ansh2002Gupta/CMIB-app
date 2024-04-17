@@ -52,7 +52,7 @@ const ViewInterviewDetails = ({ onClose, applicant_id }) => {
   );
 
   const primaryFaceToFace = FACE_TO_FACE(
-    interviewData?.vanue_address || "-",
+    interviewData?.venue_address || "-",
     formatDate(interviewData?.primary_schedule) || "-",
     formatTime(interviewData?.primary_schedule) || "-"
   );

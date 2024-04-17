@@ -14,7 +14,12 @@ import useUpdateService from "../../services/apiServices/hooks/JobProfile/useUpd
 import { useActivities } from "./Controllers/useActivities";
 import { getIndexForBoolean, yesNoToBoolean } from "../../utils/util";
 
-const Activities = ({ isEditable = true, handleEdit, onSaveSuccessfull }) => {
+const Activities = ({
+  isEditable = true,
+  handleEdit,
+  customUrl,
+  onSaveSuccessfull,
+}) => {
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
 
@@ -37,10 +42,7 @@ const Activities = ({ isEditable = true, handleEdit, onSaveSuccessfull }) => {
     isLoading: ismemberActivityDataLoading,
     error: errorWhilememberActivityData,
   } = useFetch({
-    url: MEMBER_CA_JOB_PROFILE_ACTIVITY,
-    otherOptions: {
-      skipApiCallOnMount: true,
-    },
+    url: customUrl || MEMBER_CA_JOB_PROFILE_ACTIVITY,
   });
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const Activities = ({ isEditable = true, handleEdit, onSaveSuccessfull }) => {
     : errorWhilememberActivityData;
 
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_PROFILE_ACTIVITY);
+    useUpdateService(customUrl || MEMBER_CA_JOB_PROFILE_ACTIVITY);
   const [state, setState] = useState(
     data !== null && Object.keys(data).length ? { ...data } : {}
   );

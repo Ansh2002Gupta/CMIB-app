@@ -35,8 +35,9 @@ const CustomTable = ({
   customModal,
   data,
   defaultCategory,
-  selectedFilterOptions,
+  selectedFilterOptions = {},
   setSelectedFilterOptions,
+  formatConfig,
   filterApplyHandler,
   filterCategory,
   initialFilterState = {},
@@ -79,6 +80,11 @@ const CustomTable = ({
   extraDetailsText,
   extraDetailsKey,
   renderCalendar,
+  statusData,
+  queryTypeData,
+  containerStyle,
+  isTotalCardVisible = true,
+  isFilterVisible = true,
 }) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
@@ -138,36 +144,42 @@ const CustomTable = ({
                 }
                 isLeftFillSpace
                 rightSection={
-                  <CustomTouchableOpacity
-                    onPress={handleFilterModal}
-                    style={styles.imageParentStyle}
-                    disabled={isTicketListingLoading || isGeetingJobbSeekers}
-                  >
-                    <TouchableImage
-                      source={images.iconFilter}
-                      parentStyle={styles.iconTicket}
-                      onPress={handleFilterModal}
-                    />
-                    {isWebView && (
-                      <CommonText customTextStyle={styles.filterText}>
-                        {intl.formatMessage({ id: "label.filters" })}
-                      </CommonText>
-                    )}
-                    {isFilterCount && (
-                      <CommonText
-                        customContainerStyle={styles.activeTickets}
-                        customTextStyle={styles.activeTicketsText}
-                        fontWeight={"600"}
+                  <>
+                    {isFilterVisible ? (
+                      <CustomTouchableOpacity
+                        onPress={handleFilterModal}
+                        style={styles.imageParentStyle}
+                        disabled={
+                          isTicketListingLoading || isGeetingJobbSeekers
+                        }
                       >
-                        {getFilterCount()}
-                      </CommonText>
-                    )}
-                  </CustomTouchableOpacity>
+                        <TouchableImage
+                          source={images.iconFilter}
+                          parentStyle={styles.iconTicket}
+                          onPress={handleFilterModal}
+                        />
+                        {isWebView && (
+                          <CommonText customTextStyle={styles.filterText}>
+                            {intl.formatMessage({ id: "label.filters" })}
+                          </CommonText>
+                        )}
+                        {isFilterCount && (
+                          <CommonText
+                            customContainerStyle={styles.activeTickets}
+                            customTextStyle={styles.activeTicketsText}
+                            fontWeight={"600"}
+                          >
+                            {getFilterCount()}
+                          </CommonText>
+                        )}
+                      </CustomTouchableOpacity>
+                    ) : null}
+                  </>
                 }
                 style={styles.filterTopSection(isWebView)}
               />
             )}
-            {!isWeb && (
+            {!isWeb && isTotalCardVisible && (
               <View style={styles.ticketTotals}>
                 <CommonText
                   fontWeight={"500"}
@@ -198,11 +210,16 @@ const CustomTable = ({
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
-                {isTicketListingLoading ||
-                (isGeetingJobbSeekers && (isWeb || isFirstPageReceived)) ? (
+                {(isTicketListingLoading || isGeetingJobbSeekers) &&
+                (isWeb || isFirstPageReceived) ? (
                   <LoadingScreen />
                 ) : (
-                  <View style={styles.tableSection}>
+                  <View
+                    style={{
+                      ...styles.tableSection,
+                      ...containerStyle,
+                    }}
+                  >
                     {isWebView && (
                       <MultiColumn
                         columns={getColoumConfigs(tableHeading, isHeading)}
@@ -216,15 +233,23 @@ const CustomTable = ({
                     <FlatList
                       data={data || []}
                       showsVerticalScrollIndicator={false}
+                      style={styles.flatListStyle}
                       keyExtractor={(item, index) => index?.toString()}
                       renderItem={({ item, index }) => {
-                        const statusRenderText =
-                          getRenderText(item, statusText) || "-";
+                        const statusRenderText = getRenderText(
+                          item,
+                          statusText,
+                          formatConfig
+                        );
                         return (
                           <>
                             {isWebView ? (
                               <MultiColumn
-                                columns={getColoumConfigs(item)}
+                                columns={getColoumConfigs(
+                                  item,
+                                  !isHeading,
+                                  index
+                                )}
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
@@ -233,12 +258,13 @@ const CustomTable = ({
                                   mobileComponentToRender(item, index)
                                 ) : (
                                   <View style={styles.mobileContainer}>
-                                    <View>
+                                    <View style={styles.mobileDetailRow}>
                                       <CommonText
                                         fontWeight={"600"}
                                         customTextStyle={styles.cellTextStyle()}
                                       >
-                                        {getRenderText(item, headingTexts)}
+                                        {getRenderText(item, headingTexts) ||
+                                          "-"}
                                       </CommonText>
                                       <Row style={styles.rowStyling}>
                                         <CommonText
@@ -246,7 +272,11 @@ const CustomTable = ({
                                             styles.tableQueryText
                                           }
                                         >
-                                          {getRenderText(item, subHeadingText)}
+                                          {getRenderText(
+                                            item,
+                                            subHeadingText,
+                                            formatConfig
+                                          )}
                                         </CommonText>
                                         {!!extraDetailsText && (
                                           <>
@@ -380,6 +410,7 @@ const CustomTable = ({
             setFilterState: setSelectedFilterOptions,
             setShowFilterOptions,
             unit,
+            renderCalendar,
           }}
         />
       )}
@@ -392,6 +423,7 @@ const CustomTable = ({
 CustomTable.defaultProps = {
   addNewTicket: false,
   data: [],
+  formatConfig: {},
   headingTexts: [],
   handleTicketModal: () => {},
   showSearchBar: true,
@@ -411,6 +443,7 @@ CustomTable.propTypes = {
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   data: PropTypes.array,
+  formatConfig: PropTypes.object,
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func,

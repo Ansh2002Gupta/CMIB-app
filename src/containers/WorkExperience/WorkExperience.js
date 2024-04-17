@@ -36,7 +36,12 @@ const workExperienceKeys = () => ({
   areas_of_work: [],
 });
 
-const WorkExperience = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
+const WorkExperience = ({
+  customUrl,
+  isEditable,
+  handleEdit,
+  onSaveSuccessfull,
+}) => {
   const { id } = useParams();
   const { isCompany, currentModule } = useGetCurrentUser();
 
@@ -63,7 +68,7 @@ const WorkExperience = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
     isLoading: workExperienceDataIsLoading,
     error: erroWhileFetching,
   } = useFetch({
-    url: MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE,
+    url: customUrl ?? MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -114,7 +119,7 @@ const WorkExperience = ({ isEditable, handleEdit, onSaveSuccessfull }) => {
     : erroWhileFetching;
 
   const { handleUpdate, isError, isLoading, error, setError } =
-    useUpdateService(MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE);
+    useUpdateService(customUrl ?? MEMBER_CA_JOB_PROFILE_WORK_EXPERIENCE);
 
   const [formFieldsError, setFormFieldsError] = useState([]);
   const [currentStatusError, setCurrentStatusError] = useState({});

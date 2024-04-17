@@ -15,7 +15,7 @@ import ActionPairButton from "../ActionPairButton";
 import CustomTextEditor from "../CustomTextEditor/CustomTextEditor";
 import Chip from "../Chip";
 import { LocationConfig } from "./SaveJobCommon";
-import { changeComma, timeAgo } from "../../utils/util";
+import { changeComma, timeAgo, formatSalaryRange } from "../../utils/util";
 import images from "../../images";
 import style from "./SavedJobComponent.style";
 
@@ -84,11 +84,9 @@ const JobCardWeb = ({
               <Image source={images.iconRupee} style={style.iconStyle} />
             }
             rightSection={
-              <CommonText
-                customTextStyle={style.normalText}
-              >{`${minSalary}-${maxSalary} ${intl.formatMessage({
-                id: "label.lpa",
-              })}`}</CommonText>
+              <CommonText customTextStyle={style.normalText}>
+                {formatSalaryRange(minSalary, maxSalary)}
+              </CommonText>
             }
           />
         </View>
@@ -121,7 +119,11 @@ const JobCardWeb = ({
             leftSection={
               <Image source={images.iconLocation} style={style.iconStyle} />
             }
-            rightSection={<MultiColumn columns={LocationConfig(jobLocation)} />}
+            rightSection={
+              <CommonText customTextStyle={[style.normalText, style.ellipsis]}>
+                {LocationConfig(jobLocation)}
+              </CommonText>
+            }
           />
         </View>
       ),
@@ -173,6 +175,7 @@ const JobCardWeb = ({
         <TouchableOpacity onPress={onPress}>
           <CommonText customTextStyle={[style.breakWordStyle]}>
             <CustomTextEditor
+              isViewMore
               value={jobDescription}
               disabled
               quilStyle={style.customQuilStyle}
