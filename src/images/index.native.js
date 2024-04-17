@@ -55,6 +55,7 @@ import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg";
 import iconFilter from "../../public/images/svg/iconFilter.svg";
 import iconMore from "../../public/images/svg/iconMore.svg";
+import iconEyeSvg from '../../public/images/svg/iconEyeSvg.svg';
 import iconFooter from "../../public/images/svg/iconFooter.svg";
 import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
 import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
@@ -237,6 +238,7 @@ const images = {
   iconSearch,
   iconFilter,
   iconMore,
+  iconEyeSvg,
   iconFooter,
   iconAdd,
   iconStepperDone,
