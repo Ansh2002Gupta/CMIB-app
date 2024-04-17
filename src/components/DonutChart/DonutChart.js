@@ -1,11 +1,12 @@
 import React from "react";
-import { VictoryPie } from "victory";
+import { useIntl } from "react-intl";
+import { VictoryPie, VictoryLegend } from "victory";
 import { View } from "@unthinkable/react-core-components";
 import CommonText from "../CommonText";
 
 import { TwoRow } from "../../core/layouts";
 
-import { convertGraphData } from "../../utils/util";
+import { convertDonutChartData } from "../../utils/util";
 import styles from "./DonutChart.style";
 
 const DonutChart = ({
@@ -18,17 +19,8 @@ const DonutChart = ({
   labelRadius,
   width,
 }) => {
-  const dataLevelOne = [
-    { x: "Cats", y: 35 },
-    { x: "Dogs", y: 40 },
-    { x: "Birds", y: 55 },
-  ];
-
-  const dataLevelTwo = [
-    { x: "Cats", y: 20 },
-    { x: "Dogs", y: 30 },
-    { x: "Birds", y: 50 },
-  ];
+  const convertedData = convertDonutChartData(data);
+  const intl = useIntl();
   return (
     <TwoRow
       style={styles.donutChartContainer}
@@ -38,17 +30,40 @@ const DonutChart = ({
         </CommonText>
       }
       bottomSection={
-        <VictoryPie
-          height={height}
-          width={width}
-          data={convertGraphData(data)}
-          innerRadius={innerRadius}
-          colorScale={colorScale}
-          labelRadius={({ innerRadius }) => innerRadius + labelRadius}
-          style={{
-            labels: { fill: labelColor, fontSize: 20, fontWeight: "600" },
-          }}
-        />
+        <View>
+          <VictoryPie
+            animate={{
+              duration: 2000,
+              onLoad: { duration: 1000 },
+            }}
+            height={height}
+            width={width}
+            data={convertDonutChartData(data)}
+            innerRadius={innerRadius}
+            colorScale={colorScale}
+            labelRadius={({ innerRadius }) => innerRadius + labelRadius}
+            style={{
+              labels: {
+                fill: labelColor,
+              },
+            }}
+          />
+
+          <VictoryLegend
+            itemsPerRow={3}
+            x={0}
+            y={0}
+            orientation="horizontal"
+            gutter={30}
+            height={60}
+            data={convertedData?.map((item, index) => ({
+              name: `${intl.formatMessage({ id: `label.${item.x}` })}  ${
+                item.y
+              }`,
+              symbol: { fill: colorScale[index] },
+            }))}
+          />
+        </View>
       }
     />
   );

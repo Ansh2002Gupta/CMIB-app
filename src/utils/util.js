@@ -692,3 +692,13 @@ export const convertMobileGraphData = (data, colors) => {
 
   return formattedData;
 };
+
+export const convertDonutChartData = (data) => {
+  let convertedArray = [];
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
+      convertedArray.push({ x: key, y: data[key] });
+    }
+  }
+  return convertedArray;
+};

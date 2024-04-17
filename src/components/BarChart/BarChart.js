@@ -1,15 +1,29 @@
 import React from "react";
-import { View } from "@unthinkable/react-core-components";
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryLine } from "victory";
-
+import {
+  VictoryBar,
+  VictoryChart,
+  VictoryAxis,
+  VictoryTooltip,
+  VictoryVoronoiContainer,
+} from "victory";
 import { TwoRow } from "../../core/layouts";
-
 import { convertGraphData } from "../../utils/util";
 import colors from "../../assets/colors";
 import styles from "./BarChart.style";
 import CommonText from "../CommonText";
 
-const BarChart = ({ barColor, data, label }) => {
+const BarChart = ({
+  barColor,
+  data,
+  domainPadding,
+  height,
+  label,
+  toolTipLabel,
+  xAxisLabel,
+  yAxisLabel,
+  yAxisTickFormat,
+  xAxisTickFormat,
+}) => {
   return (
     <TwoRow
       style={styles.barChartContainer}
@@ -19,27 +33,51 @@ const BarChart = ({ barColor, data, label }) => {
         </CommonText>
       }
       bottomSection={
-        <VictoryChart domainPadding={20} height={200} style={{ padding: 0 }}>
+        <VictoryChart
+          domainPadding={domainPadding}
+          height={height}
+          containerComponent={
+            <VictoryVoronoiContainer
+              voronoiDimension="x"
+              labels={toolTipLabel}
+              labelComponent={
+                <VictoryTooltip
+                  cornerRadius={2}
+                  style={styles.tooltipStyle}
+                  flyoutStyle={styles.flyoutStyle}
+                />
+              }
+            />
+          }
+        >
           <VictoryAxis
+            label={xAxisLabel}
+            tickFormat={xAxisTickFormat}
             style={{
-              tickLabels: {
-                fontSize: 8,
-                padding: 5,
-                fill: colors.darkGrey,
-              },
+              axis: styles.gridLine,
+              tickLabels: styles.tickLabels,
+              axisLabel: styles.axisLabel,
             }}
           />
           <VictoryAxis
             dependentAxis
+            label={yAxisLabel}
+            tickFormat={yAxisTickFormat}
             style={{
-              axis: { stroke: "none" },
-              tickLabels: { fontSize: 8, padding: 5, fill: colors.darkGrey },
+              axis: styles.strokeNone,
+              tickLabels: styles.tickLabels,
+              axisLabel: styles.axisLabel,
+              grid: styles.gridLine,
             }}
           />
 
           <VictoryBar
+            animate={{
+              duration: 2000,
+              onLoad: { duration: 1000 },
+            }}
             data={convertGraphData(data)}
-            style={{ data: { fill: barColor, strokeWidth: 2 } }}
+            style={{ data: styles.barStyles(barColor) }}
           />
         </VictoryChart>
       }

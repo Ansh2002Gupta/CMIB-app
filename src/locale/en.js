@@ -778,6 +778,14 @@ const locale = {
   "label.selectOption": "Select option",
   "label.interviewsScheduled": "Interviews Scheduled",
   "label.jobTypes": "Job Types",
+  "label.numberJobsOffered": "Number of Jobs Offered",
+  "label.highestCTCinINR": "Highest CTC (in INR)",
+  "label.viewAllUrgentJobs": "View All Urgent Jobs",
+  "label.nofGivenInterviews": "Interviews Given",
+  "label.nofPendingInterviews": "Interviews Pending",
+  "label.nofJobOffered": "Jobs Offered",
+  "label.nofOfferAccepted": "Offers Accepted",
+  "label.nofOfferRejected": "Offers Rejected",
 };
 
 export default locale;

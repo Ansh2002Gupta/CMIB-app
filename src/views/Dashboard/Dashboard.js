@@ -27,6 +27,7 @@ import {
 } from "../../services/apiServices/apiEndPoint";
 import SearchView from "../../components/SearchView";
 import colors from "../../assets/colors";
+import { CHART_DATA_TYPE } from "../../constants/constants";
 
 function DashboardView() {
   const intl = useIntl();
@@ -34,9 +35,6 @@ function DashboardView() {
   const { isWebView } = useIsWebView();
   const [sideBarState] = useContext(SideBarContext);
   const { isCompany } = useGetCurrentUser();
-  const { data: chartData } = useFetch({
-    url: USER_TYPE_MEMBER + ROUND_ONE_DASHBOARD,
-  });
 
   const { selectedModule } = sideBarState;
 

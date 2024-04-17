@@ -4,135 +4,242 @@ import { ScrollView, View } from "@unthinkable/react-core-components";
 
 import BarChart from "../../components/BarChart";
 import DonutChart from "../../components/DonutChart/DonutChart";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import PieChart from "../../components/PieChart/PieChart";
+import LoadingScreen from "../../components/LoadingScreen";
+import useFetch from "../../hooks/useFetch";
+import { GENERIC_GET_API_FAILED_ERROR_MESSAGE } from "../../constants/errorMessages";
+import { CHART_DATA_TYPE } from "../../constants/constants";
+import {
+  ROUND_ONE_DASHBOARD,
+  USER_TYPE_MEMBER,
+} from "../../services/apiServices/apiEndPoint";
 import colors from "../../assets/colors";
 import styles from "./CAJobsMemberDashboard.style";
 
 const CAJobsMemberDashboard = () => {
   const intl = useIntl();
-  const DATA = [
-    { label: "Google", value: 35 },
-    { label: "Infosys", value: 40 },
-    { label: "TCS", value: 80 },
-    { label: "Wipro", value: 96 },
-    { label: "Microsoft", value: 101 },
-    { label: "Daffodil", value: 20 },
-    { label: "Cars24", value: 19 },
-    { label: "Facebook", value: 34 },
-    { label: "Snapchat", value: 67 },
-    { label: "Infosys", value: 45 },
-    { label: "DBMS", value: 56 },
-    { label: "HighTech", value: 2 },
-  ];
-  const PIE_ONE_DATA = [
-    { label: "Interviews Pending", value: 6 },
-    { label: "Interviews Given", value: 8 },
-  ];
-  const PIE_TWO_DATA = [
-    { label: "Regular", value: 25 },
-    { label: "Construtural", value: 25 },
-    { label: "Post Retirement", value: 25 },
-    { label: "For Specially Added", value: 25 },
-  ];
-  const PIE_THREE_DATA = [
-    { label: "Urgent", value: 33 },
-    { label: "Others", value: 67 },
-  ];
-  const PIE_FOUR_DATA = [
-    { label: "Functional Area (1)", value: 8 },
-    { label: "Functional Area (2)", value: 13 },
-    { label: "Functional Area (3)", value: 13 },
-    { label: "Functional Area (4)", value: 8 },
-    { label: "Functional Area (5)", value: 8 },
-    { label: "Functional Area (6)", value: 13 },
-    { label: "Functional Area (7)", value: 8 },
-    { label: "Functional Area (8)", value: 8 },
-    { label: "Functional Area (9)", value: 8 },
-    { label: "Functional Area (10)", value: 13 },
-  ];
+  const {
+    data: interviewChartData,
+    isLoading: isGettingInterview,
+    fetchData: getInterViewData,
+    error: errorWhileGettingInterviewData,
+  } = useFetch({
+    url:
+      USER_TYPE_MEMBER +
+      ROUND_ONE_DASHBOARD +
+      `?type=${CHART_DATA_TYPE?.INTERVIEW_SCHEDULED}`,
+  });
+  const {
+    data: jobTypeChartData,
+    isLoading: isGettingJobType,
+    fetchData: getJobTypeData,
+    error: errorWhileGettingJobTypeData,
+  } = useFetch({
+    url:
+      USER_TYPE_MEMBER +
+      ROUND_ONE_DASHBOARD +
+      `?type=${CHART_DATA_TYPE?.JOBS_BY_TYPES}`,
+  });
 
-  return (
-    <ScrollView style={{ gap: 24 }}>
-      <View style={{ gap: 24, flexDirection: "row", flexWrap: "wrap" }}>
-        <DonutChart
-          colorScale={[colors.disabledGrey, colors.purple]}
-          data={PIE_ONE_DATA}
+  const {
+    data: urgentChartData,
+    isLoading: isGettingUrgentJob,
+    fetchData: getUrgentJobsData,
+    error: errorWhileGettingUrgentJobsData,
+  } = useFetch({
+    url:
+      USER_TYPE_MEMBER +
+      ROUND_ONE_DASHBOARD +
+      `?type=${CHART_DATA_TYPE?.URGENT_JOBS}`,
+  });
+  const {
+    data: functionalAreaChartData,
+    isLoading: isGettingFunctionalArea,
+    fetchData: getFunctionalArea,
+    error: errorWhileGettingFunctionalArea,
+  } = useFetch({
+    url:
+      USER_TYPE_MEMBER +
+      ROUND_ONE_DASHBOARD +
+      `?type=${CHART_DATA_TYPE?.SELECTED_FUNCTION_AREAS}`,
+  });
+  const {
+    data: highestOffetChartData,
+    isLoading: isGettingHighestOffer,
+    fetchData: getHighestOffer,
+    error: errorWhileGettingHighestOffer,
+  } = useFetch({
+    url:
+      USER_TYPE_MEMBER +
+      ROUND_ONE_DASHBOARD +
+      `?type=${CHART_DATA_TYPE?.TOP_COMPANIES_WITH_HIGHEST_JOB_OFFERED}`,
+  });
+
+  const {
+    data: hightCtcChartData,
+    isLoading: isGettingHighestCtc,
+    fetchData: getHighestCtc,
+    error: errorWhileGettingHighestCtc,
+  } = useFetch({
+    url:
+      USER_TYPE_MEMBER +
+      ROUND_ONE_DASHBOARD +
+      `?type=${CHART_DATA_TYPE?.TOP_COMPANIES_WITH_HIGHEST_CTC}`,
+  });
+
+  const isLoading =
+    isGettingInterview ||
+    isGettingJobType ||
+    isGettingUrgentJob ||
+    isGettingFunctionalArea ||
+    isGettingHighestOffer ||
+    isGettingHighestCtc;
+
+  const error =
+    errorWhileGettingInterviewData ||
+    errorWhileGettingJobTypeData ||
+    errorWhileGettingUrgentJobsData ||
+    errorWhileGettingFunctionalArea ||
+    errorWhileGettingHighestOffer ||
+    errorWhileGettingHighestCtc;
+
+  const getAllChartData = () => {
+    getInterViewData({});
+    getJobTypeData({});
+    getUrgentJobsData({});
+    getFunctionalArea({});
+    getHighestOffer({});
+    getHighestCtc({});
+  };
+
+  return isLoading ? (
+    <LoadingScreen />
+  ) : error ? (
+    <ErrorComponent
+      errorMsg={error?.data?.message || GENERIC_GET_API_FAILED_ERROR_MESSAGE}
+      onRetry={() => {
+        getAllChartData();
+      }}
+    />
+  ) : (
+    urgentChartData &&
+    functionalAreaChartData &&
+    highestOffetChartData &&
+    hightCtcChartData && (
+      <ScrollView style={{ gap: 24 }}>
+        <View style={styles.pieChartContiner}>
+          <View style={{ flex: 1 }}>
+            <DonutChart
+              colorScale={[
+                colors.disabledGrey,
+                colors.purple,
+                colors.greenBlue,
+                colors.green,
+                colors.errorRed,
+                colors.darkOrange,
+              ]}
+              data={interviewChartData}
+              width={250}
+              height={200}
+              innerRadius={40}
+              label={intl.formatMessage({
+                id: "label.interviewsScheduled",
+              })}
+              labelRadius={100}
+              labelColor={colors.white}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <PieChart
+              colorScale={[
+                colors.greenBlue,
+                colors.green,
+                colors.babyPink,
+                colors.purple,
+              ]}
+              data={jobTypeChartData}
+              width={250}
+              height={248}
+              label={intl.formatMessage({
+                id: "label.jobTypes",
+              })}
+              labelFontSize={8}
+              labelRadius={100}
+              labelColor={colors.darkGrey}
+            />
+          </View>
+        </View>
+        <View style={styles.pieChartContiner}>
+          <View style={{ flex: 1 }}>
+            <PieChart
+              colorScale={[colors.errorRed, colors.grassGreen]}
+              data={urgentChartData}
+              width={250}
+              height={248}
+              label={intl.formatMessage({
+                id: "label.urgentJobs",
+              })}
+              labelFontSize={8}
+              labelRadius={100}
+              labelColor={colors.darkGrey}
+              popupMessage={intl.formatMessage({
+                id: "label.viewAllUrgentJobs",
+              })}
+              onPopupClick={() => {}}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <PieChart
+              colorScale={[
+                colors.mustardYellow,
+                colors.graphiteGray,
+                colors.yellowGreen,
+                colors.purple,
+                colors.originalPurple,
+                colors.babyPink,
+                colors.green,
+                colors.errorRed,
+                colors.greenBlue,
+                colors.darkOrange,
+              ]}
+              data={functionalAreaChartData}
+              width={250}
+              height={248}
+              label={intl.formatMessage({
+                id: "label.selectedFunctionalAreas",
+              })}
+              labelFontSize={8}
+              labelRadius={100}
+              labelColor={colors.darkGrey}
+            />
+          </View>
+        </View>
+        <BarChart
+          yAxisLabel={intl.formatMessage({ id: "label.numberJobsOffered" })}
+          domainPadding={20}
           height={200}
-          innerRadius={60}
           label={intl.formatMessage({
-            id: "label.interviewsScheduled",
+            id: "label.topCompaniesHighestJobsOffered",
           })}
-          labelRadius={42}
-          labelColor={colors.white}
-          width={500}
+          toolTipLabel={({ datum }) => datum.y}
+          barColor={colors.purple}
+          data={highestOffetChartData}
         />
-        <PieChart
-          colorScale={[
-            colors.greenBlue,
-            colors.green,
-            colors.babyPink,
-            colors.purple,
-          ]}
-          data={PIE_TWO_DATA}
-          height={248}
+        <BarChart
+          yAxisLabel={intl.formatMessage({ id: "label.highestCTCinINR" })}
+          domainPadding={20}
+          height={200}
           label={intl.formatMessage({
-            id: "label.jobTypes",
+            id: "label.topCompaniesHighestCTCs",
           })}
-          labelRadius={120}
-          labelColor={colors.darkGrey}
-          width={300}
+          barColor={colors.green}
+          data={hightCtcChartData}
+          toolTipLabel={({ datum }) => `${datum.y / 100000} L`}
+          yAxisTickFormat={(tick) => `${parseInt(tick / 100000)} L`}
         />
-      </View>
-      <View style={{ gap: 24, flexDirection: "row", flexWrap: "wrap" }}>
-        <PieChart
-          colorScale={[colors.errorRed, colors.grassGreen]}
-          data={PIE_THREE_DATA}
-          height={248}
-          label={intl.formatMessage({
-            id: "label.urgentJobs",
-          })}
-          labelRadius={42}
-          labelColor={colors.white}
-        />
-        <PieChart
-          colorScale={[
-            colors.mustardYellow,
-            colors.graphiteGray,
-            colors.yellowGreen,
-            colors.purple,
-            colors.originalPurple,
-            colors.babyPink,
-            colors.green,
-            colors.errorRed,
-            colors.greenBlue,
-            colors.darkOrange,
-          ]}
-          data={PIE_FOUR_DATA}
-          width={500}
-          height={248}
-          label={intl.formatMessage({
-            id: "label.selectedFunctionalAreas",
-          })}
-          labelRadius={120}
-          labelColor={colors.darkGrey}
-        />
-      </View>
-
-      <BarChart
-        label={intl.formatMessage({
-          id: "label.topCompaniesHighestJobsOffered",
-        })}
-        barColor={colors.purple}
-        data={DATA}
-      />
-      <BarChart
-        label={intl.formatMessage({
-          id: "label.topCompaniesHighestCTCs",
-        })}
-        barColor={colors.green}
-        data={DATA}
-      />
-    </ScrollView>
+      </ScrollView>
+    )
   );
 };
 

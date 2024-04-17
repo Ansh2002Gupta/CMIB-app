@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.backgroundGrey,
   },
+  pieChartContiner: { gap: 24, flexDirection: "row", flexWrap: "wrap" },
 });
 
 export default styles;
