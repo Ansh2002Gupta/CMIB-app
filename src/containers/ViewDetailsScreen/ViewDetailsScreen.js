@@ -51,12 +51,13 @@ const SaveButton = ({
   onSave,
   onUnSave,
   setToastMsg,
+  isSaveDefault = true,
 }) => {
   const intl = useIntl();
   const isWebView = useIsWebView();
   const isMob = Platform.OS.toLowerCase() !== "web";
   const webProps = !isMob ? { size: "xs" } : {};
-  const [isSaveButton, setIsSaveButton] = useState(true);
+  const [isSaveButton, setIsSaveButton] = useState(isSaveDefault);
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   const handleSavingUnsaving = () => {
@@ -237,6 +238,11 @@ const ViewDetailsScreen = () => {
                       isUnsaving={isUnSavingCandidateDetails}
                       errorInSaving={errorInSavingCandidateDetails}
                       errorInUnSaving={errorInUnSavingCandidateDetails}
+                      isSaveDefault={
+                        params?.showSaveButton
+                          ? params?.showSaveButton === "1"
+                          : true
+                      }
                       {...{ setToastMsg }}
                     />
                   }

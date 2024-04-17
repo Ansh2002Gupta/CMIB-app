@@ -15,6 +15,11 @@ import DownloadMoreComponent from "../../containers/PostedJobs/DownloadMoreCompo
 import images from "../../images";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import styles from "./SavedCandidatesView.styles";
+import { View } from "@unthinkable/react-core-components";
+import CommonText from "../../components/CommonText";
+import TouchableImage from "../../components/TouchableImage";
+import PopupMessage from "../../components/PopupMessage/PopupMessage";
 
 const SavedCandidatesView = () => {
   const intl = useIntl();
@@ -48,7 +53,57 @@ const SavedCandidatesView = () => {
     fetchingCandidatesData,
     totalPages,
     currentPage,
+    showCurrentPopupmessage,
+    onIconPress,
+    popupOptions,
   } = useSavedCandidates();
+
+  const getMobileView = (item, index) => {
+    return (
+      <View style={styles.mobileContainer} key={index}>
+        <View>
+          <CommonText
+            fontWeight={"600"}
+            customTextStyle={styles.cellTextStyle()}
+          >
+            {item.candidate_name || "-"}
+          </CommonText>
+          <View style={styles.descriptionRow}>
+            <CommonText customTextStyle={styles.tableQueryText}>
+              {item?.candidate_id || "-"}
+            </CommonText>
+            <View style={styles.dot} />
+            <CommonText customTextStyle={styles.tableQueryText}>
+              {}
+              {`${intl.formatMessage({ id: "label.experience" })} ${
+                item?.experience
+              } ${intl.formatMessage({ id: "label.years" })}`}
+            </CommonText>
+          </View>
+        </View>
+        <View style={styles.rowsPerPageWeb}>
+          <TouchableImage
+            onPress={() => {
+              onIconPress(index);
+            }}
+            source={tableIcon}
+            style={styles.iconTicket}
+          />
+          {showCurrentPopupmessage === index && (
+            <PopupMessage
+              message={popupOptions(item)}
+              isPopupModal={true}
+              customStyle={styles.popupMessageStyle}
+              onPopupClick={(configData) => {
+                configData?.popupAction(item);
+              }}
+              labelName="label"
+            />
+          )}
+        </View>
+      </View>
+    );
+  };
 
   return (
     <TwoRow
@@ -87,6 +142,7 @@ const SavedCandidatesView = () => {
                 handleRowPerPageChange,
                 handlePageChange,
                 handleSearchResults,
+                mobileComponentToRender: getMobileView,
                 filterApplyHandler,
                 formatConfig,
                 isTotalCardVisible: false,

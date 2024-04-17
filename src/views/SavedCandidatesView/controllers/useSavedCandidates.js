@@ -61,7 +61,9 @@ const useSavedCandidates = () => {
 
   const navigate = useNavigate();
 
-  const getStatusStyle = () => {};
+  const getStatusStyle = () => {
+    return styles.cellTextStyle(12);
+  };
   const popMessageRef = useRef(null);
   useOutsideClick(popMessageRef, () => setCurrentPopupMessage(-1));
 
@@ -287,26 +289,30 @@ const useSavedCandidates = () => {
   };
 
   const openCandidateDetail = (candidateData) => {
+    let isRemoved = removedCandidates.includes(candidateData?.user_id);
     navigate(
-      `/${selectedModule?.key}/${navigations.CANDIDATE_DETAIL}/${candidateData?.user_id}`
+      `/${selectedModule?.key}/${navigations.CANDIDATE_DETAIL}/${
+        candidateData?.user_id
+      }/${Number(isRemoved)}`
     );
   };
 
+  const popupOptions = (item) => [
+    {
+      label: intl.formatMessage({
+        id: removedCandidates.includes(item?.user_id)
+          ? "label.add_to_saved_candidates"
+          : "label.removed_from_saved_candidates",
+      }),
+      popupAction: handleActions,
+    },
+    {
+      label: intl.formatMessage({ id: "label.view_candidate_details" }),
+      popupAction: openCandidateDetail,
+    },
+  ];
+
   const getColoumConfigs = (item, isHeading, index) => {
-    const popupOptions = (item) => [
-      {
-        label: intl.formatMessage({
-          id: removedCandidates.includes(item?.user_id)
-            ? "label.add_to_saved_candidates"
-            : "label.removed_from_saved_candidates",
-        }),
-        popupAction: handleActions,
-      },
-      {
-        label: intl.formatMessage({ id: "label.view_candidate_details" }),
-        popupAction: openCandidateDetail,
-      },
-    ];
     const tableStyle = isHeading
       ? commonStyles.customTableHeading
       : commonStyles.cellTextStyle(14);
@@ -440,14 +446,14 @@ const useSavedCandidates = () => {
             />
             {showCurrentPopupmessage === index && (
               <View ref={popMessageRef}>
-                <PopupMessage
-                  message={popupOptions(item)}
-                  customStyle={styles.popupMessageStyle}
-                  onPopupClick={(configData) => {
-                    configData?.popupAction(item);
-                  }}
-                  labelName="label"
-                />
+              <PopupMessage
+                message={popupOptions(item)}
+                customStyle={styles.popupMessageStyle}
+                onPopupClick={(configData) => {
+                  configData?.popupAction(item);
+                }}
+                labelName="label"
+              />
               </View>
             )}
           </View>
@@ -489,6 +495,9 @@ const useSavedCandidates = () => {
     rowsPerPage,
     currentPage,
     totalPages: savedCandidatesData?.meta?.total,
+    showCurrentPopupmessage,
+    onIconPress,
+    popupOptions
   };
 };
 
