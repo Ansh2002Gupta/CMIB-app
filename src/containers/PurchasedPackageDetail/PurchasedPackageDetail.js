@@ -98,7 +98,6 @@ function PurchasedPackageDetail({
     isHeading,
   } = usePackageInactiveHistory(onViewPress);
 
-
   const handleOnPress = () => {
     navigate(`${navigations.OTHER_PACKAGES}`);
   };
