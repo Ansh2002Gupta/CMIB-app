@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   activeWeb: {
     ...baseChipStyle,
     color: colors.darkGreen,
-    backgroundColor: colors.lightGreen2,
+    backgroundColor: colors.lightGreen,
   },
   inactiveActiveStyle: {
     alignItems: "flex-start",
