@@ -4,6 +4,7 @@ import CommonText from "../CommonText";
 
 import { TwoRow } from "../../core/layouts";
 
+import { convertGraphData } from "../../utils/util";
 import styles from "./PieChart.style";
 
 const PieChart = ({
@@ -27,7 +28,7 @@ const PieChart = ({
         <VictoryPie
           height={height}
           width={width}
-          data={data}
+          data={convertGraphData(data)}
           colorScale={colorScale}
           labelRadius={({ innerRadius }) => innerRadius + labelRadius}
           style={{

@@ -3,9 +3,13 @@ import colors from "../../assets/colors";
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 50,
+    justifyContent: "flex-start",
+    backgroundColor: colors.white,
+    marginBottom: 16,
+    borderColor: colors.lightGrey,
+    borderWidth: 1,
+    borderRadius: 16,
+    padding: 24,
   },
   pieChartContainer: {
     backgroundColor: colors.white,

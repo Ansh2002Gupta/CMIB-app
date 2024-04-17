@@ -4,6 +4,7 @@ import { View } from "@unthinkable/react-core-components";
 import { TwoColumn, TwoRow } from "../../core/layouts";
 
 import CAJobsDashboard from "../CAJobsDashboard";
+import CAJobsMemberDashboard from "../CAJobsMemberDashboard";
 import JobProfileTab from "../JobProfile";
 import ScheduleInterviewModal from "../../containers/ScheduleInterviewModal/ScheduleInterviewModal";
 import BarChart from "../../components/BarChart";
@@ -12,6 +13,7 @@ import PieChart from "../../components/PieChart/PieChart";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import TouchableImage from "../../components/TouchableImage";
 import useFetch from "../../hooks/useFetch";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import useSaveLogo from "../../services/apiServices/hooks/CompanyLogo/useSaveLogoAPI";
 import useDeleteLogo from "../../services/apiServices/hooks/CompanyLogo/useDeleteLogoAPI";
 import { moduleKeys } from "../../constants/sideBarHelpers";
@@ -31,50 +33,12 @@ function DashboardView() {
   const [isEnabled, setIsEnabled] = useState(false);
   const { isWebView } = useIsWebView();
   const [sideBarState] = useContext(SideBarContext);
+  const { isCompany } = useGetCurrentUser();
   const { data: chartData } = useFetch({
     url: USER_TYPE_MEMBER + ROUND_ONE_DASHBOARD,
   });
+
   const { selectedModule } = sideBarState;
-  const DATA = [
-    { x: "Google", y: 35 },
-    { x: "Infosys", y: 40 },
-    { x: "TCS", y: 80 },
-    { x: "Wipro", y: 96 },
-    { x: "Microsoft", y: 101 },
-    { x: "Daffodil", y: 20 },
-    { x: "Cars24", y: 19 },
-    { x: "Facebook", y: 34 },
-    { x: "Snapchat", y: 67 },
-    { x: "Infosys", y: 45 },
-    { x: "DBMS", y: 56 },
-    { x: "HighTech", y: 2 },
-  ];
-  const PIE_ONE_DATA = [
-    { x: "Interviews Pending", y: 6 },
-    { x: "Interviews Given", y: 8 },
-  ];
-  const PIE_TWO_DATA = [
-    { x: "Regular", y: 25 },
-    { x: "Construtural", y: 25 },
-    { x: "Post Retirement", y: 25 },
-    { x: "For Specially Added", y: 25 },
-  ];
-  const PIE_THREE_DATA = [
-    { x: "Urgent", y: 33 },
-    { x: "Others", y: 67 },
-  ];
-  const PIE_FOUR_DATA = [
-    { x: "Functional Area (1)", y: 8 },
-    { x: "Functional Area (2)", y: 13 },
-    { x: "Functional Area (3)", y: 13 },
-    { x: "Functional Area (4)", y: 8 },
-    { x: "Functional Area (5)", y: 8 },
-    { x: "Functional Area (6)", y: 13 },
-    { x: "Functional Area (7)", y: 8 },
-    { x: "Functional Area (8)", y: 8 },
-    { x: "Functional Area (9)", y: 8 },
-    { x: "Functional Area (10)", y: 13 },
-  ];
 
   return (
     <View style={styles.container}>
@@ -90,87 +54,14 @@ function DashboardView() {
         }
         isBottomFillSpace
         bottomSection={
-          <View style={{ gap: 24 }}>
+          <View>
             {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
-              <CAJobsDashboard />
+              !isCompany ? (
+                <CAJobsDashboard />
+              ) : (
+                <CAJobsMemberDashboard />
+              )
             ) : null}
-            <View style={{ gap: 24, flexDirection: "row", flexWrap: "wrap" }}>
-              <DonutChart
-                label={intl.formatMessage({
-                  id: "label.interviewsScheduled",
-                })}
-                data={PIE_ONE_DATA}
-                colorScale={[colors.disabledGrey, colors.purple]}
-                height={200}
-                width={200}
-                labelRadius={42}
-                labelColor={colors.white}
-              />
-              <PieChart
-                label={intl.formatMessage({
-                  id: "label.jobTypes",
-                })}
-                data={PIE_TWO_DATA}
-                colorScale={[
-                  colors.greenBlue,
-                  colors.green,
-                  colors.babyPink,
-                  colors.purple,
-                ]}
-                height={248}
-                labelRadius={120}
-                labelColor={colors.darkGrey}
-              />
-            </View>
-            <View style={{ gap: 24, flexDirection: "row", flexWrap: "wrap" }}>
-              <PieChart
-                colorScale={[colors.errorRed, colors.grassGreen]}
-                data={PIE_THREE_DATA}
-                height={248}
-                label={intl.formatMessage({
-                  id: "label.selectedFunctionalAreas",
-                })}
-                labelRadius={42}
-                labelColor={colors.white}
-              />
-              <PieChart
-                colorScale={[
-                  colors.mustardYellow,
-                  colors.graphiteGray,
-                  colors.yellowGreen,
-                  colors.purple,
-                  colors.originalPurple,
-                  colors.babyPink,
-                  colors.green,
-                  colors.errorRed,
-                  colors.greenBlue,
-                  colors.darkOrange,
-                ]}
-                data={PIE_FOUR_DATA}
-                width={500}
-                height={248}
-                label={intl.formatMessage({
-                  id: "label.urgentJobs",
-                })}
-                labelRadius={120}
-                labelColor={colors.darkGrey}
-              />
-            </View>
-
-            <BarChart
-              label={intl.formatMessage({
-                id: "label.topCompaniesHighestJobsOffered",
-              })}
-              barColor={colors.purple}
-              data={DATA}
-            />
-            <BarChart
-              label={intl.formatMessage({
-                id: "label.topCompaniesHighestCTCs",
-              })}
-              barColor={colors.green}
-              data={DATA}
-            />
           </View>
         }
         bottomSectionStyle={{ padding: 24 }}

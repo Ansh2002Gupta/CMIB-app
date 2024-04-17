@@ -4,6 +4,7 @@ import { VictoryBar, VictoryChart, VictoryAxis, VictoryLine } from "victory";
 
 import { TwoRow } from "../../core/layouts";
 
+import { convertGraphData } from "../../utils/util";
 import colors from "../../assets/colors";
 import styles from "./BarChart.style";
 import CommonText from "../CommonText";
@@ -37,7 +38,7 @@ const BarChart = ({ barColor, data, label }) => {
           />
 
           <VictoryBar
-            data={data}
+            data={convertGraphData(data)}
             style={{ data: { fill: barColor, strokeWidth: 2 } }}
           />
         </VictoryChart>
