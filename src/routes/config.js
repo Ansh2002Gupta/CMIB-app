@@ -308,6 +308,10 @@ const config = [
         element: <Candidates />,
       },
       {
+        viewPath: `${navigations.CANDIDATE_DETAIL}/:id`,
+        element: <ViewDetailsScreen />,
+      },
+      {
         viewPath: navigations.CONFIGURABLE_LIST,
         element: <Dummy />,
       },

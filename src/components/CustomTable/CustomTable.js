@@ -37,6 +37,7 @@ const CustomTable = ({
   defaultCategory,
   selectedFilterOptions = {},
   setSelectedFilterOptions,
+  formatConfig,
   filterApplyHandler,
   filterCategory,
   initialFilterState = {},
@@ -79,6 +80,8 @@ const CustomTable = ({
   extraDetailsText,
   extraDetailsKey,
   renderCalendar,
+  statusData,
+  queryTypeData,
   containerStyle,
   isTotalCardVisible = true,
   isFilterVisible = true,
@@ -207,8 +210,8 @@ const CustomTable = ({
             topSectionStyle={styles.tableTopSectionStyle(isWebView)}
             topSection={
               <>
-                {isTicketListingLoading ||
-                (isGeetingJobbSeekers && (isWeb || isFirstPageReceived)) ? (
+                {(isTicketListingLoading || isGeetingJobbSeekers) &&
+                (isWeb || isFirstPageReceived) ? (
                   <LoadingScreen />
                 ) : (
                   <View
@@ -233,13 +236,20 @@ const CustomTable = ({
                       style={styles.flatListStyle}
                       keyExtractor={(item, index) => index?.toString()}
                       renderItem={({ item, index }) => {
-                        const statusRenderText =
-                          getRenderText(item, statusText) || "-";
+                        const statusRenderText = getRenderText(
+                          item,
+                          statusText,
+                          formatConfig
+                        );
                         return (
                           <>
                             {isWebView ? (
                               <MultiColumn
-                                columns={getColoumConfigs(item)}
+                                columns={getColoumConfigs(
+                                  item,
+                                  !isHeading,
+                                  index
+                                )}
                                 style={styles.columnStyleBorder}
                               />
                             ) : (
@@ -248,7 +258,7 @@ const CustomTable = ({
                                   mobileComponentToRender(item, index)
                                 ) : (
                                   <View style={styles.mobileContainer}>
-                                    <View>
+                                    <View style={styles.mobileDetailRow}>
                                       <CommonText
                                         fontWeight={"600"}
                                         customTextStyle={styles.cellTextStyle()}
@@ -262,7 +272,11 @@ const CustomTable = ({
                                             styles.tableQueryText
                                           }
                                         >
-                                          {getRenderText(item, subHeadingText)}
+                                          {getRenderText(
+                                            item,
+                                            subHeadingText,
+                                            formatConfig
+                                          )}
                                         </CommonText>
                                         {!!extraDetailsText && (
                                           <>
@@ -409,6 +423,7 @@ const CustomTable = ({
 CustomTable.defaultProps = {
   addNewTicket: false,
   data: [],
+  formatConfig: {},
   headingTexts: [],
   handleTicketModal: () => {},
   showSearchBar: true,
@@ -428,6 +443,7 @@ CustomTable.propTypes = {
   allDataLoaded: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   data: PropTypes.array,
+  formatConfig: PropTypes.object,
   filterCategory: PropTypes.array.isRequired,
   getColoumConfigs: PropTypes.func.isRequired,
   getStatusStyle: PropTypes.func,
