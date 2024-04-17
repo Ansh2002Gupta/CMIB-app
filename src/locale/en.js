@@ -811,6 +811,7 @@ const locale = {
   "label.select_document_name": "Select document name",
   "label.select_document_type": "Select document type",
   "label.select_no_of_copies": "Select no of copies",
+  "label.contact_person": "Contact Person",
 };
 
 export default locale;
