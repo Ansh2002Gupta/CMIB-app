@@ -677,3 +677,9 @@ export const formatSalaryRange = (minSalary, maxSalary) => {
 
   return formattedSalaryRange;
 };
+
+const key = 'manage-subscriptions'
+
+export const doesPathIncludeAnyKey = (pathName) => {
+  return pathName.includes(key);
+}
