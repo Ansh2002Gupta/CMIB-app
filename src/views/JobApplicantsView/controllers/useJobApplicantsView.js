@@ -209,13 +209,13 @@ const useJobApplicants = () => {
       view_interview_details: () => {
         setModalsState((prev) => ({
           ...prev,
-          interviewModal: item?.job_applicantion_id,
+          interviewModal: item?.interview_id,
         }));
       },
       schedule_interview: () => {
         setModalsState((prev) => ({
           ...prev,
-          scheduleModal: item?.job_applicantion_id,
+          scheduleModal: item?.interview_id,
         }));
       },
     };
