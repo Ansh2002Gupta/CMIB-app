@@ -151,8 +151,9 @@ function PurchasedPackageDetail({
         <TwoRow
           topSection={
             <TwoColumn
-              leftSectionStyle={{width: '80%'}}
-              rightSectionStyle={{width: '20%'}}
+              leftSectionStyle={isWebView ? { width: '70%' } : { width: '60%' }}
+              rightSectionStyle={isWebView ? {width: '30%', alignItems: 'flex-end'} : {width: '40%', alignItems: 'flex-end'}}
+              style={{ justifyContent: 'space-between' }}
               leftSection={
                 <>
                   <View>
@@ -282,6 +283,7 @@ function PurchasedPackageDetail({
               {!isError && (
                 <CustomTable
                   {...{
+                    customTableStyle:{padding:0, marginTop: 24},
                     allDataLoaded,
                     currentPage,
                     currentRecords,
@@ -294,6 +296,7 @@ function PurchasedPackageDetail({
                     handleRowPerPageChange,
                     handleSearchResults,
                     headingTexts,
+                    isTotalCardVisible: false,
                     hideTotalCount: false,
                     indexOfFirstRecord,
                     indexOfLastRecord,

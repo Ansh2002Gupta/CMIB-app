@@ -30,6 +30,7 @@ import styles from "./CustomTable.style";
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
+  customTableStyle,
   currentPage,
   customFilterInfo,
   customModal,
@@ -126,7 +127,7 @@ const CustomTable = ({
   };
 
   return (
-    <View style={isWebView ? styles.container : styles.mobileMainContainer}>
+    <View style={{...(isWebView ? styles.container : styles.mobileMainContainer), ...customTableStyle}}>
       <TwoRow
         topSection={
           <>

@@ -208,7 +208,6 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
                   </TouchableOpacity>
                 ) : null}
               </CommonText>
-              {container?.description?.length > 80 ? <TouchableOpacity><CommonText>View more</CommonText></TouchableOpacity> : null}
             </View>
             <View style={styles.borderStyle} />
             <TwoColumn

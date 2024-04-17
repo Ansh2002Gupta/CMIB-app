@@ -29,13 +29,6 @@ import { COMPANY_INACTIVE_SUBSCRIPTION_LISTING } from "../../../services/apiServ
 import { formatDate } from "../../../utils/util";
 import TouchableImage from "../../../components/TouchableImage";
 
-// const initialFilterState = {
-//   selectedExperience: [],
-//   selectedCurrentSalary: 0,
-//   selectedFunctionalAreas: [],
-//   selectedCategory: [],
-// };
-
 const usePackageInactiveHistory = (onViewPress) => {
   const isMob = Platform.OS.toLowerCase() !== "web";
   const defaultCategory = "Experience";
@@ -46,14 +39,7 @@ const usePackageInactiveHistory = (onViewPress) => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [isAscendingOrder, setIsAscendingOrder] = useState(false);
   const navigate = useNavigate();
-  //   const [filterState, setFilterState] = useState(initialFilterState);
-  //   const [filterOptions, setFilterOptions] = useState({
-  //     experience: "",
-  //     current_salary: "",
-  //     functional_areas: "",
-  //     education: "",
-  //     category: "",
-  //   });
+  
 
   const [rowsPerPage, setRowPerPage] = useState(
     getValidRowPerPage(searchParams.get("rowsPerPage")) ||
@@ -203,12 +189,6 @@ const usePackageInactiveHistory = (onViewPress) => {
   let extraDetailsKey = ["total_experience"];
   let tableIcon = images.iconMore;
   let isHeading = true;
-  //   let filterCategory = [
-  //     "Experience",
-  //     "Current Salary",
-  //     "Functional Areas",
-  //     "Category",
-  //   ];
 
   const handlePopupItemClick = (data) => {
     switch (data?.trim().toLowerCase()) {
@@ -236,13 +216,6 @@ const usePackageInactiveHistory = (onViewPress) => {
     const newData = [data[0], data[1], `+${extraItems}`];
     return newData;
   };
-
-  // package_name: "Package Name",
-  // description: "Package Description",
-  // price: "Price",
-  // validity: "Package Validuty Period",
-  // start_date: "Start Date",
-  // validity_date: "Validity Date",
 
   const getColoumConfigs = (item, isHeading) => {
     const tableStyle = isHeading
