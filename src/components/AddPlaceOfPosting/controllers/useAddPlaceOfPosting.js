@@ -1,6 +1,78 @@
 import { useEffect, useState } from "react";
 
+const addPlaceOfPosting = [
+  {
+    cellID: 1,
+    key: "place_of_posting",
+    label: "label.place_of_posting",
+    placeholder: "label.select_place_of_posting",
+    value: "",
+  },
+  {
+    cellID: 1,
+    key: "general",
+    label: "label.general",
+    placeholder: "label.general",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "obc",
+    label: "label.obc",
+    placeholder: "label.obc",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "sc",
+    label: "label.sc",
+    placeholder: "label.sc",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "st",
+    label: "label.st",
+    placeholder: "label.st",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "ph",
+    label: "label.ph",
+    placeholder: "label.ph",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "others",
+    label: "label.others",
+    placeholder: "label.others",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    key: "total",
+    label: "label.total",
+    placeholder: "label.total",
+    value: "",
+    isNumeric: true,
+  },
+  {
+    cellID: 1,
+    isButton: true,
+    isAdd: true,
+  },
+];
+
 const useAddPlaceOfPosting = ({
+  handleInputChange,
   setRequiredPostingPlaceDetail,
   requiredPostingPlaceDetail,
 }) => {
@@ -18,6 +90,10 @@ const useAddPlaceOfPosting = ({
     others: null,
     total: null,
   });
+
+  const [multiAddPlaceOfPosting, setMultiAddPlacePosting] = useState([
+    ...addPlaceOfPosting,
+  ]);
 
   useEffect(() => {
     validateForm();
@@ -122,9 +198,32 @@ const useAddPlaceOfPosting = ({
     setEditPlaceModal(true);
   };
 
+  const handleMultiRowDocumentDetails = ({
+    propertyName,
+    value,
+    id,
+    cellID,
+  }) => {
+    setMultiAddPlacePosting((prevDetail) => {
+      const updatedDetail = prevDetail.map((item) => {
+        if (item.label === propertyName && item.cellID === cellID) {
+          return { ...item, value: value };
+        }
+        return item;
+      });
+      setRequiredPostingPlaceDetail([...updatedDetail]);
+      handleInputChange("posting_details", updatedDetail);
+      return updatedDetail;
+    });
+  };
+
   return {
     addPlaceModal,
     editPlaceModal,
+    multiAddPlaceOfPosting,
+    handleMultiRowDocumentDetails,
+    setMultiAddPlacePosting,
+    addPlaceOfPosting,
     handlePostingPlaceChange,
     isFormValid,
     onClickAddPlace,

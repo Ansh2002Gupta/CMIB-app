@@ -283,14 +283,27 @@ const DetailComponent = ({
           onChangeValue={(val) =>
             detail.isMultiSelect
               ? handleMultiSelect(val, detail, index)
-              : handleChange(detail.label, val, index, detail?.key)
+              : handleChange(
+                  detail.label,
+                  val,
+                  index,
+                  detail?.key,
+                  detail?.cellID
+                )
           }
           isMultiSelect={detail.isMultiSelect}
           onChangeText={(val) => {
             if (detail?.isNumeric) {
-              if (numericValidator(val)) handleChange(detail.label, val);
+              if (numericValidator(val))
+                handleChange(
+                  detail.label,
+                  val,
+                  index,
+                  detail.id,
+                  detail?.cellID
+                );
             } else {
-              handleChange(detail.label, val, index);
+              handleChange(detail.label, val, index, detail.id, detail?.cellID);
             }
           }}
           isRupee={detail?.isRupee}

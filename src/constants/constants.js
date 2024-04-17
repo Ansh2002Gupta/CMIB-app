@@ -817,6 +817,10 @@ export const JOB_APPLICANTS_HEADING = {
   status: "Status",
 };
 
+export const STATUS_ENUM = {
+  SHORTLISTED: "shortlisted",
+  INTERVIEW_SCHEDULED: "interview scheduled",
+};
 export const JOB_APPLICANTS_POP_MESSAGE = {
   pending: [
     "label.download_profile_resume",

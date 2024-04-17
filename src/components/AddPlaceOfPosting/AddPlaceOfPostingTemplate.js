@@ -14,11 +14,19 @@ import ModalWithTitleButton from "../../components/ModalWithTitleButton";
 import { numericValidator } from "../../utils/validation";
 import { PLACE_OF_POSTING } from "../../constants/constants";
 import styles from "./AddPlaceOfPosting.style";
+import useIsWebView from "../../hooks/useIsWebView";
+import CustomMultiRowTextInput from "../CustomMultiRowTextinput";
 
 const AddPlaceOfPostingTemplate = ({
+  renderJobDetails,
+  handleInputChange,
   addPlaceModal,
   editPlaceModal,
   handlePostingPlaceChange,
+  handleMultiRowDocumentDetails,
+  addPlaceOfPosting,
+  multiAddPlaceOfPosting,
+  setMultiAddPlacePosting,
   isFormValid,
   jobDetailData,
   onClickAddPlace,
@@ -30,7 +38,7 @@ const AddPlaceOfPostingTemplate = ({
   requiredPostingPlaceDetail,
 }) => {
   const intl = useIntl();
-  console.log("jobDetailData", jobDetailData);
+  const { isWebView } = useIsWebView();
 
   return (
     <View>
@@ -41,6 +49,10 @@ const AddPlaceOfPostingTemplate = ({
           })}
           customToggleStyle={styles.companyRequireToggleStyle}
           customLabelViewStyle={styles.toggleLabelViewStyle}
+          value={renderJobDetails?.specific_performa_required}
+          onValueChange={(val) => {
+            handleInputChange("specific_performa_required", val);
+          }}
         />
         <CommonText
           fontWeight="600"
@@ -58,43 +70,61 @@ const AddPlaceOfPostingTemplate = ({
             id: "label.place_of_posting",
           })}
         </CommonText>
-        {requiredPostingPlaceDetail.map((item, index) => {
-          return (
-            <View>
-              <View
-                style={
-                  index !== 0
-                    ? { ...styles.documentBorderStyle }
-                    : { ...styles.bottomMargin }
-                }
-              ></View>
-              <EditDeleteAction
-                topText={item?.postingPlace}
-                bottomLeftText={`Total Postings: ${item?.total || "0"}`}
-                onDeleteDocument={() => {
-                  onClickDeletePlace(index);
-                }}
-                onEditDocument={() => {
-                  onCLickEditPlace(index);
-                }}
-                isCategory
-                requiredPostingPlaceDetail={requiredPostingPlaceDetail[index]}
-              />
-            </View>
-          );
-        })}
-        <AddIconText
-          customViewStyle={styles.customAddIconStyle}
-          label={intl.formatMessage({
-            id: "label.add_place",
-          })}
-          onPress={onClickAddPlace}
-        />
-        <CommonText customTextStyle={styles.mandatoryTextStyle}>
-          {intl.formatMessage({
-            id: "label.one_mandatory",
-          })}
-        </CommonText>
+        {isWebView ? (
+          <CustomMultiRowTextInput
+            customWebContainerStyle={styles.customWebContainerStyle}
+            customCardStyle={styles.multiRowTextStyle}
+            startRowTemplate={addPlaceOfPosting}
+            gridTemplate={multiAddPlaceOfPosting}
+            setGridTemplate={setMultiAddPlacePosting}
+            numColsInARow={4}
+            handleValueChange={(type, inputValue, cellId) => {
+              handleMultiRowDocumentDetails(type, inputValue, cellId);
+            }}
+          />
+        ) : (
+          <>
+            {requiredPostingPlaceDetail.map((item, index) => {
+              return (
+                <View>
+                  <View
+                    style={
+                      index !== 0
+                        ? { ...styles.documentBorderStyle }
+                        : { ...styles.bottomMargin }
+                    }
+                  ></View>
+                  <EditDeleteAction
+                    topText={item?.postingPlace}
+                    bottomLeftText={`Total Postings: ${item?.total || "0"}`}
+                    onDeleteDocument={() => {
+                      onClickDeletePlace(index);
+                    }}
+                    onEditDocument={() => {
+                      onCLickEditPlace(index);
+                    }}
+                    isCategory
+                    requiredPostingPlaceDetail={
+                      requiredPostingPlaceDetail[index]
+                    }
+                  />
+                </View>
+              );
+            })}
+            <AddIconText
+              customViewStyle={styles.customAddIconStyle}
+              label={intl.formatMessage({
+                id: "label.add_place",
+              })}
+              onPress={onClickAddPlace}
+            />
+            <CommonText customTextStyle={styles.mandatoryTextStyle}>
+              {intl.formatMessage({
+                id: "label.one_mandatory",
+              })}
+            </CommonText>
+          </>
+        )}
       </CardComponent>
       {(addPlaceModal || editPlaceModal) && (
         <ModalWithTitleButton

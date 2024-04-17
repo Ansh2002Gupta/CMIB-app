@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   },
   quillStyling: {
     height: "508px",
+    width: "100%",
     backgroundColor: colors.white,
     borderRadius: 15,
   },

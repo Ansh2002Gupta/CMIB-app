@@ -15,6 +15,8 @@ const addDocumentField = [
   },
   {
     cellID: 1,
+    id: 1,
+    includeAllKeys: true,
     key: document_keys.DOCUMENT_TYPE,
     label: "label.document_type",
     placeholder: "label.select_document_type",
@@ -40,6 +42,7 @@ const addDocumentField = [
 ];
 
 const useAddDocument = ({
+  handleInputChange,
   requiredDocumentDetails,
   setRequiredDocumentDetails,
 }) => {
@@ -98,15 +101,21 @@ const useAddDocument = ({
     });
   };
 
-  const handleMultiRowDocumentDetails = (propertyName, value) => {
+  const handleMultiRowDocumentDetails = ({
+    propertyName,
+    value,
+    id,
+    cellID,
+  }) => {
     setMultiDocumentDetail((prevDetail) => {
       const updatedDetail = prevDetail.map((item) => {
-        if (item.label === propertyName) {
+        if (item.label === propertyName && item.cellID === cellID) {
           return { ...item, value: value };
         }
         return item;
       });
       setRequiredDocumentDetails([...updatedDetail]);
+      handleInputChange("required_docs", updatedDetail);
       return updatedDetail;
     });
   };

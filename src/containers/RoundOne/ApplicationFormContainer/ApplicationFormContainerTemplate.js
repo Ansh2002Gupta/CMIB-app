@@ -15,6 +15,7 @@ import { SideBarContext } from "../../../globalContext/sidebar/sidebarProvider";
 import images from "../../../images";
 import styles from "./ApplicationFormContainer.style";
 import CustomButton from "../../../components/CustomButton";
+import CustomScrollView from "../../../components/CustomScrollView";
 
 const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   const [sideBarState] = useContext(SideBarContext);
@@ -38,9 +39,9 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
   };
 
   let tabConfig = [
-    {
-      component: CompanyProfile,
-    },
+    // {
+    //   component: CompanyProfile,
+    // },
     {
       component: JobDetails,
     },
@@ -51,7 +52,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
 
   return (
     <>
-      <ScrollView style={{ flex: 1 }}>
+      <CustomScrollView style={{ flex: 1 }}>
         <TwoRow
           topSection={
             <ApplicationFormStepper
@@ -64,7 +65,7 @@ const ApplicationFormContainerTemplate = ({ activeStep, onHandleTab }) => {
           bottomSection={<ActiveTabComponent tabHandler={onHandleTab} />}
           isBottomFillSpace
         />
-      </ScrollView>
+      </CustomScrollView>
       <View style={styles.mainViewStyle}>
         <ApplicationFormStepper activeStep={activeStep} />
         {renderStepContent(activeStep)}

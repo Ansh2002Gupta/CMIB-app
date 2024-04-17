@@ -53,8 +53,8 @@ const AddDocumentTemplate = ({
             gridTemplate={multiDocumentDetail}
             setGridTemplate={setMultiDocumentDetail}
             numColsInARow={4}
-            handleValueChange={(type, inputValue) => {
-              handleMultiRowDocumentDetails(type, inputValue);
+            handleValueChange={(type, inputValue, cellId) => {
+              handleMultiRowDocumentDetails(type, inputValue, cellId);
             }}
           />
         ) : (

@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     marginLeft: 16,
     marginRight: 16,
+    // overFlow: "hidden",
   },
   companyRequireToggleStyle: {
     paddingTop: 12,
@@ -36,6 +37,16 @@ const styles = StyleSheet.create({
   postingPlaceMapView: {
     width: "45%",
     marginBottom: 24,
+  },
+  multiRowTextStyle: {
+    borderWidth: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 0,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 16,
+    flexDirection: "column",
   },
   customModalStyle: {
     rightButtonStyle: { marginLeft: 8 },
@@ -63,6 +74,13 @@ const styles = StyleSheet.create({
   },
   toggleLabelViewStyle: {
     width: "100%",
+  },
+  customWebContainerStyle: {
+    display: "flex",
+    width: "100%",
+    // gridTemplateColumns: "1fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.2fr",
+    // alignItems: "center",
+    overflowX: "auto",
   },
 });
 

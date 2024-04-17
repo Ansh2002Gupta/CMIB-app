@@ -1,7 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { mapApiDataToUI } from "../MappedData";
+import {
+  mapApiDataToUI,
+  mapMonthyApiToUI,
+  mapPostedPlaceApiToUI,
+  mapYearlyApiToUI,
+} from "../MappedData";
 import {
   SELECTION_PROCESS,
   document_keys,
@@ -14,6 +19,7 @@ import {
   USER_TYPE_COMPANY,
 } from "../../../../../services/apiServices/apiEndPoint";
 import { SideBarContext } from "../../../../../globalContext/sidebar/sidebarProvider";
+import { useParams } from "react-router";
 
 const addDocumentField = () => [
   {
@@ -46,6 +52,25 @@ const addDocumentField = () => [
   },
 ];
 
+const initialState = {
+  designation: "",
+  compensation: "",
+  starting_salary: "",
+  role_responsibility: "",
+  ctc_details: "",
+  monthly: [],
+  yearly: [],
+  required_docs: [],
+  bond_details: {
+    is_bond_included: "",
+    bond_period_in_mm: null,
+    exit_amount: null,
+  },
+  specific_performa_required: "",
+  posting_details: [],
+  selectionProcess: [],
+};
+
 const useJobDetailForm = () => {
   const intl = useIntl();
   const [sideBarState] = useContext(SideBarContext);
@@ -70,22 +95,57 @@ const useJobDetailForm = () => {
   );
   const [startingSalary, setStartingSalary] = useState(null);
   const currentModule = sideBarState?.selectedModule?.key;
-  // const { id } = useParams();
-  const id = 133;
+  const { id } = useParams();
+  // const id = 133;
+
+  const [isAddNewJob, setIsAddNewJob] = useState(false);
+  const [editJobDetails, setEditJobDetails] = useState(initialState);
+  const [addNewJobDetails, setAddNewJobDetails] = useState(initialState);
+
+  const renderJobDetails = isAddNewJob ? addNewJobDetails : editJobDetails;
+  const setRenderJobDetails = isAddNewJob
+    ? setAddNewJobDetails
+    : setEditJobDetails;
 
   useEffect(() => {
-    setJobDetailData(mapApiDataToUI);
+    setRenderJobDetails((prev) => ({
+      ...prev,
+      monthly: mapMonthyApiToUI(),
+      yearly: mapYearlyApiToUI(),
+      posting_details: mapPostedPlaceApiToUI(),
+      selectionProcess: SELECTION_PROCESS.map((option) => ({
+        ...option,
+        title: intl.formatMessage({ id: option.messageId }),
+      })),
+    }));
   }, []);
+
+  const handleInputChange = (fieldName, value, subFieldName) => {
+    if (fieldName === "bond_details") {
+      setRenderJobDetails((prev) => ({
+        ...prev,
+        bond_details: {
+          ...prev.bond_details,
+          [subFieldName]: value,
+        },
+      }));
+    } else {
+      setRenderJobDetails((prev) => ({
+        ...prev,
+        [fieldName]: value,
+      }));
+    }
+  };
 
   const onClickAddDesignation = () => {
     setAddDesignation(true);
   };
 
   const handleMonthlyData = (fieldName, value) => {
-    let updatedMonthly = jobDetailData.monthly.map((detail) =>
+    let updatedMonthly = renderJobDetails.monthly.map((detail) =>
       detail.label === fieldName ? { ...detail, value: value } : detail
     );
-    let updatedYearly = [...jobDetailData.yearly];
+    let updatedYearly = [...renderJobDetails.yearly];
     if (
       [
         "label.basic",
@@ -132,15 +192,15 @@ const useJobDetailForm = () => {
       );
     }
 
-    setJobDetailData({
-      ...jobDetailData,
+    setRenderJobDetails({
+      ...renderJobDetails,
       monthly: updatedMonthly,
       yearly: updatedYearly,
     });
   };
 
   const handleYearlyData = (fieldName, value) => {
-    let updatedYearly = jobDetailData.yearly.map((detail) =>
+    let updatedYearly = renderJobDetails.yearly.map((detail) =>
       detail.label === fieldName ? { ...detail, value: value } : detail
     );
     const monthlyGrossSalary = getMonthlyGrossSalary();
@@ -161,27 +221,30 @@ const useJobDetailForm = () => {
         detail.key === "ctc" ? { ...detail, value: ctc.toString() } : detail
       );
     }
-    setJobDetailData({
-      ...jobDetailData,
+    setRenderJobDetails({
+      ...renderJobDetails,
       yearly: updatedYearly,
     });
   };
 
   function getMonthlyGrossSalary() {
-    const monthlyDetail = jobDetailData.monthly.find(
+    const monthlyDetail = renderJobDetails.monthly.find(
       (detail) => detail.key === "grossSalary"
     );
     return monthlyDetail ? monthlyDetail.value : "0";
   }
 
   const handleToggle = (id) => {
-    const updatedItems = selectionProcess.map((item) => {
+    const updatedItems = renderJobDetails?.selectionProcess?.map((item) => {
       if (item.id === id) {
         return { ...item, isSelected: !item.isSelected };
       }
       return item;
     });
-    setSelectionProcess(updatedItems);
+    setRenderJobDetails((prev) => ({
+      ...prev,
+      selectionProcess: [...updatedItems],
+    }));
   };
 
   // TODO
@@ -333,6 +396,9 @@ const useJobDetailForm = () => {
   };
 
   return {
+    renderJobDetails,
+    setRenderJobDetails,
+    handleInputChange,
     addDocumentField: documentState,
     addDesignation,
     bondPeriod,
