@@ -166,6 +166,10 @@ const styles = StyleSheet.create({
   copiesInputStyle: {
     width: "48%",
   },
+  customContainerStyle: {
+    overflow: "visible",
+    flexDirection: "column",
+  },
 });
 
 export default styles;

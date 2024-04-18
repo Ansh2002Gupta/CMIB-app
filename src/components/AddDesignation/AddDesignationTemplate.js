@@ -54,6 +54,7 @@ const AddDesignationTemplate = ({
           handleValueChange={({ propertyName, value, index }) => {
             handleMultiRowDocumentDetails(propertyName, value, index);
           }}
+          customContainerStyle={styles.customContainerStyle}
         />
       ) : (
         <>

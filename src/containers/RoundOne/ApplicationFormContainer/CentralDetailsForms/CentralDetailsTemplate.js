@@ -73,17 +73,14 @@ const CentralDetailsTemplate = ({
   } = uploadImageToServerUtils;
 
   const hasCompanyLogo = false;
-  const defaultUploadResult = hasCompanyLogo
-    ? {
-        data: { url: false },
-      }
-    : null;
+  const defaultUploadResult = hasCompanyLogo ? { data: { url: false } } : null;
 
   const updatedFileUploadResult = isEditProfile
     ? fileUploadResult || defaultUploadResult
     : defaultUploadResult;
 
   const intl = useIntl();
+
   const renderRoundDetail = () => {
     if (roundCenterDetailsLoading) {
       return (
@@ -92,6 +89,7 @@ const CentralDetailsTemplate = ({
         </View>
       );
     }
+
     if (roundCenterDetailsError) {
       return (
         <View style={styles.spinner}>
@@ -101,6 +99,7 @@ const CentralDetailsTemplate = ({
         </View>
       );
     }
+
     if (roundCenterDetails)
       return (
         <>
@@ -143,27 +142,8 @@ const CentralDetailsTemplate = ({
       );
   };
 
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.topContainer}>
-        <ConfigurableList
-          title={intl.formatMessage({ id: "label.centers" })}
-          searchQuery={configurableListQuery}
-          setSearchQuery={setConfigurableListQuery}
-          selectedOptions={selectedOptions}
-          onDelete={handleDelete}
-          onPress={handlePress}
-          onAdd={handleAdd}
-          nameField="centre_name"
-          idField="centre_id"
-          options={mappedCentersList}
-          menuOptions={menuOptions}
-          setMenuOptions={setMenuOptions}
-          customOuterContianer={styles.configurableStyle}
-          componentContainer={styles.componentContainer}
-        />
-        <View style={styles.innerContainerStyle}>{renderRoundDetail()}</View>
-      </View>
+  const renderBottomSection = () => {
+    return (
       <View>
         <CardComponent customStyle={styles.cardStyle}>
           <DetailComponent
@@ -175,32 +155,63 @@ const CentralDetailsTemplate = ({
               label={intl.formatMessage({ id: "label.company_ppt" })}
               value={isCompanyPPt}
               onValueChange={(item) => setIsCompanyPPT(item)}
-              customToggleStyle={{ marginTop: 12 }}
-              customLabelStyle={{ color: colors.gray }}
+              customToggleStyle={styles.customToggleStyle}
+              customLabelStyle={styles.customLabelStyle}
             />
           </View>
 
-          <View style={styles.imageContainer}>
-            <UploadImage
-              {...{
-                onDeleteImage,
-                errorWhileUpload,
-                fileUploadResult: updatedFileUploadResult,
-                handleFileUpload,
-                isUploadingImageToServer,
-                setFileUploadResult,
-                uploadPercentage,
-                hideIconDelete: false,
-                isDocumentUpload: true,
-              }}
-            />
-          </View>
+          {!isCompanyPPt && (
+            <View style={styles.imageContainer}>
+              <UploadImage
+                {...{
+                  onDeleteImage,
+                  errorWhileUpload,
+                  fileUploadResult: updatedFileUploadResult,
+                  handleFileUpload,
+                  isUploadingImageToServer,
+                  setFileUploadResult,
+                  uploadPercentage,
+                  hideIconDelete: false,
+                  isDocumentUpload: true,
+                }}
+              />
+            </View>
+          )}
           <AddBenefits
             {...{ setRequiredDocumentDetails, requiredDocumentDetails }}
           />
         </CardComponent>
       </View>
+    );
+  };
 
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.topContainer}>
+        <ConfigurableList
+          title={intl.formatMessage({ id: "label.centers" })}
+          searchQuery={configurableListQuery}
+          setSearchQuery={setConfigurableListQuery}
+          selectedOptions={selectedOptions}
+          onDelete={handleDelete}
+          handlePressCustom={handlePress}
+          onAdd={handleAdd}
+          nameField="centre_name"
+          idField="centre_id"
+          options={mappedCentersList}
+          menuOptions={menuOptions}
+          setMenuOptions={setMenuOptions}
+          customOuterContianer={styles.configurableStyle}
+          componentContainer={styles.componentContainer}
+          optionFormatter={(option) => ({
+            detailId: option?.id,
+            id: String(option["centre_id"]),
+            name: String(option["centre_name"]),
+          })}
+        />
+        <View style={styles.innerContainerStyle}>{renderRoundDetail()}</View>
+      </View>
+      {roundCenterDetails && renderBottomSection()}
       {showCenterModal && (
         <SingleSelectionModal
           data={centerListData}

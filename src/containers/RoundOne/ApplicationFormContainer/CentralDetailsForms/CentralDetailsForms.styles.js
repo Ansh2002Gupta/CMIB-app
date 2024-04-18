@@ -126,6 +126,8 @@ const styles = StyleSheet.create({
   headerTextStyle: {
     fontSize: 16,
   },
+  customToggleStyle: { marginTop: 12 },
+  customLabelStyle: { color: colors.gray },
 });
 
 export default styles;

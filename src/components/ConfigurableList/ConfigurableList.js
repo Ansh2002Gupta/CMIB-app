@@ -27,13 +27,20 @@ const ConfigurableList = ({
   nameField = "name",
   outerContainer = {},
   componentContainer = {},
+  handlePressCustom,
+  optionFormatter,
 }) => {
   const intl = useIntl();
   const allOptions = useRef([]);
-  const items = options?.map((option) => ({
+
+  const defaultOptionFormatter = (option) => ({
     id: String(option[idField]),
     name: String(option[nameField]),
-  }));
+  });
+
+  const items = options?.map(
+    optionFormatter ? optionFormatter : defaultOptionFormatter
+  );
 
   useEffect(() => {
     allOptions.current = items;
@@ -93,7 +100,13 @@ const ConfigurableList = ({
                       ? `${classes["configurableList__item--green"]}`
                       : ``
                   }
-                  onPress={() => onPress(item.id)}
+                  onPress={() => {
+                    if (handlePressCustom) {
+                      handlePressCustom(item);
+                    } else {
+                      onPress(item.id);
+                    }
+                  }}
                   style={[
                     styles.itemContainer,
                     selectedOptions.includes(item.id)

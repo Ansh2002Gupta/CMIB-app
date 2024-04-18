@@ -16,6 +16,7 @@ const CustomMultiRowTextInput = ({
   headerId,
   handleValueChange,
   numColsInARow = 4,
+  customContainerStyle,
 }) => {
   const intl = useIntl();
   const handleChange = (label, inputValue, index, id, changedCellID) => {
@@ -88,7 +89,11 @@ const CustomMultiRowTextInput = ({
       onAdd={handleAddNewRow}
       onDelete={handleDeleteRow}
       tableHeaderList={startRowHeaderList}
-      customContainerStyle={{ flexDirection: "row", flexWrap: "unwrap" }}
+      customContainerStyle={{
+        flexDirection: "row",
+        flexWrap: "unwrap",
+        ...customContainerStyle,
+      }}
       customWebContainerStyle={{
         ...styles.customWebContainerStyle,
         ...customWebContainerStyle,

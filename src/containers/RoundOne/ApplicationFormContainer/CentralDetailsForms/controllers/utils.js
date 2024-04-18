@@ -87,7 +87,7 @@ export const contactDetailFields = (countryData, intl) => {
   ];
 };
 
-export const interviewDetailsFields = (state) => {
+export const interviewDetailsFields = (state, roundCenterDetails) => {
   return [
     [
       {
@@ -101,8 +101,13 @@ export const interviewDetailsFields = (state) => {
         placeholder: "label.select_module",
         valueField: "value",
         defaultValues: [],
-        options: interviewTypeOptions.map((option) =>
-          createModuleOptions(option, state[keys.campusDates])
+        options: roundCenterDetails?.interview_dates?.map((option) =>
+          createModuleOptions(
+            option,
+            state[keys.campusDates],
+            "interview_schedule_date",
+            "interview_schedule_date"
+          )
         ),
         isSingleMutliSelect: true,
       },
@@ -122,7 +127,66 @@ export const interviewDetailsFields = (state) => {
   ];
 };
 
-export const getFormattedData = (contactDetails) => {
+const getDesgnationDetails = (designationDetatils) => {
+  let designationObject = {};
+
+  designationDetatils.forEach((item, index) => {
+    let temp = {};
+    if (!designationObject[item.cellID]) {
+      designationObject[item.cellID] = temp;
+    }
+    if (item.key == "designation_details") {
+      designationObject[item.cellID].round_company_job_detail_id = item.value;
+    }
+    if (item.key == "number_of_vacancies") {
+      designationObject[item.cellID].no_of_vacancy = Number(item.value);
+    }
+  });
+  return Object.values(designationObject);
+};
+
+const getOtherDetails = (otherDetailsData) => {
+  let requiredObject = {};
+  otherDetailsData.forEach((item, index) => {
+    let temp = {};
+    if (!requiredObject[item.cellID]) {
+      requiredObject[item.cellID] = temp;
+    }
+    if (item.key == "benefits_details") {
+      requiredObject[item.cellID].name = item.value;
+    }
+    if (item.key == "benefits_amount") {
+      requiredObject[item.cellID].amount = item.value;
+    }
+  });
+  return Object.values(requiredObject);
+};
+
+const getDocumentData = (isCompanyPPt, fileUploadResult, profileData) => {
+  const companyDetails = {};
+
+  if (fileUploadResult?.data?.file_name || profileData?.companyLogo) {
+    const logoFileName = profileData?.companyLogo?.split("/")?.pop();
+    companyDetails.file_path =
+      fileUploadResult?.data?.file_name || logoFileName;
+  } else {
+    companyDetails.file_path = null;
+  }
+  companyDetails.company_ppt = isCompanyPPt;
+
+  return companyDetails;
+};
+
+export const getFormattedData = (
+  contactDetails,
+  designationDetatils,
+  otherBenefits,
+  isCompanyPPt,
+  fileUploadResult
+) => {
+  const designation = getDesgnationDetails(designationDetatils);
+  const benefits = getOtherDetails(otherBenefits);
+  const otherDetails = getDocumentData(isCompanyPPt, fileUploadResult);
   return {
     contact_person_info: {
       name: contactDetails[keys.personName],
@@ -136,43 +200,23 @@ export const getFormattedData = (contactDetails) => {
       campus_dates: [],
       interview_type: "",
     },
-    designation_details: [
-      {
-        id: 1,
-        round_company_job_detail_id: 1,
-        no_of_vacancy: 30,
-      },
-      {
-        id: 2,
-        round_company_job_detail_id: 3,
-        no_of_vacancy: 30,
-      },
-    ],
-    other_details: {
-      company_ppt: "yes",
-      file_path: "<path.ext>",
-    },
-    other_benefits: [
-      {
-        id: 1,
-        name: "Meals and Snacks",
-        amount: 5000,
-      },
-      {
-        id: 2,
-        name: "Parental",
-        amount: 5000,
-      },
-    ],
+    designation_details: designation,
+    other_details: otherDetails,
+    other_benefits: benefits,
   };
 };
 
-export const createModuleOptions = (module, contact) => {
+export const createModuleOptions = (
+  module,
+  contact,
+  labelKey = "label",
+  valueKey = "value"
+) => {
   return {
-    label: module.label,
-    name: module.label,
-    value: module.value,
-    isSelected: contact?.includes(module.value),
+    label: module[labelKey],
+    name: module[labelKey],
+    value: module[valueKey],
+    isSelected: contact?.includes(module[valueKey]),
     selectedIndex: null,
   };
 };

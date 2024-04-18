@@ -114,6 +114,18 @@ const useCentralDetails = () => {
     },
   });
 
+  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
+    useDeleteLogo();
+  const {
+    errorWhileUpload,
+    fileUploadResult,
+    handleFileUpload,
+    isLoading: isUploadingImageToServer,
+    setErrorWhileUpload,
+    setFileUploadResult,
+    uploadPercentage,
+  } = useSaveLogo();
+
   const contactDetailTemplate = useMemo(() => {
     const data = contactDetailFields(countryData, intl);
     return data.map((row) => {
@@ -124,8 +136,8 @@ const useCentralDetails = () => {
   }, [contactDetailsState, countryData, intl, fieldError]);
 
   const interviewDetailsTemplate = useMemo(() => {
-    return interviewDetailsFields(interviewDetailsState);
-  }, [interviewDetailsState]);
+    return interviewDetailsFields(interviewDetailsState, roundCenterDetails);
+  }, [interviewDetailsState, roundCenterDetails]);
 
   const findFieldByKeyOrLabel = (value, details) => {
     return details
@@ -149,6 +161,7 @@ const useCentralDetails = () => {
       setContactDetailsState((prev) => ({ ...prev, [key]: value }));
     }
   };
+
   const handleInterviewDetailChange = (field, value) => {
     const { key } = findFieldByKeyOrLabel(field, interviewDetailsTemplate);
     setInterviewDetailsState((prev) => ({ ...prev, [key]: value }));
@@ -198,17 +211,17 @@ const useCentralDetails = () => {
     });
   };
 
-  const handlePress = (selectedItemID) => {
+  const handlePress = (centerData) => {
     setIsAddNewJob(false);
-    setCurrentDesginationID(selectedItemID);
-    setSelectedOptions([selectedItemID]);
+    setCurrentDesginationID(centerData?.id);
+    setSelectedOptions([centerData?.id]);
 
     //TODO: api issue
     fetchRoundCenterDetails({
-      overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${selectedItemID}`,
+      overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${centerData?.id}`,
     });
     fetchApplicationDetail({
-      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedItemID}`,
+      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${centerData?.detailId}`,
     });
   };
 
@@ -233,7 +246,14 @@ const useCentralDetails = () => {
   };
 
   const handleSave = () => {
-    const body = getFormattedData(contactDetailsState);
+    const body = getFormattedData(
+      contactDetailsState,
+      designationDetatils,
+      requiredDocumentDetails,
+      isCompanyPPt,
+      fileUploadResult
+    );
+    console.log(body, "body");
   };
 
   const handleCancel = () => {};
@@ -256,18 +276,6 @@ const useCentralDetails = () => {
       });
     }
   };
-
-  const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
-    useDeleteLogo();
-  const {
-    errorWhileUpload,
-    fileUploadResult,
-    handleFileUpload,
-    isLoading: isUploadingImageToServer,
-    setErrorWhileUpload,
-    setFileUploadResult,
-    uploadPercentage,
-  } = useSaveLogo();
 
   const handleImageDeletion = () => {
     if (fileUploadResult?.data?.file_name) {
