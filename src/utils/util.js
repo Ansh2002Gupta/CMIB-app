@@ -669,3 +669,36 @@ export const formatSalaryRange = (minSalary, maxSalary) => {
 
   return formattedSalaryRange;
 };
+
+export const convertGraphData = (data) => {
+  const formattedData = data.map((item) => {
+    return {
+      x: item.label,
+      y: item.value,
+    };
+  });
+
+  return formattedData;
+};
+
+export const convertMobileGraphData = (data, colors) => {
+  const formattedData = data.map((item, index) => {
+    return {
+      name: item.label,
+      value: item.value,
+      color: colors[index],
+    };
+  });
+
+  return formattedData;
+};
+
+export const convertDonutChartData = (data) => {
+  let convertedArray = [];
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
+      convertedArray.push({ x: key, y: data[key] });
+    }
+  }
+  return convertedArray;
+};
