@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     fontFamily: "General Sans",
     fontSize: 16,
     color: colors.black,
+    fontWeight: "600",
   },
   tickLabels: {
     fontFamily: "General Sans",
