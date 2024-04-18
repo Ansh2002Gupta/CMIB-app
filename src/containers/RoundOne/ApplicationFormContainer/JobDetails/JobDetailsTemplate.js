@@ -281,6 +281,7 @@ const JobDetailsTemplate = ({
           leftSection={
             desginationItems.length && (
               <ConfigurableList
+                customOuterContianer={styles.customOuterContianer}
                 title={intl.formatMessage({ id: "label.desgination" })}
                 searchQuery={configurableListQuery}
                 setSearchQuery={setConfigurableListQuery}

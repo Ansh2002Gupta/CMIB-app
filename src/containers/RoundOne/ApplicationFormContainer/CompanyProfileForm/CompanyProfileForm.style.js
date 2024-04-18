@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   actionBtnContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     gap: 16,
     padding: 24,
     backgroundColor: colors.backgroundGrey,
@@ -59,11 +59,15 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   buttonStyle: { maxHeight: 44, maxWidth: 80 },
+  buttonTwoStyle: { maxHeight: 44, maxWidth: 150 },
   loading: {
     display: "flex",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  backButtonStyle: {
+    fontSize: 14,
   },
 });
 

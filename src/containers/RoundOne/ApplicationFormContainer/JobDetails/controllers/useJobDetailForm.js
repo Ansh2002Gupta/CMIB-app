@@ -6,15 +6,10 @@ import {
   getPlaceOfPostingDetails,
   mapDataToPayload,
   mapDataToUI,
-  mapDocsToUI,
   mapMonthyApiToUI,
-  mapPostedPlaceApiToUI,
   mapYearlyApiToUI,
 } from "../MappedData";
-import {
-  SELECTION_PROCESS,
-  document_keys,
-} from "../../../../../constants/constants";
+import { document_keys } from "../../../../../constants/constants";
 import { useDelete, usePost, usePut } from "../../../../../hooks/useApiRequest";
 import {
   APPLICATION,

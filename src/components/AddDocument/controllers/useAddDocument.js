@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
 const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   const [addDocumentModal, setAddDocumentModal] = useState(false);
@@ -10,6 +11,7 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
     documentType: "",
     copiesNumber: null,
   });
+  const intl = useIntl();
 
   useEffect(() => {
     if (editDocumentModal) {
@@ -60,8 +62,21 @@ const useAddDocument = ({ requiredDocumentDetails, setRenderJobDetails }) => {
   }) => {
     setRenderJobDetails((prevDetail) => {
       const updatedDetail = prevDetail?.required_docs?.map((item) => {
+        if (
+          !value &&
+          value?.length === 0 &&
+          item.cellID === cellID &&
+          item.label === propertyName
+        ) {
+          return {
+            ...item,
+            value: value,
+            isError: true,
+            error: intl.formatMessage({ id: "label.error.cannot_be_empty" }),
+          };
+        }
         if (item.label === propertyName && item.cellID === cellID) {
-          return { ...item, value: value };
+          return { ...item, value: value, isError: null, error: null };
         }
         return item;
       });
