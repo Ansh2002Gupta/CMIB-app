@@ -22,6 +22,7 @@ export const navigations = {
 
   //sub routes
   ALL_JOBS: "all-jobs",
+  APPLIED_JOBS_REDIRECT: "/ca-jobs/job-detail",
   APPLICATION_FORM: "application-form",
   CANDIDATE_DETAILS_SUBROUTE: "candidate-details",
   CANDIDATE_DETAILS: "/candidate-details/:id",
@@ -45,4 +46,8 @@ export const navigations = {
   JOB_PROFILE: "/job-profile",
   VIEW_JOB_DETAILS: "applicant-job-details",
   APPLICANT_DETAILS: ":job_id/applicant-details/:id",
+  PREVIOUS_SUBSCRIPTION_DETAILS: "previous-subscription-details",
+  OTHER_PACKAGES: "other-packages",
+  MANAGE_SUBSCRIPTION: "manage-subscriptions",
+  CANDIDATE_DETAIL: "candidate-details",
 };

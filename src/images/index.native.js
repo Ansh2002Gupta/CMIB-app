@@ -55,6 +55,7 @@ import iconLeftArrow from "../../public/images/iconLeftArrow/iconLeftArrow.png";
 import iconSearch from "../../public/images/svg/iconSearch.svg";
 import iconFilter from "../../public/images/svg/iconFilter.svg";
 import iconMore from "../../public/images/svg/iconMore.svg";
+import iconEyeSvg from '../../public/images/svg/iconEyeSvg.svg';
 import iconFooter from "../../public/images/svg/iconFooter.svg";
 import iconArrowDown from "../../public/images/svg/iconArrowDown.svg";
 import iconArrowUp from "../../public/images/svg/iconArrowUp.svg";
@@ -156,11 +157,12 @@ import iconLocationWhite from "../../public/images/svg/iconLocationWhite.svg";
 import iconBreifcase from "../../public/images/svg/briefcase.svg";
 import iconRupeeSign from "../../public/images/svg/rupeeSign.svg";
 import iconArchiveSave from "../../public/images/svg/iconArchiveSave.svg";
-import iconView from "../../public/images/svg/eyeview.svg";
 import iconSavedJob from "../../public/images/svg/iconSaved.svg";
+import iconView from "../../public/images/svg/eyeview.svg";
 import iconCalendarWhite from "../../public/images/svg/iconCalendarWhite.svg";
 import iconTrashSVG from "../../public/images/svg/iconTrash.svg";
 import iconArchiveSaveMobile from "../../public/images/svg/iconArchiveSaveMobile.svg";
+import iconWallet from "../../public/images/svg/wallet.svg";
 
 const images = {
   iconArrowUp,
@@ -236,6 +238,7 @@ const images = {
   iconSearch,
   iconFilter,
   iconMore,
+  iconEyeSvg,
   iconFooter,
   iconAdd,
   iconStepperDone,
@@ -320,11 +323,12 @@ const images = {
   iconBreifcase,
   iconRupeeSign,
   iconArchiveSave,
-  iconView,
   iconSavedJob,
   iconCalendarWhite,
+  iconView,
   iconTrashSVG,
   iconArchiveSaveMobile,
+  iconWallet
 };
 
 export default images;

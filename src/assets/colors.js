@@ -21,9 +21,10 @@ const greenBlue = "#2FA5CB";
 const darkGreen = "#00873E";
 const green = "#04AF55";
 const greenOne = "#04af55";
+const shallowGreen = "#CDEFDD";
 const darkSecondGreen = "#258B01";
-const lightGreen = "#E6F9EF";
-const lightGreen2 = "#DFFFDC";
+const lightGreen2 = "#E6F9EF";
+const lightGreen = "#DFFFDC";
 const grassGreen = "#2CA900";
 const yellowGreen = "#CDDC39";
 
@@ -70,6 +71,7 @@ const mustardYellow = "#FFD54F";
 const orange = "#D76200";
 const lightOrange = "#FFEFE5";
 const lightOrangeSecond = "#F9DED6";
+const lightOrangeThird = "#FFF2EF";
 const darkOrange = "#E88532";
 
 /* Purple */
@@ -113,6 +115,7 @@ const colors = {
   offWhite,
   red,
   secondaryGrey,
+  shallowGreen,
   silver,
   slateGray,
   subHeadingGray,
@@ -136,6 +139,7 @@ const colors = {
   greySix,
   lightOrangeSecond,
   skyBlueLightSecond,
+  lightOrangeThird,
   purple,
   grassGreen,
   mustardYellow,

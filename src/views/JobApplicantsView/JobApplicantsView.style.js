@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   activeWeb: {
     ...baseChipStyle,
     color: colors.darkGreen,
-    backgroundColor: colors.lightGreen2,
+    backgroundColor: colors.lightGreen,
   },
   inactiveActiveStyle: {
     alignItems: "flex-start",
@@ -85,6 +85,10 @@ const styles = StyleSheet.create({
   iconTicket: {
     height: 20,
     width: 20,
+  },
+  designationViewStyle: {
+    paddingLeft: 0,
+    paddingRight: 0,
   },
 });
 

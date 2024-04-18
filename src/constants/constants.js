@@ -580,9 +580,13 @@ export const LIST_OPTION = [
   { align: [] },
 ];
 
+export const PREVIEWED_LENGTH = 100;
 export const COMPANY_QUERY_TYPE_TICKET = "/";
 
-export const POPUP_OPTIONS = ["Download Profile & Resume", "View Details"];
+export const POPUP_OPTIONS = [
+  { name: "Download Profile & Resume", id: 1 },
+  { name: "View Details", id: 2 },
+];
 export const FILTER_TYPE_ENUM = { CHECKBOX: "checkbox", SLIDER: "slider" };
 export const color = [
   "#000000",
@@ -711,6 +715,15 @@ export const JOB_SEEKERS_TABLE_HEADING = {
   total_experience: "Total Experience",
   functional_area: "Functional Area",
 };
+
+export const INACTIVE_PACKAGE_TABLE_HEADING = {
+  package_name: "Package Name",
+  description: "Package Description",
+  price: "Price",
+  validity: "Package Validuty Period",
+  start_date: "Start Date",
+  validity_date: "Validity Date",
+};
 export const JOB_STATUS_RESPONSE_CODE = {
   "Shortlist Candidate": 3,
   "Reject Candidate": 2,
@@ -731,7 +744,7 @@ export const STATUS_OPTIONS = {
   INTERVIEW_SCHEDULED: "interview scheduled",
   JOB_OFFERED: "job offered",
   JOB_NOT_OFFERED: "job not offered",
-  NO_RESPONSE: "No response from applicant for interview",
+  NO_RESPONSE: "No Response From Applicant For Interview",
   OFFER_ACCEPTED: "offer accepted",
   OFFERE_REJECTED: "offer rejected",
   PENDING: "pending",
@@ -776,6 +789,48 @@ export const JOB_APPLICANTS_HEADING = {
   designation: "Designation",
   job_status: "Active/Inactive",
   status: "Status",
+};
+
+export const STATUS_ENUM = {
+  SHORTLISTED: "shortlisted",
+  INTERVIEW_SCHEDULED: "interview scheduled",
+};
+export const JOB_APPLICANTS_POP_MESSAGE = {
+  pending: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.shorlist_candidate",
+    "label.reject_candidate",
+  ],
+  shorlisted: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.schedule_interview",
+  ],
+  noresponse: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.view_interview_details",
+  ],
+  interviewscheduled: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+    "label.view_interview_details",
+    "label.offer_job",
+    "label.reject_after_interview",
+  ],
+  offerrejected: [
+    "label.download_profile_resume",
+    "label.view_applicant_details",
+  ],
+};
+
+export const SAVED_CANDIDATES_TABLE_HEADING = {
+  candidate_id: "Candidate ID",
+  candidate_name: "Candidate Name",
+  experience: "Total Experience",
+  functional_areas: ["Functional Area"],
+  designation_applied_for: ["Designation Applied For"],
 };
 
 export const CHART_DATA_TYPE = {

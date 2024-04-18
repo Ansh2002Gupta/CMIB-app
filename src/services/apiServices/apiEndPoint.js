@@ -29,6 +29,9 @@ export const COMPANY_QUERY_TYPE_TICKET = `${CORE}/queries/types`;
 export const COMPANY_TICKET_LISTING = `${CORE}/tickets`;
 export const COMPANY_TICKET_STATUS = `${CORE}/status`;
 export const COMPANY_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/subscriptions`;
+export const GET_PAYMENTS_STATUS = `${CORE}/payments`;
+export const COMPANY_INACTIVE_SUBSCRIPTION_LISTING = `${USER_TYPE_COMPANY}/inactive-subscription`;
+export const COMPANY_SUBSCRIPTION_DETAIL = `${USER_TYPE_COMPANY}/subscriptions`
 export const COMPANY_INIT_PAYMENT = `${USER_TYPE_COMPANY}/subscribe`;
 export const COMPANY_SUBSCRIPTION_STATUS = `${USER_TYPE_COMPANY}/active-subscription`;
 export const DOCUMENT_UPLOAD = `${CORE}/${USER_TYPE_COMPANY}/upload-pdf`;
@@ -55,7 +58,6 @@ export const INTERVIEW = "/interview";
 export const WORK_EXPERIENCE = "/work-experiences";
 export const QUESTIONNAIRE = "/questionnaire";
 export const UNMARK_PREFER = "/unmark-prefer";
-export const CANDIDATES = "/candidates";
 export const ROUND_ONE_DASHBOARD = `/dashboard`;
 export const ROUNDS = `/rounds`;
 export const GLOBAL_SESSIONS = `/sessions`;
@@ -70,12 +72,19 @@ export const MEMBER_EXAM_DETAILS = `${USER_TYPE_MEMBER}/academics`;
 export const MEMBER_SAVED_JOBS = `${USER_TYPE_MEMBER}/jobs/save`;
 export const MEMBER_JOB = `${USER_TYPE_MEMBER}/jobs`;
 export const SAVE = `/save`;
+
+//sub routes
 export const APPLY_JOB = `${USER_TYPE_MEMBER}/jobs/apply`;
 export const MEMBER_JOBS_LISTING = `${USER_TYPE_MEMBER}/${JOBS}/apply`;
 export const OFFER_RESPONSE = `${USER_TYPE_MEMBER}/${JOBS}/applicants`;
 export const JOB_LOCATION_OPTIONS = `${USER_TYPE_COMPANY}/job/locations`;
 export const JOB_TYPE_OPTIONS = `${USER_TYPE_COMPANY}/job-type`;
 export const WORK_MODE_OPTIONS = `${USER_TYPE_COMPANY}/workmode`;
+
+export const PREFERRED = "/preferred";
+export const CANDIDATES = "/candidates";
+export const MARKED_PREFER = "/marked-prefer";
+export const UNMARKED_PREFER = "/unmark-prefer";
 
 /* API Endpoints COMPANY CA JOB profile */
 export const COMPANY_CA_JOB_PROFILE = `${USER_TYPE_COMPANY}/ca-jobs/members`;
@@ -119,6 +128,6 @@ export const SAVE_JOB_DETAIL = `${USER_TYPE_MEMBER}/jobs`;
 export const SEARCH_JOBS = `search/jobs`;
 export const CHANGE_APPLICANT_STATUS = `${USER_TYPE_COMPANY}/jobs/applicants`;
 export const CHANGE_STATUS = "/change-status";
-export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${JOB_APPLICANTS}${INTERVIEW}`;
+export const GET_INTERVIEW_DETAILS = `${USER_TYPE_COMPANY}${APPLICANTS}${INTERVIEW}`;
 export const ACCEPTED = "/accepted";
 export const GET_MEMBER_COMPLETION = `${USER_TYPE_MEMBER}/profile/percentage`;

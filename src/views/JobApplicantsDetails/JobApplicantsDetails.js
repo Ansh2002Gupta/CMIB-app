@@ -25,6 +25,7 @@ import {
 import { getDate } from "../../utils/util";
 import images from "../../images";
 import styles from "./JobApplicantsDetails.style";
+import { STATUS_ENUM } from "../../constants/constants";
 
 const RenderUserInfo = ({ label, value, isWebView }) => {
   return (
@@ -54,7 +55,12 @@ const JobApplicantsDetails = () => {
     isError: isErrorWhileFetching,
     error: errorWhileFetching,
   } = useFetch({
-    url: USER_TYPE_COMPANY + JOBS + `/${job_id}` + JOB_APPLICANT + `/${id}`,
+    url:
+      USER_TYPE_COMPANY +
+      `/${JOBS}` +
+      `/${job_id}` +
+      `${JOB_APPLICANT}` +
+      `/${id}`,
     otherOptions: {
       skipApiCallOnMount: true,
     },
@@ -87,7 +93,7 @@ const JobApplicantsDetails = () => {
   };
 
   const questionnaireURL =
-    USER_TYPE_COMPANY + JOBS + `/${job_id}` + QUESTIONNAIRE;
+    USER_TYPE_COMPANY + `/${JOBS}` + `/${job_id}` + QUESTIONNAIRE;
 
   const buttonSection = (
     intl,
@@ -96,7 +102,9 @@ const JobApplicantsDetails = () => {
     onScheduleInterviewClick
   ) => {
     const isSaved = profileData?.is_saved;
-    const isEditScheduleInterview = !!profileData?.interview_id;
+    const isEditScheduleInterview =
+      profileData?.status?.trim().toLowerCase() ===
+      STATUS_ENUM?.INTERVIEW_SCHEDULED?.trim()?.toLowerCase();
     return (
       <View
         style={isWebView ? styles.buttonContainer : styles.MobButtonContainer}
@@ -116,21 +124,26 @@ const JobApplicantsDetails = () => {
               : intl.formatMessage({ id: "label.saved_applicant" })}
           </CommonText>
         </CustomButton>
-        <CustomButton
-          withGreenBackground
-          iconLeft={{
-            leftIconSource: isWebView && images.iconCalendarWhite,
-          }}
-          onPress={onScheduleInterviewClick}
-          style={isWebView ? styles.greenButton : {}}
-          isLeftIconNotSvg={false}
-        >
-          <CommonText customTextStyle={styles.greenButtonText}>
-            {isEditScheduleInterview
-              ? intl.formatMessage({ id: "label.edit_schedule_interview" })
-              : intl.formatMessage({ id: "label.schedule_interview" })}
-          </CommonText>
-        </CustomButton>
+        {(profileData?.status?.trim().toLowerCase() ===
+          STATUS_ENUM?.SHORTLISTED?.trim().toLowerCase() ||
+          profileData?.status?.trim().toLowerCase() ===
+            STATUS_ENUM?.INTERVIEW_SCHEDULED?.trim().toLowerCase()) && (
+          <CustomButton
+            withGreenBackground
+            iconLeft={{
+              leftIconSource: images.iconCalendarWhite,
+            }}
+            onPress={onScheduleInterviewClick}
+            style={isWebView ? styles.greenButton : {}}
+            isLeftIconNotSvg={false}
+          >
+            <CommonText customTextStyle={styles.greenButtonText}>
+              {isEditScheduleInterview
+                ? intl.formatMessage({ id: "label.edit_schedule_interview" })
+                : intl.formatMessage({ id: "label.schedule_interview" })}
+            </CommonText>
+          </CustomButton>
+        )}
       </View>
     );
   };

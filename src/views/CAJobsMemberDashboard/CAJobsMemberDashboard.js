@@ -187,9 +187,9 @@ const CAJobsMemberDashboard = () => {
               labelFontSize={8}
               labelRadius={100}
               labelColor={colors.darkGrey}
-              popupMessage={intl.formatMessage({
-                id: "label.viewAllUrgentJobs",
-              })}
+              // popupMessage={intl.formatMessage({
+              //   id: "label.viewAllUrgentJobs",
+              // })}
               onPopupClick={() => {}}
             />
           </View>

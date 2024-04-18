@@ -32,10 +32,6 @@ const DonutChart = ({
       bottomSection={
         <View>
           <VictoryPie
-            animate={{
-              duration: 2000,
-              onLoad: { duration: 1000 },
-            }}
             height={height}
             width={width}
             data={convertDonutChartData(data)}

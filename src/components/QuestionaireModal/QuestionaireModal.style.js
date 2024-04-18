@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  customToastStyle: { bottom: undefined, top: 500 },
 });
 
 export default styles;
