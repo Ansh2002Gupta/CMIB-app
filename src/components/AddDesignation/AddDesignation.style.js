@@ -170,6 +170,11 @@ const styles = StyleSheet.create({
     overflow: "visible",
     flexDirection: "column",
   },
+  customWebContainerStyle: {
+    display: "grid",
+    gridTemplateColumns: "10fr 1fr 0.5fr ",
+    overflowY: "auto",
+  },
 });
 
 export default styles;

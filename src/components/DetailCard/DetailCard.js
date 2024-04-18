@@ -39,6 +39,7 @@ const DetailCard = ({
   handleCheckBoxSelection,
   datePickerContainer,
   checkBoxTextStyle,
+  customErrorViewStyle,
 }) => {
   const { isWebView } = useIsWebView();
 
@@ -79,6 +80,7 @@ const DetailCard = ({
           handleCheckBoxSelection,
           datePickerContainer,
           checkBoxTextStyle,
+          customErrorViewStyle
         }}
       />
       {!!otherDetails && (

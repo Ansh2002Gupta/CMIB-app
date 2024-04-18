@@ -8,7 +8,7 @@ import useCentralDetails from "./controllers/useCentralDetails";
 const CentralDetailsForm = ({ tabHandler }) => {
   const centerDetails = useCentralDetails({ tabHandler });
 
-  return <CentralDetailsTemplate {...centerDetails} />;
+  return <CentralDetailsTemplate {...{ ...centerDetails, tabHandler }} />;
 };
 
 export default CentralDetailsForm;

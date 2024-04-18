@@ -1,4 +1,4 @@
-import { ScrollView, View } from "@unthinkable/react-core-components";
+import { Platform, ScrollView, View } from "@unthinkable/react-core-components";
 import React from "react";
 import styles from "./CentralDetailsForms.styles";
 import DetailCard from "../../../../components/DetailCard";
@@ -17,6 +17,11 @@ import UploadImage from "../../../../components/UploadImage";
 import AddBenefits from "../../../../components/AddBenfits";
 import AddDesignation from "../../../../components/AddDesignation";
 import CheckBox from "../../../../components/CheckBox";
+import CustomButton from "../../../../components/CustomButton";
+import images from "../../../../images";
+import ActionPairButton from "../../../../components/ActionPairButton";
+import { useNavigate } from "react-router";
+import commonStyles from "../../../../theme/styles/commonStyles";
 
 const CentralDetailsTemplate = ({
   handleContactDetailsChange,
@@ -66,6 +71,7 @@ const CentralDetailsTemplate = ({
   desginationData,
   handleClickOnSelectionProcess,
   selectionProcess,
+  tabHandler,
 }) => {
   const {
     fileUploadResult,
@@ -83,6 +89,17 @@ const CentralDetailsTemplate = ({
     : defaultUploadResult;
 
   const intl = useIntl();
+  const navigate = useNavigate();
+
+  const isWebProps =
+    Platform.OS.toLowerCase() === "web"
+      ? {
+          buttonOneStyle: styles.buttonStyle,
+          buttonTwoStyle: styles.buttonTwoStyle,
+          buttonOneContainerStyle: styles.buttonStyle,
+          buttonTwoContainerStyle: styles.buttonTwoStyle,
+        }
+      : {};
 
   const renderSelectionProcess = () => {
     return (
@@ -274,12 +291,38 @@ const CentralDetailsTemplate = ({
           isDataLoading={centerListLoading}
         />
       )}
-      <SaveCancelButton
-        isEditable={true}
-        onClickSave={handleSave}
-        onClickCancel={handleCancel}
-        // isValidAllFields={isValidAllFields}
-      />
+      <View style={styles.actionBtnContainer}>
+        <CustomButton
+          style={styles.buttonStyle}
+          iconLeft={{
+            leftIconSource: images.iconArrowLeft,
+          }}
+          onPress={() => {
+            tabHandler("prev");
+          }}
+        >
+          <CommonText
+            fontWeight={"600"}
+            customTextStyle={styles.backButtonStyle}
+          >
+            {intl.formatMessage({ id: "label.back" })}
+          </CommonText>
+        </CustomButton>
+        <ActionPairButton
+          buttonOneText={intl.formatMessage({ id: "label.cancel" })}
+          buttonTwoText={intl.formatMessage({ id: "label.save" })}
+          onPressButtonOne={() => navigate(-1)}
+          onPressButtonTwo={() => {
+            handleSave();
+          }}
+          displayLoader={false}
+          customStyles={{
+            ...isWebProps,
+            customContainerStyle: commonStyles.customContainerStyle,
+          }}
+          isButtonTwoGreen
+        />
+      </View>
       {isErrorWhileUpdating && !!errorWhileUpdating && (
         <ToastComponent
           toastMessage={errorWhileUpdating}

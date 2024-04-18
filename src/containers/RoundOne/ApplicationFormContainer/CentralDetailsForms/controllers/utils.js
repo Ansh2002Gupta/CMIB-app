@@ -210,7 +210,8 @@ export const getFormattedData = (
   designationDetatils,
   otherBenefits,
   isCompanyPPt,
-  fileUploadResult
+  fileUploadResult,
+  selectionProcess
 ) => {
   const designation = getDesgnationDetails(designationDetatils);
   const benefits = getOtherDetails(otherBenefits);
@@ -228,7 +229,7 @@ export const getFormattedData = (
       campus_dates: interviewDetailsState?.campusDates,
       interview_type: interviewDetailsState?.companyAvailableForInterview,
     },
-    selection_process: ["Group Discussion"],
+    selection_process: selectionProcess,
     designation_details: designation,
     other_details: otherDetails,
     other_benefits: benefits,

@@ -166,6 +166,11 @@ const styles = StyleSheet.create({
   copiesInputStyle: {
     width: "48%",
   },
+  customWebContainerStyle: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr ",
+    overflowY: "auto",
+  },
 });
 
 export default styles;

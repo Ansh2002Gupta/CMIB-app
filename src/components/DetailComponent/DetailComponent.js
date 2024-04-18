@@ -51,6 +51,7 @@ const DetailComponent = ({
   handleAddRemoveRow,
   handleCheckBoxSelection,
   datePickerContainer,
+  customErrorViewStyle
 }) => {
   const intl = useIntl();
   const { current: currentBreakpoint } = useContext(MediaQueryContext);
@@ -315,6 +316,7 @@ const DetailComponent = ({
           isSingleMutliSelect={detail.isSingleMutliSelect}
           showMonthYearPicker={detail?.showMonthYearPicker}
           checkBoxTextStyle={detail?.checkBoxTextStyle}
+          customErrorViewStyle={customErrorViewStyle}
         />
         {!!footerText && (
           <CommonText customTextStyle={styles.footerText} fontWeight="500">

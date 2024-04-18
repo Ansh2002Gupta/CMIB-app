@@ -54,6 +54,7 @@ const AddBenefitsTemplate = ({
           handleValueChange={({ index, propertyName, value }) => {
             handleMultiRowDocumentDetails(propertyName, value, index);
           }}
+          customWebContainerStyle={styles.customWebContainerStyle}
         />
       ) : (
         <>

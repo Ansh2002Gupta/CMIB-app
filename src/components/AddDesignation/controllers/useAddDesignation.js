@@ -108,7 +108,7 @@ const useAddDesignation = ({
   const handleMultiRowDocumentDetails = (propertyName, value, id) => {
     const updatedDetail = multiDocumentDetail.map((item, index) => {
       if (item.label === propertyName && index == id) {
-        return { ...item, value: value };
+        return { ...item, value: value, isError: null, error: null };
       }
       return item;
     });

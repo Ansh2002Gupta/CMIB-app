@@ -38,7 +38,7 @@ const useCentralDetails = () => {
   const [showCenterModal, setShowCenterModal] = useState(false);
   const [requiredDocumentDetails, setRequiredDocumentDetails] = useState([]);
   const [designationDetatils, setDesignationDetatils] = useState([]);
-  const [isCompanyPPt, setIsCompanyPPT] = useState(-1);
+  const [isCompanyPPt, setIsCompanyPPT] = useState(0);
   const [selectionProcess, setSelectionProcess] = useState([
     ...selectionProcessFields(intl),
   ]);
@@ -127,18 +127,15 @@ const useCentralDetails = () => {
     otherOptions: {},
   });
 
-  const {
-    // data: desginationData,
-    isLoading: saveRoundDetailLoading,
-    makeRequest: saveRoundDetails,
-  } = usePut({
-    // url: `/company/${selectedModule.key}/rounds/${roundId}/application/job-detail`,
-    url: ``,
-    otherOptions: {},
-  });
+  const { isLoading: saveRoundDetailLoading, makeRequest: saveRoundDetails } =
+    usePut({
+      url: ``,
+      otherOptions: {},
+    });
 
   const { handleDeleteLogo, errorWhileDeletion, setErrorWhileDeletion } =
     useDeleteLogo();
+
   const {
     errorWhileUpload,
     fileUploadResult,
@@ -248,13 +245,15 @@ const useCentralDetails = () => {
     setIsAddNewJob(false);
     setCurrentDesginationID(centerData);
     setSelectedOptions([centerData]);
-
-    fetchRoundCenterDetails({
-      overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${centerData?.id}`,
-    });
-    fetchApplicationDetail({
-      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${centerData?.detailId}`,
-    });
+    if (centerData?.id !== selectedOptions?.[0]?.id) {
+      setContactDetailsState({});
+      fetchRoundCenterDetails({
+        overrideUrl: `core/${selectedModule.key}/rounds/${roundId}/centres/${centerData?.id}`,
+      });
+      fetchApplicationDetail({
+        overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${centerData?.detailId}`,
+      });
+    }
   };
 
   const handleAdd = () => {
@@ -284,19 +283,20 @@ const useCentralDetails = () => {
       designationDetatils,
       requiredDocumentDetails,
       isCompanyPPt,
-      fileUploadResult
+      fileUploadResult,
+      selectionProcess
+        .filter((item) => item?.isSelected)
+        .map((item) => item?.value)
     );
 
     saveRoundDetails({
-      overrideUrl: `company/${
-        selectedModule.key
-      }/rounds/${roundId}/application/centres/${17}`,
+      overrideUrl: `company/${selectedModule.key}/rounds/${roundId}/application/centres/${selectedOptions[0]?.detailId}`,
       body,
       onSuccessCallback: () => {
         console.log("onSuccessCallback,onSuccessCallback");
       },
     });
-    console.log(body, "body");
+    console.log(body, selectedOptions, "body");
   };
 
   const handleCancel = () => {};

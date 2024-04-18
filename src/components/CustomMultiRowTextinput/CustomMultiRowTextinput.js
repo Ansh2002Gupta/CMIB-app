@@ -87,11 +87,11 @@ const CustomMultiRowTextInput = ({
       isRow={false}
       isEditProfile={true}
       onAdd={handleAddNewRow}
+      customErrorViewStyle={styles.detailErrorViewStyle}
       onDelete={handleDeleteRow}
       tableHeaderList={startRowHeaderList}
       customContainerStyle={{
-        flexDirection: "row",
-        flexWrap: "unwrap",
+        ...styles.customContainerStyle,
         ...customContainerStyle,
       }}
       customWebContainerStyle={{

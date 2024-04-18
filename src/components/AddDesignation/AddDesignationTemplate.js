@@ -55,6 +55,7 @@ const AddDesignationTemplate = ({
             handleMultiRowDocumentDetails(propertyName, value, index);
           }}
           customContainerStyle={styles.customContainerStyle}
+          customWebContainerStyle={styles.customWebContainerStyle}
         />
       ) : (
         <>
