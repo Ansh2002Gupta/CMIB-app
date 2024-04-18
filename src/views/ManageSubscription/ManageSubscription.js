@@ -80,7 +80,7 @@ function ManageSubscription() {
         }}
       />
       <ScrollView style={styles.container}>
-        <View style={{ paddingLeft: 16, paddingRight: 16 }}>
+        <View style={{ paddingLeft: 16, paddingRight: 16, width: "100%" }}>
           {!Array.isArray(subscribedPackageData) ? (
             <PurchasedPackage
               packageName={subscribedPackageData?.package_name}
@@ -215,6 +215,9 @@ function ManageSubscription() {
               <CAJobsPackagesListing
                 subscriptionListingData={subscriptionListingData}
                 isSubscribe={true}
+                isExpired={
+                  subscribedPackageData?.status.toLowerCase() === "inactive"
+                }
               />
             </>
           )}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Keyboard,
@@ -26,6 +26,7 @@ import {
   GET_PAYMENTS_STATUS,
 } from "../../services/apiServices/apiEndPoint";
 import ToastComponent from "../../components/ToastComponent/ToastComponent";
+import { MediaQueryContext } from "@unthinkable/react-theme";
 
 const getPaymentStatus = (status) => {
   if (status === "Success") {
@@ -37,7 +38,11 @@ const getPaymentStatus = (status) => {
   }
 };
 
-const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
+const CaJobsPackagesListing = ({
+  subscriptionListingData,
+  isSubscribe,
+  isExpired,
+}) => {
   const { isWebView } = useIsWebView();
   const intl = useIntl();
   const isWebPlatform = Platform.OS.toLowerCase() === "web";
@@ -64,6 +69,8 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
       skipApiCallOnMount: true,
     },
   });
+
+  const { current: currentBreakpoint } = useContext(MediaQueryContext);
 
   useEffect(() => {
     if (isGetPaymentSuccess) {
@@ -159,7 +166,9 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
     <View
       style={{
         ...(!isWebPlatform ? styles.mobContainer : {}),
-        ...(isWebView ? styles.webContainerStyle : styles.containerStyle),
+        ...(isWebView
+          ? styles.webContainerStyle(currentBreakpoint)
+          : styles.containerStyle),
       }}
     >
       {subscriptionListingData?.map((container, index) => (
@@ -217,7 +226,7 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
               style={styles.subscribeButtonContainer}
               leftSection={
                 <CommonText customTextStyle={styles.priceText}>
-                  {container?.price}
+                  ₹{container?.price}
                 </CommonText>
               }
               rightSection={
@@ -247,6 +256,33 @@ const CaJobsPackagesListing = ({ subscriptionListingData, isSubscribe }) => {
                         fontWeight={"600"}
                       >
                         {intl.formatMessage({ id: "label.subscribe" })}
+                      </CommonText>
+                    </CustomTouchableOpacity>
+                  ) : isExpired ? (
+                    <CustomTouchableOpacity
+                      style={
+                        isWebView
+                          ? styles.subscribePackagesButton
+                          : styles.subscribePackagesButtonMob
+                      }
+                      onPress={() => {
+                        setShowPaymentInitiateModal(true);
+                        setModalData({
+                          ...modalData,
+                          amount: container?.price,
+                          subscriptionId: container.id,
+                        });
+                      }}
+                    >
+                      <CommonText
+                        customTextStyle={
+                          isWebView
+                            ? styles.viewPackageText
+                            : styles.viewPackageTextMob
+                        }
+                        fontWeight={"600"}
+                      >
+                        {intl.formatMessage({ id: "label.pay" })}
                       </CommonText>
                     </CustomTouchableOpacity>
                   ) : null}

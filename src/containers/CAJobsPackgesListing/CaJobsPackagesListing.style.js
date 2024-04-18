@@ -39,14 +39,15 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     padding: 16,
   },
-  webContainerStyle: {
+  webContainerStyle: (currentBreakpoint) => ({
     backgroundColor: colors.backgroundGrey,
     paddingLeft: 16,
     paddingRight: 16,
     gap: 24,
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
-  },
+    gridTemplateColumns: currentBreakpoint === "md" ? "1fr 1fr 1fr" : "1fr 1fr",
+    width: "100%",
+  }),
   buttonStyle: {},
   containerStyle: {
     backgroundColor: colors.backgroundColor,
