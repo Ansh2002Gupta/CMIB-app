@@ -6,6 +6,7 @@ import { TwoRow } from "../../core/layouts";
 
 import CAJobsDashboard from "../CAJobsDashboard";
 import CAJobsMemberDashboard from "../CAJobsMemberDashboard";
+import CarrerAscentMemeberDashboard from "../CarrerAscentMemeberDashboard";
 import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 import IconHeader from "../../components/IconHeader/IconHeader";
 import { SideBarContext } from "../../globalContext/sidebar/sidebarProvider";
@@ -37,15 +38,20 @@ function DashboardView() {
         isBottomFillSpace
         bottomSection={
           <View>
-            {moduleKeys.CA_JOBS_KEY === selectedModule?.key ? (
-              isCompany ? (
+            {isCompany ? (
+              moduleKeys.CA_JOBS_KEY === selectedModule?.key && (
                 <CAJobsDashboard />
-              ) : (
-                <View style={{ padding: 24 }}>
-                  <CAJobsMemberDashboard />
-                </View>
               )
-            ) : null}
+            ) : (
+              <View style={{ padding: 24 }}>
+                {moduleKeys.CA_JOBS_KEY === selectedModule?.key && (
+                  <CAJobsMemberDashboard />
+                )}
+                {moduleKeys.CARRER_ASCENT_KEY === selectedModule?.key && (
+                  <CarrerAscentMemeberDashboard />
+                )}
+              </View>
+            )}
           </View>
         }
       ></TwoRow>
