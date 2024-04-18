@@ -751,6 +751,15 @@ export const JOB_SEEKERS_TABLE_HEADING = {
   total_experience: "Total Experience",
   functional_area: "Functional Area",
 };
+
+export const INACTIVE_PACKAGE_TABLE_HEADING = {
+  package_name: "Package Name",
+  description: "Package Description",
+  price: "Price",
+  validity: "Package Validuty Period",
+  start_date: "Start Date",
+  validity_date: "Validity Date",
+};
 export const JOB_STATUS_RESPONSE_CODE = {
   "Shortlist Candidate": 3,
   "Reject Candidate": 2,

@@ -30,6 +30,7 @@ import styles from "./CustomTable.style";
 const CustomTable = ({
   addNewTicket,
   allDataLoaded,
+  customTableStyle,
   currentPage,
   customFilterInfo,
   customModal,
@@ -129,7 +130,7 @@ const CustomTable = ({
   };
 
   return (
-    <View style={isWebView ? styles.container : styles.mobileMainContainer}>
+    <View style={{...(isWebView ? styles.container : styles.mobileMainContainer), ...customTableStyle}}>
       <TwoRow
         topSection={
           <>
@@ -433,6 +434,7 @@ CustomTable.defaultProps = {
   totalcards: 0,
   onIconPress: () => {},
   placeholder: "Search",
+  getStatusStyle: ()=>{},
   isTotalCardVisible: true,
   indexOfFirstRecord: 0,
   indexOfLastRecord: 0,

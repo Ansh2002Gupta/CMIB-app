@@ -678,6 +678,12 @@ export const formatSalaryRange = (minSalary, maxSalary) => {
   return formattedSalaryRange;
 };
 
+const key = "manage-subscriptions";
+
+export const doesPathIncludeAnyKey = (pathName) => {
+  return pathName.includes(key);
+};
+
 export const formateErrors = (errors) => {
   // Convert the error object into an array of strings
   const errorMessages = Object.keys(errors).map((key) => {

@@ -66,6 +66,7 @@ const yellow = "#FABB00";
 const orange = "#D76200";
 const lightOrange = "#FFEFE5";
 const lightOrangeSecond = "#F9DED6";
+const lightOrangeThird = "#FFF2EF";
 
 /* Purple */
 const lightPurple = "#E3E2F5";
@@ -128,5 +129,6 @@ const colors = {
   greySix,
   lightOrangeSecond,
   skyBlueLightSecond,
+  lightOrangeThird,
 };
 export default colors;

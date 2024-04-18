@@ -766,6 +766,18 @@ const locale = {
     "Contractual Period Year(s)/ Month(s)/ Day(s)",
   "label.years": "Years(s)",
   "label.giveAnswer": "Give Answer",
+  "label.subscriptionHistory": "Subscription History",
+  "label.previous_subscription_detail": "Previous Subscription Details",
+  "label.packageName": "Package Name",
+  "label.packageDescription": "Package Description",
+  "label.price": "Price",
+  "label.packageValidityPeriod": "Package Validity Period",
+  "label.startDate": "Start Date",
+  "label.endDate": "End Date",
+  "label.viewOtherPackages": "View Other Packages",
+  "label.otherPackages": "Other Packages",
+  "label.renewSubscription": "Renew Subscription",
+  "label.expiredOn": "Expired On",
   "label.memberCompletionProfilePercentWeb":
     "Complete your job profile! its at ",
   "label.complete": "Complete",
@@ -791,6 +803,7 @@ const locale = {
     "You cannot add one desgination at a time",
   "label.designation_name": "Designation name",
   "label.ok": "Ok",
+  "label.manageSubscription": "Manage Subscriptions",
 };
 
 export default locale;
